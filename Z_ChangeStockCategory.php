@@ -108,20 +108,19 @@ if (isset($_POST['ProcessStockChange'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br />
-	<table>
-		<tr>
-			<td>' . _('Existing Inventory Category Code') . ':</td>
+echo '<fieldset>
+		<legend>', _('Category To Change'), '</legend>
+		<field>
+			<label>' . _('Existing Inventory Category Code') . ':</label>
 			<td><input type="text" data-type="no-illegal-chars" name="OldStockCategory"  title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" size="7" maxlength="6" /></td>
-		</tr>
-		<tr>
-			<td>' . _('New Inventory Category Code') . ':</td>
+		</field>
+		<field>
+			<label>' . _('New Inventory Category Code') . ':</label
 			<td><input type="text" data-type="no-illegal-chars"  title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" name="NewStockCategory" size="7" maxlength="6" /></td>
-		</tr>
-	</table>
-
+		</field>
+	</fieldset>
+	<div class="centre">
 		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
 	</div>
 	</form>';

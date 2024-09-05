@@ -1287,12 +1287,12 @@ if (!isset($_GET['Edit'])) {
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
 	$result1 = DB_query($sql,$ErrMsg,$DbgMsg);
 
-	echo '<table class="selection">
-			<tr>
-				<th colspan="3"><h3>' .  _('Search For Stock Items') . ':</h3></th>';
+	echo '<fieldset>
+			<legend>' .  _('Search For Stock Items') . ':</legend>';
 
-	echo '</tr>
-			<tr><td>' . _('Item Category') . ': <select name="StockCat">
+	echo '<field>
+			<label for="StockCat">' . _('Item Category') . ':</label>
+			<select name="StockCat">
 
 			<option selected="selected" value="All">' . _('All') . '</option>';
 
@@ -1321,30 +1321,38 @@ if (!isset($_GET['Edit'])) {
 		$Checked = '';
 	}
 
-	echo '</select></td>
-		<td>' . _('Enter text extracts in the description') . ':</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>
-		<tr><td>' . _('Only items defined as from this Supplier') . ' <input type="checkbox" ' . $Checked . ' name="SupplierItemsOnly" /></td>
-		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>
-		</tr>
-		<tr><td></td>
-		<td><b>' . _('OR') . ' </b><a target="_blank" href="'.$RootPath.'/Stocks.php">' . _('Insert New Item') . '</a></td></tr>
-		<tr>
-				<td colspan="10">
-					<div class="centre">
-						<h2>' . _('Or') . '</h2>
-						' . _('Upload items from csv file') . '<input type="file" name="CSVFile" />
-						<input type="submit" name="UploadFile" value="' . _('Upload File') . '" />
-					</div>
-				</td>
-			</tr>
-		</table>
-		<br />
+	echo '</select>
+		</field>';
 
-		<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" />
-		<input type="submit" name="NonStockOrder" value="' . _('Order a non stock item') . '" />
-		</div><br />';
+	echo '<field>
+			<label from="Keywords">' . _('Enter text extracts in the description') . ':</label>
+			<input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" />
+		</field>
+		<field>
+			<label for="SupplierItemsOnly">' . _('Only items defined as from this Supplier') . '</label>
+			<input type="checkbox" ' . $Checked . ' name="SupplierItemsOnly" />
+		</field>
+		<h1>' . _('OR') . ' </h1>
+		<field>
+			<label for="StockCode">' . _('Enter extract of the Stock Code') . ':</label>
+			<input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" />
+		</field>
+		<h1>' . _('OR') . ' </h1>
+		<field>
+			<label>', _('Create Stock Item'), '</label>
+			<a target="_blank" href="'.$RootPath.'/Stocks.php">' . _('Insert New Item') . '</a>
+		</field>
+		<h1>' . _('OR') . '</h1>
+		<field>
+			<label for="UploadFile">' . _('Upload items from csv file') . '</label>
+			<input type="file" name="CSVFile" />
+			<input type="submit" name="UploadFile" value="' . _('Upload File') . '" />
+		</field>		</fieldset>
+
+		<div class="centre">
+			<input type="submit" name="Search" value="' . _('Search Now') . '" />
+			<input type="submit" name="NonStockOrder" value="' . _('Order a non stock item') . '" />
+		</div>';
 
 	$PartsDisplayed =0;
 }

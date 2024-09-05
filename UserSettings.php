@@ -124,23 +124,27 @@ $_POST['Language'] = $MyRow['language'];
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input name="FormID" value="', $_SESSION['FormID'], '" type="hidden" />';
 
-echo '<table class="selection">
-		<tr>
-			<td>', _('User ID'), ':</td>
-			<td>', $_SESSION['UserID'], '</td>
-		</tr>
-		<tr>
-			<td>', _('User Name'), ':</td>
-			<td>', $_SESSION['UsersRealName'], '<input name="RealName" type="hidden" value="', $_SESSION['UsersRealName'], '" /></td></tr>
-		<tr>
-			<td>', _('Maximum Number of Records to Display'), ':</td>
-			<td><input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_SESSION['DisplayRecordsMax'], '" /></td>
-		</tr>';
+echo '<fieldset>
+		<legend>', _('Edit User Settings'), '</legend>
+		<field>
+			<label for="UserID">', _('User ID'), ':</label>
+			<fieldtext>', $_SESSION['UserID'], '</fieldtext>
+		</field>';
+		
+echo '<field>
+		<label for="UsersRealName">', _('User Name'), ':</label>
+		<fieldtext>', $_SESSION['UsersRealName'], '<input name="RealName" type="hidden" value="', $_SESSION['UsersRealName'], '" /></fieldtext>
+	</field>';
+	
+echo '<field>
+		<label for="DisplayRecordsMax">', _('Maximum Number of Records to Display'), ':</label>
+		<input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_SESSION['DisplayRecordsMax'], '" />
+	</field>';
 
 // Select language:
-echo '<tr>
-	<td>', _('Language'), ':</td>
-	<td><select name="Language">';
+echo '<field>
+		<label for="Language">', _('Language'), ':</label>
+		<select name="Language">';
 if(!isset($_POST['Language'])) {
 	$_POST['Language'] = $_SESSION['Language'];
 }
@@ -151,13 +155,13 @@ foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
 	}
 	echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 // Select theme:
-echo '<tr>
-	<td>' . _('Theme') . ':</td>
-	<td><select name="Theme">';
+echo '<field>
+		<label for="Theme">' . _('Theme') . ':</label>
+		<select name="Theme">';
 
 $ThemeDirectories = scandir('css/');
 
@@ -179,42 +183,44 @@ if(!isset($_POST['Password'])) {
 	$_POST['Password']='';
 }
 echo '</select>
-		</td>
-	</tr>
-	<tr>
-		<td>', _('New Password'), ':</td>
-		<td><input name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" /></td>
-	</tr>
-	<tr>
-		<td>', _('Confirm Password'), ':</td>
-		<td><input name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />',
-			fShowFieldHelp(_('If you leave the password boxes empty your password will not change')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>
-	<tr>
-		<td>', _('Email'), ':</td>';
-
-echo '<td><input name="email" size="40" type="email" value="', $_POST['email'], '" /></td>
-	</tr>';
+	</field>';
+	
+echo '<field>
+		<label for="Password">', _('New Password'), ':</label>
+		<input name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" />
+		<fieldhelp>', _('If you leave the password boxes empty your password will not change'), '</fieldhelp>
+	</field>';
+	
+echo '<field>
+		<label for="PasswordCheck">', _('Confirm Password'), ':</label>
+		<input name="PasswordCheck" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['PasswordCheck'], '" />
+		<fieldhelp>', _('Confirm the password you entered above'), '</fieldhelp>
+	</field>';
+	
+echo '<field>
+		<label for="email">', _('Email'), ':</label>
+		<input name="email" size="40" type="email" value="', $_POST['email'], '" />
+	</field>';
 
 // Turn off/on page help:
-echo '<tr>
-		<td><label for="ShowPageHelp">', _('Display page help'), ':</label></td>
-		<td><select id="ShowPageHelp" name="ShowPageHelp">';
-if($_POST['ShowPageHelp']==0) {
+echo '<field>
+		<label for="ShowPageHelp">', _('Display page help'), ':</label>
+		<select id="ShowPageHelp" name="ShowPageHelp">';
+if ($_POST['ShowPageHelp']==0) {
 	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
 } else {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select>', fShowFieldHelp(_('Show page help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>';
+echo '</select>
+	<fieldhelp>', _('Show page help when available'), '</fieldhelp>
+</field>';
+
 // Turn off/on field help:
-echo '<tr>
-		<td><label for="ShowFieldHelp">', _('Display field help'), ':</label></td>
-		<td><select id="ShowFieldHelp" name="ShowFieldHelp">';
+echo '<field>
+		<label for="ShowFieldHelp">', _('Display field help'), ':</label>
+		<select id="ShowFieldHelp" name="ShowFieldHelp">';
 if($_POST['ShowFieldHelp']==0) {
 	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
@@ -222,16 +228,16 @@ if($_POST['ShowFieldHelp']==0) {
 	echo '<option value="0">', _('No'), '</option>',
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
-echo '</select>', fShowFieldHelp(_('Show field help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>';
+echo '</select>
+	<fieldhelp>', _('Show field help when available'), '</fieldhelp>
+</field>';
 // PDF Language Support:
 if(!isset($_POST['PDFLanguage'])) {
 	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
 }
-echo '<tr>
-		<td>', _('PDF Language Support'), ': </td>
-		<td><select name="PDFLanguage">';
+echo '<field>
+		<label for="PDFLanguage">', _('PDF Language Support'), ': </label>
+		<select name="PDFLanguage">';
 for($i=0; $i<count($PDFLanguages); $i++) {
 	if($_POST['PDFLanguage'] == $i) {
 		echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
@@ -239,11 +245,13 @@ for($i=0; $i<count($PDFLanguages); $i++) {
 		echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>
-	<br />
-	<div class="centre"><input name="Modify" type="submit" value="', _('Modify'), '" /></div>
+echo '</select>
+	</field>';
+	
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input name="Modify" type="submit" value="', _('Modify'), '" /></div>
 	</form>';
 
 include('includes/footer.php');

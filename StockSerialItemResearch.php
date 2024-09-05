@@ -8,7 +8,6 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
 	  </p>';
 
-
 //validate the submission
 if (isset($_POST['serialno'])) {
 	$SerialNo = trim($_POST['serialno']);
@@ -18,17 +17,20 @@ if (isset($_POST['serialno'])) {
 	$SerialNo = '';
 }
 
-
-
-echo '<div class="centre">
-<br />
-<form id="SerialNoResearch" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
-echo '<div>';
+echo '<form id="SerialNoResearch" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo  _('Serial Number') .': <input id="serialno" type="text" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" /> &nbsp;<input type="submit" name="submit" value="' . _('Search') . '" />
-<br />
-</div>
+echo '<fieldset>
+		<legend>', _('Serial Number Lookup'), '</legend>';
+
+echo  '<field>
+		<label for="serialno">', _('Serial Number') .':</label>
+		<input id="serialno" type="text" name="serialno" size="21" maxlength="20" value="'. $SerialNo . '" />
+	</field>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" name="submit" value="' . _('Search') . '" />
+	</div>
 </form>';
 
 echo '<script  type="text/javascript">

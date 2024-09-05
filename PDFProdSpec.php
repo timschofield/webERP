@@ -16,26 +16,29 @@ If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
         $Title = _('Select Product Specification To Print');
         include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
-        echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Enter Specification Name') .':</td>
-			<td><input type="text" name="KeyValue" size="25" maxlength="25" /></td>
-		</tr>
-		</table>
-		</div>
-		<div>
-		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
-		</div>
-		</form>
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Or Select Existing Specification') .':</td>';
+
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+		echo '<fieldset>
+				<legend>', _('Select Product Specification'), '</legend>
+				<field>
+					<label for="KeyValue">' . _('Enter Specification Name') .':</label>
+					<input type="text" name="KeyValue" size="25" maxlength="25" /></td>
+				</field>
+			</fieldset>';
+
+		echo '<div class="centre">
+				<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+			</div>
+		</form>';
+
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+		echo '<fieldset>
+				<field>
+				<label for="KeyValue">' . _('Or Select Existing Specification') .':</label>';
 	$SQLSpecSelect="SELECT DISTINCT(keyval),
 							description
 						FROM prodspecs LEFT OUTER JOIN stockmaster
@@ -43,17 +46,17 @@ If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
 
 
 	$ResultSelection=DB_query($SQLSpecSelect);
-	echo '<td><select name="KeyValue">';
+	echo '<select name="KeyValue">';
 
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'].' - ' .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
-	echo '</select></td>';
-	echo '</tr>
-		</table>
-		</div>
-		<div>
-		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+	echo '</select>';
+	echo '</field>
+		</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>';
     include('includes/footer.php');

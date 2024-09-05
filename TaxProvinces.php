@@ -176,21 +176,19 @@ or deletion of the records*/
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</tbody></table><br />';
+	echo '</tbody></table>';
 } //end of ifs and buts!
 
 
 if(isset($SelectedTaxProvince)) {
 	echo '<div class="centre">
 			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Tax Provinces') . '</a>
-		</div>
-<br />';
+		</div>';
 }
 
 if(! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(isset($SelectedTaxProvince)) {
@@ -211,18 +209,20 @@ echo '<div>';
 			$_POST['TaxProvinceName']  = $myrow['taxprovincename'];
 
 			echo '<input type="hidden" name="SelectedTaxProvince" value="' . $myrow['taxprovinceid'] . '" />';
-			echo '<table class="selection">';
+			echo '<fieldset>
+					<legend>', _('Edit Tax Province'), '</legend>';
 		}
 
 	}  else {
 		$_POST['TaxProvinceName']='';
-		echo '<table class="selection">';
+		echo '<fieldset>
+					<legend>', _('Create Tax Province'), '</legend>';
 	}
-	echo '<tr>
+	echo '<field>
 			<td>' . _('Tax Province Name') . ':' . '</td>
 			<td><input type="text" pattern="(?!^ *$)[^\\><+-]+" required="true" title="'._('The tax province cannot be left blank and includes illegal characters').'" placeholder="'._('Within 30 legal characters').'" name="TaxProvinceName" size="30" maxlength="30" value="' . $_POST['TaxProvinceName'] . '" /></td>
-		</tr>
-		</table>';
+		</field>
+		</fieldset>';
 
 	echo '<br />
 			<div class="centre">

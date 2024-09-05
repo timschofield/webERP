@@ -186,7 +186,7 @@ if(isset($_POST['submit'])) {
 		echo '</tr>';
 	} //END WHILE LIST LOOP
 
-	echo '</tbody></table><br />';
+	echo '</tbody></table>';
 } //end of ifs and buts!
 
 
@@ -196,12 +196,9 @@ if(isset($SelectedTaxCategory)) {
 		</div>';
 }
 
-echo '<br />';
-
 if(! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(isset($SelectedTaxCategory)) {
@@ -222,30 +219,30 @@ if(! isset($_GET['delete'])) {
 			$_POST['TaxCategoryName']  = $myrow['taxcatname'];
 
 			echo '<input type="hidden" name="SelectedTaxCategory" value="' . $myrow['taxcatid'] . '" />';
-			echo '<table class="selection">';
+			echo '<fieldset>
+					<legend>', _('Edit Tax Category'), '</legend>';
 		}
 
 	}  else {
 		$_POST['TaxCategoryName']='';
-		echo '<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Create Tax Category'), '</legend>';
 	}
-	echo '<tr>
-			<td>' . _('Tax Category Name') . ':' . '</td>
-			<td><input pattern="(?!^ +$)[^><+-]+" required="required" placeholder="'._('No more than 30 characters').'" type="text" title="'._('No illegal characters allowed and cannot be blank').'" name="TaxCategoryName" size="30" maxlength="30" value="' . $_POST['TaxCategoryName'] . '" /></td>
-		</tr>
-		</table>';
+	echo '<field>
+			<label for="TaxCategoryName">' . _('Tax Category Name') . ':' . '</label>
+			<input pattern="(?!^ +$)[^><+-]+" required="required" placeholder="'._('No more than 30 characters').'" type="text" title="" name="TaxCategoryName" size="30" maxlength="30" value="' . $_POST['TaxCategoryName'] . '" />
+			<fieldhelp>'._('No illegal characters allowed and cannot be blank').'</fieldhelp>
+		</field>
+		</fieldset>';
 
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-			</div>
-        </div>
-		</form>';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+		</div>
+	</form>';
 
 } //end if record deleted no point displaying form to add record
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities and Rates Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a>

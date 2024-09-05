@@ -382,15 +382,16 @@ if (isset($_POST['PrintPDF'])){
 	$Title=_('Preferred Supplier Inventory Planning');
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
 
-	echo '<tr><td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+	echo '<field>
+			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<select name="Location">';
 	$sql = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$LocnResult=DB_query($sql);
@@ -400,10 +401,12 @@ if (isset($_POST['PrintPDF'])){
 	while ($myrow=DB_fetch_array($LocnResult)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr><td>' . _('Months Buffer Stock to Hold') . ':</td>
-			<td><select name="NumberMonthsHolding">';
+	echo '<field>
+			<label for="NumberMonthsHolding">' . _('Months Buffer Stock to Hold') . ':</label>
+			<select name="NumberMonthsHolding">';
 
 	if (!isset($_POST['NumberMonthsHolding'])){
 		$_POST['NumberMonthsHolding']=1;
@@ -428,15 +431,14 @@ if (isset($_POST['PrintPDF'])){
 	} else {
 		echo '<option value="2">' . _('Two Months') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '</table>
-			<br />
+	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+    echo '</form>';
 
 	include('includes/footer.php');
 } /*end of else not PrintPDF */

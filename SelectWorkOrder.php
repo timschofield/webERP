@@ -5,10 +5,10 @@ include('includes/session.php');
 $Title = _('Search Work Orders');
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-	<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 if (isset($_GET['WO'])) {
@@ -125,11 +125,22 @@ if (!isset($StockID)) {
 	 */
 
 	if (!isset($SelectedWO) or ($SelectedWO=='')){
-		echo '<table class="selection"><tr><td>';
+		echo '<fieldset>
+				<legend class="search">', _('Search Criteria'), '</legend>';
 		if (isset($SelectedStockItem)) {
-			echo _('For the item') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
+			echo '<field>
+					<label for="SelectedStockItem">', _('For the item') . ':</label>
+					<fieldtext>' . $SelectedStockItem . '</fieldtext>
+					<input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />
+				</field>';
 		}
-		echo _('Work Order number') . ': <input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
+		echo '<field>
+				<label for="WO">', _('Work Order number') . ':</label>
+				<input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />
+			</field>
+			<field>
+				<label for ="StockLocation">' . _('Processing at') . ':</label>
+				<select name="StockLocation"> ';
 
 		$sql = "SELECT locations.loccode, locationname FROM locations
 				INNER JOIN locationusers
@@ -154,8 +165,11 @@ if (!isset($StockID)) {
 			}
 		}
 
-		echo '</select> &nbsp;&nbsp;
-			<select name="ClosedOrOpen">';
+		echo '</select>';
+
+		echo '<field>
+				<label for="ClosedOrOpen">', _('Order Status'), '</label>
+				<select name="ClosedOrOpen">';
 
 		if (isset($_GET['ClosedOrOpen']) AND $_GET['ClosedOrOpen']=='Closed_Only'){
 			$_POST['ClosedOrOpen']='Closed_Only';
@@ -169,12 +183,14 @@ if (!isset($StockID)) {
 			echo '<option selected="selected" value="Open_Only">' . _('Open Work Orders Only')  . '</option>';
 		}
 
-		echo '</select> &nbsp;&nbsp;
-			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
-			&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a></td>
-			</tr>
-			</table>
-			<br />';
+		echo '</select>
+			</field>
+		</fieldset>';
+
+		echo '<div class="centre">
+				<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
+				<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a>
+			</div>';
 	}
 
 	$SQL="SELECT categoryid,
@@ -184,35 +200,39 @@ if (!isset($StockID)) {
 
 	$result1 = DB_query($SQL);
 
-	echo '<table class="selection">
-			<tr>
-				<th colspan="6"><h3>' . _('To search for work orders for a specific item use the item selection facilities below') . '</h3></th>
-			</tr>
-			<tr>
-				<td>' . _('Select a stock category') . ':
+	echo '<fieldset>
+			<legend class="search">' . _('To search for work orders for a specific item use the item selection facilities below') . '</legend>
+			<field>
+				<label for="StockCat">' . _('Select a stock category') . ':</label>
 	  			<select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 
-	  echo '</select></td>
-	  		<td>' . _('Enter text extract(s) in the description') . ':</td>
-	  		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-		</tr>
-	  	<tr>
-			<td></td>
-	  		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-	  		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
-	  	</tr>
-	  </table><br />';
-	echo '<div class="centre"><input type="submit" name="SearchParts" value="' . _('Search Items Now') . '" />
-        <input type="submit" name="ResetPart" value="' . _('Show All') . '" /></div>';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Keywords">' . _('Enter text extract(s) in the description') . ':</label>
+			<input type="text" name="Keywords" size="20" maxlength="25" />
+		</field>';
+
+	echo '<h3>' . _('OR') . '</h3>';
+
+	echo '<field>
+			<label for="StockCode">' . _('Enter extract of the Stock Code') . ':</label>
+			<input type="text" name="StockCode" size="15" maxlength="18" />
+		</field>
+	</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="SearchParts" value="' . _('Search Items Now') . '" />
+			<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+		</div>';
 
 	if (isset($StockItemsResult)) {
 
-		echo '<br />
-			<table cellpadding="2" class="selection">
+		echo '<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>

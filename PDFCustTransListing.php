@@ -20,37 +20,36 @@ if (!isset($_POST['Date'])){
 
 	 include ('includes/header.php');
 
-	echo '<div class="centre">
-			<p class="page_title_text">
-				<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Customer Transaction Listing').
-			'</p>';
+	echo '<p class="page_title_text">
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Customer Transaction Listing').
+		'</p>';
 
 	if ($InputError==1){
 		prnMsg($msg,'error');
 	}
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	 echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
-	 echo '<table class="selection">
-	 		<tr>
-				<td>' . _('Enter the date for which the transactions are to be listed') . ':</td>
-				<td><input type="text" name="Date" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
+	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
+	 echo '<fieldset>
+	 		<field>
+				<label for="Date">' . _('Enter the date for which the transactions are to be listed') . ':</label>
+				<input type="text" name="Date" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			</field>';
 
-	echo '<tr><td>' . _('Transaction type') . '</td>
-			<td><select name="TransType">
+	echo '<field>
+			<label for="TransType">' . _('Transaction type') . '</label>
+			<select name="TransType">
 				<option value="10">' . _('Invoices') . '</option>
 				<option value="11">' . _('Credit Notes') . '</option>
 				<option value="12">' . _('Receipts') . '</option>';
 
-	 echo '</select></td></tr>
-			</table>
-			<div class="centre">
-                <br />
-				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>
-            </form>
-            </div>';
+	 echo '</select>
+		</field>
+		</fieldset>
+		<div class="centre">
+			<input type="submit" name="Go" value="' . _('Create PDF') . '" />
+		</div>
+	</form>';
 
 	 include('includes/footer.php');
 	 exit;

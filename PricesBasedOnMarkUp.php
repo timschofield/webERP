@@ -6,20 +6,20 @@ include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
 
-echo '<br /><div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br />';
+echo '<div class="page_help_text">' . _('This page adds new prices or updates already existing prices for a specified sales type (price list) and currency for the stock category selected - based on a percentage mark up from cost prices or from preferred supplier cost data or from another price list. The rounding factor ensures that prices are at least this amount or a multiple of it. A rounding factor of 5 would mean that prices would be a minimum of 5 and other prices would be expressed as multiples of 5.') . '</div><br />';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
 
 $PricesResult = DB_query($SQL);
 
-echo '<br /><table class="selection">
-             <tr>
-          	   <td>' . _('Select the Price List to update') .':</td>
-               <td><select name="PriceList">';
+echo '<fieldset>
+		<legend>', _('Price Update Criteria'), '</legend>
+		<field>
+			<label for="PriceList">' . _('Select the Price List to update') .':</label>
+			<select name="PriceList">';
 
 if (!isset($_POST['PriceList']) OR $_POST['PriceList']=='0'){
 	echo '<option selected="selected" value="0">' . _('No Price List Selected') . '</option>';
@@ -33,15 +33,16 @@ while ($PriceLists=DB_fetch_array($PricesResult)){
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 $SQL = "SELECT currency, currabrev FROM currencies";
 
 $result = DB_query($SQL);
 
-echo '<tr>
-		<td>' . _('Select the price list currency to update') . ':</td>
-		<td><select name="CurrCode">';
+echo '<field>
+		<label for="CurrCode">' . _('Select the price list currency to update') . ':</label>
+		<select name="CurrCode">';
 
 if (!isset($_POST['CurrCode'])){
 	echo '<option selected="selected" value="0">' . _('No Price List Currency Selected') . '</option>';
@@ -55,7 +56,8 @@ while ($Currencies=DB_fetch_array($result)){
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 if ($_SESSION['WeightedAverageCosting']==1){
 	$CostingBasis = _('Weighted Average Costs');
@@ -63,28 +65,31 @@ if ($_SESSION['WeightedAverageCosting']==1){
 	$CostingBasis = _('Standard Costs');
 }
 
-echo '<tr><td>' . _('Cost/Preferred Supplier Data Or Other Price List') . ':</td>
-                <td><select name="CostType">';
+echo '<field>
+		<label for="CostType">' . _('Cost/Preferred Supplier Data Or Other Price List') . ':</label>
+		<select name="CostType">';
 if ($_POST['CostType']=='PreferredSupplier'){
-     echo ' <option selected="selected" value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
-            <option value="StandardCost">' . $CostingBasis . '</option>
-            <option value="OtherPriceList">' . _('Another Price List') . '</option>';
+	 echo ' <option selected="selected" value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
+			<option value="StandardCost">' . $CostingBasis . '</option>
+			<option value="OtherPriceList">' . _('Another Price List') . '</option>';
 } elseif ($_POST['CostType']=='StandardCost'){
 	 echo ' <option value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
-            <option selected="selected" value="StandardCost">' . $CostingBasis . '</option>
-            <option value="OtherPriceList">' . _('Another Price List') . '</option>';
+			<option selected="selected" value="StandardCost">' . $CostingBasis . '</option>
+			<option value="OtherPriceList">' . _('Another Price List') . '</option>';
 } else {
 	echo ' <option value="PreferredSupplier">' . _('Preferred Supplier Cost Data') . '</option>
-            <option value="StandardCost">' . $CostingBasis . '</option>
-            <option selected="selected" value="OtherPriceList">' . _('Another Price List') . '</option>';
+			<option value="StandardCost">' . $CostingBasis . '</option>
+			<option selected="selected" value="OtherPriceList">' . _('Another Price List') . '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 DB_data_seek($PricesResult,0);
 
 if (isset($_POST['CostType']) and $_POST['CostType']=='OtherPriceList'){
-     echo '<tr><td>' . _('Select the Base Price List to Use') . ':</td>
-                            <td><select name="BasePriceList">';
+	 echo '<field>
+			<label for="BasePriceList">' . _('Select the Base Price List to Use') . ':</label>
+			<select name="BasePriceList">';
 
 	if (!isset($_POST['BasePriceList']) OR $_POST['BasePriceList']=='0'){
 		echo '<option selected="selected" value="0">' . _('No Price List Selected') . '</option>';
@@ -96,11 +101,13 @@ if (isset($_POST['CostType']) and $_POST['CostType']=='OtherPriceList'){
 			echo '<option value="' . $PriceLists['typeabbrev'] . '">' . $PriceLists['sales_type'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 }
 
-echo '<tr><td>' . _('Stock Category From') . ':</td>
-                <td><select name="StkCatFrom">';
+echo '<field>
+		<label for="StkCatFrom">' . _('Stock Category From') . ':</label>
+		<select name="StkCatFrom">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categoryid";
 
@@ -115,13 +122,14 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 DB_data_seek($result,0);
 
-echo '<tr>
-		<td>' . _('Stock Category To') . ':</td>
-		<td><select name="StkCatTo">';
+echo '<field>
+		<label for="StkCatTo">' . _('Stock Category To') . ':</label>
+		<select name="StkCatTo">';
 
 while ($myrow=DB_fetch_array($result)){
 	if (isset($_POST['StkCatFrom']) and $myrow['categoryid']==$_POST['StkCatTo']){
@@ -130,7 +138,8 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option  value="'. $myrow['categoryid'] . '">'  . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['RoundingFactor'])){
 	$_POST['RoundingFactor']=0.01;
@@ -144,31 +153,37 @@ if (!isset($_POST['PriceEndDate'])) {
 	$_POST['PriceEndDate']=DateAdd(date($_SESSION['DefaultDateFormat']), 'y', 1);
 }
 
-echo '<tr>
-		<td>' . _('Rounding Factor') . ':</td>
-		<td><input type="text" class="number" name="RoundingFactor" size="6" title="' . _('To round to the nearest cent enter 0.01. To round to the nearest whole dollar enter 1. To round to the nearest 5 dollars enter 5 etc') . '" maxlength="6" value="' . $_POST['RoundingFactor'] . '" /></td></tr>';
+echo '<field>
+		<label for="RoundingFactor">' . _('Rounding Factor') . ':</label>
+		<input type="text" class="number" name="RoundingFactor" size="6" title="" maxlength="6" value="' . $_POST['RoundingFactor'] . '" />
+		<fieldhelp>' . _('To round to the nearest cent enter 0.01. To round to the nearest whole dollar enter 1. To round to the nearest 5 dollars enter 5 etc') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('New Price To Be Effective From') . ':</td>
-		<td><input type="text" class="date" name="PriceStartDate" size="11" maxlength="10" value="' . $_POST['PriceStartDate'] . '" /></td></tr>';
+echo '<field>
+		<label for="PriceStartDate">' . _('New Price To Be Effective From') . ':</label>
+		<input type="text" class="date" name="PriceStartDate" size="11" maxlength="10" value="' . $_POST['PriceStartDate'] . '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('New Price To Be Effective To (Blank = No End Date)') . ':</td>
-		<td><input type="text" class="date" name="PriceEndDate" size="11" maxlength="10" value="' . $_POST['PriceEndDate'] . '" /></td></tr>';
+echo '<field>
+		<label for="PriceEndDate">' . _('New Price To Be Effective To (Blank = No End Date)') . ':</label>
+		<input type="text" class="date" name="PriceEndDate" size="11" maxlength="10" value="' . $_POST['PriceEndDate'] . '" />
+	</field>';
 
 if (!isset($_POST['IncreasePercent'])){
 	$_POST['IncreasePercent']=0;
 }
 
-echo '<tr>
-		<td>' . _('Percentage Increase (positive) or decrease (negative)') . '</td>
-		<td><input type="text" name="IncreasePercent" class="number" size="4" maxlength="4" value="' . $_POST['IncreasePercent'] . '" /></td></tr></table>';
+echo '<field>
+		<label for="IncreasePercent">' . _('Percentage Increase (positive) or decrease (negative)') . '</label>
+		<input type="text" name="IncreasePercent" class="number" size="4" maxlength="4" value="' . $_POST['IncreasePercent'] . '" />
+	</field>
+</fieldset>';
 
+echo '<div class="centre">
+		<input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" />
+	</div>';
 
-echo '<br /><div class="centre"><input type="submit" name="UpdatePrices" value="' . _('Update Prices') . '"  onclick="return confirm(\'' . _('Are you sure you wish to update or add all the prices according to the criteria selected?') . '\');" /></div>';
-
-echo '</div>
-      </form>';
+echo '</form>';
 
 if (isset($_POST['UpdatePrices'])){
 	$InputError =0; //assume the best
@@ -302,7 +317,7 @@ if (isset($_POST['UpdatePrices'])){
 					prnMsg(_('The cost for this item is not set up or is set up as less than or equal to zero - no price changes will be made based on zero cost items. The item concerned is:') . ' ' . $myrow['stockid'],'warn');
 				}
 			}
-            $_POST['RoundingFactor'] = filter_number_format($_POST['RoundingFactor']);
+			$_POST['RoundingFactor'] = filter_number_format($_POST['RoundingFactor']);
 			if ($_POST['CostType']!='OtherPriceList'){
 				$RoundedPrice = round(($Cost * (1+ $IncrementPercentage) * $CurrencyRate+($_POST['RoundingFactor']/2))/$_POST['RoundingFactor']) * $_POST['RoundingFactor'];
 				if ($RoundedPrice <=0){

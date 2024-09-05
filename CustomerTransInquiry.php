@@ -10,16 +10,15 @@ include('includes/header.php');
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Transaction Inquiry') . '" alt="" />' . ' ' . _('Transaction Inquiry') . '
 	</p>';
-echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div>
-	<br />';
+echo '<div class="page_help_text">' . _('Choose which type of transaction to report on.') . '</div>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table class="selection">
-		<tr>
-			<td>' . _('Type') . ':</td>
-			<td><select tabindex="1" name="TransType"> ';
+		<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="TransType">' . _('Type') . ':</label>
+				<select tabindex="1" name="TransType"> ';
 
 $sql = "SELECT typeid,
 				typename
@@ -39,7 +38,8 @@ while($myrow=DB_fetch_array($resultTypes)) {
 	}
 	echo ' value="' . $myrow['typeid'] . '">' . _($myrow['typename']) . '</option>';
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -47,16 +47,17 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<td>' . _('From') . ':</td>
-	<td><input class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" /></td>
-	<td>' . _('To') . ':</td>
-	<td><input class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" /></td>
-	</tr>
-	</table>
-	<br />
+echo '<field>
+		<label for="FromDate">' . _('From') . ':</label>
+		<input class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" />
+	</field>
+	<field>
+		<label for="ToDate">' . _('To') . ':</label>
+		<input class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" />
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input name="ShowResults" tabindex="4" type="submit" value="' . _('Show transactions') . '" />
-	</div>
     </div>
 	</form>';
 

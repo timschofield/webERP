@@ -6,11 +6,9 @@ $Title = _('Daily Sales Inquiry');
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
-echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>
-	<br />';
+echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['MonthToShow'])){
@@ -20,10 +18,11 @@ if (!isset($_POST['MonthToShow'])){
 	$EndDateSQL = $myrow['lastdate_in_period'];
 }
 
-echo '<table class="selection">
-	<tr>
-		<td>' . _('Month to Show') . ':</td>
-		<td><select tabindex="1" name="MonthToShow">';
+echo '<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="MonthToShow">' . _('Month to Show') . ':</label>
+			<select tabindex="1" name="MonthToShow">';
 
 $PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods");
 
@@ -35,15 +34,18 @@ while ($PeriodRow = DB_fetch_array($PeriodsResult)){
 		echo '<option value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
 	}
 }
-echo '</select></td>
-	<td>' . _('Salesperson') . ':</td>';
+echo '</select>
+	<field>';
+
+echo '<field>
+		<label for="Salesperson">' . _('Salesperson') . ':</label>';
 
 if($_SESSION['SalesmanLogin'] != '') {
 	echo '<td>';
 	echo $_SESSION['UsersRealName'];
 	echo '</td>';
 }else{
-	echo '<td><select tabindex="2" name="Salesperson">';
+	echo '<select tabindex="2" name="Salesperson">';
 
 	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman");
 	if (!isset($_POST['Salesperson'])){
@@ -60,17 +62,15 @@ while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
 		echo '<option value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmanname'] . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>';
 }
-echo '</tr>
-	</table>
-	<br />
+echo '</field>
+	</fieldset>
 	<div class="centre">
 		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Daily Sales For The Selected Month') . '" />
-	</div>
     </div>
-	</form>
-	<br />';
+	</form>';
+	
 /*Now get and display the sales data returned */
 if (mb_strpos($EndDateSQL,'/')) {
 	$Date_Array = explode('/',$EndDateSQL);

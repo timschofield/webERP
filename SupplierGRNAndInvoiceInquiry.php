@@ -14,7 +14,7 @@ if (isset($_GET['SelectedSupplier'])) {
 }
 if (isset($_GET['SupplierName'])) {
 	$SupplierName = $_GET['SupplierName'];
-} 
+}
 if (!isset($_POST['SupplierRef']) OR trim($_POST['SupplierRef'])=='') {
 	$_POST['SupplierRef'] = '';
 	if (empty($_POST['GRNBatchNo']) AND empty($_POST['InvoiceNo'])) {
@@ -28,20 +28,26 @@ if (!isset($_POST['SupplierRef']) OR trim($_POST['SupplierRef'])=='') {
 	$_POST['InvoiceNo'] = '';
 }
 echo '<p class="page_title_text">' . _('Supplier Invoice and Delivery Note Inquiry') . '<img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" alt="" />' . _('Supplier') . ': ' . $SupplierName . '</p>';
-echo '<div class="page_help_text">' . _('The supplier\'s delivery note is prefer to GRN No, and GRN No is prefered to Invoice No').'</div>';
+echo '<div class="page_help_text">' . _('The supplier\'s delivery note is prefer to GRN No, and GRN No is preferred to Invoice No').'</div>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="SelectedSupplier" value="' . $SupplierID . '" />';
-	
-echo '<table class="selection">
-	<tr>
-		<td class="label">' . _('Part of Supplier\'s Delivery Note') . ':</td>
-		<td><input type="text" name="SupplierRef" value="' . $_POST['SupplierRef'] . '" size="20" maxlength="30" ></td>
-		<td class="label">' . _('GRN No') . ':</td><td><input type="text" name="GRNBatchNo" value="' . $_POST['GRNBatchNo'] . '" size="6" maxlength="6" /></td>
-		<td class="label">' . _('Invoice No') . ':</td><td><input type="text" name="InvoiceNo" value="' . $_POST['InvoiceNo'] . '" size="11" maxlength="11" /></td>
-	
-	</tr>
-	</table>';
+
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>
+		<field>
+			<label>' . _('Part of Supplier\'s Delivery Note') . ':</label>
+			<input type="text" name="SupplierRef" value="' . $_POST['SupplierRef'] . '" size="20" maxlength="30" >
+		</field>
+		<field>
+			<label>' . _('GRN No') . ':</label>
+			<input type="text" name="GRNBatchNo" value="' . $_POST['GRNBatchNo'] . '" size="6" maxlength="6" />
+		</field>
+		<field>
+			<label>' . _('Invoice No') . ':</label>
+			<input type="text" name="InvoiceNo" value="' . $_POST['InvoiceNo'] . '" size="11" maxlength="11" />
+		</field>
+	</fieldset>';
 echo '<div class="centre">
 		<input type="submit" name="Submit" value="' . _('Submit') . '" />
 	</div>';
@@ -60,9 +66,9 @@ if (isset($_POST['Submit'])) {
 		$WhereInvoiceNo = " AND suppinv LIKE '%" . $InvoiceNo . "%'";
 		$Where .= $WhereInvoiceNo;
 	}
-	$sql = "SELECT grnbatch, grns.supplierref, suppinv,purchorderdetails.orderno 
-		FROM grns INNER JOIN purchorderdetails ON grns.podetailitem=purchorderdetails.podetailitem 
-		LEFT JOIN suppinvstogrn ON grns.grnno=suppinvstogrn.grnno 
+	$sql = "SELECT grnbatch, grns.supplierref, suppinv,purchorderdetails.orderno
+		FROM grns INNER JOIN purchorderdetails ON grns.podetailitem=purchorderdetails.podetailitem
+		LEFT JOIN suppinvstogrn ON grns.grnno=suppinvstogrn.grnno
 		WHERE supplierid='" . $SupplierID . "'" . $Where;
 	$ErrMsg = _('Failed to retrieve supplier invoice and grn data');
 	$result = DB_query($sql,$ErrMsg);

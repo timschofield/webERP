@@ -206,7 +206,6 @@ $result = DB_query($sql);
 require_once('includes/CurrenciesArray.php');
 if (DB_num_rows($result) > 0) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<thead>
@@ -260,7 +259,6 @@ if (DB_num_rows($result) > 0) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_GET['Edit'])){
 	echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] .'" />';
@@ -282,10 +280,11 @@ if (isset($_GET['Edit'])){
 $SQL = "SELECT currabrev FROM currencies";
 $result = DB_query($SQL);
 
-echo '<br /><table class="selection">';
-echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
-echo '<tr><td>' . _('Currency') . ':</td>
-			<td><select name="CurrAbrev">';
+echo '<fieldset>';
+echo '<legend>' . $Item . ' - ' . $PartDescription . '</legend>';
+echo '<field>
+		<label for="CurrAbrev">' . _('Currency') . ':</label>
+		<select name="CurrAbrev">';
 while ($myrow = DB_fetch_array($result)) {
 	echo '<option ';
 	if ($myrow['currabrev']==$_POST['CurrAbrev']) {
@@ -293,13 +292,14 @@ while ($myrow = DB_fetch_array($result)) {
 	}
 	echo 'value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 }// End while loop
-echo			'</select></td></tr>';
+echo '</select>
+	</field>';
 
 DB_free_result($result);
 
-echo '<tr>
-			<td>' . _('Sales Type Price List') . ':</td>
-			<td><select name="TypeAbbrev">';
+echo '<field>
+		<label for="TypeAbbrev">' . _('Sales Type Price List') . ':</label>
+		<select name="TypeAbbrev">';
 
 $SQL = "SELECT typeabbrev, sales_type FROM salestypes";
 $result = DB_query($SQL);
@@ -311,7 +311,8 @@ while ($myrow = DB_fetch_array($result)) {
 	}
 	echo 'value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 }// End while loop
-echo			'</select></td></tr>';
+echo '</select>
+	</field>';
 
 DB_free_result($result);
 
@@ -321,27 +322,35 @@ if (!isset($_POST['StartDate'])){
 if (!isset($_POST['EndDate'])){
 	$_POST['EndDate'] = '';
 }
-echo '<tr><td>' . _('Price Effective From Date')  . ':</td>
-			<td><input type="text" class="date" name="StartDate" required="required" size="10" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
-echo '<tr><td>' . _('Price Effective To Date')  . ':</td>
-			<td><input type="text" class="date" name="EndDate" size="10" maxlength="10" title="' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '" value="' . $_POST['EndDate'] . '" />';
-echo '<input type="hidden" name="Item" value="' . $Item.'" /></td></tr>';
-echo '<tr><td>' . _('Price') . ':</td>
-          <td>
-          <input type="text" class="number" required="required" name="Price" size="12" maxlength="11" value="';
-          if (isset($_POST['Price'])) {
-	         echo $_POST['Price'];
-          }
-          echo '" />
-     </td></tr>
-</table>
-<br /><div class="centre">
+echo '<field>
+		<label for="StartDate">' . _('Price Effective From Date')  . ':</label>
+		<input type="text" class="date" name="StartDate" required="required" size="10" maxlength="10" title="" value="' . $_POST['StartDate'] . '" />
+		<fieldhelp>' . _('Enter the date from which this price should take effect.') . '</fieldhelp>
+	</field>';
+
+echo '<field>
+		<label for="EndDate">' . _('Price Effective To Date')  . ':</label>
+		<input type="text" class="date" name="EndDate" size="10" maxlength="10" title="" value="' . $_POST['EndDate'] . '" />
+		<fieldhelp>' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
+		<input type="hidden" name="Item" value="' . $Item.'" />
+	</field>';
+
+echo '<field>
+		<label for="Price">' . _('Price') . ':</label>
+		<input type="text" class="number" required="required" name="Price" size="12" maxlength="11" value="';
+if (isset($_POST['Price'])) {
+	 echo $_POST['Price'];
+}
+echo '" />
+	</field>
+</fieldset>
+<div class="centre">
 <input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Price') . '" />
 </div>';
 
 
 echo '</div>
-      </form>';
+	</form>';
 include('includes/footer.php');
 
 

@@ -18,38 +18,34 @@ if (!isset($_GET['TransferNo'])){
 	//open a form for entering a transfer number
 		$Title = _('Print Stock Transfer');
 		include('includes/header.php');
-		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p><br />';
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
-        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('Print Stock Transfer Note').' : ' . '</td>
-				<td><input type="text" class="number"  name="TransferNo" maxlength="10" size="11" /></td>
-			</tr>
-			</table>';
-		echo '<br />
-			<div class="centre">
+		echo '<fieldset>';
+		echo '<fieldset>
+			<field>
+				<label for="TransferNo">' . _('Print Stock Transfer Note').' : ' . '</label>
+				<input type="text" class="number"  name="TransferNo" maxlength="10" size="11" />
+			</field>
+			</fieldset>';
+		echo '<div class="centre">
 				<input type="submit" name="Process" value="' . _('Print Transfer Note') . '" />
 			</div>
-            </div>
 			</form>';
 
 		echo '<form method="post" action="' . $RootPath . '/PDFShipLabel.php">';
-		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="Type" value="Transfer" />';
-		echo '<table>
-				<tr>
-					<td>' . _('Transfer docket to reprint Shipping Labels') . '</td>
-					<td><input type="text" class="number" size="10" name="ORD" /></td>
-				</tr>
-			</table>';
-		echo '<br />
-			<div class="centre">
+		echo '<fieldset>
+				<field>
+					<label for="ORD">' . _('Transfer docket to reprint Shipping Labels') . '</label>
+					<input type="text" class="number" size="10" name="ORD" />
+				</field>
+			</fieldset>';
+		echo '<div class="centre">
 				<input type="submit" name="Print" value="' . _('Print Shipping Labels') .'" />
 			</div>';
-		echo '</div>
+		echo '</fieldset>
 			</form>';
 
 		include('includes/footer.php');

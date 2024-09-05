@@ -40,12 +40,12 @@ echo '<p class="page_title_text">
 		</p>';
 
 if (isset($SelectedTabs)) {
-echo '<br /><table class="selection">';
-echo '	<tr>
-			<td>' . _('Petty Cash Tab') . ':</td>
-			<td>' . $SelectedTabs . '</td>
-		</tr>';
-echo '</table>';
+echo '<form><fieldset>';
+echo '<field>
+		<label>' . _('Petty Cash Tab') . ':</label>
+		<fieldtext>' . $SelectedTabs . '</fieldtext>
+	</field>';
+echo '</form></fieldset>';
 }
 
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
@@ -56,15 +56,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	}
 
 	//Limit expenses history to X days
-	echo '<table class="selection">
-			<tr>
-				<td>', _('Detail of Tab Movements For Last '), ':
-					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
-					<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
-					<input type="submit" name="Go" value="', _('Go'), '" />
-				</td>
-			</tr>
-		</table>';
+	echo '<fieldset>
+			<field>
+				<label for="SelectedTabs">', _('Detail of Tab Movements For Last '), ':</label>
+				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
+				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
+				<input type="submit" name="Go" value="', _('Go'), '" />
+			</field>
+		</fieldset>';
 	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.date,

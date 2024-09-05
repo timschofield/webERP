@@ -31,8 +31,13 @@ elseif (isset($_POST['SelectedSupplier'])) {
 	$SelectedSupplier = trim($_POST['SelectedSupplier']);
 }
 
+if (empty($_GET['identifier'])) {
+	$identifier = date('U');
+} else {
+	$identifier = $_GET['identifier'];
+}
+
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -144,9 +149,14 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 	}
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Order Number') . ': <input type="text" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" />  ' . _('Into Stock Location') . ':
+	echo '<fieldset>
+			<legend>', _('Order Search Options'), '</legend>
+			<field>
+				<label for="OrderNumber">' . _('Order Number') . ':</label>
+				<input type="text" name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" />
+			</field>
+			<field>
+				<label for="StockLocation">' . _('Into Stock Location') . ':</label>
 				<select name="StockLocation">';
 
 	if (!isset($_POST['DateFrom'])) {
@@ -219,7 +229,11 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 
 		}
 	}
-	echo '</select> ' . _('Order Status:') . ' <select name="Status">';
+	echo '</select>
+		</field>
+		<field>
+			<label for="Status">' . _('Order Status:') . '</label>
+			<select name="Status">';
 	if (!isset($_POST['Status']) OR $_POST['Status'] == 'Pending_Authorised') {
 		echo '<option selected="selected" value="Pending_Authorised">' . _('Pending and Authorised') . '</option>';
 	} else {
@@ -249,26 +263,33 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 	}
 	$Checked = (isset($_POST['PODetails']))?'checked="checked"':'';
 	echo '</select>
-		' . _('Orders Between') . ':&nbsp;
+		</field>';
+
+	echo '<field>
+			<label for="DateFrom">' . _('Orders Between') . '</label>
 			<input type="text" name="DateFrom" value="' . ConvertSQLDate($DateFrom) . '"  class="date" size="10" />
 		' . _('and') . ':&nbsp;
 			<input type="text" name="DateTo" value="' . ConvertSQLDate($DateTo) . '"  class="date" size="10" />
-		<input type="submit" name="SearchOrders" value="' . _('Search Purchase Orders') . '" />
-		</td>
-		</tr>
-		<tr><td>' . _('Show PO Details') . '<input type="checkbox" name="PODetails" ' . $Checked . ' /></td></tr>
-		</table>';
+		</field>
+		<field>
+			<label for="PODetails">' . _('Show PO Details') . '</label>
+			<input type="checkbox" name="PODetails" ' . $Checked . ' />
+		</field>
+		</fieldset>
+		<div class="centre">
+			<input type="submit" name="SearchOrders" value="' . _('Search Purchase Orders') . '" />
+		</div>';
 } //!isset($OrderNumber) or $OrderNumber == ''
 
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 $result1 = DB_query($SQL);
 
-echo '<br /><div class="page_help_text">' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</div>';
-echo '<br />
-		<table class="selection">
-		<tr>';
+echo '<div class="page_help_text">' . _('To search for purchase orders for a specific part use the part selection facilities below') . '</div>';
+echo '<fieldset>
+		<legend>', _('Item Search Options'), '</legend>';
 
-echo '<td>' . _('Select a stock category') . ':
+echo '<field>
+		<label for="StockCat">' . _('Select a stock category') . ':</label>
 		<select name="StockCat">';
 if (DB_num_rows($result1)>0){
 	echo '<option value="All">' . _('All') . '</option>';
@@ -280,24 +301,26 @@ while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 } //end loop through categories
-echo '</select></td>';
-echo '<td>' . _('Enter text extracts in the') .' '. '<b>' . _('description') . '</b>:</td>';
-echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-		</tr>
-		<tr><td></td>';
-echo '<td><b>' . _('OR').' '. '</b>' . _('Enter extract of the') .' '. '<b>' . _('Stock Code') . '</b>:</td>';
-echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
-	</tr>
-	</table>
-	<br />';
-echo '<table>
-		<tr>
-			<td><input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
-				<input type="submit" name="ResetPart" value="' . _('Show All') . '" /></td>
-		</tr>
-	</table>';
+echo '</select>
+	</field>';
 
-echo '<br />';
+echo '<field>
+		<label for="Keywords">' . _('Enter text extracts in the') .' '. '<b>' . _('description') . '</b>:</label>
+		<input type="text" name="Keywords" size="20" maxlength="25" />
+	</field>
+	';
+echo '<h1>' . _('OR').' '. '</h1>';
+
+echo '<field>
+		<label for="StockCode">' . _('Enter extract of the') .' '. '<b>' . _('Stock Code') . '</b>:</label>
+		<input type="text" name="StockCode" size="15" maxlength="18" />
+	</field>
+</fieldset>
+';
+echo '<div class="centre">
+		<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
+		<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+	</div>';
 
 if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">
@@ -642,7 +665,7 @@ else {
 			$BalRow = '';
 		}
 
-		$ModifyPage = $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'];
+		$ModifyPage = $RootPath . '/PO_Header.php?identifier=' . $identifier . '&ModifyOrderNumber=' . $myrow['orderno'];
 		if ($myrow['status'] == 'Printed') {
 			$ReceiveOrder = '<a href="' . $RootPath . '/GoodsReceived.php?PONumber=' . $myrow['orderno'] . '">' . _('Receive') . '</a>';
 		} else {

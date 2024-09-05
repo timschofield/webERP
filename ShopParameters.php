@@ -187,22 +187,15 @@ if (isset($_POST['submit'])) {
 } /* end of if submit */
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table cellpadding="2" class="selection" width="98%">';
+	<fieldset class="TwoByThreeColumn">';
 
-$TableHeader = '<tr>
-					<th>' . _('Shop Configuration Parameter') . '</th>
-					<th>' . _('Value') . '</th>
-					<th>' . _('Notes') . '</th>
-                </tr>';
+echo '<fieldset class="Column1x1">
+		<legend>' . _('General Settings') . '</legend>';
 
-echo '<tr><th colspan="3">' . _('General Settings') . '</th></tr>';
-echo $TableHeader;
-
-echo '<tr>
-		<td>' . _('Test or Live Mode') . ':</td>
-		<td><select name="X_ShopMode">';
+echo '<field>
+		<label for="X_ShopMode">' . _('Test or Live Mode') . ':</label>
+		<select name="X_ShopMode">';
 		if ($_SESSION['ShopMode']== 'test' OR $AllowDemoMode){
 			echo '<option selected="selected" value="test">' . _('Test') . '</option>
 				<option value="live">' . _('Live') . '</option>';
@@ -210,80 +203,80 @@ echo '<tr>
 			echo '<option value="test">' . _('Test') . '</option>
 				<option selected="selected" value="live">' . _('Live') . '</option>';
 		}
-		echo '</select></td>
-		<td>' . _('Must change this to live mode when the shop is activie. No PayPal or credit card transactions will be processed in test mode') . '</td>
-	</tr>';
+		echo '</select>
+		<fieldhelp>' . _('Must change this to live mode when the shop is activie. No PayPal or credit card transactions will be processed in test mode') . '</fieldhelp>
+	</field>';
 //Shop Name
-echo '<tr>
-		<td>' . _('Shop Name') . ':</td>
-		<td><input type="text" name="X_ShopName" required="required" autofocus="autofocus" size="40" maxlength="40" value="' . $_SESSION['ShopName'] . '" /></td>
-		<td>' . _('Enter the name of the shop that will be displayed on all the store pages') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopName">' . _('Shop Name') . ':</label>
+		<input type="text" name="X_ShopName" required="required" autofocus="autofocus" size="40" maxlength="40" value="' . $_SESSION['ShopName'] . '" />
+		<fieldhelp>' . _('Enter the name of the shop that will be displayed on all the store pages') . '</fieldhelp>
+	</field>';
 
 //Shop Title
-echo '<tr>
-		<td>' . _('Shop Title') . ':</td>
-		<td><input type="text" name="X_ShopTitle" required="required" size="40" maxlength="40" value="' . $_SESSION['ShopTitle'] . '" /></td>
-		<td>' . _('Enter the title of the shop that will be displayed on the main webSHOP page. Useful for SEO purposes.') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopTitle">' . _('Shop Title') . ':</label>
+		<input type="text" name="X_ShopTitle" required="required" size="40" maxlength="40" value="' . $_SESSION['ShopTitle'] . '" />
+		<fieldhelp>' . _('Enter the title of the shop that will be displayed on the main webSHOP page. Useful for SEO purposes.') . '</fieldhelp>
+	</field>';
 
 //Shop Manager Email
-echo '<tr>
-		<td>' . _('Shop Manager Email') . ':</td>
-		<td><input type="email" name="X_ShopManagerEmail" required="required" size="50" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" /></td>
-		<td>' . _('Enter the email address of the webSHOP manager.') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopManagerEmail">' . _('Shop Manager Email') . ':</label>
+		<input type="email" name="X_ShopManagerEmail" required="required" size="40" maxlength="50" value="' . $_SESSION['ShopManagerEmail'] . '" />
+		<fieldhelp>' . _('Enter the email address of the webSHOP manager.') . '</fieldhelp>
+	</field>';
 
 // Shop Customer
-echo '<tr>
-		<td>' . _('Default Web Shop Customer Acount') . ':</td>
-	   <td><input type="text" size="12" maxlength="10" required="required" name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" /></td>
-		<td>' . _('Select the customer account that is to be used for the web-store sales') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopDebtorNo">' . _('Default Web Shop Customer Acount') . ':</label>
+		<input type="text" size="12" maxlength="10" required="required" name="X_ShopDebtorNo" value="' . $_SESSION['ShopDebtorNo'] . '" />
+		<fieldhelp>' . _('Select the customer account that is to be used for the web-store sales') . '</fieldhelp>
+	</field>';
 // Shop Customer Branch
-echo '<tr>
-		<td>' . _('Default Web Shop Branch Code').':</td>
-		<td><input type="text" required="required" size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" /></td>
-		<td>' . _('The customer branch code that is to be used - a branch of the above custoemr account - for web-store sales') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopBranchCode">' . _('Default Web Shop Branch Code').':</label>
+		<input type="text" required="required" size="12" maxlength="10" name="X_ShopBranchCode" value="' . $_SESSION['ShopBranchCode'] . '" />
+		<fieldhelp>' . _('The customer branch code that is to be used - a branch of the above custoemr account - for web-store sales') . '</fieldhelp>
+	</field>';
 
 //Privacy Statement
-echo '<tr>
-		<td>' . _('Privacy Statement') . ':</td>
-		<td><textarea name="X_ShopPrivacyStatement" rows="8" cols="60">' . stripslashes($_SESSION['ShopPrivacyStatement']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the privacy policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') .  '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopPrivacyStatement">' . _('Privacy Statement') . ':</label>
+		<textarea name="X_ShopPrivacyStatement" rows="8" cols="45">' . stripslashes($_SESSION['ShopPrivacyStatement']) . '</textarea>
+		<fieldhelp>' . _('This text will appear on the web-store page that spells out the privacy policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks') .  '</fieldhelp>
+	</field>';
 //Terms and Conditions
-echo '<tr>
-		<td>' . _('Terms and Conditions') . ':</td>
-		<td><textarea name="X_ShopTermsConditions" rows="8" cols="60">' . stripslashes($_SESSION['ShopTermsConditions']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the terms and conditions associated with sales from the web-shop') . ' ' . _('Enter the raw html without any line breaks') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopTermsConditions">' . _('Terms and Conditions') . ':</label>
+		<textarea name="X_ShopTermsConditions" rows="8" cols="45">' . stripslashes($_SESSION['ShopTermsConditions']) . '</textarea>
+		<fieldhelp>' . _('This text will appear on the web-store page that spells out the terms and conditions associated with sales from the web-shop') . ' ' . _('Enter the raw html without any line breaks') . '</fieldhelp>
+	</field>';
 //About Us
-echo '<tr>
-		<td>' . _('About Us') . ':</td>
-		<td><textarea name="X_ShopAboutUs" rows="8" cols="60">' . stripslashes($_SESSION['ShopAboutUs']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks')  . '</td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Contact Us') . ':</td>
-		<td><textarea name="X_ShopContactUs" rows="8" cols="60">' . stripslashes($_SESSION['ShopContactUs']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that provides contact information to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopAboutUs">' . _('About Us') . ':</label>
+		<textarea name="X_ShopAboutUs" rows="8" cols="45">' . stripslashes($_SESSION['ShopAboutUs']) . '</textarea>
+		<fieldhelp>' . _('This text will appear on the web-store page that provides information about us to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks')  . '</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="X_ShopContactUs">' . _('Contact Us') . ':</label>
+		<textarea name="X_ShopContactUs" rows="8" cols="45">' . stripslashes($_SESSION['ShopContactUs']) . '</textarea>
+		<fieldhelp>' . _('This text will appear on the web-store page that provides contact information to users of the web-store.') . ' ' . _('Enter the raw html without any line breaks') . '</fieldhelp>
+	</field>';
 //Freight Policy
-echo '<tr>
-		<td>' . _('Freight Policy') . ':</td>
-		<td><textarea name="X_ShopFreightPolicy" rows="8" cols="60">' . stripslashes($_SESSION['ShopFreightPolicy']) . '</textarea></td>
-		<td>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks')  . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopFreightPolicy">' . _('Freight Policy') . ':</label>
+		<textarea name="X_ShopFreightPolicy" rows="8" cols="45">' . stripslashes($_SESSION['ShopFreightPolicy']) . '</textarea>
+		<fieldhelp>' . _('This text will appear on the web-store page that spells out the freight policy of the web-shop') . ' ' . _('Enter the raw html without any line breaks')  . '</fieldhelp>
+	</field>';
+echo '</fieldset>';
 
+echo '<fieldset class="Column1x2">
+		<legend>' . _('Web-Store Behaviour Settings') . '</legend>';
 
-echo '<tr><th colspan="3">' . _('Web-Store Behaviour Settings') . '</th></tr>';
-echo $TableHeader;
-
-echo '<tr>
-		<td>' . _('Show Only Items With Available Stock') . ':</td>
-		<td><select name="X_ShopShowOnlyAvailableItems">';
+echo '<field>
+		<label for="X_ShopShowOnlyAvailableItems">' . _('Show Only Items With Available Stock') . ':</label>
+		<select name="X_ShopShowOnlyAvailableItems">';
 if ($_SESSION['ShopShowOnlyAvailableItems'] == '1') {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -291,13 +284,13 @@ if ($_SESSION['ShopShowOnlyAvailableItems'] == '1') {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
-echo '</select></td>
-		<td>' . _('Shows only items with QOH > 0 thus avoiding the Arriving Soon items.') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Shows only items with QOH > 0 thus avoiding the Arriving Soon items.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Show/Hide QOH column') . ':</td>
-		<td><select name="X_ShopShowQOHColumn">';
+echo '<field>
+		<label for="X_ShopShowQOHColumn">' . _('Show/Hide QOH Column') . ':</label>
+		<select name="X_ShopShowQOHColumn">';
 if ($_SESSION['ShopShowQOHColumn'] == '1') {
 	echo '<option selected="selected" value="1">' . _('Show') . '</option>';
 	echo '<option value="0">' . _('Hide') . '</option>';
@@ -305,18 +298,18 @@ if ($_SESSION['ShopShowQOHColumn'] == '1') {
 	echo '<option selected="selected" value="0">' . _('Hide') . '</option>';
 	echo '<option value="1">' . _('Show') . '</option>';
 }
-echo '</select></td>
-		<td>' . _('Shows / Hides the QOH column Select Hide if you do not want webSHOP visitors to know how many stock do you currently hold.') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Shows / Hides the QOH Column Select Hide if you do not want webSHOP visitors to know how many stock do you currently hold.') . '</fieldhelp>
+	</field>';
 
 if (mb_strlen($_SESSION['ShopStockLocations'])>1){
 	$Locations = explode(',',$_SESSION['ShopStockLocations']);
 } else {
 	$Locations = array();
 }
-echo '<tr>
-		<td>' . _('Stock Locations') . ':</td>
-		<td><select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
+echo '<field>
+		<label for="X_ShopStockLocations">' . _('Stock Locations') . ':</label>
+		<select name="X_ShopStockLocations[]" size="5" multiple="multiple" >';
 $LocResult = DB_query("SELECT loccode, locationname FROM locations");
 while ($LocRow = DB_fetch_array($LocResult)){
 	if (in_array($LocRow['loccode'],$Locations)){
@@ -325,13 +318,13 @@ while ($LocRow = DB_fetch_array($LocResult)){
 		echo '<option value="' . $LocRow['loccode'] . '">' . $LocRow['locationname']  . '</option>';
 	}
 }
-echo '</select></td>
-		<td>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Select one or more stock locations (warehouses) that webSHOP should consider stock for the purposes of displaying the on hand quantity for customer information') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Allow Payment Surcharges') . ':</td>
-		<td><select name="X_ShopAllowSurcharges">';
+echo '<field>
+		<label for="X_ShopAllowSurcharges">' . _('Allow Payment Surcharges') . ':</label>
+		<select name="X_ShopAllowSurcharges">';
 if ($_SESSION['ShopAllowSurcharges'] == '1') {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -339,14 +332,14 @@ if ($_SESSION['ShopAllowSurcharges'] == '1') {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
-echo '</select></td>
-		<td>' . _('Add surcharges for different payment methods.') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Add surcharges for different payment methods.') . '</fieldhelp>
+	</field>';
 
 $DummyItemsResult = DB_query("SELECT stockid, description FROM stockmaster WHERE mbflag='D'");
-echo '<tr>
-		<td>' . _('Surcharges Stock Item') . ':</td>
-		<td><select name="X_ShopSurchargeStockID">';
+echo '<field>
+		<label for="X_ShopSurchargeStockID">' . _('Surcharges Stock Item') . ':</label>
+		<select name="X_ShopSurchargeStockID">';
 while ($ItemsRow = DB_fetch_array($DummyItemsResult)){
 	if ($_SESSION['ShopSurchargeStockID'] ==$ItemsRow['stockid']) {
 		echo '<option selected="selected" value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . '-' . $ItemsRow['description'] . '</option>';
@@ -354,13 +347,13 @@ while ($ItemsRow = DB_fetch_array($DummyItemsResult)){
 		echo '<option value="' . $ItemsRow['stockid'] . '">' . $ItemsRow['stockid'] . '-' . $ItemsRow['description'] . '</option>';
 	}
 }
-echo '</select></td>
-		<td>' . _('Select the webERP service item to use for payment surcharges to be processed as') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Select the webERP service item to use for payment surcharges to be processed as') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Freight Calculations') . ':</td>
-		<td><select name="X_ShopFreightMethod">';
+echo '<field>
+		<label for="X_ShopFreightMethod">' . _('Freight Calculations') . ':</label>
+		<select name="X_ShopFreightMethod">';
 
 $FreightMethods = array(array('MethodName'=>'No Freight','MethodCode'=>'NoFreight'),
 						array('MethodName'=>'webERP calculation','MethodCode'=>'webERPCalculation'),
@@ -373,19 +366,18 @@ foreach($FreightMethods as $FreightMethod){
 		echo '<option value="' . $FreightMethod['MethodCode'] . '">' . $FreightMethod['MethodName'] . '</option>';
 	}
 }
-echo '</select></td>
-		<td>' . _('Select the freight calculation method to use for the webSHOP') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Select the freight calculation method to use for the webSHOP') . '</fieldhelp>
+	</field>';
 
+echo '</fieldset>';
 
+echo '<fieldset class="Column2x1">
+		<legend>' . _('Bank Transfer Settings') . '</legend>';
 
-echo '<tr>
-		<th colspan="3">' . _('Bank Transfer Settings') . '</th></tr>';
-echo $TableHeader;
-
-echo '<tr>
-		<td>' . _('Allow Bank Transfer Payment') . ':</td>
-		<td><select name="X_ShopAllowBankTransfer">';
+echo '<field>
+		<label for="X_ShopAllowBankTransfer">' . _('Allow Bank Transfer Payment') . ':</label>
+		<select name="X_ShopAllowBankTransfer">';
 if ($_SESSION['ShopAllowBankTransfer'] ==1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -393,21 +385,23 @@ if ($_SESSION['ShopAllowBankTransfer'] ==1) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
-echo '</select></td>
-		<td>' . _('Allow bank transfers to be used for payments.') . '</td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Bank Transfer Surcharge') . ':</td>
-		<td><input type="text" class="number" size="3" maxlength="3" name="X_ShopBankTransferSurcharge" value="' . $_SESSION['ShopBankTransferSurcharge'] . '" /></td>
-		<td>' . _('The bank transfer surcharge') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Allow bank transfers to be used for payments.') . '</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="X_ShopBankTransferSurcharge">' . _('Bank Transfer Surcharge') . ':</label>
+		<input type="text" class="number" size="3" maxlength="3" name="X_ShopBankTransferSurcharge" value="' . $_SESSION['ShopBankTransferSurcharge'] . '" />
+		<fieldhelp>' . _('The bank transfer surcharge') . '</fieldhelp>
+	</field>';
 
-echo '<tr><th colspan="3">' . _('Paypal Settings') . '</th></tr>';
-echo $TableHeader;
+echo '</fieldset>';
 
-echo '<tr>
-		<td>' . _('Allow PayPal Payment') . ':</td>
-		<td><select name="X_ShopAllowPayPal">';
+echo '<fieldset class="Column2x2">
+		<legend>' . _('Paypal Settings') . '</legend>';
+
+echo '<field>
+		<label for="X_ShopAllowPayPal">' . _('Allow PayPal Payment') . ':</label>
+		<select name="X_ShopAllowPayPal">';
 if ($_SESSION['ShopAllowPayPal'] ==1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -415,13 +409,13 @@ if ($_SESSION['ShopAllowPayPal'] ==1) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
-echo '</select></td>
-		<td>' . _('Allow PayPal to be used for payments. The configuration details for PayPal payments must be entered below') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Allow PayPal to be used for payments. The configuration details for PayPal payments must be entered below') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Pay Pal Bank Account') . ':</td>
-		<td><select name="X_ShopPayPalBankAccount">';
+echo '<field>
+		<label for="X_ShopPayPalBankAccount">' . _('Pay Pal Bank Account') . ':</label>
+		<select name="X_ShopPayPalBankAccount">';
 $BankAccountsResult = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts");
 while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
 	if ($_SESSION['ShopPayPalBankAccount'] ==$BankAccountRow['accountcode']) {
@@ -430,14 +424,14 @@ while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
 		echo '<option value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';
 	}
 }
-echo '</select></td>
-		<td>' . _('Select the webERP bank account to use for receipts processed by Pay Pal') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Select the webERP bank account to use for receipts processed by Pay Pal') . '</fieldhelp>
+	</field>';
 
 
-echo '<tr>
-		<td>' . _('Pay Pal Commission Account') . ':</td>
-		<td><select name="X_ShopPayPalCommissionAccount">';
+echo '<field>
+		<label for="X_ShopPayPalCommissionAccount">' . _('Pay Pal Commission Account') . ':</label>
+		<select name="X_ShopPayPalCommissionAccount">';
 $AccountsResult = DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
@@ -451,45 +445,46 @@ while ($AccountRow = DB_fetch_array($AccountsResult)){
 		echo '<option value="' . $AccountRow['accountcode'] . '">' . $AccountRow['accountname'] . '</option>';
 	}
 }
-echo '</select></td>
-		<td>' . _('Select the webERP P/L account to use for commissions (transaction fees) charged by Pay Pal') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Select the webERP P/L account to use for commissions (transaction fees) charged by Pay Pal') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('PayPal Surcharge') . ':</td>
-		<td><input type="text" class="number" size="5" maxlength="5" name="X_ShopPayPalSurcharge" value="' . $_SESSION['ShopPayPalSurcharge'] . '" /></td>
-		<td>' . _('The PayPal surcharge') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopPayPalSurcharge">' . _('PayPal Surcharge') . ':</label>
+		<input type="text" class="number" size="5" maxlength="5" name="X_ShopPayPalSurcharge" value="' . $_SESSION['ShopPayPalSurcharge'] . '" />
+		<fieldhelp>' . _('The PayPal surcharge') . '</fieldhelp>
+	</field>';
 
 if ($AllowDemoMode){
-	echo '<tr>
-			<td>' . _('Paypal user account details') . '</td>
-			<td colspan="2">' . _('Cannot be set in the demo') . '</td>
-		</tr>';
+	echo '<field>
+			<label>' . _('Paypal user account details') . '</label>
+			<fieldtext>' . _('Cannot be set in the demo') . '</fieldtext>
+		</field>';
 } else {
-	echo '<tr>
-			<td>' . _('PayPal User') . ':</td>
-			<td><input type="text" class="noSpecialChars" size="40" maxlength="40" name="X_ShopPayPalUser" value="' . $_SESSION['ShopPayPalUser'] . '" /></td>
-			<td>' . _('The PayPal Merchant User account for Pay Pal Express Checkout') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('PayPal Password') . ':</td>
-			<td><input type="text" size="20" maxlength="20" name="X_ShopPayPalPassword" value="' . $_SESSION['ShopPayPalPassword'] . '" /></td>
-			<td>' . _('The PayPal Merchant account password for Pay Pal Express Checkout') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('PayPal Signature') . ':</td>
-			<td><input type="text" size="80" maxlength="100" name="X_ShopPayPalSignature" value="' . $_SESSION['ShopPayPalSignature'] . '" /></td>
-			<td>' . _('The PayPal merchant account signature for Pay Pal Express Checkout') . '</td>
-		</tr>';
+	echo '<field>
+			<label for="X_ShopPayPalUser">' . _('PayPal User') . ':</label>
+			<input type="text" class="noSpecialChars" size="40" maxlength="40" name="X_ShopPayPalUser" value="' . $_SESSION['ShopPayPalUser'] . '" />
+			<fieldhelp>' . _('The PayPal Merchant User account for Pay Pal Express Checkout') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopPayPalPassword">' . _('PayPal Password') . ':</label>
+			<input type="text" size="20" maxlength="20" name="X_ShopPayPalPassword" value="' . $_SESSION['ShopPayPalPassword'] . '" />
+			<fieldhelp>' . _('The PayPal Merchant account password for Pay Pal Express Checkout') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopPayPalSignature">' . _('PayPal Signature') . ':</label>
+			<input type="text" size="45" maxlength="100" name="X_ShopPayPalSignature" value="' . $_SESSION['ShopPayPalSignature'] . '" />
+			<fieldhelp>' . _('The PayPal merchant account signature for Pay Pal Express Checkout') . '</fieldhelp>
+		</field>';
 }
+echo '</fieldset>';
 
-echo '<tr><th colspan="3">' . _('Credit Card Processing Settings') . '</th></tr>';
-echo $TableHeader;
+echo '<fieldset class="Column1x3">
+		<legend>' . _('Credit Card Processing Settings') . '</legend>';
 
-echo '<tr>
-		<td>' . _('Allow Credit Card Payments') . ':</td>
-		<td><select name="X_ShopAllowCreditCards">';
+echo '<field>
+		<label for="X_ShopAllowCreditCards">' . _('Allow Credit Card Payments') . ':</label>
+		<select name="X_ShopAllowCreditCards">';
 if ($_SESSION['ShopAllowCreditCards'] ==1) {
 	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
@@ -497,13 +492,12 @@ if ($_SESSION['ShopAllowCreditCards'] ==1) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
-echo '</select></td>
-		<td>' . _('Allow Credit Cards to be used for payments. The configuration details for PayPal Pro or one of the other credit card payment solutions must be configured.') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Allow Credit Cards to be used for payments. The configuration details for PayPal Pro or one of the other credit card payment solutions must be configured.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Credit Card Gateway') . ':</td>
-		<td>';
+echo '<field>
+		<label for="X_ShopCreditCardGateway">' . _('Credit Card Gateway') . ':</label>';
 if ($AllowDemoMode) {
 	echo '<select name="SomeNameNotUsed">';
 } else {
@@ -524,19 +518,19 @@ if ($_SESSION['ShopCreditCardGateway'] =='SwipeHQ') {
 } else {
 	echo '<option value="SwipeHQ">' . _('Swipe HQ - New Zealand') . '</option>';
 }
-echo '</select></td>
-		<td>' . _('Select the credit card gateway system to be used.') . '</td>
-	</tr>';
+echo '</select>
+		<fieldhelp>' . _('Select the credit card gateway system to be used.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Credit Card Surcharge') . ':</td>
-		<td><input type="text" class="number" size="5" maxlength="5" name="X_ShopCreditCardSurcharge" value="' . $_SESSION['ShopCreditCardSurcharge'] . '" /></td>
-		<td>' . _('The credit card surcharge') . '</td>
-	</tr>';
+echo '<field>
+		<label for="X_ShopCreditCardSurcharge">' . _('Credit Card Surcharge') . ':</label>
+		<input type="text" class="number" size="5" maxlength="5" name="X_ShopCreditCardSurcharge" value="' . $_SESSION['ShopCreditCardSurcharge'] . '" />
+		<fieldhelp>' . _('The credit card surcharge') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Credit Card Bank Account') . ':</td>
-		<td><select name="X_ShopCreditCardBankAccount">';
+echo '<field>
+		<label for="X_ShopCreditCardBankAccount">' . _('Credit Card Bank Account') . ':</label>
+		<select name="X_ShopCreditCardBankAccount">';
 DB_data_seek($BankAccountsResult,0);
 while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
 	if ($_SESSION['ShopCreditCardBankAccount'] ==$BankAccountRow['accountcode']) {
@@ -545,69 +539,70 @@ while ($BankAccountRow = DB_fetch_array($BankAccountsResult)){
 		echo '<option value="' . $BankAccountRow['accountcode'] . '">' . $BankAccountRow['bankaccountname'] . '</option>';
 	}
 }
-echo '</select></td>
-		<td>' . _('Select the webERP bank account to use for receipts processed by credit card') . '</td>
-	</tr>';
-
-
+echo '</select>
+		<fieldhelp>' . _('Select the webERP bank account to use for receipts processed by credit card') . '</fieldhelp>
+	</field>';
 
 if ($AllowDemoMode){
-	echo '<tr>
-			<td>' . _('Credit card user account details') . '</td>
-			<td colspan="2">' . _('Cannot be set in the demo') . '</td>
-		</tr>';
+	echo '<field>
+			<label>' . _('Credit card user account details') . '</label>
+			<fieldtext>' . _('Cannot be set in the demo') . '</fieldtext>
+		</field>';
 } else {
-	echo '<tr>
-			<td>' . _('PayPal Pro User') . ':</td>
-			<td><input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayPalProUser" value="' . $_SESSION['ShopPayPalProUser'] . '" /></td>
-			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') .'</a> ' .  _('Merchant User account for credit card payment available in only USA and Canada') .  '</td>
-		</tr>';
+	echo '<field>
+			<label for="X_ShopPayPalProUser">' . _('PayPal Pro User') . ':</label>
+			<input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayPalProUser" value="' . $_SESSION['ShopPayPalProUser'] . '" />
+			<fieldhelp>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') .'</a> ' .  _('Merchant User account for credit card payment available in only USA and Canada') .  '</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('PayPal Pro Password') . ':</td>
-			<td><input type="text" size="20" maxlength="20" name="X_ShopPayPalProPassword" value="' . $_SESSION['ShopPayPalProPassword'] . '" /></td>
-			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') .'</a> ' . _('Merchant account password for credit card payment available in only USA and Canada') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('PayPal Pro Signature') . ':</td>
-			<td><input type="text" size="80" maxlength="80" name="X_ShopPayPalProSignature" value="' . $_SESSION['ShopPayPalProSignature'] . '" /></td>
-			<td>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') . '</a> ' ._('merchant account signature for credit card payment available in only USA and Canada') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Pay Flow Pro User') . ':</td>
-			<td><input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayFlowUser" value="' . $_SESSION['ShopPayFlowUser'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant User account') . '</td>
-		</tr>';
+	echo '<field>
+			<label for="X_ShopPayPalProPassword">' . _('PayPal Pro Password') . ':</label>
+			<input type="text" size="20" maxlength="20" name="X_ShopPayPalProPassword" value="' . $_SESSION['ShopPayPalProPassword'] . '" />
+			<fieldhelp>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') .'</a> ' . _('Merchant account password for credit card payment available in only USA and Canada') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopPayPalProSignature">' . _('PayPal Pro Signature') . ':</label>
+			<input type="text" size="80" maxlength="80" name="X_ShopPayPalProSignature" value="' . $_SESSION['ShopPayPalProSignature'] . '" />
+			<fieldhelp>' . _('The') . '<a href="https://www.paypal.com/us/webapps/mpp/paypal-payments-pro">' . _('PayPal Pro') . '</a> ' ._('merchant account signature for credit card payment available in only USA and Canada') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopPayFlowUser">' . _('Pay Flow Pro User') . ':</label>
+			<input type="text" class="noSpecialChars"  size="40" maxlength="40" name="X_ShopPayFlowUser" value="' . $_SESSION['ShopPayFlowUser'] . '" />
+			<fieldhelp>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant User account') . '</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Pay Flow Pro Password') . ':</td>
-			<td><input type="text" size="20" maxlength="20" name="X_ShopPayFlowPassword" value="' . $_SESSION['ShopPayFlowPassword'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant account password') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Pay Flow Pro Vendor') . ':</td>
-			<td><input type="text" class="noSpecialChars" size="20" maxlength="20" name="X_ShopPayFlowVendor" value="' . $_SESSION['ShopPayFlowVendor'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('vendor') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Pay Flow Pro Merchant') . ':</td>
-			<td><input type="text" size="20" maxlength="20" name="X_ShopPayFlowMerchant" value="' . $_SESSION['ShopPayFlowMerchant'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('merchant') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('SwipeHQ Merchant ID') . ':</td>
-			<td><input type="text" class="noSpecialChars" size="15" maxlength="15" name="X_ShopSwipeHQMerchantID" value="' . $_SESSION['ShopSwipeHQMerchantID'] . '" /></td>
-			<td>' . _('The'). ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . _('Merchant ID - see SwipeHQ settings -> API credentials') . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('SwipeHQ API Key') . ':</td>
-			<td><input type="text" size="80"  maxlenght="100" name="X_ShopSwipeHQAPIKey" value="' . $_SESSION['ShopSwipeHQAPIKey'] . '" /></td>
-			<td>' . _('The') . ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . _('API Key - see SwipeHQ admin settings -> API credentials') . '</td>
-		</tr>';
+	echo '<field>
+			<label for="X_ShopPayFlowPassword">' . _('Pay Flow Pro Password') . ':</label>
+			<input type="text" size="20" maxlength="20" name="X_ShopPayFlowPassword" value="' . $_SESSION['ShopPayFlowPassword'] . '" />
+			<fieldhelp>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('Merchant account password') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopPayFlowVendor">' . _('Pay Flow Pro Vendor') . ':</label>
+			<input type="text" class="noSpecialChars" size="20" maxlength="20" name="X_ShopPayFlowVendor" value="' . $_SESSION['ShopPayFlowVendor'] . '" />
+			<fieldhelp>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('vendor') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopPayFlowMerchant">' . _('Pay Flow Pro Merchant') . ':</label>
+			<input type="text" size="20" maxlength="20" name="X_ShopPayFlowMerchant" value="' . $_SESSION['ShopPayFlowMerchant'] . '" />
+			<fieldhelp>' . _('The') . ' <a href="https://www.paypal.com/us/webapps/mpp/payflow-payment-gateway">PayFlow Pro</a> ' . _('merchant') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopSwipeHQMerchantID">' . _('SwipeHQ Merchant ID') . ':</label>
+			<input type="text" class="noSpecialChars" size="15" maxlength="15" name="X_ShopSwipeHQMerchantID" value="' . $_SESSION['ShopSwipeHQMerchantID'] . '" />
+			<fieldhelp>' . _('The'). ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . _('Merchant ID - see SwipeHQ settings -> API credentials') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="X_ShopSwipeHQAPIKey">' . _('SwipeHQ API Key') . ':</label>
+			<input type="text" size="80"  maxlenght="100" name="X_ShopSwipeHQAPIKey" value="' . $_SESSION['ShopSwipeHQAPIKey'] . '" />
+			<fieldhelp>' . _('The') . ' <a href="https://www.swipehq.com/credit-card-payment-solutions/index.php">SwipeHQ</a> ' . _('API Key - see SwipeHQ admin settings -> API credentials') . '</fieldhelp>
+		</field>';
+
+	echo '</fieldset>';
+	echo '</fieldset>';
 } //end of blocked inputs in demo mode
-echo '</table>
-		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div>
-    </div>
+echo '<div class="centre">
+		<input type="submit" name="submit" value="' . _('Update') . '" />
+	</div>
 	</form>';
 
 include('includes/footer.php');

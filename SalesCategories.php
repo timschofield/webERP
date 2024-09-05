@@ -12,8 +12,10 @@ if (isset($_GET['SelectedCategory'])) {
 }
 
 if (isset($SelectedCategory)) {
-	echo '<a href="', $RootPath, '/SalesCategories.php">', _('Select a Different Category'), '</a>';
+	echo '<a href="', $RootPath, '/SalesCategories.php" class="toplink">', _('Select a Different Category'), '</a>';
 }
+
+$SupportedImgExt = array('png', 'jpg', 'jpeg');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
@@ -201,9 +203,9 @@ if (isset($SearchResult)) {
 					</td>
 				</tr>';
 			} //end if not already on work order
-			
+
 		} //end of while loop
-		
+
 	} //end if more than 1 row to show
 	echo '</tbody>
 		</table>';
@@ -289,7 +291,6 @@ if (!isset($_GET['Select'])) {
 	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		$SupportedImgExt = array('png', 'jpg', 'jpeg');
 		$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $MyRow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 		$ImageFile = reset($ImageFileArray);
 		if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
@@ -308,7 +309,7 @@ if (!isset($_GET['Select'])) {
 		$SQL = "SELECT salescatname FROM salescat WHERE salescatid='" . $MyRow['parentcatid'] . "'";
 		$ParentResult = DB_query($SQL);
 		$ParentRow = DB_fetch_array($ParentResult);
-		if ($ParentRow['salescatname'] == '') {
+		if (!isset($ParentRow['salescatname']) or $ParentRow['salescatname'] == '') {
 			$ParentRow['salescatname'] = _('No parent');
 		}
 
@@ -348,10 +349,8 @@ if (!isset($_GET['Select'])) {
 
 		echo '<input type="hidden" name="SelectedCategory" value="', $SelectedCategory, '" />';
 		echo '<input type="hidden" name="ParentCategory" value="', $MyRow['parentcatid'], '" />';
-		echo '<table>
-				<tr>
-					<th colspan="5">', _('Edit Sales Category'), '</th>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit Sales Category'), '</legend>';
 
 	} else { //end of if $SelectedCategory only do the else when a new record is being entered
 		$_POST['SalesCatName'] = '';
@@ -360,22 +359,20 @@ if (!isset($_GET['Select'])) {
 		} else {
 			$_POST['ParentCategory'] = 0;
 		}
-		echo '<table>
-				<tr>
-					<th colspan="5">', _('New Sales Category'), '</th>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('New Sales Category'), '</legend>';
 	}
-	echo '<tr>
-			<td>', _('Category Name'), ':</td>
-			<td><input type="text" name="SalesCatName" size="20" required="required" autofocus="autofocus" maxlength="50" value="', $_POST['SalesCatName'], '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="SalesCatName">', _('Category Name'), ':</label>
+			<input type="text" name="SalesCatName" size="20" required="required" autofocus="autofocus" maxlength="50" value="', $_POST['SalesCatName'], '" />
+		</field>';
 
 	$SQL = "SELECT salescatid, salescatname FROM salescat";
 	$Result = DB_query($SQL);
 
-	echo '<tr>
-			<td>', _('Parent Category'), '</td>
-			<td><select name="ParentCategory">';
+	echo '<field>
+			<label for="ParentCategory">', _('Parent Category'), '</label>
+			<select name="ParentCategory">';
 	if ($_POST['ParentCategory']==0){
 		echo '<option value="0" selected="selected">', _('No parent'), '</option>';
 	} else {
@@ -388,13 +385,12 @@ if (!isset($_GET['Select'])) {
 			echo '<option value="', $MyRow['salescatid'], '">', $MyRow['salescatname'], '</option>';
 		}
 	}
-	echo '</td>
-		</select>
-	</tr>';
+	echo '</select>
+	</field>';
 
-	echo '<tr>
-			<td>', _('Is the category in active use?'), ':</td>
-			<td><select name="Active">';
+	echo '<field>
+			<label for="Active">', _('Is the category in active use?'), ':</label>
+			<select name="Active">';
 	if (isset($_POST['Active']) and $_POST['Active'] == '1') {
 		echo '<option selected="selected" value="1">', _('Yes'), '</option>';
 		echo '<option value="0">', _('No'), '</option>';
@@ -403,20 +399,20 @@ if (!isset($_GET['Select'])) {
 		echo '<option value="1">', _('Yes'), '</option>';
 	}
 	echo '</select>
-		</td>
-	</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>', _('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</td>
-			<td><input type="file" id="CategoryPicture" name="CategoryPicture" />
-			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" >', _('Clear Image'), '
-			</td>
-		</tr>';
+	echo '<field>
+			<label for="CategoryPicture">', _('Image File (' . implode(", ", $SupportedImgExt) . ')'), ':</label>
+			<input type="file" id="CategoryPicture" name="CategoryPicture" />
+		</field>
+		<field>
+			<label for="ClearImage">', _('Clear Image'), '</label>
+			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" >
+		</field>';
 
 	echo '</fieldset>';
 
-	echo '</table>
-			<div class="centre">
+	echo '<div class="centre">
 				<input type="submit" name="SubmitCategory" value="', _('Enter Information'), '" />
 			</div>
 		</form>';

@@ -236,12 +236,9 @@ if (isset($SelectedPaymentID)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Payment Methods') . '</a></div>';
 }
 
-echo '<br />';
-
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedPaymentID)) {
@@ -273,7 +270,8 @@ if (! isset($_GET['delete'])) {
 			$_POST['DiscountPercent'] = $myrow['percentdiscount'];
 
 			echo '<input type="hidden" name="SelectedPaymentID" value="' . $_POST['MethodID'] . '" />';
-			echo '<table class="selection">';
+			echo '<fieldset>
+					<legend>', _('Edit Payment Method'), '</legend>';
 		}
 
 	}  else {
@@ -283,48 +281,48 @@ if (! isset($_GET['delete'])) {
 		$_POST['UsePrePrintedStationery'] = 0; // Default is use for receipts
 		$_POST['OpenCashDrawer'] = 0; //Default is not to open cash drawer
 		$_POST['DiscountPercent']=0;
-		echo '<table class="selection">';
+		echo '<fieldset>
+					<legend>', _('Create Payment Method'), '</legend>';
 	}
-	echo '<tr>
-			<td>' . _('Payment Method') . ':' . '</td>
-			<td><input type="text" '. (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) .' name="MethodName" autofocus="autofocus" required="required" size="30" maxlength="30" value="' . $_POST['MethodName'] . '" /></td>
-		</tr>';
-	echo '<tr>
-		<td>' . _('Use For Payments') . ':' . '</td>
-		<td><select required="required" name="ForPayment">
-			<option' . ($_POST['ForPayment'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
-			<option' . ($_POST['ForPayment'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
-            </select></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Use For Receipts') . ':' . '</td>
-			<td><select required="required" name="ForReceipt">
+	echo '<field>
+			<label for="MethodName">' . _('Payment Method') . ':</label>
+			<input type="text" '. (in_array('MethodName',$Errors) ? 'class="inputerror"' : '' ) .' name="MethodName" autofocus="autofocus" required="required" size="30" maxlength="30" value="' . $_POST['MethodName'] . '" />
+		</field>';
+	echo '<field>
+			<label for="ForPayment">' . _('Use For Payments') . ':' . '</label>
+			<select required="required" name="ForPayment">
+				<option' . ($_POST['ForPayment'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
+				<option' . ($_POST['ForPayment'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
+			</select>
+		</field>';
+	echo '<field>
+			<label for="ForReceipt">' . _('Use For Receipts') . ':</label>
+			<select required="required" name="ForReceipt">
 				<option' . ($_POST['ForReceipt'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['ForReceipt'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
-			</select></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Use Pre-printed Stationery') . ':' . '</td>
-			<td><select name="UsePrePrintedStationery">
+			</select>
+		</field>';
+	echo '<field>
+			<label for="UsePrePrintedStationery">' . _('Use Pre-printed Stationery') . ':' . '</label>
+			<select name="UsePrePrintedStationery">
 				<option' . ($_POST['UsePrePrintedStationery'] ? ' selected="selected"': '' ) .' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['UsePrePrintedStationery']==1 ? '' : ' selected="selected"' ) .' value="0">' . _('No') . '</option>
-				</select></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Open POS Cash Drawer for Sale') . ':' . '</td>
-			<td><select name="OpenCashDrawer">
+			</select>
+		</field>';
+	echo '<field>
+			<label for="OpenCashDrawer">' . _('Open POS Cash Drawer for Sale') . ':' . '</label>
+			<select name="OpenCashDrawer">
 				<option' . ($_POST['OpenCashDrawer'] ? ' selected="selected"' : '') .' value="1">' . _('Yes') . '</option>
 				<option' . ($_POST['OpenCashDrawer'] ? '' : ' selected="selected"') .' value="0">' . _('No') . '</option>
-			</select></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Payment Discount Percent on Receipts') . ':' . '</td>
-			<td><input type="text" class="number" min="0" max="1" name="DiscountPercent" value="' . locale_number_format($_POST['DiscountPercent'],2) . '" /></td>
-		</tr>';
-	echo '</table>';
+			</select>
+		</field>';
+	echo '<field>
+			<label for="DiscountPercent">' . _('Payment Discount Percent on Receipts') . ':' . '</label>
+			<input type="text" class="number" min="0" max="1" name="DiscountPercent" value="' . locale_number_format($_POST['DiscountPercent'],2) . '" />
+		</field>';
+	echo '</fieldset>';
 
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
-    echo '</div>';
+	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
 	echo '</form>';
 
 } //end if record deleted no point displaying form to add record

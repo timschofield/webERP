@@ -161,24 +161,20 @@ if (isset($_POST['SupplierID']) AND empty($_POST['TenderType']) AND empty($_POST
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Tenders') . '" alt="" />' . ' ' . _('Create or View Offers from') . ' '.$Supplier . '</p>';
-	echo '<table class="selection">';
-	echo'<tr>
-			<td>' . _('Select option for tendering') . '</td>
-			<td><select name="TenderType">
+	echo '<fieldset>';
+	echo'<field>
+			<label for="TenderType">' . _('Select option for tendering') . '</label>
+			<select name="TenderType">
 				<option value="1">' . _('View or Amend outstanding offers from').' '.$Supplier  . '</option>
 				<option value="2">' . _('Create a new offer from').' '.$Supplier  . '</option>
 				<option value="3">' . _('View any open tenders without an offer from').' '.$Supplier  . '</option>
-				</select></td>
-		</tr>';
+			</select>
+		</field>';
 	echo '<input type="hidden" name="SupplierID" value="'.$_POST['SupplierID'].'" />';
-	echo '<tr>
-			<td colspan="2">
-				<div class="centre">
-				<input type="submit" name="submit" value="' . _('Select') . '" />
-				</div>
-			</td>
-		</tr>
-		</table>
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Select') . '" />
+		</div>
+		</fieldset>
 		</form>';
 }
 
@@ -394,8 +390,10 @@ if (isset($_POST['TenderType'])
 		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a></p>';
 		exit;
 	}
-	echo '<table class="selection"><tr>';
-	echo '<td>' . _('In Stock Category') . ':';
+	echo '<fieldset>
+			<legend class="search">', _('Stock Item Search'), '</legend>
+			<field>
+				<label for="StockCat">' . _('In Stock Category') . ':</label>';
 	echo '<select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
@@ -412,8 +410,10 @@ if (isset($_POST['TenderType'])
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select>';
-	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="Keywards">' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
 	if (isset($_POST['Keywords'])) {
 		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 	} else {
@@ -421,25 +421,21 @@ if (isset($_POST['TenderType'])
 	}
 	echo '<input type="hidden" name="TenderType" value="'.$_POST['TenderType'].'" />';
 	echo '<input type="hidden" name="SupplierID" value="'.$_POST['SupplierID'].'" />';
-	echo '</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><font size="3"><b>' . _('OR') . ' ' . '</b></font>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
-			<td>';
+	echo '</field>';
+
+	echo '<h3>' . _('OR') . ' ' . '</h3>';
+	echo '<field>
+			<label for="StockCode">'. _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" autofocus="autofocus" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
 		echo '<input type="text" name="StockCode" autofocus="autofocus" size="15" maxlength="18" />';
 	}
-	echo '</td>
-		</tr>
-		</table>
-		<br />
+	echo '</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 		</div>
-		<br />
 		</form>';
 }
 

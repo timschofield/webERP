@@ -13,27 +13,25 @@ if (isset($_GET['StockID'])){
 
 if (!isset($_POST['StockID'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
-		<br />
 		<div class="page_help_text">
 			'. _('Select a manufactured part') . ' (' . _('or Assembly or Kit part') . ') ' . _('to view the costed bill of materials') . '
 			<br />' . _('Parts must be defined in the stock item entry') . '/' . _('modification screen as manufactured') . ', ' . _('kits or assemblies to be available for construction of a bill of material') . '
 		</div>
-		<br />
-		<table class="selection">
-		<tr>
-			<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-			<td><input tabindex="1" type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" /></td>
-			<td><b>' . _('OR') . '</b></td>
-			<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" /></td>
-		</tr>
-		</table>
-		<br />
+		<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
+			<input tabindex="1" type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" />
+		</field>
+			<b>' . _('OR') . '</b>
+		<field>
+			<label for="StockCode">' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</label>
+			<input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" />
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '" />
 		</div>
-		<br />
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 }
 
@@ -101,8 +99,7 @@ if (isset($_POST['Search'])
 	AND isset($result)
 	AND !isset($SelectedParent)) {
 
-	echo '<br />
-			<table class="selection">';
+	echo '<table class="selection">';
 	$TableHeader = '<tr>
 						<th>' . _('Code') . '</th>
 						<th>' . _('Description') . '</th>
@@ -238,7 +235,7 @@ if (isset($StockID) and $StockID!=""){
 		echo '</table>';
 	}
 } else { //no stock item entered
-	prnMsg(_('Enter a stock item code above') . ', ' . _('to view the costed bill of material for'),'info');
+	prnMsg(_('Enter a stock item code below') . ', ' . _('to view the costed bill of material for'),'info');
 }
 
 include('includes/footer.php');

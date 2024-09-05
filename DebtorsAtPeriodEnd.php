@@ -132,22 +132,24 @@ if (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-              <div>';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
         echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<table class="selection">';
-		echo '<tr>
-				<td>' . _('From Customer Code') .':</td>
-				<td><input tabindex="1" type="text" maxlength="10" size="8" name="FromCriteria" required="required" data-type="no-illegal-chars" title="' . _('Enter a portion of the code of first customer to report') . '" value="1" /></td>
-			</tr>
-			<tr>
-				<td>' . _('To Customer Code') . ':</td>
-				<td><input tabindex="2" type="text" maxlength="10" size="8" name="ToCriteria" required="required" data-type="no-illegal-chars" title="' . _('Enter a portion of the code of last customer to report') . '" value="zzzzzz" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Balances As At') . ':</td>
-				<td><select tabindex="3" name="PeriodEnd">';
+		echo '<fieldset>
+				<legend>', _('Report Criteria'), '</legend>';
+		echo '<field>
+				<label for="FromCriteria">' . _('From Customer Code') .':</label>
+				<input tabindex="1" type="text" maxlength="10" size="8" name="FromCriteria" required="required" data-type="no-illegal-chars" title="" value="1" />
+				<fieldhelp>' . _('Enter a portion of the code of first customer to report') . '</fieldhelp>
+			</field>
+			<field>
+				<label for="ToCriteria">' . _('To Customer Code') . ':</label>
+				<input tabindex="2" type="text" maxlength="10" size="8" name="ToCriteria" required="required" data-type="no-illegal-chars" title="" value="zzzzzz" />
+				<fieldhelp>' . _('Enter a portion of the code of last customer to report') . '</fieldhelp>
+			</field>
+			<field>
+				<label for="PeriodEnd">' . _('Balances As At') . ':</label>
+				<select tabindex="3" name="PeriodEnd">';
 
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$Periods = DB_query($sql,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
@@ -159,13 +161,11 @@ if (isset($_POST['PrintPDF'])
 		}
 	}
 
-	echo '</select></td>
-		</tr>
-		</table>
-		<br />
+	echo '</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input tabindex="5" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>
         </div>
 		</form>';
 

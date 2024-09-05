@@ -301,14 +301,14 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 }
 
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p><br />
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>
 	<form id="SupplierPurchasing" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table class="selection">
-	<tr>
-		<td>' . _('For Supplier') . ':</td>
-		<td><select name="Supplier">';
+	<fieldset>
+	<legend>', _('Supplier Selection'), '</legend>
+	<field>
+		<label for="Supplier">' . _('For Supplier') . ':</label>
+		<select name="Supplier">';
 
 $sql = "SELECT supplierid, suppname FROM suppliers WHERE supptype<>7 ORDER BY suppname";
 $SuppResult=DB_query($sql);
@@ -322,7 +322,8 @@ while ($myrow=DB_fetch_array($SuppResult)){
 		echo '<option value="' . $myrow['supplierid'] . '">' . $myrow['suppname']  . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 /*
 echo '<tr>
@@ -355,8 +356,7 @@ if ($_POST['NumberMonthsHolding']==2){
 echo '</select></td>
 	</tr>';
 */
-echo '</table>
-	<br />
+echo '</fieldset>
 	<div class="centre">
 		<input type="submit" name="ShowItems" value="' . _('Show Items') . '" />
 	</div>';
@@ -387,7 +387,8 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 						purchdata.supplierno,
 						stockmaster.description,
 						stockmaster.eoq,
-						locstock.stockid
+						locstock.stockid,
+						purchdata.leadtime/30
 					ORDER BY purchdata.supplierno,
 						stockmaster.stockid";
 
@@ -540,8 +541,8 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 		   		include('includes/footer.php');
 		   		exit;
 			}
-
 			$OnOrdRow = DB_fetch_array($OnOrdResult);
+
 			if (!isset($_POST['OrderQty' . $i])){
 				$_POST['OrderQty' . $i] =0;
 			}

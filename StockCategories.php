@@ -25,6 +25,8 @@ while ($Row = DB_fetch_array($Result)) {
 }
 // END: Tax Category Name array.
 
+echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" class="toplink">' . _('Show All Stock Categories') . '</a>';
+
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Inventory Adjustment') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_GET['SelectedCategory'])){
@@ -311,16 +313,7 @@ or deletion of the records*/
 
 //end of ifs and buts!
 
-echo '<br />';
-
-if (isset($SelectedCategory)) {
-	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" >' . _('Show All Stock Categories') . '</a>';
-}
-
 echo '<form id="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div>';
-echo '<br />';
-
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory)) {
@@ -355,21 +348,24 @@ if (isset($SelectedCategory)) {
 	}
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	echo '<input type="hidden" name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Category Code') . ':</td>
-				<td>' . $_POST['CategoryID'] . '</td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Edit Stock Category'), '</legend>
+			<field>
+				<label for="CategoryID">' . _('Category Code') . ':</label>
+				<fieldtext>' . $_POST['CategoryID'] . '</fieldtext>
+			</field>';
 
 } else { //end of if $SelectedCategory only do the else when a new record is being entered
 	if (!isset($_POST['CategoryID'])) {
 		$_POST['CategoryID'] = '';
 	}
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" required="required" autofocus="autofocus" data-type="no-illegal-chars" title="' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Create Stock Category'), '</legend>
+			<field>
+				<label for="CategoryID">' . _('Category Code') . ':</label>
+				<input type="text" name="CategoryID" required="required" autofocus="autofocus" data-type="no-illegal-chars" title="" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" />
+				<fieldhelp>' . _('Enter up to six alphanumeric characters or underscore as a code for this stock category') . '</fieldhelp
+			</field>';
 }
 
 //SQL to poulate account selection boxes
@@ -397,15 +393,16 @@ $PnLAccountsResult = DB_query($sql);
 if (!isset($_POST['CategoryDescription'])) {
 	$_POST['CategoryDescription'] = '';
 }
-echo '<tr><td><label for="CategoryDescription">' . _('Category Description') .
-	':</label></td><td><input id="CategoryDescription" maxlength="20" name="CategoryDescription" required="required" size="22" title="' .
-	_('A description of the inventory category is required') .
-	'" type="text" value="' . $_POST['CategoryDescription'] .
-	'" /></td></tr>';
+echo '<field>
+		<label for="CategoryDescription">' . _('Category Description') .':</label>
+		<input id="CategoryDescription" maxlength="20" name="CategoryDescription" required="required" size="22" title="" type="text" value="' . $_POST['CategoryDescription'] .'" />
+		<fieldhelp>' ._('A description of the inventory category is required') .'<fieldhelp>
+	</field>';
 
 // Stock Type input.
-echo '<tr><td><label for="StockType">' . _('Stock Type') .
-	':</label></td><td><select id="StockType" name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
+echo '<field>
+		<label for="StockType">' . _('Stock Type') .':</label>
+		<select id="StockType" name="StockType" onChange="ReloadForm(CategoryForm.UpdateTypes)" >';
 foreach ($StockTypeName as $StockTypeId => $Row) {
 	echo '<option';
 	if (isset($_POST['StockType']) and $_POST['StockType']==$StockTypeId) {
@@ -413,14 +410,16 @@ foreach ($StockTypeName as $StockTypeId => $Row) {
 	}
 	echo ' value="' . $StockTypeId . '">' . $Row . '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 // Default Tax Category input.
 if (!isset($_POST['DefaultTaxCatID'])) {
 	$_POST['DefaultTaxCatID'] = $_SESSION['DefaultTaxCategory'];
 }
-echo '<tr><td><label for="DefaultTaxCatID">' . _('Default Tax Category') .
-	':</label></td><td><select id="DefaultTaxCatID"  name="DefaultTaxCatID">';
+echo '<field>
+		<label for="DefaultTaxCatID">' . _('Default Tax Category') .':</label>
+		<select id="DefaultTaxCatID"  name="DefaultTaxCatID">';
 foreach ($TaxCategoryName as $TaxCategoryId => $Row) {
 	echo '<option';
 	if ($_POST['DefaultTaxCatID'] == $TaxCategoryId) {
@@ -428,14 +427,13 @@ foreach ($TaxCategoryName as $TaxCategoryId => $Row) {
 	}
 	echo ' value="' . $TaxCategoryId . '">' . $Row . '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 // Recovery or Stock GL Code input.
-echo '<input type="submit" name="UpdateTypes" style="visibility:hidden;" value="Not Seen" />
-	<tr>
-		<td>
+echo '<field>
 		<label for="StockAct">';
-		
+
 if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 	$Result = $PnLAccountsResult;
 	echo _('Recovery GL Code');
@@ -443,8 +441,8 @@ if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 	$Result = $BSAccountsResult;
 	echo _('Stock GL Code');
 }
-echo ':</label></td>
-<td><select name="StockAct">';
+echo ':</label>
+	<select name="StockAct">';
 
 while ($myrow = DB_fetch_array($Result)){
 
@@ -456,10 +454,13 @@ while ($myrow = DB_fetch_array($Result)){
 } //end while loop
 DB_data_seek($PnLAccountsResult,0);
 DB_data_seek($BSAccountsResult,0);
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 // WIP GL Code input.
-echo '<tr><td>' . _('WIP GL Code') . ':</td><td><select name="WIPAct">';
+echo '<field>
+		<label for="WIPAct">' . _('WIP GL Code') . ':</label>
+		<select name="WIPAct">';
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 	echo '<option';
 	if (isset($_POST['WIPAct']) and $myrow['accountcode']==$_POST['WIPAct']) {
@@ -469,73 +470,76 @@ while ($myrow = DB_fetch_array($BSAccountsResult)) {
 		htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) .
 		' ('.$myrow['accountcode'].')' . '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 DB_data_seek($BSAccountsResult,0);
 
 
 if (isset($_POST['StockType']) AND $_POST['StockType']!='L' AND $_POST['StockType']!='D') {
 	// Stock Adjustments GL Code input.
-	echo '<tr>
-			<td>' . _('Stock Adjustments GL Code') . ':</td>
-			<td><select name="AdjGLAct">';
-	
+	echo '<field>
+			<label for="AdjGLAct">' . _('Stock Adjustments GL Code') . ':</label>
+			<select name="AdjGLAct">';
+
 	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		if (isset($_POST['AdjGLAct']) and $myrow['accountcode']==$_POST['AdjGLAct']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 		}
-	
+
 	} //end while loop
 	DB_data_seek($PnLAccountsResult,0);
-	echo '</select></td></tr>';
-	
-	echo '<tr>
-			<td>' . _('Internal Stock Issues GL Code') . ':</td>
-			<td><select name="IssueGLAct">';
-	
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="IssueGLAct">' . _('Internal Stock Issues GL Code') . ':</label>
+			<select name="IssueGLAct">';
+
 	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		if (isset($_POST['IssueGLAct']) and $myrow['accountcode']==$_POST['IssueGLAct']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 		}
-	
+
 	} //end while loop
 	DB_data_seek($PnLAccountsResult,0);
-	echo '</select></td></tr>';
-	
-	echo '<tr>
-			<td>' . _('Price Variance GL Code') . ':</td>
-			<td><select name="PurchPriceVarAct">';
-	
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="PurchPriceVarAct">' . _('Price Variance GL Code') . ':</label>
+			<select name="PurchPriceVarAct">';
+
 	while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		if (isset($_POST['PurchPriceVarAct']) and $myrow['accountcode']==$_POST['PurchPriceVarAct']) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 		} else {
 			echo '<option value="' . $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
 		}
-	
+
 	} //end while loop
 	DB_data_seek($PnLAccountsResult,0);
-	
-	echo '</select></td>
-		</tr>';
+
+	echo '</select>
+		</field>';
 } else { //set defaults to account code =1 for dummy and labour type categories
 	echo '<input type="hidden" name="AdjGLAct" value="1" />
 			<input type="hidden" name="IssueGLAct" value="1" />
 			<input type="hidden" name="PurchPriceVarAct" value="1" />';
 
 }
-	echo '<tr>
-			<td>';
+	echo '<field>
+			<label for="MaterialUseageVarAc">';
 if (isset($_POST['StockType']) and $_POST['StockType']=='L') {
 	echo  _('Labour Efficiency Variance GL Code');
 } else {
 	echo  _('Usage Variance GL Code');
 }
-echo ':</td>
-		<td><select name="MaterialUseageVarAc">';
+echo ':</label>
+		<select name="MaterialUseageVarAc">';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['MaterialUseageVarAc']) and $myrow['accountcode']==$_POST['MaterialUseageVarAc']) {
@@ -546,9 +550,10 @@ while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 
 } //end while loop
 DB_free_result($PnLAccountsResult);
-echo '</select></td>
-		</tr>
-		</table>';
+echo '</select>
+	</field>
+</fieldset>
+<input type="submit" name="UpdateTypes" style="visibility:hidden;" value="Not Seen" />';
 
 if (!isset($SelectedCategory)) {
 	$SelectedCategory='';

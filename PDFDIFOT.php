@@ -24,29 +24,28 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('DIFOT Report') . '</p>';
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-     echo '<div>';
 	 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	 echo '<table class="selection">
-			<tr>
-				<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
-				<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
+	 echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="FromDate">' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</label>
+				<input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" />
+			</field>
+			<field>
+				<label for="ToDate">' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</label>
+				<input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			</field>';
 
 	 if (!isset($_POST['DaysAcceptable'])){
 		$_POST['DaysAcceptable'] = 1;
 	 }
 
-	 echo '<tr>
-				<td>' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ':</td>
-				<td><input type="text" class="integer" name="DaysAcceptable" maxlength="2" size="2" value="' . $_POST['DaysAcceptable'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Inventory Category') . '</td>
-				<td>';
+	 echo '<field>
+				<label for="DaysAcceptable">' . _('Enter the number of days considered acceptable between delivery requested date and invoice date(ie the date dispatched)') . ':</label>
+				<input type="text" class="integer" name="DaysAcceptable" maxlength="2" size="2" value="' . $_POST['DaysAcceptable'] . '" />
+			</field>
+			<field>
+				<label for="CategoryID">' . _('Inventory Category') . '</label>';
 
 	 $sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	 $result = DB_query($sql);
@@ -59,31 +58,31 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
 
-	 echo '</select></td></tr>';
+	 echo '</select>
+		</field>';
 
-	 echo '<tr>
-			<td>' . _('Inventory Location') . ':</td>
-			<td><select name="Location">
+	 echo '<field>
+			<label for="Location">' . _('Inventory Location') . ':</label>
+			<select name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
 	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
-	 echo '</select></td></tr>';
+	 echo '</select>
+		</field>';
 
-	 echo '<tr>
-			<td>' . _('Email the report off') . ':</td>
-			<td><select name="Email">
+	 echo '<field>
+			<label for="Email">' . _('Email the report off') . ':</label>
+			<select name="Email">
 				<option selected="selected" value="No">' . _('No') . '</option>
 				<option value="Yes">' . _('Yes') . '</option>
-			</select></td>
-		</tr>
-		</table>
-		<br />
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
-		<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-		</div>
+			<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 		</div>
 	</form>';
 

@@ -370,10 +370,12 @@ if(isset($_POST['PrintPDF'])) {
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    echo '<table class="selection">';
-	echo '<tr><td>' . _('For Sales Areas') . ':</td><td><select name="Areas[]" multiple="multiple">';
+    echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+	echo '<field>
+			<label for="Areas">' . _('For Sales Areas') . ':</label>
+			<select name="Areas[]" multiple="multiple">';
 
 	$sql="SELECT areacode, areadescription FROM areas";
 	$AreasResult= DB_query($sql);
@@ -383,10 +385,12 @@ if(isset($_POST['PrintPDF'])) {
 	while($myrow = DB_fetch_array($AreasResult)) {
 		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr><td>' . _('For Salesperson:') . '</td>
-			<td><select name="SalesPeople[]" multiple="multiple">
+	echo '<field>
+			<label for="SalesPeople">' . _('For Salesperson:') . '</label>
+			<select name="SalesPeople[]" multiple="multiple">
 				<option selected="selected" value="All">' .  _('All Salespeople') . '</option>';
 
 	$sql = "SELECT salesmancode, salesmanname FROM salesman";
@@ -395,32 +399,31 @@ if(isset($_POST['PrintPDF'])) {
 	while($myrow = DB_fetch_array($SalesFolkResult)) {
 		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr><td>' . _('Level Of Activity'). ':</td>
-			<td><select name="Activity">
+	echo '<field>
+			<label for="Activity">' . _('Level Of Activity'). ':</label>
+			<select name="Activity">
 				<option selected="selected" value="All">' .  _('All customers') . '</option>
 				<option value="GreaterThan">' .  _('Sales Greater Than') . '</option>
 				<option value="LessThan">' .  _('Sales Less Than') . '</option>
-				</select></td>
-			<td>';
+			</select>';
 
-	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value="0" /></td>
-		</tr>';
+	echo '<input type="text" class="number" name="ActivityAmount" size="8" maxlength="8" value="0" />
+		</field>';
 
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
-	echo '<tr>
-			<td>' . _('Activity Since'). ':</td>
-			<td><input type="text" class="date" name="ActivitySince" size="11" maxlength="10" value="' . $DefaultActivitySince . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="ActivitySince">' . _('Activity Since'). ':</label>
+			<input type="text" class="date" name="ActivitySince" size="11" maxlength="10" value="' . $DefaultActivitySince . '" />
+		</field>';
 
-	echo '</table>
-			<br />
+	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" />
 			</div>';
-    echo '</div>
-          </form>';
+    echo '</form>';
 
 	include('includes/footer.php');
 

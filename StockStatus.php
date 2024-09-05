@@ -35,32 +35,52 @@ $result = DB_query("SELECT description,
 					_('Could not retrieve the requested item'),
 					_('The SQL used to retrieve the items was'));
 
-$myrow = DB_fetch_array($result);
+if (DB_num_rows($result) > 0) {
+	$myrow = DB_fetch_array($result);
+	$DecimalPlaces = $myrow['decimalplaces'];
+	$Serialised = $myrow['serialised'];
+	$Controlled = $myrow['controlled'];
+	$Description = $myrow['description'];
+	$Units = $myrow['units'];
+	$KitSet = $myrow['mbflag'];
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
+		'" alt="" /><b>' . ' ' . $StockID . ' - ' . $Description . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
+} else {
+	$DecimalPlaces = 2;
+	$Serialised = 0;
+	$Controlled = 0;
+	$KitSet = '';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
+	'" alt="" /><b>' . _('Stock Status') . '</b></p>';
+}
 
-$DecimalPlaces = $myrow['decimalplaces'];
-$Serialised = $myrow['serialised'];
-$Controlled = $myrow['controlled'];
-
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
-	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
-if ($myrow[2]=='K'){
+if ($KitSet=='K'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	prnMsg( _('This is a kitset part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
-} elseif ($myrow[2]=='A'){
+} elseif ($KitSet=='A'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	prnMsg(_('This is an assembly part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
-} elseif ($myrow[2]=='D'){
+} elseif ($KitSet=='D'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Stock Code') . ':<input type="text" data-type="no-illegal-chars" title ="'._('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'" placeholder="'._('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
+echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<fieldset>
+		<legend>', _('Select Stock Code'), '</legend>
+		<field>
+			<label for="StockID">', _('Stock Code') . ':</label>
+			<input type="text" data-type="no-illegal-chars" title ="" placeholder="'._('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />
+			<fieldhelp>'._('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'</fieldhelp>
+		</field>
+	</fieldset>';
 
-echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />';
+echo '<div class="centre">
+		<input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />
+	</div>';
 
 $sql = "SELECT locstock.loccode,
 				locations.locationname,
@@ -79,8 +99,7 @@ $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
-echo '<br />
-		<table class="selection"><tbody>';
+echo '<table class="selection"><tbody>';
 	echo '<thead>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
@@ -318,8 +337,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 
 	if (isset($PriceHistory)) {
-	  echo '<br />
-			<table class="selection">
+	  echo '<table class="selection">
 			<thead>
 			<tr>
 				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
@@ -353,7 +371,7 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	}
 }//end of displaying price history for a debtor
 
-echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>
+echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Movements') . '</a>
 	<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Usage') . '</a>
 	<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>
 	<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';

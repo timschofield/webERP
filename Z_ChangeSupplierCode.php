@@ -17,17 +17,19 @@ if (isset($_POST['ProcessSupplierChange']))
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '
+echo '<fieldset>
+		<legend>', _('Supplier To Change'), '</legend>
+		<field>
+			<label>' . _('Existing Supplier Code') . ':</label>
+			<input type="text" name="OldSupplierNo" size="20" maxlength="20" />
+		</field>
+		<field>
+			<label> ' . _('New Supplier Code') . ':</label>
+			<input type="text" name="NewSupplierNo" size="20" maxlength="20" />
+		</field>
+	</fieldset>
 	<div class="centre">
-	<table>
-	<tr><td>' . _('Existing Supplier Code') . ':</td>
-		<td><input type="text" name="OldSupplierNo" size="20" maxlength="20" /></td>
-	</tr>
-		<tr><td> ' . _('New Supplier Code') . ':</td>
-	<td><input type="text" name="NewSupplierNo" size="20" maxlength="20" /></td>
-	</tr>
-	</table>
-	<button type="submit" name="ProcessSupplierChange">' . _('Process') . '</button>
+		<button type="submit" name="ProcessSupplierChange">' . _('Process') . '</button>
 	<div>
 	</form>';
 

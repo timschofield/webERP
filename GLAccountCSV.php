@@ -22,17 +22,17 @@ echo '<p class="page_title_text"><img src="'.$RootPath, '/css/', $Theme, '/image
 echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for the report */
-echo '<table>
-	        <tr>
-	         <td>' . _('Selected Accounts') . ':</td>
-	         <td><select name="Account[]" size="12" multiple="multiple">';
+echo '<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="Account">' . _('Selected Accounts') . ':</label>
+			<select name="Account[]" size="12" multiple="multiple">';
 $sql = "SELECT chartmaster.accountcode,
 			   chartmaster.accountname
 		FROM chartmaster
@@ -48,10 +48,12 @@ while ($myrow=DB_fetch_array($AccountsResult)) {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
-echo '<td>' . _('For Period range').':</td>
-		<td><select name="Period[]" size="12" multiple="multiple">';
+echo '<field>
+		<label for="Period">' . _('For Period range').':</label>
+		<select name="Period[]" size="12" multiple="multiple">';
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql);
 $id=0;
@@ -64,10 +66,13 @@ while ($myrow=DB_fetch_array($Periods)) {
 		echo '<option value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 //Select the tag
-echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
+echo '<field>
+		<label for="tag">' . _('Select Tag') . ':</label>
+		<select name="tag">';
 
 $SQL = "SELECT tagref,
 	       tagdescription
@@ -83,13 +88,16 @@ while ($myrow=DB_fetch_array($result)) {
 	   echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 // End select tag
 
-echo '</table><br />
-		<div class="centre"><input type="submit" name="MakeCSV" value="'._('Make CSV File').'" /></div>
-    </div>
-	</form>';
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="MakeCSV" value="'._('Make CSV File').'" />
+	</div>
+</form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 

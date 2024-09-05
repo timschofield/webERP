@@ -49,8 +49,8 @@ if (DB_num_rows($WOResult)==0){
 }
 $WORow = DB_fetch_array($WOResult);
 
-echo '<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a><br />';
-echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a><br />';
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php" class="toplink">' . _('Back to Work Orders'). '</a>';
+echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '" class="toplink">' . _('Back to Costing'). '</a>';
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' .

@@ -24,20 +24,19 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('Delivery Differences Report') . '</p></div>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
-			<tr>
-			<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
-			</tr>';
-	echo '<tr>
-			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
-	echo '<tr>
-			<td>' . _('Inventory Category') . '</td>
-			<td>';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="FromDate">' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</label>
+				<input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" />
+			</field>';
+	echo '<field>
+			<label for="ToDate">' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</label>
+			<input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+		</field>';
+	echo '<field>
+			<label for="CategoryID">' . _('Inventory Category') . '</label>';
 
 	$sql = "SELECT categorydescription,
 					categoryid
@@ -55,31 +54,30 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription']  . '</option>';
 	}
 
-	 echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Inventory Location') . ':</td>
-			<td><select name="Location">
+	 echo '</select>
+		</field>
+		<field>
+			<label for="Location">' . _('Inventory Location') . ':</label>
+			<select name="Location">
 				<option selected="selected" value="All">' . _('All Locations')  . '</option>';
 
 	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
 	}
-	 echo '</select></td></tr>';
+	 echo '</select>
+		</field>';
 
-	 echo '<tr>
-				<td>' . _('Email the report off') . ':</td>
-				<td><select name="Email">
+	 echo '<field>
+				<label for="Email">' . _('Email the report off') . ':</label>
+				<select name="Email">
 					<option selected="selected" value="No">' . _('No')  . '</option>
 					<option value="Yes">' . _('Yes')  . '</option>
-					</select></td>
-			</tr>
-			</table>
-			<br />
+				</select>
+			</field>
+			</fieldset>
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-			</div>
 			</div>
 		</form>';
 

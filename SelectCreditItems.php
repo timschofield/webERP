@@ -214,22 +214,22 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 	OR $_SESSION['CreditItems'.$identifier]->DebtorNo=='' ) {
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
 		_('Search') . '" alt="" />' . ' ' . _('Select Customer For Credit Note') . '</p>';
 
-	echo '<table cellpadding="3" class="selection">';
-	echo '<tr><th colspan="5"><h3> ' . _('Customer Selection')  . '</h3></th></tr>';
-	echo '<tr>
-			<td>' . _('Enter text in the customer name') . ':</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-			<td><b>' . _('OR') . '</b></td>
-			<td>' . _('Enter text extract in the customer code') . ':</td>
-			<td><input type="text" name="CustCode" size="15" maxlength="18" /></td>
-		</tr>';
-	echo '</table>
-		<br />
+	echo '<fieldset>';
+	echo '<legend class="search"> ' . _('Customer Selection')  . '</legend>';
+	echo '<field>
+			<label for="Keywords">' . _('Enter text in the customer name') . ':</label>
+			<input type="text" name="Keywords" size="20" maxlength="25" />
+		</field>
+			<h1>' . _('OR') . '</h1>
+		<field>
+			<label for="CustCode">' . _('Enter text extract in the customer code') . ':</label>
+			<input type="text" name="CustCode" size="15" maxlength="18" />
+		</field>';
+	echo '</fieldset>
 		<div class="centre">
 			<input type="submit" name="SearchCust" value="' . _('Search Now') . '" />
 		</div>';
@@ -251,7 +251,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$LastCustomer='';
 		while ($myrow=DB_fetch_array($result_CustSelect)) {
 
-			if ($LastCustomer != $myrow['name']) {
+			if (isset($myrow['name']) and $LastCustomer != $myrow['name']) {
 				echo '<td>' . $myrow['name'] . '</td>';
 			} else {
 				echo '<td></td>';
@@ -832,11 +832,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 /*Now show options for the credit note */
 
-		echo '<br />
-				<table class="selection">
-				<tr>
-					<td>' . _('Credit Note Type') . ' :</td>
-					<td><select name="CreditType" onchange="ReloadForm(MainForm.Update)" >';
+		echo '<fieldset>
+				<legend>', _('Credit Note Header'), '</legend>
+				<field>
+					<label for="CreditType">' . _('Credit Note Type') . ' :</label>
+					<select name="CreditType" onchange="ReloadForm(MainForm.Update)" >';
 
 		if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
 			   echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>
@@ -852,16 +852,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<option value="WriteOff">' . _('Good written off') . '</option>';
 		}
 
-		echo '</select></td></tr>';
-
+		echo '</select>
+			</field>';
 
 		if (!isset($_POST['CreditType']) OR $_POST['CreditType']=='Return'){
 
 /*if the credit note is a return of goods then need to know which location to receive them into */
 
-			echo '<tr>
-					<td>' . _('Goods Returned to Location') . ' :</td>
-					<td><select name="Location">';
+			echo '<field>
+					<label for="Location">' . _('Goods Returned to Location') . ' :</label>
+					<select name="Location">';
 
 			$SQL="SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 			$Result = DB_query($SQL);
@@ -877,12 +877,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
 			}
-			echo '</select></td></tr>';
+			echo '</select>
+				</field>';
 
 		} elseif ($_POST['CreditType']=='WriteOff') { /* the goods are to be written off to somewhere */
 
-			echo '<tr><td>' . _('Write off the cost of the goods to') . '</td>
-					<td><select name=WriteOffGLCode>';
+			echo '<field>
+					<label for="WriteOffGLCode">' . _('Write off the cost of the goods to') . '</label>
+					<select name=WriteOffGLCode>';
 
 			$SQL="SELECT accountcode,
 						accountname
@@ -900,11 +902,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
 				}
 			}
-			   echo '</select></td></tr>';
+			   echo '</select>
+				</field>';
 		  }
-		echo '<tr>
-				<td>' . _('Sales person'). ':</td>
-				<td><select name="SalesPerson">';
+		echo '<field>
+				<label for="SalesPerson">' . _('Sales person'). ':</label>
+				<select name="SalesPerson">';
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
 		if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ){
 			$_SESSION['CreditItems'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
@@ -918,15 +921,16 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			}
 		}
 
-		echo '</select></td>
-			</tr>';
+		echo '</select>
+			</field>';
 		  if (!isset($_POST['CreditText'])) {
 			  $_POST['CreditText']='';
 		  }
-		  echo '<tr><td>' . _('Credit Note Text') . ' :</td>
-		  		<td><textarea name="CreditText" COLS="31" rows="5">' . $_POST['CreditText'] . '</textarea></td>
-			</tr>
-			</table><br />';
+		  echo '<field>
+					<label for="CreditText">' . _('Credit Note Text') . ' :</label>
+					<textarea name="CreditText" cols="31" rows="5">' . $_POST['CreditText'] . '</textarea>
+			</field>
+			</fieldset>';
 
 		  $OKToProcess = true;
 		/*Check for the worst */
@@ -938,8 +942,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<input type="submit" name="Update" value="' . _('Update') . '" />
 				<input type="submit" name="CancelCredit" value="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');" />';
 		  if (!isset($_POST['ProcessCredit']) AND $OKToProcess == true){
-			echo '<input type="submit" name="ProcessCredit" value="' . _('Process Credit Note') . '" />
-					<br />';
+			echo '<input type="submit" name="ProcessCredit" value="' . _('Process Credit Note') . '" />';
 		  }
 		  echo '</div>';
 	 } # end of if lines
@@ -959,10 +962,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		 $result1 = DB_query($SQL);
 
-		 echo '<br />
-				<table class="selection">
-				<tr>
-					<td>' . _('Select a stock category') . ':&nbsp;<select name="StockCat">';
+		 echo '<fieldset>
+				<legend class="search">', _('Stock Item Search'), '</legend>
+				<field>
+					<label for="StockCat">' . _('Select a stock category') . '</label>
+					<select name="StockCat">';
 
 		 echo '<option selected="selected" value="All">' . _('All') . '</option>';
 		 while ($myrow1 = DB_fetch_array($result1)) {
@@ -973,27 +977,32 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			  }
 		 }
 
-		 echo '</select></td>';
+		 echo '</select>
+			</field>';
 		 if (!isset($_POST['Keywords'])) {
 		 	$_POST['Keywords'] = '';
 		 }
 		 if (!isset($_POST['StockCode'])) {
 		 	$_POST['StockCode'] = '';
 		 }
-		 echo '<td>' . _('Enter text extracts in the description') . ':&nbsp;</td>';
-		 echo '<td><input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" /></td></tr>';
-		 echo '<tr><td></td>';
-		 echo '<td><b>' ._('OR') . '</b>&nbsp;&nbsp;' . _('Enter extract of the Stock Code') . ':&nbsp;</td>';
-		 echo '<td><input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" /></td>';
-		 echo '</tr>';
-		 echo '</table>
-				<br />
-				<div class="centre">';
+		 echo '<field>
+					<label for="Keywords">' . _('Enter text extracts in the description') . ':</label>
+					<input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" />
+				</field>';
+		 echo '<field>';
+		 echo '<h1>' ._('OR') . '</h1>';
+		 echo '<field>
+					<label>'. _('Enter extract of the Stock Code') . ':</label>
+					<input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" />
+				</tfield>';
+		 echo '</field>';
+		 echo '</fieldset>';
 
-		 echo '<input type="submit" name="Search" value="' . _('Search Now') .'" />
+		echo '<div class="centre">
+				<input type="submit" name="Search" value="' . _('Search Now') .'" />
 				<input type="submit" name="ChangeCustomer" value="' . _('Change Customer') . '" />
 				<input type="submit" name="Quick" value="' . _('Quick Entry') . '" />
-				</div>';
+			</div>';
 
 		 if (isset($SearchResult)) {
 

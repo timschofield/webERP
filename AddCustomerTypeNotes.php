@@ -146,7 +146,6 @@ if (isset($Id)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorType='.$DebtorType.'">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
@@ -176,13 +175,15 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
 		echo '<input type="hidden" name="Con_ID" value="' . $_POST['NoteID'] . '" />';
 		echo '<input type="hidden" name="DebtorType" value="' . $_POST['typeid'] . '" />';
-		echo '<table class="selection">
-				<tr>
-					<td>' .  _('Note ID').':</td>
-					<td>' . $_POST['NoteID'] . '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Amend Customer Type Note'), '</legend>
+				<field>
+					<label for="NoteID">' .  _('Note ID').':</label>
+					<fieldtext>' . $_POST['NoteID'] . '</fieldtext>
+				</field>';
 	} else {
-		echo '<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Create New Customer Type Note'), '</legend>';
 		$_POST['NoteID'] = '';
 		$_POST['Note']  = '';
 		$_POST['Href']  = '';
@@ -191,27 +192,29 @@ if (!isset($_GET['delete'])) {
 		$_POST['typeid']  = '';
 	}
 
-	echo '<tr>
-			<td>' . _('Contact Group Note').':</td>
-			<td><textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32">' .  $_POST['Note'] . '</textarea></td>
-		</tr>
-		<tr>
-			<td>' .  _('Web site').':</td>
-			<td><input type="url" name="Href" value="'. $_POST['Href'].'" size="35" maxlength="100" /></td>
-		</tr>
-		<tr>
-			<td>' .  _('Date').':</td>
-			<td><input type="text" required="required" name="NoteDate" class="date" value="'. $_POST['NoteDate']. '" size="11" maxlength="10" /></td>
-		</tr>
-		<tr>
-			<td>' .  _('Priority').':</td>
-			<td><input type="text" class="number" name="Priority" value="'. $_POST['Priority'] .'" size="1" maxlength="3" /></td>
-		</tr>
-		</table>
-		<br />
+	echo '<field>
+			<label for="Note">' . _('Contact Group Note').':</label>
+			<textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32">' .  $_POST['Note'] . '</textarea>
+			<fieldhelp>', _('Write the customer type note here'), '</fieldhelp>
+		</field>
+		<field>
+			<label for="Href">' .  _('Web site').':</label>
+			<input type="url" name="Href" value="'. $_POST['Href'].'" size="35" maxlength="100" />
+			<fieldhelp>', _('Any website associated with this note'), '</fieldhelp>
+		</field>
+		<field>
+			<label for="NoteDate">' .  _('Date').':</label>
+			<input type="text" required="required" name="NoteDate" class="date" value="'. $_POST['NoteDate']. '" size="11" maxlength="10" />
+			<fieldhelp>', _('The date of this note'), '</fieldhelp>
+		</field>
+		<field>
+			<label for="Priority">' .  _('Priority').':</label>
+			<input type="text" class="number" name="Priority" value="'. $_POST['Priority'] .'" size="1" maxlength="3" />
+			<fieldhelp>', _('The priority level for this note, between 1 and 9'), '</fieldhelp>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="submit" value="'. _('Enter Information').'" />
-		</div>
         </div>
 		</form>';
 

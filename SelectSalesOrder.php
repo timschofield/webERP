@@ -210,7 +210,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 						//if the user has authority to authorise the PO then it should be created as authorised
 						$AuthSQL ="SELECT authlevel
 					 				FROM purchorderauth
-								    WHERE userid = '" . $_SESSION['UserID'] . "'
+									WHERE userid = '" . $_SESSION['UserID'] . "'
 									AND currabrev = '" . $SuppRow['currcode'] . "'";
 
 						$AuthResult = DB_query($AuthSQL);
@@ -250,7 +250,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 						DB_Txn_Commit();
 					}
 
-		      /*Starting a new purchase order with a different supplier */
+			  /*Starting a new purchase order with a different supplier */
 					$Result = DB_Txn_Begin();
 
 					$PO_OrderNo =  GetNextTransNo(18); //get the next PO number
@@ -269,8 +269,8 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 	 							currcode,
 	 							rate
 						 FROM suppliers INNER JOIN currencies
-						    ON suppliers.currcode = currencies.currabrev
-						    WHERE supplierid = '" . $SupplierID . "'";
+							ON suppliers.currcode = currencies.currabrev
+							WHERE supplierid = '" . $SupplierID . "'";
 
 					$ErrMsg = _('Could not get the supplier information for the order');
 					$SuppResult = DB_query($SQL, $ErrMsg);
@@ -345,25 +345,25 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 				/*reminder we are in a loop of the total of each item to place a purchase order for based on a selection of sales orders */
 				$DeliveryDate = DateAdd(Date($_SESSION['DefaultDateFormat']),'d',$ItemRow['leadtime']);
 				$SQL = "INSERT INTO purchorderdetails ( orderno,
-		      									itemcode,
-		      									deliverydate,
-		      									itemdescription,
-		      									glcode,
-		      									unitprice,
-		      									quantityord,
-		      									suppliersunit,
-		      									suppliers_partno,
-		      									conversionfactor )
-					      VALUES ('" . $PO_OrderNo . "',
-		      						     '" . $ItemRow['stockid'] . "',
-		      						     '" . FormatDateForSQL($DeliveryDate) . "',
-		      						     '" . $ItemRow['suppliers_partno']  . '  ' . $ItemRow['supplierdescription']  . "',
-		      						     '" . $ItemRow['stockact'] . "',
-		      						     '" . $ItemRow['price']/$ItemRow['conversionfactor'] . "',
-		      						     '" . $ItemRow['orderqty'] . "',
-		      						     '" . $ItemRow['suppliersuom'] . "',
-		      						     '" . $ItemRow['suppliers_partno'] . "',
-		      						     '" . $ItemRow['conversionfactor']  . "')";
+			  									itemcode,
+			  									deliverydate,
+			  									itemdescription,
+			  									glcode,
+			  									unitprice,
+			  									quantityord,
+			  									suppliersunit,
+			  									suppliers_partno,
+			  									conversionfactor )
+						  VALUES ('" . $PO_OrderNo . "',
+			  							 '" . $ItemRow['stockid'] . "',
+			  							 '" . FormatDateForSQL($DeliveryDate) . "',
+			  							 '" . $ItemRow['suppliers_partno']  . '  ' . $ItemRow['supplierdescription']  . "',
+			  							 '" . $ItemRow['stockact'] . "',
+			  							 '" . $ItemRow['price']/$ItemRow['conversionfactor'] . "',
+			  							 '" . $ItemRow['orderqty'] . "',
+			  							 '" . $ItemRow['suppliersuom'] . "',
+			  							 '" . $ItemRow['suppliers_partno'] . "',
+			  							 '" . $ItemRow['conversionfactor']  . "')";
 				$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 				$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 
@@ -384,7 +384,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 				$AuthResult = DB_query($AuthSQL);
 				$AuthRow = DB_fetch_array($AuthResult);
 				if ($AuthRow['authlevel'] == '') {
-				      $AuthRow['authlevel'] = 0;
+					  $AuthRow['authlevel'] = 0;
 				}
 
 				if (DB_num_rows($AuthResult) > 0 AND $AuthRow['authlevel'] > $Order_Value) { //user has authority to authrorise as well as create the order
@@ -425,15 +425,14 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Sales') . '" alt="" />' . ' ' . _('Outstanding Sales Orders') . '</p> ';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 if (isset($_POST['ResetPart'])) {
-     unset($SelectedStockItem);
+	 unset($SelectedStockItem);
 }
 
-echo '<br /><div class="centre">';
+echo '<div class="centre">';
 
 if (isset($_GET['OrderNumber'])) {
 	$OrderNumber = $_GET['OrderNumber'];
@@ -482,19 +481,22 @@ if (isset($_POST['StockID'])) {
 
 if (!isset($StockID)) {
 
-     /* Not appropriate really to restrict search by date since may miss older
-     ouststanding orders
+	 /* Not appropriate really to restrict search by date since may miss older
+	 ouststanding orders
 	$OrdersAfterDate = Date('d/m/Y',Mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
-     */
+	 */
 
 	if (!isset($OrderNumber) OR $OrderNumber == '') {
 
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('Order number') . ': </td>
-				<td><input type="text" name="OrderNumber" maxlength="8" size="9" /></td>
-				<td>' . _('From Stock Location') . ':</td>
-				<td><select name="StockLocation"> ';
+		echo '<fieldset>
+				<legend class="search">', _('Search Criteria'), '</legend>
+				<field>
+					<label for="OrderNumber">' . _('Order number') . ': </label>
+					<input type="text" name="OrderNumber" maxlength="8" size="9" />
+				</field>
+				<field>
+				<label for="StockLocation">' . _('From Stock Location') . ':</label>
+				<select name="StockLocation"> ';
 
 		$SQL = "SELECT locationname,
 						locations.loccode
@@ -508,9 +510,9 @@ if (!isset($StockID)) {
 		while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 			if (isset($_POST['StockLocation'])) {
 				if ($MyRow['loccode'] == $_POST['StockLocation']) {
-				     echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+					 echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				} else {
-				     echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
+					 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
 				}
 			} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
 				 echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
@@ -519,8 +521,12 @@ if (!isset($StockID)) {
 			}
 		}
 
-		echo '</select></td>
-			<td><select name="Quotations">';
+		echo '</select>
+			</field>';
+
+		echo '<field>
+				<label for="Quotations">', _('Search in'), '</label>
+				<select name="Quotations">';
 
 		if ( $_POST['Quotations'] == 'Quotes_Only' ) {
 			echo '<option selected="selected" value="Quotes_Only">' . _('Quotations Only') . '</option>';
@@ -554,32 +560,34 @@ if (!isset($StockID)) {
 
 
 		echo '</select>
-				</td>
-			</tr>
-			<tr>
-				<td>' . _('Customer Ref') . '</td>
-				<td><input type="text" name="CustomerRef" value="' . $_POST['CustomerRef'] . '" size="12" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Due Date From') . '</td>
-				<td><input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" size="10" /></td>
-				<td>' . _('Due Date To') . '</td>
-				<td><input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" size="10" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Order Date From') . '</td>
-				<td><input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" /></td>
-				<td>' . _('Order Date To') . '</td>
-				<td><input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" /></td>
-			</tr>
-			<tr>
-				<td>&nbsp;</td>
-				<td><input type="submit" name="SearchOrders" value="' . _('Search') . '" /></td>
-				<td><input type="submit" name="Reset" value="' . _('Reset') . '" /></td>
-				<td><a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
-				<td>&nbsp;</td>
-			</tr>
-		</table>';
+			</field>';
+
+		echo '<field>
+				<label for="CustomerRef">' . _('Customer Ref') . '</label>
+				<input type="text" name="CustomerRef" value="' . $_POST['CustomerRef'] . '" size="12" />
+			</field>
+			<field>
+				<label for"DueDateFrom">' . _('Due Date From') . '</label>
+				<input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" size="10" />
+			</field>
+			<field>
+				<label for="DueDateTo">' . _('Due Date To') . '</label>
+				<input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" size="10" />
+			</field>
+			<field>
+				<label for="OrderDateFrom">' . _('Order Date From') . '</label>
+				<input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" />
+			</field>
+			<field>
+				<label for="OrderDateTo">' . _('Order Date To') . '</label>
+				<input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" />
+			</field>
+		</fieldset>
+		<div class="centre">
+			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
+			<input type="submit" name="Reset" value="' . _('Reset') . '" />
+			<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a>
+		</div>';
 	}
 
 	$SQL="SELECT categoryid,
@@ -596,14 +604,11 @@ if (!isset($StockID)) {
 		$_POST['StockCode'] = '';
 	}
 
-	echo '<br />
-		<table class="selection">
-		<tr>
-			<th colspan="6"><h3>' . _('To search for sales orders for a specific part use the part selection facilities below') . '</h3></th>
-		</tr>
-		<tr>
-      		<td>' . _('Select a stock category') . ':
-      			<select name="StockCat">';
+	echo '<fieldset>
+			<legend class="search">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</legend>
+			<field>
+			<label for="StockCat">' . _('Select a stock category') . ':</label>
+			<select name="StockCat">';
 		echo '<option value="All">' . _('All') . '</option>';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
@@ -614,21 +619,22 @@ if (!isset($StockID)) {
 		}
 	}
 
-	echo '</select></td>
-			<td>' . _('Enter text extract(s) in the description') . ':</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-		</tr>
-      	<tr>
-			<td></td>
-      		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</td>
-      		<td><input type="text" name="StockCode" size="15" maxlength="18"  value="' . $_POST['StockCode'] . '" /></td>
-      	</tr>
-      </table>';
-	echo '<br />
+	echo '</select>
+		</field>
+		<field>
+			<label for="Keywords">' . _('Enter text extract(s) in the description') . ':</label>
+			<input type="text" name="Keywords" size="20" maxlength="25" />
+		</field>
+		<h3>' . _('OR') . ' </h3>
+		<field>
+			<label for="StockCode">' . _('Enter extract of the Stock Code') . ':</label>
+			<input type="text" name="StockCode" size="15" maxlength="18"  value="' . $_POST['StockCode'] . '" />
+		</field>
+	</fieldset>';
+	echo '<div class="centre">
 			<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
 			<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
-		</div>
-		<br />';
+		</div>';
 
 if (isset($StockItemsResult)
 	AND DB_num_rows($StockItemsResult) > 1) {
@@ -760,8 +766,8 @@ if (isset($StockItemsResult)
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
 						SUM(CASE WHEN itemdue < CURRENT_DATE
-						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
-						     ELSE 0 END) as ordervalue";
+							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
+							 ELSE 0 END) as ordervalue";
 			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND (!isset($DueDateTo) OR !is_date($DueDateTo))) {
 					$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
@@ -773,8 +779,8 @@ if (isset($StockItemsResult)
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
 						SUM(CASE WHEN itemdue >= '" . FormatDateFromSQL($DueDateFrom) . "'
-						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
-						     ELSE 0 END) as ordervalue";
+							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
+							 ELSE 0 END) as ordervalue";
 			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND isset($DueDateTo) AND is_date($DueDateTo)) {
 					$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
@@ -786,8 +792,8 @@ if (isset($StockItemsResult)
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
 						SUM (CASE WHEN itemdue >= '" . FormatDateForSQL($DueDateFrom) . "' AND itemdue <= '" . FormatDateForSQL($DueDateTo) . "'
-						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
-						     ELSE 0 END) as ordervalue";
+							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
+							 ELSE 0 END) as ordervalue";
 			} elseif ((!isset($DueDateFrom) OR !is_date($DueDateFrom)) AND isset($DueDateTo) AND is_date($DueDateTo)) {
 						$SQL = "SELECT salesorders.orderno,
 						debtorsmaster.name,
@@ -799,8 +805,8 @@ if (isset($StockItemsResult)
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
 						SUM(CASE WHEN AND itemdue <= '" . FormatDateForSQL($DueDateTo) . "'
-						     THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
-						     ELSE 0 END) as ordervalue";
+							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
+							 ELSE 0 END) as ordervalue";
 			}//end of due date inquiry
 
 				$SQL .= " FROM salesorders INNER JOIN salesorderdetails
@@ -825,7 +831,7 @@ if (isset($StockItemsResult)
 			if (isset($OrderNumber) AND $OrderNumber != '') {
 
 				$SQL .= "AND salesorders.orderno = " . $OrderNumber . "
-				    AND salesorders.quotation = " . $Quotations;
+					AND salesorders.quotation = " . $Quotations;
 
 			} elseif (isset($CustomerRef) AND $CustomerRef != '') {
 				$SQL .= "AND salesorders.customerref = '" . $CustomerRef . "'
@@ -1068,7 +1074,7 @@ if (isset($StockItemsResult)
 }
 
 echo '</div>
-      </form>';
+	  </form>';
 
 } //end StockID already selected
 
@@ -1113,10 +1119,10 @@ function GetSearchItems ($SqlConstraint = '') {
 
 	$SQL .= $SqlConstraint;
 	$SQL .= " GROUP BY stockmaster.stockid,
-					    stockmaster.description,
-					    stockmaster.decimalplaces,
-					    stockmaster.units
-					    ORDER BY stockmaster.stockid";
+						stockmaster.description,
+						stockmaster.decimalplaces,
+						stockmaster.units
+						ORDER BY stockmaster.stockid";
 
 	$ErrMsg =  _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL used to retrieve the searched parts was');

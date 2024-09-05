@@ -28,24 +28,22 @@ if (!isset($_POST['BatchNo'])){
 	$result=DB_query($sql);
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Select the batch number of receipts to be printed') . ':</td>
-			<td><select required="required" autofocus="autofocus" name="BatchNo">';
+		<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="BatchNo">' . _('Select the batch number of receipts to be printed') . ':</label>
+			<select required="required" autofocus="autofocus" name="BatchNo">';
 	while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['transno'].'">' . _('Batch') .' '. $myrow['transno'].' - '.ConvertSqlDate($myrow['transdate']) . '</option>';
 	}
-	echo '</select></td>
-			</tr>
-			</table>';
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '" />
-			</div>
-        </div>
-		</form>';
+	echo '</select>
+		</field>
+	</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '" />
+		</div>
+	</form>';
 
 	include ('includes/footer.php');
 	exit;

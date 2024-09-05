@@ -19,111 +19,108 @@ if (!isset($_POST['DateRange'])){
 }
 
 echo '<form id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table cellpadding="2" class="selection">
-		<tr><td valign="top">
-		<table>';
+echo '<fieldset>';
 
-echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
-		</tr>
-	<tr>
-		<td>' . _('Custom Range') . ':</td>
-		<td><input type="radio" name="DateRange" value="Custom" ';
+echo '<legend>' . _('Date Selection') . '</legend>';
+
+echo '<field>
+		<label for="DateRange">' . _('Custom Range') . ':</label>
+		<input type="radio" name="DateRange" value="Custom" ';
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)"/></td>
-		</tr>
-	<tr>
-		<td>' . _('This Week') . ':</td>
-		<td><input type="radio" name="DateRange" value="ThisWeek" ';
+echo	' onchange="ReloadForm(Form1.ShowSales)"/>
+		</field>';
+
+echo '<field>
+		<label for="DateRange">' . _('This Week') . ':</label>
+		<input type="radio" name="DateRange" value="ThisWeek" ';
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
-		</tr>
-	<tr>
-		<td>' . _('This Month') . ':</td>
-		<td><input type="radio" name="DateRange" value="ThisMonth" ';
+echo	' onchange="ReloadForm(Form1.ShowSales)" />
+		</field>';
+
+echo '<field>
+		<label for="DateRange">' . _('This Month') . ':</label>
+		<input type="radio" name="DateRange" value="ThisMonth" ';
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
-		</tr>
-	<tr>
-		<td>' . _('This Quarter') . ':</td>
-		<td><input type="radio" name="DateRange" value="ThisQuarter" ';
+echo ' onchange="ReloadForm(Form1.ShowSales)" />
+		</field>';
+
+echo '<field>
+		<label for="ThisQuarter">' . _('This Quarter') . ':</label>
+		<input type="radio" name="DateRange" value="ThisQuarter" ';
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
-		</tr>';
+echo ' onchange="ReloadForm(Form1.ShowSales)" />
+	</field>';
+
 if ($_POST['DateRange']=='Custom'){
 	if (!isset($_POST['ToDate'])){
 		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(1,1,1,Date('m')-12,Date('d')+1,Date('Y')));
 		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<tr>
-			<td>' . _('Date From') . ':</td>
-			<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-			</tr>';
-	echo '<tr>
-			<td>' . _('Date To') . ':</td>
-			<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-			</tr>';
+	echo '<field>
+			<label for="FromDate">' . _('Date From') . ':</label>
+			<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+		</field>';
+	echo '<field>
+			<label for="ToDate">' . _('Date To') . ':</label>
+			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+		</field>';
 }
-echo '</table>
-		</td><td valign="top">
-		<table>';
+echo '</fieldset>';
 
-echo '<tr><th colspan="2" class="centre">' . _('Display Data') . '</th>
-		</tr>
-	<tr>
-		<td>' . _('Daily') . ':</td>
-		<td><input type="radio" name="DisplayData" value="Daily" ';
+echo '<fieldset>
+		<legend>' . _('Display Data') . '</legend>';
+
+echo '<field>
+		<label for="DisplayData">' . _('Daily') . ':</label>
+		<input type="radio" name="DisplayData" value="Daily" ';
 if ($_POST['DisplayData']=='Daily'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
-		</tr>
-	<tr>
-		<td>' . _('Weekly') . ':</td>
-		<td><input type="radio" name="DisplayData" value="Weekly" ';
+echo ' onchange="ReloadForm(Form1.ShowSales)" />
+		</field>';
+
+echo '<field>
+		<label for="DisplayData">' . _('Weekly') . ':</label>
+		<input type="radio" name="DisplayData" value="Weekly" ';
 if ($_POST['DisplayData']=='Weekly'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
-		</tr>
-	<tr>
-		<td>' . _('Monthly') . ':</td>
-		<td><input type="radio" name="DisplayData" value="Monthly" ';
+echo ' onchange="ReloadForm(Form1.ShowSales)" />
+	</field>';
+
+echo '<field>
+		<label for="DisplayData">' . _('Monthly') . ':</label>
+		<input type="radio" name="DisplayData" value="Monthly" ';
 if ($_POST['DisplayData']=='Monthly'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
-		</tr>
-	<tr>
-		<td>' . _('Quarterly') . ':</td>
-		<td><input type="radio" name="DisplayData" value="Quarterly" ';
+echo ' onchange="ReloadForm(Form1.ShowSales)" />
+	</field>';
+
+echo '<field>
+		<label for="DisplayData">' . _('Quarterly') . ':</label>
+		<input type="radio" name="DisplayData" value="Quarterly" ';
 if ($_POST['DisplayData']=='Quarterly'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(Form1.ShowSales)" /></td>
-		</tr>';
-echo '</table>
-		</td></tr>
-	</table>';
+echo	' onchange="ReloadForm(Form1.ShowSales)" />
+		</field>';
+echo '</fieldset>';
 
-
-echo '<br />
-		<div class="centre">
-			<input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />
-		</div>
-        </div>
-		</form>
-		<br />';
+echo '<div class="centre">
+		<input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />
+	</div>
+</form>';
 
 if ($_POST['DateRange']=='Custom' AND !isset($_POST['FromDate']) AND !isset($_POST['ToDate'])){
 	//Don't run the report until custom dates entered

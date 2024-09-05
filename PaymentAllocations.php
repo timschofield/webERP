@@ -32,8 +32,7 @@ echo '<p class="page_title_text">
 
 echo '<div class="page_help_text">' .
 		_('This shows how the payment to the supplier was allocated') . '<a href="SupplierInquiry.php?&amp;SupplierID=' . $SuppID . '">' . _('Back to supplier inquiry') . '</a>
-	</div>
-	<br />';
+	</div>';
 
 $SQL= "SELECT supptrans.supplierno,
 				supptrans.suppreference,

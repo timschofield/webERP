@@ -91,15 +91,15 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 echo '<div class="page_help_text">' . _('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div><br />';
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="Type" value="' . $Type . '" />';
 
-echo '<table class="selection">
-		<tr>
-			<td align="left">' . _('Bank Account') . ':</td>
-			<td colspan="3"><select tabindex="1" autofocus="autofocus" name="BankAccount">';
+echo '<fieldset>
+		<legend>', _('Select Criteria'), '</legend>
+		<field>
+			<label for="BankAccount">' . _('Bank Account') . ':</label>
+			<select tabindex="1" autofocus="autofocus" name="BankAccount">';
 
 $SQL = "SELECT
 			bankaccounts.accountcode,
@@ -116,8 +116,8 @@ while ($MyRow=DB_fetch_array($resultBankActs)) {
 		((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
 		' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['BeforeDate']) OR !Is_Date($_POST['BeforeDate'])) {
 	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -127,18 +127,18 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])) {
 }
 
 // Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
-echo '<tr>
-		<td>' . _('Show') . ' ' . $TypeName . ' ' . _('from') . ':</td>
-		<td><input tabindex="3" type="text" name="AfterDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['AfterDate'] . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="AfterDate">' . _('Show') . ' ' . $TypeName . ' ' . _('from') . ':</label>
+		<input tabindex="3" type="text" name="AfterDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['AfterDate'] . '" />
+	</field>';
 
-echo '<tr>
-        <td>' . _('to') . ':</td>
-		<td><input tabindex="2" type="text" name="BeforeDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['BeforeDate'] . '" /></td>
-	</tr>';
-echo '<tr>
-		<td colspan="3">' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</td>
-		<td><select tabindex="4" name="Ostg_or_All">';
+echo '<field>
+        <label for="BeforeDate">' . _('to') . ':</label>
+		<input tabindex="2" type="text" name="BeforeDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['BeforeDate'] . '" />
+	</field>';
+echo '<field>
+		<label for="Ostg_or_All">' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</label>
+		<select tabindex="4" name="Ostg_or_All">';
 
 if ($_POST['Ostg_or_All']=='All') {
 	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
@@ -147,12 +147,12 @@ if ($_POST['Ostg_or_All']=='All') {
 	echo '<option value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
 	echo '<option selected="selected" value="Ostdg">' . _('Show unmatched') . ' ' . $TypeName . ' ' . _('only') . '</option>';
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-	<td colspan="3">' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</td>
-	<td><select tabindex="5" name="First20_or_All">';
+echo '<field>
+		<label for="First20_or_All">' . _('Choose to display only the first 20 matching') . ' ' . $TypeName . ' ' . _('or all') . ' ' . $TypeName . ' ' . _('meeting the criteria') . ':</label>
+		<select tabindex="5" name="First20_or_All">';
 if ($_POST['First20_or_All']=='All') {
 	echo '<option selected="selected" value="All">' . _('Show all') . ' ' . $TypeName . ' ' . _('in the date range') . '</option>';
 	echo '<option value="First20">' . _('Show only the first 20') . ' ' . $TypeName . '</option>';
@@ -161,11 +161,10 @@ if ($_POST['First20_or_All']=='All') {
 	echo '<option selected="selected" value="First20">' . _('Show only the first 20') . ' ' . $TypeName . '</option>';
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '</table>
-	<br />
+echo '</fieldset>
 	<div class="centre">
 		<input tabindex="6" type="submit" name="ShowTransactions" value="' . _('Show selected') . ' ' . $TypeName . '" />';
 

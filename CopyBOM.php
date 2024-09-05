@@ -55,7 +55,6 @@ if(isset($_POST['Submit'])) {
 									taxcatid,
 									serialised,
 									perishable,
-									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -82,7 +81,6 @@ if(isset($_POST['Submit'])) {
 									taxcatid,
 									serialised,
 									perishable,
-									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -161,7 +159,6 @@ if(isset($_POST['Submit'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$sql = "SELECT stockid,
@@ -171,39 +168,50 @@ if(isset($_POST['Submit'])) {
 				AND  mbflag IN ('M', 'A', 'K', 'G');";
 	$result = DB_query($sql);
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('From Stock ID') . '</td>';
-	echo '<td><select name="StockID">';
-	while($myrow = DB_fetch_row($result)) {
-		echo '<option value="'.$myrow[0].'">' . $myrow[0].' -- '.$myrow[1] . '</option>';
-	}
-	echo '</select></td>
-			</tr>';
-	echo '<tr>
-			<td><input type="radio" name="NewOrExisting" value="N" />' . _(' To New Stock ID') . '</td>';
-	echo '<td><input type="text" maxlength="20" autofocus="autofocus" pattern="[a-zA-Z0-9_\-]*" name="ToStockID" title="' . _('Enter a new item code to copy the existing item and its bill of material to. Item codes can contain only alpha-numeric characters, underscore or hyphens.') . '" /></td></tr>';
+	echo '<fieldset>
+			<legend>', _('Copy Criteria'), '</legend>';
 
-	$sql = "SELECT stockid,
+	echo '<field>
+			<label for="StockID">', _('From Stock ID'), '</label>
+			<select name="StockID">';
+	while ($MyRow = DB_fetch_row($result)) {
+		if (isset($_GET['Item']) and $MyRow[0] == $_GET['Item']) {
+			echo '<option selected="selected" value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
+		} else {
+			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
+		}
+	}
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', _(' To New Stock ID'), '</label>
+			<input type="text" required="required" maxlength="20" name="ToStockID" />
+		</field>';
+
+	$SQL = "SELECT stockid,
 					description
 				FROM stockmaster
 				WHERE stockid NOT IN (SELECT DISTINCT parent FROM bom)
 				AND mbflag IN ('M', 'A', 'K', 'G');";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
 
-	if (DB_num_rows($result) > 0) {
-		echo '<tr>
-				<td><input type="radio" name="NewOrExisting" checked="checked" value="E" />' . _('To Existing Stock ID') . '</td><td>';
+		echo '<h1>', _('OR'), '</h1>';
+		echo '<field>
+				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', _('To Existing Stock ID'), '</label>';
 		echo '<select name="ExStockID">';
-		while($myrow = DB_fetch_row($result)) {
-			echo '<option value="'.$myrow[0].'">' . $myrow[0].' -- '.$myrow[1] . '</option>';
+		while ($MyRow = DB_fetch_row($Result)) {
+			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 	}
-	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="Submit" value="Submit" /></div>
-          </div>
-          </form>';
+	echo '</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="Submit" value="Submit" />
+		</div>
+	</form>';
 
 	include('includes/footer.php');
 }

@@ -123,7 +123,6 @@ if($NewTransfer) {
 			$StockLocationToAccount = $myrow['glaccountcode'];
 		}
 
-		$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	}
 
 	$_SESSION['Transfer']= new StockTransfer(0,
@@ -135,6 +134,7 @@ if($NewTransfer) {
 										$StockLocationToAccount,
 										Date($_SESSION['DefaultDateFormat'])
 										);
+	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	$result = DB_query("SELECT description,
 							units,
 							mbflag,
@@ -602,42 +602,48 @@ echo '<p class="page_title_text">
 	  </p>';
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if(!isset($_GET['Description'])) {
 	$_GET['Description']='';
 }
-echo '<table class="selection">
-		<tr>
-			<td>' .  _('Stock Code'). ':</td>
-			<td>';
+echo '<fieldset>
+		<legend>', _('Stock Transfer'), '</legend>
+		<field>
+			<label for="StockID">' .  _('Stock Code'). ':</label>';
 if(!isset($_POST['StockID'])) {
 	$_POST['StockID'] = '';
 }
-	echo '<input type="text"  title="'._('The stock ID should not be blank or contains illegal characters, you can choose left this blank and only keyin')._('Partial Stock Code')._('or')._('Partial Description')._('then push')._('Check Part').'" name="StockID" size="21" value="' . $_POST['StockID'] . '" maxlength="20" /></td></tr>';
+	echo '<input type="text"  title="" name="StockID" size="21" value="' . $_POST['StockID'] . '" maxlength="20" />
+		<fieldhelp>'._('The stock ID should not be blank or contain illegal characters, you can choose left this blank and only keyin').' '._('Partial Stock Code').' '._('or').' '._('Partial Description').' '._('then push').' '._('Check Part').'</fieldhelp>
+	</field>';
 
-echo '<tr><td>' .  _('Partial Description'). ':</td>
-		<td><input type="text" name="StockText" title="'._('You can key in part of stock description or left this and ')._('Partial Stock Code')._('blank and click ')._('Check Part').' '._('to view the whole stock list').'" size="21" value="' . $_GET['Description'] .'" /></td>
-		<td>' . _('Partial Stock Code'). ':</td><td>';
+echo '<field>
+		<label for="StockText">' .  _('Partial Description'). ':</label>
+		<input type="text" name="StockText" title="" size="21" value="' . $_GET['Description'] .'" />
+		<fieldhelp>'._('You can key in part of stock description or left this and ').' '._('Partial Stock Code').' '._('blank and click ').' '._('Check Part').' '._('to view the whole stock list').'</fieldhelp>
+		' . _('Partial Stock Code'). ':';
 if(isset($_POST['StockID'])) {
-	echo '<input type="text" title="'._('You can key in partial of the stock code or just left this blank to click').' '._('Check Part').'" name="StockCode" size="21" value="' . $_POST['StockID'] .'" maxlength="20" />';
+	echo '<input type="text" title="" name="StockCode" size="21" value="' . $_POST['StockID'] .'" maxlength="20" />
+		<fieldhelp>'._('You can key in partial of the stock code or just left this blank to click').' '._('Check Part').'</fieldhelp>';
 } else {
-	echo '<input type="text" title="'._('You can key in partial of the stock code or just left this blank to click').' '._('Check Part').'" name="StockCode" size="21" value="" maxlength="20" />';
+	echo '<input type="text" title="" name="StockCode" size="21" value="" maxlength="20" />
+		<fieldhelp>'._('You can key in partial of the stock code or just left this blank to click').' '._('Check Part').'</fieldhelp>';
 }
-echo '</td><td><input type="submit" name="CheckCode" value="'._('Check Part').'" /></td></tr>';
+echo '<input type="submit" name="CheckCode" value="'._('Check Part').'" />
+	</field>';
 
 if(isset($_SESSION['Transfer']->TransferItem[0]->ItemDescription)
 	AND mb_strlen($_SESSION['Transfer']->TransferItem[0]->ItemDescription)>1) {
 
-	echo '<tr>
+	echo '<field>
 			<td colspan="3"><font color="blue" size="3">' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Transfer']->TransferItem[0]->PartUnit . ' )</font></td>
-		</tr>';
+		</field>';
 }
 
-echo '<tr>
-		<td>' . _('From Stock Location').':</td>
-		<td><select name="StockLocationFrom">';
+echo '<field>
+		<label for="StockLocationFrom">' . _('From Stock Location').':</label>
+		<select name="StockLocationFrom">';
 
 $sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $resultStkLocs = DB_query($sql);
@@ -657,12 +663,12 @@ while($myrow=DB_fetch_array($resultStkLocs)) {
 	}
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' .  _('To Stock Location').': </td>
-		<td><select name="StockLocationTo"> ';
+echo '<field>
+		<label for="StockLocationTo">' .  _('To Stock Location').': </label>
+		<select name="StockLocationTo"> ';
 
 DB_data_seek($resultStkLocs,0);
 
@@ -682,27 +688,32 @@ while($myrow=DB_fetch_array($resultStkLocs)) {
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Transfer Quantity').':</td>';
+echo '<field>
+		<label for="Quantity">' . _('Transfer Quantity').':</label>';
 
 if(isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 	AND $_SESSION['Transfer']->TransferItem[0]->Controlled==1) {
 
-	echo '<td class="number"><input type="hidden" name="Quantity" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /><a href="' . $RootPath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a></td></tr>';
+	echo '<input type="hidden" name="Quantity" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" />
+		<a href="' . $RootPath .'/StockTransferControlled.php?StockLocationFrom='.$_SESSION['Transfer']->StockLocationFrom.'">
+		' . $_SESSION['Transfer']->TransferItem[0]->Quantity . '</a>
+	</field>';
 } elseif(isset($_SESSION['Transfer']->TransferItem[0]->Controlled)) {
-	echo '<td><input type="text" class="number" name="Quantity" title="'._('The transfer quantity cannot be zero').'" size="12" maxlength="12" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" /></td></tr>';
+	echo '<input type="text" class="number" name="Quantity" title="" size="12" maxlength="12" value="' . locale_number_format($_SESSION['Transfer']->TransferItem[0]->Quantity) . '" />
+		<fieldhelp'._('The transfer quantity cannot be zero').'</fieldhelp>
+	</field>';
 } else {
-	echo '<td><input type="text" class="number"  title="'._('The transfer quantity cannot be zer0').'" name="Quantity" size="12" maxlength="12" value="0" /></td>
-		</tr>';
+	echo '<input type="text" class="number"  title="" name="Quantity" size="12" maxlength="12" value="0" />
+		<fieldhelp>'._('The transfer quantity cannot be zer0').'</fieldhelp>
+		</field>';
 }
 
-echo '</table>
+echo '</fieldset>
 	<div class="centre">
-		<br />
-		<input type="submit" name="EnterTransfer" value="' . _('Enter Stock Transfer') . '" />
-		<br />';
+		<input type="submit" name="EnterTransfer" value="' . _('Enter Stock Transfer') . '" />';
 
 if(empty($_SESSION['Transfer']->TransferItem[0]->StockID) and isset($_POST['StockID'])) {
 	$StockID=$_POST['StockID'];
@@ -724,7 +735,6 @@ if(isset($_SESSION['Transfer'])) {
 		<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 }
 echo '</div>
-    </div>
 	</form>';
 include('includes/footer.php');
 ?>

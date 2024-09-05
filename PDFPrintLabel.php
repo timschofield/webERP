@@ -52,7 +52,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		exit;
 	}
 
-
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
@@ -99,12 +98,10 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<input type="hidden" name="Currency" value="' . $_POST['Currency'] . '" />
 		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
 		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
-		<br />
 		<div class="centre">
 
 			<input type="submit" name="PrintLabels" value="'. _('Print Labels'). '" />
 		</div>
-		<br />
 			<div class="centre">
 				<a href="'. $RootPath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
 			</div>
@@ -282,29 +279,33 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table class="selection">
-				<tr>
-					<td>' . _('Label to print') . ':</td>
-					<td><select required="required" autofocus="autofocus" name="LabelID">';
+				<fieldset>
+				<legend>', _('Label Criteria'), '</legend>
+				<field>
+					<label for="LabelID">' . _('Label to print') . ':</label>
+					<select required="required" autofocus="autofocus" name="LabelID">';
 
 		$LabelResult = DB_query("SELECT labelid, description FROM labels");
 		while ($LabelRow = DB_fetch_array($LabelResult)){
 			echo '<option value="' . $LabelRow['labelid'] . '">' . $LabelRow['description'] . '</option>';
 		}
-		echo '</select></td>
-			</tr>
-			<tr>
-				<td>' .  _('For Stock Category') .':</td>
-				<td><select name="StockCategory">';
+		echo '</select>
+			</field>';
+
+		echo '<field>
+				<label for="StockCategory">' .  _('For Stock Category') .':</label>
+				<select name="StockCategory">';
 
 		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
 		while ($myrow = DB_fetch_array($CatResult)){
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 
-		echo '<tr><td>' . _('For Sales Type/Price List').':</td>
-                  <td><select name="SalesType">';
+		echo '<field>
+				<label for="SalesType">' . _('For Sales Type/Price List').':</label>
+				<select name="SalesType">';
 		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 		$SalesTypesResult=DB_query($sql);
 
@@ -315,10 +316,12 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
 			}
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 
-		echo '<tr><td>' . _('For Currency').':</td>
-                  <td><select name="Currency">';
+		echo '<field>
+				<label for="Currency">' . _('For Currency').':</label>
+				<select name="Currency">';
 		$sql = "SELECT currabrev, country, currency FROM currencies";
 		$CurrenciesResult=DB_query($sql);
 
@@ -329,22 +332,22 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' - ' .$myrow['currency'] . '</option>';
 			}
 		}
-		echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Effective As At') . ':</td>
-			<td><input type="text" maxlength="10" size="11" class="date" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
-        echo '</td></tr>';
+		echo '</select>
+			</field>';
 
-		echo'<tr><td>' . _('Number of labels per item') . ':</td>
-			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /></tr>';
+		echo '<field>
+				<label for="EffectiveDate">' . _('Effective As At') . ':</label>
+				<input type="text" maxlength="10" size="11" class="date" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			</field>';
 
-		echo '</table>
-				<br />
+		echo'<field>
+				<label for="LabelsPerItem">' . _('Number of labels per item') . ':</label>
+				<input type="text" class="number" name="LabelsPerItem" size="3" value="1" /></field>';
+
+		echo '</fieldset>
 				<div class="centre">
 					<input type="submit" name="ShowLabels" value="'. _('Show Labels'). '" />
 				</div>
-				<br />
 				<div class="centre">
 					<a href="'. $RootPath . '/Labels.php">' . _('Label Template Maintenance'). '</a>
 				</div>

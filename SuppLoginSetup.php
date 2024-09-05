@@ -27,11 +27,11 @@ $ModuleList = array(_('Orders'),
 					_('Petty Cash'),
 					_('Setup'));
 
-echo '<a href="' . $RootPath . '/SelectSupplier.php?">' . _('Back to Suppliers') . '</a><br />';
+echo '<a href="' . $RootPath . '/SelectSupplier.php?" class="toplink">' . _('Back to Suppliers') . '</a><br />';
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '</p><br />';
-
-
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : ' . $_SESSION['SupplierID'] . _(' has been selected') . '
+	</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -105,15 +105,15 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-
-echo '<table class="selection">
-		<tr>
-			<td>' . _('User Login') . ':</td>
-			<td><input type="text" pattern="[^><+-]{4,20}" title="'._('The user ID must has more than 4 legal characters').'" required="required" placeholder="'._('More than 4 characters').'" name="UserID" size="22" maxlength="20" /></td>
-		</tr>';
+echo '<fieldset>
+		<legend>', _('Supplier Login Details'), '</legend>
+		<field>
+			<label for="UserID">' . _('User Login') . ':</label>
+			<input type="text" pattern="[^><+-]{4,20}" title="" required="required" placeholder="'._('More than 4 characters').'" name="UserID" size="22" maxlength="20" />
+			<fieldhelp>'._('The user ID must has more than 4 legal characters').'</fieldhelp>
+		</field>';
 
 
 if (!isset($_POST['Password'])) {
@@ -128,26 +128,26 @@ if (!isset($_POST['Phone'])) {
 if (!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
-echo '<tr>
-		<td>' . _('Password') . ':</td>
-		<td><input type="password" pattern=".{5,20}" placeholder="'._('More than 5 characters').'" required="required" title="'._('Password must be more than 5 characters').'"  name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Full Name') . ':</td>
-		<td><input type="text" pattern=".{0,35}" title="'._('Must be less than 35 characters').'" placeholder="'._('User name').'" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Telephone No') . ':</td>
-		<td><input type="tel" pattern="[\s+()-\d]{1,30}" title="'._('The input must be phone number').'" placeholder="'._('number and allowed charactrs').'" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Email Address') .':</td>
-		<td><input type="email" name="Email" title="'._('The input must be email address').'" placeholder="'._('email address format').'" value="' . $_POST['Email'] .'" size="32" maxlength="55" /></td>
-	</tr>';
-
-
-
-
+echo '<field>
+		<label for="Password">' . _('Password') . ':</label>
+		<input type="password" pattern=".{5,20}" placeholder="'._('More than 5 characters').'" required="required" title=""  name="Password" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
+		<fieldhelp>'._('Password must be more than 5 characters').'</fieldhelp>
+	</field>
+	<field>
+		<label for="RealName">' . _('Full Name') . ':</label>
+		<input type="text" pattern=".{0,35}" title="" placeholder="'._('User name').'" name="RealName" value="' . $_POST['RealName'] . '" size="36" maxlength="35" />
+		<fieldhelp>'._('Must be less than 35 characters').'</fieldhelp>
+	</field>
+	<field>
+		<label for="Phone">' . _('Telephone No') . ':</label>
+		<input type="tel" pattern="[\s+()-\d]{1,30}" title="" placeholder="'._('number and allowed charactrs').'" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" />
+		<fieldhelp>'._('The input must be phone number').'</fieldhelp>
+	</field>
+	<field>
+		<label for="Email">' . _('Email Address') .':</label>
+		<input type="email" name="Email" title="" placeholder="'._('email address format').'" value="' . $_POST['Email'] .'" size="32" maxlength="55" />
+		<fieldhelp>'._('The input must be email address').'</fieldhelp>
+	</field>';
 
 //Make an array of the security roles where only one role is active and is ID 1
 
@@ -173,17 +173,17 @@ while ($myroles = DB_fetch_array($RolesResult)){
 }
 
 if (!$FoundTheSupplierRole){
-    echo '</table>
-          </div>
-          </form>';
+	echo '</fieldset>
+		  </form>';
 	prnMsg(_('The supplier login role is expected to contain just one token - number 9. There is no such role currently defined - so a supplier login cannot be set up until this role is defined'),'error');
 	include('includes/footer.php');
 	exit;
 }
 
 
-echo '<tr><td>' . _('Default Location') . ':</td>
-	<td><select name="DefaultLocation">';
+echo '<field>
+		<label for="DefaultLocation">' . _('Default Location') . ':</label>
+		<select name="DefaultLocation">';
 
 $sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $result = DB_query($sql);
@@ -198,9 +198,12 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 }
+echo '</select>
+	</field>';
 
-echo '<tr><td>' . _('Reports Page Size') .':</td>
-	<td><select name="PageSize">';
+echo '<field>
+		<label for="PageSize">' . _('Reports Page Size') .':</label>
+		<select name="PageSize">';
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
 	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
@@ -243,11 +246,12 @@ if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
 	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-	<td>' . _('Theme') . ':</td>
-	<td><select name="Theme">';
+echo '<field>
+		<label for="Theme">' . _('Theme') . ':</label>
+		<select name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
@@ -266,12 +270,12 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-
-echo '<tr>
-	<td>' . _('Language') . ':</td>
-	<td><select name="UserLanguage">';
+echo '<field>
+	<label for="UserLanguage">' . _('Language') . ':</label>
+	<select name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
@@ -282,14 +286,13 @@ foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>
-	<br />
+echo '</select>
+	</field>';
+
+echo '</fieldset>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-    </div>
 	</form>';
 
 echo '<script  type="text/javascript">defaultControl(document.forms[0].UserID);</script>';

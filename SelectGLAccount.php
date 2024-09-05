@@ -85,20 +85,20 @@ $TargetPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 if (!isset($AccountID)) {
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for General Ledger Accounts') . '</p>
-		<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(mb_strlen($msg)>1){
 		prnMsg($msg,'info');
 	}
 
-	echo '<table class="selection">
-		<tr>
-			<td>' . _('Enter extract of text in the Account name') .':</td>
-			<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-			<td><b>' .  _('OR') . '</b></td>';
+	echo '<fieldset>
+			<legend class="search">', _('General Ledger account Search'), '</legend>
+		<field>
+			<label for="Keywords">' . _('Enter extract of text in the Account name') .':</label>
+			<input type="text" name="Keywords" size="20" maxlength="25" />
+		</field>
+		<h1>' .  _('OR') . '</h1>';
 
 	$SQLAccountSelect="SELECT chartmaster.accountcode,
 							chartmaster.accountname,
@@ -110,7 +110,9 @@ if (!isset($AccountID)) {
 
 	$ResultSelection=DB_query($SQLAccountSelect);
 	$OptGroup = '';
-	echo '<td><select name="GLCode">';
+	echo '<field>
+			<label for="GLCode">', _('Search for Account Code'), '</label>
+			<select name="GLCode">';
 	echo '<option value="">' . _('Select an Account Code') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		if ($OptGroup != $MyRowSelection['group_']) {
@@ -123,11 +125,10 @@ if (!isset($AccountID)) {
 			echo '<option value="' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 		}
 	}
-	echo '</select></td>';
+	echo '</select>';
 
-	echo '	</tr>
-		</table>
-		<br />';
+	echo '</field>
+		</fieldset>';
 
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />

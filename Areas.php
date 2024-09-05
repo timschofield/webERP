@@ -171,7 +171,6 @@ if (isset($SelectedArea)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-    echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedArea)) {
@@ -190,11 +189,12 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedArea" value="' . $SelectedArea . '" />';
 		echo '<input type="hidden" name="AreaCode" value="' .$_POST['AreaCode'] . '" />';
-		echo '<table class="selection">
-				<tr>
-					<td>' . _('Area Code') . ':</td>
-					<td>' . $_POST['AreaCode'] . '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit existing Sales Area details'), '</legend>
+				<field>
+					<label for="AreaCode">' . _('Area Code') . ':</label>
+					<fieldtext>' . $_POST['AreaCode'] . '</fieldtext>
+				</field>';
 
 	} else {
 		if (!isset($_POST['AreaCode'])) {
@@ -203,27 +203,26 @@ if (!isset($_GET['delete'])) {
 		if (!isset($_POST['AreaDescription'])) {
 			$_POST['AreaDescription'] = '';
 		}
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('Area Code') . ':</td>
-				<td><input tabindex="1" ' . (in_array('AreaCode',$Errors) ? 'class="inputerror"' : '' ) .' type="text" name="AreaCode" required="required" autofocus="autofocus" value="' . $_POST['AreaCode'] . '" size="3" maxlength="3" title="' . _('Enter the sales area code - up to 3 characters are allowed') . '" /></td>
-			</tr>';
+		echo '<fieldset>
+				<legend>', _('Create New Sales Area details'), '</legend>
+			<field>
+				<label for="AreaCode">' . _('Area Code') . ':</label>
+				<input tabindex="1" ' . (in_array('AreaCode',$Errors) ? 'class="inputerror"' : '' ) .' type="text" name="AreaCode" required="required" autofocus="autofocus" value="' . $_POST['AreaCode'] . '" size="3" maxlength="3" title="" />
+				<fieldhelp>' . _('Enter the sales area code - up to 3 characters are allowed') . '</fieldhelp>
+			</field>';
 	}
 
-	echo '<tr><td>' . _('Area Name') . ':</td>
-		<td><input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" required="required" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size="26" maxlength="25" title="' . _('Enter the description of the sales area') . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="AreaDescription">' . _('Area Name') . ':</label>
+			<input tabindex="2" ' . (in_array('AreaDescription',$Errors) ?  'class="inputerror"' : '' ) .'  type="text" required="required" name="AreaDescription" value="' . $_POST['AreaDescription'] .'" size="26" maxlength="25" title="" />
+			<fieldhelp>' . _('Enter the description of the sales area') . '</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td colspan="2">
+	echo '</fieldset>
 				<div class="centre">
 					<input tabindex="3" type="submit" name="submit" value="' . _('Enter Information') .'" />
 				</div>
-			</td>
-		</tr>
-		</table>
-        </div>
-		</form>';
+	</form>';
 
  } //end if record deleted no point displaying form to add record
 

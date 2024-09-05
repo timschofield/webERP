@@ -15,14 +15,13 @@ if (!(isset($_POST['Search']))) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
 		</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
 	//to view store location
-	echo '<tr>
-			<td style="width:150px">' . _('Select Location') . '  </td>
-			<td>:</td>
-			<td><select name="Location">';
+	echo '<field>
+			<label for="Location">' . _('Select Location') . ':  </label>
+			<select name="Location">';
 	$sql = "SELECT locations.loccode,
 					locationname
 			FROM locations
@@ -32,13 +31,12 @@ if (!(isset($_POST['Search']))) {
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	//to view list of customer
-	echo '<tr>
-			<td style="width:150px">' . _('Select Customer Type') . '</td>
-			<td>:</td>
-			<td><select name="Customers">';
+	echo '<field>
+			<label for="Customers">' . _('Select Customer Type') . ':</label>
+			<select name="Customers">';
 
 	$sql = "SELECT typename,
 					typeid
@@ -49,8 +47,8 @@ if (!(isset($_POST['Search']))) {
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	// stock category selection
 	$SQL="SELECT categoryid,
@@ -59,10 +57,9 @@ if (!(isset($_POST['Search']))) {
 			ORDER BY categorydescription";
 	$result1 = DB_query($SQL);
 
-	echo '<tr>
-			<td style="width:150px">' . _('In Stock Category') . ' </td>
-			<td>:</td>
-			<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">' . _('In Stock Category') . ' </label>
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -78,45 +75,42 @@ if (!(isset($_POST['Search']))) {
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-    echo '</select></td>
-        </tr>';
+    echo '</select>
+        </field>';
 
 	//view order by list to display
-	echo '<tr>
-			<td style="width:150px">' . _('Select Order By ') . ' </td>
-			<td>:</td>
-			<td><select name="Sequence">
+	echo '<field>
+			<label for="Sequence">' . _('Select Order By ') . ':</label>
+			<select name="Sequence">
 				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
 				<option value="valuesales">' . _('Value of Sales') . '</option>
-				</select></td>
-		</tr>';
+			</select>
+		</field>';
+
 	//View number of days
-	echo '<tr>
-			<td>' . _('Number Of Days') . ' </td>
-			<td>:</td>
-			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="3" type="text" name="NumberOfDays" size="8" maxlength="8" value="30" /></td>
-		 </tr>';
+	echo '<field>
+			<label for="NumberOfDays">' . _('Number Of Days') . ':</label>
+			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="3" type="text" name="NumberOfDays" size="8" maxlength="8" value="30" />
+			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
+		 </field>';
+
 	//Stock in days less than
-	echo '<tr>
-			<td>' . _('With less than') . ' </td><td>:</td>
-			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="4" type="text" name="MaxDaysOfStock" size="8" maxlength="8" value="99999" /></td>
-			<td>' . ' ' . _('Days of Stock (QOH + QOO) Available') . ' </td>
-		 </tr>';
+	echo '<field>
+			<label for="MaxDaysOfStock">' . _('With less than') . ':</label>
+			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="4" type="text" name="MaxDaysOfStock" size="8" maxlength="8" value="99999" />
+			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
+			' . ' ' . _('Days of Stock (QOH + QOO) Available') . '
+		 </field>';
 	//view number of NumberOfTopItems items
-	echo '<tr>
-			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="'._('The input must be positive integer').'" tabindex="4" type="text" name="NumberOfTopItems" size="8" maxlength="8" value="100" /></td>
-		 </tr>
-		 <tr>
-			<td></td>
-			<td></td>
-		</tr>
-	</table>
-	<br />
+	echo '<field>
+			<label for="NumberOfTopItems">' . _('Number Of Top Items') . ':</label>
+			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="4" type="text" name="NumberOfTopItems" size="8" maxlength="8" value="100" />
+			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
+		 </field>
+	</fieldset>
 	<div class="centre">
 		<input tabindex="5" type="submit" name="Search" value="' . _('Search') . '" />
 	</div>
-    </div>
 	</form>';
 } else {
 	// everything below here to view NumberOfTopItems items sale on selected location

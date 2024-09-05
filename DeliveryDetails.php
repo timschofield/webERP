@@ -598,7 +598,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 
 		if($_POST['Quotation']==0) { /*then its not a quotation its a real order */
 
-			echo '<br /><table class="selection">
+			echo '<fieldset>
 					<tr>
 						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
 						<td>' . ' ' . '<a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier='.$identifier . '&amp;TransNo=' . $OrderNo . '">' . _('Print packing slip') . ' (' . _('Preprinted stationery') . ')' . '</a></td>
@@ -613,29 +613,29 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 					<td>' . ' ' . '<a href="' . $RootPath . '/ConfirmDispatch_Invoice.php?identifier='.$identifier . '&amp;OrderNumber=' . $OrderNo .'">' . _('Confirm Dispatch and Produce Invoice') . '</a></td>
 				</tr>';
 
-			echo '</table>';
+			echo '</fieldset>';
 
 		} else {
 			/*link to print the quotation */
-			echo '<br /><table class="selection">
+			echo '<fieldset>
 					<tr>
 						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt=""></td>
 						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' . _('Print Quotation (Landscape)') . '</a></td>
 					</tr>
 					</table>';
-			echo '<br /><table class="selection">
+			echo '<fieldset>
 					<tr>
 						<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt="" /></td>
 						<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $OrderNo . '" target="_blank">' .  _('Print Quotation (Portrait)')  . '</a></td>
 					</tr>
-					</table>';
+					</fieldset>';
 		}
-		echo '<br /><table class="selection">
+		echo '<fieldset>
 				<tr>
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Order') . '" alt="" /></td>
 					<td>' . ' ' . '<a href="'. $RootPath .'/SelectOrderItems.php?identifier='.$identifier . '&amp;NewOrder=Yes">' .  _('Add Another Sales Order')  . '</a></td>
 				</tr>
-				</table>';
+				</fieldset>';
 	} else {
 		/*its a customer logon so thank them */
 		prnMsg(_('Thank you for your business'),'success');
@@ -807,24 +807,23 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 		prnMsg(_('Quotation Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
 
 		/*link to print the quotation */
-		echo '<br /><table class="selection">
+		echo '<fieldset>
 				<tr>
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt=""></td>
 					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotation.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '" target="_blank">' .  _('Print Quotation (Landscape)')  . '</a></td>
 				</tr>
-				</table>';
-		echo '<br /><table class="selection">
+				</fieldset>';
+		echo '<fieldset>
 				<tr>
 					<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Order') . '" alt="" /></td>
 					<td>' . ' ' . '<a href="' . $RootPath . '/PDFQuotationPortrait.php?identifier='.$identifier . '&amp;QuotationNo=' . $_SESSION['ExistingOrder'.$identifier] . '" target="_blank">' .  _('Print Quotation (Portrait)')  . '</a></td>
 				</tr>
-				</table>';
+				</fieldset>';
 	} else {
 
 	prnMsg(_('Order Number') .' ' . $_SESSION['ExistingOrder'.$identifier] . ' ' . _('has been updated'),'success');
 
-	echo '<br />
-			<table class="selection">
+	echo '<fieldset>
 			<tr>
 			<td><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" /></td>
 			<td><a target="_blank" href="' . $RootPath . '/PrintCustOrder.php?identifier='.$identifier  . '&amp;TransNo=' . $_SESSION['ExistingOrder'.$identifier] . '">' .  _('Print packing slip - pre-printed stationery')  . '</a></td>
@@ -841,7 +840,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			<td><img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Order') . '" alt="" /></td>
 			<td><a href="' . $RootPath .'/SelectSalesOrder.php?identifier='.$identifier   . '">' .  _('Select A Different Order')  . '</a></td>
 		</tr>
-		</table>';
+		</fieldset>';
 	}//end of print orders
 	include('includes/footer.php');
 	exit;
@@ -858,8 +857,6 @@ echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifie
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
-
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -984,16 +981,15 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 
 }
 
-echo '<br />
-	<table class="selection">
-	<tr>
-		<td>' .  _('Deliver To') .':</td>
-		<td><input type="text" autofocus="autofocus" required="required" size="42" maxlength="40" name="DeliverTo" value="' .  stripslashes($_SESSION['Items' . $identifier]->DeliverTo) . '" title="' . _('Enter the name of the customer to deliver this order to') . '" /></td>
-	</tr>';
+echo '<fieldset>
+		<field>
+			<label for="DeliverTo">' .  _('Deliver To') .':</label>
+			<input type="text" autofocus="autofocus" required="required" size="42" maxlength="40" name="DeliverTo" value="' .  stripslashes($_SESSION['Items' . $identifier]->DeliverTo) . '" title="' . _('Enter the name of the customer to deliver this order to') . '" />
+		</field>';
 
-echo '<tr>
-	<td>', _('Deliver from the warehouse at'), ':</td>
-	<td><select name="Location">';
+echo '<field>
+		<label for="Location">', _('Deliver from the warehouse at'), ':</label>
+		<select name="Location">';
 
 if($_SESSION['Items'.$identifier]->Location=='' OR !isset($_SESSION['Items'.$identifier]->Location)) {
 	$_SESSION['Items'.$identifier]->Location = $DefaultStockLocation;
@@ -1014,7 +1010,8 @@ $StkLocsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 while($myrow=DB_fetch_array($StkLocsResult)) {
 	echo '<option', ($_SESSION['Items'.$identifier]->Location==$myrow['loccode'] ? ' selected="selected"' : ''), ' value="', $myrow['loccode'], '">', $myrow['locationname'], '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 // Set the default date to earliest possible date if not set already
 if(!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {
@@ -1028,43 +1025,44 @@ if(!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 }
 
 // The estimated Dispatch date or Delivery date for this order
-echo '<tr>
-		<td>' .  _('Estimated Delivery Date') .':</td>
-		<td><input class="date" type="text" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title="' . _('Enter the estimated delivery date requested by the customer') . '"/></td>
-	</tr>';
+echo '<field>
+		<label for="DeliveryDate">' .  _('Estimated Delivery Date') .':</label>
+		<input class="date" type="text" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title=""/>
+		<fieldhelp>' . _('Enter the estimated delivery date requested by the customer') . '</fieldhelp>
+	</field>';
 // The date when a quote was issued to the customer
-echo '<tr>
-		<td>' .  _('Quote Date') .':</td>
-		<td><input class="date" type="text" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="QuoteDate">' .  _('Quote Date') .':</label>
+		<input class="date" type="text" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" />
+	</field>';
 // The date when the customer confirmed their order
-echo '<tr>
-		<td>' .  _('Confirmed Order Date') .':</td>
-		<td><input class="date" type="text" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" /></td>
-	</tr>
-	<tr>
-		<td>' .  _('Delivery Address 1 (Street)') . ':</td>
-		<td><input type="text" size="42" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '" /></td>
-	</tr>
-	<tr>
-		<td>' .  _('Delivery Address 2 (Street)') . ':</td>
+echo '<field>
+		<label for="ConfirmedDate">' .  _('Confirmed Order Date') .':</label>
+		<input class="date" type="text" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" />
+	</field>
+	<field>
+		<label for="BrAdd1">' .  _('Delivery Address 1 (Street)') . ':</label>
+		<input type="text" size="42" maxlength="40" name="BrAdd1" value="' . $_SESSION['Items'.$identifier]->DelAdd1 . '" />
+	</field>
+	<field>
+		<label for="BrAdd2">' .  _('Delivery Address 2 (Street)') . ':</label>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd2" value="' . $_SESSION['Items'.$identifier]->DelAdd2 . '" /></td>
-	</tr>
-	<tr>
-		<td>' .  _('Delivery Address 3 (Suburb/City)') . ':</td>
+	</field>
+	<field>
+		<label for="BrAdd3">' .  _('Delivery Address 3 (Suburb/City)') . ':</label>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd3" value="' . $_SESSION['Items'.$identifier]->DelAdd3 . '" /></td>
-	</tr>
-	<tr>
-		<td>' .  _('Delivery Address 4 (State/Province)') . ':</td>
+	</field>
+	<field>
+		<label for="BrAdd4">' .  _('Delivery Address 4 (State/Province)') . ':</label>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd4" value="' . $_SESSION['Items'.$identifier]->DelAdd4 . '" /></td>
-	</tr>
-	<tr>
-		<td>' .  _('Delivery Address 5 (Postal Code)') . ':</td>
+	</field>
+	<field>
+		<label for="BrAdd5">' .  _('Delivery Address 5 (Postal Code)') . ':</label>
 		<td><input type="text" size="42" maxlength="40" name="BrAdd5" value="' . $_SESSION['Items'.$identifier]->DelAdd5 . '" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Country') . ':</td>
-		<td><select name="BrAdd6">';
+	</field>';
+echo '<field>
+		<label for="BrAdd6">' . _('Country') . ':</label>
+		<select name="BrAdd6">';
 foreach ($CountriesArray as $CountryEntry => $CountryName) {
 	if(isset($_POST['BrAdd6']) AND (strtoupper($_POST['BrAdd6']) == strtoupper($CountryName))) {
 		echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName  . '</option>';
@@ -1074,25 +1072,28 @@ foreach ($CountriesArray as $CountryEntry => $CountryName) {
 		echo '<option value="' . $CountryName . '">' . $CountryName  . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo'	<tr>
-		<td>' .  _('Contact Phone Number') .':</td>
-		<td><input type="tel" size="25" maxlength="25" required="required" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" title="' . _('Enter the telephone number of the contact at the delivery address.') . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Contact Email') . ':</td>
-		<td><input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" title="' . _('Enter the email address of the contact at the delivery address') . '" /></td>
-	</tr>
-	<tr>
-		<td>' .  _('Customer Reference') .':</td>
-		<td><input type="text" size="25"  maxlength="50" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="' . _('Enter the customer\'s purchase order reference relevant to this order') . '" /></td>
-	</tr>
-	<tr>
-		<td>' .  _('Comments') .':</td>
-		<td><textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items'.$identifier]->Comments  . '</textarea></td>
-	</tr>';
+echo'<field>
+		<label for="PhoneNo">' .  _('Contact Phone Number') .':</label>
+		<input type="tel" size="25" maxlength="25" required="required" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" title="" />
+		<fieldhelp>' . _('Enter the telephone number of the contact at the delivery address.') . '</fieldhelp>
+	</field>
+	<field>
+		<label for="Email">' . _('Contact Email') . ':</label>
+		<input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" title="" />
+		<fieldhelp>' . _('Enter the email address of the contact at the delivery address') . '</fieldhelp>
+	</field>
+	<field>
+		<label for="CustRef">' .  _('Customer Reference') .':</label>
+		<input type="text" size="25"  maxlength="50" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="" />
+		<fieldhelp>' . _('Enter the customer\'s purchase order reference relevant to this order') . '</fieldhelp>
+	</field>
+	<field>
+		<label for="Comments">' .  _('Comments') .':</label>
+		<textarea name="Comments" cols="31" rows="5">' . $_SESSION['Items'.$identifier]->Comments  . '</textarea>
+	</field>';
 
 	if($CustomerLogin  == 1) {
 		echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items'.$identifier]->SalesPerson . '" />
@@ -1101,9 +1102,9 @@ echo'	<tr>
 			<input type="hidden" name="ShipVia" value="' . $_SESSION['Items'.$identifier]->ShipVia . '" />
 			<input type="hidden" name="Quotation" value="0" />';
 	} else {
-		echo '<tr>
-				<td>' . _('Sales person'). ':</td>
-				<td><select name="SalesPerson">';
+		echo '<field>
+				<label for="SalesPerson">' . _('Sales person'). ':</label>
+				<select name="SalesPerson">';
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
 		if(!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ) {
 			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
@@ -1117,14 +1118,15 @@ echo'	<tr>
 			}
 		}
 
-		echo '</select></td>
-			</tr>';
+		echo '</select>
+			</field>';
 
 		/* This field will control whether or not to display the company logo and
 		address on the packlist */
 
-		echo '<tr><td>' . _('Packlist Type') . ':</td>
-				<td><select name="DeliverBlind">';
+		echo '<field>
+				<label for="DeliverBlind">' . _('Packlist Type') . ':</label>
+				<select name="DeliverBlind">';
 
 		if($_SESSION['Items'.$identifier]->DeliverBlind ==2) {
 			echo '<option value="1">' . _('Show Company Details/Logo') . '</option>';
@@ -1133,36 +1135,37 @@ echo'	<tr>
 			echo '<option selected="selected" value="1">' . _('Show Company Details/Logo') . '</option>';
 			echo '<option value="2">' . _('Hide Company Details/Logo') . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 
 		if(isset($_SESSION['PrintedPackingSlip']) AND $_SESSION['PrintedPackingSlip']==1) {
 
-			echo '<tr>
-				<td>' .  _('Reprint packing slip') .':</td>
-				<td><select name="ReprintPackingSlip">';
+			echo '<field>
+					<label for="ReprintPackingSlip">' .  _('Reprint packing slip') .':</label>
+					<select name="ReprintPackingSlip">';
 			echo '<option value="0">' . _('Yes') . '</option>';
 			echo '<option selected="selected" value="1">' . _('No') . '</option>';
-			echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</td></tr>';
+			echo '</select>	'. _('Last printed') .': ' . ConvertSQLDate($_SESSION['DatePackingSlipPrinted']) . '</field>';
 		} else {
-			echo '<tr><td><input type="hidden" name="ReprintPackingSlip" value="0" /></td></tr>';
+			echo '<field><td><input type="hidden" name="ReprintPackingSlip" value="0" /></td></field>';
 		}
 
-		echo '<tr>
-				<td>' .  _('Charge Freight Cost ex tax') .':</td>
-				<td><input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" /></td>';
+		echo '<field>
+				<label for="FreightCost">' .  _('Charge Freight Cost ex tax') .':</label>
+				<input type="text" class="number" size="10" maxlength="12" name="FreightCost" value="' . $_SESSION['Items'.$identifier]->FreightCost . '" />';
 
 		if($_SESSION['DoFreightCalc']==true) {
 			echo '<td><input type="submit" name="Update" value="' . _('Recalc Freight Cost') . '" /></td>';
 		}
-		echo '</tr>';
+		echo '</field>';
 
 		if((!isset($_POST['ShipVia']) OR $_POST['ShipVia']=='') AND isset($_SESSION['Items'.$identifier]->ShipVia)) {
 			$_POST['ShipVia'] = $_SESSION['Items'.$identifier]->ShipVia;
 		}
 
-		echo '<tr>
-				<td>' .  _('Freight/Shipper Method') .':</td>
-				<td><select name="ShipVia">';
+		echo '<field>
+				<label for="ShipVia">' .  _('Freight/Shipper Method') .':</label>
+				<select name="ShipVia">';
 
 		$ErrMsg = _('The shipper details could not be retrieved');
 		$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
@@ -1176,10 +1179,12 @@ echo'	<tr>
 				echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 			}
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 
-		echo '<tr><td>' .  _('Quotation Only') .':</td>
-				<td><select name="Quotation">';
+		echo '<field>
+				<label for="Quotation">' .  _('Quotation Only') .':</label>
+				<select name="Quotation">';
 		if($_SESSION['Items'.$identifier]->Quotation==1) {
 			echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 			echo '<option value="0">' . _('No') . '</option>';
@@ -1187,22 +1192,23 @@ echo'	<tr>
 			echo '<option value="1">' . _('Yes') . '</option>';
 			echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 	}//end if it is NOT a CustomerLogin
 
-echo '</table>';
+echo '</fieldset>';
 
-echo '<br /><div class="centre"><input type="submit" name="BackToLineDetails" value="' . _('Modify Order Lines') . '" /><br />';
+echo '<div class="centre">
+		<input type="submit" name="BackToLineDetails" value="' . _('Modify Order Lines') . '" />';
 
 if($_SESSION['ExistingOrder'.$identifier]==0) {
-	echo '<br /><br /><input type="submit" name="ProcessOrder" value="' . _('Place Order') . '" />';
-	echo '<br /><br /><input type="submit" name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '" />';
+	echo '<input type="submit" name="ProcessOrder" value="' . _('Place Order') . '" />';
+	echo '<input type="submit" name="MakeRecurringOrder" value="' . _('Create Recurring Order') . '" />';
 } else {
-	echo '<br /><input type="submit" name="ProcessOrder" value="' . _('Commit Order Changes') . '" />';
+	echo '<input type="submit" name="ProcessOrder" value="' . _('Commit Order Changes') . '" />';
 }
 
 echo '</div>
-      </div>
       </form>';
 include('includes/footer.php');
 ?>

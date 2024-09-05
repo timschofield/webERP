@@ -172,24 +172,32 @@ if (isset($_POST['SelectChoice'])) {
 			}
 		}
 	} else {
-		echo '<table class="selection">
-				<tr>
-				<td>' . _('Assign discount category') . '</td>';
-		echo '<td><input type="text" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title="' . _('Enter the discount category up to 2 alpha-numeric characters') . '"  maxlength="2" size="2" /></td>';
-		echo '<td>' . _('to all items in stock category') . '</td>';
+		echo '<fieldset>
+				<legend>', _('Assign Discounts'), '</legend>
+				<field>
+					<label for="DiscountCategory">' . _('Assign discount category') . '</label>
+					<input type="text" required="required" name="DiscountCategory" pattern="[0-9a-zA-Z_]*" title=""  maxlength="2" size="2" />
+					<fieldhelp>' . _('Enter the discount category up to 2 alpha-numeric characters') . '</fieldhelp>
+				</field>';
+		echo '<field>
+				<label for="stockcategory">' . _('to all items in stock category') . '</label>';
 		$sql = "SELECT categoryid,
 				categorydescription
 				FROM stockcategory";
 		$result = DB_query($sql);
-		echo '<td><select name="stockcategory">';
+		echo '<select name="stockcategory">';
 		while ($myrow=DB_fetch_array($result)) {
 			echo '<option value="'.$myrow['categoryid'].'">' . $myrow['categorydescription'] . '</option>';
 		}
-		echo '</select></td></tr></table>';
-		echo '<br /><div class="centre"><input type="submit" name="SubmitCategory" value="'. _('Update Items') .'" /></div>';
+		echo '</select>
+			</field>
+		</fieldset>';
+		
+		echo '<div class="centre">
+				<input type="submit" name="SubmitCategory" value="'. _('Update Items') .'" />
+			</div>';
 	}
-	echo '</div>
-          </form>';
+	echo '</form>';
 
 	if (! isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for first cat defined */
 
@@ -215,7 +223,7 @@ if (isset($_POST['SelectChoice'])) {
 
 		$result = DB_query($sql);
 
-		echo '<br /><table class="selection">';
+		echo '<table class="selection">';
 		echo '<tr>
 			<th>' .  _('Discount Category')  . '</th>
 			<th>' .  _('Item')  . '</th></tr>';
@@ -246,21 +254,23 @@ if (isset($_POST['SelectChoice'])) {
 
 if (!isset($_POST['SelectChoice'])) {
 	echo '<form method="post" id="choose" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr>
-			<td>' . _('Update discount category for') . '</td>
-			<td><select name="ChooseOption" onchange="ReloadForm(choose.SelectChoice)">
+	echo '<fieldset>
+			<legend>', _('Choose Stock Item Option'), '</legend>';
+			
+	echo '<field>
+			<label for="ChooseOption">' . _('Update discount category for') . '</label>
+			<select name="ChooseOption" onchange="ReloadForm(choose.SelectChoice)">
 				<option value="1">' . _('a single stock item') . '</option>
 				<option value="2">' . _('a complete stock category') . '</option>
-				</select></td>
-		</tr>
-		</table>
-		<br />';
-	echo '<div class="centre"><input type="submit" name="SelectChoice" value="'._('Select').'" /></div>';
-    echo '</div>
-          </form>';
+			</select>
+		</field>
+		</fieldset>';
+		
+	echo '<div class="centre">
+			<input type="submit" name="SelectChoice" value="'._('Select').'" />
+		</div>';
+    echo '</form>';
 }
 
 include('includes/footer.php');

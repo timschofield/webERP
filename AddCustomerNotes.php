@@ -154,7 +154,6 @@ echo '<br />';
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo=' . $DebtorNo . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($Id)) {
@@ -183,61 +182,66 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
 		echo '<input type="hidden" name="Con_ID" value="' . $_POST['Noteid'] . '" />';
 		echo '<input type="hidden" name="DebtorNo" value="' . $_POST['debtorno'] . '" />';
-		echo '<table class="selection">
-			<tr>
-				<td>' .  _('Note ID').':</td>
-				<td>' . $_POST['Noteid'] . '</td>
-			</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit existing customer note'), '</legend>
+				<field>
+					<label for="Noteid">' .  _('Note ID').':</label>
+					<fieldtext>' . $_POST['Noteid'] . '</fieldtext>
+				</field>';
 	} else {
-		echo '<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Create new customer note'), '</legend>';
 	}
 
-	echo '<tr>
-			<td>' . _('Contact Note'). '</td>';
+	echo '<field>
+			<label for="Note">' . _('Contact Note'). '</label>';
 	if (isset($_POST['Note'])) {
-		echo '<td><textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32">' .$_POST['Note'] . '</textarea></td>
-			</tr>';
+		echo '<textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32">' .$_POST['Note'] . '</textarea>
+			<fieldhelp>', _('Write the customer note here'), '</fieldhelp>
+		</field>';
 	} else {
-		echo '<td><textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32"></textarea></td>
-			</tr>';
+		echo '<textarea name="Note" autofocus="autofocus" required="required" rows="3" cols="32"></textarea>
+			<fieldhelp>', _('Write the customer note here'), '</fieldhelp>
+		</field>';
 	}
-	echo '<tr>
-			<td>' .  _('WWW') . '</td>';
+	echo '<field>
+			<label for="Href">' .  _('WWW') . '</label>';
 	if (isset($_POST['Href'])) {
-		echo '<td><input type="url" name="Href" value="'.$_POST['Href'].'" size="35" maxlength="100" /></td>
-			</tr>';
+		echo '<input type="url" name="Href" value="'.$_POST['Href'].'" size="35" maxlength="100" />
+			<fieldhelp>', _('Any website associated with this note'), '</fieldhelp>
+		</field>';
 	} else {
-		echo '<td><input type="url" name="Href" size="35" maxlength="100" /></td>
-			</tr>';
+		echo '<input type="url" name="Href" size="35" maxlength="100" />
+			<fieldhelp>', _('Any website associated with this note'), '</fieldhelp>
+		</field>';
 	}
-	echo '<tr>
-			<td>' . _('Date') . '</td>';
+	echo '<field>
+			<label for="NoteDate">' . _('Date') . '</label>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<td><input type="date" required name="NoteDate"  value="' . $_POST['NoteDate'] . '" size="11" maxlength="10" /></td>
-			</tr>';
+		echo '<input type="date" required name="NoteDate"  value="' . $_POST['NoteDate'] . '" size="11" maxlength="10" />
+			<fieldhelp>', _('The date of this note'), '</fieldhelp>
+		</field>';
 	} else {
-		echo '<td><input type="date" required name="NoteDate" size="11" maxlength="10" /></td>
-			</tr>';
+		echo '<input type="date" required name="NoteDate" size="11" maxlength="10" />
+			<fieldhelp>', _('The date of this note'), '</fieldhelp>
+		</field>';
 	}
-	echo '<tr>
-			<td>' .  _('Priority'). '</td>';
+	echo '<field>
+			<label for="Priority">' .  _('Priority'). '</label>';
 	if (isset($_POST['Priority'])) {
-		echo '<td><input type="text" class="number" required="required" name="Priority" class="number" value="' . $_POST['Priority']. '" size="1" maxlength="3" /></td>
-			</tr>';
+		echo '<input type="text" class="number" required="required" name="Priority" class="number" value="' . $_POST['Priority']. '" size="1" maxlength="3" />
+			<fieldhelp>', _('The priority level for this note, between 1 and 9'), '</fieldhelp>
+		</field>';
 	} else {
-		echo '<td><input type="text" class="number" required="required"  name="Priority" value="1"  size="1" maxlength="3"/></td>
-			</tr>';
+		echo '<input type="text" class="number" required="required"  name="Priority" value="1"  size="1" maxlength="3"/>
+			<fieldhelp>', _('The priority level for this note, between 1 and 9'), '</fieldhelp>
+		</field>';
 	}
-	echo '<tr>
-			<td colspan="2">
-			<div class="centre">
-				<input type="submit" name="submit" value="'._('Enter Information').'" />
-			</div>
-			</td>
-		</tr>
-		</table>
-        </div>
-		</form>';
+	echo '</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="'._('Enter Information').'" />
+		</div>
+	</form>';
 
 } //end if record deleted no point displaying form to add record
 

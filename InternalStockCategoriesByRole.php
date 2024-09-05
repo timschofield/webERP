@@ -105,11 +105,13 @@ if (isset($_POST['submit'])) {
 if (!isset($SelectedRole)){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">'; //Main table
+	echo '<fieldset>
+			<legend>', _('Select a User Role'), '</legend>'; //Main table
 
-	echo '<tr><td>' . _('Select User Role') . ':</td><td><select name="SelectedRole">';
+	echo '<field>
+			<label for="SelectedRole">' . _('Select User Role') . ':</label>
+			<select name="SelectedRole">';
 
 	$SQL = "SELECT secroleid,
 					secrolename
@@ -127,25 +129,26 @@ if (!isset($SelectedRole)){
 
 	} //end while loop
 
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-   	echo '</table>'; // close main table
+   	echo '</Fieldset>'; // close main table
     DB_free_result($result);
 
-	echo '<br /><div class="centre"><input type="submit" name="Process" value="' . _('Accept') . '" />
-				<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+	echo '<div class="centre">
+			<input type="submit" name="Process" value="' . _('Accept') . '" />
+			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+		</div>';
 
-	echo '</div>
-          </form>';
+	echo '</form>';
 
 }
 
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedRole)) {
 
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Stock Categories available as internal for role') . ' ' .$SelectedRole. '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Stock Categories available as internal for role') . ' ' .$SelectedRole. '</a></div>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="SelectedRole" value="' . $SelectedRole . '" />';
@@ -159,8 +162,7 @@ if (isset($_POST['process'])OR isset($SelectedRole)) {
 
 	$result = DB_query($sql);
 
-	echo '<br />
-			<table class="selection">';
+	echo '<table class="selection">';
 	echo '<tr><th colspan="3"><h3>' . _('Internal Stock Categories Allowed to user role') . ' ' .$SelectedRole. '</h3></th></tr>';
 	echo '<tr>
 			<th>' . _('Category Code') . '</th>
@@ -187,9 +189,12 @@ while ($myrow = DB_fetch_array($result)) {
 	if (! isset($_GET['delete'])) {
 
 
-		echo '<br /><table  class="selection">'; //Main table
+		echo '<fieldset>
+				<legend>', _('Select A Stock Category'), '</legend>'; //Main table
 
-		echo '<tr><td>' . _('Select Stock Category Code') . ':</td><td><select name="SelectedCategory">';
+		echo '<field>
+				<label for="SelectedCategory">' . _('Select Stock Category Code') . ':</label>
+				<select name="SelectedCategory">';
 
 		$SQL = "SELECT categoryid,
 						categorydescription
@@ -209,19 +214,20 @@ while ($myrow = DB_fetch_array($result)) {
 
 		} //end while loop
 
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 
-	   	echo '</table>'; // close main table
+	   	echo '</fieldset>'; // close main table
         DB_free_result($result);
 
-		echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
-									<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+		echo '<div class="centre">
+				<input type="submit" name="submit" value="' . _('Accept') . '" />
+				<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			</div>';
 
-		echo '</div>
-              </form>';
+		echo '</form>';
 
 	} // end if user wish to delete
 }
-
 include('includes/footer.php');
 ?>

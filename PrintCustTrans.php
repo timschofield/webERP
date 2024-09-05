@@ -565,15 +565,15 @@ if (isset($PrintPDF)
 
 		/* if FromTransNo is not set then show a form to allow input of either a single invoice number or a range of invoices to be printed. Also get the last invoice number created to show the user where the current range is up to */
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Print Invoices or Credit Notes (Landscape Mode)') . '</p>';
 
-		echo '<table class="selection">
-				<tr>
-					<td>' . _('Print Invoices or Credit Notes') . '</td>
-					<td><select name="InvOrCredit">';
+		echo '<fieldset>
+				<legend>', _('Print Criteria'), '</legend>
+				<field>
+					<label for="InvOrCredit">' . _('Print Invoices or Credit Notes') . '</label>
+					<select name="InvOrCredit">';
 
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
 
@@ -584,11 +584,12 @@ if (isset($PrintPDF)
 			echo '<option value="Invoice">' . _('Invoices') . '</option>';
 		}
 
-		echo '</select></td>
-				</tr>
-				<tr>
-					<td>', _('Print EDI Transactions'), '</td>
-					<td><select name="PrintEDI">';
+		echo '</select>
+			</field>';
+
+		echo '<field>
+				<label for="PrintEDI">', _('Print EDI Transactions'), '</label>
+				<select name="PrintEDI">';
 
 		if ($InvOrCredit=='Invoice' OR !isset($InvOrCredit)) {
 
@@ -601,23 +602,23 @@ if (isset($PrintPDF)
 			echo '<option selected="selected" value="Yes">' . _('Print PDF EDI Transactions Too') . '</option>';
 		}
 
-		echo '</select></td>
-				</tr>';
-		echo '<tr>
-				<td>' . _('Start invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" maxlength="6" size="7" name="FromTransNo" required="required" /></td>
-			</tr>';
-		echo '<tr>
-				<td>' . _('End invoice/credit note number to print') . '</td>
-				<td><input class="number" type="text" maxlength="6" size="7" name="ToTransNo" /></td>
-			</tr>
-			</table>';
+		echo '</select>
+			</field>';
+
+		echo '<field>
+				<label for="FromTransNo">' . _('Start invoice/credit note number to print') . '</label>
+				<input class="number" type="text" maxlength="6" size="7" name="FromTransNo" required="required" />
+			</field>';
+
+		echo '<field>
+				<label for="ToTransNo">' . _('End invoice/credit note number to print') . '</label>
+				<input class="number" type="text" maxlength="6" size="7" name="ToTransNo" />
+			</field>
+		</fieldset>';
 		echo '<div class="centre">
-				<br />
 				<input type="submit" name="Print" value="' . _('Print Preview') . '" />
-				<br />
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-				</div><br>';
+			</div>';
 
 		$sql = "SELECT typeno FROM systypes WHERE typeid=10";
 

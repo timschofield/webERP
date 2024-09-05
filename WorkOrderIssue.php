@@ -11,9 +11,8 @@ if (isset($_GET['StockID'])) {
 	$_POST['StockID'] = $_GET['StockID'];
 }
 
-echo '<a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders') . '</a>
-	<br />';
-echo '<a href="' . $RootPath . '/WorkOrderCosting.php?WO=' . $_POST['WO'] . '">' . _('Back to Costing') . '</a>
+echo '<a href="' . $RootPath . '/SelectWorkOrder.php" class="toplink">' . _('Back to Work Orders') . '</a>';
+echo '<a href="' . $RootPath . '/WorkOrderCosting.php?WO=' . $_POST['WO'] . '" class="toplink">' . _('Back to Costing') . '</a>
 	<br />';
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -89,7 +88,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 	$QuantityIssued = 0;
 	if (isset($_POST['SerialNos']) and is_array($_POST['SerialNos'])) { //then we are issuing a serialised item
 		$QuantityIssued = count($_POST['SerialNos']); // the total quantity issued as 1 per serial no
-		
+
 	} elseif (isset($_POST['Qty'])) { //then its a plain non-controlled item
 		$QuantityIssued = filter_number_format($_POST['Qty']);
 	} else { //it must be a batch/lot controlled item
@@ -125,13 +124,13 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 					}
 
 				} //end if the qty field is numeric
-				
+
 			} // end if the qty field is entered
-			
+
 		} //end for the 15 fields available for batch/lot entry
-		
+
 	} //end batch/lot controlled item
-	
+
 
 	if ($IssueItemRow['cost'] == 0) {
 		prnMsg(_('The item being issued has a zero cost. The issue will still be processed '), 'warn');
@@ -191,7 +190,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		} else {
 			$NewQtyOnHand = 0; //since we can't have stock of labour type items!!
-			
+
 		}
 		/*Insert stock movements - with unit cost */
 
@@ -261,9 +260,9 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 						$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 					} //non blank SerialNo
-					
+
 				} //end for all of the potential serialised entries in the multi select box
-				
+
 			} else { //the item is just batch/lot controlled not serialised
 				/*the form for entry of batch controlled items is only 15 possible fields */
 				for ($i = 0;$i < $_POST['LotCounter'];$i++) {
@@ -324,13 +323,13 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 						}
 					} //non blank BundleRef
-					
+
 				} //end for all 15 of the potential batch/lot fields received
-				
+
 			} //end of the batch controlled stuff
-			
+
 		} //end if the woitem received here is a controlled item
-		
+
 
 		if ($_SESSION['CompanyRecord']['gllink_stock'] == 1) {
 			/*GL integration with stock is activated so need the GL journals to make it so */
@@ -407,7 +406,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		include ('includes/footer.php');
 		exit;
 	} //end if there were not input errors reported - so the processing was allowed to continue
-	
+
 } //end of if the user hit the process button
 elseif (isset($_POST['ProcessMultiple'])) {
 	$IssueItems = array();
@@ -470,7 +469,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 			} //end of negative inventory check
 			$IssueItems[] = array('item' => $_POST['Item' . $No], 'qty' => $QuantityIssued, 'mbflag' => $IssueItemRow['mbflag'], 'cost' => $IssueItemRow['cost']);
 		} //end of validation
-		
+
 	}
 	if (isset($InputError) and $InputError == false) {
 		/************************ BEGIN SQL TRANSACTIONS ************************/
@@ -510,7 +509,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 			} else {
 				$NewQtyOnHand = 0; //since we can't have stock of labour type items!!
-				
+
 			}
 			/*Insert stock movements - with unit cost */
 			$SQL = "INSERT INTO stockmoves (stockid,
@@ -607,7 +606,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 		include ('includes/footer.php');
 		exit;
 	} //end if there were not input errors reported - so the processing was allowed to continue
-	
+
 } //end of multiple items input
 
 
@@ -938,8 +937,11 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 			ORDER BY categorydescription";
 	$Result1 = DB_query($SQL);
 
-	echo '<table class="selection">
-			<tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
+	echo '<fieldset>
+			<legend>', _('Stock Search'), '</legend>
+			<field>
+				<label for="StockCat">' . _('Select a stock category') . ':</label>
+				<select name="StockCat">';
 
 	if (!isset($_POST['StockCat'])) {
 		echo '<option selected="selected" value="All">' . _('All') . '</option>';
@@ -957,20 +959,29 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 		}
 	}
 
-	echo '</select></td>
-	    <td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-	    <td><input type="text" name="Keywords" size="20" maxlength="25" value="';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
+			<input type="text" name="Keywords" size="20" maxlength="25" value="';
 	if (isset($_POST['Keywords'])) echo $_POST['Keywords'];
-	echo '" /></td></tr>
-	    <tr><td></td>
-		<td><b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" value="';
-	if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
 	echo '" /></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" />';
+		</field>';
+
+	echo '<h3>' . _('OR') . ' </h3>';
+
+	echo '<field>
+			<label>', _('Enter extract of the') . ' <b>' . _('Stock Code') . '</label>
+			<input type="text" name="StockCode" size="15" maxlength="18" value="';
+	if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
+	echo '" />
+	</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="Search" value="' . _('Search Now') . '" />';
 
 	echo '<script type="text/javascript">
 		document.forms[0].StockCode.select();
@@ -983,8 +994,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 
 		if (DB_num_rows($SearchResult) > 1) {
 
-			echo '<br />
-				<table cellpadding="2" class="selection">';
+			echo '<table cellpadding="2" class="selection">';
 			$TableHeader = '<tr>
 								<th>' . _('Code') . '</th>
 								<th>' . _('Description') . '</th>
@@ -1021,15 +1031,15 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 						$j = 1;
 						echo $TableHeader;
 					} //end of page full new headings if
-					
+
 				} //end if not already on work order
-				
+
 			} //end of while loop
-			
+
 		} //end if more than 1 row to show
 		echo '</table>';
 	} #end if SearchResults to show
-	
+
 } else { //There is an item selected to issue
 	//need to get some details about the item to issue
 	$SQL = "SELECT description,
@@ -1139,7 +1149,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 					<td colspan="2"><div class="centre"><input type="submit" name="Process" value="' . _('Process Items Issued') . '" /></div></td>
 				</tr>';
 		} //end of lot/batch control
-		
+
 	} else { //not controlled - an easy one!
 		echo '<input type="hidden" name="IssueItem" value="' . $_POST['IssueItem'] . '" />';
 		echo '<tr><td>' . _('Quantity Issued') . ':</td>
@@ -1151,7 +1161,7 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	echo '</table>';
 } //end if selecting new item to issue or entering the issued item quantities
 echo '</div>
-      </form>';
+	  </form>';
 
 include ('includes/footer.php');
 ?>

@@ -355,10 +355,10 @@ if (!isset($SelectedTabs)) {
 		</p>';
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table class="selection">
-			<tr>
-				<td>', _('Clain expenses on petty cash tab'), ':</td>
-				<td><select required="required" name="SelectedTabs">';
+	echo '<fieldset>
+			<field>
+				<label for="SelectedTabs">', _('Clain expenses on petty cash tab'), ':</label>
+				<select required="required" name="SelectedTabs">';
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE usercode='" . $_SESSION['UserID'] . "'";
@@ -372,9 +372,8 @@ if (!isset($SelectedTabs)) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>'; // close main table
+		</field>';
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
@@ -401,23 +400,22 @@ if (!isset($SelectedTabs)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-		echo '<br /><table class="selection">';
-		echo '<tr>
-				<td>' . _('Petty Cash Tab') . ':</td>
-				<td>' . $SelectedTabs . '</td>
-			  </tr>';
-		echo '</table>';
+		echo '<fieldset>';
+		echo '<field>
+				<label>' . _('Petty Cash Tab') . ':</label>
+				<fieldtext>' . $SelectedTabs . '</fieldtext>
+			</field>';
+		echo '</fieldset><br />';
 
 		//Limit expenses history to X days
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Detail of Tab Movements For Last '), ':
-						<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
-						<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" /> ', _('Days'), '
-						<input type="submit" name="Go" value="', _('Go'), '" />
-					</td>
-				</tr>
-			</table>';
+		echo '<fieldset>
+				<field>
+					<label for="SelectedTabs">', _('Detail of Tab Movements For Last '), ':</label>
+					<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
+					<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" /> ', _('Days'), '
+					<input type="submit" name="Go" value="', _('Go'), '" />
+				</field>
+			</fieldset>';
 		if (isset($_POST['Cancel'])) {
 			unset($_POST['SelectedExpense']);
 			unset($_POST['Amount']);
@@ -609,26 +607,19 @@ if (!isset($SelectedTabs)) {
 		if (!isset($_POST['Date'])) {
 			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
 		}
-		echo '<table class="selection">';
+		echo '<fieldset>';
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<tr>
-					<th colspan="2"><h3>', _('Update Expense'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('Update Expense'), '</legend';
 		} else {
-			echo '<tr>
-					<th colspan="2"><h3>', _('New Expense'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('New Expense'), '</legend>';
 		}
-		echo '<tr>
-				<td>', _('Date of Expense'), ':</td>
-				<td>
-					<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
-				</td>
-			</tr>
-			<tr>
-				<td>', _('Expense Code'), ':</td>
-				<td>
-						<select required="required" name="SelectedExpense">';
+		echo '<field>
+				<label for="Date">', _('Date of Expense'), ':</label>
+				<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
+			</field>
+			<field>
+				<label for="SelectedExpense">', _('Expense Code'), ':</label>
+				<select required="required" name="SelectedExpense">';
 		DB_free_result($Result);
 		$SQL = "SELECT pcexpenses.codeexpense,
 					pcexpenses.description,
@@ -649,15 +640,14 @@ if (!isset($SelectedTabs)) {
 			$DefaultTag = $MyRow['defaulttag'];
 		} //end while loop
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount'] = 0;
 		}
-		echo '<tr>
-				<td>', _('Gross Amount'), ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', $_POST['Amount'], '" /></td>
-			</tr>';
+		echo '<field>
+				<label for="Amount">', _('Gross Amount'), ':</label>
+				<input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', $_POST['Amount'], '" />
+			</field>';
 		if (isset($_GET['edit'])) {
 			$SQL = "SELECT counterindex,
 							pccashdetail,
@@ -680,10 +670,10 @@ if (!isset($SelectedTabs)) {
 				echo '<input type="hidden" name="TaxGLAccount', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['purchtaxglaccount'], '" />';
 				echo '<input type="hidden" name="TaxOnTax', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['taxontax'], '" />';
 				echo '<input type="hidden" name="TaxRate', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['taxrate'], '" />';
-				echo '<tr>
-						<td>', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</td>
-						<td><input type="text" class="number" size="12" name="TaxAmount', $MyTaxRow['counterindex'], '" value="', -$MyTaxRow['amount'], '" /></td>
-					</tr>';
+				echo '<field>
+						<label for="TaxAmount">', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</label>
+						<input type="text" class="number" size="12" name="TaxAmount', $MyTaxRow['counterindex'], '" value="', -$MyTaxRow['amount'], '" />
+					</field>';
 			}
 		} else {
 			$SQL = "SELECT taxgrouptaxes.calculationorder,
@@ -714,18 +704,18 @@ if (!isset($SelectedTabs)) {
 				echo '<input type="hidden" name="TaxGLAccount', $i, '" value="', $MyTaxRow['purchtaxglaccount'], '" />';
 				echo '<input type="hidden" name="TaxOnTax', $i, '" value="', $MyTaxRow['taxontax'], '" />';
 				echo '<input type="hidden" name="TaxRate', $i, '" value="', $MyTaxRow['taxrate'], '" />';
-				echo '<tr>
-						<td>', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%:</td>
-						<td><input type="text" class="number" size="12" name="TaxAmount', $i, '" value="0" /></td>
-					</tr>';
+				echo '<field>
+						<label for="TaxAmount">', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%:</label>
+						<input type="text" class="number" size="12" name="TaxAmount', $i, '" value="0" />
+					</field>';
 				++$i;
 			}
 		}
 
 		//Select the tag
-		echo '<tr>
-				<td>', _('Tag'), ':</td>
-				<td><select name="Tag">';
+		echo '<field>
+				<label for="Tag">', _('Tag'), ':</label>
+				<select name="Tag">';
 		$SQL = "SELECT tagref,
 					tagdescription
 			FROM tags
@@ -743,43 +733,36 @@ if (!isset($SelectedTabs)) {
 			}
 		}
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 		// End select tag
 
 		//For the accept attribute of the file element, prefix dots to the front of each supported file extension.
 		$ReceiptSupportedExtDotPrefix = array_map(function($ReceiptSupportedExt) {
 			return '.' . $ReceiptSupportedExt;
 		}, $ReceiptSupportedExt);
-		echo '<tr>
-				<td>', _('Attach Receipt'), ':</td>
-				<td>
+		echo '<field>
+				<label for="Receipt">', _('Attach Receipt'), ':</label>
 				<input type="hidden" name="MAX_FILE_SIZE" value="' . $_SESSION['MaxImageSize'] * 1024 . '" />
 				<input type="file" name="Receipt" id="Receipt" accept="' . implode(',', $ReceiptSupportedExtDotPrefix) . '" title="', _('Accepted file types'), ': ', implode(', ', $ReceiptSupportedExt), '" />
-				</td>
-			</tr>';
+			</field>';
 
 		if (!isset($_POST['Purpose'])) {
 			$_POST['Purpose'] = '';
 		}
-		echo '<tr>
-				<td>', _('Business Purpose'), ':</td>
-				<td>
-					<input type="text" name="Purpose" size="50" maxlength="49" required="required" value="', $_POST['Purpose'], '" />
-				</td>
-			</tr>';
+		echo '<field>
+				<label for="Purpose">', _('Business Purpose'), ':</label>
+				<input type="text" name="Purpose" size="50" maxlength="49" required="required" value="', $_POST['Purpose'], '" />s
+			</field>';
 
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes'] = '';
 		}
-		echo '<tr>
-				<td>', _('Notes'), ':</td>
-				<td>
-					<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
-				</td>
-			</tr>';
+		echo '<field>
+				<label for="Notes">', _('Notes'), ':</label>
+				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
+			</field>';
 
-		echo '</table>'; // close main table
+		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 		echo '<input type="hidden" name="Days" value="', $Days, '" />';
 		echo '<div class="centre">

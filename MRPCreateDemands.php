@@ -193,12 +193,11 @@ if (isset($_POST['submit'])) {
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' .
 	_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">
-	<tr>
-		<td>' . _('Demand Type') . ':</td>
-		<td><select name="MRPDemandtype">';
+echo '<fieldset>
+		<field>
+			<label for="MRPDemandtype">' . _('Demand Type') . ':</label>
+			<select name="MRPDemandtype">';
 $sql = "SELECT mrpdemandtype,
 				description
 		FROM mrpdemandtypes";
@@ -206,11 +205,12 @@ $result = DB_query($sql);
 while ($myrow = DB_fetch_array($result)) {
 	 echo '<option value="' . $myrow['mrpdemandtype'] . '">' . $myrow['mrpdemandtype'] . ' - ' .$myrow['description'] . '</option>';
 } //end while loop
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Inventory Categories') . ':</td>
-		<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+echo '<field>
+		<label for="Categories">' . _('Inventory Categories') . ':</label>
+		<select autofocus="autofocus" required="required" minlength="1" name="Categories[] "multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription';
@@ -223,11 +223,11 @@ echo '<tr>
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-echo '<tr><td>' . _('Inventory Location') . ':</td>
-		<td><select name="Location">';
+echo '<field>
+		<label for="Location">' . _('Inventory Location') . ':</label>
+		<select name="Location">';
 echo '<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
 $result= DB_query("SELECT locations.loccode,
@@ -236,7 +236,8 @@ $result= DB_query("SELECT locations.loccode,
 while ($myrow=DB_fetch_array($result)){
 	echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 if (!isset($_POST['FromDate'])) {
 	$_POST['FromDate']=date($_SESSION['DefaultDateFormat']);
 }
@@ -246,47 +247,46 @@ if (!isset($_POST['ToDate'])) {
 if (!isset($_POST['DistDate'])) {
 	$_POST['DistDate']=date($_SESSION['DefaultDateFormat']);
 }
-echo '<tr>
-		<td>' . _('From Sales Date') . ':</td>
-		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Start Date For Distribution') . ':</td>
-		<td><input type="text" class="date" name="DistDate" maxlength="10" size="11" value="' . $_POST['DistDate'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Distribution Period') . ':</td>
-		<td><select name="Period">
+echo '<field>
+		<label for="FromDate">' . _('From Sales Date') . ':</label>
+		<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+	</field>
+	<field>
+		<label for="ToDate">'. _('To Sales Date') . ':</label>
+		<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+	</field>
+	<field>
+		<label for="DistDate">' . _('Start Date For Distribution') . ':</label>
+		<input type="text" class="date" name="DistDate" maxlength="10" size="11" value="' . $_POST['DistDate'] . '" />
+	</field>
+	<field>
+		<label for="Period">' . _('Distribution Period') . ':</label>
+		<select name="Period">
 			<option selected="selected" value="weekly">' . _('Weekly') . '</option>
 			<option value="monthly">' . _('Monthly')  . '</option>
-			</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Number of Periods') .':</td>
-		<td><input type ="text" class="number" name="PeriodNumber" size="4" value="1" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Exclude Total Quantity Less Than') . ':</td>
-		<td><input type ="text" class="number" name="ExcludeQuantity" size="4" value="1" /></td>
-    </tr>
-	<tr>
-		<td>' . _('Exclude Total Dollars Less Than') . ':</td>
-		<td><input type ="text" class="number" name="ExcludeAmount" size="8" value="0" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Multiplier') .':</td>
-		<td><input type="text" class="number" name="Multiplier" size="2" value="1" /></td>
-	</tr>
-	<tr>
-		<td></td>
-	</tr>
-	</table>
-	<br />
+		</select>
+	</field>
+	<field>
+		<label for="PeriodNumber">' . _('Number of Periods') .':</label>
+		<input type ="text" class="number" name="PeriodNumber" size="4" value="1" />
+	</field>
+	<field>
+		<label for="ExcludeQuantity">' . _('Exclude Total Quantity Less Than') . ':</label>
+		<input type ="text" class="number" name="ExcludeQuantity" size="4" value="1" />
+    </field>
+	<field>
+		<label for="ExcludeAmount">' . _('Exclude Total Dollars Less Than') . ':</label>
+		<input type ="text" class="number" name="ExcludeAmount" size="8" value="0" />
+	</field>
+	<field>
+		<label for="Multiplier">' . _('Multiplier') .':</label>
+		<input type="text" class="number" name="Multiplier" size="2" value="1" />
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Submit') .  '" />
 	</div>';
-echo '</div>
-      </form>';
+echo '</form>';
 
 include('includes/footer.php');
 ?>

@@ -182,7 +182,7 @@ or deletion of the records*/
 	$sql = "SELECT typeid, typename FROM debtortype";
 	$result = DB_query($sql);
 
-	echo '<br /><table class="selection">';
+	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
 			<th class="ascending">' . _('Type ID') . '</th>
@@ -218,9 +218,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<br />';
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
@@ -237,32 +235,35 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeName']  = $myrow['typename'];
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />
-			<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />
-			<table class="selection">';
+			<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />';
+			
+		echo '<fieldset>
+				<legend>', _('Edit Customer Type'), '</legend>';
 
 		// We dont allow the user to change an existing type code
 
-		echo '<tr>
-				<td>' . _('Type ID') . ': ' . $_POST['typeid'] . '</td>
-			</tr>';
+		echo '<field>
+				<label for="typeid">' . _('Type ID') . ':</label>
+				<fieldtext>' . $_POST['typeid'] . '</fieldtext>
+			</field>';
 	} else 	{
 		// This is a new type so the user may volunteer a type code
-		echo '<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Create New Customer Type'), '</legend>';
 	}
 
 	if (!isset($_POST['TypeName'])) {
 		$_POST['TypeName']='';
 	}
-	echo '<tr>
-			<td>' . _('Type Name') . ':</td>
-			<td><input type="text" name="TypeName"  required="required" title="' . _('The customer type name is required') . '" value="' . $_POST['TypeName'] . '" /></td>
-		</tr>
-		</table>
-		<br />
+	echo '<field>
+			<label for="TypeName">' . _('Type Name') . ':</label>
+			<input type="text" name="TypeName"  required="required" title="" value="' . $_POST['TypeName'] . '" />
+			<fieldhelp>' . _('The customer type name is required') . '</fieldhelp
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Accept') . '" />
 		</div>
-	</div>
 	</form>';
 
 } // end if user wish to delete

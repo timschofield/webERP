@@ -624,13 +624,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 } else { //show file upload form
 	prnMsg(_('Please ensure that your csv file is encoded in UTF-8, otherwise the input data will not store correctly in database'), 'warn');
 
-	echo '
-		<br />
-		<a href="Z_ImportDebtors.php?gettemplate=1">Get Import Template</a>
-		<br />
-		<br />';
+	echo '<a href="Z_ImportDebtors.php?gettemplate=1">Get Import Template</a>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
-	echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />' . _('Upload file') . ': <input name="userfile" type="file" />

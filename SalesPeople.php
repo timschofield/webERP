@@ -204,7 +204,7 @@ or deletion of the records*/
 
 	while ($myrow=DB_fetch_array($result)) {
 
-		if ($myrow[7] == 1) {
+		if ($myrow['current'] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');
@@ -392,6 +392,23 @@ if (! isset($_GET['delete'])) {
 	} //end while loop
 	echo '</select>
 		<fieldhelp>', _('Select the general ledger account to post the sales commission for this sales person to.'), '</fieldhelp>
+	</field>';
+
+	echo '<field>
+			<label for="Current">', _('Current?'), ':</label>
+			<select required="required" name="Current">';
+	if ($_POST['Current'] == 1) {
+		echo '<option selected="selected" value="1">', _('Yes'), '</option>';
+	} else {
+		echo '<option value="1">', _('Yes'), '</option>';
+	}
+	if ($_POST['Current'] == 0) {
+		echo '<option selected="selected" value="0">', _('No'), '</option>';
+	} else {
+		echo '<option value="0">', _('No'), '</option>';
+	}
+	echo '</select>
+		<fieldhelp>', _('If this sales person is currently employed, select Yes, otherwise select No.'), '</fieldhelp>
 	</field>';
 
 	echo '</fieldset>';

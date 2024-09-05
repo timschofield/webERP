@@ -172,9 +172,7 @@ if (isset($SelectedWC)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Work Centres') . '</a></div>';
 }
 
-echo '<br />
-	<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedWC)) {
@@ -200,21 +198,24 @@ if (isset($SelectedWC)) {
 
 	echo '<input type="hidden" name="SelectedWC" value="' . $SelectedWC . '" />
 		<input type="hidden" name="Code" value="' . $_POST['Code'] . '" />
-		<table class="selection">
-			<tr>
-				<td>' ._('Work Centre Code') . ':</td>
-				<td>' . $_POST['Code'] . '</td>
-			</tr>';
+		<fieldset>
+			<legend>', _('Edit Work Centre'), '</legend>
+			<field>
+				<label for="Code">' ._('Work Centre Code') . ':</label>
+				<fieldtext>' . $_POST['Code'] . '</fieldtext>
+			</field>';
 
 } else { //end of if $SelectedWC only do the else when a new record is being entered
 	if (!isset($_POST['Code'])) {
 		$_POST['Code'] = '';
 	}
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Work Centre Code') . ':</td>
-				<td><input type="text" name="Code" pattern="[^&+-]{2,}" required="required" autofocus="autofocus" title="'._('The code should be at least 2 characters and no illegal characters allowed').'"  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'._('More than 2 legal characters').'" /></td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Create Work Centre'), '</legend>
+			<field>
+				<label for="Code">' . _('Work Centre Code') . ':</label>
+				<input type="text" name="Code" pattern="[^&+-]{2,}" required="required" autofocus="autofocus" title=""  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'._('More than 2 legal characters').'" />
+				<fieldhelp>'._('The code should be at least 2 characters and no illegal characters allowed').'</fieldhelp>
+			</field>';
 }
 
 $SQL = "SELECT locationname,
@@ -226,13 +227,15 @@ $result = DB_query($SQL);
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
-echo '<tr>
-		<td>' . _('Work Centre Description') . ':</td>
-		<td><input type="text" pattern="[^&+-]{3,}" required="required" title="'._('The Work Center should be more than 3 characters and no illegal characters allowed').'" name="Description" ' . (isset($SelectedWC)? 'autofocus="autofocus"': '') . ' size="21" maxlength="20" value="' . $_POST['Description'] . '" placeholder="'._('More than 3 legal characters').'" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Location') . ':</td>
-		<td><select name="Location">';
+echo '<field>
+		<label for="Description">' . _('Work Centre Description') . ':</label>
+		<input type="text" pattern="[^&+-]{3,}" required="required" title="" name="Description" ' . (isset($SelectedWC)? 'autofocus="autofocus"': '') . ' size="21" maxlength="20" value="' . $_POST['Description'] . '" placeholder="'._('More than 3 legal characters').'" />
+		<fieldhelp>'._('The Work Center should be more than 3 characters and no illegal characters allowed').'</fieldhelp>
+	</field>';
+
+echo '<field>
+		<label for="Location">' . _('Location') . ':</label>
+		<select name="Location">';
 
 while ($myrow = DB_fetch_array($result)) {
 	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
@@ -247,11 +250,12 @@ while ($myrow = DB_fetch_array($result)) {
 DB_free_result($result);
 
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Overhead Recovery GL Account') . ':</td>
-		<td><select name="OverheadRecoveryAct">';
+echo '</select>
+	</field>';
+
+echo '<field>
+		<label for="OverheadRecoveryAct">' . _('Overhead Recovery GL Account') . ':</label>
+		<select name="OverheadRecoveryAct">';
 
 //SQL to poulate account selection boxes
 $SQL = "SELECT accountcode,
@@ -278,19 +282,20 @@ if (!isset($_POST['OverheadPerHour'])) {
 	$_POST['OverheadPerHour']=0;
 }
 
-echo '</select></td></tr>';
-echo '<tr>
-		<td>' . _('Overhead Per Hour') . ':</td>
-		<td><input type="text" class="number" name="OverheadPerHour" size="6" title="'._('The input must be numeric').'" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />';
+echo '</select>
+	</field>';
 
-echo '</td>
-	</tr>
-	</table>
-	<br />
-	<div class="centre">
+echo '<field>
+		<label for="OverheadPerHour">' . _('Overhead Per Hour') . ':</label>
+		<input type="text" class="number" name="OverheadPerHour" size="6" title="" maxlength="6" value="'.$_POST['OverheadPerHour'].'" />
+		<fieldhelp>'._('The input must be numeric').'</fieldhelp>
+	</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-	</div>
-      </form>';
+	</form>';
 include('includes/footer.php');
 ?>

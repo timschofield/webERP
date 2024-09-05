@@ -9,15 +9,15 @@ $BookMark = 'RecurringSalesOrders';
 include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' .
 	_('Inventory Items') . '" alt="" />' . ' ' . $Title . '</p>';
 
-echo '<table class="selection">
-		<tr>
-			<td>' . _('Select recurring order templates for delivery from:') . ' </td>
-			<td>' . '<select name="StockLocation">';
+echo '<fieldset>
+		<legend class="search">', _('Search Recurring Orders'), '</legend>
+		<field>
+			<label for="StockLocation">' . _('Select recurring order templates for delivery from:') . ' </label>
+			<select name="StockLocation">';
 
 $sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 
@@ -37,11 +37,11 @@ while ($myrow=DB_fetch_array($resultStkLocs)){
 	}
 }
 
-echo '</select></td>
-	</tr>
-	</table>';
+echo '</select>
+	</field>
+	</fieldset>';
 
-echo '<br /><div class="centre"><input type="submit" name="SearchRecurringOrders" value="' . _('Search Recurring Orders') . '" /></div>';
+echo '<div class="centre"><input type="submit" name="SearchRecurringOrders" value="' . _('Search Recurring Orders') . '" /></div>';
 
 if (isset($_POST['SearchRecurringOrders'])){
 

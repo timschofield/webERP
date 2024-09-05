@@ -23,7 +23,6 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/group_add.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
-echo '<br />';// Extra line after page_title_text.
 
 if($AllowDemoMode) {
 	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
@@ -397,17 +396,15 @@ if(!isset($SelectedUser)) {
 				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this user?'), '\');">', _('Delete'), '</a></td>
 			</tr>';
 	}// END foreach($Result as $MyRow).
-	echo '</tbody></table>
-		<br />';
+	echo '</tbody></table>';
 } //end of ifs and buts!
 
 
 if(isset($SelectedUser)) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Existing Users') . '</a></div><br />';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Existing Users') . '</a></div>';
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if(isset($SelectedUser)) {
@@ -468,19 +465,22 @@ if(isset($SelectedUser)) {
 	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
 	echo '<input type="hidden" name="ModulesAllowed" value="' . $_POST['ModulesAllowed'] . '" />';
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('User Code') . ':</td>
-				<td>' . $_POST['UserID'] . '</td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Amend User Details'), '</legend>
+			<field>
+				<label for="UserID">' . _('User Code') . ':</label>
+				<fieldtext>' . $_POST['UserID'] . '</fieldtext>
+			</field>';
 
 } else { //end of if $SelectedUser only do the else when a new record is being entered
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('User Login') . ':</td>
-				<td><input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('At least 4 characters').'" title="'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'" /></td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Create New User'), '</legend>
+			<field>
+				<label for="UserID">' . _('User Login') . ':</label>
+				<input pattern="(?!^([aA]{1}[dD]{1}[mM]{1}[iI]{1}[nN]{1})$)[^?+.&\\>< ]{4,}" type="text" required="required" name="UserID" size="22" maxlength="20" placeholder="'._('At least 4 characters').'" title="" />
+				<fieldhelp>'._('Please input not less than 4 characters and canot be admin or contains illegal characters').'</fieldhelp>
+			</field>';
 
 	/*set the default modules to show to all
 	this had trapped a few people previously*/
@@ -512,25 +512,27 @@ if(!isset($_POST['Phone'])) {
 if(!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
-echo '<tr>
-		<td>' . _('Password') . ':</td>
-		<td><input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('At least 5 characters').'" title="'._('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Full Name') . ':</td>
-		<td><input type="text" name="RealName" ' . (isset($SelectedUser) ? 'autofocus="autofocus"' : '') . ' required="required" value="' . $_POST['RealName'] . '" size="36" maxlength="35" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Telephone No') . ':</td>
-		<td><input type="tel" name="Phone" pattern="[0-9+()\s-]*" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Email Address') .':</td>
-		<td><input type="email" name="Email" placeholder="' . _('e.g. user@domain.com') . '" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="'._('A valid email address is required').'" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Security Role') . ':</td>
-		<td><select name="Access">';
+echo '<field>
+		<label for="Password">' . _('Password') . ':</label>
+		<input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('At least 5 characters').'" title="" />
+		<fieldhelp>'._('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="RealName">' . _('Full Name') . ':</label>
+		<input type="text" name="RealName" ' . (isset($SelectedUser) ? 'autofocus="autofocus"' : '') . ' required="required" value="' . $_POST['RealName'] . '" size="36" maxlength="35" />
+	</field>';
+echo '<field>
+		<label for="Phone">' . _('Telephone No') . ':</label>
+		<input type="tel" name="Phone" pattern="[0-9+()\s-]*" value="' . $_POST['Phone'] . '" size="32" maxlength="30" />
+	</field>';
+echo '<field>
+		<label for="Email">' . _('Email Address') .':</label>
+		<input type="email" name="Email" placeholder="' . _('e.g. user@domain.com') . '" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="" />
+		<fieldhelp>'._('A valid email address is required').'</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="Access">' . _('Security Role') . ':</label>
+		<select name="Access">';
 
 foreach($SecurityRoles as $SecKey => $SecVal) {
 	if(isset($_POST['Access']) and $SecKey == $_POST['Access']) {
@@ -540,12 +542,12 @@ foreach($SecurityRoles as $SecKey => $SecVal) {
 	}
 }
 echo '</select>';
-echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" /></td>
-	</tr>';
+echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('User Can Create Tenders') . ':</td>
-		<td><select name="CanCreateTender">';
+echo '<field>
+		<label for="CanCreateTender">' . _('User Can Create Tenders') . ':</label>
+		<select name="CanCreateTender">';
 
 if($_POST['CanCreateTender']==0) {
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -554,11 +556,12 @@ if($_POST['CanCreateTender']==0) {
  	echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	echo '<option value="0">' . _('No') . '</option>';
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Default Location') . ':</td>
-		<td><select name="DefaultLocation">';
+echo '<field>
+		<label for="DefaultLocation">' . _('Default Location') . ':</label>
+		<select name="DefaultLocation">';
 
 $sql = "SELECT loccode, locationname FROM locations";
 $Result = DB_query($sql);
@@ -571,8 +574,8 @@ while($myrow=DB_fetch_array($Result)) {
 	}
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 if(!isset($_POST['Cust'])) {
 	$_POST['Cust']='';
@@ -583,24 +586,26 @@ if(!isset($_POST['BranchCode'])) {
 if(!isset($_POST['SupplierID'])) {
 	$_POST['SupplierID']='';
 }
-echo '<tr>
-		<td>' . _('Customer Code') . ':</td>
-		<td><input type="text" name="Cust" data-type="no-ilLegal-chars" title="' . _('If this user login is to be associated with a customer account, enter the customer account code') . '" size="10" maxlength="10" value="' . $_POST['Cust'] . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Cust">' . _('Customer Code') . ':</label>
+		<input type="text" name="Cust" data-type="no-ilLegal-chars" title="" size="10" maxlength="10" value="' . $_POST['Cust'] . '" />
+		<fieldhelp>' . _('If this user login is to be associated with a customer account, enter the customer account code') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Branch Code') . ':</td>
-		<td><input type="text" name="BranchCode" data-type="no-ilLegal-chars" title="' . _('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" /></td>
-	</tr>';
+echo '<field>
+		<label for="BranchCode">' . _('Branch Code') . ':</label>
+		<input type="text" name="BranchCode" data-type="no-ilLegal-chars" title="" size="10" maxlength="10" value="' . $_POST['BranchCode'] .'" />
+		<fieldhelp>' . _('If this user login is to be associated with a customer account a valid branch for the customer account must be entered.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Supplier Code') . ':</td>
-		<td><input type="text" name="SupplierID" data-type="no-ilLegal-chars" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" /></td>
-	</tr>';
+echo '<field>
+		<label for="SupplierID">' . _('Supplier Code') . ':</label>
+		<input type="text" name="SupplierID" data-type="no-ilLegal-chars" size="10" maxlength="10" value="' . $_POST['SupplierID'] .'" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Restrict to Sales Person') . ':</td>
-		<td><select name="Salesman">';
+echo '<field>
+		<label for="Salesman">' . _('Restrict to Sales Person') . ':</label>
+		<select name="Salesman">';
 
 $sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmanname";
 $Result = DB_query($sql);
@@ -619,12 +624,12 @@ while($myrow=DB_fetch_array($Result)) {
 
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Reports Page Size') .':</td>
-		<td><select name="PageSize">';
+echo '<field>
+		<label for="PageSize">' . _('Reports Page Size') .':</label>
+		<select name="PageSize">';
 
 if(isset($_POST['PageSize']) AND $_POST['PageSize']=='A4') {
 	echo '<option selected="selected" value="A4">' . _('A4') . '</option>';
@@ -667,15 +672,14 @@ if(isset($_POST['PageSize']) AND $_POST['PageSize']=='Legal_Landscape') {
 	echo '<option value="Legal_Landscape">' . _('Legal') . ' ' . _('landscape') . '</option>';
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Theme') . ':</td>
-		<td><select required="required" name="Theme">';
+echo '<field>
+		<label for="Theme">' . _('Theme') . ':</label>
+		<select required="required" name="Theme">';
 
 $ThemeDirectories = scandir('css/');
-
 
 foreach($ThemeDirectories as $ThemeName) {
 
@@ -691,13 +695,12 @@ foreach($ThemeDirectories as $ThemeName) {
 	}
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-
-echo '<tr>
-		<td>' . _('Language') . ':</td>
-		<td><select required="required" name="UserLanguage">';
+echo '<field>
+		<label for="UserLanguage">' . _('Language') . ':</label>
+		<select required="required" name="UserLanguage">';
 
 foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
 	if(isset($_POST['UserLanguage']) AND $_POST['UserLanguage'] == $LanguageEntry) {
@@ -708,16 +711,16 @@ foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
 		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 /*Make an array out of the comma separated list of modules allowed*/
 $ModulesAllowed = explode(',',$_POST['ModulesAllowed']);
 $i = 0;
 foreach($ModuleList as $ModuleName) {
-	echo '<tr>
-			<td><label for="Module_', $i, '">', $ModuleListLabel[$i], ':</label></td>
-			<td><select id="Module_', $i, '" name="Module_', $i, '">';
+	echo '<field>
+			<label for="Module_', $i, '">', $ModuleListLabel[$i], ':</label>
+			<select id="Module_', $i, '" name="Module_', $i, '">';
 	if($ModulesAllowed[$i] == 0) {
 		echo '<option selected="selected" value="0">', _('No'), '</option>',
 			 '<option value="1">', _('Yes'), '</option>';
@@ -725,15 +728,15 @@ foreach($ModuleList as $ModuleName) {
 		echo '<option value="0">', _('No'), '</option>',
 	 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	$i++;
 }// END foreach($ModuleList as $ModuleName).
 
 // Turn off/on dashboard:
-echo '<tr>
-		<td><label for="ShowDashboard">', _('Display dashboard'), ':</label></td>
-		<td><select id="ShowDashboard" name="ShowDashboard">';
+echo '<field>
+		<label for="ShowDashboard">', _('Display dashboard'), ':</label>
+		<select id="ShowDashboard" name="ShowDashboard">';
 if($_POST['ShowDashboard']==0) {
 	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
@@ -742,12 +745,12 @@ if($_POST['ShowDashboard']==0) {
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>', fShowFieldHelp(_('Show dashboard page after login')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>';
+		'
+	</field>';
 // Turn off/on page help:
-echo '<tr>
-		<td><label for="ShowPageHelp">', _('Display page help'), ':</label></td>
-		<td><select id="ShowPageHelp" name="ShowPageHelp">';
+echo '<field>
+		<label for="ShowPageHelp">', _('Display page help'), ':</label>
+		<select id="ShowPageHelp" name="ShowPageHelp">';
 if($_POST['ShowPageHelp']==0) {
 	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
@@ -756,12 +759,12 @@ if($_POST['ShowPageHelp']==0) {
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>', fShowFieldHelp(_('Show page help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>';
+		'
+	</field>';
 // Turn off/on field help:
-echo '<tr>
-		<td><label for="ShowFieldHelp">', _('Display field help'), ':</label></td>
-		<td><select id="ShowFieldHelp" name="ShowFieldHelp">';
+echo '<field>
+		<label for="ShowFieldHelp">', _('Display field help'), ':</label>
+		<select id="ShowFieldHelp" name="ShowFieldHelp">';
 if($_POST['ShowFieldHelp']==0) {
 	echo '<option selected="selected" value="0">', _('No'), '</option>',
 		 '<option value="1">', _('Yes'), '</option>';
@@ -770,15 +773,15 @@ if($_POST['ShowFieldHelp']==0) {
  		 '<option selected="selected" value="1">', _('Yes'), '</option>';
 }
 echo '</select>', fShowFieldHelp(_('Show field help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>';
+		'
+	</field>';
 
 if(!isset($_POST['PDFLanguage'])) {
 	$_POST['PDFLanguage']=0;
 }
-echo '<tr>
-		<td><label for="PDFLanguage">', _('PDF Language Support'), ':</label></td>
-		<td><select id="PDFLanguage" name="PDFLanguage">';
+echo '<field>
+		<label for="PDFLanguage">', _('PDF Language Support'), ':</label>
+		<select id="PDFLanguage" name="PDFLanguage">';
 for($i=0;$i<count($PDFLanguages);$i++) {
 	if($_POST['PDFLanguage']==$i) {
 		echo '<option selected="selected" value="' . $i .'">' . $PDFLanguages[$i] . '</option>';
@@ -786,13 +789,13 @@ for($i=0;$i<count($PDFLanguages);$i++) {
 		echo '<option value="' . $i .'">' . $PDFLanguages[$i]. '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 /* Allowed Department for Internal Requests */
 
-echo '<tr>
-		<td>' . _('Allowed Department for Internal Requests') . ':</td>';
+echo '<field>
+		<label for="Department">' . _('Allowed Department for Internal Requests') . ':</label>';
 
 $sql = "SELECT departmentid,
 			description
@@ -800,7 +803,7 @@ $sql = "SELECT departmentid,
 		ORDER BY description";
 
 $Result=DB_query($sql);
-echo '<td><select name="Department">';
+echo '<select name="Department">';
 if((isset($_POST['Department']) AND $_POST['Department']=='0') OR !isset($_POST['Department'])) {
 	echo '<option selected="selected" value="0">' . _('Any Internal Department') . '</option>';
 } else {
@@ -813,14 +816,14 @@ while($myrow=DB_fetch_array($Result)) {
 		echo '<option value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 /* Account status */
 
-echo '<tr>
-		<td>' . _('Account Status') . ':</td>
-		<td><select required="required" name="Blocked">';
+echo '<field>
+		<label for="Blocked">' . _('Account Status') . ':</label>
+		<select required="required" name="Blocked">';
 if($_POST['Blocked']==0) {
 	echo '<option selected="selected" value="0">' . _('Open') . '</option>';
 	echo '<option value="1">' . _('Blocked') . '</option>';
@@ -828,15 +831,13 @@ if($_POST['Blocked']==0) {
  	echo '<option selected="selected" value="1">' . _('Blocked') . '</option>';
 	echo '<option value="0">' . _('Open') . '</option>';
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '</table>
-	<br />
+echo '</fieldset>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
- </div>
 	</form>';
 
 include('includes/footer.php');

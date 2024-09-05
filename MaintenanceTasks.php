@@ -10,7 +10,7 @@ $BookMark = 'AssetMaintenance';
 
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 
 if (isset($_POST['Submit'])) {
@@ -119,19 +119,19 @@ while ($myrow=DB_fetch_array($Result)) {
 		</tr>';
 }
 
-echo '</table><br /><br />';
+echo '</table>';
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
+echo '<fieldset>';
 
 if (isset($_GET['Edit'])) {
-	echo '<tr>
-			<td>' . _('Task ID') . '</td>
-                        <td>' . $_GET['TaskID'] . '</td>
-		</tr>';
+	echo '<legend>', _('Edit Maintenance Task'), '</legend>';
+	echo '<field>
+			<label for="TaskID">' . _('Task ID') . '</label>
+			<fieldtext>' . $_GET['TaskID'] . '</fieldtext>
+		</field>';
 	echo '<input type="hidden" name="TaskID" value="'.$_GET['TaskID'].'" />';
 	$sql="SELECT assetid,
 				taskdescription,
@@ -149,6 +149,8 @@ if (isset($_GET['Edit'])) {
 	$_POST['UserResponsible'] = $myrow['userresponsible'];
 	$_POST['Manager'] = $myrow['manager'];
 	$_POST['AssetID'] = $myrow['assetid'];
+} else {
+	echo '<legend>', _('Create Maintenance Task'), '</legend>';
 }
 
 if (!isset($_POST['TaskDescription'])){
@@ -167,9 +169,9 @@ if (!isset($_POST['AssetID'])){
 	$_POST['AssetID']='';
 }
 
-echo '<tr>
-		<td>' . _('Asset to Maintain').':</td>
-		<td><select required="required" name="AssetID">';
+echo '<field>
+		<label for="AssetID">' . _('Asset to Maintain').':</label>
+		<select required="required" name="AssetID">';
 $AssetSQL="SELECT assetid, description FROM fixedassets";
 $AssetResult=DB_query($AssetSQL);
 while ($myrow=DB_fetch_array($AssetResult)) {
@@ -179,22 +181,22 @@ while ($myrow=DB_fetch_array($AssetResult)) {
 		echo '<option value="'.$myrow['assetid'].'">' . $myrow['assetid'] . ' - ' . $myrow['description']  . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Task Description').':</td>
-		<td><textarea name="TaskDescription" required="required" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea></td>
-	</tr>';
+echo '<field>
+		<label for="TaskDescription">' . _('Task Description').':</label>
+		<textarea name="TaskDescription" required="required" cols="40" rows="3">' . $_POST['TaskDescription'] . '</textarea>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Days Before Task Due').':</td>
-		<td><input type="text" class="integer" required="required" name="FrequencyDays" size="5" maxlength="5" value="' . $_POST['FrequencyDays'] . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="TaskDescription">' . _('Days Before Task Due').':</label>
+		<input type="text" class="integer" required="required" name="FrequencyDays" size="5" maxlength="5" value="' . $_POST['FrequencyDays'] . '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Responsible') . ':</td>
-		<td><select required="required" name="UserResponsible">';
+echo '<field>
+		<label for="UserResponsible">' . _('Responsible') . ':</label>
+		<select required="required" name="UserResponsible">';
 $UserSQL="SELECT userid FROM www_users";
 $UserResult=DB_query($UserSQL);
 while ($myrow=DB_fetch_array($UserResult)) {
@@ -204,12 +206,12 @@ while ($myrow=DB_fetch_array($UserResult)) {
 		echo '<option value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Manager').':</td>
-		<td><select required="required" name="Manager">';
+echo '<field>
+		<label for="Manager">' . _('Manager').':</label>
+		<select required="required" name="Manager">';
 if ($_POST['Manager']==''){
 	echo '<option selected="selected" value="">' . _('No Manager') . '</option>';
 } else {
@@ -224,22 +226,19 @@ while ($myrow=DB_fetch_array($ManagerResult)) {
 		echo '<option value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>';
+echo '</select>
+	</field>
+</fieldset>';
 
 if (isset($_GET['Edit'])) {
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="Update" value="'._('Update Task').'" />
-			</div>';
+	echo '<div class="centre">
+			<input type="submit" name="Update" value="'._('Update Task').'" />
+		</div>';
 } else {
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="Submit" value="'._('Enter New Task').'" />
 		</div>';
 }
-echo '</div>
-        </form>';
+echo '</form>';
 include('includes/footer.php');
 ?>

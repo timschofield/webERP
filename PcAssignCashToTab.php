@@ -140,8 +140,9 @@ if (!isset($SelectedTabs)) {
 			WHERE assigner='" . $_SESSION['UserID'] . "'
 			ORDER BY tabcode";
 	$Result = DB_query($SQL);
-	echo '<table class="selection">
-			<tr>
+	echo '<fieldset>
+			<legend>', _('Select Tab'), '</legend>
+			<field>
 				<td>', _('Assign cash to petty cash tab'), ':</td>
 				<td><select name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -153,8 +154,8 @@ if (!isset($SelectedTabs)) {
 	}
 	echo '</select>
 			</td>
-		</tr>';
-	echo '</table>'; // close main table
+		</field>';
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
@@ -172,12 +173,12 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
 
-	echo '<br /><table class="selection">';
-	echo '	<tr>
-				<td>' . _('Petty Cash Tab') . ':</td>
-				<td>' . $SelectedTabs . '</td>
-			</tr>';
-	echo '</table>';
+	echo '<form><fieldset>';
+	echo '<field>
+			<label>' . _('Petty Cash Tab') . ':</label>
+			<fieldtext>' . $SelectedTabs . '</fieldtext>
+		</field>';
+	echo '</fieldset></form>';
 
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (isset($_POST['Cancel'])) {
@@ -216,15 +217,14 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 		//Limit expenses history to X days
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Detail of Tab Movements For Last'), ':
-						<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
-						<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" />' . _('Days') . '
-						<input type="submit" name="Go" value="' . _('Go') . '" /></th>
-					</td>
-				</tr>
-			</table>';
+		echo '<fieldset>
+				<field>
+					<label for="SelectedTabs">', _('Detail of Tab Movements For Last'), ':</label>
+					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
+					<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" />' . _('Days') . '
+					<input type="submit" name="Go" value="' . _('Go') . '" /></th>
+				</field>
+			</fieldset>';
 
 		echo '<table class="selection">
 				<thead>
@@ -366,37 +366,31 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		if (!isset($_POST['Date'])) {
 			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
 		}
-		echo '<br /><table class="selection">'; //Main table
+		echo '<fieldset>'; //Main table
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<tr>
-					<th colspan="2"><h3>', _('Update Cash Assignment'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('Update Cash Assignment'), '</legend>';
 		} else {
-			echo '<tr>
-					<th colspan="2"><h3>', _('New Cash Assignment'), '</h3></th>
-				</tr>';
+			echo '<legend>', _('New Cash Assignment'), '</legend>';
 		}
-		echo '<tr>
-				<td>', _('Cash Assignment Date'), ':</td>';
-		echo '<td>
+		echo '<field>
+				<label for="New Cash Assignment">', _('Cash Assignment Date'), ':</label>
 				<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
-			</td>
-		</tr>';
+			</field>';
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount'] = 0;
 		}
-		echo '<tr>
-				<td>', _('Amount'), ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', locale_number_format($_POST['Amount'], $CurrDecimalPlaces), '" /></td>
-			</tr>';
+		echo '<field>
+				<label for="Amount">', _('Amount'), ':</label>
+				<input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', locale_number_format($_POST['Amount'], $CurrDecimalPlaces), '" />
+			</field>';
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes'] = '';
 		}
-		echo '<tr>
-				<td>', _('Notes'), ':</td>
-				<td><input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" /></td>
-			</tr>';
-		echo '</table>'; // close main table
+		echo '<field>
+				<label for="Notes">', _('Notes'), ':</label>
+				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
+			</field>';
+		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';
 		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 		echo '<input type="hidden" name="Days" value="', $Days, '" />';

@@ -34,23 +34,23 @@ $TableResult = DB_show_tables();
 $UserResult = DB_query("SELECT userid FROM www_users ORDER BY userid");
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
+echo '<fieldset>
+		<legend>', _('Report Criteria'), '</legend>';
 
-echo '<tr>
-		<td>' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="1" type="text" class="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
-	</tr>
-	<tr>
-		<td>' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="2" type="text" class="date" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
-	</tr>';
+echo '<field>
+		<label for="FromDate">' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</label>
+		<input tabindex="1" type="text" class="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
+	</field>
+	<field>
+		<label for="ToDate">' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</label>
+		<input tabindex="2" type="text" class="date" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
+	</field>';
 
 // Show user selections
-echo '<tr>
-		<td>' .  _('User ID'). '</td>
-		<td><select tabindex="3" name="SelectedUser">
+echo '<field>
+		<label for="SelectedUser">' .  _('User ID'). '</label>
+		<select tabindex="3" name="SelectedUser">
 			<option value="ALL">' . _('All') . '</option>';
 while ($Users = DB_fetch_row($UserResult)) {
 	if (isset($_POST['SelectedUser']) and $Users[0]==$_POST['SelectedUser']) {
@@ -59,12 +59,13 @@ while ($Users = DB_fetch_row($UserResult)) {
 		echo '<option value="' . $Users[0] . '">' . $Users[0] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 // Show table selections
-echo '<tr>
-		<td>' .  _('Table '). '</td>
-		<td><select tabindex="4" name="SelectedTable">
+echo '<field>
+		<label for="SelectedTable">' .  _('Table '). '</label>
+		<select tabindex="4" name="SelectedTable">
 			<option value="ALL">' . _('All') . '</option>';
 while ($Tables = DB_fetch_row($TableResult)) {
 	if (isset($_POST['SelectedTable']) and $Tables[0]==$_POST['SelectedTable']) {
@@ -73,21 +74,20 @@ while ($Tables = DB_fetch_row($TableResult)) {
 		echo '<option value="' . $Tables[0] . '">' . $Tables[0] . '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
 if(!isset($_POST['ContainingText'])){
 	$_POST['ContainingText']='';
 }
 // Show the text
-echo '<tr>
-		<td>' . _('Containing text') . ':</td>
-		<td><input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" /></td>
-	</tr>
-	</table>
-	<br />
+echo '<field>
+		<label for="ContainingText">' . _('Containing text') . ':</label>
+		<input type="text" name="ContainingText" size="20" maxlength="20" value="'. $_POST['ContainingText'] . '" />
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input tabindex="5" type="submit" name="View" value="' . _('View') . '" />
-	</div>
 	</div>
 	</form>';
 

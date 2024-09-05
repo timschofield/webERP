@@ -228,53 +228,45 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
-		'<table class="selection">', // Content of the header and footer of the input table:
+		'<fieldset>
+			<legend>', _('Report Criteria'), '</legend>', // Content of the header and footer of the input table:
 /*		'<thead>
-			<tr>
+			<field>
 				<th colspan="2">', _('Report Parameters'), '</th>
-			</tr>
+			</field>
 		</thead>',*/
-		'<tfoot>
-			<tr>
-				<td colspan="2">',
-					'<div class="centre">',
-						'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-						'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-					'</div>',
-				'</td>
-			</tr>
-		</tfoot><tbody>',
 	// Content of the body of the input table:
 	// Select period from:
-			'<tr>',
-				'<td><label for="PeriodFrom">', _('Period from'), '</label></td>';
+			'<field>',
+				'<label for="PeriodFrom">', _('Period from'), '</label>';
 	if(!isset($_POST['PeriodFrom'])) {
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
 	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
-					fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+				'<fieldhelp>', _('Select the beginning of the reporting period'), '</fieldhelp>
+			</field>',
 			// Select period to:
-			'<tr>',
-				'<td><label for="PeriodTo">', _('Period to'), '</label></td>';
+			'<field>',
+				'<label for="PeriodTo">', _('Period to'), '</label>';
 	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
-	echo 		'<td><input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
-					fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+	echo 		'<input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
+				'<fieldhelp>', _('Select the end of the reporting period'), '</fieldhelp>
+			</field>';
 	// Show the budget for the period:
-			'<tr>',
-			 	'<td><label for="ShowDetails">', _('Show details'), '</label></td>',
-			 	'<td>',
-				 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
-					fShowFieldHelp(_('Check this box to show purchase invoices')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
-		 '</tbody></table>';
+	echo '<field>',
+			 	'<label for="ShowDetails">', _('Show details'), '</label>',
+			 	'<input', (isset($_POST['ShowDetails']) && $_POST['ShowDetails'] ? ' checked="checked"' : ''), ' id="ShowDetails" name="ShowDetails" type="checkbox">', // If $_POST['ShowDetails'] is set AND it is TRUE, shows this input checked.
+				'<fieldhelp>', _('Check this box to show purchase invoices'), '</fieldhelp>
+			</field>';
+	echo '</fieldset>';
 }
+echo '<div class="centre">',
+		'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
+		'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+	'</div>';
+
 echo	'</form>';
 include('includes/footer.php');
 // END Procedure division ======================================================

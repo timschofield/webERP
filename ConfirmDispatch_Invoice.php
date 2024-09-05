@@ -487,7 +487,7 @@ if (!isset($_SESSION['Items' . $identifier]->FreightCost) or $_SESSION['Items' .
 	} else {
 		$FreightCost = 0;
 	}
-	if (!is_numeric($BestShipper)) {
+	if (isset($BestShipper) and !is_numeric($BestShipper)) {
 		$SQL = "SELECT shipper_id FROM shippers WHERE shipper_id='" . $_SESSION['Default_Shipper'] . "'";
 		$ErrMsg = _('There was a problem testing for a default shipper because');
 		$TestShipperExists = DB_query($SQL, $ErrMsg);
@@ -1203,7 +1203,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 			/*Get the ID of the StockMove... */
 			$StkMoveNo = DB_Last_Insert_ID('stockmoves', 'stkmoveno');
 
-			$Commission = CalculateCommission($_SESSION['Items' . $Identifier]->SalesPerson, $_SESSION['Items' . $Identifier]->DebtorNo, $_SESSION['Items' . $Identifier]->Branch, $OrderLine->StockID, $_SESSION['Items' . $Identifier]->DefaultCurrency, ($OrderLine->QtyDispatched * $OrderLine->Price), $PeriodNo);
+			$Commission = CalculateCommission($_SESSION['Items' . $identifier]->SalesPerson, $_SESSION['Items' . $identifier]->DebtorNo, $_SESSION['Items' . $identifier]->Branch, $OrderLine->StockID, $_SESSION['Items' . $identifier]->DefaultCurrency, ($OrderLine->QtyDispatched * $OrderLine->Price), $PeriodNo);
 			if ($Commission != 0) {
 
 				$TransNo = GetNextTransNo(39);
@@ -1221,17 +1221,17 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 													  10,
 													  '" . $InvoiceNo . "',
 													  '" . $StkMoveNo . "',
-													  '" . $_SESSION['Items' . $Identifier]->SalesPerson . "',
+													  '" . $_SESSION['Items' . $identifier]->SalesPerson . "',
 													  0,
 													  '" . round($Commission, $_SESSION['CompanyRecord']['decimalplaces']) . "',
-													  '" . $_SESSION['Items' . $Identifier]->DefaultCurrency . "',
+													  '" . $_SESSION['Items' . $identifier]->DefaultCurrency . "',
 													  '" . $_SESSION['CurrencyRate'] . "'
 													)";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The sales commission accrual record could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the sales commission accrual record was used');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-				$SalesPersonSQL = "SELECT salesmanname, glaccount FROM salesman WHERE salesmancode='" . $_SESSION['Items' . $Identifier]->SalesPerson . "'";
+				$SalesPersonSQL = "SELECT salesmanname, glaccount FROM salesman WHERE salesmancode='" . $_SESSION['Items' . $identifier]->SalesPerson . "'";
 				$SalesPersonResult = DB_query($SalesPersonSQL);
 				$SalesPersonRow = DB_fetch_array($SalesPersonResult);
 
@@ -1248,7 +1248,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 										'" . $DefaultDispatchDate . "',
 										'" . $PeriodNo . "',
 										'" . $SalesPersonRow['glaccount'] . "',
-										'" . mb_substr(_('Sales Commission') . " - " . $SalesPersonRow['salesmanname'] . " - " . $_SESSION['Items' . $Identifier]->DebtorNo . " - " . _('Invoice No') . $InvoiceNo, 0, 200) . "',
+										'" . mb_substr(_('Sales Commission') . " - " . $SalesPersonRow['salesmanname'] . " - " . $_SESSION['Items' . $identifier]->DebtorNo . " - " . _('Invoice No') . $InvoiceNo, 0, 200) . "',
 										'" . round($Commission / $_SESSION['CurrencyRate'], $_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The expenses side of the sales commission posting could not be inserted because');
@@ -1268,7 +1268,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 										'" . $DefaultDispatchDate . "',
 										'" . $PeriodNo . "',
 										'" . $_SESSION['CompanyRecord']['commissionsact'] . "',
-										'" . mb_substr(_('Sales Commission') . " - " . $SalesPersonRow['salesmanname'] . " - " . $_SESSION['Items' . $Identifier]->DebtorNo . " - " . _('Invoice No') . $InvoiceNo, 0, 200) . "',
+										'" . mb_substr(_('Sales Commission') . " - " . $SalesPersonRow['salesmanname'] . " - " . $_SESSION['Items' . $identifier]->DebtorNo . " - " . _('Invoice No') . $InvoiceNo, 0, 200) . "',
 										'" . round(-$Commission / $_SESSION['CurrencyRate'], $_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The accruals side of the sales commission posting could not be inserted because');
@@ -1797,39 +1797,50 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 		$_POST['InvoiceText'] = '';
 	}
 
-	echo '<table class="selection">
-		<tr>
-			<td>', _('Date On Invoice'), ':</td>
-			<td><input class="date" maxlength="10" name="DispatchDate" required="required" size="11" type="text" value="', $DefaultDispatchDate, '" /></td>
-		</tr>
-		<tr>
-			<td>', _('Consignment Note Ref'), ':</td>
-			<td><input data-type="no-illegal-chars" maxlength="20" name="Consignment" size="20" title="', _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues'), '" type="text" value="', $_POST['Consignment'], '" /></td>
-		</tr>
-		<tr>
-			<td>', _('No Of Packages in Delivery'), ':</td>
-			<td><input class="integer" maxlength="6" name="Packages" size="6" type="number" value="', $_POST['Packages'], '" /></td>
-		</tr>
-		<tr>
-			<td>', _('Action For Balance'), ':</td>
-			 <td>
-				<select name="BOPolicy" required="required">
-					<option selected="selected" value="BO">', _('Automatically put balance on back order'), '</option>
-					<option value="CAN">', _('Cancel any quantities not delivered'), '</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
-			<td>', _('Invoice Text'), ':</td>
-			<td><textarea name="InvoiceText" pattern=".{0,20}" cols="31" rows="5">', reverse_escape($_POST['InvoiceText']), '</textarea></td>
-		</tr>
-		<tr>
-			<td>', _('Internal Comments'), ':</td>
-			<td><textarea name="InternalComments" pattern=".{0,20}" cols="31" rows="5">', reverse_escape($_SESSION['Items' . $identifier]->InternalComments), '</textarea></td>
-		</tr>
-	</table>
-		<br />
-		<div class="centre">
+	echo '<fieldset>
+			<legend>', _('Invoice Details'), '</legend>';
+
+	echo '<field>
+			<label for="DispatchDate">', _('Date On Invoice'), ':</label>
+			<input type="text" required="required" autofocus="autofocus" maxlength="10" size="15" name="DispatchDate" value="', $DefaultDispatchDate, '" id="datepicker" class="date" />
+			<fieldhelp>', _('The date the goods/services were sent. This is the date that will appear as the invoice date.'), '</fieldhelp>
+		</field>';
+
+	echo '<field>
+			<label for="Consignment">', _('Consignment Note Ref'), ':</label>
+			<input type="text" maxlength="20" size="20" name="Consignment" value="', $_POST['Consignment'], '" />
+			<fieldhelp>', _('The consignment reference for this delivery.'), '</fieldhelp>
+		</field>';
+
+	echo '<field>
+			<label for="Packages">', _('No Of Packages in Delivery'), ':</label>
+			<input type="text" maxlength="6" size="6" class="number" name="Packages" value="', $_POST['Packages'], '" />
+			<fieldhelp>', _('The number of packages in this delivery.'), '</fieldhelp>
+		</field>';
+
+	echo '<field>
+			<label for="BOPolicy">', _('Action For Balance'), ':</label>
+			<select required="required" name="BOPolicy">
+				<option selected="selected" value="BO">', _('Automatically put balance on back order'), '</option>
+				<option value="CAN">', _('Cancel any quantities not delivered'), '</option>
+			</select>
+			<fieldhelp>', _('Action to be taken for any remaining balance on the order.'), '</fieldhelp>
+		</field>';
+
+	echo '<field>
+			<label for="InvoiceText">', _('Invoice Text'), ':</label>
+			<textarea spellcheck="true" name="InvoiceText" cols="31" rows="5">', reverse_escape($_POST['InvoiceText']), '</textarea>
+			<fieldhelp>', _('Any text that should appear on the invoice. This text will be visible to the customer.'), '</fieldhelp>
+		</field>';
+
+	echo '<field>
+			<label for="InternalComments">', _('Internal Comments'), ':</label>
+			<textarea spellcheck="true" name="InternalComments" pattern=".{0,20}" cols="31" rows="5">', reverse_escape($_SESSION['Items' . $identifier]->InternalComments), '</textarea>
+			<fieldhelp>', _('Any internal text for this invoice. This text will not be visible to the customer.'), '</fieldhelp>
+		</field>';
+
+	echo '</fieldset>';
+	echo '<div class="centre">
 			<input name="Update" type="submit" value="', _('Update'), '" />
 			<input name="ProcessInvoice" type="submit" value="', _('Process Invoice'), '" />
 		</div>

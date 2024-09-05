@@ -102,9 +102,9 @@ if (isset($_POST['submit'])) {
 		'" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
+echo '<fieldset>
+		<legend>', _('Company Profile Settings'), '</legend>';
 
 if ($InputError != 1) {
 	$sql = "SELECT coyname,
@@ -170,73 +170,80 @@ if ($InputError != 1) {
 	$_POST['FreightAct'] = $myrow['freightact'];
 }
 
-echo '<tr>
-		<td>' . _('Name') . ' (' . _('to appear on reports') . '):</td>
-		<td><input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '"  pattern="?!^ +$"  title="' . _('Enter the name of the business. This will appear on all reports and at the top of each screen. ') . '" size="52" maxlength="50" /></td>
-	</tr>';
+echo '<field>
+		<label for="CoyName">' . _('Name') . ' (' . _('to appear on reports') . '):</label>
+		<input '.(in_array('CoyName',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="1" type="text" autofocus="autofocus" required="required" name="CoyName" value="' . stripslashes($_POST['CoyName']) . '"  pattern="?!^ +$"  title="" size="52" maxlength="50" />
+		<fieldhelp>' . _('Enter the name of the business. This will appear on all reports and at the top of each screen. ') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Official Company Number') . ':</td>
-		<td><input '.(in_array('CoyNumber',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="2" type="text" name="CompanyNumber" value="' . $_POST['CompanyNumber'] . '" size="22" maxlength="20" /></td>
-	</tr>';
+echo '<field>
+		<label for="CoyNumber">' . _('Official Company Number') . ':</label>
+		<input '.(in_array('CoyNumber',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="2" type="text" name="CompanyNumber" value="' . $_POST['CompanyNumber'] . '" size="22" maxlength="20" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Tax Authority Reference') . ':</td>
-		<td><input '.(in_array('TaxRef',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="3" type="text" name="GSTNo" value="' . $_POST['GSTNo'] . '" size="22" maxlength="20" /></td>
-	</tr>';
+echo '<field>
+		<label for="TaxRef">' . _('Tax Authority Reference') . ':</label>
+		<input '.(in_array('TaxRef',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="3" type="text" name="GSTNo" value="' . $_POST['GSTNo'] . '" size="22" maxlength="20" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Address Line 1') . ':</td>
-		<td><input '.(in_array('RegOffice1',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="4" type="text" name="RegOffice1" title="' . _('Enter the first line of the company registered office. This will appear on invoices and statements.') . '" required="required" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice1']) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="RegOffice1">' . _('Address Line 1') . ':</label>
+		<input '.(in_array('RegOffice1',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="4" type="text" name="RegOffice1" title="" required="required" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice1']) . '" />
+		<fieldhelp>' . _('Enter the first line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Address Line 2') . ':</td>
-		<td><input '.(in_array('RegOffice2',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="5" type="text" name="RegOffice2" title="' . _('Enter the second line of the company registered office. This will appear on invoices and statements.') . '" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice2']) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="RegOffice2">' . _('Address Line 2') . ':</label>
+		<input '.(in_array('RegOffice2',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="5" type="text" name="RegOffice2" title="" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice2']) . '" />
+		<fieldhelp>' . _('Enter the second line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Address Line 3') . ':</td>
-		<td><input '.(in_array('RegOffice3',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="6" type="text" name="RegOffice3" title="' . _('Enter the third line of the company registered office. This will appear on invoices and statements.') . '" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice3']) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="RegOffice3">' . _('Address Line 3') . ':</label>
+		<input '.(in_array('RegOffice3',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="6" type="text" name="RegOffice3" title="" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice3']) . '" />
+		<fieldhelp>' . _('Enter the third line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Address Line 4') . ':</td>
-		<td><input '.(in_array('RegOffice4',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="7" type="text" name="RegOffice4" title="' . _('Enter the fourth line of the company registered office. This will appear on invoices and statements.') . '" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice4']) . '" /></td>
-</tr>';
+echo '<field>
+		<label for="RegOffice4">' . _('Address Line 4') . ':</label>
+		<input '.(in_array('RegOffice4',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="7" type="text" name="RegOffice4" title="" size="42" maxlength="40" value="' . stripslashes($_POST['RegOffice4']) . '" />
+		<fieldhelp>' . _('Enter the fourth line of the company registered office. This will appear on invoices and statements.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Address Line 5') . ':</td>
-		<td><input '.(in_array('RegOffice5',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="8" type="text" name="RegOffice5" size="22" maxlength="20" value="' . stripslashes($_POST['RegOffice5']) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="RegOffice5">' . _('Address Line 5') . ':</label>
+		<input '.(in_array('RegOffice5',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="8" type="text" name="RegOffice5" size="22" maxlength="20" value="' . stripslashes($_POST['RegOffice5']) . '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Address Line 6') . ':</td>
-		<td><input '.(in_array('RegOffice6',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="9" type="text" name="RegOffice6" size="17" maxlength="15" value="' . stripslashes($_POST['RegOffice6']) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="RegOffice6">' . _('Address Line 6') . ':</label>
+		<input '.(in_array('RegOffice6',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="9" type="text" name="RegOffice6" size="17" maxlength="15" value="' . stripslashes($_POST['RegOffice6']) . '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Telephone Number') . ':</td>
-		<td><input ', (in_array('Telephone',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Telephone" required="required" size="26" tabindex="10" type="tel" title="', _('Enter the main telephone number of the company registered office. This will appear on invoices and statements.'), '" value="', $_POST['Telephone'], '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Telephone">' . _('Telephone Number') . ':</label>
+		<input ', (in_array('Telephone',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Telephone" required="required" size="26" tabindex="10" type="tel" title="" value="', $_POST['Telephone'], '" />
+		<fieldhelp>', _('Enter the main telephone number of the company registered office. This will appear on invoices and statements.'), '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Facsimile Number') . ':</td>
-		<td><input ', (in_array('Fax',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Fax" size="26" tabindex="11" type="tel" value="', $_POST['Fax'], '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Fax">' . _('Facsimile Number') . ':</label>
+		<input ', (in_array('Fax',$Errors) ?  'class="inputerror"' : '' ), ' maxlength="25" name="Fax" size="26" tabindex="11" type="tel" value="', $_POST['Fax'], '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Email Address') . ':</td>
-		<td><input '.(in_array('Email',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="email" name="Email" title="' . _('Enter the main company email address. This will appear on invoices and statements.') . '" required="required" placeholder="accounts@example.com" size="50" maxlength="55" value="' . $_POST['Email'] . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Email">' . _('Email Address') . ':</label>
+		<input '.(in_array('Email',$Errors) ?  'class="inputerror"' : '' ) .' tabindex="12" type="email" name="Email" title="" required="required" placeholder="accounts@example.com" size="50" maxlength="55" value="' . $_POST['Email'] . '" />
+		<fieldhelp>' . _('Enter the main company email address. This will appear on invoices and statements.') . '</fieldhelp>
+	</field>';
 
 
 $result=DB_query("SELECT currabrev, currency FROM currencies");
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
-echo '<tr>
-		<td><label for="CurrencyDefault">', _('Home Currency'), ':</label></td>
-		<td><select id="CurrencyDefault" name="CurrencyDefault" tabindex="13" >';
+echo '<field>
+		<label for="CurrencyDefault">', _('Home Currency'), ':</label>
+		<select id="CurrencyDefault" name="CurrencyDefault" tabindex="13" >';
 
 while ($myrow = DB_fetch_array($result)) {
 	if ($_POST['CurrencyDefault']==$myrow['currabrev']){
@@ -248,8 +255,8 @@ while ($myrow = DB_fetch_array($result)) {
 
 DB_free_result($result);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 $result=DB_query("SELECT accountcode,
 						accountname
@@ -258,9 +265,9 @@ $result=DB_query("SELECT accountcode,
 					WHERE accountgroups.pandl=0
 					ORDER BY chartmaster.accountcode");
 
-echo '<tr>
-		<td>' . _('Debtors Control GL Account') . ':</td>
-		<td><select tabindex="14" title="' . _('Select the general ledger account to be used for posting the local currency value of all customer transactions to. This account will always represent the total amount owed by customers to the business. Only balance sheet accounts are available for this selection.') . '" name="DebtorsAct">';
+echo '<field>
+		<label>' . _('Debtors Control GL Account') . ':</label>
+		<select tabindex="14" title="" name="DebtorsAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['DebtorsAct']==$myrow[0]){
@@ -272,12 +279,13 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account to be used for posting the local currency value of all customer transactions to. This account will always represent the total amount owed by customers to the business. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Creditors Control GL Account') . ':</td>
-		<td><select tabindex="15" title="' . _('Select the general ledger account to be used for posting the local currency value of all supplier transactions to. This account will always represent the total amount owed by the business to suppliers. Only balance sheet accounts are available for this selection.') . '" name="CreditorsAct">';
+echo '<field>
+		<label>' . _('Creditors Control GL Account') . ':</label>
+		<select tabindex="15" title="" name="CreditorsAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['CreditorsAct']==$myrow[0]){
@@ -289,12 +297,13 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account to be used for posting the local currency value of all supplier transactions to. This account will always represent the total amount owed by the business to suppliers. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Payroll Net Pay Clearing GL Account') . ':</td>
-		<td><select tabindex="16" name="PayrollAct">';
+echo '<field>
+		<label>' . _('Payroll Net Pay Clearing GL Account') . ':</label>
+		<select tabindex="16" name="PayrollAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PayrollAct']==$myrow[0]){
@@ -306,12 +315,12 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Goods Received Clearing GL Account') . ':</td>
-		<td><select title="' . _('Select the general ledger account to be used for posting the cost of goods received pending the entry of supplier invoices for the goods. This account will represent the value of goods received yet to be invoiced by suppliers. Only balance sheet accounts are available for this selection.') . '" tabindex="17" name="GRNAct">';
+echo '<field>
+		<label>' . _('Goods Received Clearing GL Account') . ':</label>
+		<select title="" tabindex="17" name="GRNAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['GRNAct']==$myrow[0]){
@@ -322,12 +331,13 @@ while ($myrow = DB_fetch_row($result)) {
 } //end while loop
 
 DB_data_seek($result,0);
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account to be used for posting the cost of goods received pending the entry of supplier invoices for the goods. This account will represent the value of goods received yet to be invoiced by suppliers. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>', _('Sales Commission Accruals Account'), ':</td>';
-echo '<td>
+echo '<field>
+		<label>', _('Sales Commission Accruals Account'), ':</label>';
+echo '<label>
 		<select name="CommAct">';
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['CommAct']==$myrow[0]){
@@ -337,12 +347,12 @@ while ($myrow = DB_fetch_row($result)) {
 	}
 } //end while loop
 DB_data_seek($result,0);
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Retained Earning Clearing GL Account') . ':</td>
-		<td><select title="' . _('Select the general ledger account to be used for clearing profit and loss accounts to that represents the accumulated retained profits of the business. Only balance sheet accounts are available for this selection.') . '" tabindex="18" name="RetainedEarnings">';
+echo '<field>
+		<label>' . _('Retained Earning Clearing GL Account') . ':</label>
+		<select title="" tabindex="18" name="RetainedEarnings">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['RetainedEarnings']==$myrow[0]){
@@ -354,12 +364,13 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_free_result($result);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account to be used for clearing profit and loss accounts to that represents the accumulated retained profits of the business. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Freight Re-charged GL Account') . ':</td>
-		<td><select tabindex="19" name="FreightAct">';
+echo '<field>
+		<label>' . _('Freight Re-charged GL Account') . ':</label>
+		<select tabindex="19" name="FreightAct">';
 
 $result=DB_query("SELECT accountcode,
 						accountname
@@ -378,12 +389,12 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Sales Exchange Variances GL Account') . ':</td>
-		<td><select title="' . _('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invocies is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '" tabindex="20" name="ExchangeDiffAct">';
+echo '<field>
+		<label>' . _('Sales Exchange Variances GL Account') . ':</label>
+		<select title="" tabindex="20" name="ExchangeDiffAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['ExchangeDiffAct']==$myrow[0]){
@@ -395,12 +406,13 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invocies is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Purchases Exchange Variances GL Account') . ':</td>
-		<td><select tabindex="21" title="' . _('Select the general ledger account to be used for posting the exchange differences on the accounts payable transactions to. Supplier invoices entered at one currency and paid in the supplier currency at a different exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '" name="PurchasesExchangeDiffAct">';
+echo '<field>
+		<label>' . _('Purchases Exchange Variances GL Account') . ':</label>
+		<select tabindex="21" title="" name="PurchasesExchangeDiffAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PurchasesExchangeDiffAct']==$myrow[0]){
@@ -412,12 +424,13 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account to be used for posting the exchange differences on the accounts payable transactions to. Supplier invoices entered at one currency and paid in the supplier currency at a different exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Payment Discount GL Account') . ':</td>
-		<td><select title="' . _('Select the general ledger account to be used for posting the value of payment discounts given to customers at the time of entering a receipt. Only profit and loss general ledger accounts are available for this selection.') . '" tabindex="22" name="PytDiscountAct">';
+echo '<field>
+		<label>' . _('Payment Discount GL Account') . ':</label>
+		<select title="" tabindex="22" name="PytDiscountAct">';
 
 while ($myrow = DB_fetch_row($result)) {
 	if ($_POST['PytDiscountAct']==$myrow[0]){
@@ -429,12 +442,13 @@ while ($myrow = DB_fetch_row($result)) {
 
 DB_data_seek($result,0);
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account to be used for posting the value of payment discounts given to customers at the time of entering a receipt. Only profit and loss general ledger accounts are available for this selection.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Create GL entries for accounts receivable transactions') . ':</td>
-		<td><select title="' . _('Select yes to ensure that webERP creates general ledger journals for all accounts receivable transactions. webERP will maintain the debtors control account (selected above) to ensure it should always balance to the list of customer balances in local currency.') . '" tabindex="23" name="GLLink_Debtors">';
+echo '<field>
+		<label>' . _('Create GL entries for AR transactions') . ':</label>
+		<select title="" tabindex="23" name="GLLink_Debtors">';
 
 if ($_POST['GLLink_Debtors']==0){
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -444,12 +458,13 @@ if ($_POST['GLLink_Debtors']==0){
 	echo '<option value="0">' . _('No'). '</option>';
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select yes to ensure that webERP creates general ledger journals for all accounts receivable transactions. webERP will maintain the debtors control account (selected above) to ensure it should always balance to the list of customer balances in local currency.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Create GL entries for accounts payable transactions') . ':</td>
-		<td><select title="' . _('Select yes to ensure that webERP creates general ledger journals for all accounts payable transactions. webERP will maintain the creditors control account (selected above) to ensure it should always balance to the list of supplier balances in local currency.') . '" tabindex="24" name="GLLink_Creditors">';
+echo '<field>
+		<label>' . _('Create GL entries for AP transactions') . ':</label>
+		<select title="" tabindex="24" name="GLLink_Creditors">';
 
 if ($_POST['GLLink_Creditors']==0){
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -459,12 +474,13 @@ if ($_POST['GLLink_Creditors']==0){
 	echo '<option value="0">' . _('No') . '</option>';
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select yes to ensure that webERP creates general ledger journals for all accounts payable transactions. webERP will maintain the creditors control account (selected above) to ensure it should always balance to the list of supplier balances in local currency.') . '</fieldhelp>
+</field>';
 
-echo '<tr>
-		<td>' . _('Create GL entries for stock transactions')  . ':</td>
-		<td><select title="' . _('Select yes to ensure that webERP creates general ledger journals for all inventory transactions. webERP will maintain the stock control accounts (selected under the inventory categories set up) to ensure they balance. Only balance sheet general ledger accounts can be selected.') . '" tabindex="25" name="GLLink_Stock">';
+echo '<field>
+		<label>' . _('Create GL entries for stock transactions')  . ':</label>
+		<select title="" tabindex="25" name="GLLink_Stock">';
 
 if ($_POST['GLLink_Stock']=='0'){
 	echo '<option selected="selected" value="0">' . _('No') . '</option>';
@@ -474,16 +490,16 @@ if ($_POST['GLLink_Stock']=='0'){
 	echo '<option value="0">' . _('No') . '</option>';
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select yes to ensure that webERP creates general ledger journals for all inventory transactions. webERP will maintain the stock control accounts (selected under the inventory categories set up) to ensure they balance. Only balance sheet general ledger accounts can be selected.') . '</fieldhelp>
+</field>';
 
 
-echo '</table>
-	<br />
+echo '</fieldset>
 	<div class="centre">
 		<input tabindex="26" type="submit" name="submit" value="' . _('Update') . '" />
 	</div>';
-echo '</div></form>';
+echo '</form>';
 
 include('includes/footer.php');
 ?>

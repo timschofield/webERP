@@ -20,6 +20,15 @@ if (!isset($_SESSION['SuppTrans'])){
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }
 
+if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . _('Back to Invoice Entry') . '</a>';
+} else {
+	echo '<a href="' . $RootPath . '/SupplierCredit.php" class="toplink">' . _('Back to Credit Note Entry') . '</a>';
+}
+
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Dispatch') . '" alt="" />' . ' ' . $Title . '
+	</p>';
 
 if (isset($_POST['AddAssetToInvoice'])){
 
@@ -61,12 +70,12 @@ if (isset($_GET['Delete'])){
 
 /*Show all the selected ShiptRefs so far from the SESSION['SuppInv']->Shipts array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit=='Invoice'){
-	echo '<div class="centre"><p class="page_title_text">' .  _('Fixed Assets on Invoice') . ' ';
+	echo '<p class="page_title_text">' .  _('Fixed Assets on Invoice') . ' ';
 } else {
-	echo '<div class="centre"><p class="page_title_text">' . _('Fixed Asset credits on Credit Note') . ' ';
+	echo '<p class="page_title_text">' . _('Fixed Asset credits on Credit Note') . ' ';
 }
 echo $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['SuppTrans']->SupplierName;
-echo '</p></div>';
+echo '</p>';
 echo '<table class="selection">
 	<thead>
 		<tr>
@@ -96,17 +105,10 @@ echo '</tbody></table>
 	<td class="number"><h4>' . _('Total') . ':</h4></td>
 	<td class="number"><h4>' . locale_number_format($TotalAssetValue,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</h4></td>
 		</tr>
-	</table><br />';
-
-if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<div class="centre"><a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a></div>';
-} else {
-	echo '<div class="centre"><a href="' . $RootPath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a></div>';
-}
+	</table>';
 
 /*Set up a form to allow input of new Shipment charges */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" />';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['AssetID'])) {
@@ -115,15 +117,19 @@ if (!isset($_POST['AssetID'])) {
 
 prnMsg(_('If you know the code enter it in the Asset ID input box, otherwise select the asset from the list below. Only  assets with no cost will show in the list'),'info');
 
-echo '<br /><table class="selection">';
+echo '<fieldset>
+		<legend>', _('Fixed Asset Charges'), '</legend>';
 
-echo '<tr>
-		<td>', _('Enter Asset ID'), ':</td>
-		<td><input class="integer" maxlength="6" name="AssetID" pattern="[^-]{1,5}" placeholder="', _('Positive integer'), '" size="7" title="', _('The Asset ID should be positive integer'), '" type="text" value="',  $_POST['AssetID'], '" /> <a href="FixedAssetItems.php" target="_blank">', _('New Fixed Asset'), '</a></td>
-	</tr>
-	<tr>
-		<td><b>', _('OR'), ' </b>', _('Select from list'), ':</td>
-		<td><select name="AssetSelection">';
+echo '<field>
+		<label for="AssetID">', _('Enter Asset ID'), ':</label>
+		<input class="integer" maxlength="6" name="AssetID" pattern="[^-]{1,5}" placeholder="', _('Positive integer'), '" size="7" title="" type="text" value="',  $_POST['AssetID'], '" />
+		<fieldhelp>', _('The Asset ID should be positive integer'), '</fieldhelp>
+		<a href="FixedAssetItems.php" target="_blank">', _('New Fixed Asset'), '</a>
+	</field>
+	<h3>', _('OR'), ' </h3>
+	<field>
+		<label for="AssetSelection">', _('Select from list'), ':</label>
+		<select name="AssetSelection">';
 
 $sql = "SELECT assetid,
 			description
@@ -142,24 +148,23 @@ while ($myrow = DB_fetch_array($result)) {
 	echo $myrow['assetid'] . '">' . $myrow['assetid'] . ' - ' . $myrow['description']  . '</option>';
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
-echo '<tr>
-		<td>' . _('Amount') . ':</td>
-		<td><input type="text" class="number" pattern="(?!^-?0[,.]0*$).{1,11}" title="'._('The amount must be numeric and cannot be zero').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
-	</tr>';
-echo '</table>';
+echo '<field>
+		<label for="Amount">' . _('Amount') . ':</label>
+		<input type="text" class="number" pattern="(?!^-?0[,.]0*$).{1,11}" title="" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+		<fieldhelp>'._('The amount must be numeric and cannot be zero').'</fieldhelp>
+	</field>';
+echo '</fieldset>';
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<input type="submit" name="AddAssetToInvoice" value="' . _('Enter Fixed Asset') . '" />
 	</div>';
 
-echo '</div>
-      </form>';
+echo '</form>';
 include('includes/footer.php');
 ?>

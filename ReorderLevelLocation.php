@@ -64,7 +64,6 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	echo'<p class="page_title_text"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="Update">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<table>';
     echo '<tr>
@@ -133,33 +132,31 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			</td>
 		</tr>
         </table>
-        </div>
 		</form>';
 
 
 } else { /*The option to submit was not hit so display form */
 
 
-	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
+	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
 
-	echo '<br />
-		<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT locations.loccode,
 				   locationname
 		    FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$resultStkLocs = DB_query($sql);
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Location') . ':</td>
-				<td><select name="StockLocation"> ';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="StockLocation">' . _('Location') . ':</label>
+				<select name="StockLocation"> ';
 
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
 	$SQL="SELECT categoryid,
 				categorydescription
@@ -168,32 +165,35 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	$result1 = DB_query($SQL);
 
-	echo '<tr><td>' . _('Category') . ':</td>
-				<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">' . _('Category') . ':</label>
+			<select name="StockCat">';
 
 	while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 
-	echo '</select></td></tr>';
-	echo '<tr>
-			<td>' . _('Number Of Days Sales') . ':</td>
-			<td><input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" /></td>
-          </tr>';
-	echo '<tr>
-			<td>' . _('Order By') . ':</td>
-			<td><select name="Sequence">
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="NumberOfDays">' . _('Number Of Days Sales') . ':</label>
+			<input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" />
+		</field>';
+
+	echo '<field>
+			<label for="Sequence">' . _('Order By') . ':</label>
+			<select name="Sequence">
 				<option value="1">' .  _('Total Invoiced') . '</option>
 				<option value="2">' .  _('Item Code') . '</option>
-				</select></td>
-		</tr>';
-	echo '</table>
-			<br />
+			</select>
+		</field>';
+
+	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Submit') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+    echo '</form>';
 
 } /*end of else not submit */
 include('includes/footer.php');

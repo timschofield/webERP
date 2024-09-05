@@ -137,8 +137,8 @@ or deletion of the records*/
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
-				<td><a href="%s&amp;SelectedMessageLine=%s">' . _('Edit') . '</a></td>
-				<td><a href="%s&amp;delete=%s">' . _('Delete') . '</a></td>
+				<td><a href="%s?SelectedMessageLine=%s">' . _('Edit') . '</a></td>
+				<td><a href="%s?delete=%s">' . _('Delete') . '</a></td>
 				</tr>',
 				$myrow[1],
 				$myrow[2],
@@ -149,12 +149,11 @@ or deletion of the records*/
 				$myrow[0]);
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</table>';
 	if (DB_num_rows($result)==0){
 		echo '<div class="centre">
 				<input tabindex="1" type="submit" name="NewEDIInvMsg" value="' . _('Create New EDI Invoice Message From Default Template') . '" />
-			</div>
-			<br />';
+			</div>';
 	}
 } //end of ifs SelectedLine is not set
 
@@ -189,14 +188,15 @@ if (isset($SelectedMessageLine)) {
 	echo '<input type="hidden" name="PartnerCode" value="' . $PartnerCode . '" />';
 }
 
-echo '<table class="selection">';
+echo '<fieldset>
+		<legend>', _('Message Format Details'), '</legend>';
 
-if ($myrow['messagetype']!='') {
-	echo '<tr><th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'] . '</th></tr>';
+if (isset($myrow['messagetype']) and $myrow['messagetype']!='') {
+	echo '<field><th colspan="2">' . _('Definition of') . ' ' . $myrow['messagetype'] . ' ' . _('for') . ' ' . $myrow['partnercode'] . '</th></field>';
 }
 
-echo '<tr><td>' . _('Section') . ':</td>';
-echo '<td>';
+echo '<field>
+		<label for="Section">' . _('Section') . ':</label>';
 echo '<select tabindex="2" name="Section">';
 
 if ($_POST['Section']=='Heading') {
@@ -222,22 +222,29 @@ if (!isset($_POST['SequenceNo'])) {$_POST['SequenceNo']='';}
 if (!isset($_POST['LineText'])) {$_POST['LineText']='';}
 
 
-echo '</td></tr>';
+echo '</field>';
 
-echo '<tr><td>Sequence Number:</td>';
-echo '<td><input tabindex="3" type="text" name="SequenceNo" size="3" maxlength="3" value="'.$_POST['SequenceNo'].'" />';
-echo '</td></tr>';
-echo '<tr><td>' .  _('Line Text') . ':'  . '</td>';
-echo '<td>';
-echo '<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value="'.$_POST['LineText'] .'" />';
-echo '</td></tr>';
-echo '</table><br />';
+echo '<field>
+		<label for="SequenceNo">Sequence Number:</label>
+		<input tabindex="3" type="text" name="SequenceNo" size="3" maxlength="3" value="'.$_POST['SequenceNo'].'" />
+	</field>';
+	
+echo '<field>
+		<label for="LineText">' .  _('Line Text') . ':'  . '</label>
+		<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value="'.$_POST['LineText'] .'" />
+	</field>';
+	
+echo '</fieldset>';
+
 if (isset($_GET['SelectedMessageLine'])) {
-	echo '<div class="centre"><input tabindex="5" type="submit" name="update" value="'.  _('Update Information'). '" /></div>';
+	echo '<div class="centre">
+			<input tabindex="5" type="submit" name="update" value="'.  _('Update Information'). '" />
+		</div>';
 } else {
-	echo '<div class="centre"><input tabindex="5" type="submit" name="submit" value="'.  _('Enter Information'). '" /></div>';
+	echo '<div class="centre">
+			<input tabindex="5" type="submit" name="submit" value="'.  _('Enter Information'). '" />
+		</div>';
 }
-echo '</div>';
 echo '</form>';
 
 include('includes/footer.php');

@@ -45,10 +45,11 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 	}
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-		'<table class="selection">
-			<tr>
-				<td>', _('Select GL Account'), ':</td>
-				<td><select name="SelectedGLAccount" onchange="this.form.submit()">',// Submit when the value of the select is changed.
+		'<fieldset>
+			<legend>', _('GL Account'), '</legend>
+			<field>
+				<label for="SelectedGLAccount">', _('Select GL Account'), ':</label>
+				<select name="SelectedGLAccount" onchange="this.form.submit()">',// Submit when the value of the select is changed.
 					'<option value="">', _('Not Yet Selected'), '</option>';
 	$Result = DB_query("
 		SELECT
@@ -63,9 +64,9 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 		}
 		echo 'value="', $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['accountname'] . '</option>';
 	}// End while loop.
-	echo '</select></td>
-			</tr>
-		</table>';//Close Select_GL_Account table.
+	echo '</select>
+		</field>
+	</fieldset>';//Close Select_GL_Account table.
 	DB_free_result($Result);
 	echo	'<div class="centre noprint">',// Form buttons:
 				'<button name="Process" type="submit" value="Submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ', _('Accept'), '</button> '; // "Accept" button.
@@ -189,15 +190,14 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 	} else {// If the GL account does not have access permissions for users:
 		echo '<tr><td class="centre" colspan="6">', _('GL account does not have access permissions for users'), '</td></tr>';
 	}
-	echo '</tbody></table>',
-		'<br />',
-		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">',
+	echo '</tbody></table>
+		<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-		'<input name="SelectedGLAccount" type="hidden" value="', $SelectedGLAccount, '" />',
-		'<br />
-		<table class="selection noprint">
-			<tr>
-				<td>';
+		'<input name="SelectedGLAccount" type="hidden" value="', $SelectedGLAccount, '" />';
+		
+	echo '<fieldset>
+			<legend>', _('Select User'), '</legend>
+			<field>';
 	$Result = DB_query("
 		SELECT
 			userid,
@@ -209,8 +209,8 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 			AND glaccountusers.userid=www_users.userid)
 		ORDER BY userid");
 	if(DB_num_rows($Result)>0) {// If the GL account does not have access permissions for one or more users:
-		echo	_('Add access permissions to a user'), ':</td>
-				<td><select name="SelectedUser">';
+		echo '<label for="SelectedUser">', _('Add access permissions to a user'), ':</label>
+				<select name="SelectedUser">';
 		if(!isset($_POST['SelectedUser'])) {
 			echo '<option selected="selected" value="">', _('Not Yet Selected'), '</option>';
 		}
@@ -222,17 +222,17 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 			}
 			echo $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 		}
-		echo	'</select></td>
-				<td><input type="submit" name="submit" value="Accept" />';
+		echo '</select>';
+		echo '</fieldset>';
+		
+		echo '<div class="centre">
+				<input type="submit" name="submit" value="Accept" />
+			</div>';
 	} else {// If the GL account has access permissions for all users:
 		echo _('GL account has access permissions for all users');
 	}
-	echo		'</td>
-			</tr>
-		</table>';
 	DB_free_result($Result);
-	echo '<br>',
-		'<div class="centre noprint">', // Form buttons:
+	echo '<div class="centre noprint">', // Form buttons:
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button formaction="GLAccountUsers.php?Cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/gl.png" /> ', _('Select A Different GL account'), '</button>'; // "Select A Different GL account" button.
 }

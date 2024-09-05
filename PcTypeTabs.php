@@ -142,29 +142,31 @@ if (!isset($_GET['delete'])) {
 		$_POST['TypeTabCode'] = $MyRow['typetabcode'];
 		$_POST['TypeTabDescription'] = $MyRow['typetabdescription'];
 		echo '<input type="hidden" name="SelectedTab" value="', $SelectedTab, '" />
-			  <input type="hidden" name="TypeTabCode" value="', $_POST['TypeTabCode'], '" />
-			  <table class="selection">
-				<tr>
+			<input type="hidden" name="TypeTabCode" value="', $_POST['TypeTabCode'], '" />
+			<fieldset>
+				<legend>', _('Edit Tab Type'), '</legend>
+				<field>
 					<td>', _('Code Of Type Of Tab'), ':</td>
 					<td>', $_POST['TypeTabCode'], '</td>
-				</tr>';
+				</field>';
 		// We dont allow the user to change an existing type code
 	} else {
 		// This is a new type so the user may volunteer a type code
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Code Of Type Of Tab'), ':</td>
-					<td><input type="text" minlegth="1" maxlength="20" name="TypeTabCode" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Create Tab Type'), '</legend>
+				<field>
+					<label for="TypeTabCode">', _('Code Of Type Of Tab'), ':</label>
+					<input type="text" minlegth="1" maxlength="20" name="TypeTabCode" />
+				</field>';
 	}
 	if (!isset($_POST['TypeTabDescription'])) {
 		$_POST['TypeTabDescription'] = '';
 	}
-	echo '<tr>
-			<td>', _('Description Of Type of Tab'), ':</td>
-			<td><input type="text" name="TypeTabDescription" size="50" required="required" maxlength="50" value="', $_POST['TypeTabDescription'], '" /></td>
-		</tr>';
-	echo '</table>'; // close main table
+	echo '<field>
+			<label for="TypeTabCode">', _('Description Of Type of Tab'), ':</label>
+			<input type="text" name="TypeTabDescription" size="50" required="required" maxlength="50" value="', $_POST['TypeTabDescription'], '" />
+		</field>';
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />

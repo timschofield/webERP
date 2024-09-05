@@ -227,10 +227,7 @@ if (isset($SelectedCOGSPostingID)) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Show all cost of sales posting records') . '</a></div>';
 }
 
-echo '<br />';
-
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCOGSPostingID)) {
@@ -261,69 +258,66 @@ $sql = "SELECT areacode,
 		FROM areas";
 $result = DB_query($sql);
 
-echo '<table class="selection">
-		<tr><td>' . _('Area') . ':</td>
-			<td><select tabindex="1" name="Area">
-				<option value="AN">' . _('Any Other') . '</option>';
+echo '<fieldset>
+		<legend>', _('Select criteria for COGS posting'), '</legend>
+		<field>
+			<label for="Area">', _('Area'), ':</label>
+			<select name="Area" autofocus="autofocus">
+				<option value="AN">', _('Any Other'), '</option>';
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
-		echo '<option selected="selected" value="';
+while ($MyRow = DB_fetch_array($result)) {
+	if (isset($_POST['Area']) and $MyRow['areacode'] == $_POST['Area']) {
+		echo '<option selected="selected" value="', $MyRow['areacode'], '">', $MyRow['areadescription'], '</option>';
 	} else {
-		echo '<option value="';
+		echo '<option value="', $MyRow['areacode'], '">', $MyRow['areadescription'], '</option>';
 	}
-	echo $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
-
 } //end while loop
-DB_free_result($result);
+echo '</select>
+	<fieldhelp>', _('Select the area to be used in this group. To cover all areas just select Any Other'), '</fieldhelp>
+</field>';
 
-$sql = "SELECT categoryid, categorydescription FROM stockcategory";
-$result = DB_query($sql);
+$SQL = "SELECT categoryid, categorydescription FROM stockcategory";
+$Result = DB_query($SQL);
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Stock Category') . ':</td>
-		<td><select tabindex="2" name="StkCat">
-			<option value="ANY">' . _('Any Other') . '</option>';
+echo '<field>
+		<label for="StkCat">', _('Stock Category'), ':</label>
+		<select name="StkCat">
+			<option value="ANY">', _('Any Other'), '</option>';
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['StkCat']) and $myrow['categoryid']==$_POST['StkCat']) {
-		echo '<option selected="selected" value="';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['StkCat']) and $MyRow['categoryid'] == $_POST['StkCat']) {
+		echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	} else {
-		echo '<option value="';
+		echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	}
-	echo $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
-
 } //end while loop
+echo '</select>
+	<fieldhelp>', _('Select the stock category to be used in this group. To cover all categories just select Any Other'), '</fieldhelp>
+</field>';
 
-DB_free_result($result);
+$SQL = "SELECT typeabbrev, sales_type FROM salestypes";
+$Result = DB_query($SQL);
 
-$sql = "SELECT typeabbrev, sales_type FROM salestypes";
-$result = DB_query($sql);
+echo '<field>
+		<label for="SalesType">', _('Sales Type'), ' / ', _('Price List'), ':</label>
+		<select name="SalesType">
+			<option value="AN">', _('Any Other'), '</option>';
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
-		<td><select tabindex="3" name="SalesType">
-			<option value="AN">' . _('Any Other') . '</option>';
-
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']) {
-		echo '<option selected="selected" value="';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['SalesType']) and $MyRow['typeabbrev'] == $_POST['SalesType']) {
+		echo '<option selected="selected" value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	} else {
-		echo '<option value="';
+		echo '<option value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	}
-	echo $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
-
 } //end while loop
+echo '</select>
+	<fieldhelp>', _('Select the sales type to be used in this group. To cover all types just select Any Other'), '</fieldhelp>
+</field>';
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Post to GL account') . ':</td>
-		<td><select tabindex="4" name="GLCode">';
+echo '<field>
+		<label for="GLCode">', _('Post to GL account'), ':</label>';
+
+echo '<select tabindex="4" name="GLCode">';
 
 DB_free_result($result);
 $sql = "SELECT chartmaster.accountcode,
@@ -349,13 +343,14 @@ while ($myrow = DB_fetch_array($result)) {
 
 DB_free_result($result);
 
-echo '</select></td>
-	</tr>
-	</table>
-	<br />
-	<div class="centre">
+echo '</select>';
+echo '<fieldhelp>', _('Select the general ledger code to do COGS postingst to where the above criteria have been met.'), '</fieldhelp>
+</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
 		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
     </div>
 	</form>';
 

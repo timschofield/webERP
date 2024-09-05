@@ -3,7 +3,7 @@
 
 include('includes/session.php');
 
-If (isset($_POST['PrintPDF'])){
+if (isset($_POST['PrintPDF'])){
 
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Stock Count Sheets'));
@@ -237,8 +237,8 @@ If (isset($_POST['PrintPDF'])){
 		$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 
 		if ($YPos < $Bottom_Margin + $line_height){
-		   $PageNumber++;
-		   include('includes/PDFStockCheckPageHeader.inc');
+			$PageNumber++;
+			include('includes/PDFStockCheckPageHeader.inc');
 		}
 
 	} /*end STOCK SHEETS while loop */
@@ -250,16 +250,15 @@ If (isset($_POST['PrintPDF'])){
 	$Title=_('Stock Check Sheets');
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'
-		. _('print') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="'. _('print') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
+	echo '<fieldset>
+			<legend>', _('Select Items For Stock Check'), '</legend>
+			<field>
+				<label for="Categories">' . _('Select Inventory Categories') . ':</label>
+				<select autofocus="autofocus" required="required" minlength="1" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription';
@@ -272,12 +271,11 @@ If (isset($_POST['PrintPDF'])){
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+	echo '<field>
+			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<select name="Location">';
 	$sql = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			ORDER BY locationname";
@@ -287,12 +285,11 @@ If (isset($_POST['PrintPDF'])){
 			  echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	echo '</select>
-		</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Action for Stock Check Freeze') . ':</td>
-			<td><select name="MakeStkChkData">';
+	echo '<field>
+			<label for="MakeStkChkData">' . _('Action for Stock Check Freeze') . ':</label>
+			<select name="MakeStkChkData">';
 
 	if (!isset($_POST['MakeStkChkData'])){
 		$_POST['MakeStkChkData'] = 'PrintOnly';
@@ -312,38 +309,35 @@ If (isset($_POST['PrintPDF'])){
 	} else {
 		echo '<option value="PrintOnly">' . _('Print Stock Check Sheets Only') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Show system quantity on sheets') . ':</td>
-			<td>';
+	echo '<field>
+			<label for="ShowInfo">' . _('Show system quantity on sheets') . ':</label>';
 
 	if (isset($_POST['ShowInfo']) and $_POST['ShowInfo'] == false){
 			echo '<input type="checkbox" name="ShowInfo" value="false" />';
 	} else {
 			echo '<input type="checkbox" name="ShowInfo" value="true" />';
 	}
-	echo '</td>
-		</tr>';
+	echo '</field>';
 
-	echo '<tr>
-			<td>' . _('Only print items with non zero quantities') . ':</td>
-			<td>';
+	echo '<field>
+			<label for="NonZerosOnly">' . _('Only print items with non zero quantities') . ':</label>';
 	if (isset($_POST['NonZerosOnly']) and $_POST['NonZerosOnly'] == false){
 			echo '<input type="checkbox" name="NonZerosOnly" value="false" />';
 	} else {
 			echo '<input type="checkbox" name="NonZerosOnly" value="true" />';
 	}
 
-	echo '</td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
+	echo '</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print and Process') . '" />
 		</div>
-		</div>
-		</form>';
+	</form>';
 
 	include('includes/footer.php');
 

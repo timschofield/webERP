@@ -6,7 +6,7 @@ $Title = _('Sales Category Report');
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales Category Report') . '</p>';
-echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
+echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div>';
 
 if (!isset($_POST['DateRange'])){
 	/* then assume report is for This Month - maybe wrong to do this but hey better than reporting an error?*/
@@ -14,69 +14,67 @@ if (!isset($_POST['DateRange'])){
 }
 
 echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table cellpadding="2" class="selection">';
+echo '<fieldset>';
 
-echo '<tr><th colspan="2" class="centre">' . _('Date Selection') . '</th>
-		</tr>
-		<tr>
-		<td>' . _('Custom Range') . ':</td>
-		<td><input type="radio" name="DateRange" value="Custom" ';
+echo '<legend>' . _('Date Selection') . '</legend>
+		<field>
+		<label for="DateRange">' . _('Custom Range') . ':</label>
+		<input type="radio" name="DateRange" value="Custom" ';
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
-		</tr>
-		<tr>
-		<td>' . _('This Week') . ':</td>
-		<td><input type="radio" name="DateRange" value="ThisWeek" ';
+echo ' onchange="ReloadForm(form1.ShowSales)" />
+		</field>';
+
+echo '<field>
+		<label for="DateRange">' . _('This Week') . ':</label>
+		<input type="radio" name="DateRange" value="ThisWeek" ';
 if ($_POST['DateRange']=='ThisWeek'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
-		</tr>
-		<tr>
-		<td>' . _('This Month') . ':</td>
-		<td><input type="radio" name="DateRange" value="ThisMonth" ';
+echo ' onchange="ReloadForm(form1.ShowSales)" />
+		</field>';
+
+echo '<field>
+		<label for="DateRange">' . _('This Month') . ':</label>
+		<input type="radio" name="DateRange" value="ThisMonth" ';
 if ($_POST['DateRange']=='ThisMonth'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
-		</tr>
-		<tr>
-		<td>' . _('This Quarter') . ':</td>
-		<td><input type="radio" name="DateRange" value="ThisQuarter" ';
+echo ' onchange="ReloadForm(form1.ShowSales)" />
+		</field>';
+
+echo '<field>
+		<label for="DateRange">' . _('This Quarter') . ':</label>
+		<input type="radio" name="DateRange" value="ThisQuarter" ';
 if ($_POST['DateRange']=='ThisQuarter'){
 	echo 'checked="checked"';
 }
-echo	' onchange="ReloadForm(form1.ShowSales)" /></td>
-		</tr>';
+echo' onchange="ReloadForm(form1.ShowSales)" />
+	</field>';
 if ($_POST['DateRange']=='Custom'){
 	if (!isset($_POST['FromDate'])){
 		unset($_POST['ShowSales']);
 		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(1,1,1,Date('m')-12,Date('d')+1,Date('Y')));
 		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<tr>
-			<td>' . _('Date From') . ':</td>
-			<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-			</tr>';
-	echo '<tr>
-			<td>' . _('Date To') . ':</td>
-			<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-			</tr>';
+	echo '<field>
+			<label for="FromDate">' . _('Date From') . ':</label>
+			<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+		</field>';
+
+	echo '<field>
+			<label for="ToDate">' . _('Date To') . ':</label>
+			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+		</field>';
 }
-echo '</table>';
+echo '</fieldset>';
 
 
-echo '<br /><div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />';
-echo '</div>';
-echo '</div>
-      </form>';
-echo '<br />';
-
+echo '<div class="centre"><input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" /></div>';
+echo '</form>';
 
 if (isset($_POST['ShowSales'])){
 	$InputError=0; //assume no input errors now test for errors

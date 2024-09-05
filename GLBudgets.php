@@ -31,13 +31,13 @@ echo '<p class="page_title_text">
 		<img src="'.$RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'
 	</p>';
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="selectaccount">
-	<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<br />
-		<table>
-		<tr>
-			<td>' .   _('Select GL Account').  ':</td>
-			<td><select name="SelectedAccount" required="required" onchange="ReloadForm(selectaccount.Select)">';
+		<fieldset>
+			<legend>', _('Select GL Account'), '</legend>';
+			
+echo '<field>
+		<label for="SelectedAccount">' .   _('Select GL Account').  ':</label>
+		<select name="SelectedAccount" required="required" onchange="ReloadForm(selectaccount.Select)">';
 
 $SQL = "SELECT accountcode,
 				accountname
@@ -63,27 +63,22 @@ if (DB_num_rows($result)==0) {
 		}
 		$LastCode=$myrow['accountcode'];
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 }
 
 if (!isset($PrevCode)) {$PrevCode='';}
 if (!isset($NextCode)) {$NextCode='';}
 
-echo '</table>';
+echo '</fieldset>';
 echo '<input type="hidden" name="PrevAccount" value="'.$PrevCode.'" />';
 echo '<input type="hidden" name="NextAccount" value="'.$NextCode.'" />';
 
-echo '<br />
-		<table>
-		<tr>
-			<td><input type="submit" name="Previous" value="' . _('Prev Account') . '" /></td>
-			<td><input type="submit" name="Select" value="' . _('Select Account') . '" /></td>
-			<td><input type="submit" name="Next" value="' . _('Next Account') . '" /></td>
-		</tr>
-		</table>
-		<br />
-    </div>
+echo '<div class="centre">
+		<input type="submit" name="Previous" value="' . _('Prev Account') . '" />
+		<input type="submit" name="Select" value="' . _('Select Account') . '" />
+		<input type="submit" name="Next" value="' . _('Next Account') . '" />
+	</div>
 	</form>';
 
 // End of account selection

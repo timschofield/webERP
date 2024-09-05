@@ -189,7 +189,6 @@ if (isset($SelectedReason)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReason) and ($InputError!=1)) {
@@ -210,46 +209,45 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '" />';
 		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" />';
-		echo '<table class="selection">
-				<tr>
-					<td>' .  _('Status Code') .':</td>
-					<td>' . $_POST['ReasonCode'] . '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit Credit Status'), '</legend>
+				<field>
+					<label for="ReasonCode">' .  _('Status Code') .':</label>
+					<fieldtext>' . $_POST['ReasonCode'] . '</fieldtext>
+				</field>';
 
 	} else { //end of if $SelectedReason only do the else when a new record is being entered
 		if (!isset($_POST['ReasonCode'])) {
 			$_POST['ReasonCode'] = '';
 		}
-		echo '<br />
-			<table class="selection">
-			<tr>
-				<td>' .  _('Status Code') .':</td>
-				<td><input ' . (in_array('ReasonCode',$Errors) ? 'class="integer inputerror"' : 'class="integer"' ) . ' tabindex="1" type="number" name="ReasonCode" required="required" value="'. $_POST['ReasonCode'] .'" size="3" maxlength="2" /></td>
-			</tr>';
+		echo '<fieldset>
+				<legend>', _('Create Credit Status'), '</legend>
+				<field>
+					<label for="ReasonCode">' .  _('Status Code') .':</label>
+					<input ' . (in_array('ReasonCode',$Errors) ? 'class="integer inputerror"' : 'class="integer"' ) . ' tabindex="1" type="text" name="ReasonCode" required="required" value="'. $_POST['ReasonCode'] .'" size="3" maxlength="2" />
+				</field>';
 	}
 
 	if (!isset($_POST['ReasonDescription'])) {
 		$_POST['ReasonDescription'] = '';
 	}
-	echo '<tr>
-			<td>' .  _('Description') .':</td>
-			<td><input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
-			 ' tabindex="2" type="text" name="ReasonDescription" required="required" value="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30" /></td>
-		</tr>
-		<tr>
-			<td>' .  _('Disallow Invoices') . '</td>';
+	echo '<field>
+			<label for="ReasonDescription">' .  _('Description') .':</label>
+			<input ' . (in_array('ReasonDescription',$Errors) ? 'class="inputerror"' : '' ) .
+			 ' tabindex="2" type="text" name="ReasonDescription" required="required" value="'. $_POST['ReasonDescription'] .'" size="28" maxlength="30" />
+		</field>
+		<field>
+			<label for="DisallowInvoices">' .  _('Disallow Invoices') . '</label>';
 	if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']==1) {
-		echo '<td><input tabindex="3" type="checkbox" checked="checked" name="DisallowInvoices" /></td>
-			</tr>';
+		echo '<input tabindex="3" type="checkbox" checked="checked" name="DisallowInvoices" />
+			</field>';
 	} else {
-		echo '<td><input tabindex="3" type="checkbox" name="DisallowInvoices" /></td>
-			</tr>';
+		echo '<input tabindex="3" type="checkbox" name="DisallowInvoices" />
+			</field>';
 	}
-	echo '</table>
-			<br />
+	echo '</fieldset>
 			<div class="centre">
 				<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
-			</div>
             </div>
 			</form>';
 } //end if record deleted no point displaying form to add record

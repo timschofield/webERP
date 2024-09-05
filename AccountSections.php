@@ -171,8 +171,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		_('Account Sections'), '" /> ', // Icon title.
 		_('Account Sections'), '</p>';// Page title.
 
-	echo '<br />
-	<table class="selection">
+	echo '<table class="selection">
 		<thead>
 			<tr>
 				<th class="ascending">', _('Section Number'), '</th>
@@ -209,7 +208,6 @@ if(isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
 if(! isset($_GET['delete'])) {
 
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="AccountSections" method="post">',
-		'<div class="noprint"><br />',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
 
 	if(isset($_GET['SelectedSectionID'])) {
@@ -230,18 +228,14 @@ if(! isset($_GET['delete'])) {
 			$_POST['SectionID'] = $myrow['sectionid'];
 			$_POST['SectionName'] = $myrow['sectionname'];
 
-			echo '<input name="SelectedSectionID" type="hidden" value="', $_POST['SectionID'], '" />
-				<table class="selection">
-				<thead>
-					<tr>
-						<th colspan="2">', _('Edit Account Section Details'), '</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>', _('Section Number'), ':</td>
-						<td>', $_POST['SectionID'], '</td>
-					</tr>';
+			echo '<input name="SelectedSectionID" type="hidden" value="', $_POST['SectionID'], '" />';
+			
+			echo '<fieldset>
+					<legend>', _('Edit Account Section Details'), '</legend>
+					<field>
+						<label for="SectionID">', _('Section Number'), ':</label>
+						<fieldtext>', $_POST['SectionID'], '</fieldtext>
+					</field>';
 		}
 
 	} else {
@@ -255,34 +249,30 @@ if(! isset($_GET['delete'])) {
 		if(!isset($_POST['SectionName'])) {
 			$_POST['SectionName']='';
 		}
-		echo '<table class="selection">
-			<thead>
-				<tr>
-					<th colspan="2">', _('New Account Section Details'), '</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>', _('Section Number'), ':</td>
-					<td><input autofocus="autofocus" ',
+		echo '<fieldset>
+				<legend>', _('New Account Section Details'), '</legend>
+				<field>
+					<label for="SectionID">', _('Section Number'), ':</label>
+					<input autofocus="autofocus" ',
 						( in_array('SectionID',$Errors) ? 'class="inputerror number"' : 'class="number" ' ),
-						'maxlength="4" name="SectionID" required="required" size="4" tabindex="1" type="text" value="', $_POST['SectionID'], '" /></td>
-				</tr>';
+						'maxlength="4" name="SectionID" required="required" size="4" tabindex="1" type="text" value="', $_POST['SectionID'], '" />
+					<fieldhelp>', _('Enter a unique integer identifier for this section'), '</fieldhelp>
+				</field>';
 	}
-	echo	'<tr>
-				<td>', _('Section Description'), ':</td>
-				<td><input ',
+	echo	'<field>
+				<label for="SectionName">', _('Section Description'), ':</label>
+				<input ',
 					( in_array('SectionName',$Errors) ? 'class="inputerror text" ' : 'class="text" ' ),
-					'maxlength="30" name="SectionName" required="required" size="30" tabindex="2" type="text" value="', $_POST['SectionName'], '" /></td>
-			</tr>
-			<tr>
-				<td class="centre" colspan="2"><input name="submit" tabindex="3" type="submit" value="', _('Enter Information'), '" /></td>
-			</tr>
-		</tbody>
-		</table>
-		<br />
+					'maxlength="30" name="SectionName" required="required" size="30" tabindex="2" type="text" value="', $_POST['SectionName'], '" />
+				<fieldhelp>', _('Enter a description for this section'), '</fieldhelp>
+			</field>';
+			
+	echo '</fieldset>';
+	
+	echo '<div class="centre">
+			<input name="submit" tabindex="3" type="submit" value="', _('Enter Information'), '" />
 		</div>
-		</form>';
+	</form>';
 } //end if record deleted no point displaying form to add record
 
 include('includes/footer.php');

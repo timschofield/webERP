@@ -263,7 +263,6 @@ if (isset($SelectedSalesPostingID)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedSalesPostingID)) {
@@ -296,11 +295,13 @@ if (!isset($_GET['delete'])) {
 			areadescription FROM areas";
 	$result = DB_query($SQL);
 
-	echo '<br /><table class="selection">
-		<tr>
-		<td>' . _('Area') . ':</td>
-		<td><select name="Area">
-			<option value="AN">' . _('Any Other') . '</option>';
+	echo '<fieldset>
+			<legend>', _('Sales/GL Configuration'), '</legend>';
+
+	echo '<field>
+			<label for="Area">' . _('Area') . ':</label>
+			<select name="Area">
+				<option value="AN">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['Area']) and $myrow['areacode']==$_POST['Area']) {
@@ -317,12 +318,13 @@ if (!isset($_GET['delete'])) {
 	$SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 	$result = DB_query($SQL);
 
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-
-	echo '<tr><td>' . _('Stock Category') . ':</td>
-		<td><select name="StkCat">
-			<option value="ANY">' . _('Any Other') . '</option>';
+	echo '<field>
+			<label for="StkCat">' . _('Stock Category') . ':</label>
+			<select name="StkCat">
+				<option value="ANY">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -335,8 +337,8 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-	echo '</select></td></tr>';
-
+	echo '</select>
+		</field>';
 
 	DB_free_result($result);
 
@@ -346,8 +348,9 @@ if (!isset($_GET['delete'])) {
 	$result = DB_query($SQL);
 
 
-	echo '<tr><td>' . _('Sales Type') . ' / ' . _('Price List') . ':</td>
-		<td><select name="SalesType">';
+	echo '<field>
+			<label for="SalesType">' . _('Sales Type') . ' / ' . _('Price List') . ':</label>
+			<select name="SalesType">';
 	echo '<option value="AN">' . _('Any Other') . '</option>';
 
 	while ($myrow = DB_fetch_array($result)) {
@@ -360,11 +363,12 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-
-	echo '<tr><td>' . _('Post Sales to GL Account') . ':</td>
-			<td><select name="SalesGLCode">';
+	echo '<field>
+			<label for="SalesGLCode">' . _('Post Sales to GL Account') . ':</label>
+			<select name="SalesGLCode">';
 
 	DB_free_result($result);
 	$SQL = "SELECT chartmaster.accountcode,
@@ -390,9 +394,12 @@ if (!isset($_GET['delete'])) {
 
 	DB_data_seek($result,0);
 
-	echo '</select></td></tr>
-		<tr><td>' . _('Post Discount to GL Account') . ':</td>
-			<td><select name="DiscountGLCode">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="DiscountGLCode">' . _('Post Discount to GL Account') . ':</label>
+			<select name="DiscountGLCode">';
 
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['DiscountGLCode']) and $myrow['accountcode']==$_POST['DiscountGLCode']) {
@@ -404,14 +411,13 @@ if (!isset($_GET['delete'])) {
 
 	} //end while loop
 
-	echo'</select></td>
-		</tr>
-		</table>';
+	echo'</select>
+		</field>
+	</fieldset>';
 
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
+	echo '<div class="centre"><input type="submit" name="submit" value="' . _('Enter Information') . '" /></div>';
 
-	echo '</div>
-          </form>';
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

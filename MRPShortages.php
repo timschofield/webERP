@@ -242,10 +242,14 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr><td>' . _('Inventory Category') . ':</td><td><select name="CategoryID">';
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+
+	echo '<field>
+			<label for="CategoryID">' . _('Inventory Category') . ':</label>
+			<select name="CategoryID">';
 	echo '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
 	$SQL = "SELECT categoryid,
 			categorydescription
@@ -254,37 +258,37 @@ if (isset($_POST['PrintPDF'])) {
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
 	} //end while loop
-	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Sort') . ':</td>
-			<td><select name="Sort">
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Sort">' . _('Sort') . ':</label>
+			<select name="Sort">
 				<option selected="selected" value="extcost">' . _('Extended Shortage Dollars') . '</option>
 				<option value="stockid">' . _('Part Number') . '</option>
-				</select>
-			</td>
-		</tr>';
+			</select>
+		</field>';
 
-	echo '<tr><td>' . _('Shortage-Excess Option') . ':</td>
-			<td><select name="ReportType">
+	echo '<field>
+			<label for="ReportType">' . _('Shortage-Excess Option') . ':</label>
+			<select name="ReportType">
 				<option selected="selected" value="Shortage">' . _('Report MRP Shortages') . '</option>
 				<option value="Excess">' . _('Report MRP Excesses') . '</option>
-				</select>
-			</td>
-		</tr>';
+			</select>
+		</field>';
 
-	echo '<tr><td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
+	echo '<field>
+			<label for="Fill">' . _('Print Option') . ':</label>
+			<select name="Fill">
 				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
-				</select>
-			</td>
-		</tr>';
-	echo '</table>
-		<br />
+			</select>
+		</field>';
+	echo '</fieldset>
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
-        </form>';
+		</form>';
 
 	include ('includes/footer.php');
 

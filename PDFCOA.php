@@ -27,27 +27,27 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
         include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
         echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Enter Item') .':</td>
-			<td><input type="text" name="ProdSpec" size="25" maxlength="25" /></td>
-			<td>' . _('Enter Lot') .':</td>
-			<td><input type="text" name="LotKey" size="25" maxlength="25" /></td>
-		</tr>
-		</table>
-		</div>
+		<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="ProdSpec">' . _('Enter Item') .':</label>
+			<input type="text" name="ProdSpec" size="25" maxlength="25" />
+		</field>
+		<field>
+			<label for="LotKey">' . _('Enter Lot') .':</label>
+			<input type="text" name="LotKey" size="25" maxlength="25" />
+		</field>
+		</fieldset>
 		<div>
-		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
+			<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>
 		</form>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Or Select Existing Lot') .':</td>';
+		<fieldset>
+		<field>
+			<label for="QASampleID">' . _('Or Select Existing Lot') .':</label>';
 	$SQLSpecSelect="SELECT sampleid,
 							lotkey,
 							prodspeckey,
@@ -59,15 +59,14 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 
 
 	$ResultSelection=DB_query($SQLSpecSelect);
-	echo '<td><select name="QASampleID" style="font-family: monospace; white-space:pre;">';
+	echo '<select name="QASampleID" style="font-family: monospace; white-space:pre;">';
 	echo '<option value="">' . str_pad(_('Lot/Serial'),15,'_'). str_pad(_('Item'),20, '_', STR_PAD_RIGHT). str_pad(_('Description'),20,'_') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['sampleid'] . '">' . str_pad($MyRowSelection['lotkey'],15, '_', STR_PAD_RIGHT). str_pad($MyRowSelection['prodspeckey'],20,'_') .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
-	echo '</select></td>';
-	echo '</tr>
-		</table>
-		</div>
+	echo '</select>';
+	echo '</field>
+		</fieldset>
 		<div>
 		<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 		</div>

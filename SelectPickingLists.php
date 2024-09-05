@@ -164,14 +164,20 @@ if (isset($_POST['SearchParts'])) {
 }
 
 if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right now always show all inputs
-	echo '<table class="selection">
-			<tr>';
+	echo '<fieldset>
+			<legend class="search">', _('Picking List Search'), '</legend>
+			<field>';
 	if (isset($SelectedStockItem) and $SelectedStockItem != '') {
 		echo '<td>', _('For the part'), ': <b>', $SelectedStockItem, '</b>', ' ', _('and'), '<input type="hidden" name="SelectedStockItem" value="', $SelectedStockItem, '" /></td>';
 	}
 
-	echo '<td>', _('Sales Order'), ':</td><td><input name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" value="', $OrderNumber, '"/></td>';
-	echo '<td>', _('Pick List'), ':</td><td><input name="PickList" maxlength="10" size="10" value="', $PickList, '"/></td>';
+	echo '<label for="OrderNumber">', _('Sales Order'), ':</label>
+			<input name="OrderNumber" autofocus="autofocus" maxlength="8" size="9" value="', $OrderNumber, '"/>
+		</field>';
+	echo '<field>
+			<label for="PickList">', _('Pick List'), ':</label>
+			<input name="PickList" maxlength="10" size="10" value="', $PickList, '"/>
+		</field>';
 
 	$SQL = "SELECT locations.loccode,
 					locationname
@@ -181,7 +187,9 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 					AND locationusers.userid='" . $_SESSION['UserID'] . "'
 					AND locationusers.canview=1";
 	$ResultStkLocs = DB_query($SQL);
-	echo '<td>', _('Into Stock Location'), ':</td><td><select name="StockLocation">';
+	echo '<field>
+			<label for="StockLocation">', _('Into Stock Location'), ':</label>
+			<select name="StockLocation">';
 
 	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {
@@ -196,7 +204,12 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
 		}
 	}
-	echo '</select></td><td>', _('Pick List Status'), ':</td><td><select name="Status">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Status">', _('Pick List Status'), ':</label>
+			<select name="Status">';
 
 	if ($_POST['Status'] == 'New') {
 		echo '<option selected="selected" value="New">', _('New'), '</option>';
@@ -224,10 +237,13 @@ if (true or !isset($OrderNumber) or $OrderNumber == "") { //revisit later, right
 		echo '<option value="Cancelled">', _('Cancelled'), '</option>';
 	}
 
-	echo '</select></td>
-		<td><input type="submit" name="SearchPickLists" value="' . _('Search Pick Lists') . '" /></td>
-		</tr>
-	</table>';
+	echo '</select>
+		</field>
+	</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="SearchPickLists" value="' . _('Search Pick Lists') . '" />
+		</div>';
 }
 $SQL = "SELECT categoryid,
 			categorydescription
@@ -235,14 +251,11 @@ $SQL = "SELECT categoryid,
 		ORDER BY categorydescription";
 $Result1 = DB_query($SQL);
 
-echo '<table class="selection">
-		<tr>
-			<th colspan="6">
-				<h3>', _('To search for Pick Lists for a specific part use the part selection facilities below'), '</h3>
-			</th>
-		</tr>';
-echo '<tr>
-		<td>', _('Select a stock category'), ':</td><td><select name="StockCat">';
+echo '<fieldset>
+		<legend class="search">', _('To search for Pick Lists for a specific part use the part selection facilities below'), '</legend>';
+echo '<field>
+		<label for="StockCat">', _('Select a stock category'), ':</label>
+		<select name="StockCat">';
 
 while ($MyRow1 = DB_fetch_array($Result1)) {
 	if (isset($_POST['StockCat']) and $MyRow1['categoryid'] == $_POST['StockCat']) {
@@ -252,24 +265,23 @@ while ($MyRow1 = DB_fetch_array($Result1)) {
 	}
 }
 
-echo '</select></td>
-		<td>', _('Enter text extracts in the'), ' <b>', _('description'), '</b>:</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-	</tr>
-	<tr>
-		<td colspan="2">&nbsp;</td>
-		<td><b>', _('OR'), ' </b>', _('Enter extract of the'), '<b> ', _('Stock Code'), '</b>:</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
-	</tr>
-	<tr>
-		<td colspan="4">
-			<div class="centre">
-				<input type="submit" name="SearchParts" value="', _('Search Parts Now'), '" />
-				<input type="submit" name="ResetPart" value="', _('Show All'), '" />
-			</div>
-		</td>
-	</tr>
-	</table>';
+echo '</select>
+	</field>';
+
+echo '<field>
+		<label for="Keywords">', _('Enter text extracts in the'), ' <b>', _('description'), '</b>:</label>
+		<input type="text" name="Keywords" size="20" maxlength="25" />
+	</field>
+	<h3>', _('OR'), ' </h3>
+	<field>
+		<label for="StockCode">', _('Enter extract of the'), '<b> ', _('Stock Code'), '</b>:</label>
+		<input type="text" name="StockCode" size="15" maxlength="18" />
+	</field>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" name="SearchParts" value="', _('Search Parts Now'), '" />
+		<input type="submit" name="ResetPart" value="', _('Show All'), '" />
+	</div>';
 
 if (isset($StockItemsResult)) {
 	echo '<table class="selection">

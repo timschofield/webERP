@@ -323,19 +323,28 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 // the page is called, and is also invoked at the end of all of the other functions.
 // echo "<br/>DISPLAY - DemandID = $DemandID<br/>";
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if (!isset($StockID)) {
-		echo'<table cellpadding="3" class="selection"><tr>
-			<td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
-			<td><input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" /></td>
-			<td><b>' . _('OR') . '</b></td>
-			<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
-			<td><input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" /></td>
-			<td><b>' . _('OR') . '</b></td>
-			<td><a href="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?listall=yes">' . _('List All Demands')  . '</a></td></tr>
-			<tr><td colspan="7"><div class="centre"><input tabindex="3" type="submit" name="Search" value="' . _('Search Now') .
-            '" /></div></td></tr></table>';
+		echo'<fieldset>
+				<legend>', _('Select Stock Item'), '</legend>
+					<field>
+						<label for"Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
+						<input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" />
+					</field>
+					<b>' . _('OR') . '</b>
+					<field>
+						<label for="StockCode">' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</label>
+						<input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" />
+					</field>
+					<field>
+						<b>' . _('OR') . '</b>
+						<a href="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?listall=yes">' . _('List All Demands')  . '</a>
+					</field>
+				</fieldset>';
+				
+		echo '<div class="centre">
+				<input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '" />
+			</div>';
 	} else {
 		if (isset($DemandID)) {
 		//editing an existing MRP demand
@@ -360,21 +369,23 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 
 			echo '<input type="hidden" name="DemandID" value="' . $_POST['DemandID'] . '" />';
 			echo '<input type="hidden" name="StockID" value="' . $_POST['StockID'] . '" />';
-			echo '<table class="selection">
-					<tr>
-						<td>' ._('Part Number') . ':</td>
-						<td>' . $_POST['StockID'] . '</td>
-					</tr>';
+			echo '<fieldset>
+					<legend>', _('Amend MRP Demand'), '</legend>
+					<field>
+						<label for="StockID">' ._('Part Number') . ':</label>
+						<fieldtext>' . $_POST['StockID'] . '</fieldtext>
+					</field>';
 
 		} else {
 			if (!isset($_POST['StockID'])) {
 				$_POST['StockID'] = '';
 			}
-			echo '<table class="selection">
-					<tr>
-						<td>' . _('Part Number') . ':</td>
-						<td><input type="text" name="StockID" size="21" maxlength="20" value="' . $_POST['StockID'] . '" /></td>
-					</tr>';
+			echo '<fieldset>
+					<legend>', _('Create New MRP Demand'), '</legend>
+					<field>
+						<label for="StockID">' . _('Part Number') . ':</label>
+						<input type="text" name="StockID" size="21" maxlength="20" value="' . $_POST['StockID'] . '" />
+					</field>';
 		}
 
 
@@ -386,17 +397,18 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 			$_POST['Duedate']=' ';
 		}
 
-		echo '<tr><td>' . _('Quantity') . ':</td>
-				<td><input type="text" name="Quantity" class="number" size="6" maxlength="6" value="' . $_POST['Quantity'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Due Date') . ':</td>
-				<td><input type="text" class="date" name="Duedate" size="11" maxlength="10" value="' . $_POST['Duedate'] . '" /></td>
-			</tr>';
+		echo '<field>
+				<label for="Quantity">' . _('Quantity') . ':</label>
+				<input type="text" name="Quantity" class="number" size="6" maxlength="6" value="' . $_POST['Quantity'] . '" />
+			</field>
+			<field>
+				<label for="Duedate">' . _('Due Date') . ':</label>
+				<input type="text" class="date" name="Duedate" size="11" maxlength="10" value="' . $_POST['Duedate'] . '" />
+			</field>';
 		// Generate selections for Demand Type
-		echo '<tr>
-				<td>' . _('Demand Type') . '</td>
-				<td><select name="MRPDemandtype">';
+		echo '<field>
+				<label for="MRPDemandtype">' . _('Demand Type') . '</label>
+				<select name="MRPDemandtype">';
 
 		$sql = "SELECT mrpdemandtype,
 						description
@@ -410,22 +422,20 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 			}
 			echo $myrow['mrpdemandtype'] . '">' . $myrow['mrpdemandtype'] . ' - ' .$myrow['description'] . '</option>';
 		} //end while loop
-		echo '</select></td>
-			</tr>
-			</table>
-			<br />
+		echo '</select>
+			</field>
+			</fieldset>
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Enter Information') . '" />&nbsp;&nbsp;
 				<input type="submit" name="listsome" value="' . _('List Selection') . '" />&nbsp;&nbsp;
 				<input type="submit" name="deletesome" value="' . _('Delete Demand Type') . '" />';
 		// If mrpdemand record exists, display option to delete it
 		if ((isset($DemandID)) AND (DB_num_rows($result) > 0)) {
-			echo '<br/><br/><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?delete=yes&amp;StockID='.$StockID.'&amp;DemandID=' . $DemandID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Or Delete Record') . '</a>';
+			echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?delete=yes&amp;StockID='.$StockID.'&amp;DemandID=' . $DemandID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Or Delete Record') . '</a>';
 		}
-        echo '</div>';
+		echo '</div>';
 	}
-	echo '</div>
-		</form>';
+	echo '</form>';
 
 } // End of function display()
 

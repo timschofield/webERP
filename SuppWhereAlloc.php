@@ -14,16 +14,16 @@ if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<p class="page_title_text noprint"><img alt="" src="'. $RootPath. '/css/'. $Theme.
-	'/images/money_add.png" title="',// Icon image.
-	_('Supplier Where Allocated'), '" /> ',// Icon title.
-	$Title. '</p>',// Page title.
-	'<table class="selection noprint">
-	<tr>
-		<td>' . _('Type') . ':</td>
-		<td><select tabindex="1" name="TransType"> ';
+	<p class="page_title_text noprint">
+		<img alt="" src="'. $RootPath. '/css/'. $Theme.'/images/money_add.png" title="',_('Supplier Where Allocated'), '" /> ',$Title. '
+	</p>';
+
+echo '<fieldset>
+		<legend>', _('Inquiry Critertia'), '</legend>
+		<field>
+			<label for="TransType">' . _('Type') . ':</label>
+			<select tabindex="1" name="TransType"> ';
 
 if(!isset($_POST['TransType'])) {
 	$_POST['TransType']='20';
@@ -42,14 +42,15 @@ if($_POST['TransType']==20) {
 		<option value="22">' . _('Payment') . '</option>';
 }
 
-echo '</select></td>';
+echo '</select>
+	</field>';
 
 if(!isset($_POST['TransNo'])) {$_POST['TransNo']='';}
-echo '<td>' . _('Transaction Number').':</td>
-		<td><input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="20" size="20" value="'. $_POST['TransNo'] . '" /></td>
-	</tr>
-	</table>
-	<br />
+echo '<field>
+		<label for="TransNo">' . _('Transaction Number').':</label>
+		<input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="20" size="20" value="'. $_POST['TransNo'] . '" />
+	</field>
+	</fieldset>
 	<div class="centre noprint">
 		<input tabindex="3" type="submit" name="ShowResults" value="' . _('Show How Allocated') . '" />
 	</div>';
@@ -179,7 +180,6 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 		} // end if there are allocations against the transaction
 	} //got the ID of the transaction to find allocations for
 }
-echo '</div>';
 echo '</form>';
 if(isset($Printer)) {
 	echo '<div class="centre noprint">

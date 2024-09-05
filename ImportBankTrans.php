@@ -43,23 +43,25 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 	}
     echo '<form name="ImportForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table>
-			<tr>
-				 <td>' .  _('Bank Account to Import Transaction For') . '</td>
-	             <td><select name="ImportFormat">';
+		<fieldset>
+			<legend>', _('Import Details'), '</legend>
+			<field>
+				 <label for="ImportFormat">' .  _('Bank Account to Import Transaction For') . '</label>
+	             <select name="ImportFormat">';
 
 				while ($MyRow = DB_fetch_array($result)) {
 					// Lists bank accounts order by bankaccountname
 					echo '<option value="', $MyRow['importformat'], '">', $MyRow['bankaccountname'], '</option>';
 				}
 
-	 echo       '</td>
-			 </tr>
-			 <tr>
-				 <td>' .  _('MT940 format Bank Statement File to import') . '</td>
-	             <td><input type="file" id="ImportFile" autofocus="autofocus" required="required" title="' . _('Select the file that contains the bank transactions in MT940 format') . '" name="ImportFile"></td>
-			 </tr>
-        </table>
+	 echo '</select>
+		</field>';
+		
+	echo ' <field>
+			 <label for="ImportFile">' .  _('MT940 format Bank Statement File to import') . '</label>
+				<td><input type="file" id="ImportFile" autofocus="autofocus" required="required" title="' . _('Select the file that contains the bank transactions in MT940 format') . '" name="ImportFile"></td>
+		</field>
+        </fieldset>
         <div class="centre"><input type="submit" name="Import" value="Process"></div>
         </form>';
 

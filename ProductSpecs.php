@@ -15,6 +15,8 @@ if (isset($_GET['KeyValue'])){
 	$KeyValue =mb_strtoupper($_GET['KeyValue']);
 } elseif(isset($_POST['KeyValue'])){
 	$KeyValue =mb_strtoupper($_POST['KeyValue']);
+} else {
+	$KeyValue = '';
 }
 
 if (!isset($_POST['RangeMin']) OR $_POST['RangeMin']=='') {
@@ -86,25 +88,22 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 if (!isset($KeyValue) OR $KeyValue=='') {
 	//prompt user for Key Value
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-			<div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">
-				<tr>
-					<td>' . _('Enter Specification Name') .':</td>
-					<td><input type="text" name="KeyValue" size="25" maxlength="25" /></td>
-				</tr>
-			</table>
-			</div>
+			<fieldset>
+				<field>
+					<label for="KeyValue">' . _('Enter Specification Name') .':</label>
+					<input type="text" name="KeyValue" size="25" maxlength="25" />
+				</field>
+			</fieldset>
 			<div>
 				<input type="submit" name="pickspec" value="' . _('Submit') . '" />
 			</div>
 		</form>
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-			<div>
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table class="selection">
-				<tr>
-					<td>' . _('Or Select Existing Specification') .':</td>';
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<fieldset>
+				<field>
+					<label for="KeyValue">' . _('Or Select Existing Specification') .':</label>';
 
 	$SQLSpecSelect="SELECT DISTINCT(keyval),
 							description
@@ -113,15 +112,14 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 
 
 	$ResultSelection=DB_query($SQLSpecSelect);
-	echo '<td><select name="KeyValue">';
+	echo '<select name="KeyValue">';
 
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 		echo '<option value="' . $MyRowSelection['keyval'] . '">' . $MyRowSelection['keyval'].' - ' .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 	}
-	echo 	'</select></td>
-			</tr>
-		</table>
-		</div>
+	echo 	'</select>
+			</field>
+		</fieldset>
 		<div>
 			<input type="submit" name="pickspec" value="' . _('Submit') . '" />
 		</div>
@@ -155,22 +153,23 @@ if (isset($_GET['ListTests'])) {
 			ORDER BY name";
 	$result = DB_query($sql);
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<thead>
-			<tr>
-				<th class="ascending">' . _('Add') . '</th>
-				<th class="ascending">' . _('Name') . '</th>
-				<th class="ascending">' . _('Method') . '</th>
-				<th class="ascending">' . _('Units') . '</th>
-				<th>' . _('Possible Values') . '</th>
-				<th>' . _('Target Value') . '</th>
-				<th>' . _('Range Min') . '</th>
-				<th>' . _('Range Max') . '</th>
-			</tr>
-		</thead>
-		<tbody>';
+	if (DB_num_rows($result) > 0) {
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<table class="selection">
+			<thead>
+				<tr>
+					<th class="ascending">' . _('Add') . '</th>
+					<th class="ascending">' . _('Name') . '</th>
+					<th class="ascending">' . _('Method') . '</th>
+					<th class="ascending">' . _('Units') . '</th>
+					<th>' . _('Possible Values') . '</th>
+					<th>' . _('Target Value') . '</th>
+					<th>' . _('Range Min') . '</th>
+					<th>' . _('Range Max') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
+	};
 
 	$x=0;
 	while ($myrow=DB_fetch_array($result)) {
@@ -228,12 +227,11 @@ if (isset($_GET['ListTests'])) {
 	} //END WHILE LIST LOOP
 
 	echo '</tbody>
-		</table><br />
+		</table>
 			<div class="centre">
 				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
 				<input type="hidden" name="AddTestsCounter" value="' . $x . '" />
 				<input type="submit" name="AddTests" value="' . _('Add') . '" />
-		</div>
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -491,7 +489,6 @@ if (isset($SelectedQATest)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedQATest)) {
@@ -652,10 +649,8 @@ if (! isset($_GET['delete'])) {
 		echo '</select></td>
 			</tr>
 			</table>
-			<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-			</div>
 			</div>
 			</form>';
 	}

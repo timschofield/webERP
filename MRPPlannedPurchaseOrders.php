@@ -270,7 +270,6 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		echo '<form action="MRPConvertWorkOrders.php" method="post">
-			<div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<tr>
@@ -328,7 +327,6 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				<td colspan="5" class="number">' . _('Total Extended Cost') . ': ' . locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			</tr>
 			</table>
-			</div>
 			</form>';
 
 		echo '<br /><a class="noprint" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select different criteria.'), '</a>';
@@ -342,41 +340,33 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<br /><br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<div>
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">
-			<tr>
-				<td>' . _('Consolidation') . ':</td>
-				<td>
+			<fieldset>
+				<legend>', _('Report Criteria'), '</legend>
+				<field>
+					<label for="Consolidation">' . _('Consolidation') . ':</label>
 					<select required="required" name="Consolidation">
 						<option selected="selected" value="None">' . _('None') . '</option>
 						<option value="Weekly">' . _('Weekly') . '</option>
 						<option value="Monthly">' . _('Monthly') . '</option>
 					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>' . _('Print Option') . ':</td>
-				<td>
-					<select name="Fill">
-						<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
-						<option value="no">' . _('Plain Print') . '</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>' . _('Cut Off Date') . ':</td>
-				<td>
-					<input type="text" required="required" class="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" />
-				</td>
-			</tr>
-			</table>
+			</field>
+			<field>
+				<label for="Fill">' . _('Print Option') . ':</label>
+				<select name="Fill">
+					<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
+					<option value="no">' . _('Plain Print') . '</option>
+				</select>
+			</field>
+			<field>
+				<label for="cutoffdate">' . _('Cut Off Date') . ':</label>
+				<input type="text" required="required" class="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" />
+			</field>
+			</fieldset>
 			<div class="centre">
 				<input type="submit" name="Review" value="' . _('Review') . '" /> <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>
-		</div>
 		</form>';
 
 	include('includes/footer.php');

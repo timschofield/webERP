@@ -106,10 +106,11 @@ if (!isset($SelectedUser)) {
 	then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">
-			<tr>
-				<td>' . _('Select User') . ':</td>
-				<td><select name="SelectedUser">';
+			<fieldset>
+				<legend>', _('User Selection'), '</legend>
+				<field>
+					<label for="SelectedUser">' . _('Select User') . ':</label>
+					<select name="SelectedUser">';
 
 	$Result = DB_query("SELECT userid,
 								realname
@@ -127,9 +128,10 @@ if (!isset($SelectedUser)) {
 
 	} //end while loop
 
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '</table>'; // close main table
+	echo '</fieldset>'; // close main table
 	DB_free_result($Result);
 
 	echo '<div class="centre">
@@ -208,11 +210,12 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	if (!isset($_GET['delete'])) {
 
 
-		echo '<table  class="selection">'; //Main table
+		echo '<fieldset>
+				<legend>', _('Location Selection'), '</legend>'; //Main table
 
-		echo '<tr>
-				<td>' . _('Select Location') . ':</td>
-				<td><select name="SelectedLocation">';
+		echo '<field>
+				<label for="SelectedLocation">' . _('Select Location') . ':</label>
+				<select name="SelectedLocation">';
 
 		$Result = DB_query("SELECT loccode,
 									locationname
@@ -237,9 +240,8 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 		} //end while loop
 
 		echo '</select>
-					</td>
-				</tr>
-			</table>'; // close main table
+			</field>
+		</fieldset>'; // close main table
 		DB_free_result($Result);
 
 		echo '<div class="centre">

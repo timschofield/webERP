@@ -456,35 +456,37 @@ if(isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-            <div>
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">
-			<tr>
-				<td>' . _('From Customer Code') . ':' . '</td>
-				<td><input tabindex="1" autofocus="autofocus" required="required" type="text" maxlength="6" size="7" name="FromCriteria" value="0" title="' . _('Enter the first customer code alphabetically to include in the report') . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('To Customer Code') . ':' . '</td>
-				<td><input tabindex="2" type="text" required="required"  maxlength="6" size="7" name="ToCriteria" value="zzzzzz" title="' . _('Enter the last customer code alphabetically to include in the report') . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('All balances or overdues only') . ':' . '</td>
-				<td><select tabindex="3" name="All_Or_Overdues">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		
+		echo '<fieldset>
+				<legend>', _('Select Report Criteria'), '</legend>';
+				
+		echo '<field>
+				<label for="FromCriteria">' . _('From Customer Code') . ':' . '</label>
+				<input tabindex="1" autofocus="autofocus" required="required" type="text" maxlength="6" size="7" name="FromCriteria" value="0" title="" />
+				<fieldhelp>' . _('Enter the first customer code alphabetically to include in the report') . '</fieldhelp>
+			</field>
+			<field>
+				<label for="ToCriteria">' . _('To Customer Code') . ':' . '</label>
+				<input tabindex="2" type="text" required="required"  maxlength="6" size="7" name="ToCriteria" value="zzzzzz" title="" />
+				<fieldhelp>' . _('Enter the last customer code alphabetically to include in the report') . '</fieldhelp>
+			</field>
+			<field>
+				<label for="All_Or_Overdues">' . _('All balances or overdues only') . ':' . '</label>
+				<select tabindex="3" name="All_Or_Overdues">
 					<option selected="selected" value="All">' . _('All customers with balances') . '</option>
 					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
 					<option value="HeldOnly">' . _('Held accounts only') . '</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>' . _('Only Show Customers Of') . ':' . '</td>';
+				</select>
+				<fieldhelp>', _('Show all account balances, or just show accounts with overdue balances'), '</fieldhelp>
+			</field>
+			<field>
+				<label for="Salesman">' . _('Only Show Customers Of') . ':' . '</label>';
 		if($_SESSION['SalesmanLogin'] != '') {
-			echo '<td>';
-			echo $_SESSION['UsersRealName'];
-			echo '</td>';
+			echo '<fieldtext>', $_SESSION['UsersRealName'], '</fieldtext>';
 		}else{
-			echo '<td><select tabindex="4" name="Salesman">';
+			echo '<select tabindex="4" name="Salesman">';
 
 			$sql = "SELECT salesmancode, salesmanname FROM salesman";
 
@@ -493,12 +495,14 @@ if(isset($_POST['PrintPDF'])
 			while ($myrow=DB_fetch_array($result)) {
 					echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
 			}
-			echo '</select></td>';
+			echo '</select>
+				<fieldhelp>', _('Only show customers for a particular salesperson, or for all sales people'), '</fieldhelp>';
 		}
-		echo '</tr>
-			<tr>
-				<td>' . _('Only show customers trading in') . ':' . '</td>
-				<td><select tabindex="5" name="Currency">';
+		echo '</field>';
+		
+		echo '<field>
+				<label for="Currency">' . _('Only show customers trading in') . ':' . '</label>
+				<select tabindex="5" name="Currency">';
 
 		$sql = "SELECT currency, currabrev FROM currencies";
 
@@ -510,23 +514,25 @@ if(isset($_POST['PrintPDF'])
 				  echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			  }
 		}
-		echo '</select></td>
-			</tr>
-			<tr>
-				<td>' . _('Summary or detailed report') . ':' . '</td>
-				<td><select tabindex="6" name="DetailedReport">
+		echo '</select>
+			<fieldhelp>', _('Select the customer currency, and just show customers trading in that currency'), '</fieldhelp>
+		</field>';
+		
+		echo '<field>
+				<label for="DetailedReport">' . _('Summary or detailed report') . ':' . '</label>
+				<select tabindex="6" name="DetailedReport">
 					<option selected="selected" value="No">' . _('Summary Report') . '</option>
 					<option value="Yes">' . _('Detailed Report') . '</option>
-					</select>
-				</td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
+				</select>
+				<fieldhelp>', _('The report can be shown as a summary report, or a detailed report'), '</fieldhelp>
+			</field>';
+			
+		echo '</fieldset>';
+		
+		echo '<div class="centre">
 				<input tabindex="7" type="submit" name="PrintPDF" value="' . _('Print PDF') , '" />
-			</div>
             </div>
-            </form>';
+		</form>';
 	}
 	include('includes/footer.php');
 } /*end of else not PrintPDF */

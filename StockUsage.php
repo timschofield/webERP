@@ -39,9 +39,8 @@ $myrow = DB_fetch_row($result);
 $DecimalPlaces = $myrow[3];
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
+echo '<fieldset>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
 if ($myrow[2]=='K'
@@ -55,14 +54,20 @@ if ($myrow[2]=='K'
 
 	$StockID = '';
 } else {
-	echo '<tr>
-			<th><h3>' . _('Item') . ' : ' . $StockID . ' - ' . $myrow[0] . '   (' . _('in units of') . ' : ' . $myrow[1] . ')</h3></th>
-		</tr>';
+	echo '<legend>
+			' . _('Item') . ' : ' . $StockID . ' - ' . $myrow[0] . '   (' . _('in units of') . ' : ' . $myrow[1] . ')
+		</legend>';
 }
 
-echo '<tr><td>' . _('Stock Code') . ':<input type="text" pattern="(?!^\s+$)[^%]{1,20}" title="'._('The input should not be blank or percentage mark').'" required="required" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />';
+echo '<field>
+		<label for="StockID">' . _('Stock Code') . ':</label>
+		<input type="text" pattern="(?!^\s+$)[^%]{1,20}" title="" required="required" name="StockID" size="21" maxlength="20" value="' . $StockID . '" />
+		<fieldhelp>'._('The input should not be blank or percentage mark').'</fieldhelp>
+	</field>';
 
-echo _('From Stock Location') . ':<select name="StockLocation">';
+echo '<field>
+		<label for="StockLocation">', _('From Stock Location') . ':</label>
+		<select name="StockLocation">';
 
 $sql = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
@@ -88,13 +93,13 @@ if (isset($_POST['StockLocation'])){
 	     echo '<option value="All">' . _('All Locations') . '</option>';
 	}
 }
-echo '</select>';
+echo '</select>
+	</fieldset>';
 
-echo ' <input type="submit" name="ShowUsage" value="' . _('Show Stock Usage') . '" />';
-echo ' <input type="submit" name="ShowGraphUsage" value="' . _('Show Graph Of Stock Usage') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+echo '<div class="centre">
+		<input type="submit" name="ShowUsage" value="' . _('Show Stock Usage') . '" />
+		<input type="submit" name="ShowGraphUsage" value="' . _('Show Graph Of Stock Usage') . '" />
+	</div>';
 
 
 /*HideMovt ==1 if the movement was only created for the purpose of a transaction but is not a physical movement eg. A price credit will create a movement record for the purposes of display on a credit note

@@ -192,7 +192,11 @@ if (!isset($SelectedTab)) {
 		while ($MyRow = DB_fetch_array($Result)) {
 			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['defaulttag'] . "'";
 			$TagResult = DB_query($TagSQL);
-			$TagRow = DB_fetch_array($TagResult);
+			if (DB_num_rows($TagResult) > 0) {
+				$TagRow = DB_fetch_array($TagResult);
+			} else {
+				$TagRow['tagdescription'] = '';
+			}
 			echo '<tr class="striped_row">
 					<td>', $MyRow['tabcode'], '</td>
 					<td>', $MyRow['usercode'], '</td>
@@ -254,25 +258,27 @@ if (!isset($_GET['delete'])) {
 		$_POST['TaxGroup'] = $MyRow['taxgroupid'];
 		echo '<input type="hidden" name="SelectedTab" value="', $SelectedTab, '" />';
 		echo '<input type="hidden" name="TabCode" value="', $_POST['TabCode'], '" />';
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Tab Code'), ':</td>
-					<td>', $_POST['TabCode'], '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Amend Petty Cash Type'), '</legend>
+				<field>
+					<label for="TabCode">', _('Tab Code'), ':</label>
+					<fieldtext>', $_POST['TabCode'], '</fieldtext>
+				</field>';
 	} else {
 		// This is a new type so the user may volunteer a type code
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Tab Code'), ':</td>
-					<td><input type="text" required="required" maxlength="20" name="TabCode" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Create Petty Cash Type'), '</legend>
+				<field>
+					<label for="TabCode">', _('Tab Code'), ':</label>
+					<input type="text" required="required" maxlength="20" name="TabCode" />
+				</field>';
 	}
 	if (!isset($_POST['typetabdescription'])) {
 		$_POST['typetabdescription'] = '';
 	}
-	echo '<tr>
-			<td>', _('User Name'), ':</td>
-			<td><select required="required" name="SelectUser">';
+	echo '<field>
+			<label for="SelectUser">', _('User Name'), ':</label>
+			<select required="required" name="SelectUser">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users ORDER BY userid";
@@ -285,11 +291,10 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop get user
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('Type Of Tab'), ':</td>
-			<td><select required="required" name="SelectTabs">';
+		</field>';
+	echo '<field>
+			<label for="SelectTabs">', _('Type Of Tab'), ':</label>
+			<select required="required" name="SelectTabs">';
 	$SQL = "SELECT typetabcode,
 					typetabdescription
 			FROM pctypetabs
@@ -303,11 +308,10 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop get type of tab
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('Currency'), ':</td>
-			<td><select required="required" name="SelectCurrency">';
+		</field>';
+	echo '<field>
+			<label for="SelectCurrency">', _('Currency'), ':</label>
+			<select required="required" name="SelectCurrency">';
 	$SQL = "SELECT currency, currabrev FROM currencies";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -318,20 +322,17 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop get type of tab
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	if (!isset($_POST['TabLimit'])) {
 		$_POST['TabLimit'] = 0;
 	}
-	echo '<tr>
-			<td>', _('Limit Of Tab'), ':</td>
-			<td>
-				<input type="text" class="number" name="TabLimit" size="12" required="required" maxlength="11" value="', $_POST['TabLimit'], '" />
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('Cash Assigner'), ':</td>
-			<td><select required="required" name="SelectAssigner">';
+	echo '<field>
+			<label for="TabLimit">', _('Limit Of Tab'), ':</label>
+			<input type="text" class="number" name="TabLimit" size="12" required="required" maxlength="11" value="', $_POST['TabLimit'], '" />
+		</field>';
+	echo '<field>
+			<label for="SelectAssigner">', _('Cash Assigner'), ':</label>
+			<select required="required" name="SelectAssigner">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -345,11 +346,10 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop get assigner
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('Authoriser - Cash'), ':</td>
-			<td><select required="required" name="SelectAuthoriserCash">';
+		</field>';
+	echo '<field>
+			<label for="SelectAuthoriserCash">', _('Authoriser - Cash'), ':</label>
+			<select required="required" name="SelectAuthoriserCash">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -363,11 +363,10 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop get authoriser
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('Authoriser - Expenses'), ':</td>
-			<td><select required="required" name="SelectAuthoriserExpenses">';
+		</field>';
+	echo '<field>
+			<label for="SelectAuthoriserExpenses">', _('Authoriser - Expenses'), ':</label>
+			<select required="required" name="SelectAuthoriserExpenses">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
@@ -381,11 +380,10 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop get authoriser
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('GL Account Cash Assignment'), ':</td>
-			<td><select required="required" name="GLAccountCash">';
+		</field>';
+	echo '<field>
+			<label for="GLAccountCash">', _('GL Account Cash Assignment'), ':</label>
+			<select required="required" name="GLAccountCash">';
 	$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname
 			FROM chartmaster
@@ -401,11 +399,10 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>', _('GL Account Petty Cash Tab'), ':</td>
-			<td><select required="required" name="GLAccountPcashTab">';
+		</field>';
+	echo '<field>
+			<label for="GLAccountPcashTab">', _('GL Account Petty Cash Tab'), ':</label>
+			<select required="required" name="GLAccountPcashTab">';
 	$SQL = "SELECT accountcode,
 					accountname
 				FROM chartmaster
@@ -419,17 +416,16 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	//Select the tag
 	$SQL = "SELECT tagref,
 					tagdescription
 			FROM tags
 			ORDER BY tagref";
 	$Result = DB_query($SQL);
-	echo '<tr>
-			<td>', _('Default Tag'), ':</td>
-			<td><select name="DefaultTag">';
+	echo '<field>
+			<label for="DefaultTag">', _('Default Tag'), ':</label>
+			<select name="DefaultTag">';
 	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['DefaultTag']) and $_POST['DefaultTag'] == $MyRow['tagref']) {
@@ -439,17 +435,16 @@ if (!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	// End select tag
 	$SQL = "SELECT taxgroupid,
 					taxgroupdescription
 			FROM taxgroups
 			ORDER BY taxgroupdescription";
 	$Result = DB_query($SQL);
-	echo '<tr>
-			<td>', _('Tax Group'), ':</td>
-			<td><select name="TaxGroup">';
+	echo '<field>
+			<label for="TaxGroup">', _('Tax Group'), ':</label>
+			<select name="TaxGroup">';
 	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $MyRow['taxgroupid']) {
@@ -459,10 +454,9 @@ if (!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	// End select tag
-	echo '</table>'; // close main table
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Submit" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />

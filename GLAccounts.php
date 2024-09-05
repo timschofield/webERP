@@ -235,26 +235,34 @@ if(!isset($_GET['delete'])) {
 		$_POST['AccountName'] = $MyRow['accountname'];
 		$_POST['Group'] = $MyRow['group_'];
 		$_POST['CashFlowsActivity'] = $MyRow['cashflowsactivity'];
+		$Legend = _('Edit GL Account Details');
 	} else {
 		$_POST['AccountCode'] = '';
 		$_POST['AccountName'] = '';
+		$_POST['CashFlowsActivity'] = 0;
+		$Legend = _('Create GL Account Details');
 	}
 
-	echo '<table class="selection">
-		<tr>
-			<td>', _('Account Code'), ':</td>
-			<td><input ', (empty($_POST['AccountCode']) ? 'autofocus="autofocus" ' : 'disabled="disabled" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="', _('Enter up to 20 alpha-numeric characters for the general ledger account code'), '" type="text" value="', $_POST['AccountCode'], '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Account Name') . ':</td>
-			<td><input ', (empty($_POST['AccountCode']) ? '' : 'autofocus="autofocus" '), 'maxlength="50" name="AccountName" required="required" size="51" title="' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '" type="text" value="', $_POST['AccountName'], '" /></td></tr>';
+	echo '<fieldset>
+			<legend>', $Legend, '</legend>';
+			
+	echo '<field>
+			<label for="AccountCode">', _('Account Code'), ':</label>
+			<input ', (empty($_POST['AccountCode']) ? 'autofocus="autofocus" ' : 'disabled="disabled" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="" type="text" value="', $_POST['AccountCode'], '" />
+			<fieldhelp>', _('Enter up to 20 alpha-numeric characters for the general ledger account code'), '</fieldhelp>
+		</field>
+		<field>
+			<label for="AccountName">' . _('Account Name') . ':</label>
+			<input ', (empty($_POST['AccountCode']) ? '' : 'autofocus="autofocus" '), 'maxlength="50" name="AccountName" required="required" size="51" title="" type="text" value="', $_POST['AccountName'], '" />
+			<fieldhelp>' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '</fieldhelp>
+		</field>';
 
 	$SQL = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
 	$Result = DB_query($SQL);
 
-	echo '<tr>
-			<td>' . _('Account Group') . ':</td>
-			<td><select required="required" name="Group">';
+	echo '<field>
+			<label for="Group">' . _('Account Group') . ':</label>
+			<select required="required" name="Group">';
 	while($MyRow = DB_fetch_array($Result)) {
 		echo '<option';
 		if(isset($_POST['Group']) and $MyRow[0]==$_POST['Group']) {
@@ -262,24 +270,22 @@ if(!isset($_GET['delete'])) {
 		}
 		echo ' value="', $MyRow[0], '">', $MyRow[0], '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td><label for="CashFlowsActivity">', _('Cash Flows Activity'), ':</label></td>
-			<td><select id="CashFlowsActivity" name="CashFlowsActivity" required="required">
-					<option value="0"', ($_POST['CashFlowsActivity'] == 0 ? ' selected="selected"' : ''), '>', _('No effect on cash flow'), '</option>
-					<option value="1"', ($_POST['CashFlowsActivity'] == 1 ? ' selected="selected"' : ''), '>', _('Operating activity'), '</option>
-					<option value="2"', ($_POST['CashFlowsActivity'] == 2 ? ' selected="selected"' : ''), '>', _('Investing activity'), '</option>
-					<option value="3"', ($_POST['CashFlowsActivity'] == 3 ? ' selected="selected"' : ''), '>', _('Financing activity'), '</option>
-					<option value="4"', ($_POST['CashFlowsActivity'] == 4 ? ' selected="selected"' : ''), '>', _('Cash or cash equivalent'), '</option>
-				</select>
-			</td>
-		</tr>
-		</table>';
+	echo '</select>
+		</field>';
+		
+	echo '<field>
+			<label for="CashFlowsActivity">', _('Cash Flows Activity'), ':</label>
+			<select id="CashFlowsActivity" name="CashFlowsActivity" required="required">
+				<option value="0"', ($_POST['CashFlowsActivity'] == 0 ? ' selected="selected"' : ''), '>', _('No effect on cash flow'), '</option>
+				<option value="1"', ($_POST['CashFlowsActivity'] == 1 ? ' selected="selected"' : ''), '>', _('Operating activity'), '</option>
+				<option value="2"', ($_POST['CashFlowsActivity'] == 2 ? ' selected="selected"' : ''), '>', _('Investing activity'), '</option>
+				<option value="3"', ($_POST['CashFlowsActivity'] == 3 ? ' selected="selected"' : ''), '>', _('Financing activity'), '</option>
+				<option value="4"', ($_POST['CashFlowsActivity'] == 4 ? ' selected="selected"' : ''), '>', _('Cash or cash equivalent'), '</option>
+			</select>
+		</field>
+	</fieldset>';
 
-	echo '
-		<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="submit" value="'. _('Enter Information') . '" />
 		</div>
 		</form>';

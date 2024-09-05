@@ -42,14 +42,17 @@ if (!isset($_POST['Show'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/bank.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>', // Page title.
-	'<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">', '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />', '<table>
-			<tr>
-				<td>', _('Bank Account'), ':</td>
-				<td><select name="BankAccount">';
+	'<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">'; 
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="BankAccount">', _('Bank Account'), ':</label>
+				<select name="BankAccount">';
 
 	if (DB_num_rows($AccountsResults) == 0) {
 		echo '</select></td>
-				</tr>
+				</field>
 			</table>';
 		prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
 		include ('includes/footer.php');
@@ -63,28 +66,25 @@ if (!isset($_POST['Show'])) {
 			echo '<option', ((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : ''), ' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 		}
 		echo '</select>
-				</td>
-			</tr>';
+			</field>';
 	}
-	echo '<tr>
-			<td>', _('Transactions Dated From'), ':</td>
-			<td><input type="text" name="FromTransDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" value="', date($_SESSION['DefaultDateFormat']), '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Transactions Dated To') . ':</td>
-			<td><input type="text" name="ToTransDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" value="', date($_SESSION['DefaultDateFormat']), '" /></td>
-		</tr>
-		<tr>
-			<td>', _('Show transactions'), '</td>
-			<td>
-				<select name="ShowType">
-					<option value="All">', _('All'), '</option>
-					<option value="Unmatched">', _('Unmatched'), '</option>
-					<option value="Matched">', _('Matched'), '</option>
-				</select>
-			</td>
-		</tr>
-		</table>
+	echo '<field>
+			<label for="FromTransDate">', _('Transactions Dated From'), ':</label>
+			<input type="text" name="FromTransDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" value="', date($_SESSION['DefaultDateFormat']), '" />
+		</field>
+		<field>
+			<label for="ToTransDate">' . _('Transactions Dated To') . ':</label>
+			<input type="text" name="ToTransDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" value="', date($_SESSION['DefaultDateFormat']), '" />
+		</field>
+		<field>
+			<label for="ShowType">', _('Show transactions'), '</label>
+			<select name="ShowType">
+				<option value="All">', _('All'), '</option>
+				<option value="Unmatched">', _('Unmatched'), '</option>
+				<option value="Matched">', _('Matched'), '</option>
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="Show" value="', _('Show transactions'), '" />
 		</div>

@@ -123,14 +123,15 @@ if (isset($_POST['submit'])) {
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table class="selection">
-		<tr>
-			<td>' . _('User Login') . ':</td>
-			<td><input type="text" name="UserID" required="required" ' . (isset($_GET['SelectedUser']) ? '':'autofocus="autofocus"') . 'title="' . _('Enter a userid for this customer login') . '" size="22" maxlength="20" /></td>
-		</tr>';
+echo '<fieldset>
+		<legend>', _('Login details for customer'), ' ', $CustomerName, '</legend>
+		<field>
+			<label for="UserID">' . _('User Login') . ':</label>
+			<input type="text" name="UserID" required="required" ' . (isset($_GET['SelectedUser']) ? '':'autofocus="autofocus"') . 'title="" size="22" maxlength="20" />
+			<fieldhelp>' . _('Enter a userid for this customer login') . '</fieldhelp>
+		</field>';
 
 if (!isset($_POST['Password'])) {
 	$_POST['Password']='';
@@ -145,26 +146,29 @@ if (!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
 
-echo '<tr>
-		<td>' . _('Password') . ':</td>
-		<td><input type="password" name="Password" required="required" ' . (isset($_GET['SelectedUser']) ? 'autofocus="autofocus"':'') . ' title="' . _('Enter a password for this customer login') . '" size="22" maxlength="20" value="' . $_POST['Password'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Full Name') . ':</td>
-			<td><input type="text" name="RealName" value="' . $_POST['RealName'] . '" required="required" title="' . _('Enter the user\'s real name') . '" size="36" maxlength="35" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Telephone No') . ':</td>
-			<td><input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Email Address') .':</td>
-			<td><input type="email" name="Email" value="' . $_POST['Email'] .'" required="required" title="' . _('Enter the user\'s email address') . '" size="32" maxlength="55" /></td>
-		</tr>
-        <tr>
-		<td><input type="hidden" name="Access" value="1" />
-			' . _('Branch Code') . ':</td>
-			<td><select name="BranchCode">';
+echo '<input type="hidden" name="Access" value="1" />';
+echo '<field>
+		<label for="Password">' . _('Password') . ':</label>
+		<input type="password" name="Password" required="required" ' . (isset($_GET['SelectedUser']) ? 'autofocus="autofocus"':'') . ' title="" size="22" maxlength="20" value="' . $_POST['Password'] . '" />
+		<fieldhelp>' . _('Enter a password for this customer login') . '</fieldhelp>
+	</field>
+	<field>
+		<label for="RealName">' . _('Full Name') . ':</label>
+		<input type="text" name="RealName" value="' . $_POST['RealName'] . '" required="required" title="" size="36" maxlength="35" />
+		<fieldhelp>' . _('Enter the user\'s real name') . '</fieldhelp>
+	</field>
+	<field>
+		<label for="Phone">' . _('Telephone No') . ':</label>
+		<input type="tel" name="Phone" value="' . $_POST['Phone'] . '" size="32" maxlength="30" />
+	</field>
+	<field>
+		<label for="Email">' . _('Email Address') .':</label>
+		<input type="email" name="Email" value="' . $_POST['Email'] .'" required="required" title="" size="32" maxlength="55" />
+		<fieldhelp>' . _('Enter the user\'s email address') . '</fieldhelp>
+	</field>
+    <field>
+		<label for="BranchCode">' . _('Branch Code') . ':</label>
+		<select name="BranchCode">';
 
 $sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 $result = DB_query($sql);
@@ -182,9 +186,12 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
 	}
 }
-echo '</select></td></tr>';
-echo '<tr><td>' . _('Reports Page Size') .':</td>
-	<td><select name="PageSize">';
+echo '</select>
+	</field>';
+	
+echo '<field>
+		<label for="PageSize">' . _('Reports Page Size') .':</label>
+		<select name="PageSize">';
 
 if(isset($_POST['PageSize']) and $_POST['PageSize']=='A4'){
 	echo '<option selected="selected" value="A4">' . _('A4')  . '</option>';
@@ -227,11 +234,12 @@ if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
 	echo '<option value="legal_landscape">' . _('Legal') . ' ' . _('landscape')  . '</option>';
 }
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Theme') . ':</td>
-		<td><select name="Theme">';
+echo '</select>
+	</field>';
+	
+echo '<field>
+		<label for="Theme">' . _('Theme') . ':</label>
+		<select name="Theme">';
 
 $ThemeDirectory = dir('css/');
 
@@ -249,11 +257,12 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 	}
 }
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Language') . ':</td>
-		<td><select name="UserLanguage">';
+echo '</select>
+	</field>';
+	
+echo '<field>
+		<label for="UserLanguage">' . _('Language') . ':</label>
+		<select name="UserLanguage">';
 
 foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 	if (isset($_POST['UserLanguage']) and $_POST['UserLanguage'] == $LanguageEntry){
@@ -264,13 +273,13 @@ foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 		echo '<option value="' . $LanguageEntry . '">' . $LanguageName['LanguageName']  . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>
-	<br />
-	<div class="centre">
+echo '</select>
+	</field>';
+	
+echo '</fieldset>';
+
+echo '<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
     </div>
 	</form>';
 

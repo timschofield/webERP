@@ -6,7 +6,7 @@ $Title = _('Import Fixed Assets');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
-		'/images/fixed_assets.png" title="' .
+		'/images/descending.png" title="' .
 		_('Import Fixed Assets from .csv file') . '" />' . ' ' .
 		_('Import Fixed Assets from .csv file') . '</p>';
 
@@ -28,7 +28,7 @@ $FieldNames = array(
 	'DatePurchased'			// 10 'Date of purchase',
 );
 
-if ($_FILES['SelectedAssetFile']['name']) { //start file processing
+if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 	//initialize
 	$InputError = false;
@@ -285,29 +285,31 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 
 } else { //show file upload form
 
-	echo '
-		<br />
-		<a href="Z_ImportFixedAssets.php?gettemplate=1">' . _('Get Import Template') . '</a>
-		<br />
-		<br />
-	';
+	echo '<a href="Z_ImportFixedAssets.php?gettemplate=1">' . _('Get Import Template') . '</a>';
 	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-    echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
-	echo '<table class="selection">
-					<tr><td>' . _('Select Date to Upload B/Fwd Assets To:') . '</td>
-							<td><select name="DateToEnter">';
+	echo '<fieldset>
+			<legend>', _('Import Details'), '</legend>
+			<field>
+				<label>' . _('Select Date to Upload B/Fwd Assets To:') . '</label>
+				<select name="DateToEnter">';
 	$PeriodsResult = DB_query("SELECT lastdate_in_period FROM periods ORDER BY periodno");
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
 		echo '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[0]) . '</option>';
 	}
-	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Fixed Assets Upload file:') . '</td><td><input name="SelectedAssetFile" type="file" /></td></tr></table>
-			<input type="submit" value="' . _('Send File') . '" />
-        </div>
-		</form>';
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label>' . _('Fixed Assets Upload file:') . '</label>
+			<input name="SelectedAssetFile" type="file" />
+		</field>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" value="' . _('Send File') . '" />
+	</div>
+	</form>';
 
 }
 

@@ -13,7 +13,6 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['
 . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['SelectedExpense'])){
@@ -35,10 +34,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}
 
 	/*Show a form to allow input of criteria for Expenses to show */
-	echo '<table class="selection">
-		<tr>
-			<td>' . _('Expense Code') . ':</td>
-			<td><select name="SelectedExpense">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="SelectedExpense">' . _('Expense Code') . ':</label>
+			<select name="SelectedExpense">';
 
 	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
 			FROM pctabs, pctabexpenses
@@ -63,21 +63,19 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	DB_free_result($Result);
 
 
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('From Date') . ':' . '</td>
-			<td><input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('To Date') . ':' . '</td>
-			<td><input tabindex="3" class="date" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>
-		</table>
-		<br />
+	echo '</select>
+		</field>
+		<field>
+			<label for="FromDate">' . _('From Date') . ':</label>
+			<input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+		</field>
+		<field>
+			<label for="ToDate">' . _('To Date') . ':' . '</label>
+			<input tabindex="3" class="date" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="ShowTB" value="' . _('Show HTML') .'" />
-		</div>
 		</div>
 	</form>';
 
@@ -89,22 +87,22 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />
 			<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';
 
-	echo '<br /><table class="selection">';
+	echo '<fieldset>';
 
-	echo '<tr>
-			<td>' . _('Expense Code') . ':</td>
-			<td>' . $SelectedExpense . '</td>
-			</tr>
-		<tr>
-			<td>' . _('From') . ':</td>
-			<td>' . $_POST['FromDate'] . '</td>
-		</tr>
-		<tr>
-			<td>' . _('To') . ':</td>
-			<td>' . $_POST['ToDate'] . '</td>
-		</tr>';
+	echo '<field>
+			<label>' . _('Expense Code') . ':</label>
+			<fieldtext>' . $SelectedExpense . '</fieldtext>
+			</field>
+		<field>
+			<label>' . _('From') . ':</label>
+			<fieldtext>' . $_POST['FromDate'] . '</fieldtext>
+		</field>
+		<field>
+			<label>' . _('To') . ':</label>
+			<fieldtext>' . $_POST['ToDate'] . '</fieldtext>
+		</field>';
 
-	echo '</table>';
+	echo '</fieldset>';
 
 	$SQL = "SELECT pcashdetails.counterindex,
 					pcashdetails.tabcode,
@@ -223,9 +221,8 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 
 	echo '</tbody>';
 	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';
-    echo '</div>
-          </form>';
+	echo '<div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';
+    echo '</form>';
 }
 include('includes/footer.php');
 

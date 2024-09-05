@@ -278,28 +278,36 @@ if (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
-            <div>
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">
-			<tr>
-				<td>' . _('From Supplier Code') . ':</td>
-				<td><input tabindex="1" type="text" required="required"  autofocus="autofocus" maxlength="6" size="7" name="FromCriteria" value="1" title+"' . _('Enter the first supplier code alphabetially to include in the report') . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('To Supplier Code') . ':</td>
-				<td><input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" required="required" value="zzzzzz" title="' . _('Enter the last supplier code alphabetically to include in the report') . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('All balances or overdues only') . ':' . '</td>
-				<td><select tabindex="3" name="All_Or_Overdues">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+			
+		echo '<fieldset>
+				<legend>', _('Select Report Criteria'), '</legend>';
+
+		echo '<field>
+				<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
+				<input tabindex="1" type="text" required="required"  autofocus="autofocus" maxlength="6" size="7" name="FromCriteria" value="1" title+"" />
+				<fieldhelp>' . _('Enter the first supplier code alphabetially to include in the report') . '</fieldhelp>
+			</field>';
+			
+		echo '<field>
+				<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
+				<input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" required="required" value="zzzzzz" title="" />
+				<fieldhelp>' . _('Enter the last supplier code alphabetically to include in the report') . '</fieldhelp>
+			</field>';
+			
+		echo '<field>
+				<label for="All_Or_Overdues">' . _('All balances or overdues only') . ':' . '</label>
+				<select tabindex="3" name="All_Or_Overdues">
 					<option selected="selected" value="All">' . _('All suppliers with balances') . '</option>
 					<option value="OverduesOnly">' . _('Overdue accounts only') . '</option>
-					</select></td>
-			</tr>
-			<tr>
-				<td>' . _('For suppliers trading in') . ':' . '</td>
-				<td><select tabindex="4" name="Currency">';
+				</select>
+				<fieldhelp>', _('Show all account balances, or just show accounts with overdue balances'), '</fieldhelp>
+			</field>';
+			
+		echo '<field>
+				<label for="Currency">' . _('For suppliers trading in') . ':' . '</label>
+				<select tabindex="4" name="Currency">';
 
 		$sql = "SELECT currency, currabrev FROM currencies";
 		$result=DB_query($sql);
@@ -311,22 +319,25 @@ if (isset($_POST['PrintPDF'])
 				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			}
 		}
-		echo '</select></td>
-			</tr>
-			<tr>
-				<td>' . _('Summary or Detailed Report') . ':' . '</td>
-				<td><select tabindex="5" name="DetailedReport">
+		echo '</select>
+			<fieldhelp>', _('Select the supplier currency, and just show suppliers trading in that currency'), '</fieldhelp>
+		</field>';
+		
+		echo '<field>
+				<label for="DetailedReport">' . _('Summary or Detailed Report') . ':' . '</label>
+				<select tabindex="5" name="DetailedReport">
 					<option selected="selected" value="No">' . _('Summary Report')  . '</option>
 					<option value="Yes">' . _('Detailed Report')  . '</option>
-					</select></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
+				</select>
+				<fieldhelp>', _('The report can be shown as a summary report, or a detailed report'), '</fieldhelp>
+			</field>';
+			
+		echo '</fieldset>';
+		
+		echo '<div class="centre">
 				<input tabindex="6" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			</div>
             </div>
-            </form>';
+		</form>';
 	}
 	include('includes/footer.php');
 } /*end of else not PrintPDF */

@@ -346,6 +346,14 @@ or deletion of the records*/
 		} else {
 			$ShowInWebText = _('No');
 		}
+		
+		if ($MyRow['rate'] == 0) {
+			$MyRow['rate'] = 1;
+		}
+		if (!array_key_exists($MyRow['currabrev'], $CurrencyRatesArray)) {
+			$CurrencyRatesArray[$FunctionalCurrency] = 0;
+			$CurrencyRatesArray[$MyRow['currabrev']] = 0;
+		}
 
 		if ($MyRow['currabrev']!=$FunctionalCurrency) {
 			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
@@ -387,12 +395,9 @@ if (isset($SelectedCurrency)) {
 	echo '<div class="centre"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">' . _('Show all currency definitions') . '</a></div>';
 }
 
-echo '<br />';
-
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
@@ -421,73 +426,76 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedCurrency" value="' . $SelectedCurrency . '" />';
 		echo '<input type="hidden" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" />';
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('ISO 4217 Currency Code').':</td>
-				<td>' . $_POST['Abbreviation'] . '</td>
-			</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit Currency Details'), '</legend>
+				<field>
+					<label for="Abbreviation">' . _('ISO 4217 Currency Code').':</label>
+					<fieldtext>' . $_POST['Abbreviation'] . '</fieldtext>
+				</field>';
 
 	} else { //end of if $SelectedCurrency only do the else when a new record is being entered
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
-		echo '<table class="selection">
-			<tr>
-				<td>' ._('Currency') . ':</td>
-				<td><select name="Abbreviation">';
+		echo '<fieldset>
+				<legend>', _('New currency Details'), '</legend>
+				<field>
+					<label for="Abbreviation">' ._('Currency') . ':</label>
+					<select name="Abbreviation">';
 		foreach ($CurrencyName as $CurrencyCode => $CurrencyNameTxt) {
 			echo '<option value="' . $CurrencyCode . '">' . $CurrencyCode . ' - ' . $CurrencyNameTxt . '</option>';
 		}
 
-		echo '</select></td>
-			</tr>';
+		echo '</select>
+			</field>';
 	}
 
-	echo '<tr>
-			<td>' . _('Country') . ':</td>';
+	echo '<field>
+			<label for="Country">' . _('Country') . ':</label>';
 	if (!isset($_POST['Country'])) {
 		$_POST['Country'] = '';
 	}
 	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
-		echo '<td><input type="text" name="Country" size="30" required="required" minlength="1" maxlength="50" value="' . $_POST['Country'] . '" /></td>';
+		echo '<input type="text" name="Country" size="30" required="required" minlength="1" maxlength="50" value="' . $_POST['Country'] . '" />';
 	} else {
-		echo '<td>' . $_POST['Country'] . '</td>';
+		echo '<fieldtext>' . $_POST['Country'] . '</fieldtext>';
 		echo '<input type="hidden" name="Country" value="' . $_POST['Country'] . '" />';
 	}
-	echo '</tr>
-		<tr>
-			<td>' . _('Hundredths Name') . ':</td>
-			<td>';
+	echo '</field>';
+	
+	echo '<field>
+			<label for="HundredsName">' . _('Hundredths Name') . ':</label>';
 	if (!isset($_POST['HundredsName'])) {
 		$_POST['HundredsName'] = '';
 	}
-	echo '<input type="text" name="HundredsName" size="10" required="required" minlength="1" maxlength="15" value="' . $_POST['HundredsName'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Decimal Places to Display') . ':</td>
-			<td>';
+	echo '<input type="text" name="HundredsName" size="10" required="required" minlength="1" maxlength="15" value="' . $_POST['HundredsName'] . '" />
+		</field>';
+		
+	echo '<field>
+			<label for="DecimalPlaces">' . _('Decimal Places to Display') . ':</label>';
 	if (!isset($_POST['DecimalPlaces'])) {
 		$_POST['DecimalPlaces'] = 2;
 	}
-	echo '<input class="integer" type="text" name="DecimalPlaces" size="2" required="required" minlength="1" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Exchange Rate') . ':</td>';
+	echo '<input class="integer" type="text" name="DecimalPlaces" size="2" required="required" minlength="1" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" />
+		</field>';
+		
+	echo '<field>
+			<label for="ExchangeRate">' . _('Exchange Rate') . ':</label>';
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate'] = 1;
 	}
 	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
-		echo '<td><input class="number" maxlength="16" minlength="1" name="ExchangeRate" required="required" size="16" type="text" value="', $_POST['ExchangeRate'], '" /></td>';
+		echo '<input class="number" maxlength="16" minlength="1" name="ExchangeRate" required="required" size="16" type="text" value="', $_POST['ExchangeRate'], '" />';
 	} else {
-		echo '<td>', $_POST['ExchangeRate'], '</td>',
+		echo '<fieldtext>', $_POST['ExchangeRate'], '</fieldtext>',
 			 '<input class="number" name="ExchangeRate" type="hidden" value="', $_POST['ExchangeRate'], '" />';
 	}
-	echo '</tr>';
+	echo '</field>';
 	if (!isset($_POST['webcart'])) {
 		$_POST['webcart'] = 1;
 	}
 
-	echo '<tr>
-			<td>' . _('Show in webSHOP') . ':</td>
-			<td><select name="webcart">';
+	echo '<field>
+			<label for="webcart">' . _('Show in webSHOP') . ':</label>
+			<select name="webcart">';
 
 	if ($_POST['webcart']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -501,15 +509,12 @@ if (!isset($_GET['delete'])) {
 	}
 
 	echo '</select>
-			</td>
-		</tr>
-		</table>';
+		</field>
+		</fieldset>';
 
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

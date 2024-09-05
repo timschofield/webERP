@@ -13,7 +13,7 @@ if (isset($Errors)) {
 $Errors = array();
 $i=1;
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -139,11 +139,9 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Failed to delete price data');
 	$result = DB_query($sql,$ErrMsg);
 	prnMsg( _('The price matrix record has been deleted'),'success');
-	echo '<br />';
 }
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if (isset($_GET['Edit'])){
 	echo '<input type="hidden" name="OldTypeAbbrev" value="' . $_GET['TypeAbbrev'] . '" />';
@@ -162,9 +160,11 @@ if (isset($_GET['Edit'])){
 $SQL = "SELECT currabrev FROM currencies";
 $result = DB_query($SQL);
 require_once('includes/CurrenciesArray.php');
-echo '<table class="selection">';
-echo '<tr><td>' . _('Currency') . ':</td>
-	<td><select name="CurrAbrev">';
+echo '<fieldset>
+		<legend>', _('Price Matrix For'), ' ', $_GET['StockID'], '</legend>';
+echo '<field>
+		<label for="CurrAbrev">' . _('Currency') . ':</label>
+		<select name="CurrAbrev">';
 while ($myrow = DB_fetch_array($result)){
 	echo '<option';
 	if (isset($_POST['CurrAbrev']) AND $myrow['currabrev']==$_POST['CurrAbrev']){
@@ -173,7 +173,7 @@ while ($myrow = DB_fetch_array($result)){
 	echo ' value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
 } // End while loop
 DB_free_result($result);
-echo '</select></td>';
+echo '</select>';
 
 $sql = "SELECT typeabbrev,
 		sales_type
@@ -181,8 +181,8 @@ $sql = "SELECT typeabbrev,
 
 $result = DB_query($sql);
 
-echo '<tr><td>' . _('Customer Price List') . ' (' . _('Sales Type') . '):</td><td>';
-
+echo '<field>
+		<label for="SalesType">' . _('Customer Price List') . ' (' . _('Sales Type') . '):</label>';
 echo '<select tabindex="1" name="SalesType">';
 
 while ($myrow = DB_fetch_array($result)){
@@ -193,7 +193,8 @@ while ($myrow = DB_fetch_array($result)){
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 if(isset($_GET['StockID'])){
 	$StockID = trim($_GET['StockID']);
 }elseif(isset($_POST['StockID'])){
@@ -216,26 +217,30 @@ if (!isset($_POST['QuantityBreak'])) {
 if (!isset($_POST['Price'])) {
 	$_POST['Price'] = 0;
 }
-echo '<tr><td>'. _('Price Effective From Date') . ':</td>
-	<td><input type="text" class="date" name="StartDate" required="required" size="11" maxlength="10" title="' . _('Enter the date from which this price should take effect.') . '" value="' . $_POST['StartDate'] . '" /></td></tr>';
-echo '<tr><td>' . _('Price Effective To Date') . ':</td>
-			<td><input type="text" class="date" name="EndDate" size="11" maxlength="10" title="' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '" value="' . $_POST['EndDate'] . '" />';
+echo '<field>
+		<label for="StartDate">'. _('Price Effective From Date') . ':</label>
+		<input type="text" class="date" name="StartDate" required="required" size="11" maxlength="10" title="" value="' . $_POST['StartDate'] . '" />
+		<fieldhelp>' . _('Enter the date from which this price should take effect.') . '</fieldhelp>
+	</field>';
 
+echo '<field>
+		<label for="EndDate">' . _('Price Effective To Date') . ':</label>
+		<input type="text" class="date" name="EndDate" size="11" maxlength="10" title="" value="' . $_POST['EndDate'] . '" />
+		<fieldhelp>' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Quantity Break') . '</td>
-		<td><input class="integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex="3" required="required" type="number" name="QuantityBreak" size="10" value="'. $_POST['QuantityBreak'].'" maxlength="10" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Price') . ' :</td>
-		<td><input class="number' . (in_array('Price',$Errors) ? ' inputerror' : '') . '" tabindex="4" type="text" required="required" name="Price" value="'.$_POST['Price'].'" title="' . _('The price to apply to orders where the quantity exceeds the specified quantity') . '" size="5" maxlength="5" /></td>
-	</tr>
-	</table>
-	<br />
+echo '<field>
+		<label for="QuantityBreak">' . _('Quantity Break') . '</label>
+		<input class="integer' . (in_array('QuantityBreak',$Errors) ? ' inputerror' : '') . '" tabindex="3" required="required" type="number" name="QuantityBreak" size="10" value="'. $_POST['QuantityBreak'].'" maxlength="10" />
+	</field>
+	<field>
+		<label for="Price">' . _('Price') . ' :</label>
+		<input class="number' . (in_array('Price',$Errors) ? ' inputerror' : '') . '" tabindex="4" type="text" required="required" name="Price" value="'.$_POST['Price'].'" title="' . _('The price to apply to orders where the quantity exceeds the specified quantity') . '" size="5" maxlength="5" />
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
-	<br />';
+	</div>';
 
 $sql = "SELECT sales_type,
 			salestype,
@@ -259,30 +264,31 @@ $sql = "SELECT sales_type,
 
 $result = DB_query($sql);
 
-echo '<table class="selection">';
-echo '<tr>
-		<th>' . _('Currency') . '</th>
-		<th>' . _('Sales Type') . '</th>
-		<th>' . _('Price Effective From Date') . '</th>
-		<th>' . _('Price Effective To Date') .'</th>
-		<th>' . _('Quantity Break') . '</th>
-		<th>' . _('Sell Price') . '</th>
-	</tr>';
+if (DB_num_rows($result) > 0) {
+	echo '<table class="selection">';
+	echo '<tr>
+			<th>' . _('Currency') . '</th>
+			<th>' . _('Sales Type') . '</th>
+			<th>' . _('Price Effective From Date') . '</th>
+			<th>' . _('Price Effective To Date') .'</th>
+			<th>' . _('Quantity Break') . '</th>
+			<th>' . _('Sell Price') . '</th>
+		</tr>';
 
-while ($myrow = DB_fetch_array($result)) {
-	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;StockID=' . $myrow['stockid'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'].'&amp;Price=' . $myrow['price'] . '&amp;currabrev=' . $myrow['currabrev'].'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'];
-	$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=yes&amp;StockID=' . $myrow['stockid'] . '&amp;TypeAbbrev=' . $myrow['salestype'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . locale_number_format($myrow['price'], $myrow['currdecimalplaces']) . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'].'&amp;QuantityBreak=' . $myrow['quantitybreak'];
+	while ($myrow = DB_fetch_array($result)) {
+		$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;StockID=' . $myrow['stockid'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'].'&amp;Price=' . $myrow['price'] . '&amp;currabrev=' . $myrow['currabrev'].'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'];
+		$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=yes&amp;StockID=' . $myrow['stockid'] . '&amp;TypeAbbrev=' . $myrow['salestype'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . locale_number_format($myrow['price'], $myrow['currdecimalplaces']) . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'].'&amp;QuantityBreak=' . $myrow['quantitybreak'];
 
-    if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])){
-	    printf('<tr class="striped_row">
-			<td>%s</td>
-		    	<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
-			<td><a href="%s">'._('Edit').'</a></td>
+		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])){
+			printf('<tr class="striped_row">
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="%s">'._('Edit').'</a></td>
 			</tr>',
 			$myrow['currency'],
 			$myrow['sales_type'],
@@ -292,24 +298,25 @@ while ($myrow = DB_fetch_array($result)) {
 			$myrow['price'] ,
 			$DeleteURL,
 			$EditURL);
-    }else {
-	    printf('<tr class="striped_row">
-			<td>%s</td>
-		    	<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>',
-			$myrow['currency'],
-			$myrow['sales_type'],
-			ConvertSQLDate($myrow['startdate']),
-			ConvertSQLDate($myrow['enddate']),
-			$myrow['quantitybreak'],
-			$myrow['price']);
+		} else {
+			printf('<tr class="striped_row">
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>',
+				$myrow['currency'],
+				$myrow['sales_type'],
+				ConvertSQLDate($myrow['startdate']),
+				ConvertSQLDate($myrow['enddate']),
+				$myrow['quantitybreak'],
+				$myrow['price']);
 
-    }
+		}
 
+	}
 }
 
 echo '</table>

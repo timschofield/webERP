@@ -208,29 +208,31 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedExpense" value="', $SelectedExpense, '" />';
 		echo '<input type="hidden" name="CodeExpense" value="', $_POST['CodeExpense'], '" />';
 		// We dont allow the user to change an existing type code
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Expense Code'), ':</td>
-					<td>', $_POST['CodeExpense'], '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Amend Expense Code'), '</legend>
+				<field>
+					<label for="CodeExpense">', _('Expense Code'), ':</label>
+					<fieldtext>', $_POST['CodeExpense'], '</fieldtext>
+				</field>';
 	} else {
 		// This is a new type so the user may volunteer a type code
-		echo '<table class="selection">
-				<tr>
-					<td>', _('Expense Code'), ':</td>
-					<td><input type="text" name="CodeExpense" autofocus="autofocus" required="required" maxlength="20" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Create Expense Code'), '</legend>
+				<field>
+					<label for="CodeExpense">', _('Expense Code'), ':</label>
+					<input type="text" name="CodeExpense" autofocus="autofocus" required="required" maxlength="20" />
+				</field>';
 	}
 	if (!isset($_POST['Description'])) {
 		$_POST['Description'] = '';
 	}
-	echo '<tr>
-			<td>', _('Description'), ':</td>
-			<td><input type="text" name="Description" size="50" required="required" maxlength="50" value="', $_POST['Description'], '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>', _('Account Code'), ':</td>
-			<td><select required="required" name="GLAccount">';
+	echo '<field>
+			<label for="Description">', _('Description'), ':</label>
+			<input type="text" name="Description" size="50" required="required" maxlength="50" value="', $_POST['Description'], '" />
+		</field>';
+	echo '<field>
+			<label for="GLAccount">', _('Account Code'), ':</label>
+			<select required="required" name="GLAccount">';
 	DB_free_result($Result);
 	$SQL = "SELECT accountcode,
 				accountname
@@ -246,12 +248,11 @@ if (!isset($_GET['delete'])) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	//Select the tag
-	echo '<tr>
-			<td>', _('Tag'), ':</td>
-			<td><select name="Tag">';
+	echo '<field>
+			<label for="Tag">', _('Tag'), ':</label>
+			<select name="Tag">';
 	$SQL = "SELECT tagref,
 					tagdescription
 			FROM tags
@@ -266,16 +267,15 @@ if (!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	// End select tag
 	$SQL = "SELECT taxcatid,
 					taxcatname
 				FROM taxcategories";
 	$Result = DB_query($SQL);
-	echo '<tr>
-			<td>', _('Tax Category'), ':</td>
-			<td><select name="TaxCategory">';
+	echo '<field>
+			<label for="TaxCategory">', _('Tax Category'), ':</label>
+			<select name="TaxCategory">';
 	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxCategory']) and $_POST['TaxCategory'] == $MyRow['taxcatid']) {
@@ -285,9 +285,8 @@ if (!isset($_GET['delete'])) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>'; // close main table
+		</field>';
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />

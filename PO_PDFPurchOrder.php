@@ -375,17 +375,16 @@ else {
 	/*the user has just gone into the page need to ask the question whether to print the order or email it to the supplier */
 	include('includes/header.php');
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if ($ViewingOnly == 1) {
 		echo '<input type="hidden" name="ViewingOnly" value="1" />';
 	} //$ViewingOnly == 1
-	echo '<br /><br />';
 	echo '<input type="hidden" name="OrderNo" value="' . $OrderNo . '" />';
-	echo '<table>
-         <tr>
-             <td>' . _('Print or Email the Order') . '</td>
-             <td><select name="PrintOrEmail">';
+	echo '<fieldset>
+			<legend>', _('Print Options'), '</legend>
+			<field>
+				<label for="PrintOrEmail">' . _('Print or Email the Order') . '</label>
+				<select name="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
@@ -402,9 +401,11 @@ else {
 			echo '<option selected="selected" value="Email">' . _('Email') . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Show Amounts on the Order') . '</td><td>
-		<select name="ShowAmounts">';
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="ShowAmounts">' . _('Show Amounts on the Order') . '</label>
+			<select name="ShowAmounts">';
 	if (!isset($_POST['ShowAmounts'])) {
 		$_POST['ShowAmounts'] = 'Yes';
 	}
@@ -415,7 +416,8 @@ else {
 		echo '<option value="Yes">' . _('Yes') . '</option>';
 		echo '<option selected="selected" value="No">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 	if ($_POST['PrintOrEmail'] == 'Email') {
 		$ErrMsg = _('There was a problem retrieving the contact details for the supplier');
 		$SQL = "SELECT suppliercontacts.contact,
@@ -425,7 +427,9 @@ else {
 				WHERE purchorders.orderno='" . $OrderNo . "'";
 		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
-			echo '<tr><td>' . _('Email to') . ':</td><td><select name="EmailTo">';
+			echo '<field>
+					<label for="EmailTo">' . _('Email to') . ':</label>
+					<select name="EmailTo">';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 AND mb_strpos($ContactDetails['email'], '@') > 0) {
 					if ($_POST['EmailTo'] == $ContactDetails['email']) {
@@ -435,21 +439,20 @@ else {
 					}
 				}
 			}
-			echo '</select></td></tr></table>';
+			echo '</select>
+				</field>
+			</fieldset>';
 		} else {
-			echo '</table><br />';
+			echo '</fieldset>';
 			prnMsg(_('There are no contacts defined for the supplier of this order') . '. ' . _('You must first set up supplier contacts before emailing an order'), 'error');
-			echo '<br />';
 		}
 	} else {
-		echo '</table>';
+		echo '</fieldset>';
 	}
-	echo '<br />
-         <div class="centre">
-              <input type="submit" name="DoIt" value="' . _('OK') . '" />
-         </div>
-         </div>
-         </form>';
+	echo '<div class="centre">
+			<input type="submit" name="DoIt" value="' . _('OK') . '" />
+		</div>
+	</form>';
 
 	include('includes/footer.php');
 }

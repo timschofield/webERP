@@ -311,7 +311,7 @@ if (DB_num_rows($result)!=0){
 	//END WHILE LIST LOOP
  }
 
-echo '</table><br />
+echo '</table>
 		<div class="centre">
 			<a href="' . $RootPath . '/SalesAnalRepts.php">' . _('Maintain Report Headers') . '</a>
 		</div>';
@@ -326,7 +326,6 @@ if (!isset($_GET['delete'])) {
 	$myrow=DB_fetch_array($result);
 	$ReportHeading=$myrow['reportheading'];
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="ReportHeading" value="'.$ReportHeading.'" />';
 	echo '<input type="hidden" name="ReportID" value="' . $ReportID . '" />';
@@ -375,35 +374,38 @@ if (!isset($_GET['delete'])) {
 		$_POST['ValFormat']=$myrow['valformat'];
 
 		echo '<input type="hidden" name="SelectedCol" value="' . $SelectedCol . '" />';
-		echo '<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Sales Analysis Columns'), '</legend>';
 
 	} else {
-		echo '<br /><table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Sales Analysis Columns'), '</legend>';
 		if (!isset($_POST['ColID'])) {
 			$_POST['ColID']=1;
 		}
-		echo '<tr>
-				<td>' . _('Column Number') . ':</td>
-				<td><input type="text" class="number" name="ColID" size="3" maxlength="3" value="' . $_POST['ColID'] . '" />&nbsp;(' . _('A number between 1 and 10 is expected') . ')</td>
-			</tr>';
+		echo '<field>
+				<label for="ColID">' . _('Column Number') . ':</label>
+				<input type="text" class="number" name="ColID" size="3" maxlength="3" value="' . $_POST['ColID'] . '" />
+				<fieldhelp>' . _('A number between 1 and 10 is expected'), '</fieldhelp>
+			</field>';
 	}
 	if (!isset($_POST['Heading1'])) {
 		$_POST['Heading1']='';
 	}
-	echo '<tr>
-			<td>' . _('Heading line 1') . ':</td>
-			<td><input type="text" size="16" maxlength="15" name="Heading1" value="' . $_POST['Heading1'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="Heading1">' . _('Heading line 1') . ':</label>
+			<input type="text" size="16" maxlength="15" name="Heading1" value="' . $_POST['Heading1'] . '" />
+		</field>';
 	if (!isset($_POST['Heading2'])) {
 		$_POST['Heading2']='';
 	}
-	echo '<tr>
-			<td>' . _('Heading line 2') . ':</td>
-			<td><input type="text" size="16" maxlength="15" name="Heading2" value="' . $_POST['Heading2'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Calculation') . ':</td>
-			<td><select name="Calculation">';
+	echo '<field>
+			<label for="Heading2">' . _('Heading line 2') . ':</label>
+			<input type="text" size="16" maxlength="15" name="Heading2" value="' . $_POST['Heading2'] . '" />
+		</field>';
+	echo '<field>
+			<label for="Calculation">' . _('Calculation') . ':</label>
+			<select name="Calculation">';
 	if (!isset($_POST['Calculation'])) {
 		$_POST['Calculation']=0;
 	}
@@ -414,14 +416,14 @@ if (!isset($_GET['delete'])) {
 		echo '<option value="1">' . _('Yes') . '</option>';
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	if ($_POST['Calculation']==0){ /*Its not a calculated column */
 
-		echo '<tr>
-				<td>' . _('From Period') . ':</td>
-				<td><select name="PeriodFrom">';
+		echo '<field>
+				<label for="PeriodFrom">' . _('From Period') . ':</label>
+				<select name="PeriodFrom">';
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = _('Could not load periods table');
 		$result = DB_query($sql,$ErrMsg);
@@ -432,12 +434,12 @@ if (!isset($_GET['delete'])) {
 				echo  '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[1]) . '</option>';
 			}
 		}
-		echo '</select></td>
-			</tr>';
+		echo '</select>
+			</field>';
 
-		echo '<tr>
-				<td>' . _('ToPeriod') . ':</td>
-				<td><select name="PeriodTo">';
+		echo '<field>
+				<label for="PeriodTo">' . _('ToPeriod') . ':</label>
+				<select name="PeriodTo">';
 		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 		$ErrMsg = _('Could not load periods table');
 		$result = DB_query($sql,$ErrMsg);
@@ -448,18 +450,19 @@ if (!isset($_GET['delete'])) {
 				echo  '<option value="' . $PeriodRow[0] . '">' . ConvertSQLDate($PeriodRow[1]) . '</option>';
 			}
 		}
-		echo '</select></td>
-			</tr>';
+		echo '</select>
+			</field>';
 
-		echo '<tr>
-				<td>' . _('Data to show') . ':</td>
-				<td><select name="DataType">';
+		echo '<field>
+				<label for="BudgetOrActual">' . _('Data to show') . ':</label>
+				<select name="DataType">';
 		DataOptions($_POST['DataType']);
-		echo '</select></td>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Budget or Actual') . ':</td>
-				<td><select name="BudgetOrActual">';
+		echo '</select>
+			</field>';
+
+		echo '<field>
+				<label for="BudgetOrActual">' . _('Budget or Actual') . ':</label>
+				<select name="BudgetOrActual">';
 		if ($_POST['BudgetOrActual']==0){
 			echo '<option selected="selected" value="0">' . _('Budget') . '</option>';
 			echo '<option value="1">' . _('Actual') . '</option>';
@@ -473,21 +476,20 @@ if (!isset($_GET['delete'])) {
 				<input type="hidden" name="ColDenominator" value="0" />
 				<input type="hidden" name="CalcOperator" value="" />
 				<input type="hidden" name="Constant" value="0" />';
-        echo '</td>
-            </tr>';
+        echo '</field>';
 	} else {  /*it IS a calculated column */
 
-		echo '<tr>
-				<td>' . _('Numerator Column') . ' #:</td>
-				<td><input type="text" size="4" maxlength="3" name="ColNumerator" value="' . $_POST['ColNumerator'] . '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Denominator Column') . ' #:</td>
-				<td><input type="text" size="4" maxlength="3" name="ColDenominator" value="' . $_POST['ColDenominator'] . '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Calculation Operator') . ':</td>
-				<td><select name="CalcOperator">';
+		echo '<field>
+				<label for="ColNumerator">' . _('Numerator Column') . ' #:</label>
+				<input type="text" size="4" maxlength="3" name="ColNumerator" value="' . $_POST['ColNumerator'] . '" />
+			</field>';
+		echo '<field>
+				<label for="ColDenominator">' . _('Denominator Column') . ' #:</label>
+				<input type="text" size="4" maxlength="3" name="ColDenominator" value="' . $_POST['ColDenominator'] . '" />
+			</field>';
+		echo '<field>
+				<label for="CalcOperator">' . _('Calculation Operator') . ':</label>
+				<select name="CalcOperator">';
 		if ($_POST['CalcOperator'] == '/'){
 		     echo '<option selected="selected" value="/">' . _('Numerator Divided By Denominator') . '</option>';
 		} else {
@@ -514,15 +516,16 @@ if (!isset($_GET['delete'])) {
 		    echo '<option value="-">' . _('Numerator Minus Denominator') . '</option>';
 		}
 
-		echo '</select></td>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Constant') . ':</td>
-				<td><input type="text" size="10" maxlength="10" name="Constant" value="' . $_POST['Constant'] . '" /></td>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Format Type') . ':</td>
-				<td><select name="ValFormat">';
+		echo '</select>
+			</field>';
+
+		echo '<field>
+				<label for="Constant">' . _('Constant') . ':</label>
+				<input type="text" size="10" maxlength="10" name="Constant" value="' . $_POST['Constant'] . '" />
+			</field>';
+		echo '<field>
+				<label for="ValFormat">' . _('Format Type') . ':</label>
+				<select name="ValFormat">';
 		if ($_POST['ValFormat']=='N'){
 			  echo '<option selected="selected" value="N">' . _('Numeric') . '</option>';
 			  echo '<option value="P">' . _('Percentage') . '</option>';
@@ -530,14 +533,16 @@ if (!isset($_GET['delete'])) {
 			  echo '<option value="N">' . _('Numeric') . '</option>';
 		  	echo '<option selected="selected" value="P">' . _('Percentage') . '</option>';
 		}
-		echo '</select></td></tr>
-				<input type="hidden" name="BudgetOrActual" value="0" />
-				<input type="hidden" name="DataType" value="" />
-				<input type="hidden" name="PeriodFrom" value="0" />
-				<input type="hidden" name="PeriodTo" value="0" />';
+		echo '</select>
+		</field>';
+
+		echo '<input type="hidden" name="BudgetOrActual" value="0" />';
+		echo '<input type="hidden" name="DataType" value="" />';
+		echo '<input type="hidden" name="PeriodFrom" value="0" />';
+		echo '<input type="hidden" name="PeriodTo" value="0" />';
 	}
 
-	echo '</table>';
+	echo '</fieldset>';
 
 	echo '<br />
 			<div class="centre">
