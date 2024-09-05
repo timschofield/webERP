@@ -1,0 +1,29 @@
+:root {
+--border-colour:#3B220C
+}
+.logo {
+font-family: DejaVu,Futura,Trebuchet MS,Arial,sans-serif;
+display:inline;
+font-size:24pt;
+width:auto;
+}
+.logo-left {
+background: #FFE6AE;
+color:#AF732F;
+padding-left:4px;
+border-top-left-radius:32px;
+border-bottom-left-radius:32px;
+border-top:solid 2px var(--border-colour);
+border-bottom:solid 2px var(--border-colour);
+border-left:solid 2px var(--border-colour);
+}
+.logo-right {
+background: #AF732F;
+color:#FFE6AE;
+padding-right:4px;
+border-top-right-radius:32px;
+border-bottom-right-radius:32px;
+border-top:solid 2px var(--border-colour);
+border-bottom:solid 2px var(--border-colour);
+border-right:solid 2px var(--border-colour);
+}
