@@ -397,6 +397,9 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 	$Discount = 0;
 	$AlreadyWarnedAboutCredit = false;
 	$i=1;
+	if (!isset($_POST['TotalQuickEntryRows'])) {
+		$_POST['TotalQuickEntryRows'] = 0;
+	}
 	while ($i<=max($_SESSION['QuickEntries'], $_POST['TotalQuickEntryRows'])
 			AND isset($_POST['part_' . $i])
 			AND $_POST['part_' . $i]!='') {
@@ -420,7 +423,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 			$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 		}
 		if (isset($_POST[$QuickEntryPOLine])) {
-			$NewPOLine = $_POST[$QuickEntryPOLine];
+			$NewPOLine = $_POST[$QuickEntryPOLine]; 
 		} else {
 			$NewPOLine = 0;
 		}
@@ -854,116 +857,120 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ) { /*only show order lin
 		</tr>
 		</table>';
 	echo '<input type="hidden" name="TaxTotal" value="'.$TaxTotal.'" />';
-	echo '<table><tr><td>';
+	echo '<fieldset>';
 	//nested table
-	echo '<table><tr>
-		<td>' .  _('Picked Up By') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="DeliverTo" value="' . stripslashes($_SESSION['Items'.$identifier]->DeliverTo) . '" /></td>
-	</tr>';
-	echo '<tr>
-		<td>' .  _('Contact Phone Number') .':</td>
-		<td><input type="te1" size="25" maxlength="25" name="PhoneNo" value="' . stripslashes($_SESSION['Items'.$identifier]->PhoneNo) . '" /></td>
-	</tr>';
+	echo '<fieldset>
+			<legend>', _('Delivery Details'), '</legend>';
 
-	echo '<tr>
-			<td>' . _('Contact Email') . ':</td>
-			<td><input type="email" placeholder="contact@domain.com" size="25" maxlength="30" name="Email" value="' . stripslashes($_SESSION['Items'.$identifier]->Email) . '" /></td></tr>';
+	echo '<field>
+			<label for="DeliverTo">', _('Picked Up By'), ':</label>
+			<input type="text" size="25" maxlength="25" name="DeliverTo" value="', stripslashes($_SESSION['Items' . $identifier]->DeliverTo), '" />
+		</field>';
 
-	echo '<tr>
-			<td>' .  _('Customer Reference') .':</td>
-			<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . stripcslashes($_SESSION['Items'.$identifier]->CustRef) . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="PhoneNo">', _('Contact Phone Number'), ':</label>
+			<input type="tel" size="25" maxlength="25" name="PhoneNo" value="', stripslashes($_SESSION['Items' . $identifier]->PhoneNo), '" />
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Sales person'). ':</td>';
+	echo '<field>
+			<label for="Email">', _('Contact Email'), ':</label>
+			<input type="email" size="25" maxlength="30" name="Email" value="', stripslashes($_SESSION['Items' . $identifier]->Email), '" />
+		</field>';
+
+	echo '<field>
+			<label for="CustRef">', _('Customer Reference'), ':</label>
+			<input type="text" size="25" maxlength="25" name="CustRef" value="', stripcslashes($_SESSION['Items' . $identifier]->CustRef), '" />
+		</field>';
+
+	echo '<field>
+			<label for="SalesPerson">', _('Sales person'), ':</label>';
 
 	if ($_SESSION['SalesmanLogin'] != '') {
-		echo '<td>';
-		echo $_SESSION['UsersRealName'];
-		echo '</td>';
-	}else{
-		echo '<td><select name="SalesPerson">';
+		echo '<div class="fieldtext">', $_SESSION['UsersRealName'], '</div>';
+	} else {
+		echo '<select name="SalesPerson">';
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
-		if (!isset($_POST['SalesPerson']) AND $_SESSION['SalesmanLogin']!=NULL ) {
-			$_SESSION['Items'.$identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
+		if (!isset($_POST['SalesPerson']) and $_SESSION['SalesmanLogin'] != NULL) {
+			$_SESSION['Items' . $identifier]->SalesPerson = $_SESSION['SalesmanLogin'];
 		}
 
 		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)) {
-			if ($SalesPersonRow['salesmancode']==$_SESSION['Items'.$identifier]->SalesPerson) {
-				echo '<option selected="selected" value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+			if ($SalesPersonRow['salesmancode'] == $_SESSION['Items' . $identifier]->SalesPerson) {
+				echo '<option selected="selected" value="', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
 			} else {
-				echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+				echo '<option value="', $SalesPersonRow['salesmancode'], '">', $SalesPersonRow['salesmanname'], '</option>';
 			}
 		}
-
-		echo '</select></td>';
+		echo '</select>';
 	}
-	echo '</tr>';
-	echo '<tr>
-			<td>' .  _('Comments') .':</td>
-			<td><textarea name="Comments" cols="23" rows="5">' . stripcslashes($_SESSION['Items'.$identifier]->Comments)  . '</textarea></td>
-		</tr>';
-	echo '</table>'; //end the sub table in the first column of master table
-	echo '</td><th valign="bottom">'; //for the master table
-	echo '<table class="selection">'; // a new nested table in the second column of master table
+	echo '</field>';
+
+	echo '<field>
+			<label for="Comments">', _('Comments'), ':</label>
+			<textarea name="Comments" cols="23" rows="5">', stripcslashes($_SESSION['Items' . $identifier]->Comments), '</textarea>
+		</field>';
+
+	echo '</fieldset>'; //end the sub table in the first column of master table
+	echo '<fieldset>
+			<legend>', _('Payment Details'), '</legend>'; // a new nested table in the second column of master table
 	//now the payment stuff in this column
 	$PaymentMethodsResult = DB_query("SELECT paymentid, paymentname FROM paymentmethods");
 
-	echo '<tr>
-			<td>' . _('Payment Type') . ':</td>
-			<td><select name="PaymentMethod">';
+	echo '<field>
+			<label for="PaymentMethod">', _('Payment Type'), ':</label>
+			<select name="PaymentMethod">';
 	while ($PaymentMethodRow = DB_fetch_array($PaymentMethodsResult)) {
-		if (isset($_POST['PaymentMethod']) AND $_POST['PaymentMethod'] == $PaymentMethodRow['paymentid']) {
-			echo '<option selected="selected" value="' . $PaymentMethodRow['paymentid'] . '">' . $PaymentMethodRow['paymentname'] . '</option>';
+		if (isset($_POST['PaymentMethod']) and $_POST['PaymentMethod'] == $PaymentMethodRow['paymentid']) {
+			echo '<option selected="selected" value="', $PaymentMethodRow['paymentid'], '">', $PaymentMethodRow['paymentname'], '</option>';
 		} else {
-			echo '<option value="' . $PaymentMethodRow['paymentid'] . '">' . $PaymentMethodRow['paymentname'] . '</option>';
+			echo '<option value="', $PaymentMethodRow['paymentid'], '">', $PaymentMethodRow['paymentname'], '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
-	$BankAccountsResult = DB_query("SELECT bankaccountname, accountcode, currcode FROM bankaccounts ORDER BY bankaccountname");
+	$BankAccountsResult = DB_query("SELECT bankaccountname, accountcode FROM bankaccounts ORDER BY bankaccountname");
 
-	echo '<tr>
-			<td>' . _('Banked to') . ':</td>
-			<td><select name="BankAccount">';
-	while ($MyRow = DB_fetch_array($BankAccountsResult)) {
-		// Lists bank accounts order by bankaccountname
-		echo '<option',
-			((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
-			' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
+	echo '<field>
+			<label for="BankAccount">', _('Banked to'), ':</label>
+			<select name="BankAccount">';
+	while ($BankAccountsRow = DB_fetch_array($BankAccountsResult)) {
+		if (isset($_POST['BankAccount']) and $_POST['BankAccount'] == $BankAccountsRow['accountcode']) {
+			echo '<option selected="selected" value="', $BankAccountsRow['accountcode'], '">', $BankAccountsRow['bankaccountname'], '</option>';
+		} else {
+			echo '<option value="', $BankAccountsRow['accountcode'], '">', $BankAccountsRow['bankaccountname'], '</option>';
+		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	if (!isset($_POST['CashReceived'])) {
-		$_POST['CashReceived'] =0;
+		$_POST['CashReceived'] = 0;
 	}
-	echo '<tr>
-			<td>' . _('Cash Received') . ':</td>
-			<td><input type="text" class="number" id="CashReceived" name="CashReceived" required="required"  maxlength="12" size="12" value="' . $_POST['CashReceived'] . '" onkeyup="CalculateChangeDue();" /></td>
-		</tr>';
+	echo '<field>
+			<label for="CashReceived">', _('Cash Received'), ':</label>
+			<input type="text" class="number" id="CashReceived" name="CashReceived" required="required"  maxlength="12" size="12" value="', $_POST['CashReceived'], '" onkeyup="CalculateChangeDue();" />
+		</field>';
 
 	if (!isset($_POST['AmountPaid'])) {
-		$_POST['AmountPaid'] =0;
+		$_POST['AmountPaid'] = 0;
 	}
-	echo '<tr>
-			<td>' . _('Amount Paid') . ':</td>
-			<td><input type="text" class="number" id="AmountPaid" name="AmountPaid" required="required"  title="' . _('Enter the amount paid by the customer, this must equal the amount of the sale') . '" maxlength="12" size="12" value="' . $_POST['AmountPaid'] . '" readonly /></td>
-		</tr>';
+	echo '<field>
+			<label for="AmountPaid">', _('Amount Paid'), ':</label>
+			<input type="text" class="number" id="AmountPaid" name="AmountPaid" required="required" data-title="', _('Enter the amount paid by the customer, this must equal the amount of the sale'), '" maxlength="12" size="12" value="', $_POST['AmountPaid'], '" readonly />
+		</field>';
 
 	if (!isset($_POST['ChangeDue'])) {
-		$_POST['ChangeDue'] =0;
+		$_POST['ChangeDue'] = 0;
 	}
-	echo '<tr>
-			<td>' . _('Change') . ':</td>
-			<td><input type="text" class="number" id="ChangeDue" name="ChangeDue" maxlength="12" size="12" value="' . $_POST['ChangeDue'] . '" readonly /></td>
-		</tr>';
 
-	echo '</table>'; //end the sub table in the second column of master table
-	echo '</th>
-		</tr>
-		</table>';	//end of column/row/master table
+	echo '<field>
+			<label for="ChangeDue">', _('Change'), ':</label>
+			<input type="text" class="number" id="ChangeDue" name="ChangeDue" maxlength="12" size="12" value="', $_POST['ChangeDue'], '" readonly />
+		</field>';
+
+	echo '</fieldset>'; //end the sub table in the second column of master table
+	echo '</fieldset>'; //end of column/row/master table
 	if (!isset($_POST['ProcessSale'])) {
 		echo '<br />
 				<div class="centre">
@@ -2202,49 +2209,56 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<div class="page_help_text"><p><b>' . $msg . '</b></p></div>';
 		}
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Items') . '</p>
-			<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div>
-			<br />
-			<table class="selection">
-				<tr>
-					<td><b>' . _('Select a Stock Category') . ': </b><select tabindex="1" name="StockCat">';
+			<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div>';
+		echo '<fieldset>
+				<legend>', _('Item Search Criteria'), '</legend>';
 
-		if (!isset($_POST['StockCat']) OR $_POST['StockCat']=='All') {
-			echo '<option selected="selected" value="All">' . _('All') . '</option>';
-			$_POST['StockCat'] ='All';
-		} else {
-			echo '<option value="All">' . _('All') . '</option>';
-		}
-		$SQL="SELECT categoryid,
+		$SQL = "SELECT categoryid,
 					categorydescription
 				FROM stockcategory
 				WHERE stocktype='F' OR stocktype='D'
 				ORDER BY categorydescription";
-		$result1 = DB_query($SQL);
-		while ($MyRow1 = DB_fetch_array($result1)) {
-			if ($_POST['StockCat']==$MyRow1['categoryid']) {
-				echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+		$Result1 = DB_query($SQL);
+		echo '<field>
+				<label for="StockCat">', _('Select a Stock Category'), ': </label>
+				<select name="StockCat">';
+
+		if (!isset($_POST['StockCat']) or $_POST['StockCat'] == 'All') {
+			echo '<option selected="selected" value="All">', _('All'), '</option>';
+			$_POST['StockCat'] = 'All';
+		} else {
+			echo '<option value="All">', _('All'), '</option>';
+		}
+		while ($MyRow1 = DB_fetch_array($Result1)) {
+			if ($_POST['StockCat'] == $MyRow1['categoryid']) {
+				echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 			} else {
-				echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+				echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
 			}
 		}
+		echo '</select>
+			</field>';
 
-		echo '</select></td>
-				<td><b>' . _('Enter partial Description') . ':</b>
-				<input tabindex="2" type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" value="';
-        if (isset($_POST['Keywords'])) echo $_POST['Keywords'];
-        echo '" /></td>
-				<td align="right"><b> ' . _('OR') . ' </b><b>' . _('Enter extract of the Stock Code') . ':</b>
-				<input tabindex="3" type="text" name="StockCode" size="15" maxlength="18" value="';
-        if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
-        echo '" /></td>
-			</tr>
-			<tr>
-				<td class="centre" colspan="1"><input tabindex="4" type="submit" name="Search" value="' . _('Search Now') . '" /></td>
-				<td class="centre" colspan="1"><input tabindex="5" type="submit" name="QuickEntry" value="' . _('Use Quick Entry') . '" /></td>
-			</tr>
-		</table>
-		<br />
-		</div>';
+		if (!isset($_POST['Keywords'])) {
+			$_POST['Keywords'] = '';
+		}
+		echo '<field>
+				<label for="Keywords">', _('Enter partial Description'), ':</label>
+				<input type="search" name="Keywords" size="20" maxlength="25" value="', $_POST['Keywords'], '" />
+			</field>';
+
+		if (!isset($_POST['StockCode'])) {
+			$_POST['StockCode'] = '';
+		}
+		echo '<field>
+				<label for="StockCode"> ', _('OR'), ' ', _('Enter extract of the Stock Code'), ':</label>
+				<input type="search" autofocus="autofocus" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
+			</field>
+		</fieldset>';
+		echo '<div class="centre">
+				<input type="submit" name="Search" value="', _('Search Now'), '" />
+				<input type="submit" name="QuickEntry" value="', _('Use Quick Entry'), '" />
+			</div>';
 	// Add some useful help as the order progresses
 		if (isset($SearchResult)) {
 			echo '<br />
@@ -2341,6 +2355,7 @@ if (!isset($_POST['ProcessSale'])) {
 						<input type="hidden" name="DeliverTo" value="'.$_SESSION['Items'.$identifier]->DeliverTo.'" />
 						<input type="hidden" name="PhoneNo" value="'.$_SESSION['Items'.$identifier]->PhoneNo.'" />
 						<input type="hidden" name="Email" value="'.$_SESSION['Items'.$identifier]->Email.'" />
+						<input type="hidden" name="SalesPerson" value="'.$_SESSION['Items'.$identifier]->SalesPerson.'" />
 					</td>
 				</tr>
 				<tr>
@@ -2361,6 +2376,7 @@ if (!isset($_POST['ProcessSale'])) {
             echo '<input type="hidden" name="DeliverTo" value="' . $_SESSION['Items'.$identifier]->DeliverTo . '" />';
             echo '<input type="hidden" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" />';
             echo '<input type="hidden" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" />';
+            echo '<input type="hidden" name="SalesPerson" value="' . $_SESSION['Items'.$identifier]->SalesPerson . '" />';
 		}
 
 		$SQL = "SELECT stockid
@@ -2426,7 +2442,6 @@ echo '<script src="', $RootPath, 'javscripts/CounterSalesFunctions.js"></script>
 	CounterSales.SetDefaultDeliveryDate(<?php echo empty($DefaultDeliveryDate) ? '""' : $DefaultDeliveryDate; ?>);
 	CounterSales.SetTotalQuickEntryRowsId('TotalQuickEntryRows');
 
-	CounterSales.SetTotalDue(<?php echo round($_SESSION['Items'.$identifier]->total + filter_number_format($_POST['TaxTotal']) + filter_number_format($RoundingAdjustment), $_SESSION['Items'.$identifier]->CurrDecimalPlaces) ?>);
 	CounterSales.SetDecimal(<?php echo $_SESSION['Items'.$identifier]->CurrDecimalPlaces; ?>);
 	CounterSales.SetCashReceivedId('CashReceived');
 	CounterSales.SetAmountPaidId('AmountPaid');

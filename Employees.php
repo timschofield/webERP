@@ -205,7 +205,6 @@ echo '<br />';
 if(!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(isset($SelectedEmployee)) {
@@ -235,22 +234,18 @@ if(!isset($_GET['delete'])) {
 		
 		echo '<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
 		
-		echo '<table class="selection">';
-		echo '<tr>
-				<th colspan="2">' . _('Amend Employee details') . '</th>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Employee Code') . ':</td>
-				<td>' . $SelectedEmployee . '</td>
-			</tr>';
+		echo '<fieldset>';
+		echo '<legend>' . _('Amend Employee details') . '</legend>';
+		echo '<field>
+				<label for="SelectedEmployee">' . _('Employee Code') . ':</label>
+				<fieldtext>' . $SelectedEmployee . '</fieldtext>
+			</field>';
 	} else {//end of if $SelectedEmployee only do the else when a new record is being entered
 		if(!isset($_POST['LocCode'])) {
 			$_POST['SelectedEmployee'] = '';
 		}
-		echo '<table class="selection">
-				<tr>
-					<th colspan="2"><h3>' . _('New Employee details') . '</h3></th>
-				</tr>';
+		echo '<fieldset>
+				<legend>' . _('New Employee details') . '</legend>';
 	}
 	if(!isset($_POST['Surname'])) {
 		$_POST['Surname'] = '';
@@ -274,18 +269,20 @@ if(!isset($_GET['delete'])) {
 		$_POST['Email'] = '';
 	}
 	
-	echo '<tr>
-			<td><label for="FirstName">' . _('First Name') . ':' . '</label></td>
-			<td><input type="text" name="FirstName" required="required" value="' . $_POST['FirstName'] . '" title="' . _('Enter the employee\'s first name') . '" size="21" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td><label for="Surname">' . _('Surname') . ':' . '</label></td>
-			<td><input type="text" name="Surname" required="required" value="'. $_POST['Surname'] . '" title="' . _('Enter the employee\'s surname') . '" namesize="21" maxlength="20" /></td>
-		</tr>
+	echo '<field>
+			<label for="FirstName">' . _('First Name') . ':' . '</label>
+			<input type="text" name="FirstName" required="required" value="' . $_POST['FirstName'] . '" title="" size="21" maxlength="20" />
+			<fieldhelp>' . _('Enter the employee\'s first name') . '</fieldhelp>
+		</field>
+		<field>
+			<label for="Surname">' . _('Surname') . ':' . '</label>
+			<input type="text" name="Surname" required="required" value="'. $_POST['Surname'] . '" title="" namesize="21" maxlength="20" />
+			<fieldhelp>' . _('Enter the employee\'s surname') . '</fieldhelp>
+		</field>
 		
-		<tr>
-			<td><label for="StockID">' . _('Labour Type') . ':</label></td>
-			<td><select name="StockID" />';
+		<field>
+			<label for="StockID">' . _('Labour Type') . ':</label>
+			<select name="StockID" />';
 
 	$LabourTypeItemsResult = DB_query("SELECT stockid, description FROM
 										stockmaster INNER JOIN stockcategory
@@ -300,19 +297,21 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 
-	echo '</select></td>
-		</tr>
-		<tr title="', _('The email address should be an email format such as adm@weberp.org'), '">
-			<td><label for="Email">', _('Email'), ':</label></td>
-			<td><input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" /></td>
-		</tr>
-		<tr>
-			<td><label for="NormalHours">' . _('Normal Weekly Hours') . ':' . '</label></td>
-			<td><input class="number" type="text" name="NormalHours" value="' , $_POST['NormalHours'] , '" title="' , _('Enter the employee\'s normal hours per week') , '" size="3" maxlength="2" /></td>
-		</tr>
-		<tr>
-			<td><label for="Manager">' , _('Manager') , ':' , '</label></td>
-			<td><select name="Manager" />';
+	echo '</select>
+		</field>
+		<field>
+			<label for="Email">', _('Email'), ':</label>
+			<input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" />
+			<fieldhelp>', _('The email address should be an email format such as adm@weberp.org'), '</fieldhelp>
+		</field>
+		<field>
+			<label for="NormalHours">' . _('Normal Weekly Hours') . ':' . '</label>
+			<input class="number" type="text" name="NormalHours" value="' , $_POST['NormalHours'] , '" title="" size="3" maxlength="2" />
+			<fieldhelp>' , _('Enter the employee\'s normal hours per week') , '</fieldhelp>
+		</field>
+		<field>
+			<label for="Manager">' , _('Manager') , ':' , '</label>
+			<select name="Manager" />';
 
 	$ManagersResult = DB_query("SELECT id, CONCAT(firstname, ' ', surname) AS managername
 								FROM employees
@@ -331,11 +330,12 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>' , _('webERP User') , ':' , '</td>
-			<td><select name="UserID" title="' , _('Select the employee\'s system user account so when the user logs in to enter a time sheet the system knows the employee record to use') , '"/>';
+	echo '</select>
+		</field>';
+		
+	echo '<field>
+			<label for="UserID">' , _('webERP User') , ':' , '</label>
+			<select name="UserID" title=""/>';
 	if($_POST['UserID']==''){
 		echo '<option selected="selected" value="">' , _('Not a webERP User') , '</option>';
 	} else {
@@ -349,13 +349,13 @@ if(!isset($_GET['delete'])) {
 			echo '<option value="' . $myrow['userid'] . '">' . $myrow['realname'] . '</option>';
 		}
 	}
-
+	echo '</select>
+		<fieldhelp>' , _('Select the employee\'s system user account so when the user logs in to enter a time sheet the system knows the employee record to use') , '</fieldhelp>
+	</field>';
 	
-	echo '</table>
-		<br />
+	echo '</fieldset>
 		<div class="centre">
 			<input type="submit" name="submit" value="' , _('Enter Information') , '" />
-		</div>
 		</div>
 		</form>';
 

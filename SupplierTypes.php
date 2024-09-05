@@ -19,8 +19,7 @@ $Errors = array();
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Supplier Types')
 	. '" alt="" />' . _('Supplier Type Setup') . '</p>
-	<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div>
-	<br />';
+	<div class="page_help_text">' . _('Add/edit/delete Supplier Types') . '</div>';
 
 if (isset($_POST['submit'])) {
 
@@ -51,14 +50,14 @@ if (isset($_POST['submit'])) {
 		     WHERE typename = '" . $_POST['TypeName'] . "'";
 	$CheckResult=DB_query($CheckSQL);
 	$CheckRow=DB_fetch_row($CheckResult);
-	if ($CheckRow[0]>0) {
+	if ($CheckRow[0]>0 and !isset($_POST['Edit'])) {
 		$InputError = 1;
 		echo prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
 		$Errors[$i] = 'SupplierName';
 		$i++;
 	}
 
-	if (isset($SelectedType) AND $InputError !=1) {
+	if (isset($_POST['Edit']) AND $InputError !=1) {
 
 		$sql = "UPDATE suppliertype
 			SET typename = '" . $_POST['TypeName'] . "'
@@ -186,10 +185,8 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />
-		<table class="selection">'; //Main table
+	echo '<fieldset>'; //Main table
 
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
@@ -205,35 +202,36 @@ if (! isset($_GET['delete'])) {
 		$_POST['TypeID'] = $myrow['typeid'];
 		$_POST['TypeName']  = $myrow['typename'];
 
+		echo '<input type="hidden" name="Edit" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="TypeID" value="' . $_POST['TypeID'] . '" />';
 
 		// We dont allow the user to change an existing type code
 
-		echo '<tr>
-				<td>' ._('Type ID') . ': </td>
-				<td>' . $_POST['TypeID'] . '</td>
-			</tr>';
+		echo '<legend>', _('Edit Supplier Type'), '</legend>
+				<field>
+					<label for="TypeID">' ._('Type ID') . ': </label>
+					<fieldtext>' . $_POST['TypeID'] . '</fieldtext>
+				</field>';
+	} else {
+		echo '<legend>', _('Create Supplier Type'), '</legend>';
 	}
-
 	if (!isset($_POST['TypeName'])) {
 		$_POST['TypeName']='';
 	}
-	echo '<tr>
-			<td>' . _('Type Name') . ':</td>
-			<td><input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="'._('The input should not be over 100 characters and contains illegal characters').'" name="TypeName" placeholder="'._('less than 100 characters').'" value="' . $_POST['TypeName'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="TypeName">' . _('Type Name') . ':</label>
+			<input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="" name="TypeName" placeholder="'._('less than 100 characters').'" value="' . $_POST['TypeName'] . '" />
+			<fieldhelp>'._('The input should not be over 100 characters and contains illegal characters').'</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td colspan="2">
-				<div class="centre">
-					<input type="submit" name="submit" value="' . _('Accept') . '" />
-				</div>
-			</td>
-		</tr>
-		</table>
-		</div>
-		</form>';
+	echo '</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Accept') . '" />
+		</div>';
+
+	echo '</form>';
 
 } // end if user wish to delete
 

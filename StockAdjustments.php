@@ -415,45 +415,45 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 			WHERE stockid='".$StockID."'";
 
 	$result=DB_query($sql);
-	$myrow=DB_fetch_array($result);
-	$_SESSION['Adjustment' . $identifier]->PartUnit=$myrow['units'];
-	$_SESSION['Adjustment' . $identifier]->StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
-	$DecimalPlaces = $myrow['decimalplaces'];
+	if (DB_num_rows($result) > 0) {
+		$myrow=DB_fetch_array($result);
+		$_SESSION['Adjustment' . $identifier]->PartUnit=$myrow['units'];
+		$_SESSION['Adjustment' . $identifier]->StandardCost=$myrow['materialcost']+$myrow['labourcost']+$myrow['overheadcost'];
+		$DecimalPlaces = $myrow['decimalplaces'];
+	}
 }
-echo '<br />
-	<table class="selection">
-	<tr>
-		<th colspan="4"><h3>' . _('Adjustment Details') . '</h3></th>
-	</tr>';
+echo '<fieldset>
+		<legend>' . _('Adjustment Details') . '</legend>';
 if (!isset($_GET['Description'])) {
 	$_GET['Description']='';
 }
-echo '<tr><td>' .  _('Stock Code'). ':</td><td>';
+echo '<field>
+		<label for="StockID">' .  _('Stock Code'). ':</label>';
 if (isset($StockID)) {
-	echo '<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /></td></tr>';
+	echo '<input type="text" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /></field>';
 } else {
-	echo '<input type="text" name="StockID" size="21" value="" maxlength="20" /></td></tr>';
+	echo '<input type="text" name="StockID" size="21" value="" maxlength="20" /></field>';
 }
-echo '<tr>
-		<td>' .  _('Partial Description'). ':</td>
-		<td><input type="text" name="StockText" size="21" value="' . $_GET['Description'] .'" />&nbsp; &nbsp;'._('Partial Stock Code'). ':</td>
-		<td>';
+echo '<field>
+		<label>' .  _('Partial Description'). ':</label>
+		<input type="text" name="StockText" size="21" value="' . $_GET['Description'] .'" />&nbsp; &nbsp;'._('Partial Stock Code'). ':';
 if (isset($StockID)) {
 	echo '<input type="text" name="StockCode" size="21" value="' . $StockID .'" maxlength="20" />';
 } else {
 	echo '<input type="text" name="StockCode" size="21" value="" maxlength="20" />';
 }
-echo '</td>
-		<td><input type="submit" name="CheckCode" value="'._('Check Part').'" /></td>
-	</tr>';
+echo '<input type="submit" name="CheckCode" value="'._('Check Part').'" />
+	</field>';
+
 if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjustment' . $identifier]->ItemDescription)>1){
-	echo '<tr>
+	echo '<field>
 			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . _('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</h3></td>
-		</tr>';
+		</field>';
 }
 
-echo '<tr><td>'. _('Adjustment to Stock At Location').':</td>
-		<td><select name="StockLocation" onchange="submit();"> ';
+echo '<field>
+		<label for="StockLocation">'. _('Adjustment to Stock At Location').':</label>
+		<select name="StockLocation" onchange="submit();"> ';
 foreach ($LocationList as $Loccode=>$Locationname){
 	if (isset($_SESSION['Adjustment'.$identifier]->StockLocation) AND $Loccode == $_SESSION['Adjustment' . $identifier]->StockLocation){
 		 echo '<option selected="selected" value="' . $Loccode . '">' . $Locationname . '</option>';
@@ -462,7 +462,8 @@ foreach ($LocationList as $Loccode=>$Locationname){
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->Narrative)) {
 	$_SESSION['Adjustment' . $identifier]->Narrative = '';
 	$Narrative ='';
@@ -472,14 +473,14 @@ if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustmen
 	$Narrative ='';
 }
 
-echo '<tr>
-		<td>' .  _('Comments On Why').':</td>
-		<td><input type="text" name="Narrative" size="32" onchange="submit()" maxlength="100" value="' . $Narrative . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Narrative">' .  _('Comments On Why').':</label>
+		<input type="text" name="Narrative" size="32" onchange="submit()" maxlength="100" value="' . $Narrative . '" />
+	</field>';
 
-echo '<tr><td>' . _('Adjustment Quantity').':</td>';
+echo '<field>
+		<label for="Quantity">' . _('Adjustment Quantity').':</label>';
 
-echo '<td>';
 if ($Controlled==1){
 		if ($_SESSION['Adjustment' . $identifier]->StockLocation == ''){
 			$_SESSION['Adjustment' . $identifier]->StockLocation = $_SESSION['UserStockLocation'];
@@ -489,13 +490,16 @@ if ($Controlled==1){
 				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=REMOVE&identifier='.$identifier.'">' . _('Remove') . '</a>]
 				[<a href="'.$RootPath.'/StockAdjustmentsControlled.php?AdjType=ADD&identifier='.$identifier.'">' . _('Add') . '</a>]';
 } else {
+	if (!isset($DecimalPlaces)) {
+		$DecimalPlaces = 2;
+	}
 	echo '<input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($Quantity,$DecimalPlaces) . '" />';
 }
-echo '</td></tr>';
+echo '</field>';
 	//Select the tag
-echo '<tr>
-		<td>' . _('Select Tag') . '</td>
-		<td><select name="tag">';
+echo '<field>
+		<label for="tag">' . _('Select Tag') . '</label>
+		<select name="tag">';
 
 $SQL = "SELECT tagref,
 				tagdescription
@@ -511,14 +515,13 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']. '</option>';
 	}
 }
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 // End select tag
 
-echo '</table>
+echo '</fieldset>
 	<div class="centre">
-	<br />
-	<input type="submit" name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '" />
-	<br />';
+	<input type="submit" name="EnterAdjustment" value="'. _('Enter Stock Adjustment'). '" />';
 
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation']='';
@@ -536,7 +539,6 @@ echo '<br />
 	<a href="'.$RootPath.'/SelectCompletedOrder.php?SelectedStockItem=' . $StockID .'">' . _('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
-      </div>
-      </form>';
+	</form>';
 include('includes/footer.php');
 ?>

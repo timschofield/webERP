@@ -217,13 +217,12 @@ if (isset($_POST['PrintPDF'])){
 		</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		  <div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
+		echo '<fieldset>
+				<field>
+					<label for="Categories">' . _('Select Inventory Categories') . ':</label>
+					<select autofocus="autofocus" required="required" minlength="1" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription';
@@ -236,12 +235,11 @@ if (isset($_POST['PrintPDF'])){
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+	echo '<field>
+			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<select name="Location">';
 
 	$sql = "SELECT locations.loccode,
 					locationname
@@ -256,24 +254,22 @@ if (isset($_POST['PrintPDF'])){
 	while ($myrow=DB_fetch_array($LocnResult)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Summary or Detailed Report') . ':</td>
-			<td><select name="DetailedReport">
+	echo '<field>
+			<label for="DetailedReport">' . _('Summary or Detailed Report') . ':</label>
+			<select name="DetailedReport">
 				<option selected="selected" value="No">' . _('Summary Report') . '</option>
 				<option value="Yes">' . _('Detailed Report') . '</option>
-				</select></td>
-		</tr>
-		</table>
-		<br />
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			<input type="submit" name="CSV" value="' . _('Output to CSV') . '" />
 		</div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 	include('includes/footer.php');
 

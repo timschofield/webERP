@@ -17,10 +17,14 @@ $Title = _('Shipment Charges or Credits');
 include('includes/header.php');
 
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice'){
-	echo '<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . _('Back to Invoice Entry') . '</a>';
 } else {
-	echo '<a href="' . $RootPath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>';
+	echo '<a href="' . $RootPath . '/SupplierCredit.php" class="toplink">' . _('Back to Credit Note Entry') . '</a>';
 }
+
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . $Title . '
+	</p>';
 
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('Shipment charges or credits are entered against supplier invoices or credit notes respectively') . '. ' . _('To enter supplier transactions the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or credit note must be clicked on'),'info');
@@ -96,26 +100,25 @@ echo '<tr>
 	<td class="number">' . _('Total') . ':</td>
 	<td class="number">' . locale_number_format($TotalShiptValue,2) . '</td>
 </tr>
-</table><br />';
+</table>';
 
 /*Set up a form to allow input of new Shipment charges */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ShiptRef'])) {
 	$_POST['ShiptRef']='';
 }
-echo '<table class="selection">';
-echo '<tr>
-		<td>' . _('Shipment Reference') . ':</td>
-		<td><input class="integer" pattern="[1-9][\d]{0,10}" title="'._('The shiment Ref should be positive integer').'" placeholder="'._('positive integer').'" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Shipment Selection') . ':
-			<br /> ' . _('If you know the code enter it above') . '
-			<br />' . _('otherwise select the shipment from the list') . '</td>
-		<td><select name="ShiptSelection">';
+echo '<fieldset>
+		<legend>', _('Shipment Charges'), '</legend>';
+echo '<field>
+		<label for="ShiptRef">' . _('Shipment Reference') . ':</label>
+		<input class="integer" pattern="[1-9][\d]{0,10}" title="" placeholder="'._('positive integer').'" name="ShiptRef" size="12" maxlength="11" value="' .  $_POST['ShiptRef'] . '" />
+		<fieldhelp>'._('The shiment Ref should be positive integer').'</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="ShiptSelection">' . _('Shipment Selection') . '</label>
+		<select name="ShiptSelection">';
 
 $sql = "SELECT shiptref,
 				vessel,
@@ -136,23 +139,23 @@ while ($myrow = DB_fetch_array($result)) {
 	echo $myrow['shiptref'] . '">' . $myrow['shiptref'] . ' - ' . $myrow['vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($myrow['eta']) . ' ' . _('from') . ' ' . $myrow['suppname']  . '</option>';
 }
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('If you know the code enter it above') .' '. _('otherwise select the shipment from the list') . '
+</field>';
 
 if (!isset($_POST['Amount'])) {
 	$_POST['Amount']=0;
 }
-echo '<tr>
-		<td>' . _('Amount') . ':</td>
-		<td><input type="text"  class="number" required="required" title="'._('The input must be non zero number').'" placeholder="'._('Non zero number').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
-	</tr>
-	</table>';
+echo '<field>
+		<label for="Amount">' . _('Amount') . ':</label>
+		<input type="text"  class="number" required="required" title="" placeholder="'._('Non zero number').'" name="Amount" size="12" maxlength="11" value="' .  locale_number_format($_POST['Amount'],$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+		<fieldhelp>'._('The input must be non zero number').'</fieldhelp>
+	</field>
+	</fieldset>';
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<input type="submit" name="AddShiptChgToInvoice" value="' . _('Enter Shipment Charge') . '" />
 	</div>
-    </div>
 	</form>';
 
 include('includes/footer.php');

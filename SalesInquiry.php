@@ -8,6 +8,8 @@ include('includes/session.php');
 $Title = _('Sales Inquiry');
 include('includes/header.php');
 
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
+
 # Sets default date range for current month
 if(!isset($_POST['FromDate'])) {
 
@@ -1065,175 +1067,160 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 // Display form fields. This function is called the first time
 // the page is called.
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table>';
+	echo '<fieldset>
+			<legend>', _('Inquiry Criteria'), '</legend>';
 
-	echo '<tr>
-			<td>' . _('Report Type') . ':</td>
-			<td><select name="ReportType">
+	echo '<field>
+			<label for="ReportType">' . _('Report Type') . ':</label>
+			<select name="ReportType">
 				<option selected="selected" value="Detail">' . _('Detail') . '</option>
 				<option value="Summary">' . _('Summary') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-		</tr>';
+			</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Order Type') . ':</td>
-			<td><select name="OrderType">
+	echo '<field>
+			<label for="OrderType">' . _('Order Type') . ':</label>
+			<select name="OrderType">
 				<option selected="selected" value="0">' . _('Sales Order') . '</option>
 				<option value="1">' . _('Quotation') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-		</tr>';
+			</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Date Type') . ':</td>
-			<td><select name="DateType">
+	echo '<field>
+			<label for="DateType">' . _('Date Type') . ':</label>
+			<select name="DateType">
 				<option selected="selected" value="Order">' . _('Order Date') . '</option>
 				<option value="Invoice">' . _('Invoice Date') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-		</tr>';
+			</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Invoice Type') . ':</td>
-			<td><select name="InvoiceType">
+	echo '<field>
+			<label for="InvoiceType">' . _('Invoice Type') . ':</label>
+			<select name="InvoiceType">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="10">' . _('Sales Invoice') . '</option>
 				<option value="11">' . _('Credit Note') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-			<td>' . _('Only Applies To Invoice Date Type') . '</td>
-		</tr>';
+			</select>
+			<fieldhelp>' . _('Only Applies To Invoice Date Type') . '</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label>' . _('Date Range') . ':</label>
+			<input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+			' . _('To') . ':
+			<input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+		</field>';
 	if(!isset($_POST['PartNumber'])) {
 		$_POST['PartNumber']='';
 	}
-	echo '<tr>
-			<td>' . _('Stock Code') . ':</td>
-			<td><select name="PartNumberOp">
+	echo '<field>
+			<label for="PartNumberOp">' . _('Stock Code') . ':</label>
+			<select name="PartNumberOp">
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-			<td><input type="text" name="PartNumber" size="20" maxlength="20" value="'. $_POST['PartNumber'] . '" /></td>
-		</tr>';
+			</select>
+			<input type="text" name="PartNumber" size="20" maxlength="20" value="'. $_POST['PartNumber'] . '" />
+		</field>';
 	if(!isset($_POST['DebtorNo'])) {
 		$_POST['DebtorNo']='';
 	}
-	echo '<tr>
-			<td>' . _('Customer Number') . ':</td>
-			<td><select name="DebtorNoOp">
+	echo '<field>
+			<label for="Equals">' . _('Customer Number') . ':</label>
+			<select name="DebtorNoOp">
 				<option selected="selected" value="Equals">' . _('Equals') . '</option>
 				<option value="LIKE">' . _('Begins With') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-			<td><input type="text" name="DebtorNo" size="10" maxlength="10" value="' . $_POST['DebtorNo'] . '" /></td>
-		</tr>';
+			</select>
+			<input type="text" name="DebtorNo" size="10" maxlength="10" value="' . $_POST['DebtorNo'] . '" />
+		</field>';
 	if(!isset($_POST['DebtorName'])) {
 		$_POST['DebtorName']='';
 	}
-	echo '<tr>
-			<td>' . _('Customer Name') . ':</td>
-			<td><select name="DebtorNameOp">
+	echo '<field>
+			<label for="DebtorNameOp">' . _('Customer Name') . ':</label>
+			<select name="DebtorNameOp">
 				<option selected="selected" value="LIKE">' . _('Begins With') . '</option>
 				<option value="Equals">' . _('Equals') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-			<td><input type="text" name="DebtorName" size="30" maxlength="30" value="' . $_POST['DebtorName'] .'" /></td>
-		</tr>';
+			</select>
+			<input type="text" name="DebtorName" size="30" maxlength="30" value="' . $_POST['DebtorName'] .'" />
+		</field>';
 	if(!isset($_POST['OrderNo'])) {
 		$_POST['OrderNo']='';
 	}
-    echo '<tr>
-			<td>' . _('Order Number') . ':</td>
-			<td>' . _('Equals') . '</td>
-			<td>&nbsp;</td>
-			<td><input type="text" name="OrderNo" size="10" maxlength="10" value="' . $_POST['OrderNo'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="OrderNo">' . _('Order Number') . ':</label>
+			<fieldtext>' . _('Equals') . '</fieldtext>
+			<input type="text" name="OrderNo" size="10" maxlength="10" value="' . $_POST['OrderNo'] . '" />
+		</field>';
 
-    echo '<tr>
-			<td>' . _('Line Item Status') . ':</td>
-			<td><select name="LineStatus">
+	echo '<field>
+			<label for="LineStatus">' . _('Line Item Status') . ':</label>
+			<select name="LineStatus">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="Completed">' . _('Completed') . '</option>
 				<option value="Open">' . _('Not Completed') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-		</tr>';
+			</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Stock Categories') . ':</td>
-			<td><select name="Category">';
+	echo '<field>
+			<label for="Category">' . _('Stock Categories') . ':</label>
+			<select name="Category">';
 
 	$CategoryResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory");
 	echo '<option selected="selected" value="All">' . _('All Categories')  . '</option>';
 	while($myrow = DB_fetch_array($CategoryResult)) {
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription']  . '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('For Sales Person') . ':</td>';
+	echo '<field>
+			<label for="Salesman">' . _('For Sales Person') . ':</label>';
 	if($_SESSION['SalesmanLogin'] != '') {
 		echo '<td>';
 		echo $_SESSION['UsersRealName'];
 		echo '</td>';
 	}else{
-		echo '<td><select name="Salesman">';
+		echo '<select name="Salesman">';
 		$sql="SELECT salesmancode, salesmanname FROM salesman";
 		$SalesmanResult= DB_query($sql);
 		echo '<option selected="selected" value="All">' . _('All Salespeople')  . '</option>';
 		while($myrow = DB_fetch_array($SalesmanResult)) {
 			echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname']  . '</option>';
 		}
-		echo '</select></td>';
+		echo '</select>';
 	}
-	echo '</tr>';
+	echo '</field>';
 
 // Use name='Areas[]' multiple - if want to create an array for Areas and allow multiple selections
-	echo '<tr><td>' . _('For Sales Areas') . ':</td>
-				<td><select name="Area">';
+	echo '<field>
+			<label for="Area">' . _('For Sales Areas') . ':</label>
+			<select name="Area">';
 	$AreasResult= DB_query("SELECT areacode, areadescription FROM areas");
 	echo '<option selected="selected" value="All">' . _('All Areas')  . '</option>';
 	while($myrow = DB_fetch_array($AreasResult)) {
 		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription']  . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr><td>&nbsp;</td></tr>';
-    echo '<tr>
-			<td>' . _('Sort By') . ':</td>
-			<td><select name="SortBy">
+	echo '<field>
+			<label for="SortBy">' . _('Sort By') . ':</label>
+			<select name="SortBy">
 				<option selected="selected" value="salesorderdetails.orderno">' . _('Order Number') . '</option>
 				<option value="salesorderdetails.stkcode">' . _('Stock Code') . '</option>
 				<option value="debtorsmaster.debtorno,salesorderdetails.orderno">' . _('Customer Number') . '</option>
 				<option value="debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno">' . _('Customer Name') . '</option>
 				<option value="tempstockmoves.transno,salesorderdetails.stkcode">' . _('Transaction Number') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-			<td>' . _('Transaction Number sort only valid for Invoice Date Type') . '</td>
-		</tr>';
+			</select>
+			<fieldhelp>' . _('Transaction Number sort only valid for Invoice Date Type') . '</fieldhelp>
+		</field>';
 
-   echo '<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>';
-
-	echo '<tr><td>&nbsp;</td></tr>';
-    echo '<tr><td>' . _('Summary Type') . ':</td>
-			<td><select name="SummaryType">
+	echo '<field>
+			<label for="SummaryType">' . _('Summary Type') . ':</label>
+			<select name="SummaryType">
 				<option selected="selected" value="orderno">' . _('Order Number') . '</option>
 				<option value="transno">' . _('Transaction Number') . '</option>
 				<option value="stkcode">' . _('Stock Code') . '</option>
@@ -1244,22 +1231,15 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 				<option value="categoryid">' . _('Stock Category') . '</option>
 				<option value="salesman">' . _('Salesman') . '</option>
 				<option value="area">' . _('Sales Area') . '</option>
-			</select></td>
-			<td>&nbsp;</td>
-			<td>' . _('Transaction Number summary only valid for Invoice Date Type') . '</td>
-		</tr>';
+			</select>
+			<fieldhelp>' . _('Transaction Number summary only valid for Invoice Date Type') . '</fieldhelp>
+		</field>
+	</fieldset>';
 
-  echo '<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Run Inquiry') . '" /></td>
-		</tr>
-		</table>
-	<br />';
-   echo '</div>
-         </form>';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Run Inquiry') . '" />
+		</div>';
+	echo '</form>';
 
 } // End of function display()
 

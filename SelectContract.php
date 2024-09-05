@@ -12,10 +12,10 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Select A Contract'), '</p>';// Page title.
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br /><div class="centre">';
+echo '<fieldset>
+		<legend class="search">', _('Contract Search'), '</legend>';
 
 if (isset($_GET['ContractRef'])){
 	$_POST['ContractRef']=$_GET['ContractRef'];
@@ -37,8 +37,14 @@ if (isset($_POST['ContractRef']) AND $_POST['ContractRef']!='') {
 
 if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 
-	echo _('Contract Reference') . ': <input type="text" name="ContractRef" maxlength="20" size="20" />&nbsp;&nbsp;';
-	echo '<select name="Status">';
+	echo '<field>
+			<label for="ContractRef">', _('Contract Reference') . ':</label>
+			<input type="text" name="ContractRef" maxlength="20" size="20" />
+		</field>';
+
+	echo '<field>
+			<label for="Status">', _('Search Contracts In'), '</label>
+			<select name="Status">';
 
 	if (isset($_GET['Status'])){
 		$_POST['Status']=$_GET['Status'];
@@ -63,10 +69,13 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 		}
 	}
 
-	echo '</select> &nbsp;&nbsp;';
+	echo '</select>
+		</field>';
 }
-echo '<input type="submit" name="SearchContracts" value="' . _('Search') . '" />';
-echo '&nbsp;&nbsp;<a href="' . $RootPath . '/Contracts.php">' . _('New Contract') . '</a></div><br />';
+echo '</fieldset>';
+echo '<div class="centre">
+		<input type="submit" name="SearchContracts" value="' . _('Search') . '" />';
+echo '&nbsp;&nbsp;<a href="' . $RootPath . '/Contracts.php">' . _('New Contract') . '</a></div>';
 
 
 //figure out the SQL required from the inputs available

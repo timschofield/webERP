@@ -10,7 +10,7 @@ $BookMark = 'Z_ChangeSalesmanCode'; // Anchor's id in the manual's html document
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/salesman.png" title="', _('Change A Salesman Code'), '" /> ', _('Change A Salesman Code'),
+		<img alt="" src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Change A Sales Person Code'), '" /> ', _('Change A Sales Person Code'),
 	'</p>';
 
 if (isset($_POST['ProcessSalesmanChange'])){
@@ -24,7 +24,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 /*First check the salesman code exists */
 	$result=DB_query("SELECT salesmancode FROM salesman WHERE salesmancode='" . $_POST['OldSalesmanCode'] . "'");
 	if (DB_num_rows($result) == 0){
-		prnMsg('<br /><br />' . _('The salesman code') . ': ' . $_POST['OldSalesmanCode'] . ' ' . _('does not currently exist as a salesman code in the system'), 'error');
+		prnMsg('<br /><br />' . _('The salesman code') . ': ' . $_POST['OldSalesmanCode'] . ' ' . _('does not currently exist as a sales person code in the system'), 'error');
 		include('includes/footer.php');
 		exit;
 	}
@@ -119,20 +119,19 @@ if (isset($_POST['ProcessSalesmanChange'])){
 }
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
-	<div class="centre">
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
-	<br />
-	<table>
-	<tr>
-		<td>', _('Existing Salesman Code'), ':</td>
-		<td><input type="text" name="OldSalesmanCode" size="4" maxlength="4" required="required" /></td>
-	</tr>
-	<tr>
-		<td> ', _('New Salesman Code'), ':</td>
-		<td><input type="text" name="NewSalesmanCode" size="4" maxlength="4" required="required"/></td>
-	</tr>
-	</table>
-
+	<fieldset>
+	<legend>', _('Sales Person to Change'), '</legend>
+	<field>
+		<label>', _('Existing Sales Person Code'), ':</label>
+		<input type="text" name="OldSalesmanCode" size="4" maxlength="4" required="required" />
+	</field>
+	<field>
+		<label> ', _('New Sales Person Code'), ':</label>
+		<input type="text" name="NewSalesmanCode" size="4" maxlength="4" required="required"/>
+	</field>
+	</fieldset>
+	<div class="centre">
 	<input type="submit" name="ProcessSalesmanChange" value="', _('Process'), '" />
 	</div>
 	</form>';

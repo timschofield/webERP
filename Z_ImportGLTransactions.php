@@ -219,7 +219,6 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 } else { //show file upload form
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" class="noPrint" enctype="multipart/form-data">';
-	echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<div class="page_help_text">' .
 			_('This function loads a set of general ledger transactions from a comma separated variable (csv) file.') . '<br />' .
@@ -230,15 +229,21 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			_('All the transactions must be within the same accounting period.') .  '<br />' .
 			_('The Account field must have a corresponding entry in the chartmaster table.') . '</div>';
 
-	echo '<br /><input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
-	echo _('Select Transaction Type') . ':&nbsp;
+	echo '<fieldset>
+			<legend>', _('Import Details'), '</legend>
+			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />';
+	echo '<field>
+			<label>', _('Select Transaction Type') . ':&nbsp;</label>
 			<select name="TransactionType">
 				<option value=0>' . _('GL Journal') . '</option>
 				<option value=1>' . _('GL Payment') . '</option>
 				<option value=2>' . _('GL Receipt') . '</option>
-			</select>&nbsp;&nbsp;';
+			</select>
+		</field>';
 
-	echo _('Select Currency') . ':&nbsp;<select name="Currency">';
+	echo '<field>
+			<label>', _('Select Currency') . ':&nbsp;</label>
+			<select name="Currency">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) == 0) {
@@ -253,10 +258,16 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
 			}
 		}
-		echo '</select>';
+		echo '</select>
+			</field>';
 	}
-	echo _('Upload file') . ': <input name="userfile" type="file" />
-			<input type="submit" name="submit" value="' . _('Send File') . '" />
+	echo '<field>
+			<label>', _('Upload file') . ':</label>
+			<input name="userfile" type="file" />
+		</field>';
+	echo '</fieldset>';
+	echo '<div class="centre">';
+	echo '<input type="submit" name="submit" value="' . _('Send File') . '" />
 		</div>
 		</form>';
 

@@ -33,20 +33,19 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		. _('Orders Invoiced Report') . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Enter the date from which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Enter the date to which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Inventory Category') . '</td>
-			<td>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="FromDate">' . _('Enter the date from which orders are to be listed') . ':</label>
+				<input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" />
+			</field>
+			<field>
+				<label for="ToDate">' . _('Enter the date to which orders are to be listed') . ':</label>
+				<input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			</field>
+			<field>
+				<label for="CategoryID">' . _('Inventory Category') . '</label>';
 
 	$sql = "SELECT categorydescription, categoryid FROM stockcategory";
 	$result = DB_query($sql);
@@ -57,24 +56,22 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	while ($myrow=DB_fetch_array($result)){
 	echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Inventory Location') . ':</td>
-			<td><select required="required" name="Location">
+	echo '</select>
+		</field>
+		<field>
+			<label for="Location">' . _('Inventory Location') . ':</label>
+			<select required="required" name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
 	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		</table>
-		<br />
+	echo '</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-		</div>
 		</div>
 	</form>';
 

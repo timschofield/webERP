@@ -37,28 +37,23 @@ if (!isset($_POST['supplierid'])) {
 	if (DB_num_rows($result)==0) {
 		prnMsg(_('There are no offers outstanding that you are authorised to deal with'), 'information');
 	} else {
-		echo '<p class="page_title_text"><img src="' . $RootPath.'/css/' . $Theme.'/images/supplier.png" title="' . _('Select Supplier') . '" alt="" />
-             ' . ' ' . _('Select Supplier') . '</p>';
+		echo '<p class="page_title_text"><img src="' . $RootPath.'/css/' . $Theme.'/images/supplier.png" title="' . _('Select Supplier') . '" alt="" />' . ' ' . _('Select Supplier') . '</p>';
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
-        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Supplier') . '</td>
-				<td><select name=supplierid>';
+		echo '<fieldset>
+				<legend>', _('Supplier Selection'), '</legend>
+				<field>
+					<label for="supplierid">' . _('Select Supplier') . '</label>
+					<select name=supplierid>';
 		while ($myrow=DB_fetch_array($result)) {
 			echo '<option value="' . $myrow['supplierid'].'">' . $myrow['suppname'] . '</option>';
 		}
-		echo '</select></td>
-			</tr>
-			<tr><td colspan="12">
-				<div class="centre">
-					<input type="submit" name="select" value="' . _('Enter Information') . '" />
-				</div>
-				</td>
-			</tr>
-			</table>
-            </div>
+		echo '</select>
+			</field>
+			</fieldset>
+			<div class="centre">
+				<input type="submit" name="select" value="' . _('Enter Information') . '" />
+			</div>
 			</form>';
 	}
 }

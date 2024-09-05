@@ -26,7 +26,6 @@ if (isset($_GET['SelectedSupplier'])){
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
@@ -103,9 +102,15 @@ if (isset($_POST['SearchParts'])) {
 }
 
 if (!isset($ShiptRef) or $ShiptRef==""){
-	echo '<table class="selection"><tr><td>';
-	echo _('Shipment Number'). ': <input type="text" name="ShiptRef" maxlength="10" size="10" /> '.
-		_('Into Stock Location').' :<select name="StockLocation"> ';
+	echo '<fieldset>
+			<legend class="search">', _('Search Criteria'), '</legend>
+			<field>
+				<label for="ShiptRef">', _('Shipment Number'). ':</label>
+				<input type="text" name="ShiptRef" maxlength="10" size="10" />
+			</field>
+			<field>
+				<label for="StockLocation">', _('Into Stock Location').':</label>
+				<select name="StockLocation"> ';
 	$sql = "SELECT loccode, locationname FROM locations";
 	$resultStkLocs = DB_query($sql);
 	while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -123,8 +128,11 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 		}
 	}
 
-	echo '</select>';
-	echo ' <select name="OpenOrClosed">';
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="OpenOrClosed">', _('Search For'), '</label>
+			<select name="OpenOrClosed">';
 	if (isset($_POST['OpenOrClosed']) AND $_POST['OpenOrClosed']==1){
 		echo '<option selected="selected" value="1">' .  _('Closed Shipments Only')  . '</option>';
 		echo '<option value="0">' .  _('Open Shipments Only')  . '</option>';
@@ -133,13 +141,13 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 		echo '<option value="1">' .  _('Closed Shipments Only')  . '</option>';
 		echo '<option selected="selected" value="0">' .  _('Open Shipments Only')  . '</option>';
 	}
-	echo '</select></td></tr></table>';
+	echo '</select>
+		</field>
+	</fieldset>';
 
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="SearchShipments" value="'. _('Search Shipments'). '" />
-			</div>
-			<br />';
+	echo '<div class="centre">
+			<input type="submit" name="SearchShipments" value="'. _('Search Shipments'). '" />
+		</div>';
 }
 
 $SQL="SELECT categoryid,
@@ -149,13 +157,11 @@ $SQL="SELECT categoryid,
 	ORDER BY categorydescription";
 $result1 = DB_query($SQL);
 
-echo '<table class="selection">';
-echo '<tr>
-		<th colspan="5"><h3>' . _('To search for shipments for a specific part use the part selection facilities below') . '</h3></th>
-	</tr>
-	<tr>
-		<td>' . _('Select a stock category') . ':
-			<select name="StockCat">';
+echo '<fieldset>';
+echo '<legend class="search">' . _('To search for shipments for a specific part use the part selection facilities below') . '</legend>
+	<field>
+		<label for="StockCat">' . _('Select a stock category') . ':</label>
+		<select name="StockCat">';
 
 while ($myrow1 = DB_fetch_array($result1)) {
 	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
@@ -164,23 +170,23 @@ while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
 	}
 }
-echo '</select></td>
-		<td>' . _('Enter text extracts in the') . '<b> ' . _('description') . '</b>:</td>
-		<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><b>' . _('OR') . ' </b> ' . _('Enter extract of the') . ' <b> ' . _('Stock Code') . '</b>:</td>
-		<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>
-	</tr>
-	</table>
-	<br />';
+echo '</select>
+	</field>
+	<field>
+		<label for="Keywords">' . _('Enter text extracts in the') . '<b> ' . _('description') . '</b>:</label>
+		<input type="text" name="Keywords" size="20" maxlength="25" />
+	</field>
+	<h3>' . _('OR') . ' </h3>
+	<field>
+		<label for="StockCode">' . _('Enter extract of the') . ' <b> ' . _('Stock Code') . '</b>:</label>
+		<input type="text" name="StockCode" size="15" maxlength="18" />
+	</field>
+	</fieldset>';
 
 echo '<div class="centre">
 		<input type="submit" name="SearchParts" value="'._('Search Parts Now').'" />
 		<input type="submit" name="ResetPart" value="'. _('Show All') .'" />
-	</div>
-	<br />';
+	</div>';
 
 if (isset($StockItemsResult)) {
 

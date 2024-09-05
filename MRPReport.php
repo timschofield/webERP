@@ -528,17 +528,18 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result1 = DB_query($SQL);
 	if (DB_num_rows($result1) == 0) {
 		echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up');
-		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		exit;
 	}
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items') . '</p>
-		<table class="selection">
-			<tr>
-				<td>' . _('In Stock Category') . ':<select name="StockCat">';
+		<fieldset>
+			<legend>', _('Search Criteria'), '</legend>
+			<field>
+				<label for="StockCat">' . _('In Stock Category') . ':</label>
+				<select name="StockCat">';
 	if (!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
@@ -554,32 +555,30 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select></td>';
-	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="Keywords">' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
 	if (isset($_POST['Keywords'])) {
 		echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 	} else {
 		echo '<input type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" />';
 	}
-	echo '</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><h3><b>' . _('OR') . ' ' . '</b></h3>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
-			<td>';
+	echo '</field>';
+
+	echo '<h3><b>' . _('OR') . ' ' . '</b></h3>';
+
+	echo '<field>
+			<label for="StockCode">' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
 		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
 	}
-	echo '</td>
-		</tr>
-		</table>
-		<br />
+	echo '</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
-		</div>
-		<br />
 		</div>
 		</form>';
 	if (!isset($_POST['Search'])) {

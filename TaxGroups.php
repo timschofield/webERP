@@ -221,25 +221,30 @@ if(isset($SelectedGroup)) {
 		$_POST['GroupName'] = $myrow['taxgroupdescription'];
 	}
 }
-echo '<br />';
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<fieldset>';
 if( isset($_POST['SelectedGroup'])) {
 	echo '<input type="hidden" name="SelectedGroup" value="' . $_POST['SelectedGroup'] . '" />';
+	echo '<legend>', _('Edit Tax Group'), '</legend>';
+} else {
+	echo '<legend>', _('Create Tax Group'), '</legend>';
 }
-echo '<table class="selection">';
+
 
 if(!isset($_POST['GroupName'])) {
 	$_POST['GroupName']='';
 }
-echo '<tr><td>' . _('Tax Group') . ':</td>
-		<td><input pattern="(?!^ +$)[^><+-]{4,}" title="'._('The group name must be more 4 and less than 40 characters and cannot be left blank').'" placeholder="'._('4 to 40 legal characters').'" type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" /></td>';
-echo '<td><input type="submit" name="submit" value="' . _('Enter Group') . '" /></td>
-	</tr>
-    </table>
-    <br />
-    </div>
+echo '<field>
+		<label for="GroupName">' . _('Tax Group') . ':</label>
+		<input pattern="(?!^ +$)[^><+-]{4,}" title="" placeholder="'._('4 to 40 legal characters').'" type="text" name="GroupName" size="40" maxlength="40" value="' . $_POST['GroupName'] . '" />
+		<fieldhelp>'._('The group name must be more 4 and less than 40 characters and cannot be left blank').'</fieldhelp>
+	</field>';
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input type="submit" name="submit" value="' . _('Enter Group') . '" />
+	</div>
 	</form>';
 
 if(isset($SelectedGroup)) {
@@ -273,7 +278,6 @@ if(isset($SelectedGroup)) {
 	/* the order and tax on tax will only be an issue if more than one tax authority in the group */
 	if(count($TaxAuthsUsed)>0) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<input type="hidden" name="SelectedGroup" value="' . $SelectedGroup .'" />';
 		echo '<table class="selection">
@@ -308,12 +312,11 @@ if(isset($SelectedGroup)) {
 
 		}
 		echo '</table>';
-		echo '<br />
-			<div class="centre">
+		echo '<div class="centre">
 				<input type="submit" name="UpdateOrder" value="' . _('Update Order') . '" />
 			</div>';
 	}
-	echo '</div></form>';
+	echo '</form>';
 
 	if(DB_num_rows($Result)>0 ) {
 		echo '<br /><table class="selection">
@@ -387,8 +390,7 @@ if(isset($SelectedGroup)) {
 	echo '</table>';
 }
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities and Rates Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>

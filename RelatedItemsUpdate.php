@@ -7,6 +7,8 @@ $ViewTopic = 'QualityAssurance';
 $BookMark = 'QA_Tests';
 include('includes/header.php');
 
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back to Items') . '</a>';
+
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/inventory.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
@@ -27,9 +29,6 @@ if (isset($_GET['Related'])){
 }elseif (isset($_POST['Related'])){
 	$Related = trim(mb_strtoupper($_POST['Related']));
 }
-
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a><br />';
-
 
 $result = DB_query("SELECT stockmaster.description
 					FROM stockmaster
@@ -171,7 +170,7 @@ if (DB_num_rows($result) > 0) {
 
 	}
 	//END WHILE LIST LOOP
-	echo '</tbody></table><br />';
+	echo '</tbody></table>';
 	echo '</div>
 		  </form>';
 } else {
@@ -186,26 +185,24 @@ if (isset($_GET['Edit'])){
 	$_POST['Related'] = $_GET['Related'];
 }
 
-echo '<br /><table class="selection">';
+echo '<fieldset>';
 
-echo '<tr><th colspan="5"><h3>' . $Item . ' - ' . $PartDescription . '</h3></th></tr>';
+echo '<legend>' . $Item . ' - ' . $PartDescription . '</legend>';
 
-echo '<tr><td>' . _('Related Item Code') . ':</td>
-          <td>
-          <input type="text" class="text" required="required" name="Related" size="21" maxlength="20" value="';
-          if (isset($_POST['Related'])) {
-	         echo $_POST['Related'];
-          }
-          echo '" />
-     </td></tr>
-</table>
-<br /><div class="centre">
-<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Relation') . '" />
-</div>';
+echo '<field>
+		<label for="Related">' . _('Related Item Code') . ':</label>
+		<input type="text" class="text" required="required" name="Related" size="21" maxlength="20" value="';
+		if (isset($_POST['Related'])) {
+			echo $_POST['Related'];
+		}
+		echo '" />
+		</field>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" name="submit" value="' . _('Enter') . '/' . _('Amend Relation') . '" />
+	</div>';
 
-
-echo '</div>
-      </form>';
+echo '</form>';
 include('includes/footer.php');
 
 ?>

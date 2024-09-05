@@ -202,12 +202,12 @@ if(isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartMaster'
 
-	$sql= "SELECT COUNT(group_) AS groups FROM chartmaster WHERE chartmaster.group_='" . $_GET['SelectedAccountGroup'] . "'";
+	$sql= "SELECT COUNT(group_) AS total_groups FROM chartmaster WHERE chartmaster.group_='" . $_GET['SelectedAccountGroup'] . "'";
 	$ErrMsg = _('An error occurred in retrieving the group information from chartmaster');
 	$DbgMsg = _('The SQL that was used to retrieve the information was');
 	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 	$myrow = DB_fetch_array($result);
-	if($myrow['groups']>0) {
+	if($myrow['total_groups']>0) {
 		prnMsg( _('Cannot delete this account group because general ledger accounts have been created using this group'),'warn');
 		echo '<br />' . _('There are') . ' ' . $myrow['groups'] . ' ' . _('general ledger accounts that refer to this account group');
 		echo '<br /><form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
@@ -329,7 +329,6 @@ if(isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])
 if(!isset($_GET['delete'])) {
 
 	echo '<form method="post" id="AccountGroups" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-    echo '<div><br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(isset($_GET['SelectedAccountGroup'])) {
@@ -359,26 +358,9 @@ if(!isset($_GET['delete'])) {
 		$_POST['PandL']  = $myrow['pandl'];
 		$_POST['ParentGroupName'] = $myrow['parentgroupname'];
 
-		echo '<table class="selection">
-			<thead>
-				<tr>
-					<th colspan="2">', _('Edit Account Group Details'), '</th>
-				</tr>
-			</thead>
-			<tfoot>
-			<tr>
-				<td class="centre" colspan="2">',
-					'<button name="submit" tabindex="6" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme,
-						'/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
-					'<button onclick="window.location=\'AccountGroups.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-						'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-				'</td>
-			</tr>
-			</tfoot>
-			<tbody>
-				<tr>
-					<td><input name="SelectedAccountGroup" type="hidden" value="', $_GET['SelectedAccountGroup'], '" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit Account Group Details'), '</legend>
+				<input name="SelectedAccountGroup" type="hidden" value="', $_GET['SelectedAccountGroup'], '" />';
 
 	} elseif(!isset($_POST['MoveGroup'])) { //end of if $_POST['SelectedAccountGroup'] only do the else when a new record is being entered
 
@@ -398,35 +380,18 @@ if(!isset($_GET['delete'])) {
 			$_POST['PandL']='';
 		}
 
-		echo '<br />
-			<table class="noprint selection">
-			<thead>
-				<tr>
-					<th colspan="2">', _('New Account Group Details'), '</th>
-				</tr>
-			</thead>
-			<tfoot>
-			<tr>
-				<td class="centre" colspan="2">',
-					'<button name="submit" tabindex="6" type="submit" value="Insert"><img alt="" src="', $RootPath, '/css/', $Theme,
-						'/images/tick.svg" /> ', _('Insert'), '</button>', // "Insert" button.
-					'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-						'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-				'</td>
-			</tr>
-			</tfoot>
-			<tbody>
-				<tr>
-					 <td><input name="SelectedAccountGroup" type="hidden" value="', $_POST['SelectedAccountGroup'], '" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('New Account Group Details'), '</legend>
+				<input name="SelectedAccountGroup" type="hidden" value="', $_POST['SelectedAccountGroup'], '" />';
 	}
-	echo '<tr>
-			<td>', _('Account Group Name'), ':</td>
-			<td><input autofocus="autofocus" data-type="no-illegal-chars" placeholder="' . _('Enter the account group name') . '" ' . (in_array('GroupName',$Errors) ?  '"class=inputerror" ' : '' ) . 'maxlength="30" minlength="3" name="GroupName" required="required" size="30" tabindex="1" type="text" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" /></td>
-		</tr>
-		<tr>
-			<td>', _('Parent Group'), ':</td>
-			<td><select ',
+	echo '<field>
+			<label for="GroupName">', _('Account Group Name'), ':</label>
+			<input autofocus="autofocus" data-type="no-illegal-chars" maxlength="30" minlength="3" name="GroupName" required="required" size="30" tabindex="1" type="text" value="' . $_POST['GroupName'] . '" title="' . _('A unique name for the account group must be entered - at least 3 characters long and less than 30 characters long. Only alpha numeric characters can be used.') . '" />
+			<fieldhelp>' . _('Enter the account group name') . '</fieldhelp>
+		</field>
+		<field>
+			<label for="ParentGroupName">', _('Parent Group'), ':</label>
+			<select ',
 				( in_array('ParentGroupName',$Errors) ? 'class="selecterror" ' : '' ),
 				'name="ParentGroupName" tabindex="2">';
 	echo '<option ',
@@ -442,11 +407,13 @@ if(!isset($_GET['delete'])) {
 			echo '<option value="'.htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8').'">' .htmlspecialchars($grouprow['groupname'], ENT_QUOTES,'UTF-8') . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>', _('Section In Accounts'), ':</td>
-			<td><select ',
+	echo '</select>
+		<fieldhelp>' . _('Select the name of the parent group, or select Top level group if it has no parent') . '</fieldhelp>
+	</field>';
+	
+	echo '<field>
+			<label for="SectionInAccounts">', _('Section In Accounts'), ':</label>
+			<select ',
 				( in_array('SectionInAccounts',$Errors) ? 'class="selecterror" ' : '' ),
 				'name="SectionInAccounts" tabindex="3">';
 
@@ -459,11 +426,13 @@ if(!isset($_GET['delete'])) {
 			echo '<option value="'.$secrow['sectionid'].'">' . $secrow['sectionname'].' ('.$secrow['sectionid'].')</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>', _('Profit and Loss'), ':</td>
-			<td><select name="PandL" tabindex="4" title="', _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '">';
+	echo '</select>
+		<fieldhelp>' . _('The account section to which this group belongs') . '</fieldhelp>
+	</field>';
+	
+	echo '<field>
+			<label for="PandL">', _('Profit and Loss'), ':</label>
+			<select name="PandL" tabindex="4" title="">';
 	if($_POST['PandL']!=0 ) {
 		echo '<option value="0">', _('No'), '</option>',
 			 '<option selected="selected" value="1">', _('Yes'), '</option>';
@@ -471,17 +440,33 @@ if(!isset($_GET['delete'])) {
 		echo '<option selected="selected" value="0">', _('No'), '</option>',
 			 '<option value="1">', _('Yes'), '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>', _('Sequence In TB'), ':</td>
-			<td><input class="number" maxlength="4" name="SequenceInTB" required="required" tabindex="5" type="text" value="', $_POST['SequenceInTB'], '" title="', _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '" /></td>
-		</tr>
-		</tbody>
-	</table>
-	<br />
-	</div>
-	</form>';
+	echo '</select>
+		<fieldhelp', _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '</fieldhelp>
+	</field>';
+	
+	echo '<field>
+			<label for="SequenceInTB">', _('Sequence In TB'), ':</label>
+			<input class="number" maxlength="4" name="SequenceInTB" required="required" tabindex="5" type="text" value="', $_POST['SequenceInTB'], '" title="" />
+			<fieldhelp>', _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '</fieldhelp>
+		</field>';
+		
+	echo '</fieldset>';
+	if(isset($_GET['SelectedAccountGroup'])) {
+		echo '<div class="centre">
+				<button name="submit" tabindex="6" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'/images/tick.svg" /> ', _('Update'), '</button>
+				<button onclick="window.location=\'AccountGroups.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+						'/images/return.svg" /> ', _('Return'), '</button>
+			</div>';
+	} else {
+		echo '<div class="centre">
+				<button name="submit" tabindex="6" type="submit" value="Insert"><img alt="" src="', $RootPath, '/css/', $Theme,
+					'/images/tick.svg" /> ', _('Insert'), '</button>
+				<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+					'/images/return.svg" /> ', _('Return'), '</button>
+			</div>';
+	}
+	echo '</form>';
 
 } //end if record deleted no point displaying form to add record
 

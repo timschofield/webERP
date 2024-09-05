@@ -1,7 +1,5 @@
 <?php
 
-
-
 include('includes/session.php');
 
 $Title = _('Brands Maintenance');
@@ -217,7 +215,7 @@ or deletion of the records*/
 	if (DB_num_rows($result)==0){
 		prnMsg (_('There are no manufacturers to display'),'error');
 	}
-	echo '<p class="page_Title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
 			_('Manufacturers') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<table class="selection">';
@@ -269,21 +267,18 @@ while ($myrow = DB_fetch_array($result)) {
 
 //end of ifs and buts!
 
-echo '<br />';
 if (isset($SelectedManufacturer)) {
 	echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Records') . '</a>';
 }
-echo '<br />';
 
 if (!isset($_GET['delete'])) {
 
 	echo '<form enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedManufacturer)) {
 		//editing an existing Brand
-		echo '<p class="page_Title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
+		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" Title="' .
 			_('Brand') . '" alt="" />' . ' ' . $Title . '</p>';
 
 		$sql = "SELECT manufacturers_id,
@@ -302,16 +297,12 @@ if (!isset($_GET['delete'])) {
 
 
 		echo '<input type="hidden" name="SelectedManufacturer" value="' . $SelectedManufacturer . '" />';
-		echo '<table class="selection">';
-		echo '<tr>
-				<th colspan="2">' . _('Amend Brand Details') . '</th>
-			</tr>';
+		echo '<fieldset>';
+		echo '<legend>' . _('Amend Brand Details') . '</legend>';
 	} else { //end of if $SelectedManufacturer only do the else when a new record is being entered
 
-		echo '<table class="selection">
-				<tr>
-					<th colspan="2"><h3>' . _('New Brand/Manufacturer Details') . '</h3></th>
-				</tr>';
+		echo '<fieldset>
+				<legend>' . _('New Brand/Manufacturer Details') . '</legend>';
 	}
 	if (!isset($_POST['ManufacturersName'])) {
 		$_POST['ManufacturersName'] = '';
@@ -323,24 +314,26 @@ if (!isset($_GET['delete'])) {
 		$_POST['ManufacturersImage'] = '';
 	}
 
-	echo '<tr>
-			<td>' .  _('Brand Name') . ':' . '</td>
-			<td><input type="text" required="required" autofocus="autofocus" name="ManufacturersName" value="'. $_POST['ManufacturersName'] . '" size="32" maxlength="32" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Brand URL') . ':' . '</td>
-			<td><input type="text" name="ManufacturersURL" value="' . $_POST['ManufacturersURL'] . '" size="50" maxlength="50" /></td>
-		</tr>
-		<tr>
-			<td>' .  _('Brand Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</td>
-			<td><input type="file" id="BrandPicture" name="BrandPicture" />';
+	echo '<field>
+			<label for="ManufacturersName">' .  _('Brand Name') . ':' . '</label>
+			<input type="text" required="required" autofocus="autofocus" name="ManufacturersName" value="'. $_POST['ManufacturersName'] . '" size="32" maxlength="32" />
+		</field>
+		<field>
+			<label for="ManufacturersURL">' . _('Brand URL') . ':' . '</label>
+			<input type="text" name="ManufacturersURL" value="' . $_POST['ManufacturersURL'] . '" size="50" maxlength="50" />
+		</field>
+		<field>
+			<label for="BrandPicture">' .  _('Brand Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
+			<input type="file" id="BrandPicture" name="BrandPicture" />';
 
 	if (isset ($_GET['edit']) ) {
-		echo '	<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').' ';
+		echo '<field>
+				<label for="ClearImage">'._('Clear Image').'</label>
+				<input type="checkbox" name="ClearImage" id="ClearImage" value="1">
+			</field>';
 	}
 
-	echo '	</td>
-		</tr>';
+	echo '</field>';
 		if (isset($SelectedManufacturer)){
 
 			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
@@ -358,15 +351,13 @@ if (!isset($_GET['delete'])) {
 					$BrandImgLink = _('No Image');
 				}
 			}
-			echo '<tr><td colspan="2">' . $BrandImgLink . '</td></tr>';
+			echo '<field><td colspan="2">' . $BrandImgLink . '</td></field>';
 		}
 
-		echo 	'</table>
-			<br />
+		echo 	'</fieldset>
 			<div class="centre">
 				<input type="submit" name="submit" value="' .  _('Enter Information') . '" />
 			</div>
-	        </div>
 			</form>';
 
 } //end if record deleted no point displaying form to add record

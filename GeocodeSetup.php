@@ -189,7 +189,6 @@ if (isset($SelectedParam)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedParam) and ($InputError!=1)) {
@@ -219,49 +218,66 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedParam" value="' . $SelectedParam . '" />';
 		echo '<input type="hidden" name="GeoCodeID" value="' . $_POST['GeoCodeID'] . '" />';
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' .  _('Setup configuration for Geocoding of Customers and Suppliers')  . '</p>';
-		echo '<br /><table>
-				<tr><td>' .  _('Geocode Code') .':</td>
-					<td>' . $_POST['GeoCodeID'] . '</td></tr>';
+		echo '<fieldset>
+				<field><td>' .  _('Geocode Code') .':</td>
+					<td>' . $_POST['GeoCodeID'] . '</td></field>';
 
 	} else { //end of if $SelectedParam only do the else when a new record is being entered
 		if (!isset($_POST['GeoCodeID'])) {
 			$_POST['GeoCodeID'] = '';
 		}
-		echo '<br /><table>';
-//			<tr>
+		$_POST['GeoCodeID'] = '';
+		$_POST['GeoCode_Key']  = '';
+		$_POST['Center_Long']  = '';
+		$_POST['Center_Lat']  = '';
+		$_POST['Map_Height']  = '';
+		$_POST['Map_Width']  = '';
+		$_POST['Map_Host']  = '';
+		echo '<fieldset>';
+//			<field>
 //				<td>' .  _('Geocode Code') .":</td>
 //				<td><input " . (in_array('GeoCodeID',$Errors) ? 'class="inputerror"' : '' ) .
 //					" tabindex="1" type='Text' name='GeoCodeID' value='". $_POST['GeoCodeID'] ."' size="3" maxlength="2"></td>
-//			</tr>";
+//			</field>";
 	}
 
 	if (!isset($_POST['GeoCode_Key'])) {
 		$_POST['GeoCode_Key'] = '';
 	}
-	echo '<tr>
-		<td>' .  _('Geocode Key') .':</td>
-		<td><input ' . (in_array('GeoCode_Key',$Errors) ? 'class="inputerror"' : '' ) .
-         ' tabindex="2" type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" maxlength="300" />
-		</td></tr>
+	echo '<field>
+			<label for="GeoCode_Key">' .  _('Geocode Key') .':</label>
+			<input ' . (in_array('GeoCode_Key',$Errors) ? 'class="inputerror"' : '' ) .
+			' tabindex="2" type="text" name="GeoCode_Key" value="'. $_POST['GeoCode_Key'] .'" size="28" maxlength="300" />
+		</field>
 
-		<tr><td>' .  _('Geocode Center Long') . '</td>
-		<td><input tabindex="3" type="text" name="Center_Long" value="'. $_POST['Center_Long'] .'" size="28" maxlength="300" /></td></tr>
+		<field>
+			<label for="Center_Long">' .  _('Geocode Center Long') . '</label>
+			<input tabindex="3" type="text" name="Center_Long" value="'. $_POST['Center_Long'] .'" size="28" maxlength="300" />
+		</field>
 
-		<tr><td>' .  _('Geocode Center Lat') . '</td>
-		<td><input tabindex="4" type="text" name="Center_Lat" value="'. $_POST['Center_Lat'] .'" size="28" maxlength="300" /></td></tr>
+		<field>
+			<label for="Center_Lat">' .  _('Geocode Center Lat') . '</label>
+			<input tabindex="4" type="text" name="Center_Lat" value="'. $_POST['Center_Lat'] .'" size="28" maxlength="300" />
+		</field>
 
-		<tr><td>' .  _('Geocode Map Height') . '</td>
-		<td><input tabindex="5" type="text" name="Map_Height" value="'. $_POST['Map_Height'] .'" size="28" maxlength="300" /></td></tr>
+		<field>
+			<label for="Map_Height">' .  _('Geocode Map Height') . '</label>
+			<input tabindex="5" type="text" name="Map_Height" value="'. $_POST['Map_Height'] .'" size="28" maxlength="300" />
+		</field>
 
-		<tr><td>' .  _('Geocode Map Width') . '</td>
-		<td><input tabindex="6" type="text" name="Map_Width" value="'. $_POST['Map_Width'] .'" size="28" maxlength="300" /></td></tr>
+		<field>
+			<label for="Map_Width">' .  _('Geocode Map Width') . '</label>
+			<input tabindex="6" type="text" name="Map_Width" value="'. $_POST['Map_Width'] .'" size="28" maxlength="300" />
+		</field>
 
-		<tr><td>' .  _('Geocode Host') . '</td>
-		<td><input tabindex="7" type="text" name="Map_Host" value="'. $_POST['Map_Host'] .'" size="20" maxlength="300" /></td></tr>
-		</table>
-		<div class="centre"><input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" /></div>
-		<br />
-		<br />
+		<field>
+			<label for="Map_Host">' .  _('Geocode Host') . '</label>
+			<input tabindex="7" type="text" name="Map_Host" value="'. $_POST['Map_Host'] .'" size="20" maxlength="300" />
+		</field>
+		</fieldset>
+		<div class="centre">
+			<input tabindex="4" type="submit" name="submit" value="' . _('Enter Information') . '" />
+		</div>
     </div>
 	</form>';
 echo '<div class="page_help_text">' . _('When ready, click on the link below to run the GeoCode process. This will Geocode all Branches and Suppliers. This may take some time. Errors will be returned to the screen.') . '<br />';

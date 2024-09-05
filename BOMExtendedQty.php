@@ -252,41 +252,38 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Title=_('Quantity Extended BOM Listing');
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Part') . ':</td>
-			<td><input type="text" autofocus="autofocus" required="required" name="Part" size="20" title="' . _('Enter the item code that you wish to display the extended bill of material for') . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Quantity') . ':</td>
-			<td><input type="text" class="number" required="required" name="Quantity" size="4" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Selection Option') . ':</td>
-			<td><select name="Select">
+		<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="Part">' . _('Part') . ':</label>
+			<input type="text" autofocus="autofocus" required="required" name="Part" size="20" title="" />
+			<fieldhelp>' . _('Enter the item code that you wish to display the extended bill of material for') . '</fieldhelp
+		</field>
+		<field>
+			<label for="Quantity">' . _('Quantity') . ':</label>
+			<input type="text" class="number" required="required" name="Quantity" size="4" />
+		</field>
+		<field>
+			<label for="Select">' . _('Selection Option') . ':</label>
+			<select name="Select">
 				<option selected="selected" value="All">' . _('Show All Parts') . '</option>
 				<option value="Shortages">' . _('Only Show Shortages') . '</option>
-			</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
+			</select>
+		</field>
+		<field>
+			<label for="Fill">' . _('Print Option') . ':</label>
+			<select name="Fill">
 				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
-			</select></td>
-		</tr>
-		</table>
-		<br />
-		<br />
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
-			<br />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>
         </div>
         </form>';
 

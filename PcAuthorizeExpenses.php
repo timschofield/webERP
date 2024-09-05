@@ -41,12 +41,12 @@ echo '<p class="page_title_text">
 
 
 if (isset($SelectedTabs)) {
-	echo '<br /><table class="selection">';
-	echo '<tr>
-			<td>' . _('Petty Cash Tab') . ':</td>
-			<td>' . $SelectedTabs . '</td>
-		  </tr>';
-	echo '</table>';
+	echo '<form><fieldset>';
+	echo '<field>
+			<label>' . _('Petty Cash Tab') . ':</label>
+			<fieldtext>' . $SelectedTabs . '</fieldtext>
+		  </field>';
+	echo '</fieldset></form>';
 }
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
@@ -56,15 +56,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	}
 
 	//Limit expenses history to X days
-	echo '<table class="selection">
-			<tr>
-				<td>', _('Detail of Tab Movements For Last '), ':
-					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
-					<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
-					<input type="submit" name="Go" value="', _('Go'), '" />
-				</td>
-			</tr>
-		</table>';
+	echo '<fieldset>
+			<field>
+				<label for="SelectedTabs">', _('Detail of Tab Movements For Last '), ':</label>
+				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
+				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
+				<input type="submit" name="Go" value="', _('Go'), '" />
+			</field>
+		</fieldset>';
 	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.tag,
@@ -385,13 +384,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	/*The option to submit was not hit so display form */
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table class="selection">'; //Main table
+	echo '<fieldset>'; //Main table
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE authorizerexpenses='" . $_SESSION['UserID'] . "'
 		ORDER BY tabcode";
 	$Result = DB_query($SQL);
-	echo '<tr>
+	echo '<field>
 			<td>', _('Authorise expenses on petty cash tab'), ':</td>
 			<td><select required="required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -402,9 +401,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		}
 	} //end while loop get type of tab
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>'; // close main table
+		</field>';
+	echo '</fieldset>'; // close main table
 	DB_free_result($Result);
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />

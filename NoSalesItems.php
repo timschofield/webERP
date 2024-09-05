@@ -8,16 +8,15 @@ if (!(isset($_POST['Search']))) {
 echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
 	echo '<div class="page_help_text">'
 	. _('List of items with stock available during the last X days at the selected locations but did not sell any quantity during these X days.'). '<br />' .  _( 'This list gets the no selling items, items at the location just wasting space, or need a price reduction, etc.') . '<br />' .  _('Stock available during the last X days means there was a stock movement that produced that item into that location before that day, and no other positive stock movement has been created afterwards.  No sell any quantity means, there is no sales order for that item from that location.')  . '</div>';
-	echo '<br />';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?name="SelectCustomer" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+	echo '<fieldset>
+			<legend>', _('Inquiry Criteria'), '</legend>';
 
 	//select location
-	echo '<tr>
-			 <td>' . _('Select Location') . '</td>
-			 <td>:</td>
-			 <td><select name="Location[]" multiple="multiple">
+	echo '<field>
+			 <label for="Location">' . _('Select Location') . ':</label>
+			<select name="Location[]" multiple="multiple">
 				<option value="All" selected="selected">' . _('All') . '</option>';;
 	$sql = "SELECT 	locations.loccode,locationname
 			FROM 	locations
@@ -33,14 +32,13 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			echo '<option value="' . $myrow['loccode'] . '">'  . $myrow['locationname']  . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	//to view list of customer
-	echo '<tr>
-			<td width="150">' . _('Select Customer Type') . '</td>
-			<td>:</td>
-			<td><select name="Customers">';
+	echo '<field>
+			<label for="Customers">' . _('Select Customer Type') . ':</label>
+			<select name="Customers">';
 
 	$sql = "SELECT typename,
 					typeid
@@ -50,18 +48,17 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	while ($myrow = DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	// stock category selection
 	$SQL="SELECT categoryid,categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
 	$result1 = DB_query($SQL);
-	echo '<tr>
-			<td width="150">' . _('In Stock Category') . ' </td>
-			<td>:</td>
-			<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">' . _('In Stock Category') . ':</label>
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -77,15 +74,16 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
+	echo '</select>
+		</field>';
 
 	//View number of days
-	echo '<tr>
-			<td>' . _('Number Of Days') . ' </td>
-			<td>:</td>
-			<td><input class="integer" tabindex="3" type="text" required="required" title="' . _('Enter the number of days to examine the sales for') . '" name="NumberOfDays" size="8" maxlength="8" value="30" /></td>
-		 </tr>
-	</table>
-	<br />
+	echo '<field>
+			<label for="NumberOfDays">' . _('Number Of Days') . ':</label>
+			<input class="integer" tabindex="3" type="text" required="required" title="" name="NumberOfDays" size="8" maxlength="8" value="30" />
+			<fieldhelp>' . _('Enter the number of days to examine the sales for') . '</fieldhelp>
+		 </field>
+	</fieldset>
 	<div class="centre">
 		<input tabindex="5" type="submit" name="Search" value="' . _('Search') . '" />
 	</div>

@@ -39,18 +39,18 @@ if(isset($_GET['PeriodTo'])) {
 }
 
 // Sets PeriodFrom and PeriodTo from Period:
-if($_POST['Period'] != '') {
+if(isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
 
 // Validates the data submitted in the form:
-if($_POST['PeriodFrom'] > $_POST['PeriodTo']) {
+if(isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	$_POST['NewReport'] = 'on';
 	prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
-if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
+if(isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	// The reporting period is greater than 12 months.
 	$_POST['NewReport'] = 'on';
 	prnMsg(_('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
@@ -76,12 +76,13 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 		// Input table:
-		'<table class="selection">',
+		'<fieldset>
+			<legend>', _('Report Criteria'), '</legend>',
 	// Content of the body of the input table:
 	// Select period from:
-			'<tr>',
-				'<td><label for="PeriodFrom">', _('Select period from'), '</label></td>
-		 		<td><select id="PeriodFrom" name="PeriodFrom" required="required">';
+			'<field>
+				<label for="PeriodFrom">', _('Select period from'), '</label>
+		 		<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC');
 
 	if (Date('m') > $_SESSION['YearEnd']) {
@@ -110,55 +111,49 @@ if (!isset($_POST['PeriodFrom']) OR !isset($_POST['PeriodTo']) OR $_POST['NewRep
 		}
 	}
 
-	echo			'</select>', fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+	echo '</select>
+		<fieldhelp>', _('Select the beginning of the reporting period'), '</fieldhelp>
+	</field>';
 	// Select period to:
-			'<tr>',
-				'<td><label for="PeriodTo">', _('Select period to'), '</label></td>
-		 		<td><select id="PeriodTo" name="PeriodTo" required="required">';
+	echo '<field>
+			<label for="PeriodTo">', _('Select period to'), '</label>
+		 	<select id="PeriodTo" name="PeriodTo" required="required">';
 	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	}
 	DB_data_seek($Periods, 0);
 	while($MyRow = DB_fetch_array($Periods)) {
-	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	    echo '<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo			'</select>', fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+	echo  '</select>
+		<fieldhelp>', _('Select the end of the reporting period'), '</fieldhelp>
+	</field>';
 	// OR Select period:
 	if(!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
-	echo	'<tr>
-				<td>
-					<h3>', _('OR'), '</h3>
-				</td>
-			</tr>
-			<tr>
-				<td>', _('Select Period'), '</td>
-				<td>', ReportPeriodList($_POST['Period'], array('l', 't')), fShowFieldHelp(_('Select a period instead of using the beginning and end of the reporting period.')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-				'</td>
-			</tr>';
+	echo '<h3>', _('OR'), '</h3>';
+	
+	echo '<field>
+			<label for="Period">', _('Select Period'), '</label>
+			', ReportPeriodList($_POST['Period'], array('l', 't')), 
+			'<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'), '</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
-			<td><select name="ShowDetail">
-					<option value="Summary">' . _('Summary') . '</option>
-					<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
-					</select>
-			</td>
-		</tr>',
+	echo '<field>
+			<label for="ShowDetail">', _('Detail or summary'), '</label>
+			<select name="ShowDetail">
+				<option value="Summary">' . _('Summary') . '</option>
+				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
+			</select>
+		</field>',
 		// Show accounts with zero balance:
-		'<tr>',
-			'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
-		 	<td><input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-		 		fShowFieldHelp(_('Check this box to show all accounts including those with zero balance')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-	 		'</td>
-		</tr>',
-		'</table>',
-		'<br />',
+		'<field>',
+			'<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+		 	<input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
+		 	<fieldhelp>', _('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
+		</field>',
+		'</fieldset>',
 		'<div class="centre noprint">', // Form buttons:
 			'<button name="ShowBalanceSheet" type="submit" value="', _('Show on Screen (HTML)'), '">
 				<img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('Show on Screen (HTML)'), '</button>', // "Show on Screen (HTML)" button.

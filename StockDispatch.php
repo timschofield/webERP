@@ -328,8 +328,6 @@ if (isset($_POST['PrintPDF'])) {
 	$myrow = DB_fetch_array($result);
 	$DefaultLocation = $myrow['defaultlocation'];
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>
-		  <br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT locations.loccode,
 			locationname
@@ -339,14 +337,15 @@ if (isset($_POST['PrintPDF'])) {
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation']=$DefaultLocation;
 	}
-	echo '<table class="selection">
-		 <tr>
-			 <td>' . _('Dispatch Percent') . ':</td>
-			 <td><input type ="text" name="Percent" class="number" size="8" value="0" /></td>
-		 </tr>';
-	echo '<tr>
-			  <td>' . _('From Stock Location') . ':</td>
-			  <td><select name="FromLocation"> ';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		 <field>
+			<label for="Percent">' . _('Dispatch Percent') . ':</label>
+			<input type ="text" name="Percent" class="number" size="8" value="0" />
+		 </field>';
+	echo '<field>
+			  <label for="FromLocation">' . _('From Stock Location') . ':</label>
+			  <select name="FromLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['FromLocation']){
 			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -354,15 +353,15 @@ if (isset($_POST['PrintPDF'])) {
 			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	DB_data_seek($resultStkLocs,0);
 	if (!isset($_POST['ToLocation'])) {
 		$_POST['ToLocation']=$DefaultLocation;
 	}
-	echo '<tr>
-			<td>' . _('To Stock Location') . ':</td>
-			<td><select name="ToLocation"> ';
+	echo '<field>
+			<label for="ToLocation">' . _('To Stock Location') . ':</label>
+			<select name="ToLocation"> ';
 	while ($myrow=DB_fetch_array($resultStkLocs)){
 		if ($myrow['loccode'] == $_POST['ToLocation']){
 			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -370,8 +369,8 @@ if (isset($_POST['PrintPDF'])) {
 			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
 	$result1 = DB_query($SQL);
@@ -385,9 +384,9 @@ if (isset($_POST['PrintPDF'])) {
 		exit;
 	}
 
-	echo '<tr>
-			<td>' . _('In Stock Category') . ':</td>
-			<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">' . _('In Stock Category') . ':</label>
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -403,52 +402,41 @@ if (isset($_POST['PrintPDF'])) {
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Dispatch Strategy:') . ':</td>
-			<td>
-				<select name="Strategy">
-					<option selected="selected" value="All">' . _('Items needed at TO location with overstock at FROM location') . '</option>
-					<option value="OverFrom">' . _('Items with overstock at FROM location') . '</option>
-				</select>
-			</td>
-			<td>&nbsp;</td>
-		</tr>';
+	echo '<field>
+			<label for="Strategy">' . _('Dispatch Strategy:') . ':</label>
+			<select name="Strategy">
+				<option selected="selected" value="All">' . _('Items needed at TO location with overstock at FROM location') . '</option>
+				<option value="OverFrom">' . _('Items with overstock at FROM location') . '</option>
+			</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Report Type') . ':</td>
-			<td>
-				<select name="ReportType">
-					<option selected="selected" value="Batch">' . _('Create Batch') . '</option>
-					<option value="Report">' . _('Report Only') . '</option>
-				</select>
-			</td>
-			<td>&nbsp;</td>
-		</tr>';
+	echo '<field>
+			<label for="ReportType">' . _('Report Type') . ':</label>
+			<select name="ReportType">
+				<option selected="selected" value="Batch">' . _('Create Batch') . '</option>
+				<option value="Report">' . _('Report Only') . '</option>
+			</select>
+		</field>';
 
 
-	echo '<tr>
-			<td>' . _('Template') . ':</td>
-			<td>
-				<select name="template">
-					<option selected="selected" value="fullprices">' . _('Full with Prices') . '</option>
-					<option value="full">' . _('Full') . '</option>
-					<option value="standard">' . _('Standard') . '</option>
-					<option value="simple">' . _('Simple') . '</option>
-				</select>
-			</td>
-			<td>&nbsp;</td>
-		</tr>';
+	echo '<field>
+			<label for="template">' . _('Template') . ':</label>
+			<select name="template">
+				<option selected="selected" value="fullprices">' . _('Full with Prices') . '</option>
+				<option value="full">' . _('Full') . '</option>
+				<option value="standard">' . _('Standard') . '</option>
+				<option value="simple">' . _('Simple') . '</option>
+			</select>
+		</field>';
 
-	echo '</table>
-		 <br/>
+	echo '</fieldset>
 		 <div class="centre">
 			  <input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		 </div>';
-	echo '</div>
-		  </form>';
+	echo '</form>';
 
 	include('includes/footer.php');
 

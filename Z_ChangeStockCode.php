@@ -208,21 +208,21 @@ if (isset($_POST['ProcessStockChange'])){
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br />
-    <table>
-	<tr>
-		<td>' . _('Existing Inventory Code') . ':</td>
-		<td><input type="text" name="OldStockID" size="20" maxlength="20" /></td>
-	</tr>
-	<tr>
-		<td>' . _('New Inventory Code') . ':</td>
-		<td><input type="text" name="NewStockID" size="20" maxlength="20" /></td>
-	</tr>
-	</table>
+echo '<fieldset>
+	<legend>', _('Stock Item To Change'), '</legend>
+	<field>
+		<label>' . _('Existing Inventory Code') . ':</label>
+		<input type="text" name="OldStockID" size="20" maxlength="20" />
+	</field>
+	<field>
+		<label>' . _('New Inventory Code') . ':</label>
+		<input type="text" name="NewStockID" size="20" maxlength="20" />
+	</field>
+	</fieldset>
 
+	<div class="centre">
 		<input type="submit" name="ProcessStockChange" value="' . _('Process') . '" />
 	</div>
 	</form>';

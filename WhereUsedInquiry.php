@@ -11,8 +11,7 @@ if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_POST['StockID']));
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>
-	<br />
+echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back to Items') . '</a>
 	<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
@@ -28,22 +27,30 @@ if (isset($StockID)){
 		include('includes/footer.php');
 		exit;
 	}
-	echo '<br />
-		<div class="centre"><h3>' . $StockID . ' - ' . $myrow[0] . '  (' . _('in units of') . ' ' . $myrow[1] . ')</h3></div>';
+	echo '<div class="centre"><h3>' . $StockID . ' - ' . $myrow[0] . '  (' . _('in units of') . ' ' . $myrow[1] . ')</h3></div>';
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-	<div class="centre">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
+echo '<fieldset>
+		<legend>', _('Item Search'), '</legend>';
 if (isset($StockID)) {
-	echo _('Enter an Item Code') . ': <input type="text" required="required" data-type="no-illegal-chars" title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" value="' . $StockID . '" placeholder="'._('No illegal characters allowed').'" />';
+	echo '<field>
+			<label for="StockID">', _('Enter an Item Code') . ':</label>
+			<input type="text" required="required" data-type="no-illegal-chars" title="" name="StockID" autofocus="autofocus" size="21" maxlength="20" value="' . $StockID . '" placeholder="'._('No illegal characters allowed').'" />
+			<fieldhelp>'._('Illegal characters and blank is not allowed').'</fieldhelp>
+		</field>';
 } else {
-	echo _('Enter an Item Code') . ': <input type="text" required="required" data-type="no-illegal-chars"  title="'._('Illegal characters and blank is not allowed').'" name="StockID" autofocus="autofocus" size="21" maxlength="20" placeholder="'._('No illegal characters allowed').'" />';
+	echo '<field>
+			<label for="StockID">', _('Enter an Item Code') . ':</label>
+			<input type="text" required="required" data-type="no-illegal-chars"  title="" name="StockID" autofocus="autofocus" size="21" maxlength="20" placeholder="'._('No illegal characters allowed').'" />
+			<fieldhelp>'._('Illegal characters and blank is not allowed').'</fieldhelp>
+		</field>';
 }
-
-echo '<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />
-		<br />
+echo '</fieldset>';
+echo '<div class="centre">
+		<input type="submit" name="ShowWhereUsed" value="' . _('Show Where Used') . '" />
 	</div>';
 
 if (isset($StockID)) {

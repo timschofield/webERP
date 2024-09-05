@@ -19,9 +19,11 @@ if (empty($_GET['identifier'])) {
 } else {
 	$identifier=$_GET['identifier'];
 }
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/sales.png" title="' . _('Shop Configuration'). '" alt="" />' . $Title. '
+	</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8' ) . '?identifier=' . urlencode($identifier) . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_GET['NewSpecial']) and $_GET['NewSpecial']=='yes'){
@@ -120,13 +122,6 @@ if (isset($_POST['SelectBranch'])){
 	$_SESSION['SPL'.$identifier]->BranchName = $myrow['brname'];
 }
 echo '<div class="centre">';
-if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
-	echo '<br />
-		<h2>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ')', ENT_QUOTES, 'UTF-8', false);
-} else {
-	echo '<br />
-		<h2>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL'.$identifier]->BranchName . ' ' . _('branch'), ENT_QUOTES, 'UTF-8', false);
-}
 echo '</h2></div>';
 /*if the branch details and delivery details have not been entered then select them from the list */
 if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
@@ -580,9 +575,17 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 } /* end of the code to do transfer the SPL object to the database  - user hit the place Order*/
 
 
+echo '<fieldset>';
 /*Show the header information for modification */
+if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
+	echo '<legend>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ')', ENT_QUOTES, 'UTF-8', false) . '</legend>';
+} else {
+	echo '<legend>' . htmlspecialchars(_('Purchase from') . ' ' . $_SESSION['SPL'.$identifier]->SupplierName . ' ' . _('in') . ' ' . $_SESSION['SPL'.$identifier]->SuppCurrCode . ' ' . _('for') . ' ' . $_SESSION['SPL'.$identifier]->CustomerName . ' (' . $_SESSION['SPL'.$identifier]->CustCurrCode . ') - ' . _('delivered to') . ' ' . $_SESSION['SPL'.$identifier]->BranchName . ' ' . _('branch'), ENT_QUOTES, 'UTF-8', false) . '</legend>';
+}
 
-echo '<table><tr><td>' . _('Receive Purchase Into and Sell From') . ': <select name="StkLocation">';
+echo '<field>
+		<label for="StkLocation">' . _('Receive Purchase Into and Sell From') . ':</label>
+		<select name="StkLocation">';
 
 $sql = "SELECT locations.loccode, locationname FROM locations
 		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
@@ -598,17 +601,26 @@ while ($LocnRow=DB_fetch_array($LocnResult)){
 		echo '<option value="' . $LocnRow['loccode'] . '">' . $LocnRow['locationname'] . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
-echo '<td>' . _('Initiated By') . ': <input type="text" name="Initiator" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->Initiator . '" /></td>
-	<td>' . _('Special Ref') . ': <input type="text" name="QuotationRef" size="16" maxlength="15" value="' . $_SESSION['SPL'.$identifier]->QuotationRef . '" /></td>
-	<td>' . _('Customer Ref') . ': <input type="text" name="CustRef" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->CustRef . '" /></td>
-	</tr>
-	<tr>
-		<td valign="top" colspan="2">' . _('Comments') . ': <textarea name="Comments" cols="70" rows="2">' . $_SESSION['SPL'.$identifier]->Comments . '</textarea></td>
-	</tr>
-</table>
-<hr />'; /* Rule off the header */
+echo '<field>
+		<label for="Initiator">' . _('Initiated By') . ':</label>
+		<input type="text" name="Initiator" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->Initiator . '" />
+	</field>
+	<field>
+		<label for="QuotationRef">' . _('Special Ref') . ':</label>
+		<input type="text" name="QuotationRef" size="16" maxlength="15" value="' . $_SESSION['SPL'.$identifier]->QuotationRef . '" />
+	</field>
+	<field>
+		<label for="CustRef">' . _('Customer Ref') . ':</label>
+		<input type="text" name="CustRef" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->CustRef . '" />
+	</field>
+	<field>
+		<label for="Comments">' . _('Comments') . ':</label>
+		<textarea name="Comments" cols="70" rows="2">' . $_SESSION['SPL'.$identifier]->Comments . '</textarea>
+	</field>
+</fieldset>'; /* Rule off the header */
 
 /*Now show the order so far */
 
@@ -677,15 +689,16 @@ if (!isset($_POST['ItemDescription'])) {
 	$_POST['ItemDescription']='';
 }
 
-echo '<table>';
-echo '<tr>
-		<td>' . _('Ordered item Description') . ':</td>
-		<td><input type="text" name="ItemDescription" size="40" maxlength="40" value="' . $_POST['ItemDescription'] . '" /></td>
-	</tr>';
+echo '<fieldset>
+		<legend>', _('Order Details'), '</legend>';
+echo '<field>
+		<label for="ItemDescription">' . _('Ordered item Description') . ':</label>
+		<input type="text" name="ItemDescription" size="40" maxlength="40" value="' . $_POST['ItemDescription'] . '" />
+	</field>';
 
-echo '<tr>
-		<td>' . _('Category') . ':</td>
-		<td><select name="StkCat">';
+echo '<field>
+		<label for="StkCat">' . _('Category') . ':</label>
+		<select name="StkCat">';
 
 $sql = "SELECT categoryid, categorydescription FROM stockcategory";
 $ErrMsg = _('The stock categories could not be retrieved because');
@@ -699,53 +712,48 @@ while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 /*default the order quantity to 1 unit */
 $_POST['Qty'] = 1;
 
-echo '<tr>
-		<td>' . _('Order Quantity') . ':</td>
-		<td><input type="text" class="number" size="7" maxlength="6" name="Qty" value="' . locale_number_format($_POST['Qty'],'Variable') . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Qty">' . _('Order Quantity') . ':</label>
+		<input type="text" class="number" size="7" maxlength="6" name="Qty" value="' . locale_number_format($_POST['Qty'],'Variable') . '" />
+	</field>';
 
 if (!isset($_POST['Cost'])) {
 	$_POST['Cost']=0;
 }
-echo '<tr>
-		<td>' . _('Unit Cost') . ':</td>
-		<td><input type="text" class="number" size="15" maxlength="14" name="Cost" value="' . locale_number_format($_POST['Cost'],$_SESSION['SPL'.$identifier]->SuppCurrDecimalPlaces) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Cost">' . _('Unit Cost') . ':</label>
+		<input type="text" class="number" size="15" maxlength="14" name="Cost" value="' . locale_number_format($_POST['Cost'],$_SESSION['SPL'.$identifier]->SuppCurrDecimalPlaces) . '" />
+	</field>';
 
 if (!isset($_POST['Price'])) {
 	$_POST['Price']=0;
 }
-echo '<tr>
-		<td>' . _('Unit Price') . ':</td>
-		<td><input type="text" class="number" size="15" maxlength="14" name="Price" value="' . locale_number_format($_POST['Price'],$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Price">' . _('Unit Price') . ':</label>
+		<input type="text" class="number" size="15" maxlength="14" name="Price" value="' . locale_number_format($_POST['Price'],$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces) . '" />
+	</field>';
 
 /*Default the required delivery date to tomorrow as a starting point */
 $_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),Date('d')+1,Date('y')));
 
-echo '<tr>
-		<td>' . _('Required Delivery Date') . ':</td>
-		<td><input type="text" class="date" size="11" maxlength="10" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="ReqDelDate">' . _('Required Delivery Date') . ':</label>
+		<input type="text" class="date" size="11" maxlength="10" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" />
+	</field>';
 
-echo '</table>'; /* end of main table */
+echo '</fieldset>'; /* end of main table */
 
 echo '<div class="centre">
 		<input type="submit" name="EnterLine" value="' . _('Add Item to Order') . '" />
-		<br />
-		<br />
 		<input type="submit" name="Cancel" value="' . _('Start Again') . '" />
-		<br />
-		<br />
 		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
 	</div>
-    </div>
 	</form>';
 
 include('includes/footer.php');

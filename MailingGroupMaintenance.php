@@ -136,23 +136,28 @@ if(isset($_GET['Remove'])){
 
 }
 if(!isset($_GET['Edit'])){//display the input form
-?>
-	<form id="MailGroups" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>" method="post">
-		<input type="hidden" name="FormID" value="<?php echo $_SESSION['FormID']; ?>" />
-		<label for="MailGroup"><?php echo _('Mail Group'); ?></label>
+	
+	echo '<form id="MailGroups" action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	
+	echo '<fieldset>
+			<legend>', _('Mail Group'), '</legend>';
+	echo '<field>
+			<label for="MailGroup">',  _('Mail Group'), '</label>
 			<input type="text" required="required" autofocus="autofocus" name="MailGroup" maxlength="100" size="20" />
-			<input type="hidden" name="Clean" value="1" />
-			<input type="submit" name="Enter" value="<?php echo _('Submit'); ?>" />
-	</form>
+		</field>';
+	echo '</fieldset>';
+		
+	echo '<input type="hidden" name="Clean" value="1" />';
+	echo '<div class="centre">
+			<input type="submit" name="Enter" value="',  _('Submit'), '" />
+		</div>
+	</form>';
 
-
-<?php 
 
 	include('includes/footer.php');
 }
 ?>
-
-
 <?php
 function GetMailGroup () {
 //GET the mailing group data if there are any

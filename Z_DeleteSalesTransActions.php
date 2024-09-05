@@ -134,53 +134,53 @@ if (isset($_POST['ProcessDeletions'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br /><table>
-	<tr>
-		<td>' . _('Delete All Sales Analysis') . '</td>
-		<td><input type="checkbox" name="SalesAnalysis" /></td>
-	</tr>
-	<tr><td>' . _('Delete All statement transactions') . '</td>
-		<td><input type="checkbox" name="DebtorTrans" /></td>
-	</tr>
-	<tr><td>' . _('Zero All stock balances') . '</td>
-		<td><input type="checkbox" name="ZeroStock" /></td>
-	</tr>
-	<tr><td>' . _('Make Invoiced Qty Of All Sales Orders Nil') . '</td>
-		<td><input type="checkbox" name="ZeroSalesOrders" /></td>
-	</tr>
-	<tr><td>' . _('Delete All Sales Orders') . '</td>
-		<td><input type="checkbox" name="SalesOrders" /></td>
-	</tr>
-	<tr><td>' . _('Zero Received Qty of all purchase orders') . '</td>
-		<td><input type="checkbox" name="ZeroPurchOrders" /></td>
-	</tr>
-	<tr><td>' . _('Delete All Purchase Orders') . '</td>
-		<td><input type="checkbox" name="PurchOrders" /></td>
-	</tr>
-	<tr><td>' . _('Delete All Sales related stock movements') . '</td>
-		<td><input type="checkbox" name="SalesStockMoves" /></td>
-	</tr>
-	<tr><td>' . _('Delete All Stock Receipt stock movements') . '</td>
-		<td><input type="checkbox" name="ReceiptStockMoves" /></td>
-	</tr>
-	<tr><td>' . _('Delete All Sales GL Transactions') . '</td>
-		<td><input type="checkbox" name="SalesGL" /></td>
-	</tr>
-	<tr><td>' . _('Delete All Stock GL Transactions') . '</td>
-		<td><input type="checkbox" name="StockGL" /></td>
-	</tr>
-	<tr><td>' . _('Delete All PO Goods Received (GRNs)') . '</td>
-		<td><input type="checkbox" name="GRNs" /></td>
-	</tr>
-</table>';
+echo '<fieldset>
+		<legend>', _('Select Transactions to Delete'), '</legend>
+	<field>
+		<label>' . _('Delete All Sales Analysis') . '</label>
+		<input type="checkbox" name="SalesAnalysis" />
+	</field>
+	<field><label>' . _('Delete All statement transactions') . '</label>
+		<input type="checkbox" name="DebtorTrans" />
+	</field>
+	<field><label>' . _('Zero All stock balances') . '</label>
+		<input type="checkbox" name="ZeroStock" />
+	</field>
+	<field><label>' . _('Make Invoiced Qty Of All Sales Orders Nil') . '</label>
+		<input type="checkbox" name="ZeroSalesOrders" />
+	</field>
+	<field><label>' . _('Delete All Sales Orders') . '</label>
+		<input type="checkbox" name="SalesOrders" />
+	</field>
+	<field><label>' . _('Zero Received Qty of all purchase orders') . '</label>
+		<input type="checkbox" name="ZeroPurchOrders" />
+	</field>
+	<field><label>' . _('Delete All Purchase Orders') . '</label>
+		<input type="checkbox" name="PurchOrders" />
+	</field>
+	<field><label>' . _('Delete All Sales related stock movements') . '</label>
+		<input type="checkbox" name="SalesStockMoves" />
+	</field>
+	<field><label>' . _('Delete All Stock Receipt stock movements') . '</label>
+		<input type="checkbox" name="ReceiptStockMoves" />
+	</field>
+	<field><label>' . _('Delete All Sales GL Transactions') . '</label>
+		<input type="checkbox" name="SalesGL" />
+	</field>
+	<field><label>' . _('Delete All Stock GL Transactions') . '</label>
+		<input type="checkbox" name="StockGL" />
+	</field>
+	<field><label>' . _('Delete All PO Goods Received (GRNs)') . '</label>
+		<input type="checkbox" name="GRNs" />
+	</field>
+</fieldset>';
 
+echo '<div class="centre">';
 echo '<input type="submit" name="ProcessDeletions" value="' . _('Process') . '"  onclick="return confirm(\'' . _('Are You Really REALLY Sure?') . '\');" />';
-
-echo '</div>
-      </form>';
+echo '</div>';
+echo '</form>';
 
 include ('includes/footer.php');
 ?>

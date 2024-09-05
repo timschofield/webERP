@@ -6,7 +6,7 @@ $Title = _('Sales By Category By Item Inquiry');
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Report') . '" alt="" />' . ' ' . _('Sales By Category By Item Inquiry') . '</p>';
-echo '<div class="page_help_text">' . _('Select the parameters for the inquiry') . '</div><br />';
+echo '<div class="page_help_text">' . _('Select the parameters for the inquiry') . '</div>';
 
 if (!isset($_POST['DateRange'])){
 	/* then assume report is for This Month - maybe wrong to do this but hey better than reporting an error?*/
@@ -14,7 +14,6 @@ if (!isset($_POST['DateRange'])){
 }
 
 echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 // stock category selection
 	$SQL="SELECT categoryid,
@@ -23,10 +22,11 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 			ORDER BY categorydescription";
 	$result1 = DB_query($SQL);
 
-echo '<table cellpadding="2" class="selection">
-		<tr>
-			<td style="width:150px">' . _('In Stock Category') . ':</td>
-			<td><select name="StockCat">';
+echo '<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="StockCat">' . _('In Stock Category') . ':</label>
+			<select name="StockCat">';
 if (!isset($_POST['StockCat'])){
 	$_POST['StockCat']='All';
 }
@@ -42,34 +42,30 @@ while ($myrow1 = DB_fetch_array($result1)) {
 		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	<tr>
-		<th colspan="2" class="centre">' . _('Date Selection') . '</th>
-	</tr>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['FromDate'])){
 	unset($_POST['ShowSales']);
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'],mktime(1,1,1,Date('m')-12,Date('d')+1,Date('Y')));
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
-echo '<tr>
-		<td>' . _('Date From') . ':</td>
-		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-		</tr>';
-echo '<tr>
-		<td>' . _('Date To') . ':</td>
-		<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-	</tr>
-</table>
-<br />
-<div class="centre">
-	<input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />
-</div>
-</div>
-</form>
-<br />';
+echo '<field>
+		<label for="FromDate">' . _('Date From') . ':</label>
+		<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+	</field>';
 
+echo '<field>
+		<label for="ToDate">' . _('Date To') . ':</label>
+		<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+	</field>';
+
+echo '</fieldset>';
+
+echo '<div class="centre">
+		<input tabindex="4" type="submit" name="ShowSales" value="' . _('Show Sales') . '" />
+	</div>
+</form>';
 
 if (isset($_POST['ShowSales'])){
 	$InputError=0; //assume no input errors now test for errors

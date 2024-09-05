@@ -33,20 +33,22 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 
-	echo '<div><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
-	echo '<table class="selection">
-	 		<tr>
-				<td>' . _('Enter the date from which cheques are to be listed') . ':</td>
-				<td><input type="text" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-			</tr>';
-	 echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ':</td>
-	 		<td><input type="text" name="ToDate" maxlength="10" size="11"  class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-	</tr>';
-	 echo '<tr><td>' . _('Bank Account') . '</td><td>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" /></div>';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+	 		<field>
+				<label for="FromDate">' . _('Enter the date from which cheques are to be listed') . ':</label>
+				<input type="text" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			</field>';
+	 echo '<field>
+				<label for="ToDate">' . _('Enter the date to which cheques are to be listed') . ':</label>
+				<input type="text" name="ToDate" maxlength="10" size="11"  class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+		</field>';
+	 echo '<field>
+			<label for="BankAccount">' . _('Bank Account') . '</label>';
 
 	 $sql = "SELECT bankaccountname, accountcode FROM bankaccounts";
 	 $result = DB_query($sql);
-
 
 	 echo '<select name="BankAccount">';
 
@@ -54,22 +56,21 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
 	 }
 
+	 echo '</select>
+		</field>';
 
-	 echo '</select></td></tr>';
-
-	 echo '<tr>
-				<td>' . _('Email the report off') . ':</td>
-				<td><select name="Email">
+	 echo '<field>
+				<label for="Email">' . _('Email the report off') . ':</label>
+				<select name="Email">
 					<option selected="selected" value="No">' . _('No') . '</option>
 					<option value="Yes">' . _('Yes') . '</option>
-				</select></td>
-			</tr>
-			</table>
+				</select>
+			</field>
+			</fieldset>
 			<div class="centre">
-                <br />
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>
-            </form>';
+		</form>';
 
 	 include('includes/footer.php');
 	 exit;

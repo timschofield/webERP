@@ -151,23 +151,21 @@ If (isset($_POST['PrintPDF'])) {
 
 	$Title=_('Inventory Quantities Reporting');
 	include('includes/header.php');
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
-echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
+	echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
 
-
-	echo '<br />
-		<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Selection') . ':</td>
-			<td><select name="Selection">
+		<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+			
+	echo '<field>
+			<label for="Selection">' . _('Selection') . ':</label>
+			<select name="Selection">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="Multiple">' . _('Only Parts With Multiple Locations') . '</option>
-				</select></td>
-		</tr>';
+			</select>
+		</field>';
 
 	$SQL="SELECT categoryid,
 				categorydescription
@@ -183,9 +181,9 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 		exit;
 	}
 
-	echo '<tr>
-			<td>' . _('In Stock Category') . ':</td>
-			<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">' . _('In Stock Category') . ':</label>
+			<select name="StockCat">';
 	if (!isset($_POST['StockCat'])){
 		$_POST['StockCat']='All';
 	}
@@ -201,15 +199,13 @@ echo '<div class="page_help_text">' . _('Use this report to display the quantity
 			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>
-		</table>
-		<br />
+	echo '</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
-    echo '</div>
-          </form>';
+    echo '</form>';
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */

@@ -103,56 +103,70 @@ if (DB_num_rows($result) > 0) {
 		<tbody>';
 
 	while ($myrow=DB_fetch_array($result)) {
-	echo '<tr>
-			<td>' . $myrow['locationid'] . '</td>
-			<td>' . $myrow['locationdescription'] . '</td>';
-	$ParentSql="SELECT locationdescription FROM fixedassetlocations WHERE locationid='".$myrow['parentlocationid']."'";
-	$ParentResult=DB_query($ParentSql);
-	$ParentRow=DB_fetch_array($ParentResult);
-	echo '<td>' . $ParentRow['locationdescription'] . '</td>
-			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($myrow['locationid']), '">', _('Edit'), '</a></td></tr>';
+		echo '<tr>
+				<td>' . $myrow['locationid'] . '</td>
+				<td>' . $myrow['locationdescription'] . '</td>';
+		if ($myrow['parentlocationid'] != '') {
+			$ParentSql="SELECT locationdescription FROM fixedassetlocations WHERE locationid='".$myrow['parentlocationid']."'";
+			$ParentResult=DB_query($ParentSql);
+			$ParentRow=DB_fetch_array($ParentResult);
+			echo '<td>' . $ParentRow['locationdescription'] . '</td>';
+		} else { 
+			echo '<td>', _('No Parent Location'), '</td>';
+		}
+		echo '<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($myrow['locationid']), '">', _('Edit'), '</a></td></tr>';
 	}
 
 	echo '</tbody></table>';
 }
 
-	echo '<br /><form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
-      <div>
-    <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table class="selection">
-	<tr>
-		<th class="text">' . _('Location ID') . '</th>';
+	echo '<form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    
+	echo '<fieldset>';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type="hidden" name="LocationID" value="'.$LocationID.'" />';
-	echo '<td>' . $LocationID . '</td>';
+	echo '<legend>', _('Edit Asset Location'), '</legend>';
+	
+	echo '<field>
+			<label for="LocationID">' . _('Location ID') . '</label>
+			<input type="hidden" name="LocationID" value="'.$LocationID.'" />
+			<fieldtext>' . $LocationID . '</fieldtext>
+		</field>';
 } else {
-	echo '<td><input type="text" name="LocationID" required="required" title="' . _('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '" data-type="no-illegal-chars" size="6" value="'.$LocationID.'" /></td>
-		</tr>';
+	echo '<legend>', _('Create Asset Location'), '</legend>
+			<field>
+				<label for="LocationID">' . _('Location ID') . '</label>
+				<input type="text" name="LocationID" required="required" title="" data-type="no-illegal-chars" size="6" value="'.$LocationID.'" />
+				<fieldhelp>' . _('Enter the location code of the fixed asset location. Up to six alpha-numeric characters') . '</fieldhelp>
+		</field>';
 }
 
-echo '<tr>
-		<th class="text">' . _('Location Description') . '</th>
-		<td><input type="text" name="LocationDescription" required="required" title="' . _('Enter the fixed asset location description. Up to 20 characters') . '" size="20" value="'.$LocationDescription.'" /></td>
-	</tr>
-	<tr>
-		<th class="text">' . _('Parent Location') . '</th>
-		<td><select name="ParentLocationID">';
+echo '<field>
+		<label for="LocationDescription">' . _('Location Description') . '</label>
+		<input type="text" name="LocationDescription" required="required" title="" size="20" value="'.$LocationDescription.'" />
+		<fieldhelp>' . _('Enter the fixed asset location description. Up to 20 characters') . '</fieldhelp>
+	</field>';
+	
+echo '<field>
+		<label for="ParentLocationID">' . _('Parent Location') . '</label>
+		<select name="ParentLocationID">';
 
 $sql="SELECT locationid, locationdescription FROM fixedassetlocations";
 $result=DB_query($sql);
 
 echo '<option value=""></option>';
 while ($myrow=DB_fetch_array($result)) {
-	if ($myrow['locationid']==$ParentLocationID) {
-		echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
-	} else {
-		echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+	if (isset($_GET['SelectedLocation']) and $_GET['SelectedLocation'] != $myrow['locationid']) {
+		if ($myrow['locationid']==$ParentLocationID) {
+			echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+		} else {
+			echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+		}
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>
-	<br />';
+echo '</select>
+	</field>
+</fieldset>';
 
 echo '<div class="centre">';
 if (isset($_GET['SelectedLocation'])) {
@@ -163,7 +177,6 @@ if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="submit" name="submit" value="' . _('Enter Information') . '" />';
 }
 echo '</div>
-      </div>
 	</form>';
 
 include('includes/footer.php');

@@ -10,6 +10,9 @@ $result = DB_query("SELECT debtorsmaster.name,
 					 ON debtorsmaster.currcode=currencies.currabrev
 					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'");
 $myrow = DB_fetch_array($result);
+$CurrCode = $myrow['currcode'];
+$SalesType = $myrow['salestype'];
+$CurrDecimalPlaces = $myrow['currdecimalplaces'];
 
 $Title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
 
@@ -32,29 +35,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . _('Special Customer Prices') . '</p><br />';
-echo '<b>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $myrow['currcode'] . '<br />' . ' ' . _('for') . ' ';
-
-$CurrCode = $myrow['currcode'];
-$SalesType = $myrow['salestype'];
-$CurrDecimalPlaces = $myrow['currdecimalplaces'];
-
-$result = DB_query("SELECT stockmaster.description,
-							stockmaster.mbflag
-					FROM stockmaster
-					WHERE stockmaster.stockid='" . $Item . "'");
-
-$myrow = DB_fetch_row($result);
-if (DB_num_rows($result)==0){
-	prnMsg( _('The part code entered does not exist in the database') . '. ' . _('Only valid parts can have prices entered against them'),'error');
-	$InputError=1;
-}
-if ($myrow[1]=='K'){
-	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
-	exit;
-}
-
-echo $Item . ' - ' . $myrow[0] . '</b><br />';
+		'" alt="" />' . _('Special Customer Prices') . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -204,11 +185,10 @@ $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
 $result = DB_query($sql,$ErrMsg,$DbgMsg);
 
-echo '<table><tr><td valign="top">';
 echo '<table class="selection">';
 
 if (DB_num_rows($result) == 0) {
-	echo '<tr><td>' . _('There are no default prices set up for this part') . '</td></tr>';
+	prnMsg(  _('There are no default prices set up for this part'), 'info');
 } else {
 	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($myrow = DB_fetch_array($result)) {
@@ -228,7 +208,7 @@ if (DB_num_rows($result) == 0) {
 	}
 }
 
-echo '</table></td><td valign="top">';
+echo '</table>';
 
 //now get the prices for the customer selected
 
@@ -255,7 +235,7 @@ $result = DB_query($sql,$ErrMsg,$DbgMsg);
 echo '<table class="selection">';
 
 if (DB_num_rows($result) == 0) {
-	echo '<tr><td>' . _('There are no special prices set up for this part') . '</td></tr>';
+	prnMsg( _('There are no special prices set up for this part'), 'warn');
 } else {
 /*THERE IS ALREADY A spl price setup */
 	echo '<tr>
@@ -275,11 +255,20 @@ if (DB_num_rows($result) == 0) {
 	} else {
 		$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 	}
+	$StockSQL = "SELECT units,
+						conversionfactor
+					FROM stockmaster
+					LEFT JOIN custitem
+					ON stockmaster.stockid=custitem.stockid
+					WHERE stockmaster.stockid='".$Item."'
+					AND custitem.debtorno='" . $_SESSION['CustomerID'] . "'";
+	$StockResult = DB_query($StockSQL);
+	$StockRow = DB_fetch_array($StockResult);
 	echo '<tr style="background-color:#CCCCCC">
 			<td class="number">' . locale_number_format($myrow['price'],$CurrDecimalPlaces) . '</td>
 			<td>' . $Branch . '</td>
-			<td>' . $myrow['units'] . '</td>
-			<td class="number">' . $myrow['conversionfactor'] . '</td>
+			<td>' . $StockRow['units'] . '</td>
+			<td class="number">' . $StockRow['conversionfactor'] . '</td>
 			<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
 			<td>' . $EndDateDisplay . '</td>
 	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$myrow['price'].'&amp;Branch='.$myrow['branchcode'].
@@ -291,10 +280,9 @@ if (DB_num_rows($result) == 0) {
 //END WHILE LIST LOOP
 }
 
-echo '</table></td></tr></table><br />';
+echo '</table></td></tr></table>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item . '" />';
 
@@ -332,11 +320,30 @@ $sql = "SELECT branchcode,
 		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 $result = DB_query($sql);
 
-echo '<table class="selection">
-		<tr>
-			<td>' . _('Branch') . ':</td>
-			<td><select name="Branch">';
-if ($myrow['branchcode']=='') {
+echo '<fieldset>';
+echo '<legend><b>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $myrow['currcode'] . '' . ' ' . _('for') . ' ';
+
+$result = DB_query("SELECT stockmaster.description,
+							stockmaster.mbflag
+					FROM stockmaster
+					WHERE stockmaster.stockid='" . $Item . "'");
+
+$myrow = DB_fetch_row($result);
+if (DB_num_rows($result)==0){
+	prnMsg( _('The part code entered does not exist in the database') . '. ' . _('Only valid parts can have prices entered against them'),'error');
+	$InputError=1;
+}
+if ($myrow[1]=='K'){
+	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
+	exit;
+}
+
+echo $Item . ' - ' . $myrow[0] . '</b></legend>';
+
+echo '<field>
+		<label for="Branch">' . _('Branch') . ':</label>
+		<select name="Branch">';
+if (isset($myrow['branchcode']) and $myrow['branchcode']=='') {
 	echo '<option selected="selected" value="">' . _('All Branches') . '</option>';
 } else {
 	echo '<option value="">' . _('All Branches') . '</option>';
@@ -349,27 +356,29 @@ while ($myrow=DB_fetch_array($result)) {
 		echo '<option value="'.$myrow['branchcode'].'">' . htmlspecialchars($myrow['brname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	}
 }
-echo '</select></td></tr>';
-echo '<tr>
-		<td>' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" class="date" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('End Date') . ':</td>
-		<td><input type="text" name="EndDate" class="date" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr><td>' . _('Price') . ':</td>
-          <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" /></td>
-		</tr>
-	</table>';
+echo '<field>
+		<label for="StartDate">' . _('Start Date') . ':</label>
+		<input type="text" name="StartDate" class="date" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" />
+	</field>';
+echo '<field>
+		<label for="EndDate">' . _('End Date') . ':</label>
+		<input type="text" name="EndDate" class="date" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" />
+	</field>';
+
+echo '<field>
+		<label for="Price">' . _('Price') . ':</label>
+		<input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" />
+	</field>
+</fieldset>';
 
 
-echo '<br />
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-		</div>
-        </div>
-		</form>';
+echo '<div class="centre">
+		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+	</div>
+</form>';
 
 include('includes/footer.php');
 exit;
@@ -388,12 +397,10 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 					AND stockid='" . $Item . "'
 					AND currabrev='" . $CurrAbbrev . "'
 					AND typeabbrev='" . $PriceList . "'
-					AND enddate<>''
 					ORDER BY
 					branchcode,
 					startdate,
 					enddate";
-
 	$result = DB_query($SQL);
 
 	unset($BranchCode);

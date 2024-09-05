@@ -263,22 +263,22 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br />
-    <table>
-	<tr>
-		<td>' . _('Existing Location Code') . ':</td>
-		<td><input type="text" name="OldLocationID" size="5" maxlength="5" /></td>
-	</tr>
-	<tr>
-		<td>' . _('New Location Code') . ':</td>
-		<td><input type="text" name="NewLocationID" size="5" maxlength="5" /></td>
-	</tr>
-	<tr>
-		<td>' . _('New Location Name') . ':</td>
-		<td><input type="text" name="NewLocationName" size="50" maxlength="50" /></td>
-	</tr>
-	</table>
-
+echo '<fieldset>
+	<legend>', _('Location Code To Change'), '</legend>
+	<field>
+		<label>' . _('Existing Location Code') . ':</label>
+		<input type="text" name="OldLocationID" size="5" maxlength="5" />
+	</field>
+	<field>
+		<label>' . _('New Location Code') . ':</label>
+		<input type="text" name="NewLocationID" size="5" maxlength="5" />
+	</field>
+	<field>
+		<label>' . _('New Location Name') . ':</label>
+		<input type="text" name="NewLocationName" size="50" maxlength="50" />
+	</field>
+	</fieldset>
+	<div class="centre">
 		<input type="submit" name="ProcessLocationChange" value="' . _('Process') . '" />
 	</div>
 	</form>';

@@ -18,7 +18,7 @@ If (isset($_POST['PrintPDF'])
 	$PageNumber=0;
 	$line_height=12;
 
-      /*Now figure out the aged analysis for the Supplier range under review */
+	  /*Now figure out the aged analysis for the Supplier range under review */
 
 	$SQL = "SELECT suppliers.supplierid,
 					suppliers.suppname,
@@ -122,21 +122,21 @@ If (isset($_POST['PrintPDF'])
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-    echo '<table class="selection">';
-    echo '<tr>
-			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="'.$_POST['FromCriteria'].'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" maxlength="6" size="7" name="ToCriteria" value="'.$_POST['ToCriteria'].'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Balances As At') . ':</td>
-			<td><select name="PeriodEnd">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+	echo '<field>
+			<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
+			<input type="text" maxlength="6" size="7" name="FromCriteria" value="'.$_POST['FromCriteria'].'" />
+		</field>
+		<field>
+			<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
+			<input type="text" maxlength="6" size="7" name="ToCriteria" value="'.$_POST['ToCriteria'].'" />
+		</field>
+		<field>
+			<label for="PeriodEnd">' . _('Balances As At') . ':</label>
+			<select name="PeriodEnd">';
 
 	$sql = "SELECT periodno,
 					lastdate_in_period
@@ -149,17 +149,14 @@ If (isset($_POST['PrintPDF'])
 	while ($myrow = DB_fetch_array($Periods)){
 		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1) . '</option>';
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
-	echo '</table>
-			<br />
+	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+	echo '</form>';
 	include('includes/footer.php');
 }/*end of else not PrintPDF */
-
 ?>

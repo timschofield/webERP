@@ -409,17 +409,16 @@ If (isset($_POST['PrintPDF'])) {
 		_('Print a price list by inventory category'), '</p>';// Page title.
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">
-		<tr>',
-			'<td><label for="Categories">', _('Select Inventory Categories'), ':</label></td>',
-			'<td>
-				<select autofocus="autofocus" id="Categories" minlength="1" multiple="multiple" name="Categories[]" required="required" size="12">';
-	$SQL = 'SELECT categoryid, categorydescription
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="Categories">', _('Select Inventory Categories'), ':</label>
+			<select autofocus="autofocus" id="Categories" minlength="1" multiple="multiple" name="Categories[]" required="required">';
+	$SQL = "SELECT categoryid, categorydescription
 			FROM stockcategory
-			ORDER BY categorydescription';
+			ORDER BY categorydescription";
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
 		echo '<option' ;
@@ -428,21 +427,24 @@ If (isset($_POST['PrintPDF'])) {
 		}
 		echo ' value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 	}
-	echo		'</select>
-			</td>
-		</tr>
-		<tr><td>', _('For Sales Type/Price List'), ':</td>
-			 <td><select name="SalesType">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="SalesType">', _('For Sales Type/Price List'), ':</label>
+			<select name="SalesType">';
 	$sql = "SELECT sales_type, typeabbrev FROM salestypes";
 	$SalesTypesResult=DB_query($sql);
 
 	while ($myrow=DB_fetch_array($SalesTypesResult)) {
 		echo '<option value="', $myrow['typeabbrev'], '">', $myrow['sales_type'], '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		<tr><td>', _('For Currency'), ':</td>
-			 <td><select name="Currency">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Currency">', _('For Currency'), ':</label>
+			<select name="Currency">';
 	$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
 	$CurrencyResult=DB_query($sql);
 	echo '<option selected="selected" value="All">', _('All'), '</option>';
@@ -450,52 +452,61 @@ If (isset($_POST['PrintPDF'])) {
 		echo '<option value="', $myrow['currabrev'], '">', $myrow['currency'], '</option>';
 	}
 	echo '</select>
-			</td>
-		</tr>
-		<tr>
-			<td>', _('Show Gross Profit %'), ':</td>
-			<td><select name="ShowGPPercentages">
+		</field>';
+
+	echo '<field>
+			<label for="ShowGPPercentages">', _('Show Gross Profit %'), ':</label>
+			<select name="ShowGPPercentages">
 				<option selected="selected" value="No">', _('Prices Only'), '</option>
 				<option value="Yes">', _('Show GP % too'), '</option>
-				</select></td>
-		</tr>
-		<tr>
-			<td>', _('Price Listing Type'), ':</td><td><select name="CustomerSpecials">
+			</select>
+		</field>';
+
+	echo '<field>
+			<label for="CustomerSpecials">', _('Price Listing Type'), ':</label>
+			<select name="CustomerSpecials">
 				<option selected="selected" value="Sales Type Prices">', _('Default Sales Type Prices'), '</option>
 				<option value="Customer Special Prices Only">', _('Customer Special Prices Only'), '</option>
 				<option value="Full Description">', _('Full Description'), '</option>
-				</select></td>
-		</tr>
-		<tr>
-			<td>', _('Effective As At'), ':</td>
-			<td><input type="text" required="required" maxlength="10" size="11" class="date" name="EffectiveDate" value="', Date($_SESSION['DefaultDateFormat']), '" /></td>
-		</tr>',
-	// Option to show obsolete items:
-		'<tr>',
-			'<td><label for="ShowObsolete">', _('Show obsolete items'), ':</label></td>',
-	 		'<td>',
-				'<input',(($_POST['ShowObsolete']) ? ' checked="checked"' : ''), ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />', // "Checked" if ShowObsolete is TRUE.
-					fShowFieldHelp(_('Check this box to show the obsolete items')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-			'</td>',
-	 	'</tr>',
-	// Option to select the order of the items in the report:
-		'<tr>',
-			'<td><label for="ItemOrder">', _('Sort items by'), ':</label></td>',
-	 		'<td>',
-				'<input checked="checked" id="ItemOrder" name="ItemOrder" type="radio" value="Code">', _('Currency, category and code'), '<br>',
-				'<input name="ItemOrder" type="radio" value="Description">', _('Currency, category and description'), '<br>',
-					fShowFieldHelp(_('Select the order of the items in the report')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-			'</td>',
-	 	'</tr>',
+			</select>
+		</field>';
 
-		'</table>
-		<br />',
-		'<div class="centre noprint">', // Form buttons:
+	echo '<field>
+			<label for="EffectiveDate">', _('Effective As At'), ':</label>
+			<input type="text" required="required" maxlength="10" size="11" class="date" name="EffectiveDate" value="', Date($_SESSION['DefaultDateFormat']), '" />
+		</field>';
+
+	// Option to show obsolete items:
+	if (isset($_POST['ShowObsolete'])) {
+		$Checked = ' checked="checked" ';
+	} else {
+		$Checked = ' ';
+	}
+	echo '<field>
+			<label for="ShowObsolete">', _('Show obsolete items'), ':</label>
+			<input',$Checked, ' id="ShowObsolete" name="ShowObsolete" type="checkbox" />
+			<fieldhelp>', _('Check this box to show the obsolete items'), '</fieldhelp>
+		</field>';
+
+	// Option to select the order of the items in the report:
+	echo '<fieldset>
+			<legend>', _('Sort items by'), ':</legend>
+		<field>
+	 		<label>', _('Currency, category and code'), '</label>
+	 		<input checked="checked" id="ItemOrder" name="ItemOrder" type="radio" value="Code" />
+		</field>
+		<field>
+			<label>', _('Currency, category and description'), '</label>
+			<input name="ItemOrder" type="radio" value="Description" />
+		</field>
+		</fieldset>',
+
+		'</fieldset>
+		<div class="centre noprint">', // Form buttons:
 			'<button name="PrintPDF" type="submit" value="', _('Print PDF'), '"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/pdf.png" /> ', _('PDF'), '</button>', // "PDF" button.
 			'<button onclick="window.location=\'index.php?Application=Sales\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-		'</div>',
 		'</div>
 	</form>';
 

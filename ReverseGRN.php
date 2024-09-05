@@ -285,7 +285,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 
 		/*GLCode is set to 0 when the GLLink is not activated
 		this covers a situation where the GLLink is now active  but it wasn't when this PO was entered
-		
+
 		First the credit using the GLCode in the PO detail record entry*/
 
 		$SQL = "INSERT INTO gltrans (type,
@@ -339,7 +339,6 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 
 } else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['RecdAfterDate']) or !Is_Date($_POST['RecdAfterDate'])) {
@@ -347,15 +346,15 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 	}
 	echo '<input type="hidden" name="SupplierID" value="' . $_POST['SupplierID'] . '" />';
 	echo '<input type="hidden" name="SuppName" value="' . $_POST['SuppName'] . '" />';
-	echo '<table class="selection"><tr>';
-	echo '<td>' . _('Show all goods received after') . ': </td>
-			<td><input type="text" class="date" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="11" /></td>
-		</tr>
-		</table>
-		<br />
+	echo '<fieldset>
+			<legend>', _('GRN Selection'), '</legend>';
+	echo '<field>
+			<label for="RecdAfterDate">' . _('Show all goods received after') . ': </label>
+			<input type="text" class="date" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="11" />
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="ShowGRNS" value="' . _('Show Outstanding Goods Received') . '" />
-		</div>
 		</div>
 	</form>';
 

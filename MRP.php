@@ -544,80 +544,90 @@ if (isset($_POST['submit'])) {
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	// Display parameters from last run
-	$sql = "SELECT * FROM mrpparameters";
-	$result = DB_query($sql,'','',false,false);
+	$SQL = "SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrpparameters'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
+		$sql = "SELECT * FROM mrpparameters";
+		$result = DB_query($sql,'','',false,false);
+		$myrow = DB_fetch_array($result);
+	}
 	if (DB_error_no()==0){
 
-		$myrow = DB_fetch_array($result);
 
-		$Leeway = $myrow['leeway'];
+		if (isset($myrow['leeway'])) {
+			$Leeway = $myrow['leeway'];
+		} else {
+			$Leeway = 0;
+		}
 		$UseMRPDemands = _('No');
-		if ($myrow['usemrpdemands'] == 'y') {
+		if (isset($myrow['usemrpdemands']) and $myrow['usemrpdemands'] == 'y') {
 			 $UseMRPDemands = _('Yes');
 		}
 		$UseRLDemands = _('No');
-		if ($myrow['userldemands'] == 'y') {
+		if (isset($myrow['userldemands']) and $myrow['userldemands'] == 'y') {
 			 $UseRLDemands = _('Yes');
 		}
 		$useeoq = _('No');
-		if ($myrow['eoqflag'] == 'y') {
+		if (isset($myrow['eoqflag']) and $myrow['eoqflag'] == 'y') {
 			 $useeoq = _('Yes');
 		}
 		$usepansize = _('No');
-		if ($myrow['pansizeflag'] == 'y') {
+		if (isset($myrow['pansizeflag']) and $myrow['pansizeflag'] == 'y') {
 			 $usepansize = _('Yes');
 		}
 		$useshrinkage = _('No');
-		if ($myrow['shrinkageflag'] == 'y') {
+		if (isset($myrow['shrinkageflag']) and $myrow['shrinkageflag'] == 'y') {
 			 $useshrinkage = _('Yes');
 		}
-		echo '<table class="selection">
-				<tr>
-					<th colspan="3"><h3>' . _('Last Run Details') . '</h3></th>
-				</tr>
-				<tr>
-					<td>' . _('Last Run Time') . ':</td><td>' . $myrow['runtime'] . '</td>
-				</tr>
-				<tr>
-					<td>' . _('Location') . ':</td>
-					<td>' . $myrow['location'] . '</td>
-				</tr>
-				<tr>
-					<td>' . _('Days Leeway') . ':</td>
-					<td>' . $Leeway . '</td>
-				</tr>
-				<tr>
-					<td>' . _('Use MRP Demands') . ':</td>
-					<td>' . $UseMRPDemands . '</td>
-				</tr>
-				<tr>
-					<td>' . _('Use Reorder Level Demands') . ':</td>
-					<td>' . $UseRLDemands . '</td>
-				</tr>
-				<tr>
-					<td>' . _('Use EOQ') . ':</td>
-					<td>' . $useeoq . '</td>
-				</tr>
-				<tr>
-					<td>' . _('Use Pan Size') . ':</td>
-					<td>' . $usepansize . '</td>
-				</tr>
-				<tr>
-					<td>' . _('Use Shrinkage') . ':</td>
-					<td>' . $useshrinkage . '</td>
-				</tr>
-				</table>';
+		if (!isset($myrow['runtime'])) {
+			$myrow['runtime'] = 0;
+		}
+		if (!isset($myrow['location'])) {
+			$myrow['location'] = '';
+		}
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<fieldset>
+				<legend>' . _('Last Run Details') . '</legend>
+				<field>
+					<label>' . _('Last Run Time') . ':</label>
+					<fieldtext>' . $myrow['runtime'] . '</fieldtext>
+				</field>
+				<field>
+					<label>' . _('Location') . ':</label>
+					<fieldtext>' . $myrow['location'] . '</fieldtext>
+				</field>
+				<field>
+					<label>' . _('Days Leeway') . ':</label>
+					<fieldtext>' . $Leeway . '</fieldtext>
+				</field>
+				<field>
+					<label>' . _('Use MRP Demands') . ':</label>
+					<fieldtext>' . $UseMRPDemands . '</fieldtext>
+				</field>
+				<field>
+					<label>' . _('Use Reorder Level Demands') . ':</label>
+					<fieldtext>' . $UseRLDemands . '</fieldtext>
+				</field>
+				<field>
+					<label>' . _('Use EOQ') . ':</label>
+					<fieldtext>' . $useeoq . '</fieldtext>
+				</field>
+				<field>
+					<label>' . _('Use Pan Size') . ':</label>
+					<fieldtext>' . $usepansize . '</fieldtext>
+				</field>
+				<field>
+					<label>' . _('Use Shrinkage') . ':</label>
+					<fieldtext>' . $useshrinkage . '</fieldtext>
+				</field>
+				</fieldset>';
 	}
-	echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
-			<tr>
-				<th colspan="3"><h3>' . _('This Run Details') . '</h3></th>
-			</tr>
-			<tr>
-				<td>' . _('Location') . '</td>
-				<td><select required="required" autofocus="autofocus" name="location[]" multiple="multiple">
+	echo '<fieldset>
+			<legend>' . _('This Run Details') . '</legend>
+			<field>
+				<label for="Location">' . _('Location') . '</label>
+				<select required="required" autofocus="autofocus" name="location[]" multiple="multiple">
 					<option value="All" selected="selected">' . _('All') . '</option>';
 	 $sql = "SELECT loccode,
 				locationname
@@ -627,42 +637,40 @@ if (isset($_POST['submit'])) {
 		echo '<option value="';
 		echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	} //end while loop
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 	if (!isset($Leeway)){
 		$Leeway =0;
 	}
 
-	echo '<tr>
-			<td>' . _('Days Leeway') . ':</td>
-			<td><input type="text" required="required" name="Leeway" class="integer" size="4" value="' . $Leeway . '" /></td>
-		</tr>
-		<tr>
-			<td>' ._('Use MRP Demands?') . ':</td>
-			<td><input type="checkbox" name="UseMRPDemands" value="y" checked="checked" /></td>
-		</tr>
-		<tr>
-			<td>' ._('Use Reorder Level Demands?') . ':</td>
-			<td><input type="checkbox" name="UseRLDemands" value="y" checked="checked" /></td>
-		</tr>
-		<tr>
-			<td>' ._('Use EOQ?') . ':</td>
-			<td><input type="checkbox" name="EOQFlag" value="y" checked="checked" /></td>
-		</tr>
-		<tr>
-			<td>' ._('Use Pan Size?') . ':</td>
-			<td><input type="checkbox" name="PanSizeFlag" value="y" checked="checked" /></td>
-		</tr>
-		<tr>
-			<td>' ._('Use Shrinkage?') . ':</td>
-			<td><input type="checkbox" name="ShrinkageFlag" value="y" checked="checked" /></td>
-		</tr>
-		</table>
+	echo '<field>
+			<label for="Leeway">' . _('Days Leeway') . ':</label>
+			<input type="text" required="required" name="Leeway" class="integer" size="4" value="' . $Leeway . '" />
+		</field>
+		<field>
+			<label for="UseMRPDemands">' ._('Use MRP Demands?') . ':</label>
+			<input type="checkbox" name="UseMRPDemands" value="y" checked="checked" />
+		</field>
+		<field>
+			<label for="UseRLDemands">' ._('Use Reorder Level Demands?') . ':</label>
+			<input type="checkbox" name="UseRLDemands" value="y" checked="checked" />
+		</field>
+		<field>
+			<label for="EOQFlag">' ._('Use EOQ?') . ':</label>
+			<input type="checkbox" name="EOQFlag" value="y" checked="checked" />
+		</field>
+		<field>
+			<label for="PanSizeFlag">' ._('Use Pan Size?') . ':</label>
+			<input type="checkbox" name="PanSizeFlag" value="y" checked="checked" />
+		</field>
+		<field>
+			<label for="ShrinkageFlag">' ._('Use Shrinkage?') . ':</label>
+			<input type="checkbox" name="ShrinkageFlag" value="y" checked="checked" />
+		</field>
+		</fieldset>
 		<div class="centre">
-			<br />
-			<br />
 			<input type="submit" name="submit" value="' . _('Run MRP') . '" />
 		</div>
-        </div>
 		</form>';
 }  // End of Main program logic -------------------------------------------------------
 

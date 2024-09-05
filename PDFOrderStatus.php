@@ -29,56 +29,55 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . _('Order Status Report') . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Enter the date from which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Enter the date to which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Inventory Category') . '</td>
-			<td>';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="FromDate">' . _('Enter the date from which orders are to be listed') . ':</label>
+				<input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" />
+			</field>
+			<field>
+				<label for="ToDate">' . _('Enter the date to which orders are to be listed') . ':</label>
+				<input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			</field>
+			<field>
+				<label for="CategoryID">' . _('Inventory Category') . '</label>';
 
 	$sql = "SELECT categorydescription, categoryid FROM stockcategory WHERE stocktype<>'D' AND stocktype<>'L'";
 	$result = DB_query($sql);
 
 
 	echo '<select required="required" name="CategoryID">
-		<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
+			<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Inventory Location') . ':</td>
-			<td><select name="Location">
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Location">' . _('Inventory Location') . ':</label>
+			<select name="Location">
 				<option selected="selected" value="All">' . _('All Locations') . '</option>';
 
 	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
 	while ($myrow=DB_fetch_array($result)){
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Back Order Only') . ':</td>
-			<td><select name="BackOrders">
+	echo '<field>
+			<label for="BackOrders">' . _('Back Order Only') . ':</label>
+			<select name="BackOrders">
 				<option selected="selected" value="Yes">' . _('Only Show Back Orders') . '</option>
 				<option value="No">' . _('Show All Orders') . '</option>
-			</select></td>
-		</tr>
-		</table>
-		<br />
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="Go" value="' . _('Create PDF') . '" />
-		</div>
 		</div>
 	</form>';
 

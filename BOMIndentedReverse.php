@@ -235,27 +235,26 @@ if (isset($_POST['PrintPDF'])) {
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' .
-		_('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Part') . ':</td>
-			<td><input type="text" autofocus-"autofocus" required="required" title="' ._('Enter the item code required to list the bill of material for') . '" name="Part" size="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
+		<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="Part">' . _('Part') . ':</label>
+			<input type="text" autofocus="autofocus" required="required" title="" name="Part" size="20" />
+			<fieldhelp>' ._('Enter the item code required to list the bill of material for') . '</fieldhelp>
+		</field>
+		<field>
+			<label for="Fill">' . _('Print Option') . ':</label>
+			<select name="Fill">
 				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
-			</select></td>
-		</tr>
-		</table>
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
-            <br />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>
 		</div>
         </form>';
 

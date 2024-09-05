@@ -257,30 +257,42 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Search'), '" /> ',// Icon title.
 	_('Search for Customers'), '</p>';// Page title.
 
-echo '<table cellpadding="3" class="selection">';
+echo '<fieldset>
+		<legend class="search">', _('Customer Search'), '</legend>';
 
-echo '<tr>
-		<td colspan="2">', _('Enter a partial Name'), ':</td>
-		<td><input type="text" maxlength="25" name="Keywords" title="', _('If there is an entry in this field then customers with the text entered in their name will be returned') , '"  size="20" ',
-			( isset($_POST['Keywords']) ? 'value="' . $_POST['Keywords'] . '" ' : '' ), '/></td>';
+echo '<field>
+		<label for="Keywords">', _('Enter a partial Name'), ':</label>
+		<input type="text" maxlength="25" name="Keywords" title=""  size="20" ',( isset($_POST['Keywords']) ? 'value="' . $_POST['Keywords'] . '" ' : '' ), '/>
+		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their name will be returned') , '</fieldhelp>
+	</field>';
 
-echo '<td><b>', _('OR'), '</b></td><td>', _('Enter a partial Code'), ':</td>
-		<td><input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" title="', _('If there is an entry in this field then customers with the text entered in their customer code will be returned') , '" ', (isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/></td>
-	</tr>';
+echo '<h3>', _('OR'), '</h3>';
 
-echo '<tr>
-		<td><b>', _('OR'), '</b></td><td>', _('Enter a partial Phone Number'), ':</td>
-		<td><input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" ',
-			( isset($_POST['CustPhone']) ? 'value="' . $_POST['CustPhone'] . '" ' : '' ), '/></td>';
+echo '<field>
+		<label for="CustCode">', _('Enter a partial Code'), ':</label>
+		<input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" title="" ', (isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/>
+		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their customer code will be returned') , '</fieldhelp>
+	</field>';
 
-echo '<td><b>', _('OR'), '</b></td><td>', _('Enter part of the Address'), ':</td>
-		<td><input maxlength="25" name="CustAdd" size="20" type="text" ',
-			(isset($_POST['CustAdd']) ? 'value="' . $_POST['CustAdd'] . '" ' : '' ), '/></td>
-	</tr>';
+echo '<h3>', _('OR'), '</h3>';
 
-echo '<tr>
-		<td><b>', _('OR'), '</b></td><td>', _('Choose a Type'), ':</td>
-		<td>';
+echo '<field>
+		<label for="CustPhone">', _('Enter a partial Phone Number'), ':</label>
+		<input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" ',( isset($_POST['CustPhone']) ? 'value="' . $_POST['CustPhone'] . '" ' : '' ), '/>
+	</field>';
+
+echo '<h3>', _('OR'), '</h3>';
+
+echo '<field>
+		<label for="CustAdd">', _('Enter part of the Address'), ':</label>
+		<input maxlength="25" name="CustAdd" size="20" type="text" ',(isset($_POST['CustAdd']) ? 'value="' . $_POST['CustAdd'] . '" ' : '' ), '/>
+	</field>';
+
+echo '<h3>', _('OR'), '</h3>';
+
+echo '<field>
+		<label for="CustType">', _('Choose a Type'), ':</label>
+		<field>';
 if(isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
 	$result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
@@ -288,7 +300,7 @@ if(isset($_POST['CustType'])) {
 	if(DB_num_rows($result2) == 0) {
 		$DataError = 1;
 		echo '<a href="CustomerTypes.php" target="_parent">' . _('Setup Types') . '</a>';
-		echo '<tr><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></tr>';
+		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></field>';
 	} else {
 		// If OK show select box with option selected
 		echo '<select name="CustType">
@@ -302,7 +314,8 @@ if(isset($_POST['CustType'])) {
 			}
 		}// end while loop
 		DB_data_seek($result2, 0);
-		echo '</select></td>';
+		echo '</select>
+			</field>';
 	}
 } else {// CustType is not set
 	// No option selected="selected" yet, so show Customer Type drop down list
@@ -311,7 +324,7 @@ if(isset($_POST['CustType'])) {
 	if(DB_num_rows($result2) == 0) {
 		$DataError = 1;
 		echo '<a href="CustomerTypes.php" target="_parent">' . _('Setup Types') . '</a>';
-		echo '<tr><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></tr>';
+		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></field>';
 	} else {
 		// if OK show select box with available options to choose
 		echo '<select name="CustType">
@@ -320,19 +333,22 @@ if(isset($_POST['CustType'])) {
 			echo '<option value="' . $myrow['typename'] . '">' . $myrow['typename'] . '</option>';
 		}// end while loop
 		DB_data_seek($result2, 0);
-		echo '</select></td>';
+		echo '</select>
+			</field>';
 	}
 }
 
 /* Option to select a sales area */
-echo '<td><b>', _('OR'), '</b></td>
-		<td>' . _('Choose an Area') . ':</td><td>';
+echo '<h3>', _('OR'), '</h3>';
+
+echo '<field>
+		<label for="Area">' . _('Choose an Area') . ':</label>';
 $result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
 if(DB_num_rows($result2) == 0) {
 	$DataError = 1;
 	echo '<a href="Areas.php" target="_parent">' . _('Setup Areas') . '</a>';
-	echo '<tr><td colspan="2">' . prnMsg(_('No Sales Areas defined'), 'error') . '</td></tr>';
+	echo '<field><td colspan="2">' . prnMsg(_('No Sales Areas defined'), 'error') . '</td></field>';
 } else {
 	// if OK show select box with available options to choose
 	echo '<select name="Area">';
@@ -345,10 +361,11 @@ if(DB_num_rows($result2) == 0) {
 		}
 	}// end while loop
 	DB_data_seek($result2, 0);
-	echo '</select></td></tr>';
+	echo '</select>
+		<field>';
 }
 
-echo '</table><br />';
+echo '</fieldset>';
 echo '<div class="centre">
 		<input name="Search" type="submit" value="', _('Search Now'), '" />
 		<input name="CSV" type="submit" value="', _('CSV Format'), '" />

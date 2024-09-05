@@ -458,14 +458,12 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
-
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
+	echo '<fieldset>
+			<field>
+				<label for="Categories">' . _('Select Inventory Categories') . ':</label>
+				<select autofocus="autofocus" required="required" minlength="1" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription';
@@ -478,12 +476,11 @@ if (isset($_POST['PrintPDF'])) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('For Inventory in Location') . ':</td>
-			<td><select name="Location">';
+	echo '<field>
+			<label for="Location">' . _('For Inventory in Location') . ':</label>
+			<select name="Location">';
 
 	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$LocnResult=DB_query($sql);
@@ -494,12 +491,11 @@ if (isset($_POST['PrintPDF'])) {
 		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Stock Planning') . ':</td>
-			<td><select name="NumberMonthsHolding">
+	echo '<field>
+			<label for="NumberMonthsHolding">' . _('Stock Planning') . ':</label>
+			<select name="NumberMonthsHolding">
 				<option selected="selected" value="1">' . _('One Month MAX')  . '</option>
 				<option value="1.5">' . _('One Month and a half MAX')  . '</option>
 				<option value="2">' . _('Two Months MAX')  . '</option>
@@ -512,15 +508,12 @@ if (isset($_POST['PrintPDF'])) {
 				<option value="12.5">' . _('Two Month and a half AVG')  . '</option>
 				<option value="13">' . _('Three Months AVG')  . '</option>
 				<option value="14">' . _('Four Months AVG')  . '</option>
-				</select>
-			</td>
-	</tr>
-	</table>
-	<br />
+			</select>
+		</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		<input type="submit" name="ExportToCSV" value="' . _('Export 24 months to CSV') . '" />
-	</div>
 	</div>
 	</form>';
 

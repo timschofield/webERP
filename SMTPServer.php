@@ -81,25 +81,25 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<input type="hidden" name="MailServerSetting" value="' . $MailServerSetting . '" />
-	<table class="selection">
-	<tr>
-		<td>' . _('Server Host Name') . '</td>
-		<td><input type="text" name="Host" required="required" value="' . $myrow['host'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('SMTP port') . '</td>
-		<td><input type="text" name="Port" required="required" size="4" class="number" value="' . $myrow['port'].'" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Helo Command') . '</td>
-		<td><input type="text" name="HeloAddress" value="' . $myrow['heloaddress'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Authorisation Required') . '</td>
-		<td><select name="Auth">';
+	<fieldset>
+	<legend>', _('SMTP Server Details'), '</legend>
+	<field>
+		<label for="Host">' . _('Server Host Name') . '</label>
+		<input type="text" name="Host" required="required" value="' . $myrow['host'] . '" />
+	</field>
+	<field>
+		<label for="Port">' . _('SMTP port') . '</label>
+		<input type="text" name="Port" required="required" size="4" class="number" value="' . $myrow['port'].'" />
+	</field>
+	<field>
+		<label for="HeloAddress">' . _('Helo Command') . '</label>
+		<input type="text" name="HeloAddress" value="' . $myrow['heloaddress'] . '" />
+	</field>
+	<field>
+		<label for="Auth">' . _('Authorisation Required') . '</label>
+		<select name="Auth">';
 if ($myrow['auth']==1) {
 	echo '<option selected="selected" value="1">' . _('True') . '</option>';
 	echo '<option value="0">' . _('False') . '</option>';
@@ -107,24 +107,24 @@ if ($myrow['auth']==1) {
 	echo '<option value="1">' . _('True') . '</option>';
 	echo '<option selected="selected" value="0">' . _('False') . '</option>';
 }
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('User Name') . '</td>
-		<td><input type="text" required="required" name="UserName" size="50" maxlength="50" value="' . $myrow['username']  .'" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Password') . '</td>
-		<td><input type="password" required="required" name="Password" value="' . $myrow['password'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Timeout (seconds)') . '</td>
-		<td><input type="text" size="5" name="Timeout" class="number" value="' . $myrow['timeout'] . '" /></td>
-	</tr>
-	<tr>
-		<td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td>
-	</tr>
-	</table>
+echo '</select>
+	</field>';
+
+echo '<field>
+		<label for="UserName">' . _('User Name') . '</label>
+		<input type="text" required="required" name="UserName" size="50" maxlength="50" value="' . $myrow['username']  .'" />
+	</field>
+	<field>
+		<label for="Password">' . _('Password') . '</label>
+		<input type="password" required="required" name="Password" value="' . $myrow['password'] . '" />
+	</field>
+	<field>
+		<label for="Timeout">' . _('Timeout (seconds)') . '</label>
+		<input type="text" size="5" name="Timeout" class="number" value="' . $myrow['timeout'] . '" />
+	</field>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" name="submit" value="' . _('Update') . '" />
 	</div>
 	</form>';
 

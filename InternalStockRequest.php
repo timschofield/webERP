@@ -140,53 +140,45 @@ echo '<p class="page_title_text"><img src="', $RootPath, '/css/', $Theme, '/imag
 
 if (isset($_GET['Edit'])) {
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table class="selection">';
-	echo '<tr>
-			<th colspan="2"><h4>', _('Edit the Request Line'), '</h4></th>
-		</tr>';
-	echo '<tr>
-			<td>', _('Line number'), '</td>
-			<td>', $_SESSION['Request']->LineItems[$_GET['Edit']]->LineNumber, '</td>
-		</tr>
-		<tr>
-			<td>', _('Stock Code'), '</td>
-			<td>', $_SESSION['Request']->LineItems[$_GET['Edit']]->StockID, '</td>
-		</tr>
-		<tr>
-			<td>', _('Item Description'), '</td>
-			<td>', $_SESSION['Request']->LineItems[$_GET['Edit']]->ItemDescription, '</td>
-		</tr>
-		<tr>
-			<td>', _('Unit of Measure'), '</td>
-			<td>', $_SESSION['Request']->LineItems[$_GET['Edit']]->UOM, '</td>
-		</tr>
-		<tr>
-			<td>', _('Quantity Requested'), '</td>
-			<td><input type="text" class="number" name="Quantity" value="', locale_number_format($_SESSION['Request']->LineItems[$_GET['Edit']]->Quantity, $_SESSION['Request']->LineItems[$_GET['Edit']]->DecimalPlaces), '" /></td>
-		</tr>';
+	echo '<fieldset>';
+	echo '<legend>', _('Edit the Request Line'), '</legend>';
+	echo '<field>
+			<label>', _('Line number'), '</label>
+			<fieldtext>', $_SESSION['Request']->LineItems[$_GET['Edit']]->LineNumber, '</fieldtext>
+		</field>
+		<field>
+			<label>', _('Stock Code'), '</label>
+			<fieldtext>', $_SESSION['Request']->LineItems[$_GET['Edit']]->StockID, '</fieldtext>
+		</field>
+		<field>
+			<label>', _('Item Description'), '</label>
+			<fieldtext>', $_SESSION['Request']->LineItems[$_GET['Edit']]->ItemDescription, '</fieldtext>
+		</field>
+		<field>
+			<label>', _('Unit of Measure'), '</label>
+			<fieldtext>', $_SESSION['Request']->LineItems[$_GET['Edit']]->UOM, '</fieldtext>
+		</field>
+		<field>
+			<label>', _('Quantity Requested'), '</label>
+			<fieldtext><input type="text" class="number" name="Quantity" value="', locale_number_format($_SESSION['Request']->LineItems[$_GET['Edit']]->Quantity, $_SESSION['Request']->LineItems[$_GET['Edit']]->DecimalPlaces), '" /></fieldtext>
+		</field>';
 	echo '<input type="hidden" name="LineNumber" value="', $_SESSION['Request']->LineItems[$_GET['Edit']]->LineNumber, '" />';
-	echo '</table>
-		<br />';
+	echo '</fieldset>';
 	echo '<div class="centre">
 			<input type="submit" name="Edit" value="', _('Update Line'), '" />
 		</div>
-        </div>
 		</form>';
 	include ('includes/footer.php');
 	exit;
 }
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
-	<table class="selection">
-	<tr>
-		<th colspan="2"><h4>', _('Internal Stock Request Details'), '</h4></th>
-	</tr>
-	<tr>
-		<td>' . _('Department') . ':</td>';
+	<fieldset>
+		<legend>', _('Internal Stock Request Details'), '</legend>
+	<field>
+		<label for="Department">' . _('Department') . ':</label>';
 if ($_SESSION['AllowedDepartment'] == 0) {
 	// any internal department allowed
 	$SQL = "SELECT departmentid,
@@ -202,7 +194,7 @@ if ($_SESSION['AllowedDepartment'] == 0) {
 			ORDER BY description";
 }
 $Result = DB_query($SQL);
-echo '<td><select name="Department">';
+echo '<select name="Department">';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_SESSION['Request']->Department) and $_SESSION['Request']->Department == $MyRow['departmentid']) {
 		echo '<option selected value="', $MyRow['departmentid'], '">', htmlspecialchars($MyRow['description'], ENT_QUOTES, 'UTF-8'), '</option>';
@@ -210,10 +202,11 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="', $MyRow['departmentid'], '">', htmlspecialchars($MyRow['description'], ENT_QUOTES, 'UTF-8'), '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Location from which to request stock') . ':</td>';
+echo '</select>
+	</field>';
+	
+echo '<field>
+		<label for="Location">' . _('Location from which to request stock') . ':</label>';
 $SQL = "SELECT locations.loccode,
 			locationname
 		FROM locations
@@ -222,7 +215,7 @@ $SQL = "SELECT locations.loccode,
 		ORDER BY locationname";
 
 $Result = DB_query($SQL);
-echo '<td><select name="Location">
+echo '<select name="Location">
 		<option value="">', _('Select a Location'), '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_SESSION['Request']->Location) and $_SESSION['Request']->Location == $MyRow['loccode']) {
@@ -231,22 +224,20 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="', $MyRow['loccode'], '">', $MyRow['loccode'], ' - ', htmlspecialchars($MyRow['locationname'], ENT_QUOTES, 'UTF-8'), '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>', _('Date when required'), ':</td>
-		<td><input type="text" class="date" name="DispatchDate" maxlength="10" size="11" value="', $_SESSION['Request']->DispatchDate, '" /></td>
-	</tr>
-	<tr>
-		<td>', _('Narrative'), ':</td>
-		<td><textarea name="Narrative" cols="30" rows="5">', $_SESSION['Request']->Narrative, '</textarea></td>
-	</tr>
-	</table>
-	<br />
+echo '</select>
+	</field>
+	<field>
+		<label for="DispatchDate">', _('Date when required'), ':</label>
+		<input type="text" class="date" name="DispatchDate" maxlength="10" size="11" value="', $_SESSION['Request']->DispatchDate, '" />
+	</field>
+	<field>
+		<label for="Narrative">', _('Narrative'), ':</label>
+		<textarea name="Narrative" cols="30" rows="5">', $_SESSION['Request']->Narrative, '</textarea>
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="Update" value="', _('Update'), '" />
 	</div>
-    </div>
 	</form>';
 
 if (!isset($_SESSION['Request']->Location)) {
@@ -255,9 +246,7 @@ if (!isset($_SESSION['Request']->Location)) {
 }
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
-	<br />
 	<table class="selection">
 	<thead>
 	<tr>
@@ -289,18 +278,14 @@ if (isset($_SESSION['Request']->LineItems)) {
 
 echo '</tbody>
 	</table>
-	<br />
 	<div class="centre">
 		<input type="submit" name="Submit" value="', _('Submit'), '" />
 	</div>
-	<br />
-    </div>
     </form>';
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $Theme, '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', _('Search for Inventory Items'), '</p>
 	<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 $SQL = "SELECT stockcategory.categoryid,
@@ -314,14 +299,15 @@ $SQL = "SELECT stockcategory.categoryid,
 $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
 	echo '<p class="bad">', _('Problem Report'), ':<br />', _('There are no stock categories currently defined please use the link below to set them up'), '</p>
-		<br />
 		<a href="', $RootPath, '/StockCategories.php">', _('Define Stock Categories'), '</a>';
 	exit;
 }
 
-echo '<table class="selection">
-	<tr>
-		<td>' . _('In Stock Category') . ':<select name="StockCat">';
+echo '<fieldset>
+		<legend>', _('Stock Selection'), '</legend>
+		<field>
+			<label for="StockCat">' . _('In Stock Category') . ':</label>
+			<select name="StockCat">';
 
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] = 'All';
@@ -341,33 +327,35 @@ while ($MyRow1 = DB_fetch_array($Result1)) {
 	}
 }
 
-echo '</select></td>
-	<td>', _('Enter partial'), '<b> ', _('Description'), '</b>:</td>';
+echo '</select>
+	</field>';
+	
+echo '<field>
+		<label for="Keywords">', _('Enter partial'), '<b> ', _('Description'), '</b>:</label>';
 
 if (isset($_POST['Keywords'])) {
-	echo '<td><input type="text" name="Keywords" value="', $_POST['Keywords'], '" size="20" maxlength="25" /></td>';
+	echo '<input type="text" name="Keywords" value="', $_POST['Keywords'], '" size="20" maxlength="25" />';
 } else {
-	echo '<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>';
+	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
 
-echo '</tr>
-		<tr>
-			<td></td>
-			<td><h3>', _('OR'), ' ', '</h3>', _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</td>';
+echo '</field>';
+
+echo '<h3>', _('OR'), ' ', '</h3>';
+
+echo '<field>
+		<label>', _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</label>';
 
 if (isset($_POST['StockCode'])) {
-	echo '<td><input type="text" autofocus="autofocus" name="StockCode" value="', $_POST['StockCode'], '" size="15" maxlength="18" /></td>';
+	echo '<input type="text" autofocus="autofocus" name="StockCode" value="', $_POST['StockCode'], '" size="15" maxlength="18" />';
 } else {
-	echo '<td><input type="text" name="StockCode" size="15" maxlength="18" /></td>';
+	echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
 }
 
-echo '</tr>
-	</table>
-	<br />
+echo '</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="Search" value="', _('Search Now'), '" />
-	</div>
-	<br />
 	</div>
 	</form>';
 

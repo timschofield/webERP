@@ -189,21 +189,17 @@ if(!isset($SelectedTaxAuthID)) {
 
 	//end of ifs and buts!
 
-	echo '</tbody></table><br />';
+	echo '</tbody></table>';
 }
-
-
 
 if(isset($SelectedTaxAuthID)) {
 	echo '<div class="centre">
 			<a href="' .  htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">' . _('Review all defined tax authority records') . '</a>
-		</div>
-		<br />';
+		</div>';
 }
 
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if(isset($SelectedTaxAuthID)) {
@@ -233,8 +229,18 @@ if(isset($SelectedTaxAuthID)) {
 
 	echo '<input type="hidden" name="SelectedTaxAuthID" value="' . $SelectedTaxAuthID . '" />';
 
-}  //end of if $SelectedTaxAuthID only do the else when a new record is being entered
+	echo '<fieldset>
+			<legend>', _('Edit Tax Authority Details'), '</legend>';
 
+}  //end of if $SelectedTaxAuthID only do the else when a new record is being entered
+else {
+
+	if(!isset($_POST['Description'])) {
+		$_POST['Description']='';
+	}
+	echo '<fieldset>
+		<legend>', _('Create New Tax Authority Details'), '</legend>';
+}
 
 $SQL = "SELECT accountcode,
 				accountname
@@ -244,18 +250,15 @@ $SQL = "SELECT accountcode,
 		ORDER BY accountcode";
 $result = DB_query($SQL);
 
-if(!isset($_POST['Description'])) {
-	$_POST['Description']='';
-}
-echo '<table class="selection">
-		<tr>
-			<td>' . _('Tax Type Description') . ':</td>
-			<td><input type="text" pattern="(?!^ +$)[^><+-]+" title="'._('No illegal characters allowed and should not be blank').'" placeholder="'._('Within 20 characters').'" required="required" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Input tax GL Account') . ':</td>
-			<td><select name="PurchTaxGLCode">';
+echo '<field>
+		<label for="Description">' . _('Tax Type Description') . ':</label>
+		<input type="text" pattern="(?!^ +$)[^><+-]+" title="" placeholder="'._('Within 20 characters').'" required="required" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" />
+		<fieldhelp>'._('No illegal characters allowed and should not be blank').'</fieldhelp>
+	</field>';
 
+echo '<field>
+		<label for="PurchTaxGLCode">' . _('Input tax GL Account') . ':</label>
+		<select name="PurchTaxGLCode">';
 while($myrow = DB_fetch_array($result)) {
 	if(isset($_POST['PurchTaxGLCode']) and $myrow['accountcode']==$_POST['PurchTaxGLCode']) {
 		echo '<option selected="selected" value="';
@@ -263,18 +266,15 @@ while($myrow = DB_fetch_array($result)) {
 		echo '<option value="';
 	}
 	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-
 } //end while loop
-
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 DB_data_seek($result,0);
 
-echo '<tr>
-		<td>' . _('Output tax GL Account') . ':</td>
-		<td><select name="TaxGLCode">';
-
+echo '<field>
+		<label for="TaxGLCode">' . _('Output tax GL Account') . ':</label>
+		<select name="TaxGLCode">';
 while($myrow = DB_fetch_array($result)) {
 	if(isset($_POST['TaxGLCode']) and $myrow['accountcode']==$_POST['TaxGLCode']) {
 		echo '<option selected="selected" value="';
@@ -282,9 +282,7 @@ while($myrow = DB_fetch_array($result)) {
 		echo '<option value="';
 	}
 	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
-
 } //end while loop
-
 if(!isset($_POST['Bank'])) {
 	$_POST['Bank']='';
 }
@@ -297,36 +295,33 @@ if(!isset($_POST['BankAcc'])) {
 if(!isset($_POST['BankSwift'])) {
 	$_POST['BankSwift']='';
 }
+echo '</select>
+	</field>';
 
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Bank Name') . ':</td>
-		<td><input type="text" name="Bank" size="41" maxlength="40" value="' . $_POST['Bank'] . '" placeholder="'._('Not more than 40 chacraters').'" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Bank Account Type') . ':</td>
-		<td><input type="text" name="BankAccType" size="15" maxlength="20" value="' . $_POST['BankAccType'] . '" placeholder="'._('No more than 20 characters').'" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Bank Account') . ':</td>
-		<td><input type="text" name="BankAcc" size="21" maxlength="20" value="' . $_POST['BankAcc'] . '" placeholder="'._('No more than 20 characters').'" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Bank Swift No') . ':</td>
-		<td><input type="text" name="BankSwift" size="15" maxlength="14" value="' . $_POST['BankSwift'] . '" placeholder="'._('No more than 15 characters').'" /></td>
-	</tr>
-	</table>';
+echo '<field>
+		<label for="Bank">' . _('Bank Name') . ':</label>
+		<input type="text" name="Bank" size="41" maxlength="40" value="' . $_POST['Bank'] . '" placeholder="'._('Not more than 40 chacraters').'" />
+	</field>
+	<field>
+		<label for="BankAccType">' . _('Bank Account Type') . ':</label>
+		<input type="text" name="BankAccType" size="15" maxlength="20" value="' . $_POST['BankAccType'] . '" placeholder="'._('No more than 20 characters').'" />
+	</field>
+	<field>
+		<label for="BankAcc">' . _('Bank Account') . ':</label>
+		<input type="text" name="BankAcc" size="21" maxlength="20" value="' . $_POST['BankAcc'] . '" placeholder="'._('No more than 20 characters').'" />
+	</field>
+	<field>
+		<label for="BankSwift">' . _('Bank Swift No') . ':</label>
+		<input type="text" name="BankSwift" size="15" maxlength="14" value="' . $_POST['BankSwift'] . '" placeholder="'._('No more than 15 characters').'" />
+	</field>
+	</fieldset>';
 
-echo '<br />
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-		</div>
+echo '<div class="centre">
+		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-	</form>';
+</form>';
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxCategories.php">' . _('Tax Category Maintenance') .  '</a>

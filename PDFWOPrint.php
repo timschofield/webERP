@@ -242,9 +242,13 @@ if (isset($SelectedWO) AND $SelectedWO != '' AND $SelectedWO > 0 AND $SelectedWO
 				AND label='PackQty'";
 		$result = DB_query($sql, $ErrMsg);
 		$PackQtyArray=DB_fetch_array($result);
-		$PackQty=$PackQtyArray['value'];
-		if ($PackQty==0) {
-			$PackQty=1;
+		if (DB_num_rows($result) == 0) {
+			$PackQty = 1;
+		} else {
+			$PackQty=$PackQtyArray['value'];
+			if ($PackQty==0) {
+				$PackQty=1;
+			}
 		}
 	} // 1 valid record
 } //if there is a valid order number
@@ -581,9 +585,13 @@ else {
 				AND label='PackQty'";
 		$result = DB_query($sql, $ErrMsg);
 		$PackQtyArray=DB_fetch_array($result);
-		$QtyPerBox=$PackQtyArray['value'];
-		if ($QtyPerBox==0) {
-			$QtyPerBox=1;
+		if (DB_num_rows($result) == 0) {
+			$QtyPerBox = 1;
+		} else {
+			$QtyPerBox=$PackQtyArray['value'];
+			if ($QtyPerBox==0) {
+				$QtyPerBox=1;
+			}
 		}
 		$NoOfBoxes=(int)($Labels['qtyreqd'] / $QtyPerBox);
 		$LeftOverQty=$Labels['qtyreqd'] % $QtyPerBox;
@@ -607,18 +615,17 @@ else {
 	} //not set yet
 	echo '<p class="page_title_text" ><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-	echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	if ($ViewingOnly == 1) {
 		echo '<input type="hidden" name="ViewingOnly" value="1" />';
 	} //$ViewingOnly == 1
-	echo '<br /><br />';
 	echo '<input type="hidden" name="WO" value="' . $SelectedWO . '" />';
 	echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
-	echo '<table>
-         <tr>
-             <td>' . _('Print or Email the Order') . '</td>
-             <td><select name="PrintOrEmail">';
+	echo '<Fieldset>
+			<legend>', _('Order Printiing Options'), '</legend>
+			<field>
+				<label for="PrintOrEmail">' . _('Print or Email the Order') . '</label>
+				<select name="PrintOrEmail">';
 
 	if (!isset($_POST['PrintOrEmail'])) {
 		$_POST['PrintOrEmail'] = 'Print';
@@ -635,8 +642,11 @@ else {
 			echo '<option selected="selected" value="Email">' . _('Email') . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
-	echo '<tr><td>' . _('Print Labels') . ':</td><td><select name="PrintLabels" >';
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="PrintLabels">' . _('Print Labels') . ':</label>
+			<select name="PrintLabels" >';
 	if ($PrintLabels=="Yes") {
 		echo '<option value="Yes" selected>' . _('Yes') . '</option>';
 		echo '<option value="No">' . _('No') . '</option>';
@@ -661,69 +671,65 @@ else {
 						AND woitems.wo ='" . $SelectedWO . "'";
 		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
-			echo '<tr><td>' . _('Email to') . ':</td><td><input name="EmailTo" value="';
+			echo '<field><td>' . _('Email to') . ':</td><td><input name="EmailTo" value="';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 AND mb_strpos($ContactDetails['email'], '@') > 0) {
 					echo $ContactDetails['email'];
 				}
 			}
-			echo '"/></td></tr></table>';
+			echo '"/></field></fieldset>';
 		}
 
 	} else {
-		echo '</table>';
+		echo '</fieldset>';
 	}
-	echo '<br />
-         <div class="centre">
-              <input type="submit" name="DoIt" value="' . _('Paperwork') . '" />
-         </div>
-         </div>
-         </form>';
+	echo '<div class="centre">
+			<input type="submit" name="DoIt" value="' . _('Paperwork') . '" />
+		</div>';
 
 	if ($PrintLabels=="Yes") {
 		echo '<form action="PDFFGLabel.php" method="post">';
-		echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		if ($ViewingOnly == 1) {
 			echo '<input type="hidden" name="ViewingOnly" value="1" />';
 		} //$ViewingOnly == 1
-		echo '<br /><br />';
 		echo '<input type="hidden" name="WO" value="' . $SelectedWO . '" />';
 		echo '<input type="hidden" name="StockID" value="' . $StockID . '" />';
 		echo '<input type="hidden" name="EmailTo" value="' . $EmailTo . '" />';
 		echo '<input type="hidden" name="PrintOrEmail" value="' . $_POST['PrintOrEmail'] . '" />';
-		echo '<table>
-				<tr>
-					<td>' . _('Label Item') . ':</td>
-					<td><input name="LabelItem" value="' .$LabelItem.'"/></td>
-				</tr>
-				<tr>
-					<td>' . _('Label Description') . ':</td>
-					<td><input name="LabelDesc" value="' .$LabelDesc.'"/></td>
-				</tr>
-				<tr>
-					<td>' . _('Label Lot') . ':</td>
-					<td><input name="LabelLot" value="' .$LabelLot.'"/></td>
-				</tr>
-				<tr>
-					<td>' . _('No of Full Packages') . ':</td>
-					<td><input name="NoOfBoxes" class="integer" value="' .$NoOfBoxes.'"/></td>
-				</tr>
-				<tr>
-					<td>' . _('Labels/Package') . ':</td>
-					<td><input name="LabelsPerBox" class="integer" value="' .$LabelsPerBox.'"/></td>
-				</tr>
-				<tr>
-					<td>' . _('Weight/Package') . ':</td>
-					<td><input name="QtyPerBox" class="number" value="' .$QtyPerBox. '"/></td>
-				</tr>
-				<tr>
-					<td>' . _('LeftOver Qty') . ':</td>
-					<td><input name="LeftOverQty" class="number" value="' .$LeftOverQty.'"/></td>
-				</tr>
-				<tr>
-					<td>' . _('Print or Email the Order') . '</td>
-					<td><select name="PrintOrEmail">';
+		echo '<fieldset>
+				<legend>', _('Label Print Options'), '</legend>
+				<field>
+					<label for="LabelItem">' . _('Label Item') . ':</label>
+					<input name="LabelItem" value="' .$LabelItem.'"/>
+				</field>
+				<field>
+					<label for="LabelDesc">' . _('Label Description') . ':</label>
+					<input name="LabelDesc" value="' .$LabelDesc.'"/>
+				</field>
+				<field>
+					<label for="LabelLot">' . _('Label Lot') . ':</label>
+					<input name="LabelLot" value="' .$LabelLot.'"/>
+				</field>
+				<field>
+					<label for="NoOfBoxes">' . _('No of Full Packages') . ':</label>
+					<input name="NoOfBoxes" class="integer" value="' .$NoOfBoxes.'"/>
+				</field>
+				<field>
+					<label for="LabelsPerBox">' . _('Labels/Package') . ':</label>
+					<input name="LabelsPerBox" class="integer" value="' .$LabelsPerBox.'"/>
+				</field>
+				<field>
+					<label for="QtyPerBox">' . _('Weight/Package') . ':</label>
+					<input name="QtyPerBox" class="number" value="' .$QtyPerBox. '"/>
+				</field>
+				<field>
+					<label for="LeftOverQty">' . _('LeftOver Qty') . ':</label>
+					<input name="LeftOverQty" class="number" value="' .$LeftOverQty.'"/>
+				</field>
+				<field>
+					<label for="PrintOrEmail">' . _('Print or Email the Order') . '</label>
+					<select name="PrintOrEmail">';
 
 		if (!isset($_POST['PrintOrEmail'])) {
 			$_POST['PrintOrEmail'] = 'Print';
@@ -740,7 +746,8 @@ else {
 				echo '<option selected="selected" value="Email">' . _('Email') . '</option>';
 			}
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 		$SQL = "SELECT workorders.wo,
 						workorders.loccode,
 						locations.email
@@ -752,21 +759,19 @@ else {
 						AND woitems.wo ='" . $SelectedWO . "'";
 		$ContactsResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($ContactsResult) > 0) {
-			echo '<tr><td>' . _('Email to') . ':</td><td><input name="EmailTo" value="';
+			echo '<field><label for="EmailTo">' . _('Email to') . ':</label><input name="EmailTo" value="';
 			while ($ContactDetails = DB_fetch_array($ContactsResult)) {
 				if (mb_strlen($ContactDetails['email']) > 2 AND mb_strpos($ContactDetails['email'], '@') > 0) {
 					echo $ContactDetails['email'];
 				}
 			}
-			echo '"/></td></tr></table>';
+			echo '"/></field></fieldset>';
 		}
 		else {
-			echo '</table>';
+			echo '</fieldset>';
 		}
-		echo '<br />
-			<div class="centre">
+		echo '<div class="centre">
 				<input type="submit" name="DoIt" value="' . _('Labels') . '" />
-			</div>
 			</div>
 			</form>';
 	}

@@ -21,7 +21,7 @@ function display_children($Parent, $Level, &$BOMTree) {
 				// indent and display the title of this child
 				$BOMTree[$i]['Level'] = $Level; // Level
 				if ($Level > 15) {
-					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed'), 'error');
+					prnMsg(_('A maximum of 15 levels of bill of materials only can be displayed') , 'error');
 					exit;
 				}
 				$BOMTree[$i]['Parent'] = $Parent; // Assemble
@@ -32,8 +32,9 @@ function display_children($Parent, $Level, &$BOMTree) {
 				if (isset($_POST['ShowAllLevels']) and $_POST['ShowAllLevels'] == 'Yes') {
 					display_children($MyRow['component'], $Level + 1, $BOMTree);
 				}
-			} else {
-				prnMsg(_('The component and the parent is the same'), 'error');
+			}
+			else {
+				prnMsg(_('The component and the parent is the same') , 'error');
 				echo $MyRow['component'], '<br/>';
 				include ('includes/footer.inc');
 				exit;
@@ -118,11 +119,14 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 		$Level1 = str_repeat('-&nbsp;', $Level - 1) . $Level;
 		if ($ParentMBflag != 'M' and $ParentMBflag != 'G') {
 			$AutoIssue = _('N/A');
-		} elseif ($MyRow['controlled'] == 0 and $MyRow['autoissue'] == 1) { //autoissue and not controlled
+		}
+		elseif ($MyRow['controlled'] == 0 and $MyRow['autoissue'] == 1) { //autoissue and not controlled
 			$AutoIssue = _('Yes');
-		} elseif ($MyRow['controlled'] == 1) {
+		}
+		elseif ($MyRow['controlled'] == 1) {
 			$AutoIssue = _('No');
-		} else {
+		}
+		else {
 			$AutoIssue = _('N/A');
 		}
 
@@ -132,7 +136,8 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 		 or $MyRow['mbflag'] == 'G') /* ghost */ {
 
 			$QuantityOnHand = _('N/A');
-		} else {
+		}
+		else {
 			$QuantityOnHand = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
 		}
 
@@ -149,26 +154,27 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 				<td>', $MyRow['itemdescription'], '</td>
 				<td>', $MyRow['locationname'], '</td>
 				<td>', $MyRow['workcentrename'], '</td>
-				<td class="number">', locale_number_format($MyRow['quantity'], 'Variable'), '</td>
+				<td class="number">', locale_number_format($MyRow['quantity'], 'Variable') , '</td>
 				<td>', $MyRow['units'], '</td>
-				<td class="noprint">', ConvertSQLDate($MyRow['effectiveafter']), '</td>
-				<td class="noprint">', ConvertSQLDate($MyRow['effectiveto']), '</td>
+				<td class="noprint">', ConvertSQLDate($MyRow['effectiveafter']) , '</td>
+				<td class="noprint">', ConvertSQLDate($MyRow['effectiveto']) , '</td>
 				<td class="noprint">', $AutoIssue, '</td>
 				<td class="number noprint">', $QuantityOnHand, '</td>
-				<td class="noprint"><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($Parent), '&SelectedComponent=', urlencode($MyRow['component']), '&Location=', urlencode($MyRow['loccode']), '&WorkCentre=', urlencode($MyRow['workcentrecode']), '&ShowAllLevels=', $_POST['ShowAllLevels'], '&Edit=Yes">', _('Edit'), '</a></td>';
+				<td class="noprint"><a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($Parent) , '&SelectedComponent=', urlencode($MyRow['component']) , '&Location=', urlencode($MyRow['loccode']) , '&WorkCentre=', urlencode($MyRow['workcentrecode']) , '&ShowAllLevels=', $_POST['ShowAllLevels'], '&Edit=Yes">', _('Edit') , '</a></td>';
 
 		if ($MyRow['mbflag'] == 'B' or $MyRow['mbflag'] == 'K' or $MyRow['mbflag'] == 'D') {
 			echo '<td class="noprint">
-					<div class="centre">', _('No lower levels'), '</div>
+					<div class="centre">', _('No lower levels') , '</div>
 				</td>';
-		} else {
+		}
+		else {
 			echo '<td class="noprint">
-					<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($MyRow['component']), '&ShowAllLevels=', $_POST['ShowAllLevels'], '">' . _('Drill Down') . '</a>
+					<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['component']) , '&ShowAllLevels=', $_POST['ShowAllLevels'], '">' . _('Drill Down') . '</a>
 				</td>';
 		}
 
 		echo '<td class="noprint">
-				<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8') . '?SelectedParent=', urlencode($Parent), '&SelectedComponent=', urlencode($MyRow['component']), '&delete=1&ReSelect=', urlencode($UltimateParent), '&Location=', urlencode($MyRow['loccode']), '&WorkCentre=', urlencode($MyRow['workcentrecode']), '&ShowAllLevels=', $_POST['ShowAllLevels'], '" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from this bill of materials?') . '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+				<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') . '?SelectedParent=', urlencode($Parent) , '&SelectedComponent=', urlencode($MyRow['component']) , '&delete=1&ReSelect=', urlencode($UltimateParent) , '&Location=', urlencode($MyRow['loccode']) , '&WorkCentre=', urlencode($MyRow['workcentrecode']) , '&ShowAllLevels=', $_POST['ShowAllLevels'], '" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from this bill of materials?') . '\', \'Confirm Delete\', this);">', _('Delete') , '</a></td>
 				</tr><tr><td colspan="11" style="text-indent:', $TextIndent, ';">', $MyRow['remark'], '</td>
 			 </tr>';
 
@@ -178,7 +184,8 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 /* SelectedParent could come from a post or a get */
 if (isset($_GET['SelectedParent'])) {
 	$SelectedParent = $_GET['SelectedParent'];
-} else if (isset($_POST['SelectedParent'])) {
+}
+else if (isset($_POST['SelectedParent'])) {
 	$SelectedParent = $_POST['SelectedParent'];
 }
 
@@ -206,11 +213,11 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 	}
 
 	echo '<div class="toplink noprint">
-			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($SelectedParent), '">', _('Return to main BOM screen'), '</a>
+			<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">', _('Return to main BOM screen') , '</a>
 		</div>';
 
 	echo '<p class="page_title_text noprint">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" /> ', _('Select component to add to BOM'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search') , '" alt="" /> ', _('Select component to add to BOM') , '
 		</p>';
 	//DisplayBOMItems($SelectedParent);
 	$SQL = "SELECT stockmaster.description,
@@ -247,7 +254,8 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 						LIMIT " . $_SESSION['DisplayRecordsMax'] . "
 						OFFSET " . ($_POST['Offset'] * $_SESSION['DisplayRecordsMax']);
 
-	} else {
+	}
+	else {
 		/*Its either a normal manufac item, phantom, kitset - controlled items ok */
 		$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description
@@ -270,25 +278,25 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 	$DbgMsg = _('The SQL used to retrieve the list of potential components part was');
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($SelectedParent), '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<table class="noprint">
 			<tr>
 				<th colspan="3">
-					<input style="float:left" type="submit" name="Previous" value="<<', _('Previous'), '" />
-					<input style="float:right" type="submit" name="Next" value="', _('Next'), '>>" />
+					<input style="float:left" type="submit" name="Previous" value="<<', _('Previous') , '" />
+					<input style="float:right" type="submit" name="Next" value="', _('Next') , '>>" />
 				</th>
 			</tr>
 			<tr>
-				<th>', _('Item Code'), '</th>
-				<th>', _('Item Description'), '</th>
+				<th>', _('Item Code') , '</th>
+				<th>', _('Item Description') , '</th>
 				<th></th>
 			</tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr>
 				<td>', $MyRow['stockid'], '</td>
 				<td>', $MyRow['description'], '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($SelectedParent), '&SelectedComponent=', urlencode($MyRow['stockid']), '&Add=Yes">', _('Add to the BOM'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '&SelectedComponent=', urlencode($MyRow['stockid']) , '&Add=Yes">', _('Add to the BOM') , '</a></td>
 			</tr>';
 	}
 	echo '</table>';
@@ -304,23 +312,27 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 /* SelectedComponent could also come from a post or a get */
 if (isset($_GET['SelectedComponent'])) {
 	$SelectedComponent = $_GET['SelectedComponent'];
-} elseif (isset($_POST['SelectedComponent'])) {
+}
+elseif (isset($_POST['SelectedComponent'])) {
 	$SelectedComponent = $_POST['SelectedComponent'];
 }
 
 /* delete function requires Location to be set */
 if (isset($_GET['Location'])) {
 	$Location = $_GET['Location'];
-} elseif (isset($_POST['Location'])) {
+}
+elseif (isset($_POST['Location'])) {
 	$Location = $_POST['Location'];
-} else {
+}
+else {
 	$Location = $_SESSION['UserStockLocation'];
 }
 
 /* delete function requires WorkCentre to be set */
 if (isset($_GET['WorkCentre'])) {
 	$WorkCentre = $_GET['WorkCentre'];
-} elseif (isset($_POST['WorkCentre'])) {
+}
+elseif (isset($_POST['WorkCentre'])) {
 	$WorkCentre = $_POST['WorkCentre'];
 }
 
@@ -360,7 +372,7 @@ $InputError = 0;
 if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 	//editing a selected component from the link to the line item
 	/* We do want to show the new component entry form in any case - it is a lot of work to get back to it otherwise if we need to add */
-	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', $SelectedParent, '">';
+	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', $SelectedParent, '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	$SQL = "SELECT stockmaster.description,
 					stockmaster.mbflag
@@ -376,10 +388,10 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 	$ParentMBflag = $MyRow[1];
 
 	echo '<p class="page_title_text noprint">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" /> ', _('Component Details'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search') , '" alt="" /> ', _('Component Details') , '
 		</p>';
 
-	echo '<table class="noprint">';
+	echo '<fieldset class="noPrint">';
 	if (isset($_GET['Edit'])) {
 		$SQL = "SELECT bom.loccode,
 						effectiveafter,
@@ -388,7 +400,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 						workcentreadded,
 						quantity,
 						autoissue,
-						remark
+						comment
 					FROM bom
 					INNER JOIN locationusers
 						ON locationusers.loccode=bom.loccode
@@ -409,13 +421,58 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 		$_POST['WorkCentreAdded'] = $MyRow['workcentreadded'];
 		$_POST['Quantity'] = locale_number_format($MyRow['quantity'], 'Variable');
 		$_POST['AutoIssue'] = $MyRow['autoissue'];
-		$_POST['Comment'] = $MyRow['remark'];
+		$_POST['Comment'] = $MyRow['comment'];
+
+		$SQL = "SELECT description, units FROM stockmaster WHERE stockid='" . $SelectedComponent . "'";
+		$ComponentResult = DB_query($SQL);
+		$ComponentRow = DB_fetch_array($ComponentResult);
 
 		echo '<input type="hidden" name="Edit" value="Yes" />';
-		echo '<tr>
-				<th colsspan="2">', ('Edit Component Details'), '</th>
-			</tr>';
-	} else {
+		echo '<input type="hidden" name="LocCode" value="', $_POST['LocCode'], '" />';
+		echo '<input type="hidden" name="WorkCentreAdded" value="', $_POST['WorkCentreAdded'], '" />';
+		echo '<legend><b>', ('Edit Component Details') , '</b></legend>';
+
+		echo '<field>
+				<label for="SelectedComponent">', _('Component') , ':</label>
+				<div class="fieldtext"><b>', $SelectedComponent, '</b></div>
+			</field>';
+
+		echo '<field>
+				<label for="ComponentDescription">', _('Component Description') , ':</label>
+				<div class="fieldtext"><b>', $ComponentRow['description'], '</b></div>
+			</field>';
+
+		echo '<field>
+				<label for="Sequence">', _('Sequence in BOM') , ':</label>
+				<input type="text" class="number" required="required" name="Sequence" size="6" autofocus="autofocus" value="', $_POST['Sequence'], '" />
+				<fieldhelp>', _('Enter the sequence in the BOM where this component is to be included.') , '</fieldhelp>
+			</field>';
+
+		/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
+		*/
+
+		$SQL = "SELECT locationname
+				FROM locations
+				WHERE loccode = '" . $_POST['LocCode'] . "'";
+		$Result = DB_query($SQL);
+		$LocRow = DB_fetch_array($Result);
+		echo '<field>
+			<label for="LocCode">', _('Location') , ': </label>
+			<div class="fieldtext">', $LocRow['locationname'], '</div>
+		</field>';
+
+		$SQL = "SELECT description
+				FROM workcentres
+				WHERE code='" . $_POST['WorkCentreAdded'] . "'";
+
+		$Result = DB_query($SQL);
+		$WCRow = DB_fetch_array($Result);
+		echo '<field>
+			<label for="WorkCentreAdded">', _('Work Centre Added') , ': </label>
+			<div class="fieldtext">', $WCRow['description'], '</div>
+		</field>';
+	}
+	else {
 
 		$SQL = "SELECT MAX(sequence) AS seqnum FROM bom WHERE parent='" . $SelectedParent . "'";
 		$Result = DB_query($SQL);
@@ -423,125 +480,140 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 		$_POST['LocCode'] = $Location;
 		$_POST['EffectiveAfter'] = date($_SESSION['DefaultDateFormat']);
-		$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), Date('d'), (Date('y') + 20)));
+		$_POST['EffectiveTo'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') , Date('d') , (Date('y') + 20)));
 		$_POST['Sequence'] = $MyRow['seqnum'] + 10;
 		$_POST['WorkCentreAdded'] = '';
 		$_POST['Quantity'] = locale_number_format(1, 'Variable');
 		$_POST['AutoIssue'] = $_SESSION['AutoIssue'];
 		$_POST['Comment'] = '';
 
+		$SQL = "SELECT description, units FROM stockmaster WHERE stockid='" . $SelectedComponent . "'";
+		$ComponentResult = DB_query($SQL);
+		$ComponentRow = DB_fetch_array($ComponentResult);
+
 		echo '<input type="hidden" name="Add" value="Yes" />';
-		echo '<tr>
-				<th colspan="2">', _('New Component Details'), '</th>
-			</tr>';
+		echo '<legend><b>', _('New Component Details') , '</b></legend>';
+
+		echo '<field>
+				<label for="SelectedComponent">', _('Component') , ':</label>
+				<div class="fieldtext"><b>', $SelectedComponent, '</b></div>
+			</field>';
+
+		echo '<field>
+				<label for="ComponentDescription">', _('Component Description') , ':</label>
+				<div class="fieldtext"><b>', $ComponentRow['description'], '</b></div>
+			</field>';
+
+		echo '<field>
+				<label for="Sequence">', _('Sequence in BOM') , ':</label>
+				<input type="text" class="number" required="required" name="Sequence" size="6" autofocus="autofocus" value="', $_POST['Sequence'], '" />
+				<fieldhelp>', _('Enter the sequence in the BOM where this component is to be included.') , '</fieldhelp>
+			</field>';
+
+		/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
+		*/
+
+		$SQL = "SELECT locationname,
+						locations.loccode
+					FROM locations
+					INNER JOIN locationusers
+						ON locationusers.loccode=locations.loccode
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
+						AND locationusers.canupd=1
+					WHERE locations.usedforwo = 1";
+		$Result = DB_query($SQL);
+		echo '<field>
+				<label for="LocCode">', _('Location') , ': </label>
+				<select required="required" name="LocCode">';
+
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (isset($_POST['LocCode']) and $MyRow['loccode'] == $_POST['LocCode']) {
+				echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+			}
+			else {
+				echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
+			}
+		} //end while loop
+		DB_free_result($Result);
+
+		echo '</select>
+			<fieldhelp>', _('Enter the stock location where this component is to be included.') , '</fieldhelp>
+		</field>';
+
+		$SQL = "SELECT code,
+						description
+					FROM workcentres
+					INNER JOIN locationusers
+						ON locationusers.loccode=workcentres.location
+						AND locationusers.userid='" . $_SESSION['UserID'] . "'
+						AND locationusers.canupd=1";
+
+		$Result = DB_query($SQL);
+
+		if (DB_num_rows($Result) == 0) {
+			prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.', 'warn');
+			echo '<a href="', $RootPath, '/WorkCentres.php">', _('Work Centre Maintenance') , '</a></field></fieldset>';
+			include ('includes/footer.php');
+			exit;
+		}
+		echo '<field>
+				<label for="WorkCentreAdded">', _('Work Centre Added') , ': </label>';
+
+		echo '<select required="required" name="WorkCentreAdded">';
+
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (isset($_POST['WorkCentreAdded']) and $MyRow['code'] == $_POST['WorkCentreAdded']) {
+				echo '<option selected="selected" value="', $MyRow['code'], '">', $MyRow['description'], '</option>';
+			}
+			else {
+				echo '<option value="', $MyRow['code'], '">', $MyRow['description'], '</option>';
+			}
+		} //end while loop
+		echo '</select>
+			<fieldhelp>', _('Enter the work centre where this component is to be included.') , '</fieldhelp>
+		</field>';
 	}
 
 	echo '<input type="hidden" name="ShowAllLevels" value="', $_POST['ShowAllLevels'], '" />';
 	echo '<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />';
 	echo '<input type="hidden" name="SelectedComponent" value="', $SelectedComponent, '" />';
 
-	echo '<tr>
-			<td>', _('Component'), ':</td>
-			<td>', $SelectedComponent, '<td>
-		</tr>';
+	echo '<field>
+			<label for="Quantity">', _('Quantity') , ': </label>
+			<input type="text" class="number" name="Quantity" size="10" required="required" maxlength="8" value="', $_POST['Quantity'], '" />
+			', $ComponentRow['units'], '
+			<fieldhelp>', _('Enter the quantity of this component is to be included.') , '</fieldhelp>
+		</field>';
 
-	echo '<tr>
-			<td>', _('Sequence in BOM'), ':</td>
-			<td><input type="text" class="integer" required="required" name="Sequence" size="6" autofocus="autofocus" value="', $_POST['Sequence'], '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="EffectiveAfter">', _('Effective After') , ' (', $_SESSION['DefaultDateFormat'], '):</label>
+			<input type="text" name="EffectiveAfter" class="date" size="11" required="required" maxlength="10" value="', $_POST['EffectiveAfter'], '" />
+			<fieldhelp>', _('The component will be used from this date.') , '</fieldhelp>
+		</field>';
 
-	/* echo "Enter the details of a new component in the fields below. <br />Click on 'Enter Information' to add the new component, once all fields are completed.";
-	*/
-
-	$SQL = "SELECT locationname,
-					locations.loccode
-				FROM locations
-				INNER JOIN locationusers
-					ON locationusers.loccode=locations.loccode
-					AND locationusers.userid='" . $_SESSION['UserID'] . "'
-					AND locationusers.canupd=1
-				WHERE locations.usedforwo = 1";
-	$Result = DB_query($SQL);
-	echo '<tr>
-			<td>', _('Location'), ': </td>
-			<td>
-				<select required="required" name="LocCode">';
-
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['LocCode']) and $MyRow['loccode'] == $_POST['LocCode']) {
-			echo '<option selected="selected" value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
-		} else {
-			echo '<option value="', $MyRow['loccode'], '">', $MyRow['locationname'], '</option>';
-		}
-	} //end while loop
-	DB_free_result($Result);
-
-	echo '</select>
-		</td>
-	</tr>';
-
-	$SQL = "SELECT code,
-					description
-				FROM workcentres
-				INNER JOIN locationusers
-					ON locationusers.loccode=workcentres.location
-					AND locationusers.userid='" . $_SESSION['UserID'] . "'
-					AND locationusers.canupd=1";
-
-	$Result = DB_query($SQL);
-
-	if (DB_num_rows($Result) == 0) {
-		prnMsg(_('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres') . '.', 'warn');
-		echo '<a href="', $RootPath, '/WorkCentres.php">', _('Work Centre Maintenance'), '</a></field></fieldset>';
-		include ('includes/footer.php');
-		exit;
-	}
-	echo '<tr>
-			<td>', _('Work Centre Added'), ': </td>
-			<td>
-				<select required="required" name="WorkCentreAdded">';
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['WorkCentreAdded']) and $MyRow['code'] == $_POST['WorkCentreAdded']) {
-			echo '<option selected="selected" value="', $MyRow['code'], '">', $MyRow['description'], '</option>';
-		} else {
-			echo '<option value="', $MyRow['code'], '">', $MyRow['description'], '</option>';
-		}
-	} //end while loop
-	echo '</select>
-		</td>
-	</tr>';
-
-	echo '<tr>
-			<td>', _('Quantity'), ': </td>
-			<td><input type="text" class="number" name="Quantity" size="10" required="required" maxlength="8" value="', $_POST['Quantity'], '" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>', _('Effective After'), ' (', $_SESSION['DefaultDateFormat'], '):</td>
-			<td><input type="text" name="EffectiveAfter" class="date" size="11" required="required" maxlength="10" value="', $_POST['EffectiveAfter'], '" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>', _('Effective To'), ' (', $_SESSION['DefaultDateFormat'], '):</td>
-			<td><input type="text" name="EffectiveTo" class="date" size="11" required="required" maxlength="10" value="', $_POST['EffectiveTo'], '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="EffectiveTo">', _('Effective To') , ' (', $_SESSION['DefaultDateFormat'], '):</label>
+			<input type="text" name="EffectiveTo" class="date" size="11" required="required" maxlength="10" value="', $_POST['EffectiveTo'], '" />
+			<fieldhelp>', _('The component will be used until this date.') , '</fieldhelp>
+		</field>';
 
 	if ($ParentMBflag == 'M' or $ParentMBflag == 'G') {
-		echo '<tr>
-				<td>', _('Auto Issue this Component to Work Orders'), ':</td>
-				<td>
-					<select required="required" name="AutoIssue">';
+		echo '<field>
+				<label for="AutoIssue">', _('Auto Issue this Component to Work Orders') , ':</label>
+				<select required="required" name="AutoIssue">';
 		if ($_POST['AutoIssue'] == 0) {
-			echo '<option selected="selected" value="0">', _('No'), '</option>';
-			echo '<option value="1">', _('Yes'), '</option>';
-		} else {
-			echo '<option selected="selected" value="1">', _('Yes'), '</option>';
-			echo '<option value="0">', _('No'), '</option>';
+			echo '<option selected="selected" value="0">', _('No') , '</option>';
+			echo '<option value="1">', _('Yes') , '</option>';
+		}
+		else {
+			echo '<option selected="selected" value="1">', _('Yes') , '</option>';
+			echo '<option value="0">', _('No') , '</option>';
 		}
 		echo '</select>
-			</td>
-		</tr>';
-	} else {
+			<fieldhelp>', _('Should this component be automatically issued to a work order for this BOM.') , '</fieldhelp>
+		</field>';
+	}
+	else {
 		echo '<input type="hidden" name="AutoIssue" value="0" />';
 	}
 
@@ -549,15 +621,16 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 		$_POST['Comment'] = '';
 	}
 
-	echo '<tr>
-			<td>', _('Comment'), '</td>
-			<td><textarea  rows="3" col="20" name="Comment" >', $_POST['Comment'], '</textarea></td>
-		</tr>';
+	echo '<field>
+			<label for="Comment">', _('Comment') , '</label>
+			<textarea spellcheck="true" rows="3" col="20" name="Comment" >', $_POST['Comment'], '</textarea>
+			<fieldhelp>', _('Any comments for this BOM line to appear on a work order.') , '</fieldhelp>
+		</field>';
 
-	echo '</table>
+	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="Submit" value="', _('Enter Information'), '" />
-				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+				<input type="submit" name="Submit" value="', _('Enter Information') , '" />
+				<input type="submit" name="Cancel" value="', _('Cancel') , '" />
 			</div>
 		</form>';
 	include ('includes/footer.php');
@@ -566,11 +639,11 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edit Component
 	echo '<div class="toplink noprint">
-			<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '">', _('Select a Different BOM'), '</a>
+			<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '">', _('Select a Different BOM') , '</a>
 		</div>';
 
 	echo '<p class="page_title_text noprint">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search'), '" alt="" /> ', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search') , '" alt="" /> ', $Title, '
 		</p>';
 
 	if (isset($SelectedParent) and isset($_POST['Submit'])) {
@@ -586,7 +659,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 		}
 		if (!is_numeric(filter_number_format($_POST['Quantity']))) {
 			$InputError = 1;
-			prnMsg(_('The quantity entered must be numeric'), 'error');
+			prnMsg(_('The quantity entered must be numeric') , 'error');
 		}
 		/* Comment this out to make substittute material can be recorded in the BOM
 		if (filter_number_format($_POST['Quantity']) == 0) {
@@ -603,14 +676,14 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 			$CheckControlledResult = DB_query($SQL);
 			$CheckControlledRow = DB_fetch_row($CheckControlledResult);
 			if ($CheckControlledRow[0] == 1) {
-				prnMsg(_('Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component'), 'warn');
+				prnMsg(_('Only non-serialised or non-lot controlled items can be set to auto issue. These items require the lot/serial numbers of items issued to the works orders to be specified so autoissue is not an option. Auto issue has been automatically set to off for this component') , 'warn');
 				$_POST['AutoIssue'] = 0;
 			}
 		}
 
 		if ($_POST['SelectedComponent'] == $SelectedParent) {
 			$InputError = 1;
-			prnMsg(_('The component selected is the same with the parent, it is not allowed'), 'error');
+			prnMsg(_('The component selected is the same with the parent, it is not allowed') , 'error');
 		}
 
 		$EffectiveAfterSQL = FormatDateForSQL($_POST['EffectiveAfter']);
@@ -638,7 +711,8 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 			$Msg = _('Details for') . ' - ' . $SelectedComponent . ' ' . _('have been updated') . '.';
 			UpdateCost($SelectedComponent);
 
-		} elseif ($InputError != 1 and isset($SelectedComponent) and isset($SelectedParent) and isset($_POST['Add'])) {
+		}
+		elseif ($InputError != 1 and isset($SelectedComponent) and isset($SelectedParent) and isset($_POST['Add'])) {
 
 			/*Selected component is null cos no item selected on first time round so must be adding a record must be Submitting new entries in the new component form */
 
@@ -690,11 +764,12 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 					UpdateCost($_POST['SelectedComponent']);
 					$Msg = _('A new component part') . ' ' . $_POST['SelectedComponent'] . ' ' . _('has been added to the bill of material for part') . ' - ' . $SelectedParent . '.';
 
-				} else {
+				}
+				else {
 
 					/*The component must already be on the BOM */
 
-					prnMsg(_('The component') . ' ' . $_POST['Component'] . ' ' . _('is already recorded as a component of') . ' ' . $SelectedParent . '.' . '<br />' . _('Whilst the quantity of the component required can be modified it is inappropriate for a component to appear more than once in a bill of material'), 'error');
+					prnMsg(_('The component') . ' ' . $_POST['Component'] . ' ' . _('is already recorded as a component of') . ' ' . $SelectedParent . '.' . '<br />' . _('Whilst the quantity of the component required can be modified it is inappropriate for a component to appear more than once in a bill of material') , 'error');
 				}
 
 			} //end of if its not a recursive BOM
@@ -705,7 +780,8 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 			prnMsg($Msg, 'success');
 		}
 
-	} elseif (isset($_GET['delete']) and isset($SelectedComponent) and isset($SelectedParent)) {
+	}
+	elseif (isset($_GET['delete']) and isset($SelectedComponent) and isset($SelectedParent)) {
 
 		//the link to delete a selected record was clicked instead of the Submit button
 		$SQL = "DELETE FROM bom
@@ -725,11 +801,12 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 		$ComponentArray = DB_fetch_row($ComponentResult);
 		UpdateCost($ComponentArray[0]);
 
-		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'), 'success');
+		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM') , 'success');
 		// Now reset to enable New Component Details to display after delete
 		unset($SelectedComponent);
 
-	} elseif (isset($SelectedParent) and !isset($SelectedComponent) and !isset($_POST['submit'])) {
+	}
+	elseif (isset($SelectedParent) and !isset($SelectedComponent) and !isset($_POST['submit'])) {
 
 		/* It could still be the second time the page has been run and a record has been selected	for modification - SelectedParent will exist because it was sent with the new call. if		its the first time the page has been displayed with no parameters then none of the above		are true and the list of components will be displayed with links to delete or edit each.		These will call the same page again and allow update/input or deletion of the records*/
 		//DisplayBOMItems($SelectedParent);
@@ -789,9 +866,9 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	if (DB_num_rows($Result) > 0) {
 		echo '<table class="selection noprint">
 				<tr>
-					<th>', _('Manufactured parent items'), ' : ';
+					<th>', _('Manufactured parent items') , ' : ';
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : ''), '<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($MyRow['parent']), '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -813,10 +890,10 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	if (DB_num_rows($Result) > 0) {
 		echo '<table class="noprint">
 				<tr>
-					<th>', _('Assembly parent items'), ' : ';
+					<th>', _('Assembly parent items') , ' : ';
 		$i = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : ''), '<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($MyRow['parent']), '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -843,10 +920,10 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	if (DB_num_rows($Result) > 0) {
 		echo '<table>
 				<tr>
-					<th>', _('Kit sets'), ' : ';
+					<th>', _('Kit sets') , ' : ';
 		$i = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : ''), '<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($MyRow['parent']), '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -873,10 +950,10 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	if (DB_num_rows($Result) > 0) {
 		echo '<table>
 				<tr>
-					<th>', _('Phantom'), ' : ';
+					<th>', _('Phantom') , ' : ';
 		$i = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			echo (($i) ? ', ' : ''), '<a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedParent=', urlencode($MyRow['parent']), '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
+			echo (($i) ? ', ' : '') , '<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['parent']) , '">', $MyRow['description'], '&nbsp;(', $MyRow['parent'], ')</a>';
 			++$i;
 		} //end while loop
 		echo '</th>
@@ -884,7 +961,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 		</table>';
 	}
 
-	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<form action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 	echo '<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />';
@@ -892,7 +969,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	echo '<tr>
 			<th colspan="15"><b>', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </b></th>
 			<th>
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon noprint" title="', _('Print'), '" alt="', _('Print'), '" onclick="window.print();" />
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon noprint" title="', _('Print') , '" alt="', _('Print') , '" onclick="window.print();" />
 			</th>
 		</tr>';
 
@@ -903,26 +980,27 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	display_children($SelectedParent, 1, $BOMTree);
 
 	echo '<tr>
-			<th>', _('Level'), '</th>
-			<th>', _('Sequence'), '</th>
-			<th>', _('Category Description'), '</th>
-			<th>', _('Code'), '</th>
-			<th>', _('Description'), '</th>
-			<th>', _('Location'), '</th>
-			<th>', _('Work Centre'), '</th>
-			<th>', _('Quantity'), '</th>
-			<th>', _('UOM'), '</th>
-			<th class="noprint">', _('Effective After'), '</th>
-			<th class="noprint">', _('Effective To'), '</th>
-			<th class="noprint">', _('Auto Issue'), '</th>
-			<th class="noprint">', _('Qty On Hand'), '</th>
+			<th>', _('Level') , '</th>
+			<th>', _('Sequence') , '</th>
+			<th>', _('Category Description') , '</th>
+			<th>', _('Code') , '</th>
+			<th>', _('Description') , '</th>
+			<th>', _('Location') , '</th>
+			<th>', _('Work Centre') , '</th>
+			<th>', _('Quantity') , '</th>
+			<th>', _('UOM') , '</th>
+			<th class="noprint">', _('Effective After') , '</th>
+			<th class="noprint">', _('Effective To') , '</th>
+			<th class="noprint">', _('Auto Issue') , '</th>
+			<th class="noprint">', _('Qty On Hand') , '</th>
 			<th colspan="3"></th>
 		</tr>';
 	if (count($BOMTree) == 0) {
 		echo '<tr>
-				<td colspan="8">', _('No materials found.'), '</td>
+				<td colspan="8">', _('No materials found.') , '</td>
 			</tr>';
-	} else {
+	}
+	else {
 		$UltimateParent = $SelectedParent;
 		$k = 0;
 		$RowCounter = 1;
@@ -939,57 +1017,55 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	</form>';
 
 	if (!isset($SelectedComponent)) {
-		echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+		echo '<form action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '" method="post">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
-		echo '<table class="noprint">
-				<tr>
-					<th colspan="2">', _('Select new component for BOM'), '</th>
-				</tr>';
+		echo '<fieldset>
+				<legend class="search">', _('Select new component for BOM') , '</legend>';
 
 		$SQL = "SELECT categoryid,
 						categorydescription
 				FROM stockcategory
-				WHERE stocktype='F' OR stocktype='D' OR stocktype='L'
 				ORDER BY categorydescription";
 
 		$Result = DB_query($SQL);
-		echo '<tr>
-				<td>', _('Select a Stock Category'), ': </td>
-				<td>
-					<select name="StockCat">';
+		echo '<field>
+				<label for="StockCat">', _('Select a Stock Category') , ': </label>
+				<select name="StockCat">';
 		if (!isset($_POST['StockCat']) or $_POST['StockCat'] == 'All') {
-			echo '<option selected="selected" value="All">', _('All'), '</option>';
+			echo '<option selected="selected" value="All">', _('All') , '</option>';
 			$_POST['StockCat'] = 'All';
-		} else {
-			echo '<option value="All">', _('All'), '</option>';
+		}
+		else {
+			echo '<option value="All">', _('All') , '</option>';
 		}
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($_POST['StockCat'] == $MyRow['categoryid']) {
 				echo '<option selected="selected" value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
-			} else {
+			}
+			else {
 				echo '<option value="', $MyRow['categoryid'], '">', $MyRow['categorydescription'], '</option>';
 			}
 		}
 		echo '</select>
-			</td>
-		</tr>';
+			<fieldhelp>', _('Select the stock category to filter by, or choose All to select from all categories') , '</fieldhelp>
+		</field>';
 
-		echo '<tr>
-				<td>', _('Enter text extracts in the description'), ':</td>
-				<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-			</tr>
-			<tr>
-				<td><b>', _('OR'), '</b></td>
-			</tr>
-			<tr>
-				<td>', _('Enter extract of the Stock Code'), ':</td>
-				<td><input type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="20" /></td>
-			</field>
-		</table>
-		<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />
+		echo '<field>
+					<label for="Keywords">', _('Enter text extracts in the') , ' <b>', _('description') , '</b>:</label>
+					<input type="text" name="Keywords" size="20" maxlength="25" />
+					<fieldhelp>', _('Search for the description of the component item to add to the BOM') , '</fieldhelp>
+				</field>
+				<td><b>', _('OR') , '</b></td>
+				<field>
+					<label for="StockCode">', _('Enter extract of the') , ' <b>', _('Stock Code') , '</b>:</label>
+					<input type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="20" />
+					<fieldhelp>', _('Search for the component item code to add tor the BOM') , '</fieldhelp>
+				</field>
+			</fieldset>
+			<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />
 		<div class="centre noprint">
-			<input type="submit" name="ComponentSearch" value="', _('Search Now'), '" />
+			<input type="submit" name="ComponentSearch" value="', _('Search Now') , '" />
 		</div>
 	</form>';
 	}
@@ -997,17 +1073,19 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	// end of BOM maintenance code - look at the parent selection form if not relevant
 	// ----------------------------------------------------------------------------------
 	
-} elseif (isset($_POST['Search'])) {
+}
+elseif (isset($_POST['Search'])) {
 	// Work around to auto select
 	if ($_POST['Keywords'] == '' and $_POST['StockCode'] == '') {
 		$_POST['StockCode'] = '%';
 	}
 	if ($_POST['Keywords'] and $_POST['StockCode']) {
-		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
+		prnMsg(_('Stock description keywords have been used in preference to the Stock code extract entered') , 'info');
 	}
 	if ($_POST['Keywords'] == '' and $_POST['StockCode'] == '') {
-		prnMsg(_('At least one stock description keyword or an extract of a stock code must be entered for the search'), 'info');
-	} else {
+		prnMsg(_('At least one stock description keyword or an extract of a stock code must be entered for the search') , 'info');
+	}
+	else {
 		if (mb_strlen($_POST['Keywords']) > 0) {
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
@@ -1029,7 +1107,8 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 					stockmaster.mbflag
 				ORDER BY stockmaster.stockid";
 
-		} elseif (mb_strlen($_POST['StockCode']) > 0) {
+		}
+		elseif (mb_strlen($_POST['StockCode']) > 0) {
 			$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					stockmaster.units,
@@ -1061,65 +1140,68 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 if (!isset($SelectedParent)) {
 
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search') , '" alt="" />', ' ', $Title, '
 		</p>';
 
-	echo '<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
+	echo '<form action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<div class="page_help_text">
-			', _('Select a manufactured part'), ' (', _('or Assembly or Kit part'), ') ', _('to maintain the bill of material for using the options below'), '<br />', _('Parts must be defined in the stock item entry'), '/', _('modification screen as manufactured'), ', ', _('kits or assemblies to be available for construction of a bill of material'), '
+			', _('Select a manufactured part') , ' (', _('or Assembly or Kit part') , ') ', _('to maintain the bill of material for using the options below') , '<br />', _('Parts must be defined in the stock item entry') , '/', _('modification screen as manufactured') , ', ', _('kits or assemblies to be available for construction of a bill of material') , '
 		</div>';
 
-	echo '<table>
-			<tr>
-				<th colspan="2">', _('Select the parent item for the BOM'), '</th>
-			</tr>
-			<tr>
-				<td>', _('Enter text extracts in the description'), '</td>
-				<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
-			</tr>
-			<tr>
-				<th>', _('OR'), '</th>
-			</tr>
-			<tr>
-				<td>', _('Enter extract of the Stock Code'), '</td>
-				<td><input type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="18" /></td>
-			</tr>';
-	echo '<tr>
-			<td><label for="ShowAllLevels">', _('Show all levels'), '</label></td>
-			<td><select name="ShowAllLevels">';
+	echo '<fieldset>
+			<legend class="search">', _('Select the parent item for the BOM') , '</legend>
+			<field>
+				<label for="Keywords">', _('Enter text extracts in the') , ' <b>', _('description') , '</b>:</label>
+				<input type="text" name="Keywords" size="20" maxlength="25" />
+				<fieldhelp>', _('Search for the description of parent item for the BOM') , '</fieldhelp>
+			</field>
+			<b>', _('OR') , '</b>
+			<field>
+				<label for="StockCode">', _('Enter extract of the') , ' <b>', _('Stock Code') , '</b>:</label>
+				<input type="text" autofocus="autofocus" name="StockCode" size="15" maxlength="18" />
+				<fieldhelp>', _('Search for the parent item code for the BOM') , '</fieldhelp>
+			</field>';
+
+	echo '<field>
+			<label for="ShowAllLevels">', _('Show all levels') , '</label>
+			<select name="ShowAllLevels">';
 	if (isset($_POST['ShowAllLevels']) and $_POST['ShowAllLevels'] == 'Yes') {
-		echo '<option selected="selected" value="Yes">', _('Yes'), '</option>';
-		echo '<option value="No">', _('No'), '</option>';
-	} else {
-		echo '<option value="Yes">', _('Yes'), '</option>';
-		echo '<option selected="selected" value="No">', _('No'), '</option>';
+		echo '<option selected="selected" value="Yes">', _('Yes') , '</option>';
+		echo '<option value="No">', _('No') , '</option>';
+	}
+	else {
+		echo '<option value="Yes">', _('Yes') , '</option>';
+		echo '<option selected="selected" value="No">', _('No') , '</option>';
 	}
 
 	echo '</select>
-		</td>
-	</tr>';
-	echo '</table>';
+		<fieldhelp>', _('To show all levels of the BOM choose Yes otherwise choose No.') , '</fieldhelp>
+		</field>';
+
+	echo '</fieldset>';
+
 	echo '<div class="centre">
-			<input type="submit" name="Search" value="', _('Search Now'), '" />
+			<input type="submit" name="Search" value="', _('Search Now') , '" />
 		</div>';
 
 	if (isset($_POST['Search']) and isset($Result) and !isset($SelectedParent)) {
 
 		echo '<table cellpadding="2">
 				<tr>
-					<th>', _('Code'), '</th>
-					<th>', _('Description'), '</th>
-					<th>', _('On Hand'), '</th>
-					<th>', _('Units'), '</th>
+					<th>', _('Code') , '</th>
+					<th>', _('Description') , '</th>
+					<th>', _('On Hand') , '</th>
+					<th>', _('Units') , '</th>
 				</tr>';
 
 		$j = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['mbflag'] == 'A' or $MyRow['mbflag'] == 'K' or $MyRow['mbflag'] == 'G') {
 				$StockOnHand = _('N/A');
-			} else {
+			}
+			else {
 				$StockOnHand = locale_number_format($MyRow['totalonhand'], $MyRow['decimalplaces']);
 			}
 			echo '<tr class="striped_row">
@@ -1156,7 +1238,8 @@ function arrayUnique($Array, $PreserveKeys = false) {
 			//Add element to the unique Array
 			if ($PreserveKeys) {
 				$ArrayRewrite[$Key] = $Item;
-			} else {
+			}
+			else {
 				$ArrayRewrite[] = $Item;
 			}
 		}

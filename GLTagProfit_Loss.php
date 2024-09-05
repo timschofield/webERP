@@ -15,7 +15,7 @@ if (isset($_POST['PeriodFrom']) AND ($_POST['PeriodFrom'] > $_POST['PeriodTo']))
 	$_POST['NewReport']='Select A Different Period';
 }
 
-if ($_POST['Period'] != '') {
+if (isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
@@ -41,10 +41,11 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 	$period=GetPeriod($FromDate);
 
 	/*Show a form to allow input of criteria for profit and loss to show */
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Period From') . ':</td>
-				<td><select name="PeriodFrom">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="PeriodFrom">' . _('Select Period From') . ':</label>
+				<select name="PeriodFrom">';
 
 	$SQL = "SELECT periodno,
 					lastdate_in_period
@@ -69,8 +70,8 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 		}
 	}
 
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	if (!isset($_POST['PeriodTo']) OR $_POST['PeriodTo']=='') {
 		$LastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
 		$SQL = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
@@ -82,9 +83,9 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 		$DefaultPeriodTo = $_POST['PeriodTo'];
 	}
 
-	echo '<tr>
-			<td>' . _('Select Period To') . ':</td>
-			<td><select name="PeriodTo">';
+	echo '<field>
+			<label for="PeriodTo">' . _('Select Period To') . ':</label>
+			<select name="PeriodTo">';
 
 	$RetResult = DB_data_seek($Periods,0);
 
@@ -96,27 +97,24 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 			echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '<tr>
-			<td>
-				<h3>', _('OR'), '</h3>
-			</td>
-		</tr>';
+	echo '<h3>', _('OR'), '</h3>';
 
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
-	echo '<tr>
-			<td>', _('Select Period'), '</td>
-			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
-		</tr>';
+	echo '<field>
+			<label for="Period">', _('Select Period'), '</label>
+			', ReportPeriodList($_POST['Period'], array('l', 't')), '
+		</field>';
 
 	//Select the tag
-	echo '<tr>
-			<td>' . _('Select tag') . '</td>
-			<td><select name="tag">';
+	echo '<field>
+			<label for="tag">' . _('Select tag') . '</label>
+			<select name="tag">';
 
 	$SQL = "SELECT tagref,
 				tagdescription
@@ -132,21 +130,20 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 			echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'].' - ' .$MyRow['tagdescription'] . '</option>';
     	}
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 // End select tag
 
-	echo '<tr>
-			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
-			<td><select name="Detail">
+	echo '<field>
+			<label for="ShowDetail">', _('Detail or summary'), '</label>
+			<select name="Detail">
 				<option selected="selected" value="Summary">' . _('Summary') . '</option>
 				<option selected="selected" value="Detailed">' . _('All Accounts') . '</option>
-				</select>
-			</td>
-		</tr>
-		</table>
-		<br />',
+			</select>
+		</field>
+	</fieldset>';
 
-		'<div class="centre noprint">', // Form buttons:
+	echo '<div class="centre noprint">', // Form buttons:
 			'<button name="ShowPL" type="submit" value="', _('Show Statement of Income and Expenditure'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('Show Statement of Income and Expenditure'), '</button>', // "Show Statement of Income and Expenditure" button.
 			'<button name="PrintPDF" type="submit" value="', _('PrintPDF'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ', _('PrintPDF'), '</button>', // "PrintPDF" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.

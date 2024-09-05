@@ -64,7 +64,7 @@ if(isset($_POST['PeriodFrom']) and ($_POST['PeriodFrom'] > $_POST['PeriodTo'])) 
 	$_POST['NewReport'] = 'on';
 }
 
-if ($_POST['Period'] != '') {
+if (isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
@@ -82,26 +82,14 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
-		'<table class="selection">', // Content of the header and footer of the input table:
-/*		'<thead>
-			<tr><th colspan="2">', _('Report Parameters'), '</th></tr>',
-		'</thead>',*/
-		'<tfoot>
-			<tr>
-				<td colspan="2">',
-					'<div class="centre">',
-						'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-					'</div>',
-				'</td>
-			</tr>',
-		'</tfoot>',
-		'<tbody>';
+		'<fieldset>', // Content of the header and footer of the input table:
+		'<legend>', _('Report Parameters'), '</legend>';
 	// END ReportParametersFormStart.
 	// Content of the body of the input table:
-	echo	'<tr>
-				<td>', _('Select period from'), ':</td>
-				<td><select name="PeriodFrom" required="required">';
+
+	echo	'<field>
+				<label for="PeriodFrom">', _('Select period from'), ':</label>
+				<select name="PeriodFrom" required="required">';
 
 	if(Date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
@@ -133,12 +121,12 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 		}
 	}
 
-	echo		'</select></td>
-			</tr>',
+	echo '</select>
+		</field>',
 	// Select period to:
-			'<tr>
-				<td><label for="PeriodTo">', _('Select period to'), '</label></td>
-		 		<td><select id="PeriodTo" name="PeriodTo" required="required">';
+			'<field>
+				<label for="PeriodTo">', _('Select period to'), '</label>
+		 		<select id="PeriodTo" name="PeriodTo" required="required">';
 
 	if(!isset($_POST['PeriodTo']) OR $_POST['PeriodTo']=='') {
 		$LastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
@@ -160,41 +148,46 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 		echo ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 
-	echo		'</select></td>
-			</tr>
-			<tr>
-				<td>
-					<h3>', _('OR'), '</h3>
-				</td>
-			</tr>';
+	echo '</select>
+		</field>';
+		
+	echo '<h3>', _('OR'), '</h3>';
 
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
-	echo	'<tr>
-				<td>', _('Select Period'), '</td>
-				<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
-			</tr>',
+	echo	'<field>
+				<label for="Period">', _('Select Period'), '</label>
+				', ReportPeriodList($_POST['Period'], array('l', 't')), '
+			</field>',
 	// Show all accounts instead a summary:
-			'<tr>
-				<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
-				<td><select name="ShowDetail" required="required">
+			'<field>
+				<label for="ShowDetail">', _('Detail or summary'), '</label>
+				<select name="ShowDetail" required="required">
 					<option value="Summary">', _('Summary'), '</option>
 					<option selected="selected" value="Detailed">', _('All Accounts'), '</option>
-					</select>',
-			 		fShowFieldHelp(_('Selecting Summary will show on the totals at the account group level')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+					</select>
+			 		<fieldhelp>', _('Selecting Summary will show on the totals at the account group level'), '</fieldhelp
+			</field>',
 	// Show accounts with zero balance:
-			'<tr>
-				<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
-			 	<td><input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show accounts with zero balance')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+			'<field>
+				<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+			 	<input';
+	if (isset($_POST['ShowZeroBalance'])) {
+		echo ' checked="checked"';
+	} else {
+		echo '';
+	} 
+	echo ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
+			 		'<fieldhelp>', _('Check this box to show accounts with zero balance'), '</fieldhelp>
+			</field>';
 	// BEGIN ReportParametersFormEnd:
-	echo '</tbody></table>',
+	echo '</fieldset>',
+			'<div class="centre">',
+				'<button name="Submit" type="submit" value="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
+				'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+			'</div>',
 		'</form>';
 	// END ReportParametersFormEnd.
 	// Now do the posting while the user is thinking about the period to select:

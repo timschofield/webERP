@@ -11,13 +11,13 @@ echo '<p class="page_title_text">
 	</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table class="selection">
-		<tr>
-			<td>' . _('Type') . ':</td>
-			<td><select name="TransType">';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>
+		<field>
+			<label for="TransType">' . _('Type') . ':</label>
+			<select name="TransType">';
 
 $sql = "SELECT typeid,
 				typename
@@ -39,7 +39,8 @@ while ($myrow=DB_fetch_array($resultTypes)){
 		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -50,21 +51,22 @@ if (!isset($_POST['ToDate'])){
 if (!isset($_POST['SupplierNo'])) {
 	$_POST['SupplierNo'] = '';
 }
-echo '<td>' . _('From') . ':</td>
-		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-		<td>' . _('To') . ':</td>
-		<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		<td>' . _('Supplier No') . ':</td>
-		<td><input type="text" name="SupplierNo" size="11" maxlength="10" value="' . $_POST['SupplierNo'] . '" />
-		</td>
-	</tr>
-	</table>
-	<br />
+echo '<field>
+		<label for="FromDate">' . _('From Date') . ':</label>
+		<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+	</field>
+	<field>
+		<label for="ToDate">' . _('To Date') . ':</label>
+		<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+	</field>
+	<field>
+		<label for="SupplierNo">' . _('Supplier No') . ':</label>
+		<input type="text" name="SupplierNo" size="11" maxlength="10" value="' . $_POST['SupplierNo'] . '" />
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="ShowResults" value="' . _('Show transactions') . '" />
 	</div>
-	<br />
-    </div>
 	</form>';
 
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){

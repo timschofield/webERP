@@ -343,12 +343,13 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		. $Title . '</p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-    echo '<table class="selection">';
-	echo '<tr><td>' . _('Choose Option'). ':</td>
-              <td><select name="ReportOrClose">';
+    echo '<fieldset>
+			<legend>', _('Stock Check Options'), '</legend>';
+	echo '<field>
+			<label for="ReportOrClose">' . _('Choose Option'). ':</label>
+			<select name="ReportOrClose">';
 
 	if ($_POST['ReportOrClose']=='ReportAndClose'){
 		echo '<option selected="selected" value="ReportAndClose">' .  _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
@@ -358,9 +359,12 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		echo '<option value="ReportAndClose">' . _('Report and Close the Inventory Comparison Processing Adjustments As Necessary') . '</option>';
 	}
 
-	echo '</select></td></tr>';
-	echo '<tr><td>' .  _('Action for Zero Counts') . ':</td>
-              <td><select name="ZeroCounts">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ZeroCounts">' .  _('Action for Zero Counts') . ':</label>
+			<select name="ZeroCounts">';
 
 	if ($_POST['ZeroCounts'] =='Adjust'){
 		echo '<option selected="selected" value="Adjust">' .  _('Adjust System stock to Nil') . '</option>';
@@ -370,10 +374,11 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 		echo '<option selected="selected" value="Leave">' . _('Do not Adjust System stock to Nil') . '</option>';
 	}
 
-    echo '</select></td></tr>';
-	echo '</table><br /><div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF'). '" /></div>';
-    echo '</div>
-          </form>';
+    echo '</select>
+		</field>';
+	echo '</fieldset>
+		<div class="centre"><input type="submit" name="PrintPDF" value="' . _('Print PDF'). '" /></div>';
+    echo '</form>';
 
 	include('includes/footer.php');
 

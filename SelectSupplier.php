@@ -227,30 +227,31 @@ if (isset($_SESSION['SupplierID'])) {
 		'</tr><tbody></table>';
 }
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>
-	<table cellpadding="3" class="selection">
-	<tr>
-		<td>' . _('Enter a partial Name') . ':</td>
-		<td>';
+echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Suppliers') . '</p>';
+
+echo '<fieldset>
+		<legend class="search">', _('Search Criteria'), '</legend>
+		<field>
+			<label for="Keywords">' . _('Enter a partial Name') . ':</label>';
 if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
 	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
-echo '</td>
-		<td><b>' . _('OR') . '</b></td>
-		<td>' . _('Enter a partial Code') . ':</td>
-		<td>';
+echo '<h3>' . _('OR') . '</h3>';
+
+echo '<field>
+		<label for="SupplierCode">' . _('Enter a partial Code') . ':</label>';
 if (isset($_POST['SupplierCode'])) {
 	echo '<input type="text" autofocus="autofocus" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 } else {
 	echo '<input type="text" autofocus="autofocus" name="SupplierCode" size="15" maxlength="18" />';
 }
-echo '</td></tr>
-		</table>
-		<br /><div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
+echo '</field>
+	</fieldset>';
+
+echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
 //if (isset($result) AND !isset($SingleSupplierReturned)) {
 if (isset($_POST['Search'])) {
 	$ListCount = DB_num_rows($result);

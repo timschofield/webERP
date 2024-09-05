@@ -8,11 +8,9 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<div>';
 if (isset($_POST['ResetPart'])) {
 	unset($SelectedStockItem);
 }
-echo '<br/><div class="centre">';
 if (isset($_POST['RequestNo'])) {
 	$RequestNo = $_POST['RequestNo'];
 }
@@ -28,12 +26,15 @@ if (isset($_POST['SelectedStockItem'])) {
 
 if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened or click a submit button
 	if (!isset($RequestNo) OR $RequestNo == '') {
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('Request Number') . ':</td>
-				<td><input type="text" name="RequestNo" maxlength="8" size="9" /></td>
-				<td>' . _('From Stock Location') . ':</td>
-				<td><select name="StockLocation">';
+		echo '<fieldset>
+				<legend>', _('Search Criteria'), '</legend>
+				<field>
+					<label for="RequestNo">' . _('Request Number') . ':</label>
+					<input type="text" name="RequestNo" maxlength="8" size="9" />
+				</field>
+				<field>
+					<label for="StockLocation">' . _('From Stock Location') . ':</label>
+					<select name="StockLocation">';
 		$sql = "SELECT locations.loccode, locationname, canview FROM locations
 			INNER JOIN locationusers 
 				ON locationusers.loccode=locations.loccode 
@@ -62,7 +63,8 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 				}
 			}
-			echo '<select></td>';
+			echo '<select>
+				</field>';
 		} else {//there are possiblity that the user is the authorization person,lets figure things out
 
 			$sql = "SELECT stockrequest.loccode,locations.locationname FROM stockrequest INNER JOIN locations ON stockrequest.loccode=locations.loccode
@@ -89,7 +91,8 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 						echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
 					}
 				}
-				echo '</select></td>';
+				echo '</select>
+					</field>';
 			
 
 			} else {
@@ -102,8 +105,9 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		if (!isset($_POST['Authorized'])) {
 			$_POST['Authorized'] = 'All';
 		}
-		echo '<td>' . _('Authorisation status') . '</td>
-			<td><select name="Authorized">';
+		echo '<field>
+				<label for="Authorized">' . _('Authorisation status') . '</label>
+				<select name="Authorized">';
 		$Auth = array('All'=>_('All'),0=>_('Unauthorized'),1=>_('Authorized'));
 		foreach ($Auth as $key=>$value) {
 			if ($_POST['Authorized'] == $value) {
@@ -112,15 +116,17 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				echo '<option value="' . $key . '">' . $value . '</option>';
 			}
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 	}
 	//add the department, sometime we need to check each departments' internal request
 	if (!isset($_POST['Department'])) {
 		$_POST['Department'] = '';
 	}
 
-	echo '<td>' . _('Department') . '</td>
-		<td><select name="Department">';
+	echo '<field>
+			<label for="Department">' . _('Department') . '</label>
+			<select name="Department">';
 	//now lets retrieve those deparment available for this user;
 	$sql = "SELECT departments.departmentid, 
 			departments.description
@@ -145,7 +151,8 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				echo '<option value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
 			}
 		}
-		echo '</select></td>';
+		echo '</select>
+			</field>';
 		echo '<input type="hidden" name="Departments" value="' . base64_encode(serialize($Departments)) . '" />';
 	} else {
 		prnMsg(_('There are no internal request result available for your or your department'),'error');
@@ -160,17 +167,27 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 	if (!isset($_POST['FromDate'])) {
 		$_POST['FromDate'] = '';
 	}
-	echo '<td>' . _('Date From') . '</td>
-		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" /></td>
-		<td>' . _('Date To') . '</td>
-		<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		<td><input type="submit" name="Search"  value="' ._('Search') . '" /></td></tr></table>';
+	echo '<field>
+			<label for="FromDate">' . _('Date From') . '</label>
+			<input type="text" class="date" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" />
+		</field>
+		<field>
+			<label for="ToDate">' . _('Date To') . '</label>
+			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+		</field>';
 	if (!isset($_POST['ShowDetails'])) {
 		$_POST['ShowDetails'] = 1;
 	}
 	$Checked = ($_POST['ShowDetails'] == 1)?'checked="checked"':'';
-	echo '<td>' . _('Show Details') . '
-		<input type="checkbox" ' . $Checked . ' name="ShowDetails" /> </td>';
+	echo '<field>
+			<label>' . _('Show Details') . '</label>
+			<input type="checkbox" ' . $Checked . ' name="ShowDetails" />
+		</field>';
+		
+	echo '</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="Search"  value="' ._('Search') . '" />
+		</div>';
 	//following is the item search parts which belong to the existed internal request, we should not search it generally, it'll be rediculous 
 	//hereby if the authorizer is login, we only show all category available, even if there is problem, it'll be correceted later when items selected -:)
 	if (isset($Authorizer)) { 
@@ -192,13 +209,11 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 	if ($Cats >0) {
 		
-		echo '<br /><table class="selection">
-			<tr>
-				<th colspan="6"><h3>' . _('To search for internal request for a specific part use the part selection facilities below') . '</h3></th>
-			</tr>
-			<tr>
-				<td>' . _('Stock Category') . '</td>
-				<td><select name="StockCat">';
+		echo '<fieldset>
+			<legend>' . _('To search for internal request for a specific part use the part selection facilities below') . '</legend>
+			<field>
+				<label for="StockCat">' . _('Stock Category') . '</label>
+				<select name="StockCat">';
 				
 		if (!isset($_POST['StockCat'])) {
 			$_POST['StockCat'] = '';
@@ -215,33 +230,35 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
 			}
 		}
-		echo '</selected></td>
-			<td>' . _('Enter partial') . '  <b>' . _('Description') . '</b>:</td>';
+		echo '</select>
+			</field>';
+			
+		echo '<field>
+				<label for="Keywords">' . _('Enter partial') . '  <b>' . _('Description') . '</b>:</label>';
 		if (!isset($_POST['Keywords'])) {
 			$_POST['Keywords'] = '';
 		}
-		echo '<td><input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" /></td>';		
-		echo '</tr>
-				<tr>
-					<td></td>
-					<td></td>
-					<td>' . _('OR') . ' ' .  _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>';
+		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';		
+		echo '</field>';
+		
+		echo _('OR');
+		
+		echo '<field>
+				<label for="StockCode">',_('Enter partial') . ' <b>' . _('Stock Code') . ':</label>';
 		if (!isset($_POST['StockCode'])) {
 			$_POST['StockCode'] = '';
 		}
-		echo '<td><input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" /></td>';
+		echo '<input type="text" autofocus="autofocus" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 
 	}
-	echo '</tr>
-			</table>
-			<br/>
-			<div class="centre">
-				<input type="submit" name="SearchPart" value="' . _('Search Now') . '" />
-				<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
-			</div>
-			<br />
-			</div>
-			</form>';
+	echo '</field>
+		</fieldset>';
+		
+	echo '<div class="centre">
+			<input type="submit" name="SearchPart" value="' . _('Search Now') . '" />
+			<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+		</div>
+	</form>';
 
 	if ($Cats == 0) {
 
@@ -334,18 +351,18 @@ if(isset($StockItemsResult)){
 	}
 	//lets add the condition selected by users
 	if (isset($_POST['RequestNo']) AND $_POST['RequestNo'] !== '') {
-		$SQL .= "WHERE stockrequest.dispatchid = '" . $_POST['RequestNo'] . "'";
+		$SQL .= " WHERE stockrequest.dispatchid = '" . $_POST['RequestNo'] . "'";
 	} else {
 		//first the constraint of locations;
 		if ($_POST['StockLocation'] != 'All') {//retrieve the location data from current code
-			$SQL .= "WHERE stockrequest.loccode='" . $_POST['StockLocation'] . "'";
+			$SQL .= " WHERE stockrequest.loccode='" . $_POST['StockLocation'] . "'";
 		} else {//retrieve the location data from serialzed data
 			if (!in_array(19,$_SESSION['AllowedPageSecurityTokens'])) {
 				$Locations = unserialize($_POST['Locations']);
 				$Locations = implode("','",$Locations);
-				$SQL .= "WHERE stockrequest.loccode in ('" . $Locations . "')";
+				$SQL .= " WHERE stockrequest.loccode in ('" . $Locations . "')";
 			} else {
-			 	$SQL .= "WHERE 1 ";
+			 	$SQL .= " WHERE 1 ";
 			}
 		}
 		//the authorization status
@@ -516,7 +533,7 @@ function GetSearchItems ($SQLConstraint='') {
 		 $SQL .= " WHERE stockmaster.categoryid='" . $_POST['StockCat'] ."'";
 
 	 }
-	$SQL .= ' AND (departments.authoriser="' . $_SESSION['UserID'] . '" OR initiator="' . $_SESSION['UserID'] . '") ';
+	$SQL .= " AND (departments.authoriser='" . $_SESSION['UserID'] . "' OR initiator='" . $_SESSION['UserID'] . "') ";
 	$SQL .= $SQLConstraint;
 	$SQL .= " GROUP BY stockmaster.stockid,
 					    stockmaster.description,

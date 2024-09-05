@@ -136,8 +136,7 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Show all Demand Types') . '</a></div>';
 }
 
-echo '<br /><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
-echo '<div>';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedDT) and !isset($_GET['delete'])) {
@@ -156,36 +155,36 @@ if (isset($SelectedDT) and !isset($_GET['delete'])) {
 
 	echo '<input type="hidden" name="SelectedDT" value="' . $SelectedDT . '" />';
 	echo '<input type="hidden" name="MRPDemandType" value="' . $_POST['MRPDemandType'] . '" />';
-	echo '<table class="selection">
-			<tr>
-				<td>' ._('Demand Type') . ':</td>
-				<td>' . $_POST['MRPDemandType'] . '</td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Edit Demand Type'), '</legend>
+			<field>
+				<label for="MRPDemandType">' ._('Demand Type') . ':</label>
+				<fieldtext>' . $_POST['MRPDemandType'] . '</fieldtext>
+			</field>';
 
 } else { //end of if $SelectedDT only do the else when a new record is being entered
 	if (!isset($_POST['MRPDemandType'])) {
 		$_POST['MRPDemandType'] = '';
 	}
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Demand Type') . ':</td>
-				<td><input type="text" name="MRPDemandType" size="6" maxlength="5" value="' . $_POST['MRPDemandType'] . '" /></td>
-			</tr>' ;
+	echo '<fieldset>
+			<legend>', _('Create Demand Type'), '</legend>
+			<field>
+				<label for="MRPDemandType">' . _('Demand Type') . ':</label>
+				<input type="text" name="MRPDemandType" size="6" maxlength="5" value="' . $_POST['MRPDemandType'] . '" />
+			</field>' ;
 }
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
 }
 
-echo '<tr>
-		<td>' . _('Demand Type Description') . ':</td>
-		<td><input type="text" name="Description" size="31" maxlength="30" value="' . $_POST['Description'] . '" /></td>
-	</tr>
-	</table>
-	<br />
+echo '<field>
+		<label for="Description">' . _('Demand Type Description') . ':</label>
+		<input type="text" name="Description" size="31" maxlength="30" value="' . $_POST['Description'] . '" />
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
     </div>
 	</form>';
 

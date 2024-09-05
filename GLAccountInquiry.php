@@ -53,10 +53,11 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class="selection">
-		<tr>
-			<td>' . _('Account').':</td>
-			<td><select name="Account">';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>
+		<field>
+			<label for="Account">' . _('Account').':</label>
+			<select name="Account">';
 
 $sql = "SELECT chartmaster.accountcode,
 			bankaccounts.accountcode AS bankact,
@@ -77,13 +78,13 @@ while($myrow=DB_fetch_array($Account)) {
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	}
  }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 //Select the tag
-echo '<tr>
-		<td>' . _('Select Tag') . ':</td>
-		<td><select name="tag">';
+echo '<field>
+		<label for="tag">' . _('Select Tag') . ':</label>
+		<select name="tag">';
 
 $SQL = "SELECT tagref,
 			tagdescription
@@ -100,12 +101,12 @@ while($myrow=DB_fetch_array($result)) {
 		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 // End select tag
-echo '<tr>
-		<td>' . _('For Period range').':</td>
-		<td><select name="Period[]" size="12" multiple="multiple">';
+echo '<field>
+		<label for="Period">' . _('For Period range').':</label>
+		<select name="Period[]" size="12" multiple="multiple">';
 
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql);
@@ -116,10 +117,9 @@ while($myrow=DB_fetch_array($Periods)) {
 		echo '<option value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>
-	<br />
+echo '</select>
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="Show" value="'._('Show Account Transactions').'" />
 	</div>

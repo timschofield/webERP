@@ -10,11 +10,9 @@ $BookMark = 'AssetCategories';
 
 include('includes/header.php');
 
-echo '<div class="centre">
-	<p class="page_title_text">
+echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Fixed Asset Categories') . '" alt="" />' . ' ' . $Title . '
-	</p>
-    </div>';
+	</p>';
 
 if (isset($_GET['SelectedCategory'])){
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -159,8 +157,7 @@ or deletion of the records*/
 			FROM fixedassetcategories";
 	$result = DB_query($sql);
 
-	echo '<br />
-			<table class="selection">';
+	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Cat Code') . '</th>
 			<th>' . _('Description') . '</th>
@@ -193,8 +190,7 @@ or deletion of the records*/
 					$myrow['categoryid']);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>
-          <br />';
+	echo '</table>';
 }
 
 //end of ifs and buts!
@@ -204,7 +200,6 @@ if (isset($SelectedCategory)) {
 }
 
 echo '<form id="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedCategory) and !isset($_POST['submit'])) {
@@ -230,21 +225,24 @@ if (isset($SelectedCategory) and !isset($_POST['submit'])) {
 
 	echo '<input type="hidden" name="SelectedCategory" value="' . $SelectedCategory . '" />';
 	echo '<input type="hidden" name="CategoryID" value="' . $_POST['CategoryID'] . '" />';
-	echo '<table class="selection">
-		<tr>
-			<td>' . _('Category Code') . ':</td>
-			<td>' . $_POST['CategoryID'] . '</td>
-		</tr>';
+	echo '<fieldset>
+			<legend>', _('Amend Category Details'), '</legend>
+			<field>
+				<label for="CategoryID">' . _('Category Code') . ':</label>
+				<fieldtext>' . $_POST['CategoryID'] . '</fieldtext>
+			</field>';
 
 } else { //end of if $SelectedCategory only do the else when a new record is being entered
 	if (!isset($_POST['CategoryID'])) {
 		$_POST['CategoryID'] = '';
 	}
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Category Code') . ':</td>
-				<td><input type="text" name="CategoryID" required="required" title="' . _('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '" data-type="no-illegal-chars" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" /></td>
-			</tr>';
+	echo '<fieldset>
+			<legend>', _('Create Category Details'), '</legend>
+			<field>
+				<label for="CategoryID">' . _('Category Code') . ':</label>
+				<input type="text" name="CategoryID" required="required" title="" data-type="no-illegal-chars" size="7" maxlength="6" value="' . $_POST['CategoryID'] . '" />
+				<fieldhelp>' . _('Enter the asset category code. Up to 6 alpha-numeric characters are allowed') . '</fieldhelp>
+			</field>';
 }
 
 //SQL to poulate account selection boxes
@@ -270,13 +268,14 @@ if (!isset($_POST['CategoryDescription'])) {
 	$_POST['CategoryDescription'] = '';
 }
 
-echo '<tr>
-		<td>' . _('Category Description') . ':</td>
-		<td><input type="text" name="CategoryDescription" required="required" title="' . _('Enter the asset category description up to 20 characters') . '" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Fixed Asset Cost GL Code') . ':</td>
-		<td><select name="CostAct" required="required" title="' . _('Select the general ledger account where the cost of assets of this category should be posted to. Only balance sheet accounts can be selected') . '" >';
+echo '<field>
+		<label for="CategoryDescription">' . _('Category Description') . ':</label>
+		<input type="text" name="CategoryDescription" required="required" title="" size="22" maxlength="20" value="' . $_POST['CategoryDescription'] . '" />
+		<fieldhelp>' . _('Enter the asset category description up to 20 characters') . '</fieldhelp>
+	</field>
+	<field>
+		<label for="CostAct">' . _('Fixed Asset Cost GL Code') . ':</label>
+		<select name="CostAct" required="required" title="" >';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)){
 
@@ -286,11 +285,13 @@ while ($myrow = DB_fetch_array($BSAccountsResult)){
 		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
 	}
 } //end while loop
-echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Profit and Loss Depreciation GL Code') . ':</td>
-		<td><select name="DepnAct" required="required" title="' . _('Select the general ledger account where the depreciation of assets of this category should be posted to. Only profit and loss accounts can be selected') . '" >';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account where the cost of assets of this category should be posted to. Only balance sheet accounts can be selected') . '</fieldhelp>
+</field>';
+
+echo '<field>
+		<label for="DepnAct">' . _('Profit and Loss Depreciation GL Code') . ':</label>
+		<select name="DepnAct" required="required" title="" >';
 
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DepnAct']) and $myrow['accountcode']==$_POST['DepnAct']) {
@@ -299,13 +300,14 @@ while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')</option>';
 	}
 } //end while loop
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account where the depreciation of assets of this category should be posted to. Only profit and loss accounts can be selected') . '</fieldhelp>
+</field>';
 
 DB_data_seek($PnLAccountsResult,0);
-echo '<tr>
-		<td>' .  _('Profit or Loss on Disposal GL Code') . ':</td>
-		<td><select name="DisposalAct" required="required" title="' . _('Select the general ledger account where the profit or loss on disposal on assets of this category should be posted to. Only profit and loss accounts can be selected') . '" >';
+echo '<field>
+		<label for="DisposalAct">' .  _('Profit or Loss on Disposal GL Code') . ':</label>
+		<select name="DisposalAct" required="required" title="" >';
 while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 	if (isset($_POST['DisposalAct']) and $myrow['accountcode']==$_POST['DisposalAct']) {
 		echo '<option selected="selected" value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
@@ -313,13 +315,14 @@ while ($myrow = DB_fetch_array($PnLAccountsResult)) {
 		echo '<option value="'.$myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . ' ('.$myrow['accountcode'].')' . '</option>';
 	}
 } //end while loop
-echo '</select></td>
-	</tr>';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account where the profit or loss on disposal on assets of this category should be posted to. Only profit and loss accounts can be selected') . '</fieldhelp>
+</field>';
 
 DB_data_seek($BSAccountsResult,0);
-echo '<tr>
-		<td>' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</td>
-		<td><select name="AccumDepnAct" required="required" title="' . _('Select the general ledger account where the accumulated depreciation on assets of this category should be posted to. Only balance sheet accounts can be selected') . '" >';
+echo '<field>
+		<label for="AccumDepnAct">' . _('Balance Sheet Accumulated Depreciation GL Code') . ':</label>
+		<select name="AccumDepnAct" required="required" title="" >';
 
 while ($myrow = DB_fetch_array($BSAccountsResult)) {
 
@@ -332,16 +335,16 @@ while ($myrow = DB_fetch_array($BSAccountsResult)) {
 } //end while loop
 
 
-echo '</select></td>
-	</tr>
-	</table>
-	<br />';
+echo '</select>
+	<fieldhelp>' . _('Select the general ledger account where the accumulated depreciation on assets of this category should be posted to. Only balance sheet accounts can be selected') . '</fieldhelp>
+</field>';
+
+echo '</fieldset>';
 
 echo '<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>
-    </div>
-	</form>';
+</form>';
 
 include('includes/footer.php');
 ?>

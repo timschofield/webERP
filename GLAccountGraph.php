@@ -18,7 +18,7 @@ if (isset($_POST['Account'])) {
 	$SelectedAccount = $_GET['Account'];
 }
 
-if ($_POST['Period'] != '') {
+if (isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
@@ -41,10 +41,11 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 			<img src="' . $RootPath, '/css/', $_SESSION['Theme'] . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select GL Account') . ':</td>
-				<td><select name="Account">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="Account">' . _('Select GL Account') . ':</label>
+				<select name="Account">';
 
 	$SQL = "SELECT chartmaster.accountcode,
 				bankaccounts.accountcode AS bankact,
@@ -67,11 +68,11 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	}
 	echo '</select>
 			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Graph Type') . '</td>
-			<td><select name="GraphType">
+	echo '<field>
+			<label for="GraphType">' . _('Graph Type') . '</label>
+			<select name="GraphType">
 					<option value="bars">' . _('Bar Graph') . '</option>
 					<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>
 					<option value="lines">' . _('Line Graph') . '</option>
@@ -83,17 +84,16 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 					<option value="squared">' . _('Squared Graph') . '</option>
 					<option value="stackedarea">' . _('Stacked Area Graph') . '</option>
 				</select>
-			</td>
-		</tr>';
+			</field>';
 
-	echo '<tr>
-			<td>', _('Invert Graph'), '</td>
-			<td><input type="checkbox" name="InvertGraph" /></td>
-		</tr>';
+	echo '<field>
+			<label for="InvertGraph">', _('Invert Graph'), '</label>
+			<input type="checkbox" name="InvertGraph" />
+		</field>';
 
-	echo '<tr>
-			<td>' . _('Select Period From') . ':</td>
-			<td><select name="PeriodFrom">';
+	echo '<field>
+			<label for="PeriodFrom">' . _('Select Period From') . ':</label>
+			<select name="PeriodFrom">';
 
 	if (Date('m') > $_SESSION['YearEnd']) {
 		/*Dates in SQL format */
@@ -121,17 +121,16 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	}
 
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 	if (!isset($_POST['PeriodTo']) or $_POST['PeriodTo'] == '') {
 		$DefaultPeriodTo = GetPeriod(DateAdd(ConvertSQLDate($DefaultFromDate), 'm', 11));
 	} else {
 		$DefaultPeriodTo = $_POST['PeriodTo'];
 	}
 
-	echo '<tr>
-			<td>' . _('Select Period To') . ':</td>
-			<td><select name="PeriodTo">';
+	echo '<field>
+			<label for="PeriodTo">' . _('Select Period To') . ':</label>
+			<select name="PeriodTo">';
 
 	$RetResult = DB_data_seek($Periods, 0);
 
@@ -144,25 +143,22 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
-	echo '<tr>
-			<td colspan="2">
+	echo '<field>
 				<h3>', _('OR'), '</h3>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '<tr>
-			<td>', _('Select Period'), '</td>
-			<td>' . ReportPeriodList($_POST['Period']) . '</td>
-		</tr>';
+	echo '<field>
+			<label for="Period">', _('Select Period'), '</label>
+			' . ReportPeriodList($_POST['Period']) . '
+		</field>';
 
-	echo '</table>
+	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="ShowGraph" value="' . _('Show Account Graph') . '" />
 			</div>

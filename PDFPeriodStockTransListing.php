@@ -24,20 +24,20 @@ if (!isset($_POST['FromDate'])){
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Enter the date from which the transactions are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Enter the date to which the transactions are to be listed') . ':</td>
-			<td><input type="text" required="required" name="ToDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Transaction type') . '</td>
-			<td><select name="TransType">
+		<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="FromDate">' . _('Enter the date from which the transactions are to be listed') . ':</label>
+			<input type="text" required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+		</field>
+		<field>
+			<label for="ToDate">' . _('Enter the date to which the transactions are to be listed') . ':</label>
+			<input type="text" required="required" name="ToDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+		</field>
+		<field>
+			<label for="TransType">' . _('Transaction type') . '</label>
+			<select name="TransType">
 				<option value="10">' . _('Sales Invoice') . '</option>
 				<option value="11">' . _('Sales Credit Note') . '</option>
 				<option value="16">' . _('Location Transfer') . '</option>
@@ -45,15 +45,15 @@ if (!isset($_POST['FromDate'])){
 				<option value="25">' . _('Purchase Order Delivery') . '</option>
 				<option value="26">' . _('Work Order Receipt') . '</option>
 				<option value="28">' . _('Work Order Issue') . '</option>
-				</select></td>
-		</tr>';
+			</select>
+		</field>';
 
 	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$resultStkLocs = DB_query($sql);
 
-	echo '<tr>
-			<td>' . _('For Stock Location') . ':</td>
-			<td><select required="required" name="StockLocation">
+	echo '<field>
+			<label for="StockLocation">' . _('For Stock Location') . ':</label>
+			<select required="required" name="StockLocation">
 				<option value="All">' . _('All') . '</option>';
 
 	while ($myrow=DB_fetch_array($resultStkLocs)){
@@ -70,15 +70,14 @@ if (!isset($_POST['FromDate'])){
 			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
-	echo '</table>
-			<br />
+	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="Go" value="' . _('Create PDF') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+	echo '</form>';
 
 	 include('includes/footer.php');
 	 exit;

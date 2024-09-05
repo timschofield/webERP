@@ -141,7 +141,7 @@ if (!isset($SelectedRole)) {
 
 
 if (isset($SelectedRole)) {
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Existing Roles') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Review Existing Roles') . '</a></div>';
 }
 
 if (isset($SelectedRole)) {
@@ -160,27 +160,27 @@ if (isset($SelectedRole)) {
 		$_POST['SecRoleName'] = $myrow['secrolename'];
 	}
 }
-echo '<br />';
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 if( isset($_POST['SelectedRole'])) {
 	echo '<input type="hidden" name="SelectedRole" value="' . $_POST['SelectedRole'] . '" />';
 }
-echo '<table class="selection">';
+echo '<fieldset>';
 if (!isset($_POST['SecRoleName'])) {
 	$_POST['SecRoleName']='';
+	echo '<legend>', _('Create Role'), '</legend>';
+} else {
+	echo '<legend>', _('Amend Role'), '</legend>';
 }
-echo '<tr>
-		<td>' . _('Role') . ':</td>
-		<td><input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" required="true" title="'._("The role description entered must be at least 4 characters long").'" /></td>
-	</tr>';
-echo '</table>
-	<br />
+echo '<field>
+		<label for="SecRoleName">' . _('Role') . ':</label>
+		<input type="text" name="SecRoleName" pattern=".{4,}" size="40" maxlength="40" value="' . $_POST['SecRoleName'] . '" required="true" title="" />
+		<fieldhelp>'._("The role description entered must be at least 4 characters long").'</fieldhelp>
+	</field>';
+echo '</fieldset>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Enter Role') . '" />
 	</div>
-    </div>
 	</form>';
 
 if (isset($SelectedRole)) {
@@ -200,7 +200,7 @@ if (isset($SelectedRole)) {
 		$i++;
 	}
 
-	echo '<br /><table class="selection"><tr>';
+	echo '<table class="selection"><tr>';
 
 	if (DB_num_rows($Result)>0 ) {
 		echo '<th colspan="3"><div class="centre">' . _('Assigned Security Tokens') . '</div></th>';

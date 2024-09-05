@@ -259,12 +259,12 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 
 	$result = DB_query('SELECT categoryid,categorydescription FROM fixedassetcategories');
 	echo '<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    echo '<table class="selection">';
-	echo '<tr>
-			<th>' . _('Asset Category') . '</th>
-			<td><select name="AssetCategory">
+    echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+	echo '<field>
+			<label for="AssetCategory">' . _('Asset Category') . '</label>
+			<select name="AssetCategory">
 				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetCategory']) and $myrow['categoryid'] == $_POST['AssetCategory']) {
@@ -273,13 +273,13 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	$sql = "SELECT  locationid, locationdescription FROM fixedassetlocations";
 	$result = DB_query($sql);
-	echo '<tr>
-			<th>' . _('Asset Location') . '</th>
-			<td><select name="AssetLocation">
+	echo '<field>
+			<label for="AssetLocation">' . _('Asset Location') . '</label>
+			<select name="AssetLocation">
 				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetLocation']) AND $myrow['locationid'] == $_POST['AssetLocation']) {
@@ -288,13 +288,13 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	$sql = "SELECT assetid, description FROM fixedassets";
 	$result = DB_query($sql);
-	echo '<tr>
-			<th>' . _('Asset') . '</th>
-			<td><select name="AssetID">
+	echo '<field>
+			<label for="AssetID">' . _('Asset') . '</label>
+			<select name="AssetID">
 				<option value="%">' . _('ALL') . '</option>';
 	while ($myrow = DB_fetch_array($result)) {
 		if (isset($_POST['AssetID']) AND $myrow['assetid'] == $_POST['AssetID']) {
@@ -303,8 +303,8 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			echo '<option value="' . $myrow['assetid'] . '">'  . $myrow['assetid'] . ' - ' . $myrow['description'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 	if (empty($_POST['FromDate'])) {
 		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), date('d'), date('Y') - 1));
 	}
@@ -312,21 +312,21 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 
-	echo '<tr>
-			<th>', _('From Date'), '</th>
-			<td><input type="text" class="date" name="FromDate" required="required" title="' . _('Enter the start date to show the cost and accumulated depreciation from') . '" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-		</tr>
-		<tr>
-			<th>', _('To Date'), '</th>
-			<td><input type="text" class="date" name="ToDate" required="required" title="' . _('Enter the end date to show the cost and accumulated depreciation to') . '" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>
-	</table>
-	<br />
+	echo '<field>
+			<label for="FromDate">', _('From Date'), '</label>
+			<input type="text" class="date" name="FromDate" required="required" title="" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+			<fieldhelp>' . _('Enter the start date to show the cost and accumulated depreciation from') . '</fieldhelp>
+		</field>
+		<field>
+			<label for="ToDate">', _('To Date'), '</label>
+			<input type="text" class="date" name="ToDate" required="required" title="" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+			<fieldhelp>' . _('Enter the end date to show the cost and accumulated depreciation to') . '</fieldhelp>
+		</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="submit" value="' . _('Show Assets') . '" />&nbsp;
 		<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;
 		<input type="submit" name = "csv" value="' . _('Print as CSV') . '" />
-	</div>
     </div>
 	</form>';
 }

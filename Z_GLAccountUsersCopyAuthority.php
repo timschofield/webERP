@@ -51,13 +51,13 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
-echo '<div class="centre noprint">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table>';
-echo ' <tr>
-		<td>' . _('Select User to copy the Authority FROM') . ':</td>
-		<td><select name="FromUserID">';
+echo '<fieldset>
+		<legend>', _('Copy Authorities'), '</legend>';
+echo ' <field>
+		<label>' . _('Select User to copy the Authority FROM') . ':</label>
+		<select name="FromUserID">';
 $Result = DB_query("SELECT userid,
 							realname
 					FROM www_users
@@ -68,11 +68,12 @@ while ($MyRow = DB_fetch_array($Result)) {
 	echo '<option value="';
 	echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 } //end while loop
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo ' <tr>
-		<td>' . _('Select User to copy the Authority TO') . ':</td>
-		<td><select name="ToUserID">';
+echo ' <field>
+		<label>' . _('Select User to copy the Authority TO') . ':</label>
+		<select name="ToUserID">';
 $Result = DB_query("SELECT userid,
 							realname
 					FROM www_users
@@ -83,10 +84,11 @@ while ($MyRow = DB_fetch_array($Result)) {
 	echo '<option value="';
 	echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
 } //end while loop
-echo '</select></td></tr>';
-echo '</table>',
-			// Form buttons:
-			'<button name="ProcessCopyAuthority" type="submit" value="', _('Process Copy of Authority'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Process'), '</button>', // "Process Copy of Authority" button.
+echo '</select>
+	</field>';
+echo '</fieldset>
+		<div class="centre">
+			<button name="ProcessCopyAuthority" type="submit" value="', _('Process Copy of Authority'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Process'), '</button>', // "Process Copy of Authority" button.
 			'<button formaction="index.php?Application=Utilities" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 		'</div>
 	</form>';

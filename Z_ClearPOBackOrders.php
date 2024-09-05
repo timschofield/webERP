@@ -16,9 +16,7 @@ if (isset($_POST['ClearSupplierBackOrders'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '
-	<div class="centre">
-	<table>
+echo '<table>
 	<tr><td>' . _('From Supplier Code') . ':</td>
 		<td><input type="text" name="FromSupplierNo" size="20" maxlength="20" /></td>
 	</tr>
@@ -26,6 +24,7 @@ echo '
 	<td><input type="text" name="ToSupplierNo" size="20" maxlength="20" /></td>
 	</tr>
 	</table>
+	<div class="centre">
 	<button type="submit" name="ClearSupplierBackOrders">' . _('Clear Supplier Back Orders') . '</button>
 	<div>
 	</form>';

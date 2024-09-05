@@ -198,70 +198,64 @@ if (!isset($_GET['delete'])) {
 		$_POST['ContactPhone']  = $myrow['phoneno'];
 		$_POST['ContactEmail'] = $myrow['email'];
 		$_POST['ContactNotes'] = $myrow['notes'];
-		$_POST['DebtorNo'] = $myrow['debtorno'];
-		echo '<input type="hidden" name="Id" value="'. $Id .'" />',
-			'<input type="hidden" name="Con_ID" value="' . $_POST['Con_ID'] . '" />',
-			'<input type="hidden" name="DebtorNo" value="' . $_POST['DebtorNo'] . '" />',
-			'<br />
-				<table class="selection">
-				<thead>
-					<tr>
-						<th colspan="2">', _('Edit Customer Contact Details'), '</th>
-					</tr>
-				</thead>
-				<tbody>
-				<tr>
-					<td>', _('Contact Code'), ':</td>
-					<td>', $_POST['Con_ID'], '</td>
-				</tr>';
+		echo '<input type="hidden" name="Id" value="'. $Id .'" />
+			<input type="hidden" name="Con_ID" value="' . $_POST['Con_ID'] . '" />
+			<input type="hidden" name="DebtorNo" value="' . $_POST['DebtorNo'] . '" />';
+			
+		echo '<fieldset>
+				<legend>', _('Edit Customer Contact Details'), '</legend>';
+				
+		echo '<field>
+				<label for="Con_ID">', _('Contact Code'), ':</label>
+				<fieldtext>', $_POST['Con_ID'], '</fieldtext>
+			</field>';
 	} else {// New Customer Contact Details.
-		echo '<table class="noprint selection">
-		<thead>
-			<tr>
-				<th colspan="2">', _('New Customer Contact Details'), '</th>
-			</tr>
-		</thead>
-		<tbody>';
+		echo '<fieldset>
+				<legend>', _('New Customer Contact Details'), '</legend>';
 	}
 	// Contact name:
-	echo '<tr>
-			<td>', _('Contact Name'), ':</td>
-			<td><input maxlength="40" name="ContactName" required="required" size="35" type="text" ';
+	echo '<field>
+			<label for="ContactName">', _('Contact Name'), ':</label>
+			<input maxlength="40" name="ContactName" autofocus="autofocus" required="required" size="35" type="text" ';
 				if( isset($_POST['ContactName']) ) {
-					echo 'autofocus="autofocus" value="', $_POST['ContactName'], '" ';
+					echo 'value="', $_POST['ContactName'], '" ';
 				}
-				echo '/></td>
-		</tr>';
+				echo '/>
+			<fieldhelp>', _('The name of the person from this customer'), '</fieldhelp>
+		</field>';
 	// Role:
-	echo '<tr>
-			<td>', _('Role'), ':</td>
-			<td><input maxlength="40" name="ContactRole" size="35" type="text" ';
+	echo '<field>
+			<label for="ContactRole">', _('Role'), ':</label>
+			<input maxlength="40" name="ContactRole" size="35" type="text" ';
 				if( isset($_POST['ContactRole']) ) {
 					echo 'value="', $_POST['ContactRole'], '" ';
 				}
-				echo '/></td>
-		</tr>';
+				echo '/>
+			<fieldhelp>', _('The job role that this contact has at the customer'), '</fiedhelp>
+		</field>';
 	// Phone:
-	echo '<tr>
-			<td>', _('Phone'), ':</td>
-			<td><input maxlength="40" name="ContactPhone" size="35" type="tel" ';
+	echo '<field>
+			<label for="ContactPhone">', _('Phone'), ':</label>
+			<input maxlength="40" name="ContactPhone" size="35" type="tel" ';
 				if( isset($_POST['ContactPhone']) ) {
 					echo 'value="', $_POST['ContactPhone'], '" ';
 				}
-				echo '/></td>
-		</tr>';
+				echo '/>
+			<fieldhelp>', _('A phone number for this contact'), '</fiedhelp>
+		</field>';
 	// Email:
-	echo '<tr>
-			<td>', _('Email'), ':</td>
-			<td><input maxlength="55" name="ContactEmail" size="55" type="email" ';
+	echo '<field>
+			<label for="ContactEmail">', _('Email'), ':</label>
+			<input maxlength="55" name="ContactEmail" size="55" type="email" ';
 				if( isset($_POST['ContactEmail']) ) {
 					echo 'value="', $_POST['ContactEmail'], '" ';
 				}
-				echo '/></td>
-		</tr>';
-	echo '<tr>
-			<td>', _('Send Statement'), ':</td>
-			<td><select name="StatementAddress" title="' , _('This flag identifies the contact as one who should receive an email cusstomer statement') , '" >';
+				echo '/>
+			<fieldhelp>', _('An email address for this contact'), '</fiedhelp>
+		</field>';
+	echo '<field>
+			<label for="StatementAddress">', _('Send Statement'), ':</label>
+			<select name="StatementAddress" title="" >';
 				if( !isset($_POST['StatementAddress']) ) {
 					echo '<option selected="selected" value="0">', _('No') , '</option>
 							<option value="1">', _('Yes') , '</option>';
@@ -274,25 +268,24 @@ if (!isset($_GET['delete'])) {
 								<option selected="selected" value="1">', _('Yes') , '</option>';
 					}
 				}
-				echo '</select></td>
-		</tr>';
+				echo '</select>';
+				echo '<fieldhelp>' , _('This flag identifies the contact as one who should receive an email cusstomer statement') , '</fieldhelp>
+		</field>';
 	// Notes:
-	echo '<tr>
-			<td>', _('Notes'), '</td>
-			<td><textarea cols="40" name="ContactNotes" rows="3">',
+	echo '<field>
+			<label for="ContactNotes">', _('Notes'), '</label>
+			<textarea cols="40" name="ContactNotes" rows="3">',
 				( isset($_POST['ContactNotes']) ? $_POST['ContactNotes'] : '' ),
-				'</textarea></td>
-		</tr>',
+				'</textarea>
+			<fieldhelp>', _('Any notes on this customer contact'), '</fieldhelp>
+		</field>';
 
-		'<tr>
-			<td class="centre" colspan="2">
-				<input name="submit" type="submit" value="', _('Enter Information'), '" />
-			</td>
-		</tr>
-		<tbody>
-		</table>
+	echo '</fieldset>';
+	
+	echo '<div class ="centre">
+			<input name="submit" type="submit" value="', _('Enter Information'), '" />
 		</div>
-		</form>';
+	</form>';
 
 } //end if record deleted no point displaying form to add record
 

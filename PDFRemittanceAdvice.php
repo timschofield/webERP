@@ -134,9 +134,9 @@ If ((isset($_POST['PrintPDF']))
 	/* show form to allow input	*/
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    echo '<table>';
+    echo '<fieldset>
+			<legend>', _('Remittance Advice Criteria'), '</legend>';
 
 	if (!isset($_POST['FromCriteria']) or mb_strlen($_POST['FromCriteria'])<1){
 		$DefaultFromCriteria = '1';
@@ -148,14 +148,14 @@ If ((isset($_POST['PrintPDF']))
 	} else {
 		$DefaultToCriteria = $_POST['ToCriteria'];
 	}
-	echo '<tr>
-			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('To Supplier Code') . ':</td>
-			<td><input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
+			<input type="text" maxlength="6" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" />
+		</field>';
+	echo '<field>
+			<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
+			<input type="text" maxlength="6" size="7" name="ToCriteria" value="' . $DefaultToCriteria . '" />
+		</field>';
 
 	if (!isset($_POST['PaymentDate'])){
 		$DefaultDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
@@ -163,19 +163,17 @@ If ((isset($_POST['PrintPDF']))
 		$DefaultDate = $_POST['PaymentDate'];
 	}
 
-	echo '<tr>
-			<td>' . _('Date Of Payment') . ':</td>
-			<td><input type="text" class="date" name="PaymentDate" maxlength="10" size="11" value="' . $DefaultDate . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="PaymentDate">' . _('Date Of Payment') . ':</label>
+			<input type="text" class="date" name="PaymentDate" maxlength="10" size="11" value="' . $DefaultDate . '" />
+		</field>';
 
-	echo '</table>
-        <br />
+	echo '</fieldset>
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>';
 
-    echo '</div>
-          </form>';
+    echo '</form>';
 
 	include ('includes/footer.php');
 } /*end of else not PrintPDF */

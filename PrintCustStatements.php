@@ -535,32 +535,31 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	/*if FromTransNo is not set then show a form to allow input of either a single statement number or a range of statements to be printed. Also get the last statement number created to show the user where the current range is up to */
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-        echo '<table class="selection">
-			<tr>
-				<td>' , _('Starting Customer statement to print (Customer code)') , '</td>
-				<td><input type="text" maxlength="10" size="8" name="FromCust" value="0" /></td></tr>
-			<tr>
-				<td>' ,  _('Ending Customer statement to print (Customer code)') , '</td>
-				<td><input type="text" maxlength="10" size="8" name="ToCust" value="zzzzzz" /></td>
-			</tr>
-			<tr>
-				<td>' , _('Print Or Email to flagged customer contacts') , '</td>
-				<td><select name="EmailOrPrint">
+        echo '<fieldset>
+				<legend>', _('Print Criteria'), '</legend>
+			<field>
+				<label for="FromCust">' , _('Starting Customer statement to print (Customer code)') , '</label>
+				<input type="text" maxlength="10" size="8" name="FromCust" value="0" />
+			</field>
+			<field>
+				<label for="ToCust">' ,  _('Ending Customer statement to print (Customer code)') , '</label>
+				<input type="text" maxlength="10" size="8" name="ToCust" value="zzzzzz" />
+			</field>
+			<field>
+				<label for="EmailOrPrint">' , _('Print Or Email to flagged customer contacts') , '</label>
+				<select name="EmailOrPrint">
 					<option selected="selected" value="print">', _('Print') , '</option>
 					<option value="email">', _('Email to flagged customer contacts') , '</option>
-					</select></td>
-			</table>
-				<br /><div class="centre">
-				<input type="submit" name="PrintPDF" value="' .
-                _('Print (or Email) All Statements in the Range Selected').'" />
+				</select>
+			</field>
+			</fieldset>
+			<div class="centre">
+				<input type="submit" name="PrintPDF" value="' . _('Print (or Email) All Statements in the Range Selected').'" />
 			</div>';
-        echo '</div>
-              </form>';
+		echo '</form>';
 	}
-	echo '<br /><br /><br />';
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */

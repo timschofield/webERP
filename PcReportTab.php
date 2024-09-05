@@ -23,7 +23,6 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	. '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (!isset($_POST['FromDate'])){
@@ -35,10 +34,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	}
 
 	/*Show a form to allow input of criteria for Tabs to show */
-	echo '<table class="selection">
-		<tr>
-			<td>' . _('Petty Cash Tab') . ':</td>
-			<td><select name="SelectedTabs">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="SelectedTabs">' . _('Petty Cash Tab') . ':</label>
+				<select name="SelectedTabs">';
 
 	$SQL = "SELECT tabcode
 				FROM pctabs
@@ -59,22 +59,20 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	DB_free_result($Result);
 
 
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>', _('From Date'), ':</td>
-			<td><input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
-		</tr>
-		<tr>
-			<td>', _('To Date'), ':</td>
-			<td><input tabindex="3" class="date" type="text" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>
-		</table>
-		<br />
+	echo '</select>
+		</field>
+		<field>
+			<label for="FromDate">', _('From Date'), ':</label>
+			<input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+		</field>
+		<field>
+			<label for="FromDate">', _('To Date'), ':</label>
+			<input tabindex="3" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="ShowTB" value="' . _('Show HTML') . '" />
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-		</div>
 		</div>
 	</form>';
 

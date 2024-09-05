@@ -46,10 +46,11 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 	}
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-		'<table class="selection">
-			<tr>
-				<td>', _('Select User'), ':</td>
-				<td><select name="SelectedUser" onchange="this.form.submit()">',// Submit when the value of the select is changed.
+		'<fieldset>
+			<legend>', _('User Selection'), '</legend>
+			<field>
+				<label for="SelectedUser">', _('Select User'), ':</label>
+				<select name="SelectedUser" onchange="this.form.submit()">',// Submit when the value of the select is changed.
 					'<option value="">', _('Not Yet Selected'), '</option>';
 	$Result = DB_query("
 		SELECT
@@ -64,9 +65,9 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 		}
 		echo 'value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
 	}// End while loop.
-	echo '</select></td>
-			</tr>
-		</table>';//Close Select_User table.
+	echo '</select>
+		</field>
+	</fieldset>';//Close Select_User table.
 
 	DB_free_result($Result);
 

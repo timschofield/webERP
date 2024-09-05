@@ -354,34 +354,33 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_delete.png" title="' . _('Tax Report') . '" />' . ' ' . _('Tax Reporting') . '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
-	echo '<tr>
-			<td>' . _('Tax Authority To Report On:') . ':</td>
-			<td><select name="TaxAuthority">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+	echo '<field>
+			<label for="TaxAuthority">' . _('Tax Authority To Report On:') . ':</label>
+			<select name="TaxAuthority">';
 	$Result = DB_query("SELECT taxid, description FROM taxauthorities");
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['taxid'] . '">' . $MyRow['description'] . '</option>';
 	}
 	echo '</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Return Covering') . ':</td>
-			<td>
-				<select name="NoOfPeriods">' . '
-					<option selected="selected" value="1">' . _('One Month') . '</option>' . '
-					<option value="2">' . _('2 Months') . '</option>' . '
-					<option value="3">' . _('3 Months') . '</option>' . '
-					<option value="6">' . _('6 Months') . '</option>' . '
-					<option value="12">' . _('12 Months') . '</option>' . '
-					<option value="24">' . _('24 Months') . '</option>' . '
-					<option value="48">' . _('48 Months') . '</option>' . '
-				</select>
-			</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Return To') . ':</td>
-			<td><select name="ToPeriod">';
+		</field>';
+	echo '<field>
+			<label for="NoOfPeriods">' . _('Return Covering') . ':</label>
+			<select name="NoOfPeriods">' . '
+				<option selected="selected" value="1">' . _('One Month') . '</option>' . '
+				<option value="2">' . _('2 Months') . '</option>' . '
+				<option value="3">' . _('3 Months') . '</option>' . '
+				<option value="6">' . _('6 Months') . '</option>' . '
+				<option value="12">' . _('12 Months') . '</option>' . '
+				<option value="24">' . _('24 Months') . '</option>' . '
+				<option value="48">' . _('48 Months') . '</option>' . '
+			</select>
+		</field>';
+
+	echo '<field>
+			<label for="ToPeriod">' . _('Return To') . ':</label>
+			<select name="ToPeriod">';
 	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('Y'))));
 	$SQL = "SELECT periodno,
 					lastdate_in_period
@@ -395,18 +394,17 @@ if (isset($_POST['TaxAuthority']) and isset($_POST['PrintPDF']) and isset($_POST
 			echo '<option value="' . $MyRow['periodno'] . '">' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Detail Or Summary Only') . ':</td>
-			<td>
-				<select name="DetailOrSummary">
-					<option value="Detail">' . _('Detail and Summary') . '</option>
-					<option selected="selected" value="Summary">' . _('Summary Only') . '</option>
-				</select>
-			</td>
-		</tr>
-		</table>
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="DetailOrSummary">' . _('Detail Or Summary Only') . ':</label>
+			<select name="DetailOrSummary">
+				<option value="Detail">' . _('Detail and Summary') . '</option>
+				<option selected="selected" value="Summary">' . _('Summary Only') . '</option>
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>

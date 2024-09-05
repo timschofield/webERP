@@ -36,12 +36,14 @@ if (isset($_GET['AssetID'])) {
 	$sql="SELECT categoryid, categorydescription FROM fixedassetcategories";
 	$result=DB_query($sql);
 	echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection"><tr>';
-	echo '<td>' .  _('In Asset Category') . ': </td>';
-	echo '<td><select name="AssetCat">';
+	echo '<fieldset>
+			<legend>', _('Asset Transfer Details'), '</legend>';
+			
+	echo '<field>
+			<label for="AssetCat">' .  _('In Asset Category') . ': </label>
+			<select name="AssetCat">';
 
 	if (!isset($_POST['AssetCat'])) {
 		$_POST['AssetCat'] = '';
@@ -55,9 +57,11 @@ if (isset($_GET['AssetID'])) {
 		}
 	}
 
-	echo '</select></td>';
-	echo '<td>' .  _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
-
+	echo '</select>
+		</field>';
+		
+	echo '<field>
+			<label for="Keywords">' .  _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
 
 	if (isset($_POST['Keywords'])) {
 		echo '<input type="text" name="Keywords" value="' . trim($_POST['Keywords'],'%') . '" title="' . _('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
@@ -65,11 +69,11 @@ if (isset($_GET['AssetID'])) {
 		echo '<input type="text" name="Keywords" title="' . _('Enter some text that should appear in the fixed asset\'s description to search for') . '" size="20" maxlength="25" />';
 	}
 
-	echo '</td>
-		</tr>
-		<tr>
-		<td>' . _('Asset Location') . ':</td>
-		<td><select name="AssetLocation">';
+	echo '</field>';
+	
+	echo '<field>
+			<label for="AssetLocation">' . _('Asset Location') . ':</label>
+			<select name="AssetLocation">';
 			if (!isset($_POST['AssetLocation'])) {
 				$_POST['AssetLocation'] = 'ALL';
 			}
@@ -87,11 +91,12 @@ if (isset($_GET['AssetID'])) {
 					echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
 				}
 			}
-			echo '</select>';
+			echo '</select>
+				</field>';
 
 
-	echo '<td><b>' . _('OR').' ' . '</b>' . _('Enter partial') .' <b>' .  _('Asset Code') . '</b>:</td>';
-	echo '<td>';
+	echo '<field>
+			<label><b>' . _('OR').' ' . '</b>' . _('Enter partial') .' <b>' .  _('Asset Code') . '</b>:</label>';
 
 	if (isset($_POST['AssetID'])) {
 		echo '<input type="text" name="AssetID" value="'. trim($_POST['AssetID'],'%') . '" title="' . _('Enter some text that should appear in the fixed asset\'s item code to search for') . '" size="15" maxlength="20" />';
@@ -100,13 +105,13 @@ if (isset($_GET['AssetID'])) {
 	}
 
 	echo '</td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre"><input type="submit" name="Search" value="'. _('Search Now') . '" /></div>
-          </div>
-          </form>
-          <br />';
+		</field>
+	</fieldset>';
+	
+	echo '<div class="centre">
+			<input type="submit" name="Search" value="'. _('Search Now') . '" />
+		</div>
+	</form>';
 }
 
 if (isset($_POST['Search'])) {

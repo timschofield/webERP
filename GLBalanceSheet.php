@@ -47,6 +47,9 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
 		include('includes/header.php');
 	}
+	if (!isset($_POST['ShowZeroBalance'])) {
+		$_POST['ShowZeroBalance'] = '';
+	}
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" title="', // Icon image.
 		$Title2, '" /> ', // Icon title.
 		$Title, '</p>'; // Page title.
@@ -58,10 +61,11 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 		// Input table:
-		'<table class="selection">',
-			'<tr>
-				<td>' . _('Select the balance date') . ':</td>
-				<td><select name="PeriodTo" required="required">';
+		'<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="PeriodTo">' . _('Select the balance date') . ':</label>
+				<select name="PeriodTo" required="required">';
 
 	$periodno = ((isset($_POST['PeriodTo'])) ? $_POST['PeriodTo'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])));
 
@@ -79,11 +83,12 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 			(($MyRow['periodno'] == $periodno) ? ' selected="selected"' : ''),
 			' value="', $MyRow['periodno'], '">', ConvertSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo '</select></td>
-		</tr>',
-		'<tr>
-			<td><label for="ShowDetail">', _('Detail or summary'), '</label></td>
-			<td><select name="ShowDetail" required="required" title="', _('Selecting Summary will show on the totals at the account group level'), '" >';
+	echo '</select>
+		</field>';
+		
+	echo '<field>
+			<label for="ShowDetail">', _('Detail or summary'), '</label>
+			<select name="ShowDetail" required="required" title="" >';
 	if($_POST['ShowDetail'] == 'Summary') {
 		echo	'<option selected="selected" value="Summary">', _('Summary'), '</option>
 				<option value="Detailed">', _('All Accounts'), '</option>';
@@ -91,17 +96,17 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		echo	'<option value="Summary">', _('Summary'), '</option>
 				<option selected="selected" value="Detailed">', _('All Accounts'), '</option>';
 	}
-	echo	'</select></td>
-		</tr>',
+	echo	'</select>
+			<fieldhelp>', _('Selecting Summary will show on the totals at the account group level'), '</fieldhelp>
+		</field>';
+		
 	// Show accounts with zero balance:
-			'<tr>',
-			 	'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
-			 	<td><input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show all accounts including those with zero balance')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
-		'</table>',
-		'<br />',
+	echo '<field>
+			<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+			<input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox" />
+	 		<fieldhelp>', _('Check this box to show all accounts including those with zero balance'), '</fieldhelp>
+		 </field>',
+		'</fieldset>',
 		'<div class="centre noprint">', // Form buttons:
 			'<button name="ShowBalanceSheet" type="submit" value="', _('Show on Screen (HTML)'), '">
 				<img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('Show on Screen (HTML)'), '</button>', // "Show on Screen (HTML)" button.

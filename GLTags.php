@@ -53,11 +53,15 @@ echo '<p class="page_title_text">
 	</p>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" id="form">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<br />
-	<table>
-	<tr>
+if (isset($_GET['Action']) AND $_GET['Action']=='edit') {
+	echo '<fieldset>
+			<legend>', _('Edit Tag details'), '</legend>';
+} else {
+	echo '<fieldset>
+			<legend>', _('Create Tag details'), '</legend>';
+}	
+	echo '<tr>
 		<td>' .  _('Description') . '</td>
 		<td><input type="text" required="required" autofocus="autofocus" size="30" maxlength="30" name="Description" title="' . _('Enter the description of the general ledger tag up to 30 characters') . '" value="' . $Description . '" /></td>
 		<td><input type="hidden" name="reference" value="'.$_GET['SelectedTag'].'" />';
@@ -70,9 +74,7 @@ if (isset($_GET['Action']) AND $_GET['Action']=='edit') {
 
 echo '</td>
 	</tr>
-	</table>
-	<br />
-    </div>
+	</fieldset>
 	</form>
 	<table class="selection">
 	<tr>
