@@ -28,6 +28,7 @@ Class Tender {
 	var $Revised;
 	var $contact;
 	var $Suppliers;
+	var $Contact;
 
 	function __construct(){
 	/*Constructor function initialises a new purchase tender object */

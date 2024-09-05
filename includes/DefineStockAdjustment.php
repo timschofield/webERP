@@ -11,6 +11,7 @@ class StockAdjustment {
 	var $DecimalPlaces;
 	var $Quantity;
 	var $tag;
+	var $Narrative;
 	var $SerialItems; /*array to hold controlled items*/
 
 	//Constructor
