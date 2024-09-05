@@ -49,7 +49,7 @@ class StockTransfer {
 				$StockLocationToName,
 				$StockLocationToAccount,
 				$TranDate );
-	}	
+	}
 }
 
 class LineItem {
@@ -64,6 +64,7 @@ class LineItem {
 	var $DecimalPlaces;
 	var $Perishable;
 	var $SerialItems; /*array to hold controlled items*/
+	var $StandardCost;
 //Constructor
 	function __construct($StockID,
 			$ItemDescription,
@@ -105,7 +106,7 @@ class LineItem {
 					$Controlled,
 					$Serialised,
 					$Perishable,
-					$DecimalPlaces); 
+					$DecimalPlaces);
 	}
 }
 ?>

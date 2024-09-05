@@ -48,6 +48,8 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
+	var $total;
+	var $DefaultReceivedDate;
 
 	function __construct(){
 	/*Constructor function initialises a new purchase order object */
@@ -236,6 +238,7 @@ Class LineDetails {
 	Var $Serialised;
 	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
 	Var $AssetID;
+	var $SerialItemsValid;
 
 	function __construct (	$LineNo,
 						$StockItem,

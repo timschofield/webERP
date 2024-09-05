@@ -10,6 +10,7 @@ Class Contract {
     var $CustomerName;
     var $BranchCode;
     var $BranchName;
+    var $DefaultWorkCentre;
     var $Status; /* 100 = initiated - 1=quoted - 2=ordered - 3=completed */
     var $CategoryID;   /* the category where the contract will be when converted to an item  for quotation*/
     var $OrderNo; /* the order number created when the contract is quoted */

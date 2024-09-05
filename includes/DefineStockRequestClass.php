@@ -45,6 +45,7 @@ Class LineDetails {
 	var $Quantity;
 	var $UOM;
 	var $LineNumber;
+	var $DecimalPlaces;
 
 	function __construct($StockID,
 						$ItemDescription,

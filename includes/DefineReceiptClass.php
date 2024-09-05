@@ -14,6 +14,7 @@ Class Receipt_Batch {
 	var $FunctionalExRate; /* Exchange Rate between Bank Account Currency and Functional(business reporting) currency */
 	var $Currency; /*Currency being banked - defaulted to company functional */
 	var $CurrDecimalPlaces;
+	var $BankTransRef;
 	var $Narrative;
 	var $ReceiptType;  /*Type of receipt ie credit card/cash/cheque etc - array of types defined in config.php*/
 	var $total;	  /*Total of the batch of receipts in the currency of the company*/
