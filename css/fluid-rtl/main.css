@@ -102,10 +102,23 @@ height:48px;
 vertical-align:middle;
 }
 .toplink {
-padding-top:1%;
+float:right;
+position:relative;
+background-image:url(images/next.png);
+background-repeat: no-repeat;
+background-size:18px 18px;
+background-position:5px center;
+padding-left:26px;
 padding-right:1%;
+padding-bottom:0.3%;
+background-color:#556699;
+color:#CCDDFF;
+border: 1px solid #556699;
+border-radius:10px;
 margin-bottom:-1%;
-text-align:right
+top:5px;
+left:5px;
+text-align:left
 }
 .clearfix {
   overflow: auto;
