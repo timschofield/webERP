@@ -10,6 +10,7 @@ background:transparent;
 float:right;
 margin-right:5px;
 padding:3px;
+padding-top:9px;
 }
 footer .FooterLogo img {
 width:128px;
@@ -17,7 +18,7 @@ width:128px;
 footer .FooterVersion {
 float:right;
 margin-right:10px;
-margin-top:15px;
+margin-top:20px;
 }
 footer .FooterTime {
 float:left;
