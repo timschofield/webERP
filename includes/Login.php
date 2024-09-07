@@ -28,7 +28,7 @@ if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text)
 	echo '<body>
 		<div id="container">
 			<div id="login_logo">
-				<a href="', $HomePage, '" target="_blank"><img src="css/', $DefaultDatabase, '.png" style="width:100%" /></a>
+				<div class="logo logo-left">web</div><div class="logo logo-right">ERP</div>
 			</div>
 			<div id="login_box">
 				<form action="index.php" name="LogIn" method="post" class="noPrint">
