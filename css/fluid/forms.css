@@ -295,9 +295,11 @@ gap: 1rem;
 }
 .Column1 {
 grid-column: 1 / 2;
+height:100%;
 }
 .Column2 {
 grid-column: 2 / 3;
+height:100%;
 }
 .TwoByThreeColumn {
 display: grid;
@@ -309,25 +311,25 @@ gap: 1rem;
 grid-column: 1 / 2;
 grid-row:1 / 2;
 margin-left: 5%;
-height:auto;
+height:100%;
 }
 .Column1x2 {
 grid-column: 1 / 2;
 grid-row:2 / 3;
 margin-left: 5%;
-height:auto;
+height:100%;
 }
 .Column2x1 {
 grid-column: 2 / 3;
 grid-row:1 / 2;
 margin-left: 5%;
-height:auto;
+height:100%;
 }
 .Column2x2 {
 grid-column: 2 / 3;
 grid-row:2 / 3;
 margin-left: 5%;
-height:auto;
+height:100%;
 }
 .Column1x3 {
 grid-column:1 / 3;
