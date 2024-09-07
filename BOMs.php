@@ -62,7 +62,7 @@ function CheckForRecursiveBOM($UltimateParent, $ComponentToCheck) {
 				return 1;
 			}
 		} //(while loop)
-		
+
 	} //end if $Result is true
 	return 0;
 
@@ -179,7 +179,7 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 			 </tr>';
 
 	} //END WHILE LIST LOOP
-	
+
 } //end of function DisplayBOMItems
 /* SelectedParent could come from a post or a get */
 if (isset($_GET['SelectedParent'])) {
@@ -400,7 +400,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 						workcentreadded,
 						quantity,
 						autoissue,
-						comment
+						remark
 					FROM bom
 					INNER JOIN locationusers
 						ON locationusers.loccode=bom.loccode
@@ -773,7 +773,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 				}
 
 			} //end of if its not a recursive BOM
-			
+
 		} //end of if no input errors
 		unset($SelectedComponent);
 		if ($Msg != '') {
@@ -810,9 +810,9 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 
 		/* It could still be the second time the page has been run and a record has been selected	for modification - SelectedParent will exist because it was sent with the new call. if		its the first time the page has been displayed with no parameters then none of the above		are true and the list of components will be displayed with links to delete or edit each.		These will call the same page again and allow update/input or deletion of the records*/
 		//DisplayBOMItems($SelectedParent);
-		
+
 	} //BOM editing/insertion ifs
-	
+
 
 	if (isset($_GET['ReSelect'])) {
 		$SelectedParent = $_GET['ReSelect'];
@@ -1072,7 +1072,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 
 	// end of BOM maintenance code - look at the parent selection form if not relevant
 	// ----------------------------------------------------------------------------------
-	
+
 }
 elseif (isset($_POST['Search'])) {
 	// Work around to auto select
@@ -1135,7 +1135,7 @@ elseif (isset($_POST['Search'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 
 	} //one of keywords or StockCode was more than a zero length string
-	
+
 } //end of if search
 if (!isset($SelectedParent)) {
 
@@ -1211,7 +1211,7 @@ if (!isset($SelectedParent)) {
 					<td>', $MyRow['units'], '</td>
 				</tr>';
 			//end of page full new headings if
-			
+
 		}
 		//end of while loop
 		echo '</table>';
