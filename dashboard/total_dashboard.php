@@ -12,6 +12,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$DashboardResult = DB_query($SQL);
 	$DashboardRow = DB_fetch_array($DashboardResult);
 
+	$DecimalPlaces = 2;
 	echo '<table class="DashboardTable">
 			<tr>
 				<th colspan="2">
@@ -52,11 +53,11 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$TotalSalesOrders = 0;
 	while ($row = DB_fetch_array($SalesOrdersResult)) {
 		$TotalSalesOrders+= $row['ordervalue'];
+		$DecimalPlaces = $row['currdecimalplaces'];
 	}
-
 	echo '<tr class="striped_row">
 		<th>', _('Total Sales Orders'), '</th>
-		<td class="number">', locale_number_format($TotalSalesOrders, $row['currdecimalplaces']), '</td>
+		<td class="number">', locale_number_format($TotalSalesOrders, $DecimalPlaces), '</td>
 	</tr>';
 
 	$SQL = "SELECT purchorders.orderno,
@@ -90,12 +91,12 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$SalesOrdersResult2 = DB_query($SQL);
 	$TotalPurchaseOrders = 0;
 	while ($row = DB_fetch_array($SalesOrdersResult2)) {
-
+		$DecimalPlaces = $row['currdecimalplaces'];
 		$TotalPurchaseOrders+= $row['ordervalue'];
 	}
 	echo '<tr class="striped_row">
 		<th>', _('Total Purchase orders'), '</th>
-		<td class="number">', locale_number_format($TotalPurchaseOrders, $row['currdecimalplaces']), '</td>
+		<td class="number">', locale_number_format($TotalPurchaseOrders, $DecimalPlaces), '</td>
 	</tr>';
 
 	$SQL = "SELECT salesorders.orderno,
@@ -132,12 +133,13 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$SalesOrdersResult1 = DB_query($SQL);
 	$TotalOutstanding = 0;
 	while ($row = DB_fetch_array($SalesOrdersResult1)) {
+		$DecimalPlaces = $row['currdecimalplaces'];
 		$TotalOutstanding+= $row['ordervalue'];
 	}
 
 	echo '<tr class="striped_row">
 		<th>', _('Total Outstanding to receive'), '</th>
-		<td class="number">', locale_number_format($TotalOutstanding, $row['currdecimalplaces']), '</td>
+		<td class="number">', locale_number_format($TotalOutstanding, $DecimalPlaces), '</td>
 	</tr>
 </table>';
 
