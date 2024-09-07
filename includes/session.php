@@ -321,7 +321,7 @@ function VerifyPass($Password, $Hash) {
 }
 
 function HighestFileName($PathPrefix) {
-	$files = glob('sql/updates/*.php');
+	$files = glob($PathPrefix.'sql/updates/*.php');
 	natsort($files);
 	return basename(array_pop($files), ".php");
 }
