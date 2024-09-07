@@ -53,6 +53,8 @@ border: 1px solid #8DCDEB;
 padding:2px;
 font-family:inherit;
 font-size:inherit;
+overflow: scroll;
+scrollbar-color: #096F09 #2727E6;
 }
 form fieldset field select:not([multiple]) {
 background:linear-gradient(#EAE7E7, #939393);
