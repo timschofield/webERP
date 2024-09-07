@@ -402,6 +402,7 @@ function http_file_exists($url) {
 function locale_number_format($Number, $DecimalPlaces = 0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
+	if ($DecimalPlaces == null) $DecimalPlaces = 0;
 	if (substr($_SESSION['Language'], 3, 2) == 'IN') { // If country is India (??_IN.utf8). See Indian Numbering System in Manual, Multilanguage, Technical Overview.
 		return indian_number_format(floatval($Number), $DecimalPlaces);
 	} else {
