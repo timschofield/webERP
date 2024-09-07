@@ -1,6 +1,6 @@
 form select:focus + fieldhelp, textarea:focus + fieldhelp, input:not([type=submit]):focus + fieldhelp {
-background:#BDF3BD;
-color:#0E3E0E;
+background:#4D4D4D;
+color:#FFFFFF;
 padding:2px;
 padding-right:10px;
 border-top-right-radius:30px;
