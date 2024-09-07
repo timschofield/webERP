@@ -57,6 +57,8 @@ color:#1A1A1A;
 font-family:inherit;
 font-size:inherit;
 transition-duration:0.5s;
+overflow: scroll;
+scrollbar-color: #531C1C #EDEDED;
 }
 form fieldset field select:not([multiple]) {
 background:url(images/descending.png) no-repeat left #DDDDDD;
