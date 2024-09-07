@@ -8,7 +8,9 @@ form fieldset {
 background:#BAD8F6;
 display: inline;
 border:solid 0px;
-margin:auto;
+margin-top:4px;
+margin-bottom:4px;
+margin-right:2px;
 padding-top:7px;
 margin-bottom:4px;
 margin-left:4px;
