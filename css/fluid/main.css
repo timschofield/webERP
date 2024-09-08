@@ -90,6 +90,7 @@ text-align:center;
 color:#556699;
 }
 .page_title_text {
+position:relative;
 font-weight:700;
 color:#000;
 text-align:center;
@@ -102,10 +103,26 @@ height:48px;
 vertical-align:middle;
 }
 .toplink {
-padding-top:1%;
-padding-left:1%;
+position:relative;
+background-image:url(images/previous.png);
+background-repeat: no-repeat;
+background-size:18px 18px;
+background-position:5px center;
+padding-left:26px;
+padding-right:1%;
+padding-bottom:0.3%;
+padding-top:2px;
+background-color:#556699;
+color:#CCDDFF;
+border: 1px solid #556699;
+border-radius:10px;
 margin-bottom:-1%;
+top:5px;
+left:5px;
 text-align:left
+}
+.toplink:hover{
+color:#CCDDFF;
 }
 .clearfix {
   overflow: auto;

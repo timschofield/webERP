@@ -116,8 +116,25 @@ height:40px;
 padding-left:9px;
 vertical-align:middle;
 }
-div.toplink {
+.toplink {
 float:right;
+position:relative;
+background-image:url(images/next.png);
+background-repeat: no-repeat;
+background-size:18px 18px;
+background-position:5px center;
+padding-left:26px;
+padding-right:1%;
+padding-bottom:0.3%;
+padding-top:5px;
+background-color:#B06161;
+color:#CCDDFF;
+border: 2px solid #FFFFFF;
+border-radius:10px;
+margin-bottom:-1%;
+top:10px;
+left:5px;
+text-align:left;
 }
 .clearfix {
 overflow: auto;

@@ -1,7 +1,13 @@
+:root {
+--main_colour1:#1A1A1A;
+--main_colour2:#777777;
+--border_colour:#FFFFFF;
+--text_colour:#E6EAF7;
+}
 body {
-background: linear-gradient(90deg, #1A1A1A 0%, #777777 100%);
+background: linear-gradient(90deg, var(--main_colour1) 0%, var(--main_colour2) 100%);
 font-family: Futura,Trebuchet MS,Arial,sans-serif;
-color:#E6EAF7;
+color:var(--text_colour);
 font-size:12pt;
 margin:0;
 padding:0;
@@ -9,7 +15,7 @@ text-align:center
 }
 @media only screen and (min-width: 401px) {
 #container {
-border:solid #FFFFFF 1px;
+border:solid var(--border_colour) 1px;
 border-radius:15px;
 margin:90px auto 0;
 opacity:1.0;
@@ -19,8 +25,8 @@ width:65%;
 z-index:1000
 }
 #login_box {
-background: linear-gradient(90deg, #777777 0%, #1A1A1A 100%);
-border:solid #FFFFFF 2px;
+background: linear-gradient(90deg, var(--main_colour2) 0%, var(--main_colour1) 100%);
+border:solid var(--border_colour) 2px;
 border-radius:15px;
 margin:0 10px 10px 20px;
 }
@@ -29,11 +35,11 @@ margin:0
 }
 input {
 background-color:transparent;
-border-color:#FFFFFF;
+border-color:var(--border_colour);
 border-radius:3px;
 border-style:solid;
 border-width:1px;
-color:#E6EAF7;
+color:var(--text_colour);
 font-size:100%;
 margin:10px 0 0;
 vertical-align:middle;
@@ -41,7 +47,7 @@ width:50%
 }
 input:hover, input:focus {
 background-color:transparent;
-border-color:#FFFFFF;
+border-color:var(--border_colour);
 border-style:solid;
 border-width:1px;
 font-size:100%;
@@ -190,11 +196,11 @@ box-shadow:none;
 input {
 display:block;
 background-color:transparent;
-border-color:#FFFFFF;
+border-color:var(--border_colour);
 border-radius:3px;
 border-style:solid;
 border-width:1px;
-color:#E6EAF7;
+color:var(--text_colour);
 font-size:100%;
 margin:10px 0 0 20px;
 width:90%;
@@ -215,20 +221,20 @@ display:none;
 }
 button {
 background:transparent;
-border:solid #FFFFFF 2px;
+border:solid var(--border_colour) 2px;
 border-radius:7px;
-color:#E6EAF7;
+color:var(--text_colour);
 font-size:100%;
 font-weight:700;
 margin:10px 10px 10px 50px;
 padding:4px;
 width:30%;
 transition-property:background;
-transition-duration:0.5s;
+transition-duration:0.8s;
 }
 button:hover {
 background:#1A1A1A;
-color:#E6EAF7;
+color:var(--text_colour);
 cursor:pointer;
 box-shadow:0 0 5px #7E7575
 }
@@ -240,4 +246,31 @@ position:absolute;
 float:left;
 width:20px;
 display:none;
+}
+.logo {
+font-family: DejaVu,Futura,Trebuchet MS,Arial,sans-serif;
+display:inline;
+font-size:32pt;
+width:auto;
+cursor:default;
+}
+.logo-left {
+background: var(--main_colour2);
+color:var(--main_colour1);
+padding-left:4px;
+border-top-left-radius:32px;
+border-bottom-left-radius:32px;
+border-top:solid 2px var(--border_colour);
+border-bottom:solid 2px var(--border_colour);
+border-left:solid 2px var(--border_colour);
+}
+.logo-right {
+background: var(--main_colour1);
+color:var(--text_colour2);
+padding-right:4px;
+border-top-right-radius:32px;
+border-bottom-right-radius:32px;
+border-top:solid 2px var(--border_colour);
+border-bottom:solid 2px var(--border_colour);
+border-right:solid 2px var(--border_colour);
 }

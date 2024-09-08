@@ -12,8 +12,8 @@ html {
 *:focus {outline: none;} /* Get rid of webkit focus at outset */
 body {
     font: 16px/24px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
-    background: #f4f4f4;
-	color: #333333;
+    background: #1A1A1A;
+	color: #E6E6FA;
 	margin:0;
     padding:0;
     border:0;

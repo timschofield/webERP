@@ -18,10 +18,10 @@ text-align:left;
 vertical-align:top;
 }
 form fieldset legend {
-background-color:#C9C5C5;
-color:#1A1A1A;
+background-color:#CCDDFF;
+color:#374149;
 padding:3px;
-border: 1px solid;
+border: 1px solid #374149;
 border-radius:3px;
 font-size:150%;
 margin-top:3px;
@@ -31,7 +31,9 @@ background-image:url(images/search.png);
 background-repeat: no-repeat;
 background-size:18px 18px;
 background-position:5px center;
+background-color:#556699;
 padding-left:26px;
+color:#CCDDFF;
 }
 form fieldset field {
 display:block;
@@ -56,9 +58,13 @@ padding:2px;
 color:#EFEFEF;
 font-family:inherit;
 font-size:inherit;
+margin-bottom:3px;
+overflow: scroll;
+scrollbar-color: #364048 #556699;
 }
 form fieldset field select:not([multiple]) {
 background:url(images/descending.png) no-repeat right #556699;
+color:#EAECF3;
 padding-right:24px;
 background-size:contain;
 -moz-appearance:none;
@@ -96,6 +102,14 @@ background-position:4px center;
 background-size:14px 14px;
 padding-left:24px;
 }
+form fieldset field input[type="url"] {
+display:inline;
+background-image:url(images/url.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:14px 14px;
+padding-left:24px;
+}
 form fieldset field input.date {
 display:inline;
 background-image:url(images/date.png);
@@ -109,10 +123,15 @@ padding-top: 4px;
 padding-bottom: 4px;
 padding-left: 16px;
 padding-right: 16px;
-margin: 1px;
-border: 1px solid #8DCDEB;
+margin: 2px;
+margin-bottom:4px;
+margin-left:4px;
+margin-right:4px;
+border: 1px solid #556699;
+outline-offset:2px;
+outline: 2px solid #303A43;
 color:#070745;
-background:#CAE7F1
+background:#CAE7F1;
 border-radius: 3px;
 cursor: pointer;
 transition-duration:0.5s;
@@ -125,7 +144,7 @@ padding-right: 16px;
 margin: 1px;
 border: 1px solid #8DCDEB;
 color:#070745;
-background:#CAE7F1
+background:#CAE7F1;
 border-radius: 3px;
 cursor: pointer;
 transition-duration:0.5s;
@@ -149,6 +168,11 @@ form input[type="submit"].next_button:hover {
 background:#CAE7F1 url(images/next.png) center right 2%/24px no-repeat;
 padding-right:32px;
 padding-left:16px;
+}
+form fieldset field input::placeholder {
+color:#FFFFFF;
+font-style: italic;
+font-weight:bold;
 }
 form .number {
 text-align:right;
@@ -190,4 +214,126 @@ fieldset label .checkmark:after {
 content: "";
 position: absolute;
 display: none;
+}
+form fieldset field input[type="checkbox"] {
+appearance: none;
+background-color: #CCDDFF;
+margin: 0;
+font: inherit;
+color: #CCDDFF;
+width: 1.9em;
+height: 1.9em;
+border: 0.15em solid #556699;
+border-radius: 0.15em;
+transform: translateY(-0.075em);
+display: grid;
+place-content: center;
+}
+form fieldset field input[type="checkbox"]::before {
+content: "";
+width: 0.95em;
+height: 0.95em;
+clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+transform: scale(0);
+transform-origin: bottom left;
+transition: 120ms transform ease-in-out;
+box-shadow: inset 1em 1em #343E46;
+background-color: #556699;
+}
+form fieldset field input[type="checkbox"]:checked::before {
+transform: scale(1);
+}
+form fieldset field input[type="checkbox"]:focus {
+outline: max(2px, 0.15em) solid #556699;
+outline-offset: max(2px, 0.15em);
+}
+form fieldset field input[type="checkbox"]:disabled {
+--form-control-color: var(--form-control-disabled);
+color: var(--form-control-disabled);
+cursor: not-allowed;
+}
+form fieldset field input[type="radio"] {
+appearance: none;
+background-color: var(--form-background);
+margin: 0;
+font: inherit;
+color: currentColor;
+width: 1.15em;
+height: 1.15em;
+border: 0.15em solid currentColor;
+border-radius: 50%;
+transform: translateY(-0.075em);
+display: grid;
+place-content: center;
+margin-top:3px;
+}
+form fieldset field input[type="radio"]::before {
+content: "";
+width: 0.85em;
+height: 0.85em;
+border-radius: 70%;
+transform: scale(0);
+transition: 120ms transform ease-in-out;
+box-shadow: inset 1em 1em var(--form-control-color);
+background-color: #303A43;
+}
+form fieldset field input[type="radio"]:checked::before {
+transform: scale(1);
+}
+form fieldset field input[type="radio"]:focus {
+outline: max(2px, 0.15em) solid currentColor;
+outline-offset: max(2px, 0.15em);
+}
+.label {
+width:auto;
+height:auto;
+}
+.TwoColumn {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem;
+}
+.Column1 {
+grid-column: 1 / 2;
+height:100%;
+}
+.Column2 {
+grid-column: 2 / 3;
+height:100%;
+}
+.TwoByThreeColumn {
+display: grid;
+grid-template-columns: 1fr 1fr;
+grid-template-rows: 0.7fr 1fr 0.3fr;
+gap: 1rem;
+}
+.Column1x1 {
+grid-column: 1 / 2;
+grid-row:1 / 2;
+margin-left: 5%;
+height:100%;
+}
+.Column1x2 {
+grid-column: 1 / 2;
+grid-row:2 / 3;
+margin-left: 5%;
+height:100%;
+}
+.Column2x1 {
+grid-column: 2 / 3;
+grid-row:1 / 2;
+margin-left: 5%;
+height:100%;
+}
+.Column2x2 {
+grid-column: 2 / 3;
+grid-row:2 / 3;
+margin-left: 5%;
+height:100%;
+}
+.Column1x3 {
+grid-column:1 / 3;
+grid-row:3 / 4;
+margin-left: 5%;
+width:90%;
 }

@@ -1,6 +1,6 @@
 form select:focus + fieldhelp, textarea:focus + fieldhelp, input:not([type=submit]):focus + fieldhelp {
-background:#BDF3BD;
-color:#0E3E0E;
+background:#B06161;
+color:#FFFFFF;
 padding:2px;
 padding-right:10px;
 border-top-left-radius:30px;
@@ -8,7 +8,7 @@ border-bottom-left-radius:30px;
 margin-right:2px;
 visibility:visible;
 height:auto;
-max-width:500px;
+max-width:300px;
 word-wrap:normal;
 position:absolute;
 }
@@ -20,7 +20,7 @@ padding-right:10px;
 margin-right:2px;
 visibility:hidden;
 height:auto;
-max-width:500px;
+max-width:300px;
 word-wrap:normal;
 position:absolute;
 }

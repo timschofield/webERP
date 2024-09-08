@@ -1,6 +1,7 @@
 form select:focus + fieldhelp, textarea:focus + fieldhelp, input:not([type=submit]):focus + fieldhelp {
-background:#BDF3BD;
-color:#0E3E0E;
+background:transparent;
+background-image: linear-gradient(to left, #9B9BCE, #0202EE);
+color:#FFFFFF;
 padding:2px;
 padding-right:10px;
 border-top-left-radius:30px;
