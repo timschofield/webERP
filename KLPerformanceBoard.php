@@ -194,11 +194,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPKL", 60, 150, $db);
+		StockByBrand("SHOPKL", 75, 150, $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPBL", 60, 150, $db);
+		StockByBrand("SHOPBL", 75, 150, $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOU", 60, 60, $db);
+		StockByBrand("SHOPOU", 75, 75, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4212,7 +4212,11 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 	$TotalItems   = TotalItems($Brand);
 	$DisplayItems = TotalDisplayItems($Brand);
 	$AvailableForSaleItems = $TotalItems - $DisplayItems;
-	$DailySoldItems = DailyAverageSoldItems($Brand, $NumDays);
+	$DailySoldItemsThisYear = NumItemsSoldPerBrand($Brand, $NumDays, "THIS_YEAR") / $NumDays;
+	$DailySoldItemsLastYear = NumItemsSoldPerBrand($Brand, ($OptimalDaysStock - $NumDays), "LAST_YEAR") / ($OptimalDaysStock - $NumDays);
+//	$TrendThisYear = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
+//	$DailySoldItems = max($DailySoldItemsThisYear, ($DailySoldItemsLastYear * (1 + $TrendThisYear)));
+	$DailySoldItems = max($DailySoldItemsThisYear, $DailySoldItemsLastYear );
 	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItems;
 	$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
 	$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
@@ -4271,7 +4275,21 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			"Daily Stock sold average " . $NumDays . " days (PCS)", 
+			"Daily Stock sold average last " . $NumDays . " days (PCS)", 
+			locale_number_format($DailySoldItemsThisYear,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Daily Stock sold average next " . ($OptimalDaysStock - $NumDays) . " days last year (PCS)", 
+			locale_number_format($DailySoldItemsLastYear,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Estimation daily Stock to be sold next " . $NumDays . " days  (PCS)", 
 			locale_number_format($DailySoldItems,0)
 			);
 	$k = StartEvenOrOddRow($k);

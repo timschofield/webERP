@@ -1332,9 +1332,17 @@ function TotalDisplayItems($Brand){
 	return $myrow['0'];
 }
 
-function DailyAverageSoldItems($Brand, $NumDays){
+function NumItemsSoldPerBrand($Brand, $NumDays, $Period){
 	$ErrMsg = 'Error in DailySoldItems()';
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($Period == "THIS_YEAR"){
+		// items sold in the inmediate $NumDays since yesterday
+		$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+		$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-1));
+	}else{
+		// items sold in the future $NumDays since yesterday one year ago, 
+		$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365+$NumDays));
+		$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365));
+	}
 
 	if ($Brand == "SHOPKL"){
 		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
@@ -1347,11 +1355,12 @@ function DailyAverageSoldItems($Brand, $NumDays){
 	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
 			FROM salesorderdetails, stockmaster
 			WHERE stockmaster.stockid = salesorderdetails.stkcode 
-				AND salesorderdetails.itemdue >= '" . $FromDate . "'" . 
+				AND salesorderdetails.itemdue >= '" . $FromDate . "'
+				AND salesorderdetails.itemdue <= '" . $ToDate . "'" . 
 				$operator1 ."";
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
-	return ($myrow['0'] / $NumDays);
+	return ($myrow['0']);
 }
 
 
