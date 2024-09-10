@@ -326,8 +326,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										periodno,
 										account,
 										amount,
-										narrative,
-										tag)
+										narrative)
 								VALUES (17,
 									'" .$AdjustmentNumber . "',
 									'" . $SQLAdjustmentDate . "',
@@ -335,12 +334,19 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 									'" .  $StockGLCodes['adjglact'] . "',
 									'" . round($_SESSION['Adjustment' . $identifier]->StandardCost * -($_SESSION['Adjustment' . $identifier]->Quantity), $_SESSION['CompanyRecord']['decimalplaces']) . "',
 									'" . $_SESSION['Adjustment' . $identifier]->StockID . " x " . $_SESSION['Adjustment' . $identifier]->Quantity . " @ " .
-										$_SESSION['Adjustment' . $identifier]->StandardCost . " " . $_SESSION['Adjustment' . $identifier]->Narrative . "',
-									'" . $_SESSION['Adjustment' . $identifier]->tag . "')";
+										$_SESSION['Adjustment' . $identifier]->StandardCost . " " . $_SESSION['Adjustment' . $identifier]->Narrative . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+
+			foreach ($_POST['tag'] as $Tag) {
+				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
+													'" . $Tag . "')";
+				$ErrMsg = _('Cannot insert a GL tag for the stock adjustment because');
+				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			}
 
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
@@ -348,16 +354,14 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										periodno,
 										account,
 										amount,
-										narrative,
-										tag)
+										narrative)
 								VALUES (17,
 									'" .$AdjustmentNumber . "',
 									'" . $SQLAdjustmentDate . "',
 									'" . $PeriodNo . "',
 									'" .  $StockGLCodes['stockact'] . "',
 									'" . round($_SESSION['Adjustment' . $identifier]->StandardCost * $_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . "',
-									'" . $_SESSION['Adjustment' . $identifier]->StockID . ' x ' . $_SESSION['Adjustment' . $identifier]->Quantity . ' @ ' . $_SESSION['Adjustment' . $identifier]->StandardCost . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative . "',
-									'" . $_SESSION['Adjustment' . $identifier]->tag . "'
+									'" . $_SESSION['Adjustment' . $identifier]->StockID . ' x ' . $_SESSION['Adjustment' . $identifier]->Quantity . ' @ ' . $_SESSION['Adjustment' . $identifier]->StandardCost . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative . "'
 									)";
 
 			$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
@@ -496,23 +500,22 @@ if ($Controlled==1){
 	echo '<input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($Quantity,$DecimalPlaces) . '" />';
 }
 echo '</field>';
-	//Select the tag
-echo '<field>
-		<label for="tag">' . _('Select Tag') . '</label>
-		<select name="tag">';
 
+//Select the tag
 $SQL = "SELECT tagref,
 				tagdescription
 		FROM tags
 		ORDER BY tagref";
-
-$result=DB_query($SQL);
+$Result = DB_query($SQL);
+echo '<field>
+		<label for="tag">', _('Tag'), '</label>
+		<select multiple="multiple" name="tag[]">';
 echo '<option value="0">0 - ' . _('None') . '</option>';
-while ($myrow=DB_fetch_array($result)){
-	if (isset($_SESSION['Adjustment' . $identifier]->tag) AND $_SESSION['Adjustment' . $identifier]->tag==$myrow['tagref']){
-		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
+		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']. '</option>';
+		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
 }
 echo '</select>
