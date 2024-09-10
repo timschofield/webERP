@@ -44,7 +44,7 @@ function xmlrpc_2_php_type($xmlrpcType)
 function wrap_php_function($funcName, $newFuncName='', $extraOptions=array())
 {
     $wrapper = new PhpXmlRpc\Wrapper();
-    if (!isset($extraOptions['return_source'])  || $extraOptions['return_source'] == false) {
+    if (!isset($extraOptions['return_source']) || $extraOptions['return_source'] == false) {
         // backwards compat: return string instead of callable
         $extraOptions['return_source'] = true;
         $wrapped = $wrapper->wrapPhpFunction($funcName, $newFuncName, $extraOptions);
@@ -68,7 +68,7 @@ function wrap_php_class($className, $extraOptions=array())
 {
     $wrapper = new PhpXmlRpc\Wrapper();
     $fix = false;
-    if (!isset($extraOptions['return_source'])  || $extraOptions['return_source'] == false) {
+    if (!isset($extraOptions['return_source']) || $extraOptions['return_source'] == false) {
         // backwards compat: return string instead of callable
         $extraOptions['return_source'] = true;
         $fix = true;
@@ -87,7 +87,7 @@ function wrap_php_class($className, $extraOptions=array())
  * @see PhpXmlRpc\Wrapper::wrapXmlrpcMethod
  * @param xmlrpc_client $client
  * @param string $methodName
- * @param int|array $extraOptions the usage of an int as signature number is deprecated, use an option in $extraOptions
+ * @param int|array $extraOptions the usage of an int as signature number is deprecated, use an option 'signum' in $extraOptions
  * @param int $timeout            deprecated, use an option in $extraOptions
  * @param string $protocol        deprecated, use an option in $extraOptions
  * @param string $newFuncName     deprecated, use an option in $extraOptions
@@ -108,12 +108,14 @@ function wrap_xmlrpc_method($client, $methodName, $extraOptions=0, $timeout=0, $
 
     $wrapper = new PhpXmlRpc\Wrapper();
 
-    if (!isset($extraOptions['return_source'])  || $extraOptions['return_source'] == false) {
+    if (!isset($extraOptions['return_source']) || $extraOptions['return_source'] == false) {
         // backwards compat: return string instead of callable
         $extraOptions['return_source'] = true;
         $wrapped = $wrapper->wrapXmlrpcMethod($client, $methodName, $extraOptions);
-        eval($wrapped['source']);
-        $wrapped = $wrapped['function'];
+        if (is_array($wrapped)) {
+            eval($wrapped['source']);
+            $wrapped = $wrapped['function'];
+        }
     } else {
         $wrapped = $wrapper->wrapXmlrpcMethod($client, $methodName, $extraOptions);
     }
@@ -148,7 +150,7 @@ function build_remote_method_wrapper_code($client, $methodName, $xmlrpcFuncName,
     $code = "function $xmlrpcFuncName (";
     if ($clientCopyMode < 2) {
         // client copy mode 0 or 1 == partial / full client copy in emitted code
-        $innerCode = build_client_wrapper_code($client, $clientCopyMode, $prefix, $namespace);
+        $innerCode = build_client_wrapper_code($client, $clientCopyMode, $prefix);
         $innerCode .= "\$client->setDebug(\$debug);\n";
         $this_ = '';
     } else {
@@ -205,9 +207,9 @@ function build_remote_method_wrapper_code($client, $methodName, $xmlrpcFuncName,
         $respCode = '$res';
     }
     if ($decodePhpObjects) {
-        $innerCode .= "if (\$res->faultcode()) return $respCode; else return \$encoder->decode(\$res->value(), array('decode_php_objs'));";
+        $innerCode .= "if (\$res->faultCode()) return $respCode; else return \$encoder->decode(\$res->value(), array('decode_php_objs'));";
     } else {
-        $innerCode .= "if (\$res->faultcode()) return $respCode; else return \$encoder->decode(\$res->value());";
+        $innerCode .= "if (\$res->faultCode()) return $respCode; else return \$encoder->decode(\$res->value());";
     }
 
     $code = $code . $plist . ") {\n" . $innerCode . "\n}\n";
@@ -227,9 +229,9 @@ function build_client_wrapper_code($client, $verbatim_client_copy, $prefix='xmlr
     // (this provides for future expansion or subclassing of client obj)
     if ($verbatim_client_copy)
     {
-        foreach($client as $fld => $val)
+        foreach ($client as $fld => $val)
         {
-            if($fld != 'debug' && $fld != 'return_type')
+            if ($fld != 'debug' && $fld != 'return_type')
             {
                 $val = var_export($val, true);
                 $code .= "\$client->$fld = $val;\n";
