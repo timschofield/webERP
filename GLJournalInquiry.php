@@ -27,7 +27,8 @@ if (!isset($_POST['Show'])) {
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (!isset($MaxJournalNumberUsed)) {
 				$MaxJournalNumberUsed = $MyRow['typeno'];
-			} else {
+			}
+			else {
 				$MaxJournalNumberUsed = ($MyRow['typeno'] > $MaxJournalNumberUsed) ? $MyRow['typeno'] : $MaxJournalNumberUsed;
 			}
 			echo '<option value="' . $MyRow['typeid'] . '">' . _($MyRow['typename']) . '</option>';
@@ -50,7 +51,8 @@ if (!isset($_POST['Show'])) {
 	if (isset($MyRow['fromdate']) and $MyRow['fromdate'] != '') {
 		$FromDate = $MyRow['fromdate'];
 		$ToDate = $MyRow['todate'];
-	} else {
+	}
+	else {
 		$FromDate = date('Y-m-d');
 		$ToDate = date('Y-m-d');
 	}
@@ -66,22 +68,20 @@ if (!isset($_POST['Show'])) {
 			<input type="submit" name="Show" value="' . _('Show transactions') . '" />
 		</div>';
 	echo '</form>';
-} else {
+}
+else {
 
-	$SQL = "SELECT gltrans.typeno,
+	$SQL = "SELECT gltrans.counterindex,
+					gltrans.typeno,
 				gltrans.trandate,
 				gltrans.account,
 				chartmaster.accountname,
 				gltrans.narrative,
 				gltrans.amount,
-				gltrans.tag,
-				tags.tagdescription,
 				gltrans.jobref
 			FROM gltrans
 			INNER JOIN chartmaster
 				ON gltrans.account=chartmaster.accountcode
-			LEFT JOIN tags
-				ON gltrans.tag=tags.tagref
 			WHERE gltrans.type='" . $_POST['TransType'] . "'
 				AND gltrans.trandate>='" . FormatDateForSQL($_POST['FromTransDate']) . "'
 				AND gltrans.trandate<='" . FormatDateForSQL($_POST['ToTransDate']) . "'
@@ -91,8 +91,9 @@ if (!isset($_POST['Show'])) {
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) == 0) {
-		prnMsg(_('There are no transactions for this account in the date range selected'), 'info');
-	} else {
+		prnMsg(_('There are no transactions for this account in the date range selected') , 'info');
+	}
+	else {
 		echo '<table class="selection">';
 		echo '<tr>
 				<th>' . _('Date') . '</th>
@@ -107,9 +108,17 @@ if (!isset($_POST['Show'])) {
 		$LastJournal = 0;
 
 		while ($MyRow = DB_fetch_array($Result)) {
+			$TagsSQL = "SELECT gltags.tagref,
+								tags.tagdescription
+							FROM gltags
+							INNER JOIN tags
+								ON gltags.tagref=tags.tagref
+							WHERE gltags.counterindex='" . $MyRow['counterindex'] . "'";
+			$TagsResult = DB_query($TagsSQL);
 
-			if ($MyRow['tag'] == 0) {
-				$MyRow['tagdescription'] = 'None';
+			$TagDescriptions = '';
+			while ($TagRows = DB_fetch_array($TagsResult)) {
+				$TagDescriptions .= $TagRows['tagref'] . ' - ' . $TagRows['tagdescription'] . '<br />';
 			}
 
 			if ($MyRow['typeno'] != $LastJournal) {
@@ -121,7 +130,8 @@ if (!isset($_POST['Show'])) {
 					<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
 					<td class="number">' . $MyRow['typeno'] . '</td>';
 
-			} else {
+			}
+			else {
 				echo '<tr>
 						<td colspan="2"></td>';
 			}
@@ -138,24 +148,27 @@ if (!isset($_POST['Show'])) {
 			if ($CheckRow[0] > 0) {
 				echo '<td>' . $MyRow['account'] . '</td>
 						<td>' . $MyRow['accountname'] . '</td>';
-			} else {
+			}
+			else {
 				echo '<td>' . _('Others') . '</td>
 						<td>' . _('Other GL Accounts') . '</td>';
 			}
 
 			echo '<td>' . $MyRow['narrative'] . '</td>
 					<td class="number">' . locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-					<td class="number">' . $MyRow['tag'] . ' - ' . $MyRow['tagdescription'] . '</td>';
+					<td valign="top" class="number">', $TagDescriptions, '</td>';
 
 			if ($MyRow['typeno'] != $LastJournal and $CheckRow[0] > 0) {
 				if ($_SESSION['Language'] == 'zh_CN.utf8' or $_SESSION['Language'] == 'zh_hk.utf8') {
 					echo '<td class="number"><a href="PDFGLJournalCN.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
-				} else {
+				}
+				else {
 					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '">' . _('Print') . '</a></td></tr>';
 				}
 
 				$LastJournal = $MyRow['typeno'];
-			} else {
+			}
+			else {
 				echo '<td colspan="1"></td></tr>';
 			}
 

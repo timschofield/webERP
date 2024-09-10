@@ -103,17 +103,6 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			prnMsg (_('The date "'. $myrow[0]. '" is not in the correct format'),'error');
 		}
 
-		//Then check that the tag ref is either zero, or exists in the tags table
-		if ($myrow[5] != 0) {
-			$sql = "SELECT COUNT(tagref) FROM tags WHERE tagref='" . $myrow[5] . "'";
-			$result = DB_query($sql);
-			$TestRow = DB_fetch_row($result);
-			if ($TestRow[0] == 0) {
-				$InputError = 1;
-				prnMsg (_('Tag ref') . ' "'. $myrow[5]. '" ' . _('does not exist'),'error');
-			}
-		}
-
 		//Find the period number from the date
 		$Period = GetPeriod($myrow[0]);
 
@@ -135,8 +124,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 										periodno,
 										account,
 										narrative,
-										amount,
-										tag
+										amount
 									) VALUES (
 										'" . $_POST['TransactionType'] . "',
 										'" . $TransNo . "',
@@ -145,8 +133,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 										'" . $Period . "',
 										'" . $myrow[1] . "',
 										'" . $myrow[4] . "',
-										'" . round($myrow[3]/$ExRate, 2) . "',
-										'" . $myrow[5] . "'
+										'" . round($myrow[3]/$ExRate, 2) . "'
 									)";
 
 			$result = DB_query($sql);

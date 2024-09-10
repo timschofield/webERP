@@ -190,7 +190,6 @@ if (isset($_POST['submit'])) {
 		// Add new record on submit
 		$SQL = "INSERT INTO pcashdetails (counterindex,
 										tabcode,
-										tag,
 										date,
 										codeexpense,
 										amount,
@@ -200,7 +199,6 @@ if (isset($_POST['submit'])) {
 										notes)
 								VALUES (NULL,
 										'" . $_POST['SelectedTabs'] . "',
-										'" . $_POST['Tag'] . "',
 										'" . FormatDateForSQL($_POST['Date']) . "',
 										'" . $_POST['SelectedExpense'] . "',
 										'" . -filter_number_format($_POST['Amount']) . "',
@@ -212,6 +210,17 @@ if (isset($_POST['submit'])) {
 		$Msg = _('The expense claim on tab') . ' ' . $_POST['SelectedTabs'] . ' ' . _('has been created');
 		$Result = DB_query($SQL);
 		$SelectedIndex = DB_Last_Insert_ID('pcashdetails', 'counterindex');
+
+		foreach ($_POST['tag'] as $Tag) {
+			$SQL = "INSERT INTO pctags (pccashdetail,
+										tag)
+									VALUES (
+										'" . $SelectedIndex . "',
+										'" . $Tag . "'
+									)";
+			$Result = DB_query($SQL);
+		}
+
 		foreach ($_POST as $Index => $Value) {
 			if (substr($Index, 0, 5) == 'index') {
 				$Index = $Value;
@@ -341,6 +350,7 @@ if (isset($_POST['submit'])) {
 				INNER JOIN pcashdetailtaxes
 				ON pcashdetails.counterindex = pcashdetailtaxes.pccashdetail
 				WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
+	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been deleted'), 'success');
 	unset($_GET['delete']);
@@ -440,6 +450,7 @@ if (!isset($SelectedTabs)) {
 					ORDER BY date,
 							counterindex ASC";
 		$Result = DB_query($SQL);
+
 		echo '<table class="selection">
 				<thead>
 					<tr>
@@ -495,17 +506,19 @@ if (!isset($SelectedTabs)) {
 				$ReceiptText = _('No attachment');
 			}
 
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+			$TagSQL = "SELECT tagref, tagdescription FROM tags INNER JOIN pctags ON tags.tagref=pctags.tag WHERE pctags.pccashdetail='" . $MyRow['counterindex'] . "'";
 			$TagResult = DB_query($TagSQL);
-			$TagRow = DB_fetch_array($TagResult);
-			if ($MyRow['tag'] == 0) {
-				$TagRow['tagdescription'] = _('None');
-			}
-			$TagTo = $MyRow['tag'];
-			if ($ExpenseCodeDes == 'ASSIGNCASH') {
-				$TagDescription = '';
-			} else {
-				$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
+			$TagDescription = '';
+			while ($TagRow = DB_fetch_array($TagResult)) {
+				if ($TagRow['tagref'] == 0) {
+					$TagRow['tagdescription'] = _('None');
+				}
+				$TagTo = $MyRow['tag'];
+				if ($ExpenseCodeDes == 'ASSIGNCASH') {
+					$TagDescription .= '';
+				} else {
+					$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
+				}
 			}
 
 			$TaxesDescription = '';
@@ -609,7 +622,7 @@ if (!isset($SelectedTabs)) {
 		}
 		echo '<fieldset>';
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<legend>', _('Update Expense'), '</legend';
+			echo '<legend>', _('Update Expense'), '</legend>';
 		} else {
 			echo '<legend>', _('New Expense'), '</legend>';
 		}
@@ -713,23 +726,20 @@ if (!isset($SelectedTabs)) {
 		}
 
 		//Select the tag
-		echo '<field>
-				<label for="Tag">', _('Tag'), ':</label>
-				<select name="Tag">';
 		$SQL = "SELECT tagref,
-					tagdescription
-			FROM tags
-			ORDER BY tagref";
+						tagdescription
+				FROM tags
+				ORDER BY tagref";
 		$Result = DB_query($SQL);
-		if (!isset($_POST['Tag'])) {
-			$_POST['Tag'] = $DefaultTag;
-		}
-		echo '<option value="0">0 - ', _('None'), '</option>';
+		echo '<field>
+				<label for="tag">', _('Tag'), '</label>
+				<select multiple="multiple" name="tag[]">';
+		echo '<option value="0">0 - ' . _('None') . '</option>';
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($_POST['Tag'] == $MyRow['tagref']) {
-				echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+			if (isset($TagArray) and in_array($MyRow['tagref'], $TagArray)) {
+				echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 			} else {
-				echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+				echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 			}
 		}
 		echo '</select>

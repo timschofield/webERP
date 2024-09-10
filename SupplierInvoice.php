@@ -829,11 +829,22 @@ if (!isset($_POST['PostInvoice'])) {
 			echo $TableHeader;
 
 			foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
+
+				$DescriptionTag = '';
+				foreach ($EnteredGLCode->Tag as $Tag) {
+					$SqlDescTag = "SELECT tagdescription
+							FROM tags
+							WHERE tagref='" . $Tag . "'";
+					$ResultDesTag = DB_query($SqlDescTag);
+					$TagRow = DB_fetch_array($ResultDesTag);
+					$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
+				}
+
 				echo '<tr>
 						<td>' . $EnteredGLCode->GLCode . '</td>
 						<td>' . $EnteredGLCode->GLActName . '</td>
 						<td>' . $EnteredGLCode->Narrative . '</td>
-						<td>' . $EnteredGLCode->Tag . ' - ' . $EnteredGLCode->TagName . '</td>
+						<td>' . $DescriptionTag . '</td>
 						<td class="number">' . locale_number_format($EnteredGLCode->Amount, $_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 					</tr>';
 
@@ -1117,7 +1128,6 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 											periodno,
 											account,
 											narrative,
-											tag,
 											amount)
 									VALUES (20,
 										'" . $InvoiceNo . "',
@@ -1125,13 +1135,20 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 										'" . $PeriodNo . "',
 										'" . $EnteredGLCode->GLCode . "',
 										'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . $EnteredGLCode->Narrative . "',
-										'" . $EnteredGLCode->Tag . "',
 										'" . $EnteredGLCode->Amount / $_SESSION['SuppTrans']->ExRate . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
+
+				foreach ($EnteredGLCode->Tag as $Tag) {
+					$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
+														'" . $Tag . "')";
+					$ErrMsg = _('Cannot insert a GL tag for the supplier Invoice because');
+					$DbgMsg = _('The SQL that failed to insert the GL tag record was');
+					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				}
 
 				$LocalTotal += $EnteredGLCode->Amount / $_SESSION['SuppTrans']->ExRate;
 			}
