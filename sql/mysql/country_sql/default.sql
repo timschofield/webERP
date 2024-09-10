@@ -6945,6 +6945,7 @@ INSERT INTO `config` VALUES ('ShortcutMenu','0');
 INSERT INTO `config` VALUES ('ShowStockidOnImages','0');
 INSERT INTO `config` VALUES ('ShowValueOnGRN','1');
 INSERT INTO `config` VALUES ('Show_Settled_LastMonth','1');
+INSERT INTO `config` VALUES ('StockUsageShowZeroWithinPeriodRange','1');
 INSERT INTO `config` VALUES ('SmtpSetting','0');
 INSERT INTO `config` VALUES ('SO_AllowSameItemMultipleTimes','1');
 INSERT INTO `config` VALUES ('StandardCostDecimalPlaces','2');
