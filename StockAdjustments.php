@@ -448,7 +448,7 @@ echo '</td>
 	</tr>';
 if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjustment' . $identifier]->ItemDescription)>1){
 	echo '<tr>
-			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . _('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</h3></td>
+			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) ' . '</h3></td>
 		</tr>';
 }
 
