@@ -245,6 +245,12 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_ShopSupportLeader){
+		ActiveTransfersByLocation($RootPath, $db);
+		$NumberOfTestExecuted++;
+		ActiveTransferStatus($RootPath, $db);
+		$NumberOfTestExecuted++;
+		RecentlyClosedTransferStatus(1, $RootPath, $db);
+		$NumberOfTestExecuted++;
 		ErrorsInTransfers( 15, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
