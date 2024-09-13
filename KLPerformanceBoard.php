@@ -198,7 +198,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		StockByBrand("SHOPBL", 75, 150, $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOU", 75, 75, $db);
+		StockByBrand("SHOPOU", 75, 150, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -387,13 +387,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA, 
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 
 	if ($typereport == "Shop"){
-		if ($Brand == "SHOPKL"){
-			$BrandText = "Kapal-Laut";
-		}else if ($Brand == "SHOPBL"){
-			$BrandText = "Blink";
-		}else{
-			$BrandText = "Outlet";
-		} 
+		$BrandText= BrandTextFromCode($Brand);
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard)
@@ -1670,13 +1664,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 	$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1-365));
 
-	if ($Brand == "SHOPKL"){
-		$BrandText = "Kapal-Laut";
-	}else if ($Brand == "SHOPBL"){
-		$BrandText = "Blink";
-	}else{
-		$BrandText = "Outlet";
-	} 
+	$BrandText= BrandTextFromCode($Brand);
 
 	$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
@@ -4198,32 +4186,31 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 
 function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 	
-	if ($Brand == "SHOPKL"){
-		$BrandText = "Kapal-Laut";
-	}else if ($Brand == "SHOPBL"){
-		$BrandText = "Blink";
-	}else{
-		$BrandText = "Outlet";
-	} 
+	$BrandText= BrandTextFromCode($Brand);
 
 	$Shops = NumberOfShops($Brand, "ALL", $db);
+	$NumDaysLastYear = $OptimalDaysStock - $NumDays;
 
 	$TotalModels  = TotalModels($Brand);
 	$TotalItems   = TotalItems($Brand);
 	$DisplayItems = TotalDisplayItems($Brand);
 	$AvailableForSaleItems = $TotalItems - $DisplayItems;
-	$DailySoldItemsThisYear = NumItemsSoldPerBrand($Brand, $NumDays, "THIS_YEAR") / $NumDays;
-	$DailySoldItemsLastYear = NumItemsSoldPerBrand($Brand, ($OptimalDaysStock - $NumDays), "LAST_YEAR") / ($OptimalDaysStock - $NumDays);
-//	$TrendThisYear = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
-//	$DailySoldItems = max($DailySoldItemsThisYear, ($DailySoldItemsLastYear * (1 + $TrendThisYear)));
-	$DailySoldItems = max($DailySoldItemsThisYear, $DailySoldItemsLastYear );
-	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItems;
+	$DailySoldItemsThisYearPastDays = NumItemsSoldPerBrand($Brand, $NumDays, "THIS_YEAR", "PAST") / $NumDays;
+	if ($Brand != "SHOPOU"){
+		$DailySoldItemsLastYearPastDays = NumItemsSoldPerBrand($Brand, $NumDays, "LAST_YEAR", "PAST") / $NumDays;
+		$TrendThisYear = ($DailySoldItemsThisYearPastDays / $DailySoldItemsLastYearPastDays)-1;
+		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, ($OptimalDaysStock - $NumDays), "LAST_YEAR", "FUTURE") / $NumDaysLastYear;
+		$DailySoldItemsPrediction = max($DailySoldItemsThisYearPastDays, ($DailySoldItemsLastYearNextDays * ($TrendThisYear+1)));
+	}else{
+		$DailySoldItemsPrediction = $DailySoldItemsThisYearPastDays;
+	}
+	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItemsPrediction;
 	$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
 	$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
-	$DaysStockForSaleIncludingPOWO = ($AvailableForSaleItems + $ItemsPO + $ItemsWO) / $DailySoldItems;
+	$DaysStockForSaleIncludingPOWO = ($AvailableForSaleItems + $ItemsPO + $ItemsWO) / $DailySoldItemsPrediction;
 	
 	if ($DaysStockForSaleIncludingPOWO < $OptimalDaysStock){
-		$ItemsToGetOptimalDaysStock = ($OptimalDaysStock - $DaysStockForSaleIncludingPOWO) * $DailySoldItems; 
+		$ItemsToGetOptimalDaysStock = ($OptimalDaysStock - $DaysStockForSaleIncludingPOWO) * $DailySoldItemsPrediction; 
 	}else{
 		$ItemsToGetOptimalDaysStock = 0;
 	}
@@ -4276,21 +4263,37 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 			<td class="number">%s</td>
 			</tr>', 
 			"Daily Stock sold average last " . $NumDays . " days (PCS)", 
-			locale_number_format($DailySoldItemsThisYear,0)
+			locale_number_format($DailySoldItemsThisYearPastDays,0)
 			);
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Daily Stock sold average next " . ($OptimalDaysStock - $NumDays) . " days last year (PCS)", 
-			locale_number_format($DailySoldItemsLastYear,0)
-			);
-	$k = StartEvenOrOddRow($k);
+	if ($Brand != "SHOPOU"){
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Daily Stock sold same days last year (PCS)", 
+				locale_number_format($DailySoldItemsLastYearPastDays,0)
+				);
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Retail trend last " . $NumDays . " days (%)", 
+				locale_number_format($TrendThisYear*100,1). "%"
+				);
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Daily Stock sold average next " . $NumDaysLastYear . " days last year (PCS)", 
+				locale_number_format($DailySoldItemsLastYearNextDays,0)
+				);
+		$k = StartEvenOrOddRow($k);
+	}	
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Estimation daily Stock to be sold next " . $NumDays . " days  (PCS)", 
-			locale_number_format($DailySoldItems,0)
+			locale_number_format($DailySoldItemsPrediction,0)
 			);
 	$k = StartEvenOrOddRow($k);
 	printf('<td>%s</td>
@@ -4321,6 +4324,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 				"Days left of stock including PO & WO (DAYS)", 
 				locale_number_format($DaysStockForSaleIncludingPOWO,0)
 				);
+		$k = StartEvenOrOddRow($k);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
@@ -4338,13 +4342,16 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 	InsertKPI("Stock", "Stock needed for display (PCS) " . $BrandText, $DisplayItems);
 	InsertKPI("Stock", "Stock available for sale (PCS) " . $BrandText, $AvailableForSaleItems);
 	InsertKPI("Stock", "Average pieces per model (PCS) " . $BrandText, round($AvailableForSaleItems/$TotalModels,2));
-	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItems);
+	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItemsThisYearPastDays);
+	InsertKPI("Stock", "Daily Stock forecast for " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItemsPrediction);
 	InsertKPI("Stock", "Days left of stock (DAYS) " .$BrandText, $DaysStockForSale);
 	InsertKPI("Stock", "Stock to be received PO (PCS) " . $BrandText, $ItemsPO);
 	InsertKPI("Stock", "Stock to be received WO (PCS) " . $BrandText, $ItemsWO);
 	InsertKPI("Stock", "Days left of stock+PO+WO(DAYS) " .$BrandText, $DaysStockForSaleIncludingPOWO);
 	InsertKPI("Stock", "Stock needed for optimal (PCS) " . $BrandText, $ItemsToGetOptimalDaysStock);
-
+	if ($Brand != "SHOPOU"){
+		InsertKPI("Stock", "Trend retail ". $NumDays . " days (%) " . $BrandText, $TrendThisYear*100);
+	}
 }
 
 ?>
