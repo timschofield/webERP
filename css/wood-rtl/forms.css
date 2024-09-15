@@ -137,6 +137,20 @@ border-left: 2px solid #BFBFBF;
 border-top: 2px solid #BFBFBF;
 border-bottom: 2px solid #DDDDDD;
 }
+form input[title~="PDF"] {
+background-image:url(images/pdf.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
+form input[title~="View"] {
+background-image:url(images/screen.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
 form input[type="reset"]{
 background:#FFD980;
 padding-top: 6px;
