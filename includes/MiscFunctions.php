@@ -207,7 +207,7 @@ function Convert_CRLF($string, $line_break=PHP_EOL)
 //         Null if not used
 //&$YPos - return the updated value
 //         Coming in, YPos=prior line, so update it before we print anything, and don't update it if we don't print anything
-//Defaults come from addTextWrap                                                             
+//Defaults come from addTextWrap
 function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
 {
 	$InitialExtraSpace=2;		//shift down slightly from above text
@@ -329,9 +329,9 @@ function wikiLink($WikiType, $WikiPageID) {
 
 //  Lindsay debug stuff
 function LogBackTrace($dest = 0) {
-	error_log("***BEGIN STACK BACKTRACE***", $dest);
 
 	$stack = debug_backtrace();
+	error_log("***BEGIN STACK BACKTRACE***", $dest);
 	//  Leave out our frame and the topmost - huge for xmlrpc!
 	for ($ii = 1;$ii < count($stack) - 3;$ii++) {
 		$frame = $stack[$ii];
