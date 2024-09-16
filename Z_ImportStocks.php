@@ -154,7 +154,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			$InputError = 1;
 			prnMsg(_('The economic order quantity must be numeric'),'error');
 		}
-		if ($$myrow[6] <0) {
+		if ($myrow[6] <0) {
 			$InputError = 1;
 			prnMsg (_('The economic order quantity must be a positive number'),'error');
 		}
