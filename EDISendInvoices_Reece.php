@@ -159,8 +159,8 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 	                        LIMIT 0,1";
 
 		                $ResultTax = DB_query($sql);
-
-		                $TaxRate = 100 * (mysql_result($ResultTax, 0));
+						$TaxRow = DB_fetch_array($ResultTax);
+		                $TaxRate = 100 * ($TaxRow['taxrate']);
 
                 //**************Taxrate, need to find
 
