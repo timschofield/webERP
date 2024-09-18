@@ -39,7 +39,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query('SELECT currency, currabrev, country, hundredsname,decimalplaces, rate FROM currencies');
 	while ($CurrRow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO currencies VALUES ('" . $CurrRow['currency'] . "', '" . $CurrRow['currabrev'] . "', '" . SQLite_Escape ($CurrRow['country']) . "', '" . SQLite_Escape ($CurrRow['hundredsname']) . "', '" .$CurrRow['decimalplaces'] . "', '" .$CurrRow['rate'] . "');\n");
+		  fwrite($FileHandle,"INSERT INTO currencies VALUES ('" . $CurrRow['currency'] . "', '" . $CurrRow['currabrev'] . "', '" . SQLite3::escapeString ($CurrRow['country']) . "', '" . SQLite3::escapeString ($CurrRow['hundredsname']) . "', '" .$CurrRow['decimalplaces'] . "', '" .$CurrRow['rate'] . "');\n");
 
 	}
 
@@ -48,7 +48,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query("SELECT typeabbrev, sales_type FROM salestypes");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO salestypes VALUES ('" . $myrow['typeabbrev'] . "', '" . SQLite_Escape ($myrow['sales_type']) . "');\n");
+		  fwrite($FileHandle,"INSERT INTO salestypes VALUES ('" . $myrow['typeabbrev'] . "', '" . SQLite3::escapeString ($myrow['sales_type']) . "');\n");
 
 	}
 	fwrite($FileHandle,"DELETE FROM holdreasons;\n");
@@ -56,7 +56,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query("SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO holdreasons VALUES ('" . $myrow['reasoncode'] . "', '" . SQLite_Escape ($myrow['reasondescription']) . "', '" . $myrow['dissallowinvoices'] . "');\n");
+		  fwrite($FileHandle,"INSERT INTO holdreasons VALUES ('" . $myrow['reasoncode'] . "', '" . SQLite3::escapeString ($myrow['reasondescription']) . "', '" . $myrow['dissallowinvoices'] . "');\n");
 
 	}
 	fwrite($FileHandle,"DELETE FROM paymentterms;\n");
@@ -64,7 +64,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query("SELECT termsindicator, terms FROM paymentterms");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO paymentterms VALUES ('" . $myrow['termsindicator'] . "', '" . SQLite_Escape ($myrow['terms']) . "');\n");
+		  fwrite($FileHandle,"INSERT INTO paymentterms VALUES ('" . $myrow['termsindicator'] . "', '" . SQLite3::escapeString ($myrow['terms']) . "');\n");
 
 	}
 
@@ -72,7 +72,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query("SELECT paymentid, paymentname,opencashdrawer FROM paymentmethods");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO paymentmethods VALUES ('" . $myrow['paymentid'] . "', '" . SQLite_Escape ($myrow['paymentname']) . "', '" . $myrow['opencashdrawer'] . "');\n");
+		  fwrite($FileHandle,"INSERT INTO paymentmethods VALUES ('" . $myrow['paymentid'] . "', '" . SQLite3::escapeString ($myrow['paymentname']) . "', '" . $myrow['opencashdrawer'] . "');\n");
 
 	}
 
@@ -80,7 +80,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query("SELECT loccode, locationname,taxprovinceid FROM locations");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO locations VALUES ('" . $myrow['loccode'] . "', '" . SQLite_Escape ($myrow['locationname']) . "', '" . $myrow['taxprovinceid'] . "');\n");
+		  fwrite($FileHandle,"INSERT INTO locations VALUES ('" . $myrow['loccode'] . "', '" . SQLite3::escapeString ($myrow['locationname']) . "', '" . $myrow['taxprovinceid'] . "');\n");
 
 	}
 
@@ -88,14 +88,14 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query("SELECT categoryid, categorydescription FROM stockcategory");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO stockcategory VALUES ('" . $myrow['categoryid'] . "', '" . SQLite_Escape ($myrow['categorydescription']) . "');\n");
+		  fwrite($FileHandle,"INSERT INTO stockcategory VALUES ('" . $myrow['categoryid'] . "', '" . SQLite3::escapeString ($myrow['categorydescription']) . "');\n");
 
 	}
 	fwrite($FileHandle,"DELETE FROM taxgroups;\n");
 	$result = DB_query("SELECT taxgroupid, taxgroupdescription FROM taxgroups");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO taxgroups VALUES ('" . $myrow['taxgroupid'] . "', '" . SQLite_Escape ($myrow['taxgroupdescription']) . "');\n");
+		  fwrite($FileHandle,"INSERT INTO taxgroups VALUES ('" . $myrow['taxgroupid'] . "', '" . SQLite3::escapeString ($myrow['taxgroupdescription']) . "');\n");
 
 	}
 
@@ -110,7 +110,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	$result = DB_query("SELECT taxid, description FROM taxauthorities");
 	while ($myrow = DB_fetch_array($result)) {
 
-		  fwrite($FileHandle,"INSERT INTO taxauthorities VALUES ('" . $myrow['taxid'] . "', '" . SQLite_Escape ($myrow['description']) . "');\n");
+		  fwrite($FileHandle,"INSERT INTO taxauthorities VALUES ('" . $myrow['taxid'] . "', '" . SQLite3::escapeString ($myrow['description']) . "');\n");
 
 	}
 	fwrite($FileHandle,"DELETE FROM taxauthrates;\n");
@@ -126,7 +126,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 
 	while ($myrow = DB_fetch_array($result)) {
 
-		fwrite($FileHandle,"INSERT INTO stockmaster VALUES ('" . SQLite_Escape($myrow['stockid']) . "', '" . SQLite_Escape($myrow['categoryid']) . "', '" . SQLite_Escape ($myrow['description']) . "', '" . SQLite_Escape(str_replace("\n", '', $myrow['longdescription'])) . "', '" . SQLite_Escape($myrow['units']) . "', '" . SQLite_Escape ($myrow['barcode']) . "', '" . $myrow['taxcatid'] . "', '" . $myrow['decimalplaces'] . "', '" . SQLite_Escape($myrow['discountcategory']) . "' );\n");
+		fwrite($FileHandle,"INSERT INTO stockmaster VALUES ('" . SQLite3::escapeString($myrow['stockid']) . "', '" . SQLite3::escapeString($myrow['categoryid']) . "', '" . SQLite3::escapeString ($myrow['description']) . "', '" . SQLite3::escapeString(str_replace("\n", '', $myrow['longdescription'])) . "', '" . SQLite3::escapeString($myrow['units']) . "', '" . SQLite3::escapeString ($myrow['barcode']) . "', '" . $myrow['taxcatid'] . "', '" . $myrow['decimalplaces'] . "', '" . SQLite3::escapeString($myrow['discountcategory']) . "' );\n");
 	}
 	fwrite($FileHandle,"DELETE FROM prices;\n");
 
@@ -149,24 +149,24 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 									prices.currabrev,
 									prices.debtorno");
 	while ($myrow = DB_fetch_array($result)) {
-		fwrite($FileHandle,"INSERT INTO prices VALUES ('" . SQLite_Escape($myrow['stockid']) . "', '" . SQLite_Escape($myrow['typeabbrev']) . "', '" . SQLite_Escape($myrow['currabrev']) . "', '" . SQLite_Escape($myrow['debtorno']) . "', '" . $myrow['lowestprice'] . "', '');\n");
+		fwrite($FileHandle,"INSERT INTO prices VALUES ('" . SQLite3::escapeString($myrow['stockid']) . "', '" . SQLite3::escapeString($myrow['typeabbrev']) . "', '" . SQLite3::escapeString($myrow['currabrev']) . "', '" . SQLite3::escapeString($myrow['debtorno']) . "', '" . $myrow['lowestprice'] . "', '');\n");
 	}
 
 	fwrite($FileHandle,"DELETE FROM discountmatrix;\n");
 	$result = DB_query("SELECT salestype, discountcategory, quantitybreak, discountrate FROM discountmatrix");
 	while ($myrow = DB_fetch_array($result)) {
-		  fwrite($FileHandle,"INSERT INTO discountmatrix VALUES ('" . SQLite_Escape($myrow['salestype']) . "', '" . SQLite_Escape($myrow['discountcategory']) . "', '" . $myrow['quantitybreak'] . "', '" . $myrow['discountrate'] . "');\n");
+		  fwrite($FileHandle,"INSERT INTO discountmatrix VALUES ('" . SQLite3::escapeString($myrow['salestype']) . "', '" . SQLite3::escapeString($myrow['discountcategory']) . "', '" . $myrow['quantitybreak'] . "', '" . $myrow['discountrate'] . "');\n");
 	}
 
 	fwrite($FileHandle,"DELETE FROM debtorsmaster;\n");
 	$result = DB_query("SELECT debtorno, name, currcode, salestype, holdreason, paymentterms, discount, creditlimit, discountcode FROM debtorsmaster WHERE currcode='". $CurrCode . "'");
 	while ($myrow = DB_fetch_array($result)) {
-		  fwrite($FileHandle,"INSERT INTO debtorsmaster VALUES ('" . $myrow['debtorno'] . "', '" . SQLite_Escape ($myrow['name']) . "', '" . $myrow['currcode'] . "', '" . $myrow['salestype'] . "', '" . $myrow['holdreason'] . "', '" . SQLite_Escape ($myrow['paymentterms']) . "', '" . $myrow['discount'] . "', '" . $myrow['creditlimit'] . "', '" . $myrow['discountcode'] . "');\n");
+		  fwrite($FileHandle,"INSERT INTO debtorsmaster VALUES ('" . $myrow['debtorno'] . "', '" . SQLite3::escapeString ($myrow['name']) . "', '" . $myrow['currcode'] . "', '" . $myrow['salestype'] . "', '" . $myrow['holdreason'] . "', '" . SQLite3::escapeString ($myrow['paymentterms']) . "', '" . $myrow['discount'] . "', '" . $myrow['creditlimit'] . "', '" . $myrow['discountcode'] . "');\n");
 	}
 	fwrite($FileHandle,"DELETE FROM custbranch;\n");
 	$result = DB_query("SELECT branchcode, debtorsmaster.debtorno, brname, contactname, specialinstructions,taxgroupid FROM custbranch INNER JOIN debtorsmaster ON custbranch.debtorno=debtorsmaster.debtorno WHERE debtorsmaster.currcode='". $CurrCode . "'");
 	while ($myrow = DB_fetch_array($result)) {
-		  fwrite($FileHandle,"INSERT INTO custbranch VALUES ('" . $myrow['branchcode'] . "', '" . $myrow['debtorno'] . "', '" . SQLite_Escape ($myrow['brname']) . "', '" . SQLite_Escape ($myrow['contactname']) . "', '" . SQLite_Escape ($myrow['specialinstructions']) . "', '" . $myrow['taxgroupid'] . "');\n");
+		  fwrite($FileHandle,"INSERT INTO custbranch VALUES ('" . $myrow['branchcode'] . "', '" . $myrow['debtorno'] . "', '" . SQLite3::escapeString ($myrow['brname']) . "', '" . SQLite3::escapeString ($myrow['contactname']) . "', '" . SQLite3::escapeString ($myrow['specialinstructions']) . "', '" . $myrow['taxgroupid'] . "');\n");
 	}
 	fclose($FileHandle);
 	/*Now compress to a zip archive */
@@ -186,7 +186,7 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 	return 1;
 }
 
-function SQLite_Escape($String) {
+function escapeString($String) {
   $SearchCharacters  = array('&', '"', "'",'<', '>',"\n","\r");
   $ReplaceWith = array('&amp;', '""', "''", '&lt;', '&gt;', '', '&#13;');
 
