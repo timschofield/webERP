@@ -1,7 +1,7 @@
 .container{
 display:grid;
 grid-template-columns:repeat(var(--cols), 1fr);
-grid-template-rows:repeat(var(--rows), 0.7fr);
+grid-auto-rows: 0.69fr;
 column-gap: 10px;
 row-gap: 10px;
 margin-bottom:2%;
@@ -21,8 +21,14 @@ scrollbar-color: #516396 #F9F9F9;
 float:right;
 background:#090932;
 color:#ADD8E6;
-padding-left:3px;
-padding-right:3px;
-border-radius:27px;
+padding-left:5px;
+padding-right:5px;
+border-radius:36px;
 cursor:pointer;
+}
+.DashboardTable{
+width:100%;
+}
+.DashboardTable tr {
+background:blue;
 }

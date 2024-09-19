@@ -66,3 +66,22 @@ box-shadow:3px 3px 4px inset;
 #demo_text {
 	padding:10px;
 }
+
+.ErrorMessage {
+position: absolute;
+top:30%;
+left:30%;
+right:30%;
+width:40%;
+margin:0 auto;
+text-align:center;
+padding:6px;
+padding-top:50px;
+padding-bottom:50px;
+border:3px solid red;
+border-radius:50px;
+background:#FFC0CB;
+font-size:24px;
+color:red;
+opacity:0.7;
+}
