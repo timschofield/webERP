@@ -113,7 +113,11 @@ padding-right:24px;
 form input[type="submit"]{
 padding-top: 6px;
 padding-bottom: 6px;
-padding-left: 10px;
+background-image:url(images/tick.svg);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
 padding-right: 10px;
 margin: 1px;
 border: 1px solid #8DCDEB;
@@ -122,7 +126,7 @@ border-radius: 5px;
 cursor: pointer;
 transition-duration:0.5s;
 }
-form input[title~="PDF"] {
+form input[name*="PDF"] {
 background-image:url(images/pdf.png);
 background-repeat: no-repeat;
 background-position:4px center;
@@ -136,10 +140,22 @@ background-position:4px center;
 background-size:18px 18px;
 padding-left:24px;
 }
+form input[name^="Search"] {
+background-image:url(images/search.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
 form input[type="reset"]{
+background:#E0F3B1;
+background-image:url(images/cross.svg);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
 padding-top: 6px;
 padding-bottom: 6px;
-padding-left: 10px;
+padding-left:24px;
 padding-right: 10px;
 margin: 1px;
 border: 1px solid #8DCDEB;
