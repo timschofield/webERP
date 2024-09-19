@@ -1,22 +1,18 @@
 <?php
 
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 if (isset($_POST['submit'])) {
-    submit($_POST['Tabs']);
-} else {
-    display();
-}
-
-//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($TabToShow) {
-
 	//initialise no input errors
 	$InputError = 0;
-
+	$TabToShow = $_POST['Tabs'];
 	//first off validate inputs sensible
 
 	if ($InputError == 0){
@@ -55,8 +51,8 @@ function submit($TabToShow) {
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) != 0){
 
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new PHPSpreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -72,7 +68,7 @@ function submit($TabToShow) {
 			$objPHPExcel->getActiveSheet()->getStyle('C:AB')->getNumberFormat()->setFormatCode('#,##0.00');
 			$objPHPExcel->getActiveSheet()->getStyle('4')->getFont()->setBold(true);
 			$objPHPExcel->getActiveSheet()->getStyle('A2')->getFont()->setBold(true);
-			$objPHPExcel->getActiveSheet()->getStyle('A:B')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+			$objPHPExcel->getActiveSheet()->getStyle('A:B')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
 
 			// Add title data
 			$objPHPExcel->setActiveSheetIndex(0);
@@ -168,7 +164,9 @@ function submit($TabToShow) {
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'PCExpensesAnalysis-' . Date('Y-m-d'). '.xlsx';
+
+			$File = 'PCExpensesAnalysis-' . Date('Y-m-d'). '.' . $_POST['Format'];
+
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -180,8 +178,13 @@ function submit($TabToShow) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 		}else{
 			$Title = _('Excel file for Petty Cash Expenses Analysis');
@@ -190,11 +193,7 @@ function submit($TabToShow) {
 			include('includes/footer.php');
 		}
 	}
-} // End of function submit()
-
-
-function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
-{
+} else {
 // Display form fields. This function is called the first time
 // the page is called.
 	$Title = _('Excel file for Petty Cash Expenses Analysis');
@@ -203,19 +202,19 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 	include('includes/header.php');
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Excel file for Petty Cash Expenses Analysis') . '" alt="" />' . ' ' . _('Excel file for Petty Cash Expenses Analysis') . '
 		</p>';
 
-	echo '<table class="selection">
-		<tr>
-		<td>' . _('For Petty Cash Tabs') . ':</td>
-		<td><select name="Tabs">';
+	echo '<fieldset>
+			<legend>', _('Petty Cash Tab To Analyse'), '</legend>';
+
+	echo '<field>
+			<label for="Tabs">' . _('For Petty Cash Tabs') . ':</label>
+			<select name="Tabs">';
 
 	$SQL = "SELECT tabcode
 			FROM pctabs
@@ -228,22 +227,25 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		echo '<option value="' . $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
 	}
 	echo '</select>
-			</td>
-		</tr>';
+		</field>';
 
-	echo '
-		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Petty Cash Expenses Excel File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
-         </form>';
+	echo '<field>
+			<label for="Format">', _('Output Format'), '</label>
+			<select name="Format">
+				<option value="xlsx">', _('Excel Format (.xlsx)'), '</option>
+				<option value="ods" selected="selected">', _('Open Document Format (.ods)'), '</option>
+			</select>
+		</field>';
+
+	echo '</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Create Petty Cash Expenses Excel File') . '" />
+		</div>';
+
+	echo '</form>';
 	include('includes/footer.php');
 
-} // End of function display()
+}
 
 function beginning_of_month($Date){
 	$Date2 = explode("-",$Date);
