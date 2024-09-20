@@ -334,7 +334,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 			echo '<tr>
 					<td><input type="text" name="StockID' . $j .'" size="21"  maxlength="20" value="' . $_POST['StockID' . $i] . '" /></td>
-					<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $i],'Variable') . '" /></td>
+					<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . $_POST['StockQTY' . $i] . '" /></td>
 					<td>' . _('Delete') . '<input type="checkbox" name="Delete' . $j .'" /></td>
 				</tr>';
 			$j++;
@@ -354,7 +354,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		}
 		echo '<tr>
 				<td><input type="text" name="StockID' . $j .'" ' . ($j==0 OR $j==$z-9 ? 'autofocus="autofocus"' : '') . ' size="21"  maxlength="20" value="' . $_POST['StockID' . $j] . '" /></td>
-				<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . locale_number_format($_POST['StockQTY' . $j]) . '" /></td>
+				<td><input type="text" name="StockQTY' . $j .'" size="10" maxlength="10" class="number" value="' . $_POST['StockQTY' . $j] . '" /></td>
 			</tr>';
 		$j++;
 	}
