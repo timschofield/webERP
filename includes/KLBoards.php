@@ -1652,7 +1652,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 	$Year = date('Y', strtotime("-1 days"));
 	
-	$TrendThisYear = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
+	$TrendThisYearKL = round(GetLastKPIValue("Stock","Trend retail 75 days (%) Kapal-Laut") / 100,3);
+	$TrendThisYearBL = round(GetLastKPIValue("Stock","Trend retail 75 days (%) Blink") / 100,3);
+	$TrendThisYearOU = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -1726,7 +1728,13 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$DailyUse = $myrow['qused'] / $DaysUsage;
 			$UsedLastXDays = ceil($DailyUse * $DaysUsage);
 			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
-			$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYear));
+			if (ItemInList($myrow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
+				$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYearKL));
+			}elseif (ItemInList($myrow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
+				$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYearBL));
+			}else{
+				$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYearOU));
+			}
 			$ForecastUsageNextDays = max( $ForecastUsedThisYear, $ForecastUsedLastYear);
 			$ForecastUsageDaily = $ForecastUsageNextDays / $DaysMinimumStock;
 			
@@ -1782,7 +1790,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						if ($ShowAll){
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging order status</strong></p>';
 							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate). '</p>';
-							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear). ' with trend retail = '. ($TrendThisYear*100).'%</p>';
+							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . '</p>';
+							echo '<p class="page_title_text_small" align="center">Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%</p>';
 						}else{
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.</strong></p>';
 						}
@@ -1978,6 +1987,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
+
 			InsertKPI("Packaging", "Packaging current daily use (PCS)", $TotalDailyUse);
 			InsertKPI("Packaging", "Packaging used last " . $DaysUsage .  " days (PCS)", $UsageXDays);
 			InsertKPI("Packaging", "Packaging forecast next X days (PCS)", $ForecastXDays);
