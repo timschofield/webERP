@@ -19,7 +19,8 @@ CreateTable('pctags',
   PRIMARY KEY (`pccashdetail`,`tag`)
 )");
 
-//executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans)");
+executeSQL("INSERT INTO tags VALUES(0, 'None')");
+executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans)");
 
 DropColumn('tag', 'gltrans');
 
