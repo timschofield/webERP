@@ -1,17 +1,33 @@
 <?php
 
-
 include('includes/session.php');
+use Dompdf\Dompdf;
+
 $Title = _('Sell Through Support Claims Report');
 
-if (isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Sell Through Support Claim'));
-	$pdf->addInfo('Subject', _('Sell Through Support Claim'));
-	$FontSize=10;
-	$PageNumber=1;
-	$line_height=12;
+	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
+	$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);
+
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+				<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Reorder Level Report') . '<br />
+					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . _('Low GP Sales Between') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' ' . $_POST['ToDate'] . '<br />
+				</div>';
 
 	$Title = _('Sell Through Support Claim') . ' - ' . _('Problem Report');
 
@@ -83,79 +99,99 @@ if (isset($_POST['PrintPDF'])) {
 		include('includes/header.php');
 		prnMsg(_('No sell through support items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
-		  echo '<br />' .  $SQL;
-		}
 		include('includes/footer.php');
 		exit;
 	}
 
-	include ('includes/PDFSellThroughSupportClaimPageHeader.inc');
-	$SupplierClaimTotal=0;
-	$Supplier = '';
-	$FontSize=8;
+	$HTML .= '<table>';
+
+	$HTML .= '<tr>
+				<th>' . _('Transaction') . '</th>
+				<th>' . _('Item') . '</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Sell Price') . '</th>
+				<th>' . _('Quantity') . '</th>
+				<th>' . _('Claim') . '</th>
+			</tr>';
+
+	$SupplierClaimTotal = 0;
 	while ($SellThroRow = DB_fetch_array($ClaimsResult)){
 
-		$YPos -=$line_height;
-		if ($SellThroRow['suppname']!=$Supplier){
+		$CurrDecimalPlaces = $SellThroRow['currdecimalplaces'];
+		$Supplier = $SellThroRow['suppname'];
+		$CurrCode = $SellThroRow['currcode'];
+		if (isset($Supplier) and $SellThroRow['suppname']!=$Supplier){
+			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
 			if ($SupplierClaimTotal > 0) {
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')');
-				$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
-				include('includes/PDFSellThroughClaimPageHeader.inc');
+				$HTML .= '<tr>
+							<td colspan="3"></td>
+							<td colspan="2">' . $Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
+							<td class="number">' . locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces) . '</td>
+						</tr>';
 			}
 		}
-		if ($SellThroRow['suppname']!=$Supplier){
-			$pdf->SetFont('helvetica', $style='B', $size=11);
-			$FontSize = 10;
-			$YPos -=$line_height;
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
-			$Supplier = $SellThroRow['suppname'];
-			$CurrDecimalPlaces = $SellThroRow['currdecimalplaces'];
-			$CurrCode = $SellThroRow['currcode'];
-			$SupplierClaimTotal=0;
-			$pdf->SetFont('helvetica', $style='N', $size=8);
-			$FontSize =8;
-			$YPos -=$line_height;
-		}
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,60,$FontSize,$SellThroRow['typename'] . '-' . $SellThroRow['transno']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+63,$YPos,160,$FontSize,$SellThroRow['stockid']. '-' . $SellThroRow['description']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+223,$YPos,110,$FontSize,$SellThroRow['name']);
 		$DisplaySellingPrice = locale_number_format($SellThroRow['sellingprice'],$_SESSION['CompanyRecord']['decimalplaces']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+334,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
 		$ClaimAmount = (($SellThroRow['fxcost']*$SellThroRow['rebatepercent']) + $SellThroRow['rebateamount']) * -$SellThroRow['qty'];
 		$SupplierClaimTotal += $ClaimAmount;
-
-
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,60,$FontSize,locale_number_format(-$SellThroRow['qty']), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
-
-		if ($YPos < $Bottom_Margin + $line_height){
-			include('includes/PDFSellThroughSupportClaimPageHeader.inc');
-		}
+		$HTML .= '<tr>
+					<td>' . $SellThroRow['typename'] . '-' . $SellThroRow['transno'] . '</td>
+					<td>' . $SellThroRow['stockid']. '-' . $SellThroRow['description'] . '</td>
+					<td>' . $SellThroRow['name'] . '</td>
+					<td>' . $DisplaySellingPrice . '</td>
+					<td class="number">' . locale_number_format(-$SellThroRow['qty']) . '</td>
+					<td class="number">' . locale_number_format($ClaimAmount,$CurrDecimalPlaces) . '</td>
+				</tr>';
 
 	} /*end sell through support claims while loop */
 
 	if ($SupplierClaimTotal > 0) {
-		$YPos -=5;
-		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
-		$YPos -=$line_height;
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,470,$FontSize,$Supplier . ' ' . _('Total Claim:'),'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
-		$YPos -=5;
-
-		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
-		$YPos -=1;
-		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
+		$HTML .= '<tr>
+					<td colspan="3"></td>
+					<td colspan="2">' . $Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')' . '</td>
+					<td class="number">' . locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces) . '</td>
+				</tr>';
 
 	}
-	$FontSize =10;
 
-	$YPos -= (2*$line_height);
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_SellThroughSupportClaim_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+			</html>';
 
-} else { /*The option to print PDF was not hit */
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_SellThroughSupportClaim_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Sales With Low GP');
+		include ('includes/header.php');
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Sales With Low G') . '" alt="" />' . ' ' . _('Sales With Low G') . '
+			</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
+
+} else {
 
 	include('includes/header.php');
 
@@ -165,23 +201,26 @@ if (isset($_POST['PrintPDF'])) {
 	if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])) {
 
 	/*if $FromDate is not set then show a form to allow input */
-		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat']);
-		$_POST['ToDate']=Date($_SESSION['DefaultDateFormat']);
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+		$_POST['FromDate']=Date('Y-m-d');
+		$_POST['ToDate']=Date('Y-m-d');
+		$_POST['GPMin']=0;
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
+				<legend>', _('Report Criteria'), '</legend>
 				<field>
 					<label for="FromDate">' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
-					<input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+					<input type="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
 				</field>
 				<field>
 					<label for="ToDate">' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
-					<input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+					<input type="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
 				</field>
 			</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Create Claims Report') . '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print Low GP PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . _('View Low GP Report') . '" />
 			</div>';
 		echo '</form>';
 	}

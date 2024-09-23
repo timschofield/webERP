@@ -25,8 +25,9 @@ margin-bottom:3px;
 background:#ECECEC
 }
 .logo {
-position:absolute;
-float:left;
+display:inline-block;
+left:0px;
+height:48px;
 }
 table {
 width:100%;
