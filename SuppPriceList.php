@@ -273,7 +273,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		echo '<option value="all">' . _('ALL') . '</option>';
 	while ($myrow=DB_fetch_array($result)){
 		if (isset($_POST['categoryid']) and ($myrow['categoryid'] == $_POST['categoryid'])) {
-			 echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categoryid']-$myrow['categorydescription'] . '</option>';
+			 echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		} else {
 			 echo '<option value="' . $myrow['categoryid'] . '">' .$myrow['categoryid'].' - '. $myrow['categorydescription'] . '</option>';
 		}

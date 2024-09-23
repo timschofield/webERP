@@ -1,118 +1,14 @@
 <?php
 
-
 /* Session started in session.php for password checking and authorisation level check
 config.php is in turn included in session.php*/
 include ('includes/session.php');
+use Dompdf\Dompdf;
 $Title = _('Top Items Searching');
-include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
 
 //check if input already
-if (!(isset($_POST['Search']))) {
-
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
-		</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>';
-	//to view store location
-	echo '<field>
-			<label for="Location">' . _('Select Location') . ':  </label>
-			<select name="Location">';
-	$sql = "SELECT locations.loccode,
-					locationname
-			FROM locations
-			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locations.locationname";
-	$result = DB_query($sql);
-	echo '<option value="All">' . _('All') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-	}
-	echo '</select>
-		</field>';
-	//to view list of customer
-	echo '<field>
-			<label for="Customers">' . _('Select Customer Type') . ':</label>
-			<select name="Customers">';
-
-	$sql = "SELECT typename,
-					typeid
-			FROM debtortype
-			ORDER BY typename";
-	$result = DB_query($sql);
-	echo '<option value="All">' . _('All') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
-	}
-	echo '</select>
-		</field>';
-
-	// stock category selection
-	$SQL="SELECT categoryid,
-					categorydescription
-			FROM stockcategory
-			ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
-
-	echo '<field>
-			<label for="StockCat">' . _('In Stock Category') . ' </label>
-			<select name="StockCat">';
-	if (!isset($_POST['StockCat'])){
-		$_POST['StockCat']='All';
-	}
-	if ($_POST['StockCat']=='All'){
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
-	} else {
-		echo '<option value="All">' . _('All') . '</option>';
-	}
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
-		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
-		}
-	}
-    echo '</select>
-        </field>';
-
-	//view order by list to display
-	echo '<field>
-			<label for="Sequence">' . _('Select Order By ') . ':</label>
-			<select name="Sequence">
-				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
-				<option value="valuesales">' . _('Value of Sales') . '</option>
-			</select>
-		</field>';
-
-	//View number of days
-	echo '<field>
-			<label for="NumberOfDays">' . _('Number Of Days') . ':</label>
-			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="3" type="text" name="NumberOfDays" size="8" maxlength="8" value="30" />
-			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
-		 </field>';
-
-	//Stock in days less than
-	echo '<field>
-			<label for="MaxDaysOfStock">' . _('With less than') . ':</label>
-			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="4" type="text" name="MaxDaysOfStock" size="8" maxlength="8" value="99999" />
-			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
-			' . ' ' . _('Days of Stock (QOH + QOO) Available') . '
-		 </field>';
-	//view number of NumberOfTopItems items
-	echo '<field>
-			<label for="NumberOfTopItems">' . _('Number Of Top Items') . ':</label>
-			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="4" type="text" name="NumberOfTopItems" size="8" maxlength="8" value="100" />
-			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
-		 </field>
-	</fieldset>
-	<div class="centre">
-		<input tabindex="5" type="submit" name="Search" value="' . _('Search') . '" />
-	</div>
-	</form>';
-} else {
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// everything below here to view NumberOfTopItems items sale on selected location
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -filter_number_format($_POST['NumberOfDays'])));
 
@@ -150,20 +46,32 @@ if (!(isset($_POST['Search']))) {
 					ORDER BY `" . $_POST['Sequence'] . "` DESC
 					LIMIT " . filter_number_format($_POST['NumberOfTopItems']);
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 
-	echo '<p class="page_title_text"><strong>' . _('Top Sales Items List') . '</strong></p>';
-	echo '<form action="PDFTopItems.php"  method="GET">
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
-		<input type="hidden" value="' . $_POST['Sequence'] . '" name="Sequence" />
-		<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
-		<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />
-		<input type="hidden" value="' . filter_number_format($_POST['NumberOfTopItems']) . '" name="NumberOfTopItems" />
-		<table class="selection">
-		<thead>
-			<tr>
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+				<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Reorder Level Report') . '<br />
+					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+					' . _('Location') . ' - ' . $_POST['Location'] . '<br />
+					' . _('Customers') . ' - ' . $_POST['Customers'] . '<br />
+					' . _('Stock Category') . ' - ' . $_POST['StockCat'] . '<br />
+				</div>';
+
+	$HTML .= '<table class="selection">
+				<thead>
+					<tr>
 						<th>' . _('#') . '</th>
 						<th class="ascending">' . _('Code') . '</th>
 						<th class="ascending">' . _('Description') . '</th>
@@ -173,15 +81,15 @@ if (!(isset($_POST['Search']))) {
 						<th class="ascending">' . _('On Hand') . '</th>
 						<th class="ascending">' . _('On Order') . '</th>
 						<th class="ascending">' . _('Stock (Days)') . '</th>
-			</tr>
+					</tr>
 		</thead>
 		<tbody>';
 
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		$QOH = 0;
 		$QOO = 0;
-		switch ($myrow['mbflag']) {
+		switch ($MyRow['mbflag']) {
 			case 'A':
 			case 'D':
 			case 'K':
@@ -193,61 +101,192 @@ if (!(isset($_POST['Search']))) {
 				$QOHResult = DB_query("SELECT sum(quantity)
 								FROM locstock
 								INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'");
+								WHERE stockid = '" . DB_escape_string($MyRow['stkcode']) . "'");
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH = $QOHRow[0];
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stkcode'], '');
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stkcode'], '');
 				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stkcode'], '');
+				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stkcode'], '');
 			break;
 		}
 	        if(is_numeric($QOH) and is_numeric($QOO)){
-			$DaysOfStock = ($QOH + $QOO) / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = ($QOH + $QOO) / ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		}elseif(is_numeric($QOH)){
-			$DaysOfStock = $QOH/ ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = $QOH/ ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		}elseif(is_numeric($QOO)){
-			$DaysOfStock = $QOO/ ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = $QOO/ ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 
 		}else{
 			$DaysOfStock = 0;
 		}
 		if ($DaysOfStock < $_POST['MaxDaysOfStock']){
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
-			$QOH = is_numeric($QOH)?locale_number_format($QOH,$myrow['decimalplaces']):$QOH;
-			$QOO = is_numeric($QOO)?locale_number_format($QOO,$myrow['decimalplaces']):$QOO;
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$i,
-					$CodeLink,
-					$myrow['description'],
-					locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
-					$myrow['units'], //unit
-					locale_number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
-					$QOH,  //on hand
-					$QOO, //on order
-					locale_number_format($DaysOfStock, 0) //days of available stock
-					);
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
+			$QOH = is_numeric($QOH)?locale_number_format($QOH,$MyRow['decimalplaces']):$QOH;
+			$QOO = is_numeric($QOO)?locale_number_format($QOO,$MyRow['decimalplaces']):$QOO;
+			$HTML .= '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['totalinvoiced'],$MyRow['decimalplaces']) . '</td>
+						<td>' . $MyRow['units'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td class="number">' . $QOH . '</td>
+						<td class="number">' . $QOO . '</td>
+						<td class="number">' . locale_number_format($DaysOfStock, 0) . '</td>
+					</tr>';
 		}
 		$i++;
 	}
-	echo '</tbody></table>';
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print To PDF') . '" />
-			</div>
-        </div>
-		</form>';
-}
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_TopSalesItems_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Reorder Level Reporting');
+		include ('includes/header.php');
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Top Sales Items List') . '" alt="" />' . ' ' . _('Top Sales Items List') . '
+			</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
+
+} else {
+	include ('includes/header.php');
+
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Top Sales Order Search') . '" alt="" />' . ' ' . _('Top Sales Order Search') . '
+		</p>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
+	//to view store location
+	echo '<field>
+			<label for="Location">' . _('Select Location') . ':  </label>
+			<select name="Location">';
+	$SQL = "SELECT locations.loccode,
+					locationname
+			FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locations.locationname";
+	$Result = DB_query($SQL);
+	echo '<option value="All">' . _('All') . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+	}
+	echo '</select>
+		</field>';
+	//to view list of customer
+	echo '<field>
+			<label for="Customers">' . _('Select Customer Type') . ':</label>
+			<select name="Customers">';
+
+	$SQL = "SELECT typename,
+					typeid
+			FROM debtortype
+			ORDER BY typename";
+	$Result = DB_query($SQL);
+	echo '<option value="All">' . _('All') . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+	}
+	echo '</select>
+		</field>';
+
+	// stock category selection
+	$SQL="SELECT categoryid,
+					categorydescription
+			FROM stockcategory
+			ORDER BY categorydescription";
+	$Result1 = DB_query($SQL);
+
+	echo '<field>
+			<label for="StockCat">' . _('In Stock Category') . ' </label>
+			<select name="StockCat">';
+	if (!isset($_POST['StockCat'])){
+		$_POST['StockCat']='All';
+	}
+	if ($_POST['StockCat']=='All'){
+		echo '<option selected="selected" value="All">' . _('All') . '</option>';
+	} else {
+		echo '<option value="All">' . _('All') . '</option>';
+	}
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['categoryid']==$_POST['StockCat']){
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+		} else {
+			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
+		}
+	}
+    echo '</select>
+        </field>';
+
+	//view order by list to display
+	echo '<field>
+			<label for="Sequence">' . _('Select Order By ') . ':</label>
+			<select name="Sequence">
+				<option value="totalinvoiced">' . _('Total Pieces') . '</option>
+				<option value="valuesales">' . _('Value of Sales') . '</option>
+			</select>
+		</field>';
+
+	//View number of days
+	echo '<field>
+			<label for="NumberOfDays">' . _('Number Of Days') . ':</label>
+			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="3" type="text" name="NumberOfDays" size="8" maxlength="8" value="30" />
+			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
+		 </field>';
+
+	//Stock in days less than
+	echo '<field>
+			<label for="MaxDaysOfStock">' . _('With less than') . ':</label>
+			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="4" type="text" name="MaxDaysOfStock" size="8" maxlength="8" value="99999" />
+			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
+			' . ' ' . _('Days of Stock (QOH + QOO) Available') . '
+		 </field>';
+	//view number of NumberOfTopItems items
+	echo '<field>
+			<label for="NumberOfTopItems">' . _('Number Of Top Items') . ':</label>
+			<input class="integer" required="required" pattern="(?!^0*$)(\d+)" title="" tabindex="4" type="text" name="NumberOfTopItems" size="8" maxlength="8" value="100" />
+			<fieldhelp>'._('The input must be positive integer').'</fieldhelp>
+		 </field>
+	</fieldset>
+	<div class="centre">
+			<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="View" title="View" value="' . _('View') . '" />
+		</div>
+	</form>';
 include ('includes/footer.php');
+}
 ?>

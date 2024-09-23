@@ -804,57 +804,86 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />'; // Input table:
 		// Input table:
-		
-	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>'; // Content of the header and footer of the input table:
-			
-	echo '<field>
-			<label for="PeriodFrom">', _('Select period from'), '</label>
-		 	<select id="PeriodFrom" name="PeriodFrom" required="required">';
-	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno ASC');
-	if(!isset($_POST['PeriodFrom'])) {
-		$BeginMonth = ($_SESSION['YearEnd']==12 ? 1 : $_SESSION['YearEnd']+1);// Sets January as the month that follows December.
-		if($BeginMonth <= date('n')) {// It is a month in the current year.
-			$BeginDate = mktime(0, 0, 0, $BeginMonth, 1, date('Y'));
-		} else {// It is a month in the previous year.
-			$BeginDate = mktime(0, 0, 0, $BeginMonth, 1, date('Y')-1);
-		}
-		$_POST['PeriodFrom'] = GetPeriod(date($_SESSION['DefaultDateFormat'], $BeginDate));
-	}
-	while($MyRow = DB_fetch_array($Periods)) {
-	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
-	}
-	echo '</select>';
-	
-	echo '<fieldhelp>', _('Select the beginning of the reporting period'), '</fieldhelp>
-		</field>';
-		
-	// Select period to:
-	echo '<field>
-			<label for="PeriodTo">', _('Select period to'), '</label>
-		 	<select id="PeriodTo" name="PeriodTo" required="required">';
+
 	if(!isset($_POST['PeriodTo'])) {
-		$_POST['PeriodTo'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
-		$_POST['ShowBudget'] = '';
+		$_POST['ShowBudget'] = 'On';
 		$_POST['ShowZeroBalance'] = '';
 		$_POST['ShowCash'] = '';
 	}
+
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>'; // Content of the header and footer of the input table:
+
+	echo '<field>
+			<label for="PeriodFrom">', _('Select period from'), '</label>
+		 	<select id="PeriodFrom" name="PeriodFrom" required="required">';
+	// Select period from:
+			'<field>
+				<label for="PeriodFrom">' . _('Select period from') . '</label>
+		 		<select id="PeriodFrom" name="PeriodFrom" required="required">';
+	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC');
+
+	if (Date('m') > $_SESSION['YearEnd']) {
+		/*Dates in SQL format */
+		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')));
+	} else {
+		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
+		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
+	}
+
+	$period = GetPeriod($FromDate);
+
+	while ($MyRow=DB_fetch_array($Periods)) {
+		if(isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {
+			if( $_POST['PeriodFrom']== $MyRow['periodno']) {
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' .MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+			} else {
+				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+			}
+		} else {
+			if($MyRow['lastdate_in_period']== $DefaultFromDate) {
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+			} else {
+				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
+			}
+		}
+	}
+
+	echo '</select>
+		<fieldhelp>' . _('Select the beginning of the reporting period') . '</fieldhelp>
+	</field>';
+
+	// Select period to:
+	if(!isset($_POST['PeriodTo'])) {
+		$PeriodSQL = "SELECT periodno
+						FROM periods
+						WHERE MONTH(lastdate_in_period) = MONTH(CURRENT_DATE())
+						AND YEAR(lastdate_in_period ) = YEAR(CURRENT_DATE())";
+		$PeriodResult = DB_query($PeriodSQL);
+		$PeriodRow = DB_fetch_array($PeriodResult);
+		$_POST['PeriodTo'] = $PeriodRow['periodno'];;
+	}
+	echo '<field>
+			<label for="PeriodTo">' . _('Select period to') . '</label>
+		 	<select id="PeriodTo" name="PeriodTo" required="required">';
 	DB_data_seek($Periods, 0);
 	while($MyRow = DB_fetch_array($Periods)) {
-	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+		echo '<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ) . ' value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 	}
-	echo '</select>
-		<fieldhelp>', _('Select the end of the reporting period'), '</fieldhelp>
+	echo  '</select>
+		<fieldhelp>' . _('Select the end of the reporting period') . '</fieldhelp>
 	</field>';
+
 	// OR Select period:
 	if(!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 	echo '<h3>', _('OR'), '</h3>';
-	
+
 	echo '<field>
 			<label for="Period">', _('Select Period'), '</label>
-			', ReportPeriodList($_POST['Period'], array('l', 't')), 
+			', ReportPeriodList($_POST['Period'], array('l', 't')),
 			'<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'), '</fieldhelp>
 		</field>',
 	// Show the budget:
@@ -876,10 +905,12 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 			 	<fieldhelp>', _('Check this box to show cash and cash equivalents accounts'), '</fieldhelp>
 			</field>
 		</fieldset>';
-	echo '<div class="centre">',
-			'<button name="Submit" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-		'</div>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF P & L Account').'" />
+			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') .'" />
+		</div>',
+		'</form>';
 }
 echo	'</form>';
 
