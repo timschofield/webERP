@@ -29,6 +29,11 @@ if (!isset($_POST['PageOffset'])) {
 if (isset($_POST['AssetCode'])) {
 	$_POST['AssetCode'] = trim(mb_strtoupper($_POST['AssetCode']));
 }
+
+if (!isset($_POST['DisposalStatus'])) {
+	$_POST['DisposalStatus'] = "ACTIVE";
+}
+
 // Always show the search facilities
 $SQL = "SELECT categoryid,
 				categorydescription
@@ -108,8 +113,31 @@ if (isset($_POST['AssetCode'])) {
 } else {
 	echo '<input type="text" name="AssetCode" size="15" maxlength="13" />';
 }
+
 echo '</td>
-	</tr>
+	</tr>';
+echo '<tr>
+		<td>' . _('Asset Disposal Status') . ':</td>
+		<td><select name="DisposalStatus">';
+
+if ($_POST['DisposalStatus']=='ALL'){
+	echo '	<option selected="selected" value="ALL">' . _('All') . '</option>
+			<option value="ACTIVE">' . _('Active') . '</option>
+			<option value="DISPOSED">' . _('Disposed') . '</option>';
+} elseif ($_POST['DisposalStatus']=='ACTIVE') {
+	echo '	<option value="ALL">' . _('All') . '</option>
+			<option selected="selected" value="ACTIVE">' . _('Active') . '</option>
+			<option value="DISPOSED">' . _('Disposed') . '</option>';
+}else{
+	echo '	<option value="ALL">' . _('All') . '</option>
+			<option value="ACTIVE">' . _('Active') . '</option>
+			<option selected="selected" value="DISPOSED">' . _('Disposed') . '</option>';
+}
+
+echo '	</select></td>
+	</tr>';
+
+echo '
 	</table>
 	<br />
 	<div class="centre">
@@ -143,66 +171,65 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 		if ($_POST['AssetCategory'] == 'ALL') {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE description " . LIKE .  "'" . $SearchString . "'
-						ORDER BY fixedassets.assetid";
+				$SQL .= "WHERE description " . LIKE .  "'" . $SearchString . "'";
 			} else {
 				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						AND description " . LIKE .  "'" . $SearchString . "'
-						ORDER BY fixedassets.assetid";
+						AND description " . LIKE .  "'" . $SearchString . "'";
 			}
 		} else {
 			if ($_POST['AssetLocation']=='ALL'){
 				$SQL .= "WHERE description " . LIKE .  "'" . $SearchString . "'
-						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
-						ORDER BY fixedassets.assetid";
+						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'";
 			} else {
 				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
 						AND description " . LIKE .  "'" . $SearchString . "'
-						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
-						ORDER BY fixedassets.assetid";
+						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'";
 			}
 		}
 	} elseif (isset($_POST['AssetCode'])) {
 		if ($_POST['AssetCategory'] == 'ALL') {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
-						ORDER BY fixedassets.assetid";
+				$SQL .= "WHERE fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'";
 			} else {
 				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						AND fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
-						ORDER BY fixedassets.assetid";
+						AND fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'";
 			}
 		} else {
 			if ($_POST['AssetLocation']=='ALL'){
 				$SQL .= "WHERE fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
-						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
-						ORDER BY fixedassets.assetid";
+						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'";
 			} else {
 				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
 						AND fixedassets.assetid " . LIKE . " '%" . $_POST['AssetCode'] . "%'
-						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'
-						ORDER BY fixedassets.assetid";
+						AND  assetcategoryid='" . $_POST['AssetCategory'] . "'";
 			}
 		}
 	} elseif (!isset($_POST['AssetCode']) AND !isset($_POST['Keywords'])) {
 		if ($_POST['AssetCategory'] == 'All') {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= 'ORDER BY fixedassets.assetid';
+				$SQL .= 'WHERE 1=1 ';
 			} else {
-				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						ORDER BY fixedassets.assetid";
+				$SQL .= "WHERE fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'";
 			}
 		} else {
 			if ($_POST['AssetLocation']=='ALL'){
-				$SQL .= "WHERE assetcategoryid='" . $_POST['AssetCategory'] . "'
-						ORDER BY fixedassets.assetid";
+				$SQL .= "WHERE assetcategoryid='" . $_POST['AssetCategory'] . "'";
 			} else {
 				$SQL .= "WHERE assetcategoryid='" . $_POST['AssetCategory'] . "'
-						AND fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'
-						ORDER BY fixedassets.assetid";
+						AND fixedassets.assetlocation='" . $_POST['AssetLocation'] . "'";
 			}
 		}
 	}
+
+	if ($_POST['DisposalStatus']=='ALL'){
+		$SQL .= ' ';
+	} elseif ($_POST['DisposalStatus']=='ACTIVE') {
+		$SQL .= ' AND disposaldate = "0000-00-00"';
+	}else{
+		$SQL .= ' AND disposaldate != "0000-00-00"';
+	}
+
+	$SQL .= " ORDER BY fixedassets.assetid";
 
 	$ErrMsg = _('No assets were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');

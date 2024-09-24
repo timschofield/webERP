@@ -15,6 +15,16 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		include ('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	}
+
+	if ($_POST['DisposalStatus']=='ALL'){
+		$DisposalSQL .= " AND (fixedassets.disposaldate = '0000-00-00' 
+								OR fixedassets.disposaldate >='" . $DateFrom . "')";
+	} elseif ($_POST['DisposalStatus']=='ACTIVE') {
+		$DisposalSQL .= ' AND disposaldate = "0000-00-00"';
+	}else{
+		$DisposalSQL .= ' AND disposaldate != "0000-00-00"';
+	}
+
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
 	$DateTo = FormatDateForSQL($_POST['ToDate']);
 	$sql = "SELECT fixedassets.assetid,
@@ -38,9 +48,8 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			INNER JOIN fixedassettrans ON fixedassets.assetid=fixedassettrans.assetid
 			WHERE fixedassets.assetcategoryid " . LIKE . "'" . $_POST['AssetCategory'] . "'
 			AND fixedassets.assetid " . LIKE . "'" . $_POST['AssetID'] . "'
-			AND fixedassets.assetlocation " . LIKE . "'" . $_POST['AssetLocation'] . "'
-			AND (fixedassets.disposaldate = '0000-00-00'
-				OR fixedassets.disposaldate >='" . $DateFrom . "')
+			AND fixedassets.assetlocation " . LIKE . "'" . $_POST['AssetLocation'] . "'".
+			$DisposalSQL . "
 			GROUP BY fixedassets.assetid,
 					fixedassets.description,
 					fixedassets.longdescription,
@@ -330,8 +339,34 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	}
 	echo '</select></td>
 		</tr>';
+		
+	if (!isset($_POST['DisposalStatus'])) {
+		$_POST['DisposalStatus'] = "ACTIVE";
+	}
+
+	echo '<tr>
+			<th>' . _('Asset Disposal Status') . ':</th>
+			<td><select name="DisposalStatus">';
+
+	if ($_POST['DisposalStatus']=='ALL'){
+		echo '	<option selected="selected" value="ALL">' . _('All') . '</option>
+				<option value="ACTIVE">' . _('Active') . '</option>
+				<option value="DISPOSED">' . _('Disposed') . '</option>';
+	} elseif ($_POST['DisposalStatus']=='ACTIVE') {
+		echo '	<option value="ALL">' . _('All') . '</option>
+				<option selected="selected" value="ACTIVE">' . _('Active') . '</option>
+				<option value="DISPOSED">' . _('Disposed') . '</option>';
+	}else{
+		echo '	<option value="ALL">' . _('All') . '</option>
+				<option value="ACTIVE">' . _('Active') . '</option>
+				<option selected="selected" value="DISPOSED">' . _('Disposed') . '</option>';
+	}
+
+	echo '	</select></td>
+		</tr>';
+		
 	if (empty($_POST['FromDate'])) {
-		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), date('d'), date('Y') - 1));
+		$_POST['FromDate'] = '01/01/2017';
 	}
 	if (empty($_POST['ToDate'])) {
 		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
