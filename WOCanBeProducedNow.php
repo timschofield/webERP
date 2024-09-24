@@ -16,6 +16,7 @@ function submit(&$db, $RootPath, $Location) {
 	$WhereLocation 	= " AND workorders.loccode = '". $Location ."' ";
 	
 	$sql = "SELECT woitems.wo,
+				workorders.startdate,
 				woitems.stockid,
 				woitems.qtyreqd,
 				woitems.qtyrecd,
@@ -40,6 +41,7 @@ function submit(&$db, $RootPath, $Location) {
 		$TableHeader = '
 						<tr>
 							<th>' . _('WO') . '</th>
+							<th>' . _('WO Date') . '</th>
 							<th>' . _('Stock ID') . '</th>
 							<th>' . _('Requested') . '</th>
 							<th>' . _('Received') . '</th>
@@ -65,6 +67,7 @@ function submit(&$db, $RootPath, $Location) {
 			
 			printf('<td class="number">%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -78,6 +81,7 @@ function submit(&$db, $RootPath, $Location) {
 					<td>%s</td>
 					</tr>', 
 					$WOLink,
+					ConvertSQLDate($myItem['startdate']), 
 					$CodeLink, 
 					locale_number_format($myItem['qtyreqd'],$myItem['decimalplaces']),
 					locale_number_format($myItem['qtyrecd'],$myItem['decimalplaces']),
@@ -128,6 +132,7 @@ function submit(&$db, $RootPath, $Location) {
 				
 				printf('<td class="number">%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -140,6 +145,7 @@ function submit(&$db, $RootPath, $Location) {
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
+					'',
 					'',
 					'',
 					'',
@@ -163,6 +169,7 @@ function submit(&$db, $RootPath, $Location) {
 			}
 				printf('<td class="number">%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -175,6 +182,7 @@ function submit(&$db, $RootPath, $Location) {
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
+					'',
 					'',
 					'',
 					'',

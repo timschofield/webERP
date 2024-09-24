@@ -600,7 +600,7 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 	$HasTransResult = DB_query("SELECT transno
 									FROM stockmoves
 								WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'");
+								AND reference = '" . $_POST['WO'] . "'");
 	if(DB_num_rows($HasTransResult)>0) {
 		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
 		$CancelDelete=true;

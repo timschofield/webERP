@@ -717,7 +717,9 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		OldPurchasingOrdersStillActive(90, $RootPath, $db);
+		OldPOStillActive(90, $RootPath, $db);
+		$NumberOfTestExecuted++;
+		OldWOStillActive(60, $RootPath, $db);
 		$NumberOfTestExecuted++;
 		WrongItemsOnPurchaseOrders($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -3652,7 +3654,7 @@ function OldOnlineQuotations($NumDaysBank, $RootPath, $db){
 	}
 }
 
-function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
+function OldPOStillActive($maxdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT orderno,
 				   orddate,
@@ -3691,6 +3693,45 @@ function OldPurchasingOrdersStillActive($maxdays, $RootPath, $db){
 					$CodeLink, 
 					ConvertSQLDate($myrow['orddate']), 
 					$myrow['supplierno']
+					);
+			$i++;
+		}
+		echo '</table>
+				</div>';
+	}
+}
+
+function OldWOStillActive($maxdays, $RootPath, $db){
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
+	$SQL = "SELECT wo,
+				   startdate
+			FROM workorders 
+			WHERE closed = 0
+			AND startdate <= '". $StartDate ."'
+			ORDER BY wo";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		echo '<p class="page_title_text" align="center"><strong>' . _('WOs older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
+		echo '<div>';
+		echo '<table class="selection">';
+		$TableHeader = '<tr>
+							<th class="ascending">' . _('#') . '</th>
+							<th class="ascending">' . _('WO') . '</th>
+							<th class="ascending">' . _('Date') . '</th>
+						</tr>';
+		echo $TableHeader;
+		$k = 0; //row colour counter
+		$i = 1;
+		while ($myrow = DB_fetch_array($result)) {
+			$k = StartEvenOrOddRow($k);
+			$CodeLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'] . '">' . $myrow['wo'] . '</a>';
+			printf('<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i, 
+					$CodeLink, 
+					ConvertSQLDate($myrow['startdate'])
 					);
 			$i++;
 		}
