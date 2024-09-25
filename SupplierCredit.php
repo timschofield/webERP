@@ -23,7 +23,7 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 
 include('includes/session.php');
-
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
 $Title = _('Supplier Credit Note');
 
 include('includes/header.php');
@@ -284,7 +284,7 @@ if (!isset($_SESSION['SuppTrans']->TranDate)){
 }
 echo '<field>
 		<label style="color:red">' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</label>
-		<input type="text" class="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" />
+		<input type="date" size="11" maxlength="10" name="TranDate" value="' . FormatDateForSQL($_SESSION['SuppTrans']->TranDate) . '" />
 	</field>
 	<field>
 		<label style="color:red">' . _('Exchange Rate') . ':</label>

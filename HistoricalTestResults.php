@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Historical Test Results');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_HistoricalResults';// Anchor's id in the manual's html document.
@@ -70,18 +72,17 @@ echo '</field>';
 
 echo '<field>
 		<label for="FromDate">' . _('From Sample Date') . ': </label>
-		<input name="FromDate" maxlength="10" size="11" class="date" value="' . $_POST['FromDate'] . '" />
+		<input name="FromDate" maxlength="10" size="11" type="date" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
 		<label for="ToDate"> ' . _('To Sample Date') . ':</label>
-		<input name="ToDate" maxlength="10" size="11" class="date" value="' . $_POST['ToDate'] . '" />
+		<input name="ToDate" maxlength="10" size="11" type="date" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	</fieldset>
 	<div>
 	<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 	</div>
 	</form>';
-
 
 //show header
 $SQLSpecSelect="SELECT description

@@ -3,6 +3,8 @@
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'ChequePaymentListing';
 
@@ -38,11 +40,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 			<legend>', _('Report Criteria'), '</legend>
 	 		<field>
 				<label for="FromDate">' . _('Enter the date from which cheques are to be listed') . ':</label>
-				<input type="text" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+				<input name="FromDate" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
 			</field>';
 	 echo '<field>
 				<label for="ToDate">' . _('Enter the date to which cheques are to be listed') . ':</label>
-				<input type="text" name="ToDate" maxlength="10" size="11"  class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+				<input name="ToDate" maxlength="10" size="11"  type="date" value="' . Date('Y-m-d') . '" />
 		</field>';
 	 echo '<field>
 			<label for="BankAccount">' . _('Bank Account') . '</label>';

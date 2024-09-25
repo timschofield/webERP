@@ -12,6 +12,8 @@ This script is "mirror-symmetric" to script SalesReport.php.
 
 // BEGIN: Procedure division ===================================================
 include('includes/session.php');
+if (isset($_POST['PeriodFrom'])){$_POST['PeriodFrom'] = ConvertSQLDate($_POST['PeriodFrom']);};
+if (isset($_POST['PeriodTo'])){$_POST['PeriodTo'] = ConvertSQLDate($_POST['PeriodTo']);};
 $Title = _('Purchases from Suppliers');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'PurchasesReport';
@@ -242,7 +244,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	if(!isset($_POST['PeriodFrom'])) {
 		$_POST['PeriodFrom'] = date($_SESSION['DefaultDateFormat'], strtotime("-1 year", time()));// One year before current date.
 	}
-	echo 		'<td><input class="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" type="text" value="', $_POST['PeriodFrom'], '" />',
+	echo '<td><input type="date" id="PeriodFrom" maxlength="10" name="PeriodFrom" required="required" size="11" value="', FormatDateForSQL($_POST['PeriodFrom']), '" />',
 				'<fieldhelp>', _('Select the beginning of the reporting period'), '</fieldhelp>
 			</field>',
 			// Select period to:
@@ -251,7 +253,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = date($_SESSION['DefaultDateFormat']);
 	}
-	echo 		'<input class="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" type="text" value="', $_POST['PeriodTo'], '" />',
+	echo 		'<input type="date" id="PeriodTo" maxlength="10" name="PeriodTo" required="required" size="11" value="', FormatDateForSQL($_POST['PeriodTo']), '" />',
 				'<fieldhelp>', _('Select the end of the reporting period'), '</fieldhelp>
 			</field>';
 	// Show the budget for the period:

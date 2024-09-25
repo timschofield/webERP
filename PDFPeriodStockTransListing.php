@@ -2,6 +2,8 @@
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
 $InputError=0;
 if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
@@ -29,11 +31,11 @@ if (!isset($_POST['FromDate'])){
 			<legend>', _('Report Criteria'), '</legend>
 		<field>
 			<label for="FromDate">' . _('Enter the date from which the transactions are to be listed') . ':</label>
-			<input type="text" required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			<input required="required" autofocus="autofocus" name="FromDate" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
 		</field>
 		<field>
 			<label for="ToDate">' . _('Enter the date to which the transactions are to be listed') . ':</label>
-			<input type="text" required="required" name="ToDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			<input required="required" name="ToDate" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
 		</field>
 		<field>
 			<label for="TransType">' . _('Transaction type') . '</label>

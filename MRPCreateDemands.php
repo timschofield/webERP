@@ -2,6 +2,10 @@
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['DistDate'])){$_POST['DistDate'] = ConvertSQLDate($_POST['DistDate']);};
+
 $Title = _('MRP Create Demands');
 $ViewTopic= 'MRP';
 $BookMark = 'MRP_MasterSchedule';
@@ -249,15 +253,15 @@ if (!isset($_POST['DistDate'])) {
 }
 echo '<field>
 		<label for="FromDate">' . _('From Sales Date') . ':</label>
-		<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+		<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
 		<label for="ToDate">'. _('To Sales Date') . ':</label>
-		<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+		<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	<field>
 		<label for="DistDate">' . _('Start Date For Distribution') . ':</label>
-		<input type="text" class="date" name="DistDate" maxlength="10" size="11" value="' . $_POST['DistDate'] . '" />
+		<input type="date" name="DistDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['DistDate']) . '" />
 	</field>
 	<field>
 		<label for="Period">' . _('Distribution Period') . ':</label>

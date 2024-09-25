@@ -1,6 +1,8 @@
 <?php
 
 include ('includes/session.php');
+if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);};
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);};
 
 $Title = _('Sell Through Support');
 
@@ -321,7 +323,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 						narrative
 				FROM sellthroughsupport
 				INNER JOIN suppliers
-				ON sellthroughsupport.supplierno=suppliers.suppliers.supplierid
+				ON sellthroughsupport.supplierno=suppliers.supplierid
 				WHERE id='" . floatval($_GET['SellSupportID']) . "'";
 
 		$ErrMsg = _('The supplier sell through support could not be retrieved because');
@@ -464,11 +466,11 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</field>
 		<field>
 			<label for="EffectiveFrom">' . _('Support Start Date') . ':</label>
-			<input type="text" class="date" name="EffectiveFrom" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" />
+			<input type="date" name="EffectiveFrom" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['EffectiveFrom']) . '" />
 		</field>
 		<field>
 			<label for="EffectiveTo">' . _('Support End Date') . ':</label>
-			<input type="text" class="date" name="EffectiveTo" maxlength="10" size="11" value="' . $_POST['EffectiveTo'] . '" />
+			<input type="date" name="EffectiveTo" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['EffectiveTo']) . '" />
 		</field>
 		</fieldset>
 		<div class="centre">';

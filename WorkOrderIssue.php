@@ -1,5 +1,6 @@
 <?php
 include ('includes/session.php');
+if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);};
 $Title = _('Issue Materials To Work Order');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
@@ -795,7 +796,7 @@ while ($WORow = DB_fetch_array($WOResult)) {
 
 echo '<tr>
 		<td class="label">' . _('Date Material Issued') . ':</td>
-		<td><input type="text" name="IssuedDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" class="date" maxlength="10" size="11" /></td>
+		<td><input name="IssuedDate" value="' . Date('Y-m-d') . '" type="date" maxlength="10" size="11" /></td>
 		<td class="label">' . _('Issued From') . ':</td>
 		<td>';
 

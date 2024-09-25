@@ -622,7 +622,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			<div class="centre">
 				<input type="submit" name="SearchCust" value="' . _('Search Now') . '" />
-				<input type="submit" name="reset" value="' .  _('Reset') . '" />
+				<input type="reset" name="reset" value="' .  _('Reset') . '" />
 			</div>';
 
 	if (isset($result_CustSelect)) {
@@ -871,7 +871,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$QuickEntryQty = 'qty_' . $i;
 			$QuickEntryPOLine = 'poline_' . $i;
 			$QuickEntryItemDue = 'itemdue_' . $i;
-
+			$_POST[$QuickEntryItemDue] = ConvertSQLDate($_POST[$QuickEntryItemDue]);
 			$i++;
 
 			if (isset($_POST[$QuickEntryCode])) {
@@ -1050,6 +1050,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$AlreadyWarnedAboutCredit = false;
 
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+			$_POST['ItemDue_' . $OrderLine->LineNumber] = ConvertSQLDate($_POST['ItemDue_' . $OrderLine->LineNumber]);
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 
@@ -1435,7 +1436,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
-			echo '<td><input class="date" maxlength="10" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" type="text" value="' . $LineDueDate . '" /></td>';
+			echo '<td><input type="date" maxlength="10" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" value="' . FormatDateForSQL($LineDueDate) . '" /></td>';
 
 			echo '<td rowspan="2"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
@@ -1834,7 +1835,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" title="' . _('Enter the item code ordered') . '" /></td>
 						<td><input class="number" type="text" name="qty_' . $i . '" size="6" maxlength="6" title="' . _('Enter the quantity of the item ordered by the customer') . '" /></td>
-						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" maxlength="25"
+						<td><input type="date" name="itemdue_' . $i . '" size="25" maxlength="25"
                         value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
                       </tr>';
 	   		}

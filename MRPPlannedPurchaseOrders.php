@@ -3,6 +3,7 @@
 // purchase orders created for them
 
 include('includes/session.php');
+if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);};
 
 if ( !DB_table_exists('mrprequirements') ) {
 	$Title=_('MRP error');
@@ -361,7 +362,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			</field>
 			<field>
 				<label for="cutoffdate">' . _('Cut Off Date') . ':</label>
-				<input type="text" required="required" class="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" />
+				<input required="required" type="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
 			</field>
 			</fieldset>
 			<div class="centre">

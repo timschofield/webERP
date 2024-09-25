@@ -1,6 +1,7 @@
 <?php
 
 include ('includes/session.php');
+if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);};
 
 $Title = _('Supplier Purchasing Data');
 
@@ -614,7 +615,7 @@ if (!isset($SuppliersResult)) {
 		</field>
 		<field>
 			<label for="EffectiveFrom">' . _('Price Effective From') . ':</label>
-			<input type="text" class="date" name="EffectiveFrom" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" />
+			<input type="date" name="EffectiveFrom" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['EffectiveFrom']) . '" />
 		</field>
 		<field>
 			<label>' . _('Our Unit of Measure') . ':</label>';
@@ -708,8 +709,8 @@ if (!isset($SuppliersResult)) {
 					<td><input type="text" name="DiscountNarrative%s" value="%s" maxlength="20" size="20" /></td>
 					<td><input type="text" class="number" name="DiscountAmount%s" value="%s" maxlength="10" size="11" /></td>
 					<td><input type="text" class="number" name="DiscountPercent%s" value="%s" maxlength="5" size="6" /></td>
-					<td><input type="text" class="date" name="DiscountEffectiveFrom%s" maxlength="10" size="11" value="%s" /></td>
-					<td><input type="text" class="date" name="DiscountEffectiveTo%s" maxlength="10" size="11" value="%s" /></td>
+					<td><input type="date" name="DiscountEffectiveFrom%s" maxlength="10" size="11" value="%s" /></td>
+					<td><input type="date" name="DiscountEffectiveTo%s" maxlength="10" size="11" value="%s" /></td>
 					<td><a href="%s?DeleteDiscountID=%s&amp;StockID=%s&amp;EffectiveFrom=%s&amp;SupplierID=%s&amp;Edit=1">' . _('Delete') . '</a></td>
 					</tr>',
 					$i,
@@ -741,8 +742,8 @@ if (!isset($SuppliersResult)) {
 				<td><input type="text" name="DiscountNarrative" value="" maxlength="20" size="20" /></td>
 				<td><input type="text" class="number" name="DiscountAmount" value="0" maxlength="10" size="11" /></td>
 				<td><input type="text" class="number" name="DiscountPercent" value="0" maxlength="5" size="6" /></td>
-				<td><input type="text" class="date" name="DiscountEffectiveFrom" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-				<td><input type="text" class="date" name="DiscountEffectiveTo" maxlength="10" size="11" value="' . $DefaultEndDate . '" /></td>
+				<td><input type="date" name="DiscountEffectiveFrom" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="date" name="DiscountEffectiveTo" maxlength="10" size="11" value="' . $DefaultEndDate . '" /></td>
 			</tr>
 			</table>';
 

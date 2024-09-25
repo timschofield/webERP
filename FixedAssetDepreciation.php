@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['ProcessDate'])){$_POST['ProcessDate'] = ConvertSQLDate($_POST['ProcessDate']);};
 $Title = _('Depreciation Journal Entry');
 
 $ViewTopic = 'FixedAssets';
@@ -273,11 +274,11 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	if ($AllowUserEnteredProcessDate){
 		echo '<field>
 				<label for="ProcessDate">' . _('Date to Process Depreciation'). ':</label>
-				<input type="text" class="date" required="required" name="ProcessDate" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" />';
+				<input type="date" required="required" name="ProcessDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ProcessDate']) . '" />';
 	} else {
 		echo '<field>
 				<label for="ProcessDate">' . _('Date to Process Depreciation'). ':</label>
-				<fieldtext>' . $_POST['ProcessDate']  . '</fieldtext>';
+				<fieldtext>' . FormatDateForSQL($_POST['ProcessDate'])  . '</fieldtext>';
 	}
 	echo '</fieldset>
 		<div class="centre">

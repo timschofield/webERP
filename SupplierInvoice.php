@@ -619,7 +619,7 @@ if (!isset($_POST['PostInvoice'])) {
 	}
 	echo '<field>
 			<label for="TranDate">' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</label>
-			<input type="text" class="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" />
+			<input type="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" />
 		</field>';
 
 	echo '<field>

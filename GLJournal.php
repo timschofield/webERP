@@ -2,6 +2,7 @@
 include ('includes/DefineJournalClass.php');
 
 include ('includes/session.php');
+if (isset($_POST['JournalProcessDate'])){$_POST['JournalProcessDate'] = ConvertSQLDate($_POST['JournalProcessDate']);};
 $Title = _('Journal Entry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournals';
@@ -467,7 +468,7 @@ echo '<fieldset>
 		<legend>', _('Journal Header') , '</legend>
 		<field>
 			<label for="JournalProcessDate">' . _('Date to Process Journal') . ':</label>
-			<input type="text" class="date" required="required" name="JournalProcessDate" maxlength="10" size="11" value="' . $_SESSION['JournalDetail']->JnlDate . '" />
+			<input type="date" required="required" name="JournalProcessDate" maxlength="10" size="11" value="' . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . '" />
 		</field>
 		<field>
 			<label for="JournalType">' . _('Type') . ':</label>

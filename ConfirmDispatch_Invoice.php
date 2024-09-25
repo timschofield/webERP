@@ -1803,7 +1803,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 	echo '<field>
 			<label for="DispatchDate">', _('Date On Invoice'), ':</label>
-			<input type="text" required="required" autofocus="autofocus" maxlength="10" size="15" name="DispatchDate" value="', $DefaultDispatchDate, '" id="datepicker" class="date" />
+			<input required="required" autofocus="autofocus" maxlength="10" size="15" name="DispatchDate" value="', FormatDateForSQL($DefaultDispatchDate), '" id="datepicker" type="date" />
 			<fieldhelp>', _('The date the goods/services were sent. This is the date that will appear as the invoice date.'), '</fieldhelp>
 		</field>';
 

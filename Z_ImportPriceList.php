@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
 $Title = _('Import Sales Price List');
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
@@ -159,7 +160,7 @@ if (isset($_FILES['PriceListFile']) and $_FILES['PriceListFile']['name']) { //st
 			<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 			<field>
 				<label>', _('Prices effective from') . ':</label>
-				<input type="text" name="StartDate" maxlength="10" size="11" class="date" value="' . date($_SESSION['DefaultDateFormat']) . '" />
+				<input name="StartDate" maxlength="10" size="11" type="date" value="' . date('Y-m-d') . '" />
 			</field>
 			<field>
 				<label>', _('Upload file') . ':</label>

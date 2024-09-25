@@ -3,6 +3,11 @@
 $PricesSecurity = 12;
 
 include ('includes/session.php');
+
+if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST['DueDateFrom']);};
+if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);};
+if (isset($_POST['OrderDateFrom'])){$_POST['OrderDateFrom'] = ConvertSQLDate($_POST['OrderDateFrom']);};
+if (isset($_POST['OrderDateTo'])){$_POST['OrderDateTo'] = ConvertSQLDate($_POST['OrderDateTo']);};
 $Title = _('Search Outstanding Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SelectSalesOrder';
@@ -543,19 +548,19 @@ if (!isset($StockID)) {
 		}
 
 		if (!isset($_POST['DueDateFrom'])) {
-			$_POST['DueDateFrom'] = '';
+			$_POST['DueDateFrom'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['DueDateTo'])) {
-			$_POST['DueDateTo'] = '';
+			$_POST['DueDateTo'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['CustomerRef'])) {
 			$_POST['CustomerRef'] = '';
 		}
 		if (!isset($_POST['OrderDateFrom'])) {
-			$_POST['OrderDateFrom'] = '';
+			$_POST['OrderDateFrom'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['OrderDateTo'])) {
-			$_POST['OrderDateTo'] = '';
+			$_POST['OrderDateTo'] = date($_SESSION['DefaultDateFormat']);
 		}
 
 
@@ -568,24 +573,24 @@ if (!isset($StockID)) {
 			</field>
 			<field>
 				<label for"DueDateFrom">' . _('Due Date From') . '</label>
-				<input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" size="10" />
+				<input type="date" name="DueDateFrom" value="' . FormatDateForSQL($_POST['DueDateFrom']) . '" size="10" />
 			</field>
 			<field>
 				<label for="DueDateTo">' . _('Due Date To') . '</label>
-				<input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" size="10" />
+				<input type="date" name="DueDateTo" value="' . FormatDateForSQL($_POST['DueDateTo']) . '" size="10" />
 			</field>
 			<field>
 				<label for="OrderDateFrom">' . _('Order Date From') . '</label>
-				<input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" />
+				<input type="date" name="OrderDateFrom" value="' . FormatDateForSQL($_POST['OrderDateFrom']) . '" size="10" />
 			</field>
 			<field>
 				<label for="OrderDateTo">' . _('Order Date To') . '</label>
-				<input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" />
+				<input type="date" name="OrderDateTo" value="' . FormatDateForSQL($_POST['OrderDateTo']) . '" size="10" />
 			</field>
 		</fieldset>
 		<div class="centre">
 			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
-			<input type="submit" name="Reset" value="' . _('Reset') . '" />
+			<input type="reset" name="Reset" value="' . _('Reset') . '" />
 			<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a>
 		</div>';
 	}
@@ -633,7 +638,7 @@ if (!isset($StockID)) {
 	</fieldset>';
 	echo '<div class="centre">
 			<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
-			<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+			<input type="reset" name="ResetPart" value="' . _('Show All') . '" />
 		</div>';
 
 if (isset($StockItemsResult)
@@ -778,7 +783,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(CASE WHEN itemdue >= '" . FormatDateFromSQL($DueDateFrom) . "'
+						SUM(CASE WHEN itemdue >= '" . $DueDateFrom . "'
 							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 							 ELSE 0 END) as ordervalue";
 			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND isset($DueDateTo) AND is_date($DueDateTo)) {
@@ -791,7 +796,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM (CASE WHEN itemdue >= '" . FormatDateForSQL($DueDateFrom) . "' AND itemdue <= '" . FormatDateForSQL($DueDateTo) . "'
+						SUM (CASE WHEN itemdue >= '" . $DueDateFrom . "' AND itemdue <= '" . $DueDateTo . "'
 							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 							 ELSE 0 END) as ordervalue";
 			} elseif ((!isset($DueDateFrom) OR !is_date($DueDateFrom)) AND isset($DueDateTo) AND is_date($DueDateTo)) {
@@ -804,7 +809,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(CASE WHEN AND itemdue <= '" . FormatDateForSQL($DueDateTo) . "'
+						SUM(CASE WHEN AND itemdue <= '" . $DueDateTo . "'
 							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 							 ELSE 0 END) as ordervalue";
 			}//end of due date inquiry

@@ -1,5 +1,6 @@
 <?php
 include ('includes/session.php');
+if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);};
 $Title = _('Supplier Maintenance');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
@@ -508,7 +509,7 @@ if (isset($_POST['submit'])) {
 							lng='" . $longitude . "',
 							taxref='" . $_POST['TaxRef'] . "',
 							defaultshipper='" . $_POST['DefaultShipper'] . "',
-							defaultgl='" . $_POST['DrfaultGL'] . "'
+							defaultgl='" . $_POST['DefaultGL'] . "'
 						WHERE supplierid = '" . $SupplierID . "'";
 			}
 
@@ -762,10 +763,10 @@ if (!isset($SupplierID)) {
 	echo '</select>
 		</field>';
 
-	$DateString = Date($_SESSION['DefaultDateFormat']);
+	$DateString = Date('Y-m-d');
 	echo '<field>
 			<label for="SupplierSince">' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input type="text" class="date" name="SupplierSince" value="' . $DateString . '" size="11" maxlength="10" />
+			<input type="date" name="SupplierSince" value="' . $DateString . '" size="11" maxlength="10" />
 		</field>
 		<field>
 			<label for="BankPartics">' . _('Bank Particulars') . ':</label>
@@ -1077,7 +1078,7 @@ if (!isset($SupplierID)) {
 		</field>
 		<field>
 			<label for="SupplierSince">' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input ' . (in_array('SupplierSince', $Errors) ? 'class="inputerror"' : '') . ' size="11" maxlength="10" type="text" class="date" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" />
+			<input size="11" maxlength="10" type="date" name="SupplierSince" value="' . FormatDateForSQL($_POST['SupplierSince']) . '" />
 		</field>
 		<field>
 			<label for="BankPartics">' . _('Bank Particulars') . ':</label>

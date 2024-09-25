@@ -2,6 +2,10 @@
 /* Multiple work orders cost review */
 
 include('includes/session.php');
+
+if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);};
+if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);};
+
 $Title = _('Search Work Orders');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'Z_ChangeGLAccountCode';
@@ -290,20 +294,20 @@ if (!isset($StockID)) {
 			</field>';
 
 		if (!isset($_POST['DateFrom'])) {
-			$_POST['DateFrom'] = '';
+			$_POST['DateFrom'] = Date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['DateTo'])) {
-			$_POST['DateTo'] = '';
+			$_POST['DateTo'] = Date($_SESSION['DefaultDateFormat']);
 		}
 
 		echo '<field>
 				<label for="DateFrom">', _('Start Date From'), ':</label>
-				<input type="text" name="DateFrom" size="10" value="', $_POST['DateFrom'], '" class="date" />
+				<input name="DateFrom" size="10" value="', FormatDateForSQL($_POST['DateFrom']), '" type="date" />
 			</field>';
 
 		echo '<field>
 				<label for="DateTo">', _('Start Date To'), ':</label>
-				<input type="text" name="DateTo" size="10" value="', $_POST['DateTo'], '" class="date" />
+				<input name="DateTo" size="10" value="', FormatDateForSQL($_POST['DateTo']), '" type="date" />
 			</field>
 		</fieldset>';
 		echo '<div class="centre">

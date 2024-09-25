@@ -3,6 +3,7 @@
 
 include('includes/session.php');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);};
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
 	$ViewTopic = 'AccountsReceivable';
@@ -445,7 +446,7 @@ if (!isset($DebtorNo)) {
 
 	$DataError =0;
 
-	echo '<fieldset class="TwoColumn">
+	echo '<fieldset>
 			<legend>', _('Create Customer Details'), '</legend>
 			<fieldset class="Column1">';
 
@@ -541,10 +542,10 @@ if (!isset($DebtorNo)) {
 			</field>';
 	}
 
-	$DateString = Date($_SESSION['DefaultDateFormat']);
+	$DateString = Date('Y-m-d');
 	echo '<field>
 			<label for="ClientSince">' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input tabindex="10" type="text" class="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" />
+			<input tabindex="10" type="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" />
 		</field>
 	</fieldset>';
 
@@ -683,8 +684,8 @@ if (!isset($DebtorNo)) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<fieldset class="TwoColumn">
-			<legend>', _('Create New Customer'), '</legend>';
+	echo '<fieldset>
+			<legend>', _('Edit Customer Details'), '</legend>';
 
 	if (!isset($_POST['New'])) {
 		$sql = "SELECT debtorno,
@@ -913,7 +914,7 @@ if (!isset($DebtorNo)) {
 	} else {
 		echo '<field>
 				<label for="DefaultDateFormat">' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-				<input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="date" name="ClientSince" size="11" maxlength="10" value="' . $_POST['ClientSince'] . '" />
+				<input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="date" name="ClientSince" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ClientSince']) . '" />
 			</field>
 			</fieldset>
 			<fieldset class="Column2">';

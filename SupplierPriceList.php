@@ -2,6 +2,7 @@
 /* Maintain Supplier Price Lists */
 
 include('includes/session.php');
+
 $Title = _('Supplier Purchasing Data');
 $ViewTopic = 'PurchaseOrdering';
 $BookMark = 'SupplierPriceList';
@@ -330,7 +331,7 @@ foreach ($_POST as $key=>$value) {
 									supplierdescription='" . $SupplierDescription . "',
 									leadtime='" . $LeadTime . "',
 									preferred='" . $Preferred . "',
-									effectivefrom='" . FormatDateForSQL($EffectiveFrom) . "',
+									effectivefrom='" . $EffectiveFrom . "',
 									suppliers_partno='" . $SupplierPartNo . "',
 									minorderqty='" . $MinOrderQty . "'
 								WHERE supplierno='" . $_POST['SupplierID'] . "'
@@ -363,7 +364,7 @@ foreach ($_POST as $key=>$value) {
 									'" . $_POST['SupplierDescription0'] . "',
 									'" . $_POST['LeadTime0'] . "',
 									'" . $Preferred . "',
-									'" . FormatDateForSQL($_POST['EffectiveFrom0']) . "',
+									'" . $_POST['EffectiveFrom0'] . "',
 									'" . $_POST['SupplierPartNo0'] . "',
 									'" . $_POST['MinOrderQty0'] . "'
 								)";
@@ -571,7 +572,7 @@ if(isset($_POST['SupplierID'])) {
 				<td><input maxlength="50" name="SupplierDescription0" size="30" type="text" value="" /></td>
 				<td><input class="number" name="LeadTime0" size="11" type="text" value="1" /></td>
 				<td><input name="Preferred0" type="checkbox" /></td>
-				<td><input class="date" name="EffectiveFrom0" size="11" type="text" value="', date( $_SESSION['DefaultDateFormat']), '" /></td>
+				<td><input type="date" name="EffectiveFrom0" size="11" value="', date( $_SESSION['DefaultDateFormat']), '" /></td>
 				<td><input maxlength="50" name="SupplierPartNo0" size="20" type="text" value="" /></td>
 				<td><input class="number" name="MinOrderQty0" size="11" type="text" value="1" /></td>
 				<td><button name="Insert" type="submit" style="width:100%;text-align:left"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.svg" width="15" /></button></td>
@@ -603,7 +604,7 @@ if(isset($_POST['SupplierID'])) {
 		} else {
 			echo '<td><input name="Preferred'. $RowCounter. '" type="checkbox" /></td>';
 		}
-		echo '<td><input class="date" size="11" name="EffectiveFrom'. $RowCounter. '" type="text" value="' . ConvertSQLDate($MyRow['effectivefrom']) . '" /></td>
+		echo '<td><input type="date" size="11" name="EffectiveFrom'. $RowCounter. '" value="' . $MyRow['effectivefrom'] . '" /></td>
 				<td><input maxlength="50" name="SupplierPartNo'. $RowCounter. '" size="20" type="text" value="' . $MyRow['suppliers_partno'] . '" /></td>
 				<td><input class="number" name="MinOrderQty'. $RowCounter. '" size="11" type="text" value="' . $MyRow['minorderqty'] . '" /></td>
 				<td><button type="submit" style="width:100%;text-align:left" name="Update'.$RowCounter.'"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/tick.svg" width="15" /></button></td>

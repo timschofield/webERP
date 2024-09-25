@@ -1,10 +1,13 @@
 <?php
 
-
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['ChangeDate'])){$_POST['ChangeDate'] = ConvertSQLDate($_POST['ChangeDate']);};
+
 $Title = _('MRP Calendar');
 $ViewTopic= 'MRP';
 $BookMark = 'MRP_Calendar';
@@ -261,11 +264,11 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 
 	echo '<field>
 			<label for="FromDate">' . _('From Date') . ':</label>
-			<input type="text" class="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+			<input type="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>
 		<field>
 			<label for="ToDate">' . _('To Date') . ':</label>
-			<input type="text" class="date" name="ToDate" required="required" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+			<input type="date" name="ToDate" required="required" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		<h3>' . _('Exclude The Following Days') . '</h3>
 		<field>
@@ -309,7 +312,7 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 	echo '<fieldset>
 		<field>
 			<td>' . _('Change Date Status') . ':</td>
-			<td><input type="text" name="ChangeDate" class="date" size="11" maxlength="10" value="' . $_POST['ChangeDate'] . '" /></td>
+			<td><input name="ChangeDate" type="date" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ChangeDate']) . '" /></td>
 			<td><input type="submit" name="update" value="' . _('Update') . '" /></td>
 		</field>
 		</fieldset>

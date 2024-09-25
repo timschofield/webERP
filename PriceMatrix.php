@@ -3,6 +3,8 @@
 //The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
 
 include('includes/session.php');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);};
 $Title = _('Price break matrix Maintenance');
 include('includes/header.php');
 
@@ -161,7 +163,7 @@ $SQL = "SELECT currabrev FROM currencies";
 $result = DB_query($SQL);
 require_once('includes/CurrenciesArray.php');
 echo '<fieldset>
-		<legend>', _('Price Matrix For'), ' ', $_GET['StockID'], '</legend>';
+		<legend>', _('Price Matrix For'), ' ', $_POST['StockID'], '</legend>';
 echo '<field>
 		<label for="CurrAbrev">' . _('Currency') . ':</label>
 		<select name="CurrAbrev">';
@@ -219,13 +221,13 @@ if (!isset($_POST['Price'])) {
 }
 echo '<field>
 		<label for="StartDate">'. _('Price Effective From Date') . ':</label>
-		<input type="text" class="date" name="StartDate" required="required" size="11" maxlength="10" title="" value="' . $_POST['StartDate'] . '" />
+		<input type="date" name="StartDate" required="required" size="11" maxlength="10" title="" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
 		<fieldhelp>' . _('Enter the date from which this price should take effect.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for="EndDate">' . _('Price Effective To Date') . ':</label>
-		<input type="text" class="date" name="EndDate" size="11" maxlength="10" title="" value="' . $_POST['EndDate'] . '" />
+		<input type="date" name="EndDate" size="11" maxlength="10" title="" value="' . FormatDateForSQL($_POST['EndDate']) . '" />
 		<fieldhelp>' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
 	</field>';
 

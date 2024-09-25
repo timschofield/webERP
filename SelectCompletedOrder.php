@@ -2,6 +2,7 @@
 
 
 include('includes/session.php');
+if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate($_POST['OrdersAfterDate']);};
 
 $Title = _('Search All Sales Orders');
 
@@ -446,7 +447,7 @@ echo '<field>
 	</field>
 	<field>
 		<label for="OrdersAfterDate">' . _('for all orders placed after') . ': </label>
-		<input type="text" class="date" name="OrdersAfterDate" maxlength="10" size="11" value="' . $_POST['OrdersAfterDate'] . '" />
+		<input type="date" name="OrdersAfterDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['OrdersAfterDate']) . '" />
 	</field>';
 echo '<field>
 		<label for="CustomerRef">' . _('Customer Ref') . ':</label>
