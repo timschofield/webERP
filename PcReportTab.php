@@ -3,6 +3,8 @@
 // .
 
 include ('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportTab';
 $Title = _('Petty Cash Management Report');
@@ -63,11 +65,11 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		</field>
 		<field>
 			<label for="FromDate">', _('From Date'), ':</label>
-			<input tabindex="2" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+			<input tabindex="2" type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>
 		<field>
 			<label for="FromDate">', _('To Date'), ':</label>
-			<input tabindex="3" class="date" type="text" name="FromDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+			<input tabindex="3" type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		</fieldset>
 		<div class="centre">

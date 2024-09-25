@@ -1,5 +1,9 @@
 <?php
+
 include ('includes/session.php');
+
+if (isset($_POST['EffectiveAfter'])){$_POST['EffectiveAfter'] = ConvertSQLDate($_POST['EffectiveAfter']);};
+if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST['EffectiveTo']);};
 
 $Title = _('Multi-Level Bill Of Materials Maintenance');
 
@@ -587,13 +591,13 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 	echo '<field>
 			<label for="EffectiveAfter">', _('Effective After') , ' (', $_SESSION['DefaultDateFormat'], '):</label>
-			<input type="text" name="EffectiveAfter" class="date" size="11" required="required" maxlength="10" value="', $_POST['EffectiveAfter'], '" />
+			<input name="EffectiveAfter" type="date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['EffectiveAfter']), '" />
 			<fieldhelp>', _('The component will be used from this date.') , '</fieldhelp>
 		</field>';
 
 	echo '<field>
 			<label for="EffectiveTo">', _('Effective To') , ' (', $_SESSION['DefaultDateFormat'], '):</label>
-			<input type="text" name="EffectiveTo" class="date" size="11" required="required" maxlength="10" value="', $_POST['EffectiveTo'], '" />
+			<input name="EffectiveTo" type="date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['EffectiveTo']), '" />
 			<fieldhelp>', _('The component will be used until this date.') , '</fieldhelp>
 		</field>';
 

@@ -10,6 +10,7 @@ include('includes/SQL_CommonFunctions.inc');
  * and authorisation level check
  */
 include('includes/session.php');
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
 
 $Title = _('Purchase Order Items');
 
@@ -922,7 +923,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . $SuppPrice .'" /></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="text" class="date" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'" /></td>';
+				<td><input type="date" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .FormatDateForSQL($POLine->ReqDelDate) .'" /></td>';
 			if ($POLine->QtyReceived !=0 AND $POLine->Completed!=1){
 				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .'&amp;Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
 			} elseif ($POLine->QtyReceived ==0) {
@@ -1003,7 +1004,7 @@ if (isset($_POST['NonStockOrder'])) {
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . '</td>
-			<td><input type="text" class="date" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
+			<td><input type="date" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
 		</tr>
 		</table>
 		<div class="centre">

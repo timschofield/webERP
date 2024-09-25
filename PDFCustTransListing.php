@@ -3,6 +3,7 @@
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
 
 $InputError=0;
 if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
@@ -33,7 +34,7 @@ if (!isset($_POST['Date'])){
 	 echo '<fieldset>
 	 		<field>
 				<label for="Date">' . _('Enter the date for which the transactions are to be listed') . ':</label>
-				<input type="text" name="Date" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+				<input name="Date" maxlength="10" size="11" type="date" value="' . Date('Y-m-d') . '" />
 			</field>';
 
 	echo '<field>

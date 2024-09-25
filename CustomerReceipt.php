@@ -3,6 +3,7 @@
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.php');
+if (isset($_POST['DateBanked'])){$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);};
 
 include('includes/GetPaymentMethods.php');
 
@@ -852,7 +853,7 @@ if ($_SESSION['ReceiptBatch' . $identifier]->DateBanked == '' or !Is_Date($_SESS
 
 echo '<field>
 		<label for="DateBanked">' . _('Date Banked') . ':</label>
-		<input tabindex="2" type="text" required="required" class="date" name="DateBanked" maxlength="10" size="11" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '" />
+		<input tabindex="2" required="required" type="date" name="DateBanked" maxlength="10" size="11" value="' . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . '" />
 	</field>';
 
 echo '<field>

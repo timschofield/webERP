@@ -3,6 +3,7 @@
 include ('includes/DefineSerialItems.php');
 include ('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);};
 
 $Title = _('Reverse Goods Received');
 
@@ -350,7 +351,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 			<legend>', _('GRN Selection'), '</legend>';
 	echo '<field>
 			<label for="RecdAfterDate">' . _('Show all goods received after') . ': </label>
-			<input type="text" class="date" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="11" />
+			<input type="date" name="RecdAfterDate" value="' . FormatDateForSQL($_POST['RecdAfterDate']) . '" maxlength="10" size="11" />
 		</field>
 		</fieldset>
 		<div class="centre">

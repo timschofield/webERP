@@ -1,6 +1,8 @@
 <?php
 
 include ('includes/session.php');
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);};
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);};
 $Title = _('Stock Movements');
 /* webERP manual links before header.php */
 $ViewTopic = 'Inventory';
@@ -27,7 +29,6 @@ echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" title="', _('Inventory'), '" alt="" /> ', $Title, $StockInfo, '</p>';
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
@@ -37,12 +38,16 @@ if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 3, Date('d'), Date('y')));
 }
 
-echo '<br />
-	<table class="selection">
-	<tr>
-		<th colspan="12">', _('Stock Code'), ':<input type="text" name="StockID" size="21" value="', $StockID, '" required="required" maxlength="20" />';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>
+		<field>
+			<label for="StockID">', _('Stock Code'), ':</label>
+			<input type="text" name="StockID" size="21" value="', $StockID, '" required="required" maxlength="20" />
+		</field>';
 
-echo '  ', _('From Stock Location'), ':<select required="required" name="StockLocation"> ';
+echo '<field>
+		<label for="StockLocation">', _('From Stock Location'), ':</label>
+		<select required="required" name="StockLocation"> ';
 
 $SQL = "SELECT locations.loccode,
 				locationname
@@ -70,15 +75,18 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	}
 }
 
-echo '</select></th>
-	</tr>';
-echo '<tr>
-		<th colspan="12">', _('Show Movements between'), ':
-			<input type="text" name="AfterDate" class="date" size="11" required="required" maxlength="10" value="', $_POST['AfterDate'], '" /> ' . _('and') . ':
-			<input type="text" name="BeforeDate" class="date" size="11" required="required" maxlength="10" value="', $_POST['BeforeDate'], '" />
-			<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
-		</th>
-	</tr>';
+echo '</select>
+	</field>';
+
+echo '<field>
+		<label>', _('Show Movements between'), ':</label>
+		<input name="AfterDate" type="date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['AfterDate']), '" /> ' . _('and') . ':
+		<input name="BeforeDate" type="date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['BeforeDate']), '" />
+	</field>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
+	</div>';
 
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
@@ -125,6 +133,7 @@ $MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 if (DB_num_rows($MovtsResult) > 0) {
 	$MyRow = DB_fetch_array($MovtsResult);
 
+	echo '<table>';
 	echo '<tr>
 			<th>', _('Type'), '</th>
 			<th>', _('Number'), '</th>
@@ -224,10 +233,10 @@ if (DB_num_rows($MovtsResult) > 0) {
 
 		}
 		//end of page full new headings if
-		
+
 	}
 	//end of while loop
-	
+
 }
 
 echo '</table>

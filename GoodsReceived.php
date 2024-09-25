@@ -6,6 +6,8 @@
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
+if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);};
+
 include('includes/SQL_CommonFunctions.inc');
 
 /*The identifier makes this goods received session unique so cannot get confused
@@ -106,15 +108,14 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 			<legend>', _('GRN Header'), '</legend>
 			<field>
 				<label for="DefaultReceivedDate">' .  _('Date Goods/Service Received'). ':</label>
-				<input type="text" class="date" maxlength="10" size="11" onchange="return isDate(this, this.value, '."'".
-			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_SESSION['PO' . $identifier]->DefaultReceivedDate . '" />
+				<input type="date" maxlength="10" size="11" name="DefaultReceivedDate" value="' . FormatDateForSQL($_SESSION['PO' . $identifier]->DefaultReceivedDate) . '" />
 			</field>
 			<field>
 				<label for="SupplierReference">' . _("Supplier's Reference") . ':</label>
 				<input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/>
 			</field>
 		</fieldset>';
-		
+
 	echo '<table cellpadding="2" class="selection">
 			<tr><th colspan="2">&nbsp;</th>
 				<th class="centre" colspan="4"><b>', _('Supplier Units'), '</b></th>

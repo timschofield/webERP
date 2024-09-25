@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['PaymentDate'])){$_POST['PaymentDate'] = ConvertSQLDate($_POST['PaymentDate']);};
 
 If ((isset($_POST['PrintPDF']))
 			AND isset($_POST['FromCriteria'])
@@ -165,7 +166,7 @@ If ((isset($_POST['PrintPDF']))
 
 	echo '<field>
 			<label for="PaymentDate">' . _('Date Of Payment') . ':</label>
-			<input type="text" class="date" name="PaymentDate" maxlength="10" size="11" value="' . $DefaultDate . '" />
+			<input type="date" name="PaymentDate" maxlength="10" size="11" value="' . FormatDateForSQL($DefaultDate) . '" />
 		</field>';
 
 	echo '</fieldset>

@@ -2,6 +2,7 @@
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
 include('includes/session.php');
+if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);};
 $Title = _('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
@@ -158,7 +159,7 @@ echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': '  . '<input type="text" class="date" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
+echo _('Show all transactions after') . ': '  . '<input type="date" name="TransAfterDate" value="' . FormatDateForSQL($_POST['TransAfterDate']) . '" maxlength="10" size="10" />
 	    <input class="noprint" name="Refresh Inquiry" type="submit" value="' . _('Refresh Inquiry') . '" />
     </div>
 	</form>

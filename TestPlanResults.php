@@ -3,6 +3,8 @@
 // Test Plan Results Entry.
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $ViewTopic = '';/* ?????????? */
 $BookMark = 'TestPlanResults';
 $Title = _('Test Plan Results');
@@ -15,7 +17,7 @@ if (isset($_GET['SelectedSampleID'])){
 }
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' - 15 days'));
+	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime(date($_SESSION['DefaultDateFormat']) . ' - 15 days'));
 }
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -128,7 +130,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 			}
 			echo _('Lot Number') . ': <input name="LotNumber" autofocus="autofocus" maxlength="20" size="12" value="' . $LotNumber . '"/> ' . _('Sample ID') . ': <input name="SampleID" maxlength="10" size="10" value="' . $SampleID . '"/> ';
-			echo _('From Sample Date') . ': <input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '" /> ' . _('To Sample Date') . ': <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '" /> ';
+			echo _('From Sample Date') . ': <input name="FromDate" size="10" type="date" value="' . FormatDateForSQL($_POST['FromDate']) . '" /> ' . _('To Sample Date') . ': <input name="ToDate" size="10" type="date" value="' . FormatDateForSQL($_POST['ToDate']) . '" /> ';
 			echo '<input type="submit" name="SearchSamples" value="' . _('Search Samples') . '" /></td>
 				</tr>
 				</table>';
@@ -841,9 +843,9 @@ while ($MyRow = DB_fetch_array($result)) {
 		$ShowOnCertText = _('No');
 	}
 	if ($MyRow['testdate']=='0000-00-00'){
-		$TestDate=ConvertSQLDate(date('Y-m-d'));
+		$TestDate=date('Y-m-d');
 	} else {
-		$TestDate=ConvertSQLDate($MyRow['testdate']);
+		$TestDate=$MyRow['testdate'];
 	}
 
 	$BGColor='';
@@ -921,7 +923,7 @@ while ($MyRow = DB_fetch_array($result)) {
 			<td>' . $MyRow['method'] . '</td>
 			<td>' . $RangeDisplay . '</td>
 			<td>' . $MyRow['targetvalue'] . ' ' . $MyRow['units'] . '</td>
-			<td><input type="text" class="date" name="TestDate' .$x. '" size="10" maxlength="10" value="' . $TestDate . '" /> </td>
+			<td><input type="date" name="TestDate' .$x. '" size="10" maxlength="10" value="' . $TestDate . '" /> </td>
 			<td><select name="TestedBy' .$x .'"/>';
 	while ($techrow = DB_fetch_array($techresult)) {
 		if ($techrow['userid'] == $MyRow['testedby']){

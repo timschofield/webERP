@@ -2,6 +2,9 @@
 // CustomerTransInquiry.php
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+
 $Title = _('Customer Transactions Inquiry');
 $ViewTopic = 'ARInquiries';
 $BookMark = 'ARTransInquiry';
@@ -49,11 +52,11 @@ if (!isset($_POST['ToDate'])){
 }
 echo '<field>
 		<label for="FromDate">' . _('From') . ':</label>
-		<input class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" />
+		<input type="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
 		<label for="ToDate">' . _('To') . ':</label>
-		<input class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" />
+		<input type="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	</fieldset>
 	<div class="centre">

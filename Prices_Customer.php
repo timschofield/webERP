@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);};
 
 $result = DB_query("SELECT debtorsmaster.name,
 							debtorsmaster.currcode,
@@ -13,6 +15,7 @@ $myrow = DB_fetch_array($result);
 $CurrCode = $myrow['currcode'];
 $SalesType = $myrow['salestype'];
 $CurrDecimalPlaces = $myrow['currdecimalplaces'];
+$Name = $myrow['name'];
 
 $Title = _('Special Prices for') . ' '. htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8');
 
@@ -199,8 +202,8 @@ if (DB_num_rows($result) == 0) {
 		}
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
-				<td class="date">%s</td>
-				<td class="date">%s</td>
+				<td type="date">%s</td>
+				<td type="date">%s</td>
 				</tr>',
 				locale_number_format($myrow['price'],$CurrDecimalPlaces),
 				ConvertSQLDate($myrow['startdate']),
@@ -263,18 +266,23 @@ if (DB_num_rows($result) == 0) {
 					WHERE stockmaster.stockid='".$Item."'
 					AND custitem.debtorno='" . $_SESSION['CustomerID'] . "'";
 	$StockResult = DB_query($StockSQL);
-	$StockRow = DB_fetch_array($StockResult);
-	echo '<tr style="background-color:#CCCCCC">
-			<td class="number">' . locale_number_format($myrow['price'],$CurrDecimalPlaces) . '</td>
-			<td>' . $Branch . '</td>
-			<td>' . $StockRow['units'] . '</td>
-			<td class="number">' . $StockRow['conversionfactor'] . '</td>
-			<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
-			<td>' . $EndDateDisplay . '</td>
-	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$myrow['price'].'&amp;Branch='.$myrow['branchcode'].
-				'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'].'&amp;Edit=1">' . _('Edit') . '</a></td>
-			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$myrow['branchcode'].'&amp;StartDate='.$myrow['startdate'] .'&amp;EndDate='.$myrow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td>
-		</tr>';
+	if (DB_num_rows($StockResult) == 0) {
+		$StockRow['units'] = '';
+		$StockRow['conversionfactor'] = 1;
+	} else {
+		$StockRow = DB_fetch_array($StockResult);
+		echo '<tr style="background-color:#CCCCCC">
+				<td class="number">' . locale_number_format($myrow['price'],$CurrDecimalPlaces) . '</td>
+				<td>' . $Branch . '</td>
+				<td>' . $StockRow['units'] . '</td>
+				<td class="number">' . $StockRow['conversionfactor'] . '</td>
+				<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+				<td>' . $EndDateDisplay . '</td>
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$myrow['price'].'&amp;Branch='.$myrow['branchcode'].
+					'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'].'&amp;Edit=1">' . _('Edit') . '</a></td>
+				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$myrow['branchcode'].'&amp;StartDate='.$myrow['startdate'] .'&amp;EndDate='.$myrow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
+		}
 
 	}
 //END WHILE LIST LOOP
@@ -311,7 +319,7 @@ if (!isset($_POST['StartDate'])){
 }
 
 if (!isset($_POST['EndDate'])){
-	$_POST['EndDate'] = '';
+	$_POST['EndDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 
 $sql = "SELECT branchcode,
@@ -321,7 +329,7 @@ $sql = "SELECT branchcode,
 $result = DB_query($sql);
 
 echo '<fieldset>';
-echo '<legend><b>' . htmlspecialchars($myrow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $myrow['currcode'] . '' . ' ' . _('for') . ' ';
+echo '<legend><b>' . htmlspecialchars($Name, ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $CurrCode . '' . ' ' . _('for') . ' ';
 
 $result = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
@@ -361,11 +369,11 @@ echo '</select>
 
 echo '<field>
 		<label for="StartDate">' . _('Start Date') . ':</label>
-		<input type="text" name="StartDate" class="date" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" />
+		<input name="StartDate" type="date" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
 	</field>';
 echo '<field>
 		<label for="EndDate">' . _('End Date') . ':</label>
-		<input type="text" name="EndDate" class="date" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" />
+		<input name="EndDate" type="date" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['EndDate']) . '" />
 	</field>';
 
 echo '<field>

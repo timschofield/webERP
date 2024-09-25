@@ -1,6 +1,8 @@
 <?php
 include ('includes/DefineWOClass.php');
 include ('includes/session.php');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);};
 $Title = _('Work Order Entry');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
@@ -382,13 +384,13 @@ echo '</select>
 
 echo '<field>
 		<label for="StartDate">', _('Start Date'), ':</label>
-		<input type="text" name="StartDate" size="12" maxlength="12" value="', $_SESSION['WorkOrder' . $Identifier]->StartDate, '" class="date" />
+		<input name="StartDate" size="12" maxlength="12" value="', FormatDateForSQL($_SESSION['WorkOrder' . $Identifier]->StartDate), '" type="date" />
 		<fieldhelp>', _('The date manufacturing is planned to start.'), '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for="RequiredBy">', _('Required By'), ':</label>
-		<input type="text" name="RequiredBy" size="12" maxlength="12" value="', $_SESSION['WorkOrder' . $Identifier]->RequiredBy, '" class="date" />
+		<input name="RequiredBy" size="12" maxlength="12" value="', FormatDateForSQL($_SESSION['WorkOrder' . $Identifier]->RequiredBy), '" type="date" />
 		<fieldhelp>', _('The date manufacturing should be completed by.'), '</fieldhelp>
 	</field>';
 
@@ -514,7 +516,7 @@ if (isset($_POST['Search']) or isset($_POST['Prev']) or isset($_POST['Next'])) {
 	DB_free_result($SearchResult);
 	$ListCount = DB_num_rows($SearchResult);
 	unset($SearchResult);
-	echo $ListCount.'x'.$_SESSION['DisplayRecordsMax'];
+
 	if ($ListCount > 0) {
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']) - 1;
 	} else {

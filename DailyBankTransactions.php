@@ -2,6 +2,10 @@
 // DailyBankTransactions.php
 // Allows you to view all bank transactions for a selected date range, and the inquiry can be filtered by matched or unmatched transactions, or all transactions can be chosen.
 include ('includes/session.php');
+
+if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);};
+if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);};
+
 $Title = _('Bank Transactions Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'DailyBankTransactions';
@@ -42,7 +46,7 @@ if (!isset($_POST['Show'])) {
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/bank.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>', // Page title.
-	'<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">'; 
+	'<form action="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 	echo '<fieldset>
 			<legend>', _('Report Criteria'), '</legend>
@@ -70,11 +74,11 @@ if (!isset($_POST['Show'])) {
 	}
 	echo '<field>
 			<label for="FromTransDate">', _('Transactions Dated From'), ':</label>
-			<input type="text" name="FromTransDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" value="', date($_SESSION['DefaultDateFormat']), '" />
+			<input name="FromTransDate" type="date" required="required" maxlength="10" size="11" value="', date('Y-m-d'), '" />
 		</field>
 		<field>
 			<label for="ToTransDate">' . _('Transactions Dated To') . ':</label>
-			<input type="text" name="ToTransDate" class="date" required="required" maxlength="10" size="11" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" value="', date($_SESSION['DefaultDateFormat']), '" />
+			<input name="ToTransDate" type="date" required="required" maxlength="10" size="11" value="', date('Y-m-d'), '" />
 		</field>
 		<field>
 			<label for="ShowType">', _('Show transactions'), '</label>

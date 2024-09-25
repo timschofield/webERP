@@ -2,6 +2,8 @@
 /* Shows customer account/statement on screen rather than PDF. */
 
 include('includes/session.php');
+if (isset($_POST['TransAfterDate'])) {$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);}
+
 $Title = _('Customer Account');// Screen identification.
 $ViewTopic = 'ARInquiries';// Filename in ManualContents.php's TOC.
 $BookMark = 'CustomerAccount';// Anchor's id in the manual's html document.
@@ -235,9 +237,11 @@ echo '	<tr><td colspan="2">', $CustomerRecord['address4'], '</td></tr>
 if ($CustomerRecord['dissallowinvoices'] != 0) {
 	echo '<br /><b><font color="red" size="4">', _('ACCOUNT ON HOLD'), '</font></b><br />';
 }
-echo '<br /><form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="centre noprint">
-		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-		_('Show all transactions after'), ':<input class="date" maxlength="10" name="TransAfterDate" required="required" size="11" tabindex="1" type="text" value="', $_POST['TransAfterDate'], '" />',
+echo '<form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="centre noprint">';
+echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
+
+echo _('Show all transactions after'), ':
+		<input type="date" maxlength="10" name="TransAfterDate" required="required" size="11" tabindex="1" value="', FormatDateForSQL($_POST['TransAfterDate']), '" />',
 		'<input name="Refresh Inquiry" tabindex="3" type="submit" value="', _('Refresh Inquiry'), '" />
 	</form>';
 

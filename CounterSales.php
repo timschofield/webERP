@@ -423,7 +423,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 			$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 		}
 		if (isset($_POST[$QuickEntryPOLine])) {
-			$NewPOLine = $_POST[$QuickEntryPOLine]; 
+			$NewPOLine = $_POST[$QuickEntryPOLine];
 		} else {
 			$NewPOLine = 0;
 		}
@@ -2416,7 +2416,7 @@ if (!isset($_POST['ProcessSale'])) {
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
 	 		echo '<td><input type="text" name="part_' . $i . '"' . ($i==1 ? ' autofocus="autofocus"':'') . ' data-type="no-illegal-chars" title="' . _('Enter a part code to be sold. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '"size="21" maxlength="20" /></td>
 					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" />
-						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
+						<input type="hidden" type="date" name="ItemDue_' . $i . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
    		}
 	 	echo '</table>
 				<br />

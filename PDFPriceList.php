@@ -15,6 +15,7 @@ Please note that addTextWrap() YPos is a font-size-height further down than addT
 All coordinates are measured from the lower left corner of the sheet to the top left corner of the element.
 */
 include('includes/session.php');
+if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);};
 use Dompdf\Dompdf;
 
 // Merges gets into posts:
@@ -423,7 +424,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<field>
 			<label for="EffectiveDate">', _('Effective As At'), ':</label>
-			<input type="text" required="required" maxlength="10" size="11" class="date" name="EffectiveDate" value="', Date($_SESSION['DefaultDateFormat']), '" />
+			<input required="required" maxlength="10" size="11" type="date" name="EffectiveDate" value="', Date('Y-m-d'), '" />
 		</field>';
 
 	// Option to show obsolete items:

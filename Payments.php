@@ -4,6 +4,7 @@
 include ('includes/DefinePaymentClass.php');
 
 include ('includes/session.php');
+if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);};
 $Title = _('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
 	$ViewTopic = 'AccountsPayable';
@@ -948,7 +949,7 @@ else {
 
 echo '<field>
 		<label for="DatePaid">', _('Date') , ':</label>
-		<input class="date" maxlength="10" name="DatePaid" onchange="isDate(this, this.value, ', "'", $_SESSION['DefaultDateFormat'], "'", ')" required="required" size="11" type="text" value="', $_SESSION['PaymentDetail' . $identifier]->DatePaid, '" />
+		<input type="date" maxlength="10" name="DatePaid" required="required" size="11" value="', FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid), '" />
 	</field>';
 
 // Currency of payment:
@@ -1256,7 +1257,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 	echo '</fieldset>';
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Accept') . '" />
-			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
 	if (sizeOf($_SESSION['PaymentDetail' . $identifier]->GLItems) > 0) {

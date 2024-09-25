@@ -11,6 +11,7 @@ Class Allocation {
 }
 
 include('includes/session.php');
+if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);};
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetPaymentMethods.php');
 
@@ -51,7 +52,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
 			AND supptrans.hold=0
 			AND suppliers.currcode = '" . $_POST['Currency'] . "'
-			AND supptrans.supplierNo >= '" . $_POST['FromCriteria'] . "'
+			AND supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
 			AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY suppliers.supplierid,
 					currencies.decimalplaces
@@ -302,14 +303,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		  </field>';
 
 	if (!isset($_POST['AmountsDueBy'])){
-		$DefaultDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
+		$DefaultDate = Date('Y-m-d', Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
 	} else {
-		$DefaultDate = $_POST['AmountsDueBy'];
+		$DefaultDate = FormatDateForSQL($_POST['AmountsDueBy']);
 	}
 
 	echo '<field>
 			<label for="AmountsDueBy">' . _('Payments Due To') . ':</label>
-			<input type="text" class="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" />
+			<input type="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" />
 		  </field>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";

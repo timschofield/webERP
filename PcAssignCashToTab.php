@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
 $Title = _('Assignment of Cash to Petty Cash Tab');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
@@ -374,7 +375,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		}
 		echo '<field>
 				<label for="New Cash Assignment">', _('Cash Assignment Date'), ':</label>
-				<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
+				<input type="date" name="Date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['Date']), '" />
 			</field>';
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount'] = 0;

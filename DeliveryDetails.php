@@ -10,6 +10,11 @@ include('includes/DefineCartClass.php');
 /* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
 
 include('includes/session.php');
+
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
+if (isset($_POST['QuoteDate'])){$_POST['QuoteDate'] = ConvertSQLDate($_POST['QuoteDate']);};
+if (isset($_POST['ConfirmedDate'])){$_POST['ConfirmedDate'] = ConvertSQLDate($_POST['ConfirmedDate']);};
+
 $Title = _('Order Delivery Details');// Screen identification.
 $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DeliveryDetails';// Anchor's id in the manual's html document.
@@ -1015,30 +1020,30 @@ echo '</select>
 
 // Set the default date to earliest possible date if not set already
 if(!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {
-	$_SESSION['Items'.$identifier]->DeliveryDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->DeliveryDate = Date('Y-m-d',$EarliestDispatch);
 }
 if(!isset($_SESSION['Items'.$identifier]->QuoteDate)) {
-	$_SESSION['Items'.$identifier]->QuoteDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->QuoteDate = Date('Y-m-d',$EarliestDispatch);
 }
 if(!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
-	$_SESSION['Items'.$identifier]->ConfirmedDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->ConfirmedDate = Date('Y-m-d',$EarliestDispatch);
 }
 
 // The estimated Dispatch date or Delivery date for this order
 echo '<field>
 		<label for="DeliveryDate">' .  _('Estimated Delivery Date') .':</label>
-		<input class="date" type="text" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title=""/>
+		<input type="date" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title=""/>
 		<fieldhelp>' . _('Enter the estimated delivery date requested by the customer') . '</fieldhelp>
 	</field>';
 // The date when a quote was issued to the customer
 echo '<field>
 		<label for="QuoteDate">' .  _('Quote Date') .':</label>
-		<input class="date" type="text" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" />
+		<input type="date" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" />
 	</field>';
 // The date when the customer confirmed their order
 echo '<field>
 		<label for="ConfirmedDate">' .  _('Confirmed Order Date') .':</label>
-		<input class="date" type="text" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" />
+		<input type="date" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" />
 	</field>
 	<field>
 		<label for="BrAdd1">' .  _('Delivery Address 1 (Street)') . ':</label>

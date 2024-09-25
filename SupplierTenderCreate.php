@@ -2,6 +2,7 @@
 include ('includes/DefineTenderClass.php');
 include ('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);};
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
@@ -69,7 +70,7 @@ if (isset($_GET['ID'])) {
 	$_SESSION['tender' . $identifier]->DelAdd4 = $MyRow['address4'];
 	$_SESSION['tender' . $identifier]->DelAdd5 = $MyRow['address5'];
 	$_SESSION['tender' . $identifier]->DelAdd6 = $MyRow['address6'];
-	$_SESSION['tender' . $identifier]->RequiredByDate = $MyRow['requiredbydate'];
+	$_SESSION['tender' . $identifier]->RequiredByDate = FormatDateForSQL(ConvertSQLDate($MyRow['requiredbydate']));
 
 	$SQL = "SELECT tenderid,
 					tendersuppliers.supplierid,
@@ -226,7 +227,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 	echo '<legend>' . _('Tender header details') . '</legend>
 		<field>
 			<label for="RequiredByDate">' . _('Delivery Must Be Made Before') . '</label>
-			<input type="text" class="date" required="required" name="RequiredByDate" autofocus="autofocus" size="11" value="' . ConvertSQLDate($_SESSION['tender' . $identifier]->RequiredByDate) . '" />
+			<input type="date" required="required" name="RequiredByDate" autofocus="autofocus" size="11" value="' . $_SESSION['tender' . $identifier]->RequiredByDate . '" />
 		</field>';
 
 	if (!isset($_POST['StkLocation']) or $_POST['StkLocation'] == '') {

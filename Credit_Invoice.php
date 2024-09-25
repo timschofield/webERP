@@ -10,6 +10,7 @@ include ('includes/session.php');
 $Title = _('Credit An Invoice');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/CommissionFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other credit entry sessions on the same machine  */

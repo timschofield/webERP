@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);};
+if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);};
 $Title=_('Update Pricing');
 include('includes/header.php');
 
@@ -161,12 +163,12 @@ echo '<field>
 
 echo '<field>
 		<label for="PriceStartDate">' . _('New Price To Be Effective From') . ':</label>
-		<input type="text" class="date" name="PriceStartDate" size="11" maxlength="10" value="' . $_POST['PriceStartDate'] . '" />
+		<input type="date" name="PriceStartDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['PriceStartDate']) . '" />
 	</field>';
 
 echo '<field>
 		<label for="PriceEndDate">' . _('New Price To Be Effective To (Blank = No End Date)') . ':</label>
-		<input type="text" class="date" name="PriceEndDate" size="11" maxlength="10" value="' . $_POST['PriceEndDate'] . '" />
+		<input type="date" name="PriceEndDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['PriceEndDate']) . '" />
 	</field>';
 
 if (!isset($_POST['IncreasePercent'])){

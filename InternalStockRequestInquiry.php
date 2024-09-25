@@ -1,6 +1,8 @@
 <?php
 //Token 19 is used as the authority overwritten token to ensure that all internal request can be viewed.
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Internal Stock Request Inquiry');
 include('includes/header.php');
 
@@ -14,6 +16,13 @@ if (isset($_POST['ResetPart'])) {
 if (isset($_POST['RequestNo'])) {
 	$RequestNo = $_POST['RequestNo'];
 }
+
+if (isset($_POST['Search']) and $RequestNo == '') {
+	prnMsg( _('An internal request number must be entered'), 'warn');
+	include('includes/footer.php');
+	exit;
+}
+
 if (isset($_POST['SearchPart'])) {
 	$StockItemsResult = GetSearchItems();
 }
@@ -23,7 +32,6 @@ if (isset($_POST['StockID'])) {
 if (isset($_POST['SelectedStockItem'])) {
 	$StockID = $_POST['SelectedStockItem'];
 }
-
 if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened or click a submit button
 	if (!isset($RequestNo) OR $RequestNo == '') {
 		echo '<fieldset>
@@ -36,10 +44,10 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 					<label for="StockLocation">' . _('From Stock Location') . ':</label>
 					<select name="StockLocation">';
 		$sql = "SELECT locations.loccode, locationname, canview FROM locations
-			INNER JOIN locationusers 
-				ON locationusers.loccode=locations.loccode 
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
 				AND locationusers.userid='" . $_SESSION['UserID'] . "'
-				AND locationusers.canview=1 
+				AND locationusers.canview=1
 				AND locations.internalrequest=1";
 		$LocResult = DB_query($sql);
 		$LocationCounter = DB_num_rows($LocResult);
@@ -56,7 +64,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 						echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 					}
 				} else {
-					if ($LocationCounter>1 AND $locallctr == 0) {//we show All only when it is necessary	
+					if ($LocationCounter>1 AND $locallctr == 0) {//we show All only when it is necessary
 						echo '<option value="All">' . _('All') . '</option>';
 						$locallctr = 1;
 					}
@@ -73,7 +81,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 			$LocationCounter = DB_num_rows($authresult);
 			if ($LocationCounter>0) {
 				$Authorizer = true;
-			
+
 				while ($myrow = DB_fetch_array($authresult)) {
 					$Locations[] = $myrow['loccode'];
 					if (isset($_POST['StockLocation'])) {
@@ -93,7 +101,6 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				}
 				echo '</select>
 					</field>';
-			
 
 			} else {
 				prnMsg(_('You have no authority to do the internal request inquiry'),'error');
@@ -128,16 +135,16 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 			<label for="Department">' . _('Department') . '</label>
 			<select name="Department">';
 	//now lets retrieve those deparment available for this user;
-	$sql = "SELECT departments.departmentid, 
+	$sql = "SELECT departments.departmentid,
 			departments.description
-			FROM departments LEFT JOIN stockrequest 
+			FROM departments LEFT JOIN stockrequest
 				ON departments.departmentid = stockrequest.departmentid
-				AND (departments.authoriser = '" . $_SESSION['UserID'] . "' OR stockrequest.initiator = '" . $_SESSION['UserID'] . "') 
-			WHERE stockrequest.dispatchid IS NOT NULL 
-			GROUP BY stockrequest.departmentid";//if a full request is need, the users must have all of those departments' authority 
+				AND (departments.authoriser = '" . $_SESSION['UserID'] . "' OR stockrequest.initiator = '" . $_SESSION['UserID'] . "')
+			WHERE stockrequest.dispatchid IS NOT NULL
+			GROUP BY stockrequest.departmentid";//if a full request is need, the users must have all of those departments' authority
 	$depresult = DB_query($sql);
 	if (DB_num_rows($depresult)>0) {
-		$Departments = array(); 
+		$Departments = array();
 		if (isset($_POST['Department']) AND $_POST['Department'] == 'All') {
 			echo '<option selected="selected" value="All">' . _('All') . '</option>';
 		} else {
@@ -162,18 +169,18 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 		//now lets add the time period option
 	if (!isset($_POST['ToDate'])) {
-		$_POST['ToDate'] = '';
+		$_POST['ToDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 	if (!isset($_POST['FromDate'])) {
-		$_POST['FromDate'] = '';
+		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat']);
 	}
 	echo '<field>
 			<label for="FromDate">' . _('Date From') . '</label>
-			<input type="text" class="date" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" />
+			<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) .'" />
 		</field>
 		<field>
 			<label for="ToDate">' . _('Date To') . '</label>
-			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+			<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 	if (!isset($_POST['ShowDetails'])) {
 		$_POST['ShowDetails'] = 1;
@@ -183,14 +190,14 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 			<label>' . _('Show Details') . '</label>
 			<input type="checkbox" ' . $Checked . ' name="ShowDetails" />
 		</field>';
-		
+
 	echo '</fieldset>';
 	echo '<div class="centre">
 			<input type="submit" name="Search"  value="' ._('Search') . '" />
 		</div>';
-	//following is the item search parts which belong to the existed internal request, we should not search it generally, it'll be rediculous 
+	//following is the item search parts which belong to the existed internal request, we should not search it generally, it'll be rediculous
 	//hereby if the authorizer is login, we only show all category available, even if there is problem, it'll be correceted later when items selected -:)
-	if (isset($Authorizer)) { 
+	if (isset($Authorizer)) {
 		$WhereAuthorizer = '';
 	} else {
 		$WhereAuthorizer = " AND internalstockcatrole.secroleid = '" . $_SESSION['AccessLevel'] . "' ";
@@ -208,13 +215,13 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 
 	if ($Cats >0) {
-		
+
 		echo '<fieldset>
 			<legend>' . _('To search for internal request for a specific part use the part selection facilities below') . '</legend>
 			<field>
 				<label for="StockCat">' . _('Stock Category') . '</label>
 				<select name="StockCat">';
-				
+
 		if (!isset($_POST['StockCat'])) {
 			$_POST['StockCat'] = '';
 		}
@@ -232,17 +239,17 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		}
 		echo '</select>
 			</field>';
-			
+
 		echo '<field>
 				<label for="Keywords">' . _('Enter partial') . '  <b>' . _('Description') . '</b>:</label>';
 		if (!isset($_POST['Keywords'])) {
 			$_POST['Keywords'] = '';
 		}
-		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';		
+		echo '<input type="text" name="Keywords" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 		echo '</field>';
-		
+
 		echo _('OR');
-		
+
 		echo '<field>
 				<label for="StockCode">',_('Enter partial') . ' <b>' . _('Stock Code') . ':</label>';
 		if (!isset($_POST['StockCode'])) {
@@ -253,7 +260,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 	}
 	echo '</field>
 		</fieldset>';
-		
+
 	echo '<div class="centre">
 			<input type="submit" name="SearchPart" value="' . _('Search Now') . '" />
 			<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
@@ -269,7 +276,7 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 	}
 
 
-} 
+}
 
 if(isset($StockItemsResult)){
 
@@ -307,7 +314,7 @@ if(isset($StockItemsResult)){
 		</table>';
 
 }
-	
+
 } elseif(isset($_POST['Search']) OR isset($StockID)) {//lets show the search result here
 	if (isset($StockItemsResult) AND DB_num_rows($StockItemsResult) == 1) {
 		$StockID = DB_fetch_array($StockItemsResult);
@@ -315,7 +322,7 @@ if(isset($StockItemsResult)){
 	}
 
 	if (isset($_POST['ShowDetails']) OR isset($StockID)) {
-		$SQL = "SELECT stockrequest.dispatchid, 
+		$SQL = "SELECT stockrequest.dispatchid,
 				stockrequest.loccode,
 				stockrequest.departmentid,
 				departments.description,
@@ -331,9 +338,9 @@ if(isset($StockItemsResult)){
 			stockrequestitems.decimalplaces,
 			uom,
 			completed
-			FROM stockrequest INNER JOIN stockrequestitems ON stockrequest.dispatchid=stockrequestitems.dispatchid 
-			INNER JOIN departments ON stockrequest.departmentid=departments.departmentid 
-			INNER JOIN locations ON locations.loccode=stockrequest.loccode 
+			FROM stockrequest INNER JOIN stockrequestitems ON stockrequest.dispatchid=stockrequestitems.dispatchid
+			INNER JOIN departments ON stockrequest.departmentid=departments.departmentid
+			INNER JOIN locations ON locations.loccode=stockrequest.loccode
 			INNER JOIN stockmaster ON stockrequestitems.stockid=stockmaster.stockid";
 	} else {
 		$SQL = "SELECT stockrequest.dispatchid,
@@ -349,6 +356,7 @@ if(isset($StockItemsResult)){
 					FROM stockrequest INNER JOIN departments ON stockrequest.departmentid=departments.departmentid
 					INNER JOIN locations ON locations.loccode=stockrequest.loccode ";
 	}
+
 	//lets add the condition selected by users
 	if (isset($_POST['RequestNo']) AND $_POST['RequestNo'] !== '') {
 		$SQL .= " WHERE stockrequest.dispatchid = '" . $_POST['RequestNo'] . "'";
@@ -377,21 +385,21 @@ if(isset($StockItemsResult)){
 					$Departments = unserialize(base64_decode($_POST['Departments']));
 					$Departments = implode("','", $Departments);
 					$SQL .= " AND stockrequest.departmentid IN ('" . $Departments . "')";
-					
+
 				} //IF there are no departments set,so forgot it
-				
+
 			}
 		} else {
 			$SQL .= " AND stockrequest.departmentid='" . $_POST['Department'] . "'";
 		}
 		//Date from
 		if (isset($_POST['FromDate']) AND is_date($_POST['FromDate'])) {
-			$SQL .= " AND despatchdate>='" . $_POST['FromDate'] . "'";
+			$SQL .= " AND despatchdate>='" . FormatDateForSQL($_POST['FromDate']) . "'";
 		}
 		if (isset($_POST['ToDate']) AND is_date($_POST['ToDate'])) {
-			$SQL .= " AND despatchdate<='" . $_POST['ToDate'] . "'";
+			$SQL .= " AND despatchdate<='" . FormatDateForSQL($_POST['ToDate']) . "'";
 		}
-		//item selected 
+		//item selected
 		if (isset($StockID)) {
 			$SQL .= " AND stockrequestitems.stockid='" . $StockID . "'";
 		}
@@ -424,12 +432,12 @@ if(isset($StockItemsResult)){
 						<th>' . _('Locations') . '</th>
 						<th>' . _('Department') . '</th>
 						<th>' . _('Authorization') . '</th>
-						<th>' . _('Dispatch Date') . '</th>	
+						<th>' . _('Dispatch Date') . '</th>
 					</tr>';
 		}
 
 		if (isset($_POST['ShowDetails']) OR isset($StockID)) {
-			$ID = '';//mark the ID change of the internal request 
+			$ID = '';//mark the ID change of the internal request
 		}
 		$i = 0;
 		//There are items without details AND with it
@@ -445,7 +453,7 @@ if(isset($StockItemsResult)){
 				$Disp = ConvertSQLDate($myrow['despatchdate']);
 			}
 			if (isset($ID)) {
-				if ($myrow['completed'] == 0) { 
+				if ($myrow['completed'] == 0) {
 					$Comp = _('No');
 				} else {
 					$Comp = _('Yes');
@@ -489,13 +497,13 @@ if(isset($StockItemsResult)){
 		}//end of while loop;
 		$Html .= '</table>';
 		echo '<a href="' . $RootPath . '/InternalStockRequestInquiry.php">' . _('Select Others') . '</a>';
-		
+
 		echo $Html;
 	} else {
 		prnMsg(_('There are no stock request available'),'warn');
-	}	
+	}
 }
-		
+
 include('includes/footer.php');
 exit;
 
@@ -512,7 +520,7 @@ function GetSearchItems ($SQLConstraint='') {
 			INNER JOIN departments ON stockrequest.departmentid = departments.departmentid
 
 				INNER JOIN stockmaster ON stockrequestitems.stockid = stockmaster.stockid";
-	if (isset($_POST['StockCat']) 
+	if (isset($_POST['StockCat'])
 		AND ((trim($_POST['StockCat']) == '') OR $_POST['StockCat'] == 'All')){
 		 $WhereStockCat = '';
 	} else {
