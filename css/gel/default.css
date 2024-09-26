@@ -51,30 +51,6 @@ text-align:center;
 .top {
 vertical-align:top;
 }
-.dpTbl {
-border:solid navy 1px;
-}
-.dpTD {
-border:0;
-width:20px;
-background-color:#EEE;
-text-align:right;
-cursor:pointer;
-}
-.dpDayHighlight {
-border:0;
-width:20px;
-background-color:#FF0;
-text-align:right;
-cursor:pointer;
-}
-.dpTDHover {
-border:0;
-width:20px;
-background-color:#CCC;
-text-align:right;
-cursor:pointer;
-}
 .notavailable {
 font-style:italic;
 color:#555;

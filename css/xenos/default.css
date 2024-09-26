@@ -51,37 +51,6 @@ text-align:center;
 .top {
 vertical-align:top;
 }
-.dpTbl {
-border:1px solid #C3C3C3;
--moz-box-shadow:    0px 0px 8px #999999;
--webkit-box-shadow: 0px 0px 8px #999999;
-box-shadow:         0px 0px 8px #999999;
--ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1')";
-filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1');
-}
-.dpTD {
-border: 0;
-width:25px;
-text-align:right;
-cursor:pointer;
-}
-.dpTbl button {
-    padding: 4px 12px;
-}
-.dpDayHighlight {
-border: 0;
-width:20px;
-background-color: yellow;
-text-align:right;
-cursor:pointer;
-}
-.dpTDHover {
-border: 0;
-width:20px;
-background-color: #E1E1E1;
-text-align:right;
-cursor:pointer;
-}
 .notavailable {
 font-weight:lighter;
 font-style:italic;
@@ -106,6 +75,7 @@ position: absolute;
 padding: 1px 5px 2px 5px;
 bottom: -1.9em;
 left: 10%;
+top:10%;
 white-space: nowrap;
 box-shadow: 1px 1px 3px #222222;
 opacity: 0;

@@ -229,39 +229,6 @@ div.Message.warn {
 	margin-right:auto;
 }
 
-/*** Calendar picker ***/
-.dpTbl {
-	border:1px solid #C3C3C3;
-	-moz-box-shadow:0px 0px 8px #999999;
-	-webkit-box-shadow:0px 0px 8px #999999;
-	box-shadow:0px 0px 8px #999999;
-	-ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1')";
-	filter:progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1');
-}
-.dpTD {
-	border:0;
-	width:25px;
-	text-align:right;
-	cursor:pointer;
-}
-.dpTbl button {
-	padding:4px 12px;
-}
-.dpDayHighlight {
-	border:0;
-	width:20px;
-	background-color:yellow;
-	text-align:right;
-	cursor:pointer;
-}
-.dpTDHover {
-	border:0;
-	width:20px;
-	background-color:#E1E1E1;
-	text-align:right;
-	cursor:pointer;
-}
-
 /* Table type is used for UI tables type 1 */
 .table1 {
 	background:#eeeeee;
