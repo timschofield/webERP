@@ -55,29 +55,6 @@ text-align:center;
 .top {
 vertical-align:top;
 }
-.dpTD {
-border:0;
-width:20px;
-background-color:transparent;
-text-align:left;
-cursor:pointer;
-}
-.dpDayHighlight {
-border:0;
-width:20px;
-background-color:#1A1A1A;
-color:white;
-text-align:left;
-cursor:pointer;
-}
-.dpTDHover {
-border:0;
-width:20px;
-background-color:#2F343F;
-color:white;
-text-align:left;
-cursor:pointer;
-}
 .notavailable {
 font-weight:lighter;
 font-style:italic;
