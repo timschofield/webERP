@@ -416,9 +416,9 @@ function locale_number_format_zero_blank($num,$dec){
 }
 
 function locale_number_format_kpi($num){
-	if($num >= 1000){
+	if(abs($num) >= 1000){
 		return locale_number_format($num,0);
-	}elseif($num >= 10){
+	}elseif(abs($num) >= 10){
 		return locale_number_format($num,1);
 	}else{
 		return locale_number_format($num,2);
