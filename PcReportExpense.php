@@ -1,6 +1,7 @@
 <?php
 
 include ('includes/session.php');
+use Dompdf\Dompdf;
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Petty Cash Expense Management Report');
@@ -9,13 +10,6 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PcReportExpense';
 
 include ('includes/SQL_CommonFunctions.inc');
-include  ('includes/header.php');
-
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('PC Expense Report')
-. '" alt="" />' . ' ' . $Title . '</p>';
-
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['SelectedExpense'])){
 	$SelectedExpense = mb_strtoupper($_POST['SelectedExpense']);
@@ -23,88 +17,28 @@ if (isset($_POST['SelectedExpense'])){
 	$SelectedExpense = mb_strtoupper($_GET['SelectedExpense']);
 }
 
-if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST['SelectDifferentDate'])) {
-
-
-
-	if (!isset($_POST['FromDate'])){
-		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
-	}
-
-	if (!isset($_POST['ToDate'])){
-		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
-	}
-
-	/*Show a form to allow input of criteria for Expenses to show */
-	echo '<fieldset>
-			<legend>', _('Report Criteria'), '</legend>
-		<field>
-			<label for="SelectedExpense">' . _('Expense Code') . ':</label>
-			<select name="SelectedExpense">';
-
-	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
-			FROM pctabs, pctabexpenses
-			WHERE pctabexpenses.typetabcode = pctabs.typetabcode
-				AND ( pctabs.authorizer='" . $_SESSION['UserID'] .
-					"' OR pctabs.usercode ='" . $_SESSION['UserID'].
-					"' OR pctabs.assigner ='" . $_SESSION['UserID'] . "' )
-			ORDER BY pctabexpenses.codeexpense";
-
-	$Result = DB_query($SQL);
-
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['SelectedExpense']) and $MyRow['codeexpense']==$_POST['SelectedExpense']) {
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
-		}
-		echo $MyRow['codeexpense'] . '">' . $MyRow['codeexpense'] . '</option>';
-
-	} //end while loop get type of tab
-
-	DB_free_result($Result);
-
-
-	echo '</select>
-		</field>
-		<field>
-			<label for="FromDate">' . _('From Date') . ':</label>
-			<input tabindex="2" type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
-		</field>
-		<field>
-			<label for="ToDate">' . _('To Date') . ':' . '</label>
-			<input tabindex="3" type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
-		</field>
-		</fieldset>
-		<div class="centre">
-			<input type="submit" name="ShowTB" value="' . _('Show HTML') .'" />
-		</div>
-	</form>';
-
-} else {
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
 	$SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
 
-	echo '<input type="hidden" name="FromDate" value="' . $_POST['FromDate'] . '" />
-			<input type="hidden" name="ToDate" value="' . $_POST['ToDate'] . '" />';
+	$HTML = '';
 
-	echo '<fieldset>';
-
-	echo '<field>
-			<label>' . _('Expense Code') . ':</label>
-			<fieldtext>' . $SelectedExpense . '</fieldtext>
-			</field>
-		<field>
-			<label>' . _('From') . ':</label>
-			<fieldtext>' . $_POST['FromDate'] . '</fieldtext>
-		</field>
-		<field>
-			<label>' . _('To') . ':</label>
-			<fieldtext>' . $_POST['ToDate'] . '</fieldtext>
-		</field>';
-
-	echo '</fieldset>';
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Expense Code') . ': ' . _('Expense Code') . '<br />
+					' . _('Date Range') . ': ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '<br />
+				</div>
+				<table>';
 
 	$SQL = "SELECT pcashdetails.counterindex,
 					pcashdetails.tabcode,
@@ -133,17 +67,16 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 						_('No Petty Cash movements for this expense code were returned by the SQL because'),
 						_('The SQL that failed was:'));
 
-	echo '<br />
-		<table class="selection">
+	$HTML .= '<table class="selection">
 			<thead>
 				<tr>
 					<th class="ascending">' . _('Date of Expense') . '</th>
 					<th class="ascending">' . _('Tab') . '</th>
 					<th>' . _('Currency') . '</th>
 					<th class="ascending">' . _('Gross Amount') . '</th>
-					<th>', _('Tax'), '</th>
-					<th>', _('Tax Group'), '</th>
-					<th>', _('Tag'), '</th>
+					<th>' . _('Tax') . '</th>
+					<th>' . _('Tax Group') . '</th>
+					<th>' . _('Tag') . '</th>
 					<th>' . _('Business Purpose') . '</th>
 					<th>' . _('Notes') . '</th>
 					<th>' . _('Receipt Attachment') . '</th>
@@ -206,26 +139,130 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
 
-		echo '<tr class="striped_row">
-			<td>', ConvertSQLDate($MyRow['date']), '</td>
-			<td>', $MyRow['tabcode'], '</td>
-			<td>', $MyRow['currency'], '</td>
-			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
-			<td class="number">', $TaxesTaxAmount, '</td>
-			<td>', $TaxesDescription, '</td>
-			<td>', $TagDescription, '</td>
-			<td>', $MyRow['purpose'], '</td>
-			<td>', $MyRow['notes'], '</td>
-			<td>', $ReceiptText, '</td>
-			<td>', $AuthorisedDate, '</td>
+		$HTML .= '<tr class="striped_row">
+			<td>' . ConvertSQLDate($MyRow['date']) . '</td>
+			<td>' . $MyRow['tabcode'] . '</td>
+			<td>' . $MyRow['currency'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '</td>
+			<td class="number">' . $TaxesTaxAmount . '</td>
+			<td>'. $TaxesDescription . '</td>
+			<td>'. $TagDescription . '</td>
+			<td>'. $MyRow['purpose'] . '</td>
+			<td>'. $MyRow['notes'] . '</td>
+			<td>'. $ReceiptText . '</td>
+			<td>'. $AuthorisedDate . '</td>
 		</tr>';
 	} //end of looping
 
-	echo '</tbody>';
-	echo '</table>';
-	echo '<div class="centre"><input type="submit" name="SelectDifferentDate" value="' . _('Select A Different Date') . '" /></div>';
-    echo '</form>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_ReOrderLevel_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Petty Cash Expense Management Report');
+		include ('includes/header.php');
+		echo '<p class="page_title_text">
+				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
+			</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
+} else {
+	include  ('includes/header.php');
+
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/money_add.png" title="' . _('PC Expense Report'). '" alt="" />' . ' ' . $Title . '
+		</p>';
+
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" target="_blank">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+	if (!isset($_POST['FromDate'])){
+		$_POST['FromDate']=Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
+	}
+
+	if (!isset($_POST['ToDate'])){
+		$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+	}
+
+	/*Show a form to allow input of criteria for Expenses to show */
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="SelectedExpense">' . _('Expense Code') . ':</label>
+			<select name="SelectedExpense">';
+
+	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
+			FROM pctabs, pctabexpenses
+			WHERE pctabexpenses.typetabcode = pctabs.typetabcode
+				AND ( pctabs.authorizer='" . $_SESSION['UserID'] .
+					"' OR pctabs.usercode ='" . $_SESSION['UserID'].
+					"' OR pctabs.assigner ='" . $_SESSION['UserID'] . "' )
+			ORDER BY pctabexpenses.codeexpense";
+
+	$Result = DB_query($SQL);
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectedExpense']) and $MyRow['codeexpense']==$_POST['SelectedExpense']) {
+			echo '<option selected="selected" value="';
+		} else {
+			echo '<option value="';
+		}
+		echo $MyRow['codeexpense'] . '">' . $MyRow['codeexpense'] . '</option>';
+
+	} //end while loop get type of tab
+
+	DB_free_result($Result);
+
+
+	echo '</select>
+		</field>
+		<field>
+			<label for="FromDate">' . _('From Date') . ':</label>
+			<input tabindex="2" type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
+		</field>
+		<field>
+			<label for="ToDate">' . _('To Date') . ':' . '</label>
+			<input tabindex="3" type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
+		</field>
+		</fieldset>
+		<div class="centre">
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+			<input type="submit" name="View" title="View" value="' . _('Show HTML') . '" />
+		</div>
+	</form>';
+
 }
+
 include('includes/footer.php');
 
 ?>
