@@ -4,6 +4,8 @@
 include('includes/session.php');
 
 $Title = _('Sales Analysis Report Columns');
+$ViewTopic= 'SalesAnalysis';
+$BookMark = 'SalesAnalysis';
 
 include('includes/header.php');
 

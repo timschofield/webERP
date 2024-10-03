@@ -2,6 +2,8 @@
 
 include ('includes/session.php');
 $Title = _('Search Purchase Orders');
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
 include ('includes/header.php');
 
 echo '<p class="page_title_text">

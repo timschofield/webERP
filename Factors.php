@@ -5,6 +5,9 @@ include('includes/session.php');
 
 $Title = _('Factor Company Maintenance');
 
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
+
 include('includes/header.php');
 
 if (isset($_GET['FactorID'])){
@@ -200,7 +203,7 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FactorID" value="' . $FactorID .'" />
         <input type="hidden" name="New" value="Yes" />';
-        
+
 	if (isset($_POST['Amend'])) {
 		echo '<fieldset>
 				<legend>', _('Amend Factor Company Details'), '</legend>';

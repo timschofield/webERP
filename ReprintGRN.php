@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title=_('Reprint a GRN');
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';

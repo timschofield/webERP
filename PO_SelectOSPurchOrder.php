@@ -9,6 +9,9 @@ if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate'])
 
 $Title = _('Search Outstanding Purchase Orders');
 
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
+
 include('includes/header.php');
 include('includes/DefinePOClass.php');
 

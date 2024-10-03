@@ -14,6 +14,8 @@ if (isset($_GET['KeyValue']))  {
 //Get Out if we have no product specification
 If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
         $Title = _('Select Product Specification To Print');
+        $ViewTopic = 'QualityAssurance';
+        $BookMark = '';
         include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';
 

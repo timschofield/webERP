@@ -1,0 +1,163 @@
+img.ManualImage {
+width:48px;
+transition: transform .5s;
+}
+img.ManualImage:hover {
+transform: translate(230px, 100px) scale(10);
+box-shadow: 1px 1px 1px 1px #BFBFBF;
+}
+
+article.h1,article.h2,article.h3,article.h4,article.a {
+font-weight:400;
+}
+
+article.h1 {
+color:#0D1F54;
+background:#BED4EB;
+text-shadow:1px 1px #293EF5;
+padding:10px;
+margin:1%;
+border-radius: 5px;
+}
+
+article.h2 {
+color:#0D1F54;
+background:#C8D5E3;
+padding:8px 8px 8px 20px;
+margin-left:1%;
+margin-right:1%;
+border-radius: 5px;
+}
+
+article.h3 {
+color:#0D1F54;
+background:#E1E6EC;
+padding:8px 8px 8px 30px;
+margin-left:2%;
+margin-right:2%;
+border-radius: 5px;
+}
+
+article.a {
+text-decoration:none;
+}
+
+article.a:hover {
+color:#03c;
+}
+article..code{
+background:#C7E4ED;
+color:#0A0A42;
+font-family: monospace;
+margin-left: 2%;
+margin-right: 1%;
+word-wrap: break-word;
+font-size:80%;
+}
+article.div{
+margin-left: 2%;
+}
+article.right {
+text-align:right;
+}
+
+article.floatright {
+float:right;
+}
+
+article.left {
+text-align:left;
+}
+
+article.minitext {
+margin-right: 1%;
+font-size:30%;
+}
+
+article.li.toc {
+color:#03c;
+}
+
+article.li,article.p {
+color:black;
+}
+
+article.input[type=checkbox] {
+visibility: hidden;
+}
+article.p {
+margin-left: 2%;
+}
+
+article.pre {
+    font-size: 1.2em;
+    color:black;
+word-wrap: break-word;
+}
+.help-bubble {
+width: 67%;
+height: 85%;
+background: #FFFFFF;
+border:1px solid #0A0A7E;
+padding:1%;
+position: absolute;
+left:30.5%;
+border-radius: 10px;
+display:none;
+opacity: 1;
+animation-name: fadeInOpacity;
+animation-iteration-count: 1;
+animation-timing-function: ease-in;
+animation-duration: 0.5s;
+margin-top:50px;
+z-index:9999;
+}
+@keyframes fadeInOpacity {
+0% {
+opacity: 0;
+}
+100% {
+opacity: 1;
+}
+}
+.help-bubble:after {
+content: '';
+position: absolute;
+top: 0;
+left: 88%;
+width: 0;
+height: 0;
+border: 20px solid transparent;
+border-bottom-color: #FFFFFF;
+border-top: 0;
+border-right: 0;
+margin-left: -10px;
+margin-top: -20px;
+}
+.help-header {
+position:absolute;
+top:1%;
+border-radius:13px;
+font-size:150%;
+font-weight:bold;
+color:#E2E2E2;
+margin:1px;
+margin-top:5px;
+margin-right:50px;
+margin-bottom:7px;
+padding:6px;
+background:#8A8A8A;
+width:97%;
+}
+.help-content {
+position:absolute;
+overflow:auto;
+background:#F9F9F9;
+top:10%;
+height:87%;
+}
+.close_button {
+float:right;
+padding-right:10px;
+cursor:pointer;
+}

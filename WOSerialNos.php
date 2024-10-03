@@ -38,6 +38,8 @@ if ($Serialised==1){
 } else {
 	$Title = _('Work Order Batches in Progress');
 }
+$ViewTopic = 'Manufacturing';
+$BookMark = ''
 
 include('includes/header.php');
 

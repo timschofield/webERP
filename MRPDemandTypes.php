@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('MRP Demand Types');
+$ViewTopic = 'MRP';
+$BookMark = '';
 include('includes/header.php');
 
 //SelectedDT is the Selected MRPDemandType

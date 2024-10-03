@@ -20,6 +20,8 @@ if ($_SESSION['RequirePickingNote']==0) {
 /* Show selection screen if we have no orders to work with */
 if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransDate'])){
 	$Title = _('Select Picking Lists');
+	$ViewTopic = 'Sales';
+	$BookMark = '';
 	include('includes/header.php');
 	$sql="SELECT locations.loccode,
 				locationname

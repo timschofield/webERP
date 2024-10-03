@@ -3,6 +3,8 @@
 include('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Daily Sales Inquiry');
+$ViewTopic = 'ARInquiries';
+$BookMark = '';
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 

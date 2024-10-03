@@ -4,6 +4,9 @@ include('includes/session.php');
 
 $Title = _('Stock Check Sheets Entry');
 
+$ViewTopic = 'Inventory';
+$BookMark = '';
+
 include('includes/header.php');
 
 echo '<form name="EnterCountsForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">';
@@ -178,7 +181,7 @@ if ($_GET['Action'] == 'Enter'){
 			$result = DB_query($sql);
 			if (DB_num_rows($result)==0){
 				$InputError = 1;
-				prnMsg( _('Stock item "'. $StockID. '" is not a part code that has been added to the stock check file'),'warn');
+				prnMsg( _('Stock item '. $StockID. ' is not a part code that has been added to the stock check file'),'warn');
 			}
 
 			//next validate inputs are sensible

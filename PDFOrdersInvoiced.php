@@ -358,6 +358,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 } else { /*The option to print PDF was not hit so display form */
+	$ViewPage = 'Sales';
+	$BookMark = '';
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '

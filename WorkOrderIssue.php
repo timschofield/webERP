@@ -2,6 +2,8 @@
 include ('includes/session.php');
 if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);};
 $Title = _('Issue Materials To Work Order');
+$ViewTopic = 'Manufacturing';
+$BookMark = ''
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
 

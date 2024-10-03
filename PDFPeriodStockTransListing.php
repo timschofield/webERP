@@ -15,6 +15,8 @@ if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
 if (!isset($_POST['FromDate'])){
 
 	 $Title = _('Stock Transaction Listing');
+	 $ViewTopic = 'Inventory';
+	 $BookMark = '';
 	 include ('includes/header.php');
 
 	echo '<div class="centre">

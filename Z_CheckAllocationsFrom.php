@@ -2,6 +2,8 @@
 
 include ('includes/session.php');
 $Title = _('Identify Allocation Stuff Ups');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include ('includes/header.php');
 
 $sql = "SELECT debtortrans.type,

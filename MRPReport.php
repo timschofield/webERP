@@ -515,6 +515,8 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('MRP Report');
+	$ViewTopic = 'MRP';
+	$BookMark = '';
 	include('includes/header.php');
 
 	if (isset($_POST['PrintPDF'])) {

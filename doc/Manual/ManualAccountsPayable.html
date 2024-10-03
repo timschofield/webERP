@@ -283,3 +283,19 @@ This rate is used to purchase the currency amount being paid to the supplier. Th
 
 <p>The amount in foreign currency being allowed to the supplier as payment discount. General ledger entries are created (if the link is enabled) to the account specified for "Prompt Payment Discount" in the Company Preferences record. If discount is to posted some other way then it is better to create a dummy item for the discount given and enter credit notes for the dummy item with posting as defined in the Sales GL Interface setup.</p>
 
+<!-- Help Begin: AgedDebtors -->
+<h2><a id="AgedCreditors">Aged Creditors Balance Listing</a></h2>
+<p>
+From the main menu select Payables, Reports, "Aged Supplier Report".</p>
+<p>
+This report calculates the balances of the suppliers accounts according to the parameters specified in the system paramaters ("First Overdue Deadline in (days)" and "Second Overdue Deadline in (days))". The report is generated in the currency of the supplier. The currency of the report must first be selected and the range of suppliers accounts to print.</p>
+<p>
+The report can be printed at two levels:</p>
+
+<ul>
+    <li>The full detail of the all outstanding amounts on the account, transaction by transaction analysed into current, Due, $PastDueDays1 and PastDueDays2. The detailed report also shows the terms applicable to each supplier.</li>
+
+    <li>A summary of the account balances split in the same aged groupings.</li>
+</ul>This report recalculates the balance on the supplier's account from the outstanding transactions and analyses each outstanding transaction based on the date of invoice.</p>
+<p>
+The Aged Supplier Balances can also be restricted to show just the accounts where there is some balance overdue. The same detail and summary reports are available. The resultant reports create pdf files that can be either saved or printed. <!-- Help End: AgedDebtors -->

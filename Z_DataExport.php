@@ -526,6 +526,8 @@ if ( isset($_POST['pricelist']) ) {
 	exit;
 } else {
 	$Title = _('Data Exports');
+	$ViewTopic = 'SpecialUtilities';
+	$BookMark = basename(__FILE__, '.php'); ;
 	include('includes/header.php');
 
 	// SELECT EXPORT FOR PRICE LIST

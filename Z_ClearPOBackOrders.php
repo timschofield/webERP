@@ -5,6 +5,8 @@
 $PageSecurity =15;
 include ('includes/session.php');
 $Title = _('UTILITY PAGE To Clear purchase orders with quantity on back order');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 if (isset($_POST['ClearSupplierBackOrders'])) {

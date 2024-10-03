@@ -8,6 +8,11 @@ body {
 	font-family:"Ubuntu", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
 	font-size:.85em;
 	font-weight:lighter;
+	width:100%;
+}
+
+form{
+width:100%;
 }
 
 img {

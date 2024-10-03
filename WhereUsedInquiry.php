@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Where Used Inquiry');
+$ViewTopic = 'Manufacturing';
+$BookMark = ''
 include('includes/header.php');
 
 if (isset($_GET['StockID'])){

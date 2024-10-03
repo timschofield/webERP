@@ -4,6 +4,9 @@ include('includes/session.php');
 
 $Title = _('Brands Maintenance');
 
+$ViewTopic = 'Inventory';
+$BookMark = '';
+
 include('includes/header.php');
 
 if (isset($_GET['SelectedManufacturer'])){

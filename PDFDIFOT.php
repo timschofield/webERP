@@ -20,6 +20,8 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	 $Title = _('Delivery In Full On Time (DIFOT) Report');
+	 $ViewTopic = 'Sales';
+	 $BookMark = '';
 	 include ('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '

@@ -235,6 +235,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Payment Run');
+	$ViewTopic = 'AccountsPayable';
+	$BookMark = ''
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">

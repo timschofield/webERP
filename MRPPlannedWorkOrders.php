@@ -303,6 +303,8 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('MRP Planned Work Orders Reporting');
+	$ViewTopic = 'MRP';
+	$BookMark = '';
 	include('includes/header.php');
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';

@@ -1,6 +1,8 @@
 <?php
 include('includes/session.php');
 $Title = _('Update Item Costs From CSV');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .

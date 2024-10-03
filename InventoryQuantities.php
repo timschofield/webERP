@@ -150,6 +150,8 @@ If (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('Inventory Quantities Reporting');
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Quantities Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Use this report to display the quantity of Inventory items in different categories.') . '</div><br />';
@@ -158,7 +160,7 @@ If (isset($_POST['PrintPDF'])) {
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<fieldset>
 			<legend>', _('Report Criteria'), '</legend>';
-			
+
 	echo '<field>
 			<label for="Selection">' . _('Selection') . ':</label>
 			<select name="Selection">

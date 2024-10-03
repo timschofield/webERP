@@ -9,7 +9,7 @@ if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['R
 
 include('includes/SQL_CommonFunctions.inc');
 
-$ViewTopic = '';/* ?????????? */
+$ViewTopic = 'SalesOrders';/* ?????????? */
 $BookMark = 'SpecialOrder';
 $Title = _('Special Order Entry');
 include('includes/header.php');

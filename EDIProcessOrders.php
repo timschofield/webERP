@@ -4,6 +4,8 @@
 include ('includes/session.php');
 
 $Title = _('Process EDI Orders');
+$ViewTopic = 'EDI';
+$BookMark = '';
 
 include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc'); // need for EDITransNo

@@ -373,6 +373,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 /* There was enough info to either print or email the purchase order */
 else {
 	/*the user has just gone into the page need to ask the question whether to print the order or email it to the supplier */
+	$ViewTopic = 'PurchaseOrdering';
+	$BookMark = '';
 	include('includes/header.php');
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

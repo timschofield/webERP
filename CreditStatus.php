@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Credit Status Code Maintenance');
+$ViewTopic = 'CreditStatus';
+$BookMark = 'CreditStatus';
 include('includes/header.php');
 
 if (isset($_GET['SelectedReason'])){

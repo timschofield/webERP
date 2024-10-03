@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Sales Types') . ' / ' . _('Price List Maintenance');
+$ViewTopic = 'Sales';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){

@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title=_('Apply Current Cost to Sales Analysis');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 $Period = 42;

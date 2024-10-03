@@ -12,6 +12,8 @@ if (isset($_POST['EnterCompanyDetails'])) {
 	exit;
 }
 $Title = _('Make New Company Database Utility');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 
 include('includes/header.php');
 
@@ -27,7 +29,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 	if(mb_strlen($_POST['NewDatabase'])>32
 		OR ContainsIllegalCharacters($_POST['NewDatabase'])){
-		prnMsg(_('Company database must not contain spaces, \& or " or \''),'error');
+		prnMsg(_('Company database must not contain spaces illegal characters'),'error');
 	} else {
 		$_POST['NewDatabase'] = strtolower($_POST['NewDatabase']);
 		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">
@@ -217,7 +219,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		include('includes/GetConfig.php');
 
 
-		prnMsg (_('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user "admin" is defined with the password "weberp" in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
+		prnMsg (_('The new company database has been created for' . ' ' . htmlspecialchars($_POST['NewCompany'], ENT_QUOTES, 'UTF-8') . '. ' . _('The company details and parameters should now be set up for the new company. NB: Only a single user admin is defined with the password weberp in the new company database. A new system administrator user should be defined for the new company and this account deleted immediately.')), 'info');
 
 		echo '<p><a href="', $RootPath, '/CompanyPreferences.php">', _('Set Up New Company Details'), '</a></p>
 			<p><a href="', $RootPath, '/SystemParameters.php">', _('Set Up Configuration Details'), '</a></p>

@@ -380,6 +380,8 @@ if (isset($_POST['PrintPDF'])){
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Preferred Supplier Inventory Planning');
+	$ViewTopic = 'Inventory';
+	$BookMark = 'PlanningReport';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';

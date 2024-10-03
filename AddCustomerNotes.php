@@ -2,7 +2,10 @@
 
 
 include('includes/session.php');
+if (isset($_POST['NoteDate'])){$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);};
 $Title = _('Customer Notes');
+$ViewTopic = 'AccountsReceivable';
+$BookMark = 'CustomerNotes';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -42,7 +45,7 @@ if ( isset($_POST['submit']) ) {
 	if (isset($Id) and $InputError !=1) {
 
 		$sql = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
-									date='" . $_POST['NoteDate'] . "',
+									date='" . FormatDateForSQL($_POST['NoteDate']) . "',
 									href='" . $_POST['Href'] . "',
 									priority='" . $_POST['Priority'] . "'
 				WHERE debtorno ='".$DebtorNo."'
@@ -58,7 +61,7 @@ if ( isset($_POST['submit']) ) {
 				VALUES ('" . $DebtorNo. "',
 						'" . $_POST['Href'] . "',
 						'" . $_POST['Note'] . "',
-						'" . $_POST['NoteDate'] . "',
+						'" . FormatDateForSQL($_POST['NoteDate']) . "',
 						'" . $_POST['Priority'] . "')";
 		$msg = _('The contact notes record has been added');
 	}
@@ -218,11 +221,11 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="NoteDate">' . _('Date') . '</label>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<input type="date" required name="NoteDate"  value="' . $_POST['NoteDate'] . '" size="11" maxlength="10" />
+		echo '<input type="date" required name="NoteDate"  value="' . FormatDateForSQL($_POST['NoteDate']) . '" size="11" maxlength="10" />
 			<fieldhelp>', _('The date of this note'), '</fieldhelp>
 		</field>';
 	} else {
-		echo '<input type="date" required name="NoteDate" size="11" maxlength="10" />
+		echo '<input type="date" required name="NoteDate" value="' . date('Y-m-d') . '" size="11" maxlength="10" />
 			<fieldhelp>', _('The date of this note'), '</fieldhelp>
 		</field>';
 	}

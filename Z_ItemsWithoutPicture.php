@@ -4,6 +4,8 @@
 config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('List of Items without picture');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include ('includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,

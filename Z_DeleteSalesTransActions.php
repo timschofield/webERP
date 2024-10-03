@@ -3,6 +3,8 @@
 
 include ('includes/session.php');
 $Title = _('Delete Sales Transactions');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include ('includes/header.php');
 
 if (isset($_POST['ProcessDeletions'])) {
