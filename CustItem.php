@@ -3,6 +3,9 @@
 
 include ('includes/session.php');
 
+$ViewTopic = 'AccountsReceivable';// Filename in ManualContents.php's TOC.
+$BookMark = '';// Anchor's id in the manual's html document.
+
 $Title = _('Customer Item Data');
 
 include ('includes/header.php');
@@ -33,9 +36,7 @@ if (isset($_POST['StockUOM'])) {
 
 $NoCustItemData = 0;
 
-echo '<div class="toplink">
-		<a href="', $RootPath, '/SelectProduct.php">', _('Back to Items'), '</a>
-	</div>';
+echo '<a class="toplink" href="', $RootPath, '/SelectProduct.php">', _('Back to Items'), '</a>';
 
 if (isset($_POST['cust_description'])) {
 	$_POST['cust_description'] = trim($_POST['cust_description']);
@@ -172,7 +173,7 @@ if ($Edit == false) {
 		echo '</tbody>
 			</table>';
 	} // end of there are rows to show
-	
+
 }
 /* Only show the existing records if one is not being edited */
 

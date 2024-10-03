@@ -247,6 +247,8 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 } else { /*Neither the print PDF nor show on scrren option was hit */
 
 	$Title=_('Outstanding GRNs Report');
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><strong>' . $Title . '</strong></p>';

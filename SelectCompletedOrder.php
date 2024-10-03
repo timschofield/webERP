@@ -6,6 +6,9 @@ if (isset($_POST['OrdersAfterDate'])){$_POST['OrdersAfterDate'] = ConvertSQLDate
 
 $Title = _('Search All Sales Orders');
 
+$ViewTopic = 'SalesOrders';
+$BookMark = '';
+
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />

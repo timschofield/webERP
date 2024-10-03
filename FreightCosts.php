@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Freight Costs Maintenance');
+$ViewTopic = 'Setup';
+$BookMark = 'FreightCosts';
 include('includes/header.php');
 include('includes/CountriesArray.php');
 
@@ -33,7 +35,7 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
 	echo '<fieldset>
 			<legend>', _('Select Details'), '</legend>';
-			
+
 	echo '<field>
 			<label for="ShipperID">' . _('Select A Freight Company to set up costs for') . '</label>
 			<select name="ShipperID">';
@@ -43,7 +45,7 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	}
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="LocationFrom">' . _('Select the warehouse') . ' (' . _('ship from location') . ')</label>
 			<select name="LocationFrom">';
@@ -60,7 +62,7 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 	echo '</select>
 		</field>
 	</fieldset>';
-			
+
 	echo '<div class="centre">
 			<input type="submit" value="' . _('Accept') . '" name="Accept" />
 		</div>

@@ -1,6 +1,8 @@
 <?php
 include('includes/session.php');
 $Title = _('Mailing Group Maintenance');
+$ViewTopic = 'Setup';
+$BookMark = 'MailingGroupMaintenance';
 include('includes/header.php');
 $Header = '<p class= "page_title_text"><img src="'. $RootPath.'/css/'.$Theme.'/images/group_add.png" alt="" />' .  $Title . '</p>';
 echo $Header;
@@ -8,7 +10,7 @@ echo $Header;
 if(!isset($_POST['Clean']) and !isset($_GET['Delete']) and !isset($_GET['Edit']) and !isset($_GET['Add']) and !isset($_GET['Remove'])){
 	GetMailGroup();
 }
-//validate the input 
+//validate the input
 if(isset($_POST['Enter'])){ //user has input a new value
 	$InputError = 0;
 	if(!empty($_POST['MailGroup']) and mb_strlen(trim($_POST['MailGroup']))<=100 and !ContainsIllegalCharacters($_POST['MailGroup'])){
@@ -71,7 +73,7 @@ if(isset($_GET['Delete'])){
 		prnMsg(_('The group id must be numeric'),'error');
 		include('includes/footer.php');
 		exit;
-		
+
 	}
 
 }
@@ -88,15 +90,15 @@ if(isset($_GET['Edit'])){
 			include('includes/footer.php');
 			exit;
 		}
-		
+
 	}else{
 		prnMsg(_('The page must be called with a group id'),'error');
 		include('includes/footer.php');
 		exit;
 	}
 	GetUsers($GroupId,$GroupName);
-	include('includes/footer.php');	
-		
+	include('includes/footer.php');
+
 
 }
 //Users remove one user from the group
@@ -136,10 +138,10 @@ if(isset($_GET['Remove'])){
 
 }
 if(!isset($_GET['Edit'])){//display the input form
-	
+
 	echo '<form id="MailGroups" action="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '" method="post">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	
+
 	echo '<fieldset>
 			<legend>', _('Mail Group'), '</legend>';
 	echo '<field>
@@ -147,7 +149,7 @@ if(!isset($_GET['Edit'])){//display the input form
 			<input type="text" required="required" autofocus="autofocus" name="MailGroup" maxlength="100" size="20" />
 		</field>';
 	echo '</fieldset>';
-		
+
 	echo '<input type="hidden" name="Clean" value="1" />';
 	echo '<div class="centre">
 			<input type="submit" name="Enter" value="',  _('Submit'), '" />
@@ -172,7 +174,7 @@ if(DB_num_rows($result) != 0){
 		while($myrow = DB_fetch_array($result)){
 ?>
 			<tr><td><?php echo $myrow['groupname']; ?></td>
-	
+
 				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?GroupId='.$myrow['id'].'&amp;Edit=1&amp;GroupName='.$myrow['groupname'].'" >' .  _('Edit') . '</a>'; ?></td>
 				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');">' . _('Delete') . '</a>'; ?></td>
 			</tr>
@@ -189,21 +191,21 @@ function GetUsers ($GroupId,$GroupName) {
 	$sql = "SELECT userid FROM mailgroups INNER JOIN mailgroupdetails ON mailgroups.groupname=mailgroupdetails.groupname WHERE mailgroups.id = '".$GroupId."'";
 	$ErrMsg = _('Failed to retrieve userid');
 	$result = DB_query($sql,$ErrMsg);
-	
+
 		$UsersAssigned = array();
 	if(DB_num_rows($result) != 0){
-		$i = 0; 
+		$i = 0;
 		while($myrow = DB_fetch_array($result)){
 			$UsersAssigned[$i] = $myrow['userid'];
 			$i++;
 		}
 	}
-		
+
 	$sql = "SELECT userid, realname, email FROM www_users ORDER BY realname";
 	$ErrMsg = _('Failed to retrieve user information');
 	$result = DB_query($sql,$ErrMsg);
 	if(DB_num_rows($result) != 0){
-	
+
 ?>
 	<div class="centre"><?php echo _('Current Mail Group').' : '.$GroupName; ?></div>
 	<div class="centre"><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'); ?>"><?php echo _('View All Groups'); ?></a></div>

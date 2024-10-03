@@ -6,6 +6,8 @@ include('includes/session.php');
 if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
 if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);};
 $Title = _('Price break matrix Maintenance');
+$ViewTopic = 'Sales';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($Errors)) {

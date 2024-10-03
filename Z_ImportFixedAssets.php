@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Import Fixed Assets');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
@@ -155,7 +157,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 			$InputError=true;
 		}
 		if ($DepnType !='SL' AND $DepnType!='DV'){
-			prnMsg(_('The depreciation type must be either "SL" - Straight Line or "DV" - Diminishing Value'),'error');
+			prnMsg(_('The depreciation type must be either SL - Straight Line or DV - Diminishing Value'),'error');
 			echo '<br />' . _('Row:') . $Row . ' - ' . _('Invalid depreciation type:') . ' ' . $DepnType;
 			$InputError = true;
 		}

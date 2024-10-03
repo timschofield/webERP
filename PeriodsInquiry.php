@@ -4,7 +4,8 @@
 include ('includes/session.php');
 
 $Title = _('Periods Inquiry');
-
+$ViewTopic = 'GeneralLedger';
+$BookMark = '';
 include('includes/header.php');
 
 $SQL = "SELECT periodno ,

@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Import Chart of Accounts');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');

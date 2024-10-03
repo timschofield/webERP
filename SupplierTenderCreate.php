@@ -104,6 +104,8 @@ if (isset($_GET['ID'])) {
 
 if (isset($_GET['Edit'])) {
 	$Title = _('Edit an Existing Supplier Tender Request');
+	$ViewTopic = 'SupplierTenders';
+	$BookMark = 'EditTender';
 	include ('includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  ' . $Title . '</p>';
 	$SQL = "SELECT tenderid,
@@ -150,10 +152,14 @@ if (isset($_GET['Edit'])) {
 	exit;
 } else if (isset($_GET['ID']) or (isset($_SESSION['tender' . $identifier]->TenderId))) {
 	$Title = _('Edit an Existing Supplier Tender Request');
+	$ViewTopic = 'SupplierTenders';
+	$BookMark = 'EditTender';
 	include ('includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />' . $Title . '</p>';
 } else {
 	$Title = _('Create a New Supplier Tender Request');
+	$ViewTopic = 'SupplierTenders';
+	$BookMark = 'CreateTender';
 	include ('includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />' . $Title . '</p>';
 }

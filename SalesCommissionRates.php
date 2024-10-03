@@ -19,8 +19,8 @@ $MyRow = DB_fetch_array($Result);
 $SalesPersonName = $MyRow['salesmanname'];
 
 $Title = _('Sales Commission Maintenance For') . ' ' . $SalesPersonName;
-$ViewTopic = 'SalesPeople';
-$BookMark = 'SalesPeople';
+$ViewTopic = 'SalesCommission';
+$BookMark = 'SalesCommission';
 include ('includes/header.php');
 
 if (isset($_POST['Submit'])) {

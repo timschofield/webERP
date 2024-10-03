@@ -13,6 +13,9 @@ include('includes/session.php');
 
 $Title = _('Contract Charges or Credits');
 
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
+
 include('includes/header.php');
 
 if (!isset($_SESSION['SuppTrans'])){

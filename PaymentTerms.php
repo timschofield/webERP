@@ -4,7 +4,8 @@
 include('includes/session.php');
 
 $Title = _('Payment Terms Maintenance');
-
+$ViewTopic = 'PaymentTerms';
+$BookMark = 'PaymentTerms';
 include('includes/header.php');
 
 echo '<p class="page_title_text">

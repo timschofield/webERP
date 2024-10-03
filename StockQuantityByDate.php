@@ -2,6 +2,8 @@
 include ('includes/session.php');
 if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);};
 $Title = _('Stock On Hand By Date');
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include ('includes/header.php');
 
 echo '<p class="page_title_text" >

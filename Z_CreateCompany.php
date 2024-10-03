@@ -5,6 +5,8 @@ Also inserts a blank company record if one is not already set up */
 include ('includes/session.php');
 
 $Title = _('UTILITY PAGE That sets up a new blank company record if not already existing');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 
 include('includes/header.php');
 

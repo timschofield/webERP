@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title=_('Check Period Sales Ledger Control Account');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 echo '<table>';

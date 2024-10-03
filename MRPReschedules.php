@@ -114,6 +114,8 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('MRP Reschedule Reporting');
+	$ViewTopic = 'MRP';
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">

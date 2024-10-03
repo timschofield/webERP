@@ -2,6 +2,8 @@
 
 
 include('includes/session.php');
+$ViewTopic = 'AccountsPayable';
+$BookMark = 'AgedCreditors';
 
 if (isset($_POST['PrintPDF'])
 	and isset($_POST['FromCriteria'])
@@ -280,7 +282,7 @@ if (isset($_POST['PrintPDF'])
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-			
+
 		echo '<fieldset>
 				<legend>', _('Select Report Criteria'), '</legend>';
 
@@ -289,13 +291,13 @@ if (isset($_POST['PrintPDF'])
 				<input tabindex="1" type="text" required="required"  autofocus="autofocus" maxlength="6" size="7" name="FromCriteria" value="1" title+"" />
 				<fieldhelp>' . _('Enter the first supplier code alphabetially to include in the report') . '</fieldhelp>
 			</field>';
-			
+
 		echo '<field>
 				<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
 				<input tabindex="2" type="text" maxlength="6" size="7" name="ToCriteria" required="required" value="zzzzzz" title="" />
 				<fieldhelp>' . _('Enter the last supplier code alphabetically to include in the report') . '</fieldhelp>
 			</field>';
-			
+
 		echo '<field>
 				<label for="All_Or_Overdues">' . _('All balances or overdues only') . ':' . '</label>
 				<select tabindex="3" name="All_Or_Overdues">
@@ -304,7 +306,7 @@ if (isset($_POST['PrintPDF'])
 				</select>
 				<fieldhelp>', _('Show all account balances, or just show accounts with overdue balances'), '</fieldhelp>
 			</field>';
-			
+
 		echo '<field>
 				<label for="Currency">' . _('For suppliers trading in') . ':' . '</label>
 				<select tabindex="4" name="Currency">';
@@ -322,7 +324,7 @@ if (isset($_POST['PrintPDF'])
 		echo '</select>
 			<fieldhelp>', _('Select the supplier currency, and just show suppliers trading in that currency'), '</fieldhelp>
 		</field>';
-		
+
 		echo '<field>
 				<label for="DetailedReport">' . _('Summary or Detailed Report') . ':' . '</label>
 				<select tabindex="5" name="DetailedReport">
@@ -331,9 +333,9 @@ if (isset($_POST['PrintPDF'])
 				</select>
 				<fieldhelp>', _('The report can be shown as a summary report, or a detailed report'), '</fieldhelp>
 			</field>';
-			
+
 		echo '</fieldset>';
-		
+
 		echo '<div class="centre">
 				<input tabindex="6" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
             </div>

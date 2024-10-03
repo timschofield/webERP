@@ -3,6 +3,8 @@
 include('includes/DefineOfferClass.php');
 include('includes/session.php');
 $Title = _('Supplier Tendering');
+$ViewTopic = 'SupplierTenders';
+$BookMark = '';
 include('includes/header.php');
 
 $Maximum_Number_Of_Parts_To_Show=50;

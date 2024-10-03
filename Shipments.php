@@ -5,6 +5,8 @@ include('includes/DefineShiptClass.php');
 include('includes/session.php');
 if (isset($_POST['ETA'])){$_POST['ETA'] = ConvertSQLDate($_POST['ETA']);};
 $Title = _('Shipments');
+$ViewTopic = 'Shipments';
+$BookMark = '';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');

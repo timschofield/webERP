@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Import Stock Items');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');

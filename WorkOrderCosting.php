@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Work Order Costing');
+$ViewTopic = 'Manufacturing';
+$BookMark = ''
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -174,7 +176,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 			$CurrQty = $RequirementsRow['requiredqty'];
 		}
 
-	} else {//stock changed 
+	} else {//stock changed
 		$CostVariedStocks[] = array('stockid'=>$CurrStock,'totalreqqty'=>$CurrQty);
 		$CurrStock = $RequirementsRow['stockid'];
 		$CurrQty = $RequirementsRow['requiredqty'];

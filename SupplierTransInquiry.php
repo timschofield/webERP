@@ -5,6 +5,8 @@ include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Supplier Transactions Inquiry');
+$ViewTopic = 'AccountsPayable';
+$BookMark = ''
 include('includes/header.php');
 
 echo '<p class="page_title_text">

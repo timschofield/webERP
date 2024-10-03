@@ -6,6 +6,8 @@ $PricesSecurity = 12;//don't show pricing info unless security token 12 availabl
 
 $Today =  time();
 $Title = _('Aged Controlled Inventory') . ' ' . _('as-of') . ' ' . Date(($_SESSION['DefaultDateFormat']), $Today);
+$ViewTopic = 'Inventory';
+$BookMark = 'AgedControlled';
 
 include('includes/header.php');
 

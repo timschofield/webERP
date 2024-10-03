@@ -3,6 +3,9 @@ include ('includes/session.php');
 
 $Title = _('Sales Category Maintenance');
 
+$ViewTopic = 'Setup';
+$BookMark = '';
+
 include ('includes/header.php');
 
 if (isset($_GET['SelectedCategory'])) {

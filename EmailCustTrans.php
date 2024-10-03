@@ -5,6 +5,9 @@ include('includes/session.php');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
+$ViewTopic = 'Sales';
+$BookMark = '';
+
 if ($_GET['InvOrCredit']=='Invoice'){
 	$TransactionType = _('Invoice');
 	$TypeCode = 10;

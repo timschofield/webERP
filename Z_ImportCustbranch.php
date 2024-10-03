@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Import Debtors And branches');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 

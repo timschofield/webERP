@@ -2,6 +2,8 @@
 
 include ('includes/session.php');
 $Title = _('UTILITY PAGE To Delete All Old Prices');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 $result=DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='0000-00-00'"); //convert old data to use end date of 9999-12-31 rather than SQL mode specific end date

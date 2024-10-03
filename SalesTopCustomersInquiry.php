@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Top Customer Sales Inquiry');
+$ViewTopic = 'Sales';
+$BookMark = '';
 include('includes/header.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};

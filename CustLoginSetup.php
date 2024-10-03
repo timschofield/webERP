@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Customer Login Configuration');
+$ViewTopic = 'Setup';// Filename in ManualContents.php's TOC.
+$BookMark = '';// Anchor's id in the manual's html document.
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/LanguagesArray.php');
@@ -188,7 +190,7 @@ while ($myrow=DB_fetch_array($result)){
 }
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 		<label for="PageSize">' . _('Reports Page Size') .':</label>
 		<select name="PageSize">';
@@ -236,7 +238,7 @@ if(isset($_POST['PageSize']) and $_POST['PageSize']=='legal_landscape'){
 
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 		<label for="Theme">' . _('Theme') . ':</label>
 		<select name="Theme">';
@@ -259,7 +261,7 @@ while (false != ($ThemeName = $ThemeDirectory->read())){
 
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 		<label for="UserLanguage">' . _('Language') . ':</label>
 		<select name="UserLanguage">';
@@ -275,7 +277,7 @@ foreach ($LanguagesArray as $LanguageEntry => $LanguageName){
 }
 echo '</select>
 	</field>';
-	
+
 echo '</fieldset>';
 
 echo '<div class="centre">

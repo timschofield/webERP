@@ -2,6 +2,9 @@
 
 $PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
+$ViewTopic = 'Setup';
+$BookMark = '';
+
 include('includes/session.php');
 $Title = _('Backup webERP Database');
 include('includes/header.php');

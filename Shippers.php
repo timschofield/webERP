@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Shipping Company Maintenance');
+$ViewTopic = 'Shipments';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_GET['SelectedShipper'])){

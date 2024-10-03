@@ -231,6 +231,9 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
+	$ViewTopic = 'Manufacturing';
+	$BookMark = '';
+
 	$Title=_('Reverse Indented BOM Listing');
 	include('includes/header.php');
 

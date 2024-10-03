@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Supplier Offers');
+$ViewTopic = 'SupplierTenders';
+$BookMark = 'SupplierOffers';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 

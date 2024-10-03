@@ -4,7 +4,8 @@
 include('includes/session.php');
 
 $Title = _('Shop Configuration');
-
+$ViewTopic = 'Setup';
+$BookMark = 'ShopParameters';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Shop Configuration')

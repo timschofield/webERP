@@ -5,6 +5,9 @@ include ('includes/session.php');
 
 $Title = _('GL Codes Inquiry');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = '';
+
 include('includes/header.php');
 
 $SQL = "SELECT group_,

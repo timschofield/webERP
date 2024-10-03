@@ -6,6 +6,8 @@ if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['Aft
 
 $Title = _('All Stock Movements By Location');
 
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
