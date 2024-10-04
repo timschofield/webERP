@@ -2,7 +2,7 @@
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
-require 'vendor/autoload.php';
+require $PathPrefix.'vendor/autoload.php';
 $DefaultDatabase = 'weberp';
 
 if (!file_exists($PathPrefix . 'config.php')) {
