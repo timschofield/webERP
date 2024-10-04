@@ -1,4 +1,4 @@
-
+<?php
 /* $Revision: 1.5 $2012.2CQZ二次修改 */
 
 include('includes/session.php');
@@ -32,7 +32,7 @@ if ($JournalNo=='Preview') {
 	$LineCount = 2; // UldisN
 } else {
 	$sql="SELECT gltrans.type,
-	            gltrans.typeno,
+				gltrans.typeno,
 				gltrans.trandate,
 				gltrans.account,
 				systypes.typename,
