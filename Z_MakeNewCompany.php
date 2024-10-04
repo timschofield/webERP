@@ -29,7 +29,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 	if(mb_strlen($_POST['NewDatabase'])>32
 		OR ContainsIllegalCharacters($_POST['NewDatabase'])){
-		prnMsg(_('Company database must not contain spaces illegal characters'),'error');
+		prnMsg(_('Company database must not contain spaces illegal characters') . ' ' . '" \' - &amp; or a space','error');
 	} else {
 		$_POST['NewDatabase'] = strtolower($_POST['NewDatabase']);
 		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">

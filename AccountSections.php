@@ -64,7 +64,7 @@ if(isset($_POST['submit'])) {
 	}
 	if(ContainsIllegalCharacters($_POST['SectionName'])) {
 		$InputError = 1;
-		prnMsg( _('The account section name cannot contain any illegal characters') ,'error');
+		prnMsg( _('The account section name cannot contain any illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
@@ -229,7 +229,7 @@ if(! isset($_GET['delete'])) {
 			$_POST['SectionName'] = $myrow['sectionname'];
 
 			echo '<input name="SelectedSectionID" type="hidden" value="', $_POST['SectionID'], '" />';
-			
+
 			echo '<fieldset>
 					<legend>', _('Edit Account Section Details'), '</legend>
 					<field>
@@ -266,9 +266,9 @@ if(! isset($_GET['delete'])) {
 					'maxlength="30" name="SectionName" required="required" size="30" tabindex="2" type="text" value="', $_POST['SectionName'], '" />
 				<fieldhelp>', _('Enter a description for this section'), '</fieldhelp>
 			</field>';
-			
+
 	echo '</fieldset>';
-	
+
 	echo '<div class="centre">
 			<input name="submit" tabindex="3" type="submit" value="', _('Enter Information'), '" />
 		</div>

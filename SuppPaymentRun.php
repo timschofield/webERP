@@ -267,7 +267,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	echo '<field>
 			<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
 			<input type="text" pattern="[^><+-]{1,10}" title="" maxlength="10" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" />
-			<fieldhelp>'._('Illegal characters are not allowed').'</fieldhelp>
+			<fieldhelp>'._('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 		  </field>';
 	echo '<field>
 			<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
