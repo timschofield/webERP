@@ -214,7 +214,7 @@ if (isset($SelectedWC)) {
 			<field>
 				<label for="Code">' . _('Work Centre Code') . ':</label>
 				<input type="text" name="Code" pattern="[^&+-]{2,}" required="required" autofocus="autofocus" title=""  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'._('More than 2 legal characters').'" />
-				<fieldhelp>'._('The code should be at least 2 characters and no illegal characters allowed').'</fieldhelp>
+				<fieldhelp>'._('The code should be at least 2 characters and no illegal characters allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 			</field>';
 }
 

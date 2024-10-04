@@ -224,7 +224,7 @@ if (! isset($_GET['delete'])) {
 	echo '<field>
 			<label for="TypeName">' . _('Type Name') . ':</label>
 			<input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="" name="TypeName" placeholder="'._('less than 100 characters').'" value="' . $_POST['TypeName'] . '" />
-			<fieldhelp>'._('The input should not be over 100 characters and contains illegal characters').'</fieldhelp>
+			<fieldhelp>'._('The input should not be over 100 characters and contains illegal characters') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';

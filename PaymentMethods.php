@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['MethodName'])) {
 		$InputError = 1;
-		prnMsg( _('The payment method cannot contain illegal characters'),'error');
+		prnMsg( _('The payment method cannot contain illegal characters') . ' ' . '" \' - &amp; or a space','error');
 		$Errors[$i] = 'MethodName';
 		$i++;
 	}

@@ -339,7 +339,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (ContainsIllegalCharacters($SupplierID)) {
 		$InputError = 1;
-		prnMsg(_('The supplier code cannot contain any of the illegal characters'), 'error');
+		prnMsg(_('The supplier code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space', 'error');
 		$Errors[$i] = 'ID';
 		$i++;
 	}
