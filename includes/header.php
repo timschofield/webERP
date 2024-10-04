@@ -10,8 +10,8 @@ if (!isset($RootPath)) {
 	}
 }
 
-$ViewTopic = isset($ViewTopic) ? '?ViewTopic=' . $ViewTopic : '';
-$BookMark = isset($BookMark) ? '#' . $BookMark : '';
+if (!isset($ViewTopic)) {$ViewTopic = 'Contents';};
+if (!isset($BookMark)) {$BookMark = '';};
 
 if (isset($_GET['Theme'])) {
 	$_SESSION['Theme'] = $_GET['Theme'];
@@ -38,6 +38,7 @@ echo '<html>
 			<link href="', $PathPrefix, $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/MiscFunctions.js"></script>';
+echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/manual.js"></script>';
 echo '<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
@@ -61,6 +62,13 @@ if (isset($AutoPrintPage)) {
 } else {
 	echo '<body onload="initial(); load()" onunload="GUnload()">';
 }
+
+echo '<div class="help-bubble" id="help-bubble">
+		<div class="help-header" id="help-header">
+			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+		</div>
+		<div class="help-content" id="help-content"></div>
+	</div>';
 
 if (isset($_GET['FontSize'])) {
 	$SQL = "UPDATE www_users
@@ -113,7 +121,7 @@ echo '<div id="ExitIcon">
 
 if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
-	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" target="_blank" href="' . $PathPrefix . $RootPath . '/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 
 	if (strstr($_SESSION['Language'], 'en')) {
 		echo $DefaultManualLink;
@@ -121,7 +129,7 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 		if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
 			echo '<div id="ActionIcon">
 					<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
-						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" title="', _('Help'), '" alt="', _('Help'), '" />
+						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
 					</a>
 				</div>';
 		} else {
