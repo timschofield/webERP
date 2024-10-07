@@ -1103,7 +1103,7 @@ echo'	<tr>
 		<td><input type="email" size="40" maxlength="38" name="Email" value="' . $_SESSION['Items'.$identifier]->Email . '" title="' . _('Enter the email address of the contact at the delivery address') . '" /></td>
 	</tr>
 	<tr>
-		<td>' .  _('Customer Reference') .':</td>
+		<td>' .  _('OpenCart/Marketplace/Other Inv. Number') .':</td>
 		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="' . _('Enter the customer\'s purchase order reference relevant to this order') . '" /></td>
 	</tr>
 	<tr>

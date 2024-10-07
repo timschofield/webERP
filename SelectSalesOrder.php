@@ -547,7 +547,7 @@ if (!isset($StockID)) {
 				<td><a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a></td>
 			</tr>
 			<tr>
-				<td>' . _('Customer Ref') . '</td>
+				<td>' . _('OC/Marketplace/Other Ref') . '</td>
 				<td><input type="text" name="CustomerRef" value="' . $_POST['CustomerRef'] . '" size="12" /></td>
 				<td>' . _('Order Date From') . '</td>
 				<td><input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" /></td>

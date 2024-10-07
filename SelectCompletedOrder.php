@@ -73,7 +73,7 @@ if (isset($OrderNumber)) {
 	   echo '<input type="hidden" name="SelectedCustomer" value="' . $SelectedCustomer .'" />';
         }
 } elseif (isset($CustomerRef)) {
-	echo _('Customer Ref') . ' - ' . $CustomerRef;
+	echo _('OC/Marketplace/Other Ref') . ' - ' . $CustomerRef;
 	if (mb_strlen($_SESSION['UserBranch'])>1){
    	   echo ' ' . _('and for customer') . ': ' . $SelectedCustomer .' ' . _('and') . ' ';
 	   echo '<input type="hidden" name="SelectedCustomer" value="' .$SelectedCustomer .'" />';
@@ -449,7 +449,7 @@ echo '<td>' . _('Order Number') . ':</td>
 	</tr>';
 echo '<tr>
 		<td></td>
-		<td>' . _('Customer Ref') . ':</td><td><input type="text" name="CustomerRef" maxlength="8" size="9" /></td>
+		<td>' . _('Other Ref #') . ':</td><td><input type="text" name="CustomerRef" maxlength="8" size="9" /></td>
 		<td></td>
 		<td colspan="2"><input type="checkbox" ' . $ShowChecked . ' name="completed" />' . _('Show Completed orders only') . '</td></tr>';
 

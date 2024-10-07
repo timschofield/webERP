@@ -88,7 +88,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th>' . $myrow['name'] . '</th>
 			</tr>
 			<tr>
-				<th style="text-align: left">' . _('Customer Reference') . ':</th>
+				<th style="text-align: left">' . _('OpenCart/Marketplace/Other Inv. Number') . ':</th>
 				<td class="OddTableRows">' . $myrow['customerref'] . '</td>
 				<th style="text-align: left">' . _('Deliver To') . ':</th>
 				<th>' . $myrow['deliverto'] . '</th>
