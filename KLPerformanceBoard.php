@@ -4259,7 +4259,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 			locale_number_format($AvailableForSaleItems,0)
 			);
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+/*	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Daily Stock sold average last " . $NumDays . " days (PCS)", 
@@ -4289,6 +4289,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 				);
 		$k = StartEvenOrOddRow($k);
 	}	
+*/
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
