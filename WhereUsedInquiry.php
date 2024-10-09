@@ -4,7 +4,7 @@
 include('includes/session.php');
 $Title = _('Where Used Inquiry');
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_GET['StockID'])){
@@ -18,18 +18,18 @@ echo '<a href="' . $RootPath . '/SelectProduct.php" class="toplink">' . _('Back 
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 	</p>';
 if (isset($StockID)){
-	$result = DB_query("SELECT description,
+	$Result = DB_query("SELECT description,
 								units,
 								mbflag
 						FROM stockmaster
 						WHERE stockid='".$StockID."'");
-	$myrow = DB_fetch_row($result);
-	if (DB_num_rows($result)==0){
+	$MyRow = DB_fetch_row($Result);
+	if (DB_num_rows($Result)==0){
 		prnMsg(_('The item code entered') . ' - ' . $StockID . ' ' . _('is not set up as an item in the system') . '. ' . _('Re-enter a valid item code or select from the Select Item link above'),'error');
 		include('includes/footer.php');
 		exit;
 	}
-	echo '<div class="centre"><h3>' . $StockID . ' - ' . $myrow[0] . '  (' . _('in units of') . ' ' . $myrow[1] . ')</h3></div>';
+	echo '<div class="centre"><h3>' . $StockID . ' - ' . $MyRow[0] . '  (' . _('in units of') . ' ' . $MyRow[1] . ')</h3></div>';
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -69,8 +69,8 @@ if (isset($StockID)) {
 			ORDER BY stockmaster.discontinued, bom.parent";
 
 	$ErrMsg = _('The parents for the selected part could not be retrieved because');;
-	$result = DB_query($SQL,$ErrMsg);
-	if (DB_num_rows($result)==0){
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result)==0){
 		prnMsg(_('The selected item') . ' ' . $StockID . ' ' . _('is not used as a component of any other parts'),'error');
 	} else {
 
@@ -88,21 +88,21 @@ if (isset($StockID)) {
 			</thead>
 			<tbody>';
 
-		while ($myrow=DB_fetch_array($result)) {
+		while ($MyRow=DB_fetch_array($Result)) {
 
-			if ($myrow['discontinued'] == 1){
+			if ($MyRow['discontinued'] == 1){
 				$Status = _('Obsolete');
 			}else{
 				$Status = _('Current');
 			}
 			echo '<tr class="striped_row">
-					<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
+					<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $MyRow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $MyRow['parent']. ' - ' . $MyRow['description']. '</a></td>
 					<td>' . $Status. '</td>
-					<td>' . $myrow['workcentreadded']. '</td>
-					<td>' . $myrow['loccode']. '</td>
-					<td class="number">' . locale_number_format($myrow['quantity'],'Variable') . '</td>
-					<td>' . ConvertSQLDate($myrow['effectiveafter']) . '</td>
-					<td>' . ConvertSQLDate($myrow['effectiveto']) . '</td>
+					<td>' . $MyRow['workcentreadded']. '</td>
+					<td>' . $MyRow['loccode']. '</td>
+					<td class="number">' . locale_number_format($MyRow['quantity'],'Variable') . '</td>
+					<td>' . ConvertSQLDate($MyRow['effectiveafter']) . '</td>
+					<td>' . ConvertSQLDate($MyRow['effectiveto']) . '</td>
                 </tr>';
 
 			//end of page full new headings if

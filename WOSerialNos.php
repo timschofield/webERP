@@ -39,7 +39,7 @@ if ($Serialised==1){
 	$Title = _('Work Order Batches in Progress');
 }
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 
 include('includes/header.php');
 
@@ -59,7 +59,7 @@ if (isset($_POST['AddControlledItems'])){
 
 			$InputError = false;
 
-			$sql = "INSERT INTO woserialnos (stockid,
+			$SQL = "INSERT INTO woserialnos (stockid,
 											wo,
 											qualitytext,
 											serialno)
@@ -70,38 +70,38 @@ if (isset($_POST['AddControlledItems'])){
 			$ValueLine = '';
 			for ($i=0;$i< filter_number_format($_POST['NumberToAdd']);$i++){
 				$NextItemNumber = $NextSerialNo + $i;
-				$result = DB_query("SELECT serialno FROM woserialnos
+				$Result = DB_query("SELECT serialno FROM woserialnos
 									WHERE wo='" . $WO . "'
 									AND stockid='" . $StockID ."'
 									AND serialno='" . $NextItemNumber . "'");
-				if (DB_num_rows($result)!=0){
+				if (DB_num_rows($Result)!=0){
 					$InputError=true;
 					prnMsg($NextItemNumber . ' ' . _('is already entered on this work order'),'error');
 				}
-				$result = DB_query("SELECT serialno FROM stockserialitems
+				$Result = DB_query("SELECT serialno FROM stockserialitems
 									WHERE serialno='" . $NextItemNumber . "'
 									AND stockid='" . $StockID ."'");
-				if (DB_num_rows($result)!=0){
+				if (DB_num_rows($Result)!=0){
 					$InputError=true;
 					prnMsg($NextItemNumber . ' ' . _('has already been used for this item'),'error');
 				}
 				if (!$InputError){
 					if ($i>0){
-						$sql .= ',';
+						$SQL .= ',';
 						$ValueLine = "('".$StockId."','".$WO."','','";
 
 					}
-					$sql .= $ValueLine . $NextItemNumber . "')";
+					$SQL .= $ValueLine . $NextItemNumber . "')";
 				}
 			}
 			$NextSerialNo = $NextItemNumber + 1;
 			$ErrMsg = _('Unable to add the serial numbers requested');
-			$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			// update the nextserialno in the stockmaster for the item
-			$result = DB_query("UPDATE stockmaster
+			$Result = DB_query("UPDATE stockmaster
 								SET nextserialno='" . $NextSerialNo . "'
 								WHERE stockid='" . $StockID . "'");
-			$result = DB_query("UPDATE woitems SET qtyreqd=qtyreqd+" . filter_number_format($_POST['NumberToAdd']) . "
+			$Result = DB_query("UPDATE woitems SET qtyreqd=qtyreqd+" . filter_number_format($_POST['NumberToAdd']) . "
 								WHERE stockid='" . $StockID . "'
 								AND wo='" . $WO . "'",
 								$ErrMsg,
@@ -120,32 +120,32 @@ if (isset($_POST['AddControlledItems'])){
 				prnMsg(_('The quantity for the batch must be numeric'),'error');
 				$InputError=true;
 			}
-			$result = DB_query("SELECT serialno FROM woserialnos
+			$Result = DB_query("SELECT serialno FROM woserialnos
 								WHERE wo='" . $WO . "'
 								AND stockid='" . $StockID ."'
 								AND serialno='" . $_POST['Reference'] . "'");
-			if (DB_num_rows($result)!=0){
+			if (DB_num_rows($Result)!=0){
 				$InputError=true;
 				prnMsg(_('The serial number or batch reference must be unique to the item - the reference entered is already entered on this work order'),'error');
 			}
-			$result = DB_query("SELECT serialno FROM stockserialitems
+			$Result = DB_query("SELECT serialno FROM stockserialitems
 								WHERE serialno='" . $_POST['Reference'] . "'
 								AND stockid='" . $StockID ."'");
-			if (DB_num_rows($result)!=0){
+			if (DB_num_rows($Result)!=0){
 				$InputError=true;
 				prnMsg(_('The serial number or batch reference must be unique to the item. The serial number/batch entered already exists'),'error');
 			}
 			if (!$InputError){
 				DB_Txn_Begin();
 				$ErrMsg = _('Could not add a new serial number/batch');
-				$result = DB_query("UPDATE woitems
+				$Result = DB_query("UPDATE woitems
 									SET qtyreqd=qtyreqd+" . filter_number_format($_POST['Quantity']) . "
 									WHERE stockid='" . $StockID . "'
 									AND wo='" . $WO . "'",
 									$ErrMsg,
 									$DbgMsg,
 									true);
-				$sql = "INSERT INTO woserialnos (stockid,
+				$SQL = "INSERT INTO woserialnos (stockid,
 												 wo,
 												 qualitytext,
 												 quantity,
@@ -157,7 +157,7 @@ if (isset($_POST['AddControlledItems'])){
 											 '" . $_POST['Reference'] . "')";
 
 				$ErrMsg = _('Unable to add the batch or serial number requested');
-				$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				DB_Txn_Commit();
 			}
@@ -167,12 +167,12 @@ if (isset($_POST['AddControlledItems'])){
 if (isset($_GET['Delete'])){ //user hit delete link
 
 /*when serial numbers /lots received they are removed from the woserialnos table so no need to check if already received - they will only show here if they are in progress */
-	$result = DB_query("DELETE FROM woserialnos
+	$Result = DB_query("DELETE FROM woserialnos
 						WHERE wo='" . $WO . "'
 						AND stockid='" . $StockID . "'
 						AND serialno='" . $_GET['Reference'] ."'");
 
-	$result = DB_query("UPDATE woitems SET qtyreqd=qtyreqd-" . filter_number_format($_GET['Quantity']) . "
+	$Result = DB_query("UPDATE woitems SET qtyreqd=qtyreqd-" . filter_number_format($_GET['Quantity']) . "
 						WHERE wo='" . $WO . "'
 						AND stockid = '" . $StockID . "'");
 
@@ -183,7 +183,7 @@ if (isset($_POST['UpdateItems'])){
 //update the serial numbers and quantities and notes for each serial number or batch
 	$InputError=false;
 	$WOQuantityTotal=0;
-	$sql = array();
+	$SQL = array();
 	for ($i=0;$i<$_POST['CountOfItems'];$i++){
 
 			if (mb_strlen($_POST['Reference' . $i])==0){
@@ -195,24 +195,24 @@ if (isset($_POST['UpdateItems'])){
 				$InputError=true;
 			}
 			if ($_POST['Reference' .$i] != $_POST['OldReference' .$i]){
-				$result = DB_query("SELECT serialno FROM woserialnos
+				$Result = DB_query("SELECT serialno FROM woserialnos
 									WHERE wo='" . $WO . "'
 									AND stockid='" . $StockID ."'
 									AND serialno='" . $_POST['Reference' . $i] . "'");
-				if (DB_num_rows($result)!=0){
+				if (DB_num_rows($Result)!=0){
 					$InputError=true;
 					prnMsg($_POST['Reference' .$i] . ': ' . _('The reference entered is already entered on this work order'),'error');
 				}
-				$result = DB_query("SELECT serialno FROM stockserialitems
+				$Result = DB_query("SELECT serialno FROM stockserialitems
 									WHERE serialno='" . $_POST['Reference' .$i] . "'
 									AND stockid='" . $StockID ."'");
-				if (DB_num_rows($result)!=0){
+				if (DB_num_rows($Result)!=0){
 					$InputError=true;
 					prnMsg($_POST['Reference' .$i] . ': ' . _('The serial number/batch entered already exists'),'error');
 				}
 			}
 			if (!$InputError){
-				$sql[] = "UPDATE woserialnos SET serialno='" . $_POST['Reference'.$i] . "',
+				$SQL[] = "UPDATE woserialnos SET serialno='" . $_POST['Reference'.$i] . "',
 													quantity='" . filter_number_format($_POST['Quantity'.$i]) ."',
 													qualitytext='" . $_POST['Notes'.$i] . "'
 										WHERE    wo='" . $WO . "'
@@ -224,18 +224,18 @@ if (isset($_POST['UpdateItems'])){
 			}
 	}//end loop around all serial numbers/batches
 	$ErrMsg = _('Could not update serial/batches on the work order');
-	if (sizeof($sql)>0){
-		$result = DB_Txn_Begin();
-		foreach ($sql as $SQLStatement){
-				$result = DB_query($SQLStatement,$ErrMsg,$DbgMsg,true);
+	if (sizeof($SQL)>0){
+		$Result = DB_Txn_Begin();
+		foreach ($SQL as $SQLStatement){
+				$Result = DB_query($SQLStatement,$ErrMsg,$DbgMsg,true);
 		}
-		$result = DB_query("UPDATE woitems SET qtyreqd = '" . $WOQuantityTotal . "'
+		$Result = DB_query("UPDATE woitems SET qtyreqd = '" . $WOQuantityTotal . "'
 							WHERE wo = '" .$WO . "'
 							AND stockid='" . $StockID . "'",
 							$ErrMsg,
 							$DbgMsg,
 							true);
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 	}
 
 }
@@ -286,7 +286,7 @@ echo '<td><input type="submit" name="AddControlledItems" value="' . _('Add') . '
 	</table>
 	<br />';
 
-$sql = "SELECT serialno,
+$SQL = "SELECT serialno,
 				quantity,
 				qualitytext
 		FROM woserialnos
@@ -294,7 +294,7 @@ $sql = "SELECT serialno,
 		AND stockid='" . $StockID . "'";
 
 $ErrMsg = _('Could not get the work order serial/batch items');
-$WOSerialNoResult = DB_query($sql,$ErrMsg);
+$WOSerialNoResult = DB_query($SQL,$ErrMsg);
 
 if (DB_num_rows($WOSerialNoResult)==0){
 	prnMsg(_('There are no serial items or batches yet defined for this work order item. Create new items first'),'info');

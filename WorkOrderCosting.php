@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = _('Work Order Costing');
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -272,7 +272,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 
 //Now need to run through the issues to the work order that weren't in the requirements
 
-$sql = "SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
 				stockmaster.description,
 				stockmaster.decimalplaces,
 				trandate,
@@ -287,7 +287,7 @@ $sql = "SELECT stockmoves.stockid,
 						FROM worequirements
 					WHERE worequirements.wo='" . $_POST['WO'] . "')";
 
-$WOIssuesResult = DB_query($sql,_('Could not get issues that were not required by the BOM because'));
+$WOIssuesResult = DB_query($SQL,_('Could not get issues that were not required by the BOM because'));
 
 if (DB_num_rows($WOIssuesResult)>0){
 	while ($WOIssuesRow = DB_fetch_array($WOIssuesResult)){
