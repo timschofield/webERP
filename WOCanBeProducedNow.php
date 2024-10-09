@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = _('WO items can be produced with available stock');
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
@@ -21,7 +21,7 @@ function submit($RootPath, $Location) {
 
 	$WhereLocation 	= " AND workorders.loccode = '". $Location ."' ";
 
-	$sql = "SELECT woitems.wo,
+	$SQL = "SELECT woitems.wo,
 				woitems.stockid,
 				woitems.qtyreqd,
 				woitems.qtyrecd,
@@ -37,8 +37,8 @@ function submit($RootPath, $Location) {
 			;
 
 	$ErrMsg = _('The SQL to find the WO items to produce ');
-	$resultItems = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($resultItems) != 0){
+	$ResultItems = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($ResultItems) != 0){
 
 		echo '<p class="page_title_text" align="center"><strong>' . "Items in WO to be produced now in " . $Location . " with available stock" . '</strong></p>';
 		echo '<table class="selection">';
@@ -59,7 +59,7 @@ function submit($RootPath, $Location) {
 							<th>' . _('Result') . '</th>
 						</tr>';
 
-		while ($myItem = DB_fetch_array($resultItems)) {
+		while ($myItem = DB_fetch_array($ResultItems)) {
 			echo $TableHeader;
 
 			$QtyPending = $myItem['qtyreqd'] - $myItem['qtyrecd'];
@@ -98,7 +98,7 @@ function submit($RootPath, $Location) {
 					);
 
 			// Get the BOM for this item
-			$sqlBOM = "SELECT bom.parent,
+			$SQLBOM = "SELECT bom.parent,
 						bom.component,
 						bom.quantity AS bomqty,
 						stockmaster.decimalplaces,
@@ -114,7 +114,7 @@ function submit($RootPath, $Location) {
                         AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$BOMResult = DB_query ($sqlBOM,$ErrMsg);
+			$BOMResult = DB_query ($SQLBOM,$ErrMsg);
 			$ItemCanBeproduced = TRUE;
 
 			while ($myComponent = DB_fetch_array($BOMResult)) {
@@ -221,7 +221,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 			<label for="Location">' . _('For Factory Location') . ':</label>
 			<select name="Location">';
 
-	$sql = "SELECT locations.loccode,
+	$SQL = "SELECT locations.loccode,
 					locationname
 				FROM locations
 				INNER JOIN locationusers
@@ -230,10 +230,10 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 					AND locationusers.canview=1
 				WHERE locations.usedforwo = 1";
 
-	$LocnResult=DB_query($sql);
+	$LocnResult=DB_query($SQL);
 
-	while ($myrow=DB_fetch_array($LocnResult)){
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($LocnResult)){
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select>
 		</field>

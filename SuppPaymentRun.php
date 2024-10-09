@@ -27,8 +27,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$Title = _('Payment Run - Problem Report');
 	$RefCounter = 0;
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Payment Run Report'));
-	$pdf->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
+	$PDF->addInfo('Title',_('Payment Run Report'));
+	$PDF->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
 	$line_height=12;
@@ -37,7 +37,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	include ('includes/PDFPaymentRunPageHeader.inc');
 
-	$sql = "SELECT suppliers.supplierid,
+	$SQL = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
 					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
 			FROM suppliers INNER JOIN paymentterms
@@ -59,7 +59,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
 			ORDER BY suppliers.supplierid";
 
-	$SuppliersResult = DB_query($sql);
+	$SuppliersResult = DB_query($SQL);
 
 	$SupplierID ='';
 	$TotalPayments = 0;
@@ -74,7 +74,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		$CurrDecimalPlaces = $SuppliersToPay['currdecimalplaces'];
 
-		$sql = "SELECT suppliers.supplierid,
+		$SQL = "SELECT suppliers.supplierid,
 						suppliers.suppname,
 						systypes.typename,
 						paymentterms.terms,
@@ -104,14 +104,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					supptrans.type,
 					supptrans.transno";
 
-		$TransResult = DB_query($sql,'','',false,false);
+		$TransResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Payment Run - Problem Report');
 			include('includes/header.php');
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 			if ($debug==1){
-				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
+				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
 			}
 			include('includes/footer.php');
 			exit;
@@ -142,7 +142,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 				$AccumBalance = 0;
 				$AccumDiffOnExch = 0;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,
+				$LeftOvers = $PDF->addTextWrap($Left_Margin,
 												$YPos,
 												450-$Left_Margin,
 												$FontSize,
@@ -154,7 +154,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
 
 			/*Positive is a favourable */
 			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / filter_number_format($_POST['ExRate']));
@@ -193,8 +193,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 			}
 
-			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
-			$LeftOvers = $pdf->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+			$LeftOvers = $PDF->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
+			$LeftOvers = $PDF->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 			$YPos -=$line_height;
 			if ($YPos < $Bottom_Margin + $line_height){
@@ -223,20 +223,20 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			exit;
 		}
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
-		$LeftOvers = $pdf->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
-		$LeftOvers = $pdf->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
+		$LeftOvers = $PDF->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
+		$LeftOvers = $PDF->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 	}
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
+	$PDF->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Payment Run');
 	$ViewTopic = 'AccountsPayable';
-	$BookMark = ''
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">
@@ -280,14 +280,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<label for="Currency">' . _('For Suppliers Trading in') . ':</label>
 			<select name="Currency">';
 
-	$sql = "SELECT currency, currabrev FROM currencies";
-	$result=DB_query($sql);
+	$SQL = "SELECT currency, currabrev FROM currencies";
+	$Result=DB_query($SQL);
 
-	while ($myrow=DB_fetch_array($result)){
-	if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+	while ($MyRow=DB_fetch_array($Result)){
+	if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
+			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+		echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 	}
 	}
 	echo '</select>
@@ -340,13 +340,13 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		 include('includes/footer.php');
 		 exit;
 	} else {
-		while ($myrow=DB_fetch_array($AccountsResults)){
+		while ($MyRow=DB_fetch_array($AccountsResults)){
 			  /*list the bank account names */
 
-			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
-				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$MyRow['accountcode']){
+				echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+				echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 			}
 		}
 		echo '</select>

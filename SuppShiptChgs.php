@@ -14,7 +14,7 @@ include('includes/session.php');
 
 $Title = _('Shipment Charges or Credits');
 $ViewTopic = 'AccountsPayable';
-$BookMark = ''
+$BookMark = '';
 
 include('includes/header.php');
 
@@ -48,8 +48,8 @@ if (isset($_POST['AddShiptChgToInvoice'])){
 			$_POST['ShiptRef'] = $_POST['ShiptSelection'];
 		}
 	} else {
-		$result = DB_query("SELECT shiptref FROM shipments WHERE shiptref='". $_POST['ShiptRef'] . "'");
-		if (DB_num_rows($result)==0) {
+		$Result = DB_query("SELECT shiptref FROM shipments WHERE shiptref='". $_POST['ShiptRef'] . "'");
+		if (DB_num_rows($Result)==0) {
 			prnMsg(_('The shipment entered manually is not a valid shipment reference. If you do not know the shipment reference, select it from the list'),'error');
 			$InputError = True;
 		}
@@ -122,7 +122,7 @@ echo '<field>
 		<label for="ShiptSelection">' . _('Shipment Selection') . '</label>
 		<select name="ShiptSelection">';
 
-$sql = "SELECT shiptref,
+$SQL = "SELECT shiptref,
 				vessel,
 				eta,
 				suppname
@@ -130,15 +130,15 @@ $sql = "SELECT shiptref,
 				ON shipments.supplierid=suppliers.supplierid
 			WHERE closed='0'";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['ShiptSelection']) and $myrow['shiptref']==$_POST['ShiptSelection']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['ShiptSelection']) and $MyRow['shiptref']==$_POST['ShiptSelection']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['shiptref'] . '">' . $myrow['shiptref'] . ' - ' . $myrow['vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($myrow['eta']) . ' ' . _('from') . ' ' . $myrow['suppname']  . '</option>';
+	echo $MyRow['shiptref'] . '">' . $MyRow['shiptref'] . ' - ' . $MyRow['vessel'] . ' ' . _('ETA') . ' ' . ConvertSQLDate($MyRow['eta']) . ' ' . _('from') . ' ' . $MyRow['suppname']  . '</option>';
 }
 
 echo '</select>

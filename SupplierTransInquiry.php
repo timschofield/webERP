@@ -6,7 +6,7 @@ if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromD
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Supplier Transactions Inquiry');
 $ViewTopic = 'AccountsPayable';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
@@ -23,24 +23,24 @@ echo '<fieldset>
 			<label for="TransType">' . _('Type') . ':</label>
 			<select name="TransType">';
 
-$sql = "SELECT typeid,
+$SQL = "SELECT typeid,
 				typename
 		FROM systypes
 		WHERE typeid >= 20
 		AND typeid <= 23";
 
-$resultTypes = DB_query($sql);
+$ResultTypes = DB_query($SQL);
 
 echo '<option value="All">' ._('All') . '</option>';
-while ($myrow=DB_fetch_array($resultTypes)){
+while ($MyRow=DB_fetch_array($ResultTypes)){
 	if (isset($_POST['TransType'])){
-		if ($myrow['typeid'] == $_POST['TransType']){
-		     echo '<option selected="selected" value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		if ($MyRow['typeid'] == $_POST['TransType']){
+		     echo '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 		} else {
-		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		     echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 		}
 	} else {
-		     echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+		     echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 	}
 }
 echo '</select>
@@ -76,7 +76,7 @@ echo '<field>
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
    $SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
-   $sql = "SELECT type,
+   $SQL = "SELECT type,
 				transno,
 		   		trandate,
 				duedate,
@@ -97,17 +97,17 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			INNER JOIN currencies ON suppliers.currcode=currencies.currabrev
 			WHERE ";
 
-   $sql = $sql . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
+   $SQL = $SQL . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
 	if  ($_POST['TransType']!='All')  {
-		$sql .= " AND type = " . $_POST['TransType'];
+		$SQL .= " AND type = " . $_POST['TransType'];
 	}
 	if($_POST['SupplierNo'] != "")
 	{
-		$sql .= " AND supptrans.supplierno LIKE '%".$_POST['SupplierNo']."%'";
+		$SQL .= " AND supptrans.supplierno LIKE '%".$_POST['SupplierNo']."%'";
 	}
-	$sql .=  " ORDER BY id";
+	$SQL .=  " ORDER BY id";
 
-   $TransResult = DB_query($sql);
+   $TransResult = DB_query($SQL);
    $ErrMsg = _('The supplier transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
    $DbgMsg =  _('The SQL that failed was');
 
@@ -129,7 +129,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
 	$RowCounter = 1;
 
-	while ($myrow=DB_fetch_array($TransResult)) {
+	while ($MyRow=DB_fetch_array($TransResult)) {
 
 		printf ('<tr class="striped_row">
 				<td>%s</td>
@@ -143,16 +143,16 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>',
-				$myrow['typename'],
-				$myrow['transno'],
-				$myrow['suppreference'],
-				ConvertSQLDate($myrow['trandate']),
-				$myrow['supplierno'] . ' - ' . $myrow['suppname'],
-				$myrow['transtext'],
-				ConvertSQLDate($myrow['duedate']),
-				locale_number_format($myrow['rate'],'Variable'),
-				locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
-				$myrow['currcode']);
+				$MyRow['typename'],
+				$MyRow['transno'],
+				$MyRow['suppreference'],
+				ConvertSQLDate($MyRow['trandate']),
+				$MyRow['supplierno'] . ' - ' . $MyRow['suppname'],
+				$MyRow['transtext'],
+				ConvertSQLDate($MyRow['duedate']),
+				locale_number_format($MyRow['rate'],'Variable'),
+				locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
+				$MyRow['currcode']);
 
 
 		$GLTransResult = DB_query("SELECT account,
@@ -161,8 +161,8 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 										amount
 									FROM gltrans INNER JOIN chartmaster
 									ON gltrans.account=chartmaster.accountcode
-									WHERE type='" . $myrow['type'] . "'
-									AND typeno='" . $myrow['transno'] . "'",
+									WHERE type='" . $MyRow['type'] . "'
+									AND typeno='" . $MyRow['transno'] . "'",
 									_('Could not retrieve the GL transactions for this AP transaction'));
 
 		if (DB_num_rows($GLTransResult)==0){

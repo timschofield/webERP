@@ -5,7 +5,7 @@ include('includes/session.php');
 $Title = _('Supplier Login Configuration');
 include('includes/header.php');
 $ViewTopic = 'Setup';
-$BookMark = ''
+$BookMark = '';
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/LanguagesArray.php');
 
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1) {
 
-		$sql = "INSERT INTO www_users (userid,
+		$SQL = "INSERT INTO www_users (userid,
 										realname,
 										supplierid,
 										password,
@@ -99,7 +99,7 @@ if (isset($_POST['submit'])) {
 							'". $_POST['UserLanguage'] ."')";
 		$ErrMsg = _('The user could not be added because');
 		$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 		prnMsg( _('A new supplier login has been created'), 'success' );
 		include('includes/footer.php');
 		exit;
@@ -187,17 +187,17 @@ echo '<field>
 		<label for="DefaultLocation">' . _('Default Location') . ':</label>
 		<select name="DefaultLocation">';
 
-$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-$result = DB_query($sql);
+$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
+$Result = DB_query($SQL);
 
-while ($myrow=DB_fetch_array($result)){
+while ($MyRow=DB_fetch_array($Result)){
 
 	if (isset($_POST['DefaultLocation'])
-		AND $myrow['loccode'] == $_POST['DefaultLocation']){
+		AND $MyRow['loccode'] == $_POST['DefaultLocation']){
 
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 echo '</select>
