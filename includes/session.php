@@ -213,7 +213,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 //}
 /*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
-if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php') and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: Z_UpgradeDatabase.php');
 }
 // else {

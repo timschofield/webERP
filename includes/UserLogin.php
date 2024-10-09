@@ -40,18 +40,18 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			return  UL_SHOWLOGIN;
 		}
 		/* The SQL to get the user info must use the * syntax because the field name could change between versions if the fields are specifed directly then the sql fails and the db upgrade will fail */
-		$sql = "SELECT *
+		$SQL = "SELECT *
 				FROM www_users
 				WHERE www_users.userid='" . $Name . "'";
 
 		$ErrMsg = _('Could not retrieve user details on login because');
 		$debug =1;
         $PasswordVerified = false;
-		$Auth_Result = DB_query($sql,$ErrMsg);
+		$Auth_Result = DB_query($SQL,$ErrMsg);
 
 		if (DB_num_rows($Auth_Result) > 0) {
-			$myrow = DB_fetch_array($Auth_Result);
-			if (VerifyPass($Password,$myrow['password'])) {
+			$MyRow = DB_fetch_array($Auth_Result);
+			if (VerifyPass($Password,$MyRow['password'])) {
 				$PasswordVerified = true;
 			} elseif (isset($GLOBALS['CryptFunction'])) {
 				/*if the password stored in the DB was compiled the old way,
@@ -62,24 +62,24 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				 */
 				switch ($GLOBALS['CryptFunction']) {
 					case 'sha1':
-						if ($myrow['password'] == sha1($Password)) {
+						if ($MyRow['password'] == sha1($Password)) {
 							$PasswordVerified = true;
 						}
 						break;
 					case 'md5':
-						if ($myrow['password'] == md5($Password)) {
+						if ($MyRow['password'] == md5($Password)) {
 							$PasswordVerified = true;
 						}
 						break;
 					default:
-						if ($myrow['password'] == $Password) {
+						if ($MyRow['password'] == $Password) {
 							$PasswordVerified = true;
 						}
 				}
 				if ($PasswordVerified) {
-					$sql = "UPDATE www_users SET password = '" . CryptPass($Password) . "'"
+					$SQL = "UPDATE www_users SET password = '" . CryptPass($Password) . "'"
 							. " WHERE userid = '" . $Name . "';";
-					DB_query($sql);
+					DB_query($SQL);
 				}
 
 			}
@@ -89,30 +89,31 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 		// Populate session variables with data base results
 		if ($PasswordVerified) {
 
-			if ($myrow['blocked']==1){
+			if ($MyRow['blocked']==1){
 			//the account is blocked
 				return  UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
-			$_SESSION['UserID'] = $myrow['userid'];
+			$_SESSION['UserID'] = $MyRow['userid'];
 			$_SESSION['AttemptsCounter'] = 0;
-			$_SESSION['AccessLevel'] = $myrow['fullaccess'];
-			$_SESSION['CustomerID'] = $myrow['customerid'];
-			$_SESSION['UserBranch'] = $myrow['branchcode'];
-			$_SESSION['DefaultPageSize'] = $myrow['pagesize'];
-			$_SESSION['UserStockLocation'] = $myrow['defaultlocation'];
-			$_SESSION['UserEmail'] = $myrow['email'];
-			$_SESSION['ModulesEnabled'] = explode(",", $myrow['modulesallowed']);
-			$_SESSION['UsersRealName'] = $myrow['realname'];
-			$_SESSION['Theme'] = $myrow['theme'];
-			$_SESSION['Language'] = $myrow['language'];
-			$_SESSION['SalesmanLogin'] = $myrow['salesman'];
-			$_SESSION['CanCreateTender'] = $myrow['cancreatetender'];
-			$_SESSION['AllowedDepartment'] = $myrow['department'];
-			$_SESSION['ShowDashboard'] = $myrow['showdashboard'];
-			$_SESSION['ShowPageHelp'] = $myrow['showpagehelp'];
-			$_SESSION['ShowFieldHelp'] = $myrow['showfieldhelp'];
-			$_SESSION['ScreenFontSize'] = $myrow['fontsize'];
+			$_SESSION['AccessLevel'] = $MyRow['fullaccess'];
+			$_SESSION['CustomerID'] = $MyRow['customerid'];
+			$_SESSION['UserBranch'] = $MyRow['branchcode'];
+			$_SESSION['DefaultPageSize'] = $MyRow['pagesize'];
+			$_SESSION['UserStockLocation'] = $MyRow['defaultlocation'];
+			$_SESSION['UserEmail'] = $MyRow['email'];
+			$_SESSION['Timeout'] = $MyRow['timeout'];
+			$_SESSION['ModulesEnabled'] = explode(",", $MyRow['modulesallowed']);
+			$_SESSION['UsersRealName'] = $MyRow['realname'];
+			$_SESSION['Theme'] = $MyRow['theme'];
+			$_SESSION['Language'] = $MyRow['language'];
+			$_SESSION['SalesmanLogin'] = $MyRow['salesman'];
+			$_SESSION['CanCreateTender'] = $MyRow['cancreatetender'];
+			$_SESSION['AllowedDepartment'] = $MyRow['department'];
+			$_SESSION['ShowDashboard'] = $MyRow['showdashboard'];
+			$_SESSION['ShowPageHelp'] = $MyRow['showpagehelp'];
+			$_SESSION['ShowFieldHelp'] = $MyRow['showfieldhelp'];
+			$_SESSION['ScreenFontSize'] = $MyRow['fontsize'];
 
 			switch ($_SESSION['ScreenFontSize']) {
 				case 0:
@@ -128,37 +129,37 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					$_SESSION['FontSize'] = '0.833rem';
 			}
 
-			if (isset($myrow['pdflanguage'])) {
-				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
+			if (isset($MyRow['pdflanguage'])) {
+				$_SESSION['PDFLanguage'] = $MyRow['pdflanguage'];
 			} else {
 				$_SESSION['PDFLanguage'] = '0'; //default to latin western languages
 			}
 
-			if ($myrow['displayrecordsmax'] > 0) {
-				$_SESSION['DisplayRecordsMax'] = $myrow['displayrecordsmax'];
+			if ($MyRow['displayrecordsmax'] > 0) {
+				$_SESSION['DisplayRecordsMax'] = $MyRow['displayrecordsmax'];
 			} else {
 				$_SESSION['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];  // default comes from config.php
 			}
 
-			$sql = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
+			$SQL = "UPDATE www_users SET lastvisitdate='". date('Y-m-d H:i:s') ."'
 							WHERE www_users.userid='" . $Name . "'";
-			$Auth_Result = DB_query($sql);
+			$Auth_Result = DB_query($SQL);
 			/*get the security tokens that the user has access to */
-			$sql = "SELECT tokenid
+			$SQL = "SELECT tokenid
 					FROM securitygroups
 					WHERE secroleid =  '" . $_SESSION['AccessLevel'] . "'";
-			$Sec_Result = DB_query($sql);
+			$Sec_Result = DB_query($SQL);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
 				return  UL_CONFIGERR;
 			} else {
 				$i=0;
 				$UserIsSysAdmin = FALSE;
-				while ($myrow = DB_fetch_row($Sec_Result)){
-					if ($myrow[0] == 15){
+				while ($MyRow = DB_fetch_row($Sec_Result)){
+					if ($MyRow[0] == 15){
 						$UserIsSysAdmin = TRUE;
 					}
-					$_SESSION['AllowedPageSecurityTokens'][$i] = $myrow[0];
+					$_SESSION['AllowedPageSecurityTokens'][$i] = $MyRow[0];
 					$i++;
 				}
 			}
@@ -180,10 +181,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 						/* Audit trail purge only runs if DB_Maintenance is enabled */
 						if (isset($_SESSION['MonthsAuditTrail'])){
-							 $sql = "DELETE FROM audittrail
+							 $SQL = "DELETE FROM audittrail
 									WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 							$ErrMsg = _('There was a problem deleting expired audit-trail history');
-							$result = DB_query($sql);
+							$Result = DB_query($SQL);
 						}
 					}
 				}
@@ -255,10 +256,10 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				$_SESSION['AttemptsCounter'] = 0;
 			} elseif ($_SESSION['AttemptsCounter'] >= 5 AND isset($Name)) {
 				/*User blocked from future accesses until sysadmin releases */
-				$sql = "UPDATE www_users
+				$SQL = "UPDATE www_users
 							SET blocked=1
 							WHERE www_users.userid='" . $Name . "'";
-				$Auth_Result = DB_query($sql);
+				$Auth_Result = DB_query($SQL);
 
 				if ($SysAdminEmail != ''){
 					$EmailSubject = _('User access blocked'). ' ' . $Name ;
@@ -272,7 +273,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 							$mail = new htmlMimeMail();
 							$mail->setSubject($EmailSubject);
 							$mail->setText($EmailText);
-							$result = SendmailBySmtp($mail,array($SysAdminEmail));
+							$Result = SendmailBySmtp($mail,array($SysAdminEmail));
 					}
 
 				}
