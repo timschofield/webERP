@@ -64,12 +64,12 @@ $PDFLanguages = array(
 include('includes/SQL_CommonFunctions.inc');
 
 // Make an array of the security roles
-$sql = "SELECT secroleid,
+$SQL = "SELECT secroleid,
 				secrolename
 		FROM securityroles
 		ORDER BY secrolename";
 
-$Sec_Result = DB_query($sql);
+$Sec_Result = DB_query($SQL);
 $SecurityRoles = array();
 // Now load it into an a ray using Key/Value pairs
 while( $Sec_row = DB_fetch_row($Sec_Result) ) {
@@ -126,14 +126,14 @@ if(isset($_POST['submit'])) {
 
 	if((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
-		$sql = "SELECT custbranch.debtorno
+		$SQL = "SELECT custbranch.debtorno
 				FROM custbranch
 				WHERE custbranch.debtorno='" . $_POST['Cust'] . "'
 				AND custbranch.branchcode='" . $_POST['BranchCode'] . "'";
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
-		$Result = DB_query($sql, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 		if(DB_num_rows($Result)==0) {
 			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'), 'error');
@@ -164,10 +164,11 @@ if(isset($_POST['submit'])) {
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
 		}
 
-		$sql = "UPDATE www_users SET realname='" . $_POST['RealName'] . "',
+		$SQL = "UPDATE www_users SET realname='" . $_POST['RealName'] . "',
 						customerid='" . $_POST['Cust'] ."',
 						phone='" . $_POST['Phone'] ."',
 						email='" . $_POST['Email'] ."',
+						timeout='" . $_POST['Timeout'] . "',
 						" . $UpdatePassword . "
 						branchcode='" . $_POST['BranchCode'] . "',
 						supplierid='" . $_POST['SupplierID'] . "',
@@ -192,7 +193,7 @@ if(isset($_POST['submit'])) {
 
 	} elseif($InputError !=1) {
 
-		$sql = "INSERT INTO www_users (
+		$SQL = "INSERT INTO www_users (
 					userid,
 					realname,
 					customerid,
@@ -202,6 +203,7 @@ if(isset($_POST['submit'])) {
 					password,
 					phone,
 					email,
+					timeout,
 					pagesize,
 					fullaccess,
 					cancreatetender,
@@ -224,6 +226,7 @@ if(isset($_POST['submit'])) {
 					'" . CryptPass($_POST['Password']) ."',
 					'" . $_POST['Phone'] . "',
 					'" . $_POST['Email'] ."',
+					'" . $_POST['Timeout'] ."',
 					'" . $_POST['PageSize'] ."',
 					'" . $_POST['Access'] . "',
 					'" . $_POST['CanCreateTender'] . "',
@@ -268,7 +271,7 @@ if(isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The user alterations could not be processed because');
 		$DbgMsg = _('The SQL that was used to update the user and failed was');
-		$Result = DB_query($sql, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 		unset($_POST['UserID']);
 		unset($_POST['RealName']);
@@ -278,6 +281,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Salesman']);
 		unset($_POST['Phone']);
 		unset($_POST['Email']);
+		unset($_POST['Timeout']);
 		unset($_POST['Password']);
 		unset($_POST['PageSize']);
 		unset($_POST['Access']);
@@ -302,26 +306,26 @@ if(isset($_POST['submit'])) {
 	if($AllowDemoMode AND $SelectedUser == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be deleted'), 'error');
 	} else {
-		$sql = "SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
-		$Result = DB_query($sql);
+		$SQL = "SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
+		$Result = DB_query($SQL);
 		if(DB_num_rows($Result)!=0) {
 			prnMsg(_('Cannot delete user as entries already exist in the audit trail'), 'warn');
 		} else {
-			$sql = "DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
+			$SQL = "DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The Location - User could not be deleted because');
-			$Result = DB_query($sql, $ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
-			$sql = "DELETE FROM glaccountusers WHERE userid='" . $SelectedUser . "'";
+			$SQL = "DELETE FROM glaccountusers WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The GL Account - User could not be deleted because');
-			$Result = DB_query($sql, $ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
-			$sql = "DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
+			$SQL = "DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The Bank Accounts - User could not be deleted because');
-			$Result = DB_query($sql, $ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
-			$sql = "DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
+			$SQL = "DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');
-			$Result = DB_query($sql, $ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			prnMsg(_('User Deleted'),'info');
 		}
 		unset($SelectedUser);
@@ -340,6 +344,7 @@ if(!isset($SelectedUser)) {
 				<th class="ascending">', _('Full Name'), '</th>
 				<th class="ascending">', _('Telephone'), '</th>
 				<th class="ascending">', _('Email'), '</th>
+				<th class="ascending">', _('Timeout'), '</th>
 				<th class="ascending">', _('Customer Code'), '</th>
 				<th class="ascending">', _('Branch Code'), '</th>
 				<th class="ascending">', _('Supplier Code'), '</th>
@@ -358,6 +363,7 @@ if(!isset($SelectedUser)) {
 					realname,
 					phone,
 					email,
+					timeout,
 					customerid,
 					branchcode,
 					supplierid,
@@ -383,6 +389,7 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['realname'], '</td>
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>
+				<td class="number">', $MyRow['timeout'], 'mins</td>
 				<td class="text">', $MyRow['customerid'], '</td>
 				<td class="text">', $MyRow['branchcode'], '</td>
 				<td class="text">', $MyRow['supplierid'], '</td>
@@ -410,11 +417,12 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if(isset($SelectedUser)) {
 	//editing an existing User
 
-	$sql = "SELECT
+	$SQL = "SELECT
 				userid,
 				realname,
 				phone,
 				email,
+				timeout,
 				customerid,
 				password,
 				branchcode,
@@ -436,30 +444,31 @@ if(isset($SelectedUser)) {
 			FROM www_users
 			WHERE userid='" . $SelectedUser . "'";
 
-	$Result = DB_query($sql);
-	$myrow = DB_fetch_array($Result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['UserID'] = $myrow['userid'];
-	$_POST['RealName'] = $myrow['realname'];
-	$_POST['Phone'] = $myrow['phone'];
-	$_POST['Email'] = $myrow['email'];
-	$_POST['Cust']	= $myrow['customerid'];
-	$_POST['BranchCode'] = $myrow['branchcode'];
-	$_POST['SupplierID'] = $myrow['supplierid'];
-	$_POST['Salesman'] = $myrow['salesman'];
-	$_POST['PageSize'] = $myrow['pagesize'];
-	$_POST['Access'] = $myrow['fullaccess'];
-	$_POST['CanCreateTender'] = $myrow['cancreatetender'];
-	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
-	$_POST['ModulesAllowed'] = $myrow['modulesallowed'];
-	$_POST['ShowDashboard'] = $myrow['showdashboard'];
-	$_POST['ShowPageHelp'] = $myrow['showpagehelp'];
-	$_POST['ShowFieldHelp'] = $myrow['showfieldhelp'];
-	$_POST['Blocked'] = $myrow['blocked'];
-	$_POST['Theme'] = $myrow['theme'];
-	$_POST['UserLanguage'] = $myrow['language'];
-	$_POST['PDFLanguage'] = $myrow['pdflanguage'];
-	$_POST['Department'] = $myrow['department'];
+	$_POST['UserID'] = $MyRow['userid'];
+	$_POST['RealName'] = $MyRow['realname'];
+	$_POST['Phone'] = $MyRow['phone'];
+	$_POST['Email'] = $MyRow['email'];
+	$_POST['Timeout']	= $MyRow['timeout'];
+	$_POST['Cust']	= $MyRow['customerid'];
+	$_POST['BranchCode'] = $MyRow['branchcode'];
+	$_POST['SupplierID'] = $MyRow['supplierid'];
+	$_POST['Salesman'] = $MyRow['salesman'];
+	$_POST['PageSize'] = $MyRow['pagesize'];
+	$_POST['Access'] = $MyRow['fullaccess'];
+	$_POST['CanCreateTender'] = $MyRow['cancreatetender'];
+	$_POST['DefaultLocation'] = $MyRow['defaultlocation'];
+	$_POST['ModulesAllowed'] = $MyRow['modulesallowed'];
+	$_POST['ShowDashboard'] = $MyRow['showdashboard'];
+	$_POST['ShowPageHelp'] = $MyRow['showpagehelp'];
+	$_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
+	$_POST['Blocked'] = $MyRow['blocked'];
+	$_POST['Theme'] = $MyRow['theme'];
+	$_POST['UserLanguage'] = $MyRow['language'];
+	$_POST['PDFLanguage'] = $MyRow['pdflanguage'];
+	$_POST['Department'] = $MyRow['department'];
 
 	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
@@ -512,6 +521,9 @@ if(!isset($_POST['Phone'])) {
 if(!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
+if(!isset($_POST['Timeout'])) {
+	$_POST['Timeout']=5;
+}
 echo '<field>
 		<label for="Password">' . _('Password') . ':</label>
 		<input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('At least 5 characters').'" title="" />
@@ -529,6 +541,11 @@ echo '<field>
 		<label for="Email">' . _('Email Address') .':</label>
 		<input type="email" name="Email" placeholder="' . _('e.g. user@domain.com') . '" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="" />
 		<fieldhelp>'._('A valid email address is required').'</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="Timeout">' . _('Timeout after') .':</label>
+		<input type="text" class="number" name="Timeout" required="required" value="' . $_POST['Timeout'] .'" size="4" maxlength="5" title="" />minutes
+		<fieldhelp>'._('Log the user out after this interval of non-use').'</fieldhelp>
 	</field>';
 echo '<field>
 		<label for="Access">' . _('Security Role') . ':</label>
@@ -563,14 +580,14 @@ echo '<field>
 		<label for="DefaultLocation">' . _('Default Location') . ':</label>
 		<select name="DefaultLocation">';
 
-$sql = "SELECT loccode, locationname FROM locations";
-$Result = DB_query($sql);
+$SQL = "SELECT loccode, locationname FROM locations";
+$Result = DB_query($SQL);
 
-while($myrow=DB_fetch_array($Result)) {
-	if(isset($_POST['DefaultLocation']) AND $myrow['loccode'] == $_POST['DefaultLocation']) {
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+while($MyRow=DB_fetch_array($Result)) {
+	if(isset($_POST['DefaultLocation']) AND $MyRow['loccode'] == $_POST['DefaultLocation']) {
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 
@@ -607,19 +624,19 @@ echo '<field>
 		<label for="Salesman">' . _('Restrict to Sales Person') . ':</label>
 		<select name="Salesman">';
 
-$sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmanname";
-$Result = DB_query($sql);
+$SQL = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmanname";
+$Result = DB_query($SQL);
 if((isset($_POST['Salesman']) AND $_POST['Salesman']=='') OR !isset($_POST['Salesman'])) {
 	echo '<option selected="selected" value="">' . _('Not a salesperson only login') . '</option>';
 } else {
 	echo '<option value="">' . _('Not a salesperson only login') . '</option>';
 }
-while($myrow=DB_fetch_array($Result)) {
+while($MyRow=DB_fetch_array($Result)) {
 
-	if(isset($_POST['Salesman']) AND $myrow['salesmancode'] == $_POST['Salesman']) {
-		echo '<option selected="selected" value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+	if(isset($_POST['Salesman']) AND $MyRow['salesmancode'] == $_POST['Salesman']) {
+		echo '<option selected="selected" value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+		echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
 	}
 
 }
@@ -797,23 +814,23 @@ echo '</select>
 echo '<field>
 		<label for="Department">' . _('Allowed Department for Internal Requests') . ':</label>';
 
-$sql = "SELECT departmentid,
+$SQL = "SELECT departmentid,
 			description
 		FROM departments
 		ORDER BY description";
 
-$Result=DB_query($sql);
+$Result=DB_query($SQL);
 echo '<select name="Department">';
 if((isset($_POST['Department']) AND $_POST['Department']=='0') OR !isset($_POST['Department'])) {
 	echo '<option selected="selected" value="0">' . _('Any Internal Department') . '</option>';
 } else {
 	echo '<option value="">' . _('Any Internal Department') . '</option>';
 }
-while($myrow=DB_fetch_array($Result)) {
-	if(isset($_POST['Department']) AND $myrow['departmentid'] == $_POST['Department']) {
-		echo '<option selected="selected" value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+while($MyRow=DB_fetch_array($Result)) {
+	if(isset($_POST['Department']) AND $MyRow['departmentid'] == $_POST['Department']) {
+		echo '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+		echo '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 	}
 }
 echo '</select>
