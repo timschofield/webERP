@@ -37,7 +37,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['ProcessSale'])){ /*only show order lines if there are any */
 
-	echo 'Here comes the details of the purchase <br />';
+	echo 'Here comes the details of the purchase. NOT RELEVANT to the scope of the silent printing project<br />';
 	echo 'Click Process The Sale to continue';
 
 	/////////////////////////////////////////////////
@@ -66,19 +66,23 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 	$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
 	$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
 	$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
-//	$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
 	$Receipt = $HeaderText . $ShopFooter;
-	
-//	$Receipt = mb_convert_encoding($Receipt, "ISO-8859-1");
+
 	$filename = GetFilenameFromPOSIdentifier($identifier);   
 	file_put_contents($filename, $Receipt);
 
 	//################## PRINTING STUFF ##################### 
+	echo 'Here we want the buttom "Print Now" that will start the Silent Printing Process (check lines 75 onwards from this script) <br /><br />';
+
+/* HERE SHOULD GO A MESSAGE SIMILAR TO THIS ONE, (this one only works with WebPrintClient v2, not with v6.0)
+IF CLICKED, THEN CALL the SilentPrinting($filename, TRUE) function and print
+
 	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
 		_('Print the customer receipt') . '" alt="" />' . ' ' . 
 		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
 																	'\');">' .  
 		_('Print the customer receipt'). '</a><br /><br />';
+*/
    //################## PRINTING STUFF ##################### 
 	
 	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a></div>';

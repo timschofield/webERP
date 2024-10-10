@@ -786,7 +786,9 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 														_('Form Design'),
 														_('Web-Store Configuration'),
 														_('SMTP Server Details'),
-												       	_('Mailing Group Maintenance')	);
+														_('Mailing Group Maintenance'),
+														_('Test Silent Printing')
+														);
 
 $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/SystemParameters.php',
@@ -808,7 +810,9 @@ $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/FormDesigner.php',
 													'/ShopParameters.php',
 													'/SMTPServer.php',
-											       	'/MailingGroupMaintenance.php'	);
+											       	'/MailingGroupMaintenance.php',
+											       	'/KLRetailPOSTest.php'
+													);
 
 $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Returned Item Reasons'),
