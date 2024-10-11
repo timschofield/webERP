@@ -110,6 +110,13 @@ function MonthAndYearFromSQLDate($DateEntry, $useShortMonthAndYear = false) {
 	return $MonthAndYear;
 }
 
+function MonthAndYearFromPeriodNo($PeriodNo) {
+	$PeriodSQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
+	$PeriodResult = DB_query($PeriodSQL);
+	$MyPeriodRow = DB_fetch_array($PeriodResult);
+	return MonthAndYearFromSQLDate($MyPeriodRow['lastdate_in_period']);
+}
+
 function GetMonthText($MonthNumber){
 	switch ($MonthNumber) {
 		case 1:
@@ -988,13 +995,18 @@ function CalcEarliestDispatchDate (){
 }
 
 function CreatePeriod($PeriodNo, $PeriodEnd) {
-				$GetPrdSQL = "INSERT INTO periods (periodno,
-													lastdate_in_period)
-												VALUES (
-													'" . $PeriodNo . "',
-													'" . Date('Y-m-d', $PeriodEnd) . "')";
-				$ErrMsg = _('An error occurred in adding a new period number');
-				$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
+	$GetPrdSQL = "INSERT INTO periods (periodno,
+										lastdate_in_period
+									) VALUES (
+										'" . $PeriodNo . "',
+										'" . Date('Y-m-d', $PeriodEnd) . "'
+									)";
+	$ErrMsg = _('An error occurred in adding a new period number');
+	$GetPrdResult = DB_query($GetPrdSQL, $ErrMsg);
+
+	$TotalsSQL = "INSERT INTO gltotals (account, period, amount)
+				SELECT accountcode, '" . $PeriodNo . "', 0 FROM chartmaster";
+	$ErrMsg = _('An error occurred in adding a new period number to the gltotals table');
 
 }
 
