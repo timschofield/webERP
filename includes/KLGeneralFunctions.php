@@ -1172,6 +1172,10 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
 
+			$sql="DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
 			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
