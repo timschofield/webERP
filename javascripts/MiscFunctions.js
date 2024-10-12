@@ -79,7 +79,6 @@ function eitherOr(o, t) {
 	if(o.value!='') t.value='';
 	else if(o.value=='NaN') o.value='';
 }
-}
 
 function SortSelect() {
 	selElem = this;

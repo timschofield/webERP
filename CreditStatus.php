@@ -33,12 +33,12 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs are sensible
 
-	$sql="SELECT count(reasoncode)
+	$SQL="SELECT count(reasoncode)
 			FROM holdreasons WHERE reasoncode='".$_POST['ReasonCode']."'";
-	$result=DB_query($sql);
-	$myrow=DB_fetch_row($result);
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_row($Result);
 
-	if ($myrow[0]!=0 and !isset($SelectedReason)) {
+	if ($MyRow[0]!=0 and !isset($SelectedReason)) {
 		$InputError = 1;
 		prnMsg( _('The credit status code already exists in the database'),'error');
 		$Errors[$i] = 'ReasonCode';
@@ -68,12 +68,12 @@ if (isset($_POST['submit'])) {
 		/*SelectedReason could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the delete code below*/
 
 		if (isset($_POST['DisallowInvoices']) and $_POST['DisallowInvoices']=='on'){
-			$sql = "UPDATE holdreasons SET
+			$SQL = "UPDATE holdreasons SET
 							reasondescription='" . $_POST['ReasonDescription'] . "',
 							dissallowinvoices=1
 							WHERE reasoncode = '".$SelectedReason."'";
 		} else {
-			$sql = "UPDATE holdreasons SET
+			$SQL = "UPDATE holdreasons SET
 							reasondescription='" . $_POST['ReasonDescription'] . "',
 							dissallowinvoices=0
 							WHERE reasoncode = '".$SelectedReason."'";
@@ -86,14 +86,14 @@ if (isset($_POST['submit'])) {
 
 		if (isset($_POST['DisallowInvoices']) AND $_POST['DisallowInvoices']=='on'){
 
-			$sql = "INSERT INTO holdreasons (reasoncode,
+			$SQL = "INSERT INTO holdreasons (reasoncode,
 											reasondescription,
 											dissallowinvoices)
 									VALUES ('" .$_POST['ReasonCode'] . "',
 											'".$_POST['ReasonDescription'] . "',
 											1)";
 		} else {
-			$sql = "INSERT INTO holdreasons (reasoncode,
+			$SQL = "INSERT INTO holdreasons (reasoncode,
 											reasondescription,
 											dissallowinvoices)
 									VALUES ('" . $_POST['ReasonCode'] . "',
@@ -102,33 +102,35 @@ if (isset($_POST['submit'])) {
 		}
 
 		$msg = _('A new credit status record has been inserted');
-		unset ($SelectedReason);
-		unset ($_POST['ReasonDescription']);
 	}
 	//run the SQL from either of the above possibilites
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	if ($msg != '') {
 		prnMsg($msg,'success');
 	}
+	unset ($SelectedReason);
+	unset ($_POST['ReasonCode']);
+	unset ($_POST['ReasonDescription']);
+	unset ($_POST['submit']);
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql= "SELECT COUNT(*)
+	$SQL= "SELECT COUNT(*)
 			FROM debtorsmaster
 			WHERE debtorsmaster.holdreason='".$SelectedReason."'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] > 0) {
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] > 0) {
 		prnMsg( _('Cannot delete this credit status code because customer accounts have been created referring to it'),'warn');
-		echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this credit status code');
+		echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customer accounts that refer to this credit status code');
 	}  else {
 		//only delete if used in neither customer or supplier accounts
 
-		$sql="DELETE FROM holdreasons WHERE reasoncode='" . $SelectedReason . "'";
-		$result = DB_query($sql);
+		$SQL="DELETE FROM holdreasons WHERE reasoncode='" . $SelectedReason . "'";
+		$Result = DB_query($SQL);
 		prnMsg(_('This credit status code has been deleted'),'success');
 	}
 	//end if status code used in customer or supplier accounts
@@ -144,8 +146,8 @@ then none of the above are true and the list of status codes will be displayed w
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons";
-	$result = DB_query($sql);
+	$SQL = "SELECT reasoncode, reasondescription, dissallowinvoices FROM holdreasons";
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
@@ -154,9 +156,9 @@ or deletion of the records*/
 			<th>' .  _('Disallow Invoices')  . '</th>
         </tr>';
 
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
-		if ($myrow['dissallowinvoices']==0) {
+		if ($MyRow['dissallowinvoices']==0) {
 			$DissallowText = _('Invoice OK');
 		} else {
 			$DissallowText = '<b>' .  _('NO INVOICING')  . '</b>';
@@ -169,13 +171,13 @@ or deletion of the records*/
 			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
 			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">' .  _('Delete')  . '</a></td>
 			</tr>',
-			$myrow['reasoncode'],
-			$myrow['reasondescription'],
+			$MyRow['reasoncode'],
+			$MyRow['reasondescription'],
 			$DissallowText,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$myrow['reasoncode'],
+			$MyRow['reasoncode'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$myrow['reasoncode']);
+			$MyRow['reasoncode']);
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
@@ -196,18 +198,18 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedReason) and ($InputError!=1)) {
 		//editing an existing status code
 
-		$sql = "SELECT reasoncode,
+		$SQL = "SELECT reasoncode,
 					reasondescription,
 					dissallowinvoices
 				FROM holdreasons
 				WHERE reasoncode='".$SelectedReason."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['ReasonCode'] = $myrow['reasoncode'];
-		$_POST['ReasonDescription']  = $myrow['reasondescription'];
-		$_POST['DisallowInvoices']  = $myrow['dissallowinvoices'];
+		$_POST['ReasonCode'] = $MyRow['reasoncode'];
+		$_POST['ReasonDescription']  = $MyRow['reasondescription'];
+		$_POST['DisallowInvoices']  = $MyRow['dissallowinvoices'];
 
 		echo '<input type="hidden" name="SelectedReason" value="' . $SelectedReason . '" />';
 		echo '<input type="hidden" name="ReasonCode" value="' . $_POST['ReasonCode'] . '" />';

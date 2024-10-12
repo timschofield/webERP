@@ -1,7 +1,7 @@
 .container{
 display:grid;
 grid-template-columns:repeat(var(--cols), 1fr);
-grid-template-rows:repeat(var(--rows), 0.8fr);
+grid-template-rows:repeat(var(--rows), 0.6fr);
 column-gap: 10px;
 row-gap: 10px;
 margin-bottom:2%;
@@ -15,7 +15,7 @@ margin-top:4px;
 padding:3px;
 border-radius:7px;
 box-shadow: 0 4px 8px 0 rgba(104, 104, 104, 0.5), 0 6px 6px 0 rgba(104, 104, 104, 0.5);
-scrollbar-color: #222222 #C6C6C6;
+scrollbar-color: #F9D47D #5C1209;
 }
 .CloseButton{
 float:right;
@@ -25,4 +25,7 @@ padding-left:3px;
 padding-right:3px;
 border-radius:27px;
 cursor:pointer;
+}
+.DashboardTable{
+width:100%;
 }

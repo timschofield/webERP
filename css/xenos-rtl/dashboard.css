@@ -26,5 +26,6 @@ padding-right:3px;
 border-radius:27px;
 cursor:pointer;
 }
-@media (max-width: 700px) {
+.DashboardTable{
+width:100%;
 }
