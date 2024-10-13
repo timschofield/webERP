@@ -45,6 +45,34 @@ if (isset($_POST['Submit']) or isset($_POST['Update'])) {
 														'" . $_POST['Primary'] . "'
 													)";
 			$InsertResult = DB_query($InsertSQL);
+
+			//Populate glbudgetdetails with zero values
+
+			$HeaderNo = DB_Last_Insert_ID('glbudgetheaders', 'id');
+
+			$PeriodsSQL = "SELECT periodno FROM periods";
+			$PeriodsResult = DB_query($PeriodsSQL);
+
+			$AccountsSQL = "SELECT accountcode FROM chartmaster";
+			$AccountsResult = DB_query($AccountsSQL);
+
+			while ($AccountsRow = DB_fetch_array($AccountsResult)) {
+				$AccountsArray[] = $AccountsRow['accountcode'];
+			}
+			while ($PeriodsRow = DB_fetch_array($PeriodsResult)) {
+				$PeriodsArray[] = $PeriodsRow['periodno'];
+			}
+			foreach ($AccountsArray as $Account) {
+				foreach ($PeriodsArray as $Period) {
+					$InsertDetailsSQL = "INSERT INTO glbudgetdetails VALUES (NULL,
+																			'" . $HeaderNo . "',
+																			'" . $Account . "',
+																			'" . $Period . "',
+																			0
+																		)";
+					$InsertDetailsResult = DB_query($InsertDetailsSQL);
+				}
+			}
 		} elseif (isset($_POST['Update'])) {
 			$UpdateSQL = "UPDATE glbudgetheaders SET `owner`='" . $_POST['Owner'] . "',
 													`name`='" . $_POST['Name'] . "',
