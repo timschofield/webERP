@@ -212,14 +212,16 @@ if ($ProcessSection02){
 		ComponentsToObsolete(false, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
-	if ($KL_SystemAdmin){
-		PurchaseOrdersProcessTime(90, $RootPath, $db);
+*/
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){{
+		PurchaseOrdersProcessTime(75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchaseOrdersWrongPlannedDates($RootPath, $db);
-		$NumberOfTestExecuted++;
+//		PurchaseOrdersWrongPlannedDates($RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
-
+/*
 	if ($KL_SystemAdmin){
 		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
