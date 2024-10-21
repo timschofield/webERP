@@ -358,8 +358,12 @@ if ($ProcessSection03){
 					 40525935, 300000000, 100000000, 
 					100000000, 
 					75, 1.05,
-					5000, 
-					100000, 200000,
+					  5000, 
+					100000, 
+					 10000,
+					125000,
+					  5000,
+					 40000,
 					$periodnow, $KL_SystemAdmin, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -625,7 +629,10 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 							$USDSafetyFactor,
 							$USDMinPurchase,
 							$USDMaxEasyPurchasePerMonth,
+							$SaldoADUDanamonUSDMin,
 							$SaldoADUDanamonUSDMax,
+							$SaldoADUPayoneerUSDMin,
+							$SaldoADUPayoneerUSDMax,
 							$Period, 
 							$AdminRole, 
 							$db){
@@ -891,6 +898,16 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($result);
 	$SaldoADUDanamonUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
 
+	$Account = "111203020AD"; // Payoneer PTADU USD in IDR
+	$SQL = "SELECT (bfwd + actual) as saldo
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode = '" . $Account . "'
+				AND chartdetails.period = ". $Period . "";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$SaldoADUPayoneerUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
+
 	$Account = "111204030"; // Cash in Agent Aye Cargo in BKK in IDR
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails, chartmaster
@@ -915,7 +932,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
 	$DPPlacedUSD = $PORunningTotalUSD - $POPaymentsPendingUSD;
 	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
-	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoAyeCargoUSD;
+	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 
 	if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
@@ -926,6 +943,13 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
 	}else{
 		$ToBeExchanged = 0;	
+	}
+	
+	if ($SaldoADUPayoneerUSD < $SaldoADUPayoneerUSDMin){
+		$ToBeTransferredToPayoneer = round_multiple_of(min($SaldoADUPayoneerUSDMax - $SaldoADUPayoneerUSD, 
+															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), 5000);	
+	}else{
+		$ToBeTransferredToPayoneer = 0;
 	}
 
 	////////////////////////////////////////////////////////
@@ -949,20 +973,8 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			'Running PO for items for sale (USD approx)', 
 			locale_number_format($PORunningTotalUSD,0)
 			);
-/*	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Running PO DP already placed (USD approx)', 
-			locale_number_format(-$DPPlacedUSD,0)
-			);
+
 	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Running PO pending payments during next '.$USDPODaysSchedule.' days (USD approx)', 
-			locale_number_format($POPaymentsPendingUSD,0)
-			);
-			
-*/	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
@@ -974,6 +986,13 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			</tr>', 
 			'Current balance Danamon USD ADU (USD approx)', 
 			locale_number_format($SaldoADUDanamonUSD,0)
+			);
+
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Current balance Payoneer USD ADU (USD approx)', 
+			locale_number_format($SaldoADUPayoneerUSD,0)
 			);
 
 	printf('<td>%s</td>
@@ -1013,6 +1032,17 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				locale_number_format($ToBeExchanged)
 				);
 	}
+	
+	if ($ToBeTransferredToPayoneer > 0){
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Payoneer USD', 
+				locale_number_format($ToBeTransferredToPayoneer)
+				);
+	}
+
 	echo '</table>
 		</div>';
 
