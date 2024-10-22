@@ -51,7 +51,9 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
 include('includes/KLEmails.php');
 
-include('includes/wcpInitScript.php');   
+include ('includes/WebClientPrint/WebClientPrint.php');
+use Neodynamic\SDK\Web\WebClientPrint;
+include('includes/wcpESCPOSCommands.php');
 
 if (empty($_GET['identifier'])) {
 	$identifier=GetPOSIdentifier();
@@ -1741,16 +1743,11 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
 		$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
 
-
 		//################## PRINTING STUFF ##################### 
 		$filename = GetFilenameFromPOSIdentifier($identifier);   
 		file_put_contents($filename, $Receipt);
-
-		echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
-			_('Print the customer receipt') . '" alt="" />' . ' ' . 
-			'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
-																		'\');">' .  
-			_('Print the customer receipt'). '</a><br /><br />';
+		$textActionToPrint = 'Print the customer receipt';
+		include ('includes/SilentPrinting.php');
 	   //################## PRINTING STUFF ##################### 
 
 		unset($_SESSION['Items'.$identifier]->LineItems);
