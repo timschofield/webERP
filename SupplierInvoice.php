@@ -150,7 +150,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 		include ('includes/PO_ReadInOrder.inc');
 
 		if ($_SESSION['PO' . $identifier]->Status == 'Authorised') {
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			/*Now Get the next GRN - function in SQL_CommonFunctions*/
 			$GRN = GetNextTransNo(25);
 			if (!isset($_GET['DeliveryDate'])) {
@@ -444,7 +444,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 					EnsureGLEntriesBalance(25, $GRN);
 				}
 
-				$Result = DB_Txn_Commit();
+				DB_Txn_Commit();
 
 				//Now add all these deliveries to this purchase invoice
 
@@ -1080,7 +1080,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 		/* SQL to process the postings for purchase invoice */
 		/*Start an SQL transaction */
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the invoice date*/
 		$InvoiceNo = GetNextTransNo(20);
@@ -1897,7 +1897,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 			$DbgMsg = _('The following SQL was used to attempt the update of the cost and the date the asset was purchased');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		} //end of non-gl fixed asset stuff
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed') , 'success');
 		echo '<br />

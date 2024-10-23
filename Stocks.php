@@ -852,7 +852,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $StockID . "'";
 		$Result = DB_query($SQL, _('Could not delete the item record'), '', true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' . '<br />. . ' . _('and all the location stock records set up for the part') . '<br />. . .' . _('and any bill of material that may have been set up for the part') . '<br /> . . . .' . _('and any purchasing data that may have been set up for the part') . '<br /> . . . . .' . _('and any prices that may have been set up for the part'), 'success');
 		echo '<br />';

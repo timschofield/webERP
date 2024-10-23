@@ -256,7 +256,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 					}
 
 			  /*Starting a new purchase order with a different supplier */
-					$Result = DB_Txn_Begin();
+					DB_Txn_Begin();
 
 					$PO_OrderNo =  GetNextTransNo(18); //get the next PO number
 

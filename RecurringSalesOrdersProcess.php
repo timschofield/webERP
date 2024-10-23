@@ -88,7 +88,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	$EmailText ='';
 	echo '<br />' . _('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . _('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . _('is being processed');
 
-	$result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	/*the last recurrence was the date of the last time the order recurred
 	the frequency is the number of times per annum that the order should recurr
@@ -196,7 +196,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	$ErrMsg = _('Could not update the last recurrence of the recurring order template. The database reported the error:');
 	$Result = DB_query($sql,$ErrMsg,true);
 
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	prnMsg(_('Recurring order was created for') . ' ' . $RecurrOrderRow['name'] . ' ' . _('with order Number') . ' ' . $OrderNo, 'success');
 
@@ -240,7 +240,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	/*Start an SQL transaction */
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
@@ -696,7 +696,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
  		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('Invoice number'). ' '. $InvoiceNo .' '. _('processed'),'success');
 

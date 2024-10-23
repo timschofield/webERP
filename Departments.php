@@ -94,7 +94,7 @@ if (isset($_POST['Submit'])) {
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		if (is_array($sql)) {
-			$result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			$ErrMsg = _('The department could not be inserted');
 			$DbgMsg = _('The sql that failed was') . ':';
 			foreach ($sql as $SQLStatement ) {
@@ -105,9 +105,9 @@ if (isset($_POST['Submit'])) {
 				}
 			}
 			if ($InputError!=1){
-				$result = DB_Txn_Commit();
+				 DB_Txn_Commit();
 			} else {
-				$result = DB_Txn_Rollback();
+				DB_Txn_Rollback();
 			}
 		} else {
 			$result = DB_query($sql);

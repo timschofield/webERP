@@ -6,9 +6,26 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg, $Type = 'info', $Prefix = '') {
+function prnMsg($Msg, $Type = 'info', $Prefix = '', $return = false) {
 	global $Messages;
 	$Messages[] = array($Msg, $Type, $Prefix);
+    if($return){
+        $Prefix = $Type == 'info'
+            ? _('INFORMATION') . ' ' . _('Message')
+            : ($Type == 'warning' || $Type == 'warn'
+                ? _('WARNING') . ' ' . _('Report')
+                : ($Type == 'error'
+                    ? _('ERROR') . ' ' . _('Report')
+                    : _('SUCCESS') . ' ' . _('Report')
+                )
+            );
+        return '<div id="MessageContainerFoot">
+				<div class="Message '. $Type . ' noPrint">
+					<span class="MessageCloseButton">&times;</span>
+					<b>'. $Prefix . '</b> : ' .  $Msg . '
+				</div>
+			</div>';
+    }
 }
 
 function reverse_escape($str) {

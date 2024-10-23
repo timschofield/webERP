@@ -1765,7 +1765,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 	unset($_SESSION['Items' . $identifier]);
 	unset($_SESSION['ProcessingOrder']);
 
-	echo prnMsg(_('Invoice number') . ' ' . $InvoiceNo . ' ' . _('processed'), 'success');
+	echo prnMsg(_('Invoice number') . ' ' . $InvoiceNo . ' ' . _('processed'), 'success','',true);
 
 	echo '<br /><div class="centre">';
 

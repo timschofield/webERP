@@ -1091,7 +1091,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 	// *************************************************************************
 	//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 	/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30);
 		$InvoiceNo = GetNextTransNo(10);
@@ -2070,7 +2070,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
 
-		echo prnMsg( _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'), 'success');
+		echo prnMsg( _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'), 'success','',true);
 
 		echo '<br /><div class="centre">';
 

@@ -448,8 +448,8 @@ abstract class AbstractString implements \JsonSerializable
         if (\is_string($prefix)) {
             throw new \TypeError(\sprintf('Method "%s()" must be overridden by class "%s" to deal with non-iterable values.', __FUNCTION__, static::class));
         }
-        foreach ($prefix as $prefix) {
-            if ($this->startsWith((string) $prefix)) {
+        foreach ($prefix as $pref_ix) {
+            if ($this->startsWith((string) $pref_ix)) {
                 return \true;
             }
         }

@@ -170,11 +170,11 @@ if (isset($_POST['submit'])) {
 
 		if (sizeof($SQL) > 0 ) {
 
-			$result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			foreach ($SQL as $SqlLine) {
 				$result = DB_query($SqlLine,$ErrMsg,$DbgMsg,true);
 			}
-			$result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			prnMsg( _('Shop configuration updated'),'success');
 
 			$ForceConfigReload = True; // Required to force a load even if stored in the session vars

@@ -21,16 +21,16 @@ if (isset($_POST['submit'])) {
 	$InputError = 0;
 	if ($_POST['TypeTabCode'] == '') {
 		$InputError = 1;
-		prnMsg(_('The Tabs type code cannot be an empty string'), 'error');
+		echo prnMsg(_('The Tabs type code cannot be an empty string'), 'error','',true);
 	} elseif (mb_strlen($_POST['TypeTabCode']) > 20) {
 		$InputError = 1;
-		echo prnMsg(_('The tab code must be twenty characters or less long'), 'error');
+		echo prnMsg(_('The tab code must be twenty characters or less long'), 'error','',true);
 	} elseif (ContainsIllegalCharacters($_POST['TypeTabCode']) or mb_strpos($_POST['TypeTabCode'], ' ') > 0) {
 		$InputError = 1;
-		prnMsg(_('The petty cash tab type code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space', 'error');
+		echo prnMsg(_('The petty cash tab type code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space', 'error','',true);
 	} elseif (mb_strlen($_POST['TypeTabDescription']) > 50) {
 		$InputError = 1;
-		echo prnMsg(_('The tab code must be Fifty characters or less long'), 'error');
+		echo prnMsg(_('The tab code must be Fifty characters or less long'), 'error','',true);
 	}
 	if (isset($SelectedTab) and $InputError != 1) {
 		$SQL = "UPDATE pctypetabs

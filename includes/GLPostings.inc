@@ -111,7 +111,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 
 	$UnpostedTransResult = DB_query($sql);
 
-	$TransStart = DB_Txn_Begin();
+	DB_Txn_Begin();
 	$CurrentAccount='0';
 	$TotalAmount=0;
 	while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)) {
@@ -151,7 +151,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 	$ErrMsg = _('Failed to update gltrans table');
 	$Posted = DB_query($sql,$ErrMsg,'',true);
 
-	$TransCommit = DB_Txn_Commit();
+	DB_Txn_Commit();
 }
 
 ?>
