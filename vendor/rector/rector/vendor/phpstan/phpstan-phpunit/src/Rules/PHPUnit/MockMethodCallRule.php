@@ -31,7 +31,6 @@ class MockMethodCallRule implements Rule
     public function processNode(Node $node, Scope $scope) : array
     {
         /** @var Node\Expr\MethodCall $node */
-        $node = $node;
         if (!$node->name instanceof Node\Identifier || $node->name->name !== 'method') {
             return [];
         }

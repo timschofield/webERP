@@ -230,8 +230,8 @@ or deletion of the records*/
 		</tr>';
 
 while ($myrow = DB_fetch_array($result)) {
-
-	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $myrow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+    $glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $myrow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$imagefile = reset($glob);
 	if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)){
 		$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 			'&amp;StockID='.urlencode('/BRAND-' . $myrow['manufacturers_id']).
@@ -338,8 +338,8 @@ if (!isset($_GET['delete'])) {
 
 	echo '</field>';
 		if (isset($SelectedManufacturer)){
-
-			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+            $glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+			$imagefile = reset($glob);
 			if (extension_loaded('xgd') && function_exists('gd_info') && file_exists($imagefile)){
 				$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 					'&amp;StockID='.urlencode('/BRAND-' . $SelectedManufacturer).

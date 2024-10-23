@@ -255,7 +255,8 @@ class PHPlot_Data extends PHPlot
 
         $x += $offset; $y += $offset;
         reset($this->data);
-        while (list($key, $val) = each($this->data)) {
+        # while (list($key, $val) = each($this->data)) { # 20241023: deprecated
+        foreach ($this->data as $key=>$val) {
             if ($this->data[$key][$y] == 0) {
                 $this->data[$key][$x] = 0;
             } else {

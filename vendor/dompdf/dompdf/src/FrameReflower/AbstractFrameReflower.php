@@ -110,8 +110,8 @@ abstract class AbstractFrameReflower
                         $containing_block_height = $parent_padding_box["h"];
                     }
                     $frame->set_containing_block($parent_padding_box["x"], $parent_padding_box["y"], $parent_padding_box["w"], $containing_block_height);
-                    break;
                 }
+                break;
             case "fixed":
                 $initial_cb = $frame->get_root()->get_first_child()->get_containing_block();
                 $frame->set_containing_block($initial_cb["x"], $initial_cb["y"], $initial_cb["w"], $initial_cb["h"]);

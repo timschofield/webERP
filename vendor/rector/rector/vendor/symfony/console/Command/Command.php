@@ -289,8 +289,8 @@ class Command
                         \cli_set_process_title($this->processTitle);
                     }
                 }
-            } elseif (\function_exists('RectorPrefix202301\\setproctitle')) {
-                setproctitle($this->processTitle);
+            } elseif (function_exists('\\RectorPrefix202301\\setproctitle')) {
+                \RectorPrefix202301\setproctitle($this->processTitle);
             } elseif (OutputInterface::VERBOSITY_VERY_VERBOSE === $output->getVerbosity()) {
                 $output->writeln('<comment>Install the proctitle PECL to be able to change the process title.</comment>');
             }

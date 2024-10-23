@@ -26,7 +26,8 @@ if (DB_num_rows($result) != 0){
 	$i = 1;
 	$SupportedImgExt = array('png','jpg','jpeg');
 	while ($myrow = DB_fetch_array($result)) {
-		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+        $glob = (glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$imagefile = reset($glob);
 		if(!file_exists($imagefile) ) {
 			if($PrintHeader){
 				$TableHeader = '<tr>

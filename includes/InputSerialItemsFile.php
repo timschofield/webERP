@@ -151,7 +151,7 @@ if ($ShowFileInfo){
 		</tr>
 		<tr>
 			<td>' .  _('Status') .':</td>
-			<td>' . ($invalid_imports==0?getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td>
+			<td>' . ($invalid_imports==0 ? getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td>
 		</tr>
 	</table><br />';
 	$filename = $_SESSION['CurImportFile']['tmp_name'];

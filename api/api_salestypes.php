@@ -13,6 +13,7 @@
 		}
 		$sql = "SELECT typeabbrev FROM salestypes";
 		$result = DB_query($sql);
+        $SalesTypeList = array();
 		$i=0;
 		while ($myrow=DB_fetch_array($result)) {
 			$SalesTypeList[$i]=$myrow[0];

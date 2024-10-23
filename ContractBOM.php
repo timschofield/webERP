@@ -357,7 +357,8 @@ if (isset($SearchResult)) {
 	while ($myrow=DB_fetch_array($SearchResult)) {
 
 		$SupportedImgExt = array('png','jpg','jpeg');
-		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+        $glob = (glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$imagefile = reset($glob);
 		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
 			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 				'&amp;StockID='.urlencode($myrow['stockid']).

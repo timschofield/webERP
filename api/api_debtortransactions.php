@@ -48,7 +48,7 @@ function ConvertToSQLDate($DateEntry) {
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyTransactionDate($TranDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='" . DefaultDateFormat ."'";
+		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
 		$result=DB_query($sql);
 		$myrow=DB_fetch_array($result);
 		$DateFormat=$myrow[0];

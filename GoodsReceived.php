@@ -181,7 +181,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		//Now Display LineItem
 		$SupportedImgExt = array('png','jpg','jpeg');
-		$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		 $glob = (glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$imagefile = reset($glob);
 		if ($imagefile) {
 			$ImageLink = '<a href="' . $imagefile . '" target="_blank">' .  $LnItm->StockID . '</a>';
 		} else {
