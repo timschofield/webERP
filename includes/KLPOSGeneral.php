@@ -835,14 +835,14 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 	$TextToPrint .= $CharacterFontA . $Emphasized . $CenteredJustified . $NewLine;
 	$TextToPrint .= "Follow us on" . $NewLine ;
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
-		$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
-		$TextToPrint .= "Instagram: @KapalLautBali" . $NewLine ;
+		$TextToPrint .= "Instagram: @KapalLautJewellery" . $NewLine ;
+		$TextToPrint .= "Facebook: KapalLautJewellery" . $NewLine ;
 	}else if ($_SESSION['TypeLoc'] == "SHOPBL"){
-		$TextToPrint .= "Facebook: BlinkFashionJewellery" . $NewLine ;
 		$TextToPrint .= "Instagram: @BlinkFashionJewellery" . $NewLine ;
+		$TextToPrint .= "Facebook: BlinkFashionJewellery" . $NewLine ;
 	}else{
-		$TextToPrint .= "Facebook: KapalLautBali" . $NewLine ;
-		$TextToPrint .= "Instagram: @KapalLautBali" . $NewLine ;
+		$TextToPrint .= "Instagram: @KapalLautJewellery" . $NewLine ;
+		$TextToPrint .= "Facebook: KapalLautJewellery" . $NewLine ;
 	}
 	$TextToPrint .= KLPrintReceiptTestWarning("INVOICE");
 
