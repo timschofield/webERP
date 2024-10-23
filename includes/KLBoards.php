@@ -334,6 +334,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$TotalDateF = 0;
 	$TotalForecast = 0;
 	$TotalMTD = 0;
+	$TotalDateMTD = 0;
 	
 	if ($Shop == "All"){
 		$SQLByShop = "";
@@ -573,12 +574,12 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				$Name = $myrow['salesmanname'];
 			}
 			
-			$dailyA = locale_number_format(($myrow['salesA']/$NumDaysA),0);
-			$dailyB = locale_number_format(($myrow['salesB']/$NumDaysB),0);
-			$dailyC = locale_number_format(($myrow['salesC']/$NumDaysC),0);
-			$dailyD = locale_number_format(($myrow['salesD']/$NumDaysD),0);
-			$dailyE = locale_number_format(($myrow['salesE']/$NumDaysE),0);
-			$dailyF = locale_number_format(($myrow['salesF']/$NumDaysF),0);
+			$dailyA = $myrow['salesA']/$NumDaysA;
+			$dailyB = $myrow['salesB']/$NumDaysB;
+			$dailyC = $myrow['salesC']/$NumDaysC;
+			$dailyD = $myrow['salesD']/$NumDaysD;
+			$dailyE = $myrow['salesE']/$NumDaysE;
+			$dailyF = $myrow['salesF']/$NumDaysF;
 			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
 			$trend = " ";
 			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
@@ -611,12 +612,12 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						$i,
 						$Code,
 						$Name,
-						$dailyA, 
-						$dailyB, 
-						$dailyC,
-						$dailyD,
-						$dailyE,
-						$dailyF,
+						locale_number_format($dailyA,0), 
+						locale_number_format($dailyB,0), 
+						locale_number_format($dailyC,0),
+						locale_number_format($dailyD,0),
+						locale_number_format($dailyE,0),
+						locale_number_format($dailyF,0),
 						$MTD,
 						$trend,
 						locale_number_format($forecast,0),
@@ -1652,7 +1653,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 	$Year = date('Y', strtotime("-1 days"));
 	
-	$TrendThisYear = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
+	$TrendThisYearKL = round(GetLastKPIValue("Stock","Trend retail 75 days (%) Kapal-Laut") / 100,3);
+	$TrendThisYearBL = round(GetLastKPIValue("Stock","Trend retail 75 days (%) Blink") / 100,3);
+	$TrendThisYearOU = round(GetLastKPIValue("Sales","Trend retail%") / 100,3);
 	
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
@@ -1726,7 +1729,13 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$DailyUse = $myrow['qused'] / $DaysUsage;
 			$UsedLastXDays = ceil($DailyUse * $DaysUsage);
 			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
-			$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYear));
+			if (ItemInList($myrow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
+				$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYearKL));
+			}elseif (ItemInList($myrow['stockid'], LIST_ITEMS_BLINK_PACKAGING)){
+				$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYearBL));
+			}else{
+				$ForecastUsedLastYear = ceil($myrow['qusedlastyear'] * (1 + $TrendThisYearOU));
+			}
 			$ForecastUsageNextDays = max( $ForecastUsedThisYear, $ForecastUsedLastYear);
 			$ForecastUsageDaily = $ForecastUsageNextDays / $DaysMinimumStock;
 			
@@ -1782,7 +1791,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						if ($ShowAll){
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging order status</strong></p>';
 							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate). '</p>';
-							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear). ' with trend retail = '. ($TrendThisYear*100).'%</p>';
+							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . '</p>';
+							echo '<p class="page_title_text_small" align="center">Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%</p>';
 						}else{
 							echo '<p class="page_title_text" align="center"><strong>Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.</strong></p>';
 						}
@@ -1796,7 +1806,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					}
 					echo '<div>';
 					echo '<table class="selection">';
-					$TableHeader = '<tr>
+/*					$TableHeader = '<tr>
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
@@ -1812,6 +1822,21 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('QTY Shortage') . '</th>
 										<th class="ascending">' . _('% Shortage') . '</th>
 										<th class="ascending">' . _('QOO Running') . '</th>
+										<th class="ascending">' . _('Next Order') . '</th>
+									</tr>';
+*/
+					$TableHeader = '<tr>
+										<th class="ascending">' . _('#') . '</th>
+										<th class="ascending">' . _('Code') . '</th>
+										<th class="ascending">' . _('Description') . '</th>
+										<th class="ascending">' . _('Optimum QTY') . '</th>
+										<th class="ascending">' . _('QOH Gudang') . '</th>
+										<th class="ascending">' . _('QOH Shops') . '</th>
+										<th class="ascending">' . _('QOH Total') . '</th>
+										<th class="ascending">' . _('QOH Days') . '</th>
+										<th class="ascending">' . _('Shortage QTY') . '</th>
+										<th class="ascending">' . _('% Shortage') . '</th>
+										<th class="ascending">' . _('Running QOO') . '</th>
 										<th class="ascending">' . _('Next Order') . '</th>
 									</tr>';
 					echo $TableHeader;
@@ -1833,7 +1858,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
+/*				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1867,6 +1892,33 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format_zero_blank($myrow['qoo'],0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
+*/
+				printf('<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$i, 
+						$CodeLink, 
+						$myrow['description'], 
+						locale_number_format($OptimumQOH,0),
+						locale_number_format($myrow['qohgudang'],0),
+						locale_number_format($myrow['qohshops'],0),
+						locale_number_format($QOH,0),
+						locale_number_format($QOHDays,0),
+						locale_number_format($MissingQOH,0),
+						locale_number_format($MissingQOH/$OptimumQOH*100,0) .'%',
+						locale_number_format_zero_blank($myrow['qoo'],0),
+						locale_number_format_zero_blank($QtyToOrder,0)
+						);
 			}
 			$i++;
 		}
@@ -1875,7 +1927,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
 			$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
 			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+/*			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -1909,6 +1961,34 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
+*/
+			printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					"", 
+					"TOTAL", 
+					"", 
+					locale_number_format($TotalQOHOptimum,0),
+					locale_number_format($TotalQOHGudang,0),
+					locale_number_format($TotalQOHShops,0),
+					locale_number_format($QOHTotal,0),
+					'',
+					locale_number_format($MissingTotal,0),
+					locale_number_format($MissingTotal/$TotalQOHOptimum*100,0).'%',
+					locale_number_format_zero_blank($PendingQOO,0),
+					locale_number_format_zero_blank($OptimumOrder,0)
+					);
+
 			InsertKPI("Packaging", "Packaging current daily use (PCS)", $TotalDailyUse);
 			InsertKPI("Packaging", "Packaging used last " . $DaysUsage .  " days (PCS)", $UsageXDays);
 			InsertKPI("Packaging", "Packaging forecast next X days (PCS)", $ForecastXDays);
@@ -1929,7 +2009,6 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 	/* Check if there is any item without retail price */
 	$today = date('Y-m-d');
-	$issues = 0;
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(stockmaster.actualcost) AS stdcost
@@ -1966,8 +2045,9 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
+		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$issues++;
+			$i++;
 			$k = StartEvenOrOddRow($k);
 			$NewPrice = round_price($myrow['stdcost'] * $factorRetail, "UP");
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
@@ -1980,7 +2060,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$issues, 
+					$i, 
 					$CodeLink, 
 					$myrow['description'],
 					$PriceLink,
@@ -1991,7 +2071,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 		echo '</table>
 				</div>';
 	}
-	return $issues;
+	return $i;
 }
 
 function LocationInformationReview($RootPath, $db){
@@ -2203,7 +2283,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			$TableResult[$numitems]['intransit'] = $myrow['intransit'];
 			$TableResult[$numitems]['optimum'] = round(($myrow['rl'] * $RLFactor),0);
 			$TableResult[$numitems]['needed']= max(0,$TableResult[$numitems]['optimum'] - $myrow['qoh']);
-			$QtyToShip = min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),$myrow['qohparent']);
+			$QtyToShip = min(max(0,$TableResult[$numitems]['needed'] - $myrow['intransit']),($myrow['qohparent'] - $myrow['intransit']));
 			if (ItemInList($LocCode, LIST_PACAKING_LOCATIONS)){
 				// if it is a transfer from a gudang packaging to another and we don't have much stock, 
 				// we divide the available gudang QOH between all the packaging gudang
@@ -2947,7 +3027,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (IDR)", $TotalValueAllOrders);
 			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (IDR)", round($myrow['cogs'],-6));
-			printf('<td class="number">%s</td>
+/*			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2987,10 +3067,11 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
+*/
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$myrow['cogs'],-6);
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (IDR)", $ExpectedDifferenceValueStock);
-			$k = StartEvenOrOddRow($k);
+/*			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -3031,7 +3112,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-					
+*/					
 			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (PCS)", $ExpectedDifferenceQtyStock);
 /*			$k = StartEvenOrOddRow($k);
@@ -3075,9 +3156,10 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
-*/			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
+*/
+			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (IDR)", $ExpectedFutureValueStock);
-			$k = StartEvenOrOddRow($k);
+/*			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -3118,6 +3200,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					'', 
 					'' 
 					);
+*/
 			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (PCS)", $ExpectedFutureQtyStock);
 /*			$k = StartEvenOrOddRow($k);

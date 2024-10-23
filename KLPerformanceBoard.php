@@ -40,6 +40,8 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+$yesterday_year = date('Y', strtotime("-1 days"));
+
 
 /***************************************************************************************
 * TEST AND PLAY AREA      
@@ -90,10 +92,6 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		PeriodDifferenceSales("IMMEDIATE", "Shop",  90, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Shop", 180, $db);
-		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop", 365, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -104,7 +102,7 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager){
 		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("2023", "Shop",  "YTD", $db);
+		PeriodDifferenceSales($yesterday_year -1, "Shop",  "YTD", $db); // previous year
 		$NumberOfTestExecuted++;
 	}
 
@@ -112,14 +110,12 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 
-		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Online",  15, $db);
-		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
-		$NumberOfTestExecuted++;
+//		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
+//		$NumberOfTestExecuted++;
+//		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
+//		$NumberOfTestExecuted++;
+//		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
@@ -127,11 +123,11 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 60, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 30, $db);
 		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 60, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 30, $db);
 		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 60, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 30, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -140,17 +136,17 @@ if ($ProcessSection01){
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		GeneralCustomerBehaviour("SHOPKL", 60, $db);
+		GeneralCustomerBehaviour("SHOPKL", 30, $db);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour("SHOPBL", 60, $db);
+		GeneralCustomerBehaviour("SHOPBL", 30, $db);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour("SHOPOU", 60, $db);
+		GeneralCustomerBehaviour("SHOPOU", 30, $db);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, 365 * 2, $db);
+		DailySalesRecords(10, 365 * 2, "2024-08-04", $db);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -198,11 +194,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPKL", 60, 150, $db);
+		StockByBrand("SHOPKL", 75, 150, $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPBL", 60, 150, $db);
+		StockByBrand("SHOPBL", 75, 150, $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOU", 60, 60, $db);
+		StockByBrand("SHOPOU", 75, 150, $db);
 		$NumberOfTestExecuted++;
 	}
 
@@ -216,14 +212,16 @@ if ($ProcessSection02){
 		ComponentsToObsolete(false, 0, $RootPath, $db);
 		$NumberOfTestExecuted++;
 	}
-
-	if ($KL_SystemAdmin){
-		PurchaseOrdersProcessTime(90, $RootPath, $db);
+*/
+	if ($KL_SystemAdmin 
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector){
+		PurchaseOrdersProcessTime(75, $RootPath, $db);
 		$NumberOfTestExecuted++;
-		PurchaseOrdersWrongPlannedDates($RootPath, $db);
-		$NumberOfTestExecuted++;
+//		PurchaseOrdersWrongPlannedDates($RootPath, $db);
+//		$NumberOfTestExecuted++;
 	}
-
+/*
 	if ($KL_SystemAdmin){
 		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -318,7 +316,10 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin){
+	if ($KL_SystemAdmin
+		OR $KL_OperationalManager
+		OR $KL_OperationalTeam
+		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksDistribution("CLOSED", 30);
@@ -330,12 +331,6 @@ if ($ProcessSection03){
 	if ($KL_OperationalManager
 		OR $KL_OperationalTeam
 		OR $KL_ShopManager){
-		MaintenanceTasksDistribution("OPEN", 0);
-		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("CLOSED", 30);
-		$NumberOfTestExecuted++;
-		MaintenanceTasksDistribution("TOTAL", 30);
-		$NumberOfTestExecuted++;
 		MaintenanceTasksList("OPEN");
 		$NumberOfTestExecuted++;
 		MaintenanceTasksList("CLOSED", 30);
@@ -357,14 +352,18 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationTeam){
-		CashStatus(2024, 
+		CashStatus($yesterday_year, 
 					226900000, 200000000, 100000000, 
 					143000000, 200000000, 100000000, 
 					 40525935, 300000000, 100000000, 
 					100000000, 
 					75, 1.05,
-					5000, 
-					100000, 200000,
+					  5000, 
+					100000, 
+					 10000,
+					125000,
+					  5000,
+					 40000,
 					$periodnow, $KL_SystemAdmin, $db);
 		$NumberOfTestExecuted++;
 	}
@@ -394,13 +393,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA, 
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 
 	if ($typereport == "Shop"){
-		if ($Brand == "SHOPKL"){
-			$BrandText = "Kapal-Laut";
-		}else if ($Brand == "SHOPBL"){
-			$BrandText = "Blink";
-		}else{
-			$BrandText = "Outlet";
-		} 
+		$BrandText= BrandTextFromCode($Brand);
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					(SELECT SUM(salesorders.klpaidcash + salesorders.klpaidcreditcard)
@@ -623,8 +616,8 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA, 
 				);
 		echo '</table>
 				</div>';
-		InsertKPI("Sales", "Average Value Invoice During Last " . $NumDaysA . " days (IDR)", $SumInvoiceSum/$SumInvoiceCount);
-		InsertKPI("Sales", "Average Invoices During Last " . $NumDaysA . " days (INVOICES)", $SumInvoiceCount/$NumDaysA);
+		InsertKPI("Sales", "Avg Invoice Value Last " . $NumDaysA . " days (IDR) " . $BrandText, $SumInvoiceSum/$SumInvoiceCount);
+		InsertKPI("Sales", "Avg Invoices Last " . $NumDaysA . " days (INVOICES) " . $BrandText, $SumInvoiceCount/$NumDaysA);
 	}
 }
 
@@ -636,7 +629,10 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 							$USDSafetyFactor,
 							$USDMinPurchase,
 							$USDMaxEasyPurchasePerMonth,
+							$SaldoADUDanamonUSDMin,
 							$SaldoADUDanamonUSDMax,
+							$SaldoADUPayoneerUSDMin,
+							$SaldoADUPayoneerUSDMax,
 							$Period, 
 							$AdminRole, 
 							$db){
@@ -902,6 +898,16 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$myrow = DB_fetch_array($result);
 	$SaldoADUDanamonUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
 
+	$Account = "111203020AD"; // Payoneer PTADU USD in IDR
+	$SQL = "SELECT (bfwd + actual) as saldo
+			FROM chartdetails, chartmaster
+			WHERE chartdetails.accountcode = chartmaster.accountcode
+				AND chartdetails.accountcode = '" . $Account . "'
+				AND chartdetails.period = ". $Period . "";
+	$result = DB_query($SQL);
+	$myrow = DB_fetch_array($result);
+	$SaldoADUPayoneerUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
+
 	$Account = "111204030"; // Cash in Agent Aye Cargo in BKK in IDR
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails, chartmaster
@@ -926,7 +932,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
 	$DPPlacedUSD = $PORunningTotalUSD - $POPaymentsPendingUSD;
 	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
-	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoAyeCargoUSD;
+	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 
 	if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
@@ -937,6 +943,13 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
 	}else{
 		$ToBeExchanged = 0;	
+	}
+	
+	if ($SaldoADUPayoneerUSD < $SaldoADUPayoneerUSDMin){
+		$ToBeTransferredToPayoneer = round_multiple_of(min($SaldoADUPayoneerUSDMax - $SaldoADUPayoneerUSD, 
+															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), 5000);	
+	}else{
+		$ToBeTransferredToPayoneer = 0;
 	}
 
 	////////////////////////////////////////////////////////
@@ -960,20 +973,8 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			'Running PO for items for sale (USD approx)', 
 			locale_number_format($PORunningTotalUSD,0)
 			);
-/*	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Running PO DP already placed (USD approx)', 
-			locale_number_format(-$DPPlacedUSD,0)
-			);
+
 	printf('<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Running PO pending payments during next '.$USDPODaysSchedule.' days (USD approx)', 
-			locale_number_format($POPaymentsPendingUSD,0)
-			);
-			
-*/	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
@@ -985,6 +986,13 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 			</tr>', 
 			'Current balance Danamon USD ADU (USD approx)', 
 			locale_number_format($SaldoADUDanamonUSD,0)
+			);
+
+	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			'Current balance Payoneer USD ADU (USD approx)', 
+			locale_number_format($SaldoADUPayoneerUSD,0)
 			);
 
 	printf('<td>%s</td>
@@ -1024,6 +1032,17 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 				locale_number_format($ToBeExchanged)
 				);
 	}
+	
+	if ($ToBeTransferredToPayoneer > 0){
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Payoneer USD', 
+				locale_number_format($ToBeTransferredToPayoneer)
+				);
+	}
+
 	echo '</table>
 		</div>';
 
@@ -1618,10 +1637,15 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 
 }
 
-function DailySalesRecords($Days, $NumDays, $db){
+function DailySalesRecords($Days, $NumDays, $Since, $db){
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-
+	
+	if ($Since != ''){
+		if ($Since >= $FromDate){
+			$FromDate = $Since;
+		}
+	}
 	$SQL = "SELECT salesorders.orddate,
 				SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) AS sales
 			FROM salesorders
@@ -1672,13 +1696,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 	$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1-365));
 
-	if ($Brand == "SHOPKL"){
-		$BrandText = "Kapal-Laut";
-	}else if ($Brand == "SHOPBL"){
-		$BrandText = "Blink";
-	}else{
-		$BrandText = "Outlet";
-	} 
+	$BrandText= BrandTextFromCode($Brand);
 
 	$SQL = "SELECT debtorsmaster.debtorno,
 				debtorsmaster.name,
@@ -1808,8 +1826,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 		}
 		echo '</table>
 				</div>';
-		InsertKPI("Sales", "Average Daily Items Sold Last " . $NumDaysA . " days (ITEMS)", $TotalItemCount/$NumDaysA);
-		InsertKPI("Sales", "Average #Items per Invoice Last " . $NumDaysA . " days (ITEMS)", $TotalItemCount/$TotalInvoiceCount);
+		InsertKPI("Sales", "Items x Invoice Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
 	}
 }
 
@@ -3530,6 +3547,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 	$TotalBothYearsDateB = 0;
 	$TotalBothYearsRent = 0;
 	$TotalNewDateA = 0;
+	$TotalOldDateB = 0;
 	$TotalNewRent = 0;
 	$TotalOldRent = 0;
 
@@ -3641,7 +3659,11 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 				$Rent = "";
 			}
 			
-			$percent = (($myrow['salesA'])-($myrow['salesB']))/($myrow['salesB']) * 100;
+			if ($myrow['salesB'] != 0){
+				$percent = (($myrow['salesA'])-($myrow['salesB']))/($myrow['salesB']) * 100;
+			}else{
+				$percent = 0;
+			}
 			$trend = " ";
 			if ($percent > MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
@@ -4201,28 +4223,31 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 
 function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 	
-	if ($Brand == "SHOPKL"){
-		$BrandText = "Kapal-Laut";
-	}else if ($Brand == "SHOPBL"){
-		$BrandText = "Blink";
-	}else{
-		$BrandText = "Outlet";
-	} 
+	$BrandText= BrandTextFromCode($Brand);
 
 	$Shops = NumberOfShops($Brand, "ALL", $db);
+	$NumDaysLastYear = $OptimalDaysStock - $NumDays;
 
 	$TotalModels  = TotalModels($Brand);
 	$TotalItems   = TotalItems($Brand);
 	$DisplayItems = TotalDisplayItems($Brand);
 	$AvailableForSaleItems = $TotalItems - $DisplayItems;
-	$DailySoldItems = DailyAverageSoldItems($Brand, $NumDays);
-	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItems;
+	$DailySoldItemsThisYearPastDays = NumItemsSoldPerBrand($Brand, $NumDays, "THIS_YEAR", "PAST") / $NumDays;
+	if ($Brand != "SHOPOU"){
+		$DailySoldItemsLastYearPastDays = NumItemsSoldPerBrand($Brand, $NumDays, "LAST_YEAR", "PAST") / $NumDays;
+		$TrendThisYear = ($DailySoldItemsThisYearPastDays / $DailySoldItemsLastYearPastDays)-1;
+		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, ($OptimalDaysStock - $NumDays), "LAST_YEAR", "FUTURE") / $NumDaysLastYear;
+		$DailySoldItemsPrediction = max($DailySoldItemsThisYearPastDays, ($DailySoldItemsLastYearNextDays * ($TrendThisYear+1)));
+	}else{
+		$DailySoldItemsPrediction = $DailySoldItemsThisYearPastDays;
+	}
+	$DaysStockForSale = $AvailableForSaleItems / $DailySoldItemsPrediction;
 	$ItemsPO = TotalItemsToBeReceivedByPO($Brand);
 	$ItemsWO = TotalItemsToBeReceivedByWO($Brand);
-	$DaysStockForSaleIncludingPOWO = ($AvailableForSaleItems + $ItemsPO + $ItemsWO) / $DailySoldItems;
+	$DaysStockForSaleIncludingPOWO = ($AvailableForSaleItems + $ItemsPO + $ItemsWO) / $DailySoldItemsPrediction;
 	
 	if ($DaysStockForSaleIncludingPOWO < $OptimalDaysStock){
-		$ItemsToGetOptimalDaysStock = ($OptimalDaysStock - $DaysStockForSaleIncludingPOWO) * $DailySoldItems; 
+		$ItemsToGetOptimalDaysStock = ($OptimalDaysStock - $DaysStockForSaleIncludingPOWO) * $DailySoldItemsPrediction; 
 	}else{
 		$ItemsToGetOptimalDaysStock = 0;
 	}
@@ -4271,11 +4296,42 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 			locale_number_format($AvailableForSaleItems,0)
 			);
 	$k = StartEvenOrOddRow($k);
+/*	printf('<td>%s</td>
+			<td class="number">%s</td>
+			</tr>', 
+			"Daily Stock sold average last " . $NumDays . " days (PCS)", 
+			locale_number_format($DailySoldItemsThisYearPastDays,0)
+			);
+	$k = StartEvenOrOddRow($k);
+	if ($Brand != "SHOPOU"){
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Daily Stock sold same days last year (PCS)", 
+				locale_number_format($DailySoldItemsLastYearPastDays,0)
+				);
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Retail trend last " . $NumDays . " days (%)", 
+				locale_number_format($TrendThisYear*100,1). "%"
+				);
+		$k = StartEvenOrOddRow($k);
+		printf('<td>%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"Daily Stock sold average next " . $NumDaysLastYear . " days last year (PCS)", 
+				locale_number_format($DailySoldItemsLastYearNextDays,0)
+				);
+		$k = StartEvenOrOddRow($k);
+	}	
+*/
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			"Daily Stock sold average " . $NumDays . " days (PCS)", 
-			locale_number_format($DailySoldItems,0)
+			"Estimation daily Stock to be sold next " . $NumDays . " days  (PCS)", 
+			locale_number_format($DailySoldItemsPrediction,0)
 			);
 	$k = StartEvenOrOddRow($k);
 	printf('<td>%s</td>
@@ -4306,6 +4362,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 				"Days left of stock including PO & WO (DAYS)", 
 				locale_number_format($DaysStockForSaleIncludingPOWO,0)
 				);
+		$k = StartEvenOrOddRow($k);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
@@ -4323,13 +4380,16 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 	InsertKPI("Stock", "Stock needed for display (PCS) " . $BrandText, $DisplayItems);
 	InsertKPI("Stock", "Stock available for sale (PCS) " . $BrandText, $AvailableForSaleItems);
 	InsertKPI("Stock", "Average pieces per model (PCS) " . $BrandText, round($AvailableForSaleItems/$TotalModels,2));
-	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItems);
+	InsertKPI("Stock", "Daily Stock sold average " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItemsThisYearPastDays);
+	InsertKPI("Stock", "Daily Stock forecast for " . $NumDays . " days (PCS) " . $BrandText, $DailySoldItemsPrediction);
 	InsertKPI("Stock", "Days left of stock (DAYS) " .$BrandText, $DaysStockForSale);
 	InsertKPI("Stock", "Stock to be received PO (PCS) " . $BrandText, $ItemsPO);
 	InsertKPI("Stock", "Stock to be received WO (PCS) " . $BrandText, $ItemsWO);
 	InsertKPI("Stock", "Days left of stock+PO+WO(DAYS) " .$BrandText, $DaysStockForSaleIncludingPOWO);
 	InsertKPI("Stock", "Stock needed for optimal (PCS) " . $BrandText, $ItemsToGetOptimalDaysStock);
-
+	if ($Brand != "SHOPOU"){
+		InsertKPI("Stock", "Trend retail ". $NumDays . " days (%) " . $BrandText, $TrendThisYear*100);
+	}
 }
 
 ?>

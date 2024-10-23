@@ -416,9 +416,9 @@ function locale_number_format_zero_blank($num,$dec){
 }
 
 function locale_number_format_kpi($num){
-	if($num >= 1000){
+	if(abs($num) >= 1000){
 		return locale_number_format($num,0);
-	}elseif($num >= 10){
+	}elseif(abs($num) >= 10){
 		return locale_number_format($num,1);
 	}else{
 		return locale_number_format($num,2);
@@ -1172,6 +1172,10 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
 
+			$sql="DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
+			$result = DB_query($sql,$ErrMsg);
+
 			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
 			$result = DB_query($sql,$ErrMsg);
@@ -1332,9 +1336,28 @@ function TotalDisplayItems($Brand){
 	return $myrow['0'];
 }
 
-function DailyAverageSoldItems($Brand, $NumDays){
+function NumItemsSoldPerBrand($Brand, $NumDays, $Period, $Way){
 	$ErrMsg = 'Error in DailySoldItems()';
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($Period == "THIS_YEAR"){
+		if ($Way == "FUTURE"){
+			// items sold in the inmediate $NumDays future days since yesterday. MAKES NO SENSE
+			return 0;
+		}else{
+			// items sold in the inmediate past $NumDays days since yesterday
+			$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+			$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-1));
+		}
+	}else{
+		if ($Way == "FUTURE"){
+			// items sold in the inmediate $NumDays future days since yesterday one day ago. 
+			$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365+$NumDays));
+			$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365));
+		}else{
+			// items sold in the inmediate past $NumDays days since yesterday one day ago
+			$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-366));
+			$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-366));
+		}
+	}
 
 	if ($Brand == "SHOPKL"){
 		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
@@ -1347,12 +1370,25 @@ function DailyAverageSoldItems($Brand, $NumDays){
 	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
 			FROM salesorderdetails, stockmaster
 			WHERE stockmaster.stockid = salesorderdetails.stkcode 
-				AND salesorderdetails.itemdue >= '" . $FromDate . "'" . 
+				AND salesorderdetails.itemdue >= '" . $FromDate . "'
+				AND salesorderdetails.itemdue <= '" . $ToDate . "'" . 
 				$operator1 ."";
 	$result = DB_query($SQL);
 	$myrow = DB_fetch_array($result);
-	return ($myrow['0'] / $NumDays);
+	return ($myrow['0']);
 }
 
+function BrandTextFromCode($Brand){
+	if ($Brand == "SHOPKL"){
+		$BrandText = "Kapal-Laut";
+	}elseif ($Brand == "SHOPBL"){
+		$BrandText = "Blink";
+	}elseif ($Brand == "SHOPOU"){
+		$BrandText = "Outlet";
+	}else{
+		$BrandText = "ERROR";
+	}
+	return $BrandText;
+}
 
 ?>
