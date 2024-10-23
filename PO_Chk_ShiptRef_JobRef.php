@@ -11,7 +11,7 @@ by the EnterLine button when a new purchase order line item is entered
               	/*Check for existance of Shipment Selected */
               $sql = "SELECT COUNT(*) FROM shipments WHERE shiptref ='".  $_POST['ShiptRef'] . "' AND closed =0";
                      $ShiptResult = DB_query($sql,'','',false,false);
-                     if (DB_error_no!=0 OR DB_num_rows($ShiptResult)==0){
+                     if (DB_error_no()!=0 OR DB_num_rows($ShiptResult)==0){
                              $AllowUpdate = False;
                              prnMsg(_('The update could not be processed') . '<br />' . _('There was some snag in retrieving the shipment reference entered') . ' - ' . _('see the listing of open shipments to ensure a valid shipment reference is entered'),'error');
                      } else {

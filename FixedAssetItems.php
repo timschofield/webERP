@@ -504,8 +504,8 @@ if (!isset($New) ) { //ie not new at all!
 		<field>
 			<label for"ClearImage">'._('Clear Image').'</label>
 			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ';
-
-	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+    $glob = (glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$imagefile = reset($glob);
 	if (extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($imagefile) ) {
 		$AssetImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
 			'&StockID='.urlencode('ASSET_' . $AssetID).

@@ -38,7 +38,7 @@ Class Contract {
 	}
 	
 	function Contract() {
-		self::__construct;
+		self::__construct();
 	}
 
 	function Add_To_ContractBOM($StockID,
