@@ -345,7 +345,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($weeklyavail[18],0),'right');
 	$YPos -=$line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,_('Planned Acc'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($plannedaccum[9],0),right);
+	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($plannedaccum[9],0),'right');
 	$InitialPoint = 130;
 	for($c=10;$c<19;$c++){
 		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($plannedaccum[$c],0),'right');

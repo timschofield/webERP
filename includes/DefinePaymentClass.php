@@ -47,7 +47,7 @@ Class Payment {
 	}
 
 	function Payment() {
-		self::__construct;
+		self::__construct();
 	}
 
 	function Add_To_GLAnalysis($Amount,

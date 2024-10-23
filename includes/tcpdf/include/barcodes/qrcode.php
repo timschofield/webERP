@@ -2472,7 +2472,7 @@ class QRcode {
 		if (($level < 0) OR ($level > 3)) {
 			return 0;
 		}
-		return $this->formatInfo[$level][$mask];
+		return $this->formatInfo[$level][$mask] ?? 0;
 	}
 
 	/**

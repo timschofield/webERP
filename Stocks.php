@@ -496,9 +496,9 @@ if (isset($_POST['submit'])) {
 					}
 					if ($_POST['PropNumeric' . $i] == 1) {
 						$_POST['PropValue' . $i] = filter_number_format($_POST['PropValue' . $i]);
-					} else {
+					} /*else {
 						$_POST['PropValue' . $i] = $_POST['PropValue' . $i];
-					}
+					}*/
 					$Result = DB_query("INSERT INTO stockitemproperties (stockid,
 																		stkcatpropid,
 																		value)
@@ -686,9 +686,9 @@ if (isset($_POST['submit'])) {
 
 						if ($_POST['PropNumeric' . $i] == 1) {
 							$_POST['PropValue' . $i] = filter_number_format($_POST['PropValue' . $i]);
-						} else {
+						} /*else {
 							$_POST['PropValue' . $i] = $_POST['PropValue' . $i];
-						}
+						}*/
 
 						$Result = DB_query("INSERT INTO stockitemproperties (stockid,
 													stkcatpropid,
@@ -1055,7 +1055,8 @@ echo '<field>
 		<input type="checkbox" name="ClearImage" id="ClearImage" value="1" >
 	</field>';
 if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}')) > 0) {
-	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+	$glob = (glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$imagefile = reset($glob);
 } else {
 	$imagefile = '';
 }

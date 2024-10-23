@@ -1011,7 +1011,8 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				if (!in_array($MyRow['stockid'], $ItemCodes)) {
-					$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+					$glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+					$imagefile = reset($glob);
 					if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)) {
 						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($MyRow['stockid']) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
 					} else if (file_exists($imagefile)) {

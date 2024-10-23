@@ -187,7 +187,7 @@ if (DB_num_rows($Result) > 0) {
 
 		$LeftOvers = $pdf->addTextWrap($XPos + 1, $YPos, 100, $FontSize, $MyRow2['stkcode']);
 		$LeftOvers = $pdf->addTextWrap(120, $YPos, 295, $FontSize, $MyRow2['description']);
-		$LeftOvers = $pdf->addTextWrap(270, $YPos, 85, $FontSize, ConvertSQLDate($MyRow2['itemdue']), right);
+		$LeftOvers = $pdf->addTextWrap(270, $YPos, 85, $FontSize, ConvertSQLDate($MyRow2['itemdue']), 'right');
 		$LeftOvers = $pdf->addTextWrap(340, $YPos, 85, $FontSize, $DisplayQty, 'right');
 		$LeftOvers = $pdf->addTextWrap(420, $YPos, 85, $FontSize, $DisplayUOM, 'left');
 		$LeftOvers = $pdf->addTextWrap(420, $YPos, 85, $FontSize, $DisplayPrice, 'right');
