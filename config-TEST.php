@@ -5,6 +5,9 @@
 // User configurable variables
 //---------------------------------------------------
 
+// type of webERP (TEST or Prodution)
+$webERPType = 'TEST';
+
 //DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override
 $DefaultLanguage ='en_GB.utf8';
 
@@ -17,7 +20,7 @@ $DefaultTheme = 'gel';
 //$DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
-$allow_demo_mode = False;
+$AllowDemoMode = False;
 
 // email address of the system administrator
 $SysAdminEmail = 'webmaster@kapal-laut.com';
@@ -66,6 +69,7 @@ $AllowCompanySelectionBox = 'Hide';
 // KL RICARD: LOOK AT THE END OF FILE!!! there is other palce to set the name.t this seems to be obsolete
 
 $DefaultCompany = 'test_erp';
+$DefaultDatabase = 'test_erp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour

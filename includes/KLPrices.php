@@ -130,11 +130,19 @@ function SetRLZeroAtPointOfSales($StockId, $db){
 }
 
 function round_multiple_of($n,$x=1) {
-    return round($n/$x)*$x;
+	if ($x == 0){
+		return 0;
+	}else{
+		return round($n/$x)*$x;
+	}
 }
 
 function round_down_multiple_of($n,$x=1) {
-    return floor($n/$x)*$x;
+	if ($x == 0){
+		return 0;
+	}else{
+		return floor($n/$x)*$x;
+	}
 }
 
 function IsPriceRoundedOK($n, $up="UP"){

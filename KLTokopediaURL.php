@@ -86,7 +86,7 @@ function submit(&$db, $SelectedFile) {
 			$QOH = ItemMarketplaceQOH($StockId, $db);
 			$EnabledTokopedia = ( $QOH > 0);
 			
-			if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+			if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 				// Already exists, so only update the info with the newest tokopedia link and tokopedia product id if needed
 				ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia, $db);
 				$Action = "Update";

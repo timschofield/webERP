@@ -3573,7 +3573,6 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 function OldOnlineQuotations($NumDaysBank, $RootPath, $db){
 
 	$StartDateBank = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysBank));
-	$StartDateXendit = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysXendit));
 	$Titletext = "Old Online Quotations to be deleted. No Payment received in more than " . $NumDaysBank . " days.";
 		
 	$SQL = "SELECT salesorders.orderno,	
@@ -4615,8 +4614,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 	$SQL="SELECT loccode,
 			locationname
 		FROM locations
-		WHERE typeloc = 'SHOPOU'" 
-		. $Condition;
+		WHERE typeloc = 'SHOPOU'";
 	$result = DB_query($SQL);
 	while ($myshop = DB_fetch_array($result)){
 		$SQL = "SELECT COUNT(*)
@@ -5382,6 +5380,7 @@ function OpenCartOrdersByStatus($Status, $RootPath, $db, $db_oc){
 				oc_order.store_name,
 				oc_order.firstname,
 				oc_order.lastname,
+				oc_order.currency_code,
 				oc_order.date_modified
 			FROM oc_order
 			WHERE oc_order.order_status_id = '" . $Status . "'

@@ -1,5 +1,4 @@
 <?php
-/* $Id: DateFunctions.inc 7600 2016-08-24 09:03:08Z exsonqu $*/
 
 /*
 date validation and parsing functions
@@ -82,7 +81,7 @@ function Is_date($DateEntry) {
 } //end of Is_Date function
 
 
-function MonthAndYearFromSQLDate($DateEntry) {
+function MonthAndYearFromSQLDate($DateEntry, $useShortMonthAndYear = false) {
 
 	if (mb_strpos($DateEntry,'/')) {
 		$Date_Array = explode('/',$DateEntry);
@@ -96,9 +95,19 @@ function MonthAndYearFromSQLDate($DateEntry) {
 		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
 	}
 
-	$MonthName = GetMonthText(date('n', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0])));
-	return $MonthName . ' ' . date('Y', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
+	$MonthAndYear = '';
+	$timestamp = mktime(0,0,0, (int)$Date_Array[1], (int)$Date_Array[2], (int)$Date_Array[0]);
 
+	if ($useShortMonthAndYear) {
+		// 2-digit month and year: 04/20.
+		// Useful for Graphs with many plot references.
+		$MonthAndYear = date('m/y', $timestamp);
+	} else {
+		$MonthName = GetMonthText(date('n', $timestamp));
+		$MonthAndYear = $MonthName . ' ' . date('Y', $timestamp);
+	}
+
+	return $MonthAndYear;
 }
 
 function GetMonthText($MonthNumber){
@@ -147,6 +156,7 @@ function GetMonthText($MonthNumber){
 }
 
 function GetWeekDayText ($WeekDayNumber){
+	$Day='';
 	switch ($WeekDayNumber) {
 		case 0:
 			$Day = _('Sunday');
@@ -977,7 +987,7 @@ function CalcEarliestDispatchDate (){
 	return $EarliestDispatch;
 }
 
-function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
+function CreatePeriod($PeriodNo, $PeriodEnd) {
 				$GetPrdSQL = "INSERT INTO periods (periodno,
 													lastdate_in_period)
 												VALUES (
@@ -988,7 +998,7 @@ function CreatePeriod($PeriodNo, $PeriodEnd, &$db) {
 
 }
 
-function PeriodExists($TransDate, &$db) {
+function PeriodExists($TransDate) {
 
 	/* Find the date a month on */
 	$MonthAfterTransDate = Mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate));
@@ -1006,7 +1016,7 @@ function PeriodExists($TransDate, &$db) {
 
 }
 
-function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
+function GetPeriod ($TransDate, $UseProhibit=true) {
 
 	/* Convert the transaction date into a unix time stamp.*/
 
@@ -1059,7 +1069,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 	$FirstPeriod = $myrow[1];
 
 	/* If the period number doesn't exist */
-	if (!PeriodExists($TransDate, $db)) {
+	if (!PeriodExists($TransDate)) {
 		/* if the transaction is after the last period */
 
 		if ($TransDate > $LastPeriodEnd) {
@@ -1073,14 +1083,14 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 					$LastPeriodEnd = mktime(0,0,0,2, 0, Date('Y', $LastPeriodEnd)+1);
 				}
 				$LastPeriod++;
-				CreatePeriod($LastPeriod, $LastPeriodEnd, $db);
+				CreatePeriod($LastPeriod, $LastPeriodEnd);
 			}
 		} else {
 		/* The transaction is before the first period */
 			$PeriodEnd = mktime(0,0,0,Date('m', $TransDate), 0, Date('Y', $TransDate));
 			$Period = $FirstPeriod - 1;
 			while ($FirstPeriodEnd > $PeriodEnd) {
-				CreatePeriod($Period, $FirstPeriodEnd, $db);
+				CreatePeriod($Period, $FirstPeriodEnd);
 				$Period--;
 				if (Date('m', $FirstPeriodEnd)>0) {
 					$FirstPeriodEnd = mktime(0,0,0,Date('m', $FirstPeriodEnd), 0, Date('Y', $FirstPeriodEnd));
@@ -1089,7 +1099,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 				}
 			}
 		}
-	} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)), $db)) {
+	} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)))) {
 		/* Make sure the following months period exists */
 		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
 		$result = DB_query($sql);
@@ -1097,7 +1107,7 @@ function GetPeriod ($TransDate, &$db, $UseProhibit=true) {
 		$Date_Array = explode('-', $myrow[0]);
 		$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
 		$LastPeriod = $myrow[1];
-		CreatePeriod($LastPeriod+1, $LastPeriodEnd, $db);
+		CreatePeriod($LastPeriod+1, $LastPeriodEnd);
 	}
 
 	/* Now return the period number of the transaction */

@@ -187,7 +187,7 @@ function SQLInsertNewItemKLStockmarketplaces($StockId){
 }
 
 function ItemEnableLazadaInfo($StockId, $EnabledLazada, $db){
-	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, should exist!!! so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
 				SET lazadaenabled='" . $EnabledLazada ."'
@@ -203,7 +203,7 @@ function ItemEnableLazadaInfo($StockId, $EnabledLazada, $db){
 }
 
 function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
-	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, should exist!!! so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
 				SET shopeeenabled='" . $EnabledShopee ."'
@@ -219,7 +219,7 @@ function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
 }
 
 function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia, $db){
-	if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
 				SET tokopediaenabled='" . $EnabledTokopedia ."'

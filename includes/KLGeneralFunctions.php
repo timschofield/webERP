@@ -1079,7 +1079,7 @@ function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 	return array($URL,$PackagingImage);
 }
 
-function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
+function DataExistsInWebERP($table, $f1, $v1, $f2 = '', $v2 = ''){
 	if ($f2 == ''){
 		/* Primary key is 1 field only */
 		$SQL = "SELECT COUNT(*)
@@ -1106,7 +1106,7 @@ function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
 
 function InsertKPI($Class, $Concept, $Value){
 	$Date = date('Y-m-d');
-	if (!DataExistsInWebERP($db, 'klkpi', 'date', $Date, 'concept', $Concept)){
+	if (!DataExistsInWebERP('klkpi', 'date', $Date, 'concept', $Concept)){
 		$SQL = "INSERT INTO klkpi 
 				(date,
 				class,

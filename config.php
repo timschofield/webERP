@@ -17,7 +17,7 @@ $DefaultTheme = 'gel';
 //$DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
-$allow_demo_mode = False;
+$AllowDemoMode = False;
 
 // email address of the system administrator
 $SysAdminEmail = 'sysadmin@kapal-laut.com';
@@ -55,6 +55,7 @@ $AllowCompanySelectionBox = 'Hide';
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
 //otherwise the user is expected to know the name of the company to log into.$DefaultCompany = 'kurakura_kl_erp';
 $DefaultCompany = 'kurakura_kl_erp';
+$DefaultDatabase = 'kurakura_kl_erp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour

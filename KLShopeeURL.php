@@ -105,7 +105,7 @@ function submit(&$db, $SelectedFile) {
 				$QOH = ItemMarketplaceQOH($StockId, $db);
 				$EnabledShopee = ( $QOH > 0);
 				
-				if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 					// Already exists, so only update the info with the newest shopee link and shopee product id if needed
 					ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db);
 					$Action = "Update";
