@@ -574,7 +574,7 @@ if (!isset($DebtorNo)) {
 	$result=DB_query("SELECT terms, termsindicator FROM paymentterms");
 	if (DB_num_rows($result)==0){
 		$DataError =1;
-		echo '<field><td colspan="2">' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></field>';
+		echo '<field><td colspan="2">' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error','',true) . '</td></field>';
 	} else {
 
 		echo '<field>

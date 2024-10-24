@@ -237,7 +237,8 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 		DB_free_result($LineItemsResult);
 
 	} else { // End if the order was returned successfully.
-		echo '<br />' . prnMsg(_('This order item could not be retrieved. Please select another order'), 'warn');
+		echo '<br />';
+		prnMsg(_('This order item could not be retrieved. Please select another order'), 'warn');
 		include ('includes/footer.php');
 		exit;
 	} //valid order returned from the entered order number
@@ -1765,7 +1766,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 	unset($_SESSION['Items' . $identifier]);
 	unset($_SESSION['ProcessingOrder']);
 
-	echo prnMsg(_('Invoice number') . ' ' . $InvoiceNo . ' ' . _('processed'), 'success','',true);
+	prnMsg(_('Invoice number') . ' ' . $InvoiceNo . ' ' . _('processed'), 'success');
 
 	echo '<br /><div class="centre">';
 

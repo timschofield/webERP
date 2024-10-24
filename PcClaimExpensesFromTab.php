@@ -33,7 +33,7 @@ if (isset($_POST['Cancel'])) {
 }
 if (isset($_POST['Process'])) {
 	if ($_POST['SelectedTabs'] == '') {
-		echo prnMsg(_('You have not selected a tab to claim the expenses on'), 'error','',true);
+		prnMsg(_('You have not selected a tab to claim the expenses on'), 'error');
 		unset($SelectedTabs);
 	}
 }
