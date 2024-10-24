@@ -94,7 +94,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 		echo $ItemsAvailable . ' ' . _('items available');
 		echo '</td>';
 	} else {
-		echo '<td>' .  prnMsg( _('There does not appear to be any of') . ' ' . $StockID . ' ' . _('left in'). ' '. $LocationOut , 'warn') . '</td>';
+		echo '<td>' .  prnMsg( _('There does not appear to be any of') . ' ' . $StockID . ' ' . _('left in'). ' '. $LocationOut , 'warn','',true) . '</td>';
 	}
 	echo '</tr></table>';
 }

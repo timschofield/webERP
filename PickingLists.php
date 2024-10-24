@@ -621,7 +621,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 	// *************************************************************************
 	//   E N D   O F  S Q L   P R O C E S S I N G
 	// *************************************************************************
-	echo prnMsg(_('PickList ') . ' ' . $_SESSION['ProcessingPick'] . ' ' . _('processed'), 'success');
+	prnMsg(_('PickList ') . ' ' . $_SESSION['ProcessingPick'] . ' ' . _('processed'), 'success');
 
 	if ($_SESSION['PackNoteFormat'] == 1) {
 		/*Laser printed A4 default */

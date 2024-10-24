@@ -77,9 +77,7 @@ final class ListRulesCommand extends Command
             }
             return !$rector instanceof ComplementaryRectorInterface;
         });
-        $rectorClasses = \array_map(static function (RectorInterface $rector) : string {
-            return \get_class($rector);
-        }, $customRectors);
+        $rectorClasses = \array_map(get_class(...), $customRectors);
         \sort($rectorClasses);
         return $rectorClasses;
     }

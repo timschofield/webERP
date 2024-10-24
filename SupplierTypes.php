@@ -35,14 +35,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['TypeName']) >100) {
 		$InputError = 1;
-		echo prnMsg(_('The supplier type name description must be 100 characters or less long'),'error');
+		prnMsg(_('The supplier type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'SupplierType';
 		$i++;
 	}
 
 	if (mb_strlen(trim($_POST['TypeName']))==0) {
 		$InputError = 1;
-		echo prnMsg(_('The supplier type name description must contain at least one character'),'error');
+		prnMsg(_('The supplier type name description must contain at least one character'),'error');
 		$Errors[$i] = 'SupplierType';
 		$i++;
 	}
@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 	$CheckRow=DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0 and !isset($_POST['Edit'])) {
 		$InputError = 1;
-		echo prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
+		prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
 		$Errors[$i] = 'SupplierName';
 		$i++;
 	}

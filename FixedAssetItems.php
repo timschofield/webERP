@@ -131,7 +131,7 @@ if (isset($_POST['submit'])) {
 		if ($_POST['submit']==_('Update')) { /*so its an existing one */
 
 			/*Start a transaction to do the whole lot inside */
-			$result = DB_Txn_Begin();
+			DB_Txn_Begin();
 
 			/*Need to check if changing the balance sheet codes - as will need to do journals for the cost and accum depn of the asset to the new category */
 			$result = DB_query("SELECT assetcategoryid,
@@ -283,7 +283,7 @@ if (isset($_POST['submit'])) {
 				unset($_POST['BarCode']);
 				unset($_POST['SerialNo']);
 			}//ALL WORKED SO RESET THE FORM VARIABLES
-			$result = DB_Txn_Commit();
+			DB_Txn_Commit();
 		}
 	} else {
 		echo '<br />' .  "\n";
@@ -319,7 +319,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('There is a purchase order set up for this asset. The purchase order line must be deleted first'),'error');
 	}
 	if ($CancelDelete==0) {
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -370,7 +370,7 @@ if (isset($_POST['submit'])) {
 		$sql="DELETE FROM fixedassets WHERE assetid='" . $AssetID . "'";
 		$result=DB_query($sql, _('Could not delete the asset record'),'',true);
 
-		$result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		// Delete the AssetImage
 		foreach ($SupportedImgExt as $ext) {
@@ -394,7 +394,7 @@ if (isset($_POST['submit'])) {
 
 	} //end if OK Delete Asset
 } /* end if delete asset */
-$result = DB_Txn_Commit();
+DB_Txn_Commit();
 
 echo '<form id="AssetForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

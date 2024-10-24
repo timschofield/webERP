@@ -39,7 +39,7 @@ if (isset($_POST['Cancel'])) {
 if (isset($_POST['Process'])) {
 
 	if ($_POST['SelectedRole'] == '') {
-		echo prnMsg(_('You have not selected a security role to maintain the internal stock categories on'),'error');
+		prnMsg(_('You have not selected a security role to maintain the internal stock categories on'),'error');
 		echo '<br />';
 		unset($SelectedRole);
 		unset($_POST['SelectedRole']);
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['SelectedCategory']=='') {
 		$InputError=1;
-		echo prnMsg(_('You have not selected a stock category to be added as internal to this security role'),'error');
+		prnMsg(_('You have not selected a stock category to be added as internal to this security role'),'error');
 		echo '<br />';
 		unset($SelectedRole);
 	}

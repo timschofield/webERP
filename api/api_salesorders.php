@@ -718,7 +718,7 @@ $SOH_DateFields = array ('orddate',
 		}
 
 	/*Start an SQL transaction */
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10);
 		$PeriodNo = GetCurrentPeriod();
@@ -1278,11 +1278,11 @@ $SOH_DateFields = array ('orddate',
 
 		if (sizeof($Errors)==0) {
 
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$InvoiceNo;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 	} //end InvoiceSalesOrder function

@@ -143,7 +143,7 @@ if (isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 	$ExDiffTransNo = GetNextTransNo(36);
-	$resultTx = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	$result = DB_query($sql);
 	if ($InputError!=1) {
@@ -230,7 +230,7 @@ if (isset($_POST['submit'])) {
 			}
 		}
 	}
-	$resultTx = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	unset($SelectedCurrency);
 	unset($_POST['Country']);

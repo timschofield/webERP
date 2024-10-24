@@ -48,7 +48,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	} elseif (mb_strlen($_POST['Sales_Type']) >40) {
 		$InputError = 1;
-		echo prnMsg(_('The sales type (price list) description must be forty characters or less long'),'error');
+		prnMsg(_('The sales type (price list) description must be forty characters or less long'),'error');
 		$Errors[$i] = 'SalesType';
 		$i++;
 	} elseif ($_POST['TypeAbbrev']=='AN'){

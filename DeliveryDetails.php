@@ -339,7 +339,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	$QuotDate = FormatDateforSQL($_SESSION['Items'.$identifier]->QuoteDate);
 	$ConfDate = FormatDateforSQL($_SESSION['Items'.$identifier]->ConfirmedDate);
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	$OrderNo = GetNextTransNo(30);
 
@@ -590,7 +590,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 		}//end if auto create WOs in on
 	} /* end inserted line items into sales order details */
 
-	$result = DB_Txn_Commit();
+	 DB_Txn_Commit();
 	echo '<br />';
 	if($_SESSION['Items'.$identifier]->Quotation==1) {
 		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');

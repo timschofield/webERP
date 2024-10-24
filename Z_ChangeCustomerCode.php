@@ -35,7 +35,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 		exit;
 	}
 
-	$result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	prnMsg(_('Inserting the new debtors master record'),'info');
 	$sql = "INSERT INTO debtorsmaster (`debtorno`,
@@ -224,7 +224,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 
-	$result = DB_Txn_Commit();
+	DB_Txn_Commit();
 	$result = DB_ReinstateForeignKeys();
 
 }

@@ -51,12 +51,12 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The tab code must be fifty characters or less long'), 'error');
 	} elseif (mb_strlen($_POST['Description']) == 0) {
 		$InputError = 1;
-		echo prnMsg(_('The tab code description must be entered'), 'error');
+		prnMsg(_('The tab code description must be entered'), 'error');
 	} elseif ($_POST['GLAccount'] == '') {
 		$InputError = 1;
 	} elseif ($_POST['TaxCategory'] === '0') {
 		$InputError = 1;
-		echo prnMsg(_('A tax category must be selected from the list'), 'error');
+		prnMsg(_('A tax category must be selected from the list'), 'error');
 	}
 	if (isset($SelectedExpense) and $InputError != 1) {
 		$SQL = "UPDATE pcexpenses

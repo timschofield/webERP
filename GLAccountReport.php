@@ -320,8 +320,8 @@ else {
 
 function NewPageHeader() {
 	global $PageNumber, $pdf, $YPos, $Page_Height, $Page_Width, $Top_Margin, $FontSize, $Left_Margin, $Right_Margin, $line_height;
-	$SelectedAccount;
-	$AccountName;
+	/*$SelectedAccount,
+	$AccountName;*/
 
 	/*PDF page header for GL Account report */
 

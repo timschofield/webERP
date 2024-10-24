@@ -84,9 +84,9 @@ if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text)
 			} else {
 				$CompanyName[$CompanyEntry] = $CompanyEntry;
 			}
-			if ($CompanyEntry == $DefaultCompany) {
+			/*if ($CompanyEntry == $DefaultCompany) {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
-			} else {
+			} else*/ {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
 			}
 		}

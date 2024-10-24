@@ -908,7 +908,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 	// *************************************************************************
 	//   S T A R T   O F   C R E D I T  N O T E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.inc */
@@ -1604,7 +1604,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 		unset($_SESSION['Items' . $identifier]->LineItems);
 		unset($_SESSION['Items' . $identifier]);
 
-		echo prnMsg( _('Credit Note number'). ' '. $CreditNoteNo .' '. _('processed'), 'success');
+		prnMsg( _('Credit Note number'). ' '. $CreditNoteNo .' '. _('processed'), 'success');
 
 		echo '<br /><div class="centre">';
 

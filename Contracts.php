@@ -535,7 +535,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	$CustomerDetailsRow = DB_fetch_array($CustomerDetailsResult);
 
 	//start a DB transaction
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 	$OrderNo = GetNextTransNo(30);
 	$HeaderSQL = "INSERT INTO salesorders (	orderno,
 											debtorno,
@@ -606,7 +606,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 						WHERE contractref='" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "'";
 	$ErrMsg = _('Unable to update the contract status and order number because');
 	$UpdContractResult = DB_query($sql,$ErrMsg,$DbgMsg,true);
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 	$_SESSION['Contract'.$identifier]->Status=1;
 	$_SESSION['Contract'.$identifier]->OrderNo=$OrderNo;
 	prnMsg(_('The contract has been made into quotation number') . ' ' . $OrderNo,'info');

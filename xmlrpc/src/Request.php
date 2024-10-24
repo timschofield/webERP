@@ -326,7 +326,7 @@ class Request
         $_xh = $xmlRpcParser->parse($data, $returnType, XMLParser::ACCEPT_RESPONSE, $options);
         // BC
         if (!is_array($_xh)) {
-            $_xh = $xmlRpcParser->_xh;
+            $_xh = $xmlRpcParser->__get('_xh');
         }
 
         // first error check: xml not well-formed
