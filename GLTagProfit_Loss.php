@@ -759,10 +759,13 @@ else {
 		}
 
 		$AccountPeriodActual = $MyRow['TotalAllPeriods'];
+		/*
+		 * todo : verify the impact and reasons behind the following lines
 		if ($Section == 4) {
 			$PeriodProfitLoss -= $AccountPeriodActual;
 		}
-		else {
+		else
+		*/ {
 			$PeriodProfitLoss -= $AccountPeriodActual;
 		}
 

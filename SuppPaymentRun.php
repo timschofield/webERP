@@ -67,7 +67,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 
 	if (isset($_POST['PrintPDFAndProcess'])){
-		$ProcessResult = DB_Txn_Begin();
+		DB_Txn_Begin();
 	}
 
 	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
@@ -187,7 +187,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					if ($debug==1){
 						echo '<br />' . _('The SQL that failed was') . $SQL;
 					}
-					$ProcessResult = DB_Txn_Rollback();
+					DB_Txn_Rollback();
 					include('includes/footer.php');
 					exit;
 				}
@@ -208,7 +208,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		/*All the payment processing is in the below file */
 		include('includes/PDFPaymentRun_PymtFooter.php');
 
-		$ProcessResult = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		if (DB_error_no() !=0) {
 			$Title = _('Payment Processing - Problem Report') . '.... ';
@@ -218,7 +218,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
-			$ProcessResult = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 			include('includes/footer.php');
 			exit;
 		}

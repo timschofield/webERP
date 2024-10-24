@@ -176,7 +176,7 @@ transition-duration:0.5s;
 }
 form input[type="submit"].previous_button {
 background:#EEEEEE url(images/previous.png) center left 2%/24px no-repeat;
-background-image:
+
 padding-right:16px;
 padding-left:32px;
 }

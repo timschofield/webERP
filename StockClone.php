@@ -507,7 +507,7 @@ if (isset($_POST['submit'])) {
 						$OldRow = DB_fetch_array($OldResult);
 
 					//now update cloned item costs
-						$Result = DB_Txn_Begin();
+						DB_Txn_Begin();
 						$SQL = "UPDATE stockmaster SET	materialcost='" . $OldRow['materialcost'] . "',
 										labourcost     ='" . $OldRow['labourcost'] . "',
 										overheadcost   ='" . $OldRow['overheadcost'] . "',
@@ -517,7 +517,7 @@ if (isset($_POST['submit'])) {
 						$ErrMsg = _('The cost details for the cloned stock item could not be updated because');
 						$DbgMsg = _('The SQL that failed was');
 						$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-						$Result = DB_Txn_Commit();
+						DB_Txn_Commit();
 
 					//finish up
 					if (DB_error_no() ==0) {

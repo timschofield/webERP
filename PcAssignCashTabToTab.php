@@ -338,7 +338,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
 
-		if (($MyRow['authorized'] == '0000-00-00') AND ($Description['0'] == 'ASSIGNCASH')){
+		/*if (($MyRow['authorized'] == '0000-00-00') AND ($Description['0'] == 'ASSIGNCASH')){
 			// only cash assignations NOT authorized can be modified or deleted
 			echo '<tr class="striped_row">
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
@@ -349,7 +349,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . $ReceiptText . '</td>
 				<td>' . $AuthorisedDate . '</td>
 				</tr>';
-		}else{
+		}else*/ {
 			echo '<tr class="striped_row">
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
 				<td>', $ExpenseCodeDes, '</td>

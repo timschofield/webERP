@@ -63,7 +63,7 @@ if(isset($_POST['ProcessTransfer'])) {
 	if(!$InputError) {
 	/*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
-		$Result = DB_Txn_Begin(); // The Txn should affect the full transfer
+		DB_Txn_Begin(); // The Txn should affect the full transfer
 
 		foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 			if($TrfLine->Quantity >= 0) {

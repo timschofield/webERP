@@ -80,7 +80,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  */
 	if ($InputError!=1){
 
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*figure out what status to set the order to */
 		if (IsEmailAddress($_SESSION['UserEmail'])){
@@ -390,7 +390,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		} /*end of if its a new order or an existing one */
 
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 		/* Only show the link to auto receive the order if the user has permission to receive goods and permission to authorise and has authorised the order */
 		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
                    AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){

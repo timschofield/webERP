@@ -164,7 +164,7 @@ transition-duration:0.5s;
 }
 form input[type="submit"].previous_button {
 background:url(images/previous.png) center left 2%/24px no-repeat, linear-gradient(#EAE7E7, #939393);
-background-image:
+
 padding-right:16px;
 padding-left:32px;
 }

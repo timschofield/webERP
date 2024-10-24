@@ -432,7 +432,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 	else {
 
 		//Start a transaction to do the whole lot inside
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		if ($_SESSION['PaymentDetail' . $identifier]->SupplierID == '') {
 

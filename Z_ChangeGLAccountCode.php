@@ -47,7 +47,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 
 	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		echo '<br />' . _('Adding the new chartmaster record');
 		$sql = "INSERT INTO chartmaster (accountcode,
 										accountname,
@@ -124,7 +124,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 		DB_ReinstateForeignKeys();
 
-		$result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		echo '<br />' . _('Deleting the old chartmaster record');
 		$sql = "DELETE FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'";

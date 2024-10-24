@@ -78,7 +78,7 @@ if(isset($_POST['submit'])) {
 			$InputError = 1;
 			prnMsg( _('The tax category cannot be created because another with the same name already exists'),'error');
 		} else {
-			$result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			$sql = "INSERT INTO taxcategories (
 						taxcatname )
 					VALUES (
@@ -98,7 +98,7 @@ if(isset($_POST['submit'])) {
 				FROM taxauthorities CROSS JOIN taxprovinces";
 			$result = DB_query($sql,$ErrMsg,true);
 
-			$result = DB_Txn_Commit();
+			DB_Txn_Commit();
 		}
 		$msg = _('New tax category added');
 	}

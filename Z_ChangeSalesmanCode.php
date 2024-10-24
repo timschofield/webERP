@@ -50,7 +50,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 		exit;
 	}
 
-	$result = DB_Txn_Begin();
+    DB_Txn_Begin();
 
 	prnMsg(_('Inserting the new salesman master record'), 'info');
 	$sql = "INSERT INTO salesman (`salesmancode`,
@@ -114,7 +114,7 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	$ErrMsg = _('The SQL to delete the old salesman record failed');
 	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_Txn_Commit();
+	DB_Txn_Commit();
 	$result = DB_ReinstateForeignKeys();
 }
 

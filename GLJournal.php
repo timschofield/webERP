@@ -263,7 +263,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	$PeriodNo = GetPeriod(ConvertSQLDate($_SESSION['JournalDetail']->JnlDate));
 
 	/*Start a transaction to do the whole lot inside */
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	$TransNo = GetNextTransNo(0);
 
@@ -329,7 +329,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	}
 
 	$ErrMsg = _('Cannot commit the changes');
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	prnMsg(_('Journal') . ' ' . $TransNo . ' ' . _('has been successfully entered') , 'success');
 

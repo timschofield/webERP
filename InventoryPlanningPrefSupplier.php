@@ -418,9 +418,9 @@ if (isset($_POST['PrintPDF'])){
 	} else {
 		echo '<option value="0.5">' . _('Two Weeks')  . '</option>';
 	}
-	if ($_POST['NumberMonthsHolding']==1){
+	/*if ($_POST['NumberMonthsHolding']==1){
 		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
-	} else {
+	} else*/ {
 		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding']==1.5){
