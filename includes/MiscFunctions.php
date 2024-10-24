@@ -108,8 +108,8 @@ class XmlElement {
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 	for detail of the European Central Bank rates - published daily */
-	if (http_file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
-		$xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
+	if (http_file_exists('//www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+		$xml = file_get_contents('//www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
@@ -171,8 +171,8 @@ function GetCurrencyRate($CurrCode, $CurrenciesArray) {
 }
 
 function quote_oanda_currency($CurrCode) {
-	if (http_file_exists('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
-		$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
+	if (http_file_exists('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
+		$page = file('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 		$match = array();
 		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
 		if (sizeof($match) > 0) {
@@ -185,7 +185,7 @@ function quote_oanda_currency($CurrCode) {
 
 function google_currency_rate($CurrCode) {
 	$Rate = 0;
-	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
+	$PageLines = file('//www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
 	foreach ($PageLines as $Line) {
 		if (mb_strpos($Line, 'currency_converter_result')) {
 			$Length = mb_strpos($Line, '</span>') - 58;
