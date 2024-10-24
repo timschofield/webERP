@@ -36,27 +36,27 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 	if ($_POST['CodeExpense'] == '' or $_POST['CodeExpense'] == ' ' or $_POST['CodeExpense'] == '  ') {
 		$InputError = 1;
-		prnMsg(_('The Expense type  code cannot be an empty string or spaces'), 'error');
+		echo prnMsg(_('The Expense type  code cannot be an empty string or spaces'), 'error','',true);
 	} elseif (mb_strlen($_POST['CodeExpense']) > 20) {
 		$InputError = 1;
-		prnMsg(_('The expense code must be twenty characters or less long'), 'error');
+		echo prnMsg(_('The expense code must be twenty characters or less long'), 'error','',true);
 	} elseif (ContainsIllegalCharacters($_POST['CodeExpense'])) {
 		$InputError = 1;
-		prnMsg(_('The expense code cannot contain any of the following characters ') . '" \' - &amp;', 'error');
+		echo prnMsg(_('The expense code cannot contain any of the following characters ') . '" \' - &amp;', 'error','',true);
 	} elseif (ContainsIllegalCharacters($_POST['Description'])) {
 		$InputError = 1;
-		prnMsg(_('The expense description cannot contain any of the following characters ') . '" \' - &amp;', 'error');
+		echo prnMsg(_('The expense description cannot contain any of the following characters ') . '" \' - &amp;', 'error','',true);
 	} elseif (mb_strlen($_POST['Description']) > 50) {
 		$InputError = 1;
-		prnMsg(_('The tab code must be fifty characters or less long'), 'error');
+		echo prnMsg(_('The tab code must be fifty characters or less long'), 'error','',true);
 	} elseif (mb_strlen($_POST['Description']) == 0) {
 		$InputError = 1;
-		echo prnMsg(_('The tab code description must be entered'), 'error');
+		echo prnMsg(_('The tab code description must be entered'), 'error','',true);
 	} elseif ($_POST['GLAccount'] == '') {
 		$InputError = 1;
 	} elseif ($_POST['TaxCategory'] === '0') {
 		$InputError = 1;
-		echo prnMsg(_('A tax category must be selected from the list'), 'error');
+		echo prnMsg(_('A tax category must be selected from the list'), 'error','',true);
 	}
 	if (isset($SelectedExpense) and $InputError != 1) {
 		$SQL = "UPDATE pcexpenses

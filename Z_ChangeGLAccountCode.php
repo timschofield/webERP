@@ -20,8 +20,8 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 	$_POST['NewAccountCode'] = mb_strtoupper($_POST['NewAccountCode']);
 
 /*First check the code exists */
-	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'");
-	if(DB_num_rows($result)==0) {
+	$Result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'");
+	if(DB_num_rows($Result)==0) {
 		prnMsg(_('The GL account code') . ': ' . $_POST['OldAccountCode'] . ' ' . _('does not currently exist as a GL account code in the system'),'error');
 		$InputError =1;
 	}
@@ -38,8 +38,8 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 
 /*Now check that the new code doesn't already exist */
-	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['NewAccountCode'] . "'");
-	if(DB_num_rows($result)!=0) {
+	$Result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $_POST['NewAccountCode'] . "'");
+	if(DB_num_rows($Result)!=0) {
 		echo '<br /><br />';
 		prnMsg(_('The replacement GL account code') . ': ' . $_POST['NewAccountCode'] . ' ' . _('already exists as a GL account code in the system') . ' - ' . _('a unique GL account code must be entered for the new code'),'error');
 		$InputError =1;
@@ -47,9 +47,9 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 
 	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		echo '<br />' . _('Adding the new chartmaster record');
-		$sql = "INSERT INTO chartmaster (accountcode,
+		$SQL = "INSERT INTO chartmaster (accountcode,
 										accountname,
 										group_)
 				SELECT '" . $_POST['NewAccountCode'] . "',
@@ -60,7 +60,7 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the new chartmaster record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
 		DB_IgnoreForeignKeys();
@@ -124,12 +124,12 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 
 		DB_ReinstateForeignKeys();
 
-		$result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		echo '<br />' . _('Deleting the old chartmaster record');
-		$sql = "DELETE FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'";
+		$SQL = "DELETE FROM chartmaster WHERE accountcode='" . $_POST['OldAccountCode'] . "'";
 		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
 		echo '<p>' . _('GL account Code') . ': ' . $_POST['OldAccountCode'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewAccountCode'];

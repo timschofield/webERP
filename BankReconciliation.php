@@ -54,7 +54,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 		/*Post the exchange difference to the last day of the month prior to current date*/
 		$PostingDate = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0, Date('m'), 0,Date('Y')));
 		$PeriodNo = GetPeriod($PostingDate);
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 //yet to code the journal
 
@@ -75,7 +75,7 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 
 		$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 		$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,
@@ -91,9 +91,9 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 									'" . $CurrencyRow['bankaccountname'] . ' ' . _('reconciliation on') . ' ' . Date($_SESSION['DefaultDateFormat']) . "',
 									'" . (-$ExchangeDifference) . "')";
 
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$result = DB_Txn_Commit();
+		DB_Txn_Commit();
 		prnMsg(_('Exchange difference of') . ' ' . locale_number_format($ExchangeDifference,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 	} //end if the bank statement balance was numeric
 }

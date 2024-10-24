@@ -34,7 +34,7 @@ if (isset($_POST['Cancel'])) {
 
 if (isset($_POST['Process'])) {
 	if ($_POST['SelectedBankAccount'] == '') {
-		echo prnMsg(_('You have not selected any bank account'),'error');
+		prnMsg(_('You have not selected any bank account'),'error');
 		echo '<br />';
 		unset($SelectedBankAccount);
 		unset($_POST['SelectedBankAccount']);
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['SelectedUser']=='') {
 		$InputError=1;
-		echo prnMsg(_('You have not selected an user to be authorised to use this bank account'),'error');
+		prnMsg(_('You have not selected an user to be authorised to use this bank account'),'error');
 		echo '<br />';
 		unset($SelectedBankAccount);
 	}

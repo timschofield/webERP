@@ -48,10 +48,13 @@ final class ArgumentAddingScope
             if (!$expr->class instanceof Name) {
                 return \false;
             }
+            /*
+             * 20241024: removed for redundancy
             if ($this->nodeNameResolver->isName($expr->class, ObjectReference::PARENT)) {
                 return $scope === self::SCOPE_PARENT_CALL;
             }
             return $scope === self::SCOPE_METHOD_CALL;
+            */
         }
         // MethodCall
         return $scope === self::SCOPE_METHOD_CALL;

@@ -48,12 +48,12 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs are sensible
 	$i=1;
 
-	$sql="SELECT count(currabrev)
+	$SQL="SELECT count(currabrev)
 			FROM currencies
 			WHERE currabrev='".$_POST['Abbreviation']."'";
 
-	$result=DB_query($sql);
-	$MyRow=DB_fetch_row($result);
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_row($Result);
 
 	if ($MyRow[0]!=0 AND !isset($SelectedCurrency)) {
 		$InputError = 1;
@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 		$OldRate = $MyRow[0];
 
 		/*SelectedCurrency could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		$sql = "UPDATE currencies SET	country='". $_POST['Country']. "',
+		$SQL = "UPDATE currencies SET	country='". $_POST['Country']. "',
 										hundredsname='" . $_POST['HundredsName'] . "',
 										decimalplaces='" . filter_number_format($_POST['DecimalPlaces']) . "',
 										rate='" .filter_number_format($_POST['ExchangeRate']) . "',
@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
 	} else if ($InputError !=1) {
 
 	/*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
-		$sql = "INSERT INTO currencies (
+		$SQL = "INSERT INTO currencies (
 						currency,
 						currabrev,
 						country,
@@ -143,9 +143,9 @@ if (isset($_POST['submit'])) {
 	}
 	//run the SQL from either of the above possibilites
 	$ExDiffTransNo = GetNextTransNo(36);
-	$resultTx = DB_Txn_Begin();
+	DB_Txn_Begin();
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	if ($InputError!=1) {
 		prnMsg( $msg,'success');
 	}
@@ -168,8 +168,8 @@ if (isset($_POST['submit'])) {
 									accountcode
 							FROM bankaccounts
 							WHERE currcode = '" . $SelectedCurrency . "'";
-		$resultBankAccounts = DB_query($SQLBankAccounts);
-		while ($MyRowBankAccount=DB_fetch_array($resultBankAccounts)) {
+		$ResultBankAccounts = DB_query($SQLBankAccounts);
+		while ($MyRowBankAccount=DB_fetch_array($ResultBankAccounts)) {
 
 			/*Get the balance of the bank account concerned */
 			$SQL = "SELECT bfwd+actual AS balance
@@ -208,7 +208,7 @@ if (isset($_POST['submit'])) {
 								(-$DifferenceToAdjust) . "')";
 				$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 				$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				$SQL = "INSERT INTO gltrans (
 								type,
 								typeno,
@@ -225,12 +225,12 @@ if (isset($_POST['submit'])) {
 								$MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "', '" .
 								($DifferenceToAdjust) . "')";
 
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				prnMsg(_('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 			}
 		}
 	}
-	$resultTx = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	unset($SelectedCurrency);
 	unset($_POST['Country']);
@@ -245,44 +245,44 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql= "SELECT COUNT(*) FROM debtorsmaster
+	$SQL= "SELECT COUNT(*) FROM debtorsmaster
 			WHERE currcode = '" . $SelectedCurrency . "'";
-	$result = DB_query($sql);
-	$MyRow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0] > 0)
 	{
 		prnMsg(_('Cannot delete this currency because customer accounts have been created referring to this currency') .
 		 	'<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
 	} else {
-		$sql= "SELECT COUNT(*) FROM suppliers
+		$SQL= "SELECT COUNT(*) FROM suppliers
 				WHERE suppliers.currcode = '".$SelectedCurrency."'";
-		$result = DB_query($sql);
-		$MyRow = DB_fetch_row($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0] > 0) {
 			prnMsg(_('Cannot delete this currency because supplier accounts have been created referring to this currency')
 			 . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
 		} else {
-			$sql= "SELECT COUNT(*) FROM banktrans
+			$SQL= "SELECT COUNT(*) FROM banktrans
 					WHERE currcode = '" . $SelectedCurrency . "'";
-			$result = DB_query($sql);
-			$MyRow = DB_fetch_row($result);
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_row($Result);
 			if ($MyRow[0] > 0) {
 				prnMsg(_('Cannot delete this currency because there are bank transactions that use this currency') .
 				'<br />' . ' ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('bank transactions that refer to this currency'),'warn');
 			} elseif ($FunctionalCurrency==$SelectedCurrency) {
 				prnMsg(_('Cannot delete this currency because it is the functional currency of the company'),'warn');
 			} else {
-				$sql= "SELECT COUNT(*) FROM bankaccounts
+				$SQL= "SELECT COUNT(*) FROM bankaccounts
 					WHERE currcode = '" . $SelectedCurrency . "'";
-				$result = DB_query($sql);
-				$MyRow = DB_fetch_row($result);
+				$Result = DB_query($SQL);
+				$MyRow = DB_fetch_row($Result);
 				if ($MyRow[0] > 0) {
 					prnMsg(_('Cannot delete this currency because there are bank accounts that use this currency') .
 					'<br />' . ' ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('bank accounts that refer to this currency'),'warn');
 				} else {
 					//only delete if used in neither customer or supplier, comp prefs, bank trans accounts
-					$sql="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
-					$result = DB_query($sql);
+					$SQL="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
+					$Result = DB_query($SQL);
 					prnMsg(_('The currency definition record has been deleted'),'success');
 				}
 			}
@@ -298,14 +298,14 @@ then none of the above are true and the list of payment termss will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT	currabrev,
+	$SQL = "SELECT	currabrev,
 					country,
 					hundredsname,
 					rate,
 					decimalplaces,
 					webcart
 				FROM currencies";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -329,7 +329,7 @@ or deletion of the records*/
 		$CurrencyRatesArray = array();
 	}
 
-	while ($MyRow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['currabrev']==$FunctionalCurrency) {
 			echo '<tr style="background-color:#FFbbbb">';
 		} else {

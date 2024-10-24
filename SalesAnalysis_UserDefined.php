@@ -16,10 +16,10 @@ if (isset($_GET['ProducePDF'])){
 	include ('includes/PDFSalesAnalysis.inc');
 
 	if ($Counter >0) {
-		$pdf->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
+		$PDF->OutputD('SalesAnalysis_' . date('Y-m-d') . '.pdf');
+		$PDF->__destruct();
 	} else {
-		$pdf->__destruct();
+		$PDF->__destruct();
 		$Title = _('User Defined Sales Analysis Problem');
 		include('includes/header.php');
 		echo '<p>' . _('The report did not have any none zero lines of information to show and so it has not been created');
@@ -39,7 +39,7 @@ if ($_GET['ProduceCVSFile']==True){
 	$Title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.php');
 
-	 echo 'http://' . getenv('SERVER_NAME') . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
+	 echo '//' . getenv('SERVER_NAME') . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
 	 echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv">';
 
 	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') . '<br />';

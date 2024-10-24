@@ -29,21 +29,21 @@ if ( isset($_GET['CurrencyToShow']) ){
 	echo '<table>'; // First column
 
 	$SQL = "SELECT currabrev FROM currencies";
-	$result=DB_query($SQL);
+	$Result=DB_query($SQL);
 	include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 	// CurrencyToShow Currency Picker
 	echo '<tr>
 			<td><select name="CurrencyToShow" onchange="ReloadForm(update.submit)">';
 
-	DB_data_seek($result, 0);
-	while ($myrow=DB_fetch_array($result)) {
-		if ($myrow['currabrev']!=$_SESSION['CompanyRecord']['currencydefault']){
+	DB_data_seek($Result, 0);
+	while ($MyRow=DB_fetch_array($Result)) {
+		if ($MyRow['currabrev']!=$_SESSION['CompanyRecord']['currencydefault']){
 			echo '<option';
-			if ( $CurrencyToShow==$myrow['currabrev'] )	{
+			if ( $CurrencyToShow==$MyRow['currabrev'] )	{
 				echo ' selected="selected"';
 			}
-			echo ' value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . ' (' . $myrow['currabrev'] . ')</option>';
+			echo ' value="' . $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . ' (' . $MyRow['currabrev'] . ')</option>';
 		}
 	}
 	echo '</select></td>
@@ -59,7 +59,7 @@ if ( isset($_GET['CurrencyToShow']) ){
 // **************
 // SHOW OUR GRAPH
 // **************
-	$image = 'http://www.google.com/finance/getchart?q=' . $FunctionalCurrency . $CurrencyToShow . '&amp;x=CURRENCY&amp;p=3M&amp;i=86400';
+	$image = '//www.google.com/finance/getchart?q=' . $FunctionalCurrency . $CurrencyToShow . '&amp;x=CURRENCY&amp;p=3M&amp;i=86400';
 
 	echo '<br />
 		<table class="selection">

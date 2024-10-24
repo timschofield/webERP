@@ -40,7 +40,7 @@ abstract class Extension implements ExtensionInterface, ConfigurationExtensionIn
      */
     public function getNamespace()
     {
-        return 'http://example.org/schema/dic/' . $this->getAlias();
+        return '//example.org/schema/dic/' . $this->getAlias();
     }
     /**
      * Returns the recommended alias to use in XML.

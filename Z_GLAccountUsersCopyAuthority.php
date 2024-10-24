@@ -25,27 +25,27 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 	}
 
 	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		echo '<br />' . _('Deleting the current authority to view / update the GL Accounts of user') . ' ' .  $_POST['ToUserID'];
-		$sql = "DELETE FROM glaccountusers WHERE userid = '" . $_POST['ToUserID'] . "'";
+		$SQL = "DELETE FROM glaccountusers WHERE userid = '" . $_POST['ToUserID'] . "'";
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to delete the auhority in glaccountusers record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
 		echo '<br />' . _('Copying the authority to view / update the GL Accounts from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to') . ' ' . $_POST['ToUserID'];
-		$sql = "INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
+		$SQL = "INSERT INTO glaccountusers (userid, accountcode, canview, canupd)
 						SELECT '" . $_POST['ToUserID'] . "', accountcode, canview, canupd
 						FROM glaccountusers
 						WHERE userid = '" . $_POST['FromUserID'] . "'";
 
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the auhority in glaccountusers record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
-		$result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0
 }

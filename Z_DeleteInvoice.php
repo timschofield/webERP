@@ -29,10 +29,10 @@ $SQL = "SELECT order_, id
 		AND transno = '" . $_GET['InvoiceNo'] . "'";
 
 $Result = DB_query($SQL);
-$myrow = DB_fetch_row($Result);
+$MyRow = DB_fetch_row($Result);
 
-$ProcessingOrder = $myrow[0];
-$IDDebtorTrans = $myrow[1];
+$ProcessingOrder = $MyRow[0];
+$IDDebtorTrans = $MyRow[1];
 
 /*Now get the stock movements that were invoiced into an array */
 
@@ -61,15 +61,15 @@ $Result = DB_query($SQL);
 
 $i=0;
 
-While ($myrow = DB_fetch_array($Result)){
-	$StockMovement[$i] = $myrow;
+While ($MyRow = DB_fetch_array($Result)){
+	$StockMovement[$i] = $MyRow;
 	$i++;
 }
 
 prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
 
 /*Setup a database transaction */
-$result = DB_Txn_Begin();
+DB_Txn_Begin();
 
 /*Delete any log entries */
 
@@ -174,7 +174,7 @@ $ErrMsg = _('The SQL to delete the general ledger journal records failed because
 $Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');
 
-$result = DB_Txn_Commit();
+DB_Txn_Commit();
 
 prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
 

@@ -79,38 +79,38 @@ if (isset($_GET['NewRecurringOrder'])){
 
 		if (DB_num_rows($GetOrdHdrResult)==1) {
 
-			$myrow = DB_fetch_array($GetOrdHdrResult);
+			$MyRow = DB_fetch_array($GetOrdHdrResult);
 
-			$_SESSION['Items'.$identifier]->DebtorNo = $myrow['debtorno'];
+			$_SESSION['Items'.$identifier]->DebtorNo = $MyRow['debtorno'];
 	/*CustomerID defined in header.php */
-			$_SESSION['Items'.$identifier]->Branch = $myrow['branchcode'];
-			$_SESSION['Items'.$identifier]->CustomerName = $myrow['name'];
-			$_SESSION['Items'.$identifier]->CustRef = $myrow['customerref'];
-			$_SESSION['Items'.$identifier]->Comments = $myrow['comments'];
+			$_SESSION['Items'.$identifier]->Branch = $MyRow['branchcode'];
+			$_SESSION['Items'.$identifier]->CustomerName = $MyRow['name'];
+			$_SESSION['Items'.$identifier]->CustRef = $MyRow['customerref'];
+			$_SESSION['Items'.$identifier]->Comments = $MyRow['comments'];
 
-			$_SESSION['Items'.$identifier]->DefaultSalesType =$myrow['ordertype'];
-			$_SESSION['Items'.$identifier]->SalesTypeName =$myrow['sales_type'];
-			$_SESSION['Items'.$identifier]->DefaultCurrency = $myrow['currcode'];
-			$_SESSION['Items'.$identifier]->ShipVia = $myrow['shipvia'];
-			$BestShipper = $myrow['shipvia'];
-			$_SESSION['Items'.$identifier]->DeliverTo = $myrow['deliverto'];
-			//$_SESSION['Items'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
-			$_SESSION['Items'.$identifier]->DelAdd1 = $myrow['deladd1'];
-			$_SESSION['Items'.$identifier]->DelAdd2 = $myrow['deladd2'];
-			$_SESSION['Items'.$identifier]->DelAdd3 = $myrow['deladd3'];
-			$_SESSION['Items'.$identifier]->DelAdd4 = $myrow['deladd4'];
-			$_SESSION['Items'.$identifier]->DelAdd5 = $myrow['deladd5'];
-			$_SESSION['Items'.$identifier]->DelAdd6 = $myrow['deladd6'];
-			$_SESSION['Items'.$identifier]->PhoneNo = $myrow['contactphone'];
-			$_SESSION['Items'.$identifier]->Email = $myrow['contactemail'];
-			$_SESSION['Items'.$identifier]->Location = $myrow['fromstkloc'];
+			$_SESSION['Items'.$identifier]->DefaultSalesType =$MyRow['ordertype'];
+			$_SESSION['Items'.$identifier]->SalesTypeName =$MyRow['sales_type'];
+			$_SESSION['Items'.$identifier]->DefaultCurrency = $MyRow['currcode'];
+			$_SESSION['Items'.$identifier]->ShipVia = $MyRow['shipvia'];
+			$BestShipper = $MyRow['shipvia'];
+			$_SESSION['Items'.$identifier]->DeliverTo = $MyRow['deliverto'];
+			//$_SESSION['Items'.$identifier]->DeliveryDate = ConvertSQLDate($MyRow['deliverydate']);
+			$_SESSION['Items'.$identifier]->DelAdd1 = $MyRow['deladd1'];
+			$_SESSION['Items'.$identifier]->DelAdd2 = $MyRow['deladd2'];
+			$_SESSION['Items'.$identifier]->DelAdd3 = $MyRow['deladd3'];
+			$_SESSION['Items'.$identifier]->DelAdd4 = $MyRow['deladd4'];
+			$_SESSION['Items'.$identifier]->DelAdd5 = $MyRow['deladd5'];
+			$_SESSION['Items'.$identifier]->DelAdd6 = $MyRow['deladd6'];
+			$_SESSION['Items'.$identifier]->PhoneNo = $MyRow['contactphone'];
+			$_SESSION['Items'.$identifier]->Email = $MyRow['contactemail'];
+			$_SESSION['Items'.$identifier]->Location = $MyRow['fromstkloc'];
 			$_SESSION['Items'.$identifier]->Quotation = 0;
-			$FreightCost = $myrow['freightcost'];
-			$_SESSION['Items'.$identifier]->Orig_OrderDate = $myrow['orddate'];
-			$_POST['StopDate'] = ConvertSQLDate($myrow['stopdate']);
-			$_POST['StartDate'] = ConvertSQLDate($myrow['lastrecurrence']);
-			$_POST['Frequency'] = $myrow['frequency'];
-			$_POST['AutoInvoice'] = $myrow['autoinvoice'];
+			$FreightCost = $MyRow['freightcost'];
+			$_SESSION['Items'.$identifier]->Orig_OrderDate = $MyRow['orddate'];
+			$_POST['StopDate'] = ConvertSQLDate($MyRow['stopdate']);
+			$_POST['StartDate'] = ConvertSQLDate($MyRow['lastrecurrence']);
+			$_POST['Frequency'] = $MyRow['frequency'];
+			$_POST['AutoInvoice'] = $MyRow['autoinvoice'];
 
 	/*need to look up customer name from debtors master then populate the line items array with the sales order details records */
 			$LineItemsSQL = "SELECT recurrsalesorderdetails.stkcode,
@@ -130,32 +130,32 @@ if (isset($_GET['NewRecurringOrder'])){
 									FROM recurrsalesorderdetails INNER JOIN stockmaster
 									ON recurrsalesorderdetails.stkcode = stockmaster.stockid
 									INNER JOIN locstock ON locstock.stockid = stockmaster.stockid
-									WHERE  locstock.loccode = '" . $myrow['fromstkloc'] . "'
+									WHERE  locstock.loccode = '" . $MyRow['fromstkloc'] . "'
 									AND recurrsalesorderdetails.recurrorderno ='" . $_GET['ModifyRecurringSalesOrder'] . "'";
 
 			$ErrMsg = _('The line items of the order cannot be retrieved because');
 			$LineItemsResult = DB_query($LineItemsSQL,$ErrMsg);
 			if (DB_num_rows($LineItemsResult)>0) {
 
-				while ($myrow=DB_fetch_array($LineItemsResult)) {
-					$_SESSION['Items'.$identifier]->add_to_cart($myrow['stkcode'],
-																$myrow['quantity'],
-																$myrow['description'],
-																$myrow['longdescription'],
-																$myrow['unitprice'],
-																$myrow['discountpercent'],
-																$myrow['units'],
-																$myrow['volume'],
-																$myrow['grossweight'],
-																$myrow['qohatloc'],
-																$myrow['mbflag'],
+				while ($MyRow=DB_fetch_array($LineItemsResult)) {
+					$_SESSION['Items'.$identifier]->add_to_cart($MyRow['stkcode'],
+																$MyRow['quantity'],
+																$MyRow['description'],
+																$MyRow['longdescription'],
+																$MyRow['unitprice'],
+																$MyRow['discountpercent'],
+																$MyRow['units'],
+																$MyRow['volume'],
+																$MyRow['grossweight'],
+																$MyRow['qohatloc'],
+																$MyRow['mbflag'],
 																'',
 																0,
-																$myrow['discountcategory'],
+																$MyRow['discountcategory'],
 																0,	/*Controlled*/
 																0,	/*Serialised */
-																$myrow['decimalplaces'],
-																$myrow['narrative']);
+																$MyRow['decimalplaces'],
+																$MyRow['narrative']);
 					/*Just populating with existing order - no DBUpdates */
 
 				} /* line items from sales order details */
@@ -172,13 +172,13 @@ if ((!isset($_SESSION['Items'.$identifier]) OR $_SESSION['Items'.$identifier]->I
 
 
 if (isset($_POST['DeleteRecurringOrder'])){
-	$sql = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
+	$SQL = "DELETE FROM recurrsalesorderdetails WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete recurring sales order lines for the recurring order template') . ' ' . $_POST['ExistingRecurrOrderNo'];
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	$sql = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
+	$SQL = "DELETE FROM recurringsalesorders WHERE recurrorderno='" . $_POST['ExistingRecurrOrderNo'] . "'";
 	$ErrMsg = _('Could not delete the recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'];
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 	prnMsg(_('Successfully deleted recurring sales order template number') . ' ' . $_POST['ExistingRecurrOrderNo'],'success');
 
@@ -190,7 +190,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	exit;
 }
 If (isset($_POST['Process'])) {
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 	$InputErrors =0;
 	If (!Is_Date($_POST['StartDate'])){
 		$InputErrors =1;
@@ -290,7 +290,7 @@ If (isset($_POST['Process'])) {
 
 			} /* inserted line items into sales order details */
 
-			$result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			prnmsg(_('The new recurring order template has been added'),'success');
 
 		} else { /* must be updating an existing recurring order */

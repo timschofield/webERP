@@ -49,7 +49,7 @@ class Parser
     public function getCharset()
     {
         // Note: The `return` statement is missing here. This is a bug that needs to be fixed.
-        $this->oParserState->getCharset();
+        return $this->oParserState->getCharset();
     }
 
     /**

@@ -2,15 +2,15 @@
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$line_height);
-$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+$PDF->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,_('Total Due For') . ' ' . $SupplierName, 'left');
+$LeftOvers = $PDF->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,_('Total Due For') . ' ' . $SupplierName, 'left');
 
 $TotalPayments += $AccumBalance;
 $TotalAccumDiffOnExch += $AccumDiffOnExch;
 
-$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,locale_number_format($AccumBalance,$CurrDecimalPlaces), 'right');
-$LeftOvers = $pdf->addTextWrap(405,$YPos,60,$FontSize,locale_number_format($AccumDiffOnExch,$CurrDecimalPlaces), 'right');
+$LeftOvers = $PDF->addTextWrap(340,$YPos,60,$FontSize,locale_number_format($AccumBalance,$CurrDecimalPlaces), 'right');
+$LeftOvers = $PDF->addTextWrap(405,$YPos,60,$FontSize,locale_number_format($AccumDiffOnExch,$CurrDecimalPlaces), 'right');
 
 
 if (isset($_POST['PrintPDFAndProcess'])){
@@ -59,7 +59,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		if ($debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
-		$ProcessResult = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 		include('footer.php');
 		exit;
 	}
@@ -89,7 +89,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . $SQL,'error');
 			}
-			$ProcessResult = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 			include('footer.php');
 			exit;
 		}
@@ -119,7 +119,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		if ($debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
-		$ProcessResult = DB_Txn_Rollback();
+		DB_Txn_Rollback();
 		include('footer.php');
 		exit;
 	}
@@ -156,7 +156,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . ':<br />' . $SQL, 'error');
 			}
-			$ProcessResult = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 			include('footer.php');
 			exit;
 		}
@@ -187,7 +187,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			if ($debug==1){
 				prnMsg(_('The SQL that failed was') . ':<BR>' . $SQL,'error');
 			}
-			$ProcessResult = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 			include('footer.php');
 			exit;
 		}
@@ -218,7 +218,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				if ($debug==1){
 					prnMsg(_('The SQL that failed was: ') . '<br />' . $SQL,'error');
 				}
-				$ProcessResult = DB_Txn_Rollback();
+				DB_Txn_Rollback();
 				include('footer.php');
 				exit;
 			}
@@ -231,7 +231,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 $YPos -= (1.5*$line_height);
 
-$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+$PDF->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
 
 $YPos -= $line_height;
 

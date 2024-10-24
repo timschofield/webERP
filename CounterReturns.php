@@ -74,13 +74,13 @@ if (!isset($_SESSION['Items' . $identifier])) {
 				taxprovinceid
 			FROM locations
 			WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result)==0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
 		include('includes/footer.php');
 		exit;
 	} else {
-		$MyRow = DB_fetch_array($result); //get the only row returned
+		$MyRow = DB_fetch_array($Result); //get the only row returned
 
 		if ($MyRow['cashsalecustomer']=='' OR $MyRow['cashsalebranch']=='') {
 			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
@@ -120,9 +120,9 @@ if (!isset($_SESSION['Items' . $identifier])) {
 
 		$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items' . $identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
-		$result =DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
 
-		$MyRow = DB_fetch_array($result);
+		$MyRow = DB_fetch_array($Result);
 		$_SESSION['RequireCustomerSelection']=0;
 		$_SESSION['Items' . $identifier]->CustomerName = $MyRow['name'];
 		// the sales type is the price list to be used for this sale
@@ -148,9 +148,9 @@ if (!isset($_SESSION['Items' . $identifier])) {
 				AND custbranch.debtorno = '" . $_SESSION['Items' . $identifier]->DebtorNo . "'";
         $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items' . $identifier]->Branch . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-		$result =DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
 
-		if (DB_num_rows($result)==0) {
+		if (DB_num_rows($Result)==0) {
 
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items' . $identifier]->Branch . ' ' . _('against customer code') . ': ' . $_SESSION['Items' . $identifier]->DebtorNo . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
@@ -162,7 +162,7 @@ if (!isset($_SESSION['Items' . $identifier])) {
 		}
 		// add echo
 		echo '<br />';
-		$MyRow = DB_fetch_array($result);
+		$MyRow = DB_fetch_array($Result);
 
 		$_SESSION['Items' . $identifier]->DeliverTo = '';
 		$_SESSION['Items' . $identifier]->DelAdd1 = $MyRow['braddress1'];
@@ -908,7 +908,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 	// *************************************************************************
 	//   S T A R T   O F   C R E D I T  N O T E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.inc */
@@ -1471,7 +1471,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 							'" . -(filter_number_format($_POST['AmountPaid'])/$ExRate) . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				/* Now Debit Debtors account with negative receipt/payment to customer */
 				$SQL="INSERT INTO gltrans ( type,
@@ -1490,7 +1490,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 							'" . (filter_number_format($_POST['AmountPaid'])/$ExRate) . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid was not zero
 
 			EnsureGLEntriesBalance(12,$PaymentNumber);
@@ -1503,11 +1503,11 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 			}
 			//Now need to add the receipt banktrans record
 			//First get the account currency that it has been banked into
-			$result = DB_query("SELECT rate FROM currencies
+			$Result = DB_query("SELECT rate FROM currencies
 								INNER JOIN bankaccounts
 								ON currencies.currabrev=bankaccounts.currcode
 								WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'");
-			$MyRow = DB_fetch_row($result);
+			$MyRow = DB_fetch_row($Result);
 			$BankAccountExRate = $MyRow[0];
 
 			/*
@@ -1547,7 +1547,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//insert a new debtortrans for the receipt
 
@@ -1576,7 +1576,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
@@ -1593,7 +1593,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 											 '" . $ReceiptDebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the credit note was');
 			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaid']!= 0
 
 		DB_Txn_Commit();
@@ -1604,7 +1604,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 		unset($_SESSION['Items' . $identifier]->LineItems);
 		unset($_SESSION['Items' . $identifier]);
 
-		echo prnMsg( _('Credit Note number'). ' '. $CreditNoteNo .' '. _('processed'), 'success');
+		echo prnMsg( _('Credit Note number'). ' '. $CreditNoteNo .' '. _('processed'), 'success','',true);
 
 		echo '<br /><div class="centre">';
 

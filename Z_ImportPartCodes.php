@@ -10,12 +10,12 @@ include('xmlrpc/lib/xmlrpc.inc');
 include('api/api_errorcodes.php');
 
 $webERPUser = $_SESSION['UserID'];
-$sql="SELECT password FROM www_users WHERE userid='" . $webERPUser."'";
-$result=DB_query($sql);
-$myrow=DB_fetch_array($result);
-$weberppassword = $myrow[0];
+$SQL="SELECT password FROM www_users WHERE userid='" . $webERPUser."'";
+$Result=DB_query($SQL);
+$MyRow=DB_fetch_array($Result);
+$weberppassword = $MyRow[0];
 
-$ServerURL = 'http://'. $_SERVER['HTTP_HOST'] . $RootPath . '/api/api_xml-rpc.php';
+$ServerURL = '//'. $_SERVER['HTTP_HOST'] . $RootPath . '/api/api_xml-rpc.php';
 $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
 
@@ -70,9 +70,9 @@ if (isset($_POST['update'])) {
 	echo '</table>';
 	fclose ($fp);
 } else {
-	$sql = "select * from locations";
-	$result = DB_query($sql);
-	if (DB_num_rows($result)==0) {
+	$SQL = "select * from locations";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)==0) {
 		prnMsg( _('No locations have been set up. At least one location should be set up first'), "error");
 	} else {
 		prnMsg( _('Select a csv file containing the details of the parts that you wish to import into webERP. '). '<br />' .

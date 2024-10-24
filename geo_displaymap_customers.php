@@ -7,17 +7,17 @@ include ('includes/session.php');
 include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
-$sql="SELECT * FROM geocode_param WHERE 1";
+$SQL="SELECT * FROM geocode_param WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the currency information');
-$result = DB_query($sql, $ErrMsg);
-$myrow = DB_fetch_array($result);
+$Result = DB_query($SQL, $ErrMsg);
+$MyRow = DB_fetch_array($Result);
 
-$Api_Key = $myrow['geocode_key'];
-$Center_Long = $myrow['center_long'];
-$Center_Lat = $myrow['center_lat'];
-$Map_Height = $myrow['map_height'];
-$Map_Width = $myrow['map_width'];
-$Map_Host = $myrow['map_host'];
+$Api_Key = $MyRow['geocode_key'];
+$Center_Long = $MyRow['center_long'];
+$Center_Lat = $MyRow['center_lat'];
+$Map_Height = $MyRow['map_height'];
+$Map_Width = $MyRow['map_width'];
+$Map_Host = $MyRow['map_host'];
 
 ?>
 
@@ -39,10 +39,10 @@ echo ' type="text/javascript"></script>';?>
 
 var customIcons = {
 4: {
-icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png'
+icon: '//labs.google.com/ridefinder/images/mm_20_blue.png'
 },
 5: {
-icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png'
+icon: '//labs.google.com/ridefinder/images/mm_20_red.png'
 }
 };
 
@@ -66,7 +66,7 @@ var point = new google.maps.LatLng(
 parseFloat(markers[i].getAttribute("lat")),
 parseFloat(markers[i].getAttribute("lng")));
 var html = "<b>" + name + "</b> <br/>" + address;
-var icon = 'http://labs.google.com/ridefinder/images/mm_20_blue.png' || {};
+var icon = '//labs.google.com/ridefinder/images/mm_20_blue.png' || {};
 var marker = new google.maps.Marker({
 map: map,
 position: point,

@@ -39,7 +39,7 @@ if (isset($_POST['Cancel'])) {
 if (isset($_POST['Process'])) {
 
 	if ($_POST['SelectedRole'] == '') {
-		echo prnMsg(_('You have not selected a security role to maintain the internal stock categories on'),'error');
+		echo prnMsg(_('You have not selected a security role to maintain the internal stock categories on'),'error','',true);
 		echo '<br />';
 		unset($SelectedRole);
 		unset($_POST['SelectedRole']);
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['SelectedCategory']=='') {
 		$InputError=1;
-		echo prnMsg(_('You have not selected a stock category to be added as internal to this security role'),'error');
+		echo prnMsg(_('You have not selected a stock category to be added as internal to this security role'),'error','',true);
 		echo '<br />';
 		unset($SelectedRole);
 	}
@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 			prnMsg( _('The Stock Category') . ' ' . $_POST['categoryid'] . ' ' ._('already allowed as internal for this security role'),'error');
 		} else {
 			// Add new record on submit
-			$sql = "INSERT INTO internalstockcatrole (secroleid,
+			$SQL = "INSERT INTO internalstockcatrole (secroleid,
 												categoryid)
 										VALUES ('" . $_POST['SelectedRole'] . "',
 												'" . $_POST['SelectedCategory'] . "')";
@@ -82,25 +82,25 @@ if (isset($_POST['submit'])) {
 			$msg = _('Stock Category:') . ' ' . $_POST['SelectedCategory'].' '._('has been allowed to user role') .' '. $_POST['SelectedRole'] .  ' ' . _('as internal');
 			$checkSql = "SELECT count(secroleid)
 							FROM securityroles";
-			$result = DB_query($checkSql);
-			$row = DB_fetch_row($result);
+			$Result = DB_query($checkSql);
+			$row = DB_fetch_row($Result);
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		prnMsg($msg,'success');
 		unset($_POST['SelectedCategory']);
 	}
 
 } elseif ( isset($_GET['delete']) ) {
-	$sql="DELETE FROM internalstockcatrole
+	$SQL="DELETE FROM internalstockcatrole
 		WHERE secroleid='".$SelectedRole."'
 		AND categoryid='".$SelectedType."'";
 
 	$ErrMsg = _('The Stock Category by Role record could not be deleted because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg(_('Internal Stock Category').' '. $SelectedType .' '. _('for user role').' '. $SelectedRole .' '. _('has been deleted') ,'success');
 	unset($_GET['delete']);
 }
@@ -120,15 +120,15 @@ if (!isset($SelectedRole)){
 					secrolename
 			FROM securityroles";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	echo '<option value="">' . _('Not Yet Selected') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($SelectedRole) AND $myrow['secroleid']==$SelectedRole) {
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedRole) AND $MyRow['secroleid']==$SelectedRole) {
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow['secroleid'] . '">' . $myrow['secroleid'] . ' - ' . $myrow['secrolename'] . '</option>';
+		echo $MyRow['secroleid'] . '">' . $MyRow['secroleid'] . ' - ' . $MyRow['secrolename'] . '</option>';
 
 	} //end while loop
 
@@ -136,7 +136,7 @@ if (!isset($SelectedRole)){
 		</field>';
 
    	echo '</Fieldset>'; // close main table
-    DB_free_result($result);
+    DB_free_result($Result);
 
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Accept') . '" />
@@ -156,14 +156,14 @@ if (isset($_POST['process'])OR isset($SelectedRole)) {
 
 	echo '<input type="hidden" name="SelectedRole" value="' . $SelectedRole . '" />';
 
-	$sql = "SELECT internalstockcatrole.categoryid,
+	$SQL = "SELECT internalstockcatrole.categoryid,
 					stockcategory.categorydescription
 			FROM internalstockcatrole INNER JOIN stockcategory
 			ON internalstockcatrole.categoryid=stockcategory.categoryid
 			WHERE internalstockcatrole.secroleid='".$SelectedRole."'
 			ORDER BY internalstockcatrole.categoryid ASC";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr><th colspan="3"><h3>' . _('Internal Stock Categories Allowed to user role') . ' ' .$SelectedRole. '</h3></th></tr>';
@@ -172,19 +172,19 @@ if (isset($_POST['process'])OR isset($SelectedRole)) {
 			<th>' . _('Description') . '</th>
 		</tr>';
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this internal stock category code?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['categoryid'],
-			$myrow['categorydescription'],
+			$MyRow['categoryid'],
+			$MyRow['categorydescription'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$myrow['categoryid'],
+			$MyRow['categoryid'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$myrow['categoryid']);
+			$MyRow['categoryid']);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -203,17 +203,17 @@ while ($myrow = DB_fetch_array($result)) {
 						categorydescription
 				FROM stockcategory";
 
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 		if (!isset($_POST['SelectedCategory'])){
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}
-		while ($myrow = DB_fetch_array($result)) {
-			if (isset($_POST['SelectedCategory']) AND $myrow['categoryid']==$_POST['SelectedCategory']) {
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (isset($_POST['SelectedCategory']) AND $MyRow['categoryid']==$_POST['SelectedCategory']) {
 				echo '<option selected="selected" value="';
 			} else {
 				echo '<option value="';
 			}
-			echo $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
+			echo $MyRow['categoryid'] . '">' . $MyRow['categoryid'] . ' - ' . $MyRow['categorydescription'] . '</option>';
 
 		} //end while loop
 
@@ -221,7 +221,7 @@ while ($myrow = DB_fetch_array($result)) {
 			</field>';
 
 	   	echo '</fieldset>'; // close main table
-        DB_free_result($result);
+        DB_free_result($Result);
 
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Accept') . '" />

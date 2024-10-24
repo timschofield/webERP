@@ -32,11 +32,11 @@ if(isset($_POST['Submit'])) {
 		$NewStockID = $_POST['ExStockID'];
 	}
 	if ($InputError==0){
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		if($NewOrExisting == 'N') {
 	      /* duplicate rows into stockmaster */
-			$sql = "INSERT INTO stockmaster( stockid,
+			$SQL = "INSERT INTO stockmaster( stockid,
 									categoryid,
 									description,
 									longdescription,
@@ -90,9 +90,9 @@ if(isset($_POST['Submit'])) {
 									netweight
 							FROM stockmaster
 							WHERE stockid='".$StockID."';";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		} else {
-			$sql = "SELECT lastcostupdate,
+			$SQL = "SELECT lastcostupdate,
 							actualcost,
 							lastcost,
 							materialcost,
@@ -101,23 +101,23 @@ if(isset($_POST['Submit'])) {
 							lowestlevel
 						FROM stockmaster
 						WHERE stockid='".$StockID."';";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 
-			$myrow = DB_fetch_row($result);
+			$MyRow = DB_fetch_row($Result);
 
-			$sql = "UPDATE stockmaster set
-					lastcostupdate  = '" . $myrow[0] . "',
-					actualcost      = " . $myrow[1] . ",
-					lastcost        = " . $myrow[2] . ",
-					materialcost    = " . $myrow[3] . ",
-					labourcost      = " . $myrow[4] . ",
-					overheadcost    = " . $myrow[5] . ",
-					lowestlevel     = " . $myrow[6] . "
+			$SQL = "UPDATE stockmaster set
+					lastcostupdate  = '" . $MyRow[0] . "',
+					actualcost      = " . $MyRow[1] . ",
+					lastcost        = " . $MyRow[2] . ",
+					materialcost    = " . $MyRow[3] . ",
+					labourcost      = " . $MyRow[4] . ",
+					overheadcost    = " . $MyRow[5] . ",
+					lowestlevel     = " . $MyRow[6] . "
 					WHERE stockid='".$NewStockID."';";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		}
 
-		$sql = "INSERT INTO bom
+		$SQL = "INSERT INTO bom
 					SELECT '".$NewStockID."' AS parent,
 					        sequence,
 							component,
@@ -131,10 +131,10 @@ if(isset($_POST['Submit'])) {
 							digitals
 					FROM bom
 					WHERE parent='".$StockID."';";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 		if($NewOrExisting == 'N') {
-			$sql = "INSERT INTO locstock (loccode,
+			$SQL = "INSERT INTO locstock (loccode,
 								            stockid,
 								            quantity,
 								            reorderlevel,
@@ -147,10 +147,10 @@ if(isset($_POST['Submit'])) {
 						FROM locstock
 						WHERE stockid='".$StockID."'";
 
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		}
 
-		$result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		UpdateCost($NewStockID);
 
@@ -164,12 +164,12 @@ if(isset($_POST['Submit'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$sql = "SELECT stockid,
+	$SQL = "SELECT stockid,
 					description
 				FROM stockmaster
 				WHERE stockid IN (SELECT DISTINCT parent FROM bom)
 				AND  mbflag IN ('M', 'A', 'K', 'G');";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<fieldset>
 			<legend>', _('Copy Criteria'), '</legend>';
@@ -177,7 +177,7 @@ if(isset($_POST['Submit'])) {
 	echo '<field>
 			<label for="StockID">', _('From Stock ID'), '</label>
 			<select name="StockID">';
-	while ($MyRow = DB_fetch_row($result)) {
+	while ($MyRow = DB_fetch_row($Result)) {
 		if (isset($_GET['Item']) and $MyRow[0] == $_GET['Item']) {
 			echo '<option selected="selected" value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
 		} else {

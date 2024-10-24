@@ -139,18 +139,18 @@ class Request
             $this->content_type = 'text/xml';
         }
 
-        $result = $this->xml_header($charsetEncoding);
-        $result .= '<methodName>' . $this->getCharsetEncoder()->encodeEntities(
+        $Result = $this->xml_header($charsetEncoding);
+        $Result .= '<methodName>' . $this->getCharsetEncoder()->encodeEntities(
                 $this->methodname, PhpXmlRpc::$xmlrpc_internalencoding, $charsetEncoding) . "</methodName>\n";
-        $result .= "<params>\n";
+        $Result .= "<params>\n";
         foreach ($this->params as $p) {
-            $result .= "<param>\n" . $p->serialize($charsetEncoding) .
+            $Result .= "<param>\n" . $p->serialize($charsetEncoding) .
                 "</param>\n";
         }
-        $result .= "</params>\n";
-        $result .= $this->xml_footer();
+        $Result .= "</params>\n";
+        $Result .= $this->xml_footer();
 
-        $this->payload = $result;
+        $this->payload = $Result;
     }
 
     /**
@@ -326,7 +326,7 @@ class Request
         $_xh = $xmlRpcParser->parse($data, $returnType, XMLParser::ACCEPT_RESPONSE, $options);
         // BC
         if (!is_array($_xh)) {
-            $_xh = $xmlRpcParser->_xh;
+            $_xh = $xmlRpcParser->__get('_xh');
         }
 
         // first error check: xml not well-formed
@@ -460,8 +460,8 @@ class Request
                 /// @todo throw instead? There are very few other places where the lib trigger errors which can potentially reach stdout...
                 $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
                 trigger_error('Undefined property via __get(): ' . $name . ' in ' . $trace[0]['file'] . ' on line ' . $trace[0]['line'], E_USER_WARNING);
-                $result = null;
-                return $result;
+                $Result = null;
+                return $Result;
         }
     }
 

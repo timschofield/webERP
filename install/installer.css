@@ -6,14 +6,15 @@
  **/
 
 html {
- width:: 100%;
+ width: 100%;
  background:#f0f0f0;
+    color: #000;
 }
 *:focus {outline: none;} /* Get rid of webkit focus at outset */
 body {
     font: 16px/24px "Lucida Sans", "Lucida Grande", "Lucida Sans Unicode", sans-serif;
     background: #1A1A1A;
-	color: #E6E6FA;
+	/* color: #E6E6FA; */
 	margin:0;
     padding:0;
     border:0;
@@ -111,7 +112,7 @@ form .page_help_text ul li {
 /*** Custom Installer FORM ELEMENTS ***/
 
 form {
-	background: #d8d8d8;
+	 background: #d8d8d8;
 	padding: 20px;
 	border: 1px solid #d8d8d8;
 	margin:0;

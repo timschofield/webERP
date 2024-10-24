@@ -48,10 +48,10 @@ function ConvertToSQLDate($DateEntry) {
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyTransactionDate($TranDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strpos($TranDate,'/')>0) {
 			$DateArray = explode('/',$TranDate);
 		} elseif (mb_strpos($TranDate,'.')>0) {
@@ -84,10 +84,10 @@ function ConvertToSQLDate($DateEntry) {
 /* Why use this function over GetPeriod we already have this function included in DateFunctions.inc
  * This function doesn't create periods if required so there is the danger of not being able to insert transactions*/
 	function GetPeriodFromTransactionDate($TranDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
 		} elseif (mb_strstr('.',$PeriodEnd)) {
@@ -115,10 +115,10 @@ function ConvertToSQLDate($DateEntry) {
 		$Month=$DateArray[1];
 		$Year=$DateArray[0];
 		$Date=$Year.'-'.$Month.'-'.$Day;
-		$sql="SELECT MAX(periodno) FROM periods WHERE lastdate_in_period<='" . $Date . "'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		return $myrow[0];
+		$SQL="SELECT MAX(periodno) FROM periods WHERE lastdate_in_period<='" . $Date . "'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		return $MyRow[0];
 	}
 
 /* Verify that the Settled flag is a 1 or 0 */
@@ -248,20 +248,20 @@ function ConvertToSQLDate($DateEntry) {
  * and not limited to stk='any'!!
  *
 	function GetSalesGLCode($salesarea, $partnumber) {
-		$sql="SELECT salesglcode FROM salesglpostings
+		$SQL="SELECT salesglcode FROM salesglpostings
 			WHERE stkcat='any'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		return $myrow[0];
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		return $MyRow[0];
 	}
 */
 
 /* Retrieves the default debtors code for webERP */
 	function GetDebtorsGLCode() {
-		$sql="SELECT debtorsact FROM companies";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		return $myrow[0];
+		$SQL="SELECT debtorsact FROM companies";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		return $MyRow[0];
 	}
 
 
@@ -368,7 +368,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . round($Receipt['amountfx'] / $ReceiptExRate,4) . "',
 						'" . $CustCurrRow['currcode'] . "')";
 
-		$result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'','',true);
 
 
 		if ($CompanyRecord['gllink_debtors']==1) {
@@ -388,7 +388,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['reference'] . "',
 						'" . round((-$Receipt['amountfx']-$Receipt['discountfx']) / $CustCurrRow['rate'],4) . "')";
 
-			$result = api_DB_query($SQL,'','',true);
+			$Result = api_DB_query($SQL,'','',true);
 
 			if($Receipt['discountfx']!=0){
 				$SQL="INSERT INTO gltrans ( type,
@@ -406,7 +406,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['reference'] . "',
 						'" . round($Receipt['discountfx'] / $CustCurrRow['rate'],4) . "')";
 
-				$result = api_DB_query($SQL,'','',true);
+				$Result = api_DB_query($SQL,'','',true);
 			}
 		/*and debit bank account with the receipt */
 			$SQL="INSERT INTO gltrans ( type,
@@ -425,7 +425,7 @@ function ConvertToSQLDate($DateEntry) {
 						'" . $Receipt['reference'] . "',
 						'" . round($Receipt['amountfx'] / $CustCurrRow['rate'],4) . "')";
 
-			$result = api_DB_query($SQL,'','',true);
+			$Result = api_DB_query($SQL,'','',true);
 
 		} /* end if GL linked to debtors */
 
@@ -452,21 +452,21 @@ function ConvertToSQLDate($DateEntry) {
 							'" . -$Receipt['discountfx'] . "',
 							'" . $Receipt['paymentmethod'] . "')";
 
-		$result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'','',true);
 
 		$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . $Receipt['trandate'] . "',
 						lastpaid='" . $Receipt['amountfx'] ."'
 					WHERE debtorsmaster.debtorno='" . $Receipt['debtorno'] . "'";
 
-		$result = api_DB_query($SQL,'','',true);
+		$Result = api_DB_query($SQL,'','',true);
 
 
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$ReceiptNo;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 	}
@@ -542,11 +542,11 @@ function ConvertToSQLDate($DateEntry) {
 		if (DB_error_no() != 0) {
 			$Errors[] = NoTaxProvince;
 		}
-		$myrow = DB_fetch_row($TaxProvResult);
-		$DispTaxProvinceID = $myrow[0];
+		$MyRow = DB_fetch_row($TaxProvResult);
+		$DispTaxProvinceID = $MyRow[0];
 
 	/*Start an SQL transaction */
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 	/*Now Get the next credit note number - function in SQL_CommonFunctions*/
 		$CreditNoteNo = GetNextTransNo(11);
 		$PeriodNo = GetCurrentPeriod();
@@ -602,29 +602,29 @@ function ConvertToSQLDate($DateEntry) {
 
 			$LineTaxAmount = 0;
 
-			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
-					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
+			while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
+				if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {
+					$TaxTotals[$MyRow['taxauthid']]['FXAmount']=0;
 				}
-				$TaxAuthID=$myrow['taxauthid'];
-				$TaxTotals[$myrow['taxauthid']]['GLCode'] = $myrow['taxglcode'];
-				$TaxTotals[$myrow['taxauthid']]['TaxRate'] = $myrow['taxrate'];
-				$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
+				$TaxAuthID=$MyRow['taxauthid'];
+				$TaxTotals[$MyRow['taxauthid']]['GLCode'] = $MyRow['taxglcode'];
+				$TaxTotals[$MyRow['taxauthid']]['TaxRate'] = $MyRow['taxrate'];
+				$TaxTotals[$MyRow['taxauthid']]['TaxAuthDescription'] = $MyRow['description'];
 
-				if ($myrow['taxontax'] ==1){
-					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+				if ($MyRow['taxontax'] ==1){
+					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $MyRow['taxrate'];
 				} else {
-					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
+					$TaxAuthAmount =  $LineNetAmount * $MyRow['taxrate'];
 				}
-				$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
+				$TaxTotals[$MyRow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
 
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
-				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
-												'TaxAuthID' =>$myrow['taxauthid'],
-												'TaxAuthDescription'=>$myrow['description'],
-												'TaxRate'=>$myrow['taxrate'],
-												'TaxOnTax'=>$myrow['taxontax'],
+				$LineTaxes[$LineCounter][$MyRow['calculationorder']] = array('TaxCalculationOrder' =>$MyRow['calculationorder'],
+												'TaxAuthID' =>$MyRow['taxauthid'],
+												'TaxAuthDescription'=>$MyRow['description'],
+												'TaxRate'=>$MyRow['taxrate'],
+												'TaxOnTax'=>$MyRow['taxontax'],
 												'TaxAuthAmount'=>$TaxAuthAmount);
 				$LineTaxAmount += $TaxAuthAmount;
 
@@ -857,22 +857,22 @@ function ConvertToSQLDate($DateEntry) {
 
 			$Result = api_DB_query($SQL,'','',true);
 
-			$myrow = DB_fetch_row($Result);
+			$MyRow = DB_fetch_row($Result);
 
-			if ($myrow[0]>0){  /*Update the existing record that already exists */
+			if ($MyRow[0]>0){  /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis
 						SET amt=amt+" . ($CN_Line['price'] * $CN_Line['qty'] / $CN_Header['rate']) . ",
 						qty=qty +" . $CN_Line['qty'] . ",
 						disc=disc+" . ($CN_Line['discountpercent'] * $CN_Line['price'] * $CN_Line['qty'] / $CN_Header['rate']) . "
-						WHERE salesanalysis.area='" . $myrow[2] . "'
-						AND salesanalysis.salesperson='" . $myrow[3] . "'
+						WHERE salesanalysis.area='" . $MyRow[2] . "'
+						AND salesanalysis.salesperson='" . $MyRow[3] . "'
 						AND typeabbrev ='" . $Header['tpe'] . "'
 						AND periodno = '" . $PeriodNo . "'
 						AND cust  " . LIKE . " '" . $Header['debtorno'] . "'
 						AND custbranch  " . LIKE . "  '" . $Header['branchcode'] . "'
 						AND stockid  " . LIKE . " '" . $CN_Line['stockid'] . "'
-						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+						AND salesanalysis.stkcategory ='" . $MyRow[1] . "'
 						AND budgetoractual='1'";
 
 			} else { /* insert a new sales analysis record */
@@ -1159,11 +1159,11 @@ function ConvertToSQLDate($DateEntry) {
 		}
 
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$CreditNoteNo;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 	} /*End of CreateCreditNote method */
@@ -1252,15 +1252,15 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$result = DB_Txn_Begin();
-			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
+			DB_Txn_Begin();
+			$SQL = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
 									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
-			$result = DB_query($sql);
-			$sql = "UPDATE systypes SET typeno='" . GetNextTransNo(10) . "' WHERE typeid=10";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
+			$SQL = "UPDATE systypes SET typeno='" . GetNextTransNo(10) . "' WHERE typeid=10";
+			$Result = DB_query($SQL);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
 			$DebtorsGLCode=GetDebtorsGLCode();
-			$sql="INSERT INTO gltrans VALUES(null,
+			$SQL="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransNo(10) . "',
 											0,
@@ -1272,8 +1272,8 @@ function ConvertToSQLDate($DateEntry) {
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-			$result = api_DB_query($sql);
-			$sql="INSERT INTO gltrans VALUES(null,
+			$Result = api_DB_query($SQL);
+			$SQL="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransNo(10) . "',
 											0,
@@ -1285,8 +1285,8 @@ function ConvertToSQLDate($DateEntry) {
 											0,
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
-			$result = api_DB_query($sql);
-			$result= DB_Txn_Commit();
+			$Result = api_DB_query($SQL);
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -1456,10 +1456,10 @@ function ConvertToSQLDate($DateEntry) {
 			} //end loop around potential positive receipts not fully allocated already
 		}
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 
@@ -1550,15 +1550,15 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$result = DB_Txn_Begin();
-			$sql = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
+			DB_Txn_Begin();
+			$SQL = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
-			$result = DB_query($sql);
-			$sql = "UPDATE systypes SET typeno='" . GetNextTransNo(11) ."' WHERE typeid=10";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
+			$SQL = "UPDATE systypes SET typeno='" . GetNextTransNo(11) ."' WHERE typeid=10";
+			$Result = DB_query($SQL);
 			$SalesGLCode=GetSalesGLCode($SalesArea, $PartCode);
 			$DebtorsGLCode=GetDebtorsGLCode();
-			$sql="INSERT INTO gltrans VALUES(null,
+			$SQL="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransNo(11). "',
 											0,
@@ -1569,8 +1569,8 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $CreditDetails['ovamount'] . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
-			$result = DB_query($sql);
-			$sql="INSERT INTO gltrans VALUES(null,
+			$Result = DB_query($SQL);
+			$SQL="INSERT INTO gltrans VALUES(null,
 											10,
 											'" . GetNextTransNo(11) . "',
 											0,
@@ -1581,8 +1581,8 @@ function ConvertToSQLDate($DateEntry) {
 											'" .(-intval($CreditDetails['ovamount'])) . "',
 											0,
 											'" . $CreditDetails['jobref'] ."')";
-			$result = DB_query($sql);
-			$result= DB_Txn_Commit();
+			$Result = DB_query($SQL);
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

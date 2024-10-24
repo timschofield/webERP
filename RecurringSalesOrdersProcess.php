@@ -28,7 +28,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/htmlMimeMail.php');
 
-$sql = "SELECT recurringsalesorders.recurrorderno,
+$SQL = "SELECT recurringsalesorders.recurrorderno,
 			recurringsalesorders.debtorno,
 	  		recurringsalesorders.branchcode,
 	  		recurringsalesorders.customerref,
@@ -73,7 +73,7 @@ $sql = "SELECT recurringsalesorders.recurrorderno,
 		AND (TO_DAYS(NOW()) - TO_DAYS(recurringsalesorders.lastrecurrence)) > (365/recurringsalesorders.frequency)
 		AND DATE_ADD(recurringsalesorders.lastrecurrence, " . INTERVAL ('365/recurringsalesorders.frequency', 'DAY') . ") <= recurringsalesorders.stopdate";
 
-$RecurrOrdersDueResult = DB_query($sql,_('There was a problem retrieving the recurring sales order templates. The database reported:'));
+$RecurrOrdersDueResult = DB_query($SQL,_('There was a problem retrieving the recurring sales order templates. The database reported:'));
 
 if (DB_num_rows($RecurrOrdersDueResult)==0){
 	prnMsg(_('There are no recurring order templates that are due to have another recurring order created'),'warn');
@@ -88,7 +88,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	$EmailText ='';
 	echo '<br />' . _('Recurring order') . ' ' . $RecurrOrderRow['recurrorderno'] . ' ' . _('for') . ' ' . $RecurrOrderRow['debtorno'] . ' - ' . $RecurrOrderRow['branchcode'] . ' ' . _('is being processed');
 
-	$result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	/*the last recurrence was the date of the last time the order recurred
 	the frequency is the number of times per annum that the order should recurr
@@ -191,12 +191,12 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		} /* line items from recurring sales order details */
 	} //end if there are line items on the recurring order
 
-	$sql = "UPDATE recurringsalesorders SET lastrecurrence = '" . $DelDate . "'
+	$SQL = "UPDATE recurringsalesorders SET lastrecurrence = '" . $DelDate . "'
 			WHERE recurrorderno='" . $RecurrOrderRow['recurrorderno'] ."'";
 	$ErrMsg = _('Could not update the last recurrence of the recurring order template. The database reported the error:');
-	$Result = DB_query($sql,$ErrMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,true);
 
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	prnMsg(_('Recurring order was created for') . ' ' . $RecurrOrderRow['name'] . ' ' . _('with order Number') . ' ' . $OrderNo, 'success');
 
@@ -214,10 +214,10 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 
 		$ErrMsg = _('Unable to determine the area where the sale is to, from the customer branches table, please select an area for this branch');
 		$Result = DB_query($SQL, $ErrMsg);
-		$myrow = DB_fetch_row($Result);
-		$Area = $myrow[0];
-		$DefaultShipVia = $myrow[1];
-//		$CustTaxAuth = $myrow[2];
+		$MyRow = DB_fetch_row($Result);
+		$Area = $MyRow[0];
+		$DefaultShipVia = $MyRow[1];
+//		$CustTaxAuth = $MyRow[2];
 		DB_free_result($Result);
 
 		$SQL = "SELECT rate
@@ -226,21 +226,21 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 				WHERE debtorno='" . $RecurrOrderRow['debtorno'] . "'";
 		$ErrMsg = _('The exchange rate for the customer currency could not be retrieved from the currency table because:');
 		$Result = DB_query($SQL,$ErrMsg);
-		$myrow = DB_fetch_row($Result);
-		$CurrencyRate = $myrow[0];
+		$MyRow = DB_fetch_row($Result);
+		$CurrencyRate = $MyRow[0];
 
 		$SQL = "SELECT taxprovinceid FROM locations WHERE loccode='" . $RecurrOrderRow['fromstkloc'] ."'";
 		$ErrMsg = _('Could not retrieve the tax province of the location from where the order was fulfilled because:');
 		$Result = DB_query($SQL,$ErrMsg);
-		$myrow=DB_fetch_row($Result);
-		$DispTaxProvinceID = $myrow[0];
+		$MyRow=DB_fetch_row($Result);
+		$DispTaxProvinceID = $MyRow[0];
 
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	/*Start an SQL transaction */
-		$result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		$TotalFXNetInvoice = 0;
 		$TotalFXTax = 0;
@@ -277,30 +277,30 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			$LineTaxAmount = 0;
 			$TaxTotals =array();
 
-			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
-				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
-					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
+			while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
+				if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {
+					$TaxTotals[$MyRow['taxauthid']]['FXAmount']=0;
 				}
-				$TaxAuthID=$myrow['taxauthid'];
-				$TaxTotals[$myrow['taxauthid']]['GLCode'] = $myrow['taxglcode'];
-				$TaxTotals[$myrow['taxauthid']]['TaxRate'] = $myrow['taxrate'];
-				$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
+				$TaxAuthID=$MyRow['taxauthid'];
+				$TaxTotals[$MyRow['taxauthid']]['GLCode'] = $MyRow['taxglcode'];
+				$TaxTotals[$MyRow['taxauthid']]['TaxRate'] = $MyRow['taxrate'];
+				$TaxTotals[$MyRow['taxauthid']]['TaxAuthDescription'] = $MyRow['description'];
 
-				if ($myrow['taxontax'] ==1){
-					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
-					  $TaxTotals[$myrow['taxauthid']]['FXAmount'] += ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+				if ($MyRow['taxontax'] ==1){
+					  $TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $MyRow['taxrate'];
+					  $TaxTotals[$MyRow['taxauthid']]['FXAmount'] += ($LineNetAmount+$LineTaxAmount) * $MyRow['taxrate'];
 				} else {
-					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
-					$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $LineNetAmount * $myrow['taxrate'];
+					$TaxAuthAmount =  $LineNetAmount * $MyRow['taxrate'];
+					$TaxTotals[$MyRow['taxauthid']]['FXAmount'] += $LineNetAmount * $MyRow['taxrate'];
 				}
 
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
-				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
-												'TaxAuthID' =>$myrow['taxauthid'],
-												'TaxAuthDescription'=>$myrow['description'],
-												'TaxRate'=>$myrow['taxrate'],
-												'TaxOnTax'=>$myrow['taxontax'],
+				$LineTaxes[$LineCounter][$MyRow['calculationorder']] = array('TaxCalculationOrder' =>$MyRow['calculationorder'],
+												'TaxAuthID' =>$MyRow['taxauthid'],
+												'TaxAuthDescription'=>$MyRow['description'],
+												'TaxRate'=>$MyRow['taxrate'],
+												'TaxOnTax'=>$MyRow['taxontax'],
 												'TaxAuthAmount'=>$TaxAuthAmount);
 				$LineTaxAmount += $TaxAuthAmount;
 
@@ -425,22 +425,22 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 			$DbgMsg = _('SQL to count the no of sales analysis records');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			$myrow = DB_fetch_row($Result);
+			$MyRow = DB_fetch_row($Result);
 
-			if ($myrow[0]>0){  /*Update the existing record that already exists */
+			if ($MyRow[0]>0){  /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis
 					SET amt=amt+" . filter_number_format($RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . ",
 					qty=qty +" . $RecurrOrderLineRow['quantity'] . ",
 					disc=disc+" . filter_number_format($RecurrOrderLineRow['discountpercent'] * $RecurrOrderLineRow['unitprice'] * $RecurrOrderLineRow['quantity'] / $CurrencyRate) . "
-					WHERE salesanalysis.area='" . $myrow[2] . "'
-					AND salesanalysis.salesperson='" . $myrow[3] . "'
+					WHERE salesanalysis.area='" . $MyRow[2] . "'
+					AND salesanalysis.salesperson='" . $MyRow[3] . "'
 					AND typeabbrev ='" . $RecurrOrderRow['ordertype'] . "'
 					AND periodno = '" . $PeriodNo . "'
 					AND cust  " . LIKE . " '" . $RecurrOrderRow['debtorno'] . "'
 					AND custbranch  " . LIKE . "  '" . $RecurrOrderRow['branchcode'] . "'
 					AND stockid  " . LIKE . " '" . $RecurrOrderLineRow['stkcode'] . "'
-					AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+					AND salesanalysis.stkcategory ='" . $MyRow[1] . "'
 					AND budgetoractual='1'";
 
 			} else { /* insert a new sales analysis record */
@@ -696,7 +696,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$DbgMsg = _('The following SQL to insert the debtor transaction taxes record was used');
  		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('Invoice number'). ' '. $InvoiceNo .' '. _('processed'),'success');
 
@@ -710,9 +710,9 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		if($_SESSION['SmtpSetting']==0){
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
 
-			$result = $mail->send(array($RecurrOrderRow['email']));
+			$Result = $mail->send(array($RecurrOrderRow['email']));
 		}else{
-			$result = SendmailBySmtp($mail,array($RecurrOrderRow['email']));
+			$Result = SendmailBySmtp($mail,array($RecurrOrderRow['email']));
 
 		}
 		unset($mail);

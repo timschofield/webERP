@@ -22,8 +22,8 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	}
 
 /*First check the salesman code exists */
-	$result=DB_query("SELECT salesmancode FROM salesman WHERE salesmancode='" . $_POST['OldSalesmanCode'] . "'");
-	if (DB_num_rows($result) == 0){
+	$Result=DB_query("SELECT salesmancode FROM salesman WHERE salesmancode='" . $_POST['OldSalesmanCode'] . "'");
+	if (DB_num_rows($Result) == 0){
 		prnMsg('<br /><br />' . _('The salesman code') . ': ' . $_POST['OldSalesmanCode'] . ' ' . _('does not currently exist as a sales person code in the system'), 'error');
 		include('includes/footer.php');
 		exit;
@@ -43,17 +43,17 @@ if (isset($_POST['ProcessSalesmanChange'])){
 	$_POST['NewSalesmanCode'] = mb_strtoupper($_POST['NewSalesmanCode']);
 
 /*Now check that the new code doesn't already exist */
-	$result=DB_query("SELECT salesmancode FROM salesman WHERE salesmancode='" . $_POST['NewSalesmanCode'] . "'");
-	if (DB_num_rows($result)!=0){
+	$Result=DB_query("SELECT salesmancode FROM salesman WHERE salesmancode='" . $_POST['NewSalesmanCode'] . "'");
+	if (DB_num_rows($Result)!=0){
 		prnMsg(_('The replacement salesman code') .': ' . $_POST['NewSalesmanCode'] . ' ' . _('already exists as a salesman code in the system') . ' - ' . _('a unique salesman code must be entered for the new code'), 'error');
 		include('includes/footer.php');
 		exit;
 	}
 
-	$result = DB_Txn_Begin();
+    DB_Txn_Begin();
 
 	prnMsg(_('Inserting the new salesman master record'), 'info');
-	$sql = "INSERT INTO salesman (`salesmancode`,
+	$SQL = "INSERT INTO salesman (`salesmancode`,
 								`salesmanname`,
 								`commissionrate1`,
 								`commissionrate2`,
@@ -74,48 +74,48 @@ if (isset($_POST['ProcessSalesmanChange'])){
 
 	$DbgMsg =_('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new salesman master record failed') . ', ' . _('the SQL statement was');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing debtor branch records'), 'info');
-	$sql = "UPDATE custbranch SET salesman='" . $_POST['NewSalesmanCode'] . "' WHERE salesman='" . $_POST['OldSalesmanCode'] . "'";
+	$SQL = "UPDATE custbranch SET salesman='" . $_POST['NewSalesmanCode'] . "' WHERE salesman='" . $_POST['OldSalesmanCode'] . "'";
 
 	$ErrMsg = _('The SQL to update debtor branch records failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing debtor transaction records'), 'info');
-	$sql = "UPDATE debtortrans SET salesperson='" . $_POST['NewSalesmanCode'] . "' WHERE salesperson='" . $_POST['OldSalesmanCode'] . "'";
+	$SQL = "UPDATE debtortrans SET salesperson='" . $_POST['NewSalesmanCode'] . "' WHERE salesperson='" . $_POST['OldSalesmanCode'] . "'";
 
 	$ErrMsg = _('The SQL to update debtor transaction records failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing sales analysis records'), 'info');
-	$sql = "UPDATE salesanalysis SET salesperson='" . $_POST['NewSalesmanCode'] . "' WHERE salesperson='" . $_POST['OldSalesmanCode'] . "'";
+	$SQL = "UPDATE salesanalysis SET salesperson='" . $_POST['NewSalesmanCode'] . "' WHERE salesperson='" . $_POST['OldSalesmanCode'] . "'";
 
 	$ErrMsg = _('The SQL to update Sales Analysis records failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing sales orders records'), 'info');
-	$sql = "UPDATE salesorders SET salesperson='" . $_POST['NewSalesmanCode'] . "' WHERE salesperson='" . $_POST['OldSalesmanCode'] . "'";
+	$SQL = "UPDATE salesorders SET salesperson='" . $_POST['NewSalesmanCode'] . "' WHERE salesperson='" . $_POST['OldSalesmanCode'] . "'";
 
 	$ErrMsg = _('The SQL to update the sales order header records failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	prnMsg(_('Changing user salesman records'), 'info');
-	$sql = "UPDATE www_users SET salesman='" . $_POST['NewSalesmanCode'] . "' WHERE salesman='" . $_POST['OldSalesmanCode'] . "'";
+	$SQL = "UPDATE www_users SET salesman='" . $_POST['NewSalesmanCode'] . "' WHERE salesman='" . $_POST['OldSalesmanCode'] . "'";
 
 	$ErrMsg = _('The SQL to update the user records failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_IgnoreForeignKeys();
+	$Result = DB_IgnoreForeignKeys();
 
 	prnMsg(_('Deleting the salesman code from the Salesman table'), 'info');
-	$sql = "DELETE FROM salesman WHERE salesmancode='" . $_POST['OldSalesmanCode'] . "'";
+	$SQL = "DELETE FROM salesman WHERE salesmancode='" . $_POST['OldSalesmanCode'] . "'";
 
 	$ErrMsg = _('The SQL to delete the old salesman record failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_Txn_Commit();
-	$result = DB_ReinstateForeignKeys();
+	DB_Txn_Commit();
+	$Result = DB_ReinstateForeignKeys();
 }
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">

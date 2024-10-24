@@ -90,18 +90,18 @@ if ( isset($_POST['pricelist']) ) {
 
 	While ($PriceList = DB_fetch_array($PricesResult)){
 		$Qty = 0;
-		$sqlQty = "SELECT newqoh
+		$SQLQty = "SELECT newqoh
 			FROM stockmoves
 			WHERE stockid = '".$PriceList['stockid']."'
 			AND loccode = '".$_POST['Location']."'
 			ORDER BY stkmoveno DESC LIMIT 1";
-		$resultQty = DB_query($sqlQty, $ErrMsg);
-		if ( $resultQty ) {
-			if( DB_num_rows($resultQty) > 0 ) {
-				$Row = DB_fetch_row($resultQty);
+		$ResultQty = DB_query($SQLQty, $ErrMsg);
+		if ( $ResultQty ) {
+			if( DB_num_rows($ResultQty) > 0 ) {
+				$Row = DB_fetch_row($ResultQty);
 				$Qty = $Row[0];
 			}
-			DB_free_result($resultQty);
+			DB_free_result($ResultQty);
 		}
 
 		$DisplayUnitPrice = $PriceList['price'];
@@ -315,7 +315,7 @@ if ( isset($_POST['pricelist']) ) {
 	$CSVContent = stripcomma('stockid') . ','.
 				  stripcomma('filename') . ','.
 				  stripcomma('url') . "\n";
-	$baseurl = 'http://'. $_SERVER['HTTP_HOST'] . dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')) . '/' . 'getstockimg.php?automake=1&stockid=%s.png';
+	$baseurl = '//'. $_SERVER['HTTP_HOST'] . dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')) . '/' . 'getstockimg.php?automake=1&stockid=%s.png';
 	While ($ImageList = DB_fetch_array($ImageResult)){
 		$url = sprintf($baseurl, urlencode($ImageList['stockid']));
 		$CSVContent .= (
@@ -538,21 +538,21 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table>';
 	echo '<tr><th colspan="2">' . _('Price List Export') . '</th></tr>';
-	$sql = 'SELECT sales_type, typeabbrev FROM salestypes';
-	$SalesTypesResult=DB_query($sql);
+	$SQL = 'SELECT sales_type, typeabbrev FROM salestypes';
+	$SalesTypesResult=DB_query($SQL);
 	echo '<tr><td>' . _('For Sales Type/Price List') . ':</td>';
 	echo '<td><select name="SalesType">';
-	while ($myrow=DB_fetch_array($SalesTypesResult)){
-	          echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+	while ($MyRow=DB_fetch_array($SalesTypesResult)){
+	          echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 	}
 	echo '</select></td></tr>';
 
-	$sql = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($sql);
+	$SQL = 'SELECT loccode, locationname FROM locations';
+	$SalesTypesResult=DB_query($SQL);
 	echo '<tr><td>' . _('For Location') . ':</td>';
 	echo '<td><select name="Location">';
-	while ($myrow=DB_fetch_array($SalesTypesResult)){
-	          echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($SalesTypesResult)){
+	          echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '</table>';
@@ -571,12 +571,12 @@ if ( isset($_POST['pricelist']) ) {
 	echo '<table>';
 	echo '<tr><th colspan="2">' . _('Customer List Export') . '</th></tr>';
 
-	$sql = 'SELECT loccode, locationname FROM locations';
-	$SalesTypesResult=DB_query($sql);
+	$SQL = 'SELECT loccode, locationname FROM locations';
+	$SalesTypesResult=DB_query($SQL);
 	echo '<tr><td>' . _('For Location') . ':</td>';
 	echo '<td><select name="Location">';
-	while ($myrow=DB_fetch_array($SalesTypesResult)){
-	          echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($SalesTypesResult)){
+	          echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '</table>';

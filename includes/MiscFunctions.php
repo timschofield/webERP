@@ -6,9 +6,26 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg, $Type = 'info', $Prefix = '') {
+function prnMsg($Msg, $Type = 'info', $Prefix = '', $return = false) {
 	global $Messages;
 	$Messages[] = array($Msg, $Type, $Prefix);
+    if($return){
+        $Prefix = $Type == 'info'
+            ? _('INFORMATION') . ' ' . _('Message')
+            : ($Type == 'warning' || $Type == 'warn'
+                ? _('WARNING') . ' ' . _('Report')
+                : ($Type == 'error'
+                    ? _('ERROR') . ' ' . _('Report')
+                    : _('SUCCESS') . ' ' . _('Report')
+                )
+            );
+        return '<div id="MessageContainerFoot">
+				<div class="Message '. $Type . ' noPrint">
+					<span class="MessageCloseButton">&times;</span>
+					<b>'. $Prefix . '</b> : ' .  $Msg . '
+				</div>
+			</div>';
+    }
 }
 
 function reverse_escape($str) {
@@ -91,8 +108,8 @@ class XmlElement {
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 	for detail of the European Central Bank rates - published daily */
-	if (http_file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
-		$xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
+	if (http_file_exists('//www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+		$xml = file_get_contents('//www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
@@ -154,8 +171,8 @@ function GetCurrencyRate($CurrCode, $CurrenciesArray) {
 }
 
 function quote_oanda_currency($CurrCode) {
-	if (http_file_exists('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
-		$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
+	if (http_file_exists('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
+		$page = file('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 		$match = array();
 		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
 		if (sizeof($match) > 0) {
@@ -168,7 +185,7 @@ function quote_oanda_currency($CurrCode) {
 
 function google_currency_rate($CurrCode) {
 	$Rate = 0;
-	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
+	$PageLines = file('//www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
 	foreach ($PageLines as $Line) {
 		if (mb_strpos($Line, 'currency_converter_result')) {
 			$Length = mb_strpos($Line, '</span>') - 58;
@@ -208,7 +225,7 @@ function Convert_CRLF($string, $line_break=PHP_EOL)
 //&$YPos - return the updated value
 //         Coming in, YPos=prior line, so update it before we print anything, and don't update it if we don't print anything
 //Defaults come from addTextWrap
-function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
+function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
 {
 	$InitialExtraSpace=2;		//shift down slightly from above text
 
@@ -227,50 +244,50 @@ function PrintDetail($pdf,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null
 			}
 			$YPos=$YPos-$FontSize-$InitialExtraSpace;
 			$InitialExtraSpace=0;
-			$LeftOvers = $pdf->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
+			$LeftOvers = $PDF->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
 		}
 	}
 }
 
-function PrintOurCompanyInfo($pdf,$CompanyRecord,$XPos,$YPos)
+function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$pdf->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
+	$PDF->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
 	$YPos -= $FontSize;
 	$FontSize = 10;
 
 	//webERP default:
-	$pdf->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
-	$pdf->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-	$pdf->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
-	$pdf->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
-	$pdf->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
+	$PDF->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+	$PDF->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+	$PDF->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
+	$PDF->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
+	$PDF->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
 		' ' . $_SESSION['CompanyRecord']['regoffice6']);
-	$pdf->addText($XPos, $YPos-$FontSize*5, $FontSize,  _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
+	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
 		' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
-	$pdf->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
+	$PDF->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
 
 }
 
 //Generically move down 82 units after printing this
-function PrintDeliverTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
+function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
 	$line_height=15;
-	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
+	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
-	$pdf->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
-	$pdf->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
-	$pdf->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
-	$pdf->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
+	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
+	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
+	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
+	$PDF->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
 
 	// Draws a box with round corners around 'Delivery To' info:
-	$pdf->RoundRectangle(
+	$PDF->RoundRectangle(
 		$XPos-6,// RoundRectangle $XPos.
 		$YPos+2,// RoundRectangle $YPos.
 		245,// RoundRectangle $Width.
@@ -280,22 +297,22 @@ function PrintDeliverTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
 }
 
 //Generically move down 82 units after printing this
-function PrintCompanyTo($pdf,$CompanyRecord,$Title,$XPos,$YPos)
+function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 {
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
 	$line_height=15;
-	$pdf->addText($XPos, $YPos,$FontSize, $Title . ':' );
+	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
-	$pdf->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
-	$pdf->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
-	$pdf->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
-	$pdf->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
+	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
+	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
+	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
+	$PDF->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
 
 	// Draws a box with round corners around 'Delivery To' info:
-	$pdf->RoundRectangle(
+	$PDF->RoundRectangle(
 		$XPos-6,// RoundRectangle $XPos.
 		$YPos+2,// RoundRectangle $YPos.
 		245,// RoundRectangle $Width.

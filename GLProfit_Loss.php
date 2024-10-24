@@ -46,11 +46,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
-	if ($NumberOfMonths > 12) {
-		echo '<p>';
-		prnMsg(_('A period up to 12 months in duration can be specified') . ' - ' . _('the system automatically shows a comparative for the same period from the previous year') . ' - ' . _('it cannot do this if a period of more than 12 months is specified') . '. ' . _('Please select an alternative period range'), 'error');
-		include ('includes/footer.php');
-		exit;
+	$HTML .= '<meta name="author" content="WebERP ' . $Version . '>
+					<meta name="Creator" content="webERP //www.weberp.org">
+				</head>
+				<body>';
+//		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />'; // Page title . reporting period.
+	$HTML .= '<table class="selection">'.
+		// Content of the header and footer of the output table:
+		'<thead>
+			<tr>';
+	if ($_POST['ShowDetail']=='Detailed') {
+		$HTML .= '<th>' . _('Account') . '</th><th>' . _('Account Name') . '</th>';
+	} else { /*summary */
+		$HTML .= '<th colspan="2">&nbsp;</th>';
 	}
 
 	$HTML .= '<table summary="' . _('General Ledger Profit Loss Inquiry') . '">

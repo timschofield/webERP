@@ -66,10 +66,10 @@ function ProcessSupplier($oldCode, $newCode) {
 		return;
 	}
 
-	$result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	prnMsg(_('Inserting the new supplier record'),'info');
-	$sql = "INSERT INTO suppliers (`supplierid`,
+	$SQL = "INSERT INTO suppliers (`supplierid`,
 		`suppname`,  `address1`, `address2`, `address3`,
 		`address4`,  `address5`,  `address6`, `supptype`, `lat`, `lng`,
 		`currcode`,  `suppliersince`, `paymentterms`, `lastpaid`,
@@ -87,27 +87,27 @@ function ProcessSupplier($oldCode, $newCode) {
 
 	$DbgMsg =_('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new suppliers master record failed') . ', ' . _('the SQL statement was');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	foreach ($table_key as $table=>$key) {
 		prnMsg(_('Changing').' '. $table.' ' . _('records'),'info');
-		$sql = "UPDATE " . $table . " SET $key='" . $newCode . "' WHERE $key='" . $oldCode . "'";
+		$SQL = "UPDATE " . $table . " SET $key='" . $newCode . "' WHERE $key='" . $oldCode . "'";
 		$ErrMsg = _('The SQL to update') . ' ' . $table . ' ' . _('records failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	}
 
 	prnMsg(_('Deleting the supplier code from the suppliers master table'),'info');
-	$sql = "DELETE FROM suppliers WHERE supplierid='" . $oldCode . "'";
+	$SQL = "DELETE FROM suppliers WHERE supplierid='" . $oldCode . "'";
 
 	$ErrMsg = _('The SQL to delete the old supplier record failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_Txn_Commit();
+	DB_Txn_Commit();
 }
 
 function checkSupplierExist($codeSupplier) {
-	$result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $codeSupplier . "'");
-	if (DB_num_rows($result)==0) return false;
+	$Result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $codeSupplier . "'");
+	if (DB_num_rows($Result)==0) return false;
 	return true;
 }
 

@@ -716,7 +716,7 @@ class Server
             $_xh = $xmlRpcParser->parse($data, $this->functions_parameters_type, XMLParser::ACCEPT_REQUEST, $options);
             // BC
             if (!is_array($_xh)) {
-                $_xh = $xmlRpcParser->_xh;
+                $_xh = $xmlRpcParser->__get('_xh');
             }
         } catch (NoSuchMethodException $e) {
             return new static::$responseClass(0, $e->getCode(), $e->getMessage());
@@ -1314,13 +1314,13 @@ class Server
             }
         }
 
-        $result = $server->execute($req);
+        $Result = $server->execute($req);
 
-        if ($result->faultCode() != 0) {
-            return static::_xmlrpcs_multicall_error($result); // Method returned fault.
+        if ($Result->faultCode() != 0) {
+            return static::_xmlrpcs_multicall_error($Result); // Method returned fault.
         }
 
-        return new Value(array($result->value()), 'array');
+        return new Value(array($Result->value()), 'array');
     }
 
     /**
@@ -1364,13 +1364,13 @@ class Server
             }
         }
 
-        $result = $server->execute($call['methodName'], $call['params'], $pt);
+        $Result = $server->execute($call['methodName'], $call['params'], $pt);
 
-        if ($result->faultCode() != 0) {
-            return static::_xmlrpcs_multicall_error($result); // Method returned fault.
+        if ($Result->faultCode() != 0) {
+            return static::_xmlrpcs_multicall_error($Result); // Method returned fault.
         }
 
-        return new Value(array($result->value()), 'array');
+        return new Value(array($Result->value()), 'array');
     }
 
     /**
@@ -1382,21 +1382,21 @@ class Server
      */
     public static function _xmlrpcs_multicall($server, $req)
     {
-        $result = array();
+        $Result = array();
         // let's accept a plain list of php parameters, beside a single xml-rpc msg object
         if (is_object($req)) {
             $calls = $req->getParam(0);
             foreach ($calls as $call) {
-                $result[] = static::_xmlrpcs_multicall_do_call($server, $call);
+                $Result[] = static::_xmlrpcs_multicall_do_call($server, $call);
             }
         } else {
             $numCalls = count($req);
             for ($i = 0; $i < $numCalls; $i++) {
-                $result[$i] = static::_xmlrpcs_multicall_do_call_phpvals($server, $req[$i]);
+                $Result[$i] = static::_xmlrpcs_multicall_do_call_phpvals($server, $req[$i]);
             }
         }
 
-        return new static::$responseClass(new Value($result, 'array'));
+        return new static::$responseClass(new Value($Result, 'array'));
     }
 
     /**
@@ -1499,8 +1499,8 @@ class Server
                 /// @todo throw instead? There are very few other places where the lib trigger errors which can potentially reach stdout...
                 $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
                 trigger_error('Undefined property via __get(): ' . $name . ' in ' . $trace[0]['file'] . ' on line ' . $trace[0]['line'], E_USER_WARNING);
-                $result = null;
-                return $result;
+                $Result = null;
+                return $Result;
         }
     }
 
