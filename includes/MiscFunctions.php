@@ -8,7 +8,6 @@
 
 function prnMsg($Msg, $Type = 'info', $Prefix = '', $return = false) {
 	global $Messages;
-	$Messages[] = array($Msg, $Type, $Prefix);
     if($return){
         $Prefix = $Type == 'info'
             ? _('INFORMATION') . ' ' . _('Message')
@@ -25,6 +24,9 @@ function prnMsg($Msg, $Type = 'info', $Prefix = '', $return = false) {
 					<b>'. $Prefix . '</b> : ' .  $Msg . '
 				</div>
 			</div>';
+    }
+    else{
+        $Messages[] = array($Msg, $Type, $Prefix);
     }
 }
 

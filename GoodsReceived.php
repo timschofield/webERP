@@ -789,7 +789,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	echo '<br />
 		<div class="centre">
-			'. prnMsg(_('GRN number'). ' '. $GRN .' '. _('has been processed'),'success') . '
+			'. prnMsg(_('GRN number'). ' '. $GRN .' '. _('has been processed'),'success','',true) . '
 			<br />
 			<br />
 			<a href="PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  _('Print this Goods Received Note (GRN)') . '</a>

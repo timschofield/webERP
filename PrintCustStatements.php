@@ -513,11 +513,11 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 			include('includes/header.php');
 			echo '<br />
 				<br />
-				<br />' . prnMsg( _('There were no statements to print'));
+				<br />' . prnMsg( _('There were no statements to print'),'warning','',true);
 		} else {
 			echo '<br />
 				<br />
-				<br />' . prnMsg( _('There were no statements to email'));
+				<br />' . prnMsg( _('There were no statements to email'),'warning','',true);
 		}
 		echo'<br />
 				<br />

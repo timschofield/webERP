@@ -38,28 +38,28 @@ if (isset($_POST['Submit'])) {
 		prnMsg('<br />' . _('The Tab code cannot be an empty string or spaces'), 'error');
 	} elseif (mb_strlen($_POST['TabCode']) > 20) {
 		$InputError = 1;
-		echo prnMsg(_('The Tab code must be twenty characters or less long'), 'error','',true);
+		prnMsg(_('The Tab code must be twenty characters or less long'), 'error');
 	} elseif (($_POST['SelectUser']) == '') {
 		$InputError = 1;
-		echo prnMsg(_('You must select a User for this tab'), 'error','',true);
+		prnMsg(_('You must select a User for this tab'), 'error');
 	} elseif (($_POST['SelectTabs']) == '') {
 		$InputError = 1;
-		echo prnMsg(_('You must select a type of tab from the list'), 'error','',true);
+		prnMsg(_('You must select a type of tab from the list'), 'error');
 	} elseif (($_POST['SelectAssigner']) == '') {
 		$InputError = 1;
-		echo prnMsg(_('You must select a User to assign cash to this tab'), 'error','',true);
+		prnMsg(_('You must select a User to assign cash to this tab'), 'error');
 	} elseif (($_POST['SelectAuthoriserCash']) == '') {
 		$InputError = 1;
-		echo prnMsg(_('You must select a User to authorise this tab'), 'error','',true);
+		prnMsg(_('You must select a User to authorise this tab'), 'error');
 	} elseif (($_POST['GLAccountCash']) == '') {
 		$InputError = 1;
-		echo prnMsg(_('You must select a General ledger code for the cash to be assigned from'), 'error','',true);
+		prnMsg(_('You must select a General ledger code for the cash to be assigned from'), 'error');
 	} elseif (($_POST['GLAccountPcashTab']) == '') {
 		$InputError = 1;
-		echo prnMsg(_('You must select a General ledger code for this petty cash tab'), 'error','',true);
+		prnMsg(_('You must select a General ledger code for this petty cash tab'), 'error');
 	} elseif (($_POST['TaxGroup']) === '0') {
 		$InputError = 1;
-		echo prnMsg(_('You must select a tax group'), 'error','',true);
+		prnMsg(_('You must select a tax group'), 'error');
 	}
 	if (isset($SelectedTab) and $InputError != 1) {
 		$SQL = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
