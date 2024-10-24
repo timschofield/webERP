@@ -194,11 +194,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPKL", 75, 150, $db);
+		StockByBrand("SHOPKL", 75, 150, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPBL", 75, 150, $db);
+		StockByBrand("SHOPBL", 75, 150, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
-		StockByBrand("SHOPOU", 75, 150, $db);
+		StockByBrand("SHOPOU", 75, 150, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4216,7 +4216,7 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 	}
 }
 
-function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
+function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $UserRoleIsAdmin){
 	
 	$BrandText= BrandTextFromCode($Brand);
 
@@ -4291,37 +4291,40 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock){
 			locale_number_format($AvailableForSaleItems,0)
 			);
 	$k = StartEvenOrOddRow($k);
-/*	printf('<td>%s</td>
+	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			"Daily Stock sold average last " . $NumDays . " days (PCS)", 
-			locale_number_format($DailySoldItemsThisYearPastDays,0)
+			"Retail trend from same days last year (%)", 
+			locale_number_format($TrendThisYear*100,1). "%"
 			);
 	$k = StartEvenOrOddRow($k);
-	if ($Brand != "SHOPOU"){
+	
+	if ($UserRoleIsAdmin){
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				"Daily Stock sold same days last year (PCS)", 
-				locale_number_format($DailySoldItemsLastYearPastDays,0)
+				"Daily Stock sold average last " . $NumDays . " days (PCS)", 
+				locale_number_format($DailySoldItemsThisYearPastDays,0)
 				);
 		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Retail trend last " . $NumDays . " days (%)", 
-				locale_number_format($TrendThisYear*100,1). "%"
-				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Daily Stock sold average next " . $NumDaysLastYear . " days last year (PCS)", 
-				locale_number_format($DailySoldItemsLastYearNextDays,0)
-				);
-		$k = StartEvenOrOddRow($k);
-	}	
-*/
+		if ($Brand != "SHOPOU"){
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					"Daily Stock sold same last " . $NumDays . " days last year (PCS)", 
+					locale_number_format($DailySoldItemsLastYearPastDays,0)
+					);
+			$k = StartEvenOrOddRow($k);
+			printf('<td>%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					"Daily Stock sold next " . $NumDaysLastYear . " days last year (PCS)", 
+					locale_number_format($DailySoldItemsLastYearNextDays,0)
+					);
+			$k = StartEvenOrOddRow($k);
+		}			
+	}
+
 	printf('<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
