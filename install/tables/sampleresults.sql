@@ -1,0 +1,21 @@
+CREATE TABLE `sampleresults` (
+  `resultid` bigint NOT NULL AUTO_INCREMENT,
+  `sampleid` int NOT NULL,
+  `testid` int NOT NULL,
+  `defaultvalue` varchar(150) NOT NULL,
+  `targetvalue` varchar(30) NOT NULL,
+  `rangemin` float DEFAULT NULL,
+  `rangemax` float DEFAULT NULL,
+  `testvalue` varchar(30) NOT NULL DEFAULT '',
+  `testdate` date NOT NULL DEFAULT '1000-01-01',
+  `testedby` varchar(15) NOT NULL DEFAULT '',
+  `comments` varchar(255) NOT NULL DEFAULT '',
+  `isinspec` tinyint NOT NULL DEFAULT '0',
+  `showoncert` tinyint NOT NULL DEFAULT '1',
+  `showontestplan` tinyint NOT NULL DEFAULT '1',
+  `manuallyadded` tinyint NOT NULL DEFAULT '0',
+  PRIMARY KEY (`resultid`),
+  KEY `sampleid` (`sampleid`),
+  KEY `testid` (`testid`),
+  CONSTRAINT `sampleresults_ibfk_1` FOREIGN KEY (`testid`) REFERENCES `qatests` (`testid`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3

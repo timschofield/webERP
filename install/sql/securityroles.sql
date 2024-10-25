@@ -1,0 +1,1 @@
+INSERT INTO `securityroles` VALUES (1,'Inquiries/Order Entry'),(2,'Manufac/Stock Admin'),(3,'Purchasing Officer'),(4,'AP Clerk'),(5,'AR Clerk'),(6,'Accountant'),(7,'Customer Log On Only'),(8,'System Administrator'),(9,'Supplier Log On Only');
