@@ -82,6 +82,13 @@ width:7rem;
 text-align:center;
 color:#FFFFFF;
 }
+.install {
+background:url(images/install.png) no-repeat left #383838;
+background-size:24px 24px;
+background-position:6px;
+padding-left:32px;
+width:7rem;
+}
 .is_disabled {
 cursor: not-allowed;
 opacity: 0.5;

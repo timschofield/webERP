@@ -1,7 +1,7 @@
 <?php
 // index.php
 
-ini_set('max_execution_time', "600");
+ini_set('max_execution_time', "6000");
 session_name('weberp_installation');
 session_start();
 
@@ -100,7 +100,12 @@ if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer'][
 				<img src="images/right.png" style="float:right" />
 		</div>';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 5) {
-	echo '<input type="submit" class="nav_button" name="install" value="', _('Install'), '" /><img src="images/right.png" style="float:right" />';
+	echo '<input type="submit" class="install nav_button" name="install" value="', _('Install'), '" />';
+} elseif ($_SESSION['Installer']['CurrentPage'] == 6) {
+	echo '<div class="nav_button">
+			<a href="../Logout.php">', _('Restart webERP'), '</a>
+				<img src="images/restart.png"  style="float:right; width:24px;">
+		</div>';
 } else {
 	echo '<div class="nav_button">
 			<a href="index.php?Page=', ($_SESSION['Installer']['CurrentPage'] + 1), '">', _('Next'), '</a>
@@ -108,7 +113,7 @@ if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer'][
 		</div>';
 }
 
-if ($_SESSION['Installer']['CurrentPage'] != 0) {
+if ($_SESSION['Installer']['CurrentPage'] != 0 and $_SESSION['Installer']['CurrentPage'] != 6) {
 	echo '<div class="nav_button">
 			<a href="index.php?Page=', ($_SESSION['Installer']['CurrentPage'] - 1), '">', _('Previous'), '</a>
 				<img src="images/left.png" style="float:left">
