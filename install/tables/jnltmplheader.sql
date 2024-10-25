@@ -3,4 +3,4 @@ CREATE TABLE `jnltmplheader` (
   `templatedescription` varchar(50) NOT NULL DEFAULT '',
   `journaltype` int NOT NULL DEFAULT '0',
   PRIMARY KEY (`templateid`)
-) EENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
