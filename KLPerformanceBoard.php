@@ -1778,18 +1778,27 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 							<th>' . '# Pcs/Inv'. '</th>
 						</tr>';
 		echo $TableHeader;
+		$TotalInvoiceSum = 0;
 		$TotalInvoiceCount = 0;
 		$TotalItemCount = 0;		
+		$TotalInvoiceSumLastYear = 0;
+		$TotalInvoiceCountLastYear = 0;
+		$TotalItemCountLastYear = 0;		
 		$k = 0; //row colour counter
-		$i = 1;
+		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
+			$i++;
 			$Code = $myrow['debtorno'];
 			$Name = $myrow['name'];
 			
 			if ($myrow['invoicesum'] > 0){
 
+				$TotalInvoiceSum += $myrow['invoicesum'];
 				$TotalInvoiceCount += $myrow['invoicecount'];
 				$TotalItemCount += $myrow['itemcount'];		
+				$TotalInvoiceSumLastYear += $myrow['invoicesum_lastyear'];
+				$TotalInvoiceCountLastYear += $myrow['invoicecount_lastyear'];
+				$TotalItemCountLastYear += $myrow['itemcount_lastyear'];		
 
 				$k = StartEvenOrOddRow($k);
 				printf('<td class="number">%s</td>
@@ -1822,8 +1831,36 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 						);
 				
 			}
-			$i++;
 		}
+		$k = StartEvenOrOddRow($k);
+		printf('<td class="number">%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				'',
+				'',
+				'Brand Average',
+				locale_number_format_zero_blank($TotalInvoiceSum/$TotalInvoiceCount,0), 
+				locale_number_format_zero_blank($TotalInvoiceSum/$TotalItemCount,0), 
+				locale_number_format_zero_blank($TotalInvoiceCount/$NumDaysA,1),
+				locale_number_format_zero_blank($TotalItemCount/$NumDaysA,1),
+				locale_number_format_zero_blank($TotalItemCount/$TotalInvoiceCount,1),
+				locale_number_format_zero_blank($TotalInvoiceSumLastYear/$TotalInvoiceCountLastYear,0), 
+				locale_number_format_zero_blank($TotalInvoiceSumLastYear/$TotalItemCountLastYear,0), 
+				locale_number_format_zero_blank($TotalInvoiceCountLastYear/$NumDaysA,1),
+				locale_number_format_zero_blank($TotalItemCountLastYear/$NumDaysA,1),
+				locale_number_format_zero_blank($TotalItemCountLastYear/$TotalInvoiceCountLastYear,1)
+				);
 		echo '</table>
 				</div>';
 		InsertKPI("Sales", "Items x Invoice Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
