@@ -45,67 +45,85 @@ if(isset($_GET['ShowZeroBalance'])) {// Select period from.
 }
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$RetainedEarningsAct = $_SESSION['CompanyRecord']['retainedearnings'];
+
 	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['PeriodTo'] . "'";
 	$PrdResult = DB_query($SQL);
 	$MyRow = DB_fetch_row($PrdResult);
 	$BalanceDate = ConvertSQLDate($MyRow[0]);
 
-	// Calculate B/Fwd retained earnings:
-	$SQL = "SELECT
-			Sum(CASE WHEN chartdetails.period='" . $_POST['PeriodTo'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS accumprofitbfwd,
-			Sum(CASE WHEN chartdetails.period='" . ($_POST['PeriodTo'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lyaccumprofitbfwd
-		FROM chartmaster
-			INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-			INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
-		WHERE accountgroups.pandl=1";
-	$ErrMsg = _('The accumulated profits brought forward could not be calculated by the SQL because');
-	$AccumProfitResult = DB_query($SQL, $ErrMsg);
+	/*Calculate B/Fwd retained earnings */
 
-	$AccumProfitRow = DB_fetch_array($AccumProfitResult);// Should only be one row returned.
+	/* Get the retained earnings amount */
+	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount),3) AS retainedearnings
+									FROM gltotals
+									INNER JOIN chartmaster
+										ON gltotals.account=chartmaster.accountcode
+									INNER JOIN accountgroups
+										ON chartmaster.group_=accountgroups.groupname
+									WHERE period<='" . $_POST['PeriodTo'] . "'
+										AND pandl=1";
+	$ThisYearRetainedEarningsResult = DB_query($ThisYearRetainedEarningsSQL);
+	$ThisYearRetainedEarningsRow = DB_fetch_array($ThisYearRetainedEarningsResult);
 
-	$SQL = "SELECT
-			accountgroups.sectioninaccounts,
-			accountgroups.groupname,
-			accountgroups.parentgroupname,
-			chartdetails.accountcode,
-			chartmaster.accountname,
-			Sum(CASE WHEN chartdetails.period='" . $_POST['PeriodTo'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS balancecfwd,
-			Sum(CASE WHEN chartdetails.period='" . ($_POST['PeriodTo'] - 12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lybalancecfwd
-		FROM chartmaster
-			INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
-			INNER JOIN chartdetails	ON chartmaster.accountcode=chartdetails.accountcode
-			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
-		WHERE accountgroups.pandl=0
-		GROUP BY accountgroups.groupname,
-			chartdetails.accountcode,
-			chartmaster.accountname,
-			accountgroups.parentgroupname,
-			accountgroups.sequenceintb,
-			accountgroups.sectioninaccounts
-		ORDER BY accountgroups.sectioninaccounts,
-			accountgroups.sequenceintb,
-			accountgroups.groupname,
-			chartdetails.accountcode";
-	$ErrMsg = _('No general ledger accounts were returned by the SQL because');
-	$AccountsResult = DB_query($SQL, $ErrMsg);
+	$LastYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount),3) AS retainedearnings
+									FROM gltotals
+									INNER JOIN chartmaster
+										ON gltotals.account=chartmaster.accountcode
+									INNER JOIN accountgroups
+										ON chartmaster.group_=accountgroups.groupname
+									WHERE period<='" . ($_POST['PeriodTo'] - 12) . "'
+										AND pandl=1";
+	$LastYearRetainedEarningsResult = DB_query($LastYearRetainedEarningsSQL);
+	$LastYearRetainedEarningsRow = DB_fetch_array($LastYearRetainedEarningsResult);
 
-	$Section = '';
-	$SectionBalance = 0;
-	$SectionBalanceLY = 0;
+	// Get all account codes
+	$SQL = "SELECT sectionid,
+					sectionname,
+					sectioninaccounts,
+					parentgroupname,
+					chartmaster.accountcode,
+					group_,
+					accountname,
+					pandl
+				FROM chartmaster
+				INNER JOIN glaccountusers
+					ON glaccountusers.accountcode=chartmaster.accountcode
+					AND glaccountusers.userid='" . $_SESSION['UserID'] . "'
+					AND glaccountusers.canview=1
+				INNER JOIN accountgroups
+					ON accountgroups.groupname=chartmaster.group_
+				INNER JOIN accountsection
+					ON accountsection.sectionid=accountgroups.sectioninaccounts
+				WHERE pandl=0
+				ORDER BY sequenceintb,
+						group_,
+						accountcode";
+	$AccountListResult = DB_query($SQL);
 
-	$CheckTotalLY = 0;
-	$CheckTotal = 0;
+	$SQL = "SELECT account,
+					ROUND(SUM(amount),3) AS accounttotal
+				FROM gltotals
+				WHERE period<='" . $_POST['PeriodTo'] . "'
+				GROUP BY account
+				ORDER BY account";
+	$Result = DB_query($SQL);
 
-	$ActGrp = '';
-	$Level = 0;
-	$ParentGroups = array();
-	$ParentGroups[$Level] = '';
-	$GroupTotal = array(0);
-	$GroupTotalLY = array(0);
+	$ThisYearActuals = array();
+	while ($MyRow = DB_fetch_array($Result)) {
+		$ThisYearActuals[$MyRow['account']] = $MyRow['accounttotal'];
+	}
 
+	$SQL = "SELECT account,
+					ROUND(SUM(amount),3) AS accounttotal
+				FROM gltotals
+				WHERE period<='" . ($_POST['PeriodTo'] - 12) . "'
+				GROUP BY account
+				ORDER BY account";
+	$Result = DB_query($SQL);
 
-	if(!isset($IsIncluded)) {// Runs normally if this script is NOT included in another.
-//		include('includes/header.php');
+	$LastYearActuals = array();
+	while ($MyRow = DB_fetch_array($Result)) {
+		$LastYearActuals[$MyRow['account']] = $MyRow['accounttotal'];
 	}
 
 	$HTML = '';
@@ -116,191 +134,227 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
-	$HTML .= '<meta name="author" content="WebERP ' . $Version . '>
-					<meta name="Creator" content="webERP http://www.weberp.org">
-				</head>
-				<body>';
+	$HTML .= '<table summary="' . _('HTML View') . '">
+			<thead>
+				<tr>
+					<th colspan="6">
+						<h2>' . _('Balance Sheet as at') . ' ' . $BalanceDate . '
+						</h2>
+					</th>
+				</tr>';
 
-	$HTML .= '<div class="centre" id="ReportHeader">
-				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-				' . _('Balance Sheet As At ') . $BalanceDate . '<br />
-				' . _('All amounts stated in') . ': ' . _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]) . '
-			</div>';// Page title.
-
-	$HTML .= '<table class="selection">
-				<thead>';
-
-	if ($_POST['ShowDetail']=='Detailed') {
-		$ColumnHeadings = '<tr>
-					<th>' . _('Account') . '</th>
-					<th>' . _('Account Name') . '</th>';
-	} else {// Summary report:
-		$ColumnHeadings .= '<tr>
-					<th colspan="2"></th>';
-	}
-	$ColumnHeadings .= '<th colspan="2">' . $BalanceDate . '</th>
+	if ($_POST['ShowDetail'] == 'Detailed') {
+		$HTML .= '<tr>
+				<th>' . _('Account') . '</th>
+				<th>' . _('Account Name') . '</th>
+				<th colspan="2">' . $BalanceDate . '</th>
 				<th colspan="2">' . _('Last Year') . '</th>
 			</tr>';
+	} else {
+		/*summary */
+		$HTML .= '<tr>
+				<th colspan="2"></th>
+				<th colspan="2">' . $BalanceDate . '</th>
+				<th colspan="2">' . _('Last Year') . '</th>
+			</tr>';
+	}
+	$HTML .= '</thead>';
 
-	$HTML .= '<thead><tbody>';// thead used in conjunction with tbody enable scrolling of the table body independently of the header and footer. Also, when printing a large table that spans multiple pages, these elements can enable the table header to be printed at the top of each page.
+	$Section = '';
+	$SectionBalance = 0;
+	$SectionBalanceLY = 0;
+
+	$LYCheckTotal = 0;
+	$CheckTotal = 0;
+
+	$ActGrp = '';
+	$Level = 0;
+	$ParentGroups = array();
+	$ParentGroups[$Level] = '';
+	$GroupTotal = array(0);
+	$LYGroupTotal = array(0);
 
 	$j = 0; //row counter
-
-	while ($MyRow = DB_fetch_array($AccountsResult)) {
-		$AccountBalance = $MyRow['balancecfwd'];
-		$AccountBalanceLY = $MyRow['lybalancecfwd'];
+	while ($MyRow = DB_fetch_array($AccountListResult)) {
+		if (isset($ThisYearActuals[$MyRow['accountcode']])) {
+			$AccountBalance = $ThisYearActuals[$MyRow['accountcode']];
+		} else {
+			$AccountBalance = 0;
+		}
+		if (isset($LastYearActuals[$MyRow['accountcode']])) {
+			$LYAccountBalance = $LastYearActuals[$MyRow['accountcode']];
+		} else {
+			$LYAccountBalance = 0;
+		}
 
 		if ($MyRow['accountcode'] == $RetainedEarningsAct) {
-			$AccountBalance+= $AccumProfitRow['accumprofitbfwd'];
-			$AccountBalanceLY+= $AccumProfitRow['lyaccumprofitbfwd'];
+			$AccountBalance = $ThisYearRetainedEarningsRow['retainedearnings'];
+			$LYAccountBalance = $LastYearRetainedEarningsRow['retainedearnings'];
 		}
-		if ($MyRow['groupname'] != $ActGrp and $ActGrp != '') {
+
+		if ($MyRow['group_'] != $ActGrp and $ActGrp != '') {
 			if ($MyRow['parentgroupname'] != $ActGrp) {
-				while ($MyRow['groupname'] != $ParentGroups[$Level] and $Level > 0) {
+				while ($MyRow['group_'] != $ParentGroups[$Level] and $Level > 0) {
 					if ($_POST['ShowDetail'] == 'Detailed') {
 						$HTML .= '<tr>
-								<td colspan="2">&nbsp;</td>
+								<td colspan="2"></td>
 								<td><hr /></td>
-								<td>&nbsp;</td>
+								<td></td>
 								<td><hr /></td>
-								<td>&nbsp;</td>
+								<td></td>
 							</tr>';
 					}
-					$HTML .= '<tr>
-							<td colspan="2"><i>' . $ParentGroups[$Level] . '</i></td>
+					$HTML .= '<tr class="total_row">
+							<td colspan="2"><I>' . $ParentGroups[$Level] . '</I></td>
 							<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-							<td>&nbsp;</td>
-							<td class="number">' . locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td></td>
+							<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+							<td></td>
 						</tr>';
-					$ParentGroups[$Level] = '';
 					$GroupTotal[$Level] = 0;
-					$GroupTotalLY[$Level] = 0;
+					$LYGroupTotal[$Level] = 0;
+					$ParentGroups[$Level] = '';
 					$Level--;
-					$j++;
+					++$j;
 				}
 				if ($_POST['ShowDetail'] == 'Detailed') {
 					$HTML .= '<tr>
-							<td colspan="2">&nbsp;</td>
+							<td colspan="2"></td>
 							<td><hr /></td>
-							<td>&nbsp;</td>
+							<td></td>
 							<td><hr /></td>
-							<td>&nbsp;</td>
+							<td></td>
 						</tr>';
 				}
-				$HTML .= '<tr>
+
+				$HTML .= '<tr class="total_row">
 						<td colspan="2">' . $ParentGroups[$Level] . '</td>
 						<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td>&nbsp;</td>
-						<td class="number">' . locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td></td>
+						<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td></td>
 					</tr>';
-				$ParentGroups[$Level] = '';
+
 				$GroupTotal[$Level] = 0;
-				$GroupTotalLY[$Level] = 0;
-				$j++;
+				$LYGroupTotal[$Level] = 0;
+				$ParentGroups[$Level] = '';
+				++$j;
 			}
 		}
-		if ($MyRow['sectioninaccounts'] != $Section) {
+		if ($MyRow['sectionid'] != $Section) {
 
 			if ($Section != '') {
 				if ($_POST['ShowDetail'] == 'Detailed') {
 					$HTML .= '<tr>
 							<td colspan="2"></td>
 							<td><hr /></td>
-							<td>&nbsp;</td>
+							<td></td>
 							<td><hr /></td>
-							<td>&nbsp;</td>
+							<td></td>
 						</tr>';
 				} else {
 					$HTML .= '<tr>
 							<td colspan="3"></td>
 							<td><hr /></td>
-							<td>&nbsp;</td>
+							<td></td>
 							<td><hr /></td>
 						</tr>';
 				}
-				$HTML .= '<tr>
+
+				$HTML .= '<tr class="total_row">
 						<td colspan="3"><h2>' . $Sections[$Section] . '</h2></td>
 						<td class="number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td>&nbsp;</td>
+						<td></td>
 						<td class="number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					</tr>';
-				$j++;
+				++$j;
 			}
-			$SectionBalance = 0;
 			$SectionBalanceLY = 0;
-			$Section = $MyRow['sectioninaccounts'];
+			$SectionBalance = 0;
+			$Section = $MyRow['sectionid'];
 
 			if ($_POST['ShowDetail'] == 'Detailed') {
 				$HTML .= '<tr>
-						<td colspan="6"><h1>' . $Sections[$MyRow['sectioninaccounts']] . '</h1></td>
+						<td colspan="6"><h1>' . $Sections[$MyRow['sectionid']] . '</h1></td>
 					</tr>';
 			}
 		}
 
-		if ($MyRow['groupname'] != $ActGrp) {
+		if ($MyRow['group_'] != $ActGrp) {
 
 			if ($ActGrp != '' and $MyRow['parentgroupname'] == $ActGrp) {
 				$Level++;
 			}
 
 			if ($_POST['ShowDetail'] == 'Detailed') {
-				$ActGrp = $MyRow['groupname'];
+				$ActGrp = $MyRow['group_'];
 				$HTML .= '<tr>
-						<td colspan="6"><h3>' . $MyRow['groupname'] . '</h3></td>
+						<td colspan="6"><h3>' . $MyRow['group_'] . '</h3></td>
 					</tr>';
 			}
 			$GroupTotal[$Level] = 0;
-			$GroupTotalLY[$Level] = 0;
-			$ActGrp = $MyRow['groupname'];
-			$ParentGroups[$Level] = $MyRow['groupname'];
-			$j++;
+			$LYGroupTotal[$Level] = 0;
+			$ActGrp = $MyRow['group_'];
+			$ParentGroups[$Level] = $MyRow['group_'];
+			++$j;
 		}
 
+		$SectionBalanceLY+= $LYAccountBalance;
 		$SectionBalance+= $AccountBalance;
-		$SectionBalanceLY+= $AccountBalanceLY;
-
 		for ($i = 0;$i <= $Level;$i++) {
+			$LYGroupTotal[$i]+= $LYAccountBalance;
 			$GroupTotal[$i]+= $AccountBalance;
-			$GroupTotalLY[$i]+= $AccountBalanceLY;
 		}
+		$LYCheckTotal+= $LYAccountBalance;
 		$CheckTotal+= $AccountBalance;
-		$CheckTotalLY+= $AccountBalanceLY;
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
-			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
-
-				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
+			if (isset($_POST['ShowZeroBalance'])) {
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
 
 				$HTML .= '<tr class="striped_row">
 						<td>' . $ActEnquiryURL . '</td>
 						<td>' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
 						<td class="number">' . locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td>&nbsp;</td>
-						<td class="number">' . locale_number_format($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-						<td>&nbsp;</td>
+						<td></td>
+						<td class="number">' . locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td></td>
 					</tr>';
-				$j++;
+				++$j;
+			} elseif ($AccountBalance != 0 or $LYAccountBalance != 0) {
+				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?FromPeriod=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&ToPeriod=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '">' . $MyRow['accountcode'] . '</a>';
+
+				$HTML .= '<tr class="striped_row">
+						<td>' . $ActEnquiryURL . '</td>
+						<td>' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</td>
+						<td class="number">' . locale_number_format($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td></td>
+						<td class="number">' . locale_number_format($LYAccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+						<td></td>
+					</tr>';
+				++$j;
 			}
 		}
-		$LastGroup = $MyRow['groupname'];
-		$LastSection = $MyRow['sectioninaccounts'];
-	}// END while($MyRow = DB_fetch_array($AccountsResult)).
-
-	while ($LastGroup != $ParentGroups[$Level] and $Level > 0) {
+		$Group = $MyRow['group_'];
+		$SectionInAccounts = $MyRow['sectioninaccounts'];
+	}
+	//end of loop
+	while ($Group != $ParentGroups[$Level] and $Level > 0) {
 		if ($_POST['ShowDetail'] == 'Detailed') {
 			$HTML .= '<tr>
 					<td colspan="2"></td>
 					<td><hr /></td>
-					<td>&nbsp;</td>
+					<td></td>
 					<td><hr /></td>
-					<td>&nbsp;</td>
+					<td></td>
 				</tr>';
 		}
-		$HTML .= '<tr>
-				<td colspan="2"><i>' . $ParentGroups[$Level] . '</i></td>
+		$HTML .= '<tr class="total_row">
+				<td colspan="2"><I>' . $ParentGroups[$Level] . '</I></td>
 				<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-				<td>&nbsp;</td>
-				<td class="number">' . locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td></td>
+				<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td></td>
 			</tr>';
 		$Level--;
 	}
@@ -308,41 +362,45 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$HTML .= '<tr>
 				<td colspan="2"></td>
 				<td><hr /></td>
-				<td>&nbsp;</td>
+				<td></td>
 				<td><hr /></td>
-				<td>&nbsp;</td>
+				<td></td>
 			</tr>';
 	}
-	$HTML .= '<tr>
+
+	$HTML .= '<tr class="total_row">
 			<td colspan="2">' . $ParentGroups[$Level] . '</td>
 			<td class="number">' . locale_number_format($GroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td>&nbsp;</td>
-			<td class="number">' . locale_number_format($GroupTotalLY[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>
-		<tr>';
+			<td></td>
+			<td class="number">' . locale_number_format($LYGroupTotal[$Level], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td></td>
+		</tr>';
 
 	if ($_POST['ShowDetail'] == 'Detailed') {
-		$HTML .= '<td colspan="2">&nbsp;</td>
-		<td><hr /></td>
-		<td>&nbsp;</td>
-		<td><hr /></td>
-		<td>&nbsp;</td>';
+		$HTML .= '<tr>
+				<td colspan="2"></td>
+				<td><hr /></td>
+				<td></td>
+				<td><hr /></td>
+				<td></td>
+			</tr>';
 	} else {
-		$HTML .= '<td colspan="3">&nbsp;</td>
-		<td><hr /></td>
-		<td>&nbsp;</td>
-		<td><hr /></td>';
+		$HTML .= '<tr>
+				<td colspan="3"></td>
+				<td><hr /></td>
+				<td></td>
+				<td><hr /></td>
+			</tr>';
 	}
 
-	$HTML .= '</tr>
-		<tr>
+	$HTML .= '<tr class="total_row">
 			<td colspan="3"><h2>' . $Sections[$Section] . '</h2></td>
 			<td class="number">' . locale_number_format($SectionBalance, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td>&nbsp;</td>
+			<td></td>
 			<td class="number">' . locale_number_format($SectionBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
 
-	$Section = $LastSection;
+	$Section = $SectionInAccounts;
 
 	if (isset($MyRow['sectioninaccounts']) and $_POST['ShowDetail'] == 'Detailed') {
 		$HTML .= '<tr>
@@ -353,22 +411,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<tr>
 			<td colspan="3"></td>
 			<td><hr /></td>
-			<td>&nbsp;</td>
+			<td></td>
 			<td><hr /></td>
-		</tr>
-		<tr>
+		</tr>';
+
+	$HTML .= '<tr class="total_row">
 			<td colspan="3"><h2>' . _('Check Total') . '</h2></td>
 			<td class="number">' . locale_number_format($CheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			<td>&nbsp;</td>
-			<td class="number">' . locale_number_format($CheckTotalLY, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-		</tr>
-		<tr>
+			<td></td>
+			<td class="number">' . locale_number_format($LYCheckTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+		</tr>';
+
+	$HTML .= '<tr>
 			<td colspan="3"></td>
 			<td><hr /></td>
-			<td>&nbsp;</td>
+			<td></td>
 			<td><hr /></td>
 		</tr>
-		</tbody></table>';
+	</table>';
 
 	if (isset($_POST['PrintPDF'])) {
 		$HTML .= '</body></html>';
