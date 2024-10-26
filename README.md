@@ -4,12 +4,12 @@
 webERP is a free open-source ERP system, providing best practise, multi-user business administration and accounting tools over the web. For further information and for a full list of features, please visit the support site at: http://www.weberp.org/
 
 ## Demo
-A live demo of the latest release is available on the webERP support site, where you can login and experiment with all the webERP features: http://www.weberp.org/weberp/
+A live demo of the latest release is available on the webERP support site, where you can login and experiment with all the webERP features: http://www.weberp.org/demo/
 
 ## Download Now
 The latest stable version is currently v4.15.2, and can be downloaded from SourceForge.
 [![Download Latest Official Zen Cart&reg; Release](https://a.fsdn.com/con/app/sf-download-button)
-Download the latest official webERP release](http://sourceforge.net/projects/web-erp/files/latest/download)
+Download the latest official webERP release]([http://sourceforge.net/projects/web-erp/files/latest/download](https://github.com/timschofield/webERP/releases/tag/v4.15.2))
 
 ## Requirements
 - A web server - webERP has been tested on Apache, NGINX, lighthttpd, and Hiawatha
