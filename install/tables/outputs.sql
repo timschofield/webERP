@@ -1,5 +1,5 @@
 CREATE TABLE `outputs` (
-  `runtime` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `runtime` datetime NOT NULL DEFAULT '2999-12-31 00:00:00',
   `testnumber` int NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
   `message` varchar(200) NOT NULL DEFAULT '',
