@@ -362,8 +362,8 @@ if ($ProcessSection03){
 					100000, 
 					 10000,
 					125000,
-					  5000,
-					 40000,
+					 10000,
+					 50000,
 					$periodnow, $KL_SystemAdmin, $db);
 		$NumberOfTestExecuted++;
 	}
