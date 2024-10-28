@@ -500,24 +500,61 @@ function SetTopSalesRanking($ShowMessages, $EmailText, $db){
 	$result = DB_query($sql,$ErrMsg);
 	$Text = "Truncated klsaleseprformace table";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	
+	$SQL="SELECT stockmaster.stockid
+			FROM stockmaster
+			WHERE stockmaster.discontinued = 0 
+				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " 
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " 
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " 
+				OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ") ";
+	$result = DB_query($SQL);
+	$ErrMsg =_('Could not insert items by top sales because');
+	if (DB_num_rows($result) != 0){	
+		while ($myrow = DB_fetch_array($result)) {
+			$SQLOp="INSERT INTO klsalesperformance
+									(
+									stockid,
+									topsales30,
+									topsales60,
+									topsales90,
+									valuesales30,
+									valuesales60,
+									valuesales90
+									)
+								VALUES (
+									'" . $myrow['stockid'] . "',
+									'9999999',
+									'9999999',
+									'9999999',
+									'0',
+									'0',
+									'0'
+									)";
+			$resultOp = DB_query($SQLOp,$ErrMsg);
+		}
+	}
+	$Text = "Initialized klsaleseprformace table";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	
 
-	$EmailText = SetTopSalesByGroup(TRUE,  "KAPAL-LAUT", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "KAPAL-LAUT", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(TRUE,  "BLINK", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "BLINK", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "BLINK", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(TRUE,  "OUTLET", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "OUTLET", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "OUTLET", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(TRUE,  "GENERAL", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "GENERAL", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup(FALSE, "GENERAL", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("BLINK", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("BLINK", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("BLINK", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("OUTLET", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("OUTLET", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("OUTLET", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("GENERAL", 90, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("GENERAL", 60, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("GENERAL", 30, $ShowMessages, $EmailText, $db);
 	
 	return $EmailText;
 }
 
-function SetTopSalesByGroup($InsertNeeded, $Group, $NumDays, $ShowMessages, $EmailText, $db){
+function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText, $db){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
@@ -545,29 +582,14 @@ function SetTopSalesByGroup($InsertNeeded, $Group, $NumDays, $ShowMessages, $Ema
 	$result = DB_query($SQL,$ErrMsg);
 
 	$position = 1;
+	$ErrMsg =_('Could not update items by top sales because');
 	if (DB_num_rows($result) != 0){
 		while ($myrow = DB_fetch_array($result)) {
-			if ($InsertNeeded){
-				$SQLOp="INSERT INTO klsalesperformance
-										(
-										stockid,
-										topsales". $NumDays.",
-										valuesales". $NumDays."
-										)
-									VALUES (
-										'" . $myrow['stkcode'] . "',
-										'" . $position . "',
-										'" . $myrow['valuesales'] . "'
-										)";
-				$ErrMsg =_('Could not insert items by top sales because');
-			}else{
-				$SQLOp="UPDATE klsalesperformance
-						SET topsales". $NumDays." = '" . $position . "',
-							valuesales". $NumDays." = '" . $myrow['valuesales'] . "'
-						WHERE stockid = '" . $myrow['stkcode'] . "'";
-				$ErrMsg =_('Could not update items by top sales because');
+			$SQLOp="UPDATE klsalesperformance
+					SET topsales". $NumDays." = '" . $position . "',
+						valuesales". $NumDays." = '" . $myrow['valuesales'] . "'
+					WHERE stockid = '" . $myrow['stkcode'] . "'";
 				
-			}
 			$resultOp = DB_query($SQLOp,$ErrMsg);
 			
 			$position++;
