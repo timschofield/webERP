@@ -69,9 +69,9 @@ echo '<form method="post" action="index.php?Page=3">
 					<fieldhelp>' . _('Enter the database user password if one exists') . '</fieldhelp>
 				</field>';
 if ($Result != '') {
-	echo '<input type="submit" id="save" name="test" value="Save details and test the connection" /><img class="result_icon" src="', $Result, '.png" />', $Message;
+	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" /><img class="result_icon" src="', $Result, '.png" />', $Message;
 } else {
-	echo '<input type="submit" id="save" name="test" value="Save details and test the connection" />';
+	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" />';
 }
 echo '</fieldset>
 	</form>';

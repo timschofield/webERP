@@ -30,7 +30,6 @@ if (isset($_GET['Page'])) {
 	$_SESSION['Installer']['Language'] = 'en_GB.utf8';
 	$_SESSION['Installer']['CoA'] = 'en_GB.utf8';
 	$_SESSION['CompanyRecord']['coyname'] = '';
-	$_SESSION['Installer']['CoA'] = 'en_GB.utf8';
 	$_SESSION['Installer']['TimeZone'] = 'Europe/London';
 	$_SESSION['Installer']['Email'] = 'info@example.com';
 	$_SESSION['Installer']['AdminAccount'] = 'admin';
