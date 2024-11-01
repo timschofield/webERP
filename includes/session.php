@@ -29,7 +29,9 @@ if (!isset($SysAdminEmail)) {
 	$SysAdminEmail = '';
 }
 
-// ini_set('session.gc_maxlifetime', $SessionLifeTime);
+if (isset($_SESSION['Timeout'])) {
+	ini_set('session.gc_maxlifetime', (60 * $_SESSION['Timeout'] + 1));
+}
 
 //INI directive 'safe_mode' is deprecated since PHP 5.3 and removed since PHP 5.4
 /*
