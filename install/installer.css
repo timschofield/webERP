@@ -23,9 +23,10 @@ width:80%;
 height:80%;
 background:#FFFFFF;
 color:#1A1A1A;
-margin-left:10%;
+margin-left:12%;
 margin-top:5%;
 border-radius:20px;
+text-align:left;
 }
 header{
 background:#4682B4;
@@ -105,7 +106,6 @@ width:90%;
 padding:10px;
 margin-left:5%;
 }
-<<<<<<< HEAD
 .installer_about{
 position:relative;
 text-align: left;
