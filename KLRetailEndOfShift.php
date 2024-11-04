@@ -28,6 +28,13 @@ $TextToPrint .= 'SPG Code: ' . $_SESSION['SalesmanLogin'] . $NewLine;
 $TextToPrint .= 'Shop Code: ' . substr($_SESSION['UserStockLocation'],3,2) . $NewLine;
 $TextToPrint .=  $NewLine . $NewLine;
 
+$Invoices = 0;
+$TotalCash = 0;
+$TotalCreditCard = 0;
+$TotalReturned = 0;
+$TotalVouchers = 0;
+$Total = 0;
+
 $SQL = "SELECT salesorders.orderno,
 				salesorders.customerref,
 				salesorders.klpaidcash,
@@ -57,13 +64,6 @@ if (DB_num_rows($result) != 0){
 					</tr>';
 	echo $TableHeader;
 	$k = 0; //row colour counter
-	$Invoices = 0;
-	$TotalCash = 0;
-	$TotalCreditCard = 0;
-	$TotalReturned = 0;
-	$TotalVouchers = 0;
-	$Total = 0;
-
 	
 	while ($myrow = DB_fetch_array($result)) {
 		$Invoices++;
@@ -135,7 +135,7 @@ if (DB_num_rows($result) != 0){
 	}
 	$TextToPrint .= $NewLine;
 	$TextInvoice = "# Invoices: " . $Invoices;
-	$TextCash .= "Total Cash: " . number_format($TotalCash);
+	$TextCash = "Total Cash: " . number_format($TotalCash);
 	$TextToPrint .= DoubleJustified($TextInvoice, $TextCash, $LineLenghtCharA, " ") . $RightJustified;
 	$TextToPrint .= "Total Credit Card: " . number_format($TotalCreditCard) . $NewLine;
 	$TextToPrint .= "Total Returned Goods: " . number_format($TotalReturned) . $NewLine;

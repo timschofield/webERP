@@ -667,13 +667,13 @@ function KLPrintNameOfShop(){
 	
 	// name of shop
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
-		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $NewLine . $Emphasized . "Your Essential Jewellery" . $NewLine;
+		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "Kapal-Laut" . $NewLine . $Emphasized . "Your Essential Jewellery" . $NewLine;
 	}else if ($_SESSION['TypeLoc'] == "SHOPBL"){
-		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "Blink by Kapal-Laut" . $NewLine;
+		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "Blink by Kapal-Laut" . $NewLine;
 	}else if ($_SESSION['TypeLoc'] == "SHOPOU"){
-		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "OUTLET by Kapal-Laut" . $NewLine;
+		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "OUTLET by Kapal-Laut" . $NewLine;
 	}else{
-		$TextToPrint .= $EmphasizedDoubleHeightDoubleWidth . "SHOP NAME NOT FOUND" . $NewLine;
+		$TextToPrint = $EmphasizedDoubleHeightDoubleWidth . "SHOP NAME NOT FOUND" . $NewLine;
 	}
 	// shop address
 	$TextToPrint .= $CharacterFontB;

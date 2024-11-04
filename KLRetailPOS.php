@@ -63,7 +63,6 @@ if (empty($_GET['identifier'])) {
 
 if (isset($_SESSION['Items'.$identifier])){
 	//update the Items object variable with the data posted from the form
-	$_SESSION['Items'.$identifier]->CustRef = $_POST['CustRef'];
 	$_SESSION['Items'.$identifier]->Comments = $_POST['Comments'];
 }
 
@@ -101,6 +100,8 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['ExistingOrder'] = 0;
 	$_SESSION['PrintedPackingSlip'] = 0; 
 
+	$_SESSION['ExistingOrder'. $identifier] = 0;
+
 	$_SESSION['Items'.$identifier] = new cart;
 	$_SESSION['Items'.$identifier]->DeliverTo = '';
 	$_SESSION['Items'.$identifier]->ShipVia = 1; // Hand Carried
@@ -114,7 +115,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	$_SESSION['Items'.$identifier]->DefaultSalesType = $_SESSION['salestype'];
 	$_SESSION['Items'.$identifier]->SalesTypeName = $_SESSION['sales_type'];
 	$_SESSION['Items'.$identifier]->DefaultCurrency = $_SESSION['currcode'];
-	$_SESSION['Items'.$identifier]->DefaultPOLine = $_SESSION['customerpoline'];
+	$_SESSION['Items'.$identifier]->DefaultPOLine = 0;
 	$_SESSION['Items'.$identifier]->PaymentTerms = $_SESSION['terms'];
 	$_SESSION['Items'.$identifier]->DelAdd1 = $_SESSION['braddress1'];
 	$_SESSION['Items'.$identifier]->SpecialInstructions = $_SESSION['specialinstructions'];
@@ -334,7 +335,8 @@ if ((isset($_SESSION['Items'.$identifier])) OR isset($NewItem)) {
 																'Yes', /*Update DB */
 																$_POST['ItemDue_' . $OrderLine->LineNumber],
 																$_POST['POLine_' . $OrderLine->LineNumber],
-																$_POST['GPPercent_' . $OrderLine->LineNumber]);
+																$_POST['GPPercent_' . $OrderLine->LineNumber],
+																$identifier);
 			}
 		} //page not called from itself - POST variables not set
 	}
