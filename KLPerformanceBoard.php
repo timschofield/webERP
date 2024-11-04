@@ -318,7 +318,7 @@ if ($ProcessSection03){
 
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
-		OR $KL_OperationalTeam
+		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
@@ -329,7 +329,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_OperationalManager
-		OR $KL_OperationalTeam
+		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
 		MaintenanceTasksList("OPEN");
 		$NumberOfTestExecuted++;
@@ -4262,7 +4262,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	
 	$BrandText= BrandTextFromCode($Brand);
 
-	$Shops = NumberOfShops($Brand, "ALL", $db);
+	$Shops = NumberOfShops($Brand);
 	$NumDaysLastYear = $OptimalDaysStock - $NumDays;
 	
 	/* Past NumDays This Year*/

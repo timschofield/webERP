@@ -46,9 +46,9 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
-$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
-$NumberOfOpenShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
-$NumberOfOpenShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
+$NumberOfOpenShopsKL = NumberOfShops("SHOPKL");
+$NumberOfOpenShopsBL = NumberOfShops("SHOPBL");
+$NumberOfOpenShopsOU = NumberOfShops("SHOPOU");
 $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberOfOpenShopsOU;
 
 /***************************************************************************************
@@ -1258,7 +1258,7 @@ function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCas
 
 function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath, $db){
 
-	$MinQOH = NumberOfShops($ShopType, "ALL", $db);
+	$MinQOH = NumberOfShops($ShopType);
 	
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_TEST)){
 		$Condition = " AND locations.alltestitems = '1' ";
@@ -1772,9 +1772,9 @@ function GLTransDateControl($db){
 
 function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays));
-	$ShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
-	$ShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
-	$ShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
+	$ShopsKL = NumberOfShops("SHOPKL");
+	$ShopsBL = NumberOfShops("SHOPBL");
+	$ShopsOU = NumberOfShops("SHOPOU");
 	if ($kind == "PO"){
 		$type = 25;
 	}elseif ($kind == "WO"){
@@ -3325,17 +3325,15 @@ No pending transfer regarding this item
 
 ***********************************************************************/
 
+	$ShopsToSetRL = NumberOfShops($TypeOfShop);
 	if ($TypeOfShop == "SHOPKL"){
-		$ShopsToSetRL = NumberOfShops("SHOPKL", "ALL", $db);
 		$Message = 'KAPAL-LAUT';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
 	}elseif ($TypeOfShop == "SHOPBL"){
-		$ShopsToSetRL = NumberOfShops("SHOPBL", "ALL", $db);
 		$Message = 'BLINK';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
 	}elseif ($TypeOfShop == "SHOPOU"){
-		$ShopsToSetRL = NumberOfShops("SHOPOU", "ALL", $db);
 		$Message = 'OUTLET';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";

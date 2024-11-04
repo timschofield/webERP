@@ -10,7 +10,7 @@ function KL_DailyRLAdjustmentsForOnline($ShowMessages, $updateDB, $RootPath, $db
 function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// For KL SHOPS
-	$Shops = NumberOfShops("SHOPKL", "ALL", $db);
+	$Shops = NumberOfShops("SHOPKL");
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Number of Shops Kapal-Laut = " . $Shops . "\n";
 	}
@@ -41,7 +41,7 @@ function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $E
 function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// For BLINK SHOPS
-	$Shops = NumberOfShops("SHOPBL", "ALL", $db);
+	$Shops = NumberOfShops("SHOPBL");
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Number of Shops Blink = " . $Shops . "\n";
 	}
@@ -72,7 +72,7 @@ function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db,
 function KL_DailyRLAdjustmentsForOutlet($ShowMessages, $updateDB, $RootPath, $db, $EmailText){
 
 	// for OUTLET SHOPS
-	$Shops = NumberOfShops("SHOPOU", "ALL", $db);
+	$Shops = NumberOfShops("SHOPOU");
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Number of Shops Outlet = " . $Shops . "\n";
 	}

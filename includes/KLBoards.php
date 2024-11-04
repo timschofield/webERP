@@ -1486,6 +1486,7 @@ function GetTotalQtyItemsForSale($db){
 				AND stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype = 'F'
 				AND stockmaster.categoryid NOT IN ('SHDISP', 'SHCONS', 'SHPACK', 'SHOTHE')";
+	$ErrMsg = _('Error in function GetTotalQtyItemsForSale()');
 	$result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($result);
 	return $Row['0'];
@@ -1503,7 +1504,7 @@ function GetTotalValueItemsForSale($period, $db){
 												'111519000AD',
 												'111519100AD')
 				AND chartdetails.period = ". $period . "";
-
+	$ErrMsg = _('Error in function GetTotalValueItemsForSale()');
 	$result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($result);
 	return $Row['0'];
@@ -1721,9 +1722,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$TotalQOHOptimum = 0;
 		$TotalQOHGudang = 0;
 		$TotalQOHShops = 0;
-		$NumberOfOpenShopsKL = NumberOfShops("SHOPKL", "ALL", $db);
-		$NumberOfOpenShopsBL = NumberOfShops("SHOPBL", "ALL", $db);
-		$NumberOfOpenShopsOU = NumberOfShops("SHOPOU", "ALL", $db);
+		$NumberOfOpenShopsKL = NumberOfShops("SHOPKL");
+		$NumberOfOpenShopsBL = NumberOfShops("SHOPBL");
+		$NumberOfOpenShopsOU = NumberOfShops("SHOPOU");
 
 		while ($myrow = DB_fetch_array($result)) {
 			$DailyUse = $myrow['qused'] / $DaysUsage;
@@ -3299,7 +3300,7 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
 			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
 			if ($myrow['transitdays'] < 0) {$myrow['transitdays'] = 0;}
-			if ($myrow['customsdate'] < 0) {$myrow['customsdate'] = 0;}
+			if ($myrow['customsdays'] < 0) {$myrow['customsdays'] = 0;}
 			if ($myrow['mintotaldays'] < 0) {$myrow['mintotaldays'] = 0;}
 			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
 			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
@@ -3321,7 +3322,7 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 					locale_number_format($myrow['paymentdays'],0),
 					locale_number_format($myrow['shipmentdays'],0),
 					locale_number_format($myrow['transitdays'],0),
-					locale_number_format($myrow['customsdate'],0),
+					locale_number_format($myrow['customsdays'],0),
 					locale_number_format($myrow['mintotaldays'],0),
 					locale_number_format($myrow['maxtotaldays'],0),
 					locale_number_format($myrow['avgtotaldays'],0)
@@ -3355,7 +3356,7 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
 			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
 			if ($myrow['transitdays'] < 0) {$myrow['transitdays'] = 0;}
-			if ($myrow['customsdate'] < 0) {$myrow['customsdate'] = 0;}
+			if ($myrow['customsdays'] < 0) {$myrow['customsdays'] = 0;}
 			if ($myrow['mintotaldays'] < 0) {$myrow['mintotaldays'] = 0;}
 			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
 			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
@@ -3377,7 +3378,7 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 					locale_number_format($myrow['paymentdays'],0),
 					locale_number_format($myrow['shipmentdays'],0),
 					locale_number_format($myrow['transitdays'],0),
-					locale_number_format($myrow['customsdate'],0),
+					locale_number_format($myrow['customsdays'],0),
 					locale_number_format($myrow['mintotaldays'],0),
 					locale_number_format($myrow['maxtotaldays'],0),
 					locale_number_format($myrow['avgtotaldays'],0)
@@ -3411,7 +3412,7 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
 			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
 			if ($myrow['transitdays'] < 0) {$myrow['transitdays'] = 0;}
-			if ($myrow['customsdate'] < 0) {$myrow['customsdate'] = 0;}
+			if ($myrow['customsdays'] < 0) {$myrow['customsdays'] = 0;}
 			if ($myrow['mintotaldays'] < 0) {$myrow['mintotaldays'] = 0;}
 			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
 			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
@@ -3433,7 +3434,7 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 					locale_number_format($myrow['paymentdays'],0),
 					locale_number_format($myrow['shipmentdays'],0),
 					locale_number_format($myrow['transitdays'],0),
-					locale_number_format($myrow['customsdate'],0),
+					locale_number_format($myrow['customsdays'],0),
 					locale_number_format($myrow['mintotaldays'],0),
 					locale_number_format($myrow['maxtotaldays'],0),
 					locale_number_format($myrow['avgtotaldays'],0)

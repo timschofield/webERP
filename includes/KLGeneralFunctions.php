@@ -1123,12 +1123,7 @@ function InsertKPI($Class, $Concept, $Value){
 	}
 }
 
-function NumberOfShops($ShopType, $Categories, $db){
-	if ($Categories == "ALL"){
-		
-	}else{
-		
-	}
+function NumberOfShops($ShopType){
 	$SQL="SELECT COUNT(*)
 		FROM locations
 		WHERE typeloc = '" . $ShopType . "'";
