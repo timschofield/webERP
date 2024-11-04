@@ -100,7 +100,7 @@ function submit(&$db, $SelectedFile) {
 				$QOH = ItemMarketplaceQOH($StockId, $db);
 				$EnabledLazada = ( $QOH > 0);
 				
-				if (DataExistsInWebERP($db, "klstockmarketplaces", "stockid", $StockId)){
+				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 					// Already exists, so only update the info with the newest lazada link and lazada product id if needed
 					ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada, $db);
 					$Action = "Update";

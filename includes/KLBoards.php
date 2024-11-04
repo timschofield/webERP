@@ -334,6 +334,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$TotalDateF = 0;
 	$TotalForecast = 0;
 	$TotalMTD = 0;
+	$TotalDateMTD = 0;
 	
 	if ($Shop == "All"){
 		$SQLByShop = "";
@@ -573,12 +574,12 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				$Name = $myrow['salesmanname'];
 			}
 			
-			$dailyA = locale_number_format(($myrow['salesA']/$NumDaysA),0);
-			$dailyB = locale_number_format(($myrow['salesB']/$NumDaysB),0);
-			$dailyC = locale_number_format(($myrow['salesC']/$NumDaysC),0);
-			$dailyD = locale_number_format(($myrow['salesD']/$NumDaysD),0);
-			$dailyE = locale_number_format(($myrow['salesE']/$NumDaysE),0);
-			$dailyF = locale_number_format(($myrow['salesF']/$NumDaysF),0);
+			$dailyA = $myrow['salesA']/$NumDaysA;
+			$dailyB = $myrow['salesB']/$NumDaysB;
+			$dailyC = $myrow['salesC']/$NumDaysC;
+			$dailyD = $myrow['salesD']/$NumDaysD;
+			$dailyE = $myrow['salesE']/$NumDaysE;
+			$dailyF = $myrow['salesF']/$NumDaysF;
 			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
 			$trend = " ";
 			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
@@ -611,12 +612,12 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						$i,
 						$Code,
 						$Name,
-						$dailyA, 
-						$dailyB, 
-						$dailyC,
-						$dailyD,
-						$dailyE,
-						$dailyF,
+						locale_number_format($dailyA,0), 
+						locale_number_format($dailyB,0), 
+						locale_number_format($dailyC,0),
+						locale_number_format($dailyD,0),
+						locale_number_format($dailyE,0),
+						locale_number_format($dailyF,0),
 						$MTD,
 						$trend,
 						locale_number_format($forecast,0),

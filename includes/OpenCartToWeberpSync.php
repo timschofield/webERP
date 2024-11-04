@@ -175,7 +175,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db,
 
 			if ($CustomerCode != 'Error'){
 				// First process order header
-				if (DataExistsInWebERP($db, 'salesorders', 'debtorno', $CustomerCode, 'customerref', $myrow['order_id'])){
+				if (DataExistsInWebERP('salesorders', 'debtorno', $CustomerCode, 'customerref', $myrow['order_id'])){
 					$Action = "Update";
 				}else{
 					$Action = "Insert";

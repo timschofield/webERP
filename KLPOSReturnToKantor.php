@@ -17,8 +17,10 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 
 include('includes/KLPOSGeneral.php');
+
+include ('includes/WebClientPrint/WebClientPrint.php');
+use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/wcpESCPOSCommands.php');
-include('includes/wcpInitScript.php');
 
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
@@ -191,15 +193,11 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$TextToPrint .= $CutPaper;
 
 	//################## PRINTING STUFF ##################### 
-	$identifier=date('U').zerofill(mt_rand(0,999999),6);
-	$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+	$identifier=GetPOSIdentifier();
+	$filename = GetFilenameFromPOSIdentifier($identifier);   
 	file_put_contents($filename, $TextToPrint);
-
-	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
-		_('Print the Return Transfer from Shop to Kantor') . '" alt="" />' . ' ' . 
-		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
-																	'\');">' .  
-		_('Print Return Transfer number: '). $_POST['Trf_ID'] . '</a><br /><br />';
+	$textActionToPrint = 'Print Return Transfer number: '. $_POST['Trf_ID'];
+	include ('includes/SilentPrinting.php');
 	//################## PRINTING STUFF ##################### 
 
 	include('includes/footer.php');

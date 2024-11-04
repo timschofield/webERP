@@ -203,7 +203,8 @@ FUNCTIONS ONLY USED IN PRICING CONTROL BOARD
 function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
-
+	$issues = 0;
+	
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				stockmaster.categoryid,
@@ -234,7 +235,6 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
@@ -279,7 +279,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 						+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 					
 					$k = StartEvenOrOddRow($k);
-					$i++;
+					$issues++;
 					printf('<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -296,7 +296,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 							<td>%s</td>
 							<td class="number">%s</td>
 							</tr>', 
-							$i, 
+							$issues, 
 							$CodeLink, 
 							$myrow['description'], 
 							locale_number_format($PositionTopSales,0),
@@ -320,13 +320,14 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					</div>';
 		}
 	}
-	return $i;
+	return $issues;
 }
 
 function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
-
+	$issues = 0;
+	
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				stockmaster.categoryid,
@@ -359,7 +360,6 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
@@ -401,7 +401,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
 				$k = StartEvenOrOddRow($k);
-				$i++;
+				$issues++;
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -418,7 +418,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$i, 
+						$issues, 
 						$CodeLink, 
 						$myrow['description'], 
 						locale_number_format($PositionTopSales,0),
@@ -441,12 +441,13 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 					</div>';
 		}
 	}
-	return $i;
+	return $issues;
 }
 
 function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 	$today = date('Y-m-d');
-
+	$issues = 0;
+	
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				stockmaster.categoryid,
@@ -514,7 +515,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 					$ShowHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
-				$i++;
+				$issues++;
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
 				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
@@ -538,7 +539,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$i, 
+						$issues, 
 						$CodeLink, 
 						$myrow['description'], 
 						locale_number_format($PositionTopSales,0),
@@ -560,11 +561,12 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 					</div>';
 		}
 	}
-	return $i;
+	return $issues;
 }
 
 function PriceWrongRounding($RootPath, $db){
 	$today = date('Y-m-d');
+	$issues = 0;
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -596,7 +598,6 @@ function PriceWrongRounding($RootPath, $db){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$RoundedDown = round_price($myrow['retailprice'], "DOWN");
@@ -628,7 +629,7 @@ function PriceWrongRounding($RootPath, $db){
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 				$k = StartEvenOrOddRow($k);
-				$i++;
+				$issues++;
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -639,7 +640,7 @@ function PriceWrongRounding($RootPath, $db){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$i, 
+						$issues, 
 						$CodeLink, 
 						$myrow['description'], 
 						$PositionTopSales,
@@ -656,12 +657,13 @@ function PriceWrongRounding($RootPath, $db){
 					</div>';
 		}
 	}
-	return $i;
+	return $issues;
 }
 
 function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Years * 365));
+	$issues = 0;
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -690,7 +692,6 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$k = 0; //row colour counter
-		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			if($ShowHeader){
@@ -723,7 +724,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 			$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 				+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 			$k = StartEvenOrOddRow($k);
-			$i++;
+			$issues++;
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -737,7 +738,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$i, 
+					$issues, 
 					$CodeLink, 
 					$myrow['description'], 
 					$PositionTopSales,
@@ -756,7 +757,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 					</div>';
 		}
 	}
-	return $i;
+	return $issues;
 }
 
 ?>

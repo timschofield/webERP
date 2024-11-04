@@ -1,100 +1,26 @@
 <?php
-
-define("VERSIONFILE", "0.00"); // 
-
-include('includes/DefineCartClass.php');
+define("VERSIONFILE", "1.00"); 
 include('includes/session.php');
 
-$Title = _('STRIPPED POS with PRINTING RECEIPT '. VERSIONFILE);
-
-include('includes/header.php');
-include('includes/GetPrice.inc');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/GetSalesTransGLCodes.inc');
-
-include('includes/KLCountriesForRetail.php');
-
-include('includes/KLDefines.php');
+$Title = _('TEST ESCPOS FILE '. VERSIONFILE);
+include ('includes/header.php');
+include ('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
-include('includes/KLEmails.php');
 
-include('includes/wcpInitScript.php');  
+include ('includes/WebClientPrint/WebClientPrint.php');
+use Neodynamic\SDK\Web\WebClientPrint;
+include('includes/wcpESCPOSCommands.php');
 
-if (isset($_POST['CancelOrder'])) {
-	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a>';
-	include('includes/footer.php');
-	exit;
-} else { /*Not cancelling the order */
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Retail Sales') . '" alt="" />' . ' ';
-	echo '</p>';
-}
+$TextToPrint = "x1B@0x1Ba0x010x1B!0x38Blink by Kapal-Laut0x0A0x1B!0x01     0x0A0x1B!0x38SPG END OF SHIFT REPORT0x0A0x1B!0x000x0A0x1Ba0x01Sunday 8 September 2024 15:070x0ASPG Code: 2310x0AShop Code: K20x0A0x0A0x0AK2-0103757-B             Returned Goods: 675,0000x0AK2-0230777-A                Credit Card: 490,0000x0AK2-0230779-A                Credit Card: 885,0000x0AK2-0056745-C                       Cash: 195,0000x0AK2-0103762-B                       Cash: 750,0000x0AK2-0230794-A              Credit Card: 1,120,0000x0AK2-0230795-A                Credit Card: 225,0000x0AK2-0230796-A                Credit Card: 520,0000x0AK2-0230797-A              Credit Card: 1,300,0000x0AK2-0056747-C                       Cash: 195,0000x0AK2-0230798-A                Credit Card: 425,0000x0AK2-0230799-A              Credit Card: 1,120,0000x0AK2-0230802-A              Credit Card: 1,475,0000x0AK2-0230819-A                Credit Card: 325,0000x0A0x0A# Invoices: 14             Total Cash: 1,140,0000x0A0x1Ba0x02Total Credit Card: 7,885,0000x0ATotal Returned Goods: 675,0000x0ATotal Voucher/Discounts: 00x0A0x1B!0x38Total include returns/vouchers: 9,700,0000x0ATotal Personal Sales SPG: 9,025,0000x0A0x1B!0x000x0A0x1Ba0x000x0A0x0A0x0A0x1D0x560x410x00";
 
+$identifier=GetPOSIdentifier();
+$filename = GetFilenameFromPOSIdentifier($identifier);  
+file_put_contents($filename, $TextToPrint);
+$textActionToPrint = 'Print the Daily SPG End Of Shift Test';
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?' . SID .'identifier='.$identifier . '" name="SelectParts" method="post">';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+include ('includes/SilentPrinting.php');
 
 
-if (!isset($_POST['ProcessSale'])){ /*only show order lines if there are any */
-
-	echo 'Here comes the details of the purchase <br />';
-	echo 'Click Process The Sale to continue';
-
-	/////////////////////////////////////////////////
-	// Buttons confirm / recalculate the sale
-	/////////////////////////////////////////////////
-	echo '<br /><div class="centre">
-				<input type="submit" name="ProcessSale" value="' . _('Process The Sale') . '" />
-				</div>
-				<hr />';
-
-} # end of if lines
-
-if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
-
-	// *************************************************************************
-	//   SHOW THE DETAILS OF PAYMENTS 
-	// *************************************************************************
-
-	echo 'Here is where the details of the sale are shown once processed <br /><br />';
-
-	/************************************************************************************/
-	/*                         PRINT THE CUSTOMER RECEIPT                                */
-	/************************************************************************************/
-	// TEST identifier
-	$identifier = '123456789';
-	$HeaderText = KLPrintReceiptHeader($identifier, $OrderNo);
-	$CustomerFooter = KLPrintReceiptCustomerFooter($identifier, $OrderNo);
-	$ShopFooter = KLPrintReceiptShopFooter($identifier, $OrderNo);
-	$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
-	$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
-	file_put_contents($filename, $Receipt);
-
-	//################## PRINTING STUFF ##################### 
-	echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
-		_('Print the customer receipt') . '" alt="" />' . ' ' . 
-		'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
-																	'\');">' .  
-		_('Print the customer receipt'). '</a><br /><br />';
-   //################## PRINTING STUFF ##################### 
-	
-	echo '<br /><br /><a href="' .$_SERVER['PHP_SELF'] . '">' . _('Start a new Retail Sale') . '</a></div>';
-
-} else {
-	//pretend the user never tried to commit the sale
-	unset($_POST['ProcessSale']);
-}
-/*******************************
- * end of Invoice Processing
- * ******************************/
-
-
-/* Now show the stock item selection search stuff below */
-if (!isset($_POST['ProcessSale'])){
-
-  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
-}
-echo '</form>';
-include('includes/footer.php');
-
+include ('includes/footer.php');
 ?>

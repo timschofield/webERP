@@ -1079,7 +1079,7 @@ function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 	return array($URL,$PackagingImage);
 }
 
-function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
+function DataExistsInWebERP($table, $f1, $v1, $f2 = '', $v2 = ''){
 	if ($f2 == ''){
 		/* Primary key is 1 field only */
 		$SQL = "SELECT COUNT(*)
@@ -1106,7 +1106,7 @@ function DataExistsInWebERP($db, $table, $f1, $v1, $f2 = '', $v2 = ''){
 
 function InsertKPI($Class, $Concept, $Value){
 	$Date = date('Y-m-d');
-	if (!DataExistsInWebERP($db, 'klkpi', 'date', $Date, 'concept', $Concept)){
+	if (!DataExistsInWebERP('klkpi', 'date', $Date, 'concept', $Concept)){
 		$SQL = "INSERT INTO klkpi 
 				(date,
 				class,
@@ -1336,8 +1336,33 @@ function TotalDisplayItems($Brand){
 	return $myrow['0'];
 }
 
+<<<<<<< HEAD
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 	$ErrMsg = 'Error in DailySoldItems()';
+=======
+function NumItemsSoldPerBrand($Brand, $NumDays, $Period, $Way){
+	$ErrMsg = 'Error in DailySoldItems()';
+	if ($Period == "THIS_YEAR"){
+		if ($Way == "FUTURE"){
+			// items sold in the inmediate $NumDays future days since yesterday. MAKES NO SENSE
+			return 0;
+		}else{
+			// items sold in the inmediate past $NumDays days since yesterday
+			$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
+			$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-1));
+		}
+	}else{
+		if ($Way == "FUTURE"){
+			// items sold in the inmediate $NumDays future days since yesterday one day ago. 
+			$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365+$NumDays));
+			$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365));
+		}else{
+			// items sold in the inmediate past $NumDays days since yesterday one day ago
+			$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-366));
+			$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays-366));
+		}
+	}
+>>>>>>> 010_Silent_Printing_PHP7
 
 	if ($Brand == "SHOPKL"){
 		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";

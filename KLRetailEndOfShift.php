@@ -11,8 +11,9 @@ include ('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
 
+include ('includes/WebClientPrint/WebClientPrint.php');
+use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/wcpESCPOSCommands.php');
-include('includes/wcpInitScript.php');
 
 $today = date('Y-m-d');
 
@@ -172,15 +173,11 @@ $TextToPrint .= KLPrintReceiptTestWarning("END OF SHIFT"). $NewLine . $LeftJusti
 $TextToPrint .= $CutPaper;
 
 //################## PRINTING STUFF ##################### 
-$identifier=date('U').zerofill(mt_rand(0,999999),6);
-$filename = 'includes/WebClientPrint/wcpcache/'.$identifier.'.pos';   
+$identifier=GetPOSIdentifier();
+$filename = GetFilenameFromPOSIdentifier($identifier);   
 file_put_contents($filename, $TextToPrint);
-
-echo '<img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . 
-	_('Print the Daily SPG End Of Shift') . '" alt="" />' . ' ' . 
-	'<a href="#"' . 'onclick="javascript:jsWebClientPrint.print(\'identifier='.$identifier.
-																'\');">' .  
-	_('Print the Daily SPG End Of Shift'). '</a><br /><br />';
+$textActionToPrint = 'Print the Daily SPG End Of Shift';
+include ('includes/SilentPrinting.php');
 //################## PRINTING STUFF ##################### 
 
 include ('includes/footer.php');
