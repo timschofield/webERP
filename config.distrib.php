@@ -39,9 +39,6 @@ date_default_timezone_set('Asia/Shanghai');
 $host = 'localhost';
 $mysqlport=3306;
 //The type of db server being used
-//$DBType = 'postgres' - now DEPRECIATED;
-//$DBType = 'mysql';
-//$DBType = 'mysqli'; for PHP 5 and mysql > 4.1
 $DBType = 'mysqli';
 
 

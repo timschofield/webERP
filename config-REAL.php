@@ -10,11 +10,7 @@ $DefaultLanguage ='en_GB.utf8';
 
 // Default theme to use for the login screen and the setup of new users.
 //The users' theme selection will override
-//$DefaultTheme = 'professional';
-//$DefaultTheme = 'wood';
-//$DefaultTheme = 'silverwolf';
 $DefaultTheme = 'gel';
-//$DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = False;
@@ -68,7 +64,6 @@ $MaximumExecutionTime =99999999;
 //this can be left commented out
 //$SessionSavePath = '/tmp';
 
-
 // which encryption function should be used
 //$CryptFunction = "md5"; // MD5 Hash
 $CryptFunction = "sha1"; // SHA1 Hash
@@ -78,11 +73,7 @@ $CryptFunction = "sha1"; // SHA1 Hash
 //$DefaultClock = 12;
 $DefaultClock = 24;
 
-
-
 // END OF USER CONFIGURABLE VARIABLES
-
-
 
 /*The $RootPath is used in most scripts to tell the script the installation details of the files.
 

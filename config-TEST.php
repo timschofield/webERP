@@ -13,11 +13,8 @@ $DefaultLanguage ='en_GB.utf8';
 
 // Default theme to use for the login screen and the setup of new users.
 //The users' theme selection will override
-//$DefaultTheme = 'professional';
-//$DefaultTheme = 'wood';
-//$DefaultTheme = 'silverwolf';
 $DefaultTheme = 'gel';
-//$DefaultTheme = 'xenos';
+
 
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = False;
@@ -28,14 +25,7 @@ $SysAdminEmail = 'webmaster@kapal-laut.com';
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally
-//date_default_timezone_set('Europe/London');
-//date_default_timezone_set('America/Los_Angeles');
 date_default_timezone_set('Asia/Singapore');
-//date_default_timezone_set('Australia/Melbourne');
-//date_default_timezone_set('Australia/Sydney');
-//date_default_timezone_set('Pacific/Auckland');
-
-//putenv('TZ=Asia/Singapore');
 
 
 // Connection information for the database
@@ -92,11 +82,7 @@ $CryptFunction = "sha1"; // SHA1 Hash
 //$DefaultClock = 12;
 $DefaultClock = 24;
 
-
-
 // END OF USER CONFIGURABLE VARIABLES
-
-
 
 /*The $RootPath is used in most scripts to tell the script the installation details of the files.
 
