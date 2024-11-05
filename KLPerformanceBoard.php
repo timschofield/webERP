@@ -1800,6 +1800,18 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 				$TotalInvoiceCountLastYear += $myrow['invoicecount_lastyear'];
 				$TotalItemCountLastYear += $myrow['itemcount_lastyear'];		
 
+				$AvgIDRPerInvoice = ($myrow['invoicecount'] !=0) ? $myrow['invoicesum']/$myrow['invoicecount'] : 0;
+				$AvgIDRPerItem = ($myrow['itemcount'] !=0) ? $myrow['invoicesum']/$myrow['itemcount'] : 0;
+				$AvgInvoicesPerDay = ($NumDaysA != 0) ? $myrow['invoicecount']/$NumDaysA : 0;
+				$AvgItemsPerDay = ($NumDaysA != 0) ? $myrow['itemcount']/$NumDaysA : 0;
+				$AvgItemsPerInvoice = ($myrow['invoicecount'] != 0) ? $myrow['itemcount']/$myrow['invoicecount'] : 0;
+
+				$AvgIDRPerInvoiceLastYear = ($myrow['invoicecount_lastyear'] !=0) ? $myrow['invoicesum_lastyear']/$myrow['invoicecount_lastyear'] : 0;
+				$AvgIDRPerItemLastYear = ($myrow['itemcount_lastyear'] !=0) ? $myrow['invoicesum_lastyear']/$myrow['itemcount_lastyear'] : 0;
+				$AvgInvoicesPerDayLastYear = ($NumDaysA != 0) ? $myrow['invoicecount_lastyear']/$NumDaysA: 0;
+				$AvgItemsPerDayLastYear = ($NumDaysA != 0) ? $myrow['itemcount_lastyear']/$NumDaysA : 0;
+				$AvgItemsPerInvoiceLastYear = ($myrow['invoicecount_lastyear'] != 0) ? $myrow['itemcount_lastyear']/$myrow['invoicecount_lastyear'] : 0;
+
 				$k = StartEvenOrOddRow($k);
 				printf('<td class="number">%s</td>
 						<td>%s</td>
@@ -1818,16 +1830,16 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 						$i,
 						$Code,
 						$Name,
-						locale_number_format_zero_blank($myrow['invoicesum']/$myrow['invoicecount'],0), 
-						locale_number_format_zero_blank($myrow['invoicesum']/$myrow['itemcount'],0), 
-						locale_number_format_zero_blank($myrow['invoicecount']/$NumDaysA,1),
-						locale_number_format_zero_blank($myrow['itemcount']/$NumDaysA,1),
-						locale_number_format_zero_blank($myrow['itemcount']/$myrow['invoicecount'],1),
-						locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['invoicecount_lastyear'],0), 
-						locale_number_format_zero_blank($myrow['invoicesum_lastyear']/$myrow['itemcount_lastyear'],0), 
-						locale_number_format_zero_blank($myrow['invoicecount_lastyear']/$NumDaysA,1),
-						locale_number_format_zero_blank($myrow['itemcount_lastyear']/$NumDaysA,1),
-						locale_number_format_zero_blank($myrow['itemcount_lastyear']/$myrow['invoicecount_lastyear'],1)
+						locale_number_format_zero_blank($AvgIDRPerInvoice,0), 
+						locale_number_format_zero_blank($AvgIDRPerItem,0), 
+						locale_number_format_zero_blank($AvgInvoicesPerDay,1),
+						locale_number_format_zero_blank($AvgItemsPerDay,1),
+						locale_number_format_zero_blank($AvgItemsPerInvoice,1),
+						locale_number_format_zero_blank($AvgIDRPerInvoiceLastYear,0), 
+						locale_number_format_zero_blank($AvgIDRPerItemLastYear,0), 
+						locale_number_format_zero_blank($AvgInvoicesPerDayLastYear,1),
+						locale_number_format_zero_blank($AvgItemsPerDayLastYear,1),
+						locale_number_format_zero_blank($AvgItemsPerInvoiceLastYear,1)
 						);
 				
 			}

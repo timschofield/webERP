@@ -2010,6 +2010,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 	/* Check if there is any item without retail price */
 	$today = date('Y-m-d');
+	$issues = 0;
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(stockmaster.actualcost) AS stdcost
@@ -2046,9 +2047,8 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$i++;
+			$issues++;
 			$k = StartEvenOrOddRow($k);
 			$NewPrice = round_price($myrow['stdcost'] * $factorRetail, "UP");
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
@@ -2061,7 +2061,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$i, 
+					$issues, 
 					$CodeLink, 
 					$myrow['description'],
 					$PriceLink,
@@ -2072,7 +2072,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 		echo '</table>
 				</div>';
 	}
-	return $i;
+	return $issues;
 }
 
 function LocationInformationReview($RootPath, $db){
