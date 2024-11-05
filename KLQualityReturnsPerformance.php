@@ -1,8 +1,6 @@
 <?php
 define("VERSIONFILE", "1.00");
 
-/* Session started in session.php for password checking and authorisation level check config.php is in turn included in session.php*/
-
 include ('includes/session.php');
 $Title = _('Kapal-Laut Quality and Returns Performance Board '. VERSIONFILE);
 include ('includes/header.php');
@@ -17,10 +15,7 @@ $NumberOfTestExecuted = 0;
 
 $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
-
-if($ShowSectionInfo){
-	prnMsg("Performing Control Panel Section 02",'info');
-}
+prnMsg("Performing Control Panel Section 02",'info');
 
 if ($KL_SystemAdmin 
 	OR $KL_BusinessDevelopmentManager){
@@ -111,6 +106,7 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath, $db){
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
+			$PercentIncidences = ($myrow['qtysold'] != 0) ? $myrow['incidences']/$myrow['qtysold'] : 0;
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -122,7 +118,7 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath, $db){
 					$myrow['item'],
 					locale_number_format($myrow['incidences'],0),
 					locale_number_format($myrow['qtysold'],0),
-					locale_number_format($myrow['incidences']/$myrow['qtysold']*100,1).'%'
+					locale_number_format($PercentIncidences*100,1).'%'
 					);
 			$i++;
 		}

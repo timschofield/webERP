@@ -11,13 +11,13 @@ if (!isset($_POST['Period'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['Period']);
+    submit($_POST['Period']);
 } else {
-    display($db);
+    display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $Period) {
+function submit($Period) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -117,7 +117,7 @@ function submit(&$db, $Period) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

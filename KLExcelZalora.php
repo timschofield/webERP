@@ -16,13 +16,13 @@ if (!isset($_POST['ToPrice'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $db_oc, $_POST['FromPrice'], $_POST['ToPrice']);
+    submit($_POST['FromPrice'], $_POST['ToPrice']);
 } else {
-    display($db);
+    display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, &$db_oc, $FromPrice, $ToPrice) {
+function submit($FromPrice, $ToPrice) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -137,7 +137,7 @@ function submit(&$db, &$db_oc, $FromPrice, $ToPrice) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

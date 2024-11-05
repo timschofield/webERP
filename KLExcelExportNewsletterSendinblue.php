@@ -10,13 +10,13 @@ include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
 if (isset($_POST['submit'])) {
-    submit($db_oc, $_POST['MarkExported']);
+    submit($_POST['MarkExported']);
 } else {
-    display($db_oc);
+    display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db_oc, $MarkExported) {
+function submit($MarkExported) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -114,7 +114,7 @@ function submit(&$db_oc, $MarkExported) {
 } // End of function submit()
 
 
-function display(&$db_oc)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

@@ -16,13 +16,13 @@ if (!isset($_POST['ToDate'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['Categories'], $_POST['FromDate'], $_POST['ToDate'], $_POST['CodeDetail']);
+    submit($_POST['Categories'], $_POST['FromDate'], $_POST['ToDate'], $_POST['CodeDetail']);
 } else {
-    display($db);
+    display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
+function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -301,9 +301,9 @@ function submit(&$db, $ListCategories, $FromDate, $ToDate, $CodeDetail) {
 	}
 } // End of function submit()
 
+//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
-{
+function display($RootPath, $Theme){
 // Display form fields. This function is called the first time
 // the page is called.
 	$Title = _('Excel file for Sales Analysis');

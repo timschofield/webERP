@@ -14,13 +14,13 @@ if (!isset($_POST['ToDate'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['FromDate'], $_POST['ToDate']);
+    submit($_POST['FromDate'], $_POST['ToDate']);
 } else {
-    display($db);
+    display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $FromDate, $ToDate) {
+function submit($FromDate, $ToDate) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -187,7 +187,7 @@ function submit(&$db, $FromDate, $ToDate) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

@@ -31,13 +31,13 @@ if (!isset($_POST['ToDate'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($db, $CountriesForRetail, $_POST['TypeCustomers'], $_POST['MarkExported'], $_POST['FromDate'], $_POST['ToDate']);
+    submit($CountriesForRetail, $_POST['TypeCustomers'], $_POST['MarkExported'], $_POST['FromDate'], $_POST['ToDate']);
 } else {
-    display($db);
+    display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $ToDate) {
+function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $ToDate) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -210,7 +210,7 @@ function submit(&$db, $CountriesForRetail, $TypeCustomers, $MarkExported, $FromD
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

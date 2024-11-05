@@ -13,13 +13,13 @@ include('includes/GetPrice.inc');
 
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['TypeOfShop']);
+    submit($_POST['TypeOfShop']);
 } else {
-    display($db);
+    display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $TypeOfShop) {
+function submit($TypeOfShop) {
 
 	// CONSTANT TEXTS
 	$ShippingTimeMinimal = 3;
@@ -310,7 +310,7 @@ function submit(&$db, $TypeOfShop) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

@@ -580,7 +580,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$dailyD = $myrow['salesD']/$NumDaysD;
 			$dailyE = $myrow['salesE']/$NumDaysE;
 			$dailyF = $myrow['salesF']/$NumDaysF;
-			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
+			$percent = (($NumDaysD * $NumDaysC *$myrow['salesC']) != 0) ? (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100 : 0;
 			$trend = " ";
 			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
