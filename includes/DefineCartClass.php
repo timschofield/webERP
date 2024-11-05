@@ -66,7 +66,7 @@ Class Cart {
 	var $BuyerName;
 	var $SpecialInstructions;
 
-	function Cart(){
+	function __construct(){
 	/*Constructor function initialises a new shopping cart */
 		$this->LineItems = array();
 		$this->total=0;
@@ -76,6 +76,10 @@ Class Cart {
 		$this->FreightCost =0;
 		$this->FreightTaxes = array();
 		$this->CurrDecimalPlaces=2; //default
+	}
+
+	function cart() {
+		self::__construct();
 	}
 
 	function add_to_cart($StockID,
@@ -155,7 +159,6 @@ Class Cart {
 				being retrieved from the DB - dont want to add them again - would return
 				errors anyway */
 
-				global $db;
 				$sql = "INSERT INTO salesorderdetails (orderlineno,
 														orderno,
 														stkcode,
@@ -203,7 +206,6 @@ Class Cart {
 		$this->LineItems[$UpdateLineNumber]->POLine = $POLine;
 		$this->LineItems[$UpdateLineNumber]->GPPercent = $GPPercent;
 		if ($UpdateDB=='Yes'){
-			global $db;
 			$result = DB_query("UPDATE salesorderdetails SET quantity=" . $Qty . ",
 															unitprice=" . $Price . ",
 															discountpercent=" . $Disc . ",
@@ -223,7 +225,6 @@ Class Cart {
 			return;
 		}
 		if ($UpdateDB=='Yes'){
-			global $db;
 			if ($this->Some_Already_Delivered($LineNumber)==0){
 				/* nothing has been delivered, delete it. */
 				$result = DB_query("DELETE FROM salesorderdetails
@@ -295,9 +296,6 @@ Class Cart {
 	}
 
 	function GetExistingTaxes($LineNumber, $stkmoveno){
-
-		global $db;
-
 		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
 		and the taxprovince of the dispatch location */
 
@@ -328,9 +326,6 @@ Class Cart {
 	} //end method GetExistingTaxes
 
 	function GetTaxes($LineNumber){
-
-		global $db;
-
 		/*Gets the Taxes and rates applicable to this line from the TaxGroup of the branch and TaxCategory of the item
 		and the taxprovince of the dispatch location */
 
@@ -369,9 +364,6 @@ Class Cart {
 	} //end method GetTaxes
 
 	function GetFreightTaxes () {
-
-		global $db;
-
 		/*Gets the Taxes and rates applicable to the freight based on the tax group of the branch combined with the tax category for this particular freight
 		and SESSION['FreightTaxCategory'] the taxprovince of the dispatch location */
 
@@ -449,7 +441,7 @@ Class LineDetails {
 	Var $NextSerialNo;
 	Var $GPPercent;
 
-	function LineDetails ($LineNumber,
+	function __construct ($LineNumber,
 							$StockItem,
 							$Descr,
 							$LongDescr,
@@ -522,7 +514,61 @@ Class LineDetails {
 		}
 	} //end constructor function for LineDetails
 
-}
+	function LineDetails($LineNumber,
+							$StockItem,
+							$Descr,
+							$LongDescr,
+							$Qty,
+							$Prc,
+							$DiscPercent,
+							$UOM,
+							$Volume,
+							$Weight,
+							$QOHatLoc,
+							$MBflag,
+							$ActDispatchDate,
+							$QtyInvoiced,
+							$DiscCat,
+							$Controlled,
+							$Serialised,
+							$DecimalPlaces,
+							$Narrative,
+							$TaxCategory,
+							$ItemDue,
+							$POLine,
+							$StandardCost,
+							$EOQ,
+							$NextSerialNo,
+							$ExRate ) {
+		self::__construct($LineNumber,
+							$StockItem,
+							$Descr,
+							$LongDescr,
+							$Qty,
+							$Prc,
+							$DiscPercent,
+							$UOM,
+							$Volume,
+							$Weight,
+							$QOHatLoc,
+							$MBflag,
+							$ActDispatchDate,
+							$QtyInvoiced,
+							$DiscCat,
+							$Controlled,
+							$Serialised,
+							$DecimalPlaces,
+							$Narrative,
+							$TaxCategory,
+							$ItemDue,
+							$POLine,
+							$StandardCost,
+							$EOQ,
+							$NextSerialNo,
+							$ExRate );
+	}
+
+ }
 
 Class Tax {
 	Var $TaxCalculationOrder;  /*the index for the array */
@@ -532,7 +578,7 @@ Class Tax {
 	Var $TaxOnTax;
 	var $TaxGLCode;
 
-	function Tax ($TaxCalculationOrder,
+	function __construct ($TaxCalculationOrder,
 			$TaxAuthID,
 			$TaxAuthDescription,
 			$TaxRate,
@@ -546,6 +592,21 @@ Class Tax {
 		$this->TaxOnTax = $TaxOnTax;
 		$this->TaxGLCode = $TaxGLCode;
 	}
+	function Tax ($TaxCalculationOrder,
+			$TaxAuthID,
+			$TaxAuthDescription,
+			$TaxRate,
+			$TaxOnTax,
+			$TaxGLCode) {
+
+		self::__construct($TaxCalculationOrder,
+			$TaxAuthID,
+			$TaxAuthDescription,
+			$TaxRate,
+			$TaxOnTax,
+			$TaxGLCode);
+	}
 }
+
 
 ?>
