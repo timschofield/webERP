@@ -207,6 +207,7 @@ ob_flush();
 
 /* Now we uploade the chosen chart of accounts */
 if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 'Yes') {
+	DB_IgnoreForeignKeys();
 	$SQL = "INSERT INTO www_users  (userid,
 									password,
 									realname,
