@@ -1734,7 +1734,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `www_users` WRITE;
 /*!40000 ALTER TABLE `www_users` DISABLE KEYS */;
-INSERT INTO `www_users` VALUES ('admin','$2y$10$Q8HLC/2rQaB5NcCcK6V6ZOQG3chIsx16mKtZRoSaUsU9okMBDbUwG','Tim Schofield','','','','','admin@weberp.org','MEL',8,1,'2024-10-24 18:38:24','','A4',120,'1,1,1,1,1,1,1,1,1,1,1,',0,1,1,0,50,'aguapop','en_GB.utf8',0,0,0),('maggie','$2y$10$ie4ex25tqmPXW515Zjf9UOa00qArgKzvptgSMRCB5k9xVH9/MriI2','Magie','','MAGGIE','','','magie@example.com','MEL',9,0,'2024-09-03 20:05:26','','A4',5,' , , , , , , , , , ,',0,1,1,0,50,'arc-dark','en_GB.utf8',0,1,0),('WEB0000021','$2y$10$aTt/treAhiVVd0mPw1Ums.GcOxBtX/3cIsD1RL//0iT3QUYjvIDlS','Phil Daintree','WEB0000021','','','1234564','phil@logicworks.co.nz','TOR',7,0,NULL,'WEB0000021','A4',5,'1,0,0,0,0,0,0,0,0,0,0',0,1,1,0,30,'','en_GB.utf8',0,1,0);
 /*!40000 ALTER TABLE `www_users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

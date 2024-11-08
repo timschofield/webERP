@@ -393,6 +393,69 @@ if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 
 		copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 	}
 	copy("../companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
+	DB_IgnoreForeignKeys();
+	$SQL = "INSERT INTO www_users  (userid,
+									password,
+									realname,
+									customerid,
+									supplierid,
+									salesman,
+									phone,
+									email,
+									defaultlocation,
+									fullaccess,
+									cancreatetender,
+									lastvisitdate,
+									branchcode,
+									pagesize,
+									timeout,
+									modulesallowed,
+									showdashboard,
+									showpagehelp,
+									showfieldhelp,
+									blocked,
+									displayrecordsmax,
+									theme,
+									language,
+									pdflanguage,
+									fontsize,
+									department
+								) VALUES (
+									'" . $_SESSION['Installer']['AdminAccount'] . "',
+									'" . CryptPass($_SESSION['Installer']['KwaMojaPassword']) . "',
+									'" . _('Administrator') . "',
+									'',
+									'',
+									'',
+									'',
+									'" . $_SESSION['Installer']['Email'] . "',
+									'',
+									8,
+									1,
+									'2024-10-24 18:38:24',
+									'',
+									'A4',
+									10,
+									'1,1,1,1,1,1,1,1,1,1,1,1,',
+									0,
+									1,
+									1,
+									0,
+									50,
+									'default',
+									'" . $_SESSION['Installer']['Language'] . "',
+									0,
+									0,
+									0
+								)";
+	$Result = DB_query($SQL);
+
+	if (DB_error_no() == 0) {
+		echo '<div class="success">' . _('The admin user has been inserted.') . '</div>';
+	} else {
+		echo '<div class="error">' . _('There was an error inserting the admin user') . ' - ' . DB_error_msg() . '</div>';
+	}
+	ob_flush();
 	echo '<div class="success">' . _('Database now contains the demo data.') . '</div>';
 }
 
