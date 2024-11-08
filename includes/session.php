@@ -180,6 +180,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
+		setcookie('Login', $_SESSION['DatabaseName']);
 		include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
 		break;
 
