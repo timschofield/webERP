@@ -30,7 +30,7 @@ NewModule('GL', 'gl', _('General Ledger'), 7);
 NewModule('FA', 'fa', _('Asset Manager'), 8);
 NewModule('PC', 'pc', _('Petty Cash'), 9);
 NewModule('system', 'sys', _('Setup'), 10);
-NewModule('Utilities', 'utils', _('Utilities'), 11);
+NewModule('Utilities', 'util', _('Utilities'), 11);
 
 NewMenuItem('Sales', 'Transactions', _('New Sales Order or Quotation'), '/SelectOrderItems.php?NewOrder=Yes', 1);
 NewMenuItem('Sales', 'Transactions', _('Enter Counter Sales'), '/CounterSales.php', 2);
