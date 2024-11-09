@@ -33,14 +33,14 @@ if (isset($_POST['Submit'])) {
 	if ($_POST['AuthLevel']=='') {
 		$_POST['AuthLevel']=0;
 	}
-	$sql="SELECT COUNT(*)
+	$SQL="SELECT COUNT(*)
 		FROM purchorderauth
 		WHERE userid='" . $_POST['UserID'] . "'
 		AND currabrev='" . $_POST['CurrCode'] . "'";
-	$result=DB_query($sql);
-	$myrow=DB_fetch_array($result);
-	if ($myrow[0]==0) {
-		$sql="INSERT INTO purchorderauth ( userid,
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_array($Result);
+	if ($MyRow[0]==0) {
+		$SQL="INSERT INTO purchorderauth ( userid,
 						currabrev,
 						cancreate,
 						offhold,
@@ -51,7 +51,7 @@ if (isset($_POST['Submit'])) {
 						'".$OffHold."',
 						'" . filter_number_format($_POST['AuthLevel'])."')";
 	$ErrMsg = _('The authentication details cannot be inserted because');
-	$Result=DB_query($sql,$ErrMsg);
+	$Result=DB_query($SQL,$ErrMsg);
 	} else {
 		prnMsg(_('There already exists an entry for this user/currency combination'), 'error');
 		echo '<br />';
@@ -69,7 +69,7 @@ if (isset($_POST['Update'])) {
 	} else {
 		$OffHold=1;
 	}
-	$sql="UPDATE purchorderauth SET
+	$SQL="UPDATE purchorderauth SET
 			cancreate='".$CanCreate."',
 			offhold='".$OffHold."',
 			authlevel='".filter_number_format($_POST['AuthLevel'])."'
@@ -77,36 +77,36 @@ if (isset($_POST['Update'])) {
 			AND currabrev='".$_POST['CurrCode']."'";
 
 	$ErrMsg = _('The authentication details cannot be updated because');
-	$Result=DB_query($sql,$ErrMsg);
+	$Result=DB_query($SQL,$ErrMsg);
 }
 
 if (isset($_GET['Delete'])) {
-	$sql="DELETE FROM purchorderauth
+	$SQL="DELETE FROM purchorderauth
 		WHERE userid='".$_GET['UserID']."'
 		AND currabrev='".$_GET['Currency']."'";
 
 	$ErrMsg = _('The authentication details cannot be deleted because');
-	$Result=DB_query($sql,$ErrMsg);
+	$Result=DB_query($SQL,$ErrMsg);
 }
 
 if (isset($_GET['Edit'])) {
-	$sql="SELECT cancreate,
+	$SQL="SELECT cancreate,
 				offhold,
 				authlevel
 			FROM purchorderauth
 			WHERE userid='".$_GET['UserID']."'
 			AND currabrev='".$_GET['Currency']."'";
 	$ErrMsg = _('The authentication details cannot be retrieved because');
-	$result=DB_query($sql,$ErrMsg);
-	$myrow=DB_fetch_array($result);
+	$Result=DB_query($SQL,$ErrMsg);
+	$MyRow=DB_fetch_array($Result);
 	$UserID=$_GET['UserID'];
 	$Currency=$_GET['Currency'];
-	$CanCreate=$myrow['cancreate'];
-	$OffHold=$myrow['offhold'];
-	$AuthLevel=$myrow['authlevel'];
+	$CanCreate=$MyRow['cancreate'];
+	$OffHold=$MyRow['offhold'];
+	$AuthLevel=$MyRow['authlevel'];
 }
 
-$sql="SELECT purchorderauth.userid,
+$SQL="SELECT purchorderauth.userid,
 			www_users.realname,
 			currencies.currabrev,
 			currencies.currency,
@@ -120,45 +120,47 @@ $sql="SELECT purchorderauth.userid,
 		ON purchorderauth.currabrev=currencies.currabrev";
 
 $ErrMsg = _('The authentication details cannot be retrieved because');
-$Result=DB_query($sql,$ErrMsg);
+$Result=DB_query($SQL,$ErrMsg);
 
 echo '<table class="selection">
-     <tr>
-		<th>' . _('User ID') . '</th>
-		<th>' . _('User Name') . '</th>
-		<th>' . _('Currency') . '</th>
-		<th>' . _('Create Order') . '</th>
-		<th>' . _('Can Release') . '<br />' .  _('Invoices') . '</th>
-		<th>' . _('Authority Level') . '</th>
-		<th colspan="2">&nbsp;</th>
-    </tr>';
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . _('User ID') . '</th>
+				<th class="SortedColumn">' . _('User Name') . '</th>
+				<th class="SortedColumn">' . _('Currency') . '</th>
+				<th class="SortedColumn">' . _('Create Order') . '</th>
+				<th class="SortedColumn">' . _('Can Release') . '<br />' .  _('Invoices') . '</th>
+				<th class="SortedColumn">' . _('Authority Level') . '</th>
+				<th colspan="2">&nbsp;</th>
+			</tr>
+		</thead>';
 
-while ($myrow=DB_fetch_array($Result)) {
-	if ($myrow['cancreate']==0) {
+while ($MyRow=DB_fetch_array($Result)) {
+	if ($MyRow['cancreate']==0) {
 		$DisplayCanCreate=_('Yes');
 	} else {
 		$DisplayCanCreate=_('No');
 	}
-	if ($myrow['offhold']==0) {
+	if ($MyRow['offhold']==0) {
 		$DisplayOffHold=_('Yes');
 	} else {
 		$DisplayOffHold=_('No');
 	}
-	echo '<tr>
-			<td>' . $myrow['userid'] . '</td>
-			<td>' . $myrow['realname'] . '</td>
-			<td>', _($myrow['currency']), '</td>
+	echo '<tr class="striped_row">
+			<td>' . $MyRow['userid'] . '</td>
+			<td>' . $MyRow['realname'] . '</td>
+			<td>', _($MyRow['currency']), '</td>
 			<td>' . $DisplayCanCreate . '</td>
 			<td>' . $DisplayOffHold . '</td>
-			<td class="number">' . locale_number_format($myrow['authlevel'],$myrow['decimalplaces']) . '</td>
-			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $myrow['userid'] .
-	'&amp;Currency='.$myrow['currabrev'].'">' . _('Edit') . '</a></td>
-			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $myrow['userid'] .
-	'&amp;Currency='.$myrow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">' . _('Delete') . '</a></td>
+			<td class="number">' . locale_number_format($MyRow['authlevel'],$MyRow['decimalplaces']) . '</td>
+			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Edit=Yes&amp;UserID=' . $MyRow['userid'] .
+	'&amp;Currency='.$MyRow['currabrev'].'">' . _('Edit') . '</a></td>
+			<td><a href="'.$RootPath.'/PO_AuthorisationLevels.php?Delete=Yes&amp;UserID=' . $MyRow['userid'] .
+	'&amp;Currency='.$MyRow['currabrev'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this authorisation level?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 
-echo '</table><br /><br />';
+echo '</table>';
 
 if (!isset($_GET['Edit'])) {
 	$UserID=$_SESSION['UserID'];
@@ -185,11 +187,11 @@ if (isset($_GET['Edit'])) {
 			<select name="UserID">';
 	$usersql="SELECT userid FROM www_users";
 	$userresult=DB_query($usersql);
-	while ($myrow=DB_fetch_array($userresult)) {
-		if ($myrow['userid']==$UserID) {
-			echo '<option selected="selected" value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
+	while ($MyRow=DB_fetch_array($userresult)) {
+		if ($MyRow['userid']==$UserID) {
+			echo '<option selected="selected" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {
-			echo '<option value="'.$myrow['userid'].'">' . $myrow['userid'] . '</option>';
+			echo '<option value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -197,7 +199,7 @@ if (isset($_GET['Edit'])) {
 }
 
 if (isset($_GET['Edit'])) {
-	$sql="SELECT cancreate,
+	$SQL="SELECT cancreate,
 				offhold,
 				authlevel,
 				currency,
@@ -207,18 +209,18 @@ if (isset($_GET['Edit'])) {
 			WHERE userid='".$_GET['UserID']."'
 			AND purchorderauth.currabrev='".$_GET['Currency']."'";
 	$ErrMsg = _('The authentication details cannot be retrieved because');
-	$result=DB_query($sql,$ErrMsg);
-	$myrow=DB_fetch_array($result);
+	$Result=DB_query($SQL,$ErrMsg);
+	$MyRow=DB_fetch_array($Result);
 	$UserID=$_GET['UserID'];
 	$Currency=$_GET['Currency'];
-	$CanCreate=$myrow['cancreate'];
-	$OffHold=$myrow['offhold'];
-	$AuthLevel=$myrow['authlevel'];
-	$CurrDecimalPlaces=$myrow['decimalplaces'];
+	$CanCreate=$MyRow['cancreate'];
+	$OffHold=$MyRow['offhold'];
+	$AuthLevel=$MyRow['authlevel'];
+	$CurrDecimalPlaces=$MyRow['decimalplaces'];
 
 	echo '<field>
 			<label for="CurrCode">' . _('Currency') . '</label>
-			<fieldtext>' . $myrow['currency'] . '</fieldtext>
+			<fieldtext>' . $MyRow['currency'] . '</fieldtext>
 		</field>';
 	echo '<input type="hidden" name="CurrCode" value="'.$Currency.'" />';
 } else {
@@ -227,14 +229,14 @@ if (isset($_GET['Edit'])) {
 			<select name="CurrCode">';
 	$currencysql="SELECT currabrev,currency,decimalplaces FROM currencies";
 	$currencyresult=DB_query($currencysql);
-	while ($myrow=DB_fetch_array($currencyresult)) {
-		if ($myrow['currabrev']==$Currency) {
-			echo '<option selected="selected" value="'.$myrow['currabrev'].'">' . $myrow['currency'] . '</option>';
+	while ($MyRow=DB_fetch_array($currencyresult)) {
+		if ($MyRow['currabrev']==$Currency) {
+			echo '<option selected="selected" value="'.$MyRow['currabrev'].'">' . $MyRow['currency'] . '</option>';
 		} else {
-			echo '<option value="'.$myrow['currabrev'].'">' . $myrow['currency'] . '</option>';
+			echo '<option value="'.$MyRow['currabrev'].'">' . $MyRow['currency'] . '</option>';
 		}
 	}
-	$CurrDecimalPlaces=$myrow['decimalplaces'];
+	$CurrDecimalPlaces=$MyRow['decimalplaces'];
 	echo '</select>
 		</field>';
 }
