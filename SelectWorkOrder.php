@@ -144,26 +144,26 @@ if (!isset($StockID)) {
 				<label for ="StockLocation">' . _('Processing at') . ':</label>
 				<select name="StockLocation"> ';
 
-		$sql = "SELECT locations.loccode, locationname FROM locations
+		$SQL = "SELECT locations.loccode, locationname FROM locations
 				INNER JOIN locationusers
 					ON locationusers.loccode=locations.loccode
 					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 				WHERE locations.usedforwo = 1";
 
-		$resultStkLocs = DB_query($sql);
+		$ResultStkLocs = DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($resultStkLocs)){
+		while ($MyRow=DB_fetch_array($ResultStkLocs)){
 			if (isset($_POST['StockLocation'])){
-				if ($myrow['loccode'] == $_POST['StockLocation']){
-					 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				if ($MyRow['loccode'] == $_POST['StockLocation']){
+					 echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				} else {
-					 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				}
-			} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-				 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
+				 echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			} else {
-				 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
 		}
 
@@ -200,7 +200,7 @@ if (!isset($StockID)) {
 			FROM stockcategory
 			ORDER BY categorydescription";
 
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 
 	echo '<fieldset>
 			<legend class="search">' . _('To search for work orders for a specific item use the item selection facilities below') . '</legend>
@@ -208,8 +208,8 @@ if (!isset($StockID)) {
 				<label for="StockCat">' . _('Select a stock category') . ':</label>
 	  			<select name="StockCat">';
 
-	while ($myrow1 = DB_fetch_array($result1)) {
-		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 
 	echo '</select>
@@ -237,15 +237,15 @@ if (!isset($StockID)) {
 		echo '<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('On Hand') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
 
-		while ($myrow=DB_fetch_array($StockItemsResult)) {
+		while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
 			printf('<tr class="striped_row">
 					<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
@@ -253,10 +253,10 @@ if (!isset($StockID)) {
 					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>',
-					$myrow['stockid'],
-					$myrow['description'],
-					locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
-					$myrow['units']);
+					$MyRow['stockid'],
+					$MyRow['description'],
+					locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
+					$MyRow['units']);
 
 		}//end of while loop
 		echo '</tbody></table>';
@@ -348,33 +348,33 @@ if (!isset($StockID)) {
 				<thead>
 				<tr>
 					<th>' . _('Modify') . '</th>
-					<th class="ascending">' . _('Status') . '</th>
+					<th class="SortedColumn">' . _('Status') . '</th>
 					<th>' . _('Issue To') . '</th>
 					<th>' . _('Receive') . '</th>
 					<th>' . _('Costing') . '</th>
 					<th>' . _('Paperwork') . '</th>
 					<th>' . _('Location') . '</th>
-					<th class="ascending">' . _('Item') . '</th>
-					<th class="ascending">' . _('Quantity Required') . '</th>
-					<th class="ascending">' . _('Quantity Received') . '</th>
-					<th class="ascending">' . _('Quantity Outstanding') . '</th>
-					<th class="ascending">' . _('Start Date')  . '</th>
-					<th class="ascending">' . _('Required Date') . '</th>
+					<th class="SortedColumn">' . _('Item') . '</th>
+					<th class="SortedColumn">' . _('Quantity Required') . '</th>
+					<th class="SortedColumn">' . _('Quantity Received') . '</th>
+					<th class="SortedColumn">' . _('Quantity Outstanding') . '</th>
+					<th class="SortedColumn">' . _('Start Date')  . '</th>
+					<th class="SortedColumn">' . _('Required Date') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
 
-		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
+		while ($MyRow=DB_fetch_array($WorkOrdersResult)) {
 
-			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
-			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
-			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
-			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
-			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO=' .$myrow['wo'];
-			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO=' .$myrow['wo'] . '&amp;StockID=' . urlencode($myrow['stockid']);
+			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $MyRow['wo'];
+			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
+			$Receive_WO = $RootPath . '/WorkOrderReceive.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
+			$Issue_WO = $RootPath . '/WorkOrderIssue.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
+			$Costing_WO =$RootPath . '/WorkOrderCosting.php?WO=' .$MyRow['wo'];
+			$Printing_WO =$RootPath . '/PDFWOPrint.php?WO=' .$MyRow['wo'] . '&amp;StockID=' . urlencode($MyRow['stockid']);
 
-			$FormatedRequiredByDate = ConvertSQLDate($myrow['requiredby']);
-			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
+			$FormatedRequiredByDate = ConvertSQLDate($MyRow['requiredby']);
+			$FormatedStartDate = ConvertSQLDate($MyRow['startdate']);
 
 
 			printf('<tr class="striped_row">
@@ -393,18 +393,18 @@ if (!isset($StockID)) {
 					<td>%s</td>
 					</tr>',
 					$ModifyPage,
-					$myrow['wo'].'['.$myrow['reference'] . ']',
+					$MyRow['wo'].'['.$MyRow['reference'] . ']',
 					$Status_WO,
 					$Issue_WO,
 					$Receive_WO,
 					$Costing_WO,
 					$Printing_WO,
-					$myrow['loccode'],
-					urlencode($myrow['stockid']),
-					$myrow['description'],
-					locale_number_format($myrow['qtyreqd'],$myrow['decimalplaces']),
-					locale_number_format($myrow['qtyrecd'],$myrow['decimalplaces']),
-					locale_number_format($myrow['qtyreqd']-$myrow['qtyrecd'],$myrow['decimalplaces']),
+					$MyRow['loccode'],
+					urlencode($MyRow['stockid']),
+					$MyRow['description'],
+					locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']),
+					locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']),
+					locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']),
 					$FormatedStartDate,
 					$FormatedRequiredByDate);
 		}

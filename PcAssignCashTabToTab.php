@@ -286,13 +286,13 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">' . _('Date') . '</th>
-						<th class="ascending">' . _('Expense Code') . '</th>
-						<th class="ascending">' . _('Amount') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Expense Code') . '</th>
+						<th class="SortedColumn">' . _('Amount') . '</th>
 						<th>' . _('Business Purpose') . '</th>
 						<th>' . _('Notes') . '</th>
 						<th>' . _('Receipt Attachment') . '</th>
-						<th class="ascending">' . _('Date Authorised') . '</th>
+						<th class="SortedColumn">' . _('Date Authorised') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

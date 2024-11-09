@@ -34,8 +34,8 @@ if(isset($_POST['StockSearch'])) {
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
-	while($MyRow1 = DB_fetch_array($result1)) {
+	$Result1 = DB_query($SQL);
+	while($MyRow1 = DB_fetch_array($Result1)) {
 		if($MyRow1['categoryid'] == $_POST['StockCat']) {
 			echo '<option selected="True" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
@@ -273,8 +273,8 @@ if(isset($searchresult) AND !isset($_POST['Select'])) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
 				<th>' . _('Units') . '</th>
 				</tr>
 			</thead>
@@ -325,7 +325,7 @@ foreach ($_POST as $key=>$value) {
 		$EffectiveFrom=$_POST['EffectiveFrom'.$Index];
 		$SupplierPartNo=$_POST['SupplierPartNo'.$Index];
 		$MinOrderQty=$_POST['MinOrderQty'.$Index];
-		$sql="UPDATE purchdata SET price='" . $Price . "',
+		$SQL="UPDATE purchdata SET price='" . $Price . "',
 									suppliersuom='" . $SuppUOM . "',
 									conversionfactor='" . $ConversionFactor . "',
 									supplierdescription='" . $SupplierDescription . "',
@@ -336,7 +336,7 @@ foreach ($_POST as $key=>$value) {
 									minorderqty='" . $MinOrderQty . "'
 								WHERE supplierno='" . $_POST['SupplierID'] . "'
 								AND stockid='" . $StockID . "'";
-		$result=DB_query($sql);
+		$Result=DB_query($SQL);
 	}
 	if(mb_substr($key,0,6)=='Insert') {
 		if(isset($_POST['Preferred0'])) {
@@ -344,7 +344,7 @@ foreach ($_POST as $key=>$value) {
 		} else {
 			$Preferred=0;
 		}
-		$sql="INSERT INTO purchdata (stockid,
+		$SQL="INSERT INTO purchdata (stockid,
 									supplierno,
 									price,
 									suppliersuom,
@@ -368,7 +368,7 @@ foreach ($_POST as $key=>$value) {
 									'" . $_POST['SupplierPartNo0'] . "',
 									'" . $_POST['MinOrderQty0'] . "'
 								)";
-		$result=DB_query($sql);
+		$Result=DB_query($SQL);
 	}
 }
 
@@ -379,10 +379,10 @@ if(isset($_GET['SupplierID'])) {
 }
 
 if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])) { /*NOT EDITING AN EXISTING BUT SUPPLIER selected OR ENTERED*/
-	$sql = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='".$SupplierID."'";
+	$SQL = "SELECT suppliers.suppname, suppliers.currcode FROM suppliers WHERE supplierid='".$SupplierID."'";
 	$ErrMsg = _('The supplier details for the selected supplier could not be retrieved because');
 	$DbgMsg = _('The SQL that failed was');
-	$SuppSelResult = DB_query($sql, $ErrMsg, $DbgMsg);
+	$SuppSelResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 	if(DB_num_rows($SuppSelResult) == 1) {
 		$MyRow = DB_fetch_array($SuppSelResult);
 		$SuppName = $MyRow['suppname'];
@@ -517,7 +517,7 @@ if(isset($_POST['SupplierID'])) {
 			ON purchdata.stockid=stockmaster.stockid
 			WHERE supplierno='".$_POST['SupplierID']."'
 			ORDER BY purchdata.stockid, effectivefrom DESC";
-	$result=DB_query($SQL);
+	$Result=DB_query($SQL);
 
 	$UOMSQL = "SELECT unitid,
 						unitname
@@ -580,7 +580,7 @@ if(isset($_POST['SupplierID'])) {
 	}
 
 	$RowCounter = 1;
-	while($MyRow = DB_fetch_array($result)) {
+	while($MyRow = DB_fetch_array($Result)) {
 		echo '<tr>
 				<td class="text"><input name="StockID'. $RowCounter. '" type="hidden" value="' . $MyRow['stockid'] . '" />' . $MyRow['stockid'] . '</td>
 				<td class="text">' . $MyRow['description'], '</td>

@@ -24,12 +24,12 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 //Check if the users have proper authority
 if ($_SESSION['SalesmanLogin'] != '') {
 	$ViewAllowed = false;
-	$sql = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
+	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = _('Failed to retrieve sales data');
-	$result = DB_query($sql,$ErrMsg);
-	if(DB_num_rows($result)>0) {
-		while($myrow = DB_fetch_array($result)) {
-			if ($_SESSION['SalesmanLogin'] == $myrow['salesman']){
+	$Result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($Result)>0) {
+		while($MyRow = DB_fetch_array($Result)) {
+			if ($_SESSION['SalesmanLogin'] == $MyRow['salesman']){
 				$ViewAllowed = true;
 			}
 		}
@@ -247,11 +247,11 @@ if (DB_num_rows($TransResult) == 0) {
 
 echo '<table class="selection"><thead>
 	<tr>
-		<th class="ascending">', _('Type'), '</th>
-		<th class="ascending">', _('Number'), '</th>
-		<th class="ascending">', _('Date'), '</th>
+		<th class="SortedColumn">', _('Type'), '</th>
+		<th class="SortedColumn">', _('Number'), '</th>
+		<th class="SortedColumn">', _('Date'), '</th>
 		<th>', _('Branch'), '</th>
-		<th class="ascending">', _('Reference'), '</th>
+		<th class="SortedColumn">', _('Reference'), '</th>
 		<th>', _('Comments'), '</th>
 		<th>', _('Order'), '</th>
 		<th>', _('Total'), '</th>

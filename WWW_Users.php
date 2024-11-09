@@ -340,20 +340,20 @@ if(!isset($SelectedUser)) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('User Login'), '</th>
-				<th class="ascending">', _('Full Name'), '</th>
-				<th class="ascending">', _('Telephone'), '</th>
-				<th class="ascending">', _('Email'), '</th>
-				<th class="ascending">', _('Timeout'), '</th>
-				<th class="ascending">', _('Customer Code'), '</th>
-				<th class="ascending">', _('Branch Code'), '</th>
-				<th class="ascending">', _('Supplier Code'), '</th>
-				<th class="ascending">', _('Salesperson'), '</th>
-				<th class="ascending">', _('Last Visit'), '</th>
-				<th class="ascending">', _('Security Role'), '</th>
-				<th class="ascending">', _('Report Size'), '</th>
-				<th class="ascending">', _('Theme'), '</th>
-				<th class="ascending">', _('Language'), '</th>
+				<th class="SortedColumn">', _('User Login'), '</th>
+				<th class="SortedColumn">', _('Full Name'), '</th>
+				<th class="SortedColumn">', _('Telephone'), '</th>
+				<th class="SortedColumn">', _('Email'), '</th>
+				<th class="SortedColumn">', _('Timeout'), '</th>
+				<th class="SortedColumn">', _('Customer Code'), '</th>
+				<th class="SortedColumn">', _('Branch Code'), '</th>
+				<th class="SortedColumn">', _('Supplier Code'), '</th>
+				<th class="SortedColumn">', _('Salesperson'), '</th>
+				<th class="SortedColumn">', _('Last Visit'), '</th>
+				<th class="SortedColumn">', _('Security Role'), '</th>
+				<th class="SortedColumn">', _('Report Size'), '</th>
+				<th class="SortedColumn">', _('Theme'), '</th>
+				<th class="SortedColumn">', _('Language'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

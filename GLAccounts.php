@@ -245,7 +245,7 @@ if(!isset($_GET['delete'])) {
 
 	echo '<fieldset>
 			<legend>', $Legend, '</legend>';
-			
+
 	echo '<field>
 			<label for="AccountCode">', _('Account Code'), ':</label>
 			<input ', (empty($_POST['AccountCode']) ? 'autofocus="autofocus" ' : 'disabled="disabled" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="" type="text" value="', $_POST['AccountCode'], '" />
@@ -272,7 +272,7 @@ if(!isset($_GET['delete'])) {
 	}
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="CashFlowsActivity">', _('Cash Flows Activity'), ':</label>
 			<select id="CashFlowsActivity" name="CashFlowsActivity" required="required">
@@ -303,11 +303,11 @@ or deletion of the records*/
 		<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('Account Code'), '</th>
-				<th class="ascending">', _('Account Name'), '</th>
-				<th class="ascending">', _('Account Group'), '</th>
-				<th class="ascending">', _('P/L or B/S'), '</th>
-				<th class="ascending">', _('Cash Flows Activity'), '</th>
+				<th class="SortedColumn">', _('Account Code'), '</th>
+				<th class="SortedColumn">', _('Account Name'), '</th>
+				<th class="SortedColumn">', _('Account Group'), '</th>
+				<th class="SortedColumn">', _('P/L or B/S'), '</th>
+				<th class="SortedColumn">', _('Cash Flows Activity'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

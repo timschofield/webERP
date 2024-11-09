@@ -73,14 +73,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<thead>
 					<tr>
 						<th>' . _('#') . '</th>
-						<th class="ascending">' . _('Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('Total Invoiced') . '</th>
-						<th class="ascending">' . _('Units') . '</th>
-						<th class="ascending">' . _('Value Sales') . '</th>
-						<th class="ascending">' . _('On Hand') . '</th>
-						<th class="ascending">' . _('On Order') . '</th>
-						<th class="ascending">' . _('Stock (Days)') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Total Invoiced') . '</th>
+						<th class="SortedColumn">' . _('Units') . '</th>
+						<th class="SortedColumn">' . _('Value Sales') . '</th>
+						<th class="SortedColumn">' . _('On Hand') . '</th>
+						<th class="SortedColumn">' . _('On Order') . '</th>
+						<th class="SortedColumn">' . _('Stock (Days)') . '</th>
 					</tr>
 		</thead>
 		<tbody>';

@@ -82,57 +82,48 @@ function eitherOr(o, t) {
 
 function SortSelect() {
 	selElem = this;
-	var e = [], o = [];
+	var e = new Array;
 	th = localStorage.Theme;
 	columnText = selElem.innerHTML;
 	TableHeader = selElem.parentNode;
 	TableBodyElements = TableHeader.parentNode.parentNode.getElementsByTagName('tbody');
 	table = TableBodyElements[0];
 	i = TableHeader;
-
 	for (var t = 0, n; n = i.cells[t]; t++) {
 		if (i.cells[t].innerHTML == columnText) {
 			columnNumber = t;
 			s = getComputedStyle(i.cells[t], null);
 			if (s.cursor == "s-resize") {
 				i.cells[t].style.cursor = "n-resize";
-				i.cells[t].className = 'descending';
-				direction = "a";
-/*
 				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/descending.png')";
-				i.cells[t].style.backgroundPosition = "right center";
+//				i.cells[t].style.backgroundPosition = "right center";
 				i.cells[t].style.backgroundRepeat = "no-repeat";
 				i.cells[t].style.backgroundSize = "12px";
-*/
+				direction = "a"
 			} else {
 				i.cells[t].style.cursor = "s-resize";
-				i.cells[t].className = 'ascending';
-				direction = "d";
-/*
 				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/ascending.png')";
-				i.cells[t].style.backgroundPosition = "right center";
+//				i.cells[t].style.backgroundPosition = "right center";
 				i.cells[t].style.backgroundRepeat = "no-repeat";
 				i.cells[t].style.backgroundSize = "12px";
-*/
-			}
+				direction = "d"
 			}
 		}
-
+	}
 	for (var r = 0, i; i = table.rows[r]; r++) {
-		o = [];
+		var o = new Array;
 		for (var t = 0, n; n = i.cells[t]; t++) {
 			if (i.cells[t].tagName == "TD") {
 				o[t] = i.cells[t].innerHTML;
-				columnClass = i.cells[columnNumber].className;
+				columnClass = i.cells[columnNumber].className
 			}
 		}
-		e[r] = o;
+		e[r] = o
 	}
-
 	e.sort(function (e, t) {
 		if (direction == "a") {
 			if (columnClass == "number") {
-				return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, ''));
+				return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, ''))
 			} else if (columnClass == "date") {
 				if (e[columnNumber] !== undefined) {
 					da = new Date(convertDate(e[columnNumber], localStorage.DateFormat));
@@ -140,13 +131,13 @@ function SortSelect() {
 					da = new Date(e[columnNumber]);
 				}
 				db = new Date(convertDate(t[columnNumber], localStorage.DateFormat));
-				return da > db;
+				return da > db
 			} else {
-				return e[columnNumber].localeCompare(t[columnNumber]);
-	}
+				return e[columnNumber].localeCompare(t[columnNumber])
+			}
 		} else {
 			if (columnClass == "number") {
-				return parseFloat(t[columnNumber].replace(/[,.]/g, '')) - parseFloat(e[columnNumber].replace(/[,.]/g, ''));
+				return parseFloat(t[columnNumber].replace(/[,.]/g, '')) - parseFloat(e[columnNumber].replace(/[,.]/g, ''))
 			} else if (columnClass == "date") {
 				if (e[columnNumber] !== undefined) {
 					da = new Date(convertDate(e[columnNumber], localStorage.DateFormat));
@@ -154,24 +145,30 @@ function SortSelect() {
 					da = new Date(e[columnNumber]);
 				}
 				db = new Date(convertDate(t[columnNumber], localStorage.DateFormat));
-				return da <= db;
+				return da <= db
 			} else {
-				return t[columnNumber].localeCompare(e[columnNumber]);
+				return t[columnNumber].localeCompare(e[columnNumber])
 			}
 		}
 	});
-
 	for (var r = 0, i; i = table.rows[r]; r++) {
-		o = [];
+		var o = new Array;
 		o = e[r];
 		for (var t = 0, n; n = i.cells[t]; t++) {
 			if (i.cells[t].tagName == "TD") {
-				i.cells[t].innerHTML = o[t];
+				i.cells[t].innerHTML = o[t]
 			}
 		}
 	}
-
-	return;
+	return
+}
+function SetSortingEvent() {
+	var n = document.getElementsByTagName("th");
+	for (i = 0; i < n.length; i++) {
+		if (n[i].className == "SortedColumn") {
+			n[i].onclick = SortSelect
+		}
+	}
 }
 
 function initial() {
@@ -205,6 +202,7 @@ function initial() {
 	}
 
 	/* Notification messages */
+	SetSortingEvent();
 
 	/* Move messages from footer div into header div */
 	document.getElementById('MessageContainerHead').appendChild(

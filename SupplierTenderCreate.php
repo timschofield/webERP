@@ -417,9 +417,9 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 			<th colspan="6"><h3>' . _('Items in Tender') . '</h3></th>
 		</tr>
 		<tr>
-			<th class="ascending">' . _('Stock ID') . '</th>
-			<th class="ascending">' . _('Description') . '</th>
-			<th class="ascending">' . _('Quantity') . '</th>
+			<th class="SortedColumn">' . _('Stock ID') . '</th>
+			<th class="SortedColumn">' . _('Description') . '</th>
+			<th class="SortedColumn">' . _('Quantity') . '</th>
 			<th>' . _('UOM') . '</th>
 			</tr>
 		</thead>

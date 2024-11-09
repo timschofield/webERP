@@ -209,39 +209,39 @@ echo '<div>
 
 if (!isset( $_SESSION['SuppTransTmp'])){
 	$_SESSION['SuppTransTmp'] = new SuppTrans;
-	while ($myrow=DB_fetch_array($GRNResults)){
+	while ($MyRow=DB_fetch_array($GRNResults)){
 
 		$GRNAlreadyOnInvoice = False;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-			if ($EnteredGRN->GRNNo == $myrow['grnno']) {
+			if ($EnteredGRN->GRNNo == $MyRow['grnno']) {
 				$GRNAlreadyOnInvoice = True;
 			}
 		}
-		if ($myrow['decimalplaces']==''){
-			$myrow['decimalplaces']=2;
+		if ($MyRow['decimalplaces']==''){
+			$MyRow['decimalplaces']=2;
 		}
 		if ($GRNAlreadyOnInvoice == False){
-			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'],
-														$myrow['podetailitem'],
-														$myrow['itemcode'],
-														$myrow['itemdescription'],
-														$myrow['qtyrecd'],
-														$myrow['quantityinv'],
-														$myrow['qtyrecd'] - $myrow['quantityinv'],
-														$myrow['unitprice'],
-														$myrow['unitprice'],
+			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($MyRow['grnno'],
+														$MyRow['podetailitem'],
+														$MyRow['itemcode'],
+														$MyRow['itemdescription'],
+														$MyRow['qtyrecd'],
+														$MyRow['quantityinv'],
+														$MyRow['qtyrecd'] - $MyRow['quantityinv'],
+														$MyRow['unitprice'],
+														$MyRow['unitprice'],
 														$Complete,
-														$myrow['stdcostunit'],
-														$myrow['shiptref'],
-														$myrow['jobref'],
-														$myrow['glcode'],
-														$myrow['orderno'],
-														$myrow['assetid'],
+														$MyRow['stdcostunit'],
+														$MyRow['shiptref'],
+														$MyRow['jobref'],
+														$MyRow['glcode'],
+														$MyRow['orderno'],
+														$MyRow['assetid'],
 														0,
-														$myrow['decimalplaces'],
-														$myrow['grnbatch'],
-														$myrow['supplierref']);
+														$MyRow['decimalplaces'],
+														$MyRow['grnbatch'],
+														$MyRow['supplierref']);
 		}
 	}
 }
@@ -256,18 +256,18 @@ if (!isset($_GET['Modify'])){
 				<table>
 					<thead>
 					<tr>
-						<th class="ascending">' . _('Sequence') . ' #</th>
-						<th class="ascending">' . _('GRN Number') . '</th>
-						<th class="ascending">' . _('Supplier\'s Ref') . '</th>
-						<th class="ascending">' . _('Order') . '</th>
-						<th class="ascending">' . _('Item Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('Total Qty Received') . '</th>
-						<th class="ascending">' . _('Qty Already Invoiced') . '</th>
-						<th class="ascending">' . _('Qty Yet To Invoice') . '</th>
-						<th class="ascending">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending">' . _('Select'), '</th>
+						<th class="SortedColumn">' . _('Sequence') . ' #</th>
+						<th class="SortedColumn">' . _('GRN Number') . '</th>
+						<th class="SortedColumn">' . _('Supplier\'s Ref') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Total Qty Received') . '</th>
+						<th class="SortedColumn">' . _('Qty Already Invoiced') . '</th>
+						<th class="SortedColumn">' . _('Qty Yet To Invoice') . '</th>
+						<th class="SortedColumn">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('Select'), '</th>
 					</tr>
 					</thead>
 					<tbody>';

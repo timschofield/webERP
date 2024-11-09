@@ -86,7 +86,7 @@ if ($_POST['Customer']!='') {
 	$WhereClause = "custbranch.salesman='" . $_POST['SalesPerson'] . "'";
 }
 
-$sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
+$SQL = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
 				debtorsmaster.debtorno,
 				debtorsmaster.name,
 				decimalplaces AS currdecimalplaces,
@@ -99,11 +99,11 @@ $sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance
 		ON debtorsmaster.debtorno=custbranch.debtorno";
 
 if (isset($WhereClause) and mb_strlen($WhereClause)>0){
-	$sql .= " WHERE " . $WhereClause . " ";
+	$SQL .= " WHERE " . $WhereClause . " ";
 }
-$sql .= " GROUP BY debtorsmaster.debtorno";
+$SQL .= " GROUP BY debtorsmaster.debtorno";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 $LocalTotal =0;
 
@@ -112,11 +112,11 @@ if (!isset($_POST['CreateCSV'])){
 	echo '<table>
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Customer') . ' </th>
-				<th class="ascending">' . _('Opening Balance') . '</th>
-				<th class="ascending">' . _('Debits') . '</th>
-				<th class="ascending">' . _('Credits') . '</th>
-				<th class="ascending">' . _('Balance') . '</th>
+				<th class="SortedColumn">' . _('Customer') . ' </th>
+				<th class="SortedColumn">' . _('Opening Balance') . '</th>
+				<th class="SortedColumn">' . _('Debits') . '</th>
+				<th class="SortedColumn">' . _('Credits') . '</th>
+				<th class="SortedColumn">' . _('Balance') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -129,26 +129,26 @@ $Debits =0;
 $Credits =0;
 $ClosingBalances =0;
 
-while ($myrow=DB_fetch_array($result)){
+while ($MyRow=DB_fetch_array($Result)){
 
 /*Get the sum of all transactions after the ending date -
  * we need to take off the sum of all movements after the ending date from the current balance calculated above
  * to get the balance as at the end of the period
  */
-	$sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight) AS currencytotalpost,
+	$SQL = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight) AS currencytotalpost,
 					debtorsmaster.debtorno,
 					SUM((ovamount+ovgst+ovdiscount+ovfreight)/debtortrans.rate) AS localtotalpost
 			FROM debtortrans INNER JOIN debtorsmaster
 				ON debtortrans.debtorno=debtorsmaster.debtorno
 			WHERE trandate > '" . FormatDateForSQL($_POST['FromDate']) . "'
-			AND debtorsmaster.debtorno = '" . $myrow['debtorno'] . "'
+			AND debtorsmaster.debtorno = '" . $MyRow['debtorno'] . "'
 			GROUP BY debtorsmaster.debtorno";
 
-	$TransPostResult = DB_query($sql);
+	$TransPostResult = DB_query($SQL);
 	$TransPostRow = DB_fetch_array($TransPostResult);
 /* Now we need to get the debits and credits during the period under review
  */
-	$sql = "SELECT SUM(CASE WHEN debtortrans.type=10 THEN ovamount+ovgst+ovdiscount+ovfreight ELSE 0 END) AS currencydebits,
+	$SQL = "SELECT SUM(CASE WHEN debtortrans.type=10 THEN ovamount+ovgst+ovdiscount+ovfreight ELSE 0 END) AS currencydebits,
 					SUM(CASE WHEN debtortrans.type<>10 THEN ovamount+ovgst+ovdiscount+ovfreight ELSE 0 END) AS currencycredits,
 					debtorsmaster.debtorno,
 					SUM(CASE WHEN debtortrans.type=10 THEN (ovamount+ovgst+ovdiscount+ovfreight)/debtortrans.rate ELSE 0 END) AS localdebits,
@@ -156,26 +156,26 @@ while ($myrow=DB_fetch_array($result)){
 			FROM debtortrans INNER JOIN debtorsmaster
 				ON debtortrans.debtorno=debtorsmaster.debtorno
 			WHERE trandate>='" . FormatDateForSQL($_POST['FromDate']) . "' AND trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
-			AND debtorsmaster.debtorno = '" . $myrow['debtorno'] . "'
+			AND debtorsmaster.debtorno = '" . $MyRow['debtorno'] . "'
 			GROUP BY debtorsmaster.debtorno";
 
-	$TransResult = DB_query($sql);
+	$TransResult = DB_query($SQL);
 	$TransRow = DB_fetch_array($TransResult);
 
-	$OpeningBal = $myrow['localbalance']-$TransPostRow['localtotalpost']-$TransRow['localdebits']-$TransRow['localcredits'];
-	$ClosingBal = $myrow['localbalance']-$TransPostRow['localtotalpost'];
+	$OpeningBal = $MyRow['localbalance']-$TransPostRow['localtotalpost']-$TransRow['localdebits']-$TransRow['localcredits'];
+	$ClosingBal = $MyRow['localbalance']-$TransPostRow['localtotalpost'];
 	if($OpeningBal !=0 OR $ClosingBal!=0 OR $TransRow['localdebits']!=0 OR $TransRow['localcredits']!=0) {
 
 		if (!isset($_POST['CreateCSV'])){
 			echo '<tr>
-					<td>' . $myrow['name'] . ' </td>
+					<td>' . $MyRow['name'] . ' </td>
 					<td class="number">' . locale_number_format($OpeningBal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($TransRow['localdebits'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($TransRow['localcredits'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($ClosingBal,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				</tr>';
 		} else { //send the line to CSV file
-			$CSVFile .=  '"' . stripcomma($myrow['name']) . '","' . stripcomma($OpeningBal) . '","' . stripcomma($TransRow['localdebits']) . '","' . stripcomma($TransRow['localcredits']) . '","' . stripcomma($ClosingBal) . '"' . "\n";
+			$CSVFile .=  '"' . stripcomma($MyRow['name']) . '","' . stripcomma($OpeningBal) . '","' . stripcomma($TransRow['localdebits']) . '","' . stripcomma($TransRow['localcredits']) . '","' . stripcomma($ClosingBal) . '"' . "\n";
 
 		}
 	}

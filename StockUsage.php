@@ -31,34 +31,34 @@ echo '<p class="page_title_text">
 		'" alt="" />' . ' ' . $Title . '
 	</p>';
 
-$result = DB_query("SELECT description,
+$Result = DB_query("SELECT description,
 						units,
 						mbflag,
 						decimalplaces
 					FROM stockmaster
 					WHERE stockid='".$StockID."'");
-$myrow = DB_fetch_row($result);
+$MyRow = DB_fetch_row($Result);
 
-$DecimalPlaces = $myrow[3];
+$DecimalPlaces = $MyRow[3];
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<fieldset>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
-if ($myrow[2]=='K'
-	OR $myrow[2]=='A'
-	OR $myrow[2]=='D') {
+if ($MyRow[2]=='K'
+	OR $MyRow[2]=='A'
+	OR $MyRow[2]=='D') {
 
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
-	echo '<h3>' . $StockID . ' - ' . $myrow[0] . '</h3>';
+	echo '<h3>' . $StockID . ' - ' . $MyRow[0] . '</h3>';
 
 	prnMsg( _('The selected item is a dummy or assembly or kit-set item and cannot have a stock holding') . '. ' . _('Please select a different item'),'warn');
 
 	$StockID = '';
 } else {
 	echo '<legend>
-			' . _('Item') . ' : ' . $StockID . ' - ' . $myrow[0] . '   (' . _('in units of') . ' : ' . $myrow[1] . ')
+			' . _('Item') . ' : ' . $StockID . ' - ' . $MyRow[0] . '   (' . _('in units of') . ' : ' . $MyRow[1] . ')
 		</legend>';
 }
 
@@ -72,21 +72,21 @@ echo '<field>
 		<label for="StockLocation">', _('From Stock Location') . ':</label>
 		<select name="StockLocation">';
 
-$sql = "SELECT locations.loccode, locationname FROM locations
+$SQL = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-$resultStkLocs = DB_query($sql);
-while ($myrow=DB_fetch_array($resultStkLocs)){
+$ResultStkLocs = DB_query($SQL);
+while ($MyRow=DB_fetch_array($ResultStkLocs)){
 	if (isset($_POST['StockLocation'])){
-		if ($myrow['loccode'] == $_POST['StockLocation']){
-		     echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		if ($MyRow['loccode'] == $_POST['StockLocation']){
+		     echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
-		     echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		     echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
-	} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
-		 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
-		 $_POST['StockLocation']=$myrow['loccode'];
+	} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
+		 echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		 $_POST['StockLocation']=$MyRow['loccode'];
 	} else {
-		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 if (isset($_POST['StockLocation'])){
@@ -112,7 +112,7 @@ $CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 if (isset($_POST['ShowUsage'])){
 	if($_POST['StockLocation']=='All'){
-		$sql = "SELECT periods.periodno,
+		$SQL = "SELECT periods.periodno,
 				periods.lastdate_in_period,
 				canview,
 				SUM(CASE WHEN (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=17 OR stockmoves.type=28 OR stockmoves.type=38)
@@ -127,7 +127,7 @@ if (isset($_POST['ShowUsage'])){
 					periods.lastdate_in_period
 				ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 	} else {
-		$sql = "SELECT periods.periodno,
+		$SQL = "SELECT periods.periodno,
 				periods.lastdate_in_period,
 				SUM(CASE WHEN (stockmoves.type=10 OR stockmoves.type=11 OR stockmoves.type=17 OR stockmoves.type=28 OR stockmoves.type=38)
 								AND stockmoves.hidemovt=0
@@ -142,11 +142,11 @@ if (isset($_POST['ShowUsage'])){
 				ORDER BY periodno DESC LIMIT " . $_SESSION['NumberOfPeriodsOfStockUsage'];
 
 	}
-	$MovtsResult = DB_query($sql);
+	$MovtsResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
 		echo _('The stock usage for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
 		if ($debug==1){
-		echo '<br />' . _('The SQL that failed was') . $sql;
+		echo '<br />' . _('The SQL that failed was') . $SQL;
 		}
 		exit;
 	}
@@ -154,8 +154,8 @@ if (isset($_POST['ShowUsage'])){
 	echo '<table class="selection">
 		<thead>
 			<tr>
-						<th class="ascending">' . _('Month') . '</th>
-						<th class="ascending">' . _('Usage') . '</th>
+						<th class="SortedColumn">' . _('Month') . '</th>
+						<th class="SortedColumn">' . _('Usage') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -163,18 +163,18 @@ if (isset($_POST['ShowUsage'])){
 	$TotalUsage = 0;
 	$PeriodsCounter =0;
 
-	while ($myrow=DB_fetch_array($MovtsResult)) {
+	while ($MyRow=DB_fetch_array($MovtsResult)) {
 
-		$DisplayDate = MonthAndYearFromSQLDate($myrow['lastdate_in_period']);
+		$DisplayDate = MonthAndYearFromSQLDate($MyRow['lastdate_in_period']);
 
-		$TotalUsage += $myrow['qtyused'];
+		$TotalUsage += $MyRow['qtyused'];
 		$PeriodsCounter++;
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>',
 				$DisplayDate,
-				locale_number_format($myrow['qtyused'],$DecimalPlaces));
+				locale_number_format($MyRow['qtyused'],$DecimalPlaces));
 	} //end of while loop
 
 	echo '</tbody></table>';

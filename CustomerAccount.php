@@ -25,12 +25,12 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 //Check if the users have proper authority
 if ($_SESSION['SalesmanLogin'] != '') {
 	$ViewAllowed = false;
-	$sql = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
+	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = _('Failed to retrieve sales data');
-	$result = DB_query($sql,$ErrMsg);
-	if(DB_num_rows($result)>0) {
-		while($myrow = DB_fetch_array($result)) {
-			if ($_SESSION['SalesmanLogin'] == $myrow['salesman']) {
+	$Result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($Result)>0) {
+		while($MyRow = DB_fetch_array($Result)) {
+			if ($_SESSION['SalesmanLogin'] == $MyRow['salesman']) {
 				$ViewAllowed = true;
 			}
 		}
@@ -56,7 +56,7 @@ $Transactions = array();
 /*now get all the settled transactions which were allocated this month */
 $ErrMsg = _('There was a problem retrieving the transactions that were settled over the course of the last month for'). ' ' . $CustomerID . ' ' . _('from the database');
 if ($_SESSION['Show_Settled_LastMonth']==1) {
-	$sql = "SELECT DISTINCT debtortrans.id,
+	$SQL = "SELECT DISTINCT debtortrans.id,
 						debtortrans.type,
 						systypes.typename,
 						debtortrans.branchcode,
@@ -79,10 +79,10 @@ if ($_SESSION['Show_Settled_LastMonth']==1) {
 				AND debtortrans.settled=1
 				ORDER BY debtortrans.id";
 
-	$SetldTrans=DB_query($sql, $ErrMsg);
+	$SetldTrans=DB_query($SQL, $ErrMsg);
 	$NumberOfRecordsReturned = DB_num_rows($SetldTrans);
-	while ($myrow=DB_fetch_array($SetldTrans)) {
-		$Transactions[] =  $myrow;
+	while ($MyRow=DB_fetch_array($SetldTrans)) {
+		$Transactions[] =  $MyRow;
 	}
 } else {
 	$NumberOfRecordsReturned=0;
@@ -90,7 +90,7 @@ if ($_SESSION['Show_Settled_LastMonth']==1) {
 
 /*now get all the outstanding transaction ie Settled=0 */
 $ErrMsg =  _('There was a problem retrieving the outstanding transactions for') . ' ' .	$CustomerID . ' '. _('from the database') . '.';
-$sql = "SELECT debtortrans.id,
+$SQL = "SELECT debtortrans.id,
 			debtortrans.type,
 			systypes.typename,
 			debtortrans.branchcode,
@@ -109,14 +109,14 @@ $sql = "SELECT debtortrans.id,
 		AND debtortrans.settled=0";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$sql .= " ORDER BY debtortrans.id";
+$SQL .= " ORDER BY debtortrans.id";
 
-$OstdgTrans=DB_query($sql, $ErrMsg);
-while ($myrow=DB_fetch_array($OstdgTrans)) {
-	$Transactions[] =  $myrow;
+$OstdgTrans=DB_query($SQL, $ErrMsg);
+while ($MyRow=DB_fetch_array($OstdgTrans)) {
+	$Transactions[] =  $MyRow;
 }
 
 $NumberOfRecordsReturned += DB_num_rows($OstdgTrans);
@@ -188,7 +188,7 @@ $SQL = "SELECT debtorsmaster.name,
 			debtorsmaster.debtorno = '" . $CustomerID . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $SQL .= " GROUP BY
@@ -250,11 +250,11 @@ echo _('Show all transactions after'), ':
 echo '<br /><table class="selection">
 	<thead>
 		<tr>
-			<th class="ascending">', _('Type'), '</th>
-			<th class="ascending">', _('Number'), '</th>
-			<th class="ascending">', _('Date'), '</th>
+			<th class="SortedColumn">', _('Type'), '</th>
+			<th class="SortedColumn">', _('Number'), '</th>
+			<th class="SortedColumn">', _('Date'), '</th>
 			<th>', _('Branch'), '</th>
-			<th class="ascending">', _('Reference'), '</th>
+			<th class="SortedColumn">', _('Reference'), '</th>
 			<th>', _('Comments'), '</th>
 			<th>', _('Order'), '</th>
 			<th>', _('Charges'), '</th>

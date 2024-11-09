@@ -33,13 +33,13 @@ if(isset($_POST['UpdateRates'])) {
 								FROM taxauthrates
 								WHERE taxauthrates.taxauthority='" . $TaxAuthority . "'");
 
-	while($myrow=DB_fetch_array($TaxRatesResult)) {
+	while($MyRow=DB_fetch_array($TaxRatesResult)) {
 
-		$sql = "UPDATE taxauthrates SET taxrate=" . (filter_number_format($_POST[$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid']])/100) . "
-						WHERE taxcatid = '" . $myrow['taxcatid'] . "'
-						AND dispatchtaxprovince = '" . $myrow['dispatchtaxprovince'] . "'
+		$SQL = "UPDATE taxauthrates SET taxrate=" . (filter_number_format($_POST[$MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid']])/100) . "
+						WHERE taxcatid = '" . $MyRow['taxcatid'] . "'
+						AND dispatchtaxprovince = '" . $MyRow['dispatchtaxprovince'] . "'
 						AND taxauthority = '" . $TaxAuthority . "'";
-		DB_query($sql);
+		DB_query($SQL);
 	}
 	prnMsg(_('All rates updated successfully'),'info');
 }
@@ -50,7 +50,7 @@ if(isset($_POST['UpdateRates'])) {
 
 $TaxAuthDetail = DB_query("SELECT description
 							FROM taxauthorities WHERE taxid='" . $TaxAuthority . "'");
-$myrow = DB_fetch_row($TaxAuthDetail);
+$MyRow = DB_fetch_row($TaxAuthDetail);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<div>
@@ -73,31 +73,31 @@ $TaxRatesResult = DB_query("SELECT taxauthrates.taxcatid,
 							taxauthrates.taxcatid");
 
 if(DB_num_rows($TaxRatesResult)>0) {
-	echo '<div class="centre"><h1>' . $myrow[0] . '</h1></div>';// TaxAuthorityRates table title.
+	echo '<div class="centre"><h1>' . $MyRow[0] . '</h1></div>';// TaxAuthorityRates table title.
 
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
-			<th class="ascending">' . _('Tax Category') . '</th>
-			<th class="ascending">' . _('Tax Rate') . '</th>
+			<th class="SortedColumn">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
+			<th class="SortedColumn">' . _('Tax Category') . '</th>
+			<th class="SortedColumn">' . _('Tax Rate') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while($myrow = DB_fetch_array($TaxRatesResult)) {
+	while($MyRow = DB_fetch_array($TaxRatesResult)) {
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
 				<td><input class="number" maxlength="5" name="%s" required="required" size="5" title="' . _('Input must be numeric') . '" type="text" value="%s" /></td>
 				</tr>',
 			// Deliveries From:
-			$myrow['taxprovincename'],
+			$MyRow['taxprovincename'],
 			// Tax Category:
-			_($myrow['taxcatname']),// Uses gettext() to translate 'Exempt', 'Freight' and 'Handling'.
+			_($MyRow['taxcatname']),// Uses gettext() to translate 'Exempt', 'Freight' and 'Handling'.
 			// Tax Rate:
-			$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid'],
-			locale_number_format($myrow['taxrate']*100,2));
+			$MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid'],
+			locale_number_format($MyRow['taxrate']*100,2));
 	}// End of while loop.
 	echo '</tbody></table><br />
 		<div class="centre">

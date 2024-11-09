@@ -46,8 +46,8 @@ if(isset($_POST['CheckCode'])) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Stock Code') . '</th>
-				<th class="ascending">' . _('Stock Description') . '</th>
+				<th class="SortedColumn">' . _('Stock Code') . '</th>
+				<th class="SortedColumn">' . _('Stock Description') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

@@ -125,19 +125,19 @@ if (!isset($OrderNumber) or $OrderNumber == "") {
 			<label for="StockLocation">' . _('Into Stock Location') . ':</label>
 			<select name="StockLocation"> ';
 
-	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$resultStkLocs = DB_query($sql);
-	while ($myrow = DB_fetch_array($resultStkLocs)) {
+	$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+	$ResultStkLocs = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if (isset($_POST['StockLocation'])) {
-			if ($myrow['loccode'] == $_POST['StockLocation']) {
-				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			if ($MyRow['loccode'] == $_POST['StockLocation']) {
+				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
-		} elseif ($myrow['loccode'] == $_SESSION['UserStockLocation']) {
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		} elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
+			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -188,17 +188,17 @@ $SQL = "SELECT categoryid,
 			categorydescription
 		FROM stockcategory
 		ORDER BY categorydescription";
-$result1 = DB_query($SQL);
+$Result1 = DB_query($SQL);
 echo '<fieldset>
 		<legend>', _('To search for purchase orders for a specific part use the part selection facilities below') . '</legend>';
 echo '<field>
 		<label foe="StockCat">' . _('Select a stock category') . ':</label>
 		<select name="StockCat">';
-while ($myrow1 = DB_fetch_array($result1)) {
-	if (isset($_POST['StockCat']) and $myrow1['categoryid'] == $_POST['StockCat']) {
-		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+while ($MyRow1 = DB_fetch_array($Result1)) {
+	if (isset($_POST['StockCat']) and $MyRow1['categoryid'] == $_POST['StockCat']) {
+		echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 }
 echo '</select>
@@ -223,22 +223,22 @@ if (isset($StockItemsResult)) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('On Hand') . '</th>
-				<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-				<th class="ascending">' . _('Units') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('On Hand') . '</th>
+				<th class="SortedColumn">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+				<th class="SortedColumn">' . _('Units') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($myrow = DB_fetch_array($StockItemsResult)) {
+	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 		echo '<tr class="striped_row">
-			<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
-			<td>' . $myrow['description'] . '</td>
-			<td class="number">' . locale_number_format($myrow['qoh'],$myrow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($myrow['qord'],$myrow['decimalplaces']) . '</td>
-			<td>' . $myrow['units'] . '</td>
+			<td><input type="submit" name="SelectedStockItem" value="' . $MyRow['stockid'] . '"</td>
+			<td>' . $MyRow['description'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($MyRow['qord'],$MyRow['decimalplaces']) . '</td>
+			<td>' . $MyRow['units'] . '</td>
 			</tr>';
 	}
 	//end of while loop
@@ -430,37 +430,37 @@ else {
 		echo '<table cellpadding="2" width="90%" class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('View') . '</th>
-					<th class="ascending">' . _('Supplier') . '</th>
-					<th class="ascending">' . _('Currency') . '</th>
-					<th class="ascending">' . _('Requisition') . '</th>
-					<th class="ascending">' . _('Order Date') . '</th>
-					<th class="ascending">' . _('Delivery Date') . '</th>
-					<th class="ascending">' . _('Initiator') . '</th>
-					<th class="ascending">' . _('Order Total') . '</th>
-					<th class="ascending">' . _('Status') . '</th>
+					<th class="SortedColumn">' . _('View') . '</th>
+					<th class="SortedColumn">' . _('Supplier') . '</th>
+					<th class="SortedColumn">' . _('Currency') . '</th>
+					<th class="SortedColumn">' . _('Requisition') . '</th>
+					<th class="SortedColumn">' . _('Order Date') . '</th>
+					<th class="SortedColumn">' . _('Delivery Date') . '</th>
+					<th class="SortedColumn">' . _('Initiator') . '</th>
+					<th class="SortedColumn">' . _('Order Total') . '</th>
+					<th class="SortedColumn">' . _('Status') . '</th>
 				</tr>
 			</thead>
 			</tbody>';
 
-		while ($myrow = DB_fetch_array($PurchOrdersResult)) {
-			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'];
-			$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-			$FormatedDeliveryDate = ConvertSQLDate($myrow['deliverydate']);
-			$FormatedOrderValue = locale_number_format($myrow['ordervalue'], $myrow['currdecimalplaces']);
+		while ($MyRow = DB_fetch_array($PurchOrdersResult)) {
+			$ViewPurchOrder = $RootPath . '/PO_OrderDetails.php?OrderNo=' . $MyRow['orderno'];
+			$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
+			$FormatedDeliveryDate = ConvertSQLDate($MyRow['deliverydate']);
+			$FormatedOrderValue = locale_number_format($MyRow['ordervalue'], $MyRow['currdecimalplaces']);
 
 			echo '<tr class="striped_row">
-					<td><a href="' . $ViewPurchOrder . '">' . $myrow['orderno'] . '</a></td>
-					<td>' . $myrow['suppname'] . '</td>
-					<td>' . $myrow['currcode'] . '</td>
-					<td>' . $myrow['requisitionno'] . '</td>
+					<td><a href="' . $ViewPurchOrder . '">' . $MyRow['orderno'] . '</a></td>
+					<td>' . $MyRow['suppname'] . '</td>
+					<td>' . $MyRow['currcode'] . '</td>
+					<td>' . $MyRow['requisitionno'] . '</td>
 					<td>' . $FormatedOrderDate . '</td>
 					<td>' . $FormatedDeliveryDate . '</td>
-					<td>' . $myrow['initiator'] . '</td>
+					<td>' . $MyRow['initiator'] . '</td>
 					<td class="number">' . $FormatedOrderValue . '</td>
-					<td>' . _($myrow['status']) .  '</td>
+					<td>' . _($MyRow['status']) .  '</td>
 					</tr>';
-				//$myrow['status'] is a string which has gettext translations from PO_Header.php script
+				//$MyRow['status'] is a string which has gettext translations from PO_Header.php script
 		}
 		//end of while loop
 		echo '</tbody></table>';

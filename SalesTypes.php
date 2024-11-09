@@ -188,8 +188,8 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 		<tr>
-				<th class="ascending">' . _('Type Code') . '</th>
-				<th class="ascending">' . _('Type Name') . '</th>
+				<th class="SortedColumn">' . _('Type Code') . '</th>
+				<th class="SortedColumn">' . _('Type Name') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

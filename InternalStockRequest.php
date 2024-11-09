@@ -255,9 +255,9 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 	</tr>
 	<tr>
 		<th>', _('Line Number'), '</th>
-		<th class="ascending">', _('Item Code'), '</th>
-		<th class="ascending">', _('Item Description'), '</th>
-		<th class="ascending">', _('Quantity Required'), '</th>
+		<th class="SortedColumn">', _('Item Code'), '</th>
+		<th class="SortedColumn">', _('Item Description'), '</th>
+		<th class="SortedColumn">', _('Quantity Required'), '</th>
 		<th>', _('UOM'), '</th>
 		</tr>
 	</thead>
@@ -524,14 +524,14 @@ if (isset($SearchResult)) {
 					<input tabindex="', ($j + 10), '" type="submit" name="Next" value="', _('Next'), '" /></td>
 			</tr>
 			<tr>
-				<th class="ascending">', _('Code'), '</th>
-				<th class="ascending">', _('Description'), '</th>
+				<th class="SortedColumn">', _('Code'), '</th>
+				<th class="SortedColumn">', _('Description'), '</th>
 				<th>', _('Units'), '</th>
-				<th class="ascending">', _('On Hand'), '</th>
-				<th class="ascending">', _('On Demand'), '</th>
-				<th class="ascending">', _('On Order'), '</th>
-				<th class="ascending">', _('Available'), '</th>
-				<th class="ascending">', _('Quantity'), '</th>
+				<th class="SortedColumn">', _('On Hand'), '</th>
+				<th class="SortedColumn">', _('On Demand'), '</th>
+				<th class="SortedColumn">', _('On Order'), '</th>
+				<th class="SortedColumn">', _('Available'), '</th>
+				<th class="SortedColumn">', _('Quantity'), '</th>
 			</tr>
 		</thead>
 		<tbody>';

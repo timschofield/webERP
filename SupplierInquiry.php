@@ -202,14 +202,14 @@ if(DB_num_rows($TransResult) == 0) {
 echo '<table class="selection"><thead>
 	<thead>
 	<tr>
-		<th class="ascending">' . _('Date') . '</th>
-		<th class="ascending">' . _('Type') . '</th>
-		<th class="ascending">' . _('Number') . '</th>
-		<th class="ascending">' . _('Reference') . '</th>
-		<th class="ascending">' . _('Comments') . '</th>
-		<th class="ascending">' . _('Total') . '</th>
-		<th class="ascending">' . _('Allocated') . '</th>
-		<th class="ascending">' . _('Balance') . '</th>
+		<th class="SortedColumn">' . _('Date') . '</th>
+		<th class="SortedColumn">' . _('Type') . '</th>
+		<th class="SortedColumn">' . _('Number') . '</th>
+		<th class="SortedColumn">' . _('Reference') . '</th>
+		<th class="SortedColumn">' . _('Comments') . '</th>
+		<th class="SortedColumn">' . _('Total') . '</th>
+		<th class="SortedColumn">' . _('Allocated') . '</th>
+		<th class="SortedColumn">' . _('Balance') . '</th>
 		<th class="noprint">' . _('More Info') . '</th>
 		<th class="noprint">' . _('More Info') . '</th>
 	</tr>

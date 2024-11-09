@@ -54,14 +54,14 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 						FROM banktrans
 						WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not retrieve transaction information');
-			$result = DB_query($SQL,$ErrMsg);
-			$MyRow=DB_fetch_array($result);
+			$Result = DB_query($SQL,$ErrMsg);
+			$MyRow=DB_fetch_array($Result);
 			$AmountCleared = round($MyRow[0] / $MyRow[1],2);
 			/*Update the banktrans recoord to match it off */
 			$SQL = "UPDATE banktrans SET amountcleared= ". $AmountCleared . "
 									WHERE banktransid='" . $_POST['BankTrans_' . $Counter] . "'";
 			$ErrMsg =  _('Could not match off this payment because');
-			$result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
 		} elseif ((isset($_POST['AmtClear_' . $Counter])
 					AND filter_number_format($_POST['AmtClear_' . $Counter])<0
@@ -75,7 +75,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 
 			$ErrMsg = _('Could not update the amount matched off this bank transaction because');
-			$result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
 		} elseif (isset($_POST['Unclear_' . $Counter])
 					AND $_POST['Unclear_' . $Counter]==True) {
@@ -83,7 +83,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 			$SQL = "UPDATE banktrans SET amountcleared = 0
 					 WHERE banktransid='" . $_POST['BankTrans_' . $Counter]."'";
 			$ErrMsg =  _('Could not unclear this bank transaction because');
-			$result = DB_query($SQL,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 		}
 	}
 	/*Show the updated position with the same criteria as previously entered*/
@@ -111,8 +111,8 @@ $SQL = "SELECT
 		WHERE bankaccounts.accountcode=bankaccountusers.accountcode
 			AND bankaccountusers.userid = '" . $_SESSION['UserID'] ."'
 		ORDER BY bankaccounts.bankaccountname";
-$resultBankActs = DB_query($SQL);
-while ($MyRow=DB_fetch_array($resultBankActs)) {
+$ResultBankActs = DB_query($SQL);
+while ($MyRow=DB_fetch_array($ResultBankActs)) {
 	// Lists bank accounts order by bankaccountname
 	echo '<option',
 		((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
@@ -277,12 +277,12 @@ if ($InputError !=1
 	echo '<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' .  _('Cheque No') . '</th>
-				<th class="ascending">' . _('Ref') . '</th>
-				<th class="ascending">' . _('Date') . '</th>
-				<th class="ascending">' . $TypeName . '</th>
-				<th class="ascending">' . _('Amount') . '</th>
-				<th class="ascending">' . _('Outstanding') . '</th>
+				<th class="SortedColumn">' .  _('Cheque No') . '</th>
+				<th class="SortedColumn">' . _('Ref') . '</th>
+				<th class="SortedColumn">' . _('Date') . '</th>
+				<th class="SortedColumn">' . $TypeName . '</th>
+				<th class="SortedColumn">' . _('Amount') . '</th>
+				<th class="SortedColumn">' . _('Outstanding') . '</th>
 				<th colspan="3">' . _('Clear') . ' / ' . _('Unclear') . '</th>
 				</tr>
 			</thead>

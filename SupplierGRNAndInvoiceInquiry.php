@@ -68,30 +68,30 @@ if (isset($_POST['Submit'])) {
 		$WhereInvoiceNo = " AND suppinv LIKE '%" . $InvoiceNo . "%'";
 		$Where .= $WhereInvoiceNo;
 	}
-	$sql = "SELECT grnbatch, grns.supplierref, suppinv,purchorderdetails.orderno
+	$SQL = "SELECT grnbatch, grns.supplierref, suppinv,purchorderdetails.orderno
 		FROM grns INNER JOIN purchorderdetails ON grns.podetailitem=purchorderdetails.podetailitem
 		LEFT JOIN suppinvstogrn ON grns.grnno=suppinvstogrn.grnno
 		WHERE supplierid='" . $SupplierID . "'" . $Where;
 	$ErrMsg = _('Failed to retrieve supplier invoice and grn data');
-	$result = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($result)>0) {
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result)>0) {
 		echo '<table class="selection">
 			<thead>
 			<tr>
-					<th class="ascending">' . _('Supplier Delivery Note') . '</th>
-					<th class="ascending">' . _('GRN Batch No') . '</th>
-					<th class="ascending">' . _('PO No') . '</th>
-					<th class="ascending">' . _('Invoice No') . '</th>
+					<th class="SortedColumn">' . _('Supplier Delivery Note') . '</th>
+					<th class="SortedColumn">' . _('GRN Batch No') . '</th>
+					<th class="SortedColumn">' . _('PO No') . '</th>
+					<th class="SortedColumn">' . _('Invoice No') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
 
-		while ($myrow = DB_fetch_array($result)){
+		while ($MyRow = DB_fetch_array($Result)){
 			echo '<tr class="striped_row">
-				<td>' . $myrow['supplierref'] . '</td>
-				<td><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
-				<td>' . $myrow['orderno'] . '</td>
-				<td>' . $myrow['suppinv'] . '</td>
+				<td>' . $MyRow['supplierref'] . '</td>
+				<td><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $MyRow['grnbatch'] . '&amp;PONo=' . $MyRow['orderno'] . '">' . $MyRow['grnbatch']. '</td>
+				<td>' . $MyRow['orderno'] . '</td>
+				<td>' . $MyRow['suppinv'] . '</td>
 				</tr>';
 
 		}

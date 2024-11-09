@@ -324,19 +324,19 @@ If (isset($_GET['AllocTrans'])){
 		exit;
 	}
 
-	$myrow = DB_fetch_array($Result);
+	$MyRow = DB_fetch_array($Result);
 
 	$_SESSION['Alloc']->AllocTrans = $_SESSION['AllocTrans'];
-	$_SESSION['Alloc']->SupplierID = $myrow['supplierno'];
-	$_SESSION['Alloc']->SuppName = $myrow['suppname'];;
-	$_SESSION['Alloc']->TransType = $myrow['type'];
-	$_SESSION['Alloc']->TransTypeName = _($myrow['typename']);
-	$_SESSION['Alloc']->TransNo = $myrow['transno'];
-	$_SESSION['Alloc']->TransExRate = $myrow['rate'];
-	$_SESSION['Alloc']->TransAmt = $myrow['total'];
-	$_SESSION['Alloc']->PrevDiffOnExch = $myrow['diffonexch'];
-	$_SESSION['Alloc']->TransDate = ConvertSQLDate($myrow['trandate']);
-	$_SESSION['Alloc']->CurrDecimalPlaces = $myrow['decimalplaces'];
+	$_SESSION['Alloc']->SupplierID = $MyRow['supplierno'];
+	$_SESSION['Alloc']->SuppName = $MyRow['suppname'];;
+	$_SESSION['Alloc']->TransType = $MyRow['type'];
+	$_SESSION['Alloc']->TransTypeName = _($MyRow['typename']);
+	$_SESSION['Alloc']->TransNo = $MyRow['transno'];
+	$_SESSION['Alloc']->TransExRate = $MyRow['rate'];
+	$_SESSION['Alloc']->TransAmt = $MyRow['total'];
+	$_SESSION['Alloc']->PrevDiffOnExch = $MyRow['diffonexch'];
+	$_SESSION['Alloc']->TransDate = ConvertSQLDate($MyRow['trandate']);
+	$_SESSION['Alloc']->CurrDecimalPlaces = $MyRow['decimalplaces'];
 
 	/* Now populate the array of possible (and previous actual) allocations for this supplier */
 	/*First get the transactions that have outstanding balances ie Total-Alloc >0 */
@@ -362,18 +362,18 @@ If (isset($_GET['AllocTrans'])){
 
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	while ($myrow=DB_fetch_array($Result)){
-		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												_($myrow['typename']),
-												$myrow['transno'],
-												ConvertSQLDate($myrow['trandate']),
-												$myrow['suppreference'],
+	while ($MyRow=DB_fetch_array($Result)){
+		$_SESSION['Alloc']->add_to_AllocsAllocn ($MyRow['id'],
+												_($MyRow['typename']),
+												$MyRow['transno'],
+												ConvertSQLDate($MyRow['trandate']),
+												$MyRow['suppreference'],
 												0,
-												$myrow['total'],
-												$myrow['rate'],
-												$myrow['diffonexch'],
-												$myrow['diffonexch'],
-												$myrow['alloc'],
+												$MyRow['total'],
+												$MyRow['rate'],
+												$MyRow['diffonexch'],
+												$MyRow['diffonexch'],
+												$MyRow['alloc'],
 												'NA');
 	}
 
@@ -405,20 +405,20 @@ If (isset($_GET['AllocTrans'])){
 
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	while ($myrow = DB_fetch_array($Result)){
+	while ($MyRow = DB_fetch_array($Result)){
 
-		$DiffOnExchThisOne = ($myrow['amt']/$myrow['rate']) - ($myrow['amt']/$_SESSION['Alloc']->TransExRate);
+		$DiffOnExchThisOne = ($MyRow['amt']/$MyRow['rate']) - ($MyRow['amt']/$_SESSION['Alloc']->TransExRate);
 
-		$_SESSION['Alloc']->add_to_AllocsAllocn ($myrow['id'],
-												_($myrow['typename']),
-												$myrow['transno'],
-												ConvertSQLDate($myrow['trandate']), $myrow['suppreference'], $myrow['amt'],
-												$myrow['total'],
-												$myrow['rate'],
+		$_SESSION['Alloc']->add_to_AllocsAllocn ($MyRow['id'],
+												_($MyRow['typename']),
+												$MyRow['transno'],
+												ConvertSQLDate($MyRow['trandate']), $MyRow['suppreference'], $MyRow['amt'],
+												$MyRow['total'],
+												$MyRow['rate'],
 												$DiffOnExchThisOne,
-												($myrow['diffonexch'] - $DiffOnExchThisOne),
-												$myrow['prevallocs'],
-												$myrow['allocid']);
+												($MyRow['diffonexch'] - $DiffOnExchThisOne),
+												$MyRow['prevallocs'],
+												$MyRow['allocid']);
 	}
 }
 
@@ -452,13 +452,13 @@ if (isset($_POST['AllocTrans'])){
 		echo '<table class="selection">
 			<thead>
 				<tr>
-							<th class="ascending">' . _('Type') . '</th>
-				 			<th class="ascending">' . _('Trans') . '<br />' . _('Number') . '</th>
-							<th class="ascending">' . _('Trans')  . '<br />' . _('Date') . '</th>
-							<th class="ascending">' . _('Supp') . '<br />' . _('Ref') . '</th>
-							<th class="ascending">' . _('Total') . '<br />' . _('Amount')  . '</th>
-							<th class="ascending">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
-							<th class="ascending">' . _('This') . '<br />' . _('Allocation') . '</th>
+							<th class="SortedColumn">' . _('Type') . '</th>
+				 			<th class="SortedColumn">' . _('Trans') . '<br />' . _('Number') . '</th>
+							<th class="SortedColumn">' . _('Trans')  . '<br />' . _('Date') . '</th>
+							<th class="SortedColumn">' . _('Supp') . '<br />' . _('Ref') . '</th>
+							<th class="SortedColumn">' . _('Total') . '<br />' . _('Amount')  . '</th>
+							<th class="SortedColumn">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
+							<th class="SortedColumn">' . _('This') . '<br />' . _('Allocation') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -520,7 +520,7 @@ if (isset($_POST['AllocTrans'])){
 
   unset($_SESSION['Alloc']);
 
-  $sql = "SELECT id,
+  $SQL = "SELECT id,
 		  		transno,
 				typename,
 				type,
@@ -543,8 +543,8 @@ if (isset($_POST['AllocTrans'])){
 			AND settled=0
 			ORDER BY id";
 
-  $result = DB_query($sql);
-  if (DB_num_rows($result) == 0){
+  $Result = DB_query($SQL);
+  if (DB_num_rows($Result) == 0){
 	prnMsg(_('There are no outstanding payments or credits yet to be allocated for this supplier'),'info');
 	include('includes/footer.php');
 	exit;
@@ -566,7 +566,7 @@ if (isset($_POST['AllocTrans'])){
 
   $RowCounter = 0;
 
-  while ($myrow = DB_fetch_array($result)) {
+  while ($MyRow = DB_fetch_array($Result)) {
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
@@ -577,14 +577,14 @@ if (isset($_POST['AllocTrans'])){
 			<td class="number">%s</td>
 			<td><a href="%sAllocTrans=%s">' . _('Allocate')  . '</a></td>
 			</tr>',
-			_($myrow['typename']),
-			$myrow['suppname'],
-			$myrow['transno'],
-			ConvertSQLDate($myrow['trandate']),
-			locale_number_format($myrow['total'],$myrow['currdecimalplaces']),
-			locale_number_format($myrow['total']-$myrow['alloc'], $myrow['currdecimalplaces']),
+			_($MyRow['typename']),
+			$MyRow['suppname'],
+			$MyRow['transno'],
+			ConvertSQLDate($MyRow['trandate']),
+			locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']),
+			locale_number_format($MyRow['total']-$MyRow['alloc'], $MyRow['currdecimalplaces']),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['id']);
+			$MyRow['id']);
 
   }
 
@@ -595,7 +595,7 @@ if (isset($_POST['AllocTrans'])){
   unset($_SESSION['Alloc']->Allocs);
   unset($_SESSION['Alloc']);
 
-  $sql = "SELECT id,
+  $SQL = "SELECT id,
 		  		transno,
 				typename,
 				type,
@@ -617,7 +617,7 @@ if (isset($_POST['AllocTrans'])){
 			AND settled=0
 			ORDER BY id";
 
-  $result = DB_query($sql);
+  $Result = DB_query($SQL);
 
   echo '<table class="selection">';
   $TableHeader = '<tr>
@@ -635,7 +635,7 @@ if (isset($_POST['AllocTrans'])){
   /* set up table of Tran Type - Supplier - Trans No - Date - Total - Left to alloc  */
 
   $RowCounter = 0;
-  while ($myrow = DB_fetch_array($result)) {
+  while ($MyRow = DB_fetch_array($Result)) {
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
@@ -646,21 +646,21 @@ if (isset($_POST['AllocTrans'])){
 			<td class="number">%s</td>
 			<td><a href="%sAllocTrans=%s">' . _('Allocate') . '</a></td>
 			</tr>',
-			_($myrow['typename']),
-			$myrow['suppname'],
-			$myrow['transno'],
-			ConvertSQLDate($myrow['trandate']),
-			locale_number_format($myrow['total'],$myrow['currdecimalplaces']),
-			locale_number_format($myrow['total']-$myrow['alloc'],$myrow['currdecimalplaces']),
+			_($MyRow['typename']),
+			$MyRow['suppname'],
+			$MyRow['transno'],
+			ConvertSQLDate($MyRow['trandate']),
+			locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']),
+			locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['id']);
+			$MyRow['id']);
 
 
   }  //END WHILE LIST LOOP
 
   echo '</table>';
 
-  if (DB_num_rows($result) == 0) {
+  if (DB_num_rows($Result) == 0) {
 	prnMsg(_('There are no allocations to be done'),'info');
   }
 

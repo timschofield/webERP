@@ -8,26 +8,26 @@ $BookMark = 'AccountSections';
 include('includes/header.php');
 
 // SOME TEST TO ENSURE THAT AT LEAST INCOME AND COST OF SALES ARE THERE
-	$sql= "SELECT sectionid FROM accountsection WHERE sectionid=1";
-	$result = DB_query($sql);
+	$SQL= "SELECT sectionid FROM accountsection WHERE sectionid=1";
+	$Result = DB_query($SQL);
 
-	if( DB_num_rows($result) == 0 ) {
-		$sql = "INSERT INTO accountsection (sectionid,
+	if( DB_num_rows($Result) == 0 ) {
+		$SQL = "INSERT INTO accountsection (sectionid,
 											sectionname)
 									VALUES (1,
 											'Income')";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 	}
 
-	$sql= "SELECT sectionid FROM accountsection WHERE sectionid=2";
-	$result = DB_query($sql);
+	$SQL= "SELECT sectionid FROM accountsection WHERE sectionid=2";
+	$Result = DB_query($SQL);
 
-	if( DB_num_rows($result) == 0 ) {
-		$sql = "INSERT INTO accountsection (sectionid,
+	if( DB_num_rows($Result) == 0 ) {
+		$SQL = "INSERT INTO accountsection (sectionid,
 											sectionname)
 									VALUES (2,
 											'Cost Of Sales')";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 	}
 // DONE WITH MINIMUM TESTS
 
@@ -50,12 +50,12 @@ if(isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 	if(isset($_POST['SectionID'])) {
-		$sql="SELECT sectionid
+		$SQL="SELECT sectionid
 					FROM accountsection
 					WHERE sectionid='".$_POST['SectionID']."'";
-		$result=DB_query($sql);
+		$Result=DB_query($SQL);
 
-		if((DB_num_rows($result)!=0 AND !isset($_POST['SelectedSectionID']))) {
+		if((DB_num_rows($Result)!=0 AND !isset($_POST['SelectedSectionID']))) {
 			$InputError = 1;
 			prnMsg( _('The account section already exists in the database'),'error');
 			$Errors[$i] = 'SectionID';
@@ -91,7 +91,7 @@ if(isset($_POST['submit'])) {
 
 		/*SelectedSectionID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course see the delete code below*/
 
-		$sql = "UPDATE accountsection SET sectionname='" . $_POST['SectionName'] . "'
+		$SQL = "UPDATE accountsection SET sectionname='" . $_POST['SectionName'] . "'
 				WHERE sectionid = '" . $_POST['SelectedSectionID'] . "'";
 
 		$msg = _('Record Updated');
@@ -99,7 +99,7 @@ if(isset($_POST['submit'])) {
 
 	/*SelectedSectionID is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account section form */
 
-		$sql = "INSERT INTO accountsection (sectionid,
+		$SQL = "INSERT INTO accountsection (sectionid,
 											sectionname
 										) VALUES (
 											'" . $_POST['SectionID'] . "',
@@ -109,7 +109,7 @@ if(isset($_POST['submit'])) {
 
 	if($InputError!=1) {
 		//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		prnMsg($msg,'success');
 		unset ($_POST['SelectedSectionID']);
 		unset ($_POST['SectionID']);
@@ -120,24 +120,24 @@ if(isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'accountgroups'
-	$sql= "SELECT COUNT(sectioninaccounts) AS sections FROM accountgroups WHERE sectioninaccounts='" . $_GET['SelectedSectionID'] . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
-	if($myrow['sections']>0) {
+	$SQL= "SELECT COUNT(sectioninaccounts) AS sections FROM accountgroups WHERE sectioninaccounts='" . $_GET['SelectedSectionID'] . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	if($MyRow['sections']>0) {
 		prnMsg( _('Cannot delete this account section because general ledger accounts groups have been created using this section'),'warn');
 		echo '<div>',
-			'<br />', _('There are'), ' ', $myrow['sections'], ' ', _('general ledger accounts groups that refer to this account section'),
+			'<br />', _('There are'), ' ', $MyRow['sections'], ' ', _('general ledger accounts groups that refer to this account section'),
 			'</div>';
 
 	} else {
 		//Fetch section name
-		$sql = "SELECT sectionname FROM accountsection WHERE sectionid='".$_GET['SelectedSectionID'] . "'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
-		$SectionName = $myrow['sectionname'];
+		$SQL = "SELECT sectionname FROM accountsection WHERE sectionid='".$_GET['SelectedSectionID'] . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
+		$SectionName = $MyRow['sectionname'];
 
-		$sql="DELETE FROM accountsection WHERE sectionid='" . $_GET['SelectedSectionID'] . "'";
-		$result = DB_query($sql);
+		$SQL="DELETE FROM accountsection WHERE sectionid='" . $_GET['SelectedSectionID'] . "'";
+		$Result = DB_query($SQL);
 		prnMsg( $SectionName . ' ' . _('section has been deleted') . '!','success');
 
 	} //end if account group used in GL accounts
@@ -158,13 +158,13 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
 
-	$sql = "SELECT sectionid,
+	$SQL = "SELECT sectionid,
 			sectionname
 		FROM accountsection
 		ORDER BY sectionid";
 
 	$ErrMsg = _('Could not get account group sections because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 	echo '<p class="page_title_text"><img alt="" class="noprint" src="', $RootPath, '/css/', $Theme,
 		'/images/maintenance.png" title="', // Icon image.
@@ -174,24 +174,24 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('Section Number'), '</th>
-				<th class="ascending">', _('Section Description'), '</th>
+				<th class="SortedColumn">', _('Section Number'), '</th>
+				<th class="SortedColumn">', _('Section Description'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr class="striped_row">
-				<td class="number">', $myrow['sectionid'], '</td>
-				<td class="text">', $myrow['sectionname'], '</td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
+				<td class="number">', $MyRow['sectionid'], '</td>
+				<td class="text">', $MyRow['sectionname'], '</td>
+				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
 				<td class="noprint">';
-		if( $myrow['sectionid'] == '1' or $myrow['sectionid'] == '2' ) {
+		if( $MyRow['sectionid'] == '1' or $MyRow['sectionid'] == '2' ) {
 			echo '<b>', _('Restricted'), '</b>';
 		} else {
-			echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($myrow['sectionid']).'&delete=1', ENT_QUOTES, 'UTF-8'), '">', _('Delete'), '</a>';
+			echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']).'&delete=1', ENT_QUOTES, 'UTF-8'), '">', _('Delete'), '</a>';
 		}
 		echo '</td>
 			</tr>';
@@ -213,20 +213,20 @@ if(! isset($_GET['delete'])) {
 	if(isset($_GET['SelectedSectionID'])) {
 		//editing an existing section
 
-		$sql = "SELECT sectionid,
+		$SQL = "SELECT sectionid,
 				sectionname
 			FROM accountsection
 			WHERE sectionid='" . $_GET['SelectedSectionID'] ."'";
 
-		$result = DB_query($sql);
-		if( DB_num_rows($result) == 0 ) {
+		$Result = DB_query($SQL);
+		if( DB_num_rows($Result) == 0 ) {
 			prnMsg( _('Could not retrieve the requested section please try again.'),'warn');
 			unset($_GET['SelectedSectionID']);
 		} else {
-			$myrow = DB_fetch_array($result);
+			$MyRow = DB_fetch_array($Result);
 
-			$_POST['SectionID'] = $myrow['sectionid'];
-			$_POST['SectionName'] = $myrow['sectionname'];
+			$_POST['SectionID'] = $MyRow['sectionid'];
+			$_POST['SectionName'] = $MyRow['sectionname'];
 
 			echo '<input name="SelectedSectionID" type="hidden" value="', $_POST['SectionID'], '" />';
 

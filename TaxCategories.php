@@ -165,7 +165,7 @@ if(isset($_POST['submit'])) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Tax Category') . '</th>
+				<th class="SortedColumn">' . _('Tax Category') . '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

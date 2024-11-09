@@ -24,27 +24,27 @@ if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
 }
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
-	$sql = "SELECT * FROM geocode_param WHERE 1";
+	$SQL = "SELECT * FROM geocode_param WHERE 1";
 	$ErrMsg = _('An error occurred in retrieving the information');;
-	$result = DB_query($sql, $ErrMsg);
-	$myrow = DB_fetch_array($result);
-	$sql = "SELECT suppliers.supplierid,
+	$Result = DB_query($SQL, $ErrMsg);
+	$MyRow = DB_fetch_array($Result);
+	$SQL = "SELECT suppliers.supplierid,
 				suppliers.lat,
 				suppliers.lng
 			FROM suppliers
 			WHERE suppliers.supplierid = '" . $_SESSION['SupplierID'] . "'
 			ORDER BY suppliers.supplierid";
 	$ErrMsg = _('An error occurred in retrieving the information');
-	$result2 = DB_query($sql, $ErrMsg);
-	$myrow2 = DB_fetch_array($result2);
-	$lat = $myrow2['lat'];
-	$lng = $myrow2['lng'];
-	$api_key = $myrow['geocode_key'];
-	$center_long = $myrow['center_long'];
-	$center_lat = $myrow['center_lat'];
-	$map_height = $myrow['map_height'];
-	$map_width = $myrow['map_width'];
-	$map_host = $myrow['map_host'];
+	$Result2 = DB_query($SQL, $ErrMsg);
+	$MyRow2 = DB_fetch_array($Result2);
+	$lat = $MyRow2['lat'];
+	$lng = $MyRow2['lng'];
+	$api_key = $MyRow['geocode_key'];
+	$center_long = $MyRow['center_long'];
+	$center_lat = $MyRow['center_lat'];
+	$map_height = $MyRow['map_height'];
+	$map_width = $MyRow['map_width'];
+	$map_host = $MyRow['map_host'];
 	echo '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $api_key . '"';
 	echo ' type="text/javascript"></script>';
 	echo ' <script type="text/javascript">';
@@ -129,10 +129,10 @@ if (isset($_POST['Search'])
 						ORDER BY supplierid";
 		}
 	} //one of keywords or SupplierCode was more than a zero length string
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) == 1) {
-		$myrow = DB_fetch_row($result);
-		$SingleSupplierReturned = $myrow[0];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 1) {
+		$MyRow = DB_fetch_row($Result);
+		$SingleSupplierReturned = $MyRow[0];
 	}
 	if (isset($SingleSupplierReturned)) { /*there was only one supplier returned */
  	   $_SESSION['SupplierID'] = $SingleSupplierReturned;
@@ -168,8 +168,8 @@ if (isset($_SESSION['SupplierID'])) {
 			WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
 	$SupplierNameResult = DB_query($SQL);
 	if (DB_num_rows($SupplierNameResult) == 1) {
-		$myrow = DB_fetch_row($SupplierNameResult);
-		$SupplierName = $myrow[0];
+		$MyRow = DB_fetch_row($SupplierNameResult);
+		$SupplierName = $MyRow[0];
 	}
 
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -252,9 +252,9 @@ echo '</field>
 	</fieldset>';
 
 echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
-//if (isset($result) AND !isset($SingleSupplierReturned)) {
+//if (isset($Result) AND !isset($SingleSupplierReturned)) {
 if (isset($_POST['Search'])) {
-	$ListCount = DB_num_rows($result);
+	$ListCount = DB_num_rows($Result);
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
 	if (isset($_POST['Next'])) {
 		if ($_POST['PageOffset'] < $ListPageMax) {
@@ -291,36 +291,36 @@ if (isset($_POST['Search'])) {
 		<table cellpadding="2">
 		<thead>
 			<tr>
-	  		<th class="ascending">' . _('Code') . '</th>
-			<th class="ascending">' . _('Supplier Name') . '</th>
-			<th class="ascending">' . _('Currency') . '</th>
-			<th class="ascending">' . _('Address 1') . '</th>
-			<th class="ascending">' . _('Address 2') . '</th>
-			<th class="ascending">' . _('Address 3') . '</th>
-			<th class="ascending">' . _('Address 4') . '</th>
-			<th class="ascending">' . _('Telephone') . '</th>
-			<th class="ascending">' . _('Email') . '</th>
-			<th class="ascending">' . _('URL') . '</th>
+	  		<th class="SortedColumn">' . _('Code') . '</th>
+			<th class="SortedColumn">' . _('Supplier Name') . '</th>
+			<th class="SortedColumn">' . _('Currency') . '</th>
+			<th class="SortedColumn">' . _('Address 1') . '</th>
+			<th class="SortedColumn">' . _('Address 2') . '</th>
+			<th class="SortedColumn">' . _('Address 3') . '</th>
+			<th class="SortedColumn">' . _('Address 4') . '</th>
+			<th class="SortedColumn">' . _('Telephone') . '</th>
+			<th class="SortedColumn">' . _('Email') . '</th>
+			<th class="SortedColumn">' . _('URL') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
 	$RowIndex = 0;
-	if (DB_num_rows($result) <> 0) {
-		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
+	if (DB_num_rows($Result) <> 0) {
+		DB_data_seek($Result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 	}
-	while (($myrow = DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+	while (($MyRow = DB_fetch_array($Result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 		echo '<tr class="striped_row">
-				<td><input type="submit" name="Select" value="'.$myrow['supplierid'].'" /></td>
-				<td>' . $myrow['suppname'] . '</td>
-				<td>' . $myrow['currcode'] . '</td>
-				<td>' . $myrow['address1'] . '</td>
-				<td>' . $myrow['address2'] . '</td>
-				<td>' . $myrow['address3'] . '</td>
-				<td>' . $myrow['address4'] . '</td>
-				<td>' . $myrow['telephone'] . '</td>
-				<td><a href="mailto://'.$myrow['email'].'">' . $myrow['email']. '</a></td>
-				<td><a href="'.$myrow['url'].'"target="_blank">' . $myrow['url']. '</a></td>
+				<td><input type="submit" name="Select" value="'.$MyRow['supplierid'].'" /></td>
+				<td>' . $MyRow['suppname'] . '</td>
+				<td>' . $MyRow['currcode'] . '</td>
+				<td>' . $MyRow['address1'] . '</td>
+				<td>' . $MyRow['address2'] . '</td>
+				<td>' . $MyRow['address3'] . '</td>
+				<td>' . $MyRow['address4'] . '</td>
+				<td>' . $MyRow['telephone'] . '</td>
+				<td><a href="mailto://'.$MyRow['email'].'">' . $MyRow['email']. '</a></td>
+				<td><a href="'.$MyRow['url'].'"target="_blank">' . $MyRow['url']. '</a></td>
 			</tr>';
 		$RowIndex = $RowIndex + 1;
 		//end of page full new headings if
@@ -377,7 +377,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 	// Extended Info only if selected in Configuration
 	if ($_SESSION['Extended_SupplierInfo'] == 1) {
 		if ($_SESSION['SupplierID'] != '') {
-			$sql = "SELECT suppliers.suppname,
+			$SQL = "SELECT suppliers.suppname,
 							suppliers.lastpaid,
 							suppliers.lastpaiddate,
 							suppliersince,
@@ -386,8 +386,8 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 					ON suppliers.currcode=currencies.currabrev
 					WHERE suppliers.supplierid ='" . $_SESSION['SupplierID'] . "'";
 			$ErrMsg = _('An error occurred in retrieving the information');
-			$DataResult = DB_query($sql, $ErrMsg);
-			$myrow = DB_fetch_array($DataResult);
+			$DataResult = DB_query($SQL, $ErrMsg);
+			$MyRow = DB_fetch_array($DataResult);
 			// Select some more data about the supplier
 			$SQL = "SELECT SUM(ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type = '20' OR type='21')";
 			$Total1Result = DB_query($SQL);
@@ -397,25 +397,25 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			echo '<tr><th style="width:33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
 			echo '<tr><td valign="top" class="select">'; /* Supplier Data */
 			//echo "Distance to this Supplier: <b>TBA</b><br />";
-			if ($myrow['lastpaiddate'] == 0) {
+			if ($MyRow['lastpaiddate'] == 0) {
 				echo _('No payments yet to this supplier.') . '</td>
 					<td valign="top" class="select"></td>
 					</tr>';
 			} else {
 				echo _('Last Paid:') . '</td>
-					<td valign="top" class="select"> <b>' . ConvertSQLDate($myrow['lastpaiddate']) . '</b></td>
+					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['lastpaiddate']) . '</b></td>
 					</tr>';
 			}
 			echo '<tr>
 					<td valign="top" class="select">' . _('Last Paid Amount:') . '</td>
-					<td valign="top" class="select">  <b>' . locale_number_format($myrow['lastpaid'], $myrow['currdecimalplaces']) . '</b></td></tr>';
+					<td valign="top" class="select">  <b>' . locale_number_format($MyRow['lastpaid'], $MyRow['currdecimalplaces']) . '</b></td></tr>';
 			echo '<tr>
 					<td valign="top" class="select">' . _('Supplier since:') . '</td>
-					<td valign="top" class="select"> <b>' . ConvertSQLDate($myrow['suppliersince']) . '</b></td>
+					<td valign="top" class="select"> <b>' . ConvertSQLDate($MyRow['suppliersince']) . '</b></td>
 					</tr>';
 			echo '<tr>
 					<td valign="top" class="select">' . _('Total Spend with this Supplier:') . '</td>
-					<td valign="top" class="select"> <b>' . locale_number_format($row['total'], $myrow['currdecimalplaces']) . '</b></td>
+					<td valign="top" class="select"> <b>' . locale_number_format($row['total'], $MyRow['currdecimalplaces']) . '</b></td>
 					</tr>';
 			echo '</table>';
 		}

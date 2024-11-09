@@ -880,17 +880,17 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 			<tr>
-			<th class="ascending">' . _('Item Code') . '</th>
-			<th class="ascending">' . _('Description') . '</th>
-			<th class="ascending">' . _('Quantity Our Units') . '</th>
+			<th class="SortedColumn">' . _('Item Code') . '</th>
+			<th class="SortedColumn">' . _('Description') . '</th>
+			<th class="SortedColumn">' . _('Quantity Our Units') . '</th>
 			<th>' . _('Our Unit')  . '</th>
-			<th class="ascending">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
+			<th class="SortedColumn">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
 			<th>' . _('Unit Conversion Factor') . '</th>
-			<th class="ascending">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
+			<th class="SortedColumn">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
 			<th>' .  _('Supplier Unit') . '</th>
-			<th class="ascending">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="ascending">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="ascending">' . _('Deliver By')  . '</th>
+			<th class="SortedColumn">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="SortedColumn">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="SortedColumn">' . _('Deliver By')  . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -1376,8 +1376,8 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1" class="selection">';
 	echo $PageBar;
 	$TableHeader = '<tr>
-						<th class="ascending">' . _('Code')  . '</th>
-						<th class="ascending">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Code')  . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
 						<th>' . _('Our Units') . '</th>
 						<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
 						<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>

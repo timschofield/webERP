@@ -70,17 +70,17 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$HTML .= '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Date of Expense') . '</th>
-					<th class="ascending">' . _('Tab') . '</th>
+					<th class="SortedColumn">' . _('Date of Expense') . '</th>
+					<th class="SortedColumn">' . _('Tab') . '</th>
 					<th>' . _('Currency') . '</th>
-					<th class="ascending">' . _('Gross Amount') . '</th>
+					<th class="SortedColumn">' . _('Gross Amount') . '</th>
 					<th>' . _('Tax') . '</th>
 					<th>' . _('Tax Group') . '</th>
 					<th>' . _('Tag') . '</th>
 					<th>' . _('Business Purpose') . '</th>
 					<th>' . _('Notes') . '</th>
 					<th>' . _('Receipt Attachment') . '</th>
-					<th class="ascending">' . _('Date Authorised') . '</th>
+					<th class="SortedColumn">' . _('Date Authorised') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

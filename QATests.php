@@ -44,11 +44,11 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Type';
 		$i++;
 	}
-	$sql= "SELECT COUNT(*) FROM qatests WHERE qatests.name='".$_POST['QATestName']."'
+	$SQL= "SELECT COUNT(*) FROM qatests WHERE qatests.name='".$_POST['QATestName']."'
 										AND qatests.testid <> '" .$SelectedQATest. "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
 		$InputError = 1;
 		prnMsg(_('The QA Test name already exists'),'error');
 		$Errors[$i] = 'QATestName';
@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedQATest could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE qatests SET name='" . $_POST['QATestName'] . "',
+		$SQL = "UPDATE qatests SET name='" . $_POST['QATestName'] . "',
 									method='" . $_POST['Method'] . "',
 									groupby='" . $_POST['GroupBy'] . "',
 									units='" . $_POST['Units'] . "',
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new QA Test form */
 
-		$sql = "INSERT INTO qatests (name,
+		$SQL = "INSERT INTO qatests (name,
 						method,
 						groupby,
 						units,
@@ -107,7 +107,7 @@ if (isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the QA Test failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 
 		prnMsg($msg , 'success');
 
@@ -130,15 +130,15 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS
 
-	$sql= "SELECT COUNT(*) FROM prodspec WHERE  prodspec.testid='".$SelectedQATest."'";
-	//$result = DB_query($sql);
-	//$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
+	$SQL= "SELECT COUNT(*) FROM prodspec WHERE  prodspec.testid='".$SelectedQATest."'";
+	//$Result = DB_query($SQL);
+	//$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
 		prnMsg(_('Cannot delete this QA Test because Product Specs are using it'),'error');
 	} else {
-		$sql="DELETE FROM qatests WHERE testid='". $SelectedQATest."'";
+		$SQL="DELETE FROM qatests WHERE testid='". $SelectedQATest."'";
 		$ErrMsg = _('The QA Test could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		prnMsg(_('QA Test') . ' ' . $SelectedQATest . ' ' . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
@@ -159,7 +159,7 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedQATest)) {
 		//editing an existing Sales-person
 
-		$sql = "SELECT testid,
+		$SQL = "SELECT testid,
 				name,
 				method,
 				groupby,
@@ -174,21 +174,21 @@ if (! isset($_GET['delete'])) {
 				FROM qatests
 				WHERE testid='".$SelectedQATest."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['SelectedQATest'] = $myrow['testid'];
-		$_POST['QATestName'] = $myrow['name'];
-		$_POST['Method'] = $myrow['method'];
-		$_POST['GroupBy'] = $myrow['groupby'];
-		$_POST['Type'] = $myrow['type'];
-		$_POST['Units'] = $myrow['units'];
-		$_POST['DefaultValue'] = $myrow['defaultvalue'];
-		$_POST['NumericValue'] = $myrow['numericvalue'];
-		$_POST['ShowOnCert'] = $myrow['showoncert'];
-		$_POST['ShowOnSpec'] = $myrow['showonspec'];
-		$_POST['ShowOnTestPlan'] = $myrow['showontestplan'];
-		$_POST['Active'] = $myrow['active'];
+		$_POST['SelectedQATest'] = $MyRow['testid'];
+		$_POST['QATestName'] = $MyRow['name'];
+		$_POST['Method'] = $MyRow['method'];
+		$_POST['GroupBy'] = $MyRow['groupby'];
+		$_POST['Type'] = $MyRow['type'];
+		$_POST['Units'] = $MyRow['units'];
+		$_POST['DefaultValue'] = $MyRow['defaultvalue'];
+		$_POST['NumericValue'] = $MyRow['numericvalue'];
+		$_POST['ShowOnCert'] = $MyRow['showoncert'];
+		$_POST['ShowOnSpec'] = $MyRow['showonspec'];
+		$_POST['ShowOnTestPlan'] = $MyRow['showontestplan'];
+		$_POST['Active'] = $MyRow['active'];
 
 
 		echo '<input type="hidden" name="SelectedQATest" value="' . $SelectedQATest . '" />';
@@ -391,7 +391,7 @@ then none of the above are true and the list of QA Test will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT testid,
+	$SQL = "SELECT testid,
 				name,
 				method,
 				groupby,
@@ -405,56 +405,56 @@ or deletion of the records*/
 				active
 			FROM qatests
 			ORDER BY name";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<thead>
 			<tr>
-			<th class="ascending">' . _('Test ID') . '</th>
-			<th class="ascending">' . _('Name') . '</th>
-			<th class="ascending">' . _('Method') . '</th>
-			<th class="ascending">' . _('Group By') . '</th>
-			<th class="ascending">' . _('Units') . '</th>
-			<th class="ascending">' . _('Type') . '</th>
+			<th class="SortedColumn">' . _('Test ID') . '</th>
+			<th class="SortedColumn">' . _('Name') . '</th>
+			<th class="SortedColumn">' . _('Method') . '</th>
+			<th class="SortedColumn">' . _('Group By') . '</th>
+			<th class="SortedColumn">' . _('Units') . '</th>
+			<th class="SortedColumn">' . _('Type') . '</th>
 			<th>' . _('Possible Values') . '</th>
-			<th class="ascending">' . _('Numeric Value') . '</th>
-			<th class="ascending">' . _('Show on Cert') . '</th>
-			<th class="ascending">' . _('Show on Spec') . '</th>
-			<th class="ascending">' . _('Show on Test Plan') . '</th>
-			<th class="ascending">' . _('Active') . '</th>
+			<th class="SortedColumn">' . _('Numeric Value') . '</th>
+			<th class="SortedColumn">' . _('Show on Cert') . '</th>
+			<th class="SortedColumn">' . _('Show on Spec') . '</th>
+			<th class="SortedColumn">' . _('Show on Test Plan') . '</th>
+			<th class="SortedColumn">' . _('Active') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
-	if ($myrow['active'] == 1) {
+	if ($MyRow['active'] == 1) {
 		$ActiveText = _('Yes');
 	} else {
 		$ActiveText = _('No');
 	}
-	if ($myrow['numericvalue'] == 1) {
+	if ($MyRow['numericvalue'] == 1) {
 		$IsNumeric = _('Yes');
 	} else {
 		$IsNumeric = _('No');
 	}
-	if ($myrow['showoncert'] == 1) {
+	if ($MyRow['showoncert'] == 1) {
 		$ShowOnCertText = _('Yes');
 	} else {
 		$ShowOnCertText = _('No');
 	}
-	if ($myrow['showonspec'] == 1) {
+	if ($MyRow['showonspec'] == 1) {
 		$ShowOnSpecText = _('Yes');
 	} else {
 		$ShowOnSpecText = _('No');
 	}
-	if ($myrow['showontestplan'] == 1) {
+	if ($MyRow['showontestplan'] == 1) {
 		$ShowOnTestPlanText = _('Yes');
 	} else {
 		$ShowOnTestPlanText = _('No');
 	}
 
-	switch ($myrow['type']) {
+	switch ($MyRow['type']) {
 	 	case 0; //textbox
 	 		$TypeDisp='Text Box';
 	 		break;
@@ -488,22 +488,22 @@ or deletion of the records*/
 			<td><a href="%sSelectedQATest=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedQATest=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this QA Test ?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['testid'],
-			$myrow['name'],
-			$myrow['method'],
-			$myrow['groupby'],
-			$myrow['units'],
+			$MyRow['testid'],
+			$MyRow['name'],
+			$MyRow['method'],
+			$MyRow['groupby'],
+			$MyRow['units'],
 			$TypeDisp,
-			$myrow['defaultvalue'],
+			$MyRow['defaultvalue'],
 			$IsNumeric,
 			$ShowOnCertText,
 			$ShowOnSpecText,
 			$ShowOnTestPlanText,
 			$ActiveText,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['testid'],
+			$MyRow['testid'],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['testid']);
+			$MyRow['testid']);
 
 	} //END WHILE LIST LOOP
 	echo '</tbody></table><br />';

@@ -167,7 +167,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 			$SupplierArray[$key]  = $row['supplierno'];
 		}
 
-		/* Use array_multisort to Sort the ItemArray with supplierno ascending
+		/* Use array_multisort to Sort the ItemArray with supplierno SortedColumn
 		Add $ItemArray as the last parameter, to sort by the common key
 		*/
 		if (count($SupplierArray) > 1) {
@@ -647,9 +647,9 @@ if (isset($StockItemsResult)
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 			<tr>
-			<th class="ascending" >' . _('Code') . '</th>
-			<th class="ascending" >' . _('Description') . '</th>
-			<th class="ascending" >' . _('On Hand') . '</th>
+			<th class="SortedColumn" >' . _('Code') . '</th>
+			<th class="SortedColumn" >' . _('Description') . '</th>
+			<th class="SortedColumn" >' . _('On Hand') . '</th>
 			<th>' . _('Units') . '</th>
 			</tr>
 		</thead>
@@ -913,19 +913,19 @@ if (isset($StockItemsResult)
 
 		if ( $_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only' ) {
 			echo '<tr>
-								<th class="ascending" >' . _('Modify') . '</th>
+								<th class="SortedColumn" >' . _('Modify') . '</th>
 								<th>' . _('Acknowledge') . '</th>
 								' . $PrintPickLabel . '
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
 								<th>' . _('Labels') . '</th>
-								<th class="ascending" >' . _('Customer') . '</th>
-								<th class="ascending" >' . _('Branch') . '</th>
-								<th class="ascending" >' . _('Cust Order') . ' #</th>
-								<th class="ascending" >' . _('Order Date') . '</th>
-								<th class="ascending" >' . _('Req Del Date') . '</th>
-								<th class="ascending" >' . _('Delivery To') . '</th>
-								<th class="ascending" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
+								<th class="SortedColumn" >' . _('Customer') . '</th>
+								<th class="SortedColumn" >' . _('Branch') . '</th>
+								<th class="SortedColumn" >' . _('Cust Order') . ' #</th>
+								<th class="SortedColumn" >' . _('Order Date') . '</th>
+								<th class="SortedColumn" >' . _('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . _('Delivery To') . '</th>
+								<th class="SortedColumn" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
 			if ($AuthRow['cancreate'] == 0) { //If cancreate == 0 then this means the user can create orders hmmm!!
 				echo '<th>' . _('Place PO') . '</th>';
@@ -934,15 +934,15 @@ if (isset($StockItemsResult)
 			echo '</tr>';
 		} else {  /* displaying only quotations */
 			echo '<tr>
-								<th class="ascending">' . _('Modify') . '</th>
+								<th class="SortedColumn">' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
-								<th class="ascending" >' . _('Customer') . '</th>
-								<th class="ascending" >' . _('Branch') . '</th>
-								<th class="ascending" >' . _('Cust Ref') . ' #</th>
-								<th class="ascending" >' . _('Quote Date') . '</th>
-								<th class="ascending" >' . _('Req Del Date') . '</th>
-								<th class="ascending" >' . _('Delivery To') . '</th>
-								<th class="ascending" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+								<th class="SortedColumn" >' . _('Customer') . '</th>
+								<th class="SortedColumn" >' . _('Branch') . '</th>
+								<th class="SortedColumn" >' . _('Cust Ref') . ' #</th>
+								<th class="SortedColumn" >' . _('Quote Date') . '</th>
+								<th class="SortedColumn" >' . _('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . _('Delivery To') . '</th>
+								<th class="SortedColumn" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 							</tr>';
 		}
 

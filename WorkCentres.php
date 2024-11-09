@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
+		$SQL = "UPDATE workcentres SET location = '" . $_POST['Location'] . "',
 						description = '" . $_POST['Description'] . "',
 						overheadrecoveryact ='" . $_POST['OverheadRecoveryAct'] . "',
 						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 
 	/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
 
-		$sql = "INSERT INTO workcentres (code,
+		$SQL = "INSERT INTO workcentres (code,
 										location,
 										description,
 										overheadrecoveryact,
@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
 	//run the SQL from either of the above possibilites
 
 	if ($InputError !=1){
-		$result = DB_query($sql,_('The update/addition of the work centre failed because'));
+		$Result = DB_query($SQL,_('The update/addition of the work centre failed because'));
 		prnMsg($msg,'success');
 		unset ($_POST['Location']);
 		unset ($_POST['Description']);
@@ -83,20 +83,20 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'BOM'
 
-	$sql= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='" . $SelectedWC . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
+	$SQL= "SELECT COUNT(*) FROM bom WHERE bom.workcentreadded='" . $SelectedWC . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
+		prnMsg(_('Cannot delete this work centre because bills of material have been created requiring components to be added at this work center') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' ._('BOM items referring to this work centre code'),'warn');
 	}  else {
-		$sql= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
+		$SQL= "SELECT COUNT(*) FROM contractbom WHERE contractbom.workcentreadded='" . $SelectedWC . "'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0]>0) {
+			prnMsg(_('Cannot delete this work centre because contract bills of material have been created having components added at this work center') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('Contract BOM items referring to this work centre code'),'warn');
 		} else {
-			$sql="DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
-			$result = DB_query($sql);
+			$SQL="DELETE FROM workcentres WHERE code='" . $SelectedWC . "'";
+			$Result = DB_query($SQL);
 			prnMsg(_('The selected work centre record has been deleted'),'succes');
 		} // end of Contract BOM test
 	} // end of BOM test
@@ -112,7 +112,7 @@ or deletion of the records*/
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	$sql = "SELECT workcentres.code,
+	$SQL = "SELECT workcentres.code,
 				workcentres.description,
 				locations.locationname,
 				workcentres.overheadrecoveryact,
@@ -122,21 +122,21 @@ or deletion of the records*/
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE workcentres.location = locations.loccode";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('WC Code'), '</th>
-				<th class="ascending">', _('Description'), '</th>
-				<th class="ascending">', _('Location'), '</th>
-				<th class="ascending">', _('Overhead GL Account'), '</th>
-				<th class="ascending">', _('Overhead Per Hour'), '</th>
+				<th class="SortedColumn">', _('WC Code'), '</th>
+				<th class="SortedColumn">', _('Description'), '</th>
+				<th class="SortedColumn">', _('Location'), '</th>
+				<th class="SortedColumn">', _('Overhead GL Account'), '</th>
+				<th class="SortedColumn">', _('Overhead Per Hour'), '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
 		printf('<tr>
 					<td>%s</td>
@@ -147,15 +147,15 @@ or deletion of the records*/
 					<td><a href="%s&amp;SelectedWC=%s">' . _('Edit') . '</a></td>
 					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete')  . '</a></td>
 				</tr>',
-				$myrow['code'],
-				$myrow['description'],
-				$myrow['locationname'],
-				$myrow['overheadrecoveryact'],
-				$myrow['overheadperhour'],
+				$MyRow['code'],
+				$MyRow['description'],
+				$MyRow['locationname'],
+				$MyRow['overheadrecoveryact'],
+				$MyRow['overheadperhour'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['code'],
+				$MyRow['code'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['code']);
+				$MyRow['code']);
 	}
 
 	//END WHILE LIST LOOP
@@ -178,7 +178,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedWC)) {
 	//editing an existing work centre
 
-	$sql = "SELECT code,
+	$SQL = "SELECT code,
 					location,
 					description,
 					overheadrecoveryact,
@@ -187,14 +187,14 @@ if (isset($SelectedWC)) {
 			INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			WHERE code='" . $SelectedWC . "'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['Code'] = $myrow['code'];
-	$_POST['Location'] = $myrow['location'];
-	$_POST['Description'] = $myrow['description'];
-	$_POST['OverheadRecoveryAct']  = $myrow['overheadrecoveryact'];
-	$_POST['OverheadPerHour']  = $myrow['overheadperhour'];
+	$_POST['Code'] = $MyRow['code'];
+	$_POST['Location'] = $MyRow['location'];
+	$_POST['Description'] = $MyRow['description'];
+	$_POST['OverheadRecoveryAct']  = $MyRow['overheadrecoveryact'];
+	$_POST['OverheadPerHour']  = $MyRow['overheadperhour'];
 
 	echo '<input type="hidden" name="SelectedWC" value="' . $SelectedWC . '" />
 		<input type="hidden" name="Code" value="' . $_POST['Code'] . '" />
@@ -222,7 +222,7 @@ $SQL = "SELECT locationname,
 				locations.loccode
 		FROM locations
 		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 if (!isset($_POST['Description'])) {
 	$_POST['Description'] = '';
@@ -237,17 +237,17 @@ echo '<field>
 		<label for="Location">' . _('Location') . ':</label>
 		<select name="Location">';
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['Location']) and $myrow['loccode']==$_POST['Location']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['Location']) and $MyRow['loccode']==$_POST['Location']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	echo $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 
 } //end while loop
 
-DB_free_result($result);
+DB_free_result($Result);
 
 
 echo '</select>
@@ -265,18 +265,18 @@ $SQL = "SELECT accountcode,
 		WHERE accountgroups.pandl!=0
 		ORDER BY accountcode";
 
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['OverheadRecoveryAct']) and $myrow['accountcode']==$_POST['OverheadRecoveryAct']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['OverheadRecoveryAct']) and $MyRow['accountcode']==$_POST['OverheadRecoveryAct']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
+	echo $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 
 } //end while loop
-DB_free_result($result);
+DB_free_result($Result);
 
 if (!isset($_POST['OverheadPerHour'])) {
 	$_POST['OverheadPerHour']=0;

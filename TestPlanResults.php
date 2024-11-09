@@ -139,7 +139,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					categorydescription
 				FROM stockcategory
 				ORDER BY categorydescription";
-		$result1 = DB_query($SQL);
+		$Result1 = DB_query($SQL);
 		echo '
 				<table class="selection">
 				<tr>
@@ -147,7 +147,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		echo _('To search for Pick Lists for a specific part use the part selection facilities below') . '</td></tr>';
 		echo '<tr>
 				<td>' . _('Select a stock category') . ':<select name="StockCat">';
-		while ($MyRow1 = DB_fetch_array($result1)) {
+		while ($MyRow1 = DB_fetch_array($Result1)) {
 			if (isset($_POST['StockCat']) and $MyRow1['categoryid'] == $_POST['StockCat']) {
 				echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 			} else {
@@ -179,10 +179,10 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">' . _('Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('On Hand') . '</th>
-						<th class="ascending">' . _('Units') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('On Hand') . '</th>
+						<th class="SortedColumn">' . _('Units') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -268,16 +268,16 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				echo '<table cellpadding="2" width="90%" class="selection">
 					<thead>
 						<tr>
-							<th class="ascending">' . _('Copy Results') . '</th>
-							<th class="ascending">' . _('Enter Results') . '</th>
-							<th class="ascending">' . _('Specification') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Lot / Serial') . '</th>
-							<th class="ascending">' . _('Identifier') . '</th>
-							<th class="ascending">' . _('Created By') . '</th>
-							<th class="ascending">' . _('Sample Date') . '</th>
-							<th class="ascending">' . _('Comments') . '</th>
-							<th class="ascending">' . _('Cert Allowed') . '</th>
+							<th class="SortedColumn">' . _('Copy Results') . '</th>
+							<th class="SortedColumn">' . _('Enter Results') . '</th>
+							<th class="SortedColumn">' . _('Specification') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Lot / Serial') . '</th>
+							<th class="SortedColumn">' . _('Identifier') . '</th>
+							<th class="SortedColumn">' . _('Created By') . '</th>
+							<th class="SortedColumn">' . _('Sample Date') . '</th>
+							<th class="SortedColumn">' . _('Comments') . '</th>
+							<th class="SortedColumn">' . _('Cert Allowed') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -315,7 +315,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		include('includes/footer.php');
 		exit;
 	} else {
-		$sql = "SELECT sampleresults.testid,
+		$SQL = "SELECT sampleresults.testid,
 						sampleresults.defaultvalue,
 						sampleresults.targetvalue,
 						sampleresults.rangemin,
@@ -336,22 +336,22 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		$msg = _('Test Results have been copied to sample') . ' ' . $_POST['CopyToSampleID']  . ' from sample' . ' ' . $SelectedSampleID ;
 		$ErrMsg = _('The insert of the test results failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 
-		while ($MyRow = DB_fetch_array($result)) {
-			$result2 = DB_query("SELECT count(testid) FROM prodspecs
+		while ($MyRow = DB_fetch_array($Result)) {
+			$Result2 = DB_query("SELECT count(testid) FROM prodspecs
 						WHERE testid = '".$MyRow['testid']."'
 						AND keyval='".$MyRow['prodspeckey']."'");
-			$MyRow2 = DB_fetch_row($result2);
+			$MyRow2 = DB_fetch_row($Result2);
 			if($MyRow2[0]>0) {
 				$ManuallyAdded=0;
 			} else {
 				$ManuallyAdded=1;
 			}
-			$result2 = DB_query("SELECT resultid, targetvalue,rangemin, rangemax FROM sampleresults
+			$Result2 = DB_query("SELECT resultid, targetvalue,rangemin, rangemax FROM sampleresults
 						WHERE testid = '".$MyRow['testid']."'
 						AND sampleid='".$_POST['CopyToSampleID']."'");
-			$MyRow2 = DB_fetch_array($result2);
+			$MyRow2 = DB_fetch_array($Result2);
 			$IsInSpec=1;
 			$CompareVal='yes';
 			$CompareRange='no';
@@ -467,7 +467,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 } //CopySpec
 
 if (isset($_GET['ListTests'])) {
-	$sql = "SELECT qatests.testid,
+	$SQL = "SELECT qatests.testid,
 				name,
 				method,
 				units,
@@ -480,17 +480,17 @@ if (isset($_GET['ListTests'])) {
 			AND sampleresults.sampleid='".$SelectedSampleID."'
 			WHERE qatests.active='1'
 			AND sampleresults.sampleid IS NULL";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Add') . '</th>
-				<th class="ascending">' . _('Name') . '</th>
-				<th class="ascending">' . _('Method') . '</th>
-				<th class="ascending">' . _('Units') . '</th>
+				<th class="SortedColumn">' . _('Add') . '</th>
+				<th class="SortedColumn">' . _('Name') . '</th>
+				<th class="SortedColumn">' . _('Method') . '</th>
+				<th class="SortedColumn">' . _('Units') . '</th>
 				<th>' . _('Possible Values') . '</th>
 				<th>' . _('Target Value') . '</th>
 				<th>' . _('Range Min') . '</th>
@@ -500,7 +500,7 @@ if (isset($_GET['ListTests'])) {
 		<tbody>';
 
 	$x=0;
-	while ($MyRow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
 		$x++;
 		$Class='';
@@ -578,7 +578,7 @@ if (isset($_POST['AddTests'])) {
 			} else {
 				$AddRangeMax="'" . $_POST['AddRangeMax' .$i] . "'";
 			}
-			$sql = "INSERT INTO sampleresults
+			$SQL = "INSERT INTO sampleresults
 							(sampleid,
 							testid,
 							defaultvalue,
@@ -601,7 +601,7 @@ if (isset($_POST['AddTests'])) {
 			$msg = _('A Sample Result record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Sample Result failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
-			$result = DB_query($sql,$ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 			prnMsg($msg , 'success');
 		} //if on
 	} //for
@@ -644,7 +644,7 @@ if (isset($_POST['submit'])) {
 				}
 			}
 		}
-		$sql = "UPDATE sampleresults SET testedby='".  $_POST['TestedBy' .$i] . "',
+		$SQL = "UPDATE sampleresults SET testedby='".  $_POST['TestedBy' .$i] . "',
 										testdate='". FormatDateForSQL($_POST['TestDate' .$i]) . "',
 										testvalue='".  $_POST['TestValue' .$i] . "',
 										showoncert='".  $_POST['ShowOnCert' .$i] . "',
@@ -654,38 +654,38 @@ if (isset($_POST['submit'])) {
 		$msg = _('Sample Results were updated for Result ID') . ' ' . $_POST['ResultID' .$i] ;
 		$ErrMsg = _('The updated of the sampleresults failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 	} //for
 	//check to see all values are in spec or at least entered
-	$result = DB_query("SELECT count(sampleid) FROM sampleresults
+	$Result = DB_query("SELECT count(sampleid) FROM sampleresults
 						WHERE sampleid = '".$SelectedSampleID."'
 						AND showoncert='1'
 						AND testvalue=''");
-	$MyRow = DB_fetch_row($result);
+	$MyRow = DB_fetch_row($Result);
 	if($MyRow[0]>0) {
-		$sql = "UPDATE qasamples SET identifier='" . $_POST['Identifier'] . "',
+		$SQL = "UPDATE qasamples SET identifier='" . $_POST['Identifier'] . "',
 									comments='" . $_POST['Comments'] . "',
 									cert='0'
 				WHERE sampleid = '".$SelectedSampleID."'";
 		$msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
 		$ErrMsg = _('The update of the QA Sample failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'error');
 	}
 }
 if (isset($_GET['Delete'])) {
-	$sql= "SELECT COUNT(*) FROM sampleresults WHERE sampleresults.resultid='".$_GET['ResultID']."'
+	$SQL= "SELECT COUNT(*) FROM sampleresults WHERE sampleresults.resultid='".$_GET['ResultID']."'
 											AND sampleresults.manuallyadded='1'";
-	$result = DB_query($sql);
-	$MyRow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 	if ($MyRow[0]==0) {
 		prnMsg(_('Cannot delete this Result ID because it is a part of the Product Specification'),'error');
 	} else {
-		$sql="DELETE FROM sampleresults WHERE resultid='". $_GET['ResultID']."'";
+		$SQL="DELETE FROM sampleresults WHERE resultid='". $_GET['ResultID']."'";
 		$ErrMsg = _('The sample results could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		prnMsg(_('Result QA Sample') . ' ' . $_GET['ResultID'] . _('has been deleted from the database'),'success');
 		unset($_GET['ResultID']);
@@ -710,7 +710,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
-$sql = "SELECT prodspeckey,
+$SQL = "SELECT prodspeckey,
 				description,
 				lotkey,
 				identifier,
@@ -721,8 +721,8 @@ $sql = "SELECT prodspeckey,
 		LEFT OUTER JOIN stockmaster on stockmaster.stockid=qasamples.prodspeckey
 		WHERE sampleid='".$SelectedSampleID."'";
 
-$result = DB_query($sql);
-$MyRow = DB_fetch_array($result);
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
 
 if ($MyRow['cert']==1){
 	$Cert=_('Yes');
@@ -753,7 +753,7 @@ echo '<tr class="striped_row"><td>' . str_pad($SelectedSampleID,10,'0',STR_PAD_L
 $LotKey=$MyRow['lotkey'];
 $ProdSpec=$MyRow['prodspeckey'];
 $CanCert=$MyRow['cert'];
-$sql = "SELECT sampleid,
+$SQL = "SELECT sampleid,
 				resultid,
 				sampleresults.testid,
 				qatests.name,
@@ -777,19 +777,19 @@ $sql = "SELECT sampleid,
 		AND sampleresults.showontestplan='1'
 		ORDER BY groupby, name";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 echo '<table cellpadding="2" width="90%" class="selection">
 	<thead>
 		<tr>
-			<th class="ascending">' . _('Test Name') . '</th>
-			<th class="ascending">' . _('Test Method') . '</th>
-			<th class="ascending">' . _('Range') . '</th>
-			<th class="ascending">' . _('Target Value') . '</th>
-			<th class="ascending">' . _('Test Date') . '</th>
-			<th class="ascending">' . _('Tested By') . '</th>
-			<th class="ascending">' . _('Test Result') . '</th>
-			<th class="ascending">' . _('On Cert') . '</th>
+			<th class="SortedColumn">' . _('Test Name') . '</th>
+			<th class="SortedColumn">' . _('Test Method') . '</th>
+			<th class="SortedColumn">' . _('Range') . '</th>
+			<th class="SortedColumn">' . _('Target Value') . '</th>
+			<th class="SortedColumn">' . _('Test Date') . '</th>
+			<th class="SortedColumn">' . _('Tested By') . '</th>
+			<th class="SortedColumn">' . _('Test Result') . '</th>
+			<th class="SortedColumn">' . _('On Cert') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -807,7 +807,7 @@ $techsql = "SELECT userid,
 $techresult = DB_query($techsql);
 
 
-while ($MyRow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	$x++;
 	$CompareVal='yes';
 	$CompareRange='no';

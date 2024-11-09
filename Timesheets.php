@@ -526,12 +526,12 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 		echo '<table class="selection">
 			<thead>
 			<tr class="striped_row">
-				<th class="ascending">', _('ID'), '</th>
-				<th class="ascending">', _('First name'), '</th>
-				<th class="ascending">', _('Surname'), '</th>
-				<th class="ascending">', _('Type'), '</th>
-				<th class="ascending">', _('Manager'), '</th>
-				<th class="ascending">', _('Email'), '</th>
+				<th class="SortedColumn">', _('ID'), '</th>
+				<th class="SortedColumn">', _('First name'), '</th>
+				<th class="SortedColumn">', _('Surname'), '</th>
+				<th class="SortedColumn">', _('Type'), '</th>
+				<th class="SortedColumn">', _('Manager'), '</th>
+				<th class="SortedColumn">', _('Email'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>

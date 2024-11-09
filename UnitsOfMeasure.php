@@ -169,7 +169,7 @@ if (isset($_POST['Submit'])) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Units of Measure') . '</th>
+				<th class="SortedColumn">' . _('Units of Measure') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

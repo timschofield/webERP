@@ -192,38 +192,38 @@ if (DB_num_rows($GRNResults)>0){
 	echo '<table class="selection">
 		<thead>
 			<tr>
-						<th class="ascending">' . _('GRN') . '</th>
-						<th class="ascending">' . _('Order') . '</th>
-						<th class="ascending">' . _('Item Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('Delivered') . '</th>
-						<th class="ascending">' . _('Total Qty') . '<br />' . _('Received') . '</th>
-						<th class="ascending">' . _('Qty Invoiced') . '</th>
-						<th class="ascending">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
-						<th class="ascending">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('GRN') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Delivered') . '</th>
+						<th class="SortedColumn">' . _('Total Qty') . '<br />' . _('Received') . '</th>
+						<th class="SortedColumn">' . _('Qty Invoiced') . '</th>
+						<th class="SortedColumn">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
+						<th class="SortedColumn">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($myrow=DB_fetch_array($GRNResults)){
+	while ($MyRow=DB_fetch_array($GRNResults)){
 
 		$GRNAlreadyOnCredit = False;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-			if ($EnteredGRN->GRNNo == $myrow['grnno']) {
+			if ($EnteredGRN->GRNNo == $MyRow['grnno']) {
 				$GRNAlreadyOnCredit = True;
 			}
 		}
 		if ($GRNAlreadyOnCredit == False){
 
-			if ($myrow['actprice']<>0){
-				$Price = $myrow['actprice'];
+			if ($MyRow['actprice']<>0){
+				$Price = $MyRow['actprice'];
 			} else {
-				$Price = $myrow['unitprice'];
+				$Price = $MyRow['unitprice'];
 			}
-			if ($myrow['decimalplaces']==''){
-				$myrow['decimalplaces'] =2;
+			if ($MyRow['decimalplaces']==''){
+				$MyRow['decimalplaces'] =2;
 			}
 
 			if ($Price > 1) {
@@ -233,16 +233,16 @@ if (DB_num_rows($GRNResults)>0){
             }
 
 			echo '<tr>
-					<td><input type="submit" name="GRNNo" value="' . $myrow['grnno'] . '" /></td>
-					<td>' . $myrow['orderno'] . '</td>
-					<td>' . $myrow['itemcode'] . '</td>
-					<td>' . $myrow['itemdescription'] . '</td>
-					<td>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
-					<td class="number">' . locale_number_format($myrow['qtyrecd'],$myrow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($myrow['quantityinv'],$myrow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($myrow['qtyrecd'] - $myrow['quantityinv'],$myrow['decimalplaces']) . '</td>
+					<td><input type="submit" name="GRNNo" value="' . $MyRow['grnno'] . '" /></td>
+					<td>' . $MyRow['orderno'] . '</td>
+					<td>' . $MyRow['itemcode'] . '</td>
+					<td>' . $MyRow['itemdescription'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['quantityinv'],$MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['qtyrecd'] - $MyRow['quantityinv'],$MyRow['decimalplaces']) . '</td>
 					<td class="number">' . $DisplayPrice . '</td>
-					<td class="number">' . locale_number_format($Price*($myrow['qtyrecd'] - $myrow['quantityinv']),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
+					<td class="number">' . locale_number_format($Price*($MyRow['qtyrecd'] - $MyRow['quantityinv']),$_SESSION['SuppTrans']->CurrDecimalPlaces) . '</td>
 	              	</tr>';
 	}
 	} // end loop.
@@ -278,7 +278,7 @@ if (DB_num_rows($GRNResults)>0){
 				WHERE grns.grnno='" .$_POST['GRNNo'] . "'";
 
 		$GRNEntryResult = DB_query($SQL);
-		$myrow = DB_fetch_array($GRNEntryResult);
+		$MyRow = DB_fetch_array($GRNEntryResult);
 
 		echo '<br />
 			<table class="selection">';
@@ -293,13 +293,13 @@ if (DB_num_rows($GRNResults)>0){
 				<th>' . _('Supplier') . '<br />' . _('Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 				<th>' . _('Credit') . '<br />' . _('Price') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>';
-		if ($myrow['actprice']<>0){
-			$Price = $myrow['actprice'];
+		if ($MyRow['actprice']<>0){
+			$Price = $MyRow['actprice'];
 		} else {
-			$Price = $myrow['unitprice'];
+			$Price = $MyRow['unitprice'];
 		}
-		if ($myrow['decimalplaces']==''){
-			$myrow['decimalplaces'] =2;
+		if ($MyRow['decimalplaces']==''){
+			$MyRow['decimalplaces'] =2;
 		}
         if ($Price > 1) {
             $DisplayPrice = locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces);
@@ -308,19 +308,19 @@ if (DB_num_rows($GRNResults)>0){
         }
 		echo '<tr>
 				<td>' . $_POST['GRNNo'] . '</td>
-				<td>' . $myrow['itemcode'] . ' ' . $myrow['itemdescription'] . '</td>
-				<td class="number">' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '</td>
-				<td><input type="text" class="number" name="This_QuantityCredited" value="' . locale_number_format($myrow['qtyostdg'],$myrow['decimalplaces']) . '" size="11" maxlength="10" /></td>
+				<td>' . $MyRow['itemcode'] . ' ' . $MyRow['itemdescription'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['qtyostdg'],$MyRow['decimalplaces']) . '</td>
+				<td><input type="text" class="number" name="This_QuantityCredited" value="' . locale_number_format($MyRow['qtyostdg'],$MyRow['decimalplaces']) . '" size="11" maxlength="10" /></td>
 				<td class="number">' . $DisplayPrice . '</td>
 				<td><input type="text" class="number" name="ChgPrice" value="' . locale_number_format($Price,$_SESSION['SuppTrans']->CurrDecimalPlaces) . '" size="11" maxlength="10" /></td>
 			</tr>
 			</table>';
 
-		if ($myrow['closed']==1){ /*Shipment is closed so pre-empt problems later by warning the user - need to modify the order first */
+		if ($MyRow['closed']==1){ /*Shipment is closed so pre-empt problems later by warning the user - need to modify the order first */
 			echo '<input type="hidden" name="ShiptRef" value="" />';
 			prnMsg(_('Unfortunately the shipment that this purchase order line item was allocated to has been closed') . ' - ' . _('if you add this item to the transaction then no shipments will not be updated') . '. ' . _('If you wish to allocate the order line item to a different shipment the order must be modified first'),'error');
 		} else {
-			echo '<input type="hidden" name="ShiptRef" value="' . $myrow['shiptref'] . '" />';
+			echo '<input type="hidden" name="ShiptRef" value="' . $MyRow['shiptref'] . '" />';
 		}
 
 		echo '<br />
@@ -329,20 +329,20 @@ if (DB_num_rows($GRNResults)>0){
 			</div>';
 
 		echo '<input type="hidden" name="GRNNumber" value="' . $_POST['GRNNo'] . '" />';
-		echo '<input type="hidden" name="ItemCode" value="' . $myrow['itemcode'] . '" />';
-		echo '<input type="hidden" name="ItemDescription" value="' . $myrow['itemdescription'] . '" />';
-		echo '<input type="hidden" name="QtyRecd" value="' . $myrow['qtyrecd'] . '" />';
-		echo '<input type="hidden" name="Prev_QuantityInv" value="' . $myrow['quantityinv'] . '" />';
-		echo '<input type="hidden" name="OrderPrice" value="' . $myrow['unitprice'] . '" />';
-		echo '<input type="hidden" name="StdCostUnit" value="' . $myrow['stdcostunit'] . '" />';
+		echo '<input type="hidden" name="ItemCode" value="' . $MyRow['itemcode'] . '" />';
+		echo '<input type="hidden" name="ItemDescription" value="' . $MyRow['itemdescription'] . '" />';
+		echo '<input type="hidden" name="QtyRecd" value="' . $MyRow['qtyrecd'] . '" />';
+		echo '<input type="hidden" name="Prev_QuantityInv" value="' . $MyRow['quantityinv'] . '" />';
+		echo '<input type="hidden" name="OrderPrice" value="' . $MyRow['unitprice'] . '" />';
+		echo '<input type="hidden" name="StdCostUnit" value="' . $MyRow['stdcostunit'] . '" />';
 
-		echo '<input type="hidden" name="JobRef" value="' . $myrow['jobref'] . '" />';
-		echo '<input type="hidden" name="GLCode" value="' . $myrow['glcode'] . '" />';
-		echo '<input type="hidden" name="PODetailItem" value="' . $myrow['podetailitem'] . '" />';
-		echo '<input type="hidden" name="PONo" value="' . $myrow['orderno'] . '" />';
-		echo '<input type="hidden" name="AssetID" value="' . $myrow['assetid'] . '" />';
-		echo '<input type="hidden" name="DecimalPlaces" value="' . $myrow['decimalplaces'] . '" />';
-		echo '<input type="hidden" name="GRNBatchNo" value="' . $myrow['grnbatch'] . '" />';
+		echo '<input type="hidden" name="JobRef" value="' . $MyRow['jobref'] . '" />';
+		echo '<input type="hidden" name="GLCode" value="' . $MyRow['glcode'] . '" />';
+		echo '<input type="hidden" name="PODetailItem" value="' . $MyRow['podetailitem'] . '" />';
+		echo '<input type="hidden" name="PONo" value="' . $MyRow['orderno'] . '" />';
+		echo '<input type="hidden" name="AssetID" value="' . $MyRow['assetid'] . '" />';
+		echo '<input type="hidden" name="DecimalPlaces" value="' . $MyRow['decimalplaces'] . '" />';
+		echo '<input type="hidden" name="GRNBatchNo" value="' . $MyRow['grnbatch'] . '" />';
 	}
 } //end if there were GRNs to select
 

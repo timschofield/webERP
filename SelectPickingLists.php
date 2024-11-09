@@ -287,11 +287,11 @@ if (isset($StockItemsResult)) {
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">', _('Code'), '</th>
-					<th class="ascending">', _('Description'), '</th>
-					<th class="ascending">', _('On Hand'), '</th>
-					<th class="ascending">', _('Picked'), '</th>
-					<th class="ascending">', _('Units'), '</th>
+					<th class="SortedColumn">', _('Code'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th class="SortedColumn">', _('On Hand'), '</th>
+					<th class="SortedColumn">', _('Picked'), '</th>
+					<th class="SortedColumn">', _('Units'), '</th>
 				</tr>
 			</thead>';
 	echo '<tbody>';
@@ -436,17 +436,17 @@ else {
 		echo '<table cellpadding="2" width="90%" class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">', _('Modify'), '</th>
-						<th class="ascending">', _('Picking List'), '</th>
-						<th class="ascending">', _('Packing List'), '</th>
-						<th class="ascending">', _('Labels'), '</th>
-						<th class="ascending">', _('Order'), '</th>
-						<th class="ascending">', _('Customer'), '</th>
-						<th class="ascending">', _('Request Date'), '</th>
-						<th class="ascending">', _('Ship Date'), '</th>
-						<th class="ascending">', _('Shipped By'), '</th>
-						<th class="ascending">', _('Initiated On'), '</th>
-						<th class="ascending">', _('Initiated By'), '</th>
+						<th class="SortedColumn">', _('Modify'), '</th>
+						<th class="SortedColumn">', _('Picking List'), '</th>
+						<th class="SortedColumn">', _('Packing List'), '</th>
+						<th class="SortedColumn">', _('Labels'), '</th>
+						<th class="SortedColumn">', _('Order'), '</th>
+						<th class="SortedColumn">', _('Customer'), '</th>
+						<th class="SortedColumn">', _('Request Date'), '</th>
+						<th class="SortedColumn">', _('Ship Date'), '</th>
+						<th class="SortedColumn">', _('Shipped By'), '</th>
+						<th class="SortedColumn">', _('Initiated On'), '</th>
+						<th class="SortedColumn">', _('Initiated By'), '</th>
 					</tr>
 				</thead>';
 

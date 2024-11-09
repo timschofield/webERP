@@ -23,7 +23,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		$Category ='';
 	}/*end of else StockCat */
 
-	$sql = "SELECT 	stockmaster.stockid,
+	$SQL = "SELECT 	stockmaster.stockid,
 					stockmaster.description,
 					prices.debtorno,
 					prices.branchcode,
@@ -45,13 +45,13 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 				AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 				AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
-	$result = DB_query($sql);
-	$numrow = DB_num_rows($result);
+	$Result = DB_query($SQL);
+	$numrow = DB_num_rows($Result);
 
 	if ($_POST['submit'] == 'Update') {
 			//Update Prices
 		$PriceCounter =0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			/*The logic here goes like this:
 			 * 1. If the price at the same start and end date already exists then do nowt!!
 			 * 2. If not then check if a price with the start date of today already exists - then we should be updating it
@@ -122,21 +122,21 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 			}
 			$PriceCounter++;
 		}//end while loop
-		DB_free_result($result); //clear the old result
-		$result = DB_query($sql); //re-run the query with the updated prices
-		$numrow = DB_num_rows($result); // get the new number - should be the same!!
+		DB_free_result($Result); //clear the old result
+		$Result = DB_query($SQL); //re-run the query with the updated prices
+		$numrow = DB_num_rows($Result); // get the new number - should be the same!!
 	}
 
-	$sqlcat = "SELECT categorydescription
+	$SQLcat = "SELECT categorydescription
 				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "'";
-	$ResultCat = DB_query($sqlcat);
+	$ResultCat = DB_query($SQLcat);
 	$CategoryRow = DB_fetch_array($ResultCat);
 
-	$sqltype = "SELECT sales_type
+	$SQLtype = "SELECT sales_type
 				FROM salestypes
 				WHERE typeabbrev='" . $_POST['SalesType'] . "'";
-	$ResultType = DB_query($sqltype);
+	$ResultType = DB_query($SQLtype);
 	$SalesTypeRow = DB_fetch_array($ResultType);
 
 	if (isset($CategoryRow['categorgdescription'])) {
@@ -159,60 +159,60 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Code') . '</th>
-					<th class="ascending">' . _('Description') . '</th>
-					<th class="ascending">' . _('Customer') . '</th>
-					<th class="ascending">' . _('Branch') . '</th>
-					<th class="ascending">' . _('Start Date') . '</th>
-					<th class="ascending">' . _('End Date') . '</th>
-					<th class="ascending">' . _('Cost') . '</th>
-					<th class="ascending">' . _('GP %') . '</th>
-					<th class="ascending">' . _('Price Proposed') . '</th>
-					<th class="ascending">' . _('List Price') . '</th>
+					<th class="SortedColumn">' . _('Code') . '</th>
+					<th class="SortedColumn">' . _('Description') . '</th>
+					<th class="SortedColumn">' . _('Customer') . '</th>
+					<th class="SortedColumn">' . _('Branch') . '</th>
+					<th class="SortedColumn">' . _('Start Date') . '</th>
+					<th class="SortedColumn">' . _('End Date') . '</th>
+					<th class="SortedColumn">' . _('Cost') . '</th>
+					<th class="SortedColumn">' . _('GP %') . '</th>
+					<th class="SortedColumn">' . _('Price Proposed') . '</th>
+					<th class="SortedColumn">' . _('List Price') . '</th>
 				<tr>
 			</thead>
 			<tbody>';
 
 		$PriceCounter =0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			//get cost
-			if ($myrow['cost'] == '') {
+			if ($MyRow['cost'] == '') {
 				$Cost = 0;
 			} else {
-				$Cost = $myrow['cost'];
+				$Cost = $MyRow['cost'];
 			} /*end of else Cost */
 
 			//variables for update
-			echo '<input type="hidden" value="' . $myrow['stockid'] . '" name="StockID_' . $PriceCounter .'" />
-				<input type="hidden" value="' . $myrow['debtorno'] . '" name="DebtorNo_' . $PriceCounter .'" />
-				<input type="hidden" value="' . $myrow['branchcode'] . '" name="BranchCode_' . $PriceCounter .'" />
-				<input type="hidden" value="' . $myrow['startdate'] . '" name="StartDate_' . $PriceCounter .'" />
-				<input type="hidden" value="' . $myrow['enddate'] . '" name="EndDate_' . $PriceCounter .'" />';
+			echo '<input type="hidden" value="' . $MyRow['stockid'] . '" name="StockID_' . $PriceCounter .'" />
+				<input type="hidden" value="' . $MyRow['debtorno'] . '" name="DebtorNo_' . $PriceCounter .'" />
+				<input type="hidden" value="' . $MyRow['branchcode'] . '" name="BranchCode_' . $PriceCounter .'" />
+				<input type="hidden" value="' . $MyRow['startdate'] . '" name="StartDate_' . $PriceCounter .'" />
+				<input type="hidden" value="' . $MyRow['enddate'] . '" name="EndDate_' . $PriceCounter .'" />';
 			//variable for current margin
-			if ($myrow['price'] != 0){
-				$CurrentGP = (($myrow['price']/$myrow['rate'])-$Cost)*100 / ($myrow['price']/$myrow['rate']);
+			if ($MyRow['price'] != 0){
+				$CurrentGP = (($MyRow['price']/$MyRow['rate'])-$Cost)*100 / ($MyRow['price']/$MyRow['rate']);
 			} else {
 				$CurrentGP = 0;
 			}
 			//variable for proposed
 			$ProposedPrice = $Cost * filter_number_format($_POST['Margin']);
-			if ($myrow['enddate']=='0000-00-00'){
+			if ($MyRow['enddate']=='0000-00-00'){
 				$EndDateDisplay = _('No End Date');
 			} else {
-				$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
+				$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 			}
 			echo '<tr class="striped_row">
-					<td>' . $myrow['stockid'] . '</td>
-					<td>' . $myrow['description'] . '</td>
-					<td>' . $myrow['customer'] . '</td>
-					<td>' . $myrow['branch'] . '</td>
-					<td>' . ConvertSQLDate($myrow['startdate']) . '</td>
+					<td>' . $MyRow['stockid'] . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td>' . $MyRow['customer'] . '</td>
+					<td>' . $MyRow['branch'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
 					<td>' . $EndDateDisplay . '</td>
 					<td class="number">' . locale_number_format($Cost, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td class="number">' . locale_number_format($CurrentGP, 1) . '%</td>
-					<td class="number">' . locale_number_format($ProposedPrice, $myrow['decimalplaces']) . '</td>
-					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength="14" size="10" value="' . locale_number_format($myrow['price'],$myrow['decimalplaces']) . '" /></td>
+					<td class="number">' . locale_number_format($ProposedPrice, $MyRow['decimalplaces']) . '</td>
+					<td><input type="text" class="number" name="Price_' . $PriceCounter . '" maxlength="14" size="10" value="' . locale_number_format($MyRow['price'],$MyRow['decimalplaces']) . '" /></td>
 				</tr> ';
 			$PriceCounter++;
 		} //end of looping
@@ -240,13 +240,13 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	$SQL = "SELECT categoryid, categorydescription
 			  FROM stockcategory
 			  ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 	echo '<field>
 			<label for="StockCat">' . _('Category') . ':</label>
 			<select name="StockCat">';
 	echo '<option value="all">' . _('All Categories') . '</option>';
-	while ($myrow1 = DB_fetch_array($result1)) {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 	echo '</select>
 		</field>';
@@ -265,33 +265,33 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 	}
 	echo '<input type="text" class="number" name="Margin" maxlength="8" size="8" value="' .$_POST['Margin'] . '" />
 		</field>';
-	$result = DB_query("SELECT typeabbrev, sales_type FROM salestypes");
+	$Result = DB_query("SELECT typeabbrev, sales_type FROM salestypes");
 	echo '<field>
 			<label for="SalesType">' . _('Sales Type') . '/' . _('Price List') . ':</label>
 			<select name="SalesType">';
-	while ($myrow = DB_fetch_array($result)) {
-		if ($_POST['SalesType'] == $myrow['typeabbrev']) {
-			echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($_POST['SalesType'] == $MyRow['typeabbrev']) {
+			echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+			echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 		}
 	} //end while loop
-	DB_data_seek($result, 0);
-	$result = DB_query("SELECT currency, currabrev FROM currencies");
+	DB_data_seek($Result, 0);
+	$Result = DB_query("SELECT currency, currabrev FROM currencies");
 	echo '</select>
 		</field>';
 
 	echo '<field>
 			<label for="CurrCode">' . _('Currency') . ':</label>
 			<select name="CurrCode">';
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $myrow['currabrev']) {
-			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['CurrCode']) and $_POST['CurrCode'] == $MyRow['currabrev']) {
+			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+			echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 		}
 	} //end while loop
-	DB_data_seek($result, 0);
+	DB_data_seek($Result, 0);
 	echo '</select>
 		</field>';
 	echo '</fieldset>';

@@ -66,24 +66,24 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedPaymentID could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		// Check the name does not clash
-		$sql = "SELECT count(*) FROM paymentmethods
+		$SQL = "SELECT count(*) FROM paymentmethods
 				WHERE paymentid <> '" . $SelectedPaymentID ."'
 				AND paymentname ".LIKE." '" . $_POST['MethodName'] . "'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ( $myrow[0] > 0 ) {
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( _('The payment method can not be renamed because another with the same name already exists.'),'error');
 		} else {
 			// Get the old name and check that the record still exists need to be very careful here
 
-			$sql = "SELECT paymentname FROM paymentmethods
+			$SQL = "SELECT paymentname FROM paymentmethods
 					WHERE paymentid = '" . $SelectedPaymentID . "'";
-			$result = DB_query($sql);
-			if ( DB_num_rows($result) != 0 ) {
-				$myrow = DB_fetch_row($result);
-				$OldName = $myrow[0];
-				$sql = "UPDATE paymentmethods
+			$Result = DB_query($SQL);
+			if ( DB_num_rows($Result) != 0 ) {
+				$MyRow = DB_fetch_row($Result);
+				$OldName = $MyRow[0];
+				$SQL = "UPDATE paymentmethods
 						SET paymentname='" . $_POST['MethodName'] . "',
 							paymenttype = '" . $_POST['ForPayment'] . "',
 							receipttype = '" . $_POST['ForReceipt'] . "',
@@ -101,15 +101,15 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('Could not update payment method');
 	} elseif ($InputError !=1) {
 		/*SelectedPaymentID is null cos no item selected on first time round so must be adding a record*/
-		$sql = "SELECT count(*) FROM paymentmethods
+		$SQL = "SELECT count(*) FROM paymentmethods
 				WHERE paymentname LIKE'".$_POST['MethodName'] ."'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ( $myrow[0] > 0 ) {
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ( $MyRow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( _('The payment method can not be created because another with the same name already exists.'),'error');
 		} else {
-			$sql = "INSERT INTO paymentmethods (paymentname,
+			$SQL = "INSERT INTO paymentmethods (paymentname,
 												paymenttype,
 												receipttype,
 												usepreprintedstationery,
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($InputError!=1){
-		$result = DB_query($sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		prnMsg($msg,'success');
 		echo '<br />';
 	}
@@ -143,25 +143,25 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'stockmaster'
 	// Get the original name of the payment method the ID is just a secure way to find the payment method
-	$sql = "SELECT paymentname FROM paymentmethods
+	$SQL = "SELECT paymentname FROM paymentmethods
 			WHERE paymentid = '" . $SelectedPaymentID . "'";
-	$result = DB_query($sql);
-	if ( DB_num_rows($result) == 0 ) {
+	$Result = DB_query($SQL);
+	if ( DB_num_rows($Result) == 0 ) {
 		// This is probably the safest way there is
 		prnMsg( _('Cannot delete this payment method because it no longer exist'),'warn');
 	} else {
-		$myrow = DB_fetch_row($result);
-		$OldMeasureName = $myrow[0];
-		$sql= "SELECT COUNT(*) FROM banktrans
+		$MyRow = DB_fetch_row($Result);
+		$OldMeasureName = $MyRow[0];
+		$SQL= "SELECT COUNT(*) FROM banktrans
 				WHERE banktranstype LIKE '" . $OldMeasureName . "'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0]>0) {
 			prnMsg( _('Cannot delete this payment method because bank transactions have been created using this payment method'),'warn');
-			echo '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this payment method') . '</font>';
+			echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('bank transactions that refer to this payment method') . '</font>';
 		} else {
-			$sql="DELETE FROM paymentmethods WHERE paymentname " . LIKE  . " '" . $OldMeasureName . "'";
-			$result = DB_query($sql);
+			$SQL="DELETE FROM paymentmethods WHERE paymentname " . LIKE  . " '" . $OldMeasureName . "'";
+			$Result = DB_query($SQL);
 			prnMsg( $OldMeasureName . ' ' . _('payment method has been deleted') . '!','success');
 			echo '<br />';
 		} //end if not used
@@ -187,7 +187,7 @@ if (isset($_POST['submit'])) {
   links to delete or edit each. These will call the same page again and allow update/input
   or deletion of the records*/
 
-	$sql = "SELECT paymentid,
+	$SQL = "SELECT paymentid,
 					paymentname,
 					paymenttype,
 					receipttype,
@@ -198,33 +198,33 @@ if (isset($_POST['submit'])) {
 			ORDER BY paymentid";
 
 	$ErrMsg = _('Could not get payment methods because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Payment Method') . '</th>
-			<th class="ascending">' . _('Use For Payments') . '</th>
-			<th class="ascending">' . _('Use For Receipts') . '</th>
-			<th class="ascending">' . _('Use Pre-printed Stationery') . '</th>
-			<th class="ascending">' . _('Open POS Cash Drawer for Sale') . '</th>
-			<th class="ascending">' . _('Payment discount') . ' %</th>
+			<th class="SortedColumn">' . _('Payment Method') . '</th>
+			<th class="SortedColumn">' . _('Use For Payments') . '</th>
+			<th class="SortedColumn">' . _('Use For Receipts') . '</th>
+			<th class="SortedColumn">' . _('Use Pre-printed Stationery') . '</th>
+			<th class="SortedColumn">' . _('Open POS Cash Drawer for Sale') . '</th>
+			<th class="SortedColumn">' . _('Payment discount') . ' %</th>
 			<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr class="striped_row">
-				<td>' . $myrow['paymentname'] . '</td>
-				<td class="centre">' . ($myrow['paymenttype'] ? _('Yes') : _('No')) . '</td>
-				<td class="centre">' . ($myrow['receipttype'] ? _('Yes') : _('No')) . '</td>
-				<td class="centre">' . ($myrow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
-				<td class="centre">' . ($myrow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
-				<td class="centre">' . locale_number_format($myrow['percentdiscount']*100,2) . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '">' . _('Edit') . '</a></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $myrow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete')  . '</a></td>
+				<td>' . $MyRow['paymentname'] . '</td>
+				<td class="centre">' . ($MyRow['paymenttype'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . ($MyRow['receipttype'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . ($MyRow['usepreprintedstationery'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . ($MyRow['opencashdrawer'] ? _('Yes') : _('No')) . '</td>
+				<td class="centre">' . locale_number_format($MyRow['percentdiscount']*100,2) . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $MyRow['paymentid'] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPaymentID=' . $MyRow['paymentid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment method?') . '\');">' . _('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -244,7 +244,7 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedPaymentID)) {
 		//editing an existing section
 
-		$sql = "SELECT paymentid,
+		$SQL = "SELECT paymentid,
 						paymentname,
 						paymenttype,
 						receipttype,
@@ -254,20 +254,20 @@ if (! isset($_GET['delete'])) {
 				FROM paymentmethods
 				WHERE paymentid='" . $SelectedPaymentID . "'";
 
-		$result = DB_query($sql);
-		if ( DB_num_rows($result) == 0 ) {
+		$Result = DB_query($SQL);
+		if ( DB_num_rows($Result) == 0 ) {
 			prnMsg( _('Could not retrieve the requested payment method, please try again.'),'warn');
 			unset($SelectedPaymentID);
 		} else {
-			$myrow = DB_fetch_array($result);
+			$MyRow = DB_fetch_array($Result);
 
-			$_POST['MethodID'] = $myrow['paymentid'];
-			$_POST['MethodName'] = $myrow['paymentname'];
-			$_POST['ForPayment'] = $myrow['paymenttype'];
-			$_POST['ForReceipt'] = $myrow['receipttype'];
-			$_POST['UsePrePrintedStationery'] = $myrow['usepreprintedstationery'];
-			$_POST['OpenCashDrawer'] = $myrow['opencashdrawer'];
-			$_POST['DiscountPercent'] = $myrow['percentdiscount'];
+			$_POST['MethodID'] = $MyRow['paymentid'];
+			$_POST['MethodName'] = $MyRow['paymentname'];
+			$_POST['ForPayment'] = $MyRow['paymenttype'];
+			$_POST['ForReceipt'] = $MyRow['receipttype'];
+			$_POST['UsePrePrintedStationery'] = $MyRow['usepreprintedstationery'];
+			$_POST['OpenCashDrawer'] = $MyRow['opencashdrawer'];
+			$_POST['DiscountPercent'] = $MyRow['percentdiscount'];
 
 			echo '<input type="hidden" name="SelectedPaymentID" value="' . $_POST['MethodID'] . '" />';
 			echo '<fieldset>

@@ -31,7 +31,7 @@ if(isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE taxauthorities
+		$SQL = "UPDATE taxauthorities
 					SET taxglcode ='" . $_POST['TaxGLCode'] . "',
 					purchtaxglaccount ='" . $_POST['PurchTaxGLCode'] . "',
 					description = '" . $_POST['Description'] . "',
@@ -42,7 +42,7 @@ if(isset($_POST['submit'])) {
 				WHERE taxid = '" . $SelectedTaxAuthID . "'";
 
 		$ErrMsg = _('The update of this tax authority failed because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		$msg = _('The tax authority for record has been updated');
 
@@ -50,7 +50,7 @@ if(isset($_POST['submit'])) {
 
 	/*Selected tax authority is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new tax authority form */
 
-		$sql = "INSERT INTO taxauthorities (
+		$SQL = "INSERT INTO taxauthorities (
 						taxglcode,
 						purchtaxglaccount,
 						description,
@@ -69,13 +69,13 @@ if(isset($_POST['submit'])) {
 				)";
 
 		$Errmsg = _('The addition of this tax authority failed because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		$msg = _('The new tax authority record has been added to the database');
 
 		$NewTaxID = DB_Last_Insert_ID('taxauthorities','taxid');
 
-		$sql = "INSERT INTO taxauthrates (
+		$SQL = "INSERT INTO taxauthrates (
 					taxauthority,
 					dispatchtaxprovince,
 					taxcatid
@@ -87,7 +87,7 @@ if(isset($_POST['submit'])) {
 				FROM taxprovinces,
 					taxcategories";
 
-			$InsertResult = DB_query($sql);
+			$InsertResult = DB_query($SQL);
 	}
 	//run the SQL from either of the above possibilites
 	if(isset($InputError) and $InputError !=1) {
@@ -104,18 +104,18 @@ if(isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN OTHER TABLES
 
-	$sql= "SELECT COUNT(*)
+	$SQL= "SELECT COUNT(*)
 			FROM taxgrouptaxes
 		WHERE taxauthid='" . $SelectedTaxAuthID . "'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if($myrow[0]>0) {
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if($MyRow[0]>0) {
 		prnmsg(_('Cannot delete this tax authority because there are tax groups defined that use it'),'warn');
 	} else {
 		/*Cascade deletes in TaxAuthLevels */
-		$result = DB_query("DELETE FROM taxauthrates WHERE taxauthority= '" . $SelectedTaxAuthID . "'");
-		$result = DB_query("DELETE FROM taxauthorities WHERE taxid= '" . $SelectedTaxAuthID . "'");
+		$Result = DB_query("DELETE FROM taxauthrates WHERE taxauthority= '" . $SelectedTaxAuthID . "'");
+		$Result = DB_query("DELETE FROM taxauthorities WHERE taxid= '" . $SelectedTaxAuthID . "'");
 		prnMsg(_('The selected tax authority record has been deleted'),'success');
 		unset ($SelectedTaxAuthID);
 	} // end of related records testing
@@ -125,7 +125,7 @@ if(!isset($SelectedTaxAuthID)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedTaxAuthID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of tax authorities will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT taxid,
+	$SQL = "SELECT taxid,
 				description,
 				taxglcode,
 				purchtaxglaccount,
@@ -137,25 +137,25 @@ if(!isset($SelectedTaxAuthID)) {
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined tax authorities could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the tax authorities was used');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending" >' . _('ID') . '</th>
-				<th class="ascending" >' . _('Tax Authority') . '</th>
-				<th class="ascending" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
-				<th class="ascending" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
-				<th class="ascending" >' . _('Bank') . '</th>
-				<th class="ascending" >' . _('Bank Account') . '</th>
-				<th class="ascending" >' . _('Bank Act Type') . '</th>
-				<th class="ascending" >' . _('Bank Swift') . '</th>
+				<th class="SortedColumn" >' . _('ID') . '</th>
+				<th class="SortedColumn" >' . _('Tax Authority') . '</th>
+				<th class="SortedColumn" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="SortedColumn" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="SortedColumn" >' . _('Bank') . '</th>
+				<th class="SortedColumn" >' . _('Bank Account') . '</th>
+				<th class="SortedColumn" >' . _('Bank Act Type') . '</th>
+				<th class="SortedColumn" >' . _('Bank Swift') . '</th>
 				<th colspan="4">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while($myrow = DB_fetch_row($result)) {
+	while($MyRow = DB_fetch_row($Result)) {
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -169,20 +169,20 @@ if(!isset($SelectedTaxAuthID)) {
 				<td><a href="%sSelectedTaxAuthID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax authority?') . '\');">' . _('Delete') . '</a></td>
 				<td><a href="%sTaxAuthority=%s">' . _('Edit Rates') . '</a></td>
 				</tr>',
-				$myrow[0],
-				$myrow[1],
-				$myrow[3],
-				$myrow[2],
-				$myrow[4],
-				$myrow[5],
-				$myrow[6],
-				$myrow[7],
+				$MyRow[0],
+				$MyRow[1],
+				$MyRow[3],
+				$MyRow[2],
+				$MyRow[4],
+				$MyRow[5],
+				$MyRow[6],
+				$MyRow[7],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow[0],
+				$MyRow[0],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow[0],
+				$MyRow[0],
 				$RootPath . '/TaxAuthorityRates.php?',
-				$myrow[0]);
+				$MyRow[0]);
 
 	}
 	//END WHILE LIST LOOP
@@ -205,7 +205,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if(isset($SelectedTaxAuthID)) {
 	//editing an existing tax authority
 
-	$sql = "SELECT taxglcode,
+	$SQL = "SELECT taxglcode,
 				purchtaxglaccount,
 				description,
 				bank,
@@ -215,16 +215,16 @@ if(isset($SelectedTaxAuthID)) {
 			FROM taxauthorities
 			WHERE taxid='" . $SelectedTaxAuthID . "'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['TaxGLCode']	= $myrow['taxglcode'];
-	$_POST['PurchTaxGLCode']= $myrow['purchtaxglaccount'];
-	$_POST['Description']	= $myrow['description'];
-	$_POST['Bank']		= $myrow['bank'];
-	$_POST['BankAccType']	= $myrow['bankacctype'];
-	$_POST['BankAcc'] 	= $myrow['bankacc'];
-	$_POST['BankSwift']	= $myrow['bankswift'];
+	$_POST['TaxGLCode']	= $MyRow['taxglcode'];
+	$_POST['PurchTaxGLCode']= $MyRow['purchtaxglaccount'];
+	$_POST['Description']	= $MyRow['description'];
+	$_POST['Bank']		= $MyRow['bank'];
+	$_POST['BankAccType']	= $MyRow['bankacctype'];
+	$_POST['BankAcc'] 	= $MyRow['bankacc'];
+	$_POST['BankSwift']	= $MyRow['bankswift'];
 
 
 	echo '<input type="hidden" name="SelectedTaxAuthID" value="' . $SelectedTaxAuthID . '" />';
@@ -248,7 +248,7 @@ $SQL = "SELECT accountcode,
 		ON chartmaster.group_=accountgroups.groupname
 		WHERE accountgroups.pandl=0
 		ORDER BY accountcode";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<field>
 		<label for="Description">' . _('Tax Type Description') . ':</label>
@@ -259,29 +259,29 @@ echo '<field>
 echo '<field>
 		<label for="PurchTaxGLCode">' . _('Input tax GL Account') . ':</label>
 		<select name="PurchTaxGLCode">';
-while($myrow = DB_fetch_array($result)) {
-	if(isset($_POST['PurchTaxGLCode']) and $myrow['accountcode']==$_POST['PurchTaxGLCode']) {
+while($MyRow = DB_fetch_array($Result)) {
+	if(isset($_POST['PurchTaxGLCode']) and $MyRow['accountcode']==$_POST['PurchTaxGLCode']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+	echo $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$MyRow['accountcode'].')' . '</option>';
 } //end while loop
 echo '</select>
 	</field>';
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '<field>
 		<label for="TaxGLCode">' . _('Output tax GL Account') . ':</label>
 		<select name="TaxGLCode">';
-while($myrow = DB_fetch_array($result)) {
-	if(isset($_POST['TaxGLCode']) and $myrow['accountcode']==$_POST['TaxGLCode']) {
+while($MyRow = DB_fetch_array($Result)) {
+	if(isset($_POST['TaxGLCode']) and $MyRow['accountcode']==$_POST['TaxGLCode']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$myrow['accountcode'].')' . '</option>';
+	echo $MyRow['accountcode'] . '">' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . ' ('.$MyRow['accountcode'].')' . '</option>';
 } //end while loop
 if(!isset($_POST['Bank'])) {
 	$_POST['Bank']='';

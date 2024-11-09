@@ -30,12 +30,12 @@ if (isset($_GET['Related'])){
 	$Related = trim(mb_strtoupper($_POST['Related']));
 }
 
-$result = DB_query("SELECT stockmaster.description
+$Result = DB_query("SELECT stockmaster.description
 					FROM stockmaster
 					WHERE stockmaster.stockid='".$Item."'");
-$myrow = DB_fetch_row($result);
+$MyRow = DB_fetch_row($Result);
 
-if (DB_num_rows($result)==0){
+if (DB_num_rows($Result)==0){
 	prnMsg( _('The part code entered does not exist in the database') . ': ' . $Item . _('Only valid parts can have related items entered against them'),'error');
 	$InputError=1;
 }
@@ -48,7 +48,7 @@ if (!isset($Item)){
 	exit;
 }
 
-$PartDescription = $myrow[0];
+$PartDescription = $MyRow[0];
 
 if (isset($_POST['submit'])) {
 
@@ -57,25 +57,25 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
-	$result_related = DB_query("SELECT stockmaster.description,
+	$Result_related = DB_query("SELECT stockmaster.description,
 							stockmaster.mbflag
 					FROM stockmaster
 					WHERE stockmaster.stockid='".$_POST['Related']."'");
-	$myrow_related = DB_fetch_row($result_related);
+	$MyRow_related = DB_fetch_row($Result_related);
 
-	if (DB_num_rows($result_related)==0){
+	if (DB_num_rows($Result_related)==0){
 		prnMsg( _('The part code entered as related item does not exist in the database') . ': ' . $_POST['Related'] .  _('Only valid parts can be related items'),'error');
 		$InputError=1;
 	}
 
-	$sql = "SELECT related
+	$SQL = "SELECT related
 				FROM relateditems
 			WHERE stockid='".$Item."'
 				AND related = '" . $_POST['Related'] . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 
-	if (DB_num_rows($result)!=0){
+	if (DB_num_rows($Result)!=0){
 		prnMsg( _('This related item has already been entered.') , 'warn');
 		$InputError =1;
 	}
@@ -86,30 +86,30 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($InputError !=1) {
-		$sql = "INSERT INTO relateditems (stockid,
+		$SQL = "INSERT INTO relateditems (stockid,
 									related)
 							VALUES ('" . $Item . "',
 								'" . $_POST['Related'] . "')";
 		$ErrMsg = _('The new related item could not be added');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		prnMsg($_POST['Related'] . ' ' . _('is now related to') . ' ' . $Item,'success');
 
 		/* It is safe to assume that, if A is related to B, B is related to A */
-		$sql_reverse = "SELECT related
+		$SQL_reverse = "SELECT related
 					FROM relateditems
 				WHERE stockid='".$_POST['Related']."'
 					AND related = '" . $Item . "'";
-		$result_reverse = DB_query($sql_reverse);
-		$myrow_reverse = DB_fetch_row($result_reverse);
+		$Result_reverse = DB_query($SQL_reverse);
+		$MyRow_reverse = DB_fetch_row($Result_reverse);
 
-		if (DB_num_rows($result_reverse)==0){
-			$sql = "INSERT INTO relateditems (stockid,
+		if (DB_num_rows($Result_reverse)==0){
+			$SQL = "INSERT INTO relateditems (stockid,
 										related)
 								VALUES ('" . $_POST['Related'] . "',
 									'" . $Item . "')";
 			$ErrMsg = _('The new related item could not be added');
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 			prnMsg($Item . ' ' . _('is now related to') . ' ' . $_POST['Related'],'success');
 		}
 	}
@@ -121,26 +121,26 @@ if (isset($_POST['submit'])) {
 
 	/* Again it is safe to assume that we have to delete both relations A to B and B to A */
 
-	$sql="DELETE FROM relateditems
+	$SQL="DELETE FROM relateditems
 			WHERE (stockid = '". $Item ."' AND related ='". $_GET['Related'] ."')
 			OR (stockid = '". $_GET['Related'] ."' AND related ='". $Item ."')";
 	$ErrMsg = _('Could not delete this relationshop');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg( _('This relationship has been deleted'),'success');
 
 }
 
 //Always do this stuff
 
-$sql = "SELECT stockmaster.stockid,
+$SQL = "SELECT stockmaster.stockid,
 			stockmaster.description
 		FROM stockmaster, relateditems
 		WHERE stockmaster.stockid = relateditems.related
 			AND relateditems.stockid='".$Item."'";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
-if (DB_num_rows($result) > 0) {
+if (DB_num_rows($Result) > 0) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
 		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -153,19 +153,19 @@ if (DB_num_rows($result) > 0) {
 				<input type="submit" name="NewPart" value="' . _('List Related Items') . '" /></th>
 			</tr>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
 				<th>' . _('Delete') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<tr class="striped_row">
-				<td>' . $myrow['stockid'] . '</td>
-				<td>' .  $myrow['description'] . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '&amp;Related=' . $myrow['stockid'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this relationship?') . '\');">' . _('Delete') . '</a></td>';
+				<td>' . $MyRow['stockid'] . '</td>
+				<td>' .  $MyRow['description'] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Item=' . $Item . '&amp;Related=' . $MyRow['stockid'] . '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this relationship?') . '\');">' . _('Delete') . '</a></td>';
 		echo '</tr>';
 
 	}

@@ -107,11 +107,11 @@ $SupplierCodeRow = DB_fetch_row($SupplierCodeResult);
 echo '<table class="selection">
 	<thead>
 		<tr>
-					<th class="ascending">' . _('Account') . '</th>
-					<th class="ascending">' . _('Name') . '</th>
-					<th class="ascending">' . _('Amount') . '<br />(' . $_SESSION['SuppTrans']->CurrCode . ')</th>
+					<th class="SortedColumn">' . _('Account') . '</th>
+					<th class="SortedColumn">' . _('Name') . '</th>
+					<th class="SortedColumn">' . _('Amount') . '<br />(' . $_SESSION['SuppTrans']->CurrCode . ')</th>
 					<th>' . _('Narrative') . '</th>
-					<th class="ascending">' . _('Tag') . '</th>
+					<th class="SortedColumn">' . _('Tag') . '</th>
 					<th colspan="2">&nbsp;</th>
 		</tr>
 	</thead>

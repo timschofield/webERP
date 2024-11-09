@@ -558,10 +558,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		echo '<table cellpadding="3" class="selection">
 			<thead>
 				<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Supplier Name') . '</th>
-				<th class="ascending">' . _('Address') . '</th>
-				<th class="ascending">' . _('Currency') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Supplier Name') . '</th>
+				<th class="SortedColumn">' . _('Address') . '</th>
+				<th class="SortedColumn">' . _('Currency') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
