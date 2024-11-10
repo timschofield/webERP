@@ -506,21 +506,24 @@ li { /* ??? */
 	background:url(images/bar.png) repeat-x lightgray;
 	border:thin solid lightgray;
 }
-#FooterWrapDiv{
-	overflow:hidden;
-	padding:3px;
+
+#FooterWrapDiv {
+
 }
+
 #FooterLogoDiv{
 	background:white;
     border-radius:8px;
     float:left;
 	padding:3px;
-	margin-left:44%; /* to the center (approx) */
 }
-#FooterVersionDiv{
-	clear:both; /* below the logo */
-	text-align:center;
+
+#FooterVersionDiv {
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
 }
+
 #FooterTimeDiv{
 	display:block;
 	float:right;

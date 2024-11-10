@@ -472,26 +472,28 @@ background:#E0F3B1;
 	clear:both; /* REQUIRED */
     overflow:hidden;	
     background:#C9D392;
+	padding:3px 2px;
 }
-#FooterWrapDiv{
-	overflow:hidden;
+#FooterWrapDiv {
+
+}
+
+#FooterLogoDiv {
+	background:white;
+	border-radius:7px;
+	float:left;
 	padding:3px;
 }
-#FooterLogoDiv{ 
-	float:right; /* right side */
-	background:white;
-    border-radius:8px;
-    padding:2px;
+
+#FooterVersionDiv {
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
 }
-#FooterLogoDiv img {
-    vertical-align:middle;
-}
-#FooterVersionDiv{
-	float:left; /* left side */
-	margin-top:3px;
-}
-#FooterTimeDiv{
-	clear:left; /* below  */
+
+#FooterTimeDiv {
+	float:right;
+	margin-top:15px;
 }
 
 /*** END ***/
