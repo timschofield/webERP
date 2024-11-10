@@ -240,6 +240,10 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					locale_number_format_zero_blank($TotalSalesToday,0),
 					locale_number_format_zero_blank($ValueSalesToday,0)
 					);
+			
+			$TotalPercent = ($ValueSalesFull != 0)? ($ValueSales/$ValueSalesFull*100) : 0 ;
+			$TodayRythm = ($ValueSales != 0) ? ($ValueSalesToday/($ValueSales/$numDays)*100) : 0 ;
+
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -257,12 +261,15 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					'',
 					'',
 					'',
-					locale_number_format_zero_blank($ValueSales/$ValueSalesFull*100,0).'%',
+					locale_number_format_zero_blank($TotalPercent,0).'%',
 					'',
 					'',
 					'',
-					locale_number_format_zero_blank($ValueSalesToday/($ValueSales/$numDays)*100,0).'%'
+					locale_number_format_zero_blank($TodayRythm,0).'%'
 					);
+
+			$TodayForecast = ($ValueSalesToday != 0) ? (round($ValueSalesFull/$ValueSales*$ValueSalesToday/JUTA)*JUTA) : 0 ;
+			
 			$k = StartEvenOrOddRow($k);
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -284,7 +291,7 @@ function HourlyPerformance($numDays, $RootPath, $db){
 					'',
 					'',
 					'',
-					locale_number_format_zero_blank(round($ValueSalesFull/$ValueSales*$ValueSalesToday/JUTA)*JUTA,0)
+					locale_number_format_zero_blank($TodayForecast,0)
 					);
 			echo '</table>
 				</div>';
