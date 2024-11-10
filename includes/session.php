@@ -218,6 +218,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
 if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php') and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: Z_UpgradeDatabase.php');
+	exit;
 }
 // else {
 //	unset($_SESSION['DBVersion']);
