@@ -180,7 +180,7 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $
 			$JAN = '';
 			$ISBN = '';
 			$Location = '';
-			$Quantity = ItemOnlineQOH($myrow['stockid'], $db);
+			$Quantity = ItemOnlineQOH($myrow['stockid']);
 			$StockStatusId = 5; // Out of stock by default
 
 			$Image = PATH_OPENCART_IMAGES . $myrow['stockid'].'.jpg';
@@ -755,7 +755,7 @@ function SyncProductQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText='')
 
 			/* Field Matching */
 			$Model = $myrow['stockid'];
-			$Quantity = ItemOnlineQOH($myrow['stockid'], $db);
+			$Quantity = ItemOnlineQOH($myrow['stockid']);
 			if ($Quantity > 0){
 				$Status = 1;
 			}else{

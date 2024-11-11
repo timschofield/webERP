@@ -161,7 +161,7 @@ function ItemMarketplaceName($StockID, $Description, $Translation){
 function ItemMarketplaceQOH($StockID, $db){
 	// if we have more than ACI_MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES we "cap" it, 
 	// so we don't spend update credits updating QOH when it is not important for us
-	$QOH = 	min(ItemOnlineQOH($StockID, $db), ACI_MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES);
+	$QOH = 	min(ItemOnlineQOH($StockID), ACI_MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES);
 	
 	//if less than ACI_MINIMUM_QOH_TO_SHOW_ITEM_IN_MARKETPLACES then consider we do not have available for marketplaces
 	// to avoid problems of orders not fulfilled and low rankings, better show QOH = 0 than cancel the order.
