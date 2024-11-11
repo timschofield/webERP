@@ -47,7 +47,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	
 	
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . 
 		'</p>';
 
 	if(!$InputError){

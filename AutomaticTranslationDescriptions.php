@@ -52,7 +52,7 @@ if(DB_num_rows($result) != 0) {
 					"SET descriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
-			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
+			$update = DB_query($sql, "", "", true);
 			
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';
@@ -83,7 +83,7 @@ if(DB_num_rows($result) != 0) {
 					"SET longdescriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
-			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
+			$update = DB_query($sql, "", "", true);
 
 			if ($k==1){
 				echo '<tr class="EvenTableRows">';

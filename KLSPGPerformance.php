@@ -315,6 +315,9 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			
+			$DailyA = ($myrow['daysA'] != 0) ? ($myrow['salesA']/$myrow['daysA']) : 0;
+			$DailyB = ($myrow['daysB'] != 0) ? ($myrow['salesB']/$myrow['daysB']) : 0;
+			$DailyC = ($myrow['daysC'] != 0) ? ($myrow['salesC']/$myrow['daysC']) : 0;
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -329,11 +332,11 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 					$myrow['salesmanname'],
 					$myrow['secrolename'],
 					locale_number_format_zero_blank($myrow['daysA'],0),
-					locale_number_format_zero_blank($myrow['salesA']/$myrow['daysA'],0),
+					locale_number_format_zero_blank($DailyA,0),
 					locale_number_format_zero_blank($myrow['daysB'],0),
-					locale_number_format_zero_blank($myrow['salesB']/$myrow['daysB'],0),
+					locale_number_format_zero_blank($DailyB,0),
 					locale_number_format_zero_blank($myrow['daysC'],0),
-					locale_number_format_zero_blank($myrow['salesC']/$myrow['daysC'],0)
+					locale_number_format_zero_blank($DailyC,0)
 					);
 		}
 		echo '</table>
@@ -575,12 +578,20 @@ function SPGPerformanceMonthy($db){
 							<th>' . 'last 60d' . '</th>
 						</tr>';
 		$k = 0; //row colour counter
-		$lastshop = $myrow['loccode'];
+		$lastshop = "";
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			if ($lastshop != $myrow['loccode']){
 				echo $TableHeader;
 			}
+			$Last30D = ($myrow['days30D'] != 0) ? ($myrow['last30D']/$myrow['days30D']) : 0;
+			$Last60D = ($myrow['days60D'] != 0) ? ($myrow['last60D']/$myrow['days60D']) : 0;
+			$Last30C = ($myrow['days30C'] != 0) ? ($myrow['last30C']/$myrow['days30C']) : 0;
+			$Last60C = ($myrow['days60C'] != 0) ? ($myrow['last60C']/$myrow['days60C']) : 0;
+			$Last30B = ($myrow['days30B'] != 0) ? ($myrow['last30B']/$myrow['days30B']) : 0;
+			$Last60B = ($myrow['days60B'] != 0) ? ($myrow['last60B']/$myrow['days60B']) : 0;
+			$Last30A = ($myrow['days30A'] != 0) ? ($myrow['last30A']/$myrow['days30A']) : 0;
+			$Last60A = ($myrow['days60A'] != 0) ? ($myrow['last60A']/$myrow['days60A']) : 0;
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -603,17 +614,17 @@ function SPGPerformanceMonthy($db){
 					$myrow['salesmancode'],
 					$myrow['salesmanname'],
 					locale_number_format_zero_blank($myrow['mtdD'],0),
-					locale_number_format_zero_blank($myrow['last30D']/$myrow['days30D'],0),
-					locale_number_format_zero_blank($myrow['last60D']/$myrow['days60D'],0),
+					locale_number_format_zero_blank($Last30D,0),
+					locale_number_format_zero_blank($Last60D,0),
 					locale_number_format_zero_blank($myrow['mtdC'],0),
-					locale_number_format_zero_blank($myrow['last30C']/$myrow['days30C'],0),
-					locale_number_format_zero_blank($myrow['last60C']/$myrow['days60C'],0),
+					locale_number_format_zero_blank($Last30C,0),
+					locale_number_format_zero_blank($Last60C,0),
 					locale_number_format_zero_blank($myrow['mtdB'],0),
-					locale_number_format_zero_blank($myrow['last30B']/$myrow['days30B'],0),
-					locale_number_format_zero_blank($myrow['last60B']/$myrow['days60B'],0),
+					locale_number_format_zero_blank($Last30B,0),
+					locale_number_format_zero_blank($Last60B,0),
 					locale_number_format_zero_blank($myrow['mtdA'],0),
-					locale_number_format_zero_blank($myrow['last30A']/$myrow['days30A'],0),
-					locale_number_format_zero_blank($myrow['last60A']/$myrow['days60A'],0)
+					locale_number_format_zero_blank($Last30A,0),
+					locale_number_format_zero_blank($Last60A,0)
 					);
 			$lastshop = $myrow['loccode'];
 		}
@@ -855,12 +866,20 @@ function SPGPerformanceWeekly($db){
 							<th>' . 'last 30d' . '</th>
 						</tr>';
 		$k = 0; //row colour counter
-		$lastshop = $myrow['loccode'];
+		$lastshop = "";
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
 			if ($lastshop != $myrow['loccode']){
 				echo $TableHeader;
 			}
+			$Last30D = ($myrow['days30D'] != 0) ? ($myrow['last30D']/$myrow['days30D']) : 0;
+			$Last7D = ($myrow['days7D'] != 0) ? ($myrow['last7D']/$myrow['days7D']) : 0;
+			$Last30C = ($myrow['days30C'] != 0) ? ($myrow['last30C']/$myrow['days30C']) : 0;
+			$Last7C = ($myrow['days7C'] != 0) ? ($myrow['last7C']/$myrow['days7C']) : 0;
+			$Last30B = ($myrow['days30B'] != 0) ? ($myrow['last30B']/$myrow['days30B']) : 0;
+			$Last7B = ($myrow['days7B'] != 0) ? ($myrow['last7B']/$myrow['days7B']) : 0;
+			$Last30A = ($myrow['days30A'] != 0) ? ($myrow['last30A']/$myrow['days30A']) : 0;
+			$Last7A = ($myrow['days7A'] != 0) ? ($myrow['last7A']/$myrow['days7A']) : 0;
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -883,17 +902,17 @@ function SPGPerformanceWeekly($db){
 					$myrow['salesmancode'],
 					$myrow['salesmanname'],
 					locale_number_format_zero_blank($myrow['mtdD'],0),
-					locale_number_format_zero_blank($myrow['last7D']/$myrow['days7D'],0),
-					locale_number_format_zero_blank($myrow['last30D']/$myrow['days30D'],0),
+					locale_number_format_zero_blank($Last7D,0),
+					locale_number_format_zero_blank($Last30D,0),
 					locale_number_format_zero_blank($myrow['mtdC'],0),
-					locale_number_format_zero_blank($myrow['last7C']/$myrow['days7C'],0),
-					locale_number_format_zero_blank($myrow['last30C']/$myrow['days30C'],0),
+					locale_number_format_zero_blank($Last7C,0),
+					locale_number_format_zero_blank($Last30C,0),
 					locale_number_format_zero_blank($myrow['mtdB'],0),
-					locale_number_format_zero_blank($myrow['last7B']/$myrow['days7B'],0),
-					locale_number_format_zero_blank($myrow['last30B']/$myrow['days30B'],0),
+					locale_number_format_zero_blank($Last7B,0),
+					locale_number_format_zero_blank($Last30B,0),
 					locale_number_format_zero_blank($myrow['mtdA'],0),
-					locale_number_format_zero_blank($myrow['last7A']/$myrow['days7A'],0),
-					locale_number_format_zero_blank($myrow['last30A']/$myrow['days30A'],0)
+					locale_number_format_zero_blank($Last7A,0),
+					locale_number_format_zero_blank($Last30A,0)
 					);
 			$lastshop = $myrow['loccode'];
 		}
