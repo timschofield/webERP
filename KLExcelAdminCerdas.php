@@ -143,7 +143,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 							$TextSizeEnglish;
 					$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
-					$QOH = ItemMarketplaceQOH($myrow['stockid'],$db);
+					$QOH = ItemMarketplaceQOH($myrow['stockid']);
 
 					$PackagingImage = FALSE;
 					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $myrow['klpackaging']);

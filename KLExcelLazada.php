@@ -191,7 +191,7 @@ function submit($TypeOfShop) {
 							$TextSizeEnglish;
 					$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
-					$QOH = ItemMarketplaceQOH($StockId,$db);
+					$QOH = ItemMarketplaceQOH($StockId);
 					$Category = FindShopeeCategory($StockId, $Name, $Description);
 					$Material = FindLazadaMaterial($TypeOfShop, $Name);
 					$Stone = FindLazadaStone($Name);

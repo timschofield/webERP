@@ -158,7 +158,7 @@ function ItemMarketplaceName($StockID, $Description, $Translation){
 	return $Name;
 }
 
-function ItemMarketplaceQOH($StockID, $db){
+function ItemMarketplaceQOH($StockID){
 	// if we have more than ACI_MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES we "cap" it, 
 	// so we don't spend update credits updating QOH when it is not important for us
 	$QOH = 	min(ItemOnlineQOH($StockID), ACI_MAXIMUM_QOH_TO_SHOW_IN_MARKETPLACES);

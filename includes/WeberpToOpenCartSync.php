@@ -858,7 +858,7 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 				$EnabledMarketplaces = "0";
 			}else{
 				// is not discount item, so we can decide depending on QOH
-				$QOH = ItemMarketplaceQOH($myrow['stockid'], $db);
+				$QOH = ItemMarketplaceQOH($myrow['stockid']);
 				if ($QOH > 0) {
 					$Action = "Enable";
 					$EnabledMarketplaces = "1";

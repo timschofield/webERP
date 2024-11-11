@@ -102,7 +102,7 @@ function submit(&$db, $SelectedFile) {
 				$LinkShopee = '<li><a rel="external" href="' . $URLShopee . '">' . _('Shopee') . '</a></li>';
 				
 				// Check if we have enough QOH to set it as enabled in Shopee
-				$QOH = ItemMarketplaceQOH($StockId, $db);
+				$QOH = ItemMarketplaceQOH($StockId);
 				$EnabledShopee = ( $QOH > 0);
 				
 				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){

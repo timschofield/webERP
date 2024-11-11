@@ -76,7 +76,7 @@ function submit($SelectedFile) {
 			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . _('Tokopedia') . '</a></li>';
 				
 			// Check if we have enough QOH to set it as enabled in Tokopedia
-			$QOH = ItemMarketplaceQOH($StockId, $db);
+			$QOH = ItemMarketplaceQOH($StockId);
 			$EnabledTokopedia = ( $QOH > 0);
 			
 			if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
