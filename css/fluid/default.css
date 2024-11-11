@@ -88,3 +88,7 @@ visibility: hidden;
 [data-title] {
 position: relative;
 }
+.graph {
+width:950px;
+height:450px;
+}
