@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: GLPostings.inc 6945 2014-10-27 07:20:48Z daintree $*/
 
 /* This file contains the code to post GL transactions.
 
@@ -103,7 +102,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 		}
 		$CurrentAccount = $UnpostedTrans['account'];
 		$TotalAmount += $UnpostedTrans['amount'];
-	} 
+	}
 	// There will be one account still to post after the loop
 	if($CurrentAccount != 0) {
 		$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
@@ -116,10 +115,10 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 				AND period > '" . $CurrPeriod . "'";
 		$PostBFwds = DB_query($sql);
 	}
-	
+
 	$sql = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
 	$Posted = DB_query($sql);
-	
+
 	$TransCommit = DB_Txn_Commit();
 }
 
