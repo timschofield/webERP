@@ -538,7 +538,7 @@ function SaveNewReport($ReportID, $AllowOverwrite) {
 	$sql = "INSERT INTO ".DBReports." SELECT * FROM ".DBReports." WHERE id=0;";
 	$Result=DB_query($sql,'','',false,true);
 	// Fetch the id entered
-	$ReportID = DB_Last_Insert_ID($db,'reports','id');
+	$ReportID = DB_Last_Insert_ID('reports','id');
 	// Restore original report ID from 0
 	$sql = "UPDATE ".DBReports." SET id='".$OrigID."' WHERE id=0;";
 	$Result=DB_query($sql,'','',false,true);

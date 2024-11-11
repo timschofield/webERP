@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 
 	} else {
 		CreateQASample($_POST['ProdSpecKey'],$_POST['LotKey'], $_POST['Identifier'], $_POST['Comments'], $_POST['Cert'], $_POST['DuplicateOK'],$db);
-		$SelectedSampleID=DB_Last_Insert_ID($db,'qasamples','sampleid');
+		$SelectedSampleID=DB_Last_Insert_ID('qasamples','sampleid');
 		if ($SelectedSampleID > '') {
 			$msg = _('Created New Sample');
 			prnMsg($msg , 'success');

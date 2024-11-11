@@ -310,7 +310,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql, $ErrMsg, $DbgMsg);
 
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
-				$NewAssetID = DB_Last_Insert_ID($db,'fixedassets', 'assetid');
+				$NewAssetID = DB_Last_Insert_ID('fixedassets', 'assetid');
 				$TransNo = GetNextTransNo(49,$db);
 				$PeriodNo = GetPeriod($_POST['DatePurchased'],$db);
 

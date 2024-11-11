@@ -267,7 +267,7 @@ If (isset($_POST['Process'])) {
 			$DbgMsg = _('The SQL that failed was');
 			$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg,true);
 
-			$RecurrOrderNo = DB_Last_Insert_ID($db,'recurringsalesorders','recurrorderno');
+			$RecurrOrderNo = DB_Last_Insert_ID('recurringsalesorders','recurrorderno');
 			echo 'xxx'.$RecurrOrderNo;
 			$StartOf_LineItemsSQL = "INSERT INTO recurrsalesorderdetails (recurrorderno,
 																			stkcode,

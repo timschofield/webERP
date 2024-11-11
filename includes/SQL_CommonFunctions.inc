@@ -480,7 +480,7 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The create of the qasamples record failed');
 			$DbgMsg = _('The following SQL to create the qasamples was used');
 			$Result = DB_query($SQL, $db, $ErrMsg, $DbgMsg, true);
-			$SampleID=DB_Last_Insert_ID($db,'qasamples','sampleid');
+			$SampleID=DB_Last_Insert_ID('qasamples','sampleid');
 			$SQL = "INSERT INTO sampleresults (sampleid,
 											testid,
 											defaultvalue,

@@ -1145,7 +1145,7 @@ then do the updates and inserts to process the credit note entered */
 		$DbgMsg = _('The following SQL to insert the supplier credit note was used');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 
-		$SuppTransID = DB_Last_Insert_ID($db,'supptrans','id');
+		$SuppTransID = DB_Last_Insert_ID('supptrans','id');
 
 		/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 		foreach ($_SESSION['SuppTrans']->Taxes AS $TaxTotals) {

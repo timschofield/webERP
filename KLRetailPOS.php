@@ -55,6 +55,9 @@ include ('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/wcpESCPOSCommands.php');
 
+include('includes/KLPOSInit.php');
+
+
 if (empty($_GET['identifier'])) {
 	$identifier=GetPOSIdentifier();
 } else {
@@ -124,6 +127,7 @@ if (!isset($_SESSION['Items'.$identifier])){
 	if ($_SESSION['Items'.$identifier]->SpecialInstructions) {
 		prnMsg($_SESSION['Items'.$identifier]->SpecialInstructions,'warn');
 	}
+	
 	echo '<br />';
 
 } // end if its a new sale to be set up ...
@@ -752,7 +756,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$ErrMsg =_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The debtor transaction record could not be inserted because');
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
 	 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 		/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 		foreach ($_SESSION['Items'.$identifier]->TaxTotals AS $TaxAuthID => $TaxAmount) {
@@ -853,7 +857,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			/*Get the ID of the StockMove... */
-			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 			/*Insert the taxes that applied to this line */
 			foreach ($OrderLine->Taxes as $Tax) {

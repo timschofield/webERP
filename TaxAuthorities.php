@@ -74,7 +74,7 @@ if(isset($_POST['submit'])) {
 
 		$msg = _('The new tax authority record has been added to the database');
 
-		$NewTaxID = DB_Last_Insert_ID($db,'taxauthorities','taxid');
+		$NewTaxID = DB_Last_Insert_ID('taxauthorities','taxid');
 
 		$sql = "INSERT INTO taxauthrates (
 					taxauthority,

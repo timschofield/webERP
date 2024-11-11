@@ -669,7 +669,7 @@ function ImportReport($RptName) {
 		return $Rtn;
 	}
 	// fetch the id of the row inserted
-	$ReportID = DB_Last_Insert_ID($db,DBReports,'id');
+	$ReportID = DB_Last_Insert_ID(DBReports,'id');
 	// update the translated report name and title fields into the newly imported report
 	$sql = "UPDATE ".DBReports." SET
 			reportname = '".$RptName."',
@@ -690,7 +690,7 @@ function ImportReport($RptName) {
 			$FldIndex = mb_substr($sql,9,mb_strpos($sql,':')-9);
 			$sql="INSERT INTO ".DBRptFields." SET ".mb_substr($sql,mb_strpos($sql,':')+1);
 			$Result=DB_query($sql,'','',false,true);
-			$FieldID = DB_Last_Insert_ID($db,DBRptFields, 'id');
+			$FieldID = DB_Last_Insert_ID(DBRptFields, 'id');
 			if ($FieldID<>0) { // A field was successfully written update the report id
 				if (isset($Language[$FldIndex])) $DispSQL = "displaydesc='".$Language[$FldIndex]."', ";
 					else $DispSQL = '';

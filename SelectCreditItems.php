@@ -1171,7 +1171,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 
-	$CreditTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+	$CreditTransID = DB_Last_Insert_ID('debtortrans','id');
 
 	/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 	foreach ($TaxTotals AS $TaxAuthID => $TaxAmount) {
@@ -1332,7 +1332,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				/*Get the stockmoveno from above - need to ref StockMoveTaxes and possibly SerialStockMoves */
-				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 				/*Insert the taxes that applied to this line */
 				foreach ($CreditLine->Taxes as $Tax) {
@@ -1613,7 +1613,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 					/*Its a write off too still so need to process the serial items
 					written off */
 
-					$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+					$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 					foreach($CreditLine->SerialItems as $Item){
 					/*no need to check StockSerialItems record exists

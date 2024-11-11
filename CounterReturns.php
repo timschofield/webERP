@@ -952,7 +952,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 		$DbgMsg = _('The following SQL to insert the debtor transaction record was used');
 	 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$DebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+		$DebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 	/* Insert the tax totals for each tax authority where tax was charged on the invoice */
 		foreach ($_SESSION['Items' . $identifier]->TaxTotals AS $TaxAuthID => $TaxAmount) {
@@ -1176,7 +1176,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		/*Get the ID of the StockMove... */
-			$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+			$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 		/*Insert the taxes that applied to this line */
 			foreach ($ReturnItemLine->Taxes as $Tax) {
@@ -1573,7 +1573,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
 			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+			$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 
 			//and finally add the allocation record between receipt and invoice

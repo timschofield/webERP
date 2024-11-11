@@ -159,7 +159,7 @@ function DB_error_msg() {
 	return mysqli_error($db);
 }
 
-function DB_Last_Insert_ID($Conn='', $Table, $FieldName) {
+function DB_Last_Insert_ID($Table, $FieldName) {
 //	return mysqli_insert_id($Conn);
 	if(isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];

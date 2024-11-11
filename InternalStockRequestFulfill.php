@@ -91,7 +91,7 @@ if (isset($_POST['UpdateAll'])) {
 
 
 				/*Get the ID of the StockMove... */
-				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 				$SQL="UPDATE stockrequestitems
 						SET qtydelivered=qtydelivered+" . $Quantity . "

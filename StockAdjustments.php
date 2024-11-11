@@ -240,7 +240,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 /*Get the ID of the StockMove... */
-		$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+		$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 
 /*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
 

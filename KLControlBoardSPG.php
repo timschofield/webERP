@@ -118,10 +118,10 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 			$dailyD = locale_number_format(($myrow['salesD']/$NumDaysD),0);
 			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
 			$trend = " ";
-			if ($percent > IMPROVEMENTAVERAGESALES){
+			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
 			}
-			if ($percent < -IMPROVEMENTAVERAGESALES){
+			if ($percent < -MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			$forecast = locale_number_format(round($myrow['salesC'], -5),0);

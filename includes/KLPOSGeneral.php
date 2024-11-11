@@ -550,7 +550,7 @@ function AccountDebtorPayment($ReceiptNumber,
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-002 FAILED Insert debtortrans');
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$ReceiptDebtorTransID = DB_Last_Insert_ID($db,'debtortrans','id');
+	$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
 	$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
 									lastpaid='" . $AmountPaid . "'
@@ -802,7 +802,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 	include('includes/wcpESCPOSCommands.php');
 	
-	$TextToPrint .= $NewLine;
+	$TextToPrint = $NewLine;
 
 	// Discounted items no refund...
 	$DiscountedItems = FALSE;
@@ -868,7 +868,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 	include('includes/wcpESCPOSCommands.php');
 
 	// payment descriptions
-	$TextToPrint .= $CharacterFontA. $NewLine;
+	$TextToPrint = $CharacterFontA. $NewLine;
 	if ($_POST['AmountPaidCash'] > 0){
 		$TextToPrint .= 'Paid Cash: ' . number_format($_POST['AmountPaidCash'],0) . $NewLine;
 	}

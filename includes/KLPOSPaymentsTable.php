@@ -4,58 +4,6 @@
 //  PAYMENTS Table
 /////////////////////////////////////////////////////////////////////
 
-if (!isset($_POST['AmountPaidCash'])){
-	$_POST['AmountPaidCash'] =0;
-}
-if (!isset($_POST['AmountPaidCCDanamon'])){
-	$_POST['AmountPaidCCDanamon'] =0;
-}
-if (!isset($_POST['AmountPaidCCBNI'])){
-	$_POST['AmountPaidCCBNI'] =0;
-}
-if (!isset($_POST['AmountPaidAmexBCA'])){
-	$_POST['AmountPaidAmexBCA'] =0;
-}
-if (!isset($_POST['AmountPaidAmexBNI'])){
-	$_POST['AmountPaidAmexBNI'] =0;
-}
-if (!isset($_POST['AmountPaidCCMandiri'])){
-	$_POST['AmountPaidCCMandiri'] =0;
-}
-if (!isset($_POST['AmountPaidCCBCA'])){
-	$_POST['AmountPaidCCBCA'] =0;
-}
-if (!isset($_POST['AmountPaidWeChat'])){
-	$_POST['AmountPaidWeChat'] =0;
-}
-if (!isset($_POST['AmountPaidQRIS'])){
-	$_POST['AmountPaidQRIS'] =0;
-}
-if (!isset($_POST['AmountReturnedGoods'])){
-	$_POST['AmountReturnedGoods'] =0;
-}
-if (!isset($_POST['ReturnedGoodsOldInvoice'])){
-	$_POST['ReturnedGoodsOldInvoice'] ='';
-}
-if (!isset($_POST['ReturnedGoodsItems'])){
-	$_POST['ReturnedGoodsItems'] ='';
-}
-if (!isset($_POST['ReturnedGoodsReason'])){
-	$_POST['ReturnedGoodsReason'] =0;
-}
-if (!isset($_POST['ReturnDate'])){
-	$_POST['ReturnDate'] = Date($_SESSION['DefaultDateFormat']);
-}
-if (!isset($_POST['AmountVouchers'])){
-	$_POST['AmountVouchers'] =0;
-}
-if (!isset($_POST['VoucherCode'])){
-	$_POST['VoucherCode'] ='';
-}
-if (!isset($_POST['Comments'])){
-	$_POST['Comments'] ='';
-}
-
 echo '<table class="selection">';
 echo '<tr>';
 echo '<th colspan=2></th>'; 

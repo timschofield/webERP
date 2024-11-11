@@ -591,7 +591,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				/*Get the ID of the StockMove... */
-				$StkMoveNo = DB_Last_Insert_ID($db,'stockmoves','stkmoveno');
+				$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
 				/* Do the Controlled Item INSERTS HERE */
 
 				if ($OrderLine->Controlled ==1){
