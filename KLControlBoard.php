@@ -59,21 +59,22 @@ if ($_SESSION['UserID'] == "Ricard"){
 
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
 
-//	$KL_SystemAdmin = TRUE;
-//	$KL_OperationalManager = TRUE;
-//	$KL_OperationalLeader = TRUE;
-//	$KL_AdministrationTeam = TRUE;
-//	$KL_BusinessDevelopmentManager = TRUE;
-// 	$KL_SalesDirector = TRUE;
-//	$KL_PurchasingTeam = TRUE;
-//	$KL_ShopSupportTeam = TRUE;
-//	$KL_ShopSupportLeader = TRUE;
-//	$KL_OnlineSales = TRUE;
-//	$KL_ShopManager = TRUE;
-//	$KL_SPGSeniorOrSupport = TRUE;
-//	$KL_SPGJunior = TRUE;
-//	$KL_PettyCash = TRUE;
-//	$KL_ITSupport = TRUE;
+/*	$KL_SystemAdmin = TRUE;
+	$KL_OperationalManager = TRUE;
+	$KL_OperationalLeader = TRUE;
+	$KL_AdministrationTeam = TRUE;
+	$KL_BusinessDevelopmentManager = TRUE;
+ 	$KL_SalesDirector = TRUE;
+	$KL_PurchasingTeam = TRUE;
+	$KL_ShopSupportTeam = TRUE;
+	$KL_ShopSupportLeader = TRUE;
+	$KL_OnlineSales = TRUE;
+	$KL_ShopManager = TRUE;
+	$KL_SPGSeniorOrSupport = TRUE;
+	$KL_SPGJunior = TRUE;
+	$KL_PettyCash = TRUE;
+	$KL_ITSupport = TRUE;
+*/
 //	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
@@ -453,7 +454,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInSetup("NeedDescription", "SETGEA", $RootPath, $db);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedPrice", $RootPath, $db);
+		ItemsInSetup("NeedPrice", "", $RootPath, $db);
 		$NumberOfTestExecuted++;
 		}
 

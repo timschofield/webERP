@@ -48,21 +48,22 @@ $yesterday_year = date('Y', strtotime("-1 days"));
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-//	$KL_SystemAdmin = TRUE;
-//	$KL_OperationalManager = TRUE;
-//	$KL_OperationalLeader = TRUE;
-//	$KL_AdministrationTeam = TRUE;
-//	$KL_BusinessDevelopmentManager = TRUE;
-// 	$KL_SalesDirector = TRUE;
-//	$KL_PurchasingTeam = TRUE;
-//	$KL_ShopSupportTeam = TRUE;
-//	$KL_ShopSupportLeader = TRUE;
-//	$KL_OnlineSales = TRUE;
-//	$KL_ShopManager = TRUE;
-//	$KL_SPGSeniorOrSupport = TRUE;
-//	$KL_SPGJunior = TRUE;
-//	$KL_PettyCash = TRUE;
-//	$KL_ITSupport = TRUE;
+/*	$KL_SystemAdmin = TRUE;
+	$KL_OperationalManager = TRUE;
+	$KL_OperationalLeader = TRUE;
+	$KL_AdministrationTeam = TRUE;
+	$KL_BusinessDevelopmentManager = TRUE;
+ 	$KL_SalesDirector = TRUE;
+	$KL_PurchasingTeam = TRUE;
+	$KL_ShopSupportTeam = TRUE;
+	$KL_ShopSupportLeader = TRUE;
+	$KL_OnlineSales = TRUE;
+	$KL_ShopManager = TRUE;
+	$KL_SPGSeniorOrSupport = TRUE;
+	$KL_SPGJunior = TRUE;
+	$KL_PettyCash = TRUE;
+	$KL_ITSupport = TRUE;
+*/
 //	phpinfo();
 }
 
@@ -331,7 +332,7 @@ if ($ProcessSection03){
 	if ($KL_OperationalManager
 		OR $KL_OperationalLeader
 		OR $KL_ShopManager){
-		MaintenanceTasksList("OPEN");
+		MaintenanceTasksList("OPEN", 0);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksList("CLOSED", 30);
 		$NumberOfTestExecuted++;
