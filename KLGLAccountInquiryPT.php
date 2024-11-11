@@ -34,7 +34,7 @@ $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 echo '<table class="selection"><tr><td>'._('Account').':</td><td><select name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmasterBB ORDER BY accountcode";
 $Account = DB_query($sql);
-while ($myrow=DB_fetch_array($Account,$db)){
+while ($myrow=DB_fetch_array($Account)){
 	if($myrow['accountcode'] == $SelectedAccount){
 		echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	} else {
@@ -66,7 +66,7 @@ echo '<tr> <td>'._('For Period range').':</td><td><select name="Period[]" size="
 $sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($sql);
 $id=0;
-while ($myrow=DB_fetch_array($Periods,$db)){
+while ($myrow=DB_fetch_array($Periods)){
 	if(isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
 		echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 		$id++;

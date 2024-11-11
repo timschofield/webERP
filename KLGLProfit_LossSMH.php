@@ -56,7 +56,7 @@ if ((!isset($_POST['FromPeriod'])
 			ORDER BY periodno DESC";
 	$Periods = DB_query($sql);
 
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
 			if( $_POST['FromPeriod']== $myrow['periodno']){
 				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
@@ -90,7 +90,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	$RetResult = DB_data_seek($Periods,0);
 
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 
 		if($myrow['periodno']==$DefaultToPeriod){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';

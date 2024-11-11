@@ -71,7 +71,7 @@ If (isset($_POST['PrintPDF'])
 
 	$TotBal=0;
 
-	While ($SupplierBalances = DB_fetch_array($SupplierResult,$db)){
+	While ($SupplierBalances = DB_fetch_array($SupplierResult)){
 
 		$Balance = $SupplierBalances['balance'] - $SupplierBalances['afterdatetrans'] + $SupplierBalances['afterdatediffonexch'];
 		$FXBalance = $SupplierBalances['fxbalance'] - $SupplierBalances['fxafterdatetrans'];
@@ -147,7 +147,7 @@ If (isset($_POST['PrintPDF'])
 	$ErrMsg = _('Could not retrieve period data because');
 	$Periods = DB_query($sql,$ErrMsg);
 
-	while ($myrow = DB_fetch_array($Periods,$db)){
+	while ($myrow = DB_fetch_array($Periods)){
 		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1) . '</option>';
 	}
 	echo '</select></td>

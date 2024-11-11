@@ -875,7 +875,7 @@ $SOH_DateFields = array ('orddate',
 
 				$AssResult = api_DB_query($SQL);
 
-				while ($AssParts = DB_fetch_array($AssResult,$db)){
+				while ($AssParts = DB_fetch_array($AssResult)){
 
 					$StandardCost += ($AssParts['standard'] * $AssParts['quantity']) ;
 					/* Need to get the current location quantity

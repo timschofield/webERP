@@ -1103,6 +1103,7 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 			ORDER BY stockdescriptiontranslations.stockid";
 
 	$result = DB_query($SQL);
+	$i = 0;
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Product Description Translations Updates') .'</strong></p>';
@@ -1121,7 +1122,6 @@ function SyncProductDescriptionTranslations($ShowMessages, $LastTimeRun, $db, $d
 		$UpdateErrMsg = _('The SQL to update Product Description Translations in Opencart failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 
 			/* Field Matching */

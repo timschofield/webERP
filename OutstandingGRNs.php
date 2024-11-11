@@ -86,7 +86,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$Tot_Val=0;
 	$Supplier = '';
 	$SuppTot_Val=0;
-	While ($GRNs = DB_fetch_array($GRNsResult,$db)){
+	While ($GRNs = DB_fetch_array($GRNsResult)){
 
 		if ($Supplier!=$GRNs['supplierid']){
 
@@ -192,7 +192,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$k = 0; //row colour counter
 	$i = 1;
 	$TotalHomeCurrency = 0;
-	while ($GRNs = DB_fetch_array($GRNsResult,$db) ){
+	while ($GRNs = DB_fetch_array($GRNsResult) ){
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;

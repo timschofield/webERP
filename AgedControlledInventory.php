@@ -31,7 +31,7 @@ $sql = "SELECT stockserialitems.stockid,
 
 $ErrMsg =  _('The stock held could not be retrieved because');
 $LocStockResult = DB_query($sql, $ErrMsg);
-$NumRows = DB_num_rows($LocStockResult, $db);
+$NumRows = DB_num_rows($LocStockResult);
 
 $j = 1;
 $TotalQty=0;

@@ -74,7 +74,7 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 			WHERE periodno >= " . $AlreadyPurgedGltransPeriod . "
 			ORDER BY periodno DESC";
 	$Periods = DB_query($sql);
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 		if( $myrow['periodno']== $AlreadyPurgedGltransPeriod){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {
@@ -92,7 +92,7 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 			WHERE periodno >= " . $AlreadyPurgedStockmovesPrd . "
 			ORDER BY periodno DESC";
 	$Periods = DB_query($sql);
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 		if( $myrow['periodno']== $AlreadyPurgedStockmovesPrd){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {

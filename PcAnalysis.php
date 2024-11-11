@@ -33,7 +33,7 @@ function submit(&$db, $TabToShow) {
 		$Periods = DB_query($sqlPeriods);
 		$numPeriod = 0;
 		$LabelsArray = array();
-		while ($myrow=DB_fetch_array($Periods,$db)){
+		while ($myrow=DB_fetch_array($Periods)){
 		
 			$numPeriod++;
 			$LabelsArray[$numPeriod] = MonthAndYearFromSQLDate($myrow['lastdate_in_period']);

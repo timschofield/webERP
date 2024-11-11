@@ -144,7 +144,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '	<tr><td>' . _('Select Month for Report') . ':</td>
 				<td><select name="Period">';
 
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 		if(isset($_POST['Period']) AND $_POST['Period']!=''){
 			if( $_POST['Period']== $myrow['periodno']){
 				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';

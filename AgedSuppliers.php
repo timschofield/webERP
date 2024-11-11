@@ -126,7 +126,7 @@ if (isset($_POST['PrintPDF'])
 
 	$ListCount = DB_num_rows($SupplierResult); // UldisN
 
-	while ($AgedAnalysis = DB_fetch_array($SupplierResult,$db)){
+	while ($AgedAnalysis = DB_fetch_array($SupplierResult)){
 
 		$CurrDecimalPlaces = $AgedAnalysis['currdecimalplaces'];
 

@@ -39,7 +39,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 
 		$id=0;
 		$ItemsAvailable=0;
-		while ($myrow=DB_fetch_array($Bundles,$db)){
+		while ($myrow=DB_fetch_array($Bundles)){
 			if ($LineItem->Serialised==1){
 				if ( !array_key_exists($myrow['serialno'], $AllSerials) ){
 					echo '<option value="' . $myrow['serialno'] . '">' . $myrow['serialno'] . '</option>';

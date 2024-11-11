@@ -378,7 +378,7 @@ function FindShopeeCategory($StockId, $Name, $Description){
 }
 
 function FindLazadaMaterial($TypeOfShop, $Text){
-	
+	$Material = "";
 	if ($TypeOfShop == 1){
 		// if it is KL, then default material is Silver
 		$Material = "Silver - Perak";	
@@ -402,7 +402,7 @@ function FindLazadaMaterial($TypeOfShop, $Text){
 }
 
 function FindLazadaStone($Text){
-	
+	$Stone = "";
 	if (ItemInList("cat eye", $Text)){
 		$Stone = "Cat Eye";	
 	}elseif (ItemInList("freshwater", $Text)){
@@ -458,7 +458,7 @@ function WhatsInTheBox($StockId){
 }
 
 function FindLazadaColor($Text){
-	
+	$Color = "";
 	if (ItemInList("white", $Text)){
 		$Color = "White - Putih";	
 	}elseif (ItemInList("yellow", $Text)){

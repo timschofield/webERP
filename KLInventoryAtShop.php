@@ -73,7 +73,7 @@ if (isset($_POST['PrintPDF'])){
 	$Category = '';
 	$CatTot_Qty=0;
 
-	while ($InventoryValn = DB_fetch_array($InventoryResult,$db)){
+	while ($InventoryValn = DB_fetch_array($InventoryResult)){
 
 		$YPos -=(1*$line_height);
 

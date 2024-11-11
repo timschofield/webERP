@@ -11,7 +11,7 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
 
-function CheckForRecursiveGroup($ParentGroupName, $GroupName, $db) {
+function CheckForRecursiveGroup($ParentGroupName, $GroupName) {
 
 /* returns true ie 1 if the group contains the parent group as a child group
 ie the parent group results in a recursive group structure otherwise false ie 0 */
@@ -90,7 +90,7 @@ if(isset($_POST['submit'])) {
 		$i++;
 	}
 	if($_POST['ParentGroupName'] !='') {
-		if(CheckForRecursiveGroup($_POST['GroupName'],$_POST['ParentGroupName'],$db)) {
+		if(CheckForRecursiveGroup($_POST['GroupName'],$_POST['ParentGroupName'])) {
 			$InputError =1;
 			prnMsg(_('The parent account group selected appears to result in a recursive account structure - select an alternative parent account group or make this group a top level account group'),'error');
 			$Errors[$i] = 'ParentGroupName';

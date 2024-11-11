@@ -172,7 +172,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				"Models candidates to be included in transfer: " . DB_num_rows($result) . "\n";
 		$NumModelsInThisStockDispatch = 0;
 		$NumPcsInThisStockDispatch = 0;
-		while (($myrow = DB_fetch_array($result,$db)) AND ($NumModelsInThisStockDispatch < $MaxModelsPerDispatch)){
+		while (($myrow = DB_fetch_array($result)) AND ($NumModelsInThisStockDispatch < $MaxModelsPerDispatch)){
 			// Check if there is any stock in transit already sent from FROM LOCATION
 			$InTransitQuantityAtFrom = 0;
 			if ($_SESSION['ProhibitNegativeStock']==1){
@@ -350,7 +350,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				// if we reached the maximum of models allowed per dispatch, we warn the user
 				if ($NumModelsInThisStockDispatch == $MaxModelsPerDispatch){
 					$ModelsSkipped = 0;
-					while ($myrow = DB_fetch_array($result,$db)){
+					while ($myrow = DB_fetch_array($result)){
 						$ModelsSkipped++;
 					}
 					$YPos -=(2 * $line_height);

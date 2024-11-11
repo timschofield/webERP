@@ -113,7 +113,7 @@ If (isset($_POST['PrintPDF'])) {
     $FontSize=8;
 
     $holdpart = " ";
-	While ($myrow = DB_fetch_array($result,$db)){
+	While ($myrow = DB_fetch_array($result)){
 	      if ($myrow['stockid'] != $holdpart) {
 			  $YPos -=(2 * $line_height);
 			  $holdpart = $myrow['stockid'];

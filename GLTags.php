@@ -30,7 +30,7 @@ if (isset($_GET['SelectedTag'])) {
 				WHERE tagref='".$_GET['SelectedTag']."'";
 
 		$result= DB_query($sql);
-		$myrow = DB_fetch_array($result,$db);
+		$myrow = DB_fetch_array($result);
 		$ref=$myrow['tagref'];
 		$Description = $myrow['tagdescription'];
 	}
@@ -89,7 +89,7 @@ $sql="SELECT tagref,
 
 $result= DB_query($sql);
 
-while ($myrow = DB_fetch_array($result,$db)){
+while ($myrow = DB_fetch_array($result)){
 	echo '<tr>
 			<td>' . $myrow['tagref'] . '</td>
 			<td>' . $myrow['tagdescription'] . '</td>

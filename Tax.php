@@ -75,7 +75,7 @@ if(isset($_POST['TaxAuthority']) AND
 		$YPos -= $FontSize;
 
 		$FontSize = 8;
-		while($DebtorTransRow = DB_fetch_array($DebtorTransResult,$db)) {
+		while($DebtorTransRow = DB_fetch_array($DebtorTransResult)) {
 			$pdf->addText($Left_Margin, $YPos, $FontSize, ConvertSQLDate($DebtorTransRow['trandate']));
 			$pdf->addText(82, $YPos, $FontSize, _($DebtorTransRow['typename']));
 			$pdf->addTextWrap(140, $YPos-$FontSize, 40, $FontSize, $DebtorTransRow['transno'], 'right');
@@ -114,7 +114,7 @@ if(isset($_POST['TaxAuthority']) AND
 		$YPos -= $FontSize;
 
 	} else {
-		while($DebtorTransRow = DB_fetch_array($DebtorTransResult,$db)) {
+		while($DebtorTransRow = DB_fetch_array($DebtorTransResult)) {
 			$SalesCount ++;// Counts sales transactions.
 			$SalesNet += $DebtorTransRow['netamount'];// Accumulates sales net.
 			$SalesTax += $DebtorTransRow['tax'];// Accumulates sales tax.
@@ -188,7 +188,7 @@ if(isset($_POST['TaxAuthority']) AND
 
 		// Prints out lines:
 		$FontSize = 8;
-		while($SuppTransRow = DB_fetch_array($SuppTransResult,$db)) {
+		while($SuppTransRow = DB_fetch_array($SuppTransResult)) {
 			$pdf->addText($Left_Margin, $YPos, $FontSize,ConvertSQLDate($SuppTransRow['trandate']));
 			$pdf->addText(82, $YPos, $FontSize, _($SuppTransRow['typename']));
 			$pdf->addTextWrap(140, $YPos-$FontSize, 40, $FontSize, $SuppTransRow['transno'],'right');
@@ -227,7 +227,7 @@ if(isset($_POST['TaxAuthority']) AND
 		$YPos -= $FontSize;
 
 	} else {
-		while($SuppTransRow = DB_fetch_array($SuppTransResult,$db)) {
+		while($SuppTransRow = DB_fetch_array($SuppTransResult)) {
 			$PurchasesCount ++;// Counts purchases transactions.
 			$PurchasesNet += $SuppTransRow['netamount'];// Accumulates purchases net.
 			$PurchasesTax += $SuppTransRow['taxamt'];// Accumulates purchases tax.
@@ -362,7 +362,7 @@ if(isset($_POST['TaxAuthority']) AND
 	$ErrMsg = _('Could not retrieve the period data because');
 	$Periods = DB_query($sql,$ErrMsg);
 
-	while($myrow = DB_fetch_array($Periods,$db)) {
+	while($myrow = DB_fetch_array($Periods)) {
 		if($myrow['periodno']==$DefaultPeriod) {
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . ConvertSQLDate($myrow['lastdate_in_period']) . '</option>';
 		} else {

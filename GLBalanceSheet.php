@@ -39,13 +39,13 @@ if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'
 	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='".$periodno . "'";
 	$result = DB_query($sql);
-	$myrow=DB_fetch_array($result, $db);
+	$myrow=DB_fetch_array($result);
 	$lastdate_in_period=$myrow[0];
 
 	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($sql);
 
-	while ($myrow=DB_fetch_array($Periods,$db)){
+	while ($myrow=DB_fetch_array($Periods)){
 		if( $myrow['periodno']== $periodno){
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . ConvertSQLDate($lastdate_in_period) . '</option>';
 		} else {

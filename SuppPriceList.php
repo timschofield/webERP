@@ -161,7 +161,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$FontSize=8;
 	$code='';
-	while ($myrow = DB_fetch_array($result,$db)){
+	while ($myrow = DB_fetch_array($result)){
 		$YPos -=$line_height;
 
 		$PriceDated=ConvertSQLDate($myrow[4]);
