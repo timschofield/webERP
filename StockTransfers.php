@@ -14,9 +14,9 @@ include('includes/session.php');
 
 include('includes/KLEmails.php');
 
-$Title = _('Stock Transfers');
-$BookMark = "LocationTransfers";
-$ViewTopic = "Inventory";
+$Title = _('Stock Transfers');// Screen identification.
+$ViewTopic = "Inventory";// Filename's id in ManualContents.php's TOC.
+$BookMark = "LocationTransfers";// Anchor's id in the manual's html document.
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
@@ -53,10 +53,13 @@ if(isset($_POST['CheckCode'])) {
 	$DbgMsg=_('The SQL to get the stock description was');
 	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Stock Code') . '</th>
 				<th class="ascending">' . _('Stock Description') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 	while($myrow = DB_fetch_array($result)) {
 		echo '<tr>
 				<td>' . $myrow['stockid'] . '</td>
@@ -66,7 +69,7 @@ if(isset($_POST['CheckCode'])) {
 			</tr>';
 
 	}
-	echo '</table>';
+	echo '</tbody></table>';
 	include('includes/footer.php');
 	exit;
 }
@@ -105,7 +108,9 @@ if($NewTransfer) {
 	$_SESSION['Transfer']= new StockTransfer(0,
 										$_POST['StockLocationFrom'],
 										'',
+										'',
 										$_POST['StockLocationTo'],
+										'',
 										'',
 										Date($_SESSION['DefaultDateFormat'])
 										);
@@ -256,7 +261,7 @@ if(isset($_POST['EnterTransfer']) ) {
 					16,'" .
 					$TransferNumber . "','" .
 					$AccountCode . "','" .
-					$_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer'] ->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
+					$_SESSION['Transfer']->StockLocationFrom.' - '.$_SESSION['Transfer']->TransferItem[0]->StockID.' x '.$_SESSION['Transfer']->TransferItem[0]->Quantity.' @ '. $StandardCost . "','" .
 					-$_SESSION['Transfer']->TransferItem[0]->Quantity * $StandardCost . "')";
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The outgoing inventory GL transacction record could not be inserted because');
 					$DbgMsg =  _('The following SQL to insert records was used');
