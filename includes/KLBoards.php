@@ -3851,7 +3851,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 			$Price = locale_number_format($myrow['price'],$myrow['decimalplaces']);
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $myrow['stockid'] . '&SupplierID='. $myrow['supplierno'] . '&Edit=1&EffectiveFrom='. $myrow['effectivefrom']  .' ">' . $Price . '</a>';
 			if ($Mode == "SHOWONLY"){
-				$StdCost = locale_number_format($NewStdCost,0);
+				$StdCostText = locale_number_format($NewStdCost,0);
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -3878,17 +3878,18 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 						locale_number_format($myrow['conversionfactor'],0),
 						ConvertSQLDate($myrow['lastcostupdate']),
 						locale_number_format($myrow['stdcost'],0),
-						$StdCost
+						$StdCostText
 						);
 			}else{
 				if($Mode == "UPDATEALL"){
 					// UPDATEALL
-					$StdCost = locale_number_format($NewStdCost,0);
+					$StdCostText = locale_number_format($NewStdCost,0);
 					ChangeItemStandardCost($myrow['stockid'], $NewStdCost, $myrow['stdcost'], $myrow['qoh']);
 				}else{
 					// SHOWLINK
-					$StdCost = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $myrow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
+					$StdCostText = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $myrow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
 				}
+				$percent = ($myrow['stdcost'] != 0) ? ((($myrow['price'] / $myrow['conversionfactor'] * (1/$myrow['rate']) * $StdFactor)/$myrow['stdcost'] * 100)-100) : 100 ;
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -3920,8 +3921,8 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 						locale_number_format($myrow['stdcost'],0),
 						locale_number_format($myrow['qoh'],0),
 						$myrow['units'], 
-						$StdCost,
-						locale_number_format((($myrow['price'] / $myrow['conversionfactor'] * (1/$myrow['rate']) * $StdFactor)/$myrow['stdcost'] * 100)-100,1) . '%'
+						$StdCostText,
+						locale_number_format($percent,1) . '%'
 						);
 			}
 			$i++;
