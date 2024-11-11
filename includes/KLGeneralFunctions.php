@@ -1050,13 +1050,13 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 }
 
 function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOfPackaging){
+	$PackagingImage =  FALSE;
 	if ($NumberOfImage == 1){
 		// main image
 		$URL = PATH_TO_CATALOG_IMAGES . $StockId.'.jpg';
-		$PackagingImage =  FALSE;
 	}elseif ($NumberOfImage == 999){
 		// last image of the lot MUST be a packaging image if still not found a packaging image
-		if ((!$PackagingImage) AND ($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
+		if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 			$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
 			$PackagingImage =  TRUE;
 		}else{
@@ -1068,7 +1068,7 @@ function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 		if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockId.'.'.$NumberOfImage.'.jpg')){
 			$URL = PATH_TO_CATALOG_IMAGES . $StockId.'.'.$NumberOfImage.'.jpg';
 		}else{
-			if ((!$PackagingImage) AND ($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
+			if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 				$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';
 				$PackagingImage =  TRUE;
 			}else{
