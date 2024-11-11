@@ -1,5 +1,4 @@
 <?php
-/* $Id: DefineShiptClass.php 6941 2014-10-26 23:18:08Z daintree $*/
 /* Definition of the Shipment class to hold all the information for a shipment*/
 
 Class Shipment {
@@ -16,11 +15,15 @@ Class Shipment {
 	var $Closed;
 	var $CurrDecimalPlaces;
 
-	function Shipment(){
+	function __construct(){
 	/*Constructor function initialises a new Shipment object */
 		$this->LineItems = array();
 		$this->AccumValue =0;
 		$this->Closed =0;
+	}
+
+	function Shipment() {
+		self::__construct();
 	}
 
 	function Add_To_Shipment($PODetailItem,
@@ -34,8 +37,7 @@ Class Shipment {
 							$QuantityOrd,
 							$QuantityRecd,
 							$StdCostUnit,
-							$DecimalPlaces,
-							&$db){
+							$DecimalPlaces){
 
 		$this->LineItems[$PODetailItem]= new LineDetails($PODetailItem,
 														$OrderNo,
@@ -59,7 +61,7 @@ Class Shipment {
 	}
 
 
-	function Remove_From_Shipment($PODetailItem,&$db){
+	function Remove_From_Shipment($PODetailItem){
 
 		if ($this->LineItems[$PODetailItem]->QtyInvoiced==0){
 
@@ -89,7 +91,7 @@ Class LineDetails {
 	var $DecimalPlaces;
 
 
-	function LineDetails ($PODetailItem,
+	function __construct ($PODetailItem,
 							$OrderNo,
 							$StockID,
 							$ItemDescr,
@@ -115,6 +117,32 @@ Class LineDetails {
 		$this->QuantityOrd = $QuantityOrd;
 		$this->StdCostUnit = $StdCostUnit;
 		$this->DecimalPlaces = $DecimalPlaces;
+	}
+
+	function LineDetails($PODetailItem,
+							$OrderNo,
+							$StockID,
+							$ItemDescr,
+							$QtyInvoiced,
+							$UnitPrice,
+							$UOM,
+							$DelDate,
+							$QuantityOrd,
+							$QuantityRecd,
+							$StdCostUnit,
+							$DecimalPlaces=2) {
+			self::__construct($PODetailItem,
+							$OrderNo,
+							$StockID,
+							$ItemDescr,
+							$QtyInvoiced,
+							$UnitPrice,
+							$UOM,
+							$DelDate,
+							$QuantityOrd,
+							$QuantityRecd,
+							$StdCostUnit,
+							$DecimalPlaces=2);
 	}
 }
 

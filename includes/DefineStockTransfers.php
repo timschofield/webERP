@@ -1,5 +1,4 @@
 <?php
-/* $Id: DefineStockTransfers.php 7296 2015-05-10 04:54:12Z rchacon $*/
 
 /*Class to hold stock transfer records */
 
@@ -15,7 +14,7 @@ class StockTransfer {
 	Var $TranDate;
 	Var $TransferItem; /*Array of LineItems */
 
-	function StockTransfer($TrfID,
+	function __construct($TrfID,
 				$StockLocationFrom,
 				$StockLocationFromName,
 				$StockLocationFromAccount,
@@ -34,6 +33,23 @@ class StockTransfer {
 		$this->TranDate = $TranDate;
 		$this->TransferItem=array(); /*Array of LineItem s */
 	}
+	function StockTransfer($TrfID,
+				$StockLocationFrom,
+				$StockLocationFromName,
+				$StockLocationFromAccount,
+				$StockLocationTo,
+				$StockLocationToName,
+				$StockLocationToAccount,
+				$TranDate ) {
+		self::__construct($TrfID,
+				$StockLocationFrom,
+				$StockLocationFromName,
+				$StockLocationFromAccount,
+				$StockLocationTo,
+				$StockLocationToName,
+				$StockLocationToAccount,
+				$TranDate );
+	}	
 }
 
 class LineItem {
@@ -49,7 +65,7 @@ class LineItem {
 	var $Perishable;
 	var $SerialItems; /*array to hold controlled items*/
 //Constructor
-	function LineItem($StockID,
+	function __construct($StockID,
 			$ItemDescription,
 			$Quantity,
 			$PartUnit,
@@ -72,6 +88,24 @@ class LineItem {
 			$this->Quantity = $Quantity;
 		}
 		$this->SerialItems = array();
+	}
+
+	function LineItem($StockID,
+				$ItemDescription,
+				$Quantity,
+				$PartUnit,
+				$Controlled,
+				$Serialised,
+				$Perishable,
+				$DecimalPlaces) {
+		self::__construct($StockID,
+					$ItemDescription,
+					$Quantity,
+					$PartUnit,
+					$Controlled,
+					$Serialised,
+					$Perishable,
+					$DecimalPlaces); 
 	}
 }
 ?>

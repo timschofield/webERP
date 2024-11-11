@@ -1,9 +1,6 @@
 <?php
-/* $Id: DefineSerialItems.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 function ValidBundleRef ($StockID, $LocCode, $BundleRef){
-	global $db;
-
 	$SQL = "SELECT quantity
 				FROM stockserialitems
 				WHERE stockid='" . $StockID . "'
@@ -18,9 +15,7 @@ function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 	}
 }
 function GetExpiryDate ($StockID, $LocCode, $BundleRef){
-	global $db;
-
-	$SQL = "SELECT expirationdate 
+	$SQL = "SELECT expirationdate
 				FROM stockserialitems
 				WHERE stockid = '" . $StockID . "'
 				AND loccode = '" . $LocCode . "'
@@ -40,11 +35,17 @@ class SerialItem {
 	var $ExpiryDate;
 
 	//Constructor
-	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
+	function __construct($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
 
 		$this->BundleRef = $BundleRef;
 		$this->BundleQty = $BundleQty;
 		$this->ExpiryDate = $ExpiryDate;
 	}
+
+	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
+		self::__construct($BundleRef, $BundleQty, $ExpiryDate='0000-00-00');
+	}
+
+
 }//class SerialItem
 ?>

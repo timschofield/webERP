@@ -1,5 +1,4 @@
 <?php
-/* $Id:  $*/
 /* definition of the Contract class */
 
 Class Contract {
@@ -28,13 +27,17 @@ Class Contract {
 	var $ContractBOM; /*array of stockid components  required for the contract */
 	var $ContractReqts; /*array of other items required for the contract */
 
-	function Contract(){
+	function __construct(){
 	/*Constructor function initialises a new Payment batch */
 		$this->ContractBOM = array();
 		$this->ContractReqts = array();
 		$this->BOMComponentCounter=0;
 		$this->RequirementsCounter=0;
 		$this->Status = 0;
+	}
+	
+	function Contract() {
+		self::__construct;
 	}
 
 	function Add_To_ContractBOM($StockID,
@@ -61,7 +64,6 @@ Class Contract {
 	}
 
 	function Remove_ContractComponent($ContractComponent_ID){
-		global $db;
 		$result = DB_query("DELETE FROM contractbom
 											WHERE contractref='" . $this->ContractRef . "'
 											AND stockid='" . $this->ContractBOM[$ContractComponent_ID]->StockID . "'");
@@ -85,7 +87,6 @@ function Add_To_ContractRequirements($Requirement,
 	}
 
 	function Remove_ContractRequirement($ContractRequirementID){
-		global $db;
 		$result = DB_query("DELETE FROM contractreqts WHERE contractreqid='" . $this->ContractReqts[$ContractRequirementID]->ContractReqID . "'");
 		unset($this->ContractReqts[$ContractRequirementID]);
 	}
@@ -102,7 +103,7 @@ Class ContractComponent {
 	var $UOM;
 	var $DecimalPlaces;
 
-	function ContractComponent ($ComponentID,
+	function __construct ($ComponentID,
 								$StockID,
 								$ItemDescription,
 								$WorkCentre,
@@ -121,6 +122,24 @@ Class ContractComponent {
 		$this->UOM = $UOM;
 		$this->DecimalPlaces = $DecimalPlaces;
 	}
+	function ContractComponent($ComponentID,
+								$StockID,
+								$ItemDescription,
+								$WorkCentre,
+								$Quantity,
+								$ItemCost,
+								$UOM,
+								$DecimalPlaces=0){
+
+		self::__construct($ComponentID,
+								$StockID,
+								$ItemDescription,
+								$WorkCentre,
+								$Quantity,
+								$ItemCost,
+								$UOM,
+								$DecimalPlaces=0);
+	}
 }
 
 Class ContractRequirement {
@@ -130,7 +149,7 @@ Class ContractRequirement {
 	var $Quantity;
 	var $CostPerUnit;
 
-	function ContractRequirement ($Requirement,
+	function __construct ($Requirement,
 									$Quantity,
 									$CostPerUnit,
 									$ContractReqID=0){
@@ -140,6 +159,15 @@ Class ContractRequirement {
 		$this->Quantity = $Quantity;
 		$this->CostPerUnit = $CostPerUnit;
 		$this->ContractReqID = $ContractReqID;
+	}
+	function ContractRequirement  ($Requirement,
+									$Quantity,
+									$CostPerUnit,
+									$ContractReqID=0){
+		self::__construct ($Requirement,
+									$Quantity,
+									$CostPerUnit,
+									$ContractReqID=0);
 	}
 }
 ?>

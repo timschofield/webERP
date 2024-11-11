@@ -57,11 +57,15 @@ Class PurchOrder {
 	var $KLCustomsDate;
 	var $KLArrivalDate;
 
-	function PurchOrder(){
+	function __construct(){
 	/*Constructor function initialises a new purchase order object */
 		$this->LineItems = array();
 		$this->total=0;
 		$this->LinesOnOrder=0;
+	}
+
+	function PurchOrder() {
+		self::__construct();
 	}
 
 	function add_to_order($LineNo,
@@ -241,7 +245,7 @@ Class LineDetails {
 	Var $SerialItems;  /*An array holding the batch/serial numbers and quantities in each batch*/
 	Var $AssetID;
 
-	function LineDetails (	$LineNo,
+	function __construct (	$LineNo,
 						$StockItem,
 						$Serialised,
 						$Controlled,
@@ -297,6 +301,51 @@ Class LineDetails {
 		$this->SerialItemsValid=false;
 		$this->AssetID = $AssetID;
 
+	}
+	function LineDetails($LineNo,
+						$StockItem,
+						$Serialised,
+						$Controlled,
+						$Qty,
+						$ItemDescr,
+						$Price,
+						$UOM,
+						$GLCode,
+						$ReqDelDate,
+						$ShiptRef =0,
+						$Completed,
+						$JobRef,
+						$QtyInv,
+						$QtyRecd,
+						$GLActName,
+						$DecimalPlaces,
+						$SuppliersUnit,
+						$ConversionFactor,
+						$LeadTime,
+						$Suppliers_PartNo,
+						$AssetID) {
+		self::__construct($LineNo,
+						$StockItem,
+						$Serialised,
+						$Controlled,
+						$Qty,
+						$ItemDescr,
+						$Price,
+						$UOM,
+						$GLCode,
+						$ReqDelDate,
+						$ShiptRef =0,
+						$Completed,
+						$JobRef,
+						$QtyInv,
+						$QtyRecd,
+						$GLActName,
+						$DecimalPlaces,
+						$SuppliersUnit,
+						$ConversionFactor,
+						$LeadTime,
+						$Suppliers_PartNo,
+						$AssetID);
 	}
 }
 ?>
