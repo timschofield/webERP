@@ -9,20 +9,26 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 
+$Title = _('Import Excel with Tokopedia URL information');
+
+include('includes/header.php');
+
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
 	  <div>
 		<br/>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['submit'])) {
-    submit($_POST['SelectedFile']);
+    submit($_POST['SelectedFile'], $RootPath, $Theme, $Title);
 } else {
-    display($RootPath, $Theme);
+    display($RootPath, $Theme, $Title);
 }
+
+include('includes/footer.php');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($SelectedFile) {
+function submit($SelectedFile, $RootPath, $Theme, $Title) {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
@@ -38,9 +44,8 @@ function submit($SelectedFile) {
 	//initialise no input errors
 	$InputError = FALSE;
 	
-	
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . 
 		'</p>';
 
 	if(!$InputError){
@@ -81,11 +86,11 @@ function submit($SelectedFile) {
 			
 			if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 				// Already exists, so only update the info with the newest tokopedia link and tokopedia product id if needed
-				ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia, $db);
+				ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
 				$Action = "Update";
 			}else{
 				// does not exist, so need to insert a new row for the item
-				ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia, $db);
+				ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
 				$Action = "Insert";
 			}
 
@@ -115,10 +120,8 @@ function submit($SelectedFile) {
 } // End of function submit()
 
 
-function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($RootPath, $Theme, $Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
-	$Title = _('Import Excel with Tokopedia URL information');
-	include('includes/header.php');
 	// Display form fields. This function is called the first time the page is called.
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
@@ -139,7 +142,6 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 		<br />';
 	echo '</div>
 		</form>';
-	include('includes/footer.php');
 
 } // End of function display()
 

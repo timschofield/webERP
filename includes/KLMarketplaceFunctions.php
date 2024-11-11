@@ -251,7 +251,7 @@ function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLa
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db){
+function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee){
 	$SQL="INSERT INTO klstockmarketplaces 
 				(stockid,
 				shopeeurl,
@@ -268,7 +268,7 @@ function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLSh
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia, $db){
+function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
 	$SQL="INSERT INTO klstockmarketplaces 
 				(stockid,
 				tokopediaurl,
@@ -297,7 +297,7 @@ function ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLa
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee, $db){
+function ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee){
 	$SQL = "UPDATE klstockmarketplaces
 			SET shopeeurl = '" . $URLShopee . "',
 				shopeeproductid = '" . $ShopeeProductId ."',
@@ -309,7 +309,7 @@ function ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLSh
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia, $db){
+function ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
 	$SQL = "UPDATE klstockmarketplaces
 			SET tokopediaurl = '" . $URLTokopedia . "',
 				tokopediaproductid = '" . $TokopediaProductId ."',
