@@ -2721,7 +2721,7 @@ function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $
 			$sqlDelete = "DELETE FROM salescatprod
 							WHERE stockid = '" . $ProductId . "'
 								AND salescatid NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-			$resultDelete = DB_query($sqlDelete,$db,$UpdateErrMsg,$DbgMsg,true);
+			$resultDelete = DB_query($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
 			if ($ShowMessages){
 				printf('<td>%s</td>
 						<td>%s</td>

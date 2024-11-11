@@ -48,7 +48,7 @@ $sql= "SELECT salesorders.orderno,
 		 AND salesorders.quotation=0
 		 ORDER BY custbranch.salesman, salesorders.orderno";
 
-$Result=DB_query($sql,$db,'','',false,false); //dont trap errors here
+$Result=DB_query($sql,'','',false,false); //dont trap errors here
 
 if (DB_error_no($db)!=0){
 	include('includes/header.php');

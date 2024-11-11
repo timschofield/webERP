@@ -132,7 +132,7 @@ if (isset($_POST['submit'])) {
 // PREVENT DELETES IF DEPENDENT RECORDS
 
 	$sql= "SELECT COUNT(*) FROM prodspec WHERE  prodspec.testid='".$SelectedQATest."'";
-	//$result = DB_query($sql,$db);
+	//$result = DB_query($sql);
 	//$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		prnMsg(_('Cannot delete this QA Test because Product Specs are using it'),'error');

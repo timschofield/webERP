@@ -29,7 +29,7 @@ $SQL = "SELECT custbranch.email as email
 		WHERE debtorsmaster.debtorno='" .$_SESSION['CustomerID'] . "' LIMIT 1";
 
 $ErrMsg = _('There was a problem retrieving the contact details for the customer');
-$ContactResult=DB_query($SQL,$db,$ErrMsg);
+$ContactResult=DB_query($SQL, $ErrMsg);
 
 if (DB_num_rows($ContactResult)>0){
 	$EmailAddrRow = DB_fetch_row($ContactResult);
