@@ -310,10 +310,9 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 			periods.lastdate_in_period
 		ORDER BY salesanalysis.periodno";
 
-
 	$graph->SetTitle($GraphTitle);
 	$graph->SetTitleColor('blue');
-	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png');
+	$graph->SetOutputFile($_SESSION['reports_dir'] . '/salesgraph.png');
 	$graph->SetXTitle(_('Month'));
 	if ($_POST['GraphValue']=='Net'){
 		$graph->SetYTitle(_('Sales Value'));
@@ -368,7 +367,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->DrawGraph();
 	echo '<table class="selection">
 			<tr>
-				<td><p><img class="graph" src="', $_SESSION['reports_dir'], '/salesgraph.png" alt="Sales Report Graph"></img></p></td>
+				<td><p><img class="graph" src="',$RootPath,'/', $_SESSION['reports_dir'], '/salesgraph.png" alt="Sales Report Graph"></img></p></td>
 			</tr>
 		  </table>';
 	include('includes/footer.php');
