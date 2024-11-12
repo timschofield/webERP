@@ -4370,8 +4370,8 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				<td class="number">%s</td>
 				</tr>', 
 				"Daily Stock sold last " . $NumDays . " days " . 
-				ConvertSQLDateTime($FromLastDaysThisYear) . "-" .
-				ConvertSQLDateTime($ToLastDaysThisYear). " (PCS)", 
+				ConvertSQLDate($FromLastDaysThisYear) . "-" .
+				ConvertSQLDate($ToLastDaysThisYear). " (PCS)", 
 				locale_number_format($DailySoldItemsThisYearPastDays,0)
 				);
 		$k = StartEvenOrOddRow($k);
@@ -4382,8 +4382,8 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				<td class="number">%s</td>
 				</tr>', 
 				"Daily Stock sold same last " . $NumDays . " days last year " . 
-				ConvertSQLDateTime($FromLastDaysLastYear) . "-" .
-				ConvertSQLDateTime($ToLastDaysLastYear). " (PCS)", 
+				ConvertSQLDate($FromLastDaysLastYear) . "-" .
+				ConvertSQLDate($ToLastDaysLastYear). " (PCS)", 
 				locale_number_format($DailySoldItemsLastYearPastDays,0)
 				);
 		$k = StartEvenOrOddRow($k);
@@ -4404,8 +4404,8 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				<td class="number">%s</td>
 				</tr>', 
 				"Daily Stock sold next " . $NumDaysLastYear . " days last year " . 
-				ConvertSQLDateTime($FromNextDaysLastYear) . "-" .
-				ConvertSQLDateTime($ToNextDaysLastYear). " (PCS)", 
+				ConvertSQLDate($FromNextDaysLastYear) . "-" .
+				ConvertSQLDate($ToNextDaysLastYear). " (PCS)", 
 				locale_number_format($DailySoldItemsLastYearNextDays,0)
 				);
 		$k = StartEvenOrOddRow($k);
