@@ -181,7 +181,7 @@ if (isset($_POST['submit'])) {
 									WHERE categoryid='" . $_POST['AssetCategoryID'] . "'");
 				$NewAccounts = DB_fetch_array($result);
 
-				$TransNo = GetNextTransNo( 42, $db); /* transaction type is asset category change */
+				$TransNo = GetNextTransNo(42); /* transaction type is asset category change */
 
 				//credit cost for the old category
 				$SQL = "INSERT INTO gltrans (type,
@@ -311,7 +311,7 @@ if (isset($_POST['submit'])) {
 
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 				$NewAssetID = DB_Last_Insert_ID('fixedassets', 'assetid');
-				$TransNo = GetNextTransNo(49,$db);
+				$TransNo = GetNextTransNo(49);
 				$PeriodNo = GetPeriod($_POST['DatePurchased'],$db);
 
 				$sql = "INSERT INTO fixedassettrans ( assetid,
@@ -406,7 +406,7 @@ if (isset($_POST['submit'])) {
 
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
-		$TransNo = GetNextTransNo( 43, $db); /* transaction type is asset deletion - (and remove cost/accumdepn from GL) */
+		$TransNo = GetNextTransNo(43); /* transaction type is asset deletion - (and remove cost/accumdepn from GL) */
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted
 			$SQL = "INSERT INTO gltrans (type,

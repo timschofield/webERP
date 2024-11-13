@@ -230,7 +230,7 @@ function PurgetableGltrans($PurgeToPeriod){
 										AND account = '".$mycosolidatedrow['account']."'";
 					$resultDelete = DB_query($sqlDelete,$ErrMsg,$DbgMsg);
 					
-					$Typeno = GetNextTransNo(1000, $db);
+					$Typeno = GetNextTransNo(1000);
 					$sqlInsert = "INSERT INTO gltrans 
 										(type,
 										typeno,

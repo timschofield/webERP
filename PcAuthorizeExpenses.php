@@ -156,7 +156,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 			}
 
 			//get typeno
-			$typeno = GetNextTransNo($type,$db);
+			$typeno = GetNextTransNo($type);
 
 			//build narrative
 			$Narrative = _('Petty Cash') . ' - '. $myrow['tabcode'] . ' - ' . $myrow['codeexpense'] . ' - ' . DB_escape_string($myrow['notes']) . ' - ' . $myrow['receipt'];
@@ -297,7 +297,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 
 			if ($myrow['codeexpense'] == 'ASSIGNCASH'){
 			// if it's a cash assignation we need to updated banktrans table as well.
-				$ReceiptTransNo = GetNextTransNo( 2, $db);
+				$ReceiptTransNo = GetNextTransNo(2);
 				$SQLBank= "INSERT INTO banktrans (transno,
 												type,
 												bankact,

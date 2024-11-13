@@ -136,7 +136,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
-	$ExDiffTransNo = GetNextTransNo(36,$db);
+	$ExDiffTransNo = GetNextTransNo(36);
 	$resultTx = DB_Txn_Begin();
 
 	$result = DB_query($sql);

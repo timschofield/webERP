@@ -429,7 +429,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	$Result = DB_Txn_Begin();
 /*Now Get the next GRN - function in SQL_CommonFunctions*/
-	$GRN = GetNextTransNo(25, $db);
+	$GRN = GetNextTransNo(25);
 
 	$PeriodNo = GetPeriod($_POST['DefaultReceivedDate'], $db);
 	$_POST['DefaultReceivedDate'] = FormatDateForSQL($_POST['DefaultReceivedDate']);

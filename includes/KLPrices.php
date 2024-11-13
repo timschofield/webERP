@@ -332,7 +332,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 	
 	if ($OldStockAccount != $NewStockAct AND $_SESSION['CompanyRecord']['gllink_stock']==1) {
 	/*Then we need to make a journal to transfer the cost to the new stock account */
-		$JournalNo = GetNextTransNo(0,$db); //enter as a journal
+		$JournalNo = GetNextTransNo(0); //enter as a journal
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
 									trandate,

@@ -1127,7 +1127,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
 /*Now Get the next credit note number - function in SQL_CommonFunctions*/
 
-	 $CreditNo = GetNextTransNo(11, $db);
+	 $CreditNo = GetNextTransNo(11);
 	 $SQLCreditDate = Date('Y-m-d');
 	 $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 

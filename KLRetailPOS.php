@@ -594,20 +594,20 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 		$result = DB_Txn_Begin();
 		/*First add the order to the database - it only exists in the session currently! */
-		$OrderNo = GetNextTransNo(30, $db);
-		$InvoiceNo = GetNextTransNo(10, $db);
+		$OrderNo = GetNextTransNo(30);
+		$InvoiceNo = GetNextTransNo(10);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 		// Get the Customer invoice number depending on Area
 		if ($Area == $_SESSION['AreaSalesCashOthers']){
 			// Cash sales
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceC'], $db),7) ."-C";
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceC']),7) ."-C";
 		}elseif ($Area == $_SESSION['AreaSalesCash']){
 			// Cash sales PT
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceB'], $db),7) ."-B";
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceB']),7) ."-B";
 		}elseif ($Area == $_SESSION['AreaSalesCreditCard']){
 			// Credit Card Sales PT
-			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceA'], $db),7) ."-A";
+			$_SESSION['Items'.$identifier]->CustRef = substr($_SESSION['UserStockLocation'],3,2)."-".zerofill(GetNextTransNo($_SESSION['CounterInvoiceA']),7) ."-A";
 		}else{
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');

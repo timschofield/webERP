@@ -366,7 +366,7 @@ function AccountPaymentRetail($PaymentMethod,
 							$GLAccountBankCommission,
 							$ExRate){
 
-	$ReceiptNumber = GetNextTransNo(12,$db);
+	$ReceiptNumber = GetNextTransNo(12);
 
 	if ($PaymentMethod == PAYMENT_BY_CREDITCARD){
 		$Description = $CustomerReference  . 
@@ -435,7 +435,7 @@ function AccountDiscountOnOrderRetail($TypeDiscount,
 							$ExRate){
 
 	if (!isset($ReceiptNumber)){
-		$ReceiptNumber = GetNextTransNo(10,$db);
+		$ReceiptNumber = GetNextTransNo(10);
 	}
 	
 	$Description = $CustomerReference  . 
@@ -472,7 +472,7 @@ function AccountDebtorPayment($ReceiptNumber,
 							$DebtorNo){
 
 	if (!isset($ReceiptNumber)){
-		$ReceiptNumber = GetNextTransNo(12,$db);
+		$ReceiptNumber = GetNextTransNo(12);
 	}
 
 	$Description = $CustomerReference  . 
@@ -589,7 +589,7 @@ function AccountDebtorDiscount($ReceiptNumber,
 							$DebtorNo){
 
 	if (!isset($ReceiptNumber)){
-		$ReceiptNumber = GetNextTransNo(12,$db);
+		$ReceiptNumber = GetNextTransNo(12);
 	}
 
 	if ($Type == 'VOUCHER_DISCOUNT'){

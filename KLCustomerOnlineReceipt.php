@@ -252,7 +252,7 @@ if (isset($_POST['CommitBatch'])){
 		$i++;
 	}
 
-	$_SESSION['ReceiptBatch']->BatchNo = GetNextTransNo(12,$db);
+	$_SESSION['ReceiptBatch']->BatchNo = GetNextTransNo(12);
 	/*Start a transaction to do the whole lot inside */
 	$result = DB_Txn_Begin();
 
@@ -375,7 +375,7 @@ if (isset($_POST['CommitBatch'])){
 
 				*/
 
-				$PaymentTransNo = GetNextTransNo( 1, $db);
+				$PaymentTransNo = GetNextTransNo(1);
 				$SQL="INSERT INTO banktrans (transno,
 											type,
 											bankact,

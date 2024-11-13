@@ -840,7 +840,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 		$result = DB_Txn_Begin();
 
-		$BatchNo = GetNextTransNo(12,$db);
+		$BatchNo = GetNextTransNo(12);
 		$Today = date('Y-m-d');
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 		$Narrative = 'Online ' . $OrderNo . ' ' . $PaymentCode;

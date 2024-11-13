@@ -351,7 +351,7 @@ if(isset($_POST['CommitBatch'])) {
 
 		//its a nominal bank transaction type 1
 
-			$TransNo = GetNextTransNo( 1, $db);
+			$TransNo = GetNextTransNo(1);
 			$TransType = 1;
 
 			if($_SESSION['CompanyRecord']['gllink_creditors']==1) { /* then enter GLTrans */
@@ -444,7 +444,7 @@ if(isset($_POST['CommitBatch'])) {
 
 				*/
 
-					$ReceiptTransNo = GetNextTransNo( 2, $db);
+					$ReceiptTransNo = GetNextTransNo(2);
 					$SQL = "INSERT INTO banktrans (
 								transno,
 								type,
@@ -477,7 +477,7 @@ if(isset($_POST['CommitBatch'])) {
 			/*Its a supplier payment type 22 */
 			$CreditorTotal = (($_SESSION['PaymentDetail'.$identifier]->Discount + $_SESSION['PaymentDetail'.$identifier]->Amount)/$_SESSION['PaymentDetail'.$identifier]->ExRate)/$_SESSION['PaymentDetail'.$identifier]->FunctionalExRate;
 
-			$TransNo = GetNextTransNo(22, $db);
+			$TransNo = GetNextTransNo(22);
 			$TransType = 22;
 
 			/* Create a SuppTrans entry for the supplier payment */

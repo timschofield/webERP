@@ -61,7 +61,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 	if ($OldCat == $OldCatInStockMaster){
 		if ($OldStockAccount != $NewStockAct) {
 			/*Then we need to make a journal to transfer the cost to the new stock account */
-			$JournalNo = GetNextTransNo(0,$db); //enter as a journal
+			$JournalNo = GetNextTransNo(0); //enter as a journal
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -115,7 +115,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 				$WIPValue += ($WIPRow['costissued']-$WIPRow['costrecd']);
 			}
 			if ($WIPValue !=0){
-				$JournalNo = GetNextTransNo(0,$db); //enter as a journal
+				$JournalNo = GetNextTransNo(0); //enter as a journal
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,

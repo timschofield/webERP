@@ -409,7 +409,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 					$QOH=$QOHRow[0];
 
 					if ($_SESSION['CompanyRecord']['gllink_stock']==1){
-						$CostUpdateNo = GetNextTransNo(35, $db);
+						$CostUpdateNo = GetNextTransNo(35);
 						$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
 
 						$ValueOfChange = $QOH * ($ItemShipmentCost - $StdCostUnit);

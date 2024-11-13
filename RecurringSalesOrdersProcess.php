@@ -104,7 +104,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 	$DelDate = FormatDateforSQL(DateAdd(ConvertSQLDate($RecurrOrderRow['lastrecurrence']),'d',(365/$RecurrOrderRow['frequency'])));
 
 	echo '<br />' . _('Date calculated for the next recurrence was') .': ' . $DelDate;
-	$OrderNo = GetNextTransNo(30, $db);
+	$OrderNo = GetNextTransNo(30);
 
 	$HeaderSQL = "INSERT INTO salesorders (
 							orderno,
@@ -243,7 +243,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$DispTaxProvinceID = $myrow[0];
 
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
-		$InvoiceNo = GetNextTransNo(10, $db);
+		$InvoiceNo = GetNextTransNo(10);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
 
 	/*Start an SQL transaction */

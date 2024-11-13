@@ -276,7 +276,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 
 				if ($CompanyFrom == 'PTADU'){
 					$PeriodNo = GetPeriod(ConvertSQLDate($EndDate), $db);
-					$TransNo = GetNextTransNo( 10, $db);
+					$TransNo = GetNextTransNo(10);
 
 					// account for the goods sold
 					InsertIntoGLTrans("10", 

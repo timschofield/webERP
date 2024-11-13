@@ -747,7 +747,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 /*Now Get the next invoice number - function in SQL_CommonFunctions*/
 
-	$InvoiceNo = GetNextTransNo(10, $db);
+	$InvoiceNo = GetNextTransNo(10);
 	$PeriodNo = GetPeriod($DefaultDispatchDate, $db);
 
 /*Start an SQL transaction */

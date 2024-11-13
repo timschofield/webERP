@@ -31,7 +31,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 	// Create Transfer Number
 	if(!isset($Trf_ID) && $_POST['ReportType'] == 'Batch'){
-		$Trf_ID = GetNextTransNo(16,$db);
+		$Trf_ID = GetNextTransNo(16);
 	}
 
 	// from location

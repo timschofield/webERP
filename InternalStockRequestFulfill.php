@@ -38,7 +38,7 @@ if (isset($_POST['UpdateAll'])) {
 
 			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' '. $StockID . ' ' . _('to department') . ' ' . $Department . ' ' . _('from') . ' ' . $Location ;
 
-			$AdjustmentNumber = GetNextTransNo(17,$db);
+			$AdjustmentNumber = GetNextTransNo(17);
 			$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
 			$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 

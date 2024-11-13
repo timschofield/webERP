@@ -290,7 +290,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 				// Create Transfer Number
 				if(!isset($Trf_ID) and $ReportType == 'Batch') {
-					$Trf_ID = GetNextTransNo(16,$db);
+					$Trf_ID = GetNextTransNo(16);
 					$EmailText = $EmailText . "Transfer # " . $Trf_ID . "\n";
 				}
 
