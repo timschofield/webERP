@@ -1,5 +1,4 @@
 <?php
-/* $Id: FreightCalculation.inc 6944 2014-10-27 07:15:34Z daintree $*/
 /*Function to calculate the freight cost.
 Freight cost is determined by looking for a match of destination city from the Address2 and Address3 fields then looking through the freight company rates for the total KGs and Cubic meters  to figure out the least cost shipping company. */
 
@@ -13,8 +12,7 @@ Function CalcFreightCost ($TotalValue,
 							$TotalVolume,
 							$TotalWeight,
 							$FromLocation,
-							$Currency,
-							$db){
+							$Currency){
 
 	$CalcFreightCost =9999999999;
 	$CalcBestShipper ='';

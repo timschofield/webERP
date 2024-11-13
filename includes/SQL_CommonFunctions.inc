@@ -448,16 +448,16 @@ function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
 }
 
 /*Creates sample and testresults */
-function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK, $db) {
+function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK) {
 	$result = DB_query("SELECT COUNT(testid) FROM prodspecs
 							WHERE keyval='" . $ProdSpecKey . "'
-							AND active='1'",	$db);
+							AND active='1'");
 	$myrow = DB_fetch_row($result);
 	if ($myrow[0]>0) {
 		if ($DuplicateOK==0) {
 			$result = DB_query("SELECT COUNT(sampleid) FROM qasamples
 								WHERE prodspeckey='" . $ProdSpecKey . "'
-								AND lotkey='" . $LotKey ."'",	$db);
+								AND lotkey='" . $LotKey ."'");
 			$myrow2 = DB_fetch_row($result);
 		} else {
 			$myrow2[0]=0;

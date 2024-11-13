@@ -654,7 +654,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 							$DbgMsg = _('The following SQL to insert the serial stock movement records was used');
 							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 							if ($_SESSION['QualityLogSamples']==1) {
-								CreateQASample($OrderLine->StockID,$Item->BundleRef, '', 'Created from Purchase Order', 0, 0,$db);
+								CreateQASample($OrderLine->StockID,$Item->BundleRef, '', 'Created from Purchase Order', 0, 0);
 							}
 						}//non blank BundleRef
 					} //end foreach
