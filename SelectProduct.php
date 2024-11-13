@@ -435,11 +435,13 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == False) {
 	echo '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search Outstanding Purchase Orders') . '</a><br />';
 	echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php?SelectedStockItem=' . urlencode($StockID) . '">' . _('Search All Purchase Orders') . '</a><br />';
 
-	$SupportedImgExt = array('png','jpg','jpeg');
-	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-//	echo '<a href="' . $RootPath . '/' . $imagefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
-	$largefile = PATH_TO_CATALOG_IMAGES . $StockID . '.jpg';
-	echo '<a href="' . $largefile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
+	$PossibleImageFiles = glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{png,jpg,jpeg}', GLOB_BRACE);
+	if (count($PossibleImageFiles)>0) {
+		$ImageFile =  $PossibleImageFiles[0];
+	} else {
+		$ImageFile ='';
+	}
+	echo '<a href="' . $RootPath . '/' . $ImageFile . '" target="_blank">' . _('Show Part Picture (if available)') . '</a><br />';
 
 }
 if ($Its_A_Dummy == False) {
@@ -457,24 +459,24 @@ if ($Its_A_Kitset_Assembly_Or_Dummy == false) {
 	echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 
 	//show the item image if it has been uploaded
-	if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($imagefile) ) {
+	if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($ImageFile) ) {
 		if ($_SESSION['ShowStockidOnImages'] == '0'){
 			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 								'&amp;StockID='.urlencode($StockID).
 								'&amp;text='.
-								'&amp;width=100'.
-								'&amp;height=100'.
+								'&amp;width=200'.
+								'&amp;height=200'.
 								'" alt="" />';
 		} else {
 			$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 								'&amp;StockID='.urlencode($StockID).
 								'&amp;text='. $StockID .
-								'&amp;width=100'.
-								'&amp;height=100'.
+								'&amp;width=200'.
+								'&amp;height=200'.
 								'" alt="" />';
 		}
-	} else if (file_exists ($imagefile)) {
-		$StockImgLink = '<img src="' . $imagefile . '" height="100" width="100" />';
+	} else if (file_exists ($ImageFile)) {
+		$StockImgLink = '<img src="' . $ImageFile . '" height="200" width="200" />';
 	} else {
 		$StockImgLink = _('No Image');
 	}

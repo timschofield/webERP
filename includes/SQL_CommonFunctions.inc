@@ -105,7 +105,7 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
 
 
 
-Function GetCreditAvailable($DebtorNo,&$db) {
+Function GetCreditAvailable($DebtorNo) {
 
 	$sql = "SELECT debtorsmaster.debtorno,
 			debtorsmaster.creditlimit,

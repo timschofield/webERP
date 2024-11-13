@@ -67,9 +67,9 @@ $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	while ($myrow = DB_fetch_array($result)) {
 		// From KANTO to Shop, send the items needed to fill the RL
-		$EmailText  = KLStockDispatch('KANTO', $myrow['loccode'], "All", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $myrow['smartdispatchminmodels'], $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch('KANTO', $myrow['loccode'], "All", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $myrow['smartdispatchminmodels'], $RootPath, $EmailText);
 		// From Shop to KANTO, return the overstock
-		$EmailText  = KLStockDispatch($myrow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $myrow['smartdispatchminmodels'], $RootPath, $db, $EmailText);
+		$EmailText  = KLStockDispatch($myrow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $myrow['smartdispatchmaxmodels'], $myrow['smartdispatchminmodels'], $RootPath, $EmailText);
 	}
 }
 
@@ -78,7 +78,7 @@ $EmailSubject  = "KL webERP Cron Job: Smart Dispatch ". $Group;
 SendEmailFromCron($EmailAddress, $EmailSubject, $EmailText, '', $begintime, $ScriptTile);
 
 /****************************************************************************************/
-function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $db, $EmailText){
+function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $EmailText){
 
 	$TableResult = array();
 

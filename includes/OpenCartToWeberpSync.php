@@ -8,7 +8,7 @@ function OpenCartToWeberpSync($ShowMessages, $db, $db_oc, $EmailText=''){
 
 	// check last time we run this script, so we know which records need to update from OC to webERP
 	$LastTimeRun = CheckLastTimeRun('OpenCartToWeberp', $db);
-	$TimeDifference = Get_SQL_OC_to_PHP_time_difference($db);
+	$TimeDifference = Get_SQL_OC_to_PHP_time_difference();
 	
 	if ($ShowMessages){
 		prnMsg('This script was last run on: ' . $LastTimeRun . ' webERP Database time.','success');

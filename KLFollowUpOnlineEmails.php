@@ -333,12 +333,12 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 	include ('includes/OpenCartConnectDB.php');
 	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_SHIPPED
 	$ReasonChangeStatusId = "webERP --> Order shipped via " . $myrow['shippername'] . " AWB# = " . $myrow['consignment'];  
-	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_SHIPPED, 1, $myrow['shipvia'], $myrow['consignment'], $ReasonChangeStatusId, $db, $db_oc);
+	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_SHIPPED, 1, $myrow['shipvia'], $myrow['consignment'], $ReasonChangeStatusId);
 	prnMsg("Updated Order status in OpenCart as SHIPPED");
 	// change status of the order in Opencart, as OPENCART_ORDER_STATUS_COMPLETE
 	sleep(1); // to show the change of status in the correct order
 	$ReasonChangeStatusId = "webERP --> Order shipped and accounted for.";
-	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_COMPLETE, 1, "", "", $ReasonChangeStatusId, $db, $db_oc);
+	UpdateOpenCartOrderStatus($_GET['CustomerOrder'], OPENCART_ORDER_STATUS_COMPLETE, 1, "", "", $ReasonChangeStatusId);
 	prnMsg("Updated Order status in OpenCart as COMPLETE");
 
 	// update the sales order, as we send shipped it

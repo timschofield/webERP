@@ -1,6 +1,6 @@
 <?php
 
-function Get_SQL_to_PHP_time_difference($db) {
+function Get_SQL_to_PHP_time_difference() {
 	// Based on http://stackoverflow.com/questions/3108591/calculate-number-of-hours-between-2-dates-in-php
     $NowPHP = new DateTime();
 
@@ -20,7 +20,7 @@ function Get_SQL_to_PHP_time_difference($db) {
 	return $Offset;
 }
 
-function Get_SQL_OC_to_PHP_time_difference($db) {
+function Get_SQL_OC_to_PHP_time_difference() {
 	// Based on http://stackoverflow.com/questions/3108591/calculate-number-of-hours-between-2-dates-in-php
     $NowPHP = new DateTime();
 
@@ -52,7 +52,7 @@ function GetServerTimeNow($TimeDifference){
 }
 
 function PrintTimeInformation($db) {
-	$TimeDifference = Get_SQL_to_PHP_time_difference($db);
+	$TimeDifference = Get_SQL_to_PHP_time_difference();
 	$Text = 'Server time difference: ' . $TimeDifference . "\n" .
 			'Server time now: ' . GetServerTimeNow($TimeDifference) . "\n".
 			'webERP time now: ' . date('d/M/Y H:i:s') . "\n\n";
@@ -82,21 +82,21 @@ function CheckLastTimeRun($Script, $db){
 function SetLastTimeRun($Script, $db){
 	if ($Script == 'OpenCartToWeberp'){
 		// Updating from OC to webERP: Check the time zone used in OC DB 
-		$ServerNow = GetServerTimeNow(Get_SQL_OC_to_PHP_time_difference($db));
+		$ServerNow = GetServerTimeNow(Get_SQL_OC_to_PHP_time_difference());
 		$_SESSION['OpenCartToWeberp_LastRun'] = $ServerNow;
 		$sql = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
 				WHERE confname = 'OpenCartToWeberp_LastRun'";
 	}elseif ($Script == 'WeberpToOpenCartHourly'){
 		// Updating from webERP to OC: Check the time zone used in webERP DB 
-		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 		$_SESSION['WeberpToOpenCartHourly_LastRun'] = $ServerNow;
 		$sql = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
 				WHERE confname = 'WeberpToOpenCartHourly_LastRun'";
 	}elseif ($Script == 'WeberpToOpenCartDaily'){
 		// Updating from webERP to OC: Check the time zone used in webERP DB 
-		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+		$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 		$_SESSION['WeberpToOpenCartDaily_LastRun'] = $ServerNow;
 		$sql = "UPDATE config
 				SET confvalue = '" . $ServerNow ."'
@@ -983,9 +983,9 @@ function MaintainSeoUrl($Action, $SEOQuery, $SEOKeyword, $StoreId, $LanguageId, 
 	}
 }
 
-function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB, $Comment, $db, $db_oc){
+function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB, $Comment){
 
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 
 	$SQL = "SELECT powertrack_code
 			FROM shippers
@@ -1048,7 +1048,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 
 function UpdateOpenCartOrderPayment($OrderId, $db, $db_oc){
 
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to Update OpenCart Order Payment failed');

@@ -1739,7 +1739,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 	} /*end of if Sales and GL integrated */
 	EnsureGLEntriesBalance(10,$InvoiceNo);
 	
-	MarkWebErpOrderInOpenCartAs($_SESSION['Items'.$identifier]->OrderNo, OPENCART_ORDER_STATUS_SHIPPED, $_POST['Consignment'], $db);
+	MarkWebErpOrderInOpenCartAs($_SESSION['Items'.$identifier]->OrderNo, OPENCART_ORDER_STATUS_SHIPPED, $_POST['Consignment']);
 
 	DB_Txn_Commit();
 // *************************************************************************
@@ -1822,7 +1822,7 @@ echo '</form>';
 include('includes/footer.php');
 
 
-function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB, $db){
+function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB){
 	include ('includes/KLDefines.php');
 	include ('includes/OpenCartGeneralFunctions.php');
 	include ('includes/OpenCartConnectDB.php');
@@ -1842,10 +1842,10 @@ function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB, $db){
 		if ($myrow['typeid'] == CUSTOMER_TYPE_WEBSITE){
 			if ($Status == OPENCART_ORDER_STATUS_SHIPPED){
 				$ReasonChangeStatusId = "webERP --> Order shipped via " . $myrow['shippername'] . " AWB# = " . $AWB;  
-				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 1, $myrow['shipvia'], $AWB, $ReasonChangeStatusId, $db, $db_oc);
+				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 1, $myrow['shipvia'], $AWB, $ReasonChangeStatusId);
 			}else{
 				$ReasonChangeStatusId = "webERP --> Change of status";  
-				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 1, "", "", $ReasonChangeStatusId, $db, $db_oc);
+				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 1, "", "", $ReasonChangeStatusId);
 			}
 		}
 	}

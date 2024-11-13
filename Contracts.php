@@ -739,7 +739,7 @@ if (isset($_POST['SelectedCustomer'])) {
 		$_SESSION['Contract'.$identifier]->ExRate = $myrow['rate'];
 
 		if ($_SESSION['CheckCreditLimits'] > 0){  /*Check credit limits is 1 for warn and 2 for prohibit contracts */
-			$CreditAvailable = GetCreditAvailable($_SESSION['Contract'.$identifier]->DebtorNo,$db);
+			$CreditAvailable = GetCreditAvailable($_SESSION['Contract'.$identifier]->DebtorNo);
 			if ($_SESSION['CheckCreditLimits']==1 AND $CreditAvailable <=0){
 				prnMsg(_('The') . ' ' . $_SESSION['Contract'.$identifier]->CustomerName . ' ' . _('account is currently at or over their credit limit'),'warn');
 			} elseif ($_SESSION['CheckCreditLimits']==2 AND $CreditAvailable <=0){

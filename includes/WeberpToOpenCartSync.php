@@ -8,7 +8,7 @@ function WeberpToOpenCartDailySync($ShowMessages, $db, $db_oc, $EmailText=''){
 	// check last time we run this script, so we know which records need to update from OC to webERP
 	$LastTimeRun = CheckLastTimeRun('WeberpToOpenCartDaily', $db);
 	if ($ShowMessages){
-		$TimeDifference = Get_SQL_to_PHP_time_difference($db);
+		$TimeDifference = Get_SQL_to_PHP_time_difference();
 		prnMsg('This script was last run on: ' . $LastTimeRun . ' Server time difference: ' . $TimeDifference,'success');
 		prnMsg('Server time now: ' . GetServerTimeNow($TimeDifference) ,'success');
 	}
@@ -64,7 +64,7 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $ControlTx = TRU
 	// check last time we run this script, so we know which records need to update from OC to webERP
 	$LastTimeRun = CheckLastTimeRun('WeberpToOpenCartHourly', $db);
 	if ($ShowMessages){
-		$TimeDifference = Get_SQL_to_PHP_time_difference($db);
+		$TimeDifference = Get_SQL_to_PHP_time_difference();
 		prnMsg('This script was last run on: ' . $LastTimeRun . ' Server time difference: ' . $TimeDifference,'success');
 		prnMsg('Server time now: ' . GetServerTimeNow($TimeDifference) ,'success');
 	}
@@ -110,7 +110,7 @@ function WeberpToOpenCartHourlySync($ShowMessages, $db, $db_oc, $ControlTx = TRU
 
 function SyncProductBasicInformation($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
 	$i = 0;
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	$Today = date('Y-m-d');
 	$TagSeparator = ", ";
 
@@ -1325,7 +1325,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText
 
 function SyncCurrencies($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
 	$i = 0;
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Currency Exchange Rates" . "\n" . PrintTimeInformation($db);
 	}
@@ -1452,7 +1452,7 @@ function KL_DailyCleanOpenCartDB($ShowMessages, $db, $db_oc, $EmailText=''){
 function CleanOldOpenCartCoupons($ShowMessages, $MaxDays, $db, $db_oc, $EmailText= ''){
 	$Title = 'Clean old OpenCart Couons expired ' . $MaxDays . ' ago';
 	$i = 0;
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){
 		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation($db);
 	}
@@ -1529,7 +1529,7 @@ function CleanOldOpenCartCoupons($ShowMessages, $MaxDays, $db, $db_oc, $EmailTex
 function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $EmailText= ''){
 	$Title = 'Change old PENDING OC Orders to EXPIRED';
 	$i = 0;
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){
 		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation($db);
 	}
@@ -1568,7 +1568,7 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $E
 			$OrderId = $myrow['order_id'];
 			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
 			$Comment = "webERP -> EXPIRED: Payment not received in due time.";
-			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 1, "", "", $Comment, $db, $db_oc);
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_EXPIRED, 1, "", "", $Comment);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
@@ -1604,7 +1604,7 @@ function ChangeOldPendingOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $E
 function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $EmailText= ''){
 	$Title = 'Change old SHIPPED OC Orders to COMPLETE';
 	$i = 0;
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){
 		$EmailText = $EmailText . $Title . "\n" . PrintTimeInformation($db);
 	}
@@ -1643,7 +1643,7 @@ function ChangeOldShippedOpenCartOrders($ShowMessages, $MaxDays, $db, $db_oc, $E
 			$OrderId = $myrow['order_id'];
 			$Name = $myrow['firstname'] . " " . $myrow['lastname'];
 			$Comment = "webERP -> COMPLETE: Order already shipped and accounted for.";
-			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_COMPLETE, 1, "", "", $Comment, $db, $db_oc);
+			UpdateOpenCartOrderStatus($OrderId, OPENCART_ORDER_STATUS_COMPLETE, 1, "", "", $Comment);
 
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);

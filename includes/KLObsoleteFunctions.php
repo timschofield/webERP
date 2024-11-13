@@ -2826,7 +2826,7 @@ function SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= 
 }
 
 function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
-	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference($db));
+	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Sales Categories" . "\n" . PrintTimeInformation($db);
 	}
