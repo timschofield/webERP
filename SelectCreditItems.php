@@ -1807,8 +1807,7 @@ at standard cost*/
 /*first reverse credit the cost of sales entry*/
 				  $COGSAccount = GetCOGSGLAccount($Area,
 				  					$CreditLine->StockID,
-									$_SESSION['CreditItems'.$identifier]->DefaultSalesType,
-									$db);
+									$_SESSION['CreditItems'.$identifier]->DefaultSalesType);
 				  $SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,

@@ -894,7 +894,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			
 			if ($OrderLine->StandardCost !=0){
 				/*first the cost of sales entry*/
-//				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+//				$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 				// when a retail partner sells PTADU items COGS should go to PTADU
 				$AccountCOGS = ACCOUNT_COGS_ADU;
 				

@@ -1755,7 +1755,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 												'" . $InvoiceNo . "',
 												'" . $DefaultDispatchDate . "',
 												'" . $PeriodNo . "',
-												'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db) . "',
+												'" . GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType) . "',
 												'" . $_SESSION['Items'.$identifier]->DebtorNo . " - " . $OrderLine->StockID . " x " . $OrderLine->Quantity . " @ " . $OrderLine->StandardCost . "',
 												'" . $OrderLine->StandardCost * $OrderLine->Quantity . "')";
 

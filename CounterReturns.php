@@ -1316,7 +1316,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 												'" . $CreditNoteNo . "',
 												'" . $ReturnDate . "',
 												'" . $PeriodNo . "',
-												'" . GetCOGSGLAccount($Area, $ReturnItemLine->StockID, $_SESSION['Items' . $identifier]->DefaultSalesType, $db) . "',
+												'" . GetCOGSGLAccount($Area, $ReturnItemLine->StockID, $_SESSION['Items' . $identifier]->DefaultSalesType) . "',
 												'" . $_SESSION['Items' . $identifier]->DebtorNo . " - " . $ReturnItemLine->StockID . " x " . -$ReturnItemLine->Quantity . " @ " . $ReturnItemLine->StandardCost . "',
 												'" . $ReturnItemLine->StandardCost * -$ReturnItemLine->Quantity . "')";
 

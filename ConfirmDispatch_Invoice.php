@@ -1389,7 +1389,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 					$DbgMsg = _('The following SQL to insert the klconsignment record was used');
 					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				}else{
-					$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+					$AccountCOGS = GetCOGSGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 				}
 // End of Consignment sales for PTADU MODIFICATIONS
 

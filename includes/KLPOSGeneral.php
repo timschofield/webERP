@@ -143,7 +143,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		/* Now account for the cost of sale and loss of stock */
 		if ($StandardCost !=0){
 			/*first the cost of sales entry*/
-			$AccountCOGL = GetCOGSGLAccount($Area, $StockId, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+			$AccountCOGL = GetCOGSGLAccount($Area, $StockId, $_SESSION['Items'.$identifier]->DefaultSalesType);
 			InsertIntoGLTrans("10", 
 							$InvoiceNo, 
 							Date('Y-m-d'),

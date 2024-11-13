@@ -1304,7 +1304,7 @@ if(isset($_POST['ProcessCredit']) AND $OKToProcess == true) {
 
 /*first the cost of sales entry*/
 
-				$COGSAccount = GetCOGSGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType, $db);
+				$COGSAccount = GetCOGSGLAccount($Area, $CreditLine->StockID, $_SESSION['CreditItems' . $identifier]->DefaultSalesType);
 
 				$SQL = "INSERT INTO gltrans(type,
 											typeno,
