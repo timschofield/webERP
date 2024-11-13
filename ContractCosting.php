@@ -231,7 +231,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 
 	include('includes/SQL_CommonFunctions.inc');
 
-	$GLCodes = GetStockGLCode($_SESSION['Contract'.$identifier]->ContractRef,$db);
+	$GLCodes = GetStockGLCode($_SESSION['Contract'.$identifier]->ContractRef);
 //Compare actual costs to original budgeted contract costs - if actual > budgeted - CR WIP and DR usage variance
 	$Variance =  ($OtherReqtsBudget+$ContractBOMBudget)-($OtherReqtsActual+$ContractBOMActual);
 

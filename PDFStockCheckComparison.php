@@ -132,7 +132,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $myrow['standardcost'] > 0){
 
-					$StockGLCodes = GetStockGLCode($myrow['stockid'],$db);
+					$StockGLCodes = GetStockGLCode($myrow['stockid']);
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
 

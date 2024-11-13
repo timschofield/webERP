@@ -113,7 +113,7 @@ if (isset($_POST['UpdateAll'])) {
 
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $StandardCost > 0){
 
-					$StockGLCodes = GetStockGLCode($StockID,$db);
+					$StockGLCodes = GetStockGLCode($StockID);
 
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,

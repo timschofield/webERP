@@ -156,7 +156,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 							);
 
 			/*now the stock entry*/
-			$StockGLCode = GetStockGLCode($StockId,$db);
+			$StockGLCode = GetStockGLCode($StockId);
 			InsertIntoGLTrans("10", 
 							$InvoiceNo, 
 							Date('Y-m-d'),

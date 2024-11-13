@@ -234,7 +234,7 @@ if(isset($_POST['EnterTransfer']) ) {
 			if($_SESSION['Transfer']->StockLocationToAccount !='') {
 				$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
 			} else {
-				$StockGLCode = GetStockGLCode($_SESSION['Transfer']->TransferItem[0]->StockID, $db);// Get Category's account codes.
+				$StockGLCode = GetStockGLCode($_SESSION['Transfer']->TransferItem[0]->StockID);// Get Category's account codes.
 				$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 			}
 			// Get the item cost:
@@ -390,7 +390,7 @@ if(isset($_POST['EnterTransfer']) ) {
 			if($_SESSION['Transfer']->StockLocationToAccount !='') {
 				$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
 			} else {
-				$StockGLCode = GetStockGLCode($_SESSION['Transfer']->TransferItem[0]->StockID, $db);// Get Category's account codes.
+				$StockGLCode = GetStockGLCode($_SESSION['Transfer']->TransferItem[0]->StockID);// Get Category's account codes.
 				$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 			}
 			// Get the item cost:

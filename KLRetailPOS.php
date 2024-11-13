@@ -942,7 +942,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 				}
 
 				/*now the stock entry*/
-				$StockGLCode = GetStockGLCode($OrderLine->StockID,$db);
+				$StockGLCode = GetStockGLCode($OrderLine->StockID);
 				InsertIntoGLTrans("10", 
 								$InvoiceNo, 
 								Date('Y-m-d'),
