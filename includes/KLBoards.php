@@ -739,7 +739,7 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 	$DbgMsg = _('The SQL that failed was');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	$Result = DB_Txn_Commit();
-	UpdateCost($db, $StockID); //Update any affected BOMs
+	UpdateCost($StockID); //Update any affected BOMs
 }
 
 function MaintenanceTasksList($Status, $NumDays){

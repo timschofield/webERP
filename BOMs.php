@@ -367,7 +367,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 			$result = DB_query($sql,$ErrMsg,$DbgMsg);
 			$msg = _('Details for') . ' - ' . $SelectedComponent . ' ' . _('have been updated') . '.';
-			UpdateCost($db, $SelectedComponent);
+			UpdateCost($SelectedComponent);
 
 		} elseif ($InputError !=1 AND ! isset($SelectedComponent) AND isset($SelectedParent)) {
 
@@ -423,7 +423,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 
 					$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
-					UpdateCost($db, $_POST['Component']);
+					UpdateCost($_POST['Component']);
 					$msg = _('A new component part') . ' ' . $_POST['Component'] . ' ' . _('has been added to the bill of material for part') . ' - ' . $SelectedParent . '.';
 
 				} else {
@@ -460,7 +460,7 @@ if (isset($Select)) { //Parent Stock Item selected so display BOM or edit Compon
 							WHERE parent='" . $SelectedParent ."'";
 		$ComponentResult = DB_query($ComponentSQL);
 		$ComponentArray = DB_fetch_row($ComponentResult);
-		UpdateCost($db, $ComponentArray[0]);
+		UpdateCost($ComponentArray[0]);
 
 		prnMsg(_('The component part') . ' - ' . $SelectedComponent . ' - ' . _('has been deleted from this BOM'),'success');
 		// Now reset to enable New Component Details to display after delete

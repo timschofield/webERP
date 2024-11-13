@@ -93,7 +93,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 			$DbgMsg = _('The SQL that failed was');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			UpdateCost($db, $StockID); //Update any affected BOMs
+			UpdateCost($StockID); //Update any affected BOMs
 
 		}
 

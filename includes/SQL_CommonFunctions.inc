@@ -202,7 +202,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 }
 
 /* Calculates the material cost of a bill of materials, given parent code*/
-function BomMaterialCost($Parent, $db) {
+function BomMaterialCost($Parent) {
 	$SQL = "SELECT materialcost FROM stockmaster WHERE stockid='" . $Parent . "'";
 	$result1 = DB_query($SQL);
 	$MyRow1 = DB_fetch_row($result1);
@@ -229,18 +229,18 @@ function BomMaterialCost($Parent, $db) {
 }
 
 /*Iterates through the levels of the bom, recalculating each bom it meets*/
-function UpdateCost($db, $Item) {
+function UpdateCost($Item) {
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL);
 	while ($MyRow=DB_fetch_array($Result)){
 		$NewParent = $MyRow['parent'];
-		$MaterialCost = BomMaterialCost($NewParent, $db);
+		$MaterialCost = BomMaterialCost($NewParent);
 		$SQL = "UPDATE stockmaster SET materialcost=" . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
 		$result1 = DB_query($SQL);
 		if (DB_error_no()!=0) {
 			return 1;
 		}
-		UpdateCost($db, $NewParent);
+		UpdateCost($NewParent);
 	}
 	return 0;
 }

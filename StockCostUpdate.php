@@ -79,7 +79,7 @@ if (isset($_POST['UpdateData'])){
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$Result = DB_Txn_Commit();
-		UpdateCost($db, $StockID); //Update any affected BOMs
+		UpdateCost($StockID); //Update any affected BOMs
 
 	}
 }
