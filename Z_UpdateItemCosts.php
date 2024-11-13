@@ -80,7 +80,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 			AND $OldRow['mbflag']!='A' 
 			AND $OldRow['mbflag']!='G'){
 
-			ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH);
+			ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
 
 			$SQL = "UPDATE stockmaster SET	materialcost='" . (double) $myrow[1] . "',
 											labourcost='" . (double) $myrow[2] . "',

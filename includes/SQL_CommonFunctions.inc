@@ -150,7 +150,7 @@ Function GetCreditAvailable($DebtorNo,&$db) {
 	return $CreditAvailable;
 }
 
-function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
+function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1 
 		AND $QOH!=0
 		AND (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))){
@@ -222,7 +222,7 @@ function BomMaterialCost($Parent, $db) {
 	$MaterialCost = $MyRow[0];
 	$Result = DB_Txn_Begin();
 	if (abs($MaterialCost-$OldCost)>0) {
-		ItemCostUpdateGL($db, $Parent, $MaterialCost, $OldCost, $QOH);
+		ItemCostUpdateGL($Parent, $MaterialCost, $OldCost, $QOH);
 	}
 	$Result = DB_Txn_Commit();
 	return $MaterialCost;

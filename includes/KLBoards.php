@@ -727,7 +727,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 
 function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 	$Result = DB_Txn_Begin();
-	ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH);
+	ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
 	$SQL = "UPDATE stockmaster SET	materialcost='" . $NewCost . "',
 									labourcost='" . 0 . "',
 									overheadcost='" . 0 . "',
