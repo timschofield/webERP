@@ -1882,7 +1882,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				}
 			}
 
-			EnsureGLEntriesBalance(10,$InvoiceNo,$db);
+			EnsureGLEntriesBalance(10,$InvoiceNo);
 
 			/*Also if GL is linked to debtors need to process the debit to bank and credit to debtors for the payment */
 			/*Need to figure out the cross rate between customer currency and bank account currency */
@@ -1927,7 +1927,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid we not zero
 
-			EnsureGLEntriesBalance(12,$ReceiptNumber,$db);
+			EnsureGLEntriesBalance(12,$ReceiptNumber);
 
 		} /*end of if Sales and GL integrated */
 		if ($_POST['AmountPaid']!=0){

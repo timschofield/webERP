@@ -366,7 +366,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 		}
 
-		EnsureGLEntriesBalance(17, $AdjustmentNumber,$db);
+		EnsureGLEntriesBalance(17, $AdjustmentNumber);
 
 		$Result = DB_Txn_Commit();
 		$AdjustReason = $_SESSION['Adjustment' . $identifier]->Narrative?  _('Narrative') . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative:'';

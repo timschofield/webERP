@@ -815,10 +815,8 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 	EnsureGLEntriesBalanceOpenCart(12,$CustomerReceiptNo);
 }
 
-function EnsureGLEntriesBalanceOpenCart ($TransType, $TransTypeNo) {
+function EnsureGLEntriesBalanceOpenCart($TransType, $TransTypeNo) {
 	/*Ensures general ledger entries balance for a given transaction */
-	global $db;
-
 	$result = DB_query("SELECT SUM(amount)
 						FROM gltrans
 						WHERE type = '" . $TransType . "'

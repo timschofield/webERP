@@ -592,7 +592,7 @@ if(isset($_POST['CommitBatch'])) {
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account credit because');
 				$DbgMsg = _('Cannot insert a GL transaction for the bank account credit using the SQL');
 				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				EnsureGLEntriesBalance($TransType,$TransNo,$db);
+				EnsureGLEntriesBalance($TransType,$TransNo);
 			}
 		}
 

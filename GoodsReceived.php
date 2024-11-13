@@ -789,7 +789,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 	}
 
 	if ($_SESSION['PO'.$identifier]->GLLink==1) {
-		EnsureGLEntriesBalance(25, $GRN,$db);
+		EnsureGLEntriesBalance(25, $GRN);
 	}
 
 	$Result = DB_Txn_Commit();

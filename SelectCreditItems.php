@@ -2003,7 +2003,7 @@ then debit the expense account the stock is to written off to */
 			}
 		}
 
-		EnsureGLEntriesBalance(11,$CreditNo,$db);
+		EnsureGLEntriesBalance(11,$CreditNo);
 
 	} /*end of if Sales and GL integrated */
 

@@ -1738,7 +1738,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 			}
 		}
 	} /*end of if Sales and GL integrated */
-	EnsureGLEntriesBalance(10,$InvoiceNo,$db);
+	EnsureGLEntriesBalance(10,$InvoiceNo);
 	
 	MarkWebErpOrderInOpenCartAs($_SESSION['Items'.$identifier]->OrderNo, OPENCART_ORDER_STATUS_SHIPPED, $_POST['Consignment'], $db);
 
