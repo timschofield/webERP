@@ -609,18 +609,11 @@ INSERT INTO test_erp.www_users SELECT * FROM kurakura_kl_erp.www_users;
 UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/part_pics' WHERE  `confname` =  'part_pics_dir';
 UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/reports' WHERE  `confname` =  'reports_dir';
 UPDATE  test_erp.`config` SET  `confvalue` =  'companies/test_erp/logs' WHERE  `confname` =  'LogPath';
-
-UPDATE  test_erp.`config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopName';
-UPDATE  test_erp.`config` SET  `confvalue` =  'TEST SHOP' WHERE  `confname` =  'ShopTitle';
-
-UPDATE  test_erp.`config` SET  `confvalue` =  '' WHERE  `confname` =  'InventoryManagerEmail';
-UPDATE  test_erp.`config` SET  `confvalue` =  '' WHERE  `confname` =  'FactoryManagerEmail';
-UPDATE  test_erp.`config` SET  `confvalue` =  '' WHERE  `confname` =  'PurchasingManagerEmail';
-
+UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'InventoryManagerEmail';
+UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'FactoryManagerEmail';
+UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'PurchasingManagerEmail';
+UPDATE  test_erp.`config` SET  `confvalue` =  'webmaster@kapal-laut.com' WHERE  `confname` =  'ShopManagerEmail';
 UPDATE  test_erp.`config` SET  `confvalue` =  'test' WHERE  `confname` =  'ShopMode';
-UPDATE  test_erp.`config` SET  `confvalue` =  '1372497542' WHERE  `confname` =  'ShopPayPalPassword';
-UPDATE  test_erp.`config` SET  `confvalue` =  'AKh80SD3d.pLz9oyaerqiR90yzDdARP3knOWMSTyjcbBNEns94xTl6WW' WHERE  `confname` =  'ShopPayPalSignature';
-UPDATE  test_erp.`config` SET  `confvalue` =  'testmerchant_api1.kapal-laut.com' WHERE  `confname` =  'ShopPayPalUser';
 
 UPDATE test_erp.www_users SET theme = "gel";
 UPDATE test_erp.www_users SET blocked = 0 WHERE userid LIKE "999%";
