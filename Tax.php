@@ -353,7 +353,7 @@ if(isset($_POST['TaxAuthority']) AND
 			<td>' . _('Return To') . ':</td>
 			<td><select name="ToPeriod">';
 
-	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),0,Date('Y'))),$db);
+	$DefaultPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'),0,Date('Y'))));
 
 	$sql = "SELECT periodno,
 			lastdate_in_period

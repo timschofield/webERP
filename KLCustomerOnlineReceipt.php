@@ -234,7 +234,7 @@ if (isset($_POST['CommitBatch'])){
   and add up the non-GL ones for posting to debtors later,
   also add the total discount total receipts*/
 
-	$PeriodNo = GetPeriod($_SESSION['ReceiptBatch']->DateBanked,$db);
+	$PeriodNo = GetPeriod($_SESSION['ReceiptBatch']->DateBanked);
 
 	if ($_SESSION['CompanyRecord']==0){
 		prnMsg(_('The company has not yet been set up properly') . ' - ' . _('this information is needed to process the batch') . '. ' . _('Processing has been cancelled'),'error');

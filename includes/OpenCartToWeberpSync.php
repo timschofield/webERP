@@ -630,7 +630,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 			}
 
 			if ($PaymentOK){
-				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 				InsertCustomerReceipt($CustomerCode, $AmountPaid, $FreightCost, $CurrencyPayment, $Rate, $GLAccount, $PaymentSystem, $TransactionID, $OrderNo, $PeriodNo, $db);
 				TransactionCommissionGL($CustomerCode, $GLAccount, $GLCommissionAccount, $Commission, $CurrencyPayment, $Rate, $PaymentSystem, $TransactionID, $PeriodNo, $db);
 				ChangeOrderQuotationFlag($OrderNo, 0, $db); // it has been paid, so we consider it a firm order

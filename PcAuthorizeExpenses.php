@@ -115,7 +115,7 @@ if(isset($_POST['Submit']) or isset($_POST['update']) OR isset($SelectedTabs) OR
 			AND $_POST['Submit']==_('Update')
 			AND isset($_POST[$myrow['counterindex']])) {
 
-			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']), $db);
+			$PeriodNo = GetPeriod(ConvertSQLDate($myrow['date']));
 
 			// convert to functional currency, If functional currency rate = 1, so no effect.
 			$Amount = $myrow['amount']/$myrow['rate'];

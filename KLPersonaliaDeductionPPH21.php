@@ -27,7 +27,7 @@ if (isset($_POST['submit'])){
 
 if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
-	$PeriodPPH21 = GetPeriod(ConvertSQLDate($_POST['DateOfFile']), $db);
+	$PeriodPPH21 = GetPeriod(ConvertSQLDate($_POST['DateOfFile']));
 	$PeriodName = MonthAndYearFromSQLDate($_POST['DateOfFile']);
 
 	$sql="SELECT codename,

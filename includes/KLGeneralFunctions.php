@@ -842,7 +842,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 		$BatchNo = GetNextTransNo(12);
 		$Today = date('Y-m-d');
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$Narrative = 'Online ' . $OrderNo . ' ' . $PaymentCode;
 		$BankTransType = "Transfer";
 

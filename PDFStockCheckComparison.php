@@ -42,7 +42,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			exit;
 		}
 
-		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 		$AdjustmentNumber = GetNextTransNo(17);
 

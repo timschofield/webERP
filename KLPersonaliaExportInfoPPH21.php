@@ -18,8 +18,8 @@ function submit(&$db, $Company, $LastDateOfPeriod, $SalaryType) {
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod), $db);
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = _('Export PPh21 Monthly Info for '). ConvertSQLDate($LastDateOfPeriod);

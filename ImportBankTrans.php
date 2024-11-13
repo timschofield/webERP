@@ -174,7 +174,7 @@ if (isset($_POST['ProcessBankTrans'])){
 				$_SESSION['Trans'][$i]->GLTotal == $_SESSION['Trans'][$i]->Amount){
 				/*A Debtor or Supplier is entered or there is GL analysis for the bank trans
 				 */
-				$PeriodNo = GetPeriod($_SESSION['Trans'][$i]->ValueDate,$db);
+				$PeriodNo = GetPeriod($_SESSION['Trans'][$i]->ValueDate);
 				$InsertBankTrans = true;
 			} elseif ($_SESSION['Trans'][$i]->BankTransID!=0) {
 				//Update the banktrans to show it has cleared the bank

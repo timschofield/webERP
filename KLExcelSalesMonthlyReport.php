@@ -7,7 +7,7 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
 if (!isset($_POST['Period'])){
-	$_POST['Period'] = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$_POST['Period'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 }
 
 if (isset($_POST['submit'])) {

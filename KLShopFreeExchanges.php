@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
 		prnMsg($msg , 'success');
 
 		$AdjustmentNumber = GetNextTransNo(17);
-		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
 		// PROCESS THE ITEM FROM (RETURNED)

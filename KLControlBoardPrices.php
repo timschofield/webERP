@@ -21,7 +21,7 @@ $begintime = time_start();
 $NumberOfTestExecuted = 0;
 $IssuesFound = 0;
 
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 /* Assign the sections to be executed, to avoid error 504*/
 $ShowSectionInfo = FALSE;

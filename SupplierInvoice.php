@@ -160,7 +160,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 			$_POST['ExRate'] = $_SESSION['SuppTrans']->ExRate;
 			$_POST['TranDate'] = $DeliveryDate;
 
-			$PeriodNo = GetPeriod($DeliveryDate, $db);
+			$PeriodNo = GetPeriod($DeliveryDate);
 
 			$OrderHasControlledItems = false; //assume the best
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $OrderLine) {
@@ -1058,7 +1058,7 @@ then do the updates and inserts to process the invoice entered */
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the invoice date*/
 		$InvoiceNo = GetNextTransNo(20);
-		$PeriodNo = GetPeriod( $_SESSION['SuppTrans']->TranDate, $db);
+		$PeriodNo = GetPeriod( $_SESSION['SuppTrans']->TranDate);
 		$SQLInvoiceDate = FormatDateForSQL( $_SESSION['SuppTrans']->TranDate);
 
 		if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){

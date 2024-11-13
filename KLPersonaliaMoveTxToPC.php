@@ -29,9 +29,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 	$InputError = FALSE;
 	
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod), $db);
+	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
 	$Today = date('Y-m-d');
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
 
 	if ($SalaryType == "MONTHLY"){
@@ -280,7 +280,7 @@ function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DI
 	
 	include('includes/KLPersonaliaParameterSelection.php');
 
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods WHERE periodno = '" . ($PeriodNow - 1) . "'");
 	$PeriodRow = DB_fetch_row($PeriodsResult);
 	$LastDate = $PeriodRow[0];

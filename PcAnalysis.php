@@ -23,7 +23,7 @@ function submit(&$db, $TabToShow) {
 		$SQL = "SELECT pcexpenses.codeexpense,";
 		
 		// Creation of periods SQL query
-		$period_today=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$period_today=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$sqlPeriods = "SELECT periodno,
 						lastdate_in_period
 				FROM periods

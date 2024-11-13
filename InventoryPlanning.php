@@ -117,7 +117,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Category = '';
 
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$Period_1 = $CurrentPeriod -1;
 	$Period_2 = $CurrentPeriod -2;
 	$Period_3 = $CurrentPeriod -3;
@@ -394,7 +394,7 @@ if (isset($_POST['PrintPDF'])) {
 					stockmaster.stockid";
 	}
 	$InventoryResult = DB_query($SQL);
-	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$CurrentPeriod = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$Periods = array();
 	for ($i=0;$i<24;$i++) {
 		$Periods[$i]['Period'] = $CurrentPeriod - $i;

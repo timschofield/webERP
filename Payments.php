@@ -306,7 +306,7 @@ if(isset($_POST['CommitBatch'])) {
 		$i++;
 	}
 
-	$PeriodNo = GetPeriod($_SESSION['PaymentDetail'.$identifier]->DatePaid,$db);
+	$PeriodNo = GetPeriod($_SESSION['PaymentDetail'.$identifier]->DatePaid);
 
 	$sql = "SELECT usepreprintedstationery
 			FROM paymentmethods

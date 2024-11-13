@@ -25,7 +25,7 @@
 	echo '<tr><td>' . _('Select Month of the Salaries') . '</td>
 							<td><select name="DateOfFile">';
 							
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods ORDER BY periodno");
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
 		if ($PeriodRow[1] == ($PeriodNow-1)){

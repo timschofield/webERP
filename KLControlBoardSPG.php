@@ -10,7 +10,7 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include ('includes/KLRetailCustomer.php');
 
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 /***************************************************************************************
 * SPG identification         

@@ -155,7 +155,7 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedCurrency) AND $InputError !=1) {
 		/*Get the current period */
 		$PostingDate = Date($_SESSION['DefaultDateFormat']);
-		$PeriodNo = GetPeriod($PostingDate,$db);
+		$PeriodNo = GetPeriod($PostingDate);
 
 		/* get all the bank accounts denominated on the selected currency */
 		$SQLBankAccounts = "SELECT 	bankaccountname,

@@ -201,7 +201,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		/*Now Get the next WOReceipt transaction type 26 - function in SQL_CommonFunctions*/
 		$WOReceiptNo = GetNextTransNo(26);
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 		if (!isset($_POST['ReceivedDate'])){
 			$_POST['ReceivedDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -250,7 +250,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				if ($_SESSION['CompanyRecord']['gllink_stock']==1 AND $ItemCostRow['totalqoh']!=0){
 
 					$CostUpdateNo = GetNextTransNo(35);
-					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+					$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 					$ValueOfChange = $ItemCostRow['totalqoh'] * (($Cost + $ItemCostRow['labourcost'] + $ItemCostRow['overheadcost']) - $ItemCostRow['cost']);
 

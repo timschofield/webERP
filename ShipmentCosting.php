@@ -137,7 +137,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 	if (isset($_POST['Close'])){
 	/*Set up a transaction to buffer all updates or none */
 		$result = DB_Txn_Begin();
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	}
 
 	echo '<br /><table cellpadding="2" class="selection">';
@@ -410,7 +410,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 					if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 						$CostUpdateNo = GetNextTransNo(35);
-						$PeriodNo = GetPeriod(Date('d/m/Y'), $db);
+						$PeriodNo = GetPeriod(Date('d/m/Y'));
 
 						$ValueOfChange = $QOH * ($ItemShipmentCost - $StdCostUnit);
 

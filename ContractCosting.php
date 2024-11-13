@@ -236,7 +236,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 	$Variance =  ($OtherReqtsBudget+$ContractBOMBudget)-($OtherReqtsActual+$ContractBOMActual);
 
 	$ContractCloseNo = GetNextTransNo(32);
-	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	DB_Txn_Begin();
 

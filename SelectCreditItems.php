@@ -1129,7 +1129,7 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 
 	 $CreditNo = GetNextTransNo(11);
 	 $SQLCreditDate = Date('Y-m-d');
-	 $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+	 $PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 /*Start an SQL transaction */
 	 DB_Txn_Begin();

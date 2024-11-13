@@ -166,7 +166,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28);
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db); //backdate
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat'])); //backdate
 		$SQLIssuedDate = FormatDateForSQL($_POST['IssuedDate']);
 		$StockGLCode = GetStockGLCode($_POST['IssueItem'],$db);
 
@@ -485,7 +485,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order issues ente
 			$Result = DB_Txn_Begin();
 				/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 			$WOIssueNo = GetNextTransNo(28);
-			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db); //backdate
+			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat'])); //backdate
 			$SQLIssuedDate = FormatDateForSQL($_POST['IssuedDate']);
 			foreach ($IssueItems as $key=>$itm) {
 				$_POST['IssueItem'] = $itm['item'];

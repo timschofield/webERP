@@ -596,7 +596,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30);
 		$InvoiceNo = GetNextTransNo(10);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 		// Get the Customer invoice number depending on Area
 		if ($Area == $_SESSION['AreaSalesCashOthers']){

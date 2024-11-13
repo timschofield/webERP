@@ -200,7 +200,7 @@ if(isset($_POST['EnterTransfer']) ) {
 /*All inputs must be sensible so make the stock movement records and update the locations stocks */
 
 		$TransferNumber = GetNextTransNo(16);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$SQLTransferDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
 		$Result = DB_Txn_Begin();

@@ -909,7 +909,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != ''){
 	 * GetPeriod() in includes/DateFunctions.inc */
 
 		$CreditNoteNo = GetNextTransNo(11);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 		$ReturnDate = Date('Y-m-d');
 

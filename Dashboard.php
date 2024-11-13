@@ -485,8 +485,8 @@ if(in_array($CashSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($Ca
 				<th class="ascending">', _('Balance'), '</th>
 			</tr>'
 /*,		'</thead><tbody>'*/;// Need to update the sorting javascript.
-	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
-	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$FirstPeriodSelected = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$LastPeriodSelected = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$SelectedPeriod=$LastPeriodSelected;
 
 	$Sql = "SELECT bankaccounts.accountcode,

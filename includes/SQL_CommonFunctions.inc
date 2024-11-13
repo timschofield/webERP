@@ -156,7 +156,7 @@ function ItemCostUpdateGL($db, $StockID, $NewCost, $OldCost, $QOH) {
 		AND (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))){
 
 		$CostUpdateNo = GetNextTransNo(35);
-		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$StockGLCode = GetStockGLCode($StockID,$db);
 
 		$ValueOfChange = $QOH * ($NewCost - $OldCost);

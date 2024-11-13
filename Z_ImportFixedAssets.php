@@ -186,7 +186,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		if ($InputError == false){ //no errors
 
 			$TransNo = GetNextTransNo(49);
-			$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DateToEnter']),$db);
+			$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DateToEnter']));
 
 			//attempt to insert the stock item
 			$sql = "INSERT INTO fixedassets (description,

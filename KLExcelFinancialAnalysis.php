@@ -35,8 +35,8 @@ function submit($FromDate, $ToDate) {
 		$DefaultFromDate = FormatDateForSQL($FromDate);
 		$DefaultToDate = FormatDateForSQL($ToDate);
 
-		$StartCurrentYearPeriod=GetPeriod($FromDate, $db);
-		$CurrentPeriod=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);	
+		$StartCurrentYearPeriod=GetPeriod($FromDate);
+		$CurrentPeriod=GetPeriod(Date($_SESSION['DefaultDateFormat']));	
 
 		$StartLastYearPeriod=$StartCurrentYearPeriod-12;
 		$FinishLastYearPeriod=$StartCurrentYearPeriod-1;

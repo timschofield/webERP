@@ -68,8 +68,8 @@ function submit(&$db, $DateOfFile, $SelectedFile, $SalaryType) {
 		$InputError = TRUE;
 	}
 
-	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile), $db);
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile));
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodDateOfFile + 1)){
@@ -337,7 +337,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 	echo '<tr><td>' . _('Select Month of the Salaries') . '</td>
 							<td><select name="DateOfFile">';
 							
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods ORDER BY periodno");
 	while ($PeriodRow = DB_fetch_row($PeriodsResult)){
 		if ($PeriodRow[1] == ($PeriodNow-1)){

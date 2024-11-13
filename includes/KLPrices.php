@@ -343,7 +343,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 							VALUES ( 0,
 									'" . $JournalNo . "',
 									'" . Date('Y-m-d') . "',
-									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
+									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 									'" . $NewStockAct . "',
 									'" . $StockId . ' ' . $reason . "',
 									'" . ($UnitCost* $StockQtyRow[0]) . "')";
@@ -361,7 +361,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 							VALUES ( 0,
 									'" . $JournalNo . "',
 									'" . Date('Y-m-d') . "',
-									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),$db,true) . "',
+									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 									'" . $OldStockAccount . "',
 									'" . $StockId . ' ' .$reason . "',
 									'" . (-$UnitCost* $StockQtyRow[0]) . "')";

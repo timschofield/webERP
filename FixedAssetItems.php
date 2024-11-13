@@ -312,7 +312,7 @@ if (isset($_POST['submit'])) {
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 				$NewAssetID = DB_Last_Insert_ID('fixedassets', 'assetid');
 				$TransNo = GetNextTransNo(49);
-				$PeriodNo = GetPeriod($_POST['DatePurchased'],$db);
+				$PeriodNo = GetPeriod($_POST['DatePurchased']);
 
 				$sql = "INSERT INTO fixedassettrans ( assetid,
 												transtype,
@@ -405,7 +405,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_Txn_Begin();
 
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']),$db);
+		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$TransNo = GetNextTransNo(43); /* transaction type is asset deletion - (and remove cost/accumdepn from GL) */
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted

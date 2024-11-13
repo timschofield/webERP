@@ -39,7 +39,7 @@ include ('includes/KLRoles.php');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']), $db);
+$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 $yesterday_year = date('Y', strtotime("-1 days"));
 
 

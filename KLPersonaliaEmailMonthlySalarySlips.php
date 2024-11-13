@@ -20,9 +20,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod), $db);
+	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
 	$Today = date('Y-m-d');
-	$PeriodNow = GetPeriod(date($_SESSION['DefaultDateFormat']), $db);
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
 
 	if ($SalaryType == "MONTHLY"){
