@@ -10,7 +10,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 
-CheckPackagingToBeRefilled(TRUE, TRUE, $RootPath, $db);
+CheckPackagingToBeRefilled(TRUE, TRUE, $RootPath);
 
 include ('includes/footer.php');
 ?>

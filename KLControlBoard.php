@@ -134,33 +134,33 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_SystemAdmin){
-		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWLINK", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
+		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+//		$NumberOfTestExecuted++;
+//		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
+//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam) {
-		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("Indonesia"  , "", STANDARD_COST_FACTOR_INDONESIA, 0.04, "SHOWONLY", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("Thailand"   , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("China"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath, $db);
+		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
 		$NumberOfTestExecuted++;
-		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath, $db);
-		$NumberOfTestExecuted++;
+//		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+//		$NumberOfTestExecuted++;
+//		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
+//		$NumberOfTestExecuted++;
 	}
 
 	/***************************************************************************************
@@ -246,13 +246,13 @@ if ($ProcessSection01){
 	}
 
 	if ($KL_ShopSupportLeader){
-		ActiveTransfersByLocation($RootPath, $db);
+		ActiveTransfersByLocation($RootPath);
 		$NumberOfTestExecuted++;
-		ActiveTransferStatus($RootPath, $db);
+		ActiveTransferStatus($RootPath);
 		$NumberOfTestExecuted++;
-		RecentlyClosedTransferStatus(1, $RootPath, $db);
+		RecentlyClosedTransferStatus(1, $RootPath);
 		$NumberOfTestExecuted++;
-		ErrorsInTransfers( 15, $RootPath, $db);
+		ErrorsInTransfers( 15, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -564,11 +564,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 		SamplesNotLongerNeeded($RootPath, $db);
 		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath, $db);
+		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath, $db);
+		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPOA", "ALL", $RootPath, $db);
+		GoodsToBeProduced("COMPOA", "ALL", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -582,7 +582,7 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		ComponentsToObsolete(false, 0, $RootPath, $db);
+		ComponentsToObsolete(false, 0, $RootPath);
 		$NumberOfTestExecuted++;
 		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -612,12 +612,12 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager){
-		CheckPackagingToBeRefilled(FALSE, FALSE, $RootPath, $db);
+		CheckPackagingToBeRefilled(FALSE, FALSE, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportLeader){
-		CheckPackagingToBeRefilled(FALSE, TRUE, $RootPath, $db);
+		CheckPackagingToBeRefilled(FALSE, TRUE, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -640,13 +640,13 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		prnMsg("Packaging Information",'info');
-		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, $RootPath, $db); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, $RootPath); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
+		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -732,56 +732,56 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		PurchaseOrdersWrongPlannedDates($RootPath, $db);
+		PurchaseOrdersWrongPlannedDates($RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
+		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
+		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0,$periodnow,  $RootPath, $db);
+		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0,$periodnow,  $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0,$periodnow,  $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0,$periodnow,  $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -968,7 +968,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_ShopSupportTeam){ 
-		TransfersDelayed(3, $RootPath, $db);
+		TransfersDelayed(3, $RootPath);
 		$NumberOfTestExecuted++;
 		ItemsCancelledInTransfers(3, $RootPath, $db);
 		$NumberOfTestExecuted++;
@@ -978,7 +978,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_OperationalManager){
-		TransfersDelayed(4, $RootPath, $db);
+		TransfersDelayed(4, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -3089,7 +3089,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60);
 			if($PositionTopSales <= $MaxTopSalesItems){
 				if ($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . $MaxTopSalesItems ._(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable . '</strong></p>';

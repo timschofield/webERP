@@ -14,7 +14,7 @@ include ('includes/KLGeneralFunctions.php');
 include('includes/KLReorderLevel.php');
 
 $begintime = time_start();
-LocationInformationReview($RootPath, $db);
+LocationInformationReview($RootPath);
 
 // if testing only and do not want update the DB, set the flag to FALSE. For regular operations set to TRUE.
 //$updateDB = false;

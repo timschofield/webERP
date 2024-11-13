@@ -607,7 +607,7 @@ function PositiveNumber($Value){
 	return $Value;
 }
 
-function FindReasonOfReturn($ReasonCode, $db){
+function FindReasonOfReturn($ReasonCode){
 	$ErrMsg = 'Error in function FindReasonOfReturn()';
 	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid='" . $ReasonCode . "'";
 	$result = DB_query($SQL,$ErrMsg);
@@ -1024,10 +1024,10 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 		if (($CustomerCode == "WEB-KL-IDR") OR ($CustomerCode == "WEB-WH-IDR")) {
 			// online sale from our website, we must update the status of the order in OpenCart
-			$OnlineOrderNo = GetOnlineOrderNoFromWeberp($OrderNo, $db);
+			$OnlineOrderNo = GetOnlineOrderNoFromWeberp($OrderNo);
 			$ReasonChangeStatusId = "webERP --> Payment received by " . $PaymentCode . " Amount = " . $TotalAmount;  
 			UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_PROCESSING, 1, "", "", $ReasonChangeStatusId);
-			UpdateOpenCartOrderPayment($OnlineOrderNo, $db, $db_oc);
+			UpdateOpenCartOrderPayment($OnlineOrderNo);
 		}
 
 		$result = DB_Txn_Commit();

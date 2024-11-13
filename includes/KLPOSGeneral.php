@@ -43,7 +43,7 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 	return $Area;
 }
 
-function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier, $db){
+function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier){
 
 	if ($QtyDelivered != 0){
 		/* Need to get the current standard cost */

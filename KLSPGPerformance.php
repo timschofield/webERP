@@ -38,7 +38,7 @@ if ($KL_SystemAdmin
 	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 
-	AverageSales("SPG", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All", $db);
+	AverageSales("SPG", 30, 15, 10, 7, 5, 1, 7, "CurrentYear", "All");
 	$NumberOfTestExecuted++;
 }
 	

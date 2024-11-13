@@ -4,7 +4,7 @@
 			FUNCTIONS RELATED CONTROL, PERFORMANCE OR OTHER KL BOARDS
 **************************************************************************************************/
 
-function ActiveTransfersByLocation($RootPath, $db){
+function ActiveTransfersByLocation($RootPath){
 	$TotalTransferIn = 0;
 	$TotalTransferOut = 0;
 	$TotalPcsIn = 0;
@@ -103,7 +103,7 @@ function ActiveTransfersByLocation($RootPath, $db){
 	}
 }
 
-function ActiveTransferStatus($RootPath, $db){
+function ActiveTransferStatus($RootPath){
 	$SQL = "SELECT reference,
 					shipdate,
 					(SELECT locationname
@@ -175,7 +175,7 @@ function ActiveTransferStatus($RootPath, $db){
 	}
 }
 
-function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $db){
+function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF){
 
 	$Today  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',0));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
@@ -302,7 +302,7 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	}
 }
 
-function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop, $db){
+function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop){
 
 	if ($Year == "LastYear"){
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365-1));
@@ -867,7 +867,7 @@ function MaintenanceTasksList($Status, $NumDays){
 	}
 }
 
-function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
+function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 	$SQL = "SELECT s.stockid,
 					s.units,
 					s.description,
@@ -952,7 +952,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath, $db){
 
 }
 
-function ErrorsInTransfers($maxdays, $RootPath, $db){
+function ErrorsInTransfers($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT(loctransfers.reference),
 					loctransfers.shipdate,
@@ -1069,7 +1069,7 @@ function ErrorsInTransfers($maxdays, $RootPath, $db){
 	}
 }
 
-function FinishedStockDistribution($kind, $byreport, $db){
+function FinishedStockDistribution($kind, $byreport){
 
 	if ($kind == "FORSALE"){			
 		$operator1 = " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_KL_SHOPS_NOT_FOR_SALE ."";
@@ -1492,7 +1492,7 @@ function GetTotalQtyItemsForSale($db){
 	return $Row['0'];
 }
 
-function GetTotalValueItemsForSale($period, $db){
+function GetTotalValueItemsForSale($period){
 	$SQL = "SELECT SUM(bfwd + actual) as saldo
 			FROM chartdetails, chartmaster
 			WHERE chartdetails.accountcode = chartmaster.accountcode
@@ -1525,7 +1525,7 @@ function GetTopSalesField($TopItemsDays){
 	return $TopSalesField;
 }
 
-function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
+function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 /* EXPLAIN SQL 2014-05-30 */
 	/* Check if there is any	component at kantor ready to be transformed into sellable goods */
 	if ($ParentCategory == "ONLYDISCOUNT"){
@@ -1636,7 +1636,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath, $db){
 	}
 }
 
-function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $ShowAll, $RootPath, $db){
+function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $ShowAll, $RootPath){
 /* EXPLAIN SQL	2014-05-20	
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 1	PRIMARY				stockmaster			ref		CategoryID					CategoryID			20	const	10	Using where
@@ -2007,7 +2007,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 	}
 }
 
-function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
+function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath){
 	/* Check if there is any item without retail price */
 	$today = date('Y-m-d');
 	$issues = 0;
@@ -2075,7 +2075,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath, $db){
 	return $issues;
 }
 
-function LocationInformationReview($RootPath, $db){
+function LocationInformationReview($RootPath){
 	$SQL="SELECT loccode,
 				locationname,
 				zone,
@@ -2205,7 +2205,7 @@ function LocationInformationReview($RootPath, $db){
 	}
 }
 
-function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath, $db){
+function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath){
 	$SQL = "SELECT  locations.loccode
 			FROM locations
 			WHERE locations.packagingfrom != ''
@@ -2217,12 +2217,12 @@ function CheckPackagingToBeRefilled($ShowAll, $ShowLinkEmail, $RootPath, $db){
 	
 	if (DB_num_rows($result) != 0){
 		while ($myrow = DB_fetch_array($result)) {
-			PackagingToBeRefilledFromGudang($myrow['loccode'], $ShowAll, $ShowLinkEmail, $RootPath, $db);
+			PackagingToBeRefilledFromGudang($myrow['loccode'], $ShowAll, $ShowLinkEmail, $RootPath);
 		}
 	}
 }
 
-function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $RootPath, $db){
+function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $RootPath){
 
 	$TableResult = array();
 	
@@ -2426,7 +2426,7 @@ function RoundPackagingTransfer($StockId, $n){
 	return $n;
 }
 
-function PositionTopSalesItem($stockid, $TopItemsDays, $db){
+function PositionTopSalesItem($stockid, $TopItemsDays){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
 	$SQL="SELECT ". $TopSalesField." AS topsalesposition
@@ -2442,7 +2442,7 @@ function PositionTopSalesItem($stockid, $TopItemsDays, $db){
 	return $TopSalesPosition;
 }
 
-function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $RootPath, $db){
+function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $RootPath){
 
 	if ($TypeOfCode == "IN NEGOTIATION WITH SUPPLIER"){
 		$DateField1 = "orddate";
@@ -2878,7 +2878,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
 			AND ($TypeOfProduct == "FORSALE")){
 			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale($db);
-			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow, $db);
+			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow);
 			InsertKPI("Stock", "Current Stock Items For Sale (IDR)", $CurrentTotalValueItemsForSale);
 			InsertKPI("Stock", "Current Stock Items For Sale (PCS)", $CurrentTotalQtyItemsForSale);
 			$k = StartEvenOrOddRow($k);
@@ -3251,7 +3251,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 	}
 }
 
-function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
+function PurchaseOrdersProcessTime($NumDays, $RootPath){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	
@@ -3447,7 +3447,7 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath, $db){
 	}
 }
 
-function PurchaseOrdersWrongPlannedDates($RootPath, $db){
+function PurchaseOrdersWrongPlannedDates($RootPath){
 	$Today = date('Y-m-d');
 
 	$SQL = "SELECT purchorders.orderno, 
@@ -3598,7 +3598,7 @@ function PurchaseOrdersWrongPlannedDates($RootPath, $db){
 	}
 }
 
-function RecentlyClosedTransferStatus($maxdays, $RootPath, $db){
+function RecentlyClosedTransferStatus($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays+1));
 	$SQL = "SELECT reference,
 					recdate,
@@ -3707,7 +3707,7 @@ function SQLFilterStockmasterForOnlineShop($Type){
 	return $SQL;
 }
 
-function TransfersDelayed($maxdays, $RootPath, $db){
+function TransfersDelayed($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT DISTINCT reference,
 					shipdate,
@@ -3754,7 +3754,7 @@ function TransfersDelayed($maxdays, $RootPath, $db){
 	}
 }
 
-function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $RootPath, $db){
+function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $RootPath){
 /* FunctionMode means
 	SHOWONLY: Shows data only
 	SHOWLINK: Shows link to update the standard Cost manually

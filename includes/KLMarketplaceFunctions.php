@@ -186,7 +186,7 @@ function SQLInsertNewItemKLStockmarketplaces($StockId){
 	return $SQL;
 }
 
-function ItemEnableLazadaInfo($StockId, $EnabledLazada, $db){
+function ItemEnableLazadaInfo($StockId, $EnabledLazada){
 	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, should exist!!! so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
@@ -202,7 +202,7 @@ function ItemEnableLazadaInfo($StockId, $EnabledLazada, $db){
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
+function ItemEnableShopeeInfo($StockId, $EnabledShopee){
 	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, should exist!!! so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
@@ -218,7 +218,7 @@ function ItemEnableShopeeInfo($StockId, $EnabledShopee, $db){
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia, $db){
+function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia){
 	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
 		// Already exists, so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
@@ -234,7 +234,7 @@ function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia, $db){
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada, $db){
+function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada){
 	$SQL="INSERT INTO klstockmarketplaces 
 				(stockid,
 				lazadaurl,
@@ -285,7 +285,7 @@ function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductI
 	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada, $db){
+function ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada){
 	$SQL = "UPDATE klstockmarketplaces
 			SET lazadaurl = '" . $URLLazada . "',
 				lazadaproductid = '" . $LazadaProductId ."',

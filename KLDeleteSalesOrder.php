@@ -18,7 +18,7 @@ if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 $result = DB_Txn_Begin();
 
 // online sale from our website, we must update the status of the order in OpenCart
-$OnlineOrderNo = GetOnlineOrderNoFromWeberp($_GET['OrderNo'], $db);
+$OnlineOrderNo = GetOnlineOrderNoFromWeberp($_GET['OrderNo']);
 $ReasonChangeStatusId = "webERP --> Expired as no payment received";  
 UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_EXPIRED, 1, "", "", $ReasonChangeStatusId);
 

@@ -868,9 +868,9 @@ function SyncProductMarketplacesLinks($ShowMessages, $LastTimeRun, $db, $db_oc, 
 				}
 			}
 
-			ItemEnableTokopediaInfo($myrow['stockid'], $EnabledMarketplaces, $db);
-			ItemEnableShopeeInfo($myrow['stockid'], $EnabledMarketplaces, $db);
-			ItemEnableLazadaInfo($myrow['stockid'], $EnabledMarketplaces, $db);
+			ItemEnableTokopediaInfo($myrow['stockid'], $EnabledMarketplaces);
+			ItemEnableShopeeInfo($myrow['stockid'], $EnabledMarketplaces);
+			ItemEnableLazadaInfo($myrow['stockid'], $EnabledMarketplaces);
 			
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);

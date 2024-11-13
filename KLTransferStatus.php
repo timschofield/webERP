@@ -9,11 +9,11 @@ include('includes/KLBoards.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
-TransfersDelayed(2, $RootPath, $db);
+TransfersDelayed(2, $RootPath);
 
-ActiveTransfersByLocation($RootPath, $db);
+ActiveTransfersByLocation($RootPath);
 
-ActiveTransferStatus($RootPath, $db);
+ActiveTransferStatus($RootPath);
 RecentlyClosedTransferStatus(1, $RootPath, $db);
 
 FinishedStockDistribution("FORSALE", "LOCATION", $db);

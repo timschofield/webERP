@@ -78,31 +78,31 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 		
-		ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETKLA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("TESTKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("TESTKA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("STABKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("STABKA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("NOPOKA", MINIMUM_PRICE_FACTOR_KL, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ItemsWithoutRetailPrice("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("STABBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOKA", MINIMUM_PRICE_FACTOR_KL, $RootPath);
 		$NumberOfTestExecuted++;
 
-		ItemsWithoutRetailPrice("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		ItemsWithoutRetailPrice("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("STABBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsWithoutRetailPrice("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath, $db);
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, $RootPath);
+		$NumberOfTestExecuted++;
+
+		ItemsWithoutRetailPrice("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsWithoutRetailPrice("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -237,7 +237,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 		$k = 0; //row colour counter
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
-			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales);
 			if ($PositionTopSales < $TopSales){
 
 				$MaxPrice = $myrow['standardcost'] * $FactorMax;
@@ -362,7 +362,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 		$k = 0; //row colour counter
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
-			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales, $db);
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales);
 			$MaxPrice = $myrow['standardcost'] * $FactorMax;
 			$MinPrice = $myrow['standardcost'] * $FactorMin;
 			$RecommendedPrice = round_price($MaxPrice, "UP");
@@ -518,7 +518,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 				$issues++;
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
-				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60);
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
@@ -625,7 +625,7 @@ function PriceWrongRounding($RootPath, $db){
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$DownPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedDown .  '">' . locale_number_format($RoundedDown,0) . '</a>';
 				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
-				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60;
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 				$k = StartEvenOrOddRow($k);
@@ -720,7 +720,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
 			$PriceB = round_price(($myrow['retailprice']*(1+($IncreaseB/100))), "UP");
 			$PriceALink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $PriceA .  '">' . locale_number_format($PriceA,0) . '</a>';
 			$PriceBLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $PriceB .  '">' . locale_number_format($PriceB,0) . '</a>';
-			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60, $db);
+			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60);
 			$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 				+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 			$k = StartEvenOrOddRow($k);

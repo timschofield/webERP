@@ -82,7 +82,7 @@ if ($ProcessSection01){
 		OR $KL_SalesTeamOnline
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
-		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
+		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
 		$NumberOfTestExecuted++;
 		PeriodDifferenceSales("IMMEDIATE", "Shop",  15, $db);
 		$NumberOfTestExecuted++;
@@ -111,7 +111,7 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
 
-//		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All", $db);
+//		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
 //		$NumberOfTestExecuted++;
 //		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
 //		$NumberOfTestExecuted++;
@@ -162,7 +162,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin){
-		LocationInformationReview($RootPath, $db);
+		LocationInformationReview($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -170,9 +170,9 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager
 		OR $KL_ShopManager
 		OR $KL_SalesDirector){
-		ActiveTransfersByLocation($RootPath, $db);
+		ActiveTransfersByLocation($RootPath);
 		$NumberOfTestExecuted++;
-		ActiveTransferStatus($RootPath, $db);
+		ActiveTransferStatus($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -180,20 +180,20 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_OperationalManager){
-		RecentlyClosedTransferStatus(1, $RootPath, $db);
+		RecentlyClosedTransferStatus(1, $RootPath);
 		$NumberOfTestExecuted++;
-		ErrorsInTransfers(15, $RootPath, $db);
+		ErrorsInTransfers(15, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		FinishedStockDistribution("FORSALE", "LOCATION", $db);
+		FinishedStockDistribution("FORSALE", "LOCATION");
 		$NumberOfTestExecuted++;
 		FinishedStockDistributionByShopAndCategory($db);
 		$NumberOfTestExecuted++;
-		FinishedStockDistribution("FORSALE", "STOCKCATEGORY", $db);
+		FinishedStockDistribution("FORSALE", "STOCKCATEGORY");
 		$NumberOfTestExecuted++;
 		StockByBrand("SHOPKL", 75, 150, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
@@ -204,71 +204,71 @@ if ($ProcessSection02){
 	}
 
 /*	if ($KL_SystemAdmin){
-		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath, $db);
+		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath, $db);
+		GoodsToBeProduced("COMPOA", "DISCOUNT", $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsToBeProduced("COMPOA", "ALL", $RootPath, $db);
+		GoodsToBeProduced("COMPOA", "ALL", $RootPath);
 		$NumberOfTestExecuted++;
-		ComponentsToObsolete(false, 0, $RootPath, $db);
+		ComponentsToObsolete(false, 0, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 */
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		PurchaseOrdersProcessTime(75, $RootPath, $db);
+		PurchaseOrdersProcessTime(75, $RootPath);
 		$NumberOfTestExecuted++;
-//		PurchaseOrdersWrongPlannedDates($RootPath, $db);
+//		PurchaseOrdersWrongPlannedDates($RootPath);
 //		$NumberOfTestExecuted++;
 	}
 /*
 	if ($KL_SystemAdmin){
-		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
+		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
+		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath, $db);
+		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","RECEIVED IN KANTOR", 0, $periodnow, $RootPath, $db);
+		POStatusControl("","RECEIVED IN KANTOR", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 */	
 	if ($KL_SystemAdmin OR
 		$KL_OperationalManager){
-		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath, $db);
+		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -283,7 +283,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin ){
-		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, $RootPath, $db);
+		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -305,7 +305,7 @@ if ($ProcessSection03){
 	}
 */
 	if ($KL_SystemAdmin){
-		FinishedStockDistribution("PACKAGING", "LOCATION", $db);
+		FinishedStockDistribution("PACKAGING", "LOCATION");
 		$NumberOfTestExecuted++;
 	}
 	
@@ -313,7 +313,7 @@ if ($ProcessSection03){
 		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		FinishedStockDistribution("DISPLAYS", "LOCATION", $db);
+		FinishedStockDistribution("DISPLAYS", "LOCATION");
 		$NumberOfTestExecuted++;
 	}
 
@@ -371,7 +371,7 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin){
 		ShowKPIHistory(90);
 		$NumberOfTestExecuted++;
-//		AverageKPIHistory(180, 90, 30, 15, 7, 0, $db);
+//		AverageKPIHistory(180, 90, 30, 15, 7, 0);
 //		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath, $db);
 		$NumberOfTestExecuted++;

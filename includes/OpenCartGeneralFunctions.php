@@ -332,7 +332,7 @@ function GetWeberpOrderNo($CustomerId, $OrderId, $db){
 	}
 }
 
-function GetOnlineOrderNoFromWeberp($OrderId, $db){
+function GetOnlineOrderNoFromWeberp($OrderId){
 	$SQL = "SELECT customerref
 			FROM salesorders
 			WHERE orderno = '" . $OrderId . "'";
@@ -1046,7 +1046,7 @@ function UpdateOpenCartOrderStatus($OrderId, $StatusId, $Notify, $Carrier, $AWB,
 	}
 }
 
-function UpdateOpenCartOrderPayment($OrderId, $db, $db_oc){
+function UpdateOpenCartOrderPayment($OrderId){
 
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 
