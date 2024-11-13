@@ -246,7 +246,7 @@ function UpdateCost($db, $Item) {
 }
 
 /* Accepts work order information and iterates through the bom, inserting real components (dissolving phantom assemblies) */
-function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
+function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 
 	// remember, 'G' is for ghost (phantom part type)
 
@@ -329,7 +329,7 @@ function WoRealRequirements($db, $WO, $LocCode, $StockID, $Qty=1, $ParentID='') 
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql);
 	while ($MyRow=DB_fetch_array($result)) {
-		WoRealRequirements($db, $WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
+		WoRealRequirements($WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
 	}
 
 }

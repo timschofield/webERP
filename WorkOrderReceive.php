@@ -229,7 +229,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 											AND parentstockid='" . $_POST['StockID'] . "'");
 
 			//Recursively insert real component requirements
-			WoRealRequirements($db, $_POST['WO'], $WORow['loccode'], $_POST['StockID']);
+			WoRealRequirements($_POST['WO'], $WORow['loccode'], $_POST['StockID']);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
 			$sql = "SELECT materialcost+labourcost+overheadcost AS cost,

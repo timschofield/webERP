@@ -1239,7 +1239,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != ''){
 					$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 					//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
-					WoRealRequirements($db, $WONo, $_SESSION['DefaultFactoryLocation'], $StockItem->StockID);
+					WoRealRequirements($WONo, $_SESSION['DefaultFactoryLocation'], $StockItem->StockID);
 
 					$FactoryManagerEmail = _('A new work order has been created for') .
 										":\n" . $StockItem->StockID . ' - ' . $StockItem->ItemDescription . ' x ' . $WOQuantity . ' ' . $StockItem->Units .
