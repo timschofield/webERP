@@ -347,7 +347,7 @@ function ConvertSQLDateTime($DateEntry) {
 		$Time = mb_substr($Date_Array[2],3,8);
 		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
 	} else {
-		$Time = '0:0:0';
+		$Time = '00:00:00';
 	}
 
 	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
