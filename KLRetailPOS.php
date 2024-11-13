@@ -958,7 +958,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			if ($OrderLine->Price !=0){
 
 				//Post sales transaction to GL credit sales
-				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+				$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 				InsertIntoGLTrans("10", 
 								$InvoiceNo, 
 								Date('Y-m-d'),

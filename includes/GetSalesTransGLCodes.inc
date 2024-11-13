@@ -147,7 +147,7 @@ Function GetCOGSGLAccount ($Area, $StockID, $SalesType) {
 	Return $myrow[0];
 }
 
-Function GetSalesGLAccount ($Area, $StockID, $SalesType, &$db) {
+Function GetSalesGLAccount ($Area, $StockID, $SalesType) {
 
 /*Gets the  Sales GL Code for a specific area, sales type and stock category */
 

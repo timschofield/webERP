@@ -1885,8 +1885,7 @@ then debit the expense account the stock is to written off to */
 //Post sales transaction to GL credit sales
 				    $SalesGLAccounts = GetSalesGLAccount($Area,
 				    						$CreditLine->StockID,
-										$_SESSION['CreditItems'.$identifier]->DefaultSalesType,
-										$db);
+										$_SESSION['CreditItems'.$identifier]->DefaultSalesType);
 
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,

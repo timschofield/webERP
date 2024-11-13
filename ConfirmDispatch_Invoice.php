@@ -1441,7 +1441,7 @@ invoices can have a zero amount but there must be a quantity to invoice */
 
 				if(!$IsAsset) { // its a normal stock item
 					//Post sales transaction to GL credit sales
-					$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType, $db);
+					$SalesGLAccounts = GetSalesGLAccount($Area, $OrderLine->StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,
