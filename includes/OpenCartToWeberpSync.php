@@ -92,6 +92,7 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 			ORDER BY oc_order.order_id";
 
 	$result = DB_query_oc($SQL);
+	$i = 0;
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Orders from OpenCart') .'</strong></p>';
@@ -124,7 +125,6 @@ function SyncOrderInformation($TimeDifference, $ShowMessages, $LastTimeRun , $Em
 		$InsertErrMsg = _('The SQL to insert OpenCart orders in webERP failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($ShowMessages){
 				echo '<table class="selection">';
@@ -560,6 +560,7 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 					OR oc_paypal_order.date_modified >= '" . $LastTimeRun . "')
 		ORDER BY oc_paypal_order.paypal_order_id";
 	$result = DB_query_oc($SQL);
+	$i = 0;
 
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -591,7 +592,6 @@ function SyncPaypalPaymentInformation($TimeDifference, $ShowMessages, $LastTimeR
 		$InsertErrMsg = _('The SQL to insert OpenCart Paypal payments in webERP failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($ShowMessages){
 				if ($k == 1) {
@@ -723,6 +723,7 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun , $EmailTe
 			ORDER BY oc_order.order_id ASC,
 					oc_order_history.order_history_id ASC";
 	$result = DB_query_oc($SQL);
+	$i = 0;
 
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -742,7 +743,6 @@ function SyncOrderStatus($TimeDifference, $ShowMessages, $LastTimeRun , $EmailTe
 		$UpdateErrMsg = _('The SQL to update Order Status in webERP failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($ShowMessages){
 				if ($k == 1) {
@@ -819,6 +819,7 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 					OR oc_order.date_modified >= '" . $LastTimeRun . "')
 			ORDER BY oc_order.order_id ASC";
 	$result = DB_query_oc($SQL);
+	$i = 0;
 
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -838,7 +839,6 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 		$UpdateErrMsg = _('The SQL to update Order Status in webERP failed');
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($ShowMessages){
 				if ($k == 1) {
@@ -939,6 +939,7 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 					AND salesorders.klemailpaymentconfirm = '0000-00-00'
 				ORDER BY salesorders.orderno";			
 	$result = DB_query($SQL);
+	$i = 0;
 
 	if (DB_num_rows($result) != 0){
 		if ($ShowMessages){
@@ -956,7 +957,6 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 		$UpdateErrMsg = 'The SQL to ' . $SectionTitle . ' failed';
 
 		$k = 0; //row colour counter
-		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($ShowMessages){
 				if ($k == 1) {
