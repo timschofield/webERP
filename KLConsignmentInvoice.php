@@ -28,13 +28,13 @@ if(!isset($_POST['DraftOrInvoice'])) {
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $db);
+	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice']);
 } else {
-	display($Title, $db);
+	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$db) {
+function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 
 	$EndDate = FormatDateForSQL($EndDate);
 	$InvoiceNumber = CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate);
@@ -348,7 +348,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, &$d
 } // End of function submit()
 
 
-function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

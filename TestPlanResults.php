@@ -359,7 +359,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 		while ($myrow = DB_fetch_array($result)) {
 			$result2 = DB_query("SELECT count(testid) FROM prodspecs
 						WHERE testid = '".$myrow['testid']."'
-						AND keyval='".$myrow['prodspeckey']."'",	$db);
+						AND keyval='".$myrow['prodspeckey']."'");
 			$myrow2 = DB_fetch_row($result2);;
 			if($myrow2[0]>0) {
 				$ManuallyAdded=0;
@@ -368,7 +368,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			}
 			$result2 = DB_query("SELECT resultid, targetvalue,rangemin, rangemax FROM sampleresults
 						WHERE testid = '".$myrow['testid']."'
-						AND sampleid='".$_POST['CopyToSampleID']."'",	$db);
+						AND sampleid='".$_POST['CopyToSampleID']."'");
 			$myrow2 = DB_fetch_array($result2);;
 			$IsInSpec=1;
 			$CompareVal='yes';
@@ -680,7 +680,7 @@ if (isset($_POST['submit'])) {
 	$result = DB_query("SELECT count(sampleid) FROM sampleresults
 						WHERE sampleid = '".$SelectedSampleID."'
 						AND showoncert='1'
-						AND testvalue=''",	$db);
+						AND testvalue=''");
 	$myrow = DB_fetch_row($result);;
 	if($myrow[0]>0) {
 		$sql = "UPDATE qasamples SET identifier='" . $_POST['Identifier'] . "',

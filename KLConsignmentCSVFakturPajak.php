@@ -35,13 +35,13 @@ if(!isset($_POST['DecimalDigits'])) {
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $_POST['DecimalDigits'], $db);
+	submit($Title, $_POST['CompanyFrom'], $_POST['CompanyTo'], $_POST['EndDate'], $_POST['DraftOrInvoice'], $_POST['NomorSeriFP'], $_POST['DecimalDigits']);
 } else {
-	display($Title, $db);
+	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, $DecimalDigits, &$db) {
+function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, $DecimalDigits) {
 
 	$EndDateSQL = FormatDateForSQL($EndDate);
 
@@ -331,7 +331,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 } // End of function submit()
 
 
-function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

@@ -1,7 +1,7 @@
 <?php
 
 
-function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
+function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLDefines.php');
 	include('includes/KLPrices.php');
 	include('includes/KLBoards.php');
@@ -18,33 +18,33 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	
 
 	if ($Group == "0100-CleanDB"){
-		$EmailText = KL_DailyCleanDB(FALSE, $db, $EmailText);
+		$EmailText = KL_DailyCleanDB(FALSE, $EmailText);
 	}elseif ($Group == "0200-Obsolete"){
-		$EmailText = KL_DailySetObsoleteNoStock(FALSE, $db, $EmailText);
+		$EmailText = KL_DailySetObsoleteNoStock(FALSE, $EmailText);
 	}elseif ($Group == "0250-TopSales"){
-		$EmailText = SetTopSalesRanking(FALSE, $EmailText, $db);
+		$EmailText = SetTopSalesRanking(FALSE, $EmailText);
 	}elseif ($Group == "0300-EmailsToStaff"){
-		$EmailText = KL_DailyEmailsToStaff($db, $EmailText);
+		$EmailText = KL_DailyEmailsToStaff($EmailText);
 	}elseif ($Group == "0400-OnlineRLAdjustments"){
-		$EmailText = KL_DailyRLAdjustmentsForOnline(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForOnline(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0500-RLForTopSalesKL"){
-		$EmailText = KL_DailyRLAdjustmentsForKL(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForKL(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0600-RLForTopSalesBL"){
-		$EmailText = KL_DailyRLAdjustmentsForBlink(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForBlink(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0700-RLForTopSalesOU"){
-		$EmailText = KL_DailyRLAdjustmentsForOutlet(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForOutlet(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0800-RLRebalancing"){
-		$EmailText = KL_DailyRLRebalancing(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLRebalancing(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "0900-RLZeroNotAvailable"){
-		$EmailText = KL_DailyRLZeroNotAvailable(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLZeroNotAvailable(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1000-RLAdjustPackaging"){
-		$EmailText = KL_DailyRLAdjustmentsForPackaging(FALSE, TRUE, $RootPath, $db, $EmailText); // Updates RL 
+		$EmailText = KL_DailyRLAdjustmentsForPackaging(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1100-OptimizeDB"){
-		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $db, $EmailText);
+		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $EmailText);
 	}elseif ($Group == "1200-SyncWebERPOpenCart"){
-		$EmailText = KL_DailyCleanOpenCartDB(FALSE, $db, $db_oc, $EmailText);
-		$EmailText = WeberpToOpenCartDailySync(FALSE, $db, $db_oc, $EmailText);
-		$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $EmailText);
+		$EmailText = KL_DailyCleanOpenCartDB(FALSE , $EmailText);
+		$EmailText = WeberpToOpenCartDailySync(FALSE , $EmailText);
+		$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
 	}else{
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
@@ -59,7 +59,7 @@ function KL_DailyChecks($Group, $RootPath, $db, $EmailText= ''){
 	
 }
 
-function KL_HourlyChecks($RootPath, $db, $EmailText=''){
+function KL_HourlyChecks($RootPath, $EmailText=''){
 	include('includes/KLDefines.php');
 	include('includes/KLPrices.php');
 	include('includes/KLBoards.php');
@@ -74,40 +74,40 @@ function KL_HourlyChecks($RootPath, $db, $EmailText=''){
 	include ('includes/OpenCartToWeberpSync.php');
 	include ('includes/OpenCartConnectDB.php');
 	
-	$EmailText = WeberpToOpenCartHourlySync(FALSE, $db, $db_oc, TRUE, $EmailText);
-	$EmailText = OpenCartToWeberpSync(FALSE, $db, $db_oc, $EmailText);
+	$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);
+	$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
 	
 	return $EmailText;
 }
 
 
-function KL_DailyCleanDB($ShowMessages, $db, $EmailText){
-	$EmailText = YesterdayServerUsage($ShowMessages, $EmailText, $db);
-	$EmailText = SetRLZeroForObsolete($ShowMessages, $EmailText, $db);
-	$EmailText = SetRLZeroForLocations($ShowMessages, $EmailText, $db);
-	$EmailText = SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db);
-	$EmailText = CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db);
-	$EmailText = CleanObsoleteFromWebsite($ShowMessages, $EmailText, $db);
-	$EmailText = CleanPurchOrderDetails($ShowMessages, $EmailText, $db);
-	$EmailText = CleanInternalRequestsWithoutItems($ShowMessages, $EmailText, $db);
-	$EmailText = SetStatusCompleteToFinishedOldPurchaseOrders(150, $ShowMessages, $EmailText, $db);
-	$EmailText = CleanWrongPrices($ShowMessages, $EmailText, $db);
-	$EmailText = AuthorizeAllInternalStockRequest($ShowMessages, $EmailText, $db);
-	$EmailText = CleanOldDoubleReceivedGoods(15, $ShowMessages, $EmailText, $db);
-	$EmailText = BlockInactiveUsers(17,  7, $ShowMessages, $EmailText, $db); // 17 = SPG
-	$EmailText = BlockInactiveUsers(22, 30, $ShowMessages, $EmailText, $db); // 22 = SPG-Support
-	$EmailText = PurgeKLTable("kladjustrl","adjustdate", $ShowMessages, $EmailText, $db);
-	$EmailText = PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $EmailText, $db);
-	$EmailText = PurgeKLTable("klmovetodiscount20","endprocessdate", $ShowMessages, $EmailText, $db);
-	$EmailText = PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $EmailText, $db);
-	$EmailText = PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $EmailText, $db);
-	$EmailText = PurgeAuditTrailTable($ShowMessages, $EmailText, $db);
-	$EmailText = PurgeAuditScriptsTable($ShowMessages, $EmailText, $db);
-	$EmailText = PurgePackagingUsedTable(2*365, $ShowMessages, $EmailText, $db); //we keep 2 years of packaging used for analysis. Older usage is not relevant
+function KL_DailyCleanDB($ShowMessages, $EmailText){
+	$EmailText = YesterdayServerUsage($ShowMessages, $EmailText);
+	$EmailText = SetRLZeroForObsolete($ShowMessages, $EmailText);
+	$EmailText = SetRLZeroForLocations($ShowMessages, $EmailText);
+	$EmailText = SetEndDatePriceToObsolete($ShowMessages, $EmailText);
+	$EmailText = CleanDiscountForObsoleteItems($ShowMessages, $EmailText);
+	$EmailText = CleanObsoleteFromWebsite($ShowMessages, $EmailText);
+	$EmailText = CleanPurchOrderDetails($ShowMessages, $EmailText);
+	$EmailText = CleanInternalRequestsWithoutItems($ShowMessages, $EmailText);
+	$EmailText = SetStatusCompleteToFinishedOldPurchaseOrders(150, $ShowMessages, $EmailText);
+	$EmailText = CleanWrongPrices($ShowMessages, $EmailText);
+	$EmailText = AuthorizeAllInternalStockRequest($ShowMessages, $EmailText);
+	$EmailText = CleanOldDoubleReceivedGoods(15, $ShowMessages, $EmailText);
+	$EmailText = BlockInactiveUsers(17,  7, $ShowMessages, $EmailText); // 17 = SPG
+	$EmailText = BlockInactiveUsers(22, 30, $ShowMessages, $EmailText); // 22 = SPG-Support
+	$EmailText = PurgeKLTable("kladjustrl","adjustdate", $ShowMessages, $EmailText);
+	$EmailText = PurgeKLTable("klchangeprice","endprocessdate", $ShowMessages, $EmailText);
+	$EmailText = PurgeKLTable("klmovetodiscount20","endprocessdate", $ShowMessages, $EmailText);
+	$EmailText = PurgeKLTable("klmovetodiscount50","endprocessdate", $ShowMessages, $EmailText);
+	$EmailText = PurgeKLTable("klmovetodiscount80","endprocessdate", $ShowMessages, $EmailText);
+	$EmailText = PurgeAuditTrailTable($ShowMessages, $EmailText);
+	$EmailText = PurgeAuditScriptsTable($ShowMessages, $EmailText);
+	$EmailText = PurgePackagingUsedTable(2*365, $ShowMessages, $EmailText); //we keep 2 years of packaging used for analysis. Older usage is not relevant
 	return $EmailText;
 }
 
-function YesterdayServerUsage($ShowMessages, $EmailText, $db){
+function YesterdayServerUsage($ShowMessages, $EmailText){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
 	$ToDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', 0));
 	
@@ -165,27 +165,27 @@ function YesterdayServerUsage($ShowMessages, $EmailText, $db){
 
 
 
-function KL_DailySetObsoleteNoStock($ShowMessages, $db, $EmailText = ''){
-	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $EmailText, $db);
-	$EmailText = SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $EmailText, $db);
-//	$EmailText = PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText, $db);
+function KL_DailySetObsoleteNoStock($ShowMessages, $EmailText = ''){
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOKA", $ShowMessages, $EmailText);
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOBA", $ShowMessages, $EmailText);
+	$EmailText = SetObsoleteForCategoryWithoutStock("NOPOGA", $ShowMessages, $EmailText);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC2A", $ShowMessages, $EmailText);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC5A", $ShowMessages, $EmailText);
+	$EmailText = SetObsoleteForCategoryWithoutStock("DISC8A", $ShowMessages, $EmailText);
+//	$EmailText = PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText);
 	return $EmailText;
 }
 
 
-function KL_DailyEmailsToStaff($db, $EmailText){
-	$EmailText = SendEmailChangePriceReadyForStep02($db, $EmailText);
-	$EmailText = SendEmailMoveToDiscountReadyForStep02("20", $db, $EmailText);
-	$EmailText = SendEmailMoveToDiscountReadyForStep02("50", $db, $EmailText);
-	$EmailText = SendEmailMoveToDiscountReadyForStep02("80", $db, $EmailText);
+function KL_DailyEmailsToStaff($EmailText){
+	$EmailText = SendEmailChangePriceReadyForStep02($EmailText);
+	$EmailText = SendEmailMoveToDiscountReadyForStep02("20", $EmailText);
+	$EmailText = SendEmailMoveToDiscountReadyForStep02("50", $EmailText);
+	$EmailText = SendEmailMoveToDiscountReadyForStep02("80", $EmailText);
 	return $EmailText;
 }
 
-function KL_DailyOptimizationDatabase($tablesPerDay, $ShowMessages, $db, $EmailText = ''){
+function KL_DailyOptimizationDatabase($tablesPerDay, $ShowMessages, $EmailText = ''){
 //	$NumberDay = substr(Date('Y-m-d'),-2); // Get the date number
 	$ErrMsg ='Could not OPTIMIZE tables because';
 
@@ -228,7 +228,7 @@ function KL_DailyOptimizationDatabase($tablesPerDay, $ShowMessages, $db, $EmailT
 	return $EmailText;
 }
 
-function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText, $db){
+function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText){
 	if ($_SESSION['MonthsAuditTrail'] > 0){
 		 $sql = "DELETE FROM " . $TableName . "
 				WHERE  " . $DateField . " <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'
@@ -241,7 +241,7 @@ function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function PurgePackagingUsedTable($DaysToKeep, $ShowMessages, $EmailText, $db){
+function PurgePackagingUsedTable($DaysToKeep, $ShowMessages, $EmailText){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysToKeep));
 	$sql = "DELETE FROM packagingused
 			WHERE date < '" . $FromDate . "'";
@@ -252,7 +252,7 @@ function PurgePackagingUsedTable($DaysToKeep, $ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function CleanPurchOrderDetails($ShowMessages, $EmailText, $db){
+function CleanPurchOrderDetails($ShowMessages, $EmailText){
 	$sql = "DELETE FROM purchorderdetails WHERE orderno='0'";
 	$ErrMsg ='Could not clean purchorderdetails table because';
 	$result = DB_query($sql,$ErrMsg);
@@ -261,7 +261,7 @@ function CleanPurchOrderDetails($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db){
+function CleanDiscountForObsoleteItems($ShowMessages, $EmailText){
 	$sql = "UPDATE stockmaster
 			SET discountcategory = ''
 			WHERE discontinued = 1
@@ -273,7 +273,7 @@ function CleanDiscountForObsoleteItems($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $EmailText, $db){
+function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $EmailText){
 	$sql = "UPDATE stockmaster
 			SET discontinued = 1
 			WHERE categoryid = '" . $category . "'
@@ -288,7 +288,7 @@ function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $EmailText
 	return $EmailText;
 }
 
-function SetRLZeroForObsolete($ShowMessages, $EmailText, $db){
+function SetRLZeroForObsolete($ShowMessages, $EmailText){
 	$sql = "UPDATE locstock
 			SET reorderlevel = 0
 			WHERE EXISTS (SELECT *
@@ -302,7 +302,7 @@ function SetRLZeroForObsolete($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function SetRLZeroForLocations($ShowMessages, $EmailText, $db){
+function SetRLZeroForLocations($ShowMessages, $EmailText){
 	$sql = "UPDATE locstock
 			SET reorderlevel = 0
 			WHERE loccode IN " . LIST_LOCATIONS_WITH_RL_ALWAYS_ZERO;
@@ -313,7 +313,7 @@ function SetRLZeroForLocations($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db){
+function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 	$sql = "SELECT COUNT(*) AS items
 			FROM prices
 			WHERE EXISTS (SELECT *
@@ -341,7 +341,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 			
-function CleanInternalRequestsWithoutItems($ShowMessages, $EmailText, $db){
+function CleanInternalRequestsWithoutItems($ShowMessages, $EmailText){
 	$sql = "DELETE FROM stockrequest 
 			WHERE NOT EXISTS (SELECT *
 								FROM stockrequestitems
@@ -353,7 +353,7 @@ function CleanInternalRequestsWithoutItems($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }			
 
-function CleanObsoleteFromWebsite($ShowMessages, $EmailText, $db){
+function CleanObsoleteFromWebsite($ShowMessages, $EmailText){
 	$sql = "DELETE FROM salescatprod
 			WHERE EXISTS (SELECT * FROM stockmaster
 							WHERE discontinued = 1
@@ -365,7 +365,7 @@ function CleanObsoleteFromWebsite($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 	
-function CleanWrongPrices($ShowMessages, $EmailText, $db){
+function CleanWrongPrices($ShowMessages, $EmailText){
 	$sql = "DELETE FROM prices
 			WHERE startdate > enddate
 			AND enddate != '0000-00-00'";
@@ -377,7 +377,7 @@ function CleanWrongPrices($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $EmailText, $db){
+function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $EmailText){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$sql = "UPDATE loctransfers
 			SET recqty = shipqty
@@ -391,7 +391,7 @@ function CleanOldDoubleReceivedGoods($NumDays, $ShowMessages, $EmailText, $db){
 }
 
 	
-function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $EmailText, $db){
+function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $EmailText){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$sql = "UPDATE purchorders 
 			SET status = 'Completed' 
@@ -409,7 +409,7 @@ function SetStatusCompleteToFinishedOldPurchaseOrders($maxdays, $ShowMessages, $
 
 }		
 
-function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText, $db){
+function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText){
 	$sql = "SELECT COUNT(*) AS total
 			FROM stockrequest
 			WHERE authorised !='1'";
@@ -428,7 +428,7 @@ function AuthorizeAllInternalStockRequest($ShowMessages, $EmailText, $db){
 }
 
 
-function BlockInactiveUsers($access, $maxdays, $ShowMessages, $EmailText, $db){
+function BlockInactiveUsers($access, $maxdays, $ShowMessages, $EmailText){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
 
 	$sql = "UPDATE www_users
@@ -452,7 +452,7 @@ function CleanListToPrint($List){
 	return $List;
 }
 
-function PurgeAuditTrailTable($ShowMessages, $EmailText, $db){
+function PurgeAuditTrailTable($ShowMessages, $EmailText){
 	 $sql = "DELETE FROM audittrail
 			WHERE  transactiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 	$result = DB_query($sql);
@@ -461,7 +461,7 @@ function PurgeAuditTrailTable($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function PurgeAuditScriptsTable($ShowMessages, $EmailText, $db){
+function PurgeAuditScriptsTable($ShowMessages, $EmailText){
 	 $sql = "DELETE FROM auditscripts
 			WHERE  executiondate <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'";
 	$result = DB_query($sql);
@@ -470,7 +470,7 @@ function PurgeAuditScriptsTable($ShowMessages, $EmailText, $db){
 	return $EmailText;
 }
 
-function PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText, $db){
+function PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText){
 	$sql = "DELETE FROM relateditems
 			WHERE relateditems.stockid IN (SELECT stockmaster.stockid
 											FROM stockmaster
@@ -490,7 +490,7 @@ function PurgeRelatedItemsFromObsolete($ShowMessages, $EmailText, $db){
 }
 
 
-function SetTopSalesRanking($ShowMessages, $EmailText, $db){
+function SetTopSalesRanking($ShowMessages, $EmailText){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Set Top Sales Ranking Table" . "\n\n"; 
@@ -538,23 +538,23 @@ function SetTopSalesRanking($ShowMessages, $EmailText, $db){
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	
 
-	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("BLINK", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("BLINK", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("BLINK", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("OUTLET", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("OUTLET", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("OUTLET", 30, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("GENERAL", 90, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("GENERAL", 60, $ShowMessages, $EmailText, $db);
-	$EmailText = SetTopSalesByGroup("GENERAL", 30, $ShowMessages, $EmailText, $db);
+	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 90, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 60, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("KAPAL-LAUT", 30, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("BLINK", 90, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("BLINK", 60, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("BLINK", 30, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("OUTLET", 90, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("OUTLET", 60, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("OUTLET", 30, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("GENERAL", 90, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("GENERAL", 60, $ShowMessages, $EmailText);
+	$EmailText = SetTopSalesByGroup("GENERAL", 30, $ShowMessages, $EmailText);
 	
 	return $EmailText;
 }
 
-function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText, $db){
+function SetTopSalesByGroup($Group, $NumDays, $ShowMessages, $EmailText){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 

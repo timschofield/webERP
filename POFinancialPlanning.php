@@ -5,13 +5,13 @@ $Title = _('Financial planning for active (Authorised, Printed, Pending) Purchas
 include('includes/header.php');
 
 if (isset($_POST['submit'])) {
-    submit($db, $RootPath, $_POST['Country'], $_POST['Currency']);
+    submit($RootPath, $_POST['Country'], $_POST['Currency']);
 } else {
-    display($db);
+    display();
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $RootPath, $Country, $Currency) {
+function submit($RootPath, $Country, $Currency) {
 
 	if ($Country != 'All'){
 		$WhereCountry 	= " AND suppliers.address6 = '". $Country ."' ";
@@ -219,7 +219,7 @@ function submit(&$db, $RootPath, $Country, $Currency) {
 	}
 }
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

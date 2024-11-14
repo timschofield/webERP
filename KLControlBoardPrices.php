@@ -109,31 +109,31 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		$IssuesFound += PriceBelowStandard("SETKLA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("SETKLA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("TESTKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("TESTKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("STABKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("STABKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("NOPOKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		$IssuesFound += PriceBelowStandard("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("STABBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("NOPOKA", MINIMUM_PRICE_FACTOR_KL, 0, $RootPath);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += PriceBelowStandard("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("SETBLA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("STABBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceBelowStandard("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath, $db);
+		$IssuesFound += PriceBelowStandard("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, 0, $RootPath);
+		$NumberOfTestExecuted++;
+
+		$IssuesFound += PriceBelowStandard("SETGEA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("TESTGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("STABGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += PriceBelowStandard("NOPOGA", MINIMUM_PRICE_FACTOR_GENERAL, 0, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -150,41 +150,41 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		$IssuesFound += ItemsTooCheap("TESTKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("TESTKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("STABKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("STABKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		$IssuesFound += ItemsTooCheap("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath, $db);
-		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooCheap("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MINIMUM_PRICE_FACTOR_TOPSALES_KL, 0, 50, 60, $RootPath);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += ItemsTooExpensive("TESTKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("STABKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooCheap("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MINIMUM_PRICE_FACTOR_TOPSALES_BLINK, 0, 40, 60, $RootPath);
 		$NumberOfTestExecuted++;
 
-		$IssuesFound += ItemsTooExpensive("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("TESTKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("STABKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += ItemsTooExpensive("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath, $db);
+		$IssuesFound += ItemsTooExpensive("NOPOKA", MINIMUM_PRICE_FACTOR_KL, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_KL, 0, 500, 60, $RootPath);
+		$NumberOfTestExecuted++;
+
+		$IssuesFound += ItemsTooExpensive("TESTBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsTooExpensive("STABBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath);
+		$NumberOfTestExecuted++;
+		$IssuesFound += ItemsTooExpensive("NOPOBA", MINIMUM_PRICE_FACTOR_BLINK, MAXIMUM_PRICE_FACTOR_BOTTOMSALES_BLINK, 0, 300, 60, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		$IssuesFound += PricesTooOld(3, 10, 20, $RootPath, $db);
+		$IssuesFound += PricesTooOld(3, 10, 20, $RootPath);
 		$NumberOfTestExecuted++;
-		$IssuesFound += PriceWrongRounding($RootPath, $db);
+		$IssuesFound += PriceWrongRounding($RootPath);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -200,7 +200,7 @@ include ('includes/footer.php');
 FUNCTIONS ONLY USED IN PRICING CONTROL BOARD
 *********************************************************************************************/
 
-function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
+function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
 	$issues = 0;
@@ -323,7 +323,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 	return $issues;
 }
 
-function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath, $db){
+function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
 	$issues = 0;
@@ -444,7 +444,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 	return $issues;
 }
 
-function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
+function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 	$today = date('Y-m-d');
 	$issues = 0;
 	
@@ -564,7 +564,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath, $db){
 	return $issues;
 }
 
-function PriceWrongRounding($RootPath, $db){
+function PriceWrongRounding($RootPath){
 	$today = date('Y-m-d');
 	$issues = 0;
 
@@ -660,7 +660,7 @@ function PriceWrongRounding($RootPath, $db){
 	return $issues;
 }
 
-function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath, $db){
+function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Years * 365));
 	$issues = 0;

@@ -63,16 +63,16 @@ if (DB_num_rows($result) != 0){
 		$Volume = $myrow['volume'];
 
 		if ($Weight == 0){
-			$Weight = UpdateWeight($myrow['stockid'], $Weight, $UpdateDB, $db);
+			$Weight = UpdateWeight($myrow['stockid'], $Weight, $UpdateDB);
 		}
 
 		if ($Packaging == ""){
-			$Packaging = UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $Brand, $UpdateDB, $db);
-			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB, $db);
+			$Packaging = UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $Brand, $UpdateDB);
+			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB);
 		}
 		
 		if ($Volume == 0){
-			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB, $db);
+			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB);
 		}
 		// if we have some kind of description, long enough, we can move ahead. Otherwise, we miss the descriptiob
 		if (strlen($myrow['description']) >= 8){
@@ -84,8 +84,8 @@ if (DB_num_rows($result) != 0){
 					// KL brand detected ;-) select the sub category 
 					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{
 						$WebsiteDescription = 'NO KAPAL-LAUT CATEGORY';
@@ -94,8 +94,8 @@ if (DB_num_rows($result) != 0){
 					// Blink brand detected ;-)
 					$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB, $db);
-						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory, $db);
+						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{
 						$WebsiteDescription = 'NO BLINK CATEGORY';
@@ -150,7 +150,7 @@ include ('includes/footer.php');
 				Associated functions 
 *********************************************************************************************************/
 
-function DeleteWebsiteSalesCategories($Stockid, $UpdateDB, $db){
+function DeleteWebsiteSalesCategories($Stockid, $UpdateDB){
 	if($UpdateDB){
 		$sql =	"DELETE FROM salescatprod 
 					WHERE stockid ='" .  $Stockid . "'";
@@ -159,7 +159,7 @@ function DeleteWebsiteSalesCategories($Stockid, $UpdateDB, $db){
 	}
 }
 
-function UpdateWeight($Stockid, $UpdateDB, $db){
+function UpdateWeight($Stockid, $UpdateDB){
 	if (isRing($Stockid)){
 		$Weight = STANDARD_RING_WEIGHT;
 	}elseif (isToeRing($Stockid)){
@@ -212,7 +212,7 @@ function UpdateWeight($Stockid, $UpdateDB, $db){
 	return $Weight;
 }
 
-function UpdateVolume($Stockid, $UpdateDB, $db){
+function UpdateVolume($Stockid, $UpdateDB){
 	if (isRing($Stockid)){
 		$Length = BOX_S_LENGTH;
 		$Width  = BOX_S_WIDTH;
@@ -310,7 +310,7 @@ function UpdateVolume($Stockid, $UpdateDB, $db){
 	return $Volume;
 }
 
-function UpdateVolumeByPackaging($Stockid, $Packaging, $UpdateDB, $db){
+function UpdateVolumeByPackaging($Stockid, $Packaging, $UpdateDB){
 	$TypePackaging = substr($Packaging, -1, 1);
 	if ($Stockid == "WKPC01"){
 		$Length = BOX_XS_LENGTH;
@@ -349,7 +349,7 @@ function UpdateVolumeByPackaging($Stockid, $Packaging, $UpdateDB, $db){
 	return $Volume;
 }
 
-function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB, $db){
+function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB){
 
 	if (isRing($Stockid)){
 		$Packaging = "-S";
@@ -535,7 +535,7 @@ function WebsiteCategoryBlinkJewellery($StockId, $Description, $Long, $Category)
 }
 
 
-function FindWebsiteDescription($WebsiteCategory, $db){
+function FindWebsiteDescription($WebsiteCategory){
 	$SQLCat = "SELECT salescat.salescatname
 			FROM salescat
 			WHERE salescat.salescatid = '". $WebsiteCategory . "'";

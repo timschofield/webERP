@@ -57,7 +57,7 @@ if ($_GET['Discount'] == "20"){
 
 if (($_GET['Action'] == "New") OR
 	($_GET['Action'] == "Change")){
-	UpdateDiscountCategory($_GET['Item'], $NewCategory, $_GET['Discount'],$db);
+	UpdateDiscountCategory($_GET['Item'], $NewCategory, $_GET['Discount']);
 }
 
 if ($_GET['Action'] == "Change"){
@@ -67,13 +67,13 @@ if ($_GET['Action'] == "Change"){
 if ($_GET['Action'] == "Finish"){
 	if ($_GET['Discount'] == "20"){
 		SetMoveDiscount20Flag(0, $_GET['Item']);
-		SetEndDateMoveDiscount20($_GET['Item'], $db);
+		SetEndDateMoveDiscount20($_GET['Item']);
 	}elseif($_GET['Discount'] == "50"){
 		SetMoveDiscount50Flag(0, $_GET['Item']);
-		SetEndDateMoveDiscount50($_GET['Item'], $db);
+		SetEndDateMoveDiscount50($_GET['Item']);
 	}else{
 		SetMoveDiscount80Flag(0, $_GET['Item']);
-		SetEndDateMoveDiscount80($_GET['Item'], $db);
+		SetEndDateMoveDiscount80($_GET['Item']);
 	}
 }
 

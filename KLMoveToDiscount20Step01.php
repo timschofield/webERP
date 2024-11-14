@@ -128,7 +128,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 
-		SetRLZeroAtPointOfSales($_POST['Stockid'], $db);
+		SetRLZeroAtPointOfSales($_POST['Stockid']);
 		SetMoveDiscount20Flag(1,$_POST['Stockid']);
 
 		KLSendEmail("MoveToDiscount20Started", "Silent", $_POST['Stockid']);

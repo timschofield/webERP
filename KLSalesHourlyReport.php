@@ -20,7 +20,7 @@ if ($KL_SystemAdmin
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesDirector
 	OR $KL_ShopManager){
-	HourlyPerformance(15,$RootPath, $db);
+	HourlyPerformance(15,$RootPath);
 	$NumberOfTestExecuted++;
 }
 
@@ -29,7 +29,7 @@ time_finish($begintime);
 
 include ('includes/footer.php');
 
-function HourlyPerformance($numDays, $RootPath, $db){
+function HourlyPerformance($numDays, $RootPath){
 
 	$Today = date('Y-m-d');
 	$Now = date ('H:i:s');

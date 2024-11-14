@@ -110,7 +110,7 @@ if(isset($_POST['submit'])) {
 
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
-		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode'], $db);
+		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
 		
 		prnMsg(_('The location record has been updated'),'success');
 
@@ -259,7 +259,7 @@ if(isset($_POST['submit'])) {
 		$DbgMsg = _('The SQL used to insert the location record was');
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
-		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode'], $db);
+		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
 
 		prnMsg(_('The new location record has been added'),'success');
 
@@ -1186,7 +1186,7 @@ if(!isset($_GET['delete'])) {
 
 include('includes/footer.php');
 
-function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlinePartnerCode, $db){
+function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlinePartnerCode){
 	if ($NewLocationType == 'ONLINE'){
 		// we are modifying an ONLINE Location
 		if ($NewOnlinePartnerCode != 'NOONLINE'){

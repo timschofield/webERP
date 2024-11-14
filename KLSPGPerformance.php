@@ -21,14 +21,14 @@ if ($KL_OperationalManager
 	OR $KL_SalesDirector
 	OR $KL_ShopManager){
 
-	SPGPerformanceMonthy($db);
+	SPGPerformanceMonthy();
 	$NumberOfTestExecuted++;
 }
 
 if ($KL_SalesDirector
 	OR $KL_ShopManager){
 
-	SPGPerformanceWeekly($db);
+	SPGPerformanceWeekly();
 	$NumberOfTestExecuted++;
 }
 	
@@ -45,7 +45,7 @@ if ($KL_SystemAdmin
 if ($KL_OperationalManager 
 	OR $KL_ShopManager){
 
-	SPGPerformanceAllShops(15, 30, 45, $db);
+	SPGPerformanceAllShops(15, 30, 45);
 	$NumberOfTestExecuted++;
 }
 	
@@ -54,19 +54,19 @@ if ($KL_SystemAdmin
 	OR $KL_BusinessDevelopmentManager 
 	OR $KL_SalesDirector){
 		
-	HourlySales(15,$RootPath, $db);
+	HourlySales(15,$RootPath);
 	$NumberOfTestExecuted++;
-	HourlySales(30,$RootPath, $db);
+	HourlySales(30,$RootPath);
 	$NumberOfTestExecuted++;
 	
-	DaysOfWeekSales(180,$RootPath, $db);
+	DaysOfWeekSales(180,$RootPath);
 	$NumberOfTestExecuted++;
 
 }
 
 if ($KL_SystemAdmin){	
 
-	RetailTypePayments("SPG",90, $db);
+	RetailTypePayments("SPG",90);
 	$NumberOfTestExecuted++;
 }
 
@@ -79,7 +79,7 @@ include ('includes/footer.php');
 FUNCTIONS ONLY USED IN SPG PERFORMANCE BOARD
 *********************************************************************************************/
 
-function RetailTypePayments($typereport, $maxdays, $db){
+function RetailTypePayments($typereport, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$totalcash = 0;
 	$totalcredit = 0;
@@ -199,7 +199,7 @@ function RetailTypePayments($typereport, $maxdays, $db){
 	}
 }
 
-function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC, $db){
+function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC){
 	$SQL = "SELECT locations.cashsalecustomer
 			FROM locations
 			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
@@ -207,11 +207,11 @@ function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC, $db){
 				locations.loccode";
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)) {
-		SPGPerformanceByShop($myrow['cashsalecustomer'], $NumDaysA, $NumDaysB, $NumDaysC, $db);
+		SPGPerformanceByShop($myrow['cashsalecustomer'], $NumDaysA, $NumDaysB, $NumDaysC);
 	}
 }
 
-function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
+function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
@@ -344,7 +344,7 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC, $db){
 	}
 }
 
-function SPGPerformanceMonthy($db){
+function SPGPerformanceMonthy(){
 
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$Last30A      = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-30));
@@ -633,7 +633,7 @@ function SPGPerformanceMonthy($db){
 	}
 }
 
-function SPGPerformanceWeekly($db){
+function SPGPerformanceWeekly(){
 
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$Last7A      = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-7));
@@ -921,7 +921,7 @@ function SPGPerformanceWeekly($db){
 	}
 }
 
-function HourlySales($numDays, $RootPath, $db){
+function HourlySales($numDays, $RootPath){
 
 	$Today = date('Y-m-d');
 	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
@@ -1449,7 +1449,7 @@ function HourlySales($numDays, $RootPath, $db){
 	}
 }
 
-function DaysOfWeekSales($numDays, $RootPath, $db){
+function DaysOfWeekSales($numDays, $RootPath){
 	$Today = date('Y-m-d');
 	$Yesterday = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));

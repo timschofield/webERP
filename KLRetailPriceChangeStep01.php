@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 
-		SetRLZeroAtPointOfSales($_POST['Stockid'], $db);
+		SetRLZeroAtPointOfSales($_POST['Stockid']);
 		SetChangePriceFlag(1,$_POST['Stockid']);
 
 		KLSendEmail("ChangePriceStarted", "Silent", $_POST['Stockid']);

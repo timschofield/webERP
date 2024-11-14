@@ -16,10 +16,10 @@ $periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 * SPG identification         
 ***************************************************************************************/
 
-AverageSPGSales($_SESSION['SalesmanLogin'], 90, 60, 30, 15, $db);
-SPGTypePayments($_SESSION['SalesmanLogin'], 15, $db);
-lastSalesSPG($_SESSION['SalesmanLogin'], 3, $db);
-RetailCustomerDataQualitySPG($_SESSION['SalesmanLogin'], 15, $db);
+AverageSPGSales($_SESSION['SalesmanLogin'], 90, 60, 30, 15);
+SPGTypePayments($_SESSION['SalesmanLogin'], 15);
+lastSalesSPG($_SESSION['SalesmanLogin'], 3);
+RetailCustomerDataQualitySPG($_SESSION['SalesmanLogin'], 15);
 
 prnMsg("Performed 4 SPG control board tests",'success');
 
@@ -32,7 +32,7 @@ include ('includes/footer.php');
 /******************************************************************************************************/
 /******************************************************************************************************/
 /******************************************************************************************************/
-function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
+function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysB-1));
@@ -157,7 +157,7 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $db){
 	}
 }
 
-function SPGTypePayments($SPG, $maxdays, $db){
+function SPGTypePayments($SPG, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$totalcash = 0;
 	$totalcredit = 0;
@@ -240,7 +240,7 @@ function SPGTypePayments($SPG, $maxdays, $db){
 	}
 }
 
-function lastSalesSPG($spg, $NumDaysA, $db){
+function lastSalesSPG($spg, $NumDaysA){
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 	
 	$SQL = "SELECT salesorders.orderno,	

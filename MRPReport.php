@@ -1,5 +1,4 @@
 <?php
-/* $Id: MRPReport.php 7682 2016-11-24 14:10:25Z rchacon $*/
 
 // MRPReport.php - Shows supply and demand for a part as determined by MRP
 
@@ -31,7 +30,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result = DB_query($sql,'','',False,False);
 	if (DB_error_no() !=0) {
 		$errors = 1;
-		$holddb = $db;
 		$Title = _('Print MRP Report Error');
 		include('includes/header.php');
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule etc'),'error');
@@ -42,7 +40,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 
 	if (DB_num_rows($result) == 0) {
 		$errors = 1;
-		$holddb = $db;
 		$Title = _('Print MRP Report Warning');
 		include('includes/header.php');
 		prnMsg(_('The MRP calculation must be run before this report will have any output. MRP requires set up of many parameters, including, EOQ, lead times, minimums, bills of materials, demand types, master schedule, etc'), 'warn');
@@ -82,7 +79,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result = DB_query($sql,'','',false,true);
 	if (DB_error_no() !=0) {
 		$errors = 1;
-		$holddb = $db;
 	}
 	$Supplies = array();
 	$WeeklySup = array();
@@ -116,7 +112,6 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$result = DB_query($sql,'','',false,true);
 	if (DB_error_no() !=0) {
 		$errors = 1;
-		$holddb = $db;
 	}
 
 	// Fields for Order Due weekly buckets based on planned orders
@@ -145,7 +140,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	if (isset($errors)) {
 		$Title = _('MRP Report') . ' - ' . _('Problem Report');
 		include('includes/header.php');
-		prnMsg( _('The MRP Report could not be retrieved by the SQL because') . ' '  . DB_error_msg($holddb),'error');
+		prnMsg( _('The MRP Report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($debug==1){
 			echo '<br />' . $sql;
@@ -781,25 +776,18 @@ if (isset($searchresult) AND !isset($_POST['Select'])) {
 						</tr>';
 		echo $tableheader;
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 		$RowIndex = 0;
 		if (DB_num_rows($searchresult) <> 0) {
 			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
 		while (($myrow = DB_fetch_array($searchresult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['mbflag'] == 'D') {
 				$qoh = 'N/A';
 			} else {
 				$qoh = locale_number_format($myrow['qoh'], $myrow['decimalplaces']);
 			}
-			echo '<td><input type="submit" name="Select" value="'.$myrow['stockid']. '" /></td>
+			echo '<tr class="striped_row">
+				<td><input type="submit" name="Select" value="'.$myrow['stockid']. '" /></td>
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">' . $qoh . '</td>
 				<td>' . $myrow['units'] . '</td>

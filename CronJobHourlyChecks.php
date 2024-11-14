@@ -15,7 +15,7 @@ $ScriptTile  = "Cron Job Hourly Tasks";
 $EmailText  = "KL webERP Cron Job: Hourly Tasks" . "\n"; 
 $EmailText = $EmailText . 'Cron Job started at '.date('d/M/Y H:i:s'). "\n";
 
-$EmailText = KL_HourlyChecks($RootPath, $db, $EmailText);
+$EmailText = KL_HourlyChecks($RootPath, $EmailText);
 
 $EmailAddress = "webmaster@kapal-laut.com";
 $EmailSubject  = "KL webERP Cron Job: Hourly Tasks"; 

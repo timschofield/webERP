@@ -98,7 +98,7 @@ if ($AlreadyOnThisOrder!=1){
 										FROM discountmatrix
 										WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 										AND discountcategory ='" . $myrow['discountcategory'] . "'
-										AND quantitybreak <" . $NewItemQty,$db);
+										AND quantitybreak <" . $NewItemQty);
 				$DiscCatRow = DB_fetch_row($result);
 				if ($DiscCatRow[0] != '' AND $DiscCatRow[0] > 0) {
 					$Discount = $DiscCatRow[0];

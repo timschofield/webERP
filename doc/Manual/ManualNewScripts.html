@@ -170,7 +170,7 @@ include(&apos;includes/footer.inc&apos;);
 <p>Whilst the system has been developed using MySql it has always been envisaged that users should not be forced to use Mysql - in keeping with open source principles. For this reason all requests of the database are made via abstraction functions in ConnectDB.inc. This policy has been rigorously maintained and developing extensions to the system which do not conform to this scheme would destroy the portability currently available between databases. Instead of using the PHP database specific functions then the functions defined in ConnectDB_mysql.inc should be used</p>
 
 <ul>
-    <li>$DB_result_handle = DB_query(<i>$sql,$db,$ErrorMessage='',$DebugMesage='',$InsideATransaction=0</i>)</li>
+    <li>$DB_result_handle = DB_query(<i>$sql,$ErrorMessage='',$DebugMesage='',$InsideATransaction=0</i>)</li>
 
     <li>$NumberOfRowsReturned = DB_num_rows(<i>$DB_result_handle</i>)</li>
 

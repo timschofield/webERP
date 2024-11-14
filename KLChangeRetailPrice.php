@@ -36,14 +36,14 @@ if ($_GET['Action'] == "New"){
 DB_Txn_Begin();
 if (($_GET['Action'] == "New") OR
 	($_GET['Action'] == "Change")){
-	UpdateTablePrice($_GET['Item'], $_GET['NewPrice'],$db);
+	UpdateTablePrice($_GET['Item'], $_GET['NewPrice']);
 	SetFlagPriceChangedInChangePrice($_GET['Item'], 1);
 	KLSendEmail("PrintNewPriceTags", "Silent", $_GET['Item']);
 }
 
 if ($_GET['Action'] == "Finish"){
 	SetChangePriceFlag(0, $_GET['Item']);
-	SetEndDateChangePrice($_GET['Item'], $db);
+	SetEndDateChangePrice($_GET['Item']);
 }
 
 DB_Txn_Commit();

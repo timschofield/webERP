@@ -8,13 +8,13 @@ include('includes/htmlMimeMail.php');
 $Title = _('Email Salary Slips To Employees');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType'], $db);
+	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
 } else {
-	display($Title, $db);
+	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
+function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 
 	//initialise no input errors
 	$InputError = FALSE;
@@ -167,7 +167,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType, &$db) {
 } // End of function submit()
 
 
-function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

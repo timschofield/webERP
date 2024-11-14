@@ -9,13 +9,13 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['Categories'], $_POST['Locations']);
+    submit($_POST['Categories'], $_POST['Locations']);
 } else {
-    display($db);
+    display();
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $ListCategories, $ListLocations) {
+function submit($ListCategories, $ListLocations) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -280,7 +280,7 @@ function submit(&$db, $ListCategories, $ListLocations) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

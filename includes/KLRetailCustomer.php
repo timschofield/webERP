@@ -4,7 +4,7 @@
 /*                               FUNCTIONS ASSOCIATED                                                 */
 /******************************************************************************************************/
 
-function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
+function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 	if ($NumDays == -1){
 		// today only
 		$Yesterday  = Date('Y-m-d');
@@ -117,7 +117,7 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops, $db){
 			
 }
 
-function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $MinimCustomersToShow, $CountriesForRetail, $db){
+function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $MinimCustomersToShow, $CountriesForRetail){
 	if ($NumDays == -1){
 		// today only
 		$Yesterday  = Date('Y-m-d');
@@ -258,7 +258,7 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 	}
 }
 
-function EmailHarvested($NumDays, $TypeOfShops, $db){
+function EmailHarvested($NumDays, $TypeOfShops){
 	if ($NumDays == -1){
 		// today only
 		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
@@ -342,7 +342,7 @@ function EmailHarvested($NumDays, $TypeOfShops, $db){
 			
 }
 
-function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail, $db){
+function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail){
 	if ($NumDays == -1){
 		// today only
 		$Yesterday  = Date('Y-m-d');
@@ -620,7 +620,7 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 		</form>';
 }
 
-function RetailCustomerDataQualitySPG($SPG, $NumDays, $db){
+function RetailCustomerDataQualitySPG($SPG, $NumDays){
 	if ($NumDays == -1){
 		// today only
 		$Yesterday  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));

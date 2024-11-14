@@ -17,7 +17,7 @@ define('UL_MAINTENANCE', 5);
  *	See define() statements above.
  */
 
-function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
+function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 	global $debug;
 	global $PathPrefix;
@@ -196,7 +196,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 									if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 
 										$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
-																			WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+																			WHERE currabrev='" . $CurrencyRow[0] . "'");
 									}
 								}
 							}
@@ -205,7 +205,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '', $db) {
 							while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 								if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 									$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . google_currency_rate($CurrencyRow[0]) . "'
-																		WHERE currabrev='" . $CurrencyRow[0] . "'",$db);
+																		WHERE currabrev='" . $CurrencyRow[0] . "'");
 								}
 							}
 						}

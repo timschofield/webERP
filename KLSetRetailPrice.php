@@ -17,7 +17,7 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 	exit;
 }
 
-UpdateTablePrice($_GET['Item'], $_GET['NewPrice'],$db);
+UpdateTablePrice($_GET['Item'], $_GET['NewPrice']);
 
 include('includes/footer.php');
 

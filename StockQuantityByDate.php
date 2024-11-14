@@ -125,7 +125,7 @@ if(isset($_POST['ShowStatus']) AND Is_Date($_POST['OnHandDate'])) {
 
 		$LocStockResult = DB_query($sql, $ErrMsg);
 
-		$NumRows = DB_num_rows($LocStockResult, $db);
+		$NumRows = DB_num_rows($LocStockResult);
 
 		$j = 1;
 		$k=0; //row colour counter

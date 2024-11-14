@@ -50,7 +50,7 @@ $sql= "SELECT salesorders.orderno,
 
 $Result=DB_query($sql,'','',false,false); //dont trap errors here
 
-if (DB_error_no($db)!=0){
+if (DB_error_no()!=0){
 	include('includes/header.php');
 	echo '<br />' . _('An error occurred getting the orders details');
 	if ($debug==1){

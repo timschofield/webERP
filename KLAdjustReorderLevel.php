@@ -22,13 +22,13 @@ $updateDB = true;
 $ShowMessages = true;
 $EmailText = '';
 
-KL_DailyRLAdjustmentsForOnline($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-KL_DailyRLAdjustmentsForOutlet($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-KL_DailyRLRebalancing($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-KL_DailyRLZeroNotAvailable($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
-KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, $db, $EmailText);
+KL_DailyRLAdjustmentsForOnline($ShowMessages, $updateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForOutlet($ShowMessages, $updateDB, $RootPath, $EmailText);
+KL_DailyRLRebalancing($ShowMessages, $updateDB, $RootPath, $EmailText);
+KL_DailyRLZeroNotAvailable($ShowMessages, $updateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, $EmailText);
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);

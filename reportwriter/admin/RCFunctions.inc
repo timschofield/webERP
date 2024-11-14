@@ -713,7 +713,7 @@ function CreateTableList($ReportID,$Table) {
 
 	$TableList = '';
 
-	$Result=DB_show_tables($db);
+	$Result=DB_show_tables();
 
 	while ($mytable=DB_fetch_row($Result)) {
 		$tablename = strtolower($mytable[0]);
@@ -814,7 +814,7 @@ function CreateFieldList($ReportID,$FName,$Type) {
 
 	for ($i = 0; $i < 6; $i++) {
 		if ($myrow[$i]) {
-			$Result = DB_show_fields($myrow[$i],$db);
+			$Result = DB_show_fields($myrow[$i]);
 			while ($mytable=DB_fetch_row($Result)) {
 				$fieldname = strtolower($myrow[$i]) . "." . strtolower($mytable[0]);
 				if ($FName == $fieldname){

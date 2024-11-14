@@ -51,7 +51,7 @@ Function GetStockGLCode ($StockID){
 	return $myrow;
 }
 
-Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
+Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory){
 
 /*Gets the Tax rate applicable to an item from the TaxAuthority of the branch and TaxLevel of the item */
 
@@ -74,7 +74,7 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory, &$db){
 
 }
 
-Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory, &$db) {
+Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 
 	$SQL = "SELECT taxgrouptaxes.calculationorder,
 					taxauthorities.description,

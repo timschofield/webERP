@@ -23,9 +23,9 @@ if (!isset($_POST['EndDate'])){
 }
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['CompanyFrom'], $_POST['StartDate'], $_POST['EndDate'], $db);
+	submit($Title, $_POST['CompanyFrom'], $_POST['StartDate'], $_POST['EndDate']);
 } else {
-	display($Title, $db);
+	display($Title);
 }
 
 include('includes/footer.php');
@@ -34,7 +34,7 @@ include('includes/footer.php');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $CompanyFrom, $StartDate, $EndDate, &$db) {
+function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 	include('includes/header.php');
 
 	$StartDate = FormatDateForSQL($StartDate);
@@ -128,7 +128,7 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate, &$db) {
 } // End of function submit()
 
 
-function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

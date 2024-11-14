@@ -2,7 +2,7 @@
 /*	$Id: Z_ChangeStockCode.php 7494 2016-04-25 09:53:53Z daintree $*/
 /*	This script is an utility to change an inventory item code. */
 /*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
-	$NewValue, $db) from .../includes/MiscFunctions.php.*/
+	$NewValue) from .../includes/MiscFunctions.php.*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -142,10 +142,10 @@ if (isset($_POST['ProcessStockChange'])){
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
-		ChangeFieldInTable("locstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("stockmoves", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("loctransfers", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("mrpdemands", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("locstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("stockmoves", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("loctransfers", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("mrpdemands", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 
 		//check if MRP tables exist before assuming
 		$sql = "SELECT * FROM mrpparameters";
@@ -153,40 +153,40 @@ if (isset($_POST['ProcessStockChange'])){
 		if (DB_error_no() == 0) {
 			$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",'','',false,false);
 			if (DB_error_no()==0) {
-				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
 	
 			$result = DB_query("SELECT * FROM mrprequirements" ,'','',false,false);
 			if (DB_error_no()==0){
-				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
 			
 			$result = DB_query("SELECT * FROM mrpsupplies" ,'','',false,false);
 			if (DB_error_no()==0){
-				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
 		}
-		ChangeFieldInTable("salesanalysis", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("orderdeliverydifferenceslog", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("prices", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("salesorderdetails", "stkcode", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("purchorderdetails", "itemcode", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("purchdata", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("shipmentcharges", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("stockcheckfreeze", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("stockcounts", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("grns", "itemcode", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("contractbom", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("bom", "component", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("salesanalysis", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("orderdeliverydifferenceslog", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("prices", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("salesorderdetails", "stkcode", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("purchorderdetails", "itemcode", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("purchdata", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("shipmentcharges", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("stockcheckfreeze", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("stockcounts", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("grns", "itemcode", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("contractbom", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("bom", "component", $_POST['OldStockID'], $_POST['NewStockID']);
 		
-		DB_IgnoreForeignKeys($db);
+		DB_IgnoreForeignKeys();
 
-		ChangeFieldInTable("bom", "parent", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("stockrequestitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("stockdescriptiontranslations", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);// Updates the translated item titles (StockTitles)
-		ChangeFieldInTable("custitem", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("pricematrix", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-/*		ChangeFieldInTable("Stockdescriptions", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);// Updates the translated item descriptions (StockDescriptions)*/
+		ChangeFieldInTable("bom", "parent", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("stockrequestitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("stockdescriptiontranslations", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);// Updates the translated item titles (StockTitles)
+		ChangeFieldInTable("custitem", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("pricematrix", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+/*		ChangeFieldInTable("Stockdescriptions", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);// Updates the translated item descriptions (StockDescriptions)*/
 
 		echo '<br />' . _('Changing any image files');
 		$SupportedImgExt = array('png','jpg','jpeg');
@@ -204,35 +204,35 @@ if (isset($_POST['ProcessStockChange'])){
 			}
 		}
 
-		ChangeFieldInTable("stockitemproperties", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("worequirements", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("worequirements", "parentstockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("woitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("salescatprod", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("stockserialitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("stockserialmoves", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("offers", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("tenderitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("prodspecs", "keyval", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("qasamples", "prodspeckey", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("stockitemproperties", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("worequirements", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("worequirements", "parentstockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("woitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("salescatprod", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("stockserialitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("stockserialmoves", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("offers", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("tenderitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("prodspecs", "keyval", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("qasamples", "prodspeckey", $_POST['OldStockID'], $_POST['NewStockID']);
 
 		DB_ReinstateForeignKeys();
 		/* KL RICARD TABLES */
-		ChangeFieldInTable("kladjustrl", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("klfreeexchanges", "itemfrom", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("klfreeexchanges", "itemto", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("klmovetodiscount20", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("klmovetodiscount50", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("klmovetodiscount80", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("relateditems", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("relateditems", "related", $_POST['OldStockID'], $_POST['NewStockID'], $db);
-		ChangeFieldInTable("klsalesperformance", "stockid", $_POST['OldStockID'], $_POST['NewStockID'], $db);
+		ChangeFieldInTable("kladjustrl", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klfreeexchanges", "itemfrom", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klfreeexchanges", "itemto", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klmovetodiscount20", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klmovetodiscount50", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klmovetodiscount80", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("relateditems", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("relateditems", "related", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInTable("klsalesperformance", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 
 		include ('includes/OpenCartConnectDB.php');
-		ChangeFieldInOpenCartTable( "oc_product", "model", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
-		ChangeFieldInOpenCartTable( "oc_product", "sku", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
-		ChangeFieldInOpenCartTable( "oc_product", "mpn", $_POST['OldStockID'], $_POST['NewStockID'], $db_oc);
+		ChangeFieldInOpenCartTable( "oc_product", "model", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInOpenCartTable( "oc_product", "sku", $_POST['OldStockID'], $_POST['NewStockID']);
+		ChangeFieldInOpenCartTable( "oc_product", "mpn", $_POST['OldStockID'], $_POST['NewStockID']);
 		
 		/* END OF KL TABLES */
 		
@@ -277,7 +277,7 @@ echo '<br />
 
 include('includes/footer.php');
 
-function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue, $db_oc){
+function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue){
 	/* Used in Z_ scripts to change one field across the table.
 	*/
 	echo '<br />' . _('Changing OPENCART') . ' ' . $TableName . ' ' . _('records');

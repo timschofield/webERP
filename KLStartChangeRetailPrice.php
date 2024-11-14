@@ -43,7 +43,7 @@ $DbgMsg = _('The SQL that was used and failed was');
 $result = DB_query($sql,$ErrMsg, $DbgMsg);
 prnMsg($msg , 'success');
 
-SetRLZeroAtPointOfSales($_GET['Item'], $db);
+SetRLZeroAtPointOfSales($_GET['Item']);
 SetChangePriceFlag(1, $_GET['Item']);
 KLSendEmail("ChangePriceStarted", "Silent", $_GET['Item']);
 

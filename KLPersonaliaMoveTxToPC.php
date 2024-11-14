@@ -13,15 +13,15 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['PaymentDate'], $_POST['SalaryType'], $db);
+	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['PaymentDate'], $_POST['SalaryType']);
 } else {
-	display($Title, $db);
+	display($Title);
 }
 
 include('includes/footer.php');
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, &$db) {
+function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) {
 
 	$PaymentDate = FormatDateForSQL($PaymentDate);
 	
@@ -122,16 +122,16 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 				$FixedSalary = $myrow['upahpokok'] +
 								$myrow['tunjanganjabatan'] +
 								$myrow['tunjanganmasakerja'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "FIXED", $PaymentDate, $FixedSalary, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "FIXED", $PaymentDate, $FixedSalary, $myrow['codename']);
 				
 				// Makan
 				$Makan = $myrow['tunjanganmakan'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "MAKAN", $PaymentDate, $Makan, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "MAKAN", $PaymentDate, $Makan, $myrow['codename']);
 
 				// Bensin
 				$Bensin = $myrow['tunjangantransport'] +
 								$myrow['tunjangankendaraan'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "BENSIN", $PaymentDate, $Bensin, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "BENSIN", $PaymentDate, $Bensin, $myrow['codename']);
 				
 				//Commissions
 				$Commissions = $myrow['komisitetap'] +
@@ -141,19 +141,19 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 //				if (($myrow['codename'] == 'Ricard') OR 
 //					($myrow['codename'] == 'Laia')){
 //					// Bonus paid as commissions to Ricard and Laia for PTADU goes to different GL than karyawan
-//					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $myrow['codename'], $db);
+//					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $myrow['codename']);
 //				}else{
-					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $myrow['codename'], $db);
+					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $myrow['codename']);
 //				}
 				
 				//Shifts
 				$Shifts = $myrow['lembur'] +
 								$myrow['potonganabsen'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "SHIFTS", $PaymentDate, $Shifts, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "SHIFTS", $PaymentDate, $Shifts, $myrow['codename']);
 				
 				//THR
 				$THR = $myrow['thr'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "THR", $PaymentDate, $THR, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "THR", $PaymentDate, $THR, $myrow['codename']);
 				
 				//Lain2
 				$Lain2 = $myrow['penerimaanlain'] +
@@ -161,23 +161,23 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 				if (($myrow['codename'] == 'Ricard') OR 
 					($myrow['codename'] == 'Laia')){
 					// Dividends paid as lain2 to shareholders for PTADU goes to different GL than karyawan
-					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Lain2, $myrow['codename'], $db);
+					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Lain2, $myrow['codename']);
 				}else{
-					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $myrow['codename'], $db);
+					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $myrow['codename']);
 				}
 				
 				//JHT
 				$JHT = $myrow['potonganjht'] +
 								$myrow['potonganaskes'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "JAMSOSTEK", $PaymentDate, $JHT, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "JAMSOSTEK", $PaymentDate, $JHT, $myrow['codename']);
 
 				//PPH21
 				$PPH21 = $myrow['potonganpph21'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "PPH21", $PaymentDate, $PPH21, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "PPH21", $PaymentDate, $PPH21, $myrow['codename']);
 
 				//Rounding
 				$Rounding = $myrow['bulatan'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "ROUND", $PaymentDate, $Rounding, $myrow['codename'], $db);
+				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "ROUND", $PaymentDate, $Rounding, $myrow['codename']);
 
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
@@ -223,7 +223,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType, 
 	}
 } // End of function submit()
 
-function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amount, $Receipt, $db){
+function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amount, $Receipt){
 	$PaymentMethod = strtoupper($PaymentMethod);
 	if($PaymentMethod != "CASH"){
 		$PaymentMethod = "BANK";
@@ -267,7 +267,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 }
 
 
-function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

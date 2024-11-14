@@ -84,16 +84,16 @@ if ($ProcessSection01){
 		OR $KL_ShopManager){
 		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Shop",  15, $db);
+		PeriodDifferenceSales("IMMEDIATE", "Shop",  15);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales("IMMEDIATE", "Shop",  30, $db);
+		PeriodDifferenceSales("IMMEDIATE", "Shop",  30);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		PeriodDifferenceSales("IMMEDIATE", "Shop", 365, $db);
+		PeriodDifferenceSales("IMMEDIATE", "Shop", 365);
 		$NumberOfTestExecuted++;
 	}
 
@@ -101,9 +101,9 @@ if ($ProcessSection01){
 		OR $KL_OperationalManager
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
-		PeriodDifferenceSales("YEAR", "Shop",  30, $db);
+		PeriodDifferenceSales("YEAR", "Shop",  30);
 		$NumberOfTestExecuted++;
-		PeriodDifferenceSales($yesterday_year -1, "Shop",  "YTD", $db); // previous year
+		PeriodDifferenceSales($yesterday_year -1, "Shop",  "YTD"); // previous year
 		$NumberOfTestExecuted++;
 	}
 
@@ -113,9 +113,9 @@ if ($ProcessSection01){
 
 //		AverageSales("Online", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");
 //		$NumberOfTestExecuted++;
-//		PeriodDifferenceSales("IMMEDIATE", "Online",   7, $db);
+//		PeriodDifferenceSales("IMMEDIATE", "Online",   7);
 //		$NumberOfTestExecuted++;
-//		PeriodDifferenceSales("IMMEDIATE", "Online",  30, $db);
+//		PeriodDifferenceSales("IMMEDIATE", "Online",  30);
 //		$NumberOfTestExecuted++;
 	}
 
@@ -124,11 +124,11 @@ if ($ProcessSection01){
 		OR $KL_ShopManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 30, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPKL", 30);
 		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 30, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPBL", 30);
 		$NumberOfTestExecuted++;
-		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 30, $db);
+		AverageCustomerBehaviourByValueInvoice("Shop", "SHOPOU", 30);
 		$NumberOfTestExecuted++;
 	}
 
@@ -137,17 +137,17 @@ if ($ProcessSection01){
 		OR $KL_OperationalManager
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		GeneralCustomerBehaviour("SHOPKL", 30, $db);
+		GeneralCustomerBehaviour("SHOPKL", 30);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour("SHOPBL", 30, $db);
+		GeneralCustomerBehaviour("SHOPBL", 30);
 		$NumberOfTestExecuted++;
-		GeneralCustomerBehaviour("SHOPOU", 30, $db);
+		GeneralCustomerBehaviour("SHOPOU", 30);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager){
-		DailySalesRecords(10, 365 * 2, "2024-08-04", $db);
+		DailySalesRecords(10, 365 * 2, "2024-08-04");
 		$NumberOfTestExecuted++;
 	}
 }
@@ -191,7 +191,7 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector){
 		FinishedStockDistribution("FORSALE", "LOCATION");
 		$NumberOfTestExecuted++;
-		FinishedStockDistributionByShopAndCategory($db);
+		FinishedStockDistributionByShopAndCategory();
 		$NumberOfTestExecuted++;
 		FinishedStockDistribution("FORSALE", "STOCKCATEGORY");
 		$NumberOfTestExecuted++;
@@ -288,19 +288,19 @@ if ($ProcessSection03){
 	}
 
 /*	if ($KL_SystemAdmin){
-		PackagingStatusForKapalLaut($RootPath, $db);
+		PackagingStatusForKapalLaut($RootPath);
 		$NumberOfTestExecuted++;
-		PackagingUsageForKapalLaut(30, $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		PackagingStatusForBlink($RootPath, $db);
-		$NumberOfTestExecuted++;
-		PackagingUsageForBlink(30, $RootPath, $db);
+		PackagingUsageForKapalLaut(30, $RootPath);
 		$NumberOfTestExecuted++;
 
-		PackagingStatusForOutlet($RootPath, $db);
+		PackagingStatusForBlink($RootPath);
 		$NumberOfTestExecuted++;
-		PackagingUsageForOutlet(30, $RootPath, $db);
+		PackagingUsageForBlink(30, $RootPath);
+		$NumberOfTestExecuted++;
+
+		PackagingStatusForOutlet($RootPath);
+		$NumberOfTestExecuted++;
+		PackagingUsageForOutlet(30, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 */
@@ -339,15 +339,15 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin){
-		PettyCashStatus("IDR", $db);
+		PettyCashStatus("IDR");
 		$NumberOfTestExecuted++;
-		PettyCashStatus("USD", $db);
+		PettyCashStatus("USD");
 		$NumberOfTestExecuted++;
-		PettyCashStatus("THB", $db);
+		PettyCashStatus("THB");
 		$NumberOfTestExecuted++;
-		PettyCashStatus("EUR", $db);
+		PettyCashStatus("EUR");
 		$NumberOfTestExecuted++;
-		PettyCashStatus("HKD", $db);
+		PettyCashStatus("HKD");
 		$NumberOfTestExecuted++;
 	}
 
@@ -365,7 +365,7 @@ if ($ProcessSection03){
 					125000,
 					 10000,
 					 50000,
-					$periodnow, $KL_SystemAdmin, $db);
+					$periodnow, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
@@ -373,9 +373,9 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 //		AverageKPIHistory(180, 90, 30, 15, 7, 0);
 //		$NumberOfTestExecuted++;
-		UnbalancedGLTransTX(15, $RootPath, $db);
+		UnbalancedGLTransTX(15, $RootPath);
 		$NumberOfTestExecuted++;
-		EmptyAccountsGLTransTX(15, $RootPath, $db);
+		EmptyAccountsGLTransTX(15, $RootPath);
 		$NumberOfTestExecuted++;
 	} 
 }
@@ -388,7 +388,7 @@ include ('includes/footer.php');
 /******************************************************************************************************/
 /*      FUNCTIONS ASSOCIATED
 /******************************************************************************************************/
-function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA, $db){
+function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 /* EXPLAIN SQL 2014-05-21	*/
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
@@ -635,8 +635,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 							$SaldoADUPayoneerUSDMin,
 							$SaldoADUPayoneerUSDMax,
 							$Period, 
-							$AdminRole, 
-							$db){
+							$AdminRole){
 
     // Consider all year, not until today as some tx are reported into the future
 	$EndOfYear = $Year . "-12-31";
@@ -1638,7 +1637,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 
 }
 
-function DailySalesRecords($Days, $NumDays, $Since, $db){
+function DailySalesRecords($Days, $NumDays, $Since){
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	
@@ -1691,7 +1690,7 @@ function DailySalesRecords($Days, $NumDays, $Since, $db){
 	}
 }
 
-function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
+function GeneralCustomerBehaviour($Brand, $NumDaysA){
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 	$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
@@ -1880,7 +1879,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA, $db){
 	}
 }
 
-function PackagingStatusForBlink($RootPath, $db){
+function PackagingStatusForBlink($RootPath){
 
 	$SQL = "SELECT locations.loccode,
 					locations.locationname,
@@ -2141,7 +2140,7 @@ function PackagingStatusForBlink($RootPath, $db){
 	}
 }
 
-function PackagingStatusForKapalLaut($RootPath, $db){
+function PackagingStatusForKapalLaut($RootPath){
 
 	$SQL = "SELECT locations.loccode,
 					locations.locationname,
@@ -2402,7 +2401,7 @@ function PackagingStatusForKapalLaut($RootPath, $db){
 	}
 }
 
-function PackagingStatusForOutlet($RootPath, $db){
+function PackagingStatusForOutlet($RootPath){
 
 	$SQL = "SELECT locations.loccode,
 					locations.locationname,
@@ -2548,7 +2547,7 @@ function PackagingStatusForOutlet($RootPath, $db){
 	}
 }
 
-function PackagingUsageForBlink($NumDays, $RootPath, $db){
+function PackagingUsageForBlink($NumDays, $RootPath){
 /* EXPLAIN 2014-05-20	 OK! */
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
@@ -2867,7 +2866,7 @@ function PackagingUsageForBlink($NumDays, $RootPath, $db){
 	}
 }
 
-function PackagingUsageForKapalLaut($NumDays, $RootPath, $db){
+function PackagingUsageForKapalLaut($NumDays, $RootPath){
 /* EXPLAIN 2014-05-20	 OK! */
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
@@ -3187,7 +3186,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath, $db){
 }
 
 
-function PackagingUsageByWeeks($RootPath, $db){
+function PackagingUsageByWeeks($RootPath){
 
 	$StartWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
 	$EndWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -7));
@@ -3315,7 +3314,7 @@ function PackagingUsageByWeeks($RootPath, $db){
 	}
 }
 
-function PackagingUsageForOutlet($NumDays, $RootPath, $db){
+function PackagingUsageForOutlet($NumDays, $RootPath){
 /* EXPLAIN 2014-05-20	 OK! */
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
@@ -3488,7 +3487,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath, $db){
 	}
 }
 
-function PettyCashStatus($currency, $db){
+function PettyCashStatus($currency){
 
 	$SQL = "SELECT pcashdetails.tabcode, 	
 				SUM(pcashdetails.amount) as amount
@@ -3541,7 +3540,7 @@ function PettyCashStatus($currency, $db){
 	}
 }
 
-function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
+function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 	
 	if ($NumDaysA == "YTD"){
 		// we need to translate YTD to a number of days
@@ -3863,7 +3862,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA, $db){
 	}
 }
 
-function UnbalancedGLTransTX($NumDays, $RootPath, $db){
+function UnbalancedGLTransTX($NumDays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT gltrans.trandate, 
 				systypes.typename, 
@@ -3912,7 +3911,7 @@ function UnbalancedGLTransTX($NumDays, $RootPath, $db){
 	}
 }
 
-function EmptyAccountsGLTransTX($NumDays, $RootPath, $db){
+function EmptyAccountsGLTransTX($NumDays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT gltrans.counterindex,
 				gltrans.trandate, 

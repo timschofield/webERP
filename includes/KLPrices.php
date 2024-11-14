@@ -65,7 +65,7 @@ function SetFlagPriceChangedInChangePrice($StockId, $value){
 }
 
 
-function SetEndDateChangePrice($StockId, $db){
+function SetEndDateChangePrice($StockId){
 	$sql = "UPDATE klchangeprice 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
@@ -77,7 +77,7 @@ function SetEndDateChangePrice($StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetEndDateMoveDiscount20($StockId, $db){
+function SetEndDateMoveDiscount20($StockId){
 	$sql = "UPDATE klmovetodiscount20 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
@@ -89,7 +89,7 @@ function SetEndDateMoveDiscount20($StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetEndDateMoveDiscount50($StockId, $db){
+function SetEndDateMoveDiscount50($StockId){
 	$sql = "UPDATE klmovetodiscount50 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
@@ -101,7 +101,7 @@ function SetEndDateMoveDiscount50($StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetEndDateMoveDiscount80($StockId, $db){
+function SetEndDateMoveDiscount80($StockId){
 	$sql = "UPDATE klmovetodiscount80 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
@@ -115,7 +115,7 @@ function SetEndDateMoveDiscount80($StockId, $db){
 
 
 
-function SetRLZeroAtPointOfSales($StockId, $db){
+function SetRLZeroAtPointOfSales($StockId){
 	/* sets RL = 0 for all locations NOT phisically at the kantor, so the existing pieces will return to office via regular Transfers */
 	$sql = "UPDATE locstock 
 			SET reorderlevel = 0
@@ -210,7 +210,7 @@ function multiple_of($n, $x=1){
 	return ($n % $x == 0);
 }
 
-function UpdateTablePrice($StockId, $RetailPrice, $db){
+function UpdateTablePrice($StockId, $RetailPrice){
 
 	$Today = date('Y-m-d');
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
@@ -225,40 +225,40 @@ function UpdateTablePrice($StockId, $RetailPrice, $db){
 	prnMsg (_('The end date of current prices has been changed to yesterday'),'success');
 
 	/* 2nd: set prices in IDR */
-	UpdatePriceItem($StockId, 'RT', 'IDR', $RetailPrice, $Today, TRUE, $db);
+	UpdatePriceItem($StockId, 'RT', 'IDR', $RetailPrice, $Today, TRUE);
 
 /*	$Wholesale25 = round_multiple_of($RetailPrice * (0.75), 500);
-	UpdatePriceItem($StockId, 'W2', 'IDR', $Wholesale25, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W2', 'IDR', $Wholesale25, $Today, TRUE );
 	
 	$Wholesale30 = round_multiple_of($RetailPrice * (0.70), 500);
-	UpdatePriceItem($StockId, 'W3', 'IDR', $Wholesale30, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W3', 'IDR', $Wholesale30, $Today, TRUE );
 
 	$Wholesale40 = round_multiple_of($RetailPrice * (0.60), 500);
-	UpdatePriceItem($StockId, 'W4', 'IDR', $Wholesale40, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W4', 'IDR', $Wholesale40, $Today, TRUE );
 
 	$Wholesale50 = round_multiple_of($RetailPrice * (0.50), 500);
-	UpdatePriceItem($StockId, 'W5', 'IDR', $Wholesale50, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W5', 'IDR', $Wholesale50, $Today, TRUE );
 */
 	/* 3rd: set prices in USD */
 /*	$RetailUSD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE, 0.05);
-	UpdatePriceItem($StockId, 'RT', 'USD', $RetailUSD, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'RT', 'USD', $RetailUSD, $Today, TRUE );
 
 	$Wholesale25USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.75), 0.05);
-	UpdatePriceItem($StockId, 'W2', 'USD', $Wholesale25USD, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W2', 'USD', $Wholesale25USD, $Today, TRUE );
 
 	$Wholesale30USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.70), 0.05);
-	UpdatePriceItem($StockId, 'W3', 'USD', $Wholesale30USD, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W3', 'USD', $Wholesale30USD, $Today, TRUE );
 
 	$Wholesale40USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.60), 0.05);
-	UpdatePriceItem($StockId, 'W4', 'USD', $Wholesale40USD, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W4', 'USD', $Wholesale40USD, $Today, TRUE );
 
 	$Wholesale50USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.50), 0.05);
-	UpdatePriceItem($StockId, 'W5', 'USD', $Wholesale50USD, $Today, TRUE , $db);
+	UpdatePriceItem($StockId, 'W5', 'USD', $Wholesale50USD, $Today, TRUE );
 */
 }
 
 
-function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $ShowMessages, $db){
+function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $ShowMessages){
 	$sql = "INSERT INTO prices 
 				(stockid, 
 				typeabbrev, 
@@ -285,7 +285,7 @@ function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $S
 	}
 }
 
-function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
+function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 	if ($NewCategory == "DISC8A"){
 		$reason = "KL Move To 80% Discount";
 	}else if ($NewCategory == "DISC5A"){
@@ -324,8 +324,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 	$result = DB_query("SELECT stockact,
 								wipact
 						FROM stockcategory
-						WHERE categoryid='" . $NewCategory . "'",
-						$db);
+						WHERE categoryid='" . $NewCategory . "'");
 	$NewStockActRow = DB_fetch_array($result);
 	$NewStockAct = $NewStockActRow['stockact'];
 	$NewWIPAct = $NewStockActRow['wipact'];
@@ -382,7 +381,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode, $db){
 
 }
 
-function SendEmailChangePriceReadyForStep02($db, $EmailText){
+function SendEmailChangePriceReadyForStep02($EmailText){
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(SELECT sum(quantity)
@@ -424,7 +423,7 @@ function SendEmailChangePriceReadyForStep02($db, $EmailText){
 	return $EmailText;
 }
 
-function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $db, $EmailText){
+function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $EmailText){
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				(SELECT sum(quantity)

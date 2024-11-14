@@ -14,9 +14,9 @@ TransfersDelayed(2, $RootPath);
 ActiveTransfersByLocation($RootPath);
 
 ActiveTransferStatus($RootPath);
-RecentlyClosedTransferStatus(1, $RootPath, $db);
+RecentlyClosedTransferStatus(1, $RootPath);
 
-FinishedStockDistribution("FORSALE", "LOCATION", $db);
+FinishedStockDistribution("FORSALE", "LOCATION");
 
 prnMsg("Performed 5 transfer status checks",'success');
 

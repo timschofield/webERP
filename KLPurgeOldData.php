@@ -18,16 +18,16 @@ if (isset($_POST['submit'])) {
 	submit($Title, 
 			$_POST['PurgeGltransPeriod'], 
 			$_POST['PurgeStockmovesPrd'], 
-			$_POST['PurgeLoctransfersObsoletes'], $db);
+			$_POST['PurgeLoctransfersObsoletes']);
 } else {
-	display($Title, $db);
+	display($Title);
 }
 
 include('includes/footer.php');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLoctransfersObsoletes, &$db) {
+function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLoctransfersObsoletes) {
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 		'</p>';
@@ -40,7 +40,7 @@ function submit($Title, $PurgeGltransPeriod, $PurgeStockmovesPrd, $PurgeLoctrans
 } // End of function submit()
 
 
-function display($Title, &$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

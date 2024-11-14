@@ -84,43 +84,43 @@ function submit($FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('I2', '');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C3', 'Income CC BB');
-			$objPHPExcel->getActiveSheet()->setCellValue('D3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartLastYearPeriod,$FinishLastYearPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('E3', '=D3/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $StartCurrentYearPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('G3', '=F3/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $CurrentPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H3', -MovementAccountsBetweenPeriods(GL_INCOME_CC_PT, $CurrentPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('I3', '=H3/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C4', 'Income Cash BB');
-			$objPHPExcel->getActiveSheet()->setCellValue('D4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartLastYearPeriod,$FinishLastYearPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('E4', '=D4/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartCurrentYearPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('G4', '=F4/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $CurrentPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H4', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $CurrentPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('I4', '=H4/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Income Cash');
-			$objPHPExcel->getActiveSheet()->setCellValue('D5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartLastYearPeriod,$FinishLastYearPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('E5', '=D5/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartCurrentYearPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $StartCurrentYearPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('G5', '=F5/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $CurrentPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H5', -MovementAccountsBetweenPeriods(GL_INCOME_CASH, $CurrentPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('I5', '=H5/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C6', 'Income Others BB');
-			$objPHPExcel->getActiveSheet()->setCellValue('D6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartLastYearPeriod,$FinishLastYearPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('E6', '=D6/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $StartCurrentYearPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('G6', '=F6/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $CurrentPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H6', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS_PT, $CurrentPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('I6', '=H6/$H$8');
 			
 			$objPHPExcel->getActiveSheet()->setCellValue('C7', 'Income Others');
-			$objPHPExcel->getActiveSheet()->setCellValue('D7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartLastYearPeriod,$FinishLastYearPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('D7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartLastYearPeriod,$FinishLastYearPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('E7', '=D7/$D$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('F7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartCurrentYearPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('F7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $StartCurrentYearPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('G7', '=F7/$F$8');
-			$objPHPExcel->getActiveSheet()->setCellValue('H7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $CurrentPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('H7', -MovementAccountsBetweenPeriods(GL_INCOME_OTHERS, $CurrentPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('I7', '=H7/$H$8');
 
 			$objPHPExcel->getActiveSheet()->setCellValue('C8', 'TOTAL INCOME');
@@ -164,13 +164,13 @@ function submit($FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('D1', $FromDate . ' to ' . $ToDate);
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A3', 'Income from Retail Cash BB');
-			$objPHPExcel->getActiveSheet()->setCellValue('B3', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartCurrentYearPeriod,$CurrentPeriod,$db));
+			$objPHPExcel->getActiveSheet()->setCellValue('B3', -MovementAccountsBetweenPeriods(GL_INCOME_CASH_PT, $StartCurrentYearPeriod,$CurrentPeriod));
 			$objPHPExcel->getActiveSheet()->setCellValue('A4', 'Cash from Danamon to Kantor Cash');
-			$objPHPExcel->getActiveSheet()->setCellValue('B4', -MovementsFromDanamonToCashKantor($DefaultFromDate, $DefaultToDate, $db));
+			$objPHPExcel->getActiveSheet()->setCellValue('B4', -MovementsFromDanamonToCashKantor($DefaultFromDate, $DefaultToDate));
 			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'TOTAL CASH AVAILABLE');
 			$objPHPExcel->getActiveSheet()->setCellValue('B5', '=B3+B4');
 			$objPHPExcel->getActiveSheet()->setCellValue('A7', 'Expenses paid cash for Accounts BB');
-			$objPHPExcel->getActiveSheet()->setCellValue('B7', -ExpensesPaidCashForAccountsPT($DefaultFromDate, $DefaultToDate, $db));
+			$objPHPExcel->getActiveSheet()->setCellValue('B7', -ExpensesPaidCashForAccountsPT($DefaultFromDate, $DefaultToDate));
 			$objPHPExcel->getActiveSheet()->setCellValue('A9', 'BALANCE CASH BB');
 			$objPHPExcel->getActiveSheet()->setCellValue('B9', '=B5-B7');
 
@@ -251,7 +251,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 
 } // End of function display()
 
-function MovementAccountsBetweenPeriods($AccountList, $PeriodFrom, $PeriodTo, $db){
+function MovementAccountsBetweenPeriods($AccountList, $PeriodFrom, $PeriodTo){
 	$SQL = "SELECT SUM(chartdetails.actual)
 			FROM chartdetails
 			WHERE chartdetails.accountcode IN " . $AccountList ."
@@ -262,7 +262,7 @@ function MovementAccountsBetweenPeriods($AccountList, $PeriodFrom, $PeriodTo, $d
 	return $myrow[0]/JUTA;
 }
 
-function ExpensesPaidCashForAccountsPT($DateFrom, $DateTo, $db){
+function ExpensesPaidCashForAccountsPT($DateFrom, $DateTo){
 	$SQL = "SELECT SUM(pcashdetails.amount) 
 			FROM pcashdetails, pctabs, pcexpenses
 			WHERE pcashdetails.date >= '" . $DateFrom . "'
@@ -280,7 +280,7 @@ function ExpensesPaidCashForAccountsPT($DateFrom, $DateTo, $db){
 	return $myrow[0]/JUTA;
 }
 
-function MovementsFromDanamonToCashKantor($DateFrom, $DateTo, $db){
+function MovementsFromDanamonToCashKantor($DateFrom, $DateTo){
 	$SQL = "SELECT SUM(gltrans.amount)
 			FROM gltrans
 			WHERE gltrans.trandate >= '" . $DateFrom . "'

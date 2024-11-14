@@ -61,13 +61,13 @@ if(isset($_POST['SummaryType'])) {
 }
 
 if(isset($_POST['submit'])) {
-    submit($db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType);
+    submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType);
 } else {
-    display($db);
+    display();
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType) {
+function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType) {
 
 	//initialise no input errors
 	$InputError = 0;
@@ -101,7 +101,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 // TempStockmoves function creates a temporary table of stockmoves that is used when the DateType
 // is Invoice Date
 	if($_POST['DateType'] == 'Invoice') {
-		TempStockmoves($db);
+		TempStockmoves();
 	}
 
 	# Add more to WHERE statement, if user entered something for the part number,debtorno, name
@@ -1050,7 +1050,7 @@ function submit(&$db,$PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.
@@ -1253,7 +1253,7 @@ function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_##
 
 } // End of function display()
 
-function TempStockmoves(&$db) {
+function TempStockmoves() {
 // When report based on Invoice Date, use stockmoves as the main file, but credit
 // notes, which are type 11 in stockmoves, do not have the order number in the
 // reference field; instead they have "Ex Inv - " and then the transno from the

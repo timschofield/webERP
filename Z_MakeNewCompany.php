@@ -84,7 +84,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 					$SQLScriptFile = file('./sql/pg/country_sql/default.psql');
 
 				} elseif ($DBType =='mysql') { //its a mysql db < 4.1
-					mysql_select_db($_POST['NewDatabase'],$db);
+					mysql_select_db($_POST['NewDatabase']);
 					$SQLScriptFile = file('./sql/mysql/country_sql/default.sql');
 				} elseif ($DBType =='mysqli') { //its a mysql db using the >4.1 library functions
 					mysqli_select_db($db,$_POST['NewDatabase']);

@@ -6,13 +6,13 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 
 if (isset($_POST['submit'])) {
-	submit($db, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
+	submit($_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
 } else {
-	display($db);
+	display();
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $Company, $LastDateOfPeriod, $SalaryType) {
+function submit($Company, $LastDateOfPeriod, $SalaryType) {
 
 	//initialise no input errors
 	$InputError = FALSE;
@@ -199,7 +199,7 @@ function submit(&$db, $Company, $LastDateOfPeriod, $SalaryType) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.

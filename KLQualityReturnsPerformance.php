@@ -19,11 +19,11 @@ prnMsg("Performing Control Panel Section 02",'info');
 
 if ($KL_SystemAdmin 
 	OR $KL_BusinessDevelopmentManager){
-	QualityIssuesByItem("QualityIssuesByItem", 90, $RootPath, $db);
+	QualityIssuesByItem("QualityIssuesByItem", 90, $RootPath);
 	$NumberOfTestExecuted++;
-	QualityIssuesByItem("QualityIssuesByFamily", 90, $RootPath, $db);
+	QualityIssuesByItem("QualityIssuesByFamily", 90, $RootPath);
 	$NumberOfTestExecuted++;
-	QualityIssuesByItem("ChangeOfMindByFamily", 90, $RootPath, $db);
+	QualityIssuesByItem("ChangeOfMindByFamily", 90, $RootPath);
 	$NumberOfTestExecuted++;
 }
 
@@ -33,7 +33,7 @@ time_finish($begintime);
 
 include ('includes/footer.php');
 
-function QualityIssuesByItem($typereport, $numdays, $RootPath, $db){
+function QualityIssuesByItem($typereport, $numdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
 
 	if ($typereport == "QualityIssuesByItem"){
@@ -127,7 +127,7 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath, $db){
 	}
 }
 /*
-function ReturnsBySPG($SPG, $NumDays, $db){
+function ReturnsBySPG($SPG, $NumDays){
 
 	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 

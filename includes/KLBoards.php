@@ -1303,7 +1303,7 @@ function FinishedStockDistribution($kind, $byreport){
 	}
 }
 
-function FinishedStockDistributionByShopAndCategory($db){
+function FinishedStockDistributionByShopAndCategory(){
 
 	$SQL =	"SELECT locations.loccode,
 				locations.locationname,
@@ -1479,7 +1479,7 @@ function FinishedStockDistributionByShopAndCategory($db){
 	}
 }
 
-function GetTotalQtyItemsForSale($db){
+function GetTotalQtyItemsForSale(){
 	$SQL = "SELECT SUM(locstock.quantity) AS realstock
 			FROM locstock, stockmaster, stockcategory
 			WHERE stockmaster.stockid = locstock.stockid
@@ -2877,7 +2877,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS") 
 			AND ($TypeOfProduct == "FORSALE")){
-			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale($db);
+			$CurrentTotalQtyItemsForSale = GetTotalQtyItemsForSale();
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow);
 			InsertKPI("Stock", "Current Stock Items For Sale (IDR)", $CurrentTotalValueItemsForSale);
 			InsertKPI("Stock", "Current Stock Items For Sale (PCS)", $CurrentTotalQtyItemsForSale);

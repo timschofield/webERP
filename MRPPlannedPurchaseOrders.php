@@ -153,7 +153,7 @@ if (isset($_POST['PrintPDF'])) {
 				$pdf->addTextWrap(380,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 				$pdf->addTextWrap(410,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
 				// Get and print supplier info for part
-				list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($db,$holdpart);
+				list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($holdpart);
 				$displaydate = $lastdate;
 				if (!Is_Date($lastdate)) {
 					$displaydate = ' ';
@@ -215,7 +215,7 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$fill);
 	$pdf->addTextWrap(400,$YPos,15,$FontSize,$holdmbflag,'right',0,$fill);
 	// Get and print supplier info for part
-	list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($db,$holdpart);
+	list($lastdate,$lastsupplier,$preferredsupplier) = GetPartInfo($holdpart);
 	$displaydate = $lastdate;
 	if (!Is_Date($lastdate)) {
 		$displaydate = ' ';
@@ -340,7 +340,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$PageNumber++;
 } // End of PrintHeader function
 
-function GetPartInfo(&$db,$part) {
+function GetPartInfo($part) {
 	// Get last purchase order date and supplier for part, and also preferred supplier
 	// Printed when there is a part break
 	$sql = "SELECT orddate as maxdate,

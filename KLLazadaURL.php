@@ -19,9 +19,9 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($_POST['submit'])) {
-    submit($db, $_POST['SelectedFile']);
+    submit($_POST['SelectedFile']);
 } else {
-    display($db);
+    display();
 }
 
 include('includes/footer.php');
@@ -29,7 +29,7 @@ include('includes/footer.php');
 
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit(&$db, $SelectedFile) {
+function submit($SelectedFile) {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
@@ -139,7 +139,7 @@ function submit(&$db, $SelectedFile) {
 } // End of function submit()
 
 
-function display(&$db)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 	// Display form fields. This function is called the first time the page is called.
 	echo '<p class="page_title_text">

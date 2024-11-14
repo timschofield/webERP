@@ -57,7 +57,7 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 
 if ($_SESSION['UserID'] == "Ricard"){
 
-//	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
+//	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
 /*	$KL_SystemAdmin = TRUE;
 	$KL_OperationalManager = TRUE;
@@ -78,20 +78,19 @@ if ($_SESSION['UserID'] == "Ricard"){
 //	phpinfo();
 
 /* TEST AND PLAY WITH call_user_func to move this script mainly to a table in DB
-//		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath, $db);
+//		over_or_below_limit("DISC80 Items in AR", "BELOW", 20, $RootPath);
 	$FunctionName = "over_or_below_limit";
-	$Parameters = '"DISC80 Items in AR", "BELOW", 30, $RootPath, $db';
-	call_user_func($FunctionName, "DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
-	$FunctionName("DISC80 Items in AR", "BELOW", 30, $RootPath, $db);
+	$Parameters = '"DISC80 Items in AR", "BELOW", 30, $RootPath';
+	call_user_func($FunctionName, "DISC80 Items in AR", "BELOW", 30, $RootPath);
+	$FunctionName("DISC80 Items in AR", "BELOW", 30, $RootPath);
 	
 	$Par1 = "DISC80 Items in AR";
 	$Par2 = "BELOW";
 	$Par3 = 30;
 	$Par4 = $RootPath;
-	$Par5 = $db;
-	$Par6 = "";
-	call_user_func($FunctionName, $Par1, $Par2, $Par3, $Par4, $Par5, $Par6);
-	$FunctionName($Par1, $Par2, $Par3, $Par4, $Par5, $Par6);
+	$Par5 = "";
+	call_user_func($FunctionName, $Par1, $Par2, $Par3, $Par4, $Par5);
+	$FunctionName($Par1, $Par2, $Par3, $Par4, $Par5);
 	prnMsg("END OF TESTS");
 */
 }
@@ -127,9 +126,9 @@ if ($ProcessSection01){
 	* STANDARD COST         
 	***************************************************************************************/
 	if ($KL_PurchasingTeam){
-		SuppliersWithoutBasicData($RootPath, $db);
+		SuppliersWithoutBasicData($RootPath);
 		$NumberOfTestExecuted++;
-		ItemsWithoutStandardCost($RootPath, $db);
+		ItemsWithoutStandardCost($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -178,27 +177,27 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_ShopSupportTeam){
 		
-		over_or_below_limit("Items changing price or moving category", "OVER", MAX_ITEMS_CHANGING_PRICE_OR_MOVING_DISC, $RootPath, $db);
+		over_or_below_limit("Items changing price or moving category", "OVER", MAX_ITEMS_CHANGING_PRICE_OR_MOVING_DISC, $RootPath);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items changing price", "OVER", MAX_ITEMS_CHANGING_PRICE, $RootPath, $db);
+		over_or_below_limit("Items changing price", "OVER", MAX_ITEMS_CHANGING_PRICE, $RootPath);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items moving to 20% discount", "OVER", MAX_ITEMS_MOVING_DISC20, $RootPath, $db);
+		over_or_below_limit("Items moving to 20% discount", "OVER", MAX_ITEMS_MOVING_DISC20, $RootPath);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items moving to 50% discount", "OVER", MAX_ITEMS_MOVING_DISC50, $RootPath, $db);
+		over_or_below_limit("Items moving to 50% discount", "OVER", MAX_ITEMS_MOVING_DISC50, $RootPath);
 		$NumberOfTestExecuted++;
-		over_or_below_limit("Items moving to 80% discount", "OVER", MAX_ITEMS_MOVING_DISC80, $RootPath, $db);
+		over_or_below_limit("Items moving to 80% discount", "OVER", MAX_ITEMS_MOVING_DISC80, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportTeam){
 
-		ItemsChangingPriceDelayed(4, $RootPath, $db);
+		ItemsChangingPriceDelayed(4, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsMovingToDiscountDelayed(20, 4, $RootPath, $db);
+		ItemsMovingToDiscountDelayed(20, 4, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsMovingToDiscountDelayed(50, 4, $RootPath, $db);
+		ItemsMovingToDiscountDelayed(50, 4, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsMovingToDiscountDelayed(80, 4, $RootPath, $db);
+		ItemsMovingToDiscountDelayed(80, 4, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -206,13 +205,13 @@ if ($ProcessSection01){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
-		ItemsChangingPriceDelayed(5, $RootPath, $db);
+		ItemsChangingPriceDelayed(5, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsMovingToDiscountDelayed(20, 5, $RootPath, $db);
+		ItemsMovingToDiscountDelayed(20, 5, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsMovingToDiscountDelayed(50, 5, $RootPath, $db);
+		ItemsMovingToDiscountDelayed(50, 5, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsMovingToDiscountDelayed(80, 5, $RootPath, $db);
+		ItemsMovingToDiscountDelayed(80, 5, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -221,11 +220,11 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
 		
-		ItemsInWrongShops("SHOPKL", $RootPath, $db);
+		ItemsInWrongShops("SHOPKL", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInWrongShops("SHOPBL", $RootPath, $db);
+		ItemsInWrongShops("SHOPBL", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInWrongShops("SHOPOU", $RootPath, $db);
+		ItemsInWrongShops("SHOPOU", $RootPath);
 		$NumberOfTestExecuted++;
 
 	}
@@ -235,13 +234,13 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){	
 
-		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath, $db);
+		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath);
 		$NumberOfTestExecuted++;
-		DiscountedItemsWithWrongDiscount("DISC5A", "50", $RootPath, $db);
+		DiscountedItemsWithWrongDiscount("DISC5A", "50", $RootPath);
 		$NumberOfTestExecuted++;
-		DiscountedItemsWithWrongDiscount("DISC8A", "80", $RootPath, $db);
+		DiscountedItemsWithWrongDiscount("DISC8A", "80", $RootPath);
 		$NumberOfTestExecuted++;
-		NotDiscountedItemsWithDiscount($RootPath, $db);
+		NotDiscountedItemsWithDiscount($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -260,29 +259,29 @@ if ($ProcessSection01){
 	* BALANCE ACCOUNTS         
 	***************************************************************************************/
 	if ($KL_SystemAdmin){
-		GLTransDateControl($db);
+		GLTransDateControl();
 		$NumberOfTestExecuted++;
-		GoodsReceivedNotInvoicedControl(1000000, $periodnow, $db);
+		GoodsReceivedNotInvoicedControl(1000000, $periodnow);
 		$NumberOfTestExecuted++;
-		CustomersDebtControl(10000, $periodnow, $db);
+		CustomersDebtControl(10000, $periodnow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("IDR", "('111111209',
-												'111111309')", 1, $periodnow, $db);
+												'111111309')", 1, $periodnow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("USD", "('111205010')", 1, $periodnow, $db);
+		PettyCashBalanceControlControl("USD", "('111205010')", 1, $periodnow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $periodnow, $db);
+		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $periodnow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("THB", "('111205030',
-												'111204030')", 1, $periodnow, $db);
+												'111204030')", 1, $periodnow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $periodnow, $db);
+		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $periodnow);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_AdministrationTeam){
 		// cash at retail shops
-		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $periodnow, $db);
+		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $periodnow);
 	}
 	
 	if ($KL_SystemAdmin
@@ -326,11 +325,11 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin 
 		OR $KL_PurchasingTeam
 		OR $KL_AdministrationTeam){
-		BalanceAccountControl("111111100",          -1,          1, $periodnow, $db);
+		BalanceAccountControl("111111100",          -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111202030",          -1,          1, $periodnow, $db);
+		BalanceAccountControl("111202030",          -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111204030",           0,  500000000, $periodnow, $db);
+		BalanceAccountControl("111204030",           0,  500000000, $periodnow);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -348,18 +347,18 @@ if ($ProcessSection01){
 									'111203020AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 2000000000, 10000000000, $periodnow, $db);
+									'111259050AD')", "Total Banks PT ADU", 2000000000, 10000000000, $periodnow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $periodnow, $db);
+									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $periodnow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
 									'111121110SM',
-									'111121115SM')", "Total Banks PT SMH", 2000000000, 5000000000, $periodnow, $db);
+									'111121115SM')", "Total Banks PT SMH", 2000000000, 5000000000, $periodnow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100BB', 
@@ -379,7 +378,7 @@ if ($ProcessSection01){
 									'111203020BB',
 									'111259010BB', 
 									'111259020BB', 
-									'111259050BB')", "Total Banks PT BB", 1000000000, 3000000000, $periodnow, $db);
+									'111259050BB')", "Total Banks PT BB", 1000000000, 3000000000, $periodnow);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -388,50 +387,50 @@ if ($ProcessSection01){
 									'111208010', 
 									'111208020', 
 									'111208030', 
-									'111208040')", "Total Brankas Shareholders",      0,2000000000, $periodnow, $db);
+									'111208040')", "Total Brankas Shareholders",      0,2000000000, $periodnow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
-									'111513000AD')", "Total WIP",  -5000000,   5000000, $periodnow, $db);
+									'111513000AD')", "Total WIP",  -5000000,   5000000, $periodnow);
 		$NumberOfTestExecuted++;
 
-		BalanceAccountControl("111111200",   50000000,  400000000, $periodnow, $db);
+		BalanceAccountControl("111111200",   50000000,  400000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111202010",         -1,          1, $periodnow, $db);
+		BalanceAccountControl("111202010",         -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111209",          0,   25000000, $periodnow, $db);
+		BalanceAccountControl("111111209",          0,   25000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111131100",         -1, 2000000000, $periodnow, $db);
+		BalanceAccountControl("111131100",         -1, 2000000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208010",         -1, 1000000000, $periodnow, $db);
+		BalanceAccountControl("111208010",         -1, 1000000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208020",         -1, 1000000000, $periodnow, $db);
+		BalanceAccountControl("111208020",         -1, 1000000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208030",         -1, 1000000000, $periodnow, $db);
+		BalanceAccountControl("111208030",         -1, 1000000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208040",         -1, 1000000000, $periodnow, $db);
+		BalanceAccountControl("111208040",         -1, 1000000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111520000",         -1,          1, $periodnow, $db);
+		BalanceAccountControl("111520000",         -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111512000', 
-									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $periodnow, $db);
+									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $periodnow);
 
-		BalanceAccountControl("111800000",  12000000 * $NumberOfOpenShopsTotal,  17500000 * $NumberOfOpenShopsTotal, $periodnow, $db);
+		BalanceAccountControl("111800000",  12000000 * $NumberOfOpenShopsTotal,  17500000 * $NumberOfOpenShopsTotal, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $periodnow, $db);
+		BalanceAccountControl("111900000",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100",  -50000000,   10000000, $periodnow, $db);
+		BalanceAccountControl("111311100",  -50000000,   10000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111499000",         -1,          1, $periodnow, $db);
+		BalanceAccountControl("111499000",         -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400", -200000000,          1, $periodnow, $db);
+		BalanceAccountControl("211021400", -200000000,          1, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  500000000, 1500000000, $periodnow, $db);
+		BalanceAccountControl("211021500",  500000000, 1500000000, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("612012015",         -1,          1, $periodnow, $db);
+		BalanceAccountControl("612012015",         -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("612012016",         -1,          1, $periodnow, $db);
+		BalanceAccountControl("612012016",         -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
 	}
 
@@ -442,32 +441,32 @@ if ($ProcessSection01){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETKLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("ReadyToTest", "SETBLA", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETBLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("ReadyToTest", "SETGEA", $RootPath, $db);
+		ItemsInSetup("ReadyToTest", "SETGEA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedDescription", "SETKLA", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETKLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedDescription", "SETBLA", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETBLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedDescription", "SETGEA", $RootPath, $db);
+		ItemsInSetup("NeedDescription", "SETGEA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("NeedPrice", "", $RootPath, $db);
+		ItemsInSetup("NeedPrice", "", $RootPath);
 		$NumberOfTestExecuted++;
 		}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETKLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("WithReorderLevel", "SETBLA", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETBLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInSetup("WithReorderLevel", "SETGEA", $RootPath, $db);
+		ItemsInSetup("WithReorderLevel", "SETGEA", $RootPath);
 		$NumberOfTestExecuted++;
-		ObsoleteComponentsInActiveBOM($RootPath, $db);
+		ObsoleteComponentsInActiveBOM($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -475,56 +474,56 @@ if ($ProcessSection01){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
-		ItemsInmediateShortage("COMPOA", $RootPath, $db);
+		ItemsInmediateShortage("COMPOA", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
-		GoodsJustArrived("PO", "KANTO", 3, $RootPath, $db);
+		GoodsJustArrived("PO", "KANTO", 3, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustArrived("WO", "KANTO", 3, $RootPath, $db);
+		GoodsJustArrived("WO", "KANTO", 3, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustArrived("WO", "SUPBA", 3, $RootPath, $db);
+		GoodsJustArrived("WO", "SUPBA", 3, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustTransferred("SAMPR", "KANTO", 2, 30, $RootPath, $db);
+		GoodsJustTransferred("SAMPR", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustTransferred("SASPG", "KANTO", 2, 30, $RootPath, $db);
+		GoodsJustTransferred("SASPG", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustTransferred("SERSU", "KANTO", 2, 30, $RootPath, $db);
+		GoodsJustTransferred("SERSU", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustTransferred("SERSW", "KANTO", 2, 30, $RootPath, $db);
+		GoodsJustTransferred("SERSW", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustTransferred("SERDE", "KANTO", 2, 30, $RootPath, $db);
+		GoodsJustTransferred("SERDE", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
-		GoodsJustTransferred("SERVI", "KANTO", 2, 30, $RootPath, $db);
+		GoodsJustTransferred("SERVI", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
-		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath, $db);
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath);
 		$NumberOfTestExecuted++;
 
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOKA", "SHOPKL", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
-		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath, $db);
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath);
 		$NumberOfTestExecuted++;
 
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOBA", "SHOPBL", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
 
-		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath, $db);
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath);
 		$NumberOfTestExecuted++;
 
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
-		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath, $db);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
 	}
 //////////////////////////
 // END OF SECTION
@@ -544,7 +543,7 @@ if ($ProcessSection02){
 	if ($KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
-		ConsumablesGoodsNotEnoughStock(30, 15, 45, $RootPath, $db);
+		ConsumablesGoodsNotEnoughStock(30, 15, 45, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -552,17 +551,17 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 
-		ValueStockLocation("SERVI",    0,  150, 0, 0, $db);
+		ValueStockLocation("SERVI",    0,  150, 0, 0);
 		$NumberOfTestExecuted++;
-		ValueStockLocation("SERDE",    0,  150, 0, 0, $db);
+		ValueStockLocation("SERDE",    0,  150, 0, 0);
 		$NumberOfTestExecuted++;
-		ValueStockLocation("SERSU",    0,  150, 0, 0, $db);
+		ValueStockLocation("SERSU",    0,  150, 0, 0);
 		$NumberOfTestExecuted++;
-		ValueStockLocation("SERSW",    0,  150, 0, 0, $db);
+		ValueStockLocation("SERSW",    0,  150, 0, 0);
 		$NumberOfTestExecuted++;
-		OvestockAtSamples(1, $RootPath, $db);
+		OvestockAtSamples(1, $RootPath);
 		$NumberOfTestExecuted++;
-		SamplesNotLongerNeeded($RootPath, $db);
+		SamplesNotLongerNeeded($RootPath);
 		$NumberOfTestExecuted++;
 		GoodsToBeProduced("COMPOA", "ONLYDISCOUNT", $RootPath);
 		$NumberOfTestExecuted++;
@@ -575,7 +574,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_PurchasingTeam){
-		ItemsWithoutPurchasingData($RootPath, $db);
+		ItemsWithoutPurchasingData($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -584,7 +583,7 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam){
 		ComponentsToObsolete(false, 0, $RootPath);
 		$NumberOfTestExecuted++;
-		FlaggedAsObsoleteButStockAvailable($RootPath, $db);
+		FlaggedAsObsoleteButStockAvailable($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -592,7 +591,7 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
-		ItemsInKLProcessAndRLNotZero($RootPath, $db);
+		ItemsInKLProcessAndRLNotZero($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -600,13 +599,13 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_ShopSupportLeader){
-		ItemsOnSpecialRequest($RootPath, $db);
+		ItemsOnSpecialRequest($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportTeam
 		OR $KL_PurchasingTeam){
-		PackagingItemsOnWrongLocation($RootPath, $db); 
+		PackagingItemsOnWrongLocation($RootPath); 
 		$NumberOfTestExecuted++;
 	}
 
@@ -628,7 +627,7 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportTeam){
 		
-		CheckNegativeStock($RootPath, $db);
+		CheckNegativeStock($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -656,59 +655,59 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
-		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 120, "SETKLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 120, "SETBLA", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 120, "SETBLA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 120, "SETGEA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-
-		ActiveItemsNoSales( 30, "TESTKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 60, "TESTKA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "TESTBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 60, "TESTBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "TESTGA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 60, "TESTGA", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 120, "SETGEA", $RootPath);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 30, "STABKA", $RootPath, $db);
+		ActiveItemsNoSales( 30, "TESTKA", $RootPath);
 		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "STABBA", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 60, "TESTKA", $RootPath);
 		$NumberOfTestExecuted++;
-		ActiveItemsNoSales( 30, "STABGA", $RootPath, $db);
+		ActiveItemsNoSales( 30, "TESTBA", $RootPath);
 		$NumberOfTestExecuted++;
-
-		ActiveItemsNoSales( 30, "NOPOKA", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 60, "TESTBA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 90, "NOPOKA", $RootPath, $db);
+		ActiveItemsNoSales( 30, "TESTGA", $RootPath);
 		$NumberOfTestExecuted++;
-
-		ActiveItemsNoSales( 30, "NOPOBA", $RootPath, $db);
-		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 90, "NOPOBA", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 60, "TESTGA", $RootPath);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 30, "NOPOGA", $RootPath, $db);
+		ActiveItemsNoSales( 30, "STABKA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 90, "NOPOGA", $RootPath, $db);
+		ActiveItemsNoSales( 30, "STABBA", $RootPath);
+		$NumberOfTestExecuted++;
+		ActiveItemsNoSales( 30, "STABGA", $RootPath);
 		$NumberOfTestExecuted++;
 
-		ActiveItemsNoSales( 30, "DISC2A", $RootPath, $db);
+		ActiveItemsNoSales( 30, "NOPOKA", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 90, "NOPOKA", $RootPath);
+		$NumberOfTestExecuted++;
+
+		ActiveItemsNoSales( 30, "NOPOBA", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOBA", $RootPath);
+		$NumberOfTestExecuted++;
+
+		ActiveItemsNoSales( 30, "NOPOGA", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "NOPOGA", $RootPath);
+		$NumberOfTestExecuted++;
+
+		ActiveItemsNoSales( 30, "DISC2A", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath);
 		$NumberOfTestExecuted++;
 		
-		ActiveItemsNoSales( 50, "DISC5A", $RootPath, $db);
+		ActiveItemsNoSales( 50, "DISC5A", $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath, $db);
+		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath);
 		$NumberOfTestExecuted++;
 		
-		ActiveItemsNoSales( 60, "DISC8A", $RootPath, $db);
+		ActiveItemsNoSales( 60, "DISC8A", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -719,13 +718,13 @@ if ($ProcessSection02){
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		OldPOStillActive(90, $RootPath, $db);
+		OldPOStillActive(90, $RootPath);
 		$NumberOfTestExecuted++;
-		OldWOStillActive(60, $RootPath, $db);
+		OldWOStillActive(60, $RootPath);
 		$NumberOfTestExecuted++;
-		WrongItemsOnPurchaseOrders($RootPath, $db);
+		WrongItemsOnPurchaseOrders($RootPath);
 		$NumberOfTestExecuted++;
-		WrongItemsOnWorkOrders($RootPath, $db);
+		WrongItemsOnWorkOrders($RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -787,12 +786,12 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_AdministrationTeam){
-		OutstandingOrders("Retail", "Order", $RootPath, $db);
+		OutstandingOrders("Retail", "Order", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin ){
-		OutstandingOrders("Retail", "Quotation", $RootPath, $db);
+		OutstandingOrders("Retail", "Quotation", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -804,7 +803,7 @@ if ($ProcessSection02){
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
-		OutstandingOrders("Wholesale", "Order", $RootPath, $db);
+		OutstandingOrders("Wholesale", "Order", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -813,7 +812,7 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager){
-		OutstandingOrders("Wholesale", "Quotation", $RootPath, $db);
+		OutstandingOrders("Wholesale", "Quotation", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -821,8 +820,8 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportLeader){ 
-		OutstandingOrders("Consignment", "Order", $RootPath, $db);
-		OutstandingOrders("Consignment", "Quotation", $RootPath, $db);
+		OutstandingOrders("Consignment", "Order", $RootPath);
+		OutstandingOrders("Consignment", "Quotation", $RootPath);
 	}
 	*/
 
@@ -831,7 +830,7 @@ if ($ProcessSection02){
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager){ 
-		OnlineMarketPlacePaymentPending($RootPath, $db);
+		OnlineMarketPlacePaymentPending($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -841,39 +840,39 @@ if ($ProcessSection02){
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_ShopSupportTeam){ 
-		OutstandingOrders("MarketPlace", "Order", $RootPath, $db);
+		OutstandingOrders("MarketPlace", "Order", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath, $db, $db_oc);
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath );
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath, $db, $db_oc);
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath );
 		$NumberOfTestExecuted++;
 	}
  
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
-		OnlineQuotationsFollowUp($RootPath, $db, $db_oc);
+		OnlineQuotationsFollowUp($RootPath );
 		$NumberOfTestExecuted++;
-		OldOnlineQuotations(1, $RootPath, $db);
+		OldOnlineQuotations(1, $RootPath);
 		$NumberOfTestExecuted++;
-//		OutstandingOrders("Online", "Quotation", $RootPath, $db);
+//		OutstandingOrders("Online", "Quotation", $RootPath);
 //		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){ 
-		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath, $db, $db_oc);
+		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath );
 		$NumberOfTestExecuted++;
 	}
 
@@ -881,7 +880,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){
-		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath, $db);
+		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -891,7 +890,7 @@ if ($ProcessSection02){
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_ShopSupportTeam){ 
-		OutstandingOrders("Online", "Order", $RootPath, $db);
+		OutstandingOrders("Online", "Order", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -900,7 +899,7 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline
 		OR $KL_ShopSupportTeam){ 
-		OnlineItemsOnProcess($RootPath, $db);
+		OnlineItemsOnProcess($RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -908,7 +907,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_ShopSupportLeader){ 
-		ItemsNotNeededInOnlineOrderButRequested($RootPath, $db);
+		ItemsNotNeededInOnlineOrderButRequested($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -919,7 +918,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		ActiveItemsWithoutPicture($RootPath, $db);
+		ActiveItemsWithoutPicture($RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -927,9 +926,9 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline
 		OR $KL_ITSupport){
-		ImagesWithoutProduct($RootPath, $db);
+		ImagesWithoutProduct($RootPath);
 		$NumberOfTestExecuted++;
-		OpenCartItemsWithoutPicture($RootPath, $db, $db_oc);
+		OpenCartItemsWithoutPicture($RootPath );
 		$NumberOfTestExecuted++;
 	}
 
@@ -938,16 +937,16 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
 		OR $KL_SalesTeamOnline){
-		ItemsWithoutWeightOrVolume($RootPath, $db);
+		ItemsWithoutWeightOrVolume($RootPath);
 		$NumberOfTestExecuted++;
-		ItemsShouldBeInWebsite($db);
+		ItemsShouldBeInWebsite();
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin){
-		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "ALL_EXCEPT_SPGSUPPORT", $RootPath, $db);
+		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "ALL_EXCEPT_SPGSUPPORT", $RootPath);
 		$NumberOfTestExecuted++;
-		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "SPGSUPPORT", $RootPath, $db);
+		UsersNotLoggingIn(($_SESSION['MonthsAuditTrail'] *30)+1, "SPGSUPPORT", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -957,20 +956,20 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_ShopSupportLeader 
 		OR $KL_ShopManager){
-		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath, $db);
+		RegularTransfersToShopNotReceived('08:00:00','15:00:00', $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_ShopSupportLeader){
-		TransferWithWrongInformation(15, $RootPath, $db);
+		TransferWithWrongInformation(15, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_ShopSupportTeam){ 
 		TransfersDelayed(3, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsCancelledInTransfers(3, $RootPath, $db);
+		ItemsCancelledInTransfers(3, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -983,21 +982,21 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_OperationalManager){
-		ItemsCancelledInTransfers(3, $RootPath, $db);
+		ItemsCancelledInTransfers(3, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if (!$KL_SystemAdmin){
-		PettyCashBalance('User', $db);
+		PettyCashBalance('User');
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		PettyCashBalance('Authorizer', $db);
+		PettyCashBalance('Authorizer');
 		$NumberOfTestExecuted++;
-		PettyCashToBeAuthorized($db);
+		PettyCashToBeAuthorized();
 		$NumberOfTestExecuted++;
 	}
 
@@ -1013,7 +1012,7 @@ include ('includes/footer.php');
 FUNCTIONS ONLY USED IN CONTROL BOARD
 *********************************************************************************************/
 
-function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
+function ActiveItemsNoSales($maxdays, $group, $RootPath){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
 
 // This line goes in WHERE quantity if (Service Excluded) 
@@ -1117,7 +1116,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath, $db){
 	}
 }	
 
-function ActiveItemsWithoutPicture($RootPath, $db){
+function ActiveItemsWithoutPicture($RootPath){
 /* EXPLAIN SQL 2014-05-21	Can't use key. Probably explained at http://stackoverflow.com/questions/11784322/why-would-mysql-not-use-keys-when-there-are-possible-keys 
 2014-05-30 Fixed adding a new index disontinued+Stockid
 2015-05-19 TAke out some exceptions 
@@ -1196,7 +1195,7 @@ function ActiveItemsWithoutPicture($RootPath, $db){
 	}
 }
 
-function BalanceAccountControl($account, $min, $max, $period, $db){
+function BalanceAccountControl($account, $min, $max, $period){
 	$SQL = "SELECT (bfwd + actual) as saldo, accountname
 			FROM chartdetails, chartmaster
 			WHERE chartdetails.accountcode = chartmaster.accountcode
@@ -1216,7 +1215,7 @@ function BalanceAccountControl($account, $min, $max, $period, $db){
 	}
 }
 
-function BalanceListAccountControl($accountlist, $description, $min, $max, $period, $db){
+function BalanceListAccountControl($accountlist, $description, $min, $max, $period){
 	$SQL = "SELECT SUM(bfwd + actual) as saldo
 			FROM chartdetails, chartmaster
 			WHERE chartdetails.accountcode = chartmaster.accountcode
@@ -1236,7 +1235,7 @@ function BalanceListAccountControl($accountlist, $description, $min, $max, $peri
 	}
 }
 
-function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCashAllShops, $NumberOfTestExecuted, $periodnow, $db){
+function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCashAllShops, $NumberOfTestExecuted, $periodnow){
 	// while builing the list of KL POS accounts for all shops, we check one by one
 	$ListAccounts = "('";
 	$SQL="SELECT klposcashaccount
@@ -1246,18 +1245,18 @@ function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCas
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
 		$ListAccounts = $ListAccounts . $myrow['klposcashaccount'] . "','";
-		BalanceAccountControl($myrow['klposcashaccount'], $MinCashPerShop,$MaxCashPerShop, $periodnow, $db);
+		BalanceAccountControl($myrow['klposcashaccount'], $MinCashPerShop,$MaxCashPerShop, $periodnow);
 		$NumberOfTestExecuted++;
 	}
 	$ListAccounts = substr($ListAccounts, 0, -2) . ")";
 	// Once we have the list of all KL POS accounts for all shops, we check the total in the system
-	BalanceListAccountControl($ListAccounts, "Total Cash @ shops", $MinCashAllShops, $MaxCashAllShops, $periodnow, $db);
+	BalanceListAccountControl($ListAccounts, "Total Cash @ shops", $MinCashAllShops, $MaxCashAllShops, $periodnow);
 	$NumberOfTestExecuted++;
 	return $NumberOfTestExecuted;
 }
 
 
-function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath, $db){
+function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath){
 
 	$MinQOH = NumberOfShops($ShopType);
 	
@@ -1281,9 +1280,9 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 		. $Condition;
 	$result = DB_query($SQL);
 	while ($myrow = DB_fetch_array($result)){
-		CategoryItemsNotInShop($Category, $myrow['loccode'], $MinQOH, "ALL", $RootPath, $db);
+		CategoryItemsNotInShop($Category, $myrow['loccode'], $MinQOH, "ALL", $RootPath);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop($Category, $myrow['loccode'], 1, "KANTOR", $RootPath, $db);
+		CategoryItemsNotInShop($Category, $myrow['loccode'], 1, "KANTOR", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 	return $NumberOfTestExecuted;
@@ -1292,7 +1291,7 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 
 
 
-function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPath, $db){
+function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPath){
 	
 	$Exclusions = " (excluding items in Active Tranfers, Pending of Transfer, Change of Price, Move to Discount, Special Kantor Request, Service, Shop Online and Return to Supplier)";
 	if ($WhereisQOH == "KANTOR"){
@@ -1456,7 +1455,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 	}
 }
 
-function CheckNegativeStock($RootPath, $db){
+function CheckNegativeStock($RootPath){
 	/* Check if there is any negative stock */
 
 	$total = 0;
@@ -1523,7 +1522,7 @@ function CheckNegativeStock($RootPath, $db){
 	InsertKPI("Stock", "Negative Stock items (PCS)", abs($total));
 }
 
-function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPurchase, $RootPath, $db){
+function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPurchase, $RootPath){
 /* EXPLAIN SQL 2014-05-40 added index discontinued+categoryid*/
 	/*  Check if there are consumable goods with not enough stock for the following $DaysMinStock
 		based on last $DaysUsage usage*/
@@ -1619,7 +1618,7 @@ function CustomerDebtByCurrency($Currency){
 	return $myrow[0];
 }
 
-function CustomersDebtControl($AcceptedDifference, $period, $db){
+function CustomersDebtControl($AcceptedDifference, $period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
 			WHERE chartdetails.accountcode = '111311100'
@@ -1644,7 +1643,7 @@ function CustomersDebtControl($AcceptedDifference, $period, $db){
 	}
 }
 
-function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath, $db){
+function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath){
 	$SQL = "SELECT * 
 			FROM  stockmaster 
 			WHERE categoryid = '" . $Category . "'
@@ -1682,7 +1681,7 @@ function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath, $
 	}
 }
 
-function FlaggedAsObsoleteButStockAvailable($RootPath, $db){
+function FlaggedAsObsoleteButStockAvailable($RootPath){
 	/* Check if there is any item flagged as obsolete BUT with some stock available */
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description
@@ -1722,7 +1721,7 @@ function FlaggedAsObsoleteButStockAvailable($RootPath, $db){
 	}
 }
 
-function GLTransDateControl($db){
+function GLTransDateControl(){
 	$SQL = "SELECT counterindex,
 					type,
 					typeno,
@@ -1771,7 +1770,7 @@ function GLTransDateControl($db){
 	}
 }
 
-function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
+function GoodsJustArrived($kind, $location, $numdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays));
 	$ShopsKL = NumberOfShops("SHOPKL");
 	$ShopsBL = NumberOfShops("SHOPBL");
@@ -1957,7 +1956,7 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath, $db){
 	}
 }
 
-function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $RootPath, $db){
+function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
 
 	$SQL = "SELECT loctransfers.stockid,
@@ -2020,7 +2019,7 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 	}
 }
 
-function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period, $db){
+function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
 			WHERE chartdetails.accountcode = '211021400'
@@ -2052,7 +2051,7 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period, $db){
 	}
 }
 
-function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDifference, $period, $db){
+function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDifference, $period){
 	$SQL = "SELECT SUM(pcashdetails.amount)/currencies.rate as amount_idr
 			FROM pcashdetails,pctabs,currencies	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
@@ -2081,7 +2080,7 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 }
 
 
-function ImagesWithoutProduct($RootPath, $db){
+function ImagesWithoutProduct($RootPath){
 	$ShowHeader = TRUE;
 	$k = 0; //row colour counter
 	$i= 0;
@@ -2149,7 +2148,7 @@ function ImagesWithoutProduct($RootPath, $db){
 	}
 }
 
-function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
+function ItemsCancelledInTransfers($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT loctransfers.reference,
 					loctransfers.shipdate,
@@ -2216,7 +2215,7 @@ function ItemsCancelledInTransfers($maxdays, $RootPath, $db){
 	}
 }
 
-function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
+function ItemsChangingPriceDelayed($NumDays, $RootPath){
 /* EXPLAIN SQL 2014-05-21	*/
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT stockmaster.stockid, 
@@ -2324,7 +2323,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath, $db){
 	}
 }
 
-function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
+function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
 
 
@@ -2400,7 +2399,7 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath, $db){
 	}
 }	
 
-function ItemsInmediateShortage($Cat, $RootPath, $db){
+function ItemsInmediateShortage($Cat, $RootPath){
 
 	$SQL = "SELECT stm.stockid,
 				COALESCE ((SELECT sum(quantity)
@@ -2527,7 +2526,7 @@ function ItemsInmediateShortage($Cat, $RootPath, $db){
 }	
 
 
-function ItemsInKLProcessAndRLNotZero($RootPath, $db){
+function ItemsInKLProcessAndRLNotZero($RootPath){
 	/* Check if there is any item in any KL process and RL is not zero... */
 
 	$SQL = "SELECT stockmaster.stockid,			
@@ -2616,7 +2615,7 @@ function ItemsInKLProcessAndRLNotZero($RootPath, $db){
 	}
 }
 
-function ItemsNotNeededInOnlineOrderButRequested($RootPath, $db){
+function ItemsNotNeededInOnlineOrderButRequested($RootPath){
 	
 	$SQL = "SELECT locstock.stockid,
 				locstock.quantity
@@ -2664,7 +2663,7 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath, $db){
 	}
 }
 
-function ItemsInSetup($Check, $Category, $RootPath, $db){
+function ItemsInSetup($Check, $Category, $RootPath){
 	$today = date('Y-m-d');
 	
 	if ($Check == "ReadyToTest"){
@@ -2772,7 +2771,7 @@ function ItemsInSetup($Check, $Category, $RootPath, $db){
 	}
 }
 
-function ItemsInWrongShops($ShopType, $RootPath, $db){
+function ItemsInWrongShops($ShopType, $RootPath){
 
 	if ($ShopType == "SHOPKL"){
 		$Message = 'Blink or Discount Items on KL shops';
@@ -2848,7 +2847,7 @@ function ItemsInWrongShops($ShopType, $RootPath, $db){
 	}
 }
 
-function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
+function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
 /* EXPLAIN SQL 2014-05-21	*/
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT stockmaster.stockid, 
@@ -2954,7 +2953,7 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath, $db){
 	}
 }
 
-function ItemsOnSpecialRequest($RootPath, $db){
+function ItemsOnSpecialRequest($RootPath){
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					locstock.quantity,
@@ -3002,7 +3001,7 @@ function ItemsOnSpecialRequest($RootPath, $db){
 	}
 }
 
-function ItemsShouldBeInWebsite($db){
+function ItemsShouldBeInWebsite(){
 	$SQL = "SELECT stockid, description
 			FROM stockmaster
 			WHERE " . SQLFilterStockmasterForOnlineShop("ALL"). "
@@ -3047,13 +3046,13 @@ function ItemsShouldBeInWebsite($db){
 	}
 }
 
-function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $MinAvailable, $MaxTopSalesItems, $RootPath, $db){
+function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $MinAvailable, $MaxTopSalesItems, $RootPath){
 	/*  EXPLAIN SQL 2014-05-30
 		Examples of usage in control boards
-		ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath, $db);
-		ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath, $db);
-		ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath, $db);
-		InsuficientStockForItems("STABKA", "TM-", "Tali Mie", 20, 40, $RootPath, $db);
+		ItemsWithStockLocationButNoStockAvailable("WABOM", "WaterBom", 15, 600, $RootPath);
+		ItemsWithStockLocationButNoStockAvailable("WHAYA", "Ayana", 15, 600, $RootPath);
+		ItemsWithStockLocationButNoStockAvailable("WHINT", "InterContinental", 15, 600, $RootPath);
+		InsuficientStockForItems("STABKA", "TM-", "Tali Mie", 20, 40, $RootPath);
 		
 		2018-03-18 taken out the condition:		AND locstock.reorderlevel > 0
 
@@ -3129,7 +3128,7 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 	}
 }
 
-function ItemsWithoutPurchasingData($RootPath, $db){
+function ItemsWithoutPurchasingData($RootPath){
 /* EXPLAIN SQL	2014-05-20	
 
 id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
@@ -3211,7 +3210,7 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 	}
 }
 
-function ItemsWithoutStandardCost($RootPath, $db){
+function ItemsWithoutStandardCost($RootPath){
 	/* Check if there is any item without standard cost */
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description, 
@@ -3259,7 +3258,7 @@ function ItemsWithoutStandardCost($RootPath, $db){
 	}
 }
 
-function ItemsWithoutWeightOrVolume($RootPath, $db){
+function ItemsWithoutWeightOrVolume($RootPath){
 	$SQL = "SELECT stockmaster.stockid,
 				   stockmaster.description,
 				   stockmaster.grossweight,
@@ -3314,7 +3313,7 @@ function ItemsWithoutWeightOrVolume($RootPath, $db){
 	}
 }
 
-function ItemsWithStockKantorButReorderLevelTokoZero($TypeOfShop, $RootPath, $db){
+function ItemsWithStockKantorButReorderLevelTokoZero($TypeOfShop, $RootPath){
 /**********************************************************************
 items with stock kantor > 0 
 RL is zero at one type of shop
@@ -3490,7 +3489,7 @@ No pending transfer regarding this item
 	}
 }
 
-function NotDiscountedItemsWithDiscount($RootPath, $db){
+function NotDiscountedItemsWithDiscount($RootPath){
 	$SQL = "SELECT stockid,
 					description
 			FROM  stockmaster 
@@ -3530,7 +3529,7 @@ function NotDiscountedItemsWithDiscount($RootPath, $db){
 	}
 }
 
-function ObsoleteComponentsInActiveBOM($RootPath, $db){
+function ObsoleteComponentsInActiveBOM($RootPath){
 
 	$SQL = "SELECT bom.parent,
 				bom.component
@@ -3569,7 +3568,7 @@ function ObsoleteComponentsInActiveBOM($RootPath, $db){
 	}
 }
 
-function OldOnlineQuotations($NumDaysBank, $RootPath, $db){
+function OldOnlineQuotations($NumDaysBank, $RootPath){
 
 	$StartDateBank = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysBank));
 	$Titletext = "Old Online Quotations to be deleted. No Payment received in more than " . $NumDaysBank . " days.";
@@ -3653,7 +3652,7 @@ function OldOnlineQuotations($NumDaysBank, $RootPath, $db){
 	}
 }
 
-function OldPOStillActive($maxdays, $RootPath, $db){
+function OldPOStillActive($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT orderno,
 				   orddate,
@@ -3700,7 +3699,7 @@ function OldPOStillActive($maxdays, $RootPath, $db){
 	}
 }
 
-function OldWOStillActive($maxdays, $RootPath, $db){
+function OldWOStillActive($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT wo,
 				   startdate
@@ -3739,7 +3738,7 @@ function OldWOStillActive($maxdays, $RootPath, $db){
 	}
 }
 
-function OnlineCustomersNoOrderPlaced($RootPath, $db){
+function OnlineCustomersNoOrderPlaced($RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
 	$SQL = "SELECT 	debtorsmaster.debtorno,
@@ -3802,7 +3801,7 @@ function OnlineCustomersNoOrderPlaced($RootPath, $db){
 	}
 }
 
-function OnlineItemsOnProcess($RootPath, $db){
+function OnlineItemsOnProcess($RootPath){
 	
 	$SQL = "SELECT salesorders.orderno,	
 				debtorsmaster.debtorno,
@@ -3960,7 +3959,7 @@ function OnlineItemsOnProcess($RootPath, $db){
 	}
 }
 
-function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
+function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 
 	$Titletext = "Follow up Outstanding " . $Source. " Online Orders";
 	$ThankYouDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
@@ -4132,7 +4131,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath, $db){
 	}
 }
 
-function OnlineQuotationsFollowUp($RootPath, $db, $db_oc){
+function OnlineQuotationsFollowUp($RootPath ){
 
 	$Titletext = "Follow up Outstanding Online Quotations";
 		
@@ -4195,7 +4194,7 @@ function OnlineQuotationsFollowUp($RootPath, $db, $db_oc){
 			$PaymentLink = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . $myrow['klocpaymentcode'] . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
 			$PaymentMethodText = GetPaymentMethodTextFromCode($myrow['klocpaymentcode']);
 
-			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['klocorderstatus'], $db_oc);
+			$OCStatusText = GetOpenCartStatusTextFromCode($myrow['klocorderstatus']);
 
 			if ($OCStatusText != "Processing"){
 				$PaymentLink = ''; // do not allow Apply payment in case of an status that is not processing
@@ -4232,7 +4231,7 @@ function OnlineQuotationsFollowUp($RootPath, $db, $db_oc){
 	}
 }
 
-function OnlineMarketPlacePaymentPending($RootPath, $db){
+function OnlineMarketPlacePaymentPending($RootPath){
 
 	$Titletext = "Follow up Marketplace Online Orders Payment Pending";
 		
@@ -4431,7 +4430,7 @@ function OnlineMarketPlacePaymentPending($RootPath, $db){
 }
 
 
-function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc){
+function OpenCartItemsWithoutPicture($RootPath ){
 
 	$SQL = "SELECT 	oc_product.model AS stockid
 			FROM oc_product
@@ -4474,7 +4473,7 @@ function OpenCartItemsWithoutPicture($RootPath, $db, $db_oc){
 	}
 }
 
-function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
+function OutstandingOrders($customertype, $ordertype, $RootPath){
 	/* Check if there are outstanding orders for retail customers */
 
 	if ($customertype == "Retail"){
@@ -4604,7 +4603,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath, $db){
 	}
 }
 
-function over_or_below_limit($Request, $Sign, $Limit, $RootPath, $db){
+function over_or_below_limit($Request, $Sign, $Limit, $RootPath){
 /* EXPLAIN SQL 2014-05-21	*/
 	if ($Request == "Items changing price"){
 		$SQL = "SELECT COUNT(*)
@@ -4701,7 +4700,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 }
 
 
-function OvestockAtSamples($maxallowedsamples, $RootPath, $db){
+function OvestockAtSamples($maxallowedsamples, $RootPath){
 
 	$SQL = "SELECT locstock.stockid, 
 					stockmaster.description, 
@@ -4746,7 +4745,7 @@ function OvestockAtSamples($maxallowedsamples, $RootPath, $db){
 	}
 }
 
-function PackagingItemsOnWrongLocation($RootPath, $db){
+function PackagingItemsOnWrongLocation($RootPath){
 /* EXPLAIN SQL	2014-05-20
 
 id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
@@ -4808,7 +4807,7 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 	}
 }
 
-function PettyCashBalance($TypeUser, $db){
+function PettyCashBalance($TypeUser){
 
 	if ($TypeUser == 'Authorizer'){
 		$WhereUser = "AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'";
@@ -4866,7 +4865,7 @@ function PettyCashBalance($TypeUser, $db){
 	}
 }
 
-function PettyCashToBeAuthorized($db){
+function PettyCashToBeAuthorized(){
 
 	$SQL = "SELECT pcashdetails.tabcode, 	
 				SUM(pcashdetails.amount) as amount,
@@ -4910,7 +4909,7 @@ function PettyCashToBeAuthorized($db){
 	}
 }
 
-function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPath, $db){
+function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPath){
 
 	$StartDate = Date('Y-m-d');
 	$StartTime = Date('H:i:s');
@@ -4969,7 +4968,7 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 	}
 }
 
-function SamplesNotLongerNeeded($RootPath, $db){
+function SamplesNotLongerNeeded($RootPath){
 
 	$SQL = "SELECT locstock.stockid, 
 					stockmaster.description, 
@@ -5017,7 +5016,7 @@ function SamplesNotLongerNeeded($RootPath, $db){
 	}
 }
 
-function SPGNotReportingSalesInDays($maxdays, $db){
+function SPGNotReportingSalesInDays($maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 
 	$SQL = "SELECT salesman.salesmancode,
@@ -5079,7 +5078,7 @@ function SPGNotReportingSalesInDays($maxdays, $db){
 	}
 }
 
-function SuppliersWithoutBasicData($RootPath, $db){
+function SuppliersWithoutBasicData($RootPath){
 
 	$SQL = "SELECT supplierid,
 					suppname
@@ -5112,7 +5111,7 @@ function SuppliersWithoutBasicData($RootPath, $db){
 	}
 }
 
-function TransferWithWrongInformation($maxdays, $RootPath, $db){
+function TransferWithWrongInformation($maxdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays+1));
 	$SQL = "SELECT loctransferid, 
 					reference,
@@ -5199,7 +5198,7 @@ function TransferWithWrongInformation($maxdays, $RootPath, $db){
 	}
 }
 
-function UsersNotLoggingIn($maxdays, $type, $RootPath, $db){
+function UsersNotLoggingIn($maxdays, $type, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
 	
 	if ($type=='SPGSUPPORT'){
@@ -5256,7 +5255,7 @@ function UsersNotLoggingIn($maxdays, $type, $RootPath, $db){
 	}
 }
 
-function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $db){
+function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 /*	$minpcs = $optimalpcs * (1 - $varpcs);
 	$maxpcs = $optimalpcs * (1 + $varpcs);
 	$minvalue = $optimalvalue * (1 - $varvalue);
@@ -5291,7 +5290,7 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue, $
 	}
 }
 
-function WrongItemsOnPurchaseOrders($RootPath, $db){
+function WrongItemsOnPurchaseOrders($RootPath){
 /* EXPLAIN SQL 2014-05-30 */
 	$SQL = "SELECT purchorderdetails.orderno,
 				purchorderdetails.itemcode,
@@ -5353,7 +5352,7 @@ function WrongItemsOnPurchaseOrders($RootPath, $db){
 	}
 }
 
-function WrongItemsOnWorkOrders($RootPath, $db){
+function WrongItemsOnWorkOrders($RootPath){
 /* EXPLAIN SQL 2014-05-30 */
 	$SQL = "SELECT workorders.wo,
 				woitems.stockid,
@@ -5413,7 +5412,7 @@ function WrongItemsOnWorkOrders($RootPath, $db){
 	}
 }
 
-function OpenCartOrdersByStatus($Status, $RootPath, $db, $db_oc){
+function OpenCartOrdersByStatus($Status, $RootPath ){
 	$SQL = "SELECT 	oc_order.order_id,
 				oc_order.store_name,
 				oc_order.firstname,
