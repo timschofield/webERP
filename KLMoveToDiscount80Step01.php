@@ -129,7 +129,7 @@ if (isset($_POST['submit'])) {
 		prnMsg($msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid'], $db);
-		SetMoveDiscount80Flag(1,$_POST['Stockid'], $db);
+		SetMoveDiscount80Flag(1,$_POST['Stockid']);
 
 		KLSendEmail("MoveToDiscount80Started", "Silent", $_POST['Stockid']);
 
@@ -159,7 +159,7 @@ if (isset($_POST['submit'])) {
 			WHERE countermovediscount='".$SelectedMovement."'";
 	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
-	SetMoveDiscount80Flag(0,$myrow['stockid'], $db);
+	SetMoveDiscount80Flag(0,$myrow['stockid']);
 
 	$sql="DELETE FROM klmovetodiscount80 WHERE countermovediscount='". $SelectedMovement."'";
 	$ErrMsg = _('The Move Item To 80% Discount Step 01 could not be deleted because');

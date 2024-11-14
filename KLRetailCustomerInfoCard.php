@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ($InputError !=1) {
-		RecordRetailCustomerInformation($SelectedOrder, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex'], $db);
+		RecordRetailCustomerInformation($SelectedOrder, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex']);
 		unset($SelectedOrder);
 		unset($_POST['FirstName']);
 		unset($_POST['LastName']);

@@ -1,6 +1,6 @@
 <?php
 
-function SetChangePriceFlag($Flag, $StockId, $db){
+function SetChangePriceFlag($Flag, $StockId){
 	/* sets $flag value to changingprice flag in stockmaster */
 	$sql = "UPDATE stockmaster 
 			SET klchangingprice = '" . $Flag . "'
@@ -13,7 +13,7 @@ function SetChangePriceFlag($Flag, $StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetMoveDiscount20Flag($Flag, $StockId, $db){
+function SetMoveDiscount20Flag($Flag, $StockId){
 	/* sets $flag value to flag in stockmaster */
 	$sql = "UPDATE stockmaster 
 			SET klmovingdiscount20 = '" . $Flag . "'
@@ -26,7 +26,7 @@ function SetMoveDiscount20Flag($Flag, $StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetMoveDiscount50Flag($Flag, $StockId, $db){
+function SetMoveDiscount50Flag($Flag, $StockId){
 	/* sets $flag value to flag in stockmaster */
 	$sql = "UPDATE stockmaster 
 			SET klmovingdiscount50 = '" . $Flag . "'
@@ -39,7 +39,7 @@ function SetMoveDiscount50Flag($Flag, $StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetMoveDiscount80Flag($Flag, $StockId, $db){
+function SetMoveDiscount80Flag($Flag, $StockId){
 	/* sets $flag value to  flag in stockmaster */
 	$sql = "UPDATE stockmaster 
 			SET klmovingdiscount80 = '" . $Flag . "'
@@ -52,7 +52,7 @@ function SetMoveDiscount80Flag($Flag, $StockId, $db){
 	prnMsg($msg , 'success');
 }
 
-function SetFlagPriceChangedInChangePrice($StockId, $value, $db){
+function SetFlagPriceChangedInChangePrice($StockId, $value){
 	$sql = "UPDATE klchangeprice 
 			SET pricechanged = '" . $value . "'
 			WHERE stockid = '".$StockId."'";

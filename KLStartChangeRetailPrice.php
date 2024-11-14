@@ -44,7 +44,7 @@ $result = DB_query($sql,$ErrMsg, $DbgMsg);
 prnMsg($msg , 'success');
 
 SetRLZeroAtPointOfSales($_GET['Item'], $db);
-SetChangePriceFlag(1, $_GET['Item'], $db);
+SetChangePriceFlag(1, $_GET['Item']);
 KLSendEmail("ChangePriceStarted", "Silent", $_GET['Item']);
 
 DB_Txn_Commit();

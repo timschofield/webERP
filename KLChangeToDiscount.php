@@ -66,13 +66,13 @@ if ($_GET['Action'] == "Change"){
 
 if ($_GET['Action'] == "Finish"){
 	if ($_GET['Discount'] == "20"){
-		SetMoveDiscount20Flag(0, $_GET['Item'], $db);
+		SetMoveDiscount20Flag(0, $_GET['Item']);
 		SetEndDateMoveDiscount20($_GET['Item'], $db);
 	}elseif($_GET['Discount'] == "50"){
-		SetMoveDiscount50Flag(0, $_GET['Item'], $db);
+		SetMoveDiscount50Flag(0, $_GET['Item']);
 		SetEndDateMoveDiscount50($_GET['Item'], $db);
 	}else{
-		SetMoveDiscount80Flag(0, $_GET['Item'], $db);
+		SetMoveDiscount80Flag(0, $_GET['Item']);
 		SetEndDateMoveDiscount80($_GET['Item'], $db);
 	}
 }

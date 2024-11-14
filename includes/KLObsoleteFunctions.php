@@ -19,7 +19,7 @@ define('FACEMASKS_ON_SPECIAL',92);
 
 /* This file contains obsolete functions that can be useful someday for some reason */
 
-function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopItemsDays, $ShowMessages, $updateDB, $RootPath, $db){
+function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopItemsDays, $ShowMessages, $updateDB, $RootPath){
 	/* No Sales during last maxdays, 
 		with stock at the shop
 		with RL > at the shop
@@ -97,20 +97,20 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 				// get the model code and see if the location has sold of different sizes, so we need to keep all sizes at the shop
 				// even if no sales.
 				$RingModel = CodeModelRing($myrow['stockid']);
-				$SalesModel = SalesOfItemByLocation($RingModel, $location, $maxdays, $db);
+				$SalesModel = SalesOfItemByLocation($RingModel, $location, $maxdays);
 				if ($SalesModel != 0){
 					// sales for some size, so we want to keep it in stock (just 1, in case there were 2 or more)...
 					$newRL = 1;
 					$notes = $SalesModel . " sold other sizes.";
 				}
 			}
-			if (isTopSalesItem($myrow['stockid'], $topitems, $TopItemsDays, $db)){
+			if (isTopSalesItem($myrow['stockid'], $topitems, $TopItemsDays)){
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Top ". $topitems . " sales.";
 			}
 /* KL RICARD COMMENTED ON 2014-06-10
 			// if manually reseted, not change it
-			$lastManualModification = isReorderLevelManuallyChanged($myrow['stockid'], $location, $maxmanualchanges, $db);
+			$lastManualModification = isReorderLevelManuallyChanged($myrow['stockid'], $location, $maxmanualchanges);
 			if ($lastManualModification != '0000-00-00'){
 				$newRL = $myrow['reorderlevel'];
 				$notes = "Manually changed on ". ConvertSQLDate($lastManualModification);
@@ -138,7 +138,7 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 						);
 				$i++;
 			}
-			SetReorderLevel("AdjustNoSales", $myrow['stockid'],$location, $myrow['reorderlevel'], $newRL, $updateDB, $db);
+			SetReorderLevel("AdjustNoSales", $myrow['stockid'],$location, $myrow['reorderlevel'], $newRL, $updateDB);
 		}
 		if ($ShowMessages){
 			echo '</table>
@@ -147,7 +147,7 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 	}
 }
 
-function DailySalesRecordsByShops($Days, $FromDate, $db){
+function DailySalesRecordsByShops($Days, $FromDate){
 
 	$SQL = "SELECT salesorders.orddate,
 				salesorders.debtorno,
@@ -197,7 +197,7 @@ function DailySalesRecordsByShops($Days, $FromDate, $db){
 	}
 }
 
-function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath, $db){
+function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath){
 /* EXPLAIN SQL 2014-05-21 */
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$days));
 
@@ -269,7 +269,7 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath, $d
 	}
 }
 
-function ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc){
+function ImagesShouldNotBeInOpencartCatalog($RootPath, $db_oc){
 
 	$ShowHeader = TRUE;
 	$k = 0; //row colour counter
@@ -320,7 +320,7 @@ function ImagesShouldNotBeInOpencartCatalog($RootPath, $db, $db_oc){
 	}
 }
 
-function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $MinimumStock, $OptimalStock, $RootPath, $db){
+function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $MinimumStock, $OptimalStock, $RootPath){
 
 	if($Category == "ALL"){
 		$SQLCategory = " ";
@@ -393,14 +393,14 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 	}
 }
 
-function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $DaysTopSales, $PercentageOfTopItems, $DaysMinimumStock, $RootPath, $db){
+function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $DaysTopSales, $PercentageOfTopItems, $DaysMinimumStock, $RootPath){
 
 /* Examples of use in Control Boards
-		InsuficientStockForTopSalesItems("STABKA", "10-Silver",90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("STABBA", "30-Fashion Jewellery", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("ACCESO", "40-Accessories", 90, 100, 150, $RootPath, $db);
-		InsuficientStockForTopSalesItems("CONSIG", "50-Consignment", 60, 100, 30, $RootPath, $db);
+		InsuficientStockForTopSalesItems("STABKA", "10-Silver",90, 100, 150, $RootPath);
+		InsuficientStockForTopSalesItems("STAINL", "20-Stainless Steel", 90, 100, 150, $RootPath);
+		InsuficientStockForTopSalesItems("STABBA", "30-Fashion Jewellery", 90, 100, 150, $RootPath);
+		InsuficientStockForTopSalesItems("ACCESO", "40-Accessories", 90, 100, 150, $RootPath);
+		InsuficientStockForTopSalesItems("CONSIG", "50-Consignment", 60, 100, 30, $RootPath);
 */		
 
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$DaysTopSales));
@@ -510,7 +510,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 	}
 }
 
-function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges, $db){
+function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges){
 	if ($maxmanualchanges == 0){
 		return '0000-00-00';
 	}
@@ -534,7 +534,7 @@ function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges, $d
 
 }
 
-function isTopSalesItem($stockid, $topitems, $TopItemsDays, $db){
+function isTopSalesItem($stockid, $topitems, $TopItemsDays){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
 
@@ -553,7 +553,7 @@ function isTopSalesItem($stockid, $topitems, $TopItemsDays, $db){
 	return $istopsales;
 }
 
-function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $RootPath, $db){
+function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $RootPath){
 	if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 		if (LIST_SHOPS_OUTLET == "('')"){
 			// no shops with outlet, so this report has NO sense.
@@ -640,7 +640,7 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 	}
 }
 
-function ItemsNeedingAutomaticTranslation($RootPath, $db){
+function ItemsNeedingAutomaticTranslation($RootPath){
 	$SQL = "SELECT COUNT(stockdescriptiontranslations.stockid)
 			FROM stockmaster, stockdescriptiontranslations
 			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
@@ -656,7 +656,7 @@ function ItemsNeedingAutomaticTranslation($RootPath, $db){
 	}
 }
 
-function ItemsNeedingTranslationRevision($RootPath, $db){
+function ItemsNeedingTranslationRevision($RootPath){
 	$SQL = "SELECT COUNT(stockdescriptiontranslations.stockid)
 			FROM stockmaster, stockdescriptiontranslations
 			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
@@ -670,7 +670,7 @@ function ItemsNeedingTranslationRevision($RootPath, $db){
 	}
 }
 
-function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $db){
+function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 /* EXPLAIN SQL 2014-05-20	*/
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
 	
@@ -765,7 +765,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath, $
 	}
 }
 
-function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath, $db){
+function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
 		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
@@ -850,7 +850,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 	}
 }
 
-function ItemsWithStockKantorButRLZeroAt($Location, $RootPath, $db){
+function ItemsWithStockKantorButRLZeroAt($Location, $RootPath){
 /*
 items with stock kantor > 0 
 RL is zero at $Location
@@ -947,7 +947,7 @@ function MarkSisterShopInArray(&$TableResult, $numshops, $SisterShop){
 	}
 }
 
-function NewCustomers($NumDays, $RootPath, $db){
+function NewCustomers($NumDays, $RootPath){
 /* EXPLAIN SQL 2014-05-20	*/
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
@@ -1006,7 +1006,7 @@ function NewCustomers($NumDays, $RootPath, $db){
 
 }
 
-function OvestockAtShops($kind, $RootPath, $db){
+function OvestockAtShops($kind, $RootPath){
 
 	if($kind == "OVERSTOCK"){			
 		$SQL = "SELECT locstock.loccode, 
@@ -1087,7 +1087,7 @@ function OvestockAtShops($kind, $RootPath, $db){
 	}
 }
 
-function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percentsales, $TextTitle, $RootPath, $db){
+function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percentsales, $TextTitle, $RootPath){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	
@@ -1194,7 +1194,7 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 	}
 }
 
-function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
+function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 	
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 	$today = date('Y-m-d');
@@ -1266,7 +1266,7 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath, $db){
 	}
 }
 
-function SalesOfItemByLocation($stockid, $location, $maxdays, $db){
+function SalesOfItemByLocation($stockid, $location, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT COUNT(qtyinvoiced) AS sales
 			FROM salesorderdetails, salesorders
@@ -1285,7 +1285,7 @@ function SalesOfItemByLocation($stockid, $location, $maxdays, $db){
 	return $sales;
 }
 
-function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $NewRL, $ShowMessages, $updateDB, $RootPath, $db){
+function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $NewRL, $ShowMessages, $updateDB, $RootPath){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$daystopitems));
 	$SQL = "SELECT stockmaster.stockid,
@@ -1326,7 +1326,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 				}
 				while ($mydistribution = DB_fetch_array($resultdistribution)) {
 					if($mydistribution['oldrl'] > $NewRL){
-						SetReorderLevel("LowSalesAdjust", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB, $db);
+						SetReorderLevel("LowSalesAdjust", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB);
 						if ($ShowMessages){
 							if($showHeader){
 								echo '<p class="page_title_text" align="center"><strong>' . _('Set RL Max to ') . $NewRL . ' for Low Sales '. $starttopitems . '-'. $endtopitems . ' for at least ' . $daystopitems . ' days </strong></p>';
@@ -1456,7 +1456,7 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales,$db){
 	}
 }
 
-function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
+function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$totalcash = 0;
 	$totalcredit = 0;
@@ -1554,7 +1554,7 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted, $db){
 	}
 }
 
-function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minshops, $categories, $RootPath, $db){
+function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minshops, $categories, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT salesorderdetails.stkcode,
 				stockmaster.description,
@@ -1660,7 +1660,7 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 	}
 }
 
-function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDays, $RootPath, $db){
+function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDays, $RootPath){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 
@@ -1762,7 +1762,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 }
 
 
-function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
+function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun, $db_oc, $EmailText=''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync OpenCart Order DOKU Payment Information" . "\n" . PrintTimeInformation($db);
@@ -1841,17 +1841,17 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 				}
 			}
 			/* FIELD MATCHING */
-			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['ordercurrency'], $db);
-			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id'], $db);
+			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['ordercurrency']);
+			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id']);
 			$PaymentSystem = OPENCART_DOKU_PAYMENT_SYSTEM;
 			$CurrencyOrder = $myrow['ordercurrency'];
 			$CurrencyPayment = $myrow['ordercurrency'];
 			$TotalOrder = round($myrow['ordertotal'] * $myrow['currency_value'],0); // from OC default currency to order and payment currency
-			$Rate = GetWeberpCurrencyRate($CurrencyOrder, $db);
+			$Rate = GetWeberpCurrencyRate($CurrencyOrder);
 			$AmountPaid = $myrow['amount'];
 			$TransactionID = $myrow['trx_id'];
-			$GLAccount = GetWeberpGLAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment, $db);
+			$GLAccount = GetWeberpGLAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment);
 			
 			$Commission = $ComissionFlatDOKU; // For each tx there is a flat comission
 			if (($myrow['payment_channel'] == "15") OR ($myrow['payment_channel'] == "16")){
@@ -1873,9 +1873,9 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 
 			if ($PaymentOK){
 				$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-				InsertCustomerReceipt($CustomerCode, $AmountPaid, $FreightCost, $CurrencyPayment, $Rate, $GLAccount, $PaymentSystem, $TransactionID, $OrderNo, $PeriodNo, $db);
-				TransactionCommissionGL($CustomerCode, $GLAccount, $GLCommissionAccount, $Commission, $CurrencyPayment, $Rate, $PaymentSystem, $TransactionID, $PeriodNo, $db);
-				ChangeOrderQuotationFlag($OrderNo, 0, $db); // it has been paid, so we consider it a firm order
+				InsertCustomerReceipt($CustomerCode, $AmountPaid, $FreightCost, $CurrencyPayment, $Rate, $GLAccount, $PaymentSystem, $TransactionID, $OrderNo, $PeriodNo);
+				TransactionCommissionGL($CustomerCode, $GLAccount, $GLCommissionAccount, $Commission, $CurrencyPayment, $Rate, $PaymentSystem, $TransactionID, $PeriodNo);
+				ChangeOrderQuotationFlag($OrderNo, 0); // it has been paid, so we consider it a firm order
 			}
 
 			if ($ShowMessages){
@@ -2008,7 +2008,7 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	return $WebCat; 
 }
 
-function PackagingToBeRefilled($ShopType, $ShowAll, $RootPath, $db){
+function PackagingToBeRefilled($ShopType, $ShowAll, $RootPath){
 /* EXPLAIN SQL 2014-05-20
 Updated 3 index in loctransfers
 */
@@ -2420,7 +2420,7 @@ Updated 3 index in loctransfers
 	}
 }
 
-function PackagingToBeRefilledOutlet($ShowAll, $RootPath, $db){
+function PackagingToBeRefilledOutlet($ShowAll, $RootPath){
 
 	$TableResult = array();
 	if ($ShowAll){
@@ -2688,7 +2688,7 @@ function UpdateSettingValueOpenCartByCodeAndKey($Store, $Code, $Key, $Value, $db
 	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
-function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText=''){
+function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db_oc, $EmailText=''){
 
 	/* Look for all products in weberp marked as OUTLET and "something else"*/
 
@@ -2747,7 +2747,7 @@ function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $
 	return $EmailText;
 }
 
-function SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
+function SyncFeaturedList($ShowMessages, $LastTimeRun, $db_oc, $EmailText= ''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Clean Duplicated URL Alias" . "\n" . PrintTimeInformation($db);
@@ -2825,7 +2825,7 @@ function SyncFeaturedList($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= 
 	return $EmailText;
 }
 
-function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
+function SyncSalesCategories($ShowMessages, $LastTimeRun, $db_oc, $EmailText= ''){
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Sales Categories" . "\n" . PrintTimeInformation($db);
@@ -2994,7 +2994,7 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailTex
 	return $EmailText;
 }
 
-function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText= ''){
+function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db_oc, $EmailText= ''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Activate category Depending on QOH" . "\n" . PrintTimeInformation($db);
@@ -3089,7 +3089,7 @@ function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $db, $db_oc
 	return $EmailText;
 }
 
-function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText = ''){
+function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db_oc, $EmailText = ''){
 
 	/* Look for all products in OC marked as OUTLET and "something else"*/
 	$SQL = "SELECT oc_product.product_id,
@@ -3151,7 +3151,7 @@ function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $db,
 	return $EmailText;
 }
 
-function SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText = ''){
+function SyncRelatedItems($ShowMessages, $LastTimeRun, $db_oc, $EmailText = ''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Sync Related Items" . "\n" . PrintTimeInformation($db);
@@ -3245,7 +3245,7 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText =
 	return $EmailText;
 }
 
-function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db, $db_oc, $EmailText = ''){
+function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $db_oc, $EmailText = ''){
 
 	if ($EmailText !=''){
 		$EmailText = $EmailText . "Clean Duplicated URL Alias" . "\n" . PrintTimeInformation($db);

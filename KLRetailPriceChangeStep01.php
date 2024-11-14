@@ -140,7 +140,7 @@ if (isset($_POST['submit'])) {
 		prnMsg($msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid'], $db);
-		SetChangePriceFlag(1,$_POST['Stockid'], $db);
+		SetChangePriceFlag(1,$_POST['Stockid']);
 
 		KLSendEmail("ChangePriceStarted", "Silent", $_POST['Stockid']);
 
@@ -170,7 +170,7 @@ if (isset($_POST['submit'])) {
 			WHERE counterpricechange='".$SelectedPriceChange."'";
 	$result = DB_query($sql);
 	$myrow = DB_fetch_array($result);
-	SetChangePriceFlag(0,$myrow['stockid'], $db);
+	SetChangePriceFlag(0,$myrow['stockid']);
 
 	$sql="DELETE FROM klchangeprice WHERE counterpricechange='". $SelectedPriceChange."'";
 	$ErrMsg = _('The KL Retail Price Change Step 01 could not be deleted because');

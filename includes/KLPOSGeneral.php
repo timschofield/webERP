@@ -281,7 +281,7 @@ function InsertItemSoldIntoSalesAnalysis ($Area,
 	
 }
 
-function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex, $db){
+function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Country, $DateOfBirth, $Email, $Sex){
 	// If some field is filled, record it.
 	// For some reason, Country = 0 if empty
 	if (Is_date($DateOfBirth)){
