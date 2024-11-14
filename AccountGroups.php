@@ -1,6 +1,6 @@
 <?php
-/* $Id: AccountGroups.php 7678 2016-11-23 17:15:37Z rchacon $*/
-/* Defines the groupings of general ledger accounts */
+/* AccountGroups.php
+Defines the groupings of general ledger accounts */
 
 include('includes/session.php');
 $Title = _('Account Groups');
@@ -281,6 +281,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' . _('Group Name') . '</th>
 				<th class="ascending">' . _('Section') . '</th>
@@ -288,18 +289,11 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 				<th class="ascending">' . _('Profit and Loss') . '</th>
 				<th class="ascending">' . _('Parent Group') . '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
-	$k=0; //row colour counter
 	while($myrow = DB_fetch_array($result)) {
-
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 
 		switch ($myrow['pandl']) {
 		case -1:
@@ -313,7 +307,8 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 			break;
 		} //end of switch statement
 
-		echo '<td>' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
+		echo '<tr class="striped_row">
+			<td>' . htmlspecialchars($myrow['groupname'], ENT_QUOTES,'UTF-8') . '</td>
 			<td>' . $myrow['sectionname'] . '</td>
 			<td class="number">' . $myrow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
@@ -322,7 +317,8 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 		echo '<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($myrow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 } //end of ifs and buts!
 
 
