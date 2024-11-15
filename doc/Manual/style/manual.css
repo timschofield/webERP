@@ -15,6 +15,10 @@ p > img {
 	box-shadow:1px 1px #A9BD55;
 }
 
+.help-content{
+width:97%;
+}
+
 #pagetitle {
 	background:#6BA81E;
 	border-radius:5px;
@@ -116,6 +120,8 @@ p {
 }
 pre {
     font-size: 1.2em;
+    width:97%;
+    overflow:auto;
 }
 
 .noprint {
