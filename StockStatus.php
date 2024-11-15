@@ -1,10 +1,9 @@
 <?php
 
-/* $Id: StockStatus.php 7633 2016-09-24 22:52:11Z waynemcdougall $*/
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
 include('includes/session.php');
 
-$Title = _('Item Stock Status');
+$Title = _('Stock Status');
 
 include('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
@@ -38,21 +37,33 @@ $result = DB_query("SELECT description,
 
 $myrow = DB_fetch_array($result);
 
-$DecimalPlaces = $myrow['decimalplaces'];
-$Serialised = $myrow['serialised'];
-$Controlled = $myrow['controlled'];
+if ($StockID == ''){
+	$DecimalPlaces = 0;
+	$Serialised = '';
+	$Controlled = '';
+	$Description = '';
+	$Units = '';
+	$MBFlag = '';
+}else{
+	$DecimalPlaces = $myrow['decimalplaces'];
+	$Serialised = $myrow['serialised'];
+	$Controlled = $myrow['controlled'];
+	$Description = $myrow['description'];
+	$Units = $myrow['units'];
+	$MBFlag = $myrow['mbflag'];
+}
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
-	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
+	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $Description . ' : ' . _('in units of') . ' : ' . $Units . '</b></p>';
 
 $Its_A_KitSet_Assembly_Or_Dummy =False;
-if ($myrow[2]=='K'){
+if ($MBFlag=='K'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	prnMsg( _('This is a kitset part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
-} elseif ($myrow[2]=='A'){
+} elseif ($MBFlag=='A'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	prnMsg(_('This is an assembly part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
-} elseif ($myrow[2]=='D'){
+} elseif ($MBFlag=='D'){
 	$Its_A_KitSet_Assembly_Or_Dummy =True;
 	prnMsg( _('This is an dummy part and cannot have a stock holding') . ', ' . _('only the total quantity on outstanding sales orders is shown'),'info');
 }
@@ -82,14 +93,15 @@ $LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
 echo '<br />
 		<table class="selection"><tbody>';
+	echo '<thead>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
-	$TableHeader = '<tr>
+	echo '<tr>
 						<th class="ascending">' . _('Location') . '</th>
 						<th class="ascending">' . _('Demand') . '</th>
 					</tr>';
 } else {
-	$TableHeader = '<tr>
+	echo '<tr>
 						<th class="ascending">' . _('Location') . '</th>
 						<th class="ascending">' . _('Bin Location') . '</th>
 						<th class="ascending">' . _('Quantity On Hand') . '</th>
@@ -100,19 +112,11 @@ if ($Its_A_KitSet_Assembly_Or_Dummy == True){
 						<th class="ascending">' . _('On Order') . '</th>
 					</tr>';
 }
-echo $TableHeader;
-$j = 1;
-$k=0; //row colour counter
+
+echo '</thead>
+		<tbody>';
 
 while ($myrow=DB_fetch_array($LocStockResult)) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
 	$sql = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
 			FROM salesorderdetails INNER JOIN salesorders
@@ -209,6 +213,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 		} else {
 			$Available = $myrow['quantity'] - $DemandQty;
 		}
+
+		echo '<tr class="striped_row">';
 		if ($myrow['canupd']==1) {
 			echo '<td>' . $myrow['locationname'] . '</td>
 				<td><input type="text" name="BinLocation' . $myrow['loccode'] . '" value="' . $myrow['bin'] . '" maxlength="10" size="11" onchange="ReloadForm(UpdateBinLocations)"/></td>';
@@ -243,7 +249,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	} else {
 	/* It must be a dummy, assembly or kitset part */
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>',
 				$myrow['locationname'],
@@ -252,7 +259,8 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of page full new headings if
 }
 //end of while loop
-echo '</tbody><tr>
+echo '</tbody>
+	<tr>
 		<td></td>
 		<td><input type="submit" name="UpdateBinLocations" value="' . _('Update Bins') . '" /></td>
 	</tr>
@@ -311,7 +319,8 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	  }
 	  $qty += $myrow['qty'];
 	  $FromDate = $myrow['trandate'];
-	}
+	} //end of while loop
+
 	if (isset($qty)) {
 		$DateRange = ConvertSQLDate($FromDate);
 		if ($FromDate != $ToDate) {
@@ -319,38 +328,27 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 		}
 		$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
 	}
+
 	if (isset($PriceHistory)) {
 	  echo '<br />
 			<table class="selection">
+			<thead>
 			<tr>
 				<th colspan="4"><font color="navy" size="2">' . _('Pricing history for sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo . '</font></th>
-			</tr><tbody>';
-	  $TableHeader = '<tr>
+				</tr>
+				<tr>
 						<th class="ascending">' . _('Date Range') . '</th>
 						<th class="ascending">' . _('Quantity') . '</th>
 						<th class="ascending">' . _('Price') . '</th>
 						<th class="ascending">' . _('Discount') . '</th>
-					</tr>';
-
-	  $j = 0;
-	  $k = 0; //row colour counter
+				</tr>
+			</thead>
+			<tbody>';
 
 	  foreach($PriceHistory as $PreviousPrice) {
-		$j--;
-		if ($j < 0 ){
-			$j = 11;
-			echo $TableHeader;
-		}
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-			printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s%%</td>
@@ -359,10 +357,9 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 					locale_number_format($PreviousPrice[1],$DecimalPlaces),
 					locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']),
 					locale_number_format($PreviousPrice[3]*100,2));
-	  }
+		} // end foreach
 	 echo '</tbody></table>';
 	 }
-	//end of while loop
 	else {
 	  echo '<p>' . _('No history of sales of') . ' ' . $StockID . ' ' . _('to') . ' ' . $DebtorNo;
 	}
