@@ -1,5 +1,4 @@
 <?php
-/* $Id: SystemParameters.php 7644 2016-10-11 15:52:19Z rchacon $*/
 /* This script is for maintenance of the system parameters. */
 
 include('includes/session.php');
@@ -44,6 +43,9 @@ if (isset($_POST['submit'])) {
 		$_POST['X_QuickEntries'] < 1 OR $_POST['X_QuickEntries'] > 99 ) {
 		$InputError = 1;
 		prnMsg(_('No less than 1 and more than 99 Quick entries allowed'),'error');
+	} elseif (!is_numeric($_POST['X_MaxSerialItemsIssued']) or $_POST['X_MaxSerialItemsIssued'] < 1) {
+		$InputError = 1;
+		prnMsg(_('The maximum number of serial numbers issued must be numeric and greater than zero'), 'error');
 	} elseif (mb_strlen($_POST['X_FreightChargeAppliesIfLessThan']) > 12 OR !is_numeric($_POST['X_FreightChargeAppliesIfLessThan']) ) {
 		$InputError = 1;
 		prnMsg(_('Freight Charge Applies If Less Than must be a number'),'error');
@@ -55,6 +57,9 @@ if (isset($_POST['submit'])) {
 		$_POST['X_NumberOfPeriodsOfStockUsage'] < 1 OR $_POST['X_NumberOfPeriodsOfStockUsage'] > 12 ) {
 		$InputError = 1;
 		prnMsg(_('Financial period per year must be a number between 1 and 12'),'error');
+	} elseif (!in_array(intval($_POST['X_StockUsageShowZeroWithinPeriodRange']), [0, 1])) {
+		$InputError = 1;
+		prnMsg(_('Unexpected Show Zero Counts Within Stock Usage Graph Period Range value.'), 'error');
 	} elseif (mb_strlen($_POST['X_TaxAuthorityReferenceName']) >25) {
 		$InputError = 1;
 		prnMsg(_('The Tax Authority Reference Name must be 25 characters or less long'),'error');
@@ -156,7 +161,9 @@ if (isset($_POST['submit'])) {
 		if ($_SESSION['QuickEntries'] != $_POST['X_QuickEntries'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_QuickEntries']."' WHERE confname = 'QuickEntries'";
 		}
-
+		if ($_SESSION['MaxSerialItemsIssued'] != $_POST['X_MaxSerialItemsIssued']) {
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_MaxSerialItemsIssued'] . "' WHERE confname = 'MaxSerialItemsIssued'";
+		}
 		if ($_SESSION['WorkingDaysWeek'] != $_POST['X_WorkingDaysWeek'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_WorkingDaysWeek']."' WHERE confname = 'WorkingDaysWeek'";
 		}
@@ -196,6 +203,9 @@ if (isset($_POST['submit'])) {
 		}
 		if ($_SESSION['NumberOfPeriodsOfStockUsage'] != $_POST['X_NumberOfPeriodsOfStockUsage'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_NumberOfPeriodsOfStockUsage']."' WHERE confname = 'NumberOfPeriodsOfStockUsage'";
+		}
+		if ($_SESSION['StockUsageShowZeroWithinPeriodRange'] != $_POST['X_StockUsageShowZeroWithinPeriodRange']) {
+			$sql[] = "UPDATE config SET confvalue = '" . intval($_POST['X_StockUsageShowZeroWithinPeriodRange']) . "' WHERE confname = 'StockUsageShowZeroWithinPeriodRange'";
 		}
 		if ($_SESSION['Check_Qty_Charged_vs_Del_Qty'] != $_POST['X_Check_Qty_Charged_vs_Del_Qty'] ) {
 			$sql[] = "UPDATE config SET confvalue = '".$_POST['X_Check_Qty_Charged_vs_Del_Qty']."' WHERE confname = 'Check_Qty_Charged_vs_Del_Qty'";
@@ -378,6 +388,15 @@ if (isset($_POST['submit'])) {
 			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_QualityCOAText'] . "' WHERE confname='QualityCOAText'";
 
 		}
+		if ($_SESSION['ShortcutMenu'] != $_POST['X_ShortcutMenu']){
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_ShortcutMenu'] . "' WHERE confname='ShortcutMenu'";
+
+		}
+		if ($_SESSION['LastDayOfWeek'] != $_POST['X_LastDayOfWeek']){
+			$sql[] = "UPDATE config SET confvalue = '" . $_POST['X_LastDayOfWeek'] . "' WHERE confname='LastDayOfWeek'";
+
+		}
+
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($sql) > 1 ) {
 			$result = DB_Txn_Begin();
@@ -400,10 +419,10 @@ if (isset($_POST['submit'])) {
 
 } /* end of if submit */
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
-echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table cellpadding="2" class="selection" width="98%">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
+	<div>
+	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+	<table cellpadding="2" class="selection" width="98%">';
 
 $TableHeader = '<tr>
 					<th>' . _('System Variable Name') . '</th>
@@ -490,6 +509,11 @@ echo '<tr style="outline: 1px solid"><td>' . _('Romalpa Clause') . ':</td>
 echo '<tr style="outline: 1px solid"><td>' . _('Quick Entries') . ':</td>
 	<td><input type="text" class="integer" required="required" pattern="[1-9][\d]{0,1}" name="X_QuickEntries" value="' . $_SESSION['QuickEntries'] . '" size="3" maxlength="2" /></td>
 	<td>' . _('This parameter defines the layout of the sales order entry screen. The number of fields available for quick entries. Any number from 1 to 99 can be entered.') . '</td></tr>';
+
+// MaxSerialItemsIssued
+echo '<tr style="outline: 1px solid"><td>' . _('Maximum number of serial numbered items that can be issued') . ':</td>
+	<td><input type="text" class="integer" name="X_MaxSerialItemsIssued" value="' . $_SESSION['MaxSerialItemsIssued'] . '" size="3" required="required" maxlength="10" /></td>
+	<td>' . _('This parameter defines the Maximum number of serial numbered items that can be issued. It should be an integer greater than zero.') . '</td></tr>';
 
 // Frequently Ordered Items
 echo '<tr style="outline: 1px solid"><td>' . _('Frequently Ordered Items') . ':</td>
@@ -583,7 +607,7 @@ echo '<tr style="outline: 1px solid"><td>' . _('Invoice Orientation') . ':</td>
 //Default Invoice Quantity
 echo '<tr style="outline: 1px solid"><td>' . _('Invoice Quantity Default') . ':</td>
 	<td><select name="X_InvoiceQuantityDefault">
-	<option '.($_SESSION['InvoiceQuantityDefault']=='0'?'selected="selected" ':'').'value="0">' . _('0') . '</option>
+	<option '.($_SESSION['InvoiceQuantityDefault']=='0'?'selected="selected" ':'').'value="0">0</option>
 	<option '.($_SESSION['InvoiceQuantityDefault']=='1'?'selected="selected" ':'').'value="1">' . _('Outstanding') . '</option>
 	</select></td>
 	<td>' . _('This setting controls the default behaviour of invoicing. Setting to 0 defaults the invocie quantity to zero to force entry. Set to outstanding to default the invoice quantity to the balance outstanding, after previous deliveries, on the sales order') . '</td>
@@ -756,6 +780,15 @@ echo '<tr style="outline: 1px solid"><td>' . _('Number Of Periods Of StockUsage'
 for ($i=1; $i <= 12; $i++ )
 	echo '<option '.($_SESSION['NumberOfPeriodsOfStockUsage'] == $i?'selected="selected" ':'').'value="'.$i.'">' . $i . '</option>';
 echo '</select></td><td>' . _('In stock usage inquiries this determines how many periods of stock usage to show. An average is calculated over this many periods')  . '</td></tr>';
+
+// StockUsageShowZeroWithinPeriodRange
+echo '<tr style="outline: 1px solid"><td>' . _('Show Zero Counts Within Stock Usage Graph Period Range') . ':</td>
+	<td><select name="X_StockUsageShowZeroWithinPeriodRange">
+	<option ' . ($_SESSION['StockUsageShowZeroWithinPeriodRange'] ? 'selected="selected" ':'') . 'value="1">' . _('Yes') . '</option>
+	<option ' . (!$_SESSION['StockUsageShowZeroWithinPeriodRange'] ? 'selected="selected" ':'') . 'value="0">' . _('No') . '</option>
+	</select></td>
+	<td>' . _('Show periods having zero counts within Stock Usage Graph. Choosing yes may show a wider period range than expected.') . '</td>
+	</tr>';
 
 //Show values on GRN
 echo '<tr style="outline: 1px solid"><td>' . _('Show order values on GRN') . ':</td>
@@ -1233,16 +1266,50 @@ echo '<tr style="outline: 1px solid">
 		} elseif ($_SESSION['QualityLogSamples'] == 1){
 			echo '<option select="selected" value="1">' . _('Yes') . '</option>';
 			echo '<option value="0">' . _('No') . '</option>';
-		};
+		}
 
 echo '</select>
          </td>
 	 <td>' .  _('The flag determines if the system creates quality samples automatically for each lot during P/O Receipt and W/O Receipt transactions.').'
 	 </td>
-     </tr>';
+	</tr>
+	<tr style="outline: 1px solid">
+	<td>' . _('Allow use of short-cut menus'). '</td>
+	<td>
+		<select type="text" name="X_ShortcutMenu" >';
+		if ($_SESSION['ShortcutMenu'] == 0){
+			echo '<option select="selected" value="0">' . _('No') . '</option>';
+			echo '<option value="1">' . _('Yes') . '</option>';
+		} elseif ($_SESSION['ShortcutMenu'] == 1){
+			echo '<option select="selected" value="1">' . _('Yes') . '</option>';
+			echo '<option value="0">' . _('No') . '</option>';
+		}
+
+echo '</select>
+         </td>
+	 <td>' .  _('The flag determines if the system allows users to create the javascript short cut menu - this can cause confusion to some users with some themes.').'
+	 </td>
+	</tr>
+
+	<tr style="outline: 1px solid">
+	<td>' . _('Last day of the week'). '</td>
+	<td>
+		<select type="text" name="X_LastDayOfWeek" >
+			<option ' . ($_SESSION['LastDayOfWeek'] == 0 ?'selected="selected"':'') . ' value="0">' . _('Sunday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 1 ?'selected="selected"':'') . ' value="1">' . _('Monday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 2 ?'selected="selected"':'') . ' value="2">' . _('Tuesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 3 ?'selected="selected"':'') . ' value="3">' . _('Wednesday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 4 ?'selected="selected"':'') . ' value="4">' . _('Thursday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 5 ?'selected="selected"':'') . ' value="5">' . _('Friday') . '</option>
+			<option ' . ($_SESSION['LastDayOfWeek'] == 6 ?'selected="selected"':'') . ' value="6">' . _('Saturday') . '</option>
+	</select>
+         </td>
+	 <td>' .  _('Timesheet entry default to weeks ending on this day').'
+	 </td>
+	</tr>
 
 
-echo '</table>
+	</table>
 		<br /><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div>
     </div>
 	</form>';
