@@ -129,8 +129,14 @@ INSERT INTO test_erp.edi_orders_seg_groups SELECT * FROM kurakura_kl_erp.edi_ord
 TRUNCATE test_erp.`emailsettings`;
 INSERT INTO test_erp.emailsettings SELECT * FROM kurakura_kl_erp.emailsettings;
 
+TRUNCATE test_erp.`employees`;
+INSERT INTO test_erp.employees SELECT * FROM kurakura_kl_erp.employees;
+
 TRUNCATE test_erp.`factorcompanies`;
 INSERT INTO test_erp.factorcompanies SELECT * FROM kurakura_kl_erp.factorcompanies;
+
+TRUNCATE test_erp.`favourites`;
+INSERT INTO test_erp.favourites SELECT * FROM kurakura_kl_erp.favourites;
 
 TRUNCATE test_erp.`fixedassetcategories`;
 INSERT INTO test_erp.fixedassetcategories SELECT * FROM kurakura_kl_erp.fixedassetcategories;
@@ -185,6 +191,12 @@ INSERT INTO test_erp.holdreasons SELECT * FROM kurakura_kl_erp.holdreasons;
 
 TRUNCATE test_erp.`internalstockcatrole`;
 INSERT INTO test_erp.internalstockcatrole SELECT * FROM kurakura_kl_erp.internalstockcatrole;
+
+TRUNCATE test_erp.`jnltmplheader`;
+INSERT INTO test_erp.jnltmplheader SELECT * FROM kurakura_kl_erp.jnltmplheader;
+
+TRUNCATE test_erp.`jnltmpldetails`;
+INSERT INTO test_erp.jnltmpldetails SELECT * FROM kurakura_kl_erp.jnltmpldetails;
 
 TRUNCATE test_erp.`kladjustrl`;
 INSERT INTO test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl;
@@ -330,8 +342,14 @@ INSERT INTO test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 TRUNCATE test_erp.`pcashdetails`;
 INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE `date` >= "2023-01-01"; 
 
+TRUNCATE test_erp.`pcashdetailtaxes`;
+INSERT INTO test_erp.pcashdetailtaxes SELECT * FROM kurakura_kl_erp.pcashdetailtaxes;
+
 TRUNCATE test_erp.`pcexpenses`;
 INSERT INTO test_erp.pcexpenses SELECT * FROM kurakura_kl_erp.pcexpenses;
+
+TRUNCATE test_erp.`pcreceipts`;
+INSERT INTO test_erp.pcreceipts SELECT * FROM kurakura_kl_erp.pcreceipts;
 
 TRUNCATE test_erp.`pctabexpenses`;
 INSERT INTO test_erp.pctabexpenses SELECT * FROM kurakura_kl_erp.pctabexpenses;
@@ -353,6 +371,15 @@ INSERT INTO test_erp.pickinglistdetails SELECT * FROM kurakura_kl_erp.pickinglis
 
 TRUNCATE test_erp.`pickinglists`;
 INSERT INTO test_erp.pickinglists SELECT * FROM kurakura_kl_erp.pickinglists;
+
+TRUNCATE test_erp.`pickreq`;
+INSERT INTO test_erp.pickreq SELECT * FROM kurakura_kl_erp.pickreq;
+
+TRUNCATE test_erp.`pickreqdetails`;
+INSERT INTO test_erp.pickreqdetails SELECT * FROM kurakura_kl_erp.pickreqdetails;
+
+TRUNCATE test_erp.`pickserialdetails`;
+INSERT INTO test_erp.pickserialdetails SELECT * FROM kurakura_kl_erp.pickserialdetails;
 
 TRUNCATE test_erp.`pricematrix`;
 INSERT INTO test_erp.pricematrix SELECT * FROM kurakura_kl_erp.pricematrix;
@@ -581,6 +608,9 @@ INSERT INTO test_erp.tenders SELECT * FROM kurakura_kl_erp.tenders;
 
 TRUNCATE test_erp.`tendersuppliers`;
 INSERT INTO test_erp.tendersuppliers SELECT * FROM kurakura_kl_erp.tendersuppliers;
+
+TRUNCATE test_erp.`timesheets`;
+INSERT INTO test_erp.timesheets SELECT * FROM kurakura_kl_erp.timesheets;
 
 TRUNCATE test_erp.`unitsofdimension`;
 INSERT INTO test_erp.unitsofdimension SELECT * FROM kurakura_kl_erp.unitsofdimension;
