@@ -5421,8 +5421,8 @@ class PHPlot
     {
         if (isset($zero_magnet) && $zero_magnet >= 0 && $zero_magnet <= 1.0)
             $this->rangectl[$which]['zero_magnet'] = $zero_magnet;
-        if (isset($adjust_mode) && strpos('TRI', $adjust_mode[0]) !== FALSE)
-            $this->rangectl[$which]['adjust_mode'] = $adjust_mode;
+		if (isset($adjust_mode) && strpos('TRI', chr($adjust_mode[0])) !== FALSE)
+			$this->rangectl[$which]['adjust_mode'] = $adjust_mode;
         if (isset($adjust_amount) && $adjust_amount >= 0)
             $this->rangectl[$which]['adjust_amount'] = $adjust_amount;
         return TRUE;
