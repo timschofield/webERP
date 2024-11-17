@@ -4,7 +4,7 @@ include ($PathPrefix . 'includes/LanguageSetup.php');
 include ('LanguagesArray.php');
 
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text))) {
-	$demo_text = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('kwamoja') . '</i>';
+	$demo_text = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('weberp') . '</i>';
 	} elseif (!isset($demo_text)) {
 		$demo_text = _('Please login here');
 	}
