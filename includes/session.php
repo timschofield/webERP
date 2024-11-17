@@ -333,7 +333,7 @@ function HighestFileName($PathPrefix) {
 	return basename(array_pop($files), ".php");
 }
 
-if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
+if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Error in form verification');
