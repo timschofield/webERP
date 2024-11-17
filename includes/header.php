@@ -64,6 +64,7 @@ if (isset($AutoPrintPage)) {
 	echo '<body onload="initial(); load()" onunload="GUnload()">';
 }
 
+$ScriptName = basename($_SERVER['SCRIPT_NAME']);
 echo '<div class="help-bubble" id="help-bubble">
 		<link rel="stylesheet" type="text/css" href="doc/Manual/style/manual.css" />
 		<div class="help-header" id="help-header">
@@ -101,8 +102,6 @@ echo '<style>
 				}
 			</style>';
 
-$ScriptName = basename($_SERVER['SCRIPT_NAME']);
-
 echo '<header class="noPrint">';
 
 echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
@@ -125,17 +124,19 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 
-	if (strstr($_SESSION['Language'], 'en')) {
-		echo $DefaultManualLink;
-	} else {
-		if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
-			echo '<div id="ActionIcon">
-					<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
-						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
-					</a>
-				</div>';
-		} else {
+	if ($ScriptName != 'index.php') {
+		if (strstr($_SESSION['Language'], 'en')) {
 			echo $DefaultManualLink;
+		} else {
+			if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
+				echo '<div id="ActionIcon">
+						<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
+							<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+						</a>
+					</div>';
+			} else {
+				echo $DefaultManualLink;
+			}
 		}
 	}
 
