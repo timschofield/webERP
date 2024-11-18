@@ -120,7 +120,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	</thead><tbody>';
 $Result = DB_query("SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid");
 while($MyRow = DB_fetch_array($Result)) {
-	echo '<tr>
+	echo '<tr class="striped_row">
 			<td class="number">', $MyRow['tokenid'], '</td>
 			<td class="text">', htmlspecialchars($MyRow['tokenname'], ENT_QUOTES, 'UTF-8'), '</td>
 			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Action=edit&amp;TokenId=', $MyRow['tokenid'], '">', _('Edit'), '</a></td>
