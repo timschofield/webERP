@@ -157,9 +157,12 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	header('Location: index.php'); //go back to the main index/login
 
 } elseif (isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToBeRun is not true */
-	$_SESSION['AllowedPageSecurityTokens'] = array();
-	$_SESSION['DatabaseName'] = $DefaultDatabase;
-	$_SESSION['CompanyName'] = $DefaultDatabase;
+	if (!isset($_SESSION['DatabaseName'])){
+
+		$_SESSION['AllowedPageSecurityTokens'] = array();
+		$_SESSION['DatabaseName'] = $DefaultDatabase;
+		$_SESSION['CompanyName'] = $DefaultDatabase;
+	}
 	include_once ($PathPrefix . 'includes/ConnectDB_' . $DBType . '.inc');
 	include ($PathPrefix . 'includes/GetConfig.php');
 } else {
