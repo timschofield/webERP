@@ -1,5 +1,4 @@
 <?php
-/* $Id: SecurityTokens.php 4424 2010-12-22 16:27:45Z tim_schofield $ */
 /* Administration of security tokens */
 
 include('includes/session.php');
@@ -8,15 +7,26 @@ $ViewTopic = 'SecuritySchema';
 $BookMark = 'SecurityTokens';// Pending ?
 include('includes/header.php');
 
+if($AllowDemoMode) {
+	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	exit;
+}
+
 // Merge gets into posts:
 if(isset($_GET['Action'])) {
 	$_POST['Action'] = $_GET['Action'];
+} else {
+	$_POST['Action'] = '';
 }
 if(isset($_GET['TokenId'])) {
 	$_POST['TokenId'] = $_GET['TokenId'];
+} else {
+	$_POST['TokenId'] = '';
 }
 if(isset($_GET['TokenDescription'])) {
 	$_POST['TokenDescription'] = $_GET['TokenDescription'];
+} else {
+	$_POST['TokenDescription'] = '';
 }
 
 // Validate the data sent:
@@ -91,8 +101,8 @@ switch($_POST['Action']) {
 		break;
     default:// Unknown requested action.
 		unset($_POST['Action']);
-		unset($_POST['TokenId']);
-		unset($_POST['TokenDescription']);
+		$_POST['TokenId'] = '';
+		$_POST['TokenDescription'] = '';
 }// END switch($_POST['Action']).
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -103,71 +113,69 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'<table class="selection">
 	<thead>
 		<tr>
-			<th>', _('Token ID'), '</th>
-			<th>', _('Description'), '</th>
-			<th class="noprint" colspan="2">&nbsp;</th>
+			<th class="SelectedColumn">', _('Token ID'), '</th>
+			<th class="SelectedColumn">', _('Description'), '</th>
+			<th class="noPrint" colspan="2">&nbsp;</th>
 		</tr>
 	</thead><tbody>';
 $Result = DB_query("SELECT tokenid, tokenname FROM securitytokens ORDER BY tokenid");
 while($MyRow = DB_fetch_array($Result)) {
-	echo '<tr>
+	echo '<tr class="striped_row">
 			<td class="number">', $MyRow['tokenid'], '</td>
 			<td class="text">', htmlspecialchars($MyRow['tokenname'], ENT_QUOTES, 'UTF-8'), '</td>
-			<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Action=edit&amp;TokenId=', $MyRow['tokenid'], '">', _('Edit'), '</a></td>
-			<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Action=delete&amp;TokenId=', $MyRow['tokenid'], '" onclick="return confirm(\'', _('Are you sure you wish to delete this security token?'), '\');">', _('Delete'), '</a></td>
+			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Action=edit&amp;TokenId=', $MyRow['tokenid'], '">', _('Edit'), '</a></td>
+			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?Action=delete&amp;TokenId=', $MyRow['tokenid'], '" onclick="return confirm(\'', _('Are you sure you wish to delete this security token?'), '\');">', _('Delete'), '</a></td>
 		</tr>';
 }
-echo '</tbody></table>
-	<br />
-	<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="form" method="post">
-	<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
-	<table class="noprint">
-	<thead>
-		<tr>
-			<th colspan="2">';
+echo '</tbody>
+	</table>';
+
+echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="form" method="post">
+		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
+
+echo '<fieldset>';
 // Edit or New Security Token form table:
 if(isset($_POST['Action']) and $_POST['Action']=='edit') {
-	echo		('Edit Security Token'), '</th>',
-		'</tr>
-		</thead><tfoot>',
-		'<tr>
-			<td colspan="2" class="centre">',
+	echo '<legend>', _('Edit Security Token'), '</legend>',
+		'<field>
+			<label for="TokenId">', _('Token ID'), '</label>
+			<fieldtext>', $_POST['TokenId'], '<input name="TokenId" type="hidden" value="', $_POST['TokenId'], '" /></fieldtext>
+		</field>
+		<field>
+			<label for="TokenDescription">', _('Description'), '</label>
+			<input id="TokenDescription" maxlength="60" name="TokenDescription" required="required" size="50" title="" type="text" value="', $_POST['TokenDescription'], '" />
+			<fieldhelp>', _('The security token description should describe which functions this token allows a user/role to access'), '</fieldhelp>
+		</field>
+	</fieldset>';
+	echo '<div class="centre">',
 				'<button name="Action" type="submit" value="update"><img alt="" src="', $RootPath, '/css/', $Theme,
 					'/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
 				'<button formaction="SecurityTokens.php?Action=cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,
 					'/images/cross.svg" /> ', _('Cancel'), '</button>', // "Cancel" button.
 				'<button onclick="window.location=\'index.php?Application=system\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-			'</td>',
-		'</tr>
-		</tfoot><tbody>',
-		'<tr>
-			<td>', _('Token ID'), '</td>
-			<td>', $_POST['TokenId'], '<input name="TokenId" type="hidden" value="';
+			'</div';
 } else {
-	echo		('New Security Token'), '</th>',
-		'</tr>
-		</thead><tfoot>',
-		'<tr>
-			<td colspan="2" class="centre">',
-				'<button name="Action" type="submit" value="insert"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/tick.svg" /> ', _('Insert'), '</button>', // "Insert" button.
-				'<button onclick="window.location=\'index.php?Application=system\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-			'</td>',
-		'</tr>
-		</tfoot><tbody>',
-		'<tr>
-			<td><label for="TokenId">', _('Token ID'), '</label></td>
-			<td><input autofocus="autofocus" class="number" id="TokenId" maxlength="6" name="TokenId" required="required" size="6" type="text" value="';
+	echo '<legend>', _('New Security Token'), '</legend>',
+		'<field>
+			<label for="TokenId">', _('Token ID'), '</label>
+			<input autofocus="autofocus" class="number" id="TokenId" maxlength="4" name="TokenId" required="required" size="6" type="text" value="', $_POST['TokenId'], '" />
+		</field>
+		<field>
+			<label for="TokenDescription">', _('Description'), '</label>
+			<input id="TokenDescription" maxlength="60" name="TokenDescription" required="required" size="50" title="" type="text" value="', $_POST['TokenDescription'], '" />
+			<fieldhelp>', _('The security token description should describe which functions this token allows a user/role to access'), '</fieldhelp>
+		</field>
+		</fieldset>';
+	echo '<div class="centre">',
+			'<button name="Action" type="submit" value="insert"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/tick.svg" /> ', _('Insert'), '</button>', // "Insert" button.
+			'<button onclick="window.location=\'index.php?Application=system\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
+				'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+		'</div>';
+
 }
-echo			$_POST['TokenId'], '" /></td>
-		</tr>
-		<tr>
-			<td><label for="TokenDescription">', _('Description'), '</label></td>
-			<td><input id="TokenDescription" maxlength="60" name="TokenDescription" required="required" size="50" title="', _('The security token description should describe which functions this token allows a user/role to access'), '" type="text" value="', $_POST['TokenDescription'], '" /></td>
-		</tr>
-	</table>
+echo '</table>
 	</form>';
 
 include('includes/footer.php');
