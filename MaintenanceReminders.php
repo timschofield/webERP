@@ -2,6 +2,7 @@
 //this script can be set to run from cron
 $AllowAnyone = true;
 include('includes/session.php');
+$Title = _('Send maintenance reminders');
 include('includes/htmlMimeMail.php');
 
 $SQL="SELECT 	description,
@@ -79,6 +80,9 @@ while ($MyRow = DB_fetch_array($Result)){
 if (DB_num_rows($Result)>0){
 	${'Mail' . $LastManager}->setText($MailText);
 	$SendResult = ${'Mail' . $LastManager}->send(array($LastManagerEmail));
+} else {
+	include('includes/header.php');
+	prnMsg(_('There are no reminders to be sent'), 'info');
+	include('includes/footer.php');
 }
-
 ?>
