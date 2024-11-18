@@ -782,7 +782,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 /*			'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',*/
 			'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 			'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
-			'<div class="centre noprint">'; // Form buttons:
+			'<div class="centre noPrint">'; // Form buttons:
 		if($NeedSetup) {
 			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" /> ', _('Run Setup'), '</button>'; // "Run Setup" button.
 		}

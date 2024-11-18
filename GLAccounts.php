@@ -308,7 +308,7 @@ or deletion of the records*/
 				<th class="SortedColumn">', _('Account Group'), '</th>
 				<th class="SortedColumn">', _('P/L or B/S'), '</th>
 				<th class="SortedColumn">', _('Cash Flows Activity'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -332,8 +332,8 @@ or deletion of the records*/
 				<td class="text">', $MyRow['group_'], '</td>
 				<td class="text">', $MyRow['acttype'], '</td>
 				<td class="text">', CashFlowsActivityName($MyRow['cashflowsactivity']), '</td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '">', _('Edit'), '</a></td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.'), '\');">', _('Delete'), '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '">', _('Edit'), '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.'), '\');">', _('Delete'), '</a></td>
 			</tr>';
 	}// END foreach($Result as $MyRow).
 

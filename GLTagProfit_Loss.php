@@ -148,7 +148,7 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 		</field>
 	</fieldset>';
 
-	echo '<div class="centre noprint">', // Form buttons:
+	echo '<div class="centre noPrint">', // Form buttons:
 	'<button name="ShowPL" type="submit" value="', _('Show Statement of Income and Expenditure') , '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('Show Statement of Income and Expenditure') , '</button>', // "Show Statement of Income and Expenditure" button.
 	'<button name="PrintPDF" type="submit" value="', _('PrintPDF') , '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" /> ', _('PrintPDF') , '</button>', // "PrintPDF" button.
 	'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return') , '</button>', // "Return" button.
@@ -945,7 +945,7 @@ else {
 	// Shows a form to select an action after the report was shown:
 	'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') , '" method="post">', '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 	// Resend report parameters:
-	'<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />', '<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />', '<div class="centre noprint">', // Form buttons:
+	'<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />', '<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />', '<div class="centre noPrint">', // Form buttons:
 	'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print') , '</button>', // "Print" button.
 	'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report') , '</button>', // "New Report" button.
 	'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return') , '</button>', // "Return" button.

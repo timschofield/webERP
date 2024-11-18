@@ -412,7 +412,7 @@ or deletion of the records*/
 			<th class="SortedColumn">', _('Tax Province'), '</th>
 			<th class="SortedColumn">', _('GL Account Code'), '</th>
 			<th class="SortedColumn">', _('Allow Invoicing'), '</th>
-			<th class="noprint" colspan="2">&nbsp;</th>
+			<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -431,8 +431,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="centre">%s</td>
-			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
-			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
+			<td class="noPrint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
+			<td class="noPrint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$MyRow['loccode'],
 			$MyRow['locationname'],

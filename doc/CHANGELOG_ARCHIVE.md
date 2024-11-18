@@ -1,6 +1,6 @@
 # Changelog - Archive
-All notable changes to the webERP project will be documented in this file.  
-The format is based on [Keep a Changelog], and this project adheres to [Semantic Versioning].  
+All notable changes to the webERP project will be documented in this file.
+The format is based on [Keep a Changelog], and this project adheres to [Semantic Versioning].
 For the most recent changelogs, please refer to [CHANGELOG.md].
 
 ## [v4.14] - 2017-06-20
@@ -107,7 +107,7 @@ For the most recent changelogs, please refer to [CHANGELOG.md].
 | In CustWhereAlloc.php, show transaction date in report. Standardise trandate in debtortrans. Improvements in HTML code and code documentation. |  | Rchacon | 2016-08-13 |  |  |
 | Committed falkoners fix for the upgrade script - was not adding the new field in customercontact required for the customer statements email address |  | Phil | 2016-08-11 |  |  |
 | Fix SQL for location users in SelectSalesOrder.php |  | Simon Kelly | 2016-08-11 |  |  |
-| In GLAccountInquiry.php, add noprint class to clean up printer output and improve code documentation. |  | RChacon | 2016-08-05 |  |  |
+| In GLAccountInquiry.php, add noPrint class to clean up printer output and improve code documentation. |  | RChacon | 2016-08-05 |  |  |
 | Fix html code in SuppInvGRNs.php. |  | RChacon | 2016-08-05 |  |  |
 | Make account inquiry shown directly when GL Code selected or inquiry result is 1 in SelectGLAccount.php. |  | Exson | 2016-08-02 |  |  |
 | Add cost update date for material cost in WorkOrderCosting.php and WorkOrderIssue.php. |  | Exson | 2016-07-27 |  |  |
@@ -265,8 +265,8 @@ For the most recent changelogs, please refer to [CHANGELOG.md].
 | Comment out the mrpparameters table update in sql file upgrade4.11.3-4.11.4.sql which made a misleading during upgrade and absolutely non-necessary. |  | Exson | 2015-04-26 |  |  |
 | Fixed the account code cannot be key in directly bug in GLJournal.php. Reported by Akits. |  | Exson | 2015-04-26 |  |  |
 | Fixed the raw material sellable bug introduced by myself in SelectOrderItems.php. |  | Exson | 2015-04-26 |  |  |
-| Remove the class noprint from the image in page_title_text. |  | RChacon | 2015-04-19 |  |  |
-| Add ".page_title_text img" as a display none class. This makes unnecessary to add the class noprint to the image in page_title_text. |  | RChacon | 2015-04-19 |  |  |
+| Remove the class noPrint from the image in page_title_text. |  | RChacon | 2015-04-19 |  |  |
+| Add ".page_title_text img" as a display none class. This makes unnecessary to add the class noPrint to the image in page_title_text. |  | RChacon | 2015-04-19 |  |  |
 | SelectSupplier - total supplier spend was incorrect only looked at supplier transactions excluding invoices? Now takes invoice net of debit notes reported by Andrew Galuski |  | Phil | 2015-04-19 |  |  |
 | Fixed the Wiki link broken bug in SystemParameters.php. |  | Exson | 2015-04-07 |  |  |
 | Fixed the bug that Credit and Debit submit amount was duplicated processed by local_number_format function. |  | Exson | 2015-04-04 |  |  |

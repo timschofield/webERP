@@ -738,8 +738,8 @@ function initMap() {
 							<th class="SortedColumn">' . _('Email') . '</th>
 							<th class="text">' . _('Statement') . '</th>
 							<th class="text">', _('Notes'), '</th>
-							<th class="noprint">', _('Edit'), '</th>
-							<th class="noprint">' . _('Delete') . '</th>
+							<th class="noPrint">', _('Edit'), '</th>
+							<th class="noPrint">' . _('Delete') . '</th>
 						</tr>
 					</thead>
 					<tfoot>

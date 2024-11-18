@@ -397,7 +397,7 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		'<input type="hidden" name="PeriodTo" value="', $_POST['PeriodTo'], '" />',
 		'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',
 		'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
-		'<div class="centre noprint">', // Form buttons:
+		'<div class="centre noPrint">', // Form buttons:
 			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.

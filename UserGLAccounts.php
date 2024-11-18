@@ -71,7 +71,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 
 	DB_free_result($Result);
 
-	echo	'<div class="centre noprint">',// Form buttons:
+	echo	'<div class="centre noPrint">',// Form buttons:
 				'<button name="Process" type="submit" value="Submit"><img alt="" src="', $RootPath, '/css/', $Theme,
 					'/images/user.png" /> ', _('Accept'), '</button> '; // "Accept" button.
 
@@ -157,7 +157,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 			<th class="text">', _('Name'), '</th>
 			<th class="centre">', _('View'), '</th>
 			<th class="centre">', _('Update'), '</th>
-			<th class="noprint" colspan="2">&nbsp;</th>
+			<th class="noPrint" colspan="2">&nbsp;</th>
 		</tr>
 		</thead><tbody>';
 	$Result = DB_query("
@@ -187,13 +187,13 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 			$ScriptName = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8');
 			if($MyRow['canupd'] == 1) {
 				echo _('Yes'), '</td>',
-					'<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this GL Account?'), '\');">', _('Remove Update');
+					'<td class="noPrint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=0" onclick="return confirm(\'', _('Are you sure you wish to remove Update for this GL Account?'), '\');">', _('Remove Update');
 			} else {
 				echo _('No'), '</td>',
-					'<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this GL Account?'), '\');">', _('Add Update');
+					'<td class="noPrint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;ToggleUpdate=1" onclick="return confirm(\'', _('Are you sure you wish to add Update for this GL Account?'), '\');">', _('Add Update');
 			}
 			echo	'</a></td>',
-					'<td class="noprint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this GL Account?'), '\');">', _('Un-authorise'), '</a></td>',
+					'<td class="noPrint"><a href="', $ScriptName, '?SelectedUser=', $SelectedUser, '&amp;SelectedGLAccount=', $MyRow['accountcode'], '&amp;delete=yes" onclick="return confirm(\'', _('Are you sure you wish to un-authorise this GL Account?'), '\');">', _('Un-authorise'), '</a></td>',
 				'</tr>';
 		}// End while list loop.
 	} else {// If the user does not have access permissions to GL accounts:
@@ -205,7 +205,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 		'<input name="SelectedUser" type="hidden" value="', $SelectedUser, '" />',
 		'<br />
-		<table class="selection noprint">
+		<table class="selection noPrint">
 			<tr>
 				<td>';
 	$Result = DB_query("
@@ -242,7 +242,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 		</table>';
 	DB_free_result($Result);
 	echo '<br>',
-		'<div class="centre noprint">', // Form buttons:
+		'<div class="centre noPrint">', // Form buttons:
 			'<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button formaction="UserGLAccounts.php?Cancel" type="submit"><img alt="" src="', $RootPath, '/css/', $Theme,

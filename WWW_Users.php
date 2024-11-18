@@ -354,7 +354,7 @@ if(!isset($SelectedUser)) {
 				<th class="SortedColumn">', _('Report Size'), '</th>
 				<th class="SortedColumn">', _('Theme'), '</th>
 				<th class="SortedColumn">', _('Language'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';

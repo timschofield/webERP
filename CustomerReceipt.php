@@ -294,7 +294,7 @@ if (isset($_POST['CommitBatch'])){
 				<th class="text">', _('GL Code'), '</th>
 				<th class="number">', _('Amount of Receipt'), '</th>';
 	if(isset($ReceiptItem) AND $ReceiptItem->GLCode =='') {
-		echo '<th class="noprint">&nbsp;</th>';
+		echo '<th class="noPrint">&nbsp;</th>';
 	}
 	echo '</tr>
 		</thead><tbody>';
@@ -313,7 +313,7 @@ if (isset($_POST['CommitBatch'])){
 			<td class="number">' . locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate,$_SESSION['ReceiptBatch' . $identifier]->CurrDecimalPlaces)  . '</td>';
 
 		if ($ReceiptItem->GLCode ==''){
-			echo '<td class="noprint"><a target="_blank" href="', $RootPath, '/PDFReceipt.php?BatchNumber=', $_SESSION['ReceiptBatch' . $identifier]->BatchNo, '&ReceiptNumber=', $CustomerReceiptCounter, '">', _('Print a Customer Receipt'), '</a></td></tr>';
+			echo '<td class="noPrint"><a target="_blank" href="', $RootPath, '/PDFReceipt.php?BatchNumber=', $_SESSION['ReceiptBatch' . $identifier]->BatchNo, '&ReceiptNumber=', $CustomerReceiptCounter, '">', _('Print a Customer Receipt'), '</a></td></tr>';
 			$CustomerReceiptCounter += 1;
 		}
 
@@ -598,7 +598,7 @@ if (isset($_POST['CommitBatch'])){
 	echo '<br />';
 	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
-	echo '<div class="centre noprint">',
+	echo '<div class="centre noPrint">',
 		'<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', _('Enter Receipts'), '" /> ', '<a href="', $RootPath, '/CustomerReceipt.php?NewReceipt=Yes&Type=', urlencode($_GET['Type']), '">', _('Enter Receipts'), '</a></p>',

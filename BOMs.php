@@ -162,24 +162,24 @@ function DisplayBOMItems($UltimateParent, $Parent, $Component, $Level) {
 				<td>', $MyRow['workcentrename'], '</td>
 				<td class="number">', locale_number_format($MyRow['quantity'], 'Variable') , '</td>
 				<td>', $MyRow['units'], '</td>
-				<td class="noprint">', ConvertSQLDate($MyRow['effectiveafter']) , '</td>
-				<td class="noprint">', ConvertSQLDate($MyRow['effectiveto']) , '</td>
-				<td class="noprint">', $AutoIssue, '</td>
-				<td class="number noprint">', $QuantityOnHand, '</td>
-				<td class="noprint"><a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($Parent) , '&SelectedComponent=', urlencode($MyRow['component']) , '&Location=', urlencode($MyRow['loccode']) , '&WorkCentre=', urlencode($MyRow['workcentrecode']) , '&ShowAllLevels=', $_POST['ShowAllLevels'], '&Edit=Yes">', _('Edit') , '</a></td>';
+				<td class="noPrint">', ConvertSQLDate($MyRow['effectiveafter']) , '</td>
+				<td class="noPrint">', ConvertSQLDate($MyRow['effectiveto']) , '</td>
+				<td class="noPrint">', $AutoIssue, '</td>
+				<td class="number noPrint">', $QuantityOnHand, '</td>
+				<td class="noPrint"><a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($Parent) , '&SelectedComponent=', urlencode($MyRow['component']) , '&Location=', urlencode($MyRow['loccode']) , '&WorkCentre=', urlencode($MyRow['workcentrecode']) , '&ShowAllLevels=', $_POST['ShowAllLevels'], '&Edit=Yes">', _('Edit') , '</a></td>';
 
 		if ($MyRow['mbflag'] == 'B' or $MyRow['mbflag'] == 'K' or $MyRow['mbflag'] == 'D') {
-			echo '<td class="noprint">
+			echo '<td class="noPrint">
 					<div class="centre">', _('No lower levels') , '</div>
 				</td>';
 		}
 		else {
-			echo '<td class="noprint">
+			echo '<td class="noPrint">
 					<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($MyRow['component']) , '&ShowAllLevels=', $_POST['ShowAllLevels'], '">' . _('Drill Down') . '</a>
 				</td>';
 		}
 
-		echo '<td class="noprint">
+		echo '<td class="noPrint">
 				<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') . '?SelectedParent=', urlencode($Parent) , '&SelectedComponent=', urlencode($MyRow['component']) , '&delete=1&ReSelect=', urlencode($UltimateParent) , '&Location=', urlencode($MyRow['loccode']) , '&WorkCentre=', urlencode($MyRow['workcentrecode']) , '&ShowAllLevels=', $_POST['ShowAllLevels'], '" onclick="return confirm(\'' . _('Are you sure you wish to delete this component from this bill of materials?') . '\', \'Confirm Delete\', this);">', _('Delete') , '</a></td>
 				</tr><tr><td colspan="11" style="text-indent:', $TextIndent, ';">', $MyRow['remark'], '</td>
 			 </tr>';
@@ -218,11 +218,11 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 		$_POST['Offset'] = $_POST['Offset'] + 1;
 	}
 
-	echo '<div class="toplink noprint">
+	echo '<div class="toplink noPrint">
 			<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">', _('Return to main BOM screen') , '</a>
 		</div>';
 
-	echo '<p class="page_title_text noprint">
+	echo '<p class="page_title_text noPrint">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search') , '" alt="" /> ', _('Select component to add to BOM') , '
 		</p>';
 	//DisplayBOMItems($SelectedParent);
@@ -286,7 +286,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 
 	echo '<form method="post" action="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table class="noprint">
+	echo '<table class="noPrint">
 			<tr>
 				<th colspan="3">
 					<input style="float:left" type="submit" name="Previous" value="<<', _('Previous') , '" />
@@ -393,7 +393,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 
 	$ParentMBflag = $MyRow[1];
 
-	echo '<p class="page_title_text noprint">
+	echo '<p class="page_title_text noPrint">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search') , '" alt="" /> ', _('Component Details') , '
 		</p>';
 
@@ -644,11 +644,11 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 }
 
 if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edit Component
-	echo '<div class="toplink noprint">
+	echo '<div class="toplink noPrint">
 			<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '">', _('Select a Different BOM') , '</a>
 		</div>';
 
-	echo '<p class="page_title_text noprint">
+	echo '<p class="page_title_text noPrint">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search') , '" alt="" /> ', $Title, '
 		</p>';
 
@@ -870,7 +870,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 	$i = 0;
 	if (DB_num_rows($Result) > 0) {
-		echo '<table class="selection noprint">
+		echo '<table class="selection noPrint">
 				<tr>
 					<th>', _('Manufactured parent items') , ' : ';
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -894,7 +894,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	$DbgMsg = _('The SQL used to retrieve description of the parent part was');
 	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 	if (DB_num_rows($Result) > 0) {
-		echo '<table class="noprint">
+		echo '<table class="noPrint">
 				<tr>
 					<th>', _('Assembly parent items') , ' : ';
 		$i = 0;
@@ -975,7 +975,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	echo '<tr>
 			<th colspan="15"><b>', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </b></th>
 			<th>
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon noprint" title="', _('Print') , '" alt="', _('Print') , '" onclick="window.print();" />
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon noPrint" title="', _('Print') , '" alt="', _('Print') , '" onclick="window.print();" />
 			</th>
 		</tr>';
 
@@ -995,10 +995,10 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 			<th>', _('Work Centre') , '</th>
 			<th>', _('Quantity') , '</th>
 			<th>', _('UOM') , '</th>
-			<th class="noprint">', _('Effective After') , '</th>
-			<th class="noprint">', _('Effective To') , '</th>
-			<th class="noprint">', _('Auto Issue') , '</th>
-			<th class="noprint">', _('Qty On Hand') , '</th>
+			<th class="noPrint">', _('Effective After') , '</th>
+			<th class="noPrint">', _('Effective To') , '</th>
+			<th class="noPrint">', _('Auto Issue') , '</th>
+			<th class="noPrint">', _('Qty On Hand') , '</th>
 			<th colspan="3"></th>
 		</tr>';
 	if (count($BOMTree) == 0) {
@@ -1019,7 +1019,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 		}
 	}
 	echo '</table>
-		<input type="submit" class="noprint" name="renumber" value="Re-Sequence the BOM" />
+		<input type="submit" class="noPrint" name="renumber" value="Re-Sequence the BOM" />
 	</form>';
 
 	if (!isset($SelectedComponent)) {
@@ -1070,7 +1070,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 				</field>
 			</fieldset>
 			<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />
-		<div class="centre noprint">
+		<div class="centre noPrint">
 			<input type="submit" name="ComponentSearch" value="', _('Search Now') , '" />
 		</div>
 	</form>';

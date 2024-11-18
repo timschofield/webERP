@@ -532,7 +532,7 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 				<th class="SortedColumn">', _('Type'), '</th>
 				<th class="SortedColumn">', _('Manager'), '</th>
 				<th class="SortedColumn">', _('Email'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -546,8 +546,8 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
-					<td class="noprint"><a href="%sSelectedEmployee=%s">' . _('Select') . '</a></td>
-					<td class="noprint"><a href="Employees.php?SelectedEmployee=%s">' . _('Edit') . '</a></td>
+					<td class="noPrint"><a href="%sSelectedEmployee=%s">' . _('Select') . '</a></td>
+					<td class="noPrint"><a href="Employees.php?SelectedEmployee=%s">' . _('Edit') . '</a></td>
 				</tr>',
 				$MyRow['id'],
 				$MyRow['firstname'],

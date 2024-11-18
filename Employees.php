@@ -156,7 +156,7 @@ or deletion of the records*/
 				<th class="SortedColumn">', _('Type'), '</th>
 				<th class="SortedColumn">', _('Manager'), '</th>
 				<th class="SortedColumn">', _('Email'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -170,8 +170,8 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
-					<td class="noprint"><a href="%sSelectedEmployee=%s">' . _('Edit') . '</a></td>
-					<td class="noprint"><a href="%sSelectedEmployee=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this employee?') . '\');">' . _('Delete') . '</a></td>
+					<td class="noPrint"><a href="%sSelectedEmployee=%s">' . _('Edit') . '</a></td>
+					<td class="noPrint"><a href="%sSelectedEmployee=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this employee?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
 				$MyRow['id'],
 				$MyRow['firstname'],
