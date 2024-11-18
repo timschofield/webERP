@@ -123,8 +123,3 @@ pre {
     width:97%;
     overflow:auto;
 }
-
-.noPrint {
-	display:none;
-	/* Remove unwanted elements. */
-}
