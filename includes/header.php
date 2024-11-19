@@ -1,30 +1,17 @@
 <?php
 // Titles and screen header
 // Needs the file config.php loaded where the variables are defined for
-// $RootPath
-// $Title - should be defined in the page this file is included with
-if (!isset($RootPath)){
-	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF']));
-	if ($RootPath == '/' OR $RootPath == "\\") {
+//  $RootPath
+//  $Title - should be defined in the page this file is included with
+if (!isset($RootPath)) {
+	$RootPath = dirname(htmlspecialchars(basename(__FILE__)));
+	if ($RootPath == '/' or $RootPath == "\\") {
 		$RootPath = '';
 	}
 }
 
-$ViewTopic = isset($ViewTopic)?'?ViewTopic=' . $ViewTopic : '';
-$BookMark = isset($BookMark)? '#' . $BookMark : '';
-//$StrictXHTML=False;
-
-/*	if (!headers_sent()){
-		if ($StrictXHTML) {
-			header('Content-type: application/xhtml+xml; charset=utf-8');
-		} else {
-			header('Content-type: text/html; charset=utf-8');
-		}
-	}
-	if($Title == _('Copy a BOM to New Item Code')){//solve the cannot modify heaer information in CopyBOM.php scritps
-		ob_start();
-	}
-*/
+$ViewTopic = isset($ViewTopic) ? '?ViewTopic=' . $ViewTopic : '';
+$BookMark = isset($BookMark) ? '#' . $BookMark : '';
 
 if (isset($_GET['Theme'])) {
 	$_SESSION['Theme'] = $_GET['Theme'];
@@ -191,31 +178,31 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Online Shop'), '" href="https://kapal-laut.com">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
+			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
 		</a>
 	</div>';
 
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Intranet'), '" href="', $PathPrefix, $RootPath, '../../wiki/index.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', _('Intranet'), '" />', _('Intranet'), '
+			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/plugin.png" alt="', _('Intranet'), '" />', _('Intranet'), '
 		</a>
 	</div>';
 
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
+			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
 		</a>
 	</div>';
 
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Items'), '" href="', $PathPrefix, $RootPath, '/SelectProduct.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', _('Items'), '" />', _('Items'), '
+			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" alt="', _('Items'), '" />', _('Items'), '
 		</a>
 	</div>';
 
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', _('Customers'), '" />', _('Customers'), '
+			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
 		</a>
 	</div>';
 
@@ -309,7 +296,7 @@ if ($ScriptName == 'index.php') {
 	} else {
 		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '">A</a>';
 	}
-	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+/*	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	echo '<div class="ScriptTitle">', _('Theme'), ':</div>';
 
 	echo '<select name="Theme" id="favourites" onchange="window.open (\'index.php?Theme=\' + this.value,\'_self\',false)">';
@@ -326,6 +313,7 @@ if ($ScriptName == 'index.php') {
 		}
 	}
 	echo '</select>';
+*/
 }
 
 echo '</header>';

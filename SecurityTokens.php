@@ -159,7 +159,7 @@ if(isset($_POST['Action']) and $_POST['Action']=='edit') {
 	echo '<legend>', _('New Security Token'), '</legend>',
 		'<field>
 			<label for="TokenId">', _('Token ID'), '</label>
-			<input autofocus="autofocus" class="number" id="TokenId" maxlength="4" name="TokenId" required="required" size="6" type="text" value="', $_POST['TokenId'], '" />
+			<input autofocus="autofocus" class="number" id="TokenId" maxlength="6" name="TokenId" required="required" size="6" type="text" value="', $_POST['TokenId'], '" />
 		</field>
 		<field>
 			<label for="TokenDescription">', _('Description'), '</label>

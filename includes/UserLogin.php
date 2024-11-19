@@ -1,7 +1,6 @@
 <?php
 
 /*  Performs login checks and $_SESSION initialisation */
-/* $Id: UserLogin.php 7719 2017-01-06 04:30:38Z rchacon $*/
 
 define('UL_OK',  0);		/* User verified, session initialised */
 define('UL_NOTVALID', 1);	/* User/password do not agree */
@@ -113,6 +112,21 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['ShowDashboard'] = $myrow['showdashboard'];
 			$_SESSION['ShowPageHelp'] = $myrow['showpagehelp'];
 			$_SESSION['ShowFieldHelp'] = $myrow['showfieldhelp'];
+			$_SESSION['ScreenFontSize'] = $myrow['fontsize'];
+
+			switch ($_SESSION['ScreenFontSize']) {
+				case 0:
+					$_SESSION['FontSize'] = '0.667rem';
+				break;
+				case 1:
+					$_SESSION['FontSize'] = '0.833rem';
+				break;
+				case 2:
+					$_SESSION['FontSize'] = '1rem';
+				break;
+				default:
+					$_SESSION['FontSize'] = '0.833rem';
+			}
 
 			if (isset($myrow['pdflanguage'])) {
 				$_SESSION['PDFLanguage'] = $myrow['pdflanguage'];
@@ -279,12 +293,4 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 	return   UL_OK;		    /* All is well */
 }
 
-function CheckItemInList($Item, $List){
-	// http://www.php.net/manual/en/function.strpos.php for details on ===	
-	if (strpos($List, $Item) === FALSE){
-		return false;
-	}else{
-		return true;
-	}
-}
 ?>
