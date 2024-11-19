@@ -1,0 +1,120 @@
+@font-face {
+}
+body {
+font-family:sans-serif;
+font-size:10pt;
+margin:0;
+padding:0;
+background:#F1F1F1;
+direction:rtl;
+}
+.summary_box{
+width:20%;
+border: 1px solid;
+text-align: right;
+padding: 1%;
+border-radius: 4px;
+margin:0 auto;
+margin-bottom:10px;
+}
+img {
+width:32px;
+height:32px;
+}
+img.StockImage {
+width:48px;
+transition: transform .5s;
+}
+img.StockImage:hover {
+transform: scale(5);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+img.Graph {
+width:90%;
+height:auto;
+}
+a {
+color:#4D4D4D;
+text-decoration:none;
+}
+a:hover {
+color:#0088CD;
+text-decoration:underline;
+}
+.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+.centre {
+margin:0 auto;
+text-align:center;
+}
+.top {
+vertical-align:top;
+}
+.dpTbl {
+border:1px solid #C3C3C3;
+-moz-box-shadow:    0px 0px 8px #999999;
+-webkit-box-shadow: 0px 0px 8px #999999;
+box-shadow:         0px 0px 8px #999999;
+-ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1')";
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=4, Direction=0, Color='#64BEF1');
+}
+.dpTD {
+border: 0;
+width:25px;
+text-align:left;
+cursor:pointer;
+}
+.dpTbl button {
+    padding: 4px 12px;
+}
+.dpDayHighlight {
+border: 0;
+width:20px;
+background-color: yellow;
+text-align:left;
+cursor:pointer;
+}
+.dpTDHover {
+border: 0;
+width:20px;
+background-color: #E1E1E1;
+text-align:left;
+cursor:pointer;
+}
+.notavailable {
+font-weight:lighter;
+font-style:italic;
+color:#555555;
+}
+.gallery {
+margin: 5px;
+float: right;
+/* Class selector to let an element float to the left. */
+}
+[data-title]:hover:after {
+opacity: 1;
+transition: all 0.1s ease 0.5s;
+visibility: visible;
+}
+[data-title]:after {
+content: attr(data-title);
+background-color: #1A1A1A;
+color: #E6E6FA;
+font-size: 100%;
+position: absolute;
+padding: 1px 5px 2px 5px;
+bottom: -1.9em;
+right: 10%;
+white-space: nowrap;
+box-shadow: 1px 1px 3px #222222;
+opacity: 0;
+border: 1px solid #111111;
+border-radius:5px;
+z-index: 99999;
+visibility: hidden;
+}
+[data-title] {
+position: relative;
+}

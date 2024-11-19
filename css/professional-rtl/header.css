@@ -1,0 +1,67 @@
+header {
+background:transparent;
+padding:10px;
+}
+header #Info {
+display:inline;
+padding:10px;
+}
+header #Info img {
+padding-left:7px;
+width:32px;
+vertical-align:middle;
+}
+header #Info a {
+}
+header #ActionIcon {
+display:inline;
+float:left;
+padding-right:10px;
+}
+header #ActionIcon img{
+padding-left:7px;
+width:32px;
+}
+header #ExitIcon {
+display:inline;
+float:left;
+padding-right:10px;
+padding-left:30px;
+}
+header #ExitIcon img {
+width:32px;
+}
+header .FontSize {
+font-weight:bold;
+display:inline;
+padding:3px;
+}
+header .ScriptTitle {
+font-weight:bold;
+font-size:130%;
+display:inline;
+padding:10px;
+margin-left:0px;
+}
+header #favourites {
+background: url(images/descending.png) no-repeat left #DDDDDD;
+background-size:contain;
+overflow: hidden;
+color:#090938;
+font-size: 130%;
+font-weight:bold;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 32px;
+padding-right:7px;
+border: solid 2px #090938;
+border-radius: 4px;
+margin: 2px;
+-moz-appearance:none;
+-webkit-appearance: none;
+cursor:pointer;
+}
+header #favourites:hover {
+box-shadow:2px 2px 3px #86C3D7, -2px -2px 3px #383878;
+cursor:pointer;
+}

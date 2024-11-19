@@ -1,0 +1,88 @@
+/* Tooltip container */
+.tooltip_over {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip_over .tooltiptext_over {
+    visibility: hidden;
+    width: 120px;
+    background-color: #1E273F;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    border: 1px solid black;
+    opacity: 0;
+    transition: opacity 0.5s;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip_over:hover .tooltiptext_over {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip_over .tooltiptext_over::after {
+    content: "";
+    position: absolute;
+    top: 100%; /* At the bottom of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: black transparent transparent transparent;
+}
+
+/* Tooltip container */
+.tooltip_under {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip_under .tooltiptext_under {
+    visibility: hidden;
+    width: 120px;
+    background-color: #1E273F;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+    border: 1px solid black;
+    opacity: 0;
+    transition: opacity 0.5s;
+    top: 130%;
+    left: 50%;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip_under:hover .tooltiptext_under {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip_under .tooltiptext_under::after {
+    content: " ";
+    position: absolute;
+    bottom: 100%;  /* At the top of the tooltip */
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent black transparent;
+}

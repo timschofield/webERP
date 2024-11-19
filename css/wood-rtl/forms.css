@@ -1,0 +1,203 @@
+form {
+background:transparent;
+width: 100%;
+text-align: center;
+color:#1A1A1A;
+}
+form fieldset {
+background:#FFFFFF;
+box-shadow:3px 3px 4px #631;
+display: inline;
+border:solid 1px;
+margin:auto;
+padding-top:7px;
+margin-bottom:4px;
+margin-left:4px;
+border-radius:7px;
+text-align:left;
+vertical-align:top;
+}
+form fieldset legend {
+background-color:#FFD980;
+padding-left:13px;
+padding-right:13px;
+border: 1px solid;
+border-radius:13px;
+font-size:150%;
+margin-top:3px;
+}
+form fieldset legend.search {
+background-image:url(images/search.png);
+background-repeat: no-repeat;
+background-size:18px 18px;
+background-position:right center;
+padding-right:26px;
+}
+form fieldset field {
+display:block;
+text-align:right;
+margin-bottom:3px;
+}
+form fieldset field label {
+float:right;
+width:24.5em;
+text-align:right;
+}
+form fieldset field .fieldtext {
+margin-bottom:8px;
+display:inline;
+line-height:170%;
+}
+form fieldset field input,textarea,select {
+background-color:#FEFEBB;
+border-radius: 5px;
+border: 1px solid #8DCDEB;
+padding:2px;
+color:#1A1A1A;
+font-family:inherit;
+font-size:inherit;
+}
+form fieldset field select:not([multiple]) {
+background:url(images/descending.png) no-repeat left #FEFEBB;
+padding-left:24px;
+background-size:contain;
+-moz-appearance:none;
+-webkit-appearance: none;
+}
+form fieldset field input:hover,select:hover,textarea:hover {
+box-shadow: 0 0 3px #480FCE;
+transition-duration:0.5s;
+}
+form fieldset field input:focus,select:focus,textarea:focus {
+box-shadow: 0 0 3px #480FCE;
+transition-duration:0.5s;
+}
+form fieldset field input[type="email"] {
+display:inline;
+background-image:url(images/mail.png);
+background-repeat: no-repeat;
+background-position:right 0px;
+background-size:14px 14px;
+padding-right:24px;
+}
+form fieldset field input[type="search"] {
+display:inline;
+background-image:url(images/search.png);
+background-repeat: no-repeat;
+background-position:right 0px;
+background-size:14px 14px;
+padding-right:24px;
+}
+form fieldset field input[type="tel"] {
+display:inline;
+background-image:url(images/tel.png);
+background-repeat: no-repeat;
+background-position:right 0px;
+background-size:14px 14px;
+padding-right:24px;
+}
+form fieldset field input.date {
+display:inline;
+background-image:url(images/date.png);
+background-repeat: no-repeat;
+background-position:right center;
+background-size:14px 14px;
+padding-right:24px;
+}
+form input[type="submit"]{
+background:#FFD980;
+padding-top: 6px;
+padding-bottom: 6px;
+padding-left: 15px;
+padding-right: 15px;
+margin: 2px;
+margin-top:6px;
+border: 2px solid #824411;
+border-radius: 7px;
+cursor: pointer;
+color:#1A1A1A;
+}
+form input[type="submit"]:hover{
+background:#F8C03C;
+transition-duration:0.5s;
+}
+form input[type="submit"]:active{
+border-right: 2px solid #DDDDDD;
+border-left: 2px solid #BFBFBF;
+border-top: 2px solid #BFBFBF;
+border-bottom: 2px solid #DDDDDD;
+}
+form input[type="reset"]{
+background:#FFD980;
+padding-top: 6px;
+padding-bottom: 6px;
+padding-left: 15px;
+padding-right: 15px;
+margin: 2px;
+margin-top:6px;
+border: 2px solid #824411;
+border-radius: 7px;
+cursor: pointer;
+color:#1A1A1A;
+}
+form input[type="submit"].previous_button {
+background:#FFD980 url(images/previous.png) center left 2%/24px no-repeat;
+padding-right:16px;
+padding-left:32px;
+}
+form input[type="submit"].previous_button:hover {
+background:#F8C03C url(images/previous.png) center left 2%/24px no-repeat;
+padding-right:16px;
+padding-left:32px;
+}
+form input[type="submit"].next_button {
+background:#FFD980 url(images/next.png) center right 2%/24px no-repeat;
+padding-right:32px;
+padding-left:16px;
+}
+form input[type="submit"].next_button:hover {
+background:#F8C03C url(images/next.png) center right 2%/24px no-repeat;
+padding-right:32px;
+padding-left:16px;
+}
+form .number {
+text-align:left;
+}
+fieldset ul li {
+text-align:right;
+}
+fieldset .container {
+display: block;
+position: relative;
+padding-left: 35px;
+margin-bottom: 3px;
+cursor: pointer;
+-webkit-user-select: none;
+-moz-user-select: none;
+-ms-user-select: none;
+user-select: none;
+}
+fieldset .container input {
+position: absolute;
+cursor: pointer;
+display:none;
+}
+fieldset label .checkmark {
+position: absolute;
+top: 0;
+left: 0;
+height: 10px;
+width: 25px;
+background-color: #eee;
+}
+fieldset .container:hover input ~ .checkmark {
+background-color: #ccc;
+}
+fieldset .container input:checked ~ .checkmark {
+background-color: #793B1A;
+}
+fieldset label .checkmark:after {
+content: "";
+position: absolute;
+display: none;
+}

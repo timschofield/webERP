@@ -1,0 +1,129 @@
+.MainBody {
+background:#588BB6;
+margin:5px;
+padding:1px;
+padding-bottom:4px;
+border: 1px solid #82BCF4;
+border-radius: 7px;
+}
+.MainBody li a {
+color:#090939;
+text-decoration:none;
+}
+.MainBody li a:hover {
+color:#000000;
+text-decoration:underline;
+}
+.ModuleList {
+float:right;
+background:#AF6060;
+white-space:nowrap;
+text-align:right;
+padding-left:10px;
+padding-right:10px;
+padding-top:13px;
+padding-bottom:13px;
+width:11%;
+width:min-content;
+border-radius:7px;
+margin:7px;
+color:black;
+}
+.ModuleList li a,.ModuleList li a:hover {
+background:#A62121;
+display:block;
+border-radius:10px;
+text-decoration:none;
+margin-bottom:5px;
+padding:3px;
+border:1px solid #083309;
+padding-left:5px;
+color:#B1CBE1;
+font-weight:bold;
+transition-duration:0.5s;
+}
+.ModuleList .ModuleSelected a {
+border:1px solid #083309;
+background:#A62121;
+padding-right:5px;
+color:#B1CBE1;
+font-weight:bold;
+}
+.ModuleList .ModuleUnSelected a{
+border:1px solid #083309;
+background:#AF6060;
+color:#FFFFFF;
+padding-right:5px;
+}
+.ModuleList ul,.MenuList ul {
+margin:0;
+padding:0;
+}
+.ModuleList li,.MenuList li {
+list-style:none;
+}
+.MenuList {
+background:#C0DFFE;
+display: inline;
+width:30%;
+border-radius:10px;
+margin-top:5px;
+vertical-align:top;
+margin-left:5px;
+color:black;
+border:1px solid #588BB6;
+}
+.MenuList legend {
+background:#C0DFFE;
+border-radius:10px;
+border:1px solid #588BB6;
+padding:3px;
+padding-left:7px;
+}
+.MenuList legend img {
+padding-left:7px;
+width:32px;
+height:32px;
+vertical-align:middle;
+}
+.MenuItem {
+color:#8DCDEB;
+text-decoration:none;
+text-align:right;
+padding:2px;
+}
+.MenuItem:hover {
+background:transparent;
+text-align:right;
+color:black;
+}
+.MenuList .CustomMenuList {
+text-align:center;
+color:#000;
+background:#eee;
+border-bottom:thin solid #000;
+}
+.page_title_text {
+font-weight:700;
+color:#FFFFFF;
+text-align:center;
+padding:1px;
+clear: both;
+}
+.page_title_text img{
+width:40px;
+height:40px;
+padding-left:9px;
+vertical-align:middle;
+}
+div.toplink {
+float:right;
+}
+.clearfix {
+overflow: auto;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}

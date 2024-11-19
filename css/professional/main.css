@@ -1,0 +1,123 @@
+.MainBody {
+background:transparent;
+margin:2px;
+padding:1px;
+border: 1px solid #82BCF4;
+border-radius: 7px;
+}
+.ModuleList {
+float:left;
+background:#DDDDDD;
+white-space:nowrap;
+text-align:left;
+padding-left:10px;
+padding-right:10px;
+padding-top:13px;
+padding-bottom:13px;
+width:11%;
+width:min-content;
+border:0px solid #8DCDEB;
+border-radius:7px;
+margin:7px;
+transition-duration:0.5s;
+}
+.ModuleList li a,.ModuleList li a:hover {
+background:linear-gradient(45deg, #655051, #551b1b);
+color:#FFFFFF;
+display:block;
+border-radius:4px;
+text-decoration:none;
+margin-bottom:5px;
+padding:3px;
+border:1px solid #404552;
+padding-left:5px;
+}
+.ModuleList .ModuleSelected a {
+border:1px solid #1A1A1A;
+color:#FFFFFF;
+padding-left:5px;
+}
+.ModuleList .ModuleUnSelected a {
+border:1px solid #1A1A1A;
+background:transparent;
+color:#1A1A1A;
+padding-left:5px;
+}
+.ModuleList ul,.MenuList ul {
+margin:0;
+padding:0;
+}
+.ModuleList li,.MenuList li {
+list-style:none;
+}
+.MenuList {
+background:#EEEEEE;
+display: inline;
+width:30%;
+border-radius:10px;
+margin-top:5px;
+vertical-align:top;
+margin-right:5px;
+}
+.MenuList legend {
+background:#DDDDDD;
+border:solid 1px #4D4D4D;
+padding:4px;
+border-radius:7px;
+}
+.MenuList legend img{
+width:32px;
+height:32px;
+padding-right:3px;
+vertical-align:middle;
+}
+.MenuItem {
+padding:2px;
+transition-property:text-decoration;
+transition-duration:0.5s;
+}
+.MenuItem a{
+color:#0E3D53;
+text-decoration:none;
+text-align:left;
+}
+.MenuItem a:hover {
+background:transparent;
+text-decoration:underline;
+text-align:left;
+color:#000000;
+}
+.MenuList .CustomMenuList {
+background:#ddd;
+outline:thin outset #ddd;
+text-align:center;
+color:#000;
+}
+.page_title_text {
+padding-top:2px;
+padding-bottom:2px;
+font-weight:700;
+color:#000;
+text-align:center;
+margin:0 auto;
+clear: both;
+}
+.page_title_text img {
+padding-right:7px;
+width:48px;
+height:48px;
+vertical-align:middle;
+}
+.toplink {
+float:left;
+margin-top:10px;
+display:inline-block;
+}
+.clearfix {
+  overflow: auto;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}

@@ -1,0 +1,7 @@
+form select:focus + fieldhelp, input:not([type=submit]):focus + fieldhelp {
+display:none;
+}
+
+form select + fieldhelp, input:not([type=submit]) + fieldhelp {
+display:none;
+}
