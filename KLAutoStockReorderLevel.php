@@ -81,11 +81,11 @@ if ($LocCode != ''){
 			$FilterLoc = " AND locations.allstableitems = 1 ";
 		}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 			$FilterLoc = " AND locations.allnopoitems = 1 ";
-		}elseif ($myitem['categoryid'] == "DISC2A"){
+		}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)){
 			$FilterLoc = " AND locations.alldisc20items = 1 ";
-		}elseif ($myitem['categoryid'] == "DISC5A"){
+		}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)){
 			$FilterLoc = " AND locations.alldisc50items = 1 ";
-		}elseif ($myitem['categoryid'] == "DISC8A"){
+		}elseif (ItemInLIst($myitem['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_80)){
 			$FilterLoc = " AND locations.alldisc80items = 1 ";
 		}else{
 			$FilterLoc = "";

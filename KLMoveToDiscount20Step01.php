@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'MaxItemsMovingToDiscount';
 		$i++;
 		prnMsg('Too many items moving to Discount 20% at the same time. Maximum = '. MAX_ITEMS_MOVING_DISC20,'error');
-	}elseif ($myrow['categoryid'] == 'DISC2A') {
+	}elseif ($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)) {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyDiscount20';
 		$i++;

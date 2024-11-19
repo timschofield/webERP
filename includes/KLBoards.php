@@ -1376,21 +1376,63 @@ function FinishedStockDistributionByShopAndCategory(){
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
 						AND m2.categoryid = 'DISC2A'
-						AND l2.reorderlevel != 0) AS modelsDISC20,
+						AND l2.reorderlevel != 0) AS modelsDISC20KL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid = 'DISC2B'
+						AND l2.reorderlevel != 0) AS modelsDISC20BL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid = 'DISC2G'
+						AND l2.reorderlevel != 0) AS modelsDISC20GE,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
 						AND m2.categoryid = 'DISC5A'
-						AND l2.reorderlevel != 0) AS modelsDISC50,
+						AND l2.reorderlevel != 0) AS modelsDISC50KL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid = 'DISC5B'
+						AND l2.reorderlevel != 0) AS modelsDISC50BL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid = 'DISC5G'
+						AND l2.reorderlevel != 0) AS modelsDISC50GE,
 				(SELECT COUNT(l2.reorderlevel)
 					FROM locstock AS l2,
 						stockmaster as m2
 					WHERE l2.loccode = locations.loccode
 						AND m2.stockid = l2.stockid 
 						AND m2.categoryid = 'DISC8A'
-						AND l2.reorderlevel != 0) AS modelsDISC80
+						AND l2.reorderlevel != 0) AS modelsDISC80KL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid = 'DISC8B'
+						AND l2.reorderlevel != 0) AS modelsDISC80BL,
+				(SELECT COUNT(l2.reorderlevel)
+					FROM locstock AS l2,
+						stockmaster as m2
+					WHERE l2.loccode = locations.loccode
+						AND m2.stockid = l2.stockid 
+						AND m2.categoryid = 'DISC8G'
+						AND l2.reorderlevel != 0) AS modelsDISC80GE
 			FROM locations
 			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 			ORDER BY locations.locationname";
@@ -1408,15 +1450,21 @@ function FinishedStockDistributionByShopAndCategory(){
 							<th class="ascending">' . _('TEST KL') . '</th>
 							<th class="ascending">' . _('Stable KL') . '</th>
 							<th class="ascending">' . _('NO PO KL') . '</th>
+							<th class="ascending">' . _('D 20% KL') . '</th>
+							<th class="ascending">' . _('D 50% KL') . '</th>
+							<th class="ascending">' . _('D 80% KL') . '</th>
 							<th class="ascending">' . _('TEST BL') . '</th>
 							<th class="ascending">' . _('Stable BL') . '</th>
 							<th class="ascending">' . _('NO PO BL') . '</th>
+							<th class="ascending">' . _('D 20% BL') . '</th>
+							<th class="ascending">' . _('D 50% BL') . '</th>
+							<th class="ascending">' . _('D 80% BL') . '</th>
 							<th class="ascending">' . _('TEST GE') . '</th>
 							<th class="ascending">' . _('Stable GE') . '</th>
 							<th class="ascending">' . _('NO PO GE') . '</th>
-							<th class="ascending">' . _('Disc 20') . '</th>
-							<th class="ascending">' . _('Disc 50') . '</th>
-							<th class="ascending">' . _('Disc 80') . '</th>
+							<th class="ascending">' . _('D 20% GE') . '</th>
+							<th class="ascending">' . _('D 50% GE') . '</th>
+							<th class="ascending">' . _('D 80% GE') . '</th>
 							<th class="ascending">' . _('Total') . '</th>
 						</tr>';
 		echo $TableHeader;
@@ -1435,12 +1483,24 @@ function FinishedStockDistributionByShopAndCategory(){
 									$myrow['modelsTESTGE'] + 
 									$myrow['modelsSTABLEGENERAL'] +
 									$myrow['modelsNOPOGE'] +
-									$myrow['modelsDISC20'] +
-									$myrow['modelsDISC50'] +
-									$myrow['modelsDISC80'];
+									$myrow['modelsDISC20KL'] +
+									$myrow['modelsDISC20BL'] +
+									$myrow['modelsDISC20GE'] +
+									$myrow['modelsDISC50KL'] +
+									$myrow['modelsDISC50BL'] +
+									$myrow['modelsDISC50GE'] +
+									$myrow['modelsDISC80KL'] +
+									$myrow['modelsDISC80BL'] +
+									$myrow['modelsDISC80GE'] ;
 
 			printf('<td class="number">%s</td>
 					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -1460,15 +1520,21 @@ function FinishedStockDistributionByShopAndCategory(){
 					locale_number_format_zero_blank($myrow['modelsTESTKL'],0),
 					locale_number_format_zero_blank($myrow['modelsSTABLEKAPALLAUT'],0),
 					locale_number_format_zero_blank($myrow['modelsNOPOKL'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC20KL'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC50KL'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC80KL'],0),
 					locale_number_format_zero_blank($myrow['modelsTESTBL'],0),
 					locale_number_format_zero_blank($myrow['modelsSTABLEBLINK'],0),
 					locale_number_format_zero_blank($myrow['modelsNOPOBL'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC20BL'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC50BL'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC80BL'],0),
 					locale_number_format_zero_blank($myrow['modelsTESTGE'],0),
 					locale_number_format_zero_blank($myrow['modelsSTABLEGENERAL'],0),
 					locale_number_format_zero_blank($myrow['modelsNOPOGE'],0),
-					locale_number_format_zero_blank($myrow['modelsDISC20'],0),
-					locale_number_format_zero_blank($myrow['modelsDISC50'],0),
-					locale_number_format_zero_blank($myrow['modelsDISC80'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC20GE'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC50GE'],0),
+					locale_number_format_zero_blank($myrow['modelsDISC80GE'],0),
 					locale_number_format_zero_blank($TotalModelsLocation,0)
 					);
 			$i++;

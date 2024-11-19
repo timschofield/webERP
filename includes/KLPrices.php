@@ -288,10 +288,22 @@ function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $S
 function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 	if ($NewCategory == "DISC8A"){
 		$reason = "KL Move To 80% Discount";
+	}else if ($NewCategory == "DISC8B"){
+		$reason = "BLINK Move To 80% Discount";
+	}else if ($NewCategory == "DISC8G"){
+		$reason = "GENERAL Move To 80% Discount";
 	}else if ($NewCategory == "DISC5A"){
 		$reason = "KL Move To 50% Discount";
+	}else if ($NewCategory == "DISC5B"){
+		$reason = "BLINK Move To 50% Discount";
+	}else if ($NewCategory == "DISC5G"){
+		$reason = "GENERAL Move To 50% Discount";
 	}else if ($NewCategory == "DISC2A"){
 		$reason = "KL Move To 20% Discount";
+	}else if ($NewCategory == "DISC2B"){
+		$reason = "BLINK Move To 20% Discount";
+	}else if ($NewCategory == "DISC2G"){
+		$reason = "GENERAL Move To 20% Discount";
 	}else{
 		$reason = "";
 	}

@@ -59,9 +59,6 @@ include('includes/KLPrices.php');
 		echo '<div>';
 		echo '<table class="selection">';
 
-//							<th>' . _('QOH Consignment') . '</th>
-//					locale_number_format_zero_blank($myrow['qohconsignment']-$myrow['intransitfromconsignment'],0),
-
 		$TableHeader = '<tr>
 							<th>' . _('#') . '</th>
 							<th>' . _('Code') . '</th>
@@ -93,7 +90,7 @@ include('includes/KLPrices.php');
 				AND ($myrow['intransitfromconsignment'] == 0)
 				AND ($myrow['intransitfromshops'] == 0)
 				){
-				if ($myrow['categoryid']== "DISC5A"){
+				if ($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)){
 					// already changed the category, so now it's time to see if labels have been printed and finish the process
 					$NewDiscountCategory = $myrow['discountcategory'];
 					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Category='. $myrow['categoryid'] . '&Action=Finish">' . ('Printed') . '</a>';

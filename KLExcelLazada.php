@@ -167,7 +167,7 @@ function submit($TypeOfShop) {
 
 			while ($myrow = DB_fetch_array($result)) {
 				
-				if (($myrow['categoryid'] != "DISC2A") AND ($myrow['categoryid'] != "DISC5A") AND ($myrow['categoryid'] != "DISC8A")){
+				if (!ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't send discounted items to marketplaces
 					
 					$StockId = $myrow['stockid'];

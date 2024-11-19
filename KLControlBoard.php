@@ -236,9 +236,21 @@ if ($ProcessSection01){
 
 		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath);
 		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC2B", "20", $RootPath);
+		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC2G", "20", $RootPath);
+		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC5A", "50", $RootPath);
 		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC5B", "50", $RootPath);
+		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC5G", "50", $RootPath);
+		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC8A", "80", $RootPath);
+		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC8B", "80", $RootPath);
+		$NumberOfTestExecuted++;
+		DiscountedItemsWithWrongDiscount("DISC8G", "80", $RootPath);
 		$NumberOfTestExecuted++;
 		NotDiscountedItemsWithDiscount($RootPath);
 		$NumberOfTestExecuted++;
@@ -522,8 +534,14 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
 	}
 //////////////////////////
 // END OF SECTION
@@ -702,12 +720,38 @@ if ($ProcessSection02){
 		ItemsInCategoryForMoreThanDays( 90, "DISC2A", $RootPath);
 		$NumberOfTestExecuted++;
 		
+		ActiveItemsNoSales( 30, "DISC2B", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "DISC2B", $RootPath);
+		$NumberOfTestExecuted++;
+
+		ActiveItemsNoSales( 30, "DISC2G", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 90, "DISC2G", $RootPath);
+		$NumberOfTestExecuted++;
+
 		ActiveItemsNoSales( 50, "DISC5A", $RootPath);
 		$NumberOfTestExecuted++;
 		ItemsInCategoryForMoreThanDays( 120, "DISC5A", $RootPath);
 		$NumberOfTestExecuted++;
 		
+		ActiveItemsNoSales( 50, "DISC5B", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "DISC5B", $RootPath);
+		$NumberOfTestExecuted++;
+		
+		ActiveItemsNoSales( 50, "DISC5G", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInCategoryForMoreThanDays( 120, "DISC5G", $RootPath);
+		$NumberOfTestExecuted++;
+		
 		ActiveItemsNoSales( 60, "DISC8A", $RootPath);
+		$NumberOfTestExecuted++;
+		
+		ActiveItemsNoSales( 60, "DISC8B", $RootPath);
+		$NumberOfTestExecuted++;
+		
+		ActiveItemsNoSales( 60, "DISC8G", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1266,11 +1310,11 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 		$Condition = " AND locations.allstableitems = '1' ";
 	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 		$Condition = " AND locations.allnopoitems = '1' ";
-	}elseif ($Category == "DISC2A"){
+	}elseif (ItemInLIst($Category,, LIST_STOCK_CATEGORIES_DISCOUNT_20)){
 		$Condition = " AND locations.alldisc20items = '1' ";
-	}elseif ($Category == "DISC5A"){
+	}elseif (ItemInLIst($Category,, LIST_STOCK_CATEGORIES_DISCOUNT_50)){
 		$Condition = " AND locations.alldisc50items = '1' ";
-	}elseif ($Category == "DISC8A"){
+	}elseif (ItemInLIst($Category,, LIST_STOCK_CATEGORIES_DISCOUNT_80)){
 		$Condition = " AND locations.alldisc80items = '1' ";
 	}
 	
@@ -1335,11 +1379,29 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 	} else if ($Category == 'DISC2A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC2A')";
 		$TypeOfShop = 'SHOPOU';
+	} else if ($Category == 'DISC2B') {
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC2B')";
+		$TypeOfShop = 'SHOPOU';
+	} else if ($Category == 'DISC2G') {
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC2G')";
+		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC5A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC5A')";
 		$TypeOfShop = 'SHOPOU';
+	} else if ($Category == 'DISC5B') {
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC5B')";
+		$TypeOfShop = 'SHOPOU';
+	} else if ($Category == 'DISC5G') {
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC5G')";
+		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC8A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC8A')";
+		$TypeOfShop = 'SHOPOU';
+	} else if ($Category == 'DISC8B') {
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC8B')";
+		$TypeOfShop = 'SHOPOU';
+	} else if ($Category == 'DISC8G') {
+		$WhereCat = " AND (stockmaster.categoryid = 'DISC8G')";
 		$TypeOfShop = 'SHOPOU';
 	}
 
@@ -4659,7 +4721,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
 				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC2A'
+					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT_20 . "
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='".$myshop['loccode']."'";
 		$result = DB_query($SQL);
@@ -4673,7 +4735,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
 				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC5A'
+					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT_50 . "
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='".$myshop['loccode']."'";
 		$result = DB_query($SQL);
@@ -4687,7 +4749,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$SQL = "SELECT COUNT(*)
 				FROM stockmaster,locstock
 				WHERE stockmaster.stockid = locstock.stockid
-					AND stockmaster.categoryid = 'DISC8A'
+					AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_DISCOUNT_80 . "
 					AND locstock.reorderlevel > 0
 					AND locstock.loccode ='".$myshop['loccode']."'";
 		$result = DB_query($SQL);
