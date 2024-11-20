@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Move Item To 20% Discount -> Step 01');
+$Title = _('Move Item To 20% Discount -> Step 01');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -20,7 +20,7 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('KL Move Item to 20% Discount Category') . '" alt="" />' . ' ' . $Title.'</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Move Item To 20% Discount Category') . '" alt="" />' . ' ' . $Title.'</p>';
 
 if (isset($_POST['submit'])) {
 	$_POST['Stockid'] = strtoupper($_POST['Stockid']); // just in case it came in lowercase
@@ -57,7 +57,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'MaxItemsMovingToDiscount';
 		$i++;
 		prnMsg('Too many items moving to Discount 20% at the same time. Maximum = '. MAX_ITEMS_MOVING_DISC20,'error');
-	}elseif ($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)) {
+	}elseif (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)) {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyDiscount20';
 		$i++;
@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 					endprocessdate='0000-00-00'
 				WHERE countermovediscount = '".$SelectedMovement."'";
 
-		$msg = _('KL Move Item To 20% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
+		$msg = _('Move Item To 20% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
 		$sql = "INSERT INTO klmovetodiscount20 
@@ -117,13 +117,13 @@ if (isset($_POST['submit'])) {
 					'" . Date('Y-m-d') . "',
 					'20',
 					'0000-00-00')";
-		$msg = _('KL Move Item To 20% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
+		$msg = _('Move Item To 20% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
 		DB_Txn_Begin();
 
-		$ErrMsg = _('The insert or update of the KL Move Item To 20% Discount Step 01 failed because');
+		$ErrMsg = _('The insert or update of the Move Item To 20% Discount Step 01 failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$result = DB_query($sql,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
@@ -165,7 +165,7 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('The Move Item To 20% Discount Step 01 could not be deleted because');
 	$result = DB_query($sql,$ErrMsg);
 
-	prnMsg(_('KL Move Item To 20% Discount Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
+	prnMsg(_('Move Item To 20% Discount Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
 
 	unset($SelectedMovement);
 	unset($delete);
@@ -179,19 +179,22 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT countermovediscount,
-				stockid,
-				discountcategory,
-				startprocessdate
-			FROM klmovetodiscount20
-			WHERE endprocessdate = '0000-00-00'";
+	$sql = "SELECT klmovetodiscount20.countermovediscount,
+				stockmaster.stockid,
+				stockmaster.categoryid,
+				klmovetodiscount20.discountcategory,
+				klmovetodiscount20.startprocessdate
+			FROM klmovetodiscount20,stockmaster
+			WHERE stockmaster.stockid = klmovetodiscount20.stockid
+				AND klmovetodiscount20.endprocessdate = '0000-00-00'";
 	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('#') . '</th>
 			<th>' . _('Item Code') . '</th>
-			<th>' . _('Discount') . '</th>
+			<th>' . _('From Category') . '</th>
+			<th>' . _('Moving to Disc %') . '</th>
 			<th>' . _('Start Date') . '</th>
 		</tr>';
 	$i=1;
@@ -200,11 +203,13 @@ or deletion of the records*/
 		$k = StartEvenOrOddRow($k);
 		printf('<td class="number">%s</td>
 				<td>%s</td>
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>',
 				$i,
 				$myrow['stockid'],
+				GetCategoryNameFromCode($myrow['categoryid']),
 				$myrow['discountcategory'],
 				ConvertSQLDate($myrow['startprocessdate']));
 		$i++;

@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Move To 20% Discount -> Step 02');
+$Title = _('Move To 20% Discount -> Step 02');
 include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -63,7 +63,7 @@ include('includes/KLPrices.php');
 							<th>' . _('Code') . '</th>
 							<th>' . _('Description') . '</th>
 							<th>' . _('Start Date') . '</th>
-							<th>' . _('QOH KL Shops') . '</th>
+							<th>' . _('QOH Shops') . '</th>
 							<th>' . _('Transit From Kantor') . '</th>
 							<th>' . _('Transit To Kantor') . '</th>
 							<th>' . _('QOH Kantor') . '</th>
@@ -89,7 +89,7 @@ include('includes/KLPrices.php');
 				AND ($myrow['intransitfromconsignment'] == 0)
 				AND ($myrow['intransitfromshops'] == 0)
 				){
-				if ($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)){
+				if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_20)){
 					// already changed the category, so now it's time to see if labels have been printed and finish the process
 					$NewDiscountCategory = $myrow['discountcategory'];
 					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Category='. $myrow['categoryid'] . '&Action=Finish">' . ('Printed') . '</a>';
@@ -100,7 +100,6 @@ include('includes/KLPrices.php');
 					$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Category='. $myrow['categoryid'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
 					$NewLabelsPrinted = 'Not yet';
 				}
-				
 			}else{
 				$NewDiscountCategory = $myrow['discountcategory'];
 				$NewLabelsPrinted = 'Not yet';

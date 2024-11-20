@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut. Change To Discount');
+$Title = _('Change To Discount');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -46,8 +46,7 @@ if ($_GET['Action'] == "New"){
 
 DB_Txn_Begin();
 
-
-if (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISCOUNT)){
+if (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISCOUNT)){
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2A";
 	}elseif($_GET['Discount'] == "50"){
@@ -55,7 +54,7 @@ if (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISCOU
 	}else{
 		$NewCategory = "DISC8A";
 	}
-}elseif (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_DISCOUNT)){
+}elseif (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_DISCOUNT)){
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2B";
 	}elseif($_GET['Discount'] == "50"){

@@ -144,7 +144,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 			while ($myrow = DB_fetch_array($result)) {
 				
-				if (!ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_OUTLET)){
+				if (!ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't send discounted items to marketplaces
 					
 					$StockId = $myrow['stockid'];

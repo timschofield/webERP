@@ -1310,11 +1310,11 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 		$Condition = " AND locations.allstableitems = '1' ";
 	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 		$Condition = " AND locations.allnopoitems = '1' ";
-	}elseif (ItemInLIst($Category,, LIST_STOCK_CATEGORIES_DISCOUNT_20)){
+	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_20)){
 		$Condition = " AND locations.alldisc20items = '1' ";
-	}elseif (ItemInLIst($Category,, LIST_STOCK_CATEGORIES_DISCOUNT_50)){
+	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_50)){
 		$Condition = " AND locations.alldisc50items = '1' ";
-	}elseif (ItemInLIst($Category,, LIST_STOCK_CATEGORIES_DISCOUNT_80)){
+	}elseif (ItemInLIst($Category, LIST_STOCK_CATEGORIES_DISCOUNT_80)){
 		$Condition = " AND locations.alldisc80items = '1' ";
 	}
 	
