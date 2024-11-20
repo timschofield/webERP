@@ -1,5 +1,4 @@
 <?php
-/* $Id: InputSerialItemsKeyed.php 6647 2014-03-28 11:26:41Z exsonqu $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -29,7 +28,6 @@ echo $TableHeader;
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
 
-$k=0;
 foreach ($LineItem->SerialItems as $Bundle){
 
 	if ($RowCounter == 10){
@@ -39,15 +37,8 @@ foreach ($LineItem->SerialItems as $Bundle){
 		$RowCounter++;
 	}
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	echo '<td>' . $Bundle->BundleRef . '</td>';
+	echo '<tr class="striped_row">
+			<td>' . $Bundle->BundleRef . '</td>';
 
 	if ($LineItem->Serialised==0){
 		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
@@ -78,7 +69,7 @@ if ($LineItem->Serialised==1){
 echo '</table></td><td valign="top">';
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'" id="Ga6uF5Wa" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" id="Ga6uF5Wa" method="post">
 		<div>
 		<input type="hidden" name="LineNo" value="' . $LineNo . '" />
 		<input type="hidden" name="StockID" value="' . $StockID . '" />
@@ -116,7 +107,7 @@ if ($EditControlled){
 		if ($LineItem->Serialised==1){
 			echo '<input type="hidden" name="Qty' . $StartAddingAt .'" value="1" /></TR>';
 		} else if ($LineItem->Serialised==0 and $Perishable==1) {
-			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></td><td><input type="text" name="ExpiryDate' . $StartAddingAt . '" size="11" value="' . $Bundle->ExpiryDate . '" alt="'.$_SESSION['DefaultDateFormat'].'" maxlength="10" /></td></tr>';
+			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></td><td><input type="text" name="ExpiryDate' . $StartAddingAt . '" size="11" value="' . $Bundle->ExpiryDate . '" class="date" maxlength="10" /></td></tr>';
 		} else {
 			echo '<td><input type="text" class="number" name="Qty' . $StartAddingAt .'" size="11" value="'. locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces). '" maxlength="10" /></tr>';
 		}
@@ -139,12 +130,12 @@ for ($i=0;$i < 10;$i++){
 				</tr>';
 		} else {
 			echo '<td><input type="hidden" name="Qty' . ($StartAddingAt+$i) .'" value="1" />
-					<input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" /></td>
+					<input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" maxlength="10" /></td>
 				</tr>';
 		}
 	} else if ($LineItem->Serialised==0 and $Perishable==1) {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size="11"  maxlength="10" /></td>
-				<td><input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" /></td>
+				<td><input type="text" class="date" name="ExpiryDate' . ($StartAddingAt+$i) .'" size="11" value="" maxlength="10" /></td>
 			</tr>';
 	} else {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$i) .'" size="11"  maxlength="10" /></td></tr>';

@@ -1,5 +1,4 @@
 <?php
-/* $Id: InputSerialItems.php 6941 2014-10-26 23:18:08Z daintree $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -45,9 +44,9 @@ if (!isset($RecvQty)) {
 	$RecvQty=0;
 }
 if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
-	if ($RecvQty <= 50) {
+	if ($RecvQty <= $_SESSION['MaxSerialItemsIssued']) {
 		$_POST['EntryType'] = 'KEYED';
-	} //elseif ($RecvQty <= 50) { $EntryType = "BARCODE"; }
+	} //elseif ($RecvQty <= $_SESSION['MaxSerialItemsIssued']) { $EntryType = "BARCODE"; }
 	else {
 		$_POST['EntryType'] = 'FILE';
 	}
@@ -56,7 +55,7 @@ if (!isset($_POST['EntryType']) OR trim($_POST['EntryType']) == ''){
 $invalid_imports = 0;
 $valid = true;
 
-echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'?identifier='.$identifier.'" enctype="multipart/form-data" >';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .'?identifier=' . urlencode($identifier) . '" enctype="multipart/form-data" >';
 echo '<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="LineNo" value="' . $LineNo . '" />

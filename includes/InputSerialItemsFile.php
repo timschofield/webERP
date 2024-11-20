@@ -1,5 +1,4 @@
 <?php
-/* $Id: InputSerialItemsFile.php 6310 2013-08-29 10:42:50Z daintree $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -26,22 +25,16 @@ echo $tableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
-$k=0;
+
 /*Display the batches already entered with quantities if not serialised */
 foreach ($LineItem->SerialItems as $Bundle){
 
 	$RowCounter++;
 	//only show 1st 10 lines
 	if ($RowCounter < 10){
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
-		echo '<td>' . $Bundle->BundleRef . '</td>';
+		echo '<tr class="striped_row">
+				<td>' . $Bundle->BundleRef . '</td>';
 
 		if ($LineItem->Serialised==0){
 			echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
@@ -88,9 +81,9 @@ if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name'] == '') AND $
 	exit();
 }
 if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['error'] != '') AND !isset($_SESSION['CurImportFile'])){
-		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />' . 
-				 _('Name').':'.$_FILES['ImportFile']['name'] . '<br />' . 
-				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />' . 
+		echo _('There was a problem with the uploaded file') . '. ' . _('We received').':<br />' .
+				 _('Name').':'.$_FILES['ImportFile']['name'] . '<br />' .
+				 _('Size').':'.locale_number_format($_FILES['ImportFile']['size']/1024,2).'kb<br />' .
 				 _('Type').':'.$_FILES['ImportFile']['type'] . '<br />';
 		echo '<br />' . _('Error was').' '.$_FILES['ImportFile']['error'] . '<br />';
 		$LineItem->SerialItemsValid=false;
@@ -203,7 +196,7 @@ if ($invalid_imports>0 AND !$_SESSION['CurImportFile']['Processed']){
 	foreach($LineItem->SerialItems as $SItem){
 		echo '<tr>
 				<td>' . $SItem->BundleRef . '</td>
-				<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($SItem->BundleQty, $LineItem->DecimalPlaces) . '</td>
 			</tr>';
 		$i++;
 		if ($i == 100) {

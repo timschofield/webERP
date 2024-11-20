@@ -1,5 +1,4 @@
 <?php
-/* $Id: InputSerialItemsSequential.php 6310 2013-08-29 10:42:50Z daintree $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -11,6 +10,10 @@ for controlled items - used in:
 */
 
 //we start with a batch or serial no header and need to display something for verification...
+if (!isset($_SESSION['DatabaseName'])){
+	die;
+}
+
 global $tableheader;
 
 if (isset($_GET['LineNo'])){
@@ -30,7 +33,7 @@ echo '<table>';
 echo $TableHeader;
 
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '" method="post">
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">
       <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
       <input type="hidden" name="LineNo" value="' . $LineNo . '">
       <input type="hidden" name="StockID" value="' . $StockID . '">
