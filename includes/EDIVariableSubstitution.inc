@@ -1,5 +1,4 @@
 <?php
-/* $Id: EDIVariableSubstitution.inc 4621 2011-07-03 03:35:49Z daintree $*/
 /*Code to replace [Variables] in Message LineText with the value of the variable itself */
 
 	$PositionPointer = 0;

@@ -1,5 +1,4 @@
 <?php
-/* $Id: CSVSalesAnalysis.inc 3242 2009-12-16 22:06:53Z tim_schofield $*/
 function stripcomma($str) { //because we're using comma as a delimiter
 	return str_replace(",","",$str);
 }

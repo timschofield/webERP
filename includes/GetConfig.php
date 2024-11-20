@@ -1,10 +1,8 @@
 <?php
 // Systems can temporarily force a reload by setting the variable
 // $ForceConfigReload to true
-/* $Id: GetConfig.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
-	global  $db;		// It is global, we may not be.
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
 	$ConfigResult = DB_query($sql,$ErrMsg);
@@ -107,6 +105,17 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 		$_SESSION['SMTPSettings']['timeout']=$myrow['timeout'];
 		$_SESSION['SMTPSettings']['auth']=$myrow['auth'];
 	}
+	//Add favorite scripts
+	//Check that the favourites table exists (upgrades will choke otherwise)
+
+	$sql = "SELECT href, caption FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
+	$result = DB_query($sql,'','',false,false);
+	if (DB_num_rows($result)>0) {
+		while ($myrow = DB_fetch_array($result)) {
+			$_SESSION['Favourites'][$myrow['href']] = $myrow['caption'];
+		}
+	}
+
 } //end if force reload or not set already
 
 

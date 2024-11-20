@@ -1,6 +1,5 @@
 <html>
 <head>
-<!-- \$ Id$ -->
     <title>Failed Login</title>
     <meta http-equiv="Content-Type" content="text/html; charset=us-ascii">
     <link rel="stylesheet" href="css/default/login.css" type="text/css">
@@ -13,7 +12,7 @@
             <center><font size='4' color='red'><br /><br /><br /><b>
 
 		Too many failed login attempts<font>
-		<P>Call the office to obtain access to the system again</b></p></center>
+		<P>You will have to see an authorised person to obtain access to the system</b></p></center>
             </td>
         </tr>
     </table>

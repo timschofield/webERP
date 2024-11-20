@@ -1,5 +1,4 @@
 <?php
-/* $Id: Add_SerialItemsOut.php 5768 2012-12-20 08:38:22Z daintree $*/
 /*ProcessSerialItems.php takes the posted variables and adds to the SerialItems array
  in either the cartclass->LineItems->SerialItems or the POClass->LineItems->SerialItems */
 

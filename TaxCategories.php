@@ -1,5 +1,4 @@
 <?php
-/* $Id: TaxCategories.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Tax Categories');
@@ -88,7 +87,7 @@ if(isset($_POST['submit'])) {
 			$ErrMsg = _('The new tax category could not be added');
 			$result = DB_query($sql,$ErrMsg,true);
 
-			$LastTaxCatID = DB_Last_Insert_ID( 'taxcategories','taxcatid');
+			$LastTaxCatID = DB_Last_Insert_ID('taxcategories','taxcatid');
 
 			$sql = "INSERT INTO taxauthrates (taxauthority,
 					dispatchtaxprovince,
@@ -164,20 +163,17 @@ if(isset($_POST['submit'])) {
 	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Tax Category') . '</th>
 				<th colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
-	$j = 1;
 	while($myrow = DB_fetch_row($result)) {
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
+		echo '<tr class="striped_row">';
+
 		if($myrow[1]!='Freight') {
 			// Uses gettext() to translate 'Exempt' and 'Handling':
 			echo '<td>' . _($myrow[1]) . '</td>
@@ -190,7 +186,7 @@ if(isset($_POST['submit'])) {
 		echo '</tr>';
 	} //END WHILE LIST LOOP
 
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 

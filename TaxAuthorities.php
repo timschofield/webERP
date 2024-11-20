@@ -1,5 +1,4 @@
 <?php
-/* $Id: TaxAuthorities.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Tax Authorities');
@@ -141,6 +140,7 @@ if(!isset($SelectedTaxAuthID)) {
 	$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending" >' . _('ID') . '</th>
 				<th class="ascending" >' . _('Tax Authority') . '</th>
@@ -151,17 +151,13 @@ if(!isset($SelectedTaxAuthID)) {
 				<th class="ascending" >' . _('Bank Act Type') . '</th>
 				<th class="ascending" >' . _('Bank Swift') . '</th>
 				<th colspan="4">&nbsp;</th>
-			</tr>';
-	$j = 1;
+			</tr>
+		</thead>
+		<tbody>';
+
 	while($myrow = DB_fetch_row($result)) {
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -193,7 +189,7 @@ if(!isset($SelectedTaxAuthID)) {
 
 	//end of ifs and buts!
 
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 }
 
 

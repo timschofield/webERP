@@ -1,5 +1,4 @@
 <?php
-/* $Id: EDIconfig.inc 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*EDI configuration variables definition */
 
