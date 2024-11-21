@@ -967,7 +967,7 @@ if(!isset($_GET['delete'])) {
 		</tr>';
 	// categories for location
 	echo '<tr>
-			<td>' . _('If KL or BLINK shop: Display ALL TEST items?') . ':</td>
+			<td>' . _('Display ALL TEST items?') . ':</td>
 			<td><select name="AllTestItems">';
 	if($_POST['AllTestItems']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -982,7 +982,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('If KL or BLINK shop: Display ALL STABLE items?') . ':</td>
+			<td>' . _('Display ALL STABLE items?') . ':</td>
 			<td><select name="AllStableItems">';
 	if($_POST['AllStableItems']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -997,7 +997,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('If KL or BLINK shop: Display ALL NO PO items?') . ':</td>
+			<td>' . _('Display ALL NO PO items?') . ':</td>
 			<td><select name="AllNoPoItems">';
 	if($_POST['AllNoPoItems']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -1012,7 +1012,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('If OUTLET shop: Display ALL Discount 20% items?') . ':</td>
+			<td>' . _('Display ALL Discount 20% items?') . ':</td>
 			<td><select name="AllDisc20Items">';
 	if($_POST['AllDisc20Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -1027,7 +1027,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('If OUTLET shop: Display ALL Discount 50% items?') . ':</td>
+			<td>' . _('Display ALL Discount 50% items?') . ':</td>
 			<td><select name="AllDisc50Items">';
 	if($_POST['AllDisc50Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -1042,7 +1042,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td></tr>';
 
 	echo '<tr>
-			<td>' . _('If OUTLET shop: Display ALL Discount 80% items?') . ':</td>
+			<td>' . _('Display ALL Discount 80% items?') . ':</td>
 			<td><select name="AllDisc80Items">';
 	if($_POST['AllDisc80Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';

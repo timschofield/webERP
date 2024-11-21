@@ -513,7 +513,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath);
@@ -522,6 +523,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2A", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5A", "SHOPKL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath);
 		$NumberOfTestExecuted++;
@@ -529,6 +533,9 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("NOPOBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC2B", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC5B", "SHOPBL", $NumberOfTestExecuted, $RootPath);
+		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8B", "SHOPBL", $NumberOfTestExecuted, $RootPath);
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPOU", $RootPath);
 		$NumberOfTestExecuted++;
@@ -1360,49 +1367,34 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 	// count to how many shops do we need to set the RL
 	if ($Category == 'TESTKA'){
 		$WhereCat = " AND stockmaster.categoryid = 'TESTKA' ";
-		$TypeOfShop = 'SHOPKL';
 	} else if ($Category == 'STABKA') {
 		$WhereCat = " AND stockmaster.categoryid = 'STABKA' ";
-		$TypeOfShop = 'SHOPKL';
 	} else if ($Category == 'NOPOKA') {
 		$WhereCat = " AND stockmaster.categoryid = 'NOPOKA' ";
-		$TypeOfShop = 'SHOPKL';
 	} else if ($Category == 'TESTBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'TESTBA' ";
-		$TypeOfShop = 'SHOPBL';
 	} else if ($Category == 'STABBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'STABBA' ";
-		$TypeOfShop = 'SHOPBL';
 	} else if ($Category == 'NOPOBA') {
 		$WhereCat = " AND stockmaster.categoryid = 'NOPOBA' ";
-		$TypeOfShop = 'SHOPBL';
 	} else if ($Category == 'DISC2A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC2A')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC2B') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC2B')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC2G') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC2G')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC5A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC5A')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC5B') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC5B')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC5G') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC5G')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC8A') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC8A')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC8B') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC8B')";
-		$TypeOfShop = 'SHOPOU';
 	} else if ($Category == 'DISC8G') {
 		$WhereCat = " AND (stockmaster.categoryid = 'DISC8G')";
-		$TypeOfShop = 'SHOPOU';
 	}
 
 	$SQL = "SELECT stockmaster.stockid,
@@ -3390,15 +3382,13 @@ No pending transfer regarding this item
 	$ShopsToSetRL = NumberOfShops($TypeOfShop);
 	if ($TypeOfShop == "SHOPKL"){
 		$Message = 'KAPAL-LAUT';
-		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . ")";
 	}elseif ($TypeOfShop == "SHOPBL"){
 		$Message = 'BLINK';
 		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
 	}elseif ($TypeOfShop == "SHOPOU"){
 		$Message = 'OUTLET';
-		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
-							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . ")";
+		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")";
 	}else{
 		//error_
 		return;
