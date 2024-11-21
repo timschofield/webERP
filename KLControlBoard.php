@@ -215,7 +215,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_BusinessDevelopmentManager
+	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
