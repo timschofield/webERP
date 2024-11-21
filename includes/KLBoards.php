@@ -1445,27 +1445,34 @@ function FinishedStockDistributionByShopAndCategory(){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . "Location" . '</th>
-							<th class="ascending">' . _('TEST KL') . '</th>
-							<th class="ascending">' . _('Stable KL') . '</th>
-							<th class="ascending">' . _('NO PO KL') . '</th>
-							<th class="ascending">' . _('D 20% KL') . '</th>
-							<th class="ascending">' . _('D 50% KL') . '</th>
-							<th class="ascending">' . _('D 80% KL') . '</th>
-							<th class="ascending">' . _('TEST BL') . '</th>
-							<th class="ascending">' . _('Stable BL') . '</th>
-							<th class="ascending">' . _('NO PO BL') . '</th>
-							<th class="ascending">' . _('D 20% BL') . '</th>
-							<th class="ascending">' . _('D 50% BL') . '</th>
-							<th class="ascending">' . _('D 80% BL') . '</th>
-							<th class="ascending">' . _('TEST GE') . '</th>
-							<th class="ascending">' . _('Stable GE') . '</th>
-							<th class="ascending">' . _('NO PO GE') . '</th>
-							<th class="ascending">' . _('D 20% GE') . '</th>
-							<th class="ascending">' . _('D 50% GE') . '</th>
-							<th class="ascending">' . _('D 80% GE') . '</th>
-							<th class="ascending">' . _('Total') . '</th>
+							<th colspan="2"></th>
+							<th colspan="6">' . 'KL Models'. '</th>
+							<th colspan="6">' . 'Blink Models'. '</th>
+							<th colspan="6">' . 'General Models'. '</th>
+							<th></th>
+						</tr>
+						<tr>
+							<th>' . _('#') . '</th>
+							<th>' . "Location" . '</th>
+							<th>' . _('Test') . '</th>
+							<th>' . _('Stable') . '</th>
+							<th>' . _('NO PO') . '</th>
+							<th>' . _('D 20%') . '</th>
+							<th>' . _('D 50%') . '</th>
+							<th>' . _('D 80%') . '</th>
+							<th>' . _('Test') . '</th>
+							<th>' . _('Stable') . '</th>
+							<th>' . _('NO PO') . '</th>
+							<th>' . _('D 20%') . '</th>
+							<th>' . _('D 50%') . '</th>
+							<th>' . _('D 80%') . '</th>
+							<th>' . _('Test') . '</th>
+							<th>' . _('Stable') . '</th>
+							<th>' . _('NO PO') . '</th>
+							<th>' . _('D 20%') . '</th>
+							<th>' . _('D 50%') . '</th>
+							<th>' . _('D 80%') . '</th>
+							<th>' . _('Total') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
