@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: AgedSuppliers.php 7556 2016-06-16 11:11:45Z exsonqu $*/
 
 include('includes/session.php');
 
@@ -265,7 +264,7 @@ if (isset($_POST['PrintPDF'])
 		prnMsg(_('There are no results so the PDF is empty'));
 		include('includes/footer.php');
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_AggedSupliers_' . date('Y-m-d').'.pdf');
+		$pdf->OutputD($_SESSION['DatabaseName'] . '_AgedSuppliers_' . date('Y-m-d').'.pdf');
 	}
 	$pdf->__destruct();
 } else { /*The option to print PDF was not hit */

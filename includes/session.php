@@ -181,7 +181,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 	/* RICARD KL Set up the login theme for regular and test webERP */
 	if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
-		$Theme = 'gel'; 
+//		$Theme = 'gel'; 
+		$Theme = 'default'; 
 	}else{
 		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'default'; 
 	}

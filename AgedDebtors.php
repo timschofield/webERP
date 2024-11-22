@@ -1,5 +1,4 @@
 <?php
- /* $Id: AgedDebtors.php 7675 2016-11-21 14:55:36Z rchacon $ */
  /* Lists customer account balances in detail or summary in selected currency */
 
 include('includes/session.php');
