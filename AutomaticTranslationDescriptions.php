@@ -7,6 +7,12 @@ $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_TranslateItemDescriptions'; // Anchor's id in the manual's html document.
 include ('includes/header.php');
 
+if (!function_exists("curl_init")){
+	prnMsg("This script requires that the PHP curl module be available to use the Google API. Unfortunately this installation does not have the curl module available","error");
+	include('includes/footer.php');
+	exit;
+}
+
 include ('includes/GoogleTranslator.php');
 
 $SourceLanguage=mb_substr($_SESSION['Language'],0,2);
@@ -29,7 +35,7 @@ $SQL = "SELECT stockmaster.stockid,
 $result = DB_query($SQL);
 
 if(DB_num_rows($result) != 0) {
-	echo '<p class="page_title_text" align="center"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
@@ -40,7 +46,6 @@ if(DB_num_rows($result) != 0) {
 						<th>' . _('Translated') . '</th>
 					</tr>';
 	echo $TableHeader;
-	$k = 0; //row colour counter
 	$i = 0;
 	while ($myrow = DB_fetch_array($result)) {
 
@@ -52,24 +57,18 @@ if(DB_num_rows($result) != 0) {
 					"SET descriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
-			$update = DB_query($sql, "", "", true);
-			
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
+			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
+
 			$i++;
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
-					$i, 
-					$myrow['stockid'], 
+					</tr>',
+					$i,
+					$myrow['stockid'],
 					$myrow['description'],
 					$myrow['language_id'],
 					$TranslatedText
@@ -83,24 +82,18 @@ if(DB_num_rows($result) != 0) {
 					"SET longdescriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
-			$update = DB_query($sql, "", "", true);
+			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			$i++;
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
-					$i, 
-					$myrow['stockid'], 
+					</tr>',
+					$i,
+					$myrow['stockid'],
 					$myrow['longdescription'],
 					$myrow['language_id'],
 					$TranslatedText
@@ -109,13 +102,13 @@ if(DB_num_rows($result) != 0) {
 	}
 	echo '</table>
 			</div>';
-	prnMsg("Number of translated descriptions via Google API: " . locale_number_format($i));
+	prnMsg(_('Number of translated descriptions via Google API') . ': ' . locale_number_format($i));
 } else {
 
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/maintenance.png" title="' .
-		_('No item description was automatically translated') . '" />' . ' ' .
-		_('No item description was automatically translated') . '</p>';
+		_('No item descriptions were automatically translated') . '" />' . ' ' .
+		_('No item descriptions were automatically translated') . '</p>';
 
 // Add error message for "Google Translator API Key" empty.
 
