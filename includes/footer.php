@@ -77,7 +77,7 @@ echo '<footer class="noPrint">
 		<a class="FooterLogo">
 			<img src="', $RootPath, '/', $_SESSION['LogoFile'], '" width="120" alt="webERP" title="webERP ' . ' &copy; PT. Angin Dingin Utara - ' . date('Y') . '" />
 		</a>
-		<div class="FooterVersion">webERP ', _('version'), ' ', $_SESSION['VersionNumber'], '</div>
+		<div class="FooterVersion">webERP ', _('version'), ' ', $_SESSION['VersionNumber'], '-' , _('PHP'), ' ' , phpversion() ,'</div>
 		<div class="FooterTime">', DisplayDateTime(), '</div>
 	</footer>'; // FooterDiv
 echo '</body>';
