@@ -31,7 +31,6 @@
 //               2D barcodes to be used with TCPDF.
 //
 //============================================================+
-
 /**
  * @file
  * PHP class to creates array representations for 2D barcodes to be used with TCPDF.
@@ -39,7 +38,6 @@
  * @author Nicola Asuni
  * @version 1.0.015
  */
-
 /**
  * @class TCPDF2DBarcode
  * PHP class to creates array representations for 2D barcodes to be used with TCPDF (http://www.tcpdf.org).
@@ -48,13 +46,11 @@
  * @author Nicola Asuni
  */
 class TCPDF2DBarcode {
-
 	/**
 	 * Array representation of barcode.
 	 * @protected
 	 */
 	protected $barcode_array = false;
-
 	/**
 	 * This is the class constructor.
 	 * Return an array representations for 2D barcodes:<ul>
@@ -68,7 +64,6 @@ class TCPDF2DBarcode {
 	public function __construct($code, $type) {
 		$this->setBarcode($code, $type);
 	}
-
 	/**
 	 * Return an array representations of barcode.
  	 * @return array
@@ -76,7 +71,6 @@ class TCPDF2DBarcode {
 	public function getBarcodeArray() {
 		return $this->barcode_array;
 	}
-
 	/**
 	 * Send barcode as SVG image object to the standard output.
 	 * @param $w (int) Width of a single rectangle element in user units.
@@ -96,7 +90,6 @@ class TCPDF2DBarcode {
 		//header('Content-Length: '.strlen($code));
 		echo $code;
 	}
-
 	/**
 	 * Return a SVG string representation of barcode.
 	 * @param $w (int) Width of a single rectangle element in user units.
@@ -132,7 +125,6 @@ class TCPDF2DBarcode {
 		$svg .= '</svg>'."\n";
 		return $svg;
 	}
-
 	/**
 	 * Return an HTML representation of barcode.
 	 * @param $w (int) Width of a single rectangle element in pixels.
@@ -161,7 +153,6 @@ class TCPDF2DBarcode {
 		$html .= '</div>'."\n";
 		return $html;
 	}
-
 	/**
 	 * Send a PNG image representation of barcode (requires GD or Imagick library).
 	 * @param $w (int) Width of a single rectangle element in pixels.
@@ -179,9 +170,7 @@ class TCPDF2DBarcode {
 		header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT');
 		//header('Content-Length: '.strlen($data));
 		echo $data;
-
 	}
-
 	/**
 	 * Return a PNG image representation of barcode (requires GD or Imagick library).
 	 * @param $w (int) Width of a single rectangle element in pixels.
@@ -242,7 +231,6 @@ class TCPDF2DBarcode {
 			return $imagedata;
 		}
 	}
-
 	/**
 	 * Set the barcode.
 	 * @param $code (string) code to print
@@ -343,7 +331,3 @@ class TCPDF2DBarcode {
 		}
 	}
 } // end of class
-
-//============================================================+
-// END OF FILE
-//============================================================+

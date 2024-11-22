@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFDebtorBalsPageHeader.inc 3576 2010-07-06 21:59:22Z tim_schofield $*/
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){

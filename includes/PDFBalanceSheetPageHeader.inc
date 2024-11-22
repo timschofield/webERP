@@ -1,5 +1,4 @@
 <?php
-	/* $Id: PDFBalanceSheetPageHeader.inc 5768 2012-12-20 08:38:22Z daintree $*/
 	/*
 	 * PDF page header for the balance sheet report.
 	 * Suren Naidu 10/08/2005

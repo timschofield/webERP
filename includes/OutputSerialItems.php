@@ -1,5 +1,4 @@
 <?php
-/* $Id OutputSerialItems.php 4501 2011-03-03 09:13:12Z daintree $*/
 /*Input Serial Items - used for inputing serial numbers or batch/roll/bundle references
 for controlled items - used in:
 - ConfirmDispatchControlledInvoice.php
@@ -69,7 +68,6 @@ echo $listtableheader;
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
 
-$k=0;
 foreach ($LineItem->SerialItems as $Bundle){
 
 	if ($RowCounter == 10){
@@ -79,15 +77,8 @@ foreach ($LineItem->SerialItems as $Bundle){
 		$RowCounter++;
 	}
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	echo '<td>' . $Bundle->BundleRef . '</td>';
+	echo '<tr class="striped_row">
+			<td>' . $Bundle->BundleRef . '</td>';
 
 	if ($LineItem->Serialised==0 and $Perishable==0){
 		echo '<td class="number">' . locale_number_format($Bundle->BundleQty, $LineItem->DecimalPlaces) . '</td>';
@@ -138,8 +129,6 @@ if ( isset($_GET['EditControlled']) ) {
 }
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
-
-$k=0;
 
 $StartAddingAt = 0;
 if ($EditControlled){
@@ -196,7 +185,7 @@ while ($myrow=DB_fetch_array($result)){
 			echo '<td class="number">' . locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces) . '</td>';
 		}
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size="11" value="0" maxlength="10" /></td>';
-		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size="11" value="'.ConvertSQLDate($myrow['expirationdate']).'" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" />' . ConvertSQLDate($myrow['expirationdate']) . '</td></tr>';
+		echo '<td><input type="hidden" class="date" name="ExpiryDate' . ($StartAddingAt+$RowNumber) .'" size="11" value="'.ConvertSQLDate($myrow['expirationdate']).'" maxlength="10" />' . ConvertSQLDate($myrow['expirationdate']) . '</td></tr>';
 	} else {
 		echo '<td><input type="text" class="number" name="Qty' . ($StartAddingAt+$RowNumber) .'" size=11  value="'. locale_number_format($myrow['quantity'],$LineItem->DecimalPlaces).'"  maxlength="10" /></td></tr>';
 	}

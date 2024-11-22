@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SQL_CommonFunctions.inc 7618 2016-09-12 02:35:30Z exsonqu $*/
 
 /* Common SQL Functions */
 
@@ -27,7 +26,7 @@ etc
 	$GetTransNoResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 	$myrow = DB_fetch_row($GetTransNoResult);
 	return $myrow[0];
-	
+
 }
 
 
@@ -151,12 +150,13 @@ Function GetCreditAvailable($DebtorNo) {
 }
 
 function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
-	if ($_SESSION['CompanyRecord']['gllink_stock']==1 
+
+	if ($_SESSION['CompanyRecord']['gllink_stock']==1
 		AND $QOH!=0
 		AND (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1)))){
 
 		$CostUpdateNo = GetNextTransNo(35);
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod(date($_SESSION['DefaultDateFormat']));
 		$StockGLCode = GetStockGLCode($StockID);
 
 		$ValueOfChange = $QOH * ($NewCost - $OldCost);
@@ -220,16 +220,16 @@ function BomMaterialCost($Parent) {
 	$result = DB_query($SQL);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
-	$Result = DB_Txn_Begin();
-	if (abs($MaterialCost-$OldCost)>0) {
+	if (abs($QOH*($MaterialCost-$OldCost))>0) {
 		ItemCostUpdateGL($Parent, $MaterialCost, $OldCost, $QOH);
 	}
-	$Result = DB_Txn_Commit();
 	return $MaterialCost;
 }
 
 /*Iterates through the levels of the bom, recalculating each bom it meets*/
 function UpdateCost($Item) {
+	//update the items cost itself first;
+	BomMaterialCost(strtoupper($Item));
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL);
 	while ($MyRow=DB_fetch_array($Result)){
@@ -335,7 +335,7 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 }
 
 /*Ensures general ledger entries balance for a given transaction */
-function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
+function EnsureGLEntriesBalance ($TransType, $TransTypeNo) {
 
 	$result = DB_query("SELECT SUM(amount)
 						FROM gltrans
@@ -346,6 +346,7 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 	if (abs($Difference)!=0){
 		if (abs($Difference)>0.1){
 			prnMsg(_('The general ledger entries created do not balance. See your system administrator'),'error');
+			DB_Txn_Rollback();
 		} else {
 			$result = DB_query("SELECT counterindex,
 										MAX(amount)
@@ -367,9 +368,6 @@ function EnsureGLEntriesBalance($TransType, $TransTypeNo) {
 	If location is NOT empty, returns the QOO for that specific location.
 */
 function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
-
-	global $db;
-
 	if ($Location == ""){
 		// All locations to be considered
 		$WhereLocation = "";
@@ -412,9 +410,6 @@ function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
 	If location is NOT empty, returns the QOO for that specific location.
 */
 function GetQuantityOnOrderDueToWorkOrders($StockID, $Location){
-
-	global $db;
-
 	if ($Location == ''){
 		// All locations to be considered
 		$WhereLocation = '';
@@ -502,7 +497,7 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The create of the sampleresults record failed');
 			$DbgMsg = _('The following SQL to create the sampleresults was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			
+
 		} //$myrow2[0]=0
 	} //$myrow[0]>0
 }

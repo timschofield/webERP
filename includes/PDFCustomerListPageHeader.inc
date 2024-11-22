@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFCustomerListPageHeader.inc 3242 2009-12-16 22:06:53Z tim_schofield $*/
 /*PDF page header for aged analysis reports */
 $PageNumber++;
 if ($PageNumber>1){
