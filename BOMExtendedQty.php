@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: BOMExtendedQty.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 // BOMExtendedQty.php - Quantity Extended Bill of Materials
 

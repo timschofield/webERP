@@ -1,6 +1,4 @@
 <?php
-/*	$Id: CustomerAllocations.php 7693 2016-12-02 08:48:17Z exsonqu $*/
-
 /*	Call this page with:
 	1. A TransID to show the make up and to modify existing allocations.
 	2. A DebtorNo to show all outstanding receipts or credits yet to be allocated.
@@ -390,16 +388,14 @@ if (isset($_POST['AllocTrans'])) {
 		$YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
 		if ( $AllocnItem->ID == $_POST['AllocTrans'] ) {
-			echo '<tr class="OddTableRows">';
 			$curTrans = _('Being allocated');
 		} else if ($AllocnItem->AllocAmt > 0) {
-			echo '<tr class="OddTableRows">';
 		} else {
-			echo '<tr class="EvenTableRows">';
 			$curTrans = "&nbsp;";
 		}
 
-		echo '<td>' . _($AllocnItem->TransType) . '</td>
+		echo '<tr class="striped_row">
+			<td>' . _($AllocnItem->TransType) . '</td>
 			<td class="number">' . $AllocnItem->TypeNo . '</td>
 			<td>' . $AllocnItem->TransDate . '</td>
 			<td class="number">' . locale_number_format($AllocnItem->TransAmount,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
@@ -495,16 +491,10 @@ if (isset($_POST['AllocTrans'])) {
 	}
 	 echo '<table class="selection">';
 	echo $TableHeader;
-	$k=0;
+
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo  '<tr class="OddTableRows">';;
-			$k++;
-		}
-		echo '<td>' . _($myrow['typename']) . '</td>
+		echo '<tr class="striped_row">
+				<td>' . _($myrow['typename']) . '</td>
 				<td>' . $myrow['name'] . '</td>
 				<td>' . $myrow['debtorno'] . '</td>
 				<td>' . $myrow['transno'] . '</td>
@@ -542,7 +532,7 @@ if (isset($_POST['AllocTrans'])) {
 			ON debtorsmaster.currcode=currencies.currabrev
 			WHERE (debtortrans.type=12 OR debtortrans.type=11)
 			AND debtortrans.settled=0
-			AND debtortrans.ovamount<0";
+			AND (debtortrans.ovamount<0 OR debtortrans.ovdiscount<0)";
 
 	if ($_SESSION['SalesmanLogin'] != '') {
 		$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
@@ -552,19 +542,23 @@ if (isset($_POST['AllocTrans'])) {
 
 	$result = DB_query($SQL);
 	$NoOfUnallocatedTrans = DB_num_rows($result);
+
+	if ($NoOfUnallocatedTrans == 0) {
+		prnMsg(_('There are no allocations to be done'),'info');
+	}
+	else {
 	$CurrentTransaction = 1;
 	$CurrentDebtor = '';
 	echo '<table class="selection">';
 	echo $TableHeader;
 
-	$k=0;
 	while ($myrow = DB_fetch_array($result)) {
 
 		$AllocateLink = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?AllocTrans=' . $myrow['id'] . '">' . _('Allocate') . '</a>';
 
 		if ( $CurrentDebtor != $myrow['debtorno'] ) {
 			if ( $CurrentTransaction > 1 ) {
-				echo '<tr class="OddTableRows">
+				echo '<tr class="striped_row">
 						<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
 						<td><b>' . $CurrCode . '</b></td>
 						<td><b>' . _('Balance') . '</b></td>
@@ -578,7 +572,7 @@ if (isset($_POST['AllocTrans'])) {
 						FROM debtortrans
 						WHERE (type=12 OR type=11)
 						AND debtorno='" . $myrow['debtorno'] . "'
-						AND ovamount<0";
+						AND (ovamount<0 OR ovdiscount<0)";
 			$BalResult = DB_query($BalSQL);
 			$BalRow = DB_fetch_array($BalResult);
 			$Balance = $BalRow['total'];
@@ -590,15 +584,8 @@ if (isset($_POST['AllocTrans'])) {
 			$AllocateLink = '&nbsp;';
 		}
 
-		if ($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo  '<tr class="OddTableRows">';;
-			$k++;
-		}
-
-		echo '<td>' . _($myrow['typename']) . '</td>
+		echo '<tr class="striped_row">
+				<td>' . _($myrow['typename']) . '</td>
 				<td>' . $myrow['name'] . '</td>
 				<td>' . $myrow['debtorno'] . '</td>
 				<td>' . $myrow['transno'] . '</td>
@@ -614,17 +601,16 @@ if (isset($_POST['AllocTrans'])) {
 	if (!isset($Balance)) {
 		$Balance=0;
 	}
-	if ($NoOfUnallocatedTrans == 0) {
-		prnMsg(_('There are no allocations to be done'),'info');
-	} else {
-		echo '<tr class="OddTableRows">
+
+		echo '<tr class="striped_row">
 				<td colspan="7" class="number"><b>' . locale_number_format($Balance,$CurrDecimalPlaces)  . '</b></td>
 				<td><b>' . $CurrCode . '</b></td>
 				<td><b>' . _('Balance') . '</b></td>
-			</tr>';
+			</tr>
+		</table>';
 	}
-	echo '</table>
-		<br />';
+
+	echo '<br />';
 }
 
 include('includes/footer.php');

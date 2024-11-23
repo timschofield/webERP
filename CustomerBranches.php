@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustomerBranches.php 7413 2015-12-11 04:04:13Z exsonqu $*/
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
 include('includes/session.php');
@@ -108,26 +107,19 @@ if (isset($_POST['submit'])) {
 		if ($map_host=="") {
 		// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup. Go to Geocode Setup') . '</div>';
-				} else {
-			$address = $_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4'];
-			$base_url = 'http://' . MAPS_HOST . '/maps/geo?output=xml&amp;key=' . KEY;
-			$request_url = $base_url . '&amp;q=' . urlencode($address);
+		} else {
+			$address = urlencode($_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4']);
+			$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+			$request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
 			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
-			$Coordinates = $xml->Response->Placemark->Point->Coordinates;
-			$CoordinatesSplit = explode(",", $Coordinates);
-			// Format: Longitude, Latitude, Altitude
-			$Latitude = $CoordinatesSplit[1];
-			$Longitude = $CoordinatesSplit[0];
 
-			$Status = $xml->Response->Status->code;
-			if (strcmp($Status, '200') == 0) {
+			$Status = $xml->status;
+			if (strcmp($Status, 'OK') == 0) {
 				// Successful geocode
 				$Geocode_Pending = false;
-				$Coordinates = $xml->Response->Placemark->Point->Coordinates;
-				$CoordinatesSplit = explode(",", $Coordinates);
 				// Format: Longitude, Latitude, Altitude
-				$Latitude = $CoordinatesSplit[1];
-				$Longitude = $CoordinatesSplit[0];
+				$Latitude = $xml->result->geometry->location->lat;
+				$Longitude = $xml->result->geometry->location->lng;
 			} else {
 				// failure to geocode
 				$Geocode_Pending = false;
@@ -404,6 +396,7 @@ if (!isset($SelectedBranch)){
 			_('Customer'), '" /> ',// Icon title.
 			_('Branches defined for'), ' ', $DebtorNo, ' - ', $myrow[0], '</p>';// Page title.
 		echo '<table class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Name') . '</th>
@@ -415,19 +408,14 @@ if (!isset($SelectedBranch)){
 				<th class="ascending">' . _('Email') . '</th>
 				<th class="ascending">' . _('Tax Group') . '</th>
 				<th class="ascending">' . _('Enabled?') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
-		$k=0;
 		do {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -467,7 +455,8 @@ if (!isset($SelectedBranch)){
 		} while ($myrow = DB_fetch_row($result));
 		//END WHILE LIST LOOP
 
-		echo '</table>
+		echo '</tbody>
+			</table>
 			<br />
 			<table class="selection">
 			<tr>
@@ -801,19 +790,20 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 	DB_data_seek($result,0);
 
-	$SQL = "SELECT locations.loccode, locationname
-		FROM locations
-		INNER JOIN locationusers
-		ON locationusers.loccode=locations.loccode
-			AND locationusers.userid='" . $_SESSION['UserID'] . "'
-			AND locationusers.canupd=1
-		WHERE locations.allowinvoicing='1'
-		ORDER BY locationname";
+	$SQL = "SELECT locations.loccode,
+					locationname
+			FROM locations
+			INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" . $_SESSION['UserID'] . "'
+				AND locationusers.canupd=1
+			WHERE locations.allowinvoicing='1'
+			ORDER BY locationname";
 	$result = DB_query($SQL);
 
 	if (DB_num_rows($result)==0){
 		echo '</table>';
-		prnMsg(_('There are no stock locations defined as yet') . ' - ' . _('customer branches must refer to a default location where stock is normally drawn from') . '. ' . _('Please use the link below to define at least one stock location'),'error');
+		prnMsg(_('There are no stock locations defined for which this user has access to as yet') . ' - ' . _('customer branches must refer to a default location where stock is normally drawn from') . '. ' . _('Please use the link below to define at least one stock location'),'error');
 		echo '<br /><a href="', $RootPath, '/Locations.php">', _('Define Stock Locations'), '</a>';
 		include('includes/footer.php');
 		exit;
@@ -916,7 +906,7 @@ if (!isset($_GET['delete'])) {
 			<td>' . _('Default freight/shipper method') . ':</td>
 			<td><select tabindex="21" name="DefaultShipVia">';
 	while ($myrow=DB_fetch_array($ShipperResults)){
-		if (isset($_POST['DefaultShipVia'])and $myrow['shipper_id']==$_POST['DefaultShipVia']) {
+		if ((isset($_POST['DefaultShipVia'])and $myrow['shipper_id']==$_POST['DefaultShipVia']) OR ($_SESSION['Default_Shipper'] == $myrow['shipper_id'])) {
 			echo '<option selected="selected" value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
 		} else {
 			echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
