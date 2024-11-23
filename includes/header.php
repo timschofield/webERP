@@ -138,6 +138,12 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 				echo $DefaultManualLink;
 			}
 		}
+	} else {
+		echo '<div id="ActionIcon">
+				<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/ManualContents.php" target="_blank">
+					<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+				</a>
+			</div>';
 	}
 
 	if (!isset($_SESSION['Favourites'])) {
