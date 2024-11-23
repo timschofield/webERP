@@ -605,7 +605,6 @@ echo '<field>
 		<label for="X_ExchangeRateFeed">' . _('Source Exchange Rates From') . ':</label>
 		<select name="X_ExchangeRateFeed">
 			<option value="ECB"' . ($_SESSION['ExchangeRateFeed'] != 'ECB' ? ' selected="selected"' : '') . '>' . _('European Central Bank') . '</option>
-			<option value="Google"' . ($_SESSION['ExchangeRateFeed'] == 'Google' ? ' selected="selected"' : '') . '>' . _('Google') . '</option>
 		</select>
 		<fieldhelp>' . _('Specify the source to use for exchange rates') . '</fieldhelp>
 	</field>';
