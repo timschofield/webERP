@@ -346,13 +346,18 @@ or deletion of the records*/
 		} else {
 			$ShowInWebText = _('No');
 		}
-		
+
 		if ($MyRow['rate'] == 0) {
 			$MyRow['rate'] = 1;
 		}
 		if (!array_key_exists($MyRow['currabrev'], $CurrencyRatesArray)) {
 			$CurrencyRatesArray[$FunctionalCurrency] = 0;
 			$CurrencyRatesArray[$MyRow['currabrev']] = 0;
+		}
+
+		$Rate = GetCurrencyRate($MyRow['currabrev'],$CurrencyRatesArray);
+		if ($Rate == 0) {
+			$Rate = 1;
 		}
 
 		if ($MyRow['currabrev']!=$FunctionalCurrency) {
@@ -365,7 +370,7 @@ or deletion of the records*/
 					<td class="centre">', $ShowInWebText, '</td>
 					<td class="number">', locale_number_format($MyRow['rate'], 'Variable'), '</td>
 					<td class="number">', locale_number_format(1/$MyRow['rate'], 2), '</td>
-					<td class="number">', locale_number_format(GetCurrencyRate($MyRow['currabrev'],$CurrencyRatesArray), 8), '</td>
+					<td class="number">', locale_number_format($Rate, 8), '</td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '">', _('Edit'), '</a></td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">', _('Delete'), '</a></td>
 					<td><a href="', $RootPath, '/ExchangeRateTrend.php?&amp;CurrencyToShow=' . $MyRow['currabrev'], '">' . _('Graph') . '</a></td>
@@ -460,7 +465,7 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="Country" value="' . $_POST['Country'] . '" />';
 	}
 	echo '</field>';
-	
+
 	echo '<field>
 			<label for="HundredsName">' . _('Hundredths Name') . ':</label>';
 	if (!isset($_POST['HundredsName'])) {
@@ -468,7 +473,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input type="text" name="HundredsName" size="10" required="required" minlength="1" maxlength="15" value="' . $_POST['HundredsName'] . '" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="DecimalPlaces">' . _('Decimal Places to Display') . ':</label>';
 	if (!isset($_POST['DecimalPlaces'])) {
@@ -476,7 +481,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input class="integer" type="text" name="DecimalPlaces" size="2" required="required" minlength="1" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="ExchangeRate">' . _('Exchange Rate') . ':</label>';
 	if (!isset($_POST['ExchangeRate'])) {
