@@ -51,11 +51,12 @@ if (isset($Messages) and count($Messages) > 0) {
 		echo '<div class="Message ', $Class, ' noPrint">
 					<span class="MessageCloseButton">&times;</span>
 					<b>', $Message[2], '</b> : ', $Message[0], '
-				</div>';
+				</div>
+			</div>';
+	}
 
-		if (!empty($LogFile)) {
-			fclose($LogFile);
-		}
+	if (!empty($LogFile)) {
+		fclose($LogFile);
 	}
 	echo '</div>';
 }
