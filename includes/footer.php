@@ -10,6 +10,8 @@ if (isset($Messages) and count($Messages) > 0) {
 		$LogFile = fopen($_SESSION['LogPath'] . '/weberp.log', 'a');
 	}
 
+	echo '<div id="MessageContainerFoot">';
+
 	foreach ($Messages as $Message) {
 		switch ($Message[1]) {
 			case 'error':
@@ -46,17 +48,16 @@ if (isset($Messages) and count($Messages) > 0) {
 				}
 		}
 
-		echo '<div id="MessageContainerFoot">
-				<div class="Message ', $Class, ' noPrint">
+		echo '<div class="Message ', $Class, ' noPrint">
 					<span class="MessageCloseButton">&times;</span>
 					<b>', $Message[2], '</b> : ', $Message[0], '
-				</div>
-			</div>';
+				</div>';
 
 		if (!empty($LogFile)) {
 			fclose($LogFile);
 		}
 	}
+	echo '</div>';
 }
 
 echo '</section>'; // BodyDiv
