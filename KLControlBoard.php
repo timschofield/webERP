@@ -514,8 +514,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
+	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath);
