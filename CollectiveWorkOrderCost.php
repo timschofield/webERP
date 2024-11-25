@@ -1,11 +1,18 @@
 <?php
+/* Multiple work orders cost review */
 
 include('includes/session.php');
 $Title = _('Search Work Orders');
+$ViewTopic = 'GeneralLedger';
+$BookMark = 'Z_ChangeGLAccountCode';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-	<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/magnifier.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
+
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -41,37 +48,40 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 		       	$result = DB_query($sql,$ErrMsg);
 			if (DB_num_rows($result)>0) {
 				echo '<table class="selection">
-					<tr><th class="ascending">' . _('Item') . '</th>
+					<thead>
+						<tr>
+							<th class="ascending">' . _('Item') . '</th>
 						<th>' . _('Description') . '</th>
 						<th class="ascending">' . _('Date Issued') . '</th>
 						<th class="ascending">' . _('Issued Qty') . '</th>
 						<th class="ascending">' . _('Issued Cost') . '</th>
 						<th class="ascending">' . _('Work Order') . '</th>
-					</tr>';
-				$i = 0;
-				$TotalCost = 0; 
+						</tr>
+					</thead>
+					<tbody>';
+
+				$TotalCost = 0;
 				while ($myrow = DB_fetch_array($result)){
-					if ($i==0) {
-						echo '<tr class="EvenTableRows">';
-						$i = 1;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$i = 0;
-					}
 					$IssuedQty = - $myrow['qty'];
 					$IssuedCost = $IssuedQty * $myrow['standardcost'];
 					$TotalCost += $IssuedCost;
-					echo '<td>' . $myrow['stockid'] . '</td>
+					echo '<tr class="striped_row">
+						<td>' . $myrow['stockid'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $myrow['trandate'] . '</td>
 						<td class="number">' . locale_number_format($IssuedQty,$myrow['decimalplaces']) . '</td>
 						<td class="number">' . locale_number_format($IssuedCost,2) . '</td>
 						<td>' . $myrow['reference'] . '</td>
-					       </tr>';	
+					       </tr>';
 				}
-				echo '<tr><td colspan="4"><b>' . _('Total Cost') . '</b></td>
+				echo '</tbody>
+					<tfoot>
+						<tr>
+							<td colspan="4"><b>' . _('Total Cost') . '</b></td>
 					<td colspan="2"><b>' .locale_number_format($TotalCost,2) . '</b></td>
-					</tr></table>';	
+						</tr>
+					</tfoot>
+				</table>';
 			} else {
 				prnMsg(_('There are no data available'),'error');
 				include('includes/footer.php');
@@ -206,9 +216,9 @@ if (!isset($StockID)) {
 		echo _('Work Order number') . ': <input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp; ' . _('Processing at') . ':<select name="StockLocation"> ';
 
 		$sql = "SELECT locations.loccode, locationname FROM locations
-				INNER JOIN locationusers 
-					ON locationusers.loccode=locations.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+				INNER JOIN locationusers
+					ON locationusers.loccode=locations.loccode
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
 					AND locationusers.canview=1
 				WHERE locations.usedforwo = 1";
 
@@ -263,13 +273,13 @@ if (!isset($StockID)) {
 			</td>
 			</tr>
 			<tr>
-			<td colspan="2">' . _('Start Date From') . ':<input type="text" name="DateFrom" value="' . $_POST['DateFrom'] . '" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" />
-			
-			' . _('Start Date To') . ':<input type="text" name="DateTo" value="' . $_POST['DateTo'] . '" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" />
+			<td colspan="2">' . _('Start Date From') . ':<input type="text" name="DateFrom" value="' . $_POST['DateFrom'] . '" class="date" />
+
+			' . _('Start Date To') . ':<input type="text" name="DateTo" value="' . $_POST['DateTo'] . '" class="date" />
 			</td>
 				</tr>
 				</table>';
-		echo '<div class="center">
+		echo '<div class="centre">
 			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
 			&nbsp;&nbsp;<a href="' . $RootPath . '/WorkOrderEntry.php">' . _('New Work Order') . '</a>
 			</div>
@@ -312,25 +322,20 @@ if (!isset($StockID)) {
 
 		echo '<br />
 			<table cellpadding="2" class="selection">
+			<thead>
 			<tr>
 				<th class="ascending">' . _('Code') . '</th>
 				<th class="ascending">' . _('Description') . '</th>
 				<th class="ascending">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
-			</tr>';
-		$k=0; //row colour counter
+				</tr>
+			</thead>
+			<tbody>';
 
 		while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
-			printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -341,7 +346,8 @@ if (!isset($StockID)) {
 					$myrow['units']);
 
 		}//end of while loop
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 	}
 	//end if stock search results to show
 	  else {
@@ -365,7 +371,7 @@ if (!isset($StockID)) {
 		if (!empty($_POST['DateTo'])) {
 			$StartDateTo = " AND workorders.startdate<='" . FormatDateForSQL($_POST['DateTo']) . "'";
 		}
-	
+
 		if (isset($SelectedWO) AND $SelectedWO !='') {
 				$SQL = "SELECT workorders.wo,
 								woitems.stockid,
@@ -433,6 +439,7 @@ if (!isset($StockID)) {
 				<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="wos">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<table cellpadding="2" width="95%" class="selection">
+				<thead>
 				<tr>
 					<th>' . _('Select') . '</th>
 					<th>' . _('Modify') . '</th>
@@ -447,18 +454,11 @@ if (!isset($StockID)) {
 					<th class="ascending">' . _('Quantity Outstanding') . '</th>
 					<th class="ascending">' . _('Start Date')  . '</th>
 					<th class="ascending">' . _('Required Date') . '</th>
-				</tr>';
+					</tr>
+				</thead>
+				<tbody>';
 
-		$k=0; //row colour counter
 		while ($myrow=DB_fetch_array($WorkOrdersResult)) {
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 
 			$ModifyPage = $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'];
 			$Status_WO = $RootPath . '/WorkOrderStatus.php?WO=' .$myrow['wo'] . '&amp;StockID=' . $myrow['stockid'];
@@ -471,7 +471,8 @@ if (!isset($StockID)) {
 			$FormatedStartDate = ConvertSQLDate($myrow['startdate']);
 
 
-			printf('<td><input type="checkbox" name="WO_%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input type="checkbox" name="WO_%s" /></td>
 					<td><a href="%s">%s</a></td>
 					<td><a href="%s">' . _('Status') . '</a></td>
 					<td><a href="%s">' . _('Issue To') . '</a></td>
@@ -504,8 +505,9 @@ if (!isset($StockID)) {
 		}
 		//end of while loop
 
-		echo '</table>
-			<div class="center">
+		echo '</tbody>
+			</table>
+			<div class="centre">
 				<input type="submit" value="' . _('Submit') . '" name="Submit" />
 			</form>';
       }

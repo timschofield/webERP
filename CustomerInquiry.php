@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustomerInquiry.php 7597 2016-08-19 12:03:21Z tehonu $*/
 /* Shows the customers account transactions with balances outstanding, links available to drill down to invoice/credit note or email invoices/credit notes. */
 
 include('includes/session.php');
@@ -153,7 +152,7 @@ if ($NIL_BALANCE == True) {
 	$CustomerRecord['overdue2'] = 0;
 }
 
-echo '<div class="toplink">
+echo '<div class="noprint centre">
 		<a href="', $RootPath, '/SelectCustomer.php">', _('Back to Customer Screen'), '</a>
 	</div>';
 
@@ -185,7 +184,7 @@ echo '<tr>
 
 echo '<div class="centre"><form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="noPrint">
 		<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-echo _('Show all transactions after'), ':<input type="text" required="required" class="date" alt="', $_SESSION['DefaultDateFormat'], '" id="datepicker" name="TransAfterDate" value="', $_POST['TransAfterDate'], '" minlength="0" maxlength="10" size="12" />';
+echo _('Show all transactions after'), ':<input type="text" required="required" class="date" name="TransAfterDate" value="', $_POST['TransAfterDate'], '" maxlength="10" size="11" />';
 
 echo '<select name="Status">';
 if ($_POST['Status'] == '') {
@@ -264,16 +263,7 @@ echo '<table class="selection"><thead>
 	</tr>
 	</thead><tbody>';
 
-$k = 0; //row colour counter
 while ($MyRow = DB_fetch_array($TransResult)) {
-
-	if ($k == 1) {
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
-	}
 
 	$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
@@ -291,7 +281,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			 * - User can raise credits
 			 * - User can view GL transactions
 			 */
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '" target="_blank">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -337,7 +328,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			 * - User can raise credits
 			 * - User cannot view GL transactions
 			 */
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -381,7 +373,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - User cannot raise credits
 		 * - User cannot view GL transactions
 		 */
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+				<td>', _($MyRow['typename']), '</td>
 				<td>', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>
@@ -418,7 +411,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - User can view GL transactions
 		 */
 		if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and in_array($_SESSION['PageSecurityArray']['GLTransInquiry.php'], $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -464,7 +458,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is credit note
 			* - User cannot view GL transactions
 			*/
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -507,7 +502,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - User can view GL transactions
 		 */
 		if ($_SESSION['CompanyRecord']['gllink_debtors'] == 1 and in_array($_SESSION['PageSecurityArray']['GLTransInquiry.php'], $_SESSION['AllowedPageSecurityTokens'])) {
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td><a href="' . $RootPath . '/CustWhereAlloc.php?TransType=' . $MyRow['type'] . '&TransNo=' . $MyRow['transno'] . '">' . $MyRow['transno'] . '</a></td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -539,7 +535,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 		 * - Is credit note
 		 * - User cannot view GL transactions
 		 */
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -568,7 +565,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a negative receipt
 			* - User can view GL transactions
 			*/
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -595,7 +593,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a negative receipt
 			* - User cannot view GL transactions
 			*/
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -618,7 +617,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a misc transaction
 			* - User can view GL transactions
 			*/
-			echo '<td>', _($MyRow['typename']), '</td>
+			echo '<tr class="striped_row">
+					<td>', _($MyRow['typename']), '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>
@@ -645,7 +645,8 @@ while ($MyRow = DB_fetch_array($TransResult)) {
 			* - Is a misc transaction
 			* - User cannot view GL transactions
 			*/
-			echo '<td>', $MyRow['typename'], '</td>
+			echo '<tr class="striped_row">
+					<td>', $MyRow['typename'], '</td>
 					<td>', $MyRow['transno'], '</td>
 					<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 					<td>', $MyRow['branchcode'], '</td>

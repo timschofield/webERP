@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Contracts.php 3692 2010-08-15 09:22:08Z daintree $ */
 
 include('includes/DefineContractClass.php');
 include('includes/session.php');
@@ -117,7 +116,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 
 	$result = $_FILES['Drawing']['error'];
 	$ImgExt = pathinfo($_FILES['Drawing']['name'], PATHINFO_EXTENSION);
-	
+
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
 	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $ImgExt;
 
@@ -756,7 +755,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		OR $_SESSION['Contract'.$identifier]->DebtorNo=='' ) {
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract') . '" alt="" />' . ' ' . _('Contract: Select Customer') . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier .'" name="CustomerSelection" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" name="CustomerSelection" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table cellpadding="3" class="selection">
@@ -791,21 +790,13 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo $TableHeader;
 
 		$j = 1;
-		$k = 0; //row counter to determine background colour
+
 		$LastCustomer='';
 		while ($myrow=DB_fetch_array($result_CustSelect)) {
-
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
 			if ($LastCustomer != $myrow['name']) {
-				echo '<td>' .  $myrow['name']  . '</td>';
+				echo '<tr class="striped_row"><td>' .  $myrow['name']  . '</td>';
 			} else {
-				echo '<td></td>';
+				echo '<tr class="striped_row"><td></td>';
 			}
 			echo '<td><input type="submit" name="Submit'.$j.'" value="' . $myrow['brname'] . '" /></td>
 					<input type="hidden" name="SelectedCustomer'.$j.'" value="'. $myrow['debtorno'] . '" />
@@ -820,13 +811,15 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		}
 //end of while loop
 
-		echo '</table></form>';
+		echo '</table>';
 	}//end if results to show
+
+	echo '</form>';
 
 //end if RequireCustomerSelection
 } else { /*A customer is already selected so get into the contract setup proper */
 
-	echo '<form name="ContractEntry" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '" method="post">';
+	echo '<form name="ContractEntry" enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
@@ -839,6 +832,16 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		echo  _('Modify Contract') . ': ' . $_SESSION['Contract'.$identifier]->ContractRef;
 	}
 	echo '</p>';
+
+	$sql = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
+	$wcresults = DB_query($sql);
+
+	if (DB_num_rows($wcresults)==0){
+		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
+		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
+		include('includes/footer.php');
+		exit;
+	}
 
 	/*Set up form for entry of contract header stuff */
 
@@ -857,7 +860,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		</tr>
 		<tr>
 			<td>' . _('Category') . ':</td>
-			<td><select name="CategoryID" >';
+			<td><select name="CategoryID">';
 
 	$sql = "SELECT categoryid, categorydescription FROM stockcategory";
 	$ErrMsg = _('The stock categories could not be retrieved because');
@@ -872,7 +875,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		}
 	}
 
-	echo '</select><a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
+	echo '</select>&nbsp;&nbsp;<a target="_blank" href="'. $RootPath . '/StockCategories.php">' . _('Add or Modify Contract Categories') . '</a></td></tr>';
 
 	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$ErrMsg = _('The stock locations could not be retrieved because');
@@ -881,7 +884,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<tr>
 			<td>' . _('Location') . ':</td>
-			<td><select name="LocCode" >';
+			<td><select name="LocCode">';
 	while ($myrow=DB_fetch_array($result)){
 		if (!isset($_SESSION['Contract'.$identifier]->LocCode) or $myrow['loccode']==$_SESSION['Contract'.$identifier]->LocCode){
 			echo '<option selected="selected" value="'. $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
@@ -891,20 +894,11 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	}
 
 	echo '</select></td></tr>';
-	$sql = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-	$result = DB_query($sql);
-
-	if (DB_num_rows($result)==0){
-		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
-		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
-		include('includes/footer.php');
-		exit;
-	}
 	echo '<tr><td>' . _('Default Work Centre') . ': </td><td>';
 
 	echo '<select name="DefaultWorkCentre">';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($myrow = DB_fetch_array($wcresults)) {
 		if (isset($_POST['DefaultWorkCentre']) and $myrow['code']==$_POST['DefaultWorkCentre']) {
 			echo '<option selected="selected" value="'.$myrow['code'] . '">' . $myrow['description'] . '</option>';
 		} else {
@@ -913,6 +907,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	} //end while loop
 
 	DB_free_result($result);
+	DB_free_result($wcresults);
 
 	echo '</select></td>
 		</tr>
@@ -922,9 +917,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 		</tr><tr>
 			<td>' .  _('Drawing File') . ' ' . implode(", ", $SupportedImgExt) . ' ' . _('format only') .':</td>
 			<td><input type="file" id="Drawing" name="Drawing" />
-			
+
 			</td>';
-	
+
 	$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 	echo '<td> ' . $imagefile . '</td>';
 	echo '</tr>';
@@ -935,7 +930,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<tr>
 			<td>' . _('Required Date') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' .$_SESSION['DefaultDateFormat'] . '" name="RequiredDate" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td>
+			<td><input type="text" required="required" class="date" name="RequiredDate" maxlength="10" size="11" value="' . $_SESSION['Contract'.$identifier]->RequiredDate . '" /></td>
 		</tr>';
 
 	echo '<tr>
