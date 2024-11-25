@@ -418,8 +418,8 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 			MaintainOpenCartDiscountForItem($ProductId, $Price, $DiscountCategory, $PriceList );
 			
 			/* IF It is an Outlet 20% or 50% item, we have to mark it as category outlet in Opencart*/
-			if (($DiscountCategory == 20) OR (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_DISCOUNT_20))
-				OR ($DiscountCategory == 50) OR (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_DISCOUNT_50))){
+			if (($DiscountCategory == 20) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_20))
+				OR ($DiscountCategory == 50) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_50))){
 				if ($ItemBrand == "KL"){
 					$SalesCatId = 129; // Category Outlet-Discount Kapal-Laut
 				}elseif ($ItemBrand == "BL"){
@@ -432,15 +432,15 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 			}
 			
 			/* Assign access rights to the right customer groups. */
-			if (($DiscountCategory == 20) OR (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_DISCOUNT_20))
-				OR ($DiscountCategory == 50) OR (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_DISCOUNT_50))){
+			if (($DiscountCategory == 20) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_20))
+				OR ($DiscountCategory == 50) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_50))){
 				/* if it a 20% or 50% discounted item, can be seen by all customer groups*/
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_GUEST);
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_RETAIL);
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_NO_MINIMUM);
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE);
 				AssignAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_WHOLESALE_ONLY_DISCOUNTED);
-			}elseif (($DiscountCategory == 80) OR (ItemInLIst($ItemCategory], LIST_STOCK_CATEGORIES_DISCOUNT_80))){
+			}elseif (($DiscountCategory == 80) OR (ItemInLIst($ItemCategory, LIST_STOCK_CATEGORIES_DISCOUNT_80))){
 				/* it is a 80% discount items, should not be available to anyone. Being strict it is not needed
 				as it is marked as disabled, but to keep data consistent, we revoke rights*/
 				RevokeAcessRightsProductsToCustomerGroupInOpenCart($ProductId, OPENCART_CUSTOMER_GROUP_GUEST);
