@@ -6,12 +6,35 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg, $Type = 'info', $Prefix = '') {
+function prnMsg($Msg, $Type = 'info', $Prefix = '', $return = false) {
 	global $Messages;
-	$Messages[] = array($Msg, $Type, $Prefix);
+    if($return){
+        $Prefix = $Type == 'info'
+            ? _('INFORMATION') . ' ' . _('Message')
+            : ($Type == 'warning' || $Type == 'warn'
+                ? _('WARNING') . ' ' . _('Report')
+                : ($Type == 'error'
+                    ? _('ERROR') . ' ' . _('Report')
+                    : _('SUCCESS') . ' ' . _('Report')
+                )
+            );
+        return '<div id="MessageContainerFoot">
+				<div class="Message '. $Type . ' noPrint">
+					<span class="MessageCloseButton">&times;</span>
+					<b>'. $Prefix . '</b> : ' .  $Msg . '
+				</div>
+			</div>';
+    }
+    else{
+        $Messages[] = array($Msg, $Type, $Prefix);
+    }
 }
 
 function reverse_escape($str) {
+	if (is_null($str)) {
+		$str = '';
+	}
+
 	$search = array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"');
 	$replace = array("\\", "\0", "\n", "\r", "\x1a", "'", '"');
 	return str_replace($search, $replace, $str);
@@ -87,8 +110,8 @@ class XmlElement {
 function GetECBCurrencyRates() {
 	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
 	for detail of the European Central Bank rates - published daily */
-	if (http_file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
-		$xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
+	if (http_file_exists('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+		$xml = file_get_contents('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
@@ -150,8 +173,8 @@ function GetCurrencyRate($CurrCode, $CurrenciesArray) {
 }
 
 function quote_oanda_currency($CurrCode) {
-	if (http_file_exists('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
-		$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
+	if (http_file_exists('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
+		$page = file('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 		$match = array();
 		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
 		if (sizeof($match) > 0) {
@@ -164,7 +187,7 @@ function quote_oanda_currency($CurrCode) {
 
 function google_currency_rate($CurrCode) {
 	$Rate = 0;
-	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
+	$PageLines = file('//www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
 	foreach ($PageLines as $Line) {
 		if (mb_strpos($Line, 'currency_converter_result')) {
 			$Length = mb_strpos($Line, '</span>') - 58;
@@ -177,6 +200,136 @@ function google_currency_rate($CurrCode) {
 function AddCarriageReturns($str) {
 	return str_replace('\r\n', chr(10), $str);
 }
+//Replace all text/html line breaks with PHP_EOL(default) or given line break.
+function Convert_line_breaks($string, $line_break=PHP_EOL)
+{
+    $patterns = array(  "/(<br>|<br \/>|<br\/>)\s*/i",
+                        "/(\r\n|\r|\n)/" );
+    $replacements = array(  $line_break,
+                            $line_break );
+    $string = preg_replace($patterns, $replacements, $string);
+    return $string;
+}
+//Replace all text line breaks with PHP_EOL(default) or given line break.
+function Convert_CRLF($string, $line_break=PHP_EOL)
+{
+    $patterns = array(  "/(\r\n|\r|\n)/" );
+    $replacements = array(  $line_break );
+    $string = preg_replace($patterns, $replacements, $string);
+    return $string;
+}
+
+
+//NPFunc - New Page Function, can be a direct function call or an anonymous function for more complex behavior
+//         Null if not used
+//NPINC  - New Page Include, where a PHP script is included again to facilitate a new page
+//         Null if not used
+//&$YPos - return the updated value
+//         Coming in, YPos=prior line, so update it before we print anything, and don't update it if we don't print anything
+//Defaults come from addTextWrap
+function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
+{
+	$InitialExtraSpace=2;		//shift down slightly from above text
+
+	$Text=Convert_line_breaks(htmlspecialchars_decode($Text));
+	$Split = explode(PHP_EOL, $Text);
+	foreach ($Split as $LeftOvers) {
+		$LeftOvers = stripslashes($LeftOvers);
+		while(mb_strlen($LeftOvers)>1) {
+			if ($YPos < $YLim) {// If the description line reaches the bottom margin, do PageHeader(), PageInclude(), etc.
+				if($NPFunc!=null) {
+					$NPFunc();
+				}
+				if($NPInc!=null) {
+					include ($NPInc);
+				}
+			}
+			$YPos=$YPos-$FontSize-$InitialExtraSpace;
+			$InitialExtraSpace=0;
+			$LeftOvers = $PDF->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
+		}
+	}
+}
+
+function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
+{
+	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
+
+	$FontSize = 14;
+	$PDF->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
+	$YPos -= $FontSize;
+	$FontSize = 10;
+
+	//webERP default:
+	$PDF->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+	$PDF->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+	$PDF->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
+	$PDF->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
+	$PDF->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
+		' ' . $_SESSION['CompanyRecord']['regoffice6']);
+	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
+		' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
+	$PDF->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
+
+}
+
+//Generically move down 82 units after printing this
+function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
+{
+	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
+
+	$FontSize = 14;
+	$line_height=15;
+	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+
+	//webERP default:
+	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
+	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
+	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
+	$PDF->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
+
+	// Draws a box with round corners around 'Delivery To' info:
+	$PDF->RoundRectangle(
+		$XPos-6,// RoundRectangle $XPos.
+		$YPos+2,// RoundRectangle $YPos.
+		245,// RoundRectangle $Width.
+		80,// RoundRectangle $Height.
+		10,// RoundRectangle $RadiusX.
+		10);// RoundRectangle $RadiusY.
+}
+
+//Generically move down 82 units after printing this
+function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
+{
+	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
+
+	$FontSize = 14;
+	$line_height=15;
+	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+
+	//webERP default:
+	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
+	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
+	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
+	$PDF->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
+
+	// Draws a box with round corners around 'Delivery To' info:
+	$PDF->RoundRectangle(
+		$XPos-6,// RoundRectangle $XPos.
+		$YPos+2,// RoundRectangle $YPos.
+		245,// RoundRectangle $Width.
+		80,// RoundRectangle $Height.
+		10,// RoundRectangle $RadiusX.
+		10);// RoundRectangle $RadiusY.
+}
+
+
+
+
+
+
+
+
 
 function wikiLink($WikiType, $WikiPageID) {
 	if (strstr($_SESSION['WikiPath'], 'http:')) {
@@ -195,9 +348,9 @@ function wikiLink($WikiType, $WikiPageID) {
 
 //  Lindsay debug stuff
 function LogBackTrace($dest = 0) {
-	error_log("***BEGIN STACK BACKTRACE***", $dest);
 
 	$stack = debug_backtrace();
+	error_log("***BEGIN STACK BACKTRACE***", $dest);
 	//  Leave out our frame and the topmost - huge for xmlrpc!
 	for ($ii = 1;$ii < count($stack) - 3;$ii++) {
 		$frame = $stack[$ii];
@@ -268,6 +421,7 @@ function http_file_exists($url) {
 function locale_number_format($Number, $DecimalPlaces = 0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
+	if ($DecimalPlaces == null) $DecimalPlaces = 0;
 	if (substr($_SESSION['Language'], 3, 2) == 'IN') { // If country is India (??_IN.utf8). See Indian Numbering System in Manual, Multilanguage, Technical Overview.
 		return indian_number_format(floatval($Number), $DecimalPlaces);
 	} else {
@@ -571,173 +725,3 @@ function fShowPageHelp($HelpText) {
 function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
-
-function ChangeGLAcoountCode ($NewGL, $OldGL){
-	/*First check the code exists */
-	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
-	if(DB_num_rows($result)==0) {
-		prnMsg(_('The GL account code') . ': ' . $OldGL . ' ' . _('does not currently exist as a GL account code in the system'),'error');
-		$InputError =1;
-	}
-
-	if(ContainsIllegalCharacters($NewGL)) {
-		prnMsg(_('The new GL account code to change the old code to contains illegal characters - no changes will be made'),'error');
-		$InputError =1;
-	}
-
-	if($NewGL=='') {
-		prnMsg(_('The new GL account code to change the old code to must be entered as well'),'error');
-		$InputError =1;
-	}
-
-	/*Now check that the new code doesn't already exist */
-	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $NewGL . "'");
-	if(DB_num_rows($result)!=0) {
-		echo '<br /><br />';
-		prnMsg(_('The replacement GL account code') . ': ' . $NewGL . ' ' . _('already exists as a GL account code in the system') . ' - ' . _('a unique GL account code must be entered for the new code'),'error');
-		$InputError =1;
-	}
-
-
-	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
-		echo '<br />' . _('Adding the new chartmaster record');
-		$sql = "INSERT INTO chartmaster (accountcode,
-										accountname,
-										group_,
-										cashflowsactivity,
-										controlled)
-				SELECT '" . $NewGL . "',
-					accountname,
-					group_,
-					cashflowsactivity,
-					controlled
-				FROM chartmaster
-				WHERE accountcode='" . $OldGL . "'";
-
-		$DbgMsg = _('The SQL statement that failed was');
-		$ErrMsg =_('The SQL to insert the new chartmaster record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
-		echo ' ... ' . _('completed');
-
-		DB_IgnoreForeignKeys();
-
-		ChangeFieldInTable("bankaccounts", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("bankaccountusers", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("banktrans", "bankact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("chartdetails", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("cogsglpostings", "glcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("companies", "debtorsact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "pytdiscountact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "creditorsact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "payrollact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "grnact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "exchangediffact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "purchasesexchangediffact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "retainedearnings", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "freightact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("fixedassetcategories", "costact", $OldGL, $NewGL);
-		ChangeFieldInTable("fixedassetcategories", "depnact", $OldGL, $NewGL);
-		ChangeFieldInTable("fixedassetcategories", "disposalact", $OldGL, $NewGL);
-		ChangeFieldInTable("fixedassetcategories", "accumdepnact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("glaccountusers", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("gltrans", "account", $OldGL, $NewGL);
-
-		ChangeFieldInTable("lastcostrollup", "stockact", $OldGL, $NewGL);
-		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("locations", "glaccountcode", $OldGL, $NewGL);// Location's ledger account.
-
-		ChangeFieldInTable("pcexpenses", "glaccount", $OldGL, $NewGL);
-
-		ChangeFieldInTable("pctabs", "glaccountassignment", $OldGL, $NewGL);
-		ChangeFieldInTable("pctabs", "glaccountpcash", $OldGL, $NewGL);
-
-		ChangeFieldInTable("purchorderdetails", "glcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("salesglpostings", "discountglcode", $OldGL, $NewGL);
-		ChangeFieldInTable("salesglpostings", "salesglcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("stockcategory", "stockact", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "adjglact", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "issueglact", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "purchpricevaract", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "materialuseagevarac", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "wipact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("taxauthorities", "taxglcode", $OldGL, $NewGL);
-		ChangeFieldInTable("taxauthorities", "purchtaxglaccount", $OldGL, $NewGL);
-		ChangeFieldInTable("taxauthorities", "bankacctype", $OldGL, $NewGL);
-
-		ChangeFieldInTable("workcentres", "overheadrecoveryact", $OldGL, $NewGL);
-
-		DB_ReinstateForeignKeys();
-		// KL RICARD tables
-		ChangeFieldInTable("chartmasterADU", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterSMH", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterBB", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterIK", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterPI", "accountcode", $OldGL, $NewGL);
-		
-		ChangeFieldInTable("klretailpartners", "accountppn", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accounthppcompensation", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountbankdanamon", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountbankmandiri", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountbankbca", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissioncreditcard", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountconsignmentsalesptadu", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountconsignmentcogspartner", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountwechat", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissionwechat", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountqris", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissionqris", $OldGL, $NewGL);
-
-		ChangeFieldInTable("klonlinepartners", "accountdokuidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountdokucomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalaud", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionaud", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalusd", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionusd", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypaleur", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissioneur", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountxenditidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountxenditcomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountcomissionppn", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttransfermandiri", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttransferbca", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttransferdanamon", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountmidtransidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttokopediaidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttokopediacomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountshopeeidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountshopeecomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountlazadaidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountlazadacomissionidr", $OldGL, $NewGL);
-
-
-
-
-		DB_ReinstateForeignKeys();
-
-		$result = DB_Txn_Commit();
-
-		echo '<br />' . _('Deleting the old chartmaster record');
-		$sql = "DELETE FROM chartmaster WHERE accountcode='" . $OldGL . "'";
-		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
-		echo ' ... ' . _('completed');
-
-		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;
-	}//only do the stuff above if  $InputError==0
-	
-}
-
-?>
