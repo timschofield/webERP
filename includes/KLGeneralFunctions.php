@@ -675,13 +675,13 @@ function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
 }
 
 function FindWebsiteBrand($StockID, $Category, $Description){
-	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+	if (ItemInList($Category, LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)){
 		// if belongs to one of the KL categories, so Brand is KL
 		$Brand = 1;	
-	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK)){
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)){
 		// if belongs to one of the BL categories, so Brand is BL
 		$Brand = 2;	
-	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL)){
+	}else if (ItemInList($Category, LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT)){
 		// if belongs to one of the General categories, so Brand is KL
 		$Brand = 1;	
 	}else{

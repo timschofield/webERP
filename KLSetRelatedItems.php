@@ -85,7 +85,7 @@ if (DB_num_rows($result) != 0){
 			}
 		}
 */		
-		if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
+		if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISC_20_50)){
 			$SQLExists = "SELECT *
 							FROM relateditems
 							WHERE relateditems.stockid = '" . $myrow['stockid'] . "'

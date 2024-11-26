@@ -46,7 +46,8 @@ if ($_GET['Action'] == "New"){
 
 DB_Txn_Begin();
 
-if (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISCOUNT)){
+if (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)){
+	// it is a KL item
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2A";
 	}elseif($_GET['Discount'] == "50"){
@@ -54,7 +55,8 @@ if (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DIS
 	}else{
 		$NewCategory = "DISC8A";
 	}
-}elseif (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_DISCOUNT)){
+}elseif (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)){
+	// it is a BLINK item
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2B";
 	}elseif($_GET['Discount'] == "50"){
@@ -63,6 +65,7 @@ if (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DIS
 		$NewCategory = "DISC8B";
 	}
 }else{
+	// it is a GENERAL item
 	if ($_GET['Discount'] == "20"){
 		$NewCategory = "DISC2G";
 	}elseif($_GET['Discount'] == "50"){
