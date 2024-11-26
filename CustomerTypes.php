@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustomerTypes.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Customer Types') . ' / ' . _('Maintenance');
@@ -184,23 +183,18 @@ or deletion of the records*/
 	$result = DB_query($sql);
 
 	echo '<br /><table class="selection">';
-	echo '<tr>
+	echo '<thead>
+			<tr>
 			<th class="ascending">' . _('Type ID') . '</th>
 			<th class="ascending">' . _('Type Name') . '</th>
-		</tr>';
-
-$k=0; //row colour counter
+			</tr>
+		</thead>
+		<tbody>';
 
 while ($myrow = DB_fetch_row($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
-printf('<td>%s</td>
+	printf('<tr class="striped_row">
+		<td>%s</td>
 		<td>%s</td>
 		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Customer Type?') . '");\'>' . _('Delete') . '</a></td>
@@ -213,7 +207,7 @@ printf('<td>%s</td>
 		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!
