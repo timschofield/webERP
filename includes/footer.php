@@ -31,45 +31,60 @@ echo '<div id="mask">
 	</div>';
 
 if (isset($Messages) and count($Messages) > 0) {
+	$LogFile = false;
+
+	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 0) { // add these 3 lines
+		$LogFile = fopen($_SESSION['LogPath'] . '/weberp.log', 'a');
+	}
+
+	echo '<div id="MessageContainerFoot">';
+
 	foreach ($Messages as $Message) {
 		switch ($Message[1]) {
 			case 'error':
 				$Class = 'error';
 				$Message[2] = $Message[2] ? $Message[2] : _('ERROR') . ' ' . _('Report');
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 0) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
-			break;
+			    break;
+
 			case 'warn':
 			case 'warning':
 				$Class = 'warn';
 				$Message[2] = $Message[2] ? $Message[2] : _('WARNING') . ' ' . _('Report');
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 1) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
-			break;
-			case 'success':
-				$Class = 'success';
-				$Message[2] = $Message[2] ? $Message[2] : _('SUCCESS') . ' ' . _('Report');
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+				break;
+
+            case 'info':
+                $Class = 'info';
+                $Message[2] = $Message[2] ? $Message[2] : _('INFORMATION') . ' ' . _('Message');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 2) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
-			break;
-			case 'info':
+				break;
+
+            case 'success':
 			default:
-				$Message[2] = $Message[2] ? $Message[2] : _('INFORMATION') . ' ' . _('Message');
-				$Class = 'info';
-				if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 2) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Type . ',' . $_SESSION['UserID'] . ',' . trim($Msg, ',') . "\n");
+                $Class = 'success';
+                $Message[2] = $Message[2] ? $Message[2] : _('SUCCESS') . ' ' . _('Report');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 3) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
 		}
-		echo '<div id="MessageContainerFoot">
-				<div class="Message ', $Class, ' noPrint">
+
+		echo '<div class="Message ', $Class, ' noPrint">
 					<span class="MessageCloseButton">&times;</span>
 					<b>', $Message[2], '</b> : ', $Message[0], '
-				</div>
 			</div>';
 	}
+
+	if (!empty($LogFile)) {
+		fclose($LogFile);
+	}
+	echo '</div>';
 }
 
 echo '</section>'; // BodyDiv
@@ -82,5 +97,4 @@ echo '<footer class="noPrint">
 	</footer>'; // FooterDiv
 echo '</body>';
 echo '</html>';
-
 ?>

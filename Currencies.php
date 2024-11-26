@@ -354,7 +354,6 @@ or deletion of the records*/
 			$CurrencyRatesArray[$FunctionalCurrency] = 0;
 			$CurrencyRatesArray[$MyRow['currabrev']] = 0;
 		}
-
 		$Rate = GetCurrencyRate($MyRow['currabrev'],$CurrencyRatesArray);
 		if ($Rate == 0) {
 			$Rate = 1;
