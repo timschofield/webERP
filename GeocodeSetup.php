@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: GeocodeSetup.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Geocode Maintenance');
@@ -132,7 +131,7 @@ or deletion of the records*/
 			FROM geocode_param";
 	$result = DB_query($sql);
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . 
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' .
 			_('Setup configuration for Geocoding of Customers and Suppliers')  . '</p>';
 	echo '<div class="page_help_text">' .  _('Get a google API key at ') .
 		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
@@ -152,18 +151,10 @@ or deletion of the records*/
 			<th>' .  _('Map host') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
 	while ($myrow=DB_fetch_row($result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>

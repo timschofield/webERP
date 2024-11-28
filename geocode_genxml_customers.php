@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: geocode_genxml_customers.php 6941 2014-10-26 23:18:08Z daintree $*/
 //$PageSecurity = 3;
 $Title = _('Geocode Generate XML');
 
