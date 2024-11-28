@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Factors.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 
@@ -20,7 +19,7 @@ if (isset($_GET['FactorID'])){
 if (isset($_POST['Create'])) {
 	$FactorID = 0;
 	$_POST['New'] = 'Yes';
-};
+}
 
 echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="'
 	. _('Factor Companies') . '" alt="" />' . ' ' .$Title . '</p></div>';
@@ -205,7 +204,7 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Factor company Name') . ':</td>
-			<td><input tabindex="1" type="text" name="FactorName" required="required" size="42" maxlength="40" value="' .$_POST['FactorName'].'" /></td>
+			<td><input tabindex="1" type="text" name="FactorName" required="required" size="42" maxlength="40" value="' . $_POST['FactorName'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Address Line 1') . ':</td>
@@ -310,16 +309,10 @@ if (empty($FactorID) AND !isset($_POST['Create']) AND !isset($_POST['Amend'])) {
 					email
 			FROM factorcompanies";
 	$result=DB_query($sql);
-	$j=1;
+
 	while ($myrow = DB_fetch_array($result)) {
-		if ($j==1) {
-			echo '<tr class="OddTableRows">';
-			$j=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$j++;
-		}
-		echo '<td>' . $myrow['id'] . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $myrow['id'] . '</td>
 			<td>' . $myrow['coyname'] . '</td>
 			<td>' . $myrow['address1'] . '</td>
 			<td>' . $myrow['address2'] . '</td>

@@ -1,5 +1,4 @@
 <?php
-/* $Id: ExchangeRateTrend.php 7677 2016-11-23 16:05:02Z rchacon $*/
 /* This script shows the trend in exchange rates as retrieved from ECB. */
 
 include('includes/session.php');

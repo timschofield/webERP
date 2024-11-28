@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: FTP_RadioBeacon.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*Variables required to configure this script must be set in config.php */
 
@@ -61,25 +60,18 @@ $TableHeader =	'<tr>
 echo $TableHeader;
 
 $j = 1;
-$k=0; //row colour counter
 while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
 	$FTPDispatchNote = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?OrderNo=' . $myrow['orderno'];
 	$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 	$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 	$FormatedOrderValue = locale_number_format($myrow['ordervalue'],2);
 	$FormatedDateLastSent = ConvertSQLDate($myrow['datepackingslipprinted']);
-	$ModifyPage = $RootPath . 'SelectOrderItems.php?' . SID . '&ModifyOrderNumber=' . $myrow['orderno'];
+	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
 
 	if ($myrow['printedpackingslip'] ==1){
-		printf('<td><font size="2"><a href="%s">%s</a></font></td>
+		printf('<tr class="striped_row">
+				<td><font size="2"><a href="%s">%s</a></font></td>
 				<td><font color=RED size="2">' . _('Already') . '<br />' . _('Sent') . '</font></td>
 				<td><font size="2">%s</font></td>
 				<td><font size="2">%s</font></td>
@@ -100,7 +92,8 @@ while ($myrow=DB_fetch_array($SalesOrdersResult)) {
 				$FormatedOrderValue,
 				$FormatedDateLastSent);
 	} else {
-		printf('<td><font size="2"><a href="%s">%s</a></font></td>
+		printf('<tr class="striped_row">
+				<td><font size="2"><a href="%s">%s</a></font></td>
 				<td><font size="2"><a href="%s">' . _('Send') . '</a></font></td>
 				<td><font size="2">%s</font></td>
 				<td><font size="2">%s</font></td>

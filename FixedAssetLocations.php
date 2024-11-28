@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: FixedAssetLocations.php 6941 2014-10-26 23:18:08Z daintree $ */
 
 include('includes/session.php');
 $Title = _('Fixed Asset Locations');
@@ -94,13 +93,16 @@ $result=DB_query($sql);
 
 if (DB_num_rows($result) > 0) {
 	echo '<table class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">' . _('Location ID') . '</th>
 			<th class="ascending">' . _('Location Description') . '</th>
 			<th class="ascending">' . _('Parent Location') . '</th>
-		</tr>';
-}
-while ($myrow=DB_fetch_array($result)) {
+			</tr>
+		</thead>
+		<tbody>';
+
+	while ($myrow=DB_fetch_array($result)) {
 	echo '<tr>
 			<td>' . $myrow['locationid'] . '</td>
 			<td>' . $myrow['locationdescription'] . '</td>';
@@ -108,17 +110,18 @@ while ($myrow=DB_fetch_array($result)) {
 	$ParentResult=DB_query($ParentSql);
 	$ParentRow=DB_fetch_array($ParentResult);
 	echo '<td>' . $ParentRow['locationdescription'] . '</td>
-		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation='.$myrow['locationid'].'">' .  _('Edit') . '</a></td></tr>';
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($myrow['locationid']), '">', _('Edit'), '</a></td></tr>';
+	}
+
+	echo '</tbody></table>';
 }
 
-echo '</table>
-	<br />';
-echo '<form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
+	echo '<br /><form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">
       <div>
     <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 	<table class="selection">
 	<tr>
-		<th style="text-align:left">' . _('Location ID') . '</th>';
+		<th class="text">' . _('Location ID') . '</th>';
 if (isset($_GET['SelectedLocation'])) {
 	echo '<input type="hidden" name="LocationID" value="'.$LocationID.'" />';
 	echo '<td>' . $LocationID . '</td>';
@@ -128,11 +131,11 @@ if (isset($_GET['SelectedLocation'])) {
 }
 
 echo '<tr>
-		<th style="text-align:left">' . _('Location Description') . '</th>
+		<th class="text">' . _('Location Description') . '</th>
 		<td><input type="text" name="LocationDescription" required="required" title="' . _('Enter the fixed asset location description. Up to 20 characters') . '" size="20" value="'.$LocationDescription.'" /></td>
 	</tr>
 	<tr>
-		<th style="text-align:left">' . _('Parent Location') . '</th>
+		<th class="text">' . _('Parent Location') . '</th>
 		<td><select name="ParentLocationID">';
 
 $sql="SELECT locationid, locationdescription FROM fixedassetlocations";
@@ -153,9 +156,8 @@ echo '</select></td>
 
 echo '<div class="centre">';
 if (isset($_GET['SelectedLocation'])) {
-	echo '<input type="submit" name="update" value="' . _('Update Information') . '" />';
-	echo '<br />
-		<br />
+	echo '<input type="submit" name="update" value="' . _('Update Information') . '" />
+		<br /><br />
 		<input type="submit" name="delete" value="' . _('Delete This Location') . '" />';
 } else {
 	echo '<input type="submit" name="submit" value="' . _('Enter Information') . '" />';

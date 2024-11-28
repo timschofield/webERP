@@ -1,5 +1,4 @@
 <?php
-/* $Id: FixedAssetDepreciation.php 4213 2010-12-22 14:33:20Z tim_schofield $*/
 
 include('includes/session.php');
 $Title = _('Depreciation Journal Entry');
@@ -109,7 +108,6 @@ $TotalCategoryAccumDepn =0;
 $TotalCategoryDepn = 0;
 
 $RowCounter = 0;
-$k=0;
 
 while ($AssetRow=DB_fetch_array($AssetsResult)) {
 	if ($AssetCategoryDescription != $AssetRow['categorydescription'] OR $AssetCategoryDescription =='0'){
@@ -151,14 +149,9 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 		echo $Heading;
 		$RowCounter =0;
 	}
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
-	echo '<td>' . $AssetRow['assetid'] . '</td>
+
+	echo '<tr class="striped_row">
+		<td>' . $AssetRow['assetid'] . '</td>
 		<td>' . $AssetRow['description'] . '</td>
 		<td>' . ConvertSQLDate($AssetRow['datepurchased']) . '</td>
 		<td class="number">' . locale_number_format($AssetRow['costtotal'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -281,7 +274,7 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 		<tr>';
 	if ($AllowUserEnteredProcessDate){
 		echo '<td>' . _('Date to Process Depreciation'). ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" required="required" name="ProcessDate" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
+			<td><input type="text" class="date" required="required" name="ProcessDate" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
 	} else {
 		echo '<td>' . _('Date to Process Depreciation'). ':</td>
 			<td>' . $_POST['ProcessDate']  . '</td>';

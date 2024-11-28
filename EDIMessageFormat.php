@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: EDIMessageFormat.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('EDI Message Format');
@@ -132,19 +131,10 @@ or deletion of the records*/
 					</tr>';
 	echo $TableHeader;
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td><a href="%s&amp;SelectedMessageLine=%s">' . _('Edit') . '</a></td>
@@ -153,9 +143,9 @@ or deletion of the records*/
 				$myrow[1],
 				$myrow[2],
 				$myrow[3],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID,
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 				$myrow[0],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID,
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
 				$myrow[0]);
 
 	} //END WHILE LIST LOOP

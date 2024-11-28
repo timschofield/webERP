@@ -1,10 +1,9 @@
 <?php
+
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - allow use of promotional vouchers in online shop
 ***************************************************************************************/
-
-/* $Id: DefineCartClass.php 7444 2016-01-13 07:32:36Z daintree $*/
 
 /* Definition of the cart class
 this class can hold all the information for:
@@ -37,6 +36,12 @@ Class Cart {
 	var $DelAdd4;
 	var $DelAdd5;
 	var $DelAdd6;
+	var $BrAdd1;
+	var $BrAdd2;
+	var $BrAdd3;
+	var $BrAdd4;
+	var $BrAdd5;
+	var $BrAdd6;
 	var $SalesPerson;
 	var $PhoneNo;
 	var $Email;
@@ -45,16 +50,20 @@ Class Cart {
 	var $Location;
 	var $LocationName;
 	var $DebtorNo;
+	var $BranchCode;
 	var $CustomerName;
 	var $Orig_OrderDate;
+	var $ConfirmedDate;
 	var $Branch;
 	var $TransID;
 	var $ShipVia;
+	var $InternalComments;
 	var $FreightCost;
 	var $FreightTaxes;
 	Var $OrderNo;
 	Var $Consignment;
 	Var $Quotation;
+	var $QuoteDate;
 	Var $DeliverBlind;
 	Var $CreditAvailable; //in customer currency
 	Var $TaxGroup;
@@ -65,6 +74,7 @@ Class Cart {
 	var $TaxGLCodes;
 	var $BuyerName;
 	var $SpecialInstructions;
+	var $Packages;
 
 	function __construct(){
 	/*Constructor function initialises a new shopping cart */
@@ -568,7 +578,7 @@ Class LineDetails {
 							$ExRate );
 	}
 
- }
+}
 
 Class Tax {
 	Var $TaxCalculationOrder;  /*the index for the array */
@@ -607,6 +617,5 @@ Class Tax {
 			$TaxGLCode);
 	}
 }
-
 
 ?>
