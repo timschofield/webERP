@@ -31,6 +31,24 @@ function CreateTrigger($Table, $TriggerName, $Event, $Row, $EventSql) {
 	}
 }
 
+function AddCalculatedColumn($Column, $Table, $Type, $Null, $Calculation, $After) {
+	global $SQLFile;
+	if (DB_table_exists($Table)) {
+		$SQL = "desc " . $Table . " " . $Column;
+		$Result = DB_query($SQL);
+		if (isset($SQLFile) or DB_num_rows($Result) == 0) {
+			$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " AS " . $Calculation . " PERSISTENT", False);
+			if ($Response == 0) {
+				OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been inserted'), 'success');
+			} else {
+				OutputResult(_('The column') . ' ' . $Column . ' ' . _('could not be inserted') . '<br />' . $SQL, 'error');
+			}
+		} else {
+			OutputResult(_('The column') . ' ' . $Column . ' ' . _('already exists'), 'info');
+		}
+	}
+}
+
 function NewSecurityToken($TokenId, $TokenName) {
 	$SQL = "SELECT tokenid FROM securitytokens WHERE tokenid='" . $TokenId . "'";
 	$Result = DB_query($SQL);
@@ -280,7 +298,7 @@ function DropColumn($Column, $Table) {
 		$SQL = "desc " . $Table . " " . $Column;
 		$Result = DB_query($SQL);
 		if (isset($SQLFile) or DB_num_rows($Result) != 0) {
-			$Response = executeSQL("ALTER TABLE `" . $Table . "` DROP `" . $Column, False);
+			$Response = executeSQL("ALTER TABLE `" . $Table . "` DROP `" . $Column . "`", False);
 			if ($Response == 0) {
 				OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been removed'), 'success');
 			} else {
@@ -327,15 +345,14 @@ function ChangeColumnName($OldName, $Table, $Type, $Null, $Default, $NewName, $A
 	$NewResult = DB_query($NewSQL);
 	if (DB_num_rows($OldResult) > 0 and DB_num_rows($NewResult) == 0) {
 		if ($AutoIncrement == '') {
-			$SQL = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'";
+			$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'", False);
 		} else {
-			$SQL = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " " . $AutoIncrement;
+			$Response = executeSQL("ALTER TABLE " . $Table . " CHANGE COLUMN " . $OldName . " " . $NewName . " " . $Type . " " . $Null . " " . $AutoIncrement, False);
 		}
-		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
 			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('has been renamed') . ' ' . $NewName, 'success');
 		} else {
-			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('could not be renamed') . '<br />' . $SQL, 'error');
+			OutputResult(_('The column') . ' ' . $OldName . ' ' . _('could not be renamed'), 'error');
 		}
 	} else {
 		OutputResult(_('The column') . ' ' . $OldName . ' ' . _('is already changed'), 'info');
@@ -353,10 +370,11 @@ function ChangeColumnType($Column, $Table, $Type, $Null, $Default) {
 	if ($MyRow[0] <> $Type) {
 		if ($Default == '') {
 			$SQL = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null;
+			$Response = executeSQL($SQL, False);
 		} else {
 			$SQL = "ALTER TABLE " . $Table . " CHANGE COLUMN " . $Column . " " . $Column . " " . $Type . " " . $Null . " DEFAULT '" . $Default . "'";
+			$Response = executeSQL($SQL, False);
 		}
-		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
 			OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been changed'), 'success');
 		} else {
@@ -535,7 +553,7 @@ function AddConstraint($Table, $Constraint, $Field, $ReferenceTable, $ReferenceF
 			$List = implode(',', $ReferenceField);
 			$ReferenceField = $List;
 		}
-		$SQL = "ALTER TABLE `" . $Table . "` ADD CONSTRAINT `" . $Constraint . "` FOREIGN KEY (" . $Field . ") REFERENCES `" . $ReferenceTable . "` (" . $ReferenceField . ")";
+		$SQL = "ALTER TABLE " . $Table . " ADD CONSTRAINT " . $Constraint . " FOREIGN KEY (" . $Field . ") REFERENCES " . $ReferenceTable . " (" . $ReferenceField . ")";
 		$Response = executeSQL($SQL, False);
 		if ($Response == 0) {
 			OutputResult(_('The constraint') . ' ' . $Constraint . ' ' . _('has been added'), 'success');

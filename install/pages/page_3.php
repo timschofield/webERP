@@ -8,7 +8,7 @@ if (isset($_POST['test'])) {
 	$_SESSION['Installer']['Database'] = $_POST['Database'];
 	$_SESSION['Installer']['UserName'] = $_POST['UserName'];
 	$_SESSION['Installer']['Password'] = $_POST['Password'];
-	$_SESSION['Installer']['DBMS'] = 'mysqli';
+	$_SESSION['Installer']['DBMS'] = $_POST['dbms'];
 	try {
 		$conn = mysqli_connect($_SESSION['Installer']['HostName'], $_SESSION['Installer']['UserName'], $_SESSION['Installer']['Password'], 'information_schema');
 		$Result = 'valid';
@@ -33,10 +33,21 @@ echo '<form method="post" action="index.php?Page=3">
 			</div>
 				<field>
 					<label for="dbms">' . _('DBMS driver') . ': </label>
-					<select name="dbms">
-						<option value="mysqli">MYSQLI</option>
-					</select>
-					<fieldhelp>' . _('Currently only mysqli') . '</fieldhelp>
+					<select name="dbms">';
+
+if ($_SESSION['Installer']['DBMS'] == 'mysqli') {
+	echo '<option value="mysqli" selected="selected">MYSQLI</option>';
+} else {
+	echo '<option value="mysqli">MYSQLI</option>';
+}
+if ($_SESSION['Installer']['DBMS'] == 'mariadb') {
+	echo '<option value="mariadb" selected="selected">MariaDB</option>';
+} else {
+	echo '<option value="mariadb">MariaDB</option>';
+}
+
+echo '</select>
+		<fieldhelp>' . _('Select the DBMS you are using') . '</fieldhelp>
 				</field>
 				<field>
 					<label for="HostName">' . _('Host Name') . ': </label>

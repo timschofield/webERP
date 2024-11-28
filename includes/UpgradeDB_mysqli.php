@@ -31,6 +31,24 @@ function CreateTrigger($Table, $TriggerName, $Event, $Row, $EventSql) {
 	}
 }
 
+function AddCalculatedColumn($Column, $Table, $Type, $Null, $Calculation, $After) {
+	global $SQLFile;
+	if (DB_table_exists($Table)) {
+		$SQL = "desc " . $Table . " " . $Column;
+		$Result = DB_query($SQL);
+		if (isset($SQLFile) or DB_num_rows($Result) == 0) {
+			$Response = executeSQL("ALTER TABLE `" . $Table . "` ADD COLUMN `" . $Column . "` " . $Type . " AS " . $Calculation . " STORED", False);
+			if ($Response == 0) {
+				OutputResult(_('The column') . ' ' . $Column . ' ' . _('has been inserted'), 'success');
+			} else {
+				OutputResult(_('The column') . ' ' . $Column . ' ' . _('could not be inserted') . '<br />' . $SQL, 'error');
+			}
+		} else {
+			OutputResult(_('The column') . ' ' . $Column . ' ' . _('already exists'), 'info');
+		}
+	}
+}
+
 function NewSecurityToken($TokenId, $TokenName) {
 	$SQL = "SELECT tokenid FROM securitytokens WHERE tokenid='" . $TokenId . "'";
 	$Result = DB_query($SQL);
