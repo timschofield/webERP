@@ -1,25 +1,25 @@
 <?php
-/* $Id: GLAccountReport.php 4618 2011-07-02 23:04:59Z daintree $*/
+// GLAccountReport.php
 
 include ('includes/session.php');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccountReport';
 
-if (isset($_POST['Period'])){
+if (isset($_POST['Period'])) {
 	$SelectedPeriod = $_POST['Period'];
-} elseif (isset($_GET['Period'])){
+} elseif (isset($_GET['Period'])) {
 	$SelectedPeriod = $_GET['Period'];
 }
 
-if (isset($_POST['RunReport'])){
+if (isset($_POST['RunReport'])) {
 
-	if (!isset($SelectedPeriod)){
+	if (!isset($SelectedPeriod)) {
 		prnMsg(_('A period or range of periods must be selected from the list box'),'info');
 		include('includes/footer.php');
 		exit;
 	}
-	if (!isset($_POST['Account'])){
+	if (!isset($_POST['Account'])) {
 		prnMsg(_('An account or range of accounts must be selected from the list box'),'info');
 		include('includes/footer.php');
 		exit;
@@ -36,7 +36,7 @@ if (isset($_POST['RunReport'])){
 	$FontSize=10;
 	NewPageHeader();
 
-	foreach ($_POST['Account'] as $SelectedAccount){
+	foreach ($_POST['Account'] as $SelectedAccount) {
 		/*Is the account a balance sheet or a profit and loss account */
 		$result = DB_query("SELECT chartmaster.accountname,
 								accountgroups.pandl
@@ -45,7 +45,7 @@ if (isset($_POST['RunReport'])){
 							WHERE chartmaster.accountcode='" . $SelectedAccount . "'");
 		$AccountDetailRow = DB_fetch_row($result);
 		$AccountName = $AccountDetailRow[0];
-		if ($AccountDetailRow[1]==1){
+		if ($AccountDetailRow[1]==1) {
 			$PandLAccount = True;
 		}else{
 			$PandLAccount = False; /*its a balance sheet account */
@@ -97,7 +97,7 @@ if (isset($_POST['RunReport'])){
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 		$TransResult = DB_query($sql,$ErrMsg);
 
-		if ($YPos < ($Bottom_Margin + (5 * $line_height))){ //need 5 lines grace otherwise start new page
+		if ($YPos < ($Bottom_Margin + (5 * $line_height))) { //need 5 lines grace otherwise start new page
 			$PageNumber++;
 			NewPageHeader();
 		}
@@ -123,7 +123,7 @@ if (isset($_POST['RunReport'])){
 			$YPos -=$line_height;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Brought Forward Balance'));
 
-			if ($RunningTotal < 0 ){ //its a credit balance b/fwd
+			if ($RunningTotal < 0 ) { //its a credit balance b/fwd
    			   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			} else { //its a debit balance b/fwd
                $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
@@ -132,16 +132,13 @@ if (isset($_POST['RunReport'])){
 		$PeriodTotal = 0;
 		$PeriodNo = -9999;
 
-		$j = 1;
-		$k=0; //row colour counter
-
 		while ($myrow=DB_fetch_array($TransResult)) {
 
-			if ($myrow['periodno']!=$PeriodNo){
-				if ($PeriodNo!=-9999){ //ie its not the first time around
+			if ($myrow['periodno']!=$PeriodNo) {
+				if ($PeriodNo!=-9999) { //ie its not the first time around
 					$YPos -=$line_height;
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Period Total'));
-					if ($PeriodTotal < 0 ){ //its a credit balance b/fwd
+					if ($PeriodTotal < 0 ) { //its a credit balance b/fwd
 	                   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_number_format(-$PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
                     } else { //its a debit balance b/fwd
                        $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($PeriodTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
@@ -154,10 +151,10 @@ if (isset($_POST['RunReport'])){
 			$RunningTotal += $myrow['amount'];
 			$PeriodTotal += $myrow['amount'];
 
-			if($myrow['amount']>=0){
+			if($myrow['amount']>=0) {
 				$DebitAmount = locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 				$CreditAmount = '';
-			} elseif ($myrow['amount']<0){
+			} elseif ($myrow['amount']<0) {
 				$CreditAmount = locale_number_format(-$myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
 				$DebitAmount = '';
 			}
@@ -180,7 +177,7 @@ if (isset($_POST['RunReport'])){
 			$LeftOvers = $pdf->addTextWrap(320,$YPos,150,$FontSize,$myrow['narrative']);
 			$LeftOvers = $pdf->addTextWrap(470,$YPos,80,$FontSize,$tagrow['tagdescription']);
 
-			if ($YPos < ($Bottom_Margin + (5*$line_height))){
+			if ($YPos < ($Bottom_Margin + (5*$line_height))) {
 				$PageNumber++;
 				NewPageHeader();
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,$SelectedAccount . ' - ' . $AccountName);
@@ -188,12 +185,12 @@ if (isset($_POST['RunReport'])){
 
 		}
 		$YPos -=$line_height;
-		if ($PandLAccount==True){
+		if ($PandLAccount==True) {
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize, _('Total Period Movement'));
 		} else { /*its a balance sheet account*/
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize, _('Balance C/Fwd'));
 		}
-		if ($RunningTotal < 0){
+		if ($RunningTotal < 0) {
 		   $LeftOvers = $pdf->addTextWrap(210,$YPos,50,$FontSize, locale_number_format(-$RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 		} else { //its a debit balance b/fwd
            $LeftOvers = $pdf->addTextWrap(160,$YPos,50,$FontSize, locale_number_format($RunningTotal,$_SESSION['CompanyRecord']['decimalplaces']) , 'right');
@@ -220,7 +217,7 @@ if (isset($_POST['RunReport'])){
 	include('includes/header.php');
 	include('includes/GLPostings.inc');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
 	echo '<div class="page_help_text">' . _('Use the keyboard Shift key to select multiple accounts and periods') . '</div><br />';
 
@@ -235,15 +232,15 @@ if (isset($_POST['RunReport'])){
 		        <tr>
 		         <td>' . _('Selected Accounts') . ':</td>
 		         <td><select name="Account[]" multiple="multiple">';
-	$sql = "SELECT chartmaster.accountcode, 
+	$sql = "SELECT chartmaster.accountcode,
 				   chartmaster.accountname
-			FROM chartmaster 
+			FROM chartmaster
 			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			ORDER BY chartmaster.accountcode";
 	$AccountsResult = DB_query($sql);
 	$i=0;
-	while ($myrow=DB_fetch_array($AccountsResult)){
-		if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]){
+	while ($myrow=DB_fetch_array($AccountsResult)) {
+		if(isset($_POST['Account'][$i]) AND $myrow['accountcode'] == $_POST['Account'][$i]) {
 			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . $myrow['accountname'] . '</option>';
 			$i++;
 		} else {
@@ -258,8 +255,8 @@ if (isset($_POST['RunReport'])){
 	$Periods = DB_query($sql);
 	$id=0;
 
-	while ($myrow=DB_fetch_array($Periods)){
-		if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]){
+	while ($myrow=DB_fetch_array($Periods)) {
+		if (isset($SelectedPeriod[$id]) and $myrow['periodno'] == $SelectedPeriod[$id]) {
 			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 			$id++;
 		} else {
@@ -280,8 +277,8 @@ if (isset($_POST['RunReport'])){
 
 	$result=DB_query($SQL);
 	echo '<option value="0">0 - '._('All tags') . '</option>';
-	while ($myrow=DB_fetch_array($result)){
-		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']){
+	while ($myrow=DB_fetch_array($result)) {
+		if (isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']) {
 		   echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']  . '</option>';
 		} else {
 		   echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription']  . '</option>';
@@ -318,7 +315,7 @@ function NewPageHeader () {
 
 	/*PDF page header for GL Account report */
 
-	if ($PageNumber > 1){
+	if ($PageNumber > 1) {
 		$pdf->newPage();
 	}
 
