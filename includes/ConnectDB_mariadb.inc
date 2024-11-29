@@ -1,5 +1,5 @@
 <?php
-/* Database abstraction for mysqli */
+/* Database abstraction for MariaDB */
 
 define ('LIKE', 'LIKE');
 

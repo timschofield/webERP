@@ -35,7 +35,7 @@ date_default_timezone_set('Asia/Shanghai');
 // Connection information for the database
 // $host is the computer ip address or name where the database is located
 // if the web server is also the database server then 'locahost'
-$host = 'localhost';
+$Host = 'localhost';
 $mysqlport=3306;
 //The type of db server being used
 //$DBType = 'postgres' - now DEPRECIATED;
