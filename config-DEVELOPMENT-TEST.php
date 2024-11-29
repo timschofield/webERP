@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: config.distrib.php 5807 2013-02-01 07:51:23Z daintree $ */
-
 // User configurable variables
 //---------------------------------------------------
 
@@ -28,15 +26,7 @@ $SysAdminEmail = 'webmaster@kapal-laut.com';
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
 // this is not necessary if you have your own server locally
-//date_default_timezone_set('Europe/London');
-//date_default_timezone_set('America/Los_Angeles');
 date_default_timezone_set('Asia/Singapore');
-//date_default_timezone_set('Australia/Melbourne');
-//date_default_timezone_set('Australia/Sydney');
-//date_default_timezone_set('Pacific/Auckland');
-
-//putenv('TZ=Asia/Singapore');
-
 
 // Connection information for the database
 // $host is the computer ip address or name where the database is located
@@ -66,7 +56,7 @@ $AllowCompanySelectionBox = 'Hide';
 
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
 //otherwise the user is expected to know the name of the company to log into.
-// KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.t this seems to be obsolete
+// KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.this seems to be obsolete
 
 $DefaultCompany  = 'test_erp';
 $DefaultDatabase = 'test_erp';

@@ -1,9 +1,10 @@
 <?php
 
-/* $Id: config.distrib.php 5807 2013-02-01 07:51:23Z daintree $ */
-
 // User configurable variables
 //---------------------------------------------------
+
+// type of webERP (TEST or Prodution)
+$webERPType = 'PRODUCTION';
 
 //DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override
 $DefaultLanguage ='en_GB.utf8';
@@ -13,14 +14,14 @@ $DefaultLanguage ='en_GB.utf8';
 //$DefaultTheme = 'professional';
 //$DefaultTheme = 'wood';
 //$DefaultTheme = 'silverwolf';
-$DefaultTheme = 'gel';
+$DefaultTheme = 'default';
 //$DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
-$allow_demo_mode = False;
+$AllowDemoMode = False;
 
 // email address of the system administrator
-$SysAdminEmail = 'sysadmin@kapal-laut.com';
+$SysAdminEmail = 'webmaster@kapal-laut.com';
 
 // The timezone of the business - this allows the possibility of having
 // the web-server on a overseas machine but record local time
@@ -37,8 +38,8 @@ $mysqlport=3306;
 $dbType = 'mysqli';
 
 // sql user & password
-$dbuser = 'root';
-$dbpassword = 'nyepi2016';
+$dbuser = 'kurakura_kl_0001';
+$dbpassword = 'KXGrwKrlKduQTSdqnLZc';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
@@ -53,8 +54,11 @@ $dbpassword = 'nyepi2016';
 $AllowCompanySelectionBox = 'Hide';
 
 //If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
-//otherwise the user is expected to know the name of the company to log into.$DefaultCompany = 'kurakura_kl_erp';
-$DefaultCompany = 'kurakura_kl_erp';
+//otherwise the user is expected to know the name of the company to log into.
+// KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.this seems to be obsolete
+
+$DefaultCompany  = 'kurakura_kl_erp';
+$DefaultDatabase = 'kurakura_kl_erp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour
@@ -105,11 +109,11 @@ This is the default value set in php.ini for most installations but just to be s
 turning on NOTICES destroys things */
 
 //error_reporting (E_ALL & ~E_NOTICE);
-error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+//error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 /* For Development Use */
-//error_reporting (-1);
+error_reporting (-1);
 
 //Installed companies
-$CompanyList[0] = array('database'=>'kurakura_kl_erp' ,'company'=>'Kapal-Laut' );
+$CompanyList[0] = array('database'=>'kurakura_kl_erp' ,'company'=>'Kapal-Laut DEVELOPMENT' );
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
