@@ -81,6 +81,7 @@ echo '</select></td>
 	</tr>';
 
 //Select the tag
+/* KL RICARD 
 echo '<tr>
 		<td>' . _('Select Tag') . ':</td>
 		<td><select name="tag">';
@@ -103,6 +104,8 @@ while($myrow=DB_fetch_array($result)) {
 echo '</select></td>
 	</tr>';
 // End select tag
+*/
+
 echo '<tr>
 		<td>' . _('For Period range').':</td>
 		<td><select name="Period[]" size="12" multiple="multiple">';

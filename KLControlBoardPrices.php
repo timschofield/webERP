@@ -625,7 +625,7 @@ function PriceWrongRounding($RootPath){
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$DownPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedDown .  '">' . locale_number_format($RoundedDown,0) . '</a>';
 				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
-				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60;
+				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60);
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 				$k = StartEvenOrOddRow($k);

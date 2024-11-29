@@ -1,4 +1,3 @@
-/* $Id: MiscFunctions.js 7645 2016-10-17 05:34:08Z rchacon $ */
 /* Miscellaneous JavaScript functions. */
 
 function defaultControl(c) {
@@ -59,7 +58,7 @@ function rLocaleNumber() {
 	} else {
 		this.setCustomValidity('The number format is wrong');
 		return false;
-	};
+	}
 }
 
 function assignComboToInput(c, i) {
@@ -249,8 +248,8 @@ function convertDate(dS, dF) {
 			break;
 		case "m/d/Y":
 			dA = dS.split("/");
-			m = parseInt(dA[0], 10);
-			d = parseInt(dA[1], 10)-1;
+			m = parseInt(dA[0], 10)-1;
+			d = parseInt(dA[1], 10);
 			y = parseInt(dA[2], 10);
 			break;
 		case "Y-m-d":
@@ -282,76 +281,104 @@ iF.focus();
 }
 
 function clickDate() {
-	Calendar(this.name, this.alt);
+	Calendar(this.name, localStorage.DateFormat);
 }
 
 function changeDate() {
-	isDate(this.value, this.alt);
+	isDate(this.value, localStorage.DateFormat);
 }
 
 function SortSelect() {
-	selElem=this;
-	var tmpArray = new Array();
-	columnText=selElem.innerHTML;
-	parentElem=selElem.parentNode;
-	table=parentElem.parentNode;
-	row = table.rows[0];
-	for(var j = 0, col; col = row.cells[j]; j++) {
-		if(row.cells[j].innerHTML==columnText) {
-			columnNumber=j;
-			if(selElem.className=="ascending") {
-				selElem.className='descending';
-				direction="a";
+	selElem = this;
+	var e = [], o = [];
+	th = localStorage.Theme;
+	columnText = selElem.innerHTML;
+	TableHeader = selElem.parentNode;
+	TableBodyElements = TableHeader.parentNode.parentNode.getElementsByTagName('tbody');
+	table = TableBodyElements[0];
+	i = TableHeader;
+
+	for (var t = 0, n; n = i.cells[t]; t++) {
+		if (i.cells[t].innerHTML == columnText) {
+			columnNumber = t;
+			s = getComputedStyle(i.cells[t], null);
+			if (s.cursor == "s-resize") {
+				i.cells[t].style.cursor = "n-resize";
+				i.cells[t].className = 'descending';
+				direction = "a";
+/*
+				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/descending.png')";
+				i.cells[t].style.backgroundPosition = "right center";
+				i.cells[t].style.backgroundRepeat = "no-repeat";
+				i.cells[t].style.backgroundSize = "12px";
+*/
 			} else {
-				selElem.className='ascending';
-				direction="d";
+				i.cells[t].style.cursor = "s-resize";
+				i.cells[t].className = 'ascending';
+				direction = "d";
+/*
+				i.cells[t].style.backgroundImage = "url('css/" + th + "/images/ascending.png')";
+				i.cells[t].style.backgroundPosition = "right center";
+				i.cells[t].style.backgroundRepeat = "no-repeat";
+				i.cells[t].style.backgroundSize = "12px";
+*/
+			}
 			}
 		}
-	}
-	for(var i = 1, row; row = table.rows[i]; i++) {
-		var rowArray = new Array();
-		for(var j = 0, col; col = row.cells[j]; j++) {
-			if(row.cells[j].tagName == 'TD' ) {
-				rowArray[j]=row.cells[j].innerHTML;
-				columnClass=row.cells[columnNumber].className;
+
+	for (var r = 0, i; i = table.rows[r]; r++) {
+		o = [];
+		for (var t = 0, n; n = i.cells[t]; t++) {
+			if (i.cells[t].tagName == "TD") {
+				o[t] = i.cells[t].innerHTML;
+				columnClass = i.cells[columnNumber].className;
 			}
 		}
-		tmpArray[i]=rowArray;
+		e[r] = o;
 	}
-	tmpArray.sort(
-		function(a,b) {
-			if(direction=="a") {
-				if(columnClass=="number") {
-					return parseFloat(a[columnNumber].replace(/[,.]/g, '')) - parseFloat(b[columnNumber].replace(/[,.]/g, ''));
-				} else if(columnClass=="date") {
-					da=new Date(a[columnNumber]);
-					db=new Date(b[columnNumber]);
-					return da>db;
+
+	e.sort(function (e, t) {
+		if (direction == "a") {
+			if (columnClass == "number") {
+				return parseFloat(e[columnNumber].replace(/[,.]/g, '')) - parseFloat(t[columnNumber].replace(/[,.]/g, ''));
+			} else if (columnClass == "date") {
+				if (e[columnNumber] !== undefined) {
+					da = new Date(convertDate(e[columnNumber], localStorage.DateFormat));
 				} else {
-					return a[columnNumber].localeCompare(b[columnNumber])
+					da = new Date(e[columnNumber]);
 				}
+				db = new Date(convertDate(t[columnNumber], localStorage.DateFormat));
+				return da > db;
 			} else {
-				if(columnClass=="number") {
-					return parseFloat(b[columnNumber].replace(/[,.]/g, '')) - parseFloat(a[columnNumber].replace(/[,.]/g, ''));
-				} else if(columnClass=="date") {
-					da=new Date(a[columnNumber]);
-					db=new Date(b[columnNumber]);
-					return da<=db;
+				return e[columnNumber].localeCompare(t[columnNumber]);
+	}
+		} else {
+			if (columnClass == "number") {
+				return parseFloat(t[columnNumber].replace(/[,.]/g, '')) - parseFloat(e[columnNumber].replace(/[,.]/g, ''));
+			} else if (columnClass == "date") {
+				if (e[columnNumber] !== undefined) {
+					da = new Date(convertDate(e[columnNumber], localStorage.DateFormat));
 				} else {
-					return b[columnNumber].localeCompare(a[columnNumber])
+					da = new Date(e[columnNumber]);
 				}
+				db = new Date(convertDate(t[columnNumber], localStorage.DateFormat));
+				return da <= db;
+			} else {
+				return t[columnNumber].localeCompare(e[columnNumber]);
 			}
 		}
-	);
-	for(var i = 0, row; row = table.rows[i+1]; i++) {
-		var rowArray = new Array();
-		rowArray=tmpArray[i];
-		for(var j = 0, col; col = row.cells[j]; j++) {
-			if(row.cells[j].tagName == 'TD' ) {
-				row.cells[j].innerHTML=rowArray[j];
+	});
+
+	for (var r = 0, i; i = table.rows[r]; r++) {
+		o = [];
+		o = e[r];
+		for (var t = 0, n; n = i.cells[t]; t++) {
+			if (i.cells[t].tagName == "TD") {
+				i.cells[t].innerHTML = o[t];
 			}
 		}
 	}
+
 	return;
 }
 
@@ -368,8 +395,8 @@ function initial() {
 	var ds=document.getElementsByTagName("input");
 	for(i=0;i<ds.length;i++) {
 		if(ds[i].className=="date") {
-			ds[i].onclick=clickDate;
-			ds[i].onchange=changeDate;
+			ds[i].onclick = clickDate;
+			ds[i].onchange = changeDate;
 		}
 		if(ds[i].getAttribute("data-type") == 'no-illegal-chars') ds[i].pattern="(?!^ +$)[^?\'\u0022+.&\\\\><]*";
 		if(ds[i].className=="number") ds[i].onkeypress=rTN;
@@ -388,6 +415,27 @@ function initial() {
 	for(i=0;i<ds.length;i++) {
 		if(ds[i].className=="ascending") ds[i].onclick=SortSelect;
 	}
+
+	/* Notification messages */
+
+	/* Move messages from footer div into header div */
+	document.getElementById('MessageContainerHead').appendChild(
+    document.getElementById('MessageContainerFoot')
+	);
+
+	/* Show footer div after it has been moved to header div */
+	document.getElementById('MessageContainerFoot').style["display"] = "block";
+
+	/* Close button dynamic styling*/
+	var close = document.getElementsByClassName("MessageCloseButton");
+	var i;
+	for (i = 0; i < close.length; i++) {
+		close[i].onclick = function(){
+			var div = this.parentElement;
+			div.style.opacity = "0";
+			setTimeout(function(){ div.style.display = "none"; }, 600);
+		}
+	}
 }
 
 function AddAmount(t, Target, d) {
@@ -399,4 +447,56 @@ function AddAmount(t, Target, d) {
 		if(d) document.getElementById(d).required="";
 	}
 }
+function update1(s) {
+	var ss=s.split(';');
+	var sss=ss.map((a)=>document.getElementById(a).value);
+	var ttl = sss.reduce((a,b)=>parseFloat(a)+parseFloat(b));
+	document.getElementById('ttl').value = ttl;
+}
+function payVerify(b,a) {
+	var s=document.getElementById('update');
+	var s=s.getAttribute('data-ids');
+	update1(s);
+	var cs=document.getElementById('Amount').getAttribute('class');
+	if ((parseFloat(document.getElementById(b).value) < parseFloat(parseFloat(document.getElementById(a).value))) && (parseFloat(document.getElementById(b).value) >= 0)){
+		if (cs.indexOf('error') == -1) {
+			document.getElementById('Amount').className="error" + ' ' + cs;
+		}
+		event.preventDefault();
+	} else {
+		if (cs.indexOf('error') != -1) {
+			document.getElementById('Amount').className="number";
+		}
+		return true;
+	}
+}
+
+function AddScript(e, t) {
+	theme = localStorage.Theme;
+	document.getElementById("favourites").innerHTML = document.getElementById("favourites").innerHTML + '<option value="' + e + '">' + t + "</option>";
+	document.getElementById("PlusMinus").src = "css/" + theme + "/images/subtract.png";
+	document.getElementById("PlusMinus").setAttribute("onClick", "javascript: RemoveScript('" + e + "', '" + t + "');");
+	UpdateFavourites(e, t)
+}
+
+function RemoveScript(e, t) {
+	theme = localStorage.Theme;
+	remSelOpt(e, document.getElementById("favourites"));
+	document.getElementById("PlusMinus").src = "css/" + theme + "/images/add.png";
+	document.getElementById("PlusMinus").setAttribute("onClick", "javascript: AddScript('" + e + "', '" + t + "');");
+	UpdateFavourites(e, t)
+}
+
+function UpdateFavourites(e, t) {
+	Target = "UpdateFavourites.php?Script=" + e + "&Title=" + t;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+	}
+	xmlhttp.open("GET", Target, true);
+	xmlhttp.send();
+	return false
+}
+
 window.onload=initial;

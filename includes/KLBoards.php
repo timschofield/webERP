@@ -1636,7 +1636,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 	}
 }
 
-function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $ShowAll, $RootPath){
+function InsuficientStockForShopPackaging($Category, $DaysUsage, $DaysMinimumStock, $ShowAll, $ExtendedVersion, $RootPath){
 /* EXPLAIN SQL	2014-05-20	
 id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 1	PRIMARY				stockmaster			ref		CategoryID					CategoryID			20	const	10	Using where
@@ -1807,7 +1807,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					}
 					echo '<div>';
 					echo '<table class="selection">';
-/*					$TableHeader = '<tr>
+					if ($ExtendedVersion){
+						$TableHeader = '<tr>
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
@@ -1825,8 +1826,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('QOO Running') . '</th>
 										<th class="ascending">' . _('Next Order') . '</th>
 									</tr>';
-*/
-					$TableHeader = '<tr>
+					}else{
+						$TableHeader = '<tr>
 										<th class="ascending">' . _('#') . '</th>
 										<th class="ascending">' . _('Code') . '</th>
 										<th class="ascending">' . _('Description') . '</th>
@@ -1840,6 +1841,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 										<th class="ascending">' . _('Running QOO') . '</th>
 										<th class="ascending">' . _('Next Order') . '</th>
 									</tr>';
+					}
 					echo $TableHeader;
 					$showHeader = FALSE;
 				}
@@ -1859,7 +1861,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$k = StartEvenOrOddRow($k);
-/*				printf('<td class="number">%s</td>
+				if ($ExtendedVersion){
+					printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1893,8 +1896,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format_zero_blank($myrow['qoo'],0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
-*/
-				printf('<td class="number">%s</td>
+				}else{
+					printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1920,6 +1923,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format_zero_blank($myrow['qoo'],0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
+				}
 			}
 			$i++;
 		}
@@ -1928,7 +1932,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
 			$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
 			$k = StartEvenOrOddRow($k);
-/*			printf('<td class="number">%s</td>
+			if ($ExtendedVersion){
+				printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -1962,8 +1967,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
-*/
-			printf('<td class="number">%s</td>
+			}else{
+				printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -1989,6 +1994,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
+			}
 
 			InsertKPI("Packaging", "Packaging current daily use (PCS)", $TotalDailyUse);
 			InsertKPI("Packaging", "Packaging used last " . $DaysUsage .  " days (PCS)", $UsageXDays);
@@ -2054,6 +2060,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath){
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['stdcost'],0) . '</a>';
 			$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '&Action=New">' . locale_number_format($NewPrice,0) . '</a>';
+			$Factor = ($myrow['stdcost'] != 0) ? ($NewPrice/$myrow['stdcost']) : 0;
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2065,7 +2072,7 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath){
 					$CodeLink, 
 					$myrow['description'],
 					$PriceLink,
-					locale_number_format_zero_blank($NewPrice/$myrow['stdcost'], 2),
+					locale_number_format_zero_blank($Factor, 2),
 					$NewPriceLink
 					);
 		}

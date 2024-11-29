@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: AddCustomerNotes.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Customer Notes');
@@ -120,22 +119,15 @@ if (!isset($Id)) {
 			<th>' . _('Priority') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%s">%s</a></td>
 				<td>%s</td>
 				<td><a href="%sId=%s&DebtorNo=%s">' .  _('Edit').' </td>
-				<td><a href="%sId=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer note?') . '\');">' .  _('Delete'). '</td></tr>',
+				<td><a href="%sId=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer note?') . '\');">' .  _('Delete'). '</td>
+				</tr>',
 				ConvertSQLDate($myrow['date']),
 				$myrow['note'],
 				$myrow['href'],
@@ -221,10 +213,10 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('Date')  . '</td>';
 	if (isset($_POST['NoteDate'])) {
-		echo '<td><input type="text" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" value="'.ConvertSQLDate($_POST['NoteDate']).'" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" required name="NoteDate" class="date" value="'.ConvertSQLDate($_POST['NoteDate']).'" size="11" maxlength="10" /></td>
 			</tr>';
 	} else {
-		echo '<td><input type="text" required name="NoteDate" class="date" alt="' .$_SESSION['DefaultDateFormat']. '" id="datepicker" size="10" maxlength="10" /></td>
+		echo '<td><input type="text" required name="NoteDate" class="date" size="11" maxlength="10" /></td>
 			</tr>';
 	}
 	echo '<tr>

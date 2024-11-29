@@ -7,31 +7,28 @@ by Khwunchai J.
 ***/
 
 
+/* $Id: login.css 5657 2012-09-10 11:32:07Z daintree $*/
 body {
-	background-attachment:fixed;
-	background-color:#f1f1f1;
-	background-image:url("images/background.jpg");
-	background-repeat:no-repeat;
-	background-size:cover;
-	color:#000000;
+    background:#F1F1F1;
+    color:black;
     font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
     text-align:center;
 }
 
-img {
+img{
     vertical-align:middle;
 }
 
 #container {
     background:#FFFFFF;
     border:thin solid #CCCCCC;
-
+    
     margin-left:auto;
     margin-right:auto;
     margin-top:50px;
     width:360px;
     z-index:1000;
-
+    
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
     border-radius: 4px;
@@ -43,14 +40,15 @@ img {
 }
 
 #login_logo {
-    background:url("../webERP.gif") no-repeat scroll center center #FFFFFF;
-    border:medium outset gray;
-    border-radius:19px 19px 19px 19px;
-    height:44px;
-    margin:10% auto;
-    padding:12px;
-    width:190px;
+background:url("../LogoKLBlink.jpg") no-repeat scroll center center #FFFFFF;
+border:medium outset gray;
+border-radius:10px 10px 10px 10px;
+height:85px;
+margin:10% auto;
+padding:12px;
+width:239px;
 }
+
 form {
     width: 240px;
     margin: auto;
@@ -68,7 +66,7 @@ input[type='text'], input[type='password'] {
     padding:4px 8px;
     margin-top:4px;
     margin-bottom:16px;
-
+    
     -webkit-border-radius:  4px;
     -moz-border-radius:     4px;
     border-radius:          4px;
@@ -76,7 +74,7 @@ input[type='text'], input[type='password'] {
 input[type='text']:focus, input[type='password']:focus {
     outline:none;
     border-color:#2380CD;
-
+    
     -moz-box-shadow:    0px 0px 5px #55B1EA;
 	-webkit-box-shadow: 0px 0px 5px #55B1EA;
 	box-shadow:         0px 0px 5px #55B1EA;
@@ -92,7 +90,7 @@ input.button {
     font-weight:bold;
     color: #FFFFFF;
     margin-left: auto;
-
+    
     -webkit-border-radius:  4px;
     -moz-border-radius:     4px;
     border-radius:          4px;
@@ -107,6 +105,6 @@ input.button:hover {
     cursor: pointer;
 }
 
-/*#demo_text {
+/*#demo_text{
 	padding:10px;
 }*/

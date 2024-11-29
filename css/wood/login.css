@@ -7,18 +7,15 @@ by Hindra Joshua
 ***/
 
 
+/* $Id: login.css 4559 2011-05-01 09:45:18Z daintree $*/
 body {
-	background-attachment:fixed;
-	background-color:#663311;
-	background-image:url("images/desk.jpg");
-	background-repeat:repeat;
-	background-size:auto;
-	color:#000000;
+	background:url("images/desk.jpg") #663311;
+    color:black;
     font:14px "Lucida Grande","Arial","Helvetica","Verdana","sans-serif";
     text-align:center;
 }
 
-img {
+img{
 	vertical-align:middle;
 }
 
@@ -35,15 +32,17 @@ img {
 }
 
 #login_logo {
-background:url("../webERP.gif") no-repeat scroll center center #FFFFFF;
+background:url("../LogoKLBlink.jpg") no-repeat scroll center center #FFFFFF;
 border:medium outset gray;
-border-radius:19px 19px 19px 19px;
-height:44px;
+border-radius:10px 10px 10px 10px;
+height:85px;
 margin:10% auto;
 padding:12px;
-width:190px;
+width:239px;
 }
-/*input {
+
+
+/*input{
 	background:none repeat scroll 0 0 transparent;
     border:thick outset #FFEEBB;
     border-radius:15px 15px 15px 15px;
@@ -79,9 +78,9 @@ input.button:hover {
     padding:10px;
     vertical-align:middle;
     width:50%;
-	box-shadow:3px 3px 4px inset;
+	box-shadow:3px 3px 4px inset;	
 }
 
-#demo_text {
+#demo_text{
 	padding:10px;
 }

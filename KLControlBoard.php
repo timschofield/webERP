@@ -639,7 +639,7 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		prnMsg("Packaging Information",'info');
-		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, $RootPath); // Works for both regular and outlet shop packaging
+		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, false, $RootPath); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath);
 		$NumberOfTestExecuted++;
@@ -4285,6 +4285,7 @@ function OnlineMarketPlacePaymentPending($RootPath){
 		$TotalShopeeValue = 0;
 		$TotalTokopediaValue = 0;
 		$TotalPaymentValue = 0;
+		$DecimalPlaces = 0;
 		
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
@@ -4316,7 +4317,8 @@ function OnlineMarketPlacePaymentPending($RootPath){
 			}else{
 				$PaymentLazada = '';
 			}
-
+			$DecimalPlaces = $myrow['decimalplaces'];
+			
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4336,7 +4338,7 @@ function OnlineMarketPlacePaymentPending($RootPath){
 					$myrow['orderno'], 
 					$myrow['customerref'],
 					ConvertSQLDate($myrow['orddate']), 
-					locale_number_format($PaymentValue,$myrow['decimalplaces']),
+					locale_number_format($PaymentValue,$DecimalPlaces),
 					$myrow['currcode'], 
 					$PaymentManual,
 					$PaymentTokopedia,
@@ -4365,7 +4367,7 @@ function OnlineMarketPlacePaymentPending($RootPath){
 				"", 
 				"",
 				"SHOPEE:", 
-				locale_number_format($TotalShopeeValue,$myrow['decimalplaces']),
+				locale_number_format($TotalShopeeValue,$DecimalPlaces),
 				"IDR", 
 				"",
 				"",
@@ -4391,7 +4393,7 @@ function OnlineMarketPlacePaymentPending($RootPath){
 				"", 
 				"",
 				"TOKOPEDIA:", 
-				locale_number_format($TotalTokopediaValue,$myrow['decimalplaces']),
+				locale_number_format($TotalTokopediaValue,$DecimalPlaces),
 				"IDR", 
 				"",
 				"",
@@ -4417,7 +4419,7 @@ function OnlineMarketPlacePaymentPending($RootPath){
 				"", 
 				"",
 				"TOTAL:", 
-				locale_number_format($TotalPaymentValue,$myrow['decimalplaces']),
+				locale_number_format($TotalPaymentValue,$DecimalPlaces),
 				"IDR", 
 				"",
 				"",
