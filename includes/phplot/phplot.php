@@ -830,10 +830,10 @@ class PHPlot
     protected function GetColorIndexArray($color_array, $max_colors)
     {
         $n = min(count($color_array), $max_colors);
-        $Result = array();
+        $result = array();
         for ($i = 0; $i < $n; $i++)
-            $Result[] = $this->GetColorIndex($color_array[$i]);
-        return $Result;
+            $result[] = $this->GetColorIndex($color_array[$i]);
+        return $result;
     }
 
     /**
@@ -849,10 +849,10 @@ class PHPlot
     protected function GetDarkColorIndexArray($color_array, $max_colors)
     {
         $n = min(count($color_array), $max_colors);
-        $Result = array();
+        $result = array();
         for ($i = 0; $i < $n; $i++)
-            $Result[] = $this->GetDarkColorIndex($color_array[$i]);
-        return $Result;
+            $result[] = $this->GetDarkColorIndex($color_array[$i]);
+        return $result;
     }
 
     /**
@@ -1374,15 +1374,15 @@ class PHPlot
         if (!preg_match('/^\d+-\d+(-\d+)*$/', $which_style)) {
             return $this->PrintError("SetDefaultDashedStyle(): Wrong parameter '$which_style'.");
         }
-        $Result = '';
+        $result = '';
         $use_color = TRUE;
         $transparent = ' ' . IMG_COLOR_TRANSPARENT;
         // Expand the dashed line style specifier:
         foreach (explode('-', $which_style) as $n) {
-            $Result .= str_repeat($use_color ? ' #' : $transparent, $n);
+            $result .= str_repeat($use_color ? ' #' : $transparent, $n);
             $use_color = !$use_color;  // Alternate color and transparent
         }
-        $this->default_dashed_style = ltrim($Result);
+        $this->default_dashed_style = ltrim($result);
         return TRUE;
     }
 
@@ -1857,7 +1857,7 @@ class PHPlot
             $y = $ypos - $r10 * $factor;
 
             // Call ImageString or ImageStringUp:
-            $draw_func($this->img, $font_number, $x, $y, $lines[$i], $color);
+            $draw_func($this->img, $font_number, (int)$x, (int)$y, $lines[$i], $color);
 
             // Step to the next line of text. This is a rotation of (x=0, y=interline_spacing)
             $xpos += $r01 * $interline_step;
@@ -2866,13 +2866,13 @@ class PHPlot
     protected function CheckOptionArray($opt, $acc, $func)
     {
         $opt_array = (array)$opt;
-        $Result = array();
+        $result = array();
         foreach ($opt_array as $option) {
             $choice = $this->CheckOption($option, $acc, $func);
             if (is_null($choice)) return NULL; // In case CheckOption error handler returns
-            $Result[] = $choice;
+            $result[] = $choice;
         }
-        return $Result;
+        return $result;
     }
 
     /**
@@ -5421,8 +5421,8 @@ class PHPlot
     {
         if (isset($zero_magnet) && $zero_magnet >= 0 && $zero_magnet <= 1.0)
             $this->rangectl[$which]['zero_magnet'] = $zero_magnet;
-        if (isset($adjust_mode) && strpos('TRI', $adjust_mode[0]) !== FALSE)
-            $this->rangectl[$which]['adjust_mode'] = $adjust_mode;
+		if (isset($adjust_mode) && strpos('TRI', $adjust_mode) !== FALSE)
+			$this->rangectl[$which]['adjust_mode'] = $adjust_mode;
         if (isset($adjust_amount) && $adjust_amount >= 0)
             $this->rangectl[$which]['adjust_amount'] = $adjust_amount;
         return TRUE;
@@ -7125,9 +7125,9 @@ class PHPlot
     {
         $x = $this->xtr($x_world);
         $y = $this->ytr($y_world);
-        $Result = $this->DrawShape($x, $y, $column, $color);
+        $result = $this->DrawShape($x, $y, $column, $color);
         $this->DoCallback('data_points', 'dot', $row, $column, $x, $y);
-        return $Result;
+        return $result;
     }
 
     /**
@@ -7155,6 +7155,11 @@ class PHPlot
     protected function DrawBar($row, $column, $x1, $y1, $x2, $y2, $data_color, $shade_color, $border_color,
             $shade_top = TRUE, $shade_side = TRUE)
     {
+		$x1 = (int)$x1;
+		$y1 = (int)$y1;
+		$x2 = (int)$x2;
+		$y2 = (int)$y2;
+		
         // Sort the points so x1,y1 is upper left and x2,y2 is lower right. This
         // is needed in order to get the shading right, and imagerectangle may require it.
         if ($x1 > $x2) {
