@@ -112,9 +112,9 @@ This is the default value set in php.ini for most installations but just to be s
 turning on NOTICES destroys things */
 
 //error_reporting (E_ALL & ~E_NOTICE);
-//error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 /* For Development Use */
-error_reporting (-1);
+//error_reporting (-1);
 
 //Installed companies
 $CompanyList[0] = array('database'=>'kurakura_kl_erp' ,'company'=>'Kapal-Laut DEVELOPMENT' );
