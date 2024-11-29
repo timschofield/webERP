@@ -31,16 +31,18 @@ date_default_timezone_set('Asia/Singapore');
 // Connection information for the database
 // $host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
-$host = 'localhost';
+$Host = 'localhost';
 $mysqlport=3306;
 
-//The type of db server being used - currently only postgres or mysql
-$dbType = 'mysqli';
-
+//The type of db server being used
+//$DBType = 'postgres' - now DEPRECIATED;
+//$DBType = 'mysql';
+//$DBType = 'mysqli';
+$DBType = 'mariadb';
 
 // sql user & password
-$dbuser = 'DBU_ptadu_test';
-$dbpassword = 'LTq%w@.KkJcZ$@!^HBz';
+$DBUser = 'DBU_ptadu_test';
+$DBPassword = 'LTq%w@.KkJcZ$@!^HBz';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
