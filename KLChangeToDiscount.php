@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('Kapal-Laut. Change To Discount');
+$Title = _('Change To Discount');
 include('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -26,15 +26,15 @@ if (!isset($_GET['Item']) or !isset($_GET['Discount']) or !isset($_GET['Category
 $Title = 'KL Set the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
 
 if ($_GET['Action'] == "New"){
-	$Title = 'KL Set the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
+	$Title = 'Set the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else if ($_GET['Action'] == "Change"){
-	$Title = 'KL Change the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
+	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Code for item ' . $_GET['Item'];
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else if ($_GET['Action'] == "Finish"){
-	$Title = 'KL Change the ' . $_GET['Discount'] . '% Discount Labels for item ' . $_GET['Item'];
+	$Title = 'Change the ' . $_GET['Discount'] . '% Discount Labels for item ' . $_GET['Item'];
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('retail Price') . '" alt="" />' . $Title . '.</p>';
 }else{
@@ -46,13 +46,33 @@ if ($_GET['Action'] == "New"){
 
 DB_Txn_Begin();
 
-// it is a PTADU item, so let's apply PTADU discount categories
-if ($_GET['Discount'] == "20"){
-	$NewCategory = "DISC2A";
-}elseif($_GET['Discount'] == "50"){
-	$NewCategory = "DISC5A";
+if (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)){
+	// it is a KL item
+	if ($_GET['Discount'] == "20"){
+		$NewCategory = "DISC2A";
+	}elseif($_GET['Discount'] == "50"){
+		$NewCategory = "DISC5A";
+	}else{
+		$NewCategory = "DISC8A";
+	}
+}elseif (ItemInLIst($_GET['Category'], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)){
+	// it is a BLINK item
+	if ($_GET['Discount'] == "20"){
+		$NewCategory = "DISC2B";
+	}elseif($_GET['Discount'] == "50"){
+		$NewCategory = "DISC5B";
+	}else{
+		$NewCategory = "DISC8B";
+	}
 }else{
-	$NewCategory = "DISC8A";
+	// it is a GENERAL item
+	if ($_GET['Discount'] == "20"){
+		$NewCategory = "DISC2G";
+	}elseif($_GET['Discount'] == "50"){
+		$NewCategory = "DISC5G";
+	}else{
+		$NewCategory = "DISC8G";
+	}
 }
 
 if (($_GET['Action'] == "New") OR

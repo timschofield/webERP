@@ -18,17 +18,6 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 
-/*
-if (!Is_Date($_POST['FromDate'])) {
-	$InputError = 1;
-	prnMsg(_('Invalid From Date'),'error');
-}
-if (!Is_Date($_POST['ToDate'])) {
-	$InputError = 1;
-	prnMsg(_('Invalid To Date'),'error');
-}
-*/
-
 if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
 	if (FormatDateForSQL($_POST['FromDate']) > FormatDateForSQL($_POST['ToDate'])){
 		prnMsg(_('The selected date from is actually after the date to!'),'error');
@@ -160,6 +149,7 @@ if (!isset($_POST['FromDate'])
 	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
 	$graph->SetYDataLabelPos('none');
+	$graph->TuneYAutoRange(0, 0, 0);
 	$graph->SetDataColors(
 		array('blue'),  //Data Colors
 		array('black')	//Border Colors

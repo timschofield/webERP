@@ -650,13 +650,13 @@ function CleanKeywordText($Text){
 }
 
 function GetWeberpItemBrand($webERPCategoryId, $ManufacturerId){
-	if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT)
+	if (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_ALL_DISCOUNT)
 		OR ($ManufacturerId == 1)){
 		$ItemBrand = "KL";
-	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_BLINK)
+	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_BLINK_INCLUDING_ALL_DISCOUNT)
 		OR ($ManufacturerId == 2)){
 		$ItemBrand = "BL";
-	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_GENERAL)){
+	}elseif (ItemInList($webERPCategoryId, LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT)){
 		$ItemBrand = "GE";
 	}else{
 		// should never happen

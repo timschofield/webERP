@@ -1,4 +1,5 @@
 <?php
+/* $Id: mimePart.php 4622 2011-07-03 04:33:19Z daintree $*/
 //
 // +----------------------------------------------------------------------+
 // | PHP Version 4                                                        |
@@ -123,7 +124,7 @@ class Mail_mimePart {
      *                  charset      - Character set to use
      * @access public
      */
-    function __construct($body = '', $params = array())
+    public function __construct($body = '', $params = array())
     {
         if (!defined('MAIL_MIMEPART_CRLF')) {
             define('MAIL_MIMEPART_CRLF', defined('MAIL_MIME_CRLF') ? MAIL_MIME_CRLF : "\r\n", TRUE);

@@ -18,7 +18,9 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 	$EmailSubject = "";
 	$EmailText = "";
 	$EmailAddress = "";
-		
+
+	$IfIssueShopSupportLeaderText =  "\n\n" . "If there is any problem or delay, please email Shop Support Team Leader.";
+	
 	switch ($Type) {
 		/* PREPARE ORDER ONLINE TO SHOP SUPPORT */
 		case "PrepareOrderOnline":
@@ -100,22 +102,23 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			/* Change Price Started */
 			$EmailSubject = "Change of Price procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Purchasing manager.";
+						"All existing pieces of the item will return to kantor shortly." 
+						. $IfIssueShopSupportLeaderText;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "PrintNewPriceTags":
 			/* Print New Pricetags */ 
 			$EmailSubject = "New Pricetags needed for: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"Please destroy all OLD pricetags, print new ones and place them at the items, so items are ready for sale.";
+						"Please destroy all OLD pricetags, print new ones and place them at the items, so items are ready for sale." 
+						. $IfIssueShopSupportLeaderText;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "ChangePriceItemFromConsignment":
 			$EmailSubject = "Return item from consignment locations: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"Please return all the pieces for this item in consignment locations to kantor ASAP, as the item is in Change of Price procedure." . "\n\n" .
-						"Locations considered: Waterbom, Ayana and InterContinental."  . "\n\n";
+						"Please return all the pieces for this item in consignment locations to kantor ASAP, as the item is in Change of Price procedure." . "\n\n" . "Locations considered: Waterbom, Ayana and InterContinental."  
+						. $IfIssueShopSupportLeaderText;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "ItemReadyChangePriceStep02":
@@ -132,24 +135,24 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			/* Move To Discount Started */
 			$EmailSubject = "Movement to 20% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Shop Support Team Leader";
+						"All existing pieces of the item will return to kantor shortly." 
+						. $IfIssueShopSupportLeaderText;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "MoveToDiscount50Started":
 			/* Move To Discount Started */
 			$EmailSubject = "Movement to 50% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Shop Support Team Leader";
+						"All existing pieces of the item will return to kantor shortly." 
+						. $IfIssueShopSupportLeaderText;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "MoveToDiscount80Started":
 			/* Move To Discount Started */
 			$EmailSubject = "Movement to 80% Discount Category procedure just started for item: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"All existing pieces of the item will return to kantor shortly." . "\n\n" . 
-						"If there is any problem or delay, please email Shop Support Team Leader";
+						"All existing pieces of the item will return to kantor shortly." 
+						. $IfIssueShopSupportLeaderText;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "MoveToDiscountFromConsignment":
@@ -157,14 +160,16 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 			$EmailText = $EmailSubject . "\n\n" . 
 						"Please return all the pieces for this item in consignment locations to kantor ASAP, as the item is moving to discount procedure." . "\n\n" .
 						"Locations considered: Waterbom & Ayana."  . "\n\n" .
-						"If there is some stock at Sheraton, please notify Ike or Ricard as it is an exception and must checked.";
+						"If there is some stock at Sheraton, it is an exception and must checked."
+						. $IfIssueShopSupportLeaderText;;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "PrintDiscountPriceTags":
 			/* Print Discount Pricetags */ 
-			$EmailSubject = "Stamp Discount Pricetags needed for: ". $Param1;
+			$EmailSubject = "New Discount Pricetags needed for: ". $Param1;
 			$EmailText = $EmailSubject . "\n\n" . 
-						"Please stamp ALL pricetags with the -" . $Param2 ."% stamp and get them ready to return to the shops.";
+						"Please destroy all OLD pricetags, print new pricetags with the -" . $Param2 ."% discount and place them at the items, so items are ready for sale." 
+						. $IfIssueShopSupportLeaderText;
 			$EmailAddress = "kl-shopsupport@kapal-laut.com";
 			break;
 		case "ItemReadyMoveToDiscountStep02":

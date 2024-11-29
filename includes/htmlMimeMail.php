@@ -1,4 +1,5 @@
 <?php
+/* $Id: htmlMimeMail.php 6592 2014-03-02 08:41:40Z daintree $*/
 /**
 * Filename.......: class.html.mime.mail.inc
 * Project........: HTML Mime mail class
@@ -89,7 +90,7 @@ class htmlMimeMail
 * if supplied.
 */
 
-	function __construct()
+	public function __construct()
 	{
 		/**
         * Initialise some variables.
@@ -180,11 +181,11 @@ class htmlMimeMail
 	function setCrlf($crlf = "\n")
 	{
 		if (!defined('CRLF')) {
-			define('CRLF', $crlf, true);
+			define('CRLF', $crlf);
 		}
 
 		if (!defined('MAIL_MIMEPART_CRLF')) {
-			define('MAIL_MIMEPART_CRLF', $crlf, true);
+			define('MAIL_MIMEPART_CRLF', $crlf);
 		}
 	}
 

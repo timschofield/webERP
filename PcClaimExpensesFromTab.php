@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: PcClaimExpensesFromTab.php 7593 2016-08-18 07:09:07Z exsonqu $*/
-
 include('includes/session.php');
 $Title = _('Claim Petty Cash Expenses From Tab');
 /* webERP manual links before header.php */
@@ -256,7 +254,7 @@ if (!isset($SelectedTabs)){
 
 			$sqldes="SELECT description
 						FROM pcexpenses
-						WHERE codeexpense='". $myrow['3'] . "'";
+						WHERE codeexpense='". $myrow['4'] . "'";
 
 			$ResultDes = DB_query($sqldes);
 			$Description=DB_fetch_array($ResultDes);
@@ -264,12 +262,12 @@ if (!isset($SelectedTabs)){
 			if (!isset($Description['0'])){
 				$Description['0']='ASSIGNCASH';
 			}
-			if ($myrow['5']=='0000-00-00') {
+			if ($myrow['6']=='0000-00-00') {
 				$AuthorisedDate=_('Unauthorised');
 			} else {
-				$AuthorisedDate=ConvertSQLDate($myrow['5']);
+				$AuthorisedDate=ConvertSQLDate($myrow['6']);
 			}
-			if (($myrow['5'] == '0000-00-00') and ($Description['0'] != 'ASSIGNCASH')){
+			if (($myrow['6'] == '0000-00-00') and ($Description['0'] != 'ASSIGNCASH')){
 				// only movements NOT authorized can be modified or deleted
 				printf('<td>%s</td>
 					<td>%s</td>
@@ -280,12 +278,12 @@ if (!isset($SelectedTabs)){
 					<td><a href="%sSelectedIndex=%s&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
 					<td><a href="%sSelectedIndex=%s&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this code and the expenses it may have set up?') . '");\'>' . _('Delete') . '</a></td>
 					</tr>',
-					ConvertSQLDate($myrow['2']),
+					ConvertSQLDate($myrow['3']),
 					$Description['0'],
-					locale_number_format($myrow['4'],$CurrDecimalPlaces),
+					locale_number_format($myrow['5'],$CurrDecimalPlaces),
 					$AuthorisedDate,
-					$myrow['7'],
-					$myrow['8'],
+					$myrow['9'],
+					$myrow['10'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['0'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['0']);
 			} else {
@@ -296,12 +294,12 @@ if (!isset($SelectedTabs)){
 					<td>%s</td>
 					<td>%s</td>
 					</tr>',
-					ConvertSQLDate($myrow['2']),
+					ConvertSQLDate($myrow['3']),
 					$Description['0'],
-					locale_number_format($myrow['4'],$CurrDecimalPlaces),
+					locale_number_format($myrow['5'],$CurrDecimalPlaces),
 					$AuthorisedDate,
-					$myrow['7'],
-					$myrow['8']);
+					$myrow['9'],
+					$myrow['10']);
 
 			}
 

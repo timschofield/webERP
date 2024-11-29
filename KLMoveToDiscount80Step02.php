@@ -1,7 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('KL Move To 80% Discount -> Step 02');
+$Title = _('Move To 80% Discount -> Step 02');
 include('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
@@ -55,7 +55,7 @@ include('includes/KLPrices.php');
 				AND klmovetodiscount80.endprocessdate = '0000-00-00'";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to be moved to 80% Discount in kantor') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to be moved to 80% Discount in Kantor') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -63,7 +63,7 @@ include('includes/KLPrices.php');
 							<th>' . _('Code') . '</th>
 							<th>' . _('Description') . '</th>
 							<th>' . _('Start Date') . '</th>
-							<th>' . _('QOH KL Shops') . '</th>
+							<th>' . _('QOH Shops') . '</th>
 							<th>' . _('Transit From Kantor') . '</th>
 							<th>' . _('Transit To Kantor') . '</th>
 							<th>' . _('QOH Kantor') . '</th>
@@ -89,15 +89,15 @@ include('includes/KLPrices.php');
 				AND ($myrow['intransitfromconsignment'] == 0)
 				AND ($myrow['intransitfromshops'] == 0)
 				){
-				if ($myrow['categoryid']== "DISC8A"){
+				if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_80)){
 					// already changed the category, so now it's time to see if labels have been printed and finish the process
 					$NewDiscountCategory = $myrow['discountcategory'];
-					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory']  . '&Category='. $myrow['categoryid'] . '&Action=Finish">' . ('Printed') . '</a>';
+					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Category='. $myrow['categoryid'] . '&Action=Finish">' . ('Printed') . '</a>';
 				}else{
 					// the category is still the old one. We still need to change it!
 					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
 					// We can apply the new discount category
-					$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory']  . '&Category='. $myrow['categoryid'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
+					$NewDiscountCategory = '<a href="' . $RootPath . '/KLChangeToDiscount.php?Item=' . $myrow['stockid'] . '&Discount='. $myrow['discountcategory'] . '&Category='. $myrow['categoryid'] . '&Action=Change">' . $myrow['discountcategory'] . '</a>';
 					$NewLabelsPrinted = 'Not yet';
 				}
 			}else{
@@ -135,7 +135,7 @@ include('includes/KLPrices.php');
 		echo '</table>
 				</div>';
 	}else{
-		prnMsg("No items to be moved to 80% Discount at the moment", "success");
+		prnMsg("No items to be moved to 80% discount at the moment", "success");
 	}
 
 include('includes/footer.php');
