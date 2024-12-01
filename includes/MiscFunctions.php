@@ -323,20 +323,16 @@ function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 		10);// RoundRectangle $RadiusY.
 }
 
-
-
-
-
-
-
-
-
+//Assemble URL for configured Wiki Application
 function wikiLink($WikiType, $WikiPageID) {
 	if (strstr($_SESSION['WikiPath'], 'http:')) {
+		$WikiPath = $_SESSION['WikiPath'];
+	} elseif (strstr($_SESSION['WikiPath'], 'https:')) {
 		$WikiPath = $_SESSION['WikiPath'];
 	} else {
 		$WikiPath = '../' . $_SESSION['WikiPath'] . '/';
 	}
+
 	if ($_SESSION['WikiApp'] == _('WackoWiki')) {
 		echo '<a target="_blank" href="' . $WikiPath . $WikiType . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
 	} elseif ($_SESSION['WikiApp'] == _('MediaWiki')) {
