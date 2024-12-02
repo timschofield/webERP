@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 				SET date = '" . FormatDateForSQL($_POST['Date']) . "',
 					amount = '" . filter_number_format($_POST['Amount']) . "',
 					authorized = '0000-00-00',
-					notes = '" . $_POST['Notes'] . "',
+					notes = '" . $_POST['Notes'] . "'
 				WHERE counterindex = '" . $SelectedIndex . "'";
 		$Msg = _('Assignment of cash to PC Tab ') . ' ' . $SelectedTabs . ' ' . _('has been updated');
 	} elseif ($InputError != 1) {
