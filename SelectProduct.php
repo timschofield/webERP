@@ -306,21 +306,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 	$DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
 	$Demand+= $DemAsComponentRow[0];
 	//Also the demand for the item as a component of works orders
-	$SQL = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
-			FROM woitems INNER JOIN worequirements
-			ON woitems.stockid=worequirements.parentstockid
-			INNER JOIN workorders
-			ON woitems.wo=workorders.wo
-			AND woitems.wo=worequirements.wo
-			INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-			WHERE  worequirements.stockid='" . $StockID . "'
-			AND workorders.closed=0";
-	$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
-	$DemandResult = DB_query($SQL, $ErrMsg);
-	if (DB_num_rows($DemandResult) == 1) {
-		$DemandRow = DB_fetch_row($DemandResult);
-		$Demand+= $DemandRow[0];
-	}
+	$Demand += GetItemDemandAsAComponentOfWorkOrders($StockID,'');
+
 	echo '<tr>
 			<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
 			<td style="width:17%; text-align:right" class="select">' . $QOH . '</td>

@@ -169,24 +169,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 	}
 
 	//Also the demand for the item as a component of works orders
-
-	$SQL = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
-			FROM woitems INNER JOIN worequirements
-			ON woitems.stockid=worequirements.parentstockid
-			INNER JOIN workorders
-			ON woitems.wo=workorders.wo
-			AND woitems.wo=worequirements.wo
-			WHERE workorders.loccode='" . $MyRow['loccode'] . "'
-			AND worequirements.stockid='" . $StockID . "'
-			AND workorders.closed=0";
-
-	$ErrMsg = _('The workorder component demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
-	if (DB_num_rows($DemandResult)==1){
-		$DemandRow = DB_fetch_row($DemandResult);
-		$DemandQty += $DemandRow[0];
-	}
+	$DemandQty += GetItemDemandAsAComponentOfWorkOrders($StockID,$MyRow['loccode']);
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
 		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
