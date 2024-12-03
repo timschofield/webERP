@@ -276,7 +276,7 @@ function ImagesShouldNotBeInOpencartCatalog($RootPath){
 	$i= 0;
 	// get all images in part_pics folder
 	$suffix = ".jpg";
-	$imagefiles = getDirectoryTree(ABSOLUTE_PATH_OPENCART_IMAGES, 'jpg');
+	$imagefiles = getDirectoryTree(ABSOLUTE_PATH_OPENCART_IMAGES);
 	foreach ($imagefiles as $file) {
 		$StockId = substr($file, 0, strpos($file, $suffix));
 		if (strpos($StockId, '.1') > 0){

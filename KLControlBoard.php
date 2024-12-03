@@ -2140,7 +2140,7 @@ function ImagesWithoutProduct($RootPath){
 	$i= 0;
 	// get all images in part_pics folder
 	$suffix = ".jpg";
-	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir'], 'jpg');
+	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir']);
 	foreach ($imagefiles as $file) {
 		if ($file != '.ftpquota' AND
 			$file != 'Obsolete' AND

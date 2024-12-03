@@ -446,9 +446,15 @@ function StartSameColourRow($k){
 	return $k;
 }
 
-function getDirectoryTree( $outerDir , $x){ 
-    $dirs = array_diff( scandir( $outerDir ), Array( ".", ".." ) ); 
-    return $dirs; 
+function getDirectoryTree($outerDir){ 
+	$dirs = FALSE; 
+	if (is_dir($outerDir)){
+		$Directory = scandir( $outerDir );
+		if (is_array($Directory)){
+			$dirs = array_diff( $Directory, Array( ".", ".." ) ); 
+		}
+	}
+   return $dirs; 
 } 
 
 function ItemInList($Item, $List){
