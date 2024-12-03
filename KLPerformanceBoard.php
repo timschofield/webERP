@@ -360,7 +360,8 @@ if ($ProcessSection03){
 					100000000, 
 					75, 1.05,
 					  5000, 
-					100000, 
+					100000,
+					125000,
 					 10000,
 					125000,
 					 10000,
@@ -622,20 +623,28 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 	}
 }
 
-function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTransferADU, 
-							$CashEndOfPreviousYearSMH, $YearlyGoalSMH, $MinTransferSMH, 
-							$CashEndOfPreviousYearBB, $YearlyGoalBB, $MinTransferBB, 
-							$MinMoveFree, 
-							$USDPODaysSchedule,
-							$USDSafetyFactor,
-							$USDMinPurchase,
-							$USDMaxEasyPurchasePerMonth,
-							$SaldoADUDanamonUSDMin,
-							$SaldoADUDanamonUSDMax,
-							$SaldoADUPayoneerUSDMin,
-							$SaldoADUPayoneerUSDMax,
-							$Period, 
-							$AdminRole){
+function CashStatus($Year, 	
+					$CashEndOfPreviousYearADU, 
+					$YearlyGoalADU, 
+					$MinTransferADU, 
+					$CashEndOfPreviousYearSMH, 
+					$YearlyGoalSMH, 
+					$MinTransferSMH, 
+					$CashEndOfPreviousYearBB, 
+					$YearlyGoalBB, 
+					$MinTransferBB, 
+					$MinMoveFree, 
+					$USDPODaysSchedule,
+					$USDSafetyFactor,
+					$USDMinPurchase,
+					$USDMaxEasyPurchasePerMonth,
+					$SaldoADUGlobalUSDMax,
+					$SaldoADUDanamonUSDMin,
+					$SaldoADUDanamonUSDMax,
+					$SaldoADUPayoneerUSDMin,
+					$SaldoADUPayoneerUSDMax,
+					$Period, 
+					$AdminRole){
 
     // Consider all year, not until today as some tx are reported into the future
 	$EndOfYear = $Year . "-12-31";
@@ -930,7 +939,6 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 
 	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next % days (IDR)")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
-	$DPPlacedUSD = $PORunningTotalUSD - $POPaymentsPendingUSD;
 	$POPaymentsPendingUSDuntilEndOfMonth = $PORunningTotalUSD / $USDPODaysSchedule * $DaysUntilEndOfMonth * $USDSafetyFactor;
 	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
@@ -938,7 +946,7 @@ function CashStatus($Year, 	$CashEndOfPreviousYearADU, $YearlyGoalADU, $MinTrans
 	if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
 		AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
 		$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
-												$SaldoADUDanamonUSDMax - $SaldoADUDanamonUSD), 5000);	
+												$SaldoADUGlobalUSDMax - $SaldoUSD), 5000);	
 	}elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
 		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
 	}else{
