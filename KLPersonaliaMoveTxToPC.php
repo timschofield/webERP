@@ -193,16 +193,16 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 						<td class="number">%s</td>
 						</tr>', 
 						$myrow['codename'],
-						locale_number_format_zero_blank($FixedSalary),
-						locale_number_format_zero_blank($Makan),
-						locale_number_format_zero_blank($Bensin),
-						locale_number_format_zero_blank($Commissions),
-						locale_number_format_zero_blank($Shifts),
-						locale_number_format_zero_blank($THR),
-						locale_number_format_zero_blank($Lain2),
-						locale_number_format_zero_blank($JHT),
-						locale_number_format_zero_blank($PPH21),
-						locale_number_format_zero_blank($Rounding)
+						locale_number_format_zero_blank($FixedSalary,0),
+						locale_number_format_zero_blank($Makan,0),
+						locale_number_format_zero_blank($Bensin,0),
+						locale_number_format_zero_blank($Commissions,0),
+						locale_number_format_zero_blank($Shifts,0),
+						locale_number_format_zero_blank($THR,0),
+						locale_number_format_zero_blank($Lain2,0),
+						locale_number_format_zero_blank($JHT,0),
+						locale_number_format_zero_blank($PPH21,0),
+						locale_number_format_zero_blank($Rounding,0)
 						);
 			}
 			echo '</table>
