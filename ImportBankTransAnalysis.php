@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SuppTransGLAnalysis.php 4578 2011-05-28 11:01:00Z daintree $*/
 
 /*The ImportBankTransClass contains the structure ofinformation about the transactions
 An array of class BankTrans objects - containing details of the bank transactions has an array of
@@ -117,7 +116,7 @@ if ($_SESSION['Trans'][$TransID]->Amount >= 0){ //its a receipt
 }
 
 /*Set up a form to allow input of new GL entries */
-echo '</p><form name="form1" action="' . $_SERVER['PHP_SELF'] . '" method="post">';
+echo '</p><form name="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<input type="hidden" name="TransID" value=' . $TransID . ' />';
@@ -199,6 +198,7 @@ if ($AllowGLAnalysis==false){
 	}
 } else { /*Allow GL Analysis == true */
 	echo '</p><table cellpadding="2" class="selection">
+			<thead>
 				<tr>
 					<th colspan="5">' . _('General ledger Analysis') . '</th>
 				</tr>
@@ -208,9 +208,11 @@ if ($AllowGLAnalysis==false){
 					<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
 					<th>' . _('Narrative') . '</th>
 					<th class="ascending">' . _('Tag') . '</th>
-				</tr>';
+				</tr>
+			</thead>
+			<tbody>';
+
 	$TotalGLValue=0;
-	$i=0;
 
 	foreach ( $_SESSION['Trans'][$TransID]->GLEntries AS $EnteredGLCode){
 
@@ -220,14 +222,16 @@ if ($AllowGLAnalysis==false){
 			<td class=number>' . locale_number_format($EnteredGLCode->Amount,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>
 			<td>' . $EnteredGLCode->Narrative . '</td>
 			<td>' . $EnteredGLCode->Tag . '</td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?Edit=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Edit') . '</a></td>
-			<td><a href="' . $_SERVER['PHP_SELF'] . '?Delete=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Edit') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $EnteredGLCode->ID . '&amp;TransID=' . $TransID . '">' . _('Delete') . '</a></td>
 			</tr>';
 
 		$TotalGLValue += $EnteredGLCode->Amount;
 	}
 
-	echo '<tr>
+	echo '</tbody>
+		<tfoot>
+		<tr>
 			<td colspan="2" class="number">' . _('Total of GL Entries') . ':</td>
 			<td class="number">' . locale_number_format($TotalGLValue,$_SESSION['Statement']->CurrDecimalPlaces) . '</td>
 		</tr>
@@ -244,6 +248,7 @@ if ($AllowGLAnalysis==false){
 		echo '<th colspan="5"><font size="4" color="green">' . _('Reconciled') . '</th>';
 	}
 	echo '</tr>
+		</tfoot>
 		</table>';
 
 
