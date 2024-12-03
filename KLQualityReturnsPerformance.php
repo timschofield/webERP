@@ -27,9 +27,11 @@ if ($KL_SystemAdmin
 	$NumberOfTestExecuted++;
 }
 
-
 prnMsg("Performed ". $NumberOfTestExecuted . " Quality and Returns tests",'success');
-time_finish($begintime);
+
+if ($KL_SystemAdmin){
+	time_finish($begintime);
+}
 
 include ('includes/footer.php');
 

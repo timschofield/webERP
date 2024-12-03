@@ -14,8 +14,6 @@ include('includes/OpenCartGeneralFunctions.php');
 
 $UpdateDB = TRUE;
 
-$begintime = time_start();
-
 // Select items and classify them
 $SQL = "SELECT stockmaster.stockid,
 			   stockmaster.description,
@@ -143,7 +141,6 @@ if (DB_num_rows($result) != 0){
 	prnMsg("Number of items associated to website catalog: " . locale_number_format($ItemsAdded));
 }
 
-time_finish($begintime);
 include ('includes/footer.php');
 
 /********************************************************************************************************

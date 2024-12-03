@@ -193,7 +193,10 @@ prnMsg("Performed ". $NumberOfTestExecuted . " pricing control tests",'success')
 prnMsg("Detected ". $IssuesFound . " pricing issues",'success');
 InsertKPI("Prices", "Pricing Issues", $IssuesFound);
 
-time_finish($begintime);
+if ($KL_SystemAdmin){
+	time_finish($begintime);
+}
+
 include ('includes/footer.php');
 
 /********************************************************************************************

@@ -381,7 +381,10 @@ if ($ProcessSection03){
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " performance tests",'success');
-time_finish($begintime);
+
+if ($KL_SystemAdmin){
+	time_finish($begintime);
+}
 
 include ('includes/footer.php');
 
