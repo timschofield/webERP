@@ -1,0 +1,29 @@
+:root {
+--border-colour:#617C4F
+}
+.logo {
+font-family: DejaVu,Futura,Trebuchet MS,Arial,sans-serif;
+display:inline;
+font-size:24pt;
+width:auto;
+}
+.logo-left {
+background: #E0F3B1;
+color:#5A5F00;
+padding-left:4px;
+border-top-left-radius:32px;
+border-bottom-left-radius:32px;
+border-top:solid 2px var(--border-colour);
+border-bottom:solid 2px var(--border-colour);
+border-left:solid 2px var(--border-colour);
+}
+.logo-right {
+background: #5A5F00;
+color:#E0F3B1;
+padding-right:4px;
+border-top-right-radius:32px;
+border-bottom-right-radius:32px;
+border-top:solid 2px var(--border-colour);
+border-bottom:solid 2px var(--border-colour);
+border-right:solid 2px var(--border-colour);
+}
