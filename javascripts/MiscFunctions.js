@@ -257,6 +257,16 @@ function payVerify(b,a) {
 	}
 }
 
+function remSelOpt(e, t) {
+	len1 = t.options.length;
+	for (i = 0; i < len1; i++) {
+		if (t.options[i].value == e) {
+			t.options[i] = null;
+			break
+		}
+	}
+}
+
 function AddScript(e, t) {
 	theme = localStorage.Theme;
 	document.getElementById("favourites").innerHTML = document.getElementById("favourites").innerHTML + '<option value="' + e + '">' + t + "</option>";
