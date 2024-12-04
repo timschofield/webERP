@@ -161,12 +161,10 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		$_POST['FromDate'] = '';
 	}
 	echo '<td>' . _('Date From') . '</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" /></td> 
+		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" vaue="' . $_POST['FromDate'] .'" /></td>
 		<td>' . _('Date To') . '</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
-		<td><input type="submit" name="Search"  value="' ._('Search') . '" /></td></tr></table>	
-		
-		';
+		<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+		<td><input type="submit" name="Search"  value="' ._('Search') . '" /></td></tr></table>';
 	if (!isset($_POST['ShowDetails'])) {
 		$_POST['ShowDetails'] = 1;
 	}
@@ -260,28 +258,22 @@ if(isset($StockItemsResult)){
 
 	if (isset($StockItemsResult)
 	AND DB_num_rows($StockItemsResult)>1) {
-	echo '<a href="' . $RootPath . '/InternalStockRequestInquiry.php">' . _('Return') . '</a>';
-	echo '<table cellpadding="2" class="selection">';
-	echo '<tr>
+	echo '<a href="' . $RootPath . '/InternalStockRequestInquiry.php">' . _('Return') . '</a>
+		<table cellpadding="2" class="selection">
+		<thead>
+			<tr>
 			<th class="ascending" >' . _('Code') . '</th>
 			<th class="ascending" >' . _('Description') . '</th>
 			<th class="ascending" >' . _('Total Applied') . '</th>
 			<th>' . _('Units') . '</th>
-		</tr>';
-
-	$k=0; //row colour counter
+			</tr>
+		</thead>
+		<tbody>';
 
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -294,7 +286,8 @@ if(isset($StockItemsResult)){
 	}
 //end of while loop
 
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 
 }
 	
@@ -324,8 +317,7 @@ if(isset($StockItemsResult)){
 			FROM stockrequest INNER JOIN stockrequestitems ON stockrequest.dispatchid=stockrequestitems.dispatchid 
 			INNER JOIN departments ON stockrequest.departmentid=departments.departmentid 
 			INNER JOIN locations ON locations.loccode=stockrequest.loccode 
-			INNER JOIN stockmaster ON stockrequestitems.stockid=stockmaster.stockid
-			"; 
+			INNER JOIN stockmaster ON stockrequestitems.stockid=stockmaster.stockid";
 	} else {
 		$SQL = "SELECT stockrequest.dispatchid,
 					stockrequest.loccode,
@@ -338,7 +330,7 @@ if(isset($StockItemsResult)){
 					narrative,
 					initiator
 					FROM stockrequest INNER JOIN departments ON stockrequest.departmentid=departments.departmentid
-				        INNER JOIN locations ON locations.loccode=stockrequest.loccode	";
+					INNER JOIN locations ON locations.loccode=stockrequest.loccode ";
 	}
 	//lets add the condition selected by users
 	if (isset($_POST['RequestNo']) AND $_POST['RequestNo'] !== '') {
@@ -425,13 +417,6 @@ if(isset($StockItemsResult)){
 		$i = 0;
 		//There are items without details AND with it
 		while ($myrow = DB_fetch_array($result)) {
-			if ($i == 0) {
-				$Html .= "<tr class=\"EvenTableRows\">";
-				$i = 1;
-			} elseif ($i == 1) {
-				$Html .= "<tr class=\"OddTableRows\">";
-				$i = 0;
-			}
 			if ($myrow['authorised'] == 0) {
 				$Auth = _('No');
 			} else {
@@ -451,7 +436,8 @@ if(isset($StockItemsResult)){
 			}
 			if (isset($ID) AND ($ID != $myrow['dispatchid'])) {
 				$ID = $myrow['dispatchid'];
-				$Html .= '<td>' . $myrow['dispatchid'] . '</td>
+				$Html .= '<tr class="striped_row">
+						<td>' . $myrow['dispatchid'] . '</td>
 						<td>' . $myrow['locationname'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $Auth . '</td>
@@ -463,7 +449,8 @@ if(isset($StockItemsResult)){
 						<td>' . $Comp . '</td>';
 
 			} elseif (isset($ID) AND ($ID == $myrow['dispatchid'])) {
-				$Html .= '<td></td>
+				$Html .= '<tr class="striped_row">
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -474,7 +461,8 @@ if(isset($StockItemsResult)){
 						<td>' . $myrow['uom'] . '</td>
 						<td>' . $Comp . '</td>';
 			} elseif(!isset($ID)) {
-					$Html .= '<td>' . $myrow['dispatchid'] . '</td>
+					$Html .= '<tr class="striped_row">
+						<td>' . $myrow['dispatchid'] . '</td>
 						<td>' . $myrow['locationname'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $Auth . '</td>
@@ -489,23 +477,12 @@ if(isset($StockItemsResult)){
 	} else {
 		prnMsg(_('There are no stock request available'),'warn');
 	}	
-
-
-
-
-
-
-
-				
-			
-
 }
 		
 include('includes/footer.php');
 exit;
 
 function GetSearchItems ($SQLConstraint='') {
-	global $db;
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		 echo _('Stock description keywords have been used in preference to the Stock code extract entered');
 	}

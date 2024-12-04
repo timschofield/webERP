@@ -1,9 +1,10 @@
 <?php
-/* $Id: MRPCreateDemands.php 7362 2015-09-30 12:36:52Z tehonu $*/
 // MRPCreateDemands.php - Create mrpdemands based on sales order history
 
 include('includes/session.php');
 $Title = _('MRP Create Demands');
+$ViewTopic= 'MRP';
+$BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
 
 if (isset($_POST['submit'])) {
@@ -210,8 +211,8 @@ echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Inventory Categories') . ':</td>
 		<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
+	$SQL = 'SELECT categoryid, categorydescription
+			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
@@ -247,11 +248,11 @@ if (!isset($_POST['DistDate'])) {
 }
 echo '<tr>
 		<td>' . _('From Sales Date') . ':</td>
-		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="10" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="10" value="' . $_POST['ToDate'] . '" /></td>
+		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />&nbsp;&nbsp;&nbsp;'. _('To Sales Date') . ':<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Start Date For Distribution') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'" name="DistDate" size="10" value="' . $_POST['DistDate'] . '" /></td>
+		<td><input type="text" class="date" name="DistDate" maxlength="10" size="11" value="' . $_POST['DistDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Distribution Period') . ':</td>

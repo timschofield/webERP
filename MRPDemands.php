@@ -1,14 +1,14 @@
 <?php
 
-/* $Id: MRPDemands.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 // Add, Edit, Delete, and List MRP demand records. Table is mrpdemands.
 // Have separate functions for each routine. Use pass-by-reference - (&$StockID) -
-// to pass values of $StockID to functions. - when just used $db as variable,
-// got error: Catchable fatal error: Object of class mysqli could not be converted to string
+// to pass value of $StockID to functions.
 
 include('includes/session.php');
 $Title = _('MRP Demands');
+$ViewTopic= 'MRP';
+$BookMark = 'MRP_MasterSchedule';
 include('includes/header.php');
 
 if (isset($_POST['DemandID'])){
@@ -94,17 +94,11 @@ function search(&$StockID) { //####SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEARCH_SEA
 		echo $TableHeader;
 
 		$j = 1;
-		$k = 0; //row colour counter
+
 		while ($myrow=DB_fetch_array($result)) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			$tabindex=$j+4;
-			echo '<td><input tabindex="' . $tabindex . '" type="submit" name="StockID" value="' . $myrow['stockid'] .'" /></td>
+			echo '<tr class="striped_row">
+				<td><input tabindex="' . $tabindex . '" type="submit" name="StockID" value="' . $myrow['stockid'] .'" /></td>
 				<td>' . $myrow['description'] . '</td>
 				</tr>';
 			$j++;
@@ -397,7 +391,7 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 			</tr>
 			<tr>
 				<td>' . _('Due Date') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Duedate" size="12" maxlength="12" value="' . $_POST['Duedate'] . '" /></td>
+				<td><input type="text" class="date" name="Duedate" size="11" maxlength="10" value="' . $_POST['Duedate'] . '" /></td>
 			</tr>';
 		// Generate selections for Demand Type
 		echo '<tr>

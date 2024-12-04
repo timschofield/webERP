@@ -153,15 +153,8 @@ if(!isset($_GET['Edit'])){//display the input form
 ?>
 
 
-
-
-
-
-
-
 <?php
 function GetMailGroup () {
-global $db;
 //GET the mailing group data if there are any
 $sql = "SELECT groupname, id FROM mailgroups ORDER BY groupname";
 $ErrMsg = _('Failed to retrieve mail groups information');
@@ -188,7 +181,6 @@ if(DB_num_rows($result) != 0){
 }
 
 function GetUsers ($GroupId,$GroupName) {
-	global $db;
 	$sql = "SELECT userid FROM mailgroups INNER JOIN mailgroupdetails ON mailgroups.groupname=mailgroupdetails.groupname WHERE mailgroups.id = '".$GroupId."'";
 	$ErrMsg = _('Failed to retrieve userid');
 	$result = DB_query($sql,$ErrMsg);
@@ -217,20 +209,10 @@ function GetUsers ($GroupId,$GroupName) {
 		<th colspan="3"><?php echo _('Available Users'); ?></th>
 	</tr>
 <?php
-	$k = 0;
 	while($myrow=DB_fetch_array($result)){
-		if($k==0){
 ?>
-			<tr class="EvenTableRows">
+		<tr class="striped_row">
 <?php
-			$k = 1;
-		}else{
-?>
-			<tr class="OddTableRows">
-<?php
-			$k = 0;
-		}
-	
 		if(in_array($myrow['userid'],$UsersAssigned)){
 ?>
 			<td><?php echo $myrow['userid']; ?></td>

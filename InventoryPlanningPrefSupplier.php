@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: InventoryPlanningPrefSupplier.php 6944 2014-10-27 07:15:34Z daintree $ */
 
 function standard_deviation($Data){
 	$Total = 0;

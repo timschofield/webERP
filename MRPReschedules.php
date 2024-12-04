@@ -1,20 +1,15 @@
 <?php
-
-/*$Id: MRPReschedules.php 6944 2014-10-27 07:15:34Z daintree $ */
-
 // MRPReschedules.php - Report of purchase orders and work orders that MRP determines should be
 // rescheduled.
 
 include('includes/session.php');
 
-$sql="SHOW TABLES WHERE Tables_in_" . $_SESSION['DatabaseName'] . "='mrprequirements'";
-$result=DB_query($sql);
-if (DB_num_rows($result)==0) {
+if ( !DB_table_exists('mrprequirements') ) {
 	$Title='MRP error';
 	include('includes/header.php');
 	echo '<br />';
-	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' . 
-			_('To run the MRP calculation click').' ' . '<a href='.$RootPath .'/MRP.php?' . SID .'>' . _('here') . '</a>', 'error');
+	prnMsg( _('The MRP calculation must be run before you can run this report') . '<br />' .
+			_('To run the MRP calculation click').' ' . '<a href="'.$RootPath .'/MRP.php">' . _('here') . '</a>', 'error');
 	include('includes/footer.php');
 	exit;
 }
@@ -57,7 +52,7 @@ if (isset($_POST['PrintPDF'])) {
 	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.php');
 	   prnMsg( _('No MRP reschedule retrieved'), 'warn');
-	   echo '<br /><a href="' .$RootPath .'/index.php?' . SID . '">' . _('Back to the menu') . '</a>';
+	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 	   if ($debug==1){
 		echo '<br />' . $sql;
 	   }

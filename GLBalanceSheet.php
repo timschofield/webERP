@@ -314,7 +314,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$CheckTotal+= $AccountBalance;
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
-			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and ($AccountBalance <> 0 or $AccountBalanceLY <> 0))) {
+			if (($_POST['ShowZeroBalance'] != '') or (($_POST['ShowZeroBalance'] == '') and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 				$FontSize = 8;
 				$pdf->setFont('', '');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 50, $FontSize, $MyRow['accountcode']);
@@ -589,7 +589,7 @@ if (!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		$CheckTotalLY+= $AccountBalanceLY;
 
 		if ($_POST['ShowDetail'] == 'Detailed') {
-			if (isset($_POST['ShowZeroBalance']) or (!isset($_POST['ShowZeroBalance']) and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
+			if (($_POST['ShowZeroBalance'] != '') or (($_POST['ShowZeroBalance'] == '') and (round($AccountBalance, $_SESSION['CompanyRecord']['decimalplaces']) <> 0 or round($AccountBalanceLY, $_SESSION['CompanyRecord']['decimalplaces']) <> 0))) {
 
 				$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode(FYStartPeriod($_POST['PeriodTo'])) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['accountcode']) . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';// Function FYStartPeriod() in ~/includes/MiscFunctions.php
 
