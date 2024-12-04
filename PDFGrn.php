@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFGrn.php 7373 2015-10-30 12:12:52Z exsonqu $*/
 
 include('includes/session.php');
 
@@ -115,7 +114,7 @@ if ($NoOfGRNs >0){
 		/* move to after serial print
 		if($FooterPrintedInPage == 0){
 			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ') . $DeliveryDate);
-			$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
+			$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for').' ______________________');
 			$FooterPrintedInPage= 1;
 		}
 		*/
@@ -165,7 +164,7 @@ if ($NoOfGRNs >0){
 
 		if($FooterPrintedInPage == 0){
 			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize, _('Date of Receipt: ') . $DeliveryDate);
-			$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for ').'______________________');
+			$LeftOvers = $pdf->addText($FormDesign->SignedFor->x,$Page_Height-$FormDesign->SignedFor->y,$FormDesign->SignedFor->FontSize, _('Signed for').' ______________________');
 			$FooterPrintedInPage= 1;
 		}
 	} //end of loop around GRNs to print

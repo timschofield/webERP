@@ -1,6 +1,5 @@
 <?php
 /* $Revision: 1.7 $ */
-/* $Id: PO_Chk_ShiptRef_JobRef.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*Code to check that ShiptRef and Contract or JobRef entered are valid entries
 This is used by the UpdateLine button when a purchase order line item is updated and

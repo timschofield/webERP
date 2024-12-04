@@ -1,16 +1,16 @@
 <?php
 
-/* $Id: PaymentAllocations.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /*
 	This page is called from SupplierInquiry.php when the 'view payments' button is selected
 */
 
 include('includes/session.php');
-
 $Title = _('Payment Allocations');
-
+$ViewTopic = 'AccountsPayable';
+$BookMark = 'PaymentAllocations';
 include('includes/header.php');
+
 include('includes/SQL_CommonFunctions.inc');
 
 if (!isset($_GET['SuppID'])){
@@ -70,17 +70,10 @@ $TableHeader = '<tr>
 echo $TableHeader;
 
 $j=1;
-$k=0; //row colour counter
   while ($myrow = DB_fetch_array($Result)) {
-	if ($k == 1){
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 
-	echo '<td>' . $myrow['supplierno'] . '</td>
+	echo '<tr class="striped_row">
+		<td>' . $myrow['supplierno'] . '</td>
 		<td>' . $myrow['suppreference'] . '</td>
 		<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
 		<td class="number">' . locale_number_format($myrow['alloc'],$myrow['currdecimalplaces']) . '</td>

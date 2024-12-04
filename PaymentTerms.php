@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PaymentTerms.php 7556 2016-06-16 11:11:45Z exsonqu $*/
 
 include('includes/session.php');
 

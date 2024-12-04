@@ -1,8 +1,7 @@
 <?php
 
-/* $Id: PDFOrderStatus.php 6943 2014-10-27 07:06:42Z daintree $*/
 
-include ('includes/session.php');
+include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 
 $InputError=0;
@@ -35,11 +34,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		<table class="selection">
 		<tr>
 			<td>' . _('Enter the date from which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y'))) . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Enter the date to which orders are to be listed') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Inventory Category') . '</td>
@@ -86,7 +85,6 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	include('includes/footer.php');
 	exit;
 } else {
-	include('includes/ConnectDB.inc');
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title',_('Order Status Report'));
 	$pdf->addInfo('Subject',_('Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
@@ -251,7 +249,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 if ($_POST['BackOrders']=='Yes'){
 		$sql .= " AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced >0";
 }
-//Add salesman role control 
+//Add salesman role control
 if ($_SESSION['SalesmanLogin'] != '') {
 		$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }

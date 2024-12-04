@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFDeliveryDifferences.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -30,11 +29,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '<table class="selection">
 			<tr>
 			<td>' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat']. '" name="FromDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
+			<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat']. '"  name="ToDate" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+			<td><input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Inventory Category') . '</td>
@@ -148,7 +147,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				ON orderdeliverydifferenceslog.invoiceno=debtortrans.transno
 				INNER JOIN salesorders
 					ON orderdeliverydifferenceslog.orderno=salesorders.orderno
-				INNER JOIN locationusers 
+				INNER JOIN locationusers
 					ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.type=10
 		AND salesorders.fromstkloc='". $_POST['Location'] . "'
@@ -173,7 +172,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 				AND debtortrans.type=10
 				INNER JOIN salesorders
 					ON orderdeliverydifferenceslog.orderno = salesorders.orderno
-				INNER JOIN locationusers 
+				INNER JOIN locationusers
 					ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE salesorders.fromstkloc='" . $_POST['Location'] . "'
 		AND categoryid='" . $_POST['CategoryID'] . "'
@@ -247,8 +246,8 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 			FROM salesorderdetails INNER JOIN debtortrans
-				ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders 
-				ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers 
+				ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
+				ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
 				ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
@@ -257,8 +256,8 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN stockmaster
-			ON salesorderdetails.stkcode=stockmaster.stockid INNER JOIN salesorders 
-			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers 
+			ON salesorderdetails.stkcode=stockmaster.stockid INNER JOIN salesorders
+			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
 			ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.trandate>='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -269,7 +268,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 	$sql = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
-			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers 
+			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
 			ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE debtortrans.trandate>='". FormatDateForSQL($_POST['FromDate']) . "'
 		AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'
@@ -311,7 +310,7 @@ if ($_POST['Email']=='Yes'){
 	if (file_exists($_SESSION['reports_dir'] . '/'.$ReportFileName)){
 		unlink($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	}
-	$pdf->Output($_SESSION['reports_dir'].'/'.$ReportFileName,'F');	
+	$pdf->Output($_SESSION['reports_dir'].'/'.$ReportFileName,'F');
 
 	include('includes/htmlMimeMail.php');
 

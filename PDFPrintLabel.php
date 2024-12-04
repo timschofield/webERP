@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPriceLabels.php 5228 2012-04-06 02:48:00Z vvs2012 $*/
 
 include('includes/session.php');
 include('includes/barcodepack/class.code128.php');
@@ -180,6 +179,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 	$pdf->setPrintHeader(false);
 	$pdf->setPrintFooter(false);
 
+
 	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
 	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 	$pdf->setPrintHeader(false);
@@ -209,38 +209,18 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 					}
 					if ($Field['FieldValue'] == 'price'){ //need to format for the number of decimal places
 						$LeftOvers = $pdf->addTextWrap($XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],$LabelDimensions['label_width']-$Field['HPos'],$Field['FontSize'],$Value);
-					}elseif ($Field['FieldValue'] == 'logo'){ 
+					}elseif ($Field['FieldValue'] == 'logo'){
 						$pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
+
 					}elseif($Field['Barcode']==1) {
 
-						$BarcodeImage = new code128(str_replace('_','',$Value));	
-						
-						$WidthSmallestBar = 25.4 / 600; // 25.4mm per inch / 600 points per inch
-						// define barcode style
-						$style = array(
-							'position' => '',
-							'align' => 'C',
-							'stretch' => false,
-							'fitwidth' => true,
-							'cellfitalign' => '',
-							'border' => true,
-							'hpadding' => 'auto',
-							'vpadding' => 'auto',
-							'fgcolor' => array(0,0,0),
-							'bgcolor' => false, //array(255,255,255),
-							'text' => true,
-							'font' => 'helvetica',
-							'fontsize' => 8,
-							'stretchtext' => 4
-						);
-//						$pdf->Cell(0, 0, 'CODE 128 AUTO', 0, 1);
-//						$pdf->write1DBarcode($Value, 'C128', '', '', '', 18, $WidthSmallestBar, $style, 'N');						
-						
-/*						ob_start();
+						$BarcodeImage = new code128(str_replace('_','',$Value));
+
+						ob_start();
 						imagepng(imagepng($BarcodeImage->draw()));
 						$Image_String = ob_get_contents();
 						ob_end_clean();
-*/
+
 						$pdf->addJpegFromFile('@' . $Image_String,$XPos+$Field['HPos'],$YPos-$LabelDimensions['label_height']+$Field['VPos'],'', $Field['FontSize']);
 
 					} else {
@@ -353,7 +333,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		</tr>
 		<tr>
 			<td>' . _('Effective As At') . ':</td>
-			<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+			<td><input type="text" maxlength="10" size="11" class="date" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
         echo '</td></tr>';
 
 		echo'<tr><td>' . _('Number of labels per item') . ':</td>

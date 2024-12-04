@@ -1,6 +1,4 @@
 <?php
-/*	$Id: PDFQuotation.php 6941 2014-10-26 23:18:08Z daintree $*/
-
 /*	Please note that addTextWrap prints a font-size-height further down than
 	addText and other functions.*/
 

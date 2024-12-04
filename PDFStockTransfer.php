@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFStockTransfer.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /* This script is superseded by the PDFStockLocTransfer.php which produces a multiple item stock transfer listing - this was for the old individual stock transfers where there is just single items being transferred */
 
@@ -120,7 +119,7 @@ while ($myrow=DB_fetch_array($result)) {
 			FROM stockmaster WHERE stockid ='" . $StockID . "'";
 	$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 	$ControlledRow = DB_fetch_row($CheckControlledResult);
-	
+
 	if ($ControlledRow[0]==1) { /*Then its a controlled item */
 		$SQL = "SELECT stockserialmoves.serialno,
 				stockserialmoves.moveqty
@@ -136,7 +135,7 @@ while ($myrow=DB_fetch_array($result)) {
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['serialno']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['moveqty']);
 			$YPos=$YPos-$line_height;
-			
+
 			if ($YPos < $Bottom_Margin + $line_height){
 				include('includes/PDFStockTransferHeader.inc');
 			} //while SerialStockMoves
@@ -151,8 +150,8 @@ while ($myrow=DB_fetch_array($result)) {
 }
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-70,300-$Left_Margin,$FontSize, _('Date of transfer: ').$Date);
 
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, _('Signed for ').$From.'______________________');
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, _('Signed for ').$To.'______________________');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-120,300-$Left_Margin,$FontSize, _('Signed for').' '.$From.'______________________');
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos-160,300-$Left_Margin,$FontSize, _('Signed for').' '.$To.'______________________');
 
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockTransfer_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
