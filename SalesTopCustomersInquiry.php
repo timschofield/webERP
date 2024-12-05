@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SalesTopCustomersInquiry.php 4261 2010-12-22 15:56:50Z  $*/
 
 include('includes/session.php');
 $Title = _('Top Customer Sales Inquiry');
@@ -26,7 +25,7 @@ echo '<form id="form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUO
 				<tr>
 					<td>' . _('Custom Range') . ':</td>
 					<td><input type="radio" name="DateRange" value="Custom" ';
-					
+
 if ($_POST['DateRange']=='Custom'){
 	echo 'checked="checked"';
 }
@@ -64,11 +63,11 @@ if ($_POST['DateRange']=='Custom'){
 	}
 	echo '<tr>
 			<td>' . _('Date From') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 			</tr>';
 	echo '<tr>
 			<td>' . _('Date To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 			</tr>';
 }
 echo '</table></td>
@@ -223,17 +222,11 @@ if (isset($_POST['ShowSales'])){
 	$CumulativeTotalNetSales = 0;
 	$CumulativeTotalQuantity = 0;
 	$i=1;
-	$k=0;
-	while ($SalesRow=DB_fetch_array($SalesResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
-		echo '<td>' . $i . '</td>
+	while ($SalesRow=DB_fetch_array($SalesResult)) {
+
+		echo '<tr class="striped_row">
+				<td>' . $i . '</td>
 				<td>' . $SalesRow['debtorno'] . ' - ' . $SalesRow['name'] . '</td>
 				<td class="number">' . locale_number_format($SalesRow['salesvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 				<td class="number">' . locale_number_format($SalesRow['returnvalue'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -249,13 +242,9 @@ if (isset($_POST['ShowSales'])){
 
 	} //loop around category sales for the period
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows"><td colspan="8"><hr /></td></tr>';
-		echo '<tr class="OddTableRows">';
-	} else {
-		echo '<tr class="OddTableRows"><td colspan="8"><hr /></td></tr>';
-		echo '<tr class="EvenTableRows">';
-	}
+	echo '<tr class="striped_row"><td colspan="8"><hr /></td></tr>';
+	echo '<tr class="striped_row">';
+
 	echo '<td class="number" colspan="2">' . _('GRAND Total') . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalSales,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		<td class="number">' . locale_number_format($CumulativeTotalRefunds,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>

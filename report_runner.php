@@ -18,7 +18,6 @@
 //you must tell the script where you main installation is located
 //Rememeber this is different for each location
 //$weberp_home=/srv/www/htdocs/weberp
-/* $Id: report_runner.php 5912 2013-05-10 14:37:31Z exsonqu $*/
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -97,7 +96,7 @@ for ($i=0;$i<count($Recipients); $i++) {
 	$Recipient[$i]="<".$Recipient[$i].">";
 }
 
-$AllowCronJobToBeRun = true;
+//$AllowCronJobToBeRun = true;
 include('includes/session.php');
 
 include ('includes/ConstructSQLForUserDefinedSalesReport.inc');

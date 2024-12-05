@@ -1,5 +1,4 @@
 <?php
-/* $Id: Prices_Customer.php 7053 2014-12-28 23:21:24Z rchacon $*/
 
 include('includes/session.php');
 
@@ -218,10 +217,11 @@ if (DB_num_rows($result) == 0) {
 		} else {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
 		}
-		printf('<tr class="EvenTableRows">
+		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td class="date">%s</td>
-				<td class="date">%s</td></tr>',
+				<td class="date">%s</td>
+				</tr>',
 				locale_number_format($myrow['price'],$CurrDecimalPlaces),
 				ConvertSQLDate($myrow['startdate']),
 				$EndDateDisplay);
@@ -352,11 +352,11 @@ while ($myrow=DB_fetch_array($result)) {
 echo '</select></td></tr>';
 echo '<tr>
 		<td>' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" class="date" alt="'.$_SESSION['DefaultDateFormat']. '" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
+		<td><input type="text" name="StartDate" class="date" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
 	</tr>';
 echo '<tr>
 		<td>' . _('End Date') . ':</td>
-		<td><input type="text" name="EndDate" class="date" alt="'.$_SESSION['DefaultDateFormat']. '" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
+		<td><input type="text" name="EndDate" class="date" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('Price') . ':</td>
           <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" /></td>

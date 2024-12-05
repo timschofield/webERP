@@ -1,5 +1,4 @@
 <?php
-/* $Id: RecurringSalesOrders.php 6945 2014-10-27 07:20:48Z daintree $*/
 /* This is where the details specific to the recurring order are entered and the template committed to the database once the Process button is hit */
 
 include('includes/DefineCartClass.php');
@@ -319,7 +318,7 @@ If (isset($_POST['Process'])) {
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') .
 		'" alt="" /><b>' . ' '. _('Recurring Order for Customer') .' : ' . $_SESSION['Items'.$identifier]->CustomerName  . '</b></p>';
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -338,7 +337,6 @@ echo '<tr>
 $_SESSION['Items'.$identifier]->total = 0;
 $_SESSION['Items'.$identifier]->totalVolume = 0;
 $_SESSION['Items'.$identifier]->totalWeight = 0;
-$k = 0; //row colour counter
 
 foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
@@ -349,15 +347,8 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 	$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100),2);
 
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-		echo '<td>' . $StockItem->StockID . '</td>
+	echo '<tr class="striped_row">
+			<td>' . $StockItem->StockID . '</td>
 			<td title="'. $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
 			<td class="number">' . $DisplayQuantity . '</td>
 			<td>' . $StockItem->Units . '</td>
@@ -426,7 +417,7 @@ if (!isset($_POST['StartDate'])){
 if ($NewRecurringOrder=='Yes'){
 	echo '<tr>
 	<td>' .  _('Start Date') .':</td>
-	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StartDate" size="11" maxlength="10" value="' . $_POST['StartDate'] .'" /></td></tr>';
+	<td><input type="text" class="date" name="StartDate" size="11" maxlength="10" value="' . $_POST['StartDate'] .'" /></td></tr>';
 } else {
 	echo '<tr>
 	<td>' .  _('Last Recurrence') . ':</td>
@@ -440,7 +431,7 @@ if (!isset($_POST['StopDate'])){
 
 echo '<tr>
 	<td>' .  _('Finish Date') .':</td>
-	<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="StopDate" size="11" maxlength="10" value="' . $_POST['StopDate'] .'" /></td></tr>';
+	<td><input type="text" class="date" name="StopDate" size="11" maxlength="10" value="' . $_POST['StopDate'] .'" /></td></tr>';
 
 echo '<tr>
 	<td>' .  _('Frequency of Recurrence') .':</td>

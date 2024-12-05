@@ -1,5 +1,4 @@
 <?php
-/* $Id: SalesInquiry.php 7675 2016-11-21 14:55:36Z rchacon $*/
 /*  */
 // SalesInquiry.php
 // Inquiry on Sales Orders - If Date Type is Order Date, salesorderdetails is the main table
@@ -97,6 +96,17 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		prnMsg(_('Cannot sort by transaction number with a date type of Order Date'),'error');
 		return;
 	}
+	if (!in_array($_POST['SortBy'],array('salesorderdetails.orderno',
+						'salesorderdetails.stkcode',
+						'debtorsmaster.debtorno,salesorderdetails.orderno',
+						'debtorsmaster.name,debtorsmaster.debtorno,salesorderdetails.orderno',
+						'tempstockmoves.transno,salesorderdetails.stkcode',
+						'salesorderdetails.itemdue,salesorderdetails.orderno'))) {
+		$InputError = 1;
+		prnMsg(_('The sorting order is not defined'),'error');
+		return;
+	}
+
 
 // TempStockmoves function creates a temporary table of stockmoves that is used when the DateType
 // is Invoice Date
@@ -1103,9 +1113,9 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 	echo '<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
 			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>';
 	if(!isset($_POST['PartNumber'])) {
 		$_POST['PartNumber']='';

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: ReorderLevel.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 // ReorderLevel.php - Report of parts with quantity below reorder level
 // Shows if there are other locations that have quantities for the parts that are short
@@ -83,12 +82,13 @@ if (isset($_POST['PrintPDF'])) {
 		$OnOrderSQL = "SELECT SUM(quantityord-quantityrecd) AS quantityonorder
 								FROM purchorders
 								LEFT JOIN purchorderdetails
-								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorders.status !='Cancelled'
-								AND purchorders.status !='Rejected'
-								AND purchorders.status !='Pending'
-								AND purchorderdetails.itemcode='".$myrow['stockid']."'
-								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
+									ON purchorders.orderno=purchorderdetails.orderno
+								WHERE purchorders.status != 'Cancelled'
+									AND purchorders.status != 'Rejected'
+									AND purchorders.status != 'Pending'
+									AND purchorders.status != 'Completed'
+									AND purchorderdetails.itemcode='".$myrow['stockid']."'
+									AND purchorders.intostocklocation='".$myrow['loccode']."'";
 		$OnOrderResult = DB_query($OnOrderSQL);
 		$OnOrderRow = DB_fetch_array($OnOrderResult);
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -109,17 +109,6 @@ if (isset($_POST['PrintPDF'])) {
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 					   $Right_Margin,$CategoryDescription);
 		}
-		$OnOrderSQL = "SELECT SUM(quantityord-quantityrecd) AS quantityonorder
-								FROM purchorders
-								LEFT JOIN purchorderdetails
-								ON purchorders.orderno=purchorderdetails.orderno
-								WHERE purchorders.status != 'Cancelled'
-									AND purchorders.status != 'Rejected'
-									AND purchorders.status != 'Pending'
-								      AND purchorderdetails.itemcode='".$myrow['stockid']."'
-								      AND purchorders.intostocklocation='".$myrow['loccode']."'";
-		$OnOrderResult = DB_query($OnOrderSQL);
-		$OnOrderRow = DB_fetch_array($OnOrderResult);
 
 		// Print if stock for part in other locations
 		$sql2 = "SELECT locstock.quantity,

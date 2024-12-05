@@ -1,5 +1,4 @@
 <?php
-/* $Id: SalesPeople.php 7548 2016-05-30 09:59:55Z daintree $*/
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -59,6 +58,13 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The salesperson name must be thirty characters or less long'),'error');
 		$Errors[$i] = 'SalesmanName';
 		$i++;
+	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1']))
+			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
+		$InputError = 1;
+		prnMsg(_('The commission rates must be a floating point number'),'error');
+	} elseif (!is_numeric(filter_number_format($_POST['Breakpoint']))) {
+		$InputError = 1;
+		prnMsg(_('The breakpoint should be a floating point number'),'error');
 	}
 
 	if (!isset($_POST['SManTel'])){
@@ -199,38 +205,48 @@ or deletion of the records*/
 			FROM salesman
 			ORDER BY current DESC,
 				salesmancode";
+
 	$result = DB_query($sql);
 
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Code') . '</th>
 			<th>' . _('Name') . '</th>
+			<th>' . _('Telephone') . '</th>
+			<th>' . _('Facsimile') . '</th>
+			<th>' . _('Comm Rate 1') . '</th>
+			<th>' . _('Break') . '</th>
+			<th>' . _('Comm Rate 2') . '</th>
 			<th>' . _('Current') . '</th>
 		</tr>';
-	$k=0;
+
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 	if ($myrow[7] == 1) {
 		$ActiveText = _('Yes');
 	} else {
 		$ActiveText = _('No');
 	}
 
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
 			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedSalesPerson=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales person?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['salesmancode'],
 			$myrow['salesmanname'],
+			$myrow['smantel'],
+			$myrow['smanfax'],
+			locale_number_format($myrow['commissionrate1'],2),
+			locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($myrow['commissionrate2'],2),
 			$ActiveText,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['salesmancode'],
@@ -282,7 +298,7 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SalesmanCode" value="' . $_POST['SalesmanCode'] . '" />';
 		echo '<table class="selection">
 				<tr>
-					<td>' . _('Salesperson code') . ':</td>
+					<td>' . _('SPG code') . ':</td>
 					<td>' . $_POST['SalesmanCode'] . '</td>
 				</tr>';
 
@@ -290,7 +306,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class="selection">
 				<tr>
-					<td>' . _('SPG Code') . ':</td>
+					<td>' . _('SPG code') . ':</td>
 					<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size="3" maxlength="3" /></td>
 				</tr>';
 	}

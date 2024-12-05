@@ -1,13 +1,13 @@
 <?php
-
-/* $Id: POReport.php 7256 2015-04-01 11:24:48Z exsonqu $ */
-
 // POReport.php
 // Inquiry on Purchase Orders
+
 // If Date Type is Order, the main file is purchorderdetails
 // If Date Type is Delivery, the main file is grns
 
 include('includes/session.php');
+$ViewTopic = '';/* ?????????? */
+$BookMark = 'POReport';
 $Title = _('Purchase Order Report');
 include('includes/header.php');
 
@@ -553,18 +553,13 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 						</tr>';
 
 				$linectr = 0;
-				$k = 0;
+
 				while ($myrow = DB_fetch_array($result)) {
-					if ($k==1){
-						echo '<tr class="EvenTableRows">';
-						$k=0;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$k++;
-					}
 					$linectr++;
+
 				   // Detail for both DateType of Order
-					printf('<td><a href="'. $RootPath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
+					printf('<tr class="striped_row">
+							<td><a href="'. $RootPath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -642,19 +637,14 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 						</tr>';
 
 				$linectr = 0;
-				$k = 0;
+
 				while ($myrow = DB_fetch_array($result)) {
-					if ($k==1){
-						echo '<tr class="EvenTableRows">';
-						$k=0;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$k++;
-					}
 					$linectr++;
+
 				   // Detail for both DateType of Ship
 				   // In sql, had to alias grns.qtyrecd as quantityord so could use same name here
-					printf('<td>%s</td>
+					printf('<tr class="striped_row">
+							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -774,20 +764,15 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 
 				$suppname = ' ';
 				$linectr = 0;
-				$k=0;
+
 			while ($myrow = DB_fetch_array($result)) {
 				$linectr++;
 				if ($summarytype == 'orderno') {
 					$suppname = $myrow['suppname'];
 				}
-					if ($k==1){
-						echo '<tr class="EvenTableRows">';
-						$k=0;
-					} else {
-						echo '<tr class="OddTableRows">';
-						$k++;
-					}
-				printf('<td>%s</td>
+
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -849,7 +834,7 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 } // End of function submit()
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submitcsv($PartNumber,
+function submitcsv( $PartNumber,
 					$PartNumberOp,
 					$SupplierId,
 					$SupplierIdOp,
@@ -1294,7 +1279,7 @@ function submitcsv($PartNumber,
 		}
 		fprintf($FileHandle, '"'. _('Purchase Order Report') . '","' . $_POST['ReportType'] . ' '._('By').' '.$SortBy_Display ."\n");
 		fprintf($FileHandle, '"'. _('Date Type') . '","' . $_POST['DateType'] . '"'. "\n");
-		fprintf($FileHandle, '"'. _('Date Range') . '","' . $_POST['FromDate'] . _(' To ') .  $_POST['ToDate'] . '"'."\n");
+		fprintf($FileHandle, '"'. _('Date Range') . '","' . $_POST['FromDate'] . ' ' . _('To') . ' ' .  $_POST['ToDate'] . '"'."\n");
 		if (mb_strlen(trim($PartNumber)) > 0) {
 			fprintf($FileHandle, '"'. _('Part Number') . '","' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '"'."\n");
 		}
@@ -1363,7 +1348,7 @@ function submitcsv($PartNumber,
 			} else {
 			  // Header for Date Type of Delivery Date
 				fprintf($FileHandle, '"%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s","%s"'."\n",
-					_('Order No'), 
+					_('Order No'),
 					_('Part Number'),
 					 _('Order Date'),
 					 _('Supplier No'),
@@ -1531,8 +1516,8 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		</tr>
 		<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
-        <input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="text" required="required" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . ':&nbsp;&nbsp;
+        <input type="text" required="required" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Part Number') . ':</td>
