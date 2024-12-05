@@ -3,8 +3,6 @@
  * this value is saved in the $_SESSION['Versionumber'] when includes/GetConfig.php is run
  * if  VersionNumber is < $Version  then the DB update script is run */
 
-$Version='4.15.2'; //must update manually every time there is a DB change
-
 require_once ($PathPrefix .'includes/MiscFunctions.php');
 
 if (!isset($_SESSION['DatabaseName'])) { //need to get the database name from the file structure
