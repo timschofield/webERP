@@ -1,5 +1,4 @@
 <?php
-/* $Id: SelectSupplier.php 7665 2016-11-08 15:51:11Z rchacon $*/
 /* Selects a supplier. A supplier is required to be selected before any AP transactions and before any maintenance or inquiry of the supplier */
 
 include('includes/session.php');
@@ -10,11 +9,18 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
-if (!isset($_SESSION['SupplierID'])) {
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Suppliers') . '</p>';
-}
 if (isset($_GET['SupplierID'])) {
 	$_SESSION['SupplierID']=$_GET['SupplierID'];
+}
+if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
+	$_SESSION['SupplierID'] = $_POST['Select'];
+	unset($_POST['Select']);
+	unset($_POST['Keywords']);
+	unset($_POST['SupplierCode']);
+	unset($_POST['Search']);
+	unset($_POST['Go']);
+	unset($_POST['Next']);
+	unset($_POST['Previous']);
 }
 // only get geocode information if integration is on, and supplier has been selected
 if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
@@ -39,7 +45,7 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$map_height = $myrow['map_height'];
 	$map_width = $myrow['map_width'];
 	$map_host = $myrow['map_host'];
-	echo '<script src="http://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $api_key . '"';
+	echo '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $api_key . '"';
 	echo ' type="text/javascript"></script>';
 	echo ' <script type="text/javascript">';
 	echo 'function load() {
@@ -66,16 +72,6 @@ if (!isset($_POST['PageOffset'])) {
 	if ($_POST['PageOffset'] == 0) {
 		$_POST['PageOffset'] = 1;
 	}
-}
-if (isset($_POST['Select'])) { /*User has hit the button selecting a supplier */
-	$_SESSION['SupplierID'] = $_POST['Select'];
-	unset($_POST['Select']);
-	unset($_POST['Keywords']);
-	unset($_POST['SupplierCode']);
-	unset($_POST['Search']);
-	unset($_POST['Go']);
-	unset($_POST['Next']);
-	unset($_POST['Previous']);
 }
 if (isset($_POST['Search'])
 	OR isset($_POST['Go'])
@@ -148,7 +144,24 @@ if (isset($_POST['Search'])
         }
 } //end of if search
 
+$TableHead =
+	'<table cellpadding="4" width="90%" class="selection">
+		<thead>
+			<tr>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
+					_('Supplier Inquiries') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
+					_('Supplier Transactions') . '</th>
+				<th style="width:33%">' .
+					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
+					_('Supplier Maintenance') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 if (isset($_SESSION['SupplierID'])) {
+	// A supplier is selected
 	$SupplierName = '';
 	$SQL = "SELECT suppliers.suppname
 			FROM suppliers
@@ -158,16 +171,17 @@ if (isset($_SESSION['SupplierID'])) {
 		$myrow = DB_fetch_row($SupplierNameResult);
 		$SupplierName = $myrow[0];
 	}
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Supplier') . '" alt="" />' . ' ' . _('Supplier') . ' : <b>' . $_SESSION['SupplierID'] . ' - ' . $SupplierName . '</b> ' . _('has been selected') . '.</p>';
-	echo '<div class="page_help_text">' . _('Select a menu option to operate using this supplier.') . '</div>';
-	echo '<br />
-		<table width="90%" cellpadding="4">
-		<tr>
-			<th style="width:33%">' . _('Supplier Inquiries') . '</th>
-			<th style="width:33%">' . _('Supplier Transactions') . '</th>
-			<th style="width:33%">' . _('Supplier Maintenance') . '</th>
-		</tr>';
-	echo '<tr><td valign="top" class="select">'; /* Inquiry Options */
+
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/supplier.png" title="', // Icon image.
+		_('Supplier'), '" /> ', // Icon title.
+		_('Supplier'), ': ', $_SESSION['SupplierID'], ' - ', $SupplierName, '</p>',// Page title.
+		'<div class="page_help_text">', _('Select a menu option to operate using this supplier.'), '</div>',// Page help text.
+		'<br />',
+		$TableHead,
+			'<tr>
+				<td valign="top" class="select">';
+	// Supplier inquiries options:
 	echo '<a href="' . $RootPath . '/SupplierInquiry.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Supplier Account Inquiry') . '</a>
 		<br />
 		<a href="' . $RootPath . '/SupplierGRNAndInvoiceInquiry.php?SelectedSupplier=' . $_SESSION['SupplierID'] . '&amp;SupplierName='.urlencode($SupplierName).'">' . _('Supplier Delivery Note AND GRN inquiry') . '</a>
@@ -190,31 +204,27 @@ if (isset($_SESSION['SupplierID'])) {
 	echo '</td><td valign="top" class="select">'; /* Supplier Maintenance */
 	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a>
 		<br /><a href="' . $RootPath . '/Suppliers.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Modify Or Delete Supplier Details') . '</a>
-		<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Add/Modify/Delete Supplier Contacts') . '</a>
+		<br /><a href="' . $RootPath . '/SupplierContacts.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Add/Edit/Delete Supplier Contacts') . '</a>
 		<br />
 		<br /><a href="' . $RootPath . '/SellThroughSupport.php?SupplierID=' . $_SESSION['SupplierID'] . '">' . _('Set Up Sell Through Support Deals') . '</a>
 		<br /><a href="' . $RootPath . '/Shipments.php?NewShipment=Yes">' . _('Set Up A New Shipment') . '</a>
 		<br /><a href="' . $RootPath . '/SuppLoginSetup.php">' . _('Supplier Login Configuration') . '</a>
 		</td>
 		</tr>
-		</table>';
+		<tbody></table>';
 } else {
 	// Supplier is not selected yet
-	echo '<br />';
-	echo '<table width="90%" cellpadding="4">
-		<tr>
-			<th style="width:33%">' . _('Supplier Inquiries') . '</th>
-			<th style="width:33%">' . _('Supplier Transactions') . '</th>
-			<th style="width:33%">' . _('Supplier Maintenance') . '</th>
-		</tr>';
-	echo '<tr>
-			<td valign="top" class="select"></td>
-			<td valign="top" class="select"></td>
-			<td valign="top" class="select">'; /* Supplier Maintenance */
-	echo '<a href="' . $RootPath . '/Suppliers.php">' . _('Add a New Supplier') . '</a><br />';
-	echo '</td>
-		</tr>
-		</table>';
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+		'/images/supplier.png" title="', // Icon image.
+		_('Suppliers'), '" /> ', // Icon title.
+		_('Suppliers'), '</p>',// Page title.
+		'<br />',
+		$TableHead,
+		'<tr>',
+			'<td class="select"></td>',// Supplier inquiries options.
+			'<td class="select"></td>',// Supplier transactions options.
+			'<td class="select"><a href="', $RootPath, '/Suppliers.php">', _('Add a New Supplier'), '</a></td>',// Supplier Maintenance options.
+		'</tr><tbody></table>';
 }
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
@@ -277,8 +287,9 @@ if (isset($_POST['Search'])) {
 	echo '<br />
 		<br />
 		<br />
-		<table cellpadding="2">';
-	echo '<tr>
+		<table cellpadding="2">
+		<thead>
+			<tr>
 	  		<th class="ascending">' . _('Code') . '</th>
 			<th class="ascending">' . _('Supplier Name') . '</th>
 			<th class="ascending">' . _('Currency') . '</th>
@@ -289,21 +300,17 @@ if (isset($_POST['Search'])) {
 			<th class="ascending">' . _('Telephone') . '</th>
 			<th class="ascending">' . _('Email') . '</th>
 			<th class="ascending">' . _('URL') . '</th>
-		</tr>';
-	$k = 0; //row counter to determine background colour
+			</tr>
+		</thead>
+		<tbody>';
+
 	$RowIndex = 0;
 	if (DB_num_rows($result) <> 0) {
 		DB_data_seek($result, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 	}
 	while (($myrow = DB_fetch_array($result)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		echo '<td><input type="submit" name="Select" value="'.$myrow['supplierid'].'" /></td>
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="Select" value="'.$myrow['supplierid'].'" /></td>
 				<td>' . $myrow['suppname'] . '</td>
 				<td>' . $myrow['currcode'] . '</td>
 				<td>' . $myrow['address1'] . '</td>
@@ -318,7 +325,7 @@ if (isset($_POST['Search'])) {
 		//end of page full new headings if
 	}
 	//end of while loop
-	echo '</table>';
+	echo '</tbody></table>';
 }
 //end if results to show
 if (isset($ListPageMax) and $ListPageMax > 1) {

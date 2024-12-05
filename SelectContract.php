@@ -1,16 +1,15 @@
 <?php
 
-/* $Id: SelectContract.php 3692 2010-08-15 09:22:08Z daintree $*/
-
 include('includes/session.php');
 $Title = _('Select Contract');
-
 $ViewTopic= 'Contracts';
 $BookMark = 'SelectContract';
-
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contracts') . '" alt="" />' . ' ' . _('Select A Contract') . '</p> ';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/contract.png" title="', // Icon image.
+	_('Contracts'), '" /> ', // Icon title.
+	_('Select A Contract'), '</p>';// Page title.
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<div>';
@@ -152,15 +151,9 @@ $TableHeader = '<tr>
 echo $TableHeader;
 
 $j = 1;
-$k=0; //row colour counter
+
 while ($myrow=DB_fetch_array($ContractsResult)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
+	echo '<tr class="striped_row">';
 
 	$ModifyPage = $RootPath . '/Contracts.php?ModifyContractRef=' . $myrow['contractref'];
 	$OrderModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];

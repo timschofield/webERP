@@ -1,5 +1,4 @@
 <?php
-/* $Id: SellThroughSupport.php 5785 2012-12-29 04:47:42Z daintree $*/
 
 include ('includes/session.php');
 
@@ -32,7 +31,7 @@ if (isset($_GET['Delete'])){
 
 if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($SupplierID)) { /*Validate Inputs */
 	$InputError = 0; /*Start assuming the best */
-	
+
 	if (is_numeric(filter_number_format($_POST['RebateAmount']))==false) {
 		$InputError = 1;
 		prnMsg(_('The rebate amount entered was not numeric and a number is required.'), 'error');
@@ -40,7 +39,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 	} elseif (filter_number_format($_POST['RebateAmount']) == 0 AND filter_number_format($_POST['RebatePercent'])==0) {
 		prnMsg(_('Both the rebate amount and the rebate percent is zero. One or the other must be a positive number?'), 'error');
 		$InputError = 1;
-		
+
 /*
 	} elseif (mb_strlen($_POST['Narrative'])==0 OR $_POST['Narrative']==''){
 		prnMsg(_('The narrative cannot be empty.'),'error');
@@ -76,7 +75,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . filter_number_format($_POST['RebatePercent']/100) . "',
 							'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 							'" . FormatDateForSQL($_POST['EffectiveTo']) . "')";
-							
+
         $ErrMsg = _('The sell through support record could not be added to the database because');
         $DbgMsg = _('The SQL that failed was');
         $AddResult = DB_query($sql, $ErrMsg, $DbgMsg);
@@ -92,15 +91,15 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 											effectivefrom='" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 											effectiveto='" . FormatDateForSQL($_POST['EffectiveTo']) . "'
 							WHERE id='" . $_POST['SellSupportID'] . "'";
-							
+
 		$ErrMsg = _('The sell through support record could not be updated because');
 		$DbgMsg = _('The SQL that failed was');
 		$UpdResult = DB_query($sql, $ErrMsg, $DbgMsg);
 		prnMsg(_('Sell Through Support record has been updated'), 'success');
 		$Edit = false;
-	
+
 	}
-    
+
     if ($InputError == 0) {
 	/*  insert took place and need to clear the form  */
         unset($_POST['StockID']);
@@ -154,7 +153,7 @@ if (isset($_POST['SearchSupplier'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="2" colspan="7" class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
     $TableHeader = '<tr>
 						<th>' . _('Code') . '</th>
 	                	<th>' . _('Supplier Name') . '</th>
@@ -164,16 +163,10 @@ if (isset($_POST['SearchSupplier'])) {
 						<th>' . _('Address 3') . '</th>
 					</tr>';
     echo $TableHeader;
-	$k = 0;
+
     while ($myrow = DB_fetch_array($SuppliersResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-       printf('<td><input type="submit" name="SupplierID" value="%s" /></td>
+       printf('<tr class="striped_row">
+				<td><input type="submit" name="SupplierID" value="%s" /></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -196,7 +189,6 @@ if (isset($_POST['SearchSupplier'])) {
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table cellpadding="3" colspan="4" class="selection">
 			<tr>
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>
 				<td><input type="text" name="Keywords" size="20" maxlength="25" /></td>
 				<td><b>' . _('OR') . '</b></td>
@@ -225,12 +217,12 @@ if (isset($SupplierID)) { /* Then display all the sell through support for the s
 							ON suppliers.currcode=currencies.currabrev
 							WHERE supplierid='" . $SupplierID . "'");
 	$SuppRow = DB_fetch_array($SuppResult);
-	
+
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . ' ' . _('For Supplier') . ' - ' . $SupplierID . ' - ' . $SuppRow['suppname'] . '</p><br />';
 }
 
 if (isset($SupplierID) AND $Edit == false) {
-	
+
     $sql = "SELECT	id,
 					sellthroughsupport.debtorno,
 					debtorsmaster.name,
@@ -268,15 +260,8 @@ if (isset($SupplierID) AND $Edit == false) {
 						</tr>';
 
 		echo $TableHeader;
-		$k = 0; //row colour counter
+
 		while ($myrow = DB_fetch_array($Result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['categoryid']=='') {
 				$ItemDescription = $myrow['stockid'] . ' - ' . $myrow['description'];
 			} else {
@@ -287,8 +272,9 @@ if (isset($SupplierID) AND $Edit == false) {
 			} else {
 				$Customer = $myrow['debtorno'] . ' - ' . $myrow['name'];
 			}
-			
-            printf('<td>%s</td>
+
+            printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -329,16 +315,16 @@ if (isset($SupplierID)) { //not selecting a supplier
 						stockid,
 						categoryid,
 						narrative
-				FROM sellthroughsupport 
+				FROM sellthroughsupport
 				WHERE id='" . floatval($_GET['SellSupportID']) . "'";
-		
+
 		$ErrMsg = _('The supplier sell through support could not be retrieved because');
 		$EditResult = DB_query($sql, $ErrMsg);
 		$myrow = DB_fetch_array($EditResult);
 	}
 
 	$SuppName = $myrow['suppname'];
-	
+
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
@@ -376,7 +362,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 		$_POST['Narrative'] ='';
 	}
 
-	
+
 	echo '<tr>
 			<td>' . _('Support for Customer') . ':</td>
 			<td><select name="DebtorNo">';
@@ -463,11 +449,11 @@ if (isset($SupplierID)) { //not selecting a supplier
 		</tr>
 		<tr>
 			<td>' . _('Support Start Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveFrom" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
+			<td><input type="text" class="date" name="EffectiveFrom" maxlength="10" size="11" value="' . $_POST['EffectiveFrom'] . '" /></td>
 		</tr>
 		<tr>
 			<td>' . _('Support End Date') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveTo" maxlength="10" size="11" value="' . $_POST['EffectiveTo'] . '" /></td>
+			<td><input type="text" class="date" name="EffectiveTo" maxlength="10" size="11" value="' . $_POST['EffectiveTo'] . '" /></td>
 		</tr>
 		</table>
 		<br />
@@ -475,7 +461,7 @@ if (isset($SupplierID)) { //not selecting a supplier
 	if ($Edit == true) {
 		echo '<input type="submit" name="UpdateRecord" value="' . _('Update') . '" />';
 		echo '<input type="hidden" name="Edit" value="1" />';
-		
+
 		/*end if there is a supplier sell through support record being updated */
 	} else {
 		echo '<input type="submit" name="AddRecord" value="' . _('Add') . '" />';

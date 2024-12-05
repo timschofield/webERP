@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SelectCompletedOrder.php 7637 2016-09-25 10:38:47Z exsonqu $*/
 
 include('includes/session.php');
 
@@ -444,12 +443,12 @@ if (!isset($_POST['OrderNumber'])){
 echo '<td>' . _('Order Number') . ':</td>
 	<td><input type="text" name="OrderNumber" maxlength="8" size="9" value ="' . $_POST['OrderNumber'] . '" /></td>
 	<td>' . _('for all orders placed after') . ': </td>
-	<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] .'"  name="OrdersAfterDate" maxlength="10" size="11" value="' . $_POST['OrdersAfterDate'] . '" /></td>
+	<td><input type="text" class="date" name="OrdersAfterDate" maxlength="10" size="11" value="' . $_POST['OrdersAfterDate'] . '" /></td>
 	<td><input type="submit" name="SearchOrders" value="' . _('Search Orders') . '" /></td>
 	</tr>';
 echo '<tr>
 		<td></td>
-		<td>' . _('Other Ref #') . ':</td><td><input type="text" name="CustomerRef" maxlength="8" size="9" /></td>
+		<td>' . _('Other Ref') . ':</td><td><input type="text" name="CustomerRef" maxlength="8" size="9" /></td>
 		<td></td>
 		<td colspan="2"><input type="checkbox" ' . $ShowChecked . ' name="completed" />' . _('Show Completed orders only') . '</td></tr>';
 
@@ -513,19 +512,11 @@ If (isset($StockItemsResult)) {
 	echo $TableHeadings;
 
 	$j = 1;
-	$k=0; //row colour counter
 
 	while ($myrow=DB_fetch_array($StockItemsResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		printf('<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -553,7 +544,7 @@ If (isset($SalesOrdersResult)) {
 			$ordrow = DB_fetch_array($SalesOrdersResult);
 			$OrderNumber = $ordrow['orderno'];
 		}
-		header('location:' . $RootPath .'/OrderDetails.php?OrderNumber=' . $OrderNumber);
+		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
 		exit;
 	}
 
@@ -574,24 +565,16 @@ If (isset($SalesOrdersResult)) {
 	echo $tableheader;
 
 	$j = 1;
-	$k=0; //row colour counter
+
 	while ($myrow=DB_fetch_array($SalesOrdersResult)) {
-
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'];
 		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
 		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
 		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
 
-		printf('<td><a href="%s">%s</a></td>
+		printf('<tr class="striped_row">
+				<td><a href="%s">%s</a></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

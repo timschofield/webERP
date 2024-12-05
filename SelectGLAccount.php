@@ -1,5 +1,4 @@
 <?php
-/* $Id: SelectGLAccount.php 7577 2016-08-02 06:29:19Z exsonqu $*/
 
 include('includes/session.php');
 
@@ -9,7 +8,7 @@ $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
 
 $msg='';
-unset($result);
+unset($Result);
 
 if (isset($_POST['Search'])){
 
@@ -24,9 +23,9 @@ if (isset($_POST['Search'])){
                     FROM chartmaster,
                         accountgroups,
 						glaccountusers
-					WHERE glaccountusers.accountcode = chartmaster.accountcode 
+					WHERE glaccountusers.accountcode = chartmaster.accountcode
 						AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
-						AND glaccountusers.canview=1 
+						AND glaccountusers.canview=1
 						AND chartmaster.group_=accountgroups.groupname
                     ORDER BY chartmaster.accountcode";
     }
@@ -43,39 +42,45 @@ if (isset($_POST['Search'])){
 				FROM chartmaster,
 					accountgroups,
 					glaccountusers
-				WHERE glaccountusers.accountcode = chartmaster.accountcode 
+				WHERE glaccountusers.accountcode = chartmaster.accountcode
 					AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
-					AND glaccountusers.canview=1 
+					AND glaccountusers.canview=1
 					AND chartmaster.group_ = accountgroups.groupname
 					AND accountname " . LIKE  . "'". $SearchString ."'
 				ORDER BY accountgroups.sequenceintb,
 					chartmaster.accountcode";
 
 		} elseif (mb_strlen($_POST['GLCode'])>0){
+			if (!empty($_POST['GLCode'])) {
+				echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/GLAccountInquiry.php?Account=' . $_POST['GLCode'] . '&Show=Yes">';
+				exit;
+			}
 
 			$SQL = "SELECT chartmaster.accountcode,
 					chartmaster.accountname,
 					chartmaster.group_,
 					CASE WHEN accountgroups.pandl!=0 THEN '" . _('Profit and Loss') . "' ELSE '" . _('Balance Sheet') ."' END AS pl
 					FROM chartmaster,
-						accountgroups, 
+						accountgroups,
 						glaccountusers
-				WHERE glaccountusers.accountcode = chartmaster.accountcode 
+				WHERE glaccountusers.accountcode = chartmaster.accountcode
 					AND glaccountusers.userid='" .  $_SESSION['UserID'] . "'
-					AND glaccountusers.canview=1 
+					AND glaccountusers.canview=1
 					AND chartmaster.group_=accountgroups.groupname
 					AND chartmaster.accountcode >= '" . $_POST['GLCode'] . "'
 					ORDER BY chartmaster.accountcode";
 		}
 		if (isset($SQL) and $SQL!=''){
-			$result = DB_query($SQL);
-			if (DB_num_rows($result) == 1) {
-				$AccountRow = DB_fetch_row($result);
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) == 1) {
+				$AccountRow = DB_fetch_row($Result);
 				header('location:' . $RootPath . '/GLAccountInquiry.php?Account=' . $AccountRow[0] . '&Show=Yes');
 				exit;
 			}
 		}
 } //end of if search
+
+$TargetPeriod = GetPeriod(date($_SESSION['DefaultDateFormat']));
 
 if (!isset($AccountID)) {
 
@@ -96,15 +101,22 @@ if (!isset($AccountID)) {
 			<td><b>' .  _('OR') . '</b></td>';
 
 	$SQLAccountSelect="SELECT chartmaster.accountcode,
-							chartmaster.accountname
+							chartmaster.accountname,
+							chartmaster.group_
 						FROM chartmaster
 						INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
-						ORDER BY chartmaster.accountcode";
+						INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
+						ORDER BY accountgroups.sequenceintb, accountgroups.groupname, chartmaster.accountcode";
 
 	$ResultSelection=DB_query($SQLAccountSelect);
+	$OptGroup = '';
 	echo '<td><select name="GLCode">';
 	echo '<option value="">' . _('Select an Account Code') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){
+		if ($OptGroup != $MyRowSelection['group_']) {
+			echo '<optgroup label="' . $MyRowSelection['group_'] . '">';
+			$OptGroup = $MyRowSelection['group_'];
+		}
 		if (isset($_POST['GLCode']) and $_POST['GLCode']==$MyRowSelection['accountcode']){
 			echo '<option selected="selected" value="' . $MyRowSelection['accountcode'] . '">' . $MyRowSelection['accountcode'].' - ' .htmlspecialchars($MyRowSelection['accountname'], ENT_QUOTES,'UTF-8', false) . '</option>';
 		} else {
@@ -116,13 +128,13 @@ if (!isset($AccountID)) {
 	echo '	</tr>
 		</table>
 		<br />';
-		
+
 	echo '<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
 			<input type="submit" name="reset" value="' . _('Reset') .'" />
 		</div>';
 
-	if (isset($result) and DB_num_rows($result)>0) {
+	if (isset($Result) and DB_num_rows($Result)>0) {
 
 		echo '<br /><table class="selection">';
 
@@ -139,26 +151,28 @@ if (!isset($AccountID)) {
 
 		$j = 1;
 
-		while ($myrow=DB_fetch_array($result)) {
+		while ($MyRow=DB_fetch_array($Result)) {
 
 			printf('<tr>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%s/GLAccountInquiry.php?Account=%s&amp;Show=Yes"><img src="%s/css/%s/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
+					<td><a href="%s/GLAccountInquiry.php?Account=%s&amp;Show=Yes&FromPeriod=%s&ToPeriod=%s"><img src="%s/css/%s/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
 					<td><a href="%s/GLAccounts.php?SelectedAccount=%s"><img src="%s/css/%s/images/maintenance.png" title="' . _('Edit') . '" alt="' . _('Edit') . '" /></a>
 					</tr>',
-					htmlspecialchars($myrow['accountcode'],ENT_QUOTES,'UTF-8',false),
-					htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false),
-					$myrow['group_'],
-					$myrow['pl'],
+					htmlspecialchars($MyRow['accountcode'],ENT_QUOTES,'UTF-8',false),
+					htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false),
+					$MyRow['group_'],
+					$MyRow['pl'],
 					$RootPath,
-					$myrow['accountcode'],
+					$MyRow['accountcode'],
+					$TargetPeriod,
+					$TargetPeriod,
 					$RootPath,
 					$Theme,
 					$RootPath,
-					$myrow['accountcode'],
+					$MyRow['accountcode'],
 					$RootPath,
 					$Theme);
 
