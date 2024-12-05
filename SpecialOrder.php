@@ -1,13 +1,16 @@
 <?php
-/* $Id: SpecialOrder.php 7053 2014-12-28 23:21:24Z rchacon $ */
+// SpecialOrder.php
+// Allows for a sales order to be created and an indent order to be created on a supplier for a one off item that may never be purchased again. A dummy part is created based on the description and cost details given.
 
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
+
 include('includes/SQL_CommonFunctions.inc');
 
+$ViewTopic = '';/* ?????????? */
+$BookMark = 'SpecialOrder';
 $Title = _('Special Order Entry');
-
 include('includes/header.php');
 
 if (empty($_GET['identifier'])) {
@@ -17,7 +20,7 @@ if (empty($_GET['identifier'])) {
 	$identifier=$_GET['identifier'];
 }
 
-echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'].'?identifier='.$identifier) . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8' ) . '?identifier=' . urlencode($identifier) . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -151,19 +154,11 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 		echo $TableHeader;
 
 		$j = 1;
-		$k = 0; //row counter to determine background colour
 
 		while ($myrow=DB_fetch_array($BranchResult)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
-			printf('<td><input type="submit" name="SelectBranch" value="%s" /></td>
+			printf('<tr class="striped_row">
+					<td><input type="submit" name="SelectBranch" value="%s" /></td>
 					<td>%s</td>
 					</tr>',
 				$myrow['branchcode'],
@@ -503,7 +498,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$result =DB_query($sql,$ErrMsg,$DbgMsg,true);
 
 		$BranchDetails=DB_fetch_array($result);
-		$SalesOrderNo=GetNextTransNo(30);
+		$SalesOrderNo=GetNextTransNo (30);
 		$HeaderSQL = "INSERT INTO salesorders (orderno,
 											debtorno,
 											branchcode,
@@ -607,7 +602,7 @@ echo '</select></td>';
 
 echo '<td>' . _('Initiated By') . ': <input type="text" name="Initiator" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->Initiator . '" /></td>
 	<td>' . _('Special Ref') . ': <input type="text" name="QuotationRef" size="16" maxlength="15" value="' . $_SESSION['SPL'.$identifier]->QuotationRef . '" /></td>
-	<td>' . _('OC/Marketplace/Other Ref') . ': <input type="text" name="CustRef" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->CustRef . '" /></td>
+	<td>' . _('Customer Ref') . ': <input type="text" name="CustRef" size="11" maxlength="10" value="' . $_SESSION['SPL'.$identifier]->CustRef . '" /></td>
 	</tr>
 	<tr>
 		<td valign="top" colspan="2">' . _('Comments') . ': <textarea name="Comments" cols="70" rows="2">' . $_SESSION['SPL'.$identifier]->Comments . '</textarea></td>
@@ -635,7 +630,7 @@ if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 		</tr>';
 
 	$_SESSION['SPL'.$identifier]->total = 0;
-	$k = 0;  //row colour counter
+
 	foreach ($_SESSION['SPL'.$identifier]->LineItems as $SPLLine) {
 
 		$LineTotal = $SPLLine->Quantity * $SPLLine->Price;
@@ -648,14 +643,8 @@ if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 		$DisplayPrice = locale_number_format($SPLLine->Price,$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces);
 		$DisplayQuantity = locale_number_format($SPLLine->Quantity,'Variable');
 
-		if ($k==1){
-				echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-				echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-		echo '<td>' . $SPLLine->ItemDescription . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $SPLLine->ItemDescription . '</td>
 			<td>' . $SPLLine->ReqDelDate . '</td>
 			<td class="number">' . $DisplayQuantity . '</td>
 			<td class="number">' . $DisplayCost . '</td>
@@ -664,16 +653,17 @@ if (count($_SESSION['SPL'.$identifier]->LineItems)>0){
 			<td class="number">' . $DisplayLineTotal . '</td>
 			<td class="number">' . $DisplayLineCostTotalCurr . '</td>
 			<td class="number">' . $DisplayLineTotalCurr . '</td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=' . $SPLLine->LineNo . '">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&Delete=' . $SPLLine->LineNo . '">' . _('Delete') . '</a></td>
 		</tr>';
 
 		$_SESSION['SPL'.$identifier]->total += ($LineTotal/$_SESSION['SPL'.$identifier]->CustCurrExRate);
 	}
 
 	$DisplayTotal = locale_number_format($_SESSION['SPL'.$identifier]->total,$_SESSION['SPL'.$identifier]->CustCurrDecimalPlaces);
-	echo '<tr>
-		<td colspan="8" class="number">' . _('TOTAL Excl Tax') . '</td>
-		<td class="number"><b>' . $DisplayTotal . '</b></td>
+	echo '<tr>',
+/*		'<td colspan="8" class="number">' . _('TOTAL Excl Tax') . '</td>',*/
+		'<td class="number" colspan="8">', _('Total Excluding Tax'), '</td>',
+		'<td class="number"><b>', $DisplayTotal, '</b></td>
 	</tr>
 	</table>';
 
@@ -741,7 +731,7 @@ $_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'
 
 echo '<tr>
 		<td>' . _('Required Delivery Date') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" size="12" maxlength="11" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" /></td>
+		<td><input type="text" class="date" size="11" maxlength="10" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" /></td>
 	</tr>';
 
 echo '</table>'; /* end of main table */

@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockAdjustmentsControlled.php 6310 2013-08-29 10:42:50Z daintree $*/
 
 
 include('includes/DefineSerialItems.php');
