@@ -1,8 +1,10 @@
 <?php
-/* $Id: StockTransfers.php 7021 2014-12-14 02:04:44Z tehonu $*/
+/* Entry of point to point stock location transfers of a single part. */
+
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - send email if destination = location SERDE (to be destroyed)
+- Added $_POST['Reason']
 ***************************************************************************************/
 
 /* Inventory Transfer - Item Dispatch */
@@ -12,6 +14,7 @@ include('includes/DefineStockTransfers.php');
 
 include('includes/session.php');
 
+//KL RICARD
 include('includes/KLEmails.php');
 
 $Title = _('Stock Transfers');// Screen identification.
@@ -100,18 +103,48 @@ if($NewTransfer) {
 
 	if(!isset($_POST['StockLocationFrom'])) {
 		$_POST['StockLocationFrom']='';
+		$StockLocationFromAccount = '';
+	}
+	else
+	{
+		$SQL = "SELECT glaccountcode
+				FROM locations
+				INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				WHERE locations.loccode = '" . $_POST['StockLocationFrom'] . "'";
+		$Result = DB_query($SQL);
+		$myrow = DB_fetch_array($Result);
+		{
+			$StockLocationFromAccount = $myrow['glaccountcode'];
+		}
 	}
 	if(!isset($_POST['StockLocationTo'])) {
 		$_POST['StockLocationTo']='';
+		$StockLocationToAccount = '';
+	}
+	else
+	{
+		$SQL = "SELECT glaccountcode
+				FROM locations
+				INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+				WHERE locations.loccode = '" . $_POST['StockLocationTo'] . "'";
+		$Result = DB_query($SQL);
+		$myrow = DB_fetch_array($Result);
+		{
+			$StockLocationToAccount = $myrow['glaccountcode'];
+		}
+
+		$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	}
 
 	$_SESSION['Transfer']= new StockTransfer(0,
 										$_POST['StockLocationFrom'],
 										'',
-										'',
+										$StockLocationFromAccount,
 										$_POST['StockLocationTo'],
 										'',
-										'',
+										$StockLocationToAccount,
 										Date($_SESSION['DefaultDateFormat'])
 										);
 	$result = DB_query("SELECT description,
@@ -161,14 +194,39 @@ if(isset($_POST['Quantity'])
 }
 
 if(isset($_POST['StockLocationFrom'])
-	AND $_POST['StockLocationFrom']!= $_SESSION['Transfer']->StockLocationFrom ) {
+	AND $_POST['StockLocationFrom'] != $_SESSION['Transfer']->StockLocationFrom ) {
+
+	$SQL = "SELECT glaccountcode
+			FROM locations
+			INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+			WHERE locations.loccode = '" . $_POST['StockLocationFrom'] . "'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	{
+		$_SESSION['Transfer']->StockLocationFromAccount = $myrow['glaccountcode'];
+	}
 
 	$_SESSION['Transfer']->StockLocationFrom = $_POST['StockLocationFrom'];
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 	$_SESSION['Transfer']->TransferItem[0]->Quantity=filter_number_format($_POST['Quantity']);
 	$_SESSION['Transfer']->TransferItem[0]->SerialItems=array();
 }
-if(isset($_POST['StockLocationTo']) ) {
+
+if(isset($_POST['StockLocationTo'])
+	AND $_POST['StockLocationTo'] != $_SESSION['Transfer']->StockLocationTo) {
+
+	$SQL = "SELECT glaccountcode
+			FROM locations
+			INNER JOIN locationusers
+			ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+			WHERE locations.loccode = '" . $_POST['StockLocationTo'] . "'";
+	$Result = DB_query($SQL);
+	$myrow = DB_fetch_array($Result);
+	{
+		$_SESSION['Transfer']->StockLocationToAccount = $myrow['glaccountcode'];
+	}
+
 	$_SESSION['Transfer']->StockLocationTo = $_POST['StockLocationTo'];
 }
 
@@ -229,10 +287,11 @@ if(isset($_POST['EnterTransfer']) ) {
 			exit;
 		}
 		// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
-		if($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') {
+		if(($_SESSION['Transfer']->StockLocationFromAccount !='' OR $_SESSION['Transfer']->StockLocationToAccount !='') AND
+			($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 			// Get the account code:
-			if($_SESSION['Transfer']->StockLocationToAccount !='') {
-				$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
+			if($_SESSION['Transfer']->StockLocationFromAccount !='') {
+				$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
 			} else {
 				$StockGLCode = GetStockGLCode($_SESSION['Transfer']->TransferItem[0]->StockID);// Get Category's account codes.
 				$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
@@ -385,7 +444,8 @@ if(isset($_POST['EnterTransfer']) ) {
 			$QtyOnHandPrior = 0;
 		}
 		// Insert incoming inventory GL transaction if any of the locations has a GL account code:
-		if($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='') {
+		if(($_SESSION['Transfer']->StockLocationFromAccount !='' OR $_SESSION['Transfer']->StockLocationToAccount !='') AND
+			($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 			// Get the account code:
 			if($_SESSION['Transfer']->StockLocationToAccount !='') {
 				$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
@@ -538,7 +598,6 @@ if(isset($_POST['EnterTransfer']) ) {
 		$DbgMsg = _('The following SQL to update the location stock record was used');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg, true);
 
-		$Result = DB_Txn_Commit();
 		/* KL RICARD Send emails to team if transfer from / to special location */
 		if ($_SESSION['Transfer']->StockLocationTo == 'SERDE'){
 			KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_SESSION['Transfer']->TransferItem[0]->StockID, $_SESSION['Transfer']->TransferItem[0]->Quantity, $_SESSION['Transfer']->StockLocationFrom, $_SESSION['Transfer']->StockLocationTo);
@@ -546,6 +605,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		/* KL RICARD End modification */
 
 		$Result = DB_Txn_Commit();
+
 
 		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');
 		echo '<br /><a href="PDFStockTransfer.php?TransferNo='.$TransferNumber.'">' . _('Print Transfer Note') . '</a>';
@@ -563,7 +623,9 @@ echo '<p class="page_title_text">
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+// KL RICARD
 echo '<input type="hidden" name="Reason" value="' . $_POST['Reason'] . '" />';
+
 
 if(!isset($_GET['Description'])) {
 	$_GET['Description']='';
@@ -657,7 +719,7 @@ if(isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 	echo '<td><input type="text" class="number"  title="'._('The transfer quantity cannot be zer0').'" name="Quantity" size="12" maxlength="12" value="0" /></td>
 		</tr>';
 }
-
+//KL RICARD Added Reason
 echo '<tr>
 		<td>' 
 			. _('Reason').':
@@ -666,6 +728,7 @@ echo '<tr>
 			<input type="text" name="Reason" size="51" value="' . $_POST['Reason'] . '" maxlength="80" >
 		</td>
 	</tr>';
+// KL RICARD End
 	
 echo '</table>
 	<div class="centre">

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: StockCheck.php 6962 2014-11-06 02:59:12Z tehonu $*/
 
 include('includes/session.php');
 
@@ -27,11 +26,11 @@ If (isset($_POST['PrintPDF'])){
 							  '" . Date('Y-m-d') . "'
 					   FROM locstock,
 							stockmaster
-					   WHERE locstock.stockid=stockmaster.stockid 
-					   AND locstock.loccode='" . $_POST['Location'] . "' 
+					   WHERE locstock.stockid=stockmaster.stockid
+					   AND locstock.loccode='" . $_POST['Location'] . "'
 					   AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
-					   AND stockmaster.mbflag!='A' 
-					   AND stockmaster.mbflag!='K' 
+					   AND stockmaster.mbflag!='A'
+					   AND stockmaster.mbflag!='K'
 					   AND stockmaster.mbflag!='D'";
 
 		$result = DB_query($sql,'','',false,false);
@@ -260,9 +259,9 @@ If (isset($_POST['PrintPDF'])){
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
+				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription
+			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {
@@ -279,8 +278,8 @@ If (isset($_POST['PrintPDF'])){
 	echo '<tr>
 			<td>' . _('For Inventory in Location') . ':</td>
 			<td><select name="Location">';
-	$sql = "SELECT locations.loccode, locationname FROM locations 
-			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+	$sql = "SELECT locations.loccode, locationname FROM locations
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			ORDER BY locationname";
 	$LocnResult=DB_query($sql);
 

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: StockReorderLevel.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Stock Re-Order Level Maintenance');
@@ -46,32 +45,25 @@ $DbgMsg = _('The SQL that failed was');
 
 $LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
-echo '<table class="selection">';
-echo '<tr>
+echo '<table class="selection">
+	<thead>
+		<tr>
 		<th colspan="3">' . _('Stock Code') . ':<input  type="text" data-type="no-illegal-chars" title="'._('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
-	</tr>';
-echo '<tr>
+		</tr>
+		<tr>
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myrow[0] . '</b>  (' . _('In Units of') . ' ' . $myrow[1] . ')</h3></th>
-	</tr>';
-
-$TableHeader = '<tbody><tr>
+		</tr>
+		<tr>
 					<th class="ascending">' . _('Location') . '</th>
 					<th class="ascending">' . _('Quantity On Hand') . '</th>
 					<th class="ascending">' . _('Re-Order Level') . '</th>
-				</tr>';
+		</tr>
+	</thead>
+	<tbody>';
 
 echo $TableHeader;
-$k=0; //row colour counter
 
 while ($myrow=DB_fetch_array($LocStockResult)) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
 	if (isset($_POST['UpdateData'])
 		AND $_POST['Old_' . $myrow['loccode']]!= filter_number_format($_POST[$myrow['loccode']])
@@ -91,9 +83,11 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 	} else {
 		$UpdateCode='<input type="hidden" name="%s">%s<input type="hidden" name="Old_%s" value="%s" />';
 	}
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
-			<td class="number">' . $UpdateCode . '</td></tr>',
+			<td class="number">' . $UpdateCode . '</td>
+			</tr>',
 			$myrow['locationname'],
 			locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
 			$myrow['loccode'],
@@ -101,7 +95,6 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 			$myrow['loccode'],
 			$myrow['reorderlevel']);
 
-//end of page full new headings if
 }
 //end of while loop
 

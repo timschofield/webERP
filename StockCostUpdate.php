@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: StockCostUpdate.php 7436 2016-01-04 00:16:55Z tehonu $*/
 
 $UpdateSecurity =10;
 

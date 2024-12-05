@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockQties_csv.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.php');
 $Title = _('Produce Stock Quantities CSV');

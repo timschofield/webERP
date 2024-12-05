@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: StockClone.php 6669 2014-04-05 23:31:54Z rchacon $ */
-
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - management of the extra KL fileds in stockmaster
@@ -239,7 +237,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Height';
 		$i++;
 	}
-// END KL RICARD
+// KL RICARD END
 	if (!is_numeric(filter_number_format($_POST['EOQ']))) {
 		$InputError = 1;
 		prnMsg(_('The economic order quantity must be numeric'),'error');
@@ -314,8 +312,8 @@ if (isset($_POST['submit'])) {
 				$Errors[$i] = 'DuplicateStockID';
 				//exit;
 			} else {
-    			DB_Txn_Begin();
-				// Added fields lastcategoryupdate, length, width, height and unitsdimension
+   			DB_Txn_Begin();
+				// KL RICARD Added fields lastcategoryupdate, length, width, height and unitsdimension
 				$sql = "INSERT INTO stockmaster (stockid,
 												description,
 												longdescription,
@@ -585,6 +583,7 @@ if (isset($_POST['submit'])) {
                         // Leave Category ID set for ease of batch entry
 // KL RICARD: Next Line Commented on original version. Uncommented by Ricard
 						unset($_POST['CategoryID']);
+// KL RICARD End
 						unset($_POST['lastcategoryupdate']);
 
 						unset($_POST['Units']);
@@ -651,7 +650,7 @@ if (empty($_POST['StockID']) || ($_POST['StockID'] == $_POST['OldStockID']) || i
 
 }
 if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']== 1 ) { // Must be modifying an existing item and no changes made yet
-// Added the lastcategoryupdate field
+// KL RICARD Added the lastcategoryupdate field
     $selectedStockID = $_POST['OldStockID'];
 	$sql = "SELECT stockid,
 					description,
@@ -685,8 +684,9 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['Description'] = $myrow['description'];
 	$_POST['EOQ']  = $myrow['eoq'];
 	$_POST['CategoryID']  = $myrow['categoryid'];
-// Added the lastcategoryupdate field
+// KL RICARD Added the lastcategoryupdate field
 	$_POST['lastcategoryupdate']  = $myrow['lastcategoryupdate'];
+// KL RICARD End
 
 	$_POST['Units']  = $myrow['units'];
 	$_POST['MBFlag']  = $myrow['mbflag'];
@@ -697,10 +697,12 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['Volume']  = $myrow['volume'];
 	$_POST['GrossWeight']  = $myrow['grossweight'];
 	$_POST['NetWeight']  = $myrow['netweight'];
+// KL RICARD Added lines for new fields
 	$_POST['length']  = $myrow['length'];
 	$_POST['Width']  = $myrow['width'];
 	$_POST['Height']  = $myrow['height'];
 	$_POST['UnitsDimension']  = $myrow['unitsdimension'];
+// KL RICARD END Added lines for new fields
 	$_POST['BarCode']  = $myrow['barcode'];
 	$_POST['DiscountCategory']  = $myrow['discountcategory'];
 	$_POST['TaxCat'] = $myrow['taxcatid'];
@@ -832,8 +834,8 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
     if (!isset($_POST['CategoryID'])) {
         $_POST['CategoryID']=$Category;
     }
-	// KL RICARD
 
+	// KL RICARD
 	if (!isset($_POST['lastcategoryupdate']) OR $_POST['lastcategoryupdate']==''){
 		$_POST['lastcategoryupdate']='0000-00-00';
 	}
@@ -892,10 +894,12 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
     }
 
 
-    echo '<tr>
+  	// KL RICARD
+	echo '<tr>
             <td>' . _('Date last category') . ':</td>
             <td><input ' . (in_array('lastcategoryupdate',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="lastcategoryupdate" size="12" maxlength="10" value="' . $_POST['lastcategoryupdate'] . '" /></td></tr>';
 
+	// KL RICARD END
 	echo '<tr>
             <td>' . _('Economic Order Quantity') . ':</td>
             <td><input ' . (in_array('EOQ',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="EOQ" size="12" maxlength="10" value="' . locale_number_format($_POST['EOQ'],'Variable') . '" /></td></tr>';
@@ -943,7 +947,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 		</tr>';
 
 	// KL RICARD DIMENSION FIELDS	END
-    echo '<tr>
+	echo '<tr>
             <td>' . _('Units of Measure') . ':</td>
             <td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="Units">';
 
@@ -1136,10 +1140,12 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
         $_POST['CategoryID'] = '';
     }
 
-    if (!isset($_POST['lastcategoryupdate'])) {
+    // KL RICARD
+	if (!isset($_POST['lastcategoryupdate'])) {
         $_POST['lastcategoryupdate'] = '';
     }
-
+	// KL RICARD End
+	
     $sql = "SELECT stkcatpropid,
                     label,
                     controltype,
