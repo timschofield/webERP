@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_DeleteInvoice.php 6969 2014-11-08 00:42:31Z exsonqu $*/
 
 /* Script to delete an invoice expects and invoice number to delete
 not included on any menu for obvious reasons

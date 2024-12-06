@@ -1,5 +1,6 @@
 <?php
-/* $Id: Z_poEditLangRemaining.php 6772 2014-06-22 21:30:22Z rchacon $ */
+// Z_poEditLangRemaining.php
+// Edit Remaining Strings For This Language.
 
 /* Steve Kitchen */
 
@@ -8,15 +9,14 @@
 //$PageSecurity = 15;
 
 include ('includes/session.php');
-
-$Title = _('Edit Remaining Items');// _('Edit Remaining Strings For This Language')
 $ViewTopic = "SpecialUtilities";
-$BookMark = "Z_poEditLangRemaining";// Anchor's id in the manual's html document.
+$BookMark = "Z_poEditLangRemaining";
+$Title = _('Edit Remaining Strings For This Language');
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/maintenance.png" title="' . 
-		_('Edit Remaining Strings For This Language') . '" />' . ' ' . 
-		_('Edit Remaining Strings For This Language') . '</p>';
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/maintenance.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 /* Your webserver user MUST have read/write access to here,	otherwise you'll be wasting your time */
 
@@ -38,7 +38,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
     // save the modifications
 
 		echo '<br /><table><tr><td>';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
     /* write the new language file */
@@ -105,7 +105,7 @@ $PathToLanguage_mo = mb_substr($PathToLanguage,0,strrpos($PathToLanguage,'.')) .
 		prnMsg (_('Your existing translation file (messages.po) will be saved as messages.po.old') . '<br />', 'info', _('PLEASE NOTE'));
 		echo '<br />';
 		echo '</div>';
-		echo '<form method="post" action=' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '>';
+		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table>';

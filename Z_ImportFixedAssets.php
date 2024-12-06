@@ -1,14 +1,13 @@
 <?php
-/* $Id:  $*/
 /* Script to import fixed assets into a specified period*/
 
 include('includes/session.php');
 $Title = _('Import Fixed Assets');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/fixed_assets.png" title="' . 
-		_('Import Fixed Assets from .csv file') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/fixed_assets.png" title="' .
+		_('Import Fixed Assets from .csv file') . '" />' . ' ' .
 		_('Import Fixed Assets from .csv file') . '</p>';
 
 // If this script is called with a file object, then the file contents are imported
@@ -219,7 +218,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 
 
-				$AssetID = DB_Last_Insert_ID( 'fixedassets','assetid');
+				$AssetID = DB_Last_Insert_ID('fixedassets','assetid');
 				$sql = "INSERT INTO fixedassettrans ( assetid,
 												transtype,
 												transno,
@@ -292,7 +291,7 @@ if ($_FILES['SelectedAssetFile']['name']) { //start file processing
 		<br />
 		<br />
 	';
-	echo '<form enctype="multipart/form-data" action="Z_ImportFixedAssets.php" method="post">';
+	echo '<form enctype="multipart/form-data" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

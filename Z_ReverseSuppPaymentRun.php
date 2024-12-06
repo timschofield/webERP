@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_ReverseSuppPaymentRun.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 /* Script to delete all supplier payments entered or created from a payment run on a specified day
  */

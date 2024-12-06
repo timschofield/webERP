@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_SalesIntegrityCheck.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 // Script to do some Sales Integrity checks
 // No SQL updates or Inserts - so safe to run
@@ -142,7 +141,7 @@ while ($myrow = DB_fetch_array($Result)) {
 			echo ', <div style="color:red">' . _('Has no Sales Order') . '</div>';
 	}
 
-	$sumsql = "SELECT SUM( qtyinvoiced * unitprice ) AS InvoiceTotal
+	$sumsql = "SELECT ROUND(SUM(qtyinvoiced * unitprice * (1 - discountpercent)), 3) AS InvoiceTotal
 				FROM salesorderdetails
 				WHERE orderno = '" . $myrow['orderno'] . "'";
 	$sumresult = DB_query($sumsql);
@@ -153,7 +152,7 @@ while ($myrow = DB_fetch_array($Result)) {
 							trandate,
 							settled,
 							rate,
-							ovamount,
+							SUM(ovamount) AS ovamount,
 							ovgst
 				 	FROM debtortrans WHERE order_ = '" . $myrow['orderno'] . "'";
 		$invResult = DB_query($invSQL);

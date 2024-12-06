@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_ReApplyCostToSA.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title=_('Apply Current Cost to Sales Analysis');
@@ -8,7 +7,7 @@ include('includes/header.php');
 
 $Period = 42;
 
-echo "<form method='post' action='" . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . "'>";
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -34,7 +33,7 @@ echo '</div></form>';
 
 if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 	$sql = "SELECT stockmaster.stockid,
-			actualcost AS standardcost,
+			materialcost+overheadcost+labourcost AS standardcost,
 			stockmaster.mbflag
 		FROM salesanalysis INNER JOIN stockmaster
 			ON salesanalysis.stockid=stockmaster.stockid
@@ -53,7 +52,7 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 	while ($ItemsToUpdate = DB_fetch_array($result)){
 
 		if ($ItemsToUpdate['mbflag']=='A'){
-			$SQL = "SELECT SUM(actualcost) AS standardcost
+			$SQL = "SELECT SUM(materialcost + labourcost + overheadcost) AS standardcost
 					FROM stockmaster INNER JOIN BOM
 						ON stockmaster.stockid = bom.component
 					WHERE bom.parent = '" . $ItemsToUpdate['stockid'] . "'

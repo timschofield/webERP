@@ -1,12 +1,11 @@
  <?php
-/* $Id: Z_ImportStocks.php 7347 2015-09-05 22:20:44Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Import Items');
 include('includes/header.php');
-echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . 
-		'/images/inventory.png" title="' . 
-		_('Import Stock Items from .csv') . '" />' . ' ' . 
+echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
+		'/images/inventory.png" title="' .
+		_('Import Stock Items from .csv') . '" />' . ' ' .
 		_('Import Stock Items from .csv') . '</p>';
 
 // If this script is called with a file object, then the file contents are imported
@@ -47,7 +46,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$FileName = $_FILES['userfile']['name'];
 	$TempName  = $_FILES['userfile']['tmp_name'];
 	$FileSize = $_FILES['userfile']['size'];
-	
+
 	//get file handle
 	$FileHandle = fopen($TempName, 'r');
 
@@ -206,8 +205,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					barcode,
 					discountcategory,
 					taxcatid,
-					decimalplaces,
-					appendfile)
+					decimalplaces)
 				VALUES (
 					'$StockID',
 					'" . $myrow[1]	. "',
@@ -225,8 +223,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					'" . $myrow[13]	. "',
 					'" . $myrow[14]	. "',
 					"  . $myrow[15]	. ",
-					"  . $myrow[16]	. ",
-					'" . $myrow[17]	. "'
+					"  . $myrow[16]	. "
 				);
 			";
 
@@ -289,7 +286,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		<a href="Z_ImportStocks.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
-	echo '<form action="Z_ImportStocks.php" method="post" enctype="multipart/form-data">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

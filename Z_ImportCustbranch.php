@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ImportCustbranch.php 6068 2015-03-26 16:04:22Z exson $*/
 
 include('includes/session.php');
 $Title = _('Import Debtors And branches');
@@ -9,7 +8,7 @@ include('includes/SQL_CommonFunctions.inc');
 if(!isset($_POST['UpdateIfExists'])) {
 	$_POST['UpdateIfExists']=0;
 }else{
-	$_POST['UpdateIfExists']=1;	
+	$_POST['UpdateIfExists']=1;
 }
 
 // If this script is called with a file object, then the file contents are imported
@@ -105,7 +104,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	while ($myrow = DB_fetch_array($result)) {
 		$Taxgroups[]=$myrow['taxgroupid'];
 	}
-	
+
 	//test header row field name and sequence
 	$head = 0;
 	foreach ($headRow as $headField) {
@@ -202,7 +201,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			}
 			if($c == 5) {
 				$Lenth = 20;
-			} 
+			}
 			if (isset($_POST['BrAddress'.$c]) AND mb_strlen($_POST['BrAddress'.$c])>$Lenth) {
 				$InputError = 1;
 				prnMsg(_('The Branch address1 must be no more than') . ' ' . $Lenth . ' '. _('characters'),'error');
@@ -218,7 +217,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		if($Longitude !== null AND !is_numeric($Longitude)) {
 			$InputError = 1;
 			prnMsg(_('The longitude is expected to be a numeric'),'error');
-		       	$Errors[$i] = 'Longitued';	
+		       	$Errors[$i] = 'Longitued';
 			$i++;
 		}
 		if (!is_numeric($_POST['FwdDate'])) {
@@ -325,13 +324,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			}
 			if($c == 5) {
 				$Lenth = 20;
-			} 
+			}
 			if (isset($_POST['BrPostAddr'.$c]) AND mb_strlen($_POST['BrPostAddr'.$c])>$Lenth) {
 				$InputError = 1;
 				prnMsg(_('The Branch Post Address') . ' ' . $c . ' ' . _('must be no more than') . ' ' . $Lenth . ' '. _('characters'),'error');
 				$Errors[$i] = 'BrPostAddr'.$c;
 				$i++;
-			} 
+			}
 
 		}
 		if(isset($_POST['CustBranchCode']) AND mb_strlen($_POST['CustBranchCode']) > 30) {
@@ -339,11 +338,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			prnMsg(_('The Cust branch code for EDI must be less than 30 characters'),'error');
 			$Errors[$i] = 'CustBranchCode';
 			$i++;
-		}	
+		}
 
 		if ($InputError !=1) {
-			if (DB_error_no() ==0) { 
-				
+			if (DB_error_no() ==0) {
+
 				if(in_array($_POST['DebtorNo'],$NotExistDebtorNos,true)) {
 					continue;
 				}else{
@@ -358,7 +357,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						$NotExistDebtorNos[]=$_POST['DebtorNo'];
 						prnMsg(_('The Debtor No') . $_POST['DebtorNo'] . ' ' . _('has not existed, and its branches data cannot be imported'),'error');
 						include('includes/footer.php');
-						exit;	
+						exit;
 					}
 				}
 				$sql = "SELECT 1
@@ -372,7 +371,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 								'branch'=>$_POST['BranchCode']);
 					$UpdatedNum++;
 				}else{
-				
+
 					if (!isset($_POST['EstDeliveryDays'])) {
 						$_POST['EstDeliveryDays']=1;
 					}
@@ -478,7 +477,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 									'" . $_POST['CustBranchCode'] ."',
 									'" . $_POST['DeliverBlind'] . "')";
 					}
-					
+
 					//run the SQL from either of the above possibilites
 					$ErrMsg = _('The branch record could not be inserted or updated because');
 					$result = DB_query($sql, $ErrMsg);
@@ -532,7 +531,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	echo '<br /><br /><br />"'. implode('","',$FieldHeadings). '"<br /><br /><br />';
 
 } else { //show file upload form
-	
+
 	prnMsg(_('Please ensure that your csv file is encoded in UTF-8, otherwise the input data will not store correctly in database'),'warn');
 
 	echo '
@@ -540,7 +539,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		<a href="Z_ImportCustbranch.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
-	echo '<form action="Z_ImportCustbranch.php" method="post" enctype="multipart/form-data">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 

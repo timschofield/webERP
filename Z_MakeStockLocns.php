@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_MakeStockLocns.php 6941 2014-10-26 23:18:08Z daintree $*/
 /* Script to make stock locations for all parts that do not have stock location records set up*/
 
 include ('includes/session.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_poEditLangModule.php 7383 2015-11-09 07:02:05Z daintree $ */
 
 include ('includes/session.php');
 $Title = _('Edit Module');// _('Edit a Language File Module')

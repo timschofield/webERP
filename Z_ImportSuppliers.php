@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ImportSuppliers.php 6067 2013-07-10 02:04:22Z tehonu $*/
 /* Import suppliers by csv file */
 
 include('includes/session.php');
@@ -355,7 +354,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 		<a href="Z_ImportSuppliers.php?gettemplate=1">Get Import Template</a>
 		<br />
 		<br />';
-	echo '<form action="Z_ImportSuppliers.php" method="post" enctype="multipart/form-data">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" enctype="multipart/form-data">';
     echo '<div class="centre">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
