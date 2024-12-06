@@ -131,6 +131,7 @@ or deletion of the records*/
 				INNER JOIN locationusers 
 					ON locationusers.loccode=klmaintenancetasks.loccode 
 						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+						AND locationusers.canupd=1
 			WHERE klmaintenancetasks.closed = 0
 			ORDER BY klmaintenancetasks.counterindex";
 	$result = DB_query($sql);
@@ -298,6 +299,7 @@ if (!isset($_GET['close'])) {
 					INNER JOIN locationusers 
 						ON locationusers.loccode=locations.loccode 
 							AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+							AND locationusers.canupd=1
 				ORDER BY locationname";
 		$resultStkLocs = DB_query($sql);
 
