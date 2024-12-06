@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: ManualAPIFunctions.php 3152 2009-12-11 14:28:49Z tim_schofield $ */
 $RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
 $PathPrefix= $_SERVER['HTTP_HOST'].$RootPath.'/../../';
 
