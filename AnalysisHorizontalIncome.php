@@ -460,7 +460,7 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 		}
 	}// End of loop.
 
-	if($MyRow['groupname']!= $ActGrp) {
+	if(isset($MyRow['groupname']) and $MyRow['groupname']!= $ActGrp) {
 		if($MyRow['parentgroupname']!=$ActGrp AND $ActGrp!='') {
 			while($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 				if($_POST['ShowDetail']=='Detailed') {
