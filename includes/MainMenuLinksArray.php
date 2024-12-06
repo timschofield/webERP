@@ -63,9 +63,7 @@ $MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOr
 													'/SelectRecurringSalesOrder.php',
 													'/RecurringSalesOrdersProcess.php');
 
-//if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
 if ($KL_BusinessDevelopmentManager){
-//if (false){
 	$TextControlBoard01 = _('KL Control Board Section 01');
 	$LinkControlBoard01 = "/KLControlBoard.php?Section=01";
 	$TextControlBoard02 = _('KL Control Board Section 02');
@@ -77,7 +75,6 @@ if ($KL_BusinessDevelopmentManager){
 	$LinkControlBoard02 = '';
 }	
 													
-//if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
 if (false){
 	$TextPricingControlBoard01 = _('KL Pricing Control Board Section 01');
 	$LinkPricingControlBoard01 = "/KLControlBoardPrices.php?Section=01";
