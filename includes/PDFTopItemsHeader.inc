@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFTopItemsHeader.inc 6941 2014-10-26 23:18:08Z daintree $*/
 /*PDF page header for Top Items report */
 if ($PageNumber>1){
 	$pdf->newPage();

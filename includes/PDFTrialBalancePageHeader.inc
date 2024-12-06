@@ -4,7 +4,6 @@
 	 * Suren Naidu 18/08/2005
 	 *
 	 */
-/* $Id: PDFTrialBalancePageHeader.inc 5768 2012-12-20 08:38:22Z daintree $*/
 
 	$PageNumber++;
 	if ($PageNumber>1){

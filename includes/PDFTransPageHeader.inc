@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFTransPageHeader.inc 6826 2014-08-17 21:53:13Z rchacon $ */
 
 /*	Please note that addTextWrap() prints a font-size-height further down than
 	addText() and other functions. Use addText() instead of addTextWrap() to
@@ -19,6 +18,9 @@ if ($InvOrCredit=='Invoice') {
 } else {
 	$pdf->addText($Page_Width - 200, $YPos, $FontSize, _('CREDIT NOTE') . ' ');
 }
+
+$FontSize = 10;
+$pdf->addTextWrap($Page_Width-$Left_Margin-42, $YPos+5, 72, $FontSize, _('Page') . ' ' . $PageNumber);
 
 $XPos = $Page_Width - 265;
 $YPos -= 111;
@@ -42,8 +44,6 @@ $pdf->line($XPos+235, $YPos+5,$XPos+235, $YPos+100);
 
 $YPos = $Page_Height - $Top_Margin - 10;
 
-$FontSize = 10;
-
 $pdf->addText($Page_Width-268, $YPos-13, $FontSize, _('Number'));
 $pdf->addText($Page_Width-180, $YPos-13, $FontSize, $FromTransNo);
 $pdf->addText($Page_Width-268, $YPos-26, $FontSize, _('Customer Code'));
@@ -65,9 +65,6 @@ if ($InvOrCredit=='Invoice') {
 }
 
 
-$pdf->addText($Page_Width-268, $YPos-108, $FontSize, _('Page'));
-$pdf->addText($Page_Width-180, $YPos-108, $FontSize, $PageNumber);
-
 /*End of the text in the right side box */
 
 /*Now print out the company name and address in the middle under the logo */
@@ -79,7 +76,7 @@ $FontSize=8;
 $pdf->addText($XPos, $YPos-10, $FontSize, $_SESSION['TaxAuthorityReferenceName'] . ': ' . $_SESSION['CompanyRecord']['gstno']);
 $pdf->addText($XPos, $YPos-19,$FontSize, $_SESSION['CompanyRecord']['regoffice1']);
 $pdf->addText($XPos, $YPos-28,$FontSize, $_SESSION['CompanyRecord']['regoffice2']);
-$pdf->addText($XPos, $YPos-37,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . ' ' . $_SESSION['CompanyRecord']['regoffice4'] . ' ' . $_SESSION['CompanyRecord']['regoffice5']);
+$pdf->addText($XPos, $YPos-37,$FontSize, $_SESSION['CompanyRecord']['regoffice3'] . '  ' . $_SESSION['CompanyRecord']['regoffice4'] . '  ' . $_SESSION['CompanyRecord']['regoffice5']);
 $pdf->addText($XPos, $YPos-46, $FontSize, $_SESSION['CompanyRecord']['regoffice6']);
 $pdf->addText($XPos, $YPos-54, $FontSize, _('Phone') . ':' . $_SESSION['CompanyRecord']['telephone'] . ' ' . _('Fax') . ': ' . $_SESSION['CompanyRecord']['fax']);
 $pdf->addText($XPos, $YPos-63, $FontSize, _('Email') . ': ' . $_SESSION['CompanyRecord']['email']);
@@ -98,12 +95,12 @@ if ($myrow['invaddrbranch']==0){
 	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['name']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['address1']));
 	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['address2']));
-	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['address3']) . ' ' . html_entity_decode($myrow['address4']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['address3']) . '  ' . html_entity_decode($myrow['address4']) . '  ' . html_entity_decode($myrow['address5']) . '  ' . html_entity_decode($myrow['address6']));
 } else {
 	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['name']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['brpostaddr1']));
 	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['brpostaddr2']));
-	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['brpostaddr3']) . ' ' . html_entity_decode($myrow['brpostaddr4']) . ' ' . html_entity_decode($myrow['brpostaddr5']) . ' ' . html_entity_decode($myrow['brpostaddr6']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['brpostaddr3']) . '  ' . html_entity_decode($myrow['brpostaddr4']) . '  ' . html_entity_decode($myrow['brpostaddr5']) . '  ' . html_entity_decode($myrow['brpostaddr6']));
 }
 
 
@@ -132,7 +129,7 @@ if (!function_exists('htmlspecialchars_decode')) {
 	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['deliverto']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['deladd1']));
 	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['deladd2']));
-	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['deladd3']) . ' ' . html_entity_decode($myrow['deladd4']) . ' ' . html_entity_decode($myrow['deladd5']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['deladd3']) . '  ' . html_entity_decode($myrow['deladd4']) . '  ' . html_entity_decode($myrow['deladd5']) . '  ' . html_entity_decode($myrow['deladd6']));
 	$XPos -=80;
 }
 if ($InvOrCredit=='Credit'){
@@ -143,7 +140,7 @@ if ($InvOrCredit=='Credit'){
 	$pdf->addText($XPos, $YPos, $FontSize, html_entity_decode($myrow['brname']));
 	$pdf->addText($XPos, $YPos-14, $FontSize, html_entity_decode($myrow['braddress1']));
 	$pdf->addText($XPos, $YPos-28, $FontSize, html_entity_decode($myrow['braddress2']));
-	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['braddress3']) . ' ' . html_entity_decode($myrow['braddress4']) . ' ' . html_entity_decode($myrow['braddress5']) . ' ' . html_entity_decode($myrow['braddress6']));
+	$pdf->addText($XPos, $YPos-42, $FontSize, html_entity_decode($myrow['braddress3']) . '  ' . html_entity_decode($myrow['braddress4']) . '  ' . html_entity_decode($myrow['braddress5']) . '  ' . html_entity_decode($myrow['braddress6']));
 	$XPos -=80;
 }
 
@@ -160,6 +157,10 @@ $YPos -= ($line_height*2);
 
 include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 $pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $myrow['currcode'] . ' ' . $CurrencyName[$myrow['currcode']]);
+
+if ($InvOrCredit=='Invoice') {
+	$pdf->addText($Page_Width-$Left_Margin-88, $YPos-8, $FontSize, _('Due Date') . ': ' . $DisplayDueDate);
+}
 
 /*draw a box with nice round corner for entering line items */
 /*90 degree arc at top right of box 0 degrees starts a bottom */

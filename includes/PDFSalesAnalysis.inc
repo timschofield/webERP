@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFSalesAnalysis.inc 6310 2013-08-29 10:42:50Z daintree $*/
 
 include ('includes/class.pdf.php');
 
@@ -311,15 +310,15 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 	if ($Counter>0){ /*Dont want to print totals if this is the first record */
 		$TotalText = mb_substr(_('TOTAL') . ' ' . $LastLine['col5'] . ' - ' . $LastLine['col6'],0,33);
 		$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$TotalText);
-	
+
 		DB_data_seek($ColsResult,0);
 		while ($Cols = DB_fetch_array($ColsResult)){
 			$Xpos = 160 + $Cols['colno']*60;
 			if ($Cols['calculation']==0){
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl3[$Cols['colno']],0),'right');
-	
+
 			} else { /* its a calculation need to re-perform on the totals*/
-	
+
 				switch ($Cols['calcoperator']) {
 					Case '/':
 						if ($AccumLvl3[$Cols['coldenominator']]==0){
@@ -352,7 +351,7 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 				}
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-	
+
 		}
 		$Ypos -=$line_height;
 	}
@@ -368,9 +367,9 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 			$Xpos = 160 + $Cols['colno']*60;
 			if ($Cols['calculation']==0){
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl2[$Cols['colno']],0),'right');
-	
+
 			} else { /* its a calculation need to re-perform on the totals*/
-	
+
 				switch ($Cols['calcoperator']) {
 					Case '/':
 						if ($AccumLvl2[$Cols['coldenominator']]==0){
@@ -403,7 +402,7 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 				}
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-	
+
 		}
 		$Ypos -=$line_height;
 	}
@@ -419,7 +418,7 @@ if ($LastLine['col3']!='0'){
 			if ($Cols['calculation']==0){
 			$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, locale_number_format($AccumLvl1[$Cols['colno']],0),'right');
 			} else { /* its a calculation need to re-perform on the totals*/
-	
+
 				switch ($Cols['calcoperator']) {
 				Case '/':
 					if ($AccumLvl1[$Cols['coldenominator']]==0){
@@ -452,7 +451,7 @@ if ($LastLine['col3']!='0'){
 				}
 				$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 			}
-	
+
 		}
 		$Ypos -=(2*$line_height);
 	}

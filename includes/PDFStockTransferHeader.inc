@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFStockTransferHeader.inc 5680 2012-09-25 08:21:52Z daintree $*/
 /*PDF page header for price list report */
 if ($PageNumber>1){
 	$pdf->newPage();

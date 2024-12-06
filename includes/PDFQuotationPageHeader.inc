@@ -1,5 +1,4 @@
 <?php
-/*	$Id: PDFQuotationPageHeader.inc 7551 2016-06-06 15:28:31Z rchacon $*/
 /* pdf-php by R&OS code to set up a new sales order page */
 
 /*	Please note that addTextWrap prints a font-size-height further down than
@@ -52,7 +51,7 @@ $pdf->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['e
 $XPos = 46;
 $YPos = 566;
 $FontSize=14;
-$myrow = array_map(html_entity_decode, $myrow);
+$myrow = array_map('html_entity_decode', $myrow);
 $line_height = 15;
 $pdf->addText($XPos, $YPos, $FontSize, _('Delivery To').':' );
 $pdf->addText($XPos, $YPos-$line_height*1, $FontSize, $myrow['deliverto']);

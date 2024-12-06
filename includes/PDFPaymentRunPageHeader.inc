@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPaymentRunPageHeader.inc 3242 2009-12-16 22:06:53Z tim_schofield $*/
 /*PDF page header for aged analysis reports */
 if ($PageNumber >1){
 	$pdf->newPage();

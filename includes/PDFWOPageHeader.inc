@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFWOPageHeader.inc */
 
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -30,9 +29,9 @@ $pdf->addText($FormDesign->FactoryAddress->Caption->x,$Page_Height - $FormDesign
 $pdf->addText($FormDesign->FactoryAddress->Name->x,$Page_Height - $FormDesign->FactoryAddress->Name->y, $FormDesign->FactoryAddress->Name->FontSize, $WOHeader['locationname']);
 $pdf->addText($FormDesign->FactoryAddress->Line1->x,$Page_Height - $FormDesign->FactoryAddress->Line1->y, $FormDesign->FactoryAddress->Line1->FontSize, $WOHeader['deladd1']);
 $pdf->addText($FormDesign->FactoryAddress->Line2->x,$Page_Height - $FormDesign->FactoryAddress->Line2->y, $FormDesign->FactoryAddress->Line2->FontSize, $WOHeader['deladd2']);
-$pdf->addText($FormDesign->FactoryAddress->Line3->x,$Page_Height - $FormDesign->FactoryAddress->Line3->y+$AddressLineOffset, $FormDesign->FactoryAddress->Line3->FontSize, $WOHeader['deladd3']); 
-$pdf->addText($FormDesign->FactoryAddress->Line4->x,$Page_Height - $FormDesign->FactoryAddress->Line4->y+$AddressLineOffset, $FormDesign->FactoryAddress->Line4->FontSize, $WOHeader['deladd4']); 
-$pdf->addText($FormDesign->FactoryAddress->Line5->x,$Page_Height - $FormDesign->FactoryAddress->Line5->y+$AddressLineOffset, $FormDesign->FactoryAddress->Line5->FontSize, $WOHeader['deladd5'] . $WOHeader['deladd6']);// Includes delivery postal code and country. 
+$pdf->addText($FormDesign->FactoryAddress->Line3->x,$Page_Height - $FormDesign->FactoryAddress->Line3->y+$AddressLineOffset, $FormDesign->FactoryAddress->Line3->FontSize, $WOHeader['deladd3']);
+$pdf->addText($FormDesign->FactoryAddress->Line4->x,$Page_Height - $FormDesign->FactoryAddress->Line4->y+$AddressLineOffset, $FormDesign->FactoryAddress->Line4->FontSize, $WOHeader['deladd4']);
+$pdf->addText($FormDesign->FactoryAddress->Line5->x,$Page_Height - $FormDesign->FactoryAddress->Line5->y+$AddressLineOffset, $FormDesign->FactoryAddress->Line5->FontSize, $WOHeader['deladd5'] . $WOHeader['deladd6']);// Includes delivery postal code and country.
 //$pdf->addText($FormDesign->FactoryAddress->WorkCenter->x,$Page_Height - $FormDesign->FactoryAddress->WorkCenter->y+$AddressLineOffset, $FormDesign->FactoryAddress->WorkCenter->FontSize, $WOHeader['workcenter']);
 
 $pdf->RoundRectangle($FormDesign->WOAddressBox->x, $Page_Height - $FormDesign->WOAddressBox->y,$FormDesign->WOAddressBox->width, $FormDesign->WOAddressBox->height, $FormDesign->WOAddressBox->radius, $FormDesign->WOAddressBox->radius);// Function RoundRectangle from includes/class.pdf.php
@@ -68,8 +67,9 @@ $pdf->Rectangle($FormDesign->HeaderRectangle->x, $Page_Height - $FormDesign->Hea
 $pdf->addText($FormDesign->Headings->Column1->x,$Page_Height - $FormDesign->Headings->Column1->y, $FormDesign->Headings->Column1->FontSize, _('Action'));
 $pdf->addText($FormDesign->Headings->Column2->x,$Page_Height - $FormDesign->Headings->Column2->y, $FormDesign->Headings->Column2->FontSize, _('Item') );
 $pdf->addText($FormDesign->Headings->Column3->x,$Page_Height - $FormDesign->Headings->Column3->y, $FormDesign->Headings->Column3->FontSize, _('Item Description') );
-$pdf->addText($FormDesign->Headings->Column4->x,$Page_Height - $FormDesign->Headings->Column4->y, $FormDesign->Headings->Column4->FontSize, _('Quantity Reqd') );
+$pdf->addText($FormDesign->Headings->Column4->x,$Page_Height - $FormDesign->Headings->Column4->y, $FormDesign->Headings->Column4->FontSize, _('Qty Reqd') );
 $pdf->addText($FormDesign->Headings->Column5->x,$Page_Height - $FormDesign->Headings->Column5->y, $FormDesign->Headings->Column5->FontSize, _('Qty Issued') );
+$pdf->addText($FormDesign->Headings->Column6->x,$Page_Height - $FormDesign->Headings->Column6->y, $FormDesign->Headings->Column6->FontSize, _('Units') );
 /*draw a rectangle to hold the data lines */
 $pdf->Rectangle($FormDesign->DataRectangle->x, $Page_Height - $FormDesign->DataRectangle->y, $FormDesign->DataRectangle->width,$FormDesign->DataRectangle->height);
 ?>

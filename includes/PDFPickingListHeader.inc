@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPickingListHeader.inc 6592 2014-03-02 08:41:40Z daintree $*/
 /* pdf-php by R&OS code to set up a new sales order page */
 if ($PageNumber>1){
 	$pdf->newPage();

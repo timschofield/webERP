@@ -1,15 +1,5 @@
 <?php
 
-/* $Id: PDFStarter.php 7578 2016-08-02 10:02:32Z exsonqu $ */
-
-/*****************************************************************************************
-KL RICARD MODIFICATIONS:
-- Deleted the Default page size parameters, as it messed up with Print Label functions, 
-needing to set up their own page sizes.
-- Commited also to SVN Commit 6955. 
-- Commited as KL file in case Phil rolls back my commit.
-- This KL file mod should be reversed if Phil accepts the commit long time. 
-*****************************************************************************************/
 
 /*	-------------------------------------------------------------------------------------
 	November 2009. Moving from FPDF to TCPDF.
@@ -117,10 +107,10 @@ switch ($PaperSize) {
 		$Left_Margin=50;
 		$Right_Margin=40;
 		break;
-   
+
    case 'P/3/A4_pingzheng':
 
-	   	$DocumentPaper = 'Z2'; 
+	   	$DocumentPaper = 'Z2';
 	   	$DocumentOrientation ='L';
 
       		$Page_Width=595;

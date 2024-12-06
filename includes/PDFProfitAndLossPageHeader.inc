@@ -1,10 +1,14 @@
 <?php
+/********************************************************************************
+*
+* KL RICARD not print the company Name
+*
+********************************************************************************/
 	/*
 	 * PDF page header for the profit and loss report.
 	 * Suren Naidu 28/08/2005
 	 *
 	 */
-/* $Id: PDFProfitAndLossPageHeader.inc 5768 2012-12-20 08:38:22Z daintree $*/
 
 	$PageNumber++;
 	if ($PageNumber>1){
@@ -13,7 +17,9 @@
 
 	$FontSize = 8;
 	$YPos = $Page_Height - $Top_Margin;
+// KL RICARD
 //	$pdf->addText($Left_Margin,$YPos,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+// KL RICARD End
 
 	$YPos -= $line_height;
 	$FontSize =10;
