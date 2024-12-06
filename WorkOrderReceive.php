@@ -1,5 +1,4 @@
 <?php
-/* $Id: WorkOrderReceive.php 7293 2015-05-09 11:11:13Z exsonqu $*/
 
 include('includes/session.php');
 $Title = _('Receive Work Order');
@@ -136,7 +135,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		}
 	}
 
-	if ($QuantityReceived + $WORow['qtyrecd'] > $WORow['qtyreqd'] *(1+$_SESSION['OverReceiveProportion'])){
+	if ($QuantityReceived + $WORow['qtyrecd'] > $WORow['qtyreqd'] *(1+$_SESSION['OverReceiveProportion']/100)){
 		prnMsg(_('The quantity received is greater than the quantity required even after allowing for the configured allowable over-receive proportion. If this is correct then the work order must be modified first.'),'error');
 		$InputError=true;
 	}
@@ -851,9 +850,7 @@ echo '<table class="selection">
 		//add expiry date for perishable product
 		if($WORow['perishable']==1){
 			echo '<td>' . _('Expiry Date') . ':<td>
-			      <td><input type="text" name="ExpiryDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"
-				         required  />
-			      </td>';
+			      <td><input type="text" maxlength="10" size="11" name="ExpiryDate" class="date" required /></td>';
 		}
 
 		echo '<td>' . _('Received Into') . ':</td>

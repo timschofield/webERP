@@ -1,5 +1,11 @@
 <?php
-/* $Id: UserGLAccounts.php 7427 2015-12-27 19:59:10Z rchacon $*/
+
+/*************************************************************************************
+*
+* KL RICARD: Send some emails to check out team's work
+*
+**************************************************************************************/
+
 /* Maintenance of GL Accounts allowed for a user. */
 
 include('includes/session.php');
@@ -7,6 +13,7 @@ $Title = _('User Authorised GL Accounts');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserGLAccounts';
 include('includes/header.php');
+// KL RICARD
 include('includes/KLEmails.php');
 
 if(isset($_POST['SelectedUser']) and $_POST['SelectedUser']<>'') {//If POST not empty:
@@ -116,6 +123,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 								'1')";
 				$ErrMsg = _('An access permission to a GL account could not be added');
 				if(DB_query($SQL, $ErrMsg)) {
+					// KL RICARD Send the email
 					KLSendEmail("GLAccountsUserCreated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 					prnMsg(_('An access permission to a GL account was added') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
 					unset($_GET['SelectedGLAccount']);
@@ -129,6 +137,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 			AND userid='" . $SelectedUser . "'";
 		$ErrMsg = _('An access permission to a GL account could not be removed');
 		if(DB_query($SQL, $ErrMsg)) {
+			// KL RICARD Send the email
 			KLSendEmail("GLAccountsUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 			prnMsg(_('An access permission to a GL account was removed') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
 			unset($_GET['delete']);
@@ -146,6 +155,7 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 				AND userid='" . $SelectedUser . "'";
 		$ErrMsg = _('An access permission to update a GL account could not be modified');
 		if(DB_query($SQL, $ErrMsg)) {
+			// KL RICARD Send the email
 			KLSendEmail("GLAccountsUserUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 			prnMsg(_('An access permission to update a GL account was modified') . '. ' . _('User') . ': ' . $SelectedUser . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '.', 'success');
 			unset($_GET['ToggleUpdate']);
@@ -175,16 +185,9 @@ if(!isset($SelectedUser)) {// If is NOT set a user for GL accounts.
 		WHERE glaccountusers.userid='" . $SelectedUser . "'
 		ORDER BY chartmaster.accountcode ASC");
 	if(DB_num_rows($Result)>0) {// If the user has access permissions to one or more GL accounts:
-		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
-			echo '<td class="text">', $MyRow['accountcode'], '</td>
+			echo '<tr class="striped_row">
+				<td class="text">', $MyRow['accountcode'], '</td>
 				<td class="text">', $MyRow['accountname'], '</td>
 				<td class="centre">';
 			if($MyRow['canview'] == 1) {

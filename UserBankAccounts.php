@@ -1,12 +1,20 @@
 <?php
-/* $Id: UserBankAccounts.php 7398 2015-11-24 19:59:10Z tehonu $*/
-/* Maintains table bankaccountusers (Authorized users to work with a bank account in webERP) */
+
+/*************************************************************************************
+*
+* KL RICARD: Send some emails to check out team's work
+*
+**************************************************************************************/
+
+// UserBankAccounts.php
+// Maintains table bankaccountusers (Authorized users to work with a bank account in webERP).
 
 include('includes/session.php');
 $Title = _('Bank Account Users');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'UserBankAccounts';
 include('includes/header.php');
+// KL RICARD
 include('includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -77,6 +85,7 @@ if (isset($_POST['submit'])) {
 
 			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedBankAccount'] . ' ' . _('bank account has been changed');
 			$Result = DB_query($SQL);
+			// KL RICARD: Send the email
 			KLSendEmail("BankAccountsUserCreated", "Silent",$_SESSION['UserID'], $_POST['SelectedUser'], $_POST['SelectedBankAccount']);
 			prnMsg($msg, 'success');
 			unset($_POST['SelectedBankAccount']);
@@ -89,6 +98,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Bank account user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	// KL RICARD: Send the email
 	KLSendEmail("BankAccountsUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedBankAccount);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to use the') . ' ' . $SelectedBankAccount . ' ' . _('bank account removed'), 'success');
 	unset($_GET['delete']);
@@ -167,18 +177,10 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 			<th>' . _('Name') . '</th>
 		</tr>';
 
-	$k = 0; //row colour counter
-
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%s?SelectedBankAccount=%s&amp;delete=yes&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this bank account?') . '\');">' . _('Un-authorise') . '</a></td>
 				</tr>',
@@ -201,8 +203,10 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 				<td>' . _('Select Bank Account') . ':</td>
 				<td><select name="SelectedBankAccount">';
 
-		$Result = DB_query("SELECT accountcode,
-									bankaccountname
+		$Result = DB_query("SELECT
+								accountcode,
+								bankaccountname,
+								currcode
 							FROM bankaccounts
 							WHERE NOT EXISTS (SELECT bankaccountusers.accountcode
 											FROM bankaccountusers
@@ -214,14 +218,11 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 			echo '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 		}
 		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['SelectedBankAccount']) and $MyRow['accountcode'] == $_POST['SelectedBankAccount']) {
-				echo '<option selected="selected" value="';
-			} else {
-				echo '<option value="';
-			}
-			echo $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['bankaccountname'] . '</option>';
-
-		} //end while loop
+			// Lists bank accounts order by bankaccountname
+			echo '<option',
+				((isset($_POST['SelectedBankAccount']) and $MyRow['accountcode'] == $_POST['SelectedBankAccount']) ? ' selected="selected"' : '' ),
+				' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
+		}// End while loop
 
 		echo '</select>
 					</td>

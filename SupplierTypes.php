@@ -1,6 +1,5 @@
 <?php
 
-/* $Id SupplierTypes.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 include('includes/session.php');
 $Title = _('Supplier Types') . ' / ' . _('Maintenance');
@@ -148,24 +147,19 @@ if (!isset($SelectedType)){
 	$sql = "SELECT typeid, typename FROM suppliertype";
 	$result = DB_query($sql);
 
-	echo '<table class="selection">';
-	echo '<tr>
+	echo '<table class="selection">
+		<thead>
+			<tr>
 		<th class="ascending" >' . _('Type ID') . '</th>
 		<th class="ascending" >' . _('Type Name') . '</th>
-		</tr>';
-
-$k=0; //row colour counter
+			</tr>
+		</thead>
+		<tbody>';
 
 while ($myrow = DB_fetch_row($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
 			<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' .
@@ -179,7 +173,7 @@ while ($myrow = DB_fetch_row($result)) {
 		$myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

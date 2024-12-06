@@ -1,5 +1,4 @@
 <?php
-/* $Id: UnitsOfMeasure.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 include('includes/session.php');
 
@@ -166,28 +165,23 @@ if (isset($_POST['Submit'])) {
 	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Units of Measure') . '</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_row($result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		echo '<td>' . $myrow[1] . '</td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>';
-		echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete')  . '</a></td>';
-		echo '</tr>';
+		echo '<tr class="striped_row">
+				<td>' . $myrow[1] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedMeasureID=' . $myrow[0] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this unit of measure?') . '\');">' . _('Delete')  . '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 

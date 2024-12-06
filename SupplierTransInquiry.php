@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SupplierTransInquiry.php 7423 2015-12-24 10:12:57Z exsonqu $*/
 
 include('includes/session.php');
 $Title = _('Supplier Transactions Inquiry');
@@ -52,9 +51,9 @@ if (!isset($_POST['SupplierNo'])) {
 	$_POST['SupplierNo'] = '';
 }
 echo '<td>' . _('From') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
+		<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" /></td>
 		<td>' . _('To') . ':</td>
-		<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
+		<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" /></td>
 		<td>' . _('Supplier No') . ':</td>
 		<td><input type="text" name="SupplierNo" size="11" maxlength="10" value="' . $_POST['SupplierNo'] . '" />
 		</td>
@@ -62,7 +61,7 @@ echo '<td>' . _('From') . ':</td>
 	</table>
 	<br />
 	<div class="centre">
-		<input type="submit" name="ShowResults" value="' . _('Show Transactions') . '" />
+		<input type="submit" name="ShowResults" value="' . _('Show transactions') . '" />
 	</div>
 	<br />
     </div>
@@ -96,6 +95,10 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	if  ($_POST['TransType']!='All')  {
 		$sql .= " AND type = " . $_POST['TransType'];
 	}
+	if($_POST['SupplierNo'] != "")
+	{
+		$sql .= " AND supptrans.supplierno LIKE '%".$_POST['SupplierNo']."%'";
+	}
 	$sql .=  " ORDER BY id";
 
    $TransResult = DB_query($sql);
@@ -119,19 +122,11 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	echo $tableheader;
 
 	$RowCounter = 1;
-	$k = 0; //row colour counter
 
 	while ($myrow=DB_fetch_array($TransResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';;
-			$k++;
-		}
-
-		printf ('<td>%s</td>
+		printf ('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

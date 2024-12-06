@@ -1,11 +1,17 @@
 <?php
-/* $Id: LocationUsers.php 6806 2013-09-28 05:10:46Z daintree $*/
+
+/*************************************************************************************
+*
+* KL RICARD: Send some emails to check out team's work
+*
+**************************************************************************************/
 
 include('includes/session.php');
 $Title = _('User Authorised Inventory Locations Maintenance');
 $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
 $BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
 include('includes/header.php');
+// KL RICARD
 include('includes/KLEmails.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('User Authorised Locations') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -77,6 +83,7 @@ if (isset($_POST['submit'])) {
 
 			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedLocation'] . ' ' . _('location has been changed');
 			$Result = DB_query($SQL);
+			// KL RICARD Send the email
 			KLSendEmail("LocationUserCreated", "Silent",$_SESSION['UserID'], $_POST['SelectedUser'],$_POST['SelectedLocation']);
 			prnMsg($msg, 'success');
 			unset($_POST['SelectedLocation']);
@@ -89,6 +96,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Location user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	// KL RICARD Send the email
 	KLSendEmail("LocationUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedLocation);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to use the') . ' ' . $SelectedLocation . ' ' . _('location removed'), 'success');
 	unset($_GET['delete']);
@@ -100,6 +108,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Location user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	// KL RICARD Send the email
 	KLSendEmail("LocationUserUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedLocation);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to update') . ' ' . $SelectedLocation . ' ' . _('location removed'), 'success');
 	unset($_GET['ToggleUpdate']);
@@ -182,16 +191,7 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 			<th>' . _('Update') . '</th>
 		</tr>';
 
-	$k = 0; //row colour counter
-
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 
 		if ($MyRow['canupd'] == 1) {
 			$ToggleText = '<td><a href="%s?SelectedLocation=%s&amp;ToggleUpdate=0&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this location?') . '\');">' . _('Remove Update') . '</a></td>';
@@ -199,7 +199,8 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 			$ToggleText = '<td><a href="%s?SelectedLocation=%s&amp;ToggleUpdate=1&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this location?') . '\');">' . _('Add Update') . '</a></td>';
 		}
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>' .
