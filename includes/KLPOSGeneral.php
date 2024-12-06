@@ -818,9 +818,9 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 	// read terms and conditions
 	$TextToPrint .= $CharacterFontB . $LeftJustified;
-	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it.". $NewLine;
-	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and goods in perfect and unused conditions. We reserve the right to refuse any exchange. Warranty only valid with this original invoice (bank statement is not valid).". $NewLine;
-	$TextToPrint .= "For more information on our business terms and conditions, promotions, shop locations, job opportunities, news and warranty terms and conditions check our online shop.". $NewLine;
+	$TextToPrint .= "This invoice is the only valid proof of purchase. Keep it. Bank or credit card statement is not a valid proof of purchase.". $NewLine;
+	$TextToPrint .= "No refund. Exchange within 7 days with this original invoice, packaging and goods in perfect and unused conditions. We reserve the right to refuse any exchange. Warranty only valid with this original invoice.". $NewLine;
+	$TextToPrint .= "For more information on our business terms and conditions, warranty, promotions, shop locations, job opportunities and news check our online shop.". $NewLine;
 	if ((isset($_SESSION['PartnerName'])) AND ($_SESSION['PartnerName'] != '')){
 		$TextToPrint .= $_SESSION['PartnerName'];
 	}
