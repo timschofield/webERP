@@ -1,4 +1,11 @@
 <?php
+
+/***************************************************************************************
+*
+* KL RICARD: Commented out defaultgl field as it seems of no use for KL usage (or webERP in general)
+*
+***************************************************************************************/
+
 include ('includes/session.php');
 $Title = _('Supplier Maintenance');
 /* webERP manual links before header.php */
@@ -848,6 +855,7 @@ if (!isset($SupplierID)) {
 			</td>
 		</tr>';
 
+/* KL RICARD Commented out defaultgl as it seems of no use for us (or webeERP in general)
 	$Result = DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
@@ -868,7 +876,7 @@ if (!isset($SupplierID)) {
 	echo '</select>
 			</td>
 		</tr>';
-
+*/ 
 	echo '<tr>
 			<td>' . _('Tax Group') . ':</td>
 			<td><select name="TaxGroup">';
