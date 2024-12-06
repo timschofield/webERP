@@ -1,5 +1,4 @@
 <?php
-/* $Id: SupplierContacts.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 
@@ -144,17 +143,19 @@ if (!isset($SelectedContact)){
 		$myrow = DB_fetch_array($result);
 
 		echo '<table class="selection">
+			<thead>
 				<tr>
 					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
-				</tr>';
-		 
-		echo '<tbody><tr>
+				</tr>
+				<tr>
 				<th class="ascending">' . _('Name') . '</th>
 				<th class="ascending">' . _('Position') . '</th>
 				<th class="ascending">' . _('Phone No') . '</th>
 				<th class="ascending">' . _('Fax No') . '</th>
 				<th class="ascending">' . _('Email') . '</th>
-			</tr>';
+				</tr>
+			</thead>
+			<tbody>';
 
 		do {
 			printf('<tr><td>%s</td>
@@ -177,7 +178,7 @@ if (!isset($SelectedContact)){
 					$SupplierID,
 					$myrow['contact']);
 		} while ($myrow = DB_fetch_array($result));
-        echo '</tbody><br />';
+        echo '</tbody></table><br />';
 	} else {
 		prnMsg(_('There are no contacts defined for this supplier'),'info');
 	}

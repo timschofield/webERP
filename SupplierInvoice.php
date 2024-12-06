@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SupplierInvoice.php 7489 2016-04-10 17:12:51Z rchacon $ */
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of GRNs objects - containing details of GRNs for invoicing
@@ -32,12 +31,15 @@ if (!isset($_SESSION['SuppTrans']->SupplierName)) {
 	$result = DB_query($sql);
 	$myrow = DB_fetch_row($result);
 	$SupplierName=$myrow[0];
+	if (!isset($_SESSION['SuppTrans']->SupplierID)) {
+		$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
+	}
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath . '/css/' . $Theme .
 	'/images/transactions.png" title="' . _('Supplier Invoice') . '" />' . ' ' .
-	_('Enter Supplier Invoice') . ': ' . $SupplierName . '</p>';
+	_('Enter Supplier Invoice') . ': ' . $SupplierName . ' ' . $_SESSION['SuppTrans']->SupplierID . '</p>';
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!=''){
 
  /*It must be a new invoice entry - clear any existing invoice details from the SuppTrans object and initiate a newy*/
@@ -211,7 +213,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 
 					$SQL = "UPDATE purchorderdetails SET quantityrecd = quantityrecd + '" . $OrderLine->ReceiveQty . "',
 														stdcostunit='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->StandardCost . "',
-														completed='" . $_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->Completed . "'
+														completed='1'
 												WHERE podetailitem = '" . $OrderLine->PODetailRec . "'";
 
 					$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The purchase order detail record could not be updated with the quantity received because');
@@ -449,6 +451,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 								grns.qtyrecd,
 								grns.quantityinv,
 								grns.stdcostunit,
+								grns.supplierref,
 								purchorderdetails.glcode,
 								purchorderdetails.shiptref,
 								purchorderdetails.jobref,
@@ -487,7 +490,8 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 																$myrow['assetid'],
 																0,
 																$myrow['decimalplaces'],
-																$myrow['grnbatch']);
+																$myrow['grnbatch'],
+																$myrow['supplierref']);
 				}
 			} //end if the order has no controlled items on it
 		} //only allow auto receiving of all lines if the PO is authorised
@@ -632,7 +636,7 @@ if (!isset($_POST['PostInvoice'])){
 		$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 	}
 	echo '<td>' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</td>
-		<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
+		<td><input type="text" class="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" /></td>
 		<td>' . _('Exchange Rate') . ':</td>
 		<td><input class="number" maxlength="12" name="ExRate" size="14" type="text" value="' . locale_number_format($_SESSION['SuppTrans']->ExRate,10) . '" /></td>
 	</tr>
@@ -649,18 +653,20 @@ if (!isset($_POST['PostInvoice'])){
 	}
 	echo ' <input type="submit" name="FixedAssets" value="' . _('Fixed Assets') . '" />
 		</div>';
+	$CanSubmit = false;//To avoid a empty submit
 
 	$TotalGRNValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->GRNs)>0){   /*if there are any GRNs selected for invoicing then */
 		/*Show all the selected GRNs so far from the SESSION['SuppInv']->GRNs array */
+		$CanSubmit = true;
 
 		echo '<br />
 				<table class="selection">
 			<tr>
 				<th colspan="6">' . _('Purchase Order Charges') . '</th>
 			</tr>';
-		$tableheader = '<tr style="background-color:#800000">
+		$tableheader = '<tr style="tableheader">
 							<th>' . _('Seq') . ' #</th>
 							<th>' . _('GRN Batch') . '</th>
 							<th>' . _('Supplier Ref') . '</th>
@@ -699,6 +705,7 @@ if (!isset($_POST['PostInvoice'])){
 	$TotalShiptValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Shipts) > 0){   /*if there are any Shipment charges on the invoice*/
+		$CanSubmit = true;
 
 		echo '<br />
 				<table class="selection">
@@ -739,6 +746,7 @@ if (!isset($_POST['PostInvoice'])){
 	$TotalAssetValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Assets) > 0){   /*if there are any fixed assets on the invoice*/
+		$CanSubmit = true;
 
 		echo '<br />
 			<table class="selection">
@@ -779,6 +787,7 @@ if (!isset($_POST['PostInvoice'])){
 	$TotalContractsValue = 0;
 
 	if (count( $_SESSION['SuppTrans']->Contracts) > 0){   /*if there are any contract charges on the invoice*/
+		$CanSubmit = true;
 
 		echo '<br />
 			<table class="selection">
@@ -823,6 +832,7 @@ if (!isset($_POST['PostInvoice'])){
 	if ( $_SESSION['SuppTrans']->GLLink_Creditors == 1){
 
 		if (count($_SESSION['SuppTrans']->GLCodes) > 0){
+			$CanSubmit = true;
 			echo '<br />
 					<table class="selection">
 					<tr>
@@ -957,11 +967,13 @@ if (!isset($_POST['PostInvoice'])){
 				<td><textarea name="Comments" cols="40" rows="2">' . $_SESSION['SuppTrans']->Comments . '</textarea></td>
 			</tr>
 		</table>';
+	if ($CanSubmit) {
 
 	echo '<br />
 			<div class="centre">
 				<input type="submit" name="PostInvoice" value="' . _('Enter Invoice') . '" />
 			</div>';
+	}
 
     echo '</div>
           </form>';
@@ -1299,7 +1311,7 @@ then do the updates and inserts to process the invoice entered */
 															'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo .  ' - ' . $EnteredGRN->ItemCode . ' x ' . ($EnteredGRN->This_QuantityInv -$TotalQuantityOnHand) . ' x  ' . _('price var of') . ' ' . round(($EnteredGRN->ChgPrice / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  . "',
 															'" . $WriteOffToVariances . "')";
 
-									$ErrMsg = _('CRITICAL ERROR 1') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because'). $SQL;
+									$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 									$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 
@@ -1325,7 +1337,7 @@ then do the updates and inserts to process the invoice entered */
 													 round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,$_SESSION['CompanyRecord']['decimalplaces'])  . "',
 													'" . ($PurchPriceVar - $WriteOffToVariances) . "')";
 
-								$ErrMsg = _('CRITICAL ERROR 2') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because'). $SQL;
+								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
@@ -1347,7 +1359,7 @@ then do the updates and inserts to process the invoice entered */
 														'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' . $EnteredGRN->ItemCode . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var of') . ' ' . round(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,2)  .  "',
 														'" . $PurchPriceVar . "')";
 
-								$ErrMsg = _('CRITICAL ERROR 3') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because'). $SQL;
+								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 								$DbgMsg = _('The following SQL to insert the GL transaction was used');
 								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 							}
@@ -1384,7 +1396,7 @@ then do the updates and inserts to process the invoice entered */
 											'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . _('GRN') . ' ' . $EnteredGRN->GRNNo . ' - ' .  $EnteredGRN->ItemDescription . ' x ' . $EnteredGRN->This_QuantityInv . ' x  ' . _('price var') . ' ' . locale_number_format(($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) - $EnteredGRN->StdCostUnit,$_SESSION['SuppTrans']->CurrDecimalPlaces) . "',
 											'" . $PurchPriceVar . "')";
 
-							$ErrMsg = _('CRITICAL ERROR 4') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because') . $SQL;
+							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added for the price variance of the stock item because');
 
 							$DbgMsg = _('The following SQL to insert the GL transaction was used');
 							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
@@ -1556,7 +1568,7 @@ then do the updates and inserts to process the invoice entered */
 					goods received record because');
 			$DbgMsg = _('The following SQL to map the invoice to the GRN was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-			
+
 			if (mb_strlen($EnteredGRN->ShiptRef)>0 AND $EnteredGRN->ShiptRef != '0'){
 				/* insert the shipment charge records */
 				$SQL = "INSERT INTO shipmentcharges (shiptref,
