@@ -146,16 +146,15 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 			</div>';
 	}
 
-	if (!isset($_SESSION['Favourites'])) {
-		$SQL = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-		$Result = DB_query($SQL);
-		while ($MyRow = DB_fetch_array($Result)) {
-			$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
-		}
-		if (DB_num_rows($Result) == 0) {
-			$_SESSION['Favourites'] = Array();
-		}
+	$SQL = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
 	}
+	if (DB_num_rows($Result) == 0) {
+		$_SESSION['Favourites'] = Array();
+	}
+
 	echo '<div id="ActionIcon">
 			<select name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)">';
 	echo '<option value=""><i>', _('Commonly used scripts'), '</i></option>';
