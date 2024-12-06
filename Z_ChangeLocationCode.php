@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeLocationCode.php 5296 2012-04-29 15:28:19Z vvs2012 $*/
 /* Utility to change a location code. */
 
 include ('includes/session.php');
@@ -135,6 +134,12 @@ if(isset($_POST['ProcessLocationChange'])) {
 		echo '<br />' . _('Changing the freightcosts table records');
 		$sql = "UPDATE freightcosts SET locationfrom='" . $_POST['NewLocationID'] . "' WHERE locationfrom='" . $_POST['OldLocationID'] . "'";
 		$ErrMsg = _('The SQL to update the freightcosts records failed');
+		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		echo ' ... ' . _('completed');
+
+		echo '<br />' . _('Changing the locationusers table records');
+		$sql = "UPDATE locationusers SET loccode='" . $_POST['NewLocationID'] . "' WHERE loccode='" . $_POST['OldLocationID'] . "'";
+		$ErrMsg = _('The SQL to update users records failed');
 		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 

@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeSupplierCode.php 4466 2011-01-13 09:33:59Z daintree $*/
 /* This script is an utility to change a supplier code. */
 
 include ('includes/session.php');
@@ -8,7 +7,7 @@ $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeSupplierCode'; // Anchor's id in the manual's html document
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/supplier.png" title="' . 
+	'/images/supplier.png" title="' .
 	_('Change A Supplier Code') . '" /> ' .// Icon title.
 	_('Change A Supplier Code') . '</p>';// Page title.
 
@@ -37,7 +36,6 @@ exit();
 
 
 function ProcessSupplier($oldCode, $newCode) {
-	global $db;
 	$table_key= array (
 		'grns' => 'supplierid',
 		'offers'=>'supplierid',
@@ -106,7 +104,6 @@ function ProcessSupplier($oldCode, $newCode) {
 }
 
 function checkSupplierExist($codeSupplier) {
-	global $db;
 	$result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $codeSupplier . "'");
 	if (DB_num_rows($result)==0) return false;
 	return true;

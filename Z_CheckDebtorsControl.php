@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_CheckDebtorsControl.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title=_('Debtors Control Integrity');
@@ -79,7 +78,6 @@ include('includes/header.php');
 
 		$CurPeriod = $_POST['FromPeriod'];
 		$GLOpening = $invTotal = $RecTotal = $GLClosing = $CalcTotal = $DiffTotal = 0;
-		$j=0;
 
 		while ( $CurPeriod <= $_POST['ToPeriod'] ) {
 			$SQL = "SELECT bfwd,
@@ -94,17 +92,11 @@ include('includes/header.php');
 			$GLOpening += $dtRow['bfwd'];
 			$glMovement = $dtRow['bfwd'] + $dtRow['actual'];
 
-			if ($j==1) {
-				echo '<tr class="OddTableRows">';
-				$j=0;
-			} else {
-				echo '<tr class="EvenTableRows">';
-				$j++;
-			}
-			echo '<td>' . $CurPeriod . '</td>
+			echo '<tr class="striped_row">
+					<td>' . $CurPeriod . '</td>
 					<td class="number">' . locale_number_format($dtRow['bfwd'],2) . '</td>';
 
-			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totinvnetcrds
+			$SQL = "SELECT SUM((ovamount+ovgst+ovfreight+ovdiscount)/rate) AS totinvnetcrds
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND (type=10 OR type=11)";
@@ -116,7 +108,7 @@ include('includes/header.php');
 
 			echo '<td class="number">' . locale_number_format($invRow['totinvnetcrds'],2) . '</td>';
 
-			$SQL = "SELECT SUM((ovamount+ovgst)/rate) AS totreceipts
+			$SQL = "SELECT SUM((ovamount+ovgst+ovfreight+ovdiscount)/rate) AS totreceipts
 					FROM debtortrans
 					WHERE prd = '" . $CurPeriod . "'
 					AND type=12";

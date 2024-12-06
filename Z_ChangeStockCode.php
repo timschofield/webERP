@@ -1,12 +1,11 @@
 <?php
-/*	$Id: Z_ChangeStockCode.php 7494 2016-04-25 09:53:53Z daintree $*/
 /*	This script is an utility to change an inventory item code. */
-/*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue, 
+/*	It uses function ChangeFieldInTable($TableName, $FieldName, $OldValue,
 	$NewValue) from .../includes/MiscFunctions.php.*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
-- change the stock code also in KL tables using this field in webERP and OpenCart
+- change the stock code also in KL tables using this field in webERP and OpenCart (function ChangeFieldInOpenCartTable at bottom of this script)
 ***************************************************************************************/
 
 include ('includes/session.php');
@@ -15,7 +14,7 @@ $ViewTopic = 'SpecialUtilities'; // Filename in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeStockCode'; // Anchor's id in the manual's html document.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/inventory.png" title="' . 
+	'/images/inventory.png" title="' .
 	_('Change An Inventory Item Code') . '" /> ' .// Icon title.
 	_('Change An Inventory Item Code') . '</p>';// Page title.
 
@@ -58,7 +57,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 		DB_IgnoreForeignKeys();
 		$result = DB_Txn_Begin();
-/* RICARD KL: Added lastcategoryupdate and kl*** fields, and 4 dimension fields */	
+/* RICARD KL: Added lastcategoryupdate and kl*** fields, and dimension fields */	
 		echo '<br />' . _('Adding the new stock master record');
 		$sql = "INSERT INTO stockmaster (stockid,
 										categoryid,
@@ -80,12 +79,14 @@ if (isset($_POST['ProcessStockChange'])){
 										barcode,
 										discountcategory,
 										taxcatid,
-										decimalplaces,
-										shrinkfactor,
-										pansize,
-										netweight,
+										serialised,
 										perishable,
+										decimalplaces,
+										pansize,
+										shrinkfactor,
 										nextserialno,
+										netweight,
+										lastcostupdate
 										lastcategoryupdate,
 										length,
 										width,
@@ -117,12 +118,14 @@ if (isset($_POST['ProcessStockChange'])){
 					barcode,
 					discountcategory,
 					taxcatid,
-					decimalplaces,
-					shrinkfactor,
-					pansize,
-					netweight,
+					serialised,
 					perishable,
+					decimalplaces,
+					pansize,
+					shrinkfactor,
 					nextserialno,
+					netweight,
+					lastcostupdate,
 					lastcategoryupdate,
 					length,
 					width,
@@ -155,12 +158,12 @@ if (isset($_POST['ProcessStockChange'])){
 			if (DB_error_no()==0) {
 				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
-	
+
 			$result = DB_query("SELECT * FROM mrprequirements" ,'','',false,false);
 			if (DB_error_no()==0){
 				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
-			
+
 			$result = DB_query("SELECT * FROM mrpsupplies" ,'','',false,false);
 			if (DB_error_no()==0){
 				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -178,15 +181,15 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("grns", "itemcode", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("contractbom", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("bom", "component", $_POST['OldStockID'], $_POST['NewStockID']);
-		
+		// KL RICARD
 		DB_IgnoreForeignKeys();
-
+		// KL RICARD END
 		ChangeFieldInTable("bom", "parent", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("stockrequestitems", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("stockdescriptiontranslations", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);// Updates the translated item titles (StockTitles)
 		ChangeFieldInTable("custitem", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("pricematrix", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
-/*		ChangeFieldInTable("Stockdescriptions", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);// Updates the translated item descriptions (StockDescriptions)*/
+		ChangeFieldInTable("pickreqdetails", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 
 		echo '<br />' . _('Changing any image files');
 		$SupportedImgExt = array('png','jpg','jpeg');
@@ -216,7 +219,6 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("prodspecs", "keyval", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("qasamples", "prodspeckey", $_POST['OldStockID'], $_POST['NewStockID']);
 
-		DB_ReinstateForeignKeys();
 		/* KL RICARD TABLES */
 		ChangeFieldInTable("kladjustrl", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 		ChangeFieldInTable("klchangeprice", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -235,7 +237,6 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInOpenCartTable( "oc_product", "mpn", $_POST['OldStockID'], $_POST['NewStockID']);
 		
 		/* END OF KL TABLES */
-		
 		DB_ReinstateForeignKeys();
 
 		$result = DB_Txn_Commit();
@@ -251,7 +252,7 @@ if (isset($_POST['ProcessStockChange'])){
 		if ($_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
 			$_SESSION['SelectedStockItem'] = $_POST['NewStockID'];
 		}
-		
+
 	} //only do the stuff above if  $InputError==0
 }
 
@@ -277,6 +278,7 @@ echo '<br />
 
 include('includes/footer.php');
 
+// KL RICARD
 function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue){
 	/* Used in Z_ scripts to change one field across the table.
 	*/
@@ -287,6 +289,6 @@ function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue
 	$result = DB_query_oc($sql,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 }
-
+// KL RICARD END
 
 ?>

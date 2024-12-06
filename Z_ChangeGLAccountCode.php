@@ -1,9 +1,9 @@
 <?php
-/* $Id: Z_ChangeGLAccountCode.php 6946 2014-10-27 07:30:11Z daintree $*/
 /* Utility to change a GL account code in all webERP. */
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
+- Use the fucntion ChangeGLAcoountCode
 - change the account code also in KL tables using this field
 ***************************************************************************************/
 
@@ -20,9 +20,12 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 include('includes/SQL_CommonFunctions.inc');
 
 if(isset($_POST['ProcessGLAccountCode'])) {
+
 	$InputError =0;
+
 	$_POST['NewAccountCode'] = mb_strtoupper($_POST['NewAccountCode']);
 	ChangeGLAcoountCode ($_POST['NewAccountCode'], $_POST['OldAccountCode']);
+
 
 }
 

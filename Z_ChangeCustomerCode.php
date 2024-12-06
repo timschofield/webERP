@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeCustomerCode.php 7050 2014-12-28 20:48:56Z rchacon $*/
 /* This script is an utility to change a customer code. */
 
 include ('includes/session.php');
@@ -8,7 +7,7 @@ $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeCustomerCode'; // Anchor's id in the manual's html document.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/customer.png" title="' . 
+	'/images/customer.png" title="' .
 	_('Change A Customer Code') . '" /> ' .// Icon title.
 	_('Change A Customer Code') . '</p>';// Page title.
 

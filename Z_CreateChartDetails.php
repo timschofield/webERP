@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_CreateChartDetails.php 6945 2014-10-27 07:20:48Z daintree $*/
 
 include ('includes/session.php');
 $Title = _('Create Chart Details Records');

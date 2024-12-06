@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_CreateCompanyTemplateFile.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include ('includes/session.php');
 $Title = _('Create Database Template File');

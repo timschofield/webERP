@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_CurrencySuppliersBalances.php 7052 2014-12-28 21:40:12Z rchacon $*/
 /* This script is an utility to show suppliers balances in total by currency. */
 
 include ('includes/session.php');
