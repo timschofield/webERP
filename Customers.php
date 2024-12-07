@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Customers.php 6942 2014-10-27 02:48:29Z daintree $ */
 
 include('includes/session.php');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
@@ -457,7 +456,7 @@ if (!isset($DebtorNo)) {
 	if ($_SESSION['AutoDebtorNo']==0)  {
 		echo '<tr>
 				<td>' . _('Customer Code') . ':</td>
-				<td><input type="text" data-type="no-illegal-chars" tabindex="1"  name="DebtorNo"  required="required" autofocus="autofocus"title ="'._('Up to 10 characters for the customer code. The following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric').'" size="11" maxlength="10" /></td></tr>';
+				<td><input type="text" data-type="no-illegal-chars" tabindex="1"  name="DebtorNo"  required="required" autofocus="autofocus" title ="'._('Up to 10 characters for the customer code. The following characters are prohibited:') . ' \' &quot; + . &amp; \\ &gt; &lt;" placeholder="'._('alpha-numeric').'" size="11" maxlength="10" /></td></tr>';
 	}
 
 	echo '<tr>
@@ -545,7 +544,7 @@ if (!isset($DebtorNo)) {
 	$DateString = Date($_SESSION['DefaultDateFormat']);
 	echo '<tr>
 			<td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-			<td><input tabindex="10" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" value="' . $DateString . '" size="12" maxlength="10" /></td>
+			<td><input tabindex="10" type="text" class="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" /></td>
 		</tr>';
 
 	echo '</table></td>
@@ -916,7 +915,7 @@ if (!isset($DebtorNo)) {
 			</tr>
 			<tr>
 				<td>' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ClientSince" size="11" maxlength="10" value="' . $_POST['ClientSince'] . '" /></td>
+				<td><input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="date" name="ClientSince" size="11" maxlength="10" value="' . $_POST['ClientSince'] . '" /></td>
 			</tr>
 			</table></td>
 			<td><table class="selection">';
@@ -1132,19 +1131,12 @@ if (!isset($DebtorNo)) {
 				<th colspan="2"><input type="submit" name="AddContact" value="' . _('Add Contact') . '" /></th>
 			</tr>';
 	}
-	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
 
 		if (isset($_GET['Modify'])) {
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
@@ -1157,7 +1149,8 @@ if (!isset($DebtorNo)) {
 					$myrow['email'],
 					$myrow['notes']);
 		} else {
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
