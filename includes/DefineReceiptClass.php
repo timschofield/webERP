@@ -1,11 +1,5 @@
 <?php
 
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
-- Linked to CustomerReceipt.php mod
-***************************************************************************************/
-
 /* definition of the ReceiptBatch class */
 
 Class Receipt_Batch {
@@ -37,9 +31,9 @@ Class Receipt_Batch {
 		self::__construct();
 	}
 
-	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag, $OrderPaid){
+	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
 		if ((isset($Customer) OR isset($GLCode)) AND ($Amount + $Discount) !=0){
-			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $tag, $OrderPaid);
+			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $tag);
 			$this->ItemCounter++;
 			$this->total = $this->total + ($Amount + $Discount) / $this->ExRate;
 			Return 1;
@@ -67,10 +61,8 @@ Class Receipt {
 	Var $ID;
 	var $tag;
 	var $TagName;
-	var $OrderPaid;
 
-	function __construct ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag, $OrderPaid = ""){
-
+	function __construct ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
 /* Constructor function to add a new Receipt object with passed params */
 		$this->Amount =$Amt;
 		$this->Customer = $Cust;
@@ -81,15 +73,14 @@ Class Receipt {
 		$this->PayeeBankDetail=$PayeeBankDetail;
 		$this->ID = $id;
 		$this->tag = $Tag;
-		$this->OrderPaid = $OrderPaid;
 		$result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'");
 		if (DB_num_rows($result)==1){
 			$TagRow = DB_fetch_array($result);
 			$this->TagName = $TagRow['tagdescription'];
 		}
 	}
-	function Receipt($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag, $OrderPaid = ""){
-		self::__construct($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag, $OrderPaid);
+	function Receipt($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
+		self::__construct($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag);
 	}
 }
 
