@@ -675,6 +675,12 @@ if (!isset($SupplierID)) {
 
 	/*If the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
+	$Result = DB_query("SELECT typeid, typename FROM suppliertype");
+	if (DB_num_rows($Result) == 0) {
+		prnMsg(_('There are no supplier types setup. These must be created first'), 'error');
+		exit;
+	}
+
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -717,7 +723,7 @@ if (!isset($SupplierID)) {
 		</field>
 		<field>
 			<label for="Address5">' . _('Address Line 5 (Postal Code)') . ':</label>
-			<td><input type="text" name="Address5" size="42" placeholder="' . _('Less than 40 characters') . '" maxlength="40" /></td>
+			<td><input type="text" name="Address5" size="42" placeholder="' . _('Less than 40 characters') . '" maxlength="20" /></td>
 		</field>
 		<field>
 			<label for="Address6">' . _('Country') . ':</label>
