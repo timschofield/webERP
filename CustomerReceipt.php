@@ -1,12 +1,6 @@
 <?php
 /* Entry of both customer receipts against accounts receivable and also general ledger or nominal receipts */
 
-/**************************************************************************************
-KL RICARD MODIFICATIONS:
-- Added field OrderPaid to allow the registration of the orderno. Only useful for online orders.
-- Temporary solution. Better use a dedicated script for this functionality: Payment by bank transfer of online
-customers. It needs to take shipment into account as well (currently it doesn't.
-***************************************************************************************/
 include('includes/DefineReceiptClass.php');
 include('includes/session.php');
 if (isset($_POST['DateBanked'])){$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);};
@@ -223,8 +217,7 @@ if (isset($_POST['Process'])){ //user hit submit a new entry to the receipt batc
 													$_POST['GLCode'],
 													$_POST['PayeeBankDetail'],
 													$_POST['CustomerName'],
-													$_POST['tag'],
-													$_POST['OrderPaid']);
+													$_POST['tag']);
 			/*Make sure the same receipt is not double processed by a page refresh */
 			$Cancel = 1;
 		}
@@ -239,7 +232,6 @@ if (isset($Cancel)){
 	unset($_POST['Discount']);
 	unset($_POST['Narrative']);
 	unset($_POST['PayeeBankDetail']);
-	unset($_POST['OrderPaid']);
 }
 
 
@@ -317,7 +309,7 @@ if (isset($_POST['CommitBatch'])){
 			<td>' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . '</td>
 			<td>' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '</td>
 			<td>' . $ReceiptItem->CustomerName . '</td>
-			<td class="text">' . $ReceiptItem->GLCode . ' - ' . $MyRow['accountname'] . '</td>
+			<td class="text">' . $ReceiptItem->GLCode . ' - ' . ($MyRow['accountname'] ?? '') . '</td>
 			<td class="number">' . locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate,$_SESSION['ReceiptBatch' . $identifier]->CurrDecimalPlaces)  . '</td>';
 
 		if ($ReceiptItem->GLCode ==''){
@@ -346,14 +338,14 @@ if (isset($_POST['CommitBatch'])){
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-/*				foreach ($ReceiptItem->tag as $Tag) {
+				foreach ($ReceiptItem->tag as $Tag) {
 					$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
 														'" . $Tag . "')";
 					$ErrMsg = _('Cannot insert a GL tag for the journal line because');
 					$DbgMsg = _('The SQL that failed to insert the GL tag record was');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				}
-*/			}
+			}
 
 			/*check to see if this is a GL posting to another bank account (or the same one)
 			if it is then a matching payment needs to be created for this account too */
@@ -463,7 +455,7 @@ if (isset($_POST['CommitBatch'])){
 						12,
 						'" . $ReceiptItem->Customer . "',
 						'',
-						'" . $ReceiptItem->OrderPaid . "',
+						'" . $ReceiptItem->ID . "',
 						'" . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . "',
 						'" . date('Y-m-d H-i-s') . "',
 						'" . $PeriodNo . "',
@@ -710,21 +702,21 @@ customer record returned by the search - this record is then auto selected */
 				debtorsmaster.creditlimit,
 				holdreasons.dissallowinvoices,
 				holdreasons.reasondescription,
-				SUM(debtortrans.balance) AS balance,
+				SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS balance,
 				SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue  THEN debtortrans.balance ELSE 0 END
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue  THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= 0 THEN debtortrans.balance ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				END) AS due,
 				SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight - debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN debtortrans.balance ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				END) AS overdue1,
 				SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.balance ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN debtortrans.balance ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				END) AS overdue2
 			FROM debtorsmaster INNER JOIN paymentterms
 			ON debtorsmaster.paymentterms = paymentterms.termsindicator
@@ -1140,7 +1132,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 	echo '<fieldset>
 			<legend>' . _('General Ledger Receipt Entry') . '</legend>';
 
-/*	//Select the tag
+	//Select the tag
 	echo '<field>
 			<label for="tag[]">', _('Select Tag(s)'), ':</label>
 			<select multiple="multiple" name="tag[]">';
@@ -1164,7 +1156,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 	</field>';
 
 // End select tag
-*/
+
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<field>
 			<label for="GLCode">' . _('GL Account') . ':</label>
@@ -1216,9 +1208,6 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 	if (!isset($_POST['PayeeBankDetail'])) {
 		$_POST['PayeeBankDetail']='';
 	}
-	if (!isset($_POST['OrderPaid'])) {
-		$_POST['OrderPaid']='';
-	}
 	if (!isset($_POST['Narrative'])) {
 		$_POST['Narrative']='';
 	}
@@ -1240,10 +1229,6 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 	echo '<field>
 			<label for="PayeeBankDetail">' . _('Payee Bank Details') . ':</label>
 			<input tabindex="12" type="text" name="PayeeBankDetail" maxlength="22" size="20" value="' . $_POST['PayeeBankDetail'] . '" />
-		</field>
-		<field>
-			<label for="OrderPaid">' . _('webERP Order (Online ONLY!)') . ':</label>
-			<input tabindex="13" type="text" name="OrderPaid" maxlength="22" size="20" value="' . $_POST['OrderPaid'] . '" />
 		</field>
 		<field>
 			<label for="Narrative">' . _('Narrative') . ':</label>
