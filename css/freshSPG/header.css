@@ -1,0 +1,68 @@
+header {
+background:#C9D392;
+padding:10px;
+color:#5A5F00;
+}
+header #Info {
+display:inline;
+padding:10px;
+}
+header #Info img {
+padding-right:7px;
+width:32px;
+height:32px;
+vertical-align:middle;
+}
+header #Info a {
+}
+header #ActionIcon {
+display:inline;
+float:right;
+padding-left:10px;
+}
+header #ActionIcon img{
+padding-right:7px;
+width:32px;
+height:32px;
+}
+header #ExitIcon {
+display:inline;
+float:right;
+padding-left:10px;
+padding-right:30px;
+}
+header #ExitIcon img {
+width:32px;
+height:32px;
+}
+header .FontSize {
+font-weight:bold;
+display:inline;
+padding:3px;
+color:#5A5F00;
+}
+header .ScriptTitle {
+font-weight:bold;
+font-size:130%;
+display:inline;
+padding:10px;
+margin-left:0px;
+}
+header #favourites {
+background: url(images/descending.png) no-repeat right transparent;
+background-size:contain;
+overflow: hidden;
+color:#5A5F00;
+font-size: 130%;
+font-weight:bold;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-left: 7px;
+padding-right: 32px;
+border: solid 2px #5A5F00;
+border-radius: 12px;
+margin: 2px;
+-moz-appearance:none;
+-webkit-appearance: none;
+cursor:pointer;
+}
