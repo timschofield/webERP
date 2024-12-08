@@ -209,7 +209,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	//Recalculate the standard for the item if there were no items previously received against the work order
 		if ($WORow['qtyrecd']==0){
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost
 									FROM stockmaster INNER JOIN bom
 									ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $_POST['StockID'] . "'
