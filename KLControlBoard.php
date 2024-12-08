@@ -876,12 +876,18 @@ if ($ProcessSection02){
 	}
 	*/
 
+	if ($KL_AdministrationTeam
+		OR $KL_SalesTeamOnline){ 
+		OnlineMarketPlacePaymentPending(0, $RootPath);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
 		OR $KL_OperationalManager){ 
-		OnlineMarketPlacePaymentPending($RootPath);
+		OnlineMarketPlacePaymentPending(10, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -4288,9 +4294,18 @@ function OnlineQuotationsFollowUp($RootPath ){
 	}
 }
 
-function OnlineMarketPlacePaymentPending($RootPath){
+function OnlineMarketPlacePaymentPending($Days, $RootPath){
+	// if $Days = 0 it means all the Online Marketplace Orders still pending of payment
+	// if $Days > 0 it means the same but only show the delayed for more than $Days
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
-	$Titletext = "Follow up Marketplace Online Orders Payment Pending";
+	if ($Days == 0){
+		$Titletext = "All Marketplace Online Orders with Payment Pending";
+		$WhereStatement = "";
+	}else{
+		$Titletext = "Delayed Marketplace Online Orders Payment Pending for more than " . $Days . " days";
+		$WhereStatement = " AND salesorders.orddate <= '" . $StartDate . "' ";
+	}
 		
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
@@ -4310,7 +4325,8 @@ function OnlineMarketPlacePaymentPending($RootPath){
 				INNER JOIN currencies
 					ON debtorsmaster.currcode = currencies.currabrev
 			WHERE salesorders.klpaidcash= 0	
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ")
+				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ") " .
+				$WhereStatement . "
 			GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
 				salesorders.orddate
@@ -4757,7 +4773,6 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 	}
 	return $NumberOfTestExecuted;
 }
-
 
 function OvestockAtSamples($maxallowedsamples, $RootPath){
 
