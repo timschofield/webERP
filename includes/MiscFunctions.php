@@ -585,8 +585,14 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 	$ThisMonth = date('m');
 	$ThisYear = date('Y');
 	$LastMonth = $ThisMonth - 1;
+	if ($LastMonth == 0) {
+		$LastMonth = 12;
+	}
 	$LastYear = $ThisYear - 1;
 	$NextMonth = $ThisMonth + 1;
+	if ($NextMonth == 13) {
+		$NextMonth = 1;
+	}
 	$NextYear = $ThisYear + 1;
 	// Find total number of days in this month:
 	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
