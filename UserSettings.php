@@ -14,11 +14,8 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('User Settings'), '" /> ',// Icon title.
 	_('User Settings'), '</p>';// Page title.
 
-$PDFLanguages = array(_('Latin Western Languages - Times'),
-					_('Eastern European Russian Japanese Korean Hebrew Arabic Thai'),
-					_('Chinese'),
-					_('Free Serif'));
-
+// KL RICARD Only show one option, no weird languages we don't use
+$PDFLanguages = array(_('Latin Western Languages - Times'));
 
 if (isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
