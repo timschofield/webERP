@@ -13,7 +13,9 @@ include('includes/session.php');
 $Title = _('User Settings');
 $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
+
 include('includes/header.php');
+// KL RICARD
 include('includes/KLRoles.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -21,12 +23,8 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>'; // Page title.
 
-$PDFLanguages = array(
-	_('Latin Western Languages - Times'),
-	_('Eastern European Russian Japanese Korean Hebrew Arabic Thai'),
-	_('Chinese'),
-	_('Free Serif')
-);
+// KL RICARD Only show one option, no weird languages we don't use
+$PDFLanguages = array(_('Latin Western Languages - Times'));
 
 if(isset($_POST['Modify'])) {
 	// no input errors assumed initially before we test
@@ -36,11 +34,13 @@ if(isset($_POST['Modify'])) {
 	ie the page has called itself with some user input */
 
 	//first off validate inputs sensible
-	if($_POST['DisplayRecordsMax'] <= 0) {
-		$InputError = 1;
-		prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
-	}
-
+	// KL RICARD: For some version issues, we can't use this check
+	//if($_POST['DisplayRecordsMax'] <= 0) {
+	//	$InputError = 1;
+	//	prnMsg(_('The Maximum Number of Records on Display entered must not be negative') . '. ' . _('0 will default to system setting'),'error');
+	//}
+	// KL RICARD END 
+	
 	//!!!for the demo only - enable this check so password is not changed
 	if($AllowDemoMode AND $_POST['Password'] != '') {
 		$InputError = 1;
@@ -72,23 +72,30 @@ if(isset($_POST['Modify'])) {
 		}
 
 		if($UpdatePassword != 'Y') {
-			$SQL = "UPDATE www_users
-					SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
-						theme='" . $_POST['Theme'] . "',
-						language='" . $_POST['Language'] . "',
-						email='" . $_POST['email'] . "',
-						showpagehelp='" . $_POST['ShowPageHelp'] . "',
-						showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
-						pdflanguage='" . $_POST['PDFLanguage'] . "'
-					WHERE userid = '" . $_SESSION['UserID'] . "'";
+			// KL RICARD Only KL_SystemAdmin is allowed to change his settings. Other users only password and email
+			if ($KL_SystemAdmin){
+				$SQL = "UPDATE www_users
+						SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
+							theme='" . $_POST['Theme'] . "',
+							language='" . $_POST['Language'] . "',
+							email='" . $_POST['email'] . "',
+							showpagehelp='" . $_POST['ShowPageHelp'] . "',
+							showfieldhelp='" . $_POST['ShowFieldHelp'] . "',
+							pdflanguage='" . $_POST['PDFLanguage'] . "'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}else{
+				$SQL = "UPDATE www_users
+						SET email='". $_POST['email'] ."'
+						WHERE userid = '" . $_SESSION['UserID'] . "'";
+			}
 			$ErrMsg = _('The user alterations could not be processed because');
 			$DbgMsg = _('The SQL that was used to update the user and failed was');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 			prnMsg( _('The user settings have been updated') . '. ' . _('Be sure to remember your password for the next time you login'),'success');
 		} else {
-			// KL RICARD: Only SystemAdmin is allowed to change his settings, other users only email and password. 
+			// KL RICARD: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
 			if ($KL_SystemAdmin){
-				$sql = "UPDATE www_users
+				$SQL = "UPDATE www_users
 						SET displayrecordsmax='" . $_POST['DisplayRecordsMax'] . "',
 							theme='" . $_POST['Theme'] . "',
 							language='" . $_POST['Language'] . "',
@@ -99,7 +106,7 @@ if(isset($_POST['Modify'])) {
 							password='" . CryptPass($_POST['Password']) . "'
 						WHERE userid = '" . $_SESSION['UserID'] . "'";
 			}else{
-				$sql = "UPDATE www_users
+				$SQL = "UPDATE www_users
 						SET email='". $_POST['email'] ."',
 							password='" . CryptPass($_POST['Password']) . "'
 						WHERE userid = '" . $_SESSION['UserID'] . "'";
@@ -125,54 +132,65 @@ if(isset($_POST['Modify'])) {
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input name="FormID" value="', $_SESSION['FormID'], '" type="hidden" />';
 
+// KL RICARD: For some version issues, we need this check
+if (!isset($_POST['DisplayRecordsMax']) OR $_POST['DisplayRecordsMax']=='') {
+  $_POST['DisplayRecordsMax'] = $_SESSION['DefaultDisplayRecordsMax'];
+}
+// KL RICARD END
+
 echo '<table class="selection">
 		<tr>
-			<td>', _('User ID'), ':</td>
-			<td>', $_SESSION['UserID'], '</td>
-		</tr>
-		<tr>
-			<td>', _('User Name'), ':</td>
-			<td>', $_SESSION['UsersRealName'], '<input name="RealName" type="hidden" value="', $_SESSION['UsersRealName'], '" /></td></tr>
-		<tr>
-			<td>', _('Maximum Number of Records to Display'), ':</td>
-			<td><input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_SESSION['DisplayRecordsMax'], '" /></td>
+			<td>' . _('User ID') . ':</td>
+			<td>' . $_SESSION['UserID'] . '</td>
 		</tr>';
 
-// Select language:
 echo '<tr>
-	<td>', _('Language'), ':</td>
-	<td><select name="Language">';
-if(!isset($_POST['Language'])) {
-	$_POST['Language'] = $_SESSION['Language'];
-}
-foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
-	echo '<option ';
-	if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
-		echo 'selected="selected" ';
+		<td>' . _('User Name') . ':</td>
+		<td>' . $_SESSION['UsersRealName'] . '
+		<input type="hidden" name="RealName" value="'.$_SESSION['UsersRealName'].'" /></td></tr>';
+
+// KL RICARD: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
+if ($KL_SystemAdmin){
+	echo '<tr>
+		<td>' . _('Maximum Number of Records to Display') . ':</td>
+		<td><input type="text" class="integer" required="required" title="'._('The input must be positive integer').'" name="DisplayRecordsMax" size="3" maxlength="3" value="' . $_POST['DisplayRecordsMax'] . '"  /></td>
+		</tr>';
+
+	// Select language:
+	echo '<tr>
+		<td>', _('Language'), ':</td>
+		<td><select name="Language">';
+	if(!isset($_POST['Language'])) {
+		$_POST['Language'] = $_SESSION['Language'];
 	}
-	echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
-}
-echo '</select></td>
-	</tr>';
+	foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
+		echo '<option ';
+		if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
+			echo 'selected="selected" ';
+		}
+		echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
+	}
+	echo '</select></td>
+		</tr>';
 
-// Select theme:
-echo '<tr>
-	<td>' . _('Theme') . ':</td>
-	<td><select name="Theme">';
+	// Select theme:
+	echo '<tr>
+		<td>' . _('Theme') . ':</td>
+		<td><select name="Theme">';
 
-$ThemeDirectories = scandir('css/');
+	$ThemeDirectories = scandir('css/');
 
-foreach ($ThemeDirectories as $ThemeName) {
-	if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
+	foreach ($ThemeDirectories as $ThemeName) {
+		if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
 
-		if($_SESSION['Theme'] == $ThemeName) {
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			if($_SESSION['Theme'] == $ThemeName) {
+				echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			} else {
+				echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			}
 		}
 	}
 }
-
 if(!isset($_POST['PasswordCheck'])) {
 	$_POST['PasswordCheck']='';
 }
@@ -211,47 +229,48 @@ $_POST['ShowFieldHelp'] = $MyRow['showfieldhelp'];
 
 echo '<td><input name="email" size="40" type="email" value="', $_POST['email'], '" /></td>
 	</tr>';
-
-// Turn off/on page help:
-echo '<tr>
-		<td><label for="ShowPageHelp">', _('Display page help'), ':</label></td>
-		<td><select id="ShowPageHelp" name="ShowPageHelp">';
-if($_POST['ShowPageHelp']==0) {
-	echo '<option selected="selected" value="0">', _('No'), '</option>',
-		 '<option value="1">', _('Yes'), '</option>';
-} else {
-	echo '<option value="0">', _('No'), '</option>',
- 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
-}
-echo '</select>', fShowFieldHelp(_('Show page help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>';
-// Turn off/on field help:
-echo '<tr>
-		<td><label for="ShowFieldHelp">', _('Display field help'), ':</label></td>
-		<td><select id="ShowFieldHelp" name="ShowFieldHelp">';
-if($_POST['ShowFieldHelp']==0) {
-	echo '<option selected="selected" value="0">', _('No'), '</option>',
-		 '<option value="1">', _('Yes'), '</option>';
-} else {
-	echo '<option value="0">', _('No'), '</option>',
- 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
-}
-echo '</select>', fShowFieldHelp(_('Show field help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		'</td>
-	</tr>';
-// PDF Language Support:
-if(!isset($_POST['PDFLanguage'])) {
-	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
-}
-echo '<tr>
-		<td>', _('PDF Language Support'), ': </td>
-		<td><select name="PDFLanguage">';
-for($i=0; $i<count($PDFLanguages); $i++) {
-	if($_POST['PDFLanguage'] == $i) {
-		echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
+if ($KL_SystemAdmin){
+	// Turn off/on page help:
+	echo '<tr>
+			<td><label for="ShowPageHelp">', _('Display page help'), ':</label></td>
+			<td><select id="ShowPageHelp" name="ShowPageHelp">';
+	if($_POST['ShowPageHelp']==0) {
+		echo '<option selected="selected" value="0">', _('No'), '</option>',
+			 '<option value="1">', _('Yes'), '</option>';
 	} else {
-		echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';
+		echo '<option value="0">', _('No'), '</option>',
+			 '<option selected="selected" value="1">', _('Yes'), '</option>';
+	}
+	echo '</select>', fShowFieldHelp(_('Show page help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			'</td>
+		</tr>';
+	// Turn off/on field help:
+	echo '<tr>
+			<td><label for="ShowFieldHelp">', _('Display field help'), ':</label></td>
+			<td><select id="ShowFieldHelp" name="ShowFieldHelp">';
+	if($_POST['ShowFieldHelp']==0) {
+		echo '<option selected="selected" value="0">', _('No'), '</option>',
+			 '<option value="1">', _('Yes'), '</option>';
+	} else {
+		echo '<option value="0">', _('No'), '</option>',
+			 '<option selected="selected" value="1">', _('Yes'), '</option>';
+	}
+	echo '</select>', fShowFieldHelp(_('Show field help when available')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
+			'</td>
+		</tr>';
+	// PDF Language Support:
+	if(!isset($_POST['PDFLanguage'])) {
+		$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
+	}
+	echo '<tr>
+			<td>', _('PDF Language Support'), ': </td>
+			<td><select name="PDFLanguage">';
+	for($i=0; $i<count($PDFLanguages); $i++) {
+		if($_POST['PDFLanguage'] == $i) {
+			echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
+		} else {
+			echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';
+		}
 	}
 }
 echo '</select></td>
