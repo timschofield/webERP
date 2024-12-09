@@ -227,6 +227,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInWrongShops("SHOPOU", $RootPath);
 		$NumberOfTestExecuted++;
+		ItemsInWrongShops("DEFECTIVE", $RootPath);
+		$NumberOfTestExecuted++;
 
 	}
 
@@ -2836,23 +2838,28 @@ function ItemsInSetup($Check, $Category, $RootPath){
 function ItemsInWrongShops($ShopType, $RootPath){
 
 	if ($ShopType == "SHOPKL"){
-		$Message = 'Blink or Discount Items on KL shops';
+		$Message = 'Blink or KL 80% Discount Items on KL shops';
 		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						AND locations.typeloc = 'SHOPKL' ";
 	}elseif ($ShopType == "SHOPBL"){
-		$Message = 'KL or Discount items on BLINK shops';
+		$Message = 'KL or Blink 80% Discount items on BLINK shops';
 		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						AND locations.typeloc = 'SHOPBL' ";
 	}elseif ($ShopType == "SHOPOU"){
-		$Message = 'KL or Blink items on OUTLET shops';
+		$Message = 'KL or Blink full priced items on OUTLET shops';
 		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						AND locations.typeloc = 'SHOPOU' ";
+	}elseif ($ShopType == "DEFECTIVE"){
+		$Message = 'Discounted -D items on KL or Blink shops';
+		$Condition =  " AND UPPER(RIGHT(stockmaster.stockid,2)) = '-D'
+						AND (locations.typeloc = 'SHOPKL' 
+							OR locations.typeloc = 'SHOPBL')";
 	}else{
 		//error_
 		return;
@@ -4350,7 +4357,6 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 							<th class="ascending">' . '' . '</th>
 							<th class="ascending">' . _('Paid Tokopedia') . '</th>
 							<th class="ascending">' . _('Paid Shopee') . '</th>
-							<th class="ascending">' . _('Paid Lazada') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -4384,12 +4390,6 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 			}else{
 				$PaymentShopee = '';
 			}
-			if ($myrow['debtorno'] == "LAZADA"){
-				$PaymentLazada = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'lazada' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-				$PaymentManual = '';
-			}else{
-				$PaymentLazada = '';
-			}
 			$DecimalPlaces = $myrow['decimalplaces'];
 			
 			printf('<td class="number">%s</td>
@@ -4399,7 +4399,6 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4415,90 +4414,86 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					$myrow['currcode'], 
 					$PaymentManual,
 					$PaymentTokopedia,
-					$PaymentShopee,
-					$PaymentLazada
+					$PaymentShopee
 					);
 			$i++;
 			$TotalPaymentValue += $PaymentValue;
 		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				"", 
-				"", 
-				"", 
-				"", 
-				"",
-				"SHOPEE:", 
-				locale_number_format($TotalShopeeValue,$DecimalPlaces),
-				"IDR", 
-				"",
-				"",
-				"",
-				""
-				);
+		// for the detailed report, show totals. If only delayed more than $Days, no need to show totals
+		if ($Days = 0){
 			printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				"", 
-				"", 
-				"", 
-				"", 
-				"",
-				"TOKOPEDIA:", 
-				locale_number_format($TotalTokopediaValue,$DecimalPlaces),
-				"IDR", 
-				"",
-				"",
-				"",
-				""
-				);
-			printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				"", 
-				"", 
-				"", 
-				"", 
-				"",
-				"TOTAL:", 
-				locale_number_format($TotalPaymentValue,$DecimalPlaces),
-				"IDR", 
-				"",
-				"",
-				"",
-				""
-				);
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					"", 
+					"", 
+					"", 
+					"", 
+					"",
+					"SHOPEE:", 
+					locale_number_format($TotalShopeeValue,$DecimalPlaces),
+					"IDR", 
+					"",
+					"",
+					""
+					);
+				printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					"", 
+					"", 
+					"", 
+					"", 
+					"",
+					"TOKOPEDIA:", 
+					locale_number_format($TotalTokopediaValue,$DecimalPlaces),
+					"IDR", 
+					"",
+					"",
+					""
+					);
+				printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					"", 
+					"", 
+					"", 
+					"", 
+					"",
+					"TOTAL:", 
+					locale_number_format($TotalPaymentValue,$DecimalPlaces),
+					"IDR", 
+					"",
+					"",
+					""
+					);
+		}
 		echo '</table>
 				</div>';
 	}
