@@ -1,5 +1,11 @@
 <?php
 
+/**************************************************************************************
+*
+* KL RICARD: Keep the v4.13.1 version, as we want to keep the same SOP standard v4.15.2 
+* uses a different accountint SOP for fixed assets. To be improved probably in v5
+*
+**************************************************************************************/
 
 include('includes/session.php');
 $Title = _('Fixed Assets');
