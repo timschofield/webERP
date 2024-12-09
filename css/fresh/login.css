@@ -43,7 +43,7 @@ input.button {
 background:none repeat scroll 0 0 transparent;
 border:thick outset #C9D392;
 border-radius:15px 15px 15px 15px;
-padding:10px;
+padding:12px;
 vertical-align:middle;
 width:50%;
 font-weight:bold;
@@ -54,12 +54,12 @@ input.button:hover {
 background:none repeat scroll 0 0 transparent;
 border:thick inset #C9D392;
 border-radius:15px 15px 15px 15px;
-padding:10px;
+padding:12px;
 vertical-align:middle;
 width:50%;
 box-shadow:3px 3px 4px inset;	
 }
 
 #demo_text{
-	padding:10px;
+	padding:12px;
 }

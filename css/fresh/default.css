@@ -1,5 +1,4 @@
-/* $Id: default.css 7627 2016-09-19 03:55:49Z rchacon $*/
-/***
+﻿/*** 
 
 New "Fresh" Theme for WebERP
 
@@ -10,23 +9,17 @@ by Hindra Joshua
 Based from the previous theme "SilverWolf"
 Credits to the original authors.
 
-NOTE:
+NOTE: 
 This CSS is not yet optimized. Some styles maybe 'redundant' or 'unused',
 but for the obvious one it will be cleaned up.
-To optimized the rest we should examined the whole codes! That would be for
+To optimized the rest we should examined the whole codes! That would be for 
 the next project. :)
 
 ***/
 
-button img {
-	/* Describes how button image should be displayed. */
-	height:21px;
-	width:21px;
-}
-
 body {
-	font-family: Arial, Verdana, Helvetica, sans-serif;
-	font-size:10pt;
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 12px;
 	margin:0;
 	padding:0;
 }
@@ -45,6 +38,18 @@ img {
 	border:none;
 	vertical-align:middle;
 }
+p.page_title_text {
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	padding-top: 2px;
+	padding-bottom: 2px;
+	font-weight: bold;
+	font-size: 12px;
+	color: black;
+	background-color: #C9D392;
+	width: 30%;
+	TEXT-ALIGN:center;
+	margin: 12px auto;
+}
 p.good { /***/
     font-weight: bold;
     color: green;
@@ -54,54 +59,54 @@ p.bad { /***/
     color:red;
 }
 table {
-	background-color: #ffffff;
-	margin: 0 auto;
-	width:100%
+  background-color: #ffffff;
+  margin: 0 auto;
+  width:100%
 }
 table.selection {
 }
 th {
+	font-weight: normal;
+	font-size: 12px;
 	background-color: #777C59;
 	color: white;
-	font-weight: normal;
 	text-align: center;
 }
-th.ascending {
-  cursor: s-resize;
-}
-th.descending {
-  cursor: n-resize;
-}
-th:after {
-	content: "";
-	float: right;
-	margin-top: 7px;
-	visibility: hidden;
-}
-th.ascending:after {
-	border-width: 0 4px 4px;
-	border-style: solid;
-	border-color: #000 transparent;
-	visibility: visible;
-}
-th.descending:after {
-	border-bottom: none;
-	border-left: 4px solid transparent;
-	border-right: 4px solid transparent;
-	border-top: 4px solid #000;
-	visibility: visible;
+th.number {
+	text-align: right;
+	font-weight: normal;
+	background-color: #800000;
+	color: white;
 }
 td {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 12px;
 	text-align: left;
 }
 td.select {
 	background-color:#eee;
+}
+td.number {
+	text-align: right;
+}
+td.numberTotal { /* KL Modified */
+	background-color:#e6f8c1;
+	text-align: right;
+	font-size: 30px;
 }
 div.centre { /* centering buttons / links */
   margin: 0 auto;
   text-align:center;
 }
 input {
+	font-family: Arial, Verdana, Helvetica, sans-serif;;
+	font-size: 12px;
+}
+input.number{
+	text-align: right;
+}
+input.numberTotal{
+	text-align: right;
 }
 input.image {
 	border-width:0px;
@@ -111,24 +116,23 @@ input:hover{
 }
 select {
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
-	font-size:12px;
-}
-input.inputerror, input.error, select.error, select.selecterror, label.error {
-	color:red;
-	border: 2px solid red;
-}
-input:required, select:required, textarea:required {
-	background-color:lightyellow;
+	font-size: 12px;
 }
 textarea{
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+	font-size: 12px;
 }
 textarea:hover{
 }
 .EvenTableRows {
-	background-color: #72824D;
+	background-color:#e6f8c1;
 }
 .OddTableRows {
 	background-color: #CAF17C;
+}
+.TotalTableRows {
+	background-color: #72824D;
+	font-size: 20px;
 }
 
 div.error {
@@ -151,21 +155,23 @@ div.info {
 	color: navy;
 	border: 0px solid navy;
 }
-div.page_help_text {
-	background:lightgrey url(images/help.png) top left no-repeat;
-	border:#A52A2A 1px solid;
-	color:black;
-	float:none;
-	font-weight:normal;
-	margin:0 auto;
-	padding-bottom:2px;
-	padding-left:10px;
+DIV.page_help_text {
+	background: lightgrey url(images/help.png) top left no-repeat;
+	BORDER: #a52a2a 1px solid;
 	padding-top:2px;
-	position:static;
-	text-align:center;
-	visibility:visible;
-	width:80%;
-	z-index:1;
+        padding-bottom: 2px;
+	PADDING-LEFT: 12px;
+	Z-INDEX: 1;
+	width: 80%;
+	FLOAT: none;
+	VISIBILITY: visible;
+	MARGIN: 0 auto;
+	POSITION: static;
+	font-family: Arial, Verdana, Helvetica, sans-serif;
+        font-weight: normal;
+        font-size: 12px;
+        color: black;
+	TEXT-ALIGN:center;
 }
 
 /*** calendar picker ***/
@@ -225,7 +231,7 @@ div.page_help_text {
 .label {
 	font-weight:bold;
 	font-style:normal;
-	font-size:120%;
+	font-size:12px;
 	color:black;
 }
 .table_index {
@@ -314,14 +320,14 @@ select.selecterror {
     display:inline; /* items are inline */
 }
 
-/*** links as buttons!!! clicking anywhere in the button will activate
+/*** links as buttons!!! clicking anywhere in the button will activate 
      the link!!! ***HJ***/
-
+	 
 #QuickMenuDiv li a{
 	background:#B4BB86;
     border:thin outset #5A5F00;
     color:#5A5F00;
-    padding:8px;
+    padding:8px;	
 }
 #QuickMenuDiv li a:hover{
 	background:#B4BB86;
@@ -344,20 +350,24 @@ select.selecterror {
 #BodyDiv table {
 	width:auto; /* automatic width */
 	margin: 0 auto;
-	margin-bottom:10px;
+	margin-bottom:12px;
 }
 #BodyDiv table.selection {
-	background:#E0F3B1;
-	border:thin outset #E0F3B1;
-	padding:5px;
+background:#E0F3B1;
+    border:thin outset #E0F3B1;
+    padding:5px;
 }
+/*#BodyDiv .centre{
+	margin:0 auto 12px;
+    text-align:center;
+}*/
 
 /*** BODY - MAIN MENU ***/
 
 #MainMenuDiv{
 	float:left; /* REQUIRED: to the left side */
 	white-space:nowrap; /* don't break text */
-	text-align:center;
+	text-align:center; 
 	width:11%;
 	background:#617C4F;
 }
@@ -377,15 +387,15 @@ select.selecterror {
 	color:white;
 }
 #MainMenuDiv li a:hover{ /* link as button!!! pressed state */
-	background:#5A5F00;
-	border:thin inset #617C4F;
-	padding:3px;
 	text-decoration:none;
+	padding:3px;
+	border:thin inset #617C4F;
+	background:#5A5F00;	
 }
 #MainMenuDiv .main_menu_selected a{ /* the selected button */
-	border:thin inset #5A5F00;
+	border:thin inset #5A5F00;	
 	background:#5A5F00;
-	color:white;
+	color:white;	
 }
 
 /*** BODY - SUB MENU ***/
@@ -415,7 +425,7 @@ select.selecterror {
 #SubMenuDiv li{
 	/*list-style:none;*/ /* REQUIRED: hide the bullets */
 	padding:2px;
-	background:#E0F3B1;
+	background:#E0F3B1;	
 }
 #SubMenuDiv li img{
 	vertical-align:middle; /* verticall align icon with the text */
@@ -448,11 +458,11 @@ select.selecterror {
 /*    float:left;*/
 /*    width:32.5%;
 	border:thin solid black;*/
-
+	
 }
 .menu_group_item p {
 	color: #00f; /* This is the color for bullets, I like it to be the same as the anchor color, but it's up to you */
-	text-indent: -10px; /* this makes the bullet to appear as the li tag previously used */
+	text-indent: -12px; /* this makes the bullet to appear as the li tag previously used */
 	margin: 0 0 0 12px; /* One thing that I didnÃÂÃÂ´t like of the li was that it had no left margin applied */
 }
 
@@ -460,55 +470,30 @@ select.selecterror {
 
 #FooterDiv{
 	clear:both; /* REQUIRED */
-    overflow:hidden;
+    overflow:hidden;	
     background:#C9D392;
+	padding:3px 2px;
 }
-#FooterWrapDiv{
-	overflow:hidden;
+#FooterWrapDiv {
+
+}
+
+#FooterLogoDiv {
+	background:white;
+	border-radius:7px;
+	float:left;
 	padding:3px;
 }
-#FooterLogoDiv{
-	float:right; /* right side */
-	background:white;
-    border-radius:8px;
-    padding:2px;
+
+#FooterVersionDiv {
+	float:left;
+	margin-left:10px;
+	margin-top:15px;
 }
-#FooterLogoDiv img {
-    vertical-align:middle;
+
+#FooterTimeDiv {
+	float:right;
+	margin-top:15px;
 }
-#FooterVersionDiv{
-	float:left; /* left side */
-	margin-top:3px;
-}
-#FooterTimeDiv{
-	clear:left; /* below  */
-}
-#Report {
-	/* Division id for reports. */}
-#Report table {
-	/* Body of a report formatted with table tag. */
-}
-.centre {
-	text-align:center;
-	/* Class selector to horizontal align a text (centre) in an element. */
-}
-.number {
-	text-align:right;
-	/* Class selector to horizontal align a number (right) in an element. */
-}
-.text {
-	text-align:left;
-	/* Class selector to horizontal align a text (left) in an element. */
-}
-.page_title_text {
-	background-color:#C9D392;
-	color:black;
-	font-weight:bold;
-	margin:10px auto;
-	padding-bottom:2px;
-	padding-top:2px;
-	text-align:center;
-	width:30%;
-	/* Class selector for page title. */
-}
-/* END Style for all. ********************************************************/
+
+/*** END ***/
