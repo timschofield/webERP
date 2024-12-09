@@ -4355,7 +4355,6 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 							<th class="ascending">' . '' . '</th>
 							<th class="ascending">' . _('Paid Tokopedia') . '</th>
 							<th class="ascending">' . _('Paid Shopee') . '</th>
-							<th class="ascending">' . _('Paid Lazada') . '</th>
 						</tr>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
@@ -4389,12 +4388,6 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 			}else{
 				$PaymentShopee = '';
 			}
-			if ($myrow['debtorno'] == "LAZADA"){
-				$PaymentLazada = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'lazada' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-				$PaymentManual = '';
-			}else{
-				$PaymentLazada = '';
-			}
 			$DecimalPlaces = $myrow['decimalplaces'];
 			
 			printf('<td class="number">%s</td>
@@ -4404,7 +4397,6 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4420,90 +4412,86 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					$myrow['currcode'], 
 					$PaymentManual,
 					$PaymentTokopedia,
-					$PaymentShopee,
-					$PaymentLazada
+					$PaymentShopee
 					);
 			$i++;
 			$TotalPaymentValue += $PaymentValue;
 		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				"", 
-				"", 
-				"", 
-				"", 
-				"",
-				"SHOPEE:", 
-				locale_number_format($TotalShopeeValue,$DecimalPlaces),
-				"IDR", 
-				"",
-				"",
-				"",
-				""
-				);
+		// for the detailed report, show totals. If only delayed more than $Days, no need to show totals
+		if ($Days = 0){
 			printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				"", 
-				"", 
-				"", 
-				"", 
-				"",
-				"TOKOPEDIA:", 
-				locale_number_format($TotalTokopediaValue,$DecimalPlaces),
-				"IDR", 
-				"",
-				"",
-				"",
-				""
-				);
-			printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				"", 
-				"", 
-				"", 
-				"", 
-				"",
-				"TOTAL:", 
-				locale_number_format($TotalPaymentValue,$DecimalPlaces),
-				"IDR", 
-				"",
-				"",
-				"",
-				""
-				);
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					"", 
+					"", 
+					"", 
+					"", 
+					"",
+					"SHOPEE:", 
+					locale_number_format($TotalShopeeValue,$DecimalPlaces),
+					"IDR", 
+					"",
+					"",
+					""
+					);
+				printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					"", 
+					"", 
+					"", 
+					"", 
+					"",
+					"TOKOPEDIA:", 
+					locale_number_format($TotalTokopediaValue,$DecimalPlaces),
+					"IDR", 
+					"",
+					"",
+					""
+					);
+				printf('<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					"", 
+					"", 
+					"", 
+					"", 
+					"",
+					"TOTAL:", 
+					locale_number_format($TotalPaymentValue,$DecimalPlaces),
+					"IDR", 
+					"",
+					"",
+					""
+					);
+		}
 		echo '</table>
 				</div>';
 	}
