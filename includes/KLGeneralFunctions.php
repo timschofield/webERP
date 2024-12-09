@@ -23,7 +23,7 @@ function time_finish($begintime){
 	$time = $time[1] + $time[0];
 	$endtime = $time;
 	$totaltime = ($endtime - $begintime);
-	prnMsg('Script execution time: ' . locale_number_format($totaltime,3) . ' seconds.','success');
+	prnMsg('Script execution time: ' . locale_number_format($totaltime,2) . ' seconds.','success');
 }
 
 function function_finish($begintime){
