@@ -8,8 +8,8 @@ padding:10px;
 }
 header #Info img {
 padding-right:7px;
-height:32px;
-width:32px;
+height:24px;
+width:24px;
 vertical-align:middle;
 }
 header #Info a {
@@ -27,8 +27,8 @@ margin-top:-10px;
 }
 header #ActionIcon img{
 padding-right:7px;
-height:32px;
-width:32px;
+height:24px;
+width:24px;
 }
 header #ActionIcon:hover {
 background:#4D4D4D;
@@ -50,8 +50,8 @@ background:#4D4D4D;
 transition-duration:0.5s;
 }
 header #ExitIcon img {
-height:32px;
-width:32px;
+height:24px;
+width:24px;
 }
 header .FontSize {
 font-weight:bold;
@@ -76,7 +76,7 @@ font-weight:bold;
 padding-top: 2px;
 padding-bottom: 2px;
 padding-left: 7px;
-padding-right:32px;
+padding-right:24px;
 border: solid 1px #34A7E8;
 border-radius: 4px;
 margin: 2px;

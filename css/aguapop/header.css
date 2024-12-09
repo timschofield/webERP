@@ -15,8 +15,8 @@ color:white;
 }
 header #Info img {
 padding-right:7px;
-width:32px;
-height:32px;
+width:24px;
+height:24px;
 vertical-align:middle;
 }
 header #Info a {
@@ -31,18 +31,18 @@ color:white;
 }
 header #ActionIcon img{
 padding-right:7px;
-width:32px;
-height:32px;
+width:24px;
+height:24px;
 }
 header #ExitIcon {
 display:inline;
 float:right;
 padding-left:10px;
-padding-right:30px;
+padding-right:10px;
 }
 header #ExitIcon img {
-height:32px;
-width:32px;
+height:24px;
+width:24px;
 }
 header .FontSize {
 font-weight:bold;
@@ -52,7 +52,7 @@ color:#FFFFFF;
 }
 header .ScriptTitle {
 font-weight:bold;
-font-size:130%;
+font-size:120%;
 display:inline;
 padding:10px;
 margin-left:0px;
@@ -68,7 +68,7 @@ font-weight:bold;
 padding-top: 2px;
 padding-bottom: 2px;
 padding-left: 7px;
-padding-right:32px;
+padding-right:24px;
 border: solid 1px #fff;
 border-radius: 15px;
 margin: 2px;
