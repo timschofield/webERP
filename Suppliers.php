@@ -1152,6 +1152,7 @@ if (!isset($SupplierID)) {
 			</td>
 		</tr>';
 
+/* KL RICARD Commented out defaultgl as it seems of no use for us (or webeERP in general)
 	$Result = DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
@@ -1172,6 +1173,7 @@ if (!isset($SupplierID)) {
 	echo '</select>
 			</td>
 		</tr>';
+KL RICARD END */
 
 	echo '<tr>
 			<td>' . _('Tax Group') . ':</td>
