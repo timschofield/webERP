@@ -287,23 +287,6 @@ if ($ProcessSection03){
 		$NumberOfTestExecuted++;
 	}
 
-/*	if ($KL_SystemAdmin){
-		PackagingStatusForKapalLaut($RootPath);
-		$NumberOfTestExecuted++;
-		PackagingUsageForKapalLaut(30, $RootPath);
-		$NumberOfTestExecuted++;
-
-		PackagingStatusForBlink($RootPath);
-		$NumberOfTestExecuted++;
-		PackagingUsageForBlink(30, $RootPath);
-		$NumberOfTestExecuted++;
-
-		PackagingStatusForOutlet($RootPath);
-		$NumberOfTestExecuted++;
-		PackagingUsageForOutlet(30, $RootPath);
-		$NumberOfTestExecuted++;
-	}
-*/
 	if ($KL_SystemAdmin){
 		FinishedStockDistribution("PACKAGING", "LOCATION");
 		$NumberOfTestExecuted++;
@@ -323,6 +306,11 @@ if ($ProcessSection03){
 		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("OPEN", 0);
 		$NumberOfTestExecuted++;
+	}
+
+	if ($KL_OperationalManager
+		OR $KL_OperationalLeader
+		OR $KL_ShopManager){
 		MaintenanceTasksDistribution("CLOSED", 30);
 		$NumberOfTestExecuted++;
 		MaintenanceTasksDistribution("TOTAL", 30);
@@ -372,8 +360,6 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin){
 		ShowKPIHistory(90);
 		$NumberOfTestExecuted++;
-//		AverageKPIHistory(180, 90, 30, 15, 7, 0);
-//		$NumberOfTestExecuted++;
 		UnbalancedGLTransTX(15, $RootPath);
 		$NumberOfTestExecuted++;
 		EmptyAccountsGLTransTX(15, $RootPath);
