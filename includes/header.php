@@ -1,4 +1,11 @@
 <?php
+
+/***********************************************************************************************
+*
+* KL RICARD: Custom main menu, not show theme selection, Favourites, Dashboard. Always show main menu
+*
+************************************************************************************************/
+
 // Titles and screen header
 // Needs the file config.php loaded where the variables are defined for
 //  $RootPath
@@ -10,8 +17,8 @@ if (!isset($RootPath)) {
 	}
 }
 
-$ViewTopic = isset($ViewTopic) ? '?ViewTopic=' . $ViewTopic : '';
-$BookMark = isset($BookMark) ? '#' . $BookMark : '';
+if (!isset($ViewTopic)) {$ViewTopic = 'Contents';};
+if (!isset($BookMark)) {$BookMark = '';};
 
 if (isset($_GET['Theme'])) {
 	$_SESSION['Theme'] = $_GET['Theme'];
@@ -27,69 +34,6 @@ if (isset($Title) and $Title == _('Copy a BOM to New Item Code')) { //solve the 
 	ob_start();
 }
 
-/*	echo '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">',
-		'<html xmlns="http://www.w3.org/1999/xhtml">',
-
-		'<head>',
-			'<link rel="icon" href="', $RootPath, '/favicon.ico" />',
-			'<link rel="shortcut icon" href="', $RootPath, '/favicon.ico" />';
-	if ($StrictXHTML) {
-		echo '<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />';
-	} else {
-		echo '<meta http-equiv="Content-Type" content="application/html; charset=utf-8" />';
-	}
-    echo	'<link href="', $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />',
-			'<link href="', $RootPath, '/css/', $_SESSION['Theme'], '/default.css" rel="stylesheet" type="text/css" media="screen"/>',
-/			'<script type="text/javascript" src="', $RootPath, '/javascripts/MiscFunctions.js"></script>',
-			'<title>', $Title, '</title>',
-		'</head>',
-
-		'<body>',
-			'<div id="CanvasDiv">',
-			'<input type="hidden" name="Lang" id="Lang" value="', $Lang, '" />',
-			'<div id="HeaderDiv">',
-				'<div id="HeaderWrapDiv">';
-
-	if (isset($Title)) {
-		echo '<div id="AppInfoDiv">'; //===HJ===
-			echo '<div id="AppInfoCompanyDiv">';
-				echo '<img alt="'._('Company').'" src="'.$RootPath.'/css/'.$Theme.'/images/company.png" title="'._('Company').'" />' . stripslashes($_SESSION['CompanyRecord']['coyname']);
-			echo '</div>';
-			echo '<div id="AppInfoUserDiv">';
-				echo '<a href="'.$RootPath.'/UserSettings.php"><img alt="'._('User').'" src="'.$RootPath.'/css/'.$Theme.'/images/user.png" title="'._('User').'" />' . stripslashes($_SESSION['UsersRealName']) . '</a>';
-			echo '</div>';
-			echo '<div id="AppInfoModuleDiv">';
-				// Make the title text a class, can be set to display:none is some themes
-				echo $Title;
-			echo '</div>';
-		echo '</div>'; // AppInfoDiv
-
-
-		echo '<div id="QuickMenuDiv"><ul>';
-
-		echo '<li><a href="'.$RootPath.'/index.php">' . _('Main Menu') . '</a></li>'; //take off inline formatting, use CSS instead ===HJ===
-
-		if (count($_SESSION['AllowedPageSecurityTokens'])>1){
-			echo '<li><a href="'.$RootPath.'/SelectCustomer.php">' . _('Customers') . '</a></li>';
-			echo '<li><a href="'.$RootPath.'/SelectProduct.php">' . _('Items')     . '</a></li>';
-			echo '<li><a href="'.$RootPath.'/SelectSupplier.php">' . _('Suppliers') . '</a></li>';
-
-			$DefaultManualLink = '<li><a rel="external" accesskey="8" href="' .  $RootPath . '../../wiki/index.php'. '">' . _('Intranet KL') . '</a></li>';
-			echo $DefaultManualLink;
-			$DefaultWebLink = '<li><a rel="external" accesskey="9" href="' .   'https://kapal-laut.com'. '">' . _('Online Shop') . '</a></li>';
-			echo $DefaultWebLink;
-		}
-
-		echo '<li><a href="'.$RootPath.'/Logout.php" onclick="return confirm(\''._('Are you sure you wish to logout?').'\');">' . _('Logout') . '</a></li>';
-
-		echo '</ul></div>'; // QuickMenuDiv
-	}
-	echo		'</div>',// Close HeaderWrapDiv
-			'</div>',// Close Headerdiv
-			'<div id="BodyDiv">',
-				'<div id="BodyWrapDiv">';
-*/	
-
 echo '<!DOCTYPE html>';
 
 echo '<html>
@@ -97,15 +41,22 @@ echo '<html>
 			<meta http-equiv="Content-Type" content="application/html; charset=utf-8; cache-control: no-cache, no-store, must-revalidate; Pragma: no-cache" />
 			<title>', _('webERP'), ' - ', $Title, '</title>
 			<link rel="icon" href="', $PathPrefix, $RootPath, '/favicon.ico?v=2" />
-			<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?v=30" rel="stylesheet" type="text/css" media="screen" />
+			<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/styles.css?version=1.0" rel="stylesheet" type="text/css" media="screen" />
 			<link href="', $PathPrefix, $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';
-echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/MiscFunctions.js"></script>';
+echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>';
+
+// KL RICARD Comment the manual js as we don't use it
+//echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/manual.js"></script>';
+// KL RICARD END
+
 echo '<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
 	</script>';
-
+// KL RICARD Comment it out as it logs out inmediately
+//echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
+// KL RICARD END
 if ($_SESSION['ShowPageHelp'] == 0) {
 	echo '<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
 } else {
@@ -124,6 +75,17 @@ if (isset($AutoPrintPage)) {
 } else {
 	echo '<body onload="initial(); load()" onunload="GUnload()">';
 }
+
+$ScriptName = basename($_SERVER['SCRIPT_NAME']);
+/* KL RICARD
+echo '<div class="help-bubble" id="help-bubble">
+		<link rel="stylesheet" type="text/css" href="doc/Manual/style/manual.css" />
+		<div class="help-header" id="help-header">
+			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+		</div>
+		<div class="help-content" id="help-content"></div>
+	</div>';
+KL RICARD END */
 
 if (isset($_GET['FontSize'])) {
 	$SQL = "UPDATE www_users
@@ -158,9 +120,14 @@ $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 
 echo '<header class="noPrint">';
 
-echo '<div id="Info" data-title="', _('Company Details'), '">
-		<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" alt="', _('Company'), '"/>', stripslashes($_SESSION['CompanyRecord']['coyname']), '
-	</div>';
+// KL RICARD Old stuff
+//echo '<div id="Info" data-title="', _('Company Details'), '">
+//		<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" alt="', _('Company'), '"/>', stripslashes($_SESSION['CompanyRecord']['coyname']), '
+//	</div>';
+// KL RICARD old st
+//echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
+//		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/logo.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
+//	</div>';
 
 echo '<div id="Info">
 		<a class="FontSize" data-title="', _('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $PathPrefix, $RootPath, '/UserSettings.php">
@@ -269,14 +236,17 @@ if ($ScriptName != 'Dashboard.php') {
 
 }
 */
-if ($ScriptName != 'index.php') {
+
+// KL RICARD 
+//if ($ScriptName != 'index.php') {
 	echo '<div id="ActionIcon">
-			<a data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
-				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />
+			<a class="FontSize" data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
+				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />', _('Main Menu'), '
 			</a>
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
-}
+//}
+// KL RICARD END
 
 echo '<br /><div class="ScriptTitle">', $Title, '</div>';
 if ($ScriptName == 'index.php') {
