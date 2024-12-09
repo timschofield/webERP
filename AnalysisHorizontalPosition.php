@@ -340,18 +340,20 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		}
 	}// End of loop.
 
-	while($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-		if($_POST['ShowDetail']=='Detailed') {
-			echo $DrawTotalLine;
+	if (isset($MyRow)) {
+		while($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+			if($_POST['ShowDetail']=='Detailed') {
+				echo $DrawTotalLine;
+			}
+			echo '<tr>
+				<	td colspan="2">', $ParentGroups[$Level], '</td>
+					<td class="number">', locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(-$GroupTotal[$Level]+$GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', RelativeChange(-$GroupTotal[$Level],-$GroupTotalLY[$Level]), '</td>
+				</tr>';
+			$Level--;
 		}
-		echo '<tr>
-				<td colspan="2">', $ParentGroups[$Level], '</td>
-				<td class="number">', locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', locale_number_format(-$GroupTotal[$Level]+$GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', RelativeChange(-$GroupTotal[$Level],-$GroupTotalLY[$Level]), '</td>
-			</tr>';
-		$Level--;
 	}
 	if($_POST['ShowDetail']=='Detailed') {
 		echo $DrawTotalLine;
@@ -372,12 +374,14 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 			<td class="number"><h2>', RelativeChange(-$SectionBalance,-$SectionBalanceLY), '</h2></td>
 		</tr>';
 
-	$Section = $MyRow['sectioninaccounts'];
+	if (isset($MyRow)) {
+		$Section = $MyRow['sectioninaccounts'];
 
-	if(isset($MyRow['sectioninaccounts']) and $_POST['ShowDetail']=='Detailed') {
-		echo '<tr>
-				<td colspan="6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
-			</tr>';
+		if(isset($MyRow['sectioninaccounts']) and $_POST['ShowDetail']=='Detailed') {
+			echo '<tr>
+					<td colspan="6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
+				</tr>';
+		}
 	}
 	echo $DrawTotalLine;
 	echo'<tr>
