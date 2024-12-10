@@ -62,7 +62,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Reorder Level Report') . '<br />
+					' . _('Top sales items list') . '<br />
 					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 					' . _('Location') . ' - ' . $_POST['Location'] . '<br />
 					' . _('Customers') . ' - ' . $_POST['Customers'] . '<br />
