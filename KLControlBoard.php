@@ -888,6 +888,7 @@ if ($ProcessSection02){
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
 		OR $KL_SalesTeamOnline
+		OR $KL_ShopSupportLeader
 		OR $KL_OperationalManager){ 
 		OnlineMarketPlacePaymentPending(10, $RootPath);
 		$NumberOfTestExecuted++;
