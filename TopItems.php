@@ -173,7 +173,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Reorder Level Reporting');
+		$Title = _('Top Sales Items List');
 		include ('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Top Sales Items List') . '" alt="" />' . ' ' . _('Top Sales Items List') . '
