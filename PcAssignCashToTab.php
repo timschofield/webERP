@@ -12,6 +12,8 @@ $Title = _('Assignment of Cash to Petty Cash Tab');
 $ViewTopic = 'PettyCash';
 $BookMark = 'CashAssignment';
 include('includes/header.php');
+include('includes/SQL_CommonFunctions.inc');
+
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
 } elseif (isset($_GET['SelectedTabs'])) {
@@ -330,19 +332,12 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			}
 		}
 		//END WHILE LIST LOOP
-		$SQLamount = "SELECT sum(amount)
-					FROM pcashdetails
-					WHERE tabcode='" . $SelectedTabs . "'";
-		$ResultAmount = DB_query($SQLamount);
-		$Amount = DB_fetch_array($ResultAmount);
-		if (!isset($Amount['0'])) {
-			$Amount['0'] = 0;
-		}
+		$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 		echo '</tbody>
 			<tfoot>
 				<tr>
 					<td colspan="2" class="number">', _('Current balance'), ':</td>
-					<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+					<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 				</tr>
 			</tfoot>';
 		echo '</table>
