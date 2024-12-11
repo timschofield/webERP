@@ -107,6 +107,11 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin){
+		OnlineMarketPlacePaymentPending(0, $RootPath);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
