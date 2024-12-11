@@ -1,435 +1,839 @@
 <?php
 
+/*************************************************************************
+*
+* KL RICARD: Keep the receipt code field
+* 			Do not show tax, tax group, tag, purpose
+*
+**************************************************************************/
+
 include('includes/session.php');
 $Title = _('Claim Petty Cash Expenses From Tab');
 /* webERP manual links before header.php */
-$ViewTopic= 'PettyCash';
+$ViewTopic = 'PettyCash';
 $BookMark = 'ExpenseClaim';
 include('includes/header.php');
-
-
-if (isset($_POST['SelectedTabs'])){
+if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
-} elseif (isset($_GET['SelectedTabs'])){
+} elseif (isset($_GET['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_GET['SelectedTabs']);
 }
-
-if (isset($_POST['SelectedIndex'])){
+if (isset($_POST['SelectedIndex'])) {
 	$SelectedIndex = $_POST['SelectedIndex'];
-} elseif (isset($_GET['SelectedIndex'])){
+} elseif (isset($_GET['SelectedIndex'])) {
 	$SelectedIndex = $_GET['SelectedIndex'];
 }
-
-if (isset($_POST['Days'])){
+if (isset($_POST['Days'])) {
 	$Days = filter_number_format($_POST['Days']);
-} elseif (isset($_GET['Days'])){
+} elseif (isset($_GET['Days'])) {
 	$Days = filter_number_format($_GET['Days']);
 }
-
 if (isset($_POST['Cancel'])) {
 	unset($SelectedTabs);
 	unset($SelectedIndex);
 	unset($Days);
 	unset($_POST['Amount']);
+	unset($_POST['Purpose']);
 	unset($_POST['Notes']);
+	// KL RICARD Keep the receipt text field
 	unset($_POST['Receipt']);
+	unset($_FILES['Receipt']);
 }
-
-
 if (isset($_POST['Process'])) {
-
-	if ($_POST['SelectedTabs']=='') {
-		echo prnMsg(_('You have not selected a tab to claim the expenses on'),'error');
+	if ($_POST['SelectedTabs'] == '') {
+		echo prnMsg(_('You have not selected a tab to claim the expenses on'), 'error');
 		unset($SelectedTabs);
 	}
 }
-
 if (isset($_POST['Go'])) {
-	if ($Days<=0) {
-		prnMsg(_('The number of days must be a positive number'),'error');
-		$Days=30;
+	if ($Days <= 0) {
+		prnMsg(_('The number of days must be a positive number'), 'error');
+		$Days = 30;
 	}
 }
-
+//Define receipt attachment upload functions and variables which are used in various places within script
+$ReceiptSupportedExt = array('png','jpg','jpeg','pdf','doc','docx','xls','xlsx'); //Supported file extensions
+$ReceiptDir = $PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/expenses_receipts/'; //Receipts upload directory
 if (isset($_POST['submit'])) {
-//initialise no input errors assumed initially before we test
+	//initialise no input errors assumed initially before we test
 	$InputError = 0;
-
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
-
 	//first off validate inputs sensible
-
-	if ($_POST['SelectedExpense']=='') {
-		$InputError=1;
-		prnMsg(_('You have not selected an expense to claim on this tab'),'error');
-	} elseif ($_POST['Amount']==0) {
+	if ($_POST['SelectedExpense'] == '') {
 		$InputError = 1;
-		prnMsg( _('The amount must be greater than 0'),'error');
+		prnMsg(_('You have not selected an expense to claim on this tab'), 'error');
+	} elseif ($_POST['Amount'] == 0) {
+		$InputError = 1;
+		prnMsg(_('The amount must be greater than 0'), 'error');
 	}
 	if (!is_date($_POST['Date'])) {
 		$InputError = 1;
-		prnMsg(_('The date input is not a right format'),'error');
+		prnMsg(_('The date input is not in the correct format'), 'error');
 	}
-
-	if (isset($SelectedIndex) AND $InputError !=1)  {
-		$sql = "UPDATE pcashdetails
-			SET date = '".FormatDateForSQL($_POST['Date'])."',
-			codeexpense = '" . $_POST['SelectedExpense'] . "',
-			amount = '" .-filter_number_format($_POST['Amount']) . "',
-			notes = '" . $_POST['Notes'] . "',
-			receipt = '" . $_POST['Receipt'] . "'
-			WHERE counterindex = '".$SelectedIndex."'";
-
-		$msg = _('The Expense Claim on Tab') . ' ' . $SelectedTabs . ' ' .  _('has been updated');
-
-	} elseif ($InputError !=1 ) {
-
+	if (isset($SelectedIndex) and $InputError != 1) { //Edit
+		// KL RICARD Keep the receipt text field
+		$SQL = "UPDATE pcashdetails
+			SET date = '" . FormatDateForSQL($_POST['Date']) . "',
+				tag = '" . $_POST['Tag'] . "',
+				codeexpense = '" . $_POST['SelectedExpense'] . "',
+				amount = '" . -filter_number_format($_POST['Amount']) . "',
+				receipt = '" . $_POST['Receipt'] . "'
+				notes = '" . $_POST['Notes'] . "'
+			WHERE counterindex = '" . $SelectedIndex . "'";
+		$Msg = _('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been updated');
+		$Result = DB_query($SQL);
+		foreach ($_POST as $Index => $Value) {
+			if (substr($Index, 0, 5) == 'index') {
+				$Index = $Value;
+				$SQL = "UPDATE pcashdetailtaxes SET pccashdetail='" . $_POST['PcCashDetail' . $Index] . "',
+													calculationorder='" . $_POST['CalculationOrder' . $Index] . "',
+													description='" . $_POST['Description' . $Index] . "',
+													taxauthid='" . $_POST['TaxAuthority' . $Index] . "',
+													purchtaxglaccount='" . $_POST['TaxGLAccount' . $Index] . "',
+													taxontax='" . $_POST['TaxOnTax' . $Index] . "',
+													taxrate='" . $_POST['TaxRate' . $Index] . "',
+													amount='" . -$_POST['TaxAmount' . $Index] . "'
+												WHERE counterindex='" . $Index ."'";
+				$Result = DB_query($SQL);
+			}
+		}
+		if (isset($_FILES['Receipt']) and $_FILES['Receipt']['name'] != '') {
+			$UploadOriginalName = $_FILES['Receipt']['name'];
+			$UploadTempName = $_FILES['Receipt']['tmp_name'];
+			$UploadSize = $_FILES['Receipt']['size'];
+			$UploadType = $_FILES['Receipt']['type'];
+			$UploadError = $_FILES['Receipt']['error'];
+			$UploadTheFile = 'Yes'; //Assume all is well to start off with, but check for the worst
+			$ReceiptSupportedMime = array('image/png','image/jpeg','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //list of support mime types, corresponding to the list of support file extensions in $ReceiptSupportedExt
+			if ($UploadSize > ($_SESSION['MaxImageSize'] * 1024)) { //Server-side file size check. This will usually be caught by $UploadError == 2 (MAX_FILE_SIZE), but we must not trust the user.
+				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				$UploadTheFile = 'No';
+			} elseif (!in_array($UploadType, $ReceiptSupportedMime) and $UploadError != 2) { //File type check. If $UploadError == 2, then $UploadType will be empty.
+				prnMsg(_('File type not accepted. Only the following file types can be attached') . ': ' . implode(', ', $ReceiptSupportedExt), 'warn');
+				$UploadTheFile = 'No';
+			} elseif ($UploadError == 1 ) {  //upload_max_filesize error check
+				prnMsg(_('The uploaded file exceeds the upload_max_filesize directive in php.ini. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 2 ) {  //Client-side file size error check (MAX_FILE_SIZE)
+				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 3 ) {  //Partial upload error check
+				prnMsg( _('The uploaded file was only partially uploaded. Please try again.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 4 ) {  //No file uploaded error check
+				prnMsg( _('No file was uploaded'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 5 ) {  //Undefined error check
+				prnMsg( _('Undefined error'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 6 ) {  //Temp directory error check
+				prnMsg( _('A necessary temporary folder is missing. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 7 ) {  //Disk write failure error check
+				prnMsg( _('Cannot write file to disk. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 8 ) {  //Upload stopped by PHP extension error check
+				prnMsg( _('The file upload was stopped by a PHP extension. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			}
+			if ($UploadTheFile == 'Yes') { //Passed all the above validation
+				$ReceiptSQL = "SELECT hashfile,
+								extension
+								FROM pcreceipts
+								WHERE pccashdetail='" . $SelectedIndex . "'
+								LIMIT 1";
+					$ReceiptResult = DB_query($ReceiptSQL);
+					$ReceiptRow = DB_fetch_assoc($ReceiptResult);
+				if (DB_num_rows($ReceiptResult) > 0) { //If expenses record already has an uploaded receipt
+					//Delete existing receipt files from directory
+					$ReceiptHash = $ReceiptRow['hashfile'];
+					$ReceiptExt = $ReceiptRow['extension'];
+					$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+					$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+					unlink($ReceiptPath);
+					//Upload the new receipt file.
+					if (!file_exists($ReceiptDir)) { //Create the receipts directory if it doesn't already exist
+					mkdir($ReceiptDir, 0775, true);
+					}
+					$ReceiptHash = md5(md5_file($UploadTempName) . microtime()); //MD5 hash of uploaded file with timestamp
+					$ReceiptExt = strtolower(pathinfo($UploadOriginalName, PATHINFO_EXTENSION)); //Grab the file extension of the uploaded file
+					$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt; //Rename the uploaded file with the expenses index number
+					$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+					move_uploaded_file($UploadTempName, $ReceiptPath); //Move the uploaded file from the temp directory to the receipts directory
+					//Update receipt file info in database
+					$ReceiptSQL = "UPDATE pcreceipts SET hashfile='" . $ReceiptHash . "',
+													type='" . $UploadType . "',
+													extension='" . $ReceiptExt . "',
+													size=" . $UploadSize . "
+												WHERE pccashdetail='" . $SelectedIndex . "'";
+					$ReceiptResult = DB_query($ReceiptSQL);
+				} else { //If expenses record does not already have an uploaded receipt
+					if (!file_exists($ReceiptDir)) { //Create the receipts directory if it doesn't already exist
+					mkdir($ReceiptDir, 0775, true);
+					}
+					$ReceiptExt = strtolower(pathinfo($UploadOriginalName, PATHINFO_EXTENSION)); //Grab the file extension of the uploaded file
+					$ReceiptHash = md5(md5_file($UploadTempName) . microtime()); //MD5 hash of uploaded file with timestamp
+					$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt; //Rename the uploaded file with the expenses index number
+					$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+					move_uploaded_file($UploadTempName, $ReceiptPath); //Move the uploaded file from the temp directory to the receipts directory
+					$ReceiptSQL = "INSERT INTO pcreceipts (counterindex,
+													pccashdetail,
+													hashfile,
+													type,
+													extension,
+													size
+												) VALUES (
+													NULL,
+													'" . $SelectedIndex . "',
+													'" . $ReceiptHash . "',
+													'" . $UploadType . "',
+													'" . $ReceiptExt . "',
+													" . $UploadSize . "
+													)";
+					$ReceiptResult = DB_query($ReceiptSQL);
+				}
+			}
+		}
+		prnMsg($Msg, 'success');
+	} elseif ($InputError != 1) {
 		// First check the type is not being duplicated
 		// Add new record on submit
+		// KL RICARD Keep the receipt text field. Added these 2 empty variable checks as they don't come from user interface and to avoid notice errors
+		if (!isset($_POST['Tag'])) {
+			$_POST['Tag'] = 0;
+		}
+		if (!isset($_POST['Purpose'])) {
+			$_POST['Purpose'] = '';
+		}
 
-		$sql = "INSERT INTO pcashdetails (counterindex,
+		$SQL = "INSERT INTO pcashdetails (counterindex,
 										tabcode,
+										tag,
 										date,
 										codeexpense,
 										amount,
 										authorized,
 										posted,
-										notes,
-										receipt)
+										purpose,
+										receipt,
+										notes)
 								VALUES (NULL,
-                                        '" . $_POST['SelectedTabs'] . "',
-										'".FormatDateForSQL($_POST['Date'])."',
+										'" . $_POST['SelectedTabs'] . "',
+										'" . $_POST['Tag'] . "',
+										'" . FormatDateForSQL($_POST['Date']) . "',
 										'" . $_POST['SelectedExpense'] . "',
 										'" . -filter_number_format($_POST['Amount']) . "',
 										0,
 										0,
-										'" . $_POST['Notes'] . "',
-										'" . $_POST['Receipt'] . "'
+										'" . $_POST['Purpose'] . "',
+										'" . $_POST['Receipt'] . "',
+										'" . $_POST['Notes'] . "'
 										)";
-
-		$msg = _('The Expense Claim on Tab') . ' ' . $_POST['SelectedTabs'] .  ' ' . _('has been created');
+		$Msg = _('The expense claim on tab') . ' ' . $_POST['SelectedTabs'] . ' ' . _('has been created');
+		$Result = DB_query($SQL);
+		$SelectedIndex = DB_Last_Insert_ID('pcashdetails', 'counterindex');
+		foreach ($_POST as $Index => $Value) {
+			if (substr($Index, 0, 5) == 'index') {
+				$Index = $Value;
+				$SQL = "INSERT INTO pcashdetailtaxes (counterindex,
+														pccashdetail,
+														calculationorder,
+														description,
+														taxauthid,
+														purchtaxglaccount,
+														taxontax,
+														taxrate,
+														amount
+												) VALUES (
+														NULL,
+														'" . $SelectedIndex . "',
+														'" . $_POST['CalculationOrder' . $Index] . "',
+														'" . $_POST['Description' . $Index] . "',
+														'" . $_POST['TaxAuthority' . $Index] . "',
+														'" . $_POST['TaxGLAccount' . $Index] . "',
+														'" . $_POST['TaxOnTax' . $Index] . "',
+														'" . $_POST['TaxRate' . $Index] . "',
+														'" . -$_POST['TaxAmount' . $Index] . "'
+												)";
+				$Result = DB_query($SQL);
+			}
+		}
+		if (isset($_FILES['Receipt']) and $_FILES['Receipt']['name'] != '') {
+			$UploadOriginalName = $_FILES['Receipt']['name'];
+			$UploadTempName = $_FILES['Receipt']['tmp_name'];
+			$UploadSize = $_FILES['Receipt']['size'];
+			$UploadType = $_FILES['Receipt']['type'];
+			$UploadError = $_FILES['Receipt']['error'];
+			$UploadTheFile = 'Yes'; //Assume all is well to start off with, but check for the worst
+			$ReceiptSupportedMime = array('image/png','image/jpeg','application/pdf','application/msword','application/vnd.openxmlformats-officedocument.wordprocessingml.document','application/vnd.ms-excel','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'); //list of support mime types, corresponding to the list of support file extensions in $ReceiptSupportedExt
+			if ($UploadSize > ($_SESSION['MaxImageSize'] * 1024)) { //Server-side file size check. This will usually be caught by $UploadError == 2 (MAX_FILE_SIZE), but we must not trust the user.
+				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				$UploadTheFile = 'No';
+			} elseif (!in_array($UploadType, $ReceiptSupportedMime) and $UploadError != 2) { //File type check. If $UploadError == 2, then $UploadType will be empty.
+				prnMsg(_('File type not accepted. Only the following file types can be attached') . ': ' . implode(', ', $ReceiptSupportedExt), 'warn');
+				$UploadTheFile = 'No';
+			} elseif ($UploadError == 1 ) {  //upload_max_filesize error check
+				prnMsg(_('The uploaded file exceeds the upload_max_filesize directive in php.ini. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 2 ) {  //Client-side file size error check (MAX_FILE_SIZE)
+				prnMsg(_('The uploaded file exceeds the maximum file size of') . ' ' . $_SESSION['MaxImageSize'] . 'KB', 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 3 ) {  //Partial upload error check
+				prnMsg( _('The uploaded file was only partially uploaded. Please try again.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 4 ) {  //No file uploaded error check
+				prnMsg( _('No file was uploaded'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 5 ) {  //Undefined error check
+				prnMsg( _('Undefined error'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 6 ) {  //Temp directory error check
+				prnMsg( _('A necessary temporary folder is missing. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 7 ) {  //Disk write failure error check
+				prnMsg( _('Cannot write file to disk. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			} elseif ($UploadError == 8 ) {  //Upload stopped by PHP extension error check
+				prnMsg( _('The file upload was stopped by a PHP extension. Please contact your system administrator.'), 'warn');
+				$UploadTheFile ='No';
+			}
+			if ($UploadTheFile == 'Yes') { //Passed all the above validation
+				if (!file_exists($ReceiptDir)) { //Create the receipts directory if it doesn't already exist
+				mkdir($ReceiptDir, 0775, true);
+				}
+				$ReceiptHash = md5(md5_file($UploadTempName) . microtime()); //MD5 hash of uploaded file with timestamp
+				$ReceiptExt = strtolower(pathinfo($UploadOriginalName, PATHINFO_EXTENSION)); //Grab the file extension of the uploaded file
+				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt; //Rename the uploaded file with the expenses index number
+				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+				move_uploaded_file($UploadTempName, $ReceiptPath); //Move the uploaded file from the temp directory to the receipts directory
+				$ReceiptSQL = "INSERT INTO pcreceipts (counterindex,
+												pccashdetail,
+												hashfile,
+												type,
+												extension,
+												size
+											) VALUES (
+												NULL,
+												'" . $SelectedIndex . "',
+												'" . $ReceiptHash . "',
+												'" . $UploadType . "',
+												'" . $ReceiptExt . "',
+												" . $UploadSize . "
+												)";
+				$ReceiptResult = DB_query($ReceiptSQL);
+			}
+		}
+		prnMsg($Msg, 'success');
 	}
-
-	if ( $InputError !=1) {
-		//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
-		prnMsg($msg,'success');
-
+	if ($InputError != 1) {
 		unset($_POST['SelectedExpense']);
 		unset($_POST['Amount']);
+		unset($_POST['Tag']);
 		unset($_POST['Date']);
-		unset($_POST['Notes']);
+		unset($_POST['Purpose']);
+		// KL RICARD Keep the receipt text field
 		unset($_POST['Receipt']);
+		unset($_POST['Notes']);
+		unset($_FILES['Receipt']);
 	}
-
-} elseif ( isset($_GET['delete']) ) {
-
-	$sql="DELETE FROM pcashdetails
-			WHERE counterindex='".$SelectedIndex."'";
+} elseif (isset($_GET['delete'])) {
+	$ReceiptSQL = "SELECT hashfile,
+					extension
+					FROM pcreceipts
+					WHERE pccashdetail='" . $SelectedIndex . "'
+					LIMIT 1";
+		$ReceiptResult = DB_query($ReceiptSQL);
+		$ReceiptRow = DB_fetch_assoc($ReceiptResult);
+	if (DB_num_rows($ReceiptResult) > 0) {
+	//Delete receipt files from directory
+	$ReceiptHash = $ReceiptRow['hashfile'];
+	$ReceiptExt = $ReceiptRow['extension'];
+	$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+	$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+	unlink($ReceiptPath);
+	//Delete receipt file info from database
+	$SQL = "DELETE FROM pcreceipts
+			WHERE pccashdetail='" . $SelectedIndex . "'";
 	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
-	$result = DB_query($sql,$ErrMsg);
-	prnMsg(_('Petty cash Expense record') .  ' ' . $SelectedTabs  . ' ' . _('has been deleted') ,'success');
-
+	$Result = DB_query($SQL, $ErrMsg);
+	}
+	//Delete expenses record & associated taxes
+	$SQL = "DELETE FROM pcashdetails, pcashdetailtaxes
+				USING pcashdetails
+				INNER JOIN pcashdetailtaxes
+				ON pcashdetails.counterindex = pcashdetailtaxes.pccashdetail
+				WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
+	$Result = DB_query($SQL, $ErrMsg);
+	prnMsg(_('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been deleted'), 'success');
 	unset($_GET['delete']);
-
-}//end of get delete
-
-if (!isset($SelectedTabs)){
-
+} //end of get delete
+if (!isset($SelectedTabs)) {
 	/* It could still be the first time the page has been run and a record has been selected for modification - SelectedTabs will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 	then none of the above are true and the list of sales types will be displayed with
 	links to delete or edit each. These will call the same page again and allow update/input
 	or deletion of the records*/
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')	. '" alt="" />' . ' ' . $Title . '</p>';
-
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br /><table class="selection">'; //Main table
-
-	echo '<tr><td>' . _('Petty Cash Tabs for User ') . $_SESSION['UserID'] . ':</td>
-				<td><select name="SelectedTabs">';
-
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Payment Entry'), '" alt="" />', ' ', $Title, '
+		</p>';
+	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
+	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	echo '<table class="selection">
+			<tr>
+				<td>', _('Clain expenses on petty cash tab'), ':</td>
+				<td><select required="required" name="SelectedTabs">';
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE usercode='" . $_SESSION['UserID'] . "'";
-
-	$result = DB_query($SQL);
-	echo '<option value="">' . _('Not Yet Selected') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		if (isset($_POST['SelectTabs']) and $myrow['tabcode']==$_POST['SelectTabs']) {
-			echo '<option selected="selected" value="';
+	$Result = DB_query($SQL);
+	echo '<option value="">', _('Not Yet Selected'), '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
+			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		} else {
-			echo '<option value="';
+			echo '<option value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		}
-		echo $myrow['tabcode'] . '">' . $myrow['tabcode'] . '</option>';
-
 	} //end while loop
-
-	echo '</select></td></tr>';
-   	echo '</table>'; // close main table
-    DB_free_result($result);
-
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="Process" value="' . _('Accept') . '" />
-				<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
-			</div>
-		</div>
-	</form>';
-
+	echo '</select>
+			</td>
+		</tr>';
+	echo '</table>'; // close main table
+	echo '<div class="centre">
+			<input type="submit" name="Process" value="', _('Accept'), '" />
+			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+		</div>';
+	echo '</form>';
 } else { // isset($SelectedTabs)
-
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Petty Cash Claim Entry') . '" alt="" />
-         ' . ' ' . $Title . '</p>';
-
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another tab') . '</a></div>';
-
-	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-			<div>
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<br />
-				<table class="selection">
-				<tr>
-					<th colspan="8"><h3>' . _('Petty Cash Tab') . ' ' .$SelectedTabs. '</h3></th>
-				</tr>
-				<tr>
-					<th colspan="8">' . _('Detail Of Movements For Last ') .': ';
-
-
-		if(!isset ($Days)){
-			$Days=30;
+	echo '<div class="centre">
+			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
+		</div>';
+	echo '<p class="page_title_text">
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, '
+		</p>';
+	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
+		if (!isset($Days)) {
+			$Days = 30;
 		}
-
 		/* Retrieve decimal places to display */
-		$SqlDecimalPlaces="SELECT decimalplaces
+		$SQLDecimalPlaces = "SELECT decimalplaces
 					FROM currencies,pctabs
 					WHERE currencies.currabrev = pctabs.currency
 						AND tabcode='" . $SelectedTabs . "'";
-		$result = DB_query($SqlDecimalPlaces);
-		$myrow=DB_fetch_array($result);
-		$CurrDecimalPlaces = $myrow['decimalplaces'];
+		$Result = DB_query($SQLDecimalPlaces);
+		$MyRow = DB_fetch_array($Result);
+		$CurrDecimalPlaces = $MyRow['decimalplaces'];
+		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+		echo '<br /><table class="selection">';
+		echo '<tr>
+				<td>' . _('Petty Cash Tab') . ':</td>
+				<td>' . $SelectedTabs . '</td>
+			  </tr>';
+		echo '</table>';
 
-		echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
-			<input type="text" class="integer" name="Days" value="' . $Days . '" maxlength="3" size="4" /> ' . _('Days');
-		echo '<input type="submit" name="Go" value="' . _('Go') . '" />';
-		echo '</th></tr>';
-
+		//Limit expenses history to X days
+		echo '<table class="selection">
+				<tr>
+					<td>', _('Detail of Tab Movements For Last '), ':
+						<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
+						<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" /> ', _('Days'), '
+						<input type="submit" name="Go" value="', _('Go'), '" />
+					</td>
+				</tr>
+			</table>';
 		if (isset($_POST['Cancel'])) {
 			unset($_POST['SelectedExpense']);
 			unset($_POST['Amount']);
 			unset($_POST['Date']);
-			unset($_POST['Notes']);
+			unset($_POST['Purpose']);
+			// KL RICARD Keep the receipt text field
 			unset($_POST['Receipt']);
+			unset($_POST['Notes']);
+			unset($_FILES['Receipt']);
 		}
+		// KL RICARD Keep the receipt text field
+		$SQL = "SELECT counterindex,
+						tabcode,
+						tag,
+						date,
+						codeexpense,
+						amount,
+						authorized,
+						posted,
+						purpose,
+						receipt,
+						notes
+					FROM pcashdetails
+					WHERE tabcode='" . $SelectedTabs . "'
+						AND date >=DATE_SUB(CURDATE(), INTERVAL " . $Days . " DAY)
+					ORDER BY date,
+							counterindex ASC";
+		$Result = DB_query($SQL);
+		// KL RICARD Keep the receipt text field, and do not show tax, tag, purpose
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="ascending">', _('Date of Expense'), '</th>
+						<th class="ascending">', _('Expense Code'), '</th>
+						<th class="ascending">', _('Amount'), '</th>
+						<th>', _('Notes'), '</th>
+						<th>', _('Receipt'), '</th>
+						<th>', _('Receipt Attachment'), '</th>
+						<th class="ascending">', _('Date Authorised'), '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
-		$sql = "SELECT * FROM pcashdetails
-				WHERE tabcode='".$SelectedTabs."'
-					AND date >=DATE_SUB(CURDATE(), INTERVAL ".$Days." DAY)
-				ORDER BY date, counterindex ASC";
-
-		$result = DB_query($sql);
-
-		echo '<tr>
-				<th>' . _('Date Of Expense') . '</th>
-				<th>' . _('Expense Description') . '</th>
-				<th>' . _('Amount') . '</th>
-				<th>' . _('Authorized') . '</th>
-				<th>' . _('Notes') . '</th>
-				<th>' . _('Receipt') . '</th>
-			</tr>';
-
-		$k=0; //row colour counter
-
-		while ($myrow = DB_fetch_row($result)) {
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k=1;
-			}
-
-			$sqldes="SELECT description
+		while ($MyRow = DB_fetch_array($Result)) {
+			$SQLDes = "SELECT description
 						FROM pcexpenses
-						WHERE codeexpense='". $myrow['4'] . "'";
+						WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
+			$ResultDes = DB_query($SQLDes);
+			$Description = DB_fetch_array($ResultDes);
 
-			$ResultDes = DB_query($sqldes);
-			$Description=DB_fetch_array($ResultDes);
-
-			if (!isset($Description['0'])){
-				$Description['0']='ASSIGNCASH';
-			}
-			if ($myrow['6']=='0000-00-00') {
-				$AuthorisedDate=_('Unauthorised');
+			if (!isset($Description[0])) {
+				$ExpenseCodeDes = 'ASSIGNCASH';
 			} else {
-				$AuthorisedDate=ConvertSQLDate($myrow['6']);
+					$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 			}
-			if (($myrow['6'] == '0000-00-00') and ($Description['0'] != 'ASSIGNCASH')){
-				// only movements NOT authorized can be modified or deleted
-				printf('<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="%sSelectedIndex=%s&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedIndex=%s&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this code and the expenses it may have set up?') . '");\'>' . _('Delete') . '</a></td>
-					</tr>',
-					ConvertSQLDate($myrow['3']),
-					$Description['0'],
-					locale_number_format($myrow['5'],$CurrDecimalPlaces),
-					$AuthorisedDate,
-					$myrow['9'],
-					$myrow['10'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['0'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['0']);
+
+			if ($MyRow['authorized'] == '0000-00-00') {
+				$AuthorisedDate = _('Unauthorised');
 			} else {
-				printf('<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					ConvertSQLDate($myrow['3']),
-					$Description['0'],
-					locale_number_format($myrow['5'],$CurrDecimalPlaces),
-					$AuthorisedDate,
-					$myrow['9'],
-					$myrow['10']);
-
+				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 			}
 
+			//Generate download link for expense receipt, or show text if no receipt file is found.
+			$ReceiptSQL = "SELECT hashfile,
+								extension
+								FROM pcreceipts
+								WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+					$ReceiptResult = DB_query($ReceiptSQL);
+					$ReceiptRow = DB_fetch_array($ReceiptResult);
+			if (DB_num_rows($ReceiptResult) > 0) { //If receipt exists in database
+				$ReceiptHash = $ReceiptRow['hashfile'];
+				$ReceiptExt = $ReceiptRow['extension'];
+				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
+			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
+				$ReceiptText = '';
+			} else {
+				$ReceiptText = _('No attachment');
+			}
+
+			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+			$TagResult = DB_query($TagSQL);
+			$TagRow = DB_fetch_array($TagResult);
+			if ($MyRow['tag'] == 0) {
+				$TagRow['tagdescription'] = _('None');
+			}
+			$TagTo = $MyRow['tag'];
+			if ($ExpenseCodeDes == 'ASSIGNCASH') {
+				$TagDescription = '';
+			} else {
+				$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
+			}
+
+			$TaxesDescription = '';
+			$TaxesTaxAmount = '';
+			$TaxSQL = "SELECT counterindex,
+								pccashdetail,
+								calculationorder,
+								description,
+								taxauthid,
+								purchtaxglaccount,
+								taxontax,
+								taxrate,
+								amount
+							FROM pcashdetailtaxes
+							WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+			$TaxResult = DB_query($TaxSQL);
+			while ($MyTaxRow = DB_fetch_array($TaxResult)) {
+				$TaxesDescription .= $MyTaxRow['description'] . '<br />';
+				$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . '<br />';
+			}
+			if (($MyRow['authorized'] == '0000-00-00') and ($ExpenseCodeDes != 'ASSIGNCASH')) {
+				// only movements NOT authorised can be modified or deleted
+				// KL RICARD Keep the receipt text field, and do not show tax, tag, purpose
+				echo '<tr class="striped_row">
+						<td>', ConvertSQLDate($MyRow['date']), '</td>
+						<td>', $ExpenseCodeDes, '</td>
+						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+						<td>', $MyRow['notes'], '</td>
+						<td>', $MyRow['receipt'], '</td>
+						<td>', $ReceiptText, '</td>
+						<td>', $AuthorisedDate, '</td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;edit=yes">' . _('Edit') . '</a></td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedIndex=', $MyRow['counterindex'], '&amp;SelectedTabs=' . $SelectedTabs . '&amp;Days=' . $Days . '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this expense?') . '");\'>' . _('Delete') . '</a></td>
+					</tr>';
+			} else {
+				// KL RICARD Keep the receipt text field, and do not show tax, tag, purpose
+				echo '<tr class="striped_row">
+						<td>', ConvertSQLDate($MyRow['date']), '</td>
+						<td>', $ExpenseCodeDes, '</td>
+						<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
+						<td>', $MyRow['notes'], '</td>
+						<td>', $MyRow['receipt'], '</td>
+						<td>', $ReceiptText, '</td>
+						<td>', $AuthorisedDate, '</td>
+					</tr>';
+			}
 		}
 		//END WHILE LIST LOOP
-
-		$sqlAmount="SELECT sum(amount)
+		$SQLAmount = "SELECT sum(amount)
 					FROM pcashdetails
-					WHERE tabcode='".$SelectedTabs."'";
-
-		$ResultAmount = DB_query($sqlAmount);
-		$Amount=DB_fetch_array($ResultAmount);
-
+					WHERE tabcode='" . $SelectedTabs . "'";
+		$ResultAmount = DB_query($SQLAmount);
+		$Amount = DB_fetch_array($ResultAmount);
 		if (!isset($Amount['0'])) {
-			$Amount['0']=0;
+			$Amount['0'] = 0;
 		}
-
-		echo '<tr>
-				<td colspan="2" style="text-align:right" >' . _('Current balance') . ':</td>
-				<td class="number">' . locale_number_format($Amount['0'],$CurrDecimalPlaces) . '</td>
-			</tr>
-			</table>
-			</div>
-		</form>';
-		}
-
-	if (! isset($_GET['delete'])) {
-
-		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
-			<div>
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-
-		if ( isset($_GET['edit'])) {
-			$sql = "SELECT *
-				FROM pcashdetails
-				WHERE counterindex='".$SelectedIndex."'";
-
-			$result = DB_query($sql);
-			$myrow = DB_fetch_array($result);
-
-			$_POST['Date'] = ConvertSQLDate($myrow['date']);
-			$_POST['SelectedExpense'] = $myrow['codeexpense'];
-			$_POST['Amount']  =  -$myrow['amount'];
-			$_POST['Notes']  = $myrow['notes'];
-			$_POST['Receipt']  = $myrow['receipt'];
-
-			echo '<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
-				<input type="hidden" name="SelectedIndex" value="' . $SelectedIndex. '" />
-				<input type="hidden" name="Days" value="' . $Days . '" />';
-
-		}//end of Get Edit
-
+		echo '</tbody>
+				<tfoot>
+					<tr>
+					<td colspan="2" class="number">', _('Current balance'), ':</td>
+					<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+					</tr>
+				</tfoot>';
+		echo '</table>';
+		echo '</form>';
+	}
+	if (!isset($_GET['delete'])) {
+		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
+		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+		if (isset($_GET['edit'])) {
+			// KL RICARD Keep the receipt text field
+			$SQL = "SELECT counterindex,
+							tabcode,
+							tag,
+							date,
+							codeexpense,
+							amount,
+							authorized,
+							posted,
+							purpose,
+							receipt,
+							notes
+						FROM pcashdetails
+						WHERE counterindex='" . $SelectedIndex . "'";
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_array($Result);
+			$_POST['Date'] = ConvertSQLDate($MyRow['date']);
+			$_POST['SelectedExpense'] = $MyRow['codeexpense'];
+			$_POST['Amount'] = -$MyRow['amount'];
+			$_POST['Purpose'] = $MyRow['purpose'];
+			// KL RICARD Keep the receipt text field
+			$_POST['Receipt'] = $MyRow['receipt'];
+			$_POST['Notes'] = $MyRow['notes'];
+			$_POST['Tag'] = $MyRow['tag'];
+			echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
+			echo '<input type="hidden" name="SelectedIndex" value="', $SelectedIndex, '" />';
+			echo '<input type="hidden" name="Days" value="', $Days, '" />';
+		} //end of Get Edit
 		if (!isset($_POST['Date'])) {
-			$_POST['Date']=Date($_SESSION['DefaultDateFormat']);
+			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
 		}
-
-        echo '<br /><table class="selection">'; //Main table
+		echo '<table class="selection">';
+		if (isset($_GET['SelectedIndex'])) {
+			echo '<tr>
+					<th colspan="2"><h3>', _('Update Expense'), '</h3></th>
+				</tr>';
+		} else {
+			echo '<tr>
+					<th colspan="2"><h3>', _('New Expense'), '</h3></th>
+				</tr>';
+		}
 		echo '<tr>
-				<td>' . _('Date Of Expense') . ':</td>
-				<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="Date" size="10" required="required" autofocus="autofocus" maxlength="10" value="' . $_POST['Date']. '" /></td>
+				<td>', _('Date of Expense'), ':</td>
+				<td>
+					<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
+				</td>
 			</tr>
 			<tr>
-				<td>' . _('Code Of Expense') . ':</td>
-				<td><select required="required" name="SelectedExpense">';
-
-		DB_free_result($result);
-
+				<td>', _('Expense Code'), ':</td>
+				<td>
+						<select required="required" name="SelectedExpense">';
+		DB_free_result($Result);
 		$SQL = "SELECT pcexpenses.codeexpense,
-					pcexpenses.description
+					pcexpenses.description,
+					pctabs.defaulttag
 			FROM pctabexpenses, pcexpenses, pctabs
 			WHERE pctabexpenses.codeexpense = pcexpenses.codeexpense
 				AND pctabexpenses.typetabcode = pctabs.typetabcode
-				AND pctabs.tabcode = '".$SelectedTabs."'
+				AND pctabs.tabcode = '" . $SelectedTabs . "'
 			ORDER BY pcexpenses.codeexpense ASC";
-
-		$result = DB_query($SQL);
-		echo '<option value="">' . _('Not Yet Selected') . '</option>';
-		while ($myrow = DB_fetch_array($result)) {
-			if (isset($_POST['SelectedExpense']) and $myrow['codeexpense']==$_POST['SelectedExpense']) {
-				echo '<option selected="selected" value="';
+		$Result = DB_query($SQL);
+		echo '<option value="">', _('Not Yet Selected'), '</option>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (isset($_POST['SelectedExpense']) and $MyRow['codeexpense'] == $_POST['SelectedExpense']) {
+				echo '<option selected="selected" value="', $MyRow['codeexpense'], '">', $MyRow['codeexpense'], ' - ', $MyRow['description'], '</option>';
 			} else {
-				echo '<option value="';
+				echo '<option value="', $MyRow['codeexpense'], '">', $MyRow['codeexpense'], ' - ', $MyRow['description'], '</option>';
 			}
-			echo $myrow['codeexpense'] . '">' . $myrow['codeexpense'] . ' - ' . $myrow['description'] . '</option>';
-
+			$DefaultTag = $MyRow['defaulttag'];
 		} //end while loop
-
-		echo '</select></td>
+		echo '</select>
+				</td>
 			</tr>';
-
 		if (!isset($_POST['Amount'])) {
-			$_POST['Amount']=0;
+			$_POST['Amount'] = 0;
+		}
+		echo '<tr>
+				<td>', _('Amount'), ':</td>
+				<td><input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', $_POST['Amount'], '" /></td>
+			</tr>';
+/*	KL RICARD Do not show taxes	
+		if (isset($_GET['edit'])) {
+			$SQL = "SELECT counterindex,
+							pccashdetail,
+							calculationorder,
+							description,
+							taxauthid,
+							purchtaxglaccount,
+							taxontax,
+							taxrate,
+							amount
+						FROM pcashdetailtaxes
+						WHERE pccashdetail='" . $SelectedIndex . "'";
+			$TaxesResult = DB_query($SQL);
+			while ($MyTaxRow = DB_fetch_array($TaxesResult)) {
+				echo '<input type="hidden" name="index', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['counterindex'], '" />';
+				echo '<input type="hidden" name="PcCashDetail', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['pccashdetail'], '" />';
+				echo '<input type="hidden" name="CalculationOrder', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['calculationorder'], '" />';
+				echo '<input type="hidden" name="Description', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['description'], '" />';
+				echo '<input type="hidden" name="TaxAuthority', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['taxauthid'], '" />';
+				echo '<input type="hidden" name="TaxGLAccount', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['purchtaxglaccount'], '" />';
+				echo '<input type="hidden" name="TaxOnTax', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['taxontax'], '" />';
+				echo '<input type="hidden" name="TaxRate', $MyTaxRow['counterindex'], '" value="', $MyTaxRow['taxrate'], '" />';
+				echo '<tr>
+						<td>', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%</td>
+						<td><input type="text" class="number" size="12" name="TaxAmount', $MyTaxRow['counterindex'], '" value="', -$MyTaxRow['amount'], '" /></td>
+					</tr>';
+			}
+		} else {
+			$SQL = "SELECT taxgrouptaxes.calculationorder,
+							taxauthorities.description,
+							taxgrouptaxes.taxauthid,
+							taxauthorities.purchtaxglaccount,
+							taxgrouptaxes.taxontax,
+							taxauthrates.taxrate
+						FROM taxauthrates
+						INNER JOIN taxgrouptaxes
+							ON taxauthrates.taxauthority=taxgrouptaxes.taxauthid
+						INNER JOIN taxauthorities
+							ON taxauthrates.taxauthority=taxauthorities.taxid
+						INNER JOIN taxgroups
+							ON taxgroups.taxgroupid=taxgrouptaxes.taxgroupid
+						INNER JOIN pctabs
+							ON pctabs.taxgroupid=taxgroups.taxgroupid
+						WHERE taxauthrates.taxcatid = " . $_SESSION['DefaultTaxCategory'] . "
+							AND pctabs.tabcode='" . $SelectedTabs . "'
+						ORDER BY taxgrouptaxes.calculationorder";
+			$TaxResult = DB_query($SQL);
+			$i = 0;
+			while ($MyTaxRow = DB_fetch_array($TaxResult)) {
+				echo '<input type="hidden" name="index', $i, '" value="', $i, '" />';
+				echo '<input type="hidden" name="CalculationOrder', $i, '" value="', $MyTaxRow['calculationorder'], '" />';
+				echo '<input type="hidden" name="Description', $i, '" value="', $MyTaxRow['description'], '" />';
+				echo '<input type="hidden" name="TaxAuthority', $i, '" value="', $MyTaxRow['taxauthid'], '" />';
+				echo '<input type="hidden" name="TaxGLAccount', $i, '" value="', $MyTaxRow['purchtaxglaccount'], '" />';
+				echo '<input type="hidden" name="TaxOnTax', $i, '" value="', $MyTaxRow['taxontax'], '" />';
+				echo '<input type="hidden" name="TaxRate', $i, '" value="', $MyTaxRow['taxrate'], '" />';
+				echo '<tr>
+						<td>', $MyTaxRow['description'], ' - ', ($MyTaxRow['taxrate'] * 100), '%:</td>
+						<td><input type="text" class="number" size="12" name="TaxAmount', $i, '" value="0" /></td>
+					</tr>';
+				++$i;
+			}
 		}
 
+		//Select the tag
 		echo '<tr>
-				<td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" required="required" name="Amount" size="12" maxlength="11" value="' . $_POST['Amount'] . '" /></td>
+				<td>', _('Tag'), ':</td>
+				<td><select name="Tag">';
+		$SQL = "SELECT tagref,
+					tagdescription
+			FROM tags
+			ORDER BY tagref";
+		$Result = DB_query($SQL);
+KL RICARD END Do not show taxes */
+		
+		if (!isset($_POST['Tag'])) {
+			$_POST['Tag'] = 0;
+		}
+		
+/*	KL RICARD END Do not show tag
+		echo '<option value="0">0 - ', _('None'), '</option>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($_POST['Tag'] == $MyRow['tagref']) {
+				echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+			} else {
+				echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+			}
+		}
+		echo '</select>
+				</td>
 			</tr>';
+		// End select tag
+KL RICARD END Do not show tag */
+
+		// KL RICARD keep the receipt text field
+		if (!isset($_POST['Receipt'])) {
+			$_POST['Receipt'] = '';
+		}
+		echo '<tr>
+				<td>', _('Receipt'), ':</td>
+				<td>
+					<input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" />
+				</td>
+			</tr>';
+		// KL RICARD END keep the receipt text field
+		
+		//For the accept attribute of the file element, prefix dots to the front of each supported file extension.
+		$ReceiptSupportedExtDotPrefix = array_map(function($ReceiptSupportedExt) {
+			return '.' . $ReceiptSupportedExt;
+		}, $ReceiptSupportedExt);
+		echo '<tr>
+				<td>', _('Attach Receipt'), ':</td>
+				<td>
+				<input type="hidden" name="MAX_FILE_SIZE" value="' . $_SESSION['MaxImageSize'] * 1024 . '" />
+				<input type="file" name="Receipt" id="Receipt" accept="' . implode(',', $ReceiptSupportedExtDotPrefix) . '" title="', _('Accepted file types'), ': ', implode(', ', $ReceiptSupportedExt), '" />
+				</td>
+			</tr>';
+
+		if (!isset($_POST['Purpose'])) {
+			$_POST['Purpose'] = '';
+		}
+
+/* KL RICARD Do not show purpose
+		echo '<tr>
+				<td>', _('Purpose'), ':</td>
+				<td>
+					<input type="text" name="Purpose" size="50" maxlength="49" required="required" value="', $_POST['Purpose'], '" />
+				</td>
+			</tr>';
+KL RICARD END Do not show purpose */
 
 		if (!isset($_POST['Notes'])) {
-			$_POST['Notes']='';
+			$_POST['Notes'] = '';
 		}
-
 		echo '<tr>
-				<td>' . _('Notes') . ':</td>
-				<td><input type="text" name="Notes" size="50" maxlength="49" value="' . $_POST['Notes'] . '" /></td>
+				<td>', _('Notes'), ':</td>
+				<td>
+					<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
+				</td>
 			</tr>';
 
-		if (!isset($_POST['Receipt'])) {
-			$_POST['Receipt']='';
-		}
-
-		echo '<tr>
-				<td>' . _('Receipt') . ':</td>
-				<td><input type="text" name="Receipt" size="50" maxlength="49" value="' . $_POST['Receipt'] . '" /></td>
-			</tr>
-			</table>
-			<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
-			<input type="hidden" name="Days" value="' .$Days. '" />
-			<br />
-			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Accept') . '" />
-				<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
-			</div>
-			</div>
-		</form>';
-
+		echo '</table>'; // close main table
+		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
+		echo '<input type="hidden" name="Days" value="', $Days, '" />';
+		echo '<div class="centre">
+				<input type="submit" name="submit" value="', _('Accept'), '" />
+				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			</div>';
+		echo '</form>';
 	} // end if user wish to delete
-
 }
-
 include('includes/footer.php');
 ?>
