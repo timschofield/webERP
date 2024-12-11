@@ -418,7 +418,7 @@ if (isset($WOItemsResult)) {
 echo '</fieldset>';
 
 if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['WorkOrder' . $Identifier]->NumberOfItems > 0) {
-	$i = 0;
+	$i = 1;
 
 	echo '<table>
 			<tr>
@@ -428,6 +428,7 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 				<th>', _('Qty Received'), '</th>
 				<th>', _('Balance Remaining'), '</th>
 				<th>', _('Next Lot/SN Ref'), '</th>
+				<th colspan="2"></th>
 			</tr>';
 
 	foreach ($_SESSION['WorkOrder' . $Identifier]->Items as $WorkOrderItem) {
@@ -439,10 +440,12 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 		echo '<input type="hidden" name="OutputStockId', $i, '" value="', $WorkOrderItem->StockId, '" />';
 		echo '<tr class="striped_row">
 				<td>', $WorkOrderItem->StockId, ' - ', $DescriptionRow['description'], '</td>
-				<td><textarea spellcheck="true" style="width:100%" rows="2" cols="50" name="WOComments', $i, '" >', $WorkOrderItem->Comments, '</textarea></td>';
+				<td><textarea spellcheck="true" style="width:96%" rows="2" cols="50" name="WOComments', $i, '" >', $WorkOrderItem->Comments, '</textarea></td>';
 
 		if ($WorkOrderItem->Controlled == 1 and $_SESSION['DefineControlledOnWOEntry'] == 1) {
-			echo '<td class="number">', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '</td>';
+			echo '<td class="number">', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '
+					<input type="hidden" required="required" class="number" name="OutputQty', $i, '" value="', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size="8" maxlength="10" title="', _('The input format must be positive numeric'), '" />
+				</td>';
 		} else {
 			echo '<td class="number">
 					<input type="text" required="required" class="number" name="OutputQty', $i, '" value="', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size="8" maxlength="10" title="', _('The input format must be positive numeric'), '" />
@@ -467,6 +470,8 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 						<a href="', $RootPath, '/WOSerialNos.php?WO=', urlencode($_POST['WO']), '&StockID=', urlencode($WorkOrderItem->StockId), '&Description=', urlencode($DescriptionRow['description']), '&Serialised=', urlencode($WorkOrderItem->Serialised), '&NextSerialNo=', urlencode($WorkOrderItem->NextLotSerialNumbers), '">', $LotOrSN, '</a>
 					</td>';
 			}
+		} else {
+			echo '<td colspan="2"></td>';
 		}
 		echo '<td>';
 		if ($_SESSION['WikiApp'] != 0) {
