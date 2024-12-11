@@ -44,7 +44,7 @@ echo '<div id="FooterTimeDiv">';
 echo '</div>';
 
 echo '<div id="FooterVersionDiv">';
-	echo 'webERP ' . _('version') . ' ' . $_SESSION['VersionNumber'];
+	echo 'webERP ' . _('version') . ' ' . '4.13.1 - Pre 4.15.2';
 echo '</div>';
 
 echo '</div>'; // FooterWrapDiv

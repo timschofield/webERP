@@ -21,9 +21,9 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 	DB_free_result($ConfigResult); // no longer needed
 	/*Maybe we should check config directories exist and try to create if not */
 
-	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
-		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
-	}
+//	if (!isset($_SESSION['VersionNumber'])){ // the config record for VersionNumber is not yet added
+//		header('Location: UpgradeDatabase.php'); //divert to the db upgrade if the VersionNumber is not in the config table
+//	}
 
 	/*Load the pagesecurity settings from the database */
 	$sql="SELECT script, pagesecurity FROM scripts";

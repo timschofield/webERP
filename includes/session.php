@@ -172,9 +172,9 @@ if(basename($_SERVER['SCRIPT_NAME'])=='Logout.php'){
 }
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
-	header('Location: UpgradeDatabase.php');
-}
+//if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
+//	header('Location: UpgradeDatabase.php');
+//}
 
 if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
 	$_SESSION['Theme'] = 'gel';

@@ -85,9 +85,9 @@ if (!isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToB
 include($PathPrefix . 'includes/GetConfig.php');
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
-	header('Location: UpgradeDatabase.php');
-}
+//if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
+//	header('Location: UpgradeDatabase.php');
+//}
 
 If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
 	$_SESSION['Theme'] = $_POST['Theme'];
