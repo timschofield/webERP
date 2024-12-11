@@ -381,8 +381,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	} //end of looping
 	$SQLamount = "SELECT sum(amount)
 			FROM pcashdetails
-			WHERE tabcode='" . $SelectedTabs . "'
-				AND codeexpense<>'ASSIGNCASH'";
+			WHERE tabcode='" . $SelectedTabs . "'";
 	$ResultAmount = DB_query($SQLamount);
 	$Amount = DB_fetch_array($ResultAmount);
 	if (!isset($Amount['0'])) {
