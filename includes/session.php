@@ -2,7 +2,7 @@
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
-- Set up the login theme for regular and test webERP
+- Set up the login theme for development, production and test webERP
 - Commented out the standard call to Dashboard
 - Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
 *****************************************************************************************/
@@ -176,16 +176,11 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	} else {
 		$rc = UL_OK;
 	}
-
-	/*  Need to set the theme to make login screen nice */
-	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
-	/* RICARD KL Set up the login theme for regular and test webERP */
-	if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
-		$Theme = 'gel'; 
-	}else{
-		$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : 'default'; 
-	}
-	/* RICARD KL END MODIFICATION Set up the login theme for regular and test webERP */
+	
+	/* RICARD KL Set up the login theme for production, test, development, development test webERP */
+	$Theme = KLThemeSelection();
+	/* RICARD KL END MODIFICATION Set up the login theme for production, test, development, development test webERP */
+	
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
 		include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
@@ -246,20 +241,9 @@ if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCR
 	header('Location: UpgradeDatabase.php');
 }
 
-if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
-	$_SESSION['Theme'] = 'gel';
-	$Theme = 'gel'; 
-}else{
-	if (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
-		$_SESSION['Theme'] = $_POST['Theme'];
-		$Theme = $_POST['Theme'];
-	} elseif (isset($_SESSION['Theme'])) {
-		$Theme = $_SESSION['Theme'];
-	} else {
-		$Theme = $DefaultTheme;
-		$_SESSION['Theme'] = '$DefaultTheme';
-	}
-}
+/* RICARD KL Set up the theme for production, test, development, development test webERP */
+$_SESSION['Theme'] = KLThemeSelection();
+/* RICARD KL END MODIFICATION Set up the theme for production, test, development, development test webERP */
 
 
 if ($_SESSION['HTTPS_Only'] == 1) {
@@ -533,6 +517,29 @@ function quote_smart($value) {
 		$value = "'" . DB_escape_string($value) . "'";
 	} 
 	return $value;
+}
+
+function KLThemeSelection(){
+	if (strpos(strtoupper($_SERVER['HTTP_HOST']),"DEVELOPMENT")!== false){
+		// we are on ptadu-development.com (development code)
+		if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+			// development environment with the test DB (safest)
+			$Theme = 'xenos'; 
+		}else{
+			// development environment with the production DB (risky)
+			$Theme = 'aguapop'; 
+		}
+	} else {
+		// we are on ptadu.com (production code)
+		if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+			// Training staff environment: we are on production code with the test DB 
+			$Theme = 'gel'; 
+		}else{
+			// Production environment: we are on production code with the real production DB 
+			$Theme = 'professional'; 
+		}
+	}
+	return $Theme;
 }
 
 ?>
