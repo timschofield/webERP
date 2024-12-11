@@ -703,13 +703,15 @@ $MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/KLMaintenanceTypes.php');
 
 $MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
-							_('Cash Transfer Between Tabs'),
+													_('Cash Transfer Between Tabs'),
 													_('Claim Expenses From PC Tab'),
-													_('Expenses Authorisation'));
+													_('Authorize Cash Assign To PC Tab'),
+													_('Authorize Expenses From PC Tab'));
 
 $MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
 												'/PcAssignCashTabToTab.php',
 												'/PcClaimExpensesFromTab.php',
+												'/PcAuthorizeCash.php',
 												'/PcAuthorizeExpenses.php');
 
 $MenuItems['PC']['Reports']['Caption'] = array(_('PC Tab General Report'),

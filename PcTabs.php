@@ -1,4 +1,9 @@
 <?php
+/****************************************************************
+*
+* KL RICARD : allow multiple assigners and authorizers
+*
+*****************************************************************/
 
 include('includes/session.php');
 $Title = _('Maintenance Of Petty Cash Tabs');
@@ -7,7 +12,7 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'PCTabSetup';
 include('includes/header.php');
 echo '<p class="page_title_text">
-		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Payment Entry'), '" alt="" />', ' ', $Title, '
+		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
 	</p>';
 if (isset($_POST['SelectedTab'])) {
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);
@@ -61,14 +66,46 @@ if (isset($_POST['Submit'])) {
 		$InputError = 1;
 		echo prnMsg(_('You must select a tax group'), 'error');
 	}
+	
+	// KL RICARD Allow multiple authorizers and assigners
+	if ($InputError == 0) {
+		$AuthorisersExpenses = '';
+		$i = 0;
+		foreach ($_POST['SelectAuthoriserExpenses'] as $value) {
+			if ($i) $AuthorisersExpenses .= ',';
+			$AuthorisersExpenses .= $value;
+			$i++;
+		}
+
+		$AuthorisersCash = '';
+		$i = 0;
+		foreach ($_POST['SelectAuthoriserCash'] as $value) {
+			if ($i) $AuthorisersCash .= ',';
+			$AuthorisersCash .= $value;
+			$i++;
+		}
+
+		$Assigners = '';
+		$i = 0;
+		foreach ($_POST['SelectAssigner'] as $value) {
+			if ($i) $Assigners .= ',';
+			$Assigners .= $value;
+			$i++;
+		}
+	}	
+	// KL RICARD END Allow multiple authorizers and assigners
+
+	
+
 	if (isset($SelectedTab) and $InputError != 1) {
+		// KL RICARD Allow multiple authorizers and assigners
 		$SQL = "UPDATE pctabs SET usercode = '" . $_POST['SelectUser'] . "',
 									typetabcode = '" . $_POST['SelectTabs'] . "',
 									currency = '" . $_POST['SelectCurrency'] . "',
 									tablimit = '" . filter_number_format($_POST['TabLimit']) . "',
-									assigner = '" . $_POST['SelectAssigner'] . "',
-									authorizer = '" . $_POST['SelectAuthoriserCash'] . "',
-									authorizerexpenses = '" . $_POST['SelectAuthoriserExpenses'] . "',
+									assigner = '" . $Assigners . "',
+									authorizer = '" . $AuthorisersCash . "',
+									authorizerexpenses = '" . $AuthorisersExpenses . "',
 									glaccountassignment = '" . $_POST['GLAccountCash'] . "',
 									glaccountpcash = '" . $_POST['GLAccountPcashTab'] . "',
 									defaulttag = '" . $_POST['DefaultTag'] . "',
@@ -87,6 +124,7 @@ if (isset($_POST['Submit'])) {
 			prnMsg(_('The Tab ') . ' ' . $_POST['TabCode'] . ' ' . _(' already exists'), 'error');
 		} else {
 			// Add new record on submit
+			// KL RICARD Allow multiple authorizers and assigners
 			$SQL = "INSERT INTO pctabs	(tabcode,
 							 			 usercode,
 										 typetabcode,
@@ -104,9 +142,9 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['SelectTabs'] . "',
 									'" . $_POST['SelectCurrency'] . "',
 									'" . filter_number_format($_POST['TabLimit']) . "',
-									'" . $_POST['SelectAssigner'] . "',
-									'" . $_POST['SelectAuthoriserCash'] . "',
-									'" . $_POST['SelectAuthoriserExpenses'] . "',
+									'" . $Assigners . "',
+									'" . $AuthorisersCash . "',
+									'" . $AuthorisersExpenses . "',
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "',
 									'" . $_POST['DefaultTag'] . "',
@@ -127,6 +165,7 @@ if (isset($_POST['Submit'])) {
 		unset($_POST['TabLimit']);
 		unset($_POST['SelectAssigner']);
 		unset($_POST['SelectAuthoriserCash']);
+		unset($_POST['SelectAuthoriserExpenses']);
 		unset($_POST['GLAccountCash']);
 		unset($_POST['GLAccountPcashTab']);
 		unset($_POST['TaxGroup']);
@@ -329,60 +368,74 @@ if (!isset($_GET['delete'])) {
 				<input type="text" class="number" name="TabLimit" size="12" required="required" maxlength="11" value="', $_POST['TabLimit'], '" />
 			</td>
 		</tr>';
+	// KL RICARD END multiple assigners and authorizers
 	echo '<tr>
 			<td>', _('Cash Assigner'), ':</td>
-			<td><select required="required" name="SelectAssigner">';
+			<td><select multiple="multiple" name="SelectAssigner[]">';
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['SelectAssigner']) and $MyRow['userid'] == $_POST['SelectAssigner']) {
-			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+		$Assigners = explode(',',$_POST['SelectAssigner']);
+		if (isset($_POST['SelectAssigner']) and in_array($MyRow['userid'],$Assigners)) {
+			echo '<option selected="selected" value="';
 		} else {
-			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="';
 		}
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+
 	} //end while loop get assigner
 	echo '</select>
 			</td>
 		</tr>';
 	echo '<tr>
 			<td>', _('Authoriser - Cash'), ':</td>
-			<td><select required="required" name="SelectAuthoriserCash">';
+			<td><select multiple="multiple" name="SelectAuthoriserCash[]">';
+
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['SelectAuthoriserCash']) and $MyRow['userid'] == $_POST['SelectAuthoriserCash']) {
-			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+		$Authorizer = explode(',',$_POST['SelectAuthoriserCash']);
+		if (isset($_POST['SelectAuthoriserCash']) and in_array($MyRow['userid'],$Authorizer)) {
+			echo '<option selected="selected" value="';
 		} else {
-			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="';
 		}
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+
 	} //end while loop get authoriser
+
 	echo '</select>
 			</td>
 		</tr>';
 	echo '<tr>
 			<td>', _('Authoriser - Expenses'), ':</td>
-			<td><select required="required" name="SelectAuthoriserExpenses">';
+			<td><select multiple="multiple" name="SelectAuthoriserExpenses[]">';
+
 	$SQL = "SELECT userid,
 					realname
 			FROM www_users
 			ORDER BY userid";
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['SelectAuthoriserExpenses']) and $MyRow['userid'] == $_POST['SelectAuthoriserExpenses']) {
-			echo '<option selected="selected" value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+		$Authorizer = explode(',',$_POST['SelectAuthoriserExpenses']);
+		if (isset($_POST['SelectAuthoriserExpenses']) and in_array($MyRow['userid'],$Authorizer)) {
+			echo '<option selected="selected" value="';
 		} else {
-			echo '<option value="', $MyRow['userid'], '">', $MyRow['userid'], ' - ', $MyRow['realname'], '</option>';
+			echo '<option value="';
 		}
+		echo $MyRow['userid'] . '">' . $MyRow['userid'] . ' - ' . $MyRow['realname'] . '</option>';
+
 	} //end while loop get authoriser
 	echo '</select>
 			</td>
 		</tr>';
+	// KL RICARD END multiple assigners and authorizers
 	echo '<tr>
 			<td>', _('GL Account Cash Assignment'), ':</td>
 			<td><select required="required" name="GLAccountCash">';
@@ -450,7 +503,6 @@ if (!isset($_GET['delete'])) {
 	echo '<tr>
 			<td>', _('Tax Group'), ':</td>
 			<td><select name="TaxGroup">';
-	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $MyRow['taxgroupid']) {
 			echo '<option selected="selected" value="', $MyRow['taxgroupid'], '">', $MyRow['taxgroupid'], ' - ', $MyRow['taxgroupdescription'], '</option>';

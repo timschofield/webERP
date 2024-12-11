@@ -43,9 +43,9 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$SQL = "SELECT DISTINCT(pctabexpenses.codeexpense)
 			FROM pctabs, pctabexpenses
 			WHERE pctabexpenses.typetabcode = pctabs.typetabcode
-				AND ( pctabs.authorizer='" . $_SESSION['UserID'] .
-					"' OR pctabs.usercode ='" . $_SESSION['UserID'].
-					"' OR pctabs.assigner ='" . $_SESSION['UserID'] . "' )
+				AND (pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+					OR pctabs.usercode ='" . $_SESSION['UserID']. "' 
+					OR pctabs.assigner LIKE'%" . $_SESSION['UserID'] . "%')
 			ORDER BY pctabexpenses.codeexpense";
 
 	$Result = DB_query($SQL);
@@ -124,9 +124,9 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 				AND pcashdetails.codeexpense='".$SelectedExpense."'
 				AND pcashdetails.date >='" . $SQL_FromDate . "'
 				AND pcashdetails.date <= '" . $SQL_ToDate . "'
-				AND (pctabs.authorizer='" . $_SESSION['UserID'] .
-					"' OR pctabs.usercode ='" . $_SESSION['UserID'].
-					"' OR pctabs.assigner ='" . $_SESSION['UserID'] . "')
+				AND (pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+					OR pctabs.usercode ='" . $_SESSION['UserID']. "' 
+					OR pctabs.assigner LIKE'%" . $_SESSION['UserID'] . "%')
 			ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 
 	$Result = DB_query($SQL,
