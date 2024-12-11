@@ -425,6 +425,45 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<fieldset>
 		<legend>', _('Configuration Options'), '</legend>';
 
+// ---------- New section: Db Maintenance
+echo '<fieldset>
+		<legend>', _('Db Maintenance'), '</legend>';
+/*Perform Database maintenance DB_Maintenance*/
+echo '<field>
+		<label for="X_DB_Maintenance">' . _('Perform Database Maintenance At Logon') . ':</label>
+		<select name="X_DB_Maintenance">';
+	if ($_SESSION['DB_Maintenance']=='1'){
+		echo '<option selected="selected" value="1">' . _('Daily') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Daily') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='7'){
+		echo '<option selected="selected" value="7">' . _('Weekly') . '</option>';
+	} else {
+		echo '<option value="7">' . _('Weekly') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='30'){
+		echo '<option selected="selected" value="30">' . _('Monthly') . '</option>';
+	} else {
+		echo '<option value="30">' . _('Monthly') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='0'){
+		echo '<option selected="selected" value="0">' . _('Never') . '</option>';
+	} else {
+		echo '<option value="0">' . _('Never') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='-1'){
+		echo '<option selected="selected" value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
+	} else {
+		echo '<option value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
+	}
+
+	echo '</select>
+		<fieldhelp>' . _('Runs DB_Maintenance function in ConnectDB_XXXX.inc at regular intervals (checked every user login). [Allow Sysadmin Access Only] blocks all users except security role Administrator from affecting database.') . '</fieldhelp>
+	</field>';
+echo '</fieldset><br />';
+
+// ---------- New section: General Settings
 echo '<fieldset>
 		<legend>', _('General Settings'), '</legend>';
 // DefaultDateFormat
@@ -462,6 +501,7 @@ if (is_writable('config.php')) {
 	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
 }
 echo '</fieldset><br />';
+
 // ---------- New section:
 echo '<fieldset>
 		<legend>' . _('Accounts Receivable/Payable Settings') . '</legend>';
