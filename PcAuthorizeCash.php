@@ -244,17 +244,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			</td>
 		</tr>';
 	} //end of looping
-	$SQLamount = "SELECT sum(amount)
-			FROM pcashdetails
-			WHERE tabcode='" . $SelectedTabs . "'";
-	$ResultAmount = DB_query($SQLamount);
-	$Amount = DB_fetch_array($ResultAmount);
-	if (!isset($Amount['0'])) {
-		$Amount['0'] = 0;
-	}
+	$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 	echo '<tr>
 			<td colspan="2" class="number">', _('Current balance'), ':</td>
-			<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+			<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 		</tr>';
 	// Do the postings
 	include('includes/GLPostings.inc');

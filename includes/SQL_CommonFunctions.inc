@@ -537,4 +537,18 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 	} //$myrow[0]>0
 }
 
+function PettyCashTabCurrentBalance($Tab){
+	$SQL = "SELECT SUM(amount) AS balance
+			FROM pcashdetails
+			WHERE tabcode='" . $Tab . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	if (!isset($MyRow['balance'])) {
+		$Balance = 0;
+	}else{
+		$Balance = $MyRow['balance'];
+	}
+	return $Balance;
+}
+
 ?>
