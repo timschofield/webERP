@@ -327,7 +327,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen(trim($_POST['SuppName'])) > 40 or mb_strlen(trim($_POST['SuppName'])) == 0 or trim($_POST['SuppName']) == '') {
 
 		$InputError = 1;
-		prnMsg(_('The supplier name must be entered and be forty characters or less long'), 'error');
+		prnMsg(_('The supplier name must be entered and has maximum 40 characters)'), 'error');
 		$Errors[$i] = 'Name';
 		$i++;
 	}
@@ -693,37 +693,39 @@ if (!isset($SupplierID)) {
 	if ($_SESSION['AutoSupplierNo'] == 0) {
 		echo '<field>
 				<label for="SupplierID">' . _('Supplier Code') . ':</label>
-				<input type="text" data-type="no-illegal-chars" title="" required="required" name="SupplierID" placeholder="' . _('within 10 characters') . '" size="11" maxlength="10" />
-				<fieldhelp>' . _('The supplier id should not be within 10 legal characters and cannot be blank') . '</fieldhelp>
+				<input type="text" data-type="no-illegal-chars" title="" required="required" name="SupplierID" placeholder="' . _('max 10 characters') . '" size="11" maxlength="10" />
+				<fieldhelp>' . _('The supplier id cannot be blank (max 10 characters)') . '</fieldhelp>
 			</field>';
 	}
 	echo '<field>
 			<label for="SuppName">' . _('Supplier Name') . ':</label>
-			<input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="" name="SuppName" size="42" placeholder="' . _('Within 40 legal characters') . '" maxlength="40" />
-			<fieldhelp>' . _('The supplier name should not be blank and should be less than 40 legal characters') . '</fieldhelp>
+			<input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="" name="SuppName" size="42" placeholder="' . _('max 40 characters') . '" maxlength="40" />
+			<fieldhelp>' . _('The supplier name should not be blank (max 40 characters)') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address1">' . _('Address Line 1 (Street)') . ':</label>
-			<input type="text" pattern=".{1,40}" title="" placeholder="' . _('Less than 40 characters') . '" name="Address1" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" pattern=".{1,40}" title="" placeholder="' . _('Max 39 characters') . '" name="Address1" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address2">' . _('Address Line 2 (Street)') . ':</label>
-			<input type="text" name="Address2" pattern=".{1,40}" title="" placeholder="' . _('Less than 40 characters') . '" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" name="Address2" pattern=".{1,40}" title="" placeholder="' . _('Max 39 characters') . '" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address3">' . _('Address Line 3 (Suburb/City)') . ':</label>
-			<input type="text" title="" placeholder="' . _('Less than 40 characters') . '" name="Address3" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" title="" placeholder="' . _('Max 39 characters') . '" name="Address3" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address4">' . _('Address Line 4 (State/Province)') . ':</label>
-			<td><input type="text" name="Address4" placeholder="' . _('Less than 50 characters') . '" size="42" maxlength="50" /></td>
+			<td><input type="text" name="Address4" placeholder="' . _('Max 49 characters') . '" size="42" maxlength="50" /></td>
+			<fieldhelp>' . _('Max 49 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address5">' . _('Address Line 5 (Postal Code)') . ':</label>
-			<td><input type="text" name="Address5" size="42" placeholder="' . _('Less than 40 characters') . '" maxlength="20" /></td>
+			<td><input type="text" name="Address5" size="42" placeholder="' . _('Max 39 characters') . '" maxlength="20" /></td>
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address6">' . _('Country') . ':</label>
