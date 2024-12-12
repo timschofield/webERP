@@ -904,16 +904,12 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline){
+	if ($KL_SalesTeamOnline){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath );
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin
-		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline){
+	if ($KL_SalesTeamOnline){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath );
 		$NumberOfTestExecuted++;
 	}
@@ -930,7 +926,6 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_SalesDirector
 		OR $KL_SalesTeamOnline){ 
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath );
 		$NumberOfTestExecuted++;
@@ -4301,205 +4296,6 @@ function OnlineQuotationsFollowUp($RootPath ){
 				</div>';
 	}
 }
-
-function OnlineMarketPlacePaymentPending($Days, $RootPath){
-	// if $Days = 0 it means all the Online Marketplace Orders still pending of payment
-	// if $Days > 0 it means the same but only show the delayed for more than $Days
-	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
-
-	if ($Days == 0){
-		$Titletext = "All Marketplace Online Orders with Payment Pending";
-		$WhereStatement = "";
-	}else{
-		$Titletext = "Delayed Marketplace Online Orders Payment Pending for more than " . $Days . " days";
-		$WhereStatement = " AND salesorders.orddate <= '" . $StartDate . "' ";
-	}
-		
-	$SQL = "SELECT salesorders.orderno,	
-				salesorders.customerref,
-				debtorsmaster.debtorno,
-				salesorders.deliverto AS name,
-				salesorders.orddate,
-                SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
-				salesorders.freightcost,
-				salesorders.klpaidcash,
-				debtorsmaster.currcode,
-				currencies.decimalplaces
-			FROM salesorders 
-				INNER JOIN salesorderdetails 	
-					ON salesorders.orderno = salesorderdetails.orderno
-				INNER JOIN debtorsmaster 
-					ON salesorders.debtorno = debtorsmaster.debtorno
-				INNER JOIN currencies
-					ON debtorsmaster.currcode = currencies.currabrev
-			WHERE salesorders.klpaidcash= 0	
-				AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ") " .
-				$WhereStatement . "
-			GROUP BY salesorders.orderno,	
-				debtorsmaster.name,
-				salesorders.orddate
-			ORDER BY salesorders.debtorno,
-					salesorders.deliverto";			
-
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('#MarketPlace') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Order Value') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . '' . '</th>
-							<th class="ascending">' . _('Paid Tokopedia') . '</th>
-							<th class="ascending">' . _('Paid Shopee') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$i = 1;
-		$TotalShopeeValue = 0;
-		$TotalTokopediaValue = 0;
-		$TotalPaymentValue = 0;
-		$DecimalPlaces = 0;
-		
-		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-			$PaymentLinkText = 'Apply Payment';
-			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
-
-			$PaymentLinkManualText = 'Mark As Paid';
-			
-			$PaymentManual = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'MANUAL_MARKETPLACE' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkManualText .'</a>';
-			// prepare the links according to the Marketplace
-			if ($myrow['debtorno'] == "TOKOPEDIA"){
-				$PaymentTokopedia = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'tokopedia' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-				$PaymentManual = '';
-				$TotalTokopediaValue += $PaymentValue;
-			}else{
-				$PaymentTokopedia = '';
-			}
-			if ($myrow['debtorno'] == "SHOPEE"){
-				$PaymentShopee = '<a href="' . $RootPath . '/KLReceiptPaymentOnline.php?OrderNo=' . $myrow['orderno'] . '&PaymentCode=' . 'shopee' . '&CustomerCode=' . $myrow['debtorno'] . '&Amount=' . $PaymentValue . '">'. $PaymentLinkText .'</a>';
-				$PaymentManual = '';
-				$TotalShopeeValue += $PaymentValue;
-			}else{
-				$PaymentShopee = '';
-			}
-			$DecimalPlaces = $myrow['decimalplaces'];
-			
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i, 
-					$myrow['debtorno'], 
-					$myrow['name'], 
-					$myrow['orderno'], 
-					$myrow['customerref'],
-					ConvertSQLDate($myrow['orddate']), 
-					locale_number_format($PaymentValue,$DecimalPlaces),
-					$myrow['currcode'], 
-					$PaymentManual,
-					$PaymentTokopedia,
-					$PaymentShopee
-					);
-			$i++;
-			$TotalPaymentValue += $PaymentValue;
-		}
-		// for the detailed report, show totals. If only delayed more than $Days, no need to show totals
-		if ($Days = 0){
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					"", 
-					"", 
-					"", 
-					"", 
-					"",
-					"SHOPEE:", 
-					locale_number_format($TotalShopeeValue,$DecimalPlaces),
-					"IDR", 
-					"",
-					"",
-					""
-					);
-				printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					"", 
-					"", 
-					"", 
-					"", 
-					"",
-					"TOKOPEDIA:", 
-					locale_number_format($TotalTokopediaValue,$DecimalPlaces),
-					"IDR", 
-					"",
-					"",
-					""
-					);
-				printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					"", 
-					"", 
-					"", 
-					"", 
-					"",
-					"TOTAL:", 
-					locale_number_format($TotalPaymentValue,$DecimalPlaces),
-					"IDR", 
-					"",
-					"",
-					""
-					);
-		}
-		echo '</table>
-				</div>';
-	}
-}
-
 
 function OpenCartItemsWithoutPicture($RootPath ){
 

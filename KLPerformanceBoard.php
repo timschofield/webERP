@@ -107,6 +107,11 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 	}
 
+	if ($KL_SystemAdmin){
+		OnlineMarketPlacePaymentPending(0, $RootPath);
+		$NumberOfTestExecuted++;
+	}
+
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
 		OR $KL_BusinessDevelopmentManager){
@@ -932,12 +937,16 @@ function CashStatus($Year,
 	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 
-	if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
-		AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
-		$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
-												$SaldoADUGlobalUSDMax - $SaldoUSD), 5000);	
-	}elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
-		$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
+	if ($SaldoUSD <= $USDMaxEasyPurchasePerMonth){
+		if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
+			AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
+			$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
+													$SaldoADUGlobalUSDMax - $SaldoUSD), 5000);	
+		}elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
+			$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
+		}else{
+			$ToBeExchanged = 0;	
+		}
 	}else{
 		$ToBeExchanged = 0;	
 	}
