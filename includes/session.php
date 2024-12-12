@@ -211,7 +211,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	
 	}
 
-
+	// KL RICARD
 	/* If script is from TEST weberp, DB should be TEST as well */
 	/* DB name is hardcoded, needs to be updated if renamed*/
 	if ((strpos($_SERVER['PHP_SELF'],"TEST")!== false) AND ($_SESSION['DatabaseName'] != "test_erp")){
@@ -232,6 +232,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		include($PathPrefix . 'includes/footer.php');
 		exit;
 	}
+	// KL RICARD END
 
 
 }
