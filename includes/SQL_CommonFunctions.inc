@@ -211,12 +211,12 @@ function BomMaterialCost($Parent) {
 	$result1 = DB_query($SQL);
 	$MyRow1 = DB_fetch_row($result1);
 	$QOH = $MyRow1[0];
-	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost
-	   					FROM bom LEFT JOIN stockmaster
-						ON bom.component = stockmaster.stockid
-						WHERE bom.parent='". $Parent . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+	$SQL = "SELECT SUM(actualcost) AS SumOfmaterialcost
+			FROM bom LEFT JOIN stockmaster
+				ON bom.component = stockmaster.stockid
+			WHERE bom.parent='". $Parent . "'
+				AND bom.effectiveafter <= '" . date('Y-m-d') . "'
+				AND bom.effectiveto > '" . date('Y-m-d') . "'";
 	$result = DB_query($SQL);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
@@ -266,7 +266,7 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 				'" . $ParentID . "',
 				bom.component,
 				bom.quantity*" . $Qty . ",
-				materialcost+labourcost+overheadcost,
+				actualcost,
 				bom.autoissue
 			FROM bom INNER JOIN stockmaster
 			ON bom.component=stockmaster.stockid
@@ -294,7 +294,7 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 							CAST('NODE-1' AS CHAR) as parentstockid,
 							bom.component AS stockid,
 							bom.quantity*1 AS qtypu,
-							materialcost+labourcost+overheadcost AS stdcost,
+							actualcost AS stdcost,
 							bom.autoissue
 						FROM bom INNER JOIN stockmaster
 						ON bom.component=stockmaster.stockid

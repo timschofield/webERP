@@ -72,8 +72,8 @@ if ($Location=='All'){
 				stockmaster.stockid,
 				stockmaster.description,
 				SUM(locstock.quantity) as qtyonhand,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-				SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+				stockmaster.actualcost AS unitcost,
+				SUM(locstock.quantity) *(stockmaster.actualcost) AS itemtotal
 			FROM stockmaster,
 				stockcategory,
 				locstock
@@ -97,8 +97,8 @@ if ($Location=='All'){
 				stockmaster.stockid,
 				stockmaster.description,
 				locstock.quantity as qtyonhand,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-				locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+				stockmaster.actualcost AS unitcost,
+				locstock.quantity *(stockmaster.actualcost) AS itemtotal
 			FROM stockmaster,
 				stockcategory,
 				locstock

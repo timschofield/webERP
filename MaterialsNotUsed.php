@@ -11,7 +11,7 @@ include ('includes/header.php');
 $SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.decimalplaces,
-				(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS stdcost,
+				(stockmaster.actualcost) AS stdcost,
 				(SELECT SUM(quantity)
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid) AS qoh

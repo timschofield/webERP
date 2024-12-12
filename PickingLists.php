@@ -175,7 +175,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 								salesorderdetails.orderlineno,
 								salesorderdetails.poline,
 								salesorderdetails.itemdue,
-								stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+								stockmaster.actualcost AS standardcost
 							FROM pickreqdetails
 							INNER JOIN pickreq
 								ON pickreq.prid=pickreqdetails.prid

@@ -210,7 +210,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 					}
 					// Get the item cost:
-					$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+					$SQLstandardcost = "SELECT stockmaster.actualcost AS standardcost
 										FROM stockmaster
 										WHERE stockmaster.stockid ='" . $TrfLine->StockID . "'";
 					$ErrMsg = _('The standard cost of the item cannot be retrieved because');
@@ -366,7 +366,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 					}
 					// Get the item cost:
-					$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+					$SQLstandardcost = "SELECT stockmaster.actualcost AS standardcost
 										FROM stockmaster
 										WHERE stockmaster.stockid ='" . $TrfLine->StockID . "'";
 					$ErrMsg = _('The standard cost of the item cannot be retrieved because');

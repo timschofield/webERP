@@ -513,7 +513,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 										$DbgMsg,
 										true);
 				//Need to get the latest BOM to roll up cost
-				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+				$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost
 													FROM stockmaster INNER JOIN bom
 													ON stockmaster.stockid=bom.component
 													WHERE bom.parent='" . $StockItem->StockID . "'
@@ -710,7 +710,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 										$ErrMsg,
 										$DbgMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*contractbom.quantity) AS cost
+			$CostResult = DB_query("SELECT SUM((actualcost)*contractbom.quantity) AS cost
 									FROM stockmaster INNER JOIN contractbom
 									ON stockmaster.stockid=contractbom.stockid
 									WHERE contractbom.contractref='" .  $ContractRow['contractref'] . "'");

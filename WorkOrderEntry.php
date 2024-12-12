@@ -164,7 +164,7 @@ if (isset($_POST['Save'])) {
 
 		// insert parent item info
 		foreach ($_SESSION['WorkOrder' . $Identifier]->Items as $Item) {
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,
+			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,
 											bom.loccode
 										FROM stockmaster
 										INNER JOIN bom

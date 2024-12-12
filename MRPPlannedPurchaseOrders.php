@@ -31,8 +31,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					stockmaster.description,
 					stockmaster.mbflag,
 					stockmaster.decimalplaces,
-					stockmaster.actualcost,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
+					stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -49,8 +48,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					stockmaster.description,
 					stockmaster.mbflag,
 					stockmaster.decimalplaces,
-					stockmaster.actualcost,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
+					stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -62,9 +60,6 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					stockmaster.mbflag,
 					stockmaster.decimalplaces,
 					stockmaster.actualcost,
-					stockmaster.materialcost,
-					stockmaster.labourcost,
-					stockmaster.overheadcost,
 					computedcost
 				ORDER BY mrpplannedorders.part,weekindex";
 	} else {  // This else consolidates by month
@@ -78,8 +73,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					stockmaster.description,
 					stockmaster.mbflag,
 					stockmaster.decimalplaces,
-					stockmaster.actualcost,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost ) as computedcost
+					stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -91,9 +85,6 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					stockmaster.mbflag,
 					stockmaster.decimalplaces,
 					stockmaster.actualcost,
-					stockmaster.materialcost,
-					stockmaster.labourcost,
-					stockmaster.overheadcost,
 					computedcost
 				ORDER BY mrpplannedorders.part,yearmonth";
 	}

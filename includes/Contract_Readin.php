@@ -62,7 +62,7 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 							contractbom.quantity,
 							stockmaster.units,
 							stockmaster.decimalplaces,
-							stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost
+							stockmaster.actualcost AS cost
 						FROM contractbom INNER JOIN stockmaster
 						ON contractbom.stockid=stockmaster.stockid
 						WHERE contractref ='" . $ContractRef . "'";

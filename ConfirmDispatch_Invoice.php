@@ -174,7 +174,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 								salesorderdetails.orderlineno,
 								salesorderdetails.poline,
 								salesorderdetails.itemdue,
-								stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+								stockmaster.actualcost AS standardcost
 							FROM salesorderdetails INNER JOIN stockmaster
 							 	ON salesorderdetails.stkcode = stockmaster.stockid
 							WHERE salesorderdetails.orderno ='" . $_GET['OrderNumber'] . "'
@@ -1039,7 +1039,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 				$StandardCost = 0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+								stockmaster.actualcost AS standard
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLine->StockID . "'

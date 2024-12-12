@@ -279,7 +279,7 @@ if (isset($_POST['submit'])) {
 			$SQL = "SELECT mbflag,
 							controlled,
 							serialised,
-							materialcost+labourcost+overheadcost AS itemcost,
+							actualcost AS itemcost,
 							stockcategory.stockact,
 							stockcategory.wipact,
 							description,

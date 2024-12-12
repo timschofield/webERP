@@ -1435,7 +1435,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 						bom.quantity,
-						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+						stockmaster.actualcost AS standard
 						FROM bom,
 							stockmaster
 						WHERE bom.component=stockmaster.stockid

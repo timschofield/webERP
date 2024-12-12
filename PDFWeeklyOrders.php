@@ -29,7 +29,7 @@ $sql= "SELECT salesorders.orderno,
 			  salesorderdetails.qtyinvoiced,
 			  salesorderdetails.completed,
 			  salesorderdetails.discountpercent,
-			  stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+			  stockmaster.actualcost AS standardcost,
 			  debtorsmaster.name
 		 FROM salesorders
 			 INNER JOIN salesorderdetails

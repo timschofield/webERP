@@ -13,8 +13,8 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 					stockmaster.decimalplaces,
 					SUM(locstock.quantity) AS qtyonhand,
 					stockmaster.units,
-					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-					SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+					stockmaster.actualcost AS unitcost,
+					SUM(locstock.quantity) *(stockmaster.actualcost) AS itemtotal
 				FROM stockmaster,
 					stockcategory,
 					locstock
@@ -26,9 +26,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 					unitcost,
 					stockmaster.units,
 					stockmaster.decimalplaces,
-					stockmaster.materialcost,
-					stockmaster.labourcost,
-					stockmaster.overheadcost,
+					stockmaster.actualcost,
 					stockmaster.stockid,
 					stockmaster.description
 				HAVING SUM(locstock.quantity)!=0
@@ -43,8 +41,8 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 					stockmaster.units,
 					stockmaster.decimalplaces,
 					locstock.quantity AS qtyonhand,
-					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-					locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+					stockmaster.actualcost AS unitcost,
+					locstock.quantity *(stockmaster.actualcost) AS itemtotal
 				FROM stockmaster,
 					stockcategory,
 					locstock

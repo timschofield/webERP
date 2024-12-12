@@ -327,7 +327,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 	//need to check again we have the full week!
 	$WeekTimeTotalResult = DB_query("SELECT employeeid,
 											employees.stockid,
-											materialcost+labourcost+overheadcost AS labourcost,
+											actualcost AS labourcost,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
 									FROM timesheets INNER JOIN employees
 									ON timesheets.employeeid=employees.id
@@ -353,7 +353,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 											employees.stockid as issueitem,
 											employees.surname,
 											employees.firstname,
-											materialcost+labourcost+overheadcost AS labourcost,
+											actualcost AS labourcost,
 											workorders.loccode,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
 									FROM timesheets INNER JOIN employees

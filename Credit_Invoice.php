@@ -128,9 +128,7 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 								stockmoves.qty as quantity,
 								stockmoves.discountpercent,
 								stockmoves.trandate,
-								stockmaster.materialcost
-									+ stockmaster.labourcost
-									+ stockmaster.overheadcost AS standardcost,
+								stockmaster.actualcost AS standardcost,
 								stockmoves.narrative
 							FROM stockmoves, stockmaster
 							WHERE stockmoves.stockid = stockmaster.stockid
@@ -724,9 +722,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 					$StandardCost = 0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 					$SQL = "SELECT	bom.component,
 									bom.quantity,
-								stockmaster.materialcost
-									+ stockmaster.labourcost
-									+ stockmaster.overheadcost AS standard
+								stockmaster.actualcost AS standard
 								FROM bom,
 									stockmaster
 								WHERE bom.component=stockmaster.stockid

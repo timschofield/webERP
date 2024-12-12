@@ -186,7 +186,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 								stockmaster.stockid,
 								stockmaster.units,
 								stockmaster.decimalplaces,
-								stockmaster.materialcost+labourcost+overheadcost AS unitcost
+								stockmaster.actualcost AS unitcost
 							FROM stockmaster
 							WHERE stockmaster.stockid = '". trim($_POST['StockID'.$i]) . "'";
 

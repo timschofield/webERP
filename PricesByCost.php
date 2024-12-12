@@ -27,7 +27,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					stockmaster.description,
 					prices.debtorno,
 					prices.branchcode,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) as cost,
+					(stockmaster.actualcost) as cost,
 					prices.price as price,
 					prices.debtorno AS customer,
 					prices.branchcode AS branch,
@@ -41,7 +41,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				ON prices.currabrev=currencies.currabrev
 				WHERE stockmaster.discontinued = 0
 				" . $Category . "
-				AND   prices.price" . $Comparator . "(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * '" . filter_number_format($_POST['Margin']) . "'
+				AND   prices.price" . $Comparator . "(stockmaster.actualcost) * '" . filter_number_format($_POST['Margin']) . "'
 				AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 				AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 				AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";

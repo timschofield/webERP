@@ -160,9 +160,9 @@ if (isset($StockID) and $StockID!=""){
 					bom.component,
 					stockmaster.description,
 					stockmaster.decimalplaces,
-					stockmaster.materialcost+ stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+					stockmaster.actualcost as standardcost,
 					bom.quantity,
-					bom.quantity * (stockmaster.materialcost+ stockmaster.labourcost+ stockmaster.overheadcost) AS componentcost
+					bom.quantity * (stockmaster.actualcost) AS componentcost
 			FROM bom INNER JOIN stockmaster
 			ON bom.component = stockmaster.stockid
 			WHERE bom.parent = '" . $StockID . "'

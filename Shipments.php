@@ -92,7 +92,7 @@ if (isset($_GET['SelectedShipment'])){
 									purchorderdetails.quantityord,
 									purchorderdetails.quantityrecd,
 									purchorderdetails.stdcostunit,
-									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as stdcost,
+									stockmaster.actualcost as stdcost,
 									purchorders.intostocklocation
 							FROM purchorderdetails INNER JOIN stockmaster
 								ON purchorderdetails.itemcode=stockmaster.stockid
@@ -255,7 +255,7 @@ if (isset($_GET['Add'])
 					purchorderdetails.itemdescription,
 					purchorderdetails.unitprice,
 					purchorderdetails.stdcostunit,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as stdcost,
+					stockmaster.actualcost as stdcost,
 					purchorderdetails.quantityord,
 					purchorderdetails.quantityrecd,
 					purchorderdetails.deliverydate,
