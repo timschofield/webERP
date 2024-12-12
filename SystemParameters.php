@@ -1077,40 +1077,6 @@ echo '<field>
 		<fieldhelp>' . _('Force connections to be only over secure sockets - ie encrypted data only') . '</fieldhelp>
 	</field>';
 
-/*Perform Database maintenance DB_Maintenance*/
-echo '<field>
-		<label for="X_DB_Maintenance">' . _('Perform Database Maintenance At Logon') . ':</label>
-		<select name="X_DB_Maintenance">';
-	if ($_SESSION['DB_Maintenance']=='1'){
-		echo '<option selected="selected" value="1">' . _('Daily') . '</option>';
-	} else {
-		echo '<option value="1">' . _('Daily') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='7'){
-		echo '<option selected="selected" value="7">' . _('Weekly') . '</option>';
-	} else {
-		echo '<option value="7">' . _('Weekly') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='30'){
-		echo '<option selected="selected" value="30">' . _('Monthly') . '</option>';
-	} else {
-		echo '<option value="30">' . _('Monthly') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='0'){
-		echo '<option selected="selected" value="0">' . _('Never') . '</option>';
-	} else {
-		echo '<option value="0">' . _('Never') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='-1'){
-		echo '<option selected="selected" value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
-	} else {
-		echo '<option value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
-	}
-
-	echo '</select>
-		<fieldhelp>' . _('Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login') . '</fieldhelp>
-	</field>';
-
 $WikiApplications = array( _('Disabled'),
  					_('WackoWiki'),
  					_('MediaWiki'),
