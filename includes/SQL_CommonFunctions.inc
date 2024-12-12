@@ -108,7 +108,7 @@ Function GetCreditAvailable($DebtorNo) {
 
 	$sql = "SELECT debtorsmaster.debtorno,
 			debtorsmaster.creditlimit,
-			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) as balance
+			SUM(debtortrans.balance) as balance
 		FROM debtorsmaster INNER JOIN debtortrans
 			ON debtorsmaster.debtorno=debtortrans.debtorno
 		WHERE debtorsmaster.debtorno='" . $DebtorNo . "'

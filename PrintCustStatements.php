@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	$ErrMsg = _('There was a problem settling the old transactions.');
 	$DbgMsg = _('The SQL used to settle outstanding transactions was');
 	$sql = "UPDATE debtortrans SET settled=1
-			WHERE ABS(debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc)<0.009";
+			WHERE ABS(debtortrans.balance)<0.009";
 	$SettleAsNec = DB_query($sql, $ErrMsg, $DbgMsg);
 
 /*Figure out who all the customers in this range are */
@@ -159,7 +159,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 						debtortrans.trandate,
 						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst as total,
 						debtortrans.alloc,
-						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc as ostdg
+						debtortrans.balance as ostdg
 					FROM debtortrans INNER JOIN systypes
 						ON debtortrans.type=systypes.typeid
 					WHERE debtortrans.debtorno='" . $StmtHeader['debtorno'] . "'
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 									debtortrans.trandate,
 									debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst AS total,
 									debtortrans.alloc,
-									debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc AS ostdg
+									debtortrans.balance AS ostdg
 							FROM debtortrans INNER JOIN systypes
 								ON debtortrans.type=systypes.typeid
 							INNER JOIN custallocns
@@ -350,40 +350,34 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 							SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 								CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >=
 								paymentterms.daysbeforedue
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-								debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END
 							ELSE
 								CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= 0
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-								debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END
 							END) AS due,
 							Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 								CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
 								AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >=
 								(paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-								debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END
 							ELSE
 								CASE WHEN (TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . ")
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-								debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END
 							END) AS overdue1,
 							Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 								CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
 								AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue +
 								" . $_SESSION['PastDueDays2'] . ")
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-								debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END
 							ELSE
 								CASE WHEN (TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth))
 								>= " . $_SESSION['PastDueDays2'] . ")
-								THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-								debtortrans.ovdiscount - debtortrans.alloc
+								THEN debtortrans.balance
 								ELSE 0 END
 							END) AS overdue2
 						FROM debtorsmaster INNER JOIN paymentterms

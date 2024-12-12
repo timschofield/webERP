@@ -29,8 +29,8 @@ if (isset($_POST['PrintPDF'])
 					debtorsmaster.name,
 		  			currencies.currency,
 		  			currencies.decimalplaces,
-					SUM((debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)/debtortrans.rate) AS balance,
-					SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
+					SUM((debtortrans.balance)/debtortrans.rate) AS balance,
+					SUM(debtortrans.balance) AS fxbalance,
 					SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
 					(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
 					SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "'
