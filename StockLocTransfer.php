@@ -65,11 +65,11 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						break;
 				} // end switch statement
 				if ($_SESSION['ProhibitNegativeStock']==1){
-					$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+					$InTransitSQL="SELECT SUM(pendingqty) as intransit
 									FROM loctransfers
 									WHERE stockid='" . $StockID . "'
 										AND shiploc='".$_POST['FromStockLocation']."'
-										AND shipqty>recqty";
+										AND pendingqty>0";
 					$InTransitResult=DB_query($InTransitSQL);
 					$InTransitRow=DB_fetch_array($InTransitResult);
 					$InTransitQuantity=$InTransitRow['intransit'];
@@ -132,11 +132,11 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 						$_POST['LinesCounter'] -= 10;
 					}
 					if ($_SESSION['ProhibitNegativeStock']==1){
-						$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+						$InTransitSQL="SELECT SUM(pendingqty) as intransit
 										FROM loctransfers
 										WHERE stockid='" . $_POST['StockID' . $i] . "'
 											AND shiploc='".$_POST['FromStockLocation']."'
-											AND shipqty>recqty";
+											AND pendingqty>0";
 						$InTransitResult=DB_query($InTransitSQL);
 						$InTransitRow=DB_fetch_array($InTransitResult);
 						$InTransitQuantity=$InTransitRow['intransit'];
