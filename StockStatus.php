@@ -177,7 +177,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $MyRow['loccode']);
 
-		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND shiploc='".$MyRow['loccode']."'";
@@ -189,7 +189,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 			$InTransitQuantityOut=0;
 		}
 
-		$InTransitSQL="SELECT SUM(-shipqty+recqty) as intransit
+		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND recloc='".$MyRow['loccode']."'";
