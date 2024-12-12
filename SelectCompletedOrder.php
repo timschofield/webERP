@@ -247,7 +247,8 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 						salesorders.orddate,
 						salesorders.deliverydate,
 						salesorders.deliverto,
-						currencies.decimalplaces AS currdecimalplaces, SUM(salesorderdetails.linenetprice) AS ordervalue
+						currencies.decimalplaces AS currdecimalplaces, 
+						SUM(salesorderdetails.linenetprice) AS ordervalue
 					FROM salesorders INNER JOIN salesorderdetails
 						ON salesorders.orderno = salesorderdetails.orderno
 						INNER JOIN debtorsmaster
