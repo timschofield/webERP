@@ -182,18 +182,20 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		case UL_OK; //user logged in successfully
 			setcookie('Login', $_SESSION['DatabaseName']);
 			include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
-			$CheckSQL = "SELECT sessionid FROM login_data WHERE sessionid='" . session_id() . "'";
-			$CheckResult = DB_query($CheckSQL);
-			if (DB_num_rows($CheckResult) == 0) {
-				$SQL = "INSERT INTO login_data VALUES ('" . session_id() . "',
+			if ($_SESSION['DBUpdateNumber'] > 10) {
+				$CheckSQL = "SELECT sessionid FROM login_data WHERE sessionid='" . session_id() . "'";
+				$CheckResult = DB_query($CheckSQL);
+				if (DB_num_rows($CheckResult) == 0) {
+					$SQL = "INSERT INTO login_data VALUES ('" . session_id() . "',
 														'" . $_SESSION['UserID'] . "',
 														NOW(),
 														'" . basename($_SERVER['SCRIPT_NAME']) . "')";
-				$Result = DB_query($SQL);
-			} else {
-				$SQL = "UPDATE login_data SET script='" . basename($_SERVER['SCRIPT_NAME']) . "'
+					$Result = DB_query($SQL);
+				} else {
+					$SQL = "UPDATE login_data SET script='" . basename($_SERVER['SCRIPT_NAME']) . "'
 									WHERE sessionid='" . session_id() . "'";
-				$Result = DB_query($SQL);
+					$Result = DB_query($SQL);
+				}
 			}
 		break;
 
