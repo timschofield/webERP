@@ -294,4 +294,17 @@ function UpdateFavourites(e, t) {
 	return false
 }
 
+function unload() {
+	alert("Hello world!");
+	Target = "Logout.php";
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+	}
+	xmlhttp.open("GET", Target, true);
+	xmlhttp.send();
+	return false
+}
+
 window.onload=initial;
