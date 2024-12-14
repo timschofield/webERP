@@ -295,8 +295,7 @@ function UpdateFavourites(e, t) {
 }
 
 function unload() {
-	alert("Hello world!");
-	Target = "Logout.php";
+/*	Target = "Logout.php";
 	if (window.XMLHttpRequest) {
 		xmlhttp = new XMLHttpRequest
 	} else {
@@ -304,7 +303,8 @@ function unload() {
 	}
 	xmlhttp.open("GET", Target, true);
 	xmlhttp.send();
-	return false
+	return false*/
 }
 
 window.onload=initial;
+window.onbeforeunload=unload;
