@@ -1035,10 +1035,13 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_OperationalManager){
+		OR $KL_OperationalManager
+		OR $KL_AdministrationLeader){
 		PettyCashBalance('Authorizer');
 		$NumberOfTestExecuted++;
-		PettyCashToBeAuthorized();
+		PettyCashToBeAuthorized('Cash');
+		$NumberOfTestExecuted++;
+		PettyCashToBeAuthorized('Expenses');
 		$NumberOfTestExecuted++;
 	}
 
@@ -4716,20 +4719,29 @@ function PettyCashBalance($TypeUser){
 	}
 }
 
-function PettyCashToBeAuthorized(){
+function PettyCashToBeAuthorized($AuthorizationType){
 
+	if ($AuthorizationType == "Cash"){
+		$Title = "Petty Cash Assignations to be Authorized";
+		$SQLAuthority = "AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+						AND pcashdetails.codeexpense = 'ASSIGNCASH'";
+	}else{
+		$Title = "Petty Cash Expenses to be Authorized";
+		$SQLAuthority = "AND pctabs.authorizerexpenses LIKE '%" . $_SESSION['UserID'] . "%'
+						AND pcashdetails.codeexpense != 'ASSIGNCASH'";
+	}
 	$SQL = "SELECT pcashdetails.tabcode, 	
 				SUM(pcashdetails.amount) as amount,
 				pctabs.currency
 			FROM pcashdetails,pctabs	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
-				AND pcashdetails.authorized = '0000-00-00'
-				AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+				AND pcashdetails.authorized = '0000-00-00'" .
+				$SQLAuthority . "
 			GROUP BY pcashdetails.tabcode";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Expenses to be Authorized') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
