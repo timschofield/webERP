@@ -5,6 +5,8 @@
 $KL_SystemAdmin = FALSE;
 $KL_OperationalManager = FALSE;
 $KL_OperationalLeader = FALSE;
+$KL_OperationalTeam = FALSE;
+$KL_AdministrationLeader = FALSE;
 $KL_AdministrationTeam = FALSE;
 $KL_BusinessDevelopmentManager = FALSE;
 $KL_PurchasingTeam = FALSE;
@@ -37,10 +39,11 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration (R)
 }else if ($_SESSION['AccessLevel'] == 22){ // Sales Team SPG Support
 	$KL_SPGJunior = TRUE;
 }else if ($_SESSION['AccessLevel'] == 19){ // Administration Leader (Revi)
+	$KL_AdministrationLeader = TRUE;
 	$KL_AdministrationTeam = TRUE;
 }else if ($_SESSION['AccessLevel'] == 27){ // Administration Team 
 	$KL_AdministrationTeam = TRUE;
-}else if ($_SESSION['AccessLevel'] == 21){ // Business Development manager (L)
+}else if ($_SESSION['AccessLevel'] == 21){ // Business Development manager (Laia)
 	$KL_BusinessDevelopmentManager = TRUE;
 }else if ($_SESSION['AccessLevel'] == 24){ // Purchasing Leader (Cicik)
 	$KL_PurchasingTeam = TRUE;
@@ -55,7 +58,8 @@ if ($_SESSION['AccessLevel'] == 8){ // webERP System Administration (R)
 }else if ($_SESSION['AccessLevel'] == 36){ // Sales Team Online
 	$KL_SalesTeamOnline = TRUE;
 }else if ($_SESSION['AccessLevel'] == 37){ // Operational Leader (Novik)
-	$KL_AdministrationTeam = TRUE;
+	$KL_OperationalLeader = TRUE;
+	$KL_OperationalTeam = TRUE;
 }
 
 ?>

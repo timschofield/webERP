@@ -345,7 +345,7 @@ if ($ProcessSection03){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_AdministrationTeam){
+		OR $KL_AdministrationLeader){
 		CashStatus($yesterday_year, 
 					226900000, 200000000, 100000000, 
 					143000000, 200000000, 100000000, 
