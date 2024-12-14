@@ -219,7 +219,7 @@ function UpdateTablePrice($StockId, $RetailPrice){
 	$sql = "UPDATE prices 
 			SET enddate='" . $Yesterday . "'
 			WHERE stockid ='" . $StockId . "'
-			AND  (enddate > '" . $Yesterday . "' OR enddate = '0000-00-00') ";
+			AND  (enddate > '" . $Yesterday . "' OR enddate = '9999-12-31') ";
 	$ErrMsg = _('Could not update the price because');
 	$result = DB_query($sql,$ErrMsg);
 	prnMsg (_('The end date of current prices has been changed to yesterday'),'success');
@@ -276,7 +276,7 @@ function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $S
 			$Price . ",
 			'', '" . 
 			$StartDate . "',
-			'0000-00-00')";
+			'9999-12-31')";
 			
 	$ErrMsg = _('Could not add the new KL price');
 	$result = DB_query($sql,$ErrMsg);

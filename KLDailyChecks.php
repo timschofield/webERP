@@ -327,7 +327,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
 				AND (enddate > '"  . date('Y-m-d') ."'
-				  OR enddate = '0000-00-00')";
+				  OR enddate = '9999-12-31')";
 	$result = DB_query($sql,$ErrMsg);
 	$myrow = DB_fetch_array($result);
 	InsertKPI("Stock", "Models moved to obsolete (MODELS)", $myrow['items']);
@@ -339,7 +339,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
 				AND (enddate > '"  . date('Y-m-d') ."'
-				  OR enddate = '0000-00-00')";
+				  OR enddate = '9999-12-31')";
 	$ErrMsg =_('Could not set end date to today for obsolete items because');
 	$result = DB_query($sql,$ErrMsg);
 	$Text = "Prices End Date updated to today for obsolete items.";
@@ -374,7 +374,7 @@ function CleanObsoleteFromWebsite($ShowMessages, $EmailText){
 function CleanWrongPrices($ShowMessages, $EmailText){
 	$sql = "DELETE FROM prices
 			WHERE startdate > enddate
-			AND enddate != '0000-00-00'";
+			AND enddate != '9999-12-31'";
 	$ErrMsg =_('Could not delete wrong prices because');
 	$result = DB_query($sql,$ErrMsg);
 	$Text = "Wrong prices removed from DB";

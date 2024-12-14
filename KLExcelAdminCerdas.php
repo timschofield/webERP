@@ -59,7 +59,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 					AND prices.currabrev = '". CURRENCY_CODE ."'
 					AND prices.startdate <= '". $Now. "' 
-					AND (prices.enddate >= '". $Now. "' OR prices.enddate = '0000-00-00')
+					AND (prices.enddate >= '". $Now. "' OR prices.enddate = '9999-12-31')
 				ORDER BY stockmaster.stockid";
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){

@@ -95,7 +95,7 @@ If (isset($_POST['PrintPDF'])) {
 						AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 						AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 						AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-						AND (prices.enddate='0000-00-00' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+						AND (prices.enddate='9999-12-31' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
 						$WhereCurrency . "
 						ORDER BY prices.currabrev,
 							stockcategory.categorydescription,
@@ -130,7 +130,7 @@ If (isset($_POST['PrintPDF'])) {
                 WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				AND prices.typeabbrev='" . $_POST['SalesType'] . "'
     			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-    			AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+    			AND (prices.enddate='9999-12-31' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
 				$WhereCurrency . "
     			AND prices.debtorno=''
     			ORDER BY prices.currabrev,
@@ -197,7 +197,7 @@ If (isset($_POST['PrintPDF'])) {
 		$pdf->addText($Left_Margin, $YPos, $FontSize, $PriceList['stockid']);
 		$pdf->addText($Left_Margin+80, $YPos, $FontSize, $PriceList['description']);
 		$pdf->addText($Left_Margin+280, $YPos, $FontSize, ConvertSQLDate($PriceList['startdate']));
-		if ($PriceList['enddate']!='0000-00-00') {
+		if ($PriceList['enddate']!='9999-12-31') {
 			$DisplayEndDate = ConvertSQLDate($PriceList['enddate']);
 		} else {
 			$DisplayEndDate = _('No End Date');
