@@ -63,5 +63,3 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 A copy of the GNU General Public License is included in the doc directory along with this program; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
 
 Copyright © weberp.org 2003-2018 - Contact: info@weberp.org
-
-Note that as well as the name of the project/development community of webERP "weberp.org" is a domain name administered by the project administrator on behalf of the project. Irrespective of misleading comments elsewhere, copyright of all contributed code remains with the developer who contributed it and the "weberp.org" project is the collective name for the webERP development team.
