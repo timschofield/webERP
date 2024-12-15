@@ -19,7 +19,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 						WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 							AND prices.currabrev = '". CURRENCY_CODE ."'
 							AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-							AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+							AND (prices.enddate='9999-12-31' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
 							AND prices.debtorno=''";
 	}elseif ($_POST['LabelID'] == 'CodeSticker'){
 		$SQLPrice = "0 AS price, ";

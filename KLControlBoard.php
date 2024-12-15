@@ -62,6 +62,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 /*	$KL_SystemAdmin = TRUE;
 	$KL_OperationalManager = TRUE;
 	$KL_OperationalLeader = TRUE;
+	$KL_AdministrationLeader = TRUE;
 	$KL_AdministrationTeam = TRUE;
 	$KL_BusinessDevelopmentManager = TRUE;
  	$KL_SalesDirector = TRUE;
@@ -95,23 +96,8 @@ if ($_SESSION['UserID'] == "Ricard"){
 */
 }
 
-if ($KL_SystemAdmin 
-	OR $KL_OperationalManager 
-	OR $KL_AdministrationTeam 
-	OR $KL_BusinessDevelopmentManager 
-	OR $KL_SalesDirector
-	OR $KL_PurchasingTeam 
-	OR $KL_ShopSupportTeam 
-	OR $KL_ShopSupportLeader 
-	OR $KL_ShopManager
-	OR $KL_SalesTeamOnline
-	OR $KL_PettyCash 
-	OR $KL_SPGSeniorOrSupport 
-	OR $KL_SPGJunior){
 
-//	$NumberOfTestExecuted++;
-	
-}
+
 
 /***************************************************************************************
 * SECTION 1         
@@ -300,7 +286,7 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_SystemAdmin
-		OR $KL_AdministrationTeam){
+		OR $KL_AdministrationLeader){
 		InternalBankTransfers("PTADU", 
 					"111121105AD", 1000000000, 2000000000,
 					"111121101AD",   25000000,   75000000,
@@ -339,7 +325,7 @@ if ($ProcessSection01){
 
 	if ($KL_SystemAdmin 
 		OR $KL_PurchasingTeam
-		OR $KL_AdministrationTeam){
+		OR $KL_AdministrationLeader){
 		BalanceAccountControl("111111100",          -1,          1, $periodnow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111202030",          -1,          1, $periodnow);
@@ -1048,10 +1034,14 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector){
+		OR $KL_SalesDirector
+		OR $KL_OperationalManager
+		OR $KL_AdministrationLeader){
 		PettyCashBalance('Authorizer');
 		$NumberOfTestExecuted++;
-		PettyCashToBeAuthorized();
+		PettyCashToBeAuthorized('Cash');
+		$NumberOfTestExecuted++;
+		PettyCashToBeAuthorized('Expenses');
 		$NumberOfTestExecuted++;
 	}
 
@@ -2737,7 +2727,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 							FROM prices
 							WHERE stockmaster.stockid = prices.stockid
 								AND prices.startdate <= '". $today. "' 
-								AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+								AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 								AND prices.typeabbrev = 'RT'
 								AND currabrev = 'IDR') IS NOT NULL
 					AND NOT EXISTS (SELECT *
@@ -2771,7 +2761,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 				WHERE stockmaster.stockid = prices.stockid
 					AND prices.typeabbrev = 'RT'
 					AND prices.startdate <= '". $today. "' 
-					AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+					AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 					AND currabrev = 'IDR') AS price,
 			(SELECT SUM(locstock.quantity)
 				FROM locstock
@@ -4731,20 +4721,29 @@ function PettyCashBalance($TypeUser){
 	}
 }
 
-function PettyCashToBeAuthorized(){
+function PettyCashToBeAuthorized($AuthorizationType){
 
+	if ($AuthorizationType == "Cash"){
+		$Title = "Petty Cash Assignations to be Authorized";
+		$SQLAuthority = "AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+						AND pcashdetails.codeexpense = 'ASSIGNCASH'";
+	}else{
+		$Title = "Petty Cash Expenses to be Authorized";
+		$SQLAuthority = "AND pctabs.authorizerexpenses LIKE '%" . $_SESSION['UserID'] . "%'
+						AND pcashdetails.codeexpense != 'ASSIGNCASH'";
+	}
 	$SQL = "SELECT pcashdetails.tabcode, 	
 				SUM(pcashdetails.amount) as amount,
 				pctabs.currency
 			FROM pcashdetails,pctabs	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
-				AND pcashdetails.authorized = '0000-00-00'
-				AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
+				AND pcashdetails.authorized = '0000-00-00'" .
+				$SQLAuthority . "
 			GROUP BY pcashdetails.tabcode";
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Expenses to be Authorized') . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

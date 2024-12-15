@@ -1212,7 +1212,7 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate <= '". $InitialDate. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 				AND stockmaster.discontinued = 0					
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0

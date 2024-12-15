@@ -222,7 +222,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate <= '". $today. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
@@ -346,7 +346,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate <= '". $StartDate. "' 
 				AND prices.startdate <= '". $today. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
@@ -465,7 +465,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate <= '". $today. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
@@ -583,7 +583,7 @@ function PriceWrongRounding($RootPath){
 						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 						AND prices.currabrev = '". CURRENCY_CODE ."'
 						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+						AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 					LIMIT 1) AS retailprice,
 				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster				
@@ -682,7 +682,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate <= '". $StartDate. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '0000-00-00')
+				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 				AND stockmaster.discontinued = 0
 				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "

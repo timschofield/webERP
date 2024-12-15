@@ -240,7 +240,7 @@ if (isset($_POST['UpdatePrices'])){
 		if (Is_Date($_POST['PriceEndDate'])){
 			$SQLEndDate = FormatDateForSQL($_POST['PriceEndDate']);
 		} else {
-			$SQLEndDate = '0000-00-00';
+			$SQLEndDate = '9999-12-31';
 		}
 		$sql = "SELECT stockid,
 						actualcost AS cost
@@ -284,7 +284,7 @@ if (isset($_POST['UpdatePrices'])){
 								AND currabrev='" . $_POST['CurrCode'] . "'
 								AND debtorno=''
 								AND startdate <='" . Date('Y-m-d') . "'
-								AND (enddate >= '" . Date('Y-m-d') . "' OR enddate='0000-00-00')
+								AND (enddate >= '" . Date('Y-m-d') . "' OR enddate='9999-12-31')
 								AND stockid='" . $myrow['stockid'] . "'
 							ORDER BY startdate DESC";
 				$ErrMsg = _('Could not get the base price for the item') . ' ' . $myrow['stockid'] . _('from the price list') . ' ' . $_POST['BasePriceList'];
@@ -324,7 +324,7 @@ if (isset($_POST['UpdatePrices'])){
 													AND debtorno =''
 													AND currabrev='" . $_POST['CurrCode'] . "'
 													AND startdate <='" . Date('Y-m-d') . "'
-													AND (enddate>='" . Date('Y-m-d') . "' OR enddate='0000-00-00')
+													AND (enddate>='" . Date('Y-m-d') . "' OR enddate='9999-12-31')
 													AND stockid='" . $myrow['stockid'] . "'");
 				if (DB_num_rows($CurrentPriceResult)==1){
 					$DayPriorToNewPrice = DateAdd($_POST['PriceStartDate'],'d',-1);

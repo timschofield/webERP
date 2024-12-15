@@ -8,7 +8,7 @@ WHERE stockmaster.stockid = prices.stockid
 	AND prices.typeabbrev = 'RT'
 	AND prices.currabrev = 'IDR'
 	AND prices.startdate <= '2021-01-14' 
-	AND (prices.enddate >= '2021-01-14' OR prices.enddate = '0000-00-00')
+	AND (prices.enddate >= '2021-01-14' OR prices.enddate = '9999-12-31')
 ORDER BY stockmaster.stockid
 
 SELECT DISTINCT(prices.price), SUM(quantity)
@@ -20,6 +20,6 @@ WHERE stockmaster.stockid = prices.stockid
 	AND prices.typeabbrev = 'RT'
 	AND prices.currabrev = 'IDR'
 	AND prices.startdate <= '2021-01-14' 
-	AND (prices.enddate >= '2021-01-14' OR prices.enddate = '0000-00-00')
+	AND (prices.enddate >= '2021-01-14' OR prices.enddate = '9999-12-31')
 GROUP BY prices.price
 ORDER BY prices.price
