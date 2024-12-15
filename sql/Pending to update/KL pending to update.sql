@@ -1,8 +1,4 @@
-/* ALREADY RUN IN DB*/
-
-
-/* PENDING TO RUN IN DB*/
-
+/* ALREADY RUN IN DB
 
 UPDATE `pctabs` SET authorizerexpenses=authorizer;
 
@@ -14,6 +10,7 @@ UPDATE config SET confvalue='4.13.1' WHERE confname='VersionNumber';
 
 -- Convert prices to use non- SQL mode specific end date we will have a year 10000 problem but its a way off!:
 UPDATE prices SET enddate='9999-12-31' WHERE enddate='0000-00-00';
+UPDATE pricematrix SET enddate='9999-12-31' WHERE enddate='0000-00-00';
 
 UPDATE config SET confvalue='4.14' WHERE confname='VersionNumber';
 
@@ -22,6 +19,20 @@ UPDATE config SET confvalue='4.14.1' WHERE confname='VersionNumber';
 UPDATE config SET confvalue='4.15' WHERE confname='VersionNumber';
 
 ALTER TABLE `stockmaster` DROP COLUMN `appendfile`;
+
+UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';
+
+UPDATE config SET confvalue='4.15.2' WHERE confname='VersionNumber';
+*/
+
+/* PENDING TO RUN IN DB*/
+
+
+/***********************************************************************
+*
+* PENDING OF VERIFICATION
+*
+************************************************************************/
 
 -- change date defaults to acceptable default - could also use CURRENT_TIMESTAMP ??
 ALTER TABLE `assetmanager` CHANGE `datepurchased` `datepurchased` DATE NOT NULL DEFAULT '1000-01-01';
@@ -81,9 +92,4 @@ ALTER TABLE tenders CHANGE `requiredbydate` `requiredbydate` datetime NOT NULL D
 ALTER TABLE workorders CHANGE `requiredby` `requiredby` date NOT NULL DEFAULT '1000-01-01';
 ALTER TABLE workorders CHANGE `startdate` `startdate` date NOT NULL DEFAULT '1000-01-01';
 
-
--- THIS IS THE LAST SQL QUERY. Updates database version number:
-UPDATE config SET confvalue='4.15.1' WHERE confname='VersionNumber';
-
-UPDATE config SET confvalue='4.15.2' WHERE confname='VersionNumber';
 
