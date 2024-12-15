@@ -33,7 +33,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 				AND prices.debtorno=debtorsmaster.debtorno
 				AND prices.branchcode='" . $BranchCode . "'
 				AND prices.startdate <='" . Date('Y-m-d') . "'
-				AND prices.enddate ='0000-00-00'
+				AND prices.enddate ='9999-12-31'
 				ORDER BY prices.startdate DESC";
 
 		$result = DB_query($sql,$ErrMsg);
@@ -67,7 +67,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 						AND prices.debtorno=debtorsmaster.debtorno
 						AND prices.branchcode=''
 						AND prices.startdate <='" . Date('Y-m-d') . "'
-						AND prices.enddate >='0000-00-00'
+						AND prices.enddate >='9999-12-31'
 						ORDER BY prices.startdate DESC";
 
 				$result = DB_query($sql,$ErrMsg);
@@ -89,7 +89,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 					$result = DB_query($sql,$ErrMsg);
 
 					if (DB_num_rows($result)==0){
-						/*No special customer specific pricing use the customers normal price list but look for default price with 0000-00-00 end date*/
+						/*No special customer specific pricing use the customers normal price list but look for default price with 9999-12-31 end date*/
 						$sql = "SELECT prices.price,
 									   prices.startdate
 								FROM prices,
@@ -100,7 +100,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 								AND prices.debtorno=''
 								AND prices.currabrev = debtorsmaster.currcode
 								AND prices.startdate <='" . Date('Y-m-d') . "'
-								AND prices.enddate ='0000-00-00'
+								AND prices.enddate ='9999-12-31'
 								ORDER BY prices.startdate DESC";
 
 						$result = DB_query($sql,$ErrMsg);
@@ -134,7 +134,7 @@ function GetPrice ($StockID, $DebtorNo, $BranchCode, $OrderLineQty=1, $ReportZer
 										AND prices.typeabbrev='" . $_SESSION['DefaultPriceList'] . "'
 										AND prices.debtorno=''
 										AND prices.startdate <='" . Date('Y-m-d') . "'
-										AND prices.enddate ='0000-00-00'
+										AND prices.enddate ='9999-12-31'
 										ORDER BY prices.startdate DESC";
 
 								$result = DB_query($sql,$ErrMsg);
