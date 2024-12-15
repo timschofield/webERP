@@ -171,7 +171,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
 								AND branchcode=''
-								AND startdate <= '". Date('Y-m-d') ."' AND ( enddate >= '" . Date('Y-m-d') . "' OR enddate = '0000-00-00')
+								AND startdate <= CURRENT_DATE
+								AND (enddate >= CURRENT_DATE OR enddate = '9999-12-31')
 								AND stockid='" . $StockID . "'");
 		if ($MyRow['mbflag'] == 'K' OR $MyRow['mbflag'] == 'A' OR $MyRow['mbflag'] == 'G') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.actualcost)) AS cost

@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		$msg = _('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	}
-	if ($_POST['EndDate']!='0000-00-00'){
+	if ($_POST['EndDate']!='9999-12-31'){
 		if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){ //EndDate can also be blank for default prices
 			$InputError =1;
 			$msg = _('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 			$msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
 		}
 		if (trim($_POST['EndDate'])==''){
-			$_POST['EndDate'] = '0000-00-00';
+			$_POST['EndDate'] = '9999-12-31';
 		}
 	}
 
@@ -197,7 +197,7 @@ if (DB_num_rows($result) == 0) {
 } else {
 	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['enddate']=='0000-00-00'){
+		if ($myrow['enddate']=='9999-12-31'){
 			$EndDateDisplay = _('No End Date');
 		} else {
 			$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
@@ -255,7 +255,7 @@ if (DB_num_rows($result) == 0) {
 	} else {
 		$Branch = $myrow['brname'];
 	}
-	if ($myrow['enddate']=='0000-00-00'){
+	if ($myrow['enddate']=='9999-12-31'){
 		$EndDateDisplay = _('No End Date');
 	} else {
 		$EndDateDisplay = ConvertSQLDate($myrow['enddate']);
@@ -458,7 +458,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 				AND typeabbrev='" . $PriceList . "'
 				AND debtorno ='" . $CustomerID . "'
 				AND branchcode=''
-				AND enddate ='0000-00-00'
+				AND enddate ='9999-12-31'
 				ORDER BY startdate";
 	$result = DB_query($SQL);
 
@@ -473,7 +473,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 						AND startdate ='" . $OldStartDate . "'
 						AND debtorno ='" . $CustomerID . "'
 						AND branchcode=''
-						AND enddate = '0000-00-00'
+						AND enddate = '9999-12-31'
 						AND debtorno =''";
 			$UpdateResult = DB_query($SQL);
 		}
