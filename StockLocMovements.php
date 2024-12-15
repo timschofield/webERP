@@ -105,7 +105,7 @@ $SQL = "SELECT stockmoves.stockid,
 				ON stockmoves.type=systypes.typeid
 			INNER JOIN stockmaster
 				ON stockmoves.stockid=stockmaster.stockid
-			WHERE  stockmoves.loccode " . LIKE . " '" . $_POST['StockLocation'] . "'
+			WHERE stockmoves.loccode = '" . $_POST['StockLocation'] . "'
 				AND stockmoves.trandate >= '" . $SQLAfterDate . "'
 				AND stockmoves.trandate <= '" . $SQLBeforeDate . "'
 				AND hidemovt=0
