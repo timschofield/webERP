@@ -1,0 +1,490 @@
+<br /><br />
+<a name="Inventory"><font size="+3"><b>Bestandsführung</b></font></a>
+<br /><br />
+<font size="+2"><b>Übersicht</b></font>
+<br /><br />
+Bestände werden aus betriebswirtschaftlicher Sicht in bestimmte Kategorien eingeteilt. Eine Spielzeugfabrik hat möglicherweise Einteilungen für Baukästen, Kinderfahrzeuge, Brettspiele usw. Diese werden als Warengruppen bezeichnet und es kann erwartet werden, dass diese Einteilungen durch die Unternehmensleitung bereits getroffen wurden. Der Name dieser Einteilungen (nicht aber ihr Schlüssel) kann nachträglich jederzeit geändert werden.
+<br /><br />
+Hinweis: Die Integration mit dem Hauptbuch erfolgt auf der Ebene der Warengruppe. Die Buchung in das Hauptbuch wird durch die Zugehörigkeit des Materials zu einer betimmten Warengruppe in Verbindung mit dem Vertriebsbereich und der Umsatzart bestimmt. Über die Registerkarte Einstellungen im Hauptmenü werden getrennte Einträge für die Konten Umsatzerlöse und Herstellkosten des Umsatzes gepflegt.
+<br /><br />
+Fakturierte Lieferungen verringern den Bestand an dem in der Rechnung angegebenen Lagerort. Durch Gutschriften werden die Bestände in dem in der Gutschrift angegebenen Lagerort wiederum erhöht. Bestandskorrekturen an der gelagerten Menge sind ebenso möglich wie Umlagerungen zwischen verschiedenen Lagerorten.
+<br /><br />
+Für jede Warenbewegung wird ein Datensatz angelegt, Warenausgänge aus Verkäufen, Wareneingänge zu Bestellungen, Bestandskorrekturen, Gutschriften aus Verkäufen können über die Auswertung zu Warenbewegungen angezeigt werden. Das Summieren der Warenbewegungen ermöglicht auf einfache Weise die Auswertung vergangenen Entnahmen und es ist eine Auswertung für die Anzeige nach Monaten vorhanden.
+<br /><br />
+Bestände werden zu Standardpreisen bewertet. Wenn die Hauptbuch-Integration aktiv ist, werden für alle Bestandskorrekturen, Standardpreis-Anpassungen sowie Lagerzu- und Abgänge Buchungen im Hauptbuch vorgenommen. Wenn Bestandsbuchungen durchgeführt werden - dazu wird in den Unternehmenseinstellungen ein Schalter gesetzt - wird der bewertete Materialbestand auf den entsprechenden Konten des Hauptbuches mitgebucht, mit dem Ausweis jeder einzelnen Warenbewegung im Journal. Dies bildet einen hohen Gebrauchswert in einem effektiven, informationsreichen Hauptbuch.
+<br /><br />
+Hinweis: Die Integration der Bestandsführung mit dem Hauptbuch ist optional. Die Verkaufs-/Debitoren-Schnittstelle besteht unabhängig von der Bestandsführungsschnittstelle.
+<br /><br />
+<font size="+2"><b>Merkmale der Bestandsführung</b></font>
+<br /><br />
+<ul>
+<li>Mehrere Lagerorte sind möglich. Bestandszahlen können für eine unbegrenzte Anzahl von Lagerorten eingegeben werden.</li>
+<li>Preise für ein Material können für jede Umsatzart und in jeder (und allen) Währung(en) festgelegt werden, was eine hohe Flexibilität bei der Preisgestaltung bietet.</li>
+<li>Automatische Rückabwicklung. Kundenaufträge, die noch zu beliefern sind, können automatisch rückabgewickelt werden, um den Auftragsbestand zu stornieren.</li>
+<li>Historie der Warenbewegungen auf der Ebene des Materials.</li>
+<li><b>Dummy-Materialien</b> sind möglich, die kalkuliert, fakturiert, aber nicht gelagert werden können, z. B. für den Verkauf von Arbeits- oder Dienstleistungen.</li>
+<li>Materialien können als <b>Bestellsatz</b> definiert werden. Ein Kundenauftrag für einen Bestellsatz wird automatisch in die einzelnen Komponenten aufgelöst, dabei werden die vordefinierten Mengen mit der Anzahl der bestellten Bestellsätze multipliziert. Diese Komponentenmengen können daraufhin noch durch den Benutzer abgeändert werden. Die Bestandsführung, Fakturierung und Umsatzbuchung erfolgt auf der Ebene der Einzelkomponenten.</li>
+<li>Sammelmaterialien können in ähnlicher Weise wie Bestellsätze definiert werden. Diese Teile existierten nur für Kundenaufträge, Fakturierung und Erlösbuchungen. Es werden hierfür jedoch keine Bestände geführt, hier stehen die jeweiligen Einzelkomponenten.</li>
+<li>Auswertungen zu Rechnungen und Gutschriften sind an die Warenbewegungen gekoppelt, so dass auch die Angaben zu den berechneten Positionen abgefragt werden können.</li>
+<li>Auswertungen zu Standardpreisen und Bewertungen</li>
+<li>Monatliche Materialverbrauchsauswertung nach Lagerorten und insgesamt</li>
+<li>Bestandsplanungsberichte</li>
+<li>Integration mit dem Einkauf, Kreditorenbuchhaltung, Debitorenbuchhaltung und Hauptbuch.</li>
+</ul>
+
+<!-- Help Begin: Stocks -->
+
+<font size="+2"><b>Neue Materialien anlegen</b></font>
+<br /><br />
+Das Anlegen neuer Materialien erfordert die Eingabe bestimmter Grunddaten:
+<br /><br />
+<ul>
+<li>Materialnummer und Beschreibung zusammen mit Warengruppe und Materialart.</li>
+<li>Kostenangaben</li>
+<li>Einkaufsdaten</li>
+<li>Verkaufspreise</li>
+</ul>
+Die Erfassung der Grunddaten erfolgt aus dem Menü, Wählen Sie das Register Bestandsführung und klicken Sie "Materialstamm anlegen"
+<br /><br />
+<font size="+1"><b>Materialnummer</b></font>
+<br /><br />
+Eine Materialnummer wird für jedes Material verlangt, das ist eine Kombination von bis zu 20 Zeichen Länge. Die Vergabe der Materialnummern sollte vereinbart werden, damit sichergestellt wird, dass ähnliche Materialien untereinander erscheinen. Intern sucht das System nach der Materialnummer in den verschiedenen Tabellen. Eine systematische Herangehensweise bei der benennung deer Materialien kann später eine Menge Zeit sparen. In den Einkaufsdaten ist es außerdem möglich, dem Material zusätzlich die Teilenummer des Herstellers zuzuordnen.
+<br /><br />
+Es gibt ein Programm, mit dem Materialnummern nachträglich geändert werden können. Dieses Programm ist zusammen mit weiteren Hilfswerkzeugen über das Servicemenü Z_index.php erreichbar (Es gibt keinen Menüpunkt dafür, wegen der gefährlichen Eigenschaften von manchen dieser Werkzeuge). Das Programm zum Ändern der Materialnummer selbste heißt Z_ChangeStockCode.php.
+<br /><br />
+<font size="+1"><b>Materialbezeichnung</b></font>
+<br /><br />
+Für die Materialbeschreibung stehen zwei Felder zur Verfügung. Der Kurztext kann bis zu 50 Zeichen lang sein und ist für jedes Material ein Mussfeld. Diese Beschreibung wird in den Auswahllisten der Materialvorgänge angezeigt. Der Langtext steht auf den Bildern als Beschreibung zur Verfügung, in denen die Kunden ihre Bestellungen erfassen. Dieses Feld erlaubt sehr lange Beschreibungen der Vorzüge / Funktionen / Technischen Spezifikationen für die einzelnen Produkte. Die Absicht hinter diesem Feld ist, dass es für einen Katalog oder für Internet-Bestellungen durch die Kunden weitere Informationen über das Produkt zur Verfügung stellt. Auf den Rechnungen und Gutschriften wird nur der Kurztext ausgegeben.
+<br /><br />
+<font size="+1"><b>Warengruppe</b></font>
+<br /><br />
+Die Warengruppen müssen zuerst eingerichtet werden. Dies erfolgt über Hauptmenü &rarr; Einstellungen &rarr; Bestandsführung. Wenn Sie die Warengruppe festlegen, müssen Sie bedenken, dass diese sowohl für Auswertungen und Summenberichte, als auch für die Bestimmung der Kontierung bei aktiver Hauptbuchintegration verwendeet werden. Auch auf dem Bild Materialstamm pflegen haben Sie einen Link Warengruppen ändern und anlegen.
+<br /><br />
+Die Warengruppe wird für alle Materialstämme benötigt. Bei der Materialsuche ist es oft zweckmäßig, die Suche auf eine bestimmt Warengruppe einzuschränken. Auf dem Bild Materialsuche gibt es deshalb ein entsprechendes Auswahlfeld.
+<br /><br /> 
+<font size="+1"><b>Optimale Bestellmenge</b></font>
+<br /><br />
+Das ist die Menge, in der Kaufteile bestellt oder Eigenerzeugnisse produziert werden, Momentan ist dieses Feld nur ein Vermerk, in der Zukunft soll es ein wichtiges Feld für Berechnungen in der Bedarfsplanungskomponente werden.
+<br /><br />
+<font size="+1"><b>Volumen pro Verpackungseinheit</b></font>
+<br /><br />
+Dieses Feld ist für die Versandkostenberechnung erforderlich. Es bestimmt das für den Versand eines Teiles erforderliche Volumen. Lesen Sie dazu auch den Abschnitt über Transportkosten.
+<br /><br />
+<font size="+1"><b>Gewicht pro Verpackungseinheit</b></font>
+<br /><br />
+Dieses Feld ist für die Versandkostenberechnung erforderlich. Es bestimmt das Gewicht eines Teiles für den Versand. Das Programm für die Berechnung der Transportkosten ermittelt den höheren Wert aus dem Gesamtvolumen und dem Gesamtgewicht. Viele Speditionen verwenden eine Umrechnung und berechnen den höheren Betrag aus Gewicht oder Volumen. Lesen Sie dazu auch den Abschnitt über Transportkosten.
+<br /><br />
+<font size="+1"><b>Maßeinheiten</b></font>
+<br /><br />
+Ein Auswahlkästchen erlaubt die Auswahl der passenden Maßeinheit. Die Maßeinheiten werden über Hauptmenü &rarr; Einstellungen &rarr; Bestandsführung gepflegt. Sie wird in allen Rechnungen und Bestandsauswertungen ausgegeben.
+<br /><br />
+<font size="+1"><b>Zeitgemäß oder veraltet</b></font>
+<br /><br />
+Dies ist ein Sperrkennzeichen für Materialien, die nicht mehr verwendet werden dürfen. Weil Stammdaten noch für die Auswertung vergangener Vorgänge im System verbleiben müssen, können die Stammdaten nicht mehr benötigter Materialien nicht einfach gelöscht werden. Damit jedoch solche Materialien nicht mehr für die Auswahl bei Bestellungen, Rechnungen und Warenbewegungen zur Verfügung stehen, werden sie als veraltet gekennzeichnet. In Bestandsberichten wird diese Eigenschaft mit ausgewiesen.
+<br /><br />
+<font size="+1"><b>Materialart</b></font>
+<br /><br />
+Dieses Feld ist obligatorisch und teilt die Materialien wie folgt ein:
+<br /><ul><li>
+<b>Fertigerzeugnis</b> Das Material wird als Eigenfertigung deklariert und kann eine Stückliste haben, es gibt aber keine Sperren im System, die das Bestellen eines solchen Materials bei einem Lieferanten behindern.
+<br /><br />
+<li><b>Kaufteile</b> Das Material wird von einem externen Lieferanten bezogen. Es kann nicht gleichzeitig eigengefertigt werden und auch keine Stückliste haben.
+<br /><br />
+<li><b>Sammelmaterial</b> Das Sammelmaterial ist eine Zusammenfassung von Komponenten, die über eine Stückliste definiert wird. Für das Sammelmaterial erfolgt weder eine Lagerhaltung noch eine Bewertung. Dies erfolgt auf der Ebene der zugeordneten Komponenten. Eine Rechnung für ein Sammelmaterial erzeugt Warenbewegungen für die einzelnen Komponenten und die Bestände werden im Verhältnis der Angaben der Stückliste umgerechnet. Die Herstellkosten des Umsatzes werden bei aktiver Hauptbuchintegration als die Summe der Kosten der Stücklistenkomponenten zum Zeitpunkt der Rechnungslegung ausgewiesen.
+<br /><br />
+<li><b>Bestellsatz</b> Der Bestellsatz ist selbst kein physisches Material, sondern stellt eine Eingabehilfe dar. Für einen Bestellsatz sind ebenfalls die Komponenten in einer Stückliste festgelegt. Anders als beim Sammelmaterial wird jedoch der Bestellsatz sofort bei der Bestell- oder Auftragserfassung in die Komponenten aufgelöst und die Komponentenmengen können noch verändert werden, so dass nicht nur die Bestandsführung und die Bewertung auf der Ebene der Komponenten erfolgt, sondern die Komponenten selbst auch auf Rechnungen erscheinen.
+<br /><br />
+<li><b>Dummymaterial</b> Dummymaterialien sind nicht mit Beständen verknüpft. Sie werden insbesondere für Unternehmen eingesetzt, die Dienstleistungen erbringen oder an einer Erfassung von Lagermengen nicht interessiert sind. Für Dummymaterialien können Umsätze und Mengen ausgewertet werden, die fakturierten Mengen werden dann angezeigt.
+</ul>
+Dieses Feld ist von Bedeutung für die Bedarfs- und Bestandsplanung und die Produktionsplanung. Wenn Sie Dummymaterialien für Dienstleistungen verwenden, werden keine Lagermengen für die Betriebsstätte oder in Summe erfasst. Bewegungsdaten werden dennoch gebucht, um die geleisteten und berechneten Mengen nachzuweisen. Bestandskorrekturen sind nicht erlaubt. Für Sammelmaterialien werden nur Umsatzzahlen geführt, die Bestände und Warenbewegungen werden auf der Ebene der Komponenten gebucht. Sammelmaterialien werden normalerweise verwendet, wenn die Materialien aus den verschiedensten Gründen einzeln am Lager geführt, aber im Ganzen mit einem Komplettpreis verkauft werden.
+<br /><br />
+<font size="+1"><b>Sammelmaterialien einrichten</b></font>
+<br /><br />
+Nehmen wir das Beispiel aus einer Santiärfirma, welche die Umsätze für komplette Einrichtungen nachweisen möchte, die Bestände aber auf der Ebene der einzelnen Komponenten.
+<br /><br />
+Das Unternehmen möchte nicht Bestände für komplette Toiletten haben, sondern wenn die Bestände gezählt werden, dann sind das Spülkästen, Toilettensitze, Toilettenbecken, die einzeln gelagert werden. Wenn komplette Toiletten im Bestand geführt würden, müssten sie bei einer Inventur immer auseinandergerechnet werden.
+<br /><br />
+Solche Teile werden im System als "Sammelmaterial" bezeichnet.
+<br /><br />
+Wenn eine Rechnung für ein Sammelmaterial verbucht wird, dann werden die Bestände der Komponenten entsprechend der Anzahl in der Stückliste multipliziert mit der Stückzahl des verkauften Sammelmaterials verbucht.
+<br /><br />
+Zum Beispiel hätte unsere Toilette die folgende Stückliste:
+<br /><br />
+1 x Spülkasten
+<br />
+1 x Toilettenbecken
+<br />
+2 x Schrauben zum Befestigen auf dem Fußboden
+<br />
+1 x Karton Toilettensitz incl. Befestigungsmaterial
+<br /><br />
+Wenn nun von diesem Sammelmaterial 10 Stück verkauft werden, wird die Lagermenge für die Spülkästen, Toilettenbecken und die Kartons mit den Sitzen jeweils um 10 Stück vermindert, für die Schrauben allerdings um 20 Stück. Die Auswertung der Warenbewegungen zeigt diese Bewegungen einzeln an mit einem Verweis auf das Sammelmaterial, von dem die Bewegung herrührt und der Rechnungsnummer, mit der es verkauft wurde.
+<br /><br />
+Es ist wichtig, dass man sich daran erinnert, dass, wenn eine Gutschrift für ein Sammelmaterial erstellt wird, das Ganze umgekehrt vonstatten geht. Der Bestand wird komponentenweise zurückgebucht. Die Gutschrift muss für den richtigen Lagerort (Betriebsstätte mit Lagerverwaltung) erfasst werden. Es gibt auch die Möglichkeit, zm Zusammenhang mit der Gutschrift den Bestand auszubuchen und abzuschreiben, dann ist der Lagerort nicht so wichtig.
+<br /><br />
+Der nächste Punkt mag ein bisschen verwirrend sein. Wenn man sich die Auswertung der Warenbewegungen ansieht, wird neben den Warenbewegungen der einzelnen Komponenten noch eine Warenbewegung für das Sammelmaterial als Ganzes angezeigt. Das hat den Vorteil, dass ausgewertet werden kann, an welche Kunden diese Sammelmaterialien verkauft wurden. Trotzdem gibt es keine Bestandssätze für diese Materialien, da sie ja nicht gelagert werden (nur die Komponenten werden gelagert, und das ganze Material entsteht praktisch erst zum Zeitpunkt der Auslieferung.
+<br /><br />
+Wenn Materialien zum ersten mal eingerichtet werden, muss die Warengruppe festgelegt werden und zu diesem Zeitpunkt wird auch die Materialart festgelegt. Die Auswahlmöglichkeiten sind "Kaufteil" (der Vorschlagswert), "Fertigerzeugnis", "Sammelmaterial", "Bestellsatz" und "Dummymaterial".
+<br /><br />
+Beachten Sie die Behandlung der Sammelmaterialien:
+<br /><br />
+Wenn für ein Material in der Bestandsanzeige Bestände ausgewiesen werden, dann ist es nicht möglich, dieses Material als Sammelmaterial festzulegen, indem Sie einfach das Kennzeichen ändern. Zuvor muss der Bestand auf Null zurückgebucht werden und die Bestände der entsprechenden Komponenten angepasst werden. Ebenso ist eine Änderung nicht möglich, wenn offene Bestellungen vorhanden sind. Bedenken Sie, dass die Sammelmaterialien nur zum Zwecke des Verkaufes existieren und selbst keine Lagerbestände haben.
+<br /><br />
+Wenn Sie die Materialart auf Sammelmaterial gesetzt haben, wird für das Material in der Materialsuche die Option "Bewertete Stückliste anzeigen" unter Materialauswertungen auswahlbereit. Diese Auswertung zeigt die gültige Stückliste und die Summe der Kosten, die bei den Buchungen für die Ergebnisrechnung und die Hauptbuchbuchungen verwendet werden.
+<br /><br />
+Das Einrichten eines Sammelmaterials erfordert das Anlegen einer Stückliste für dieses Material.
+<br /><br />
+Sie klicken unter Hauptmenü &rarr; Produktion &rarr; Datenpflege auf Stückliste. In den Suchfeldern haben Sie die Möglichkeit, nach Ihrem Sammelmaterial anhand des Kurztextes oder der Materialnummer zu suchen. Wenn Sie eine Auswahl eingegeben haben, klicken Sie auf den Knopf Suchen. Nicht alle Materialien werden angezeigt, sondern nur solche Materialarten, die eine Stückliste haben können - Fertigerzeugnisse, Sammelmaterialien und Bestellsätze. Wenn Sie das Material nicht in dieser Materialart angelegt haben, wird es nicht angezeigt.
+<br /><br />
+Wenn Sie auf den Knopf mit der entsprechenden Materialnummer drücken, wechseln Sie auf das Bild, in welchem Sie die Komponenten für die Stückliste angeben. Wenn bereits eine Stückliste angelegt ist, werden die bereits eingerichteten Komponenten als Liste angezeigt. Dabei gibt es zu jeder Position zwei Links, mit der Sie die jeweilige Position bearbeiten bzw. löschen können. 
+<br /><br />
+Um eine neue Komponente in die Stückliste einzufügen, müssen Sie nur die Materialnummer von der Liste auswählen, Betriebsstätte und Arbeitsplatz bleiben bei dieser Materialart unberücksichtigt (Die Betriebsstätte aus dem Kundenauftrag wird für die Bestandsbuchungen der einzelnen Komponenten verwendet), so dass Sie irgendwelche Vorschlagswerte dafür ohne Sorge übernehmen können. Die benötigte Menge ist ein Mussfeld und wird mit 1 vorgeschlagen (und wird auch in den meisten Fällen 1 bleiben).
+<br /><br />
+Die Gültigkeitsdaten Gültig ab und Gültig bis (auch als Angaben zur Änderungssteuerung bekannt) sind die Datumsangaben, zwischen denen die Komponente in der Stückliste eingesetzt wird. Wenn die Stücklistenänderung fällig ist und den Kunden angekündigt ist, dass ab 1.1.2005 ein neues Toilettenbecken eingesetzt wird, dann muss dieses Material von diesem Tage an gültig sein. Das Gültig-Bis-Datum des bisherigen Materials wird dann auf den 31.12.2004 geändert. Die Alternative wäre alle Stücklisten an dem Tag zu ändern, an dem die Änderungen wirksam werden sollen.
+<br /><br />
+Wenn Sie dann auf Speichern geklickt haben, wird die Komponente in die Stückliste eingefügt und in der Datenbank gesichert. Wenn Sie mit der Stückliste fertig sind, brauchen Sie nur im Hauptmenü zur nächsten Aufgabe wechseln. Seien Sie vorsichtig, dass Sie nicht versehentlich auf die Taste Speichern klicken, die Vorgaben aus den Eingabefeldern würden sofort hinzugefügt. Wenn Sie Änderungen wünschen, müssen Sie die betreffende Position zunächst durch Klick auf Bearbeiten auswählen.
+<br /><br />
+<font size="+1"><b>Chargen-, Seriennummern oder Lose überwachen</b></font>
+<br /><br />
+Dieses Feld gibt an, ob es sich um ein nachweispflichtiges Material handelt. Die Nachweispflicht kann auch unter verschiedenen anderen Begriffen wie Chargenrückverfolgung o. ä. bekannt sein. Kurz gefasst bedeutet das, dass jedesmal bei einer Lieferung, Umlagerung, Inventurkorrektur, Fakturierung die entsprechende Los-, Chargen-, Rollen- oder Stapelnummer und die entsprechende Menge angegeben werden muss. Viele Qualitätssicherungssysteme benötigen die Rückverfolgbarkeit für die Nachweisführung, welches Rohmaterial bei der Herstellung welches Produktes eingesetzt wurde. Jedesmal wenn ein Beleg zu einem nachweispflichtigen Material angelegt wird, führt das System die Mengen aus einer separaten Übersicht je Nachweisnummer (Schmelze, Rolle, Los, Fertigungsauftrag, Seriennummer) an.
+<br /><br />
+<font size="+1"><b>mit Seriennummer</b></font>
+<br /><br />
+Seriennummern sind ein Spezialfall der nachweispflichtigen Materialien, weil die Menge je Nachweisnummer immer 1 ist. Das System erwartet die Eingabe der Seriennummer für jedes einzelne Teil eines solchen Materials. Diese Einstellung hat keine bedeutung, wenn das Material nicht nachweispflichtig ist.
+<br /><br />
+<font size="+1"><b>Barcode</b></font>
+<br /><br />
+Dieses Feld ist der eindeutige Bezeichner für dieses Material im Geschäftsverkehr und wird zur Kennzeichung des Materials in den EDI-Nachrichten nach dem EANCOM-Standard verwendet. Es enthält normalerweise die als Strichcode auf der Verpackung angegebene EAN-Artikelnummer.
+<br /><br />
+<font size="+1"><b>Rabattgruppe</b></font>
+<br /><br />
+Dieses Feld wird für die Rabattstaffeln in der Kombination Umsatzart und Rabattgruppe verwendet. Wenn ein Auftrag für ein Material mit einer bestimmten Rabattgruppe an einen Kunden mit einer bestimmten Umsatzart verkauft wird, und die Menge über einer bestimmten Mengengrenze liegt, berechnet das System automatisch einen Rabatt für die entsprechenden Auftragspositionen, die zu dieser Rabattgruppe gehören. Dies erlaubt Mengengrenzen über eine Anzahl ähnlicher Artikel.
+<br /><br />
+Die Rabattgruppe ist ein zwei Zeichen langes Feld und es erfolgt keine Gültigkeitsprüfung bei der Erfassung.
+<br /><br />
+<font size="+1"><b>Dezimalstellen</b></font>
+<br /><br />
+Einige Materialien müssen in der Menge mit Dezimalstellen angegeben werden, andere wiederum nicht. Dieses Feld wird im System für Rechnungen, Aufträge und alle anderen Stellen ausgewertet, wo Mengen angezeigt werden.
+
+<!-- Help End: Stocks -->
+
+<br /><br />
+
+<!-- Help Begin: StockCostUpdate -->
+
+<font size="+2"><b>Bestandsbewertung</b></font>
+<br /><br />
+Über Hauptmenü &rarr; Bestandsführung &rarr; Datenpflege wählen Sie Standardkosten ändern. Die Materialnummer kann direkt eingegeben werden, um die Kostenstruktur anzuzeigen, Änderungen der Kosten auf diesem Bild werden als Preisänderungsbuchungen in die Hauptbuchhaltung übernommen, wenn die Bestandsfühungsintegration aktiv ist (Hauptmenü &rarr; Einstellungen &rarr; Allgemein &rarr; Unternehmenseinstellungen). Alternativ besteht die Möglichkeit, diese Seite über die Materialsuche - der Link dazu ist auf allen Seiten vorhanden - aufzurufen. Wenn das Material ausgewählt ist, finden Sie den Link unter Materialdaten pflegen &rarr; Standardkosten ändern. Die Pflege und die erstmalige Erfassung der Standardkosten ist ein entscheidenter Teil der Systemeinstellung. Das Eintragen der Materialstammdaten allein reicht nicht aus. Die hier einzugebenden Kosteninformationen werden sowohl für die Bestandsbewertung als auch für die Buchungen in der Hauptbuchschnittstelle für die Herstellkosten des Umsatzes,  die Bewertung von Bestandskorrekturen, die Bewertung der Wareneingänge usw. verwendet. Sie können nur dann weggelassen werden, wenn die Hauptbuchintegration der Bestandsführung nicht aktiv ist und der Wert der Bestände nicht interessiert.
+<br /><br />
+<font size="+1"><b>Materialkosten</b></font>
+<br /><br />
+Wenn das Material ein Kaufteil ist, sollte der Wert der Mittelwert oder die erwarteten Kosten (wenn es erst bestellt ist) des Materials sein. Wenn das Material in Eigenfertigung produziert wird, werden die Kosten der extern beschafften Komponenten und die Gesamtkosten der selbst gefertigten  untergeordneten Stücklistenkomponenten hier erfasst. Zukünftig sollen diese einmal mit der Kostenkalkulation über die Stückliste verdichtet werden. Änderungen an den Werten wirken sich auf den Wert der Bestände dieses Materials aus. Das System ist ein Standardkostensystem. Wenn Materialien eingekauft werden, werden die Istkosten mit den Standardkosten verglichen und der Unterschied auf ein Preisabweichungskonto gebucht, das in der Warengruppe dieses Materials hinterlegt ist.
+<br /><br />
+<font size="+1"><b>Arbeitskosten</b></font>
+<br /><br />
+Dieses Feld sollte den Gesamtwert der Arbeitskosten enthalten, die in die Kosten des Materials eingeflossen sind. Die Arbeitskosten sind nur auf das einzelne Material und nicht auf die untergeordneten selbst gefertigten Komponenten bezogen. Änderungen an den Werten wirken sich auf den Wert des Bestandes aus. Lesen Sie auch die Anmerkungen zu den Materialkosten oben. Zukünftig wird dieses Feld automatisch durch die Kostenkalkulation geändert werden.
+<br /><br />
+<font size="+1"><b>Gemeinkosten</b></font>
+<br /><br />
+Dieses Feld sollte die gesamten Gemeinkosten beinhalten, die dem Verkauf von einer Einheit des Materials zuzurechnen sind. Dieser Wert wirkt sich auf den gesamten Bestand dieses Materials aus, genauso wie die Material- und Arbeitskosten oben. Arbeitskosten, Materialkosten und Gemeinkosten zusammengenommen ergeben die Standardkosten des Materials. Dieser Gesamtwert wird bei der Materialbewertung angesetzt. Zukünftig soll dieses Feld durch die Kostenkalkulation in Abhängigkeit vom Gemeinkostensatz des Arbeitsplatzes und der Gesamtleistung an jedem Arbeitsplatz geändert werden.
+<br /><br />
+<font size="+1"><b>Überlegungen zu den Standardkosten</b></font>
+<br /><br />
+Jedesmal wenn ein Material verkauft wird, wird das Konto Herstellkosten des Umsatzes (festgelegt durch die Kontenfindung in Abhängikeit von Umsatzart, Warengruppe und Vertriebsbereich) mit der Summe der Material-, Arbeits- und Gemeinkosten belastet und der Lagerbestand in der gleichen Höhe mit den gesamten Standardkosten entlastet.
+<br /><br />
+<font size="+1"><b>Istkosten</b></font>
+<br /><br />
+Die Istkosten sind die Kosten, wie sie beim letzten Einkauf angefallen sind. Für ein Fertigerzeugnis sind dies die kalkulierten Kosten einschließlich der Fertigungsabweichungen (Preisabweichungen werden herausgerechnet).
+<br /><br />
+<font size="+1"><b>Änderungen an den Arbeitskosten, Materialkosten oder Gemeinkosten</b></font>
+<br /><br />
+Weil das System in den Bestandsdaten nur die Standardkosten des Materials fortschreibt, werden die Bestände damit bewertet. Wenn diese Kosten geändert werden, wird der vorhandene Bestand des betreffenden Materials entsprechend auf- oder abgewertet. Wenn die Integration der Bestandsführung mit dem Hauptbuch aktiv ist, wird eine Buchung auf den in der Warengruppe des Materials hinterlegten Konten vorgenommen.
+<br /><br />
+Die neuen Kosten wirken sich nur auf Buchungen aus, die nach der Änderung erfasst werden. Die Berichte der Ergebnisrechnung beziehen sich auf die zum Zeitpunkt der Buchung zutreffenden Kosten.
+<br /><br />
+Es gibt ein Hilfswerkzeug auf der Seite Z_index.php, welches es erlaubt, die Ergebnisrechnungssätze für eine bestimmte Periode mit den aktuellen Kosten nachzubewerten. Es nimmt die fakturierten Mengen und multipliziert sie mit den akutellen Standardkosten. In der Folge weichen die Buchungen in der Hauptbuchhaltung vom Zeitpunkt der Fakturierung / Gutschrift von den in der Ergebnisrechnung angezeigten Werten ab.
+
+<!-- Help End: StockCostUpdate -->
+
+<br /><br />
+
+<!-- Help Begin: SelectProduct -->
+
+<font size="+2"><b>Materialsuche</b></font>
+<br /><br />
+Von allen Seiten des Systems erreichen Sie die Suche in den entscheidenden Systemtabellen - die Kundensuche, die Materialsuche und die Lieferantensuche. Wenn Sie auf den Link Materialsuche klicken oder Alt-3 drücken, gelangen Sie direkt in das Bild Materialsuche. Zusätzlich haben Sie über Hauptmenü &rarr; Bestandsführung &rarr; Datenpflege einen Link Materialstamm/Preise ändern/löschen. Über beide Wege erreichen Sie die Seite Material suchen.
+<br /><br />
+Die Suche nach einem bestimmten Material kann durch die Auswahl einer bestimmten Warengruppe eingeschränkt werden, eine Ausswahlliste ermöglicht die Angabe einer der vorhandenen Warengruppen. Außerdem können Ausschnitte aus der Materialnummer oder Ausschnitte aus dem Kurztext des Materials angegeben werden, wenn Sie beide Felder belegen, wird die Angabe zum Kurztext verwendet. Beachten Sie, dass die eingegebenen Zeichenketten nicht am Anfang der Materialnummer oder -bezeichnung vorkommen müssen. Alle Materialien, die den Suchtext irgendwo in der Bezeichnung bzw. in der Materialnummer enthalten, werden aufgelistet, zusammen mit dem verfügbaren Bestand und der Maßeinheit. Sammelmaterialien, Bestellsätze und Dummymaterialien haben natürlich 0 Bestand.
+<br /><br />
+Die Maximalzahl der auszugebenden Materialpositionen kann in den Systemeinstellungen festgelegt werden. Dadurch wird die Anzahl der von der Datenbank zurückgegebenen Datensätze begrenzt, damit Benutzer mit einer langsameren Datenanbindung nicht für eine zu breite Auswahl bestraft werden. Das herunterladen zu großer Datenmengen über eine langsame Wählverbindung würde zu einer ernsthaften Verringerung der Performance führen. Voreinstellung sind 100 Datensätze.
+<br /><br />
+Wenn Sie auf die Taste mit der gewünschten Materialnummer klicken, wird das Material ausgewählt und die für dieses Material möglichen Optionen werden angezeigt.
+<br /><br />
+Wenn Sie ein Material ausgewählt haben, können Sie Folgendes bearbeiten:
+<br /><br />
+<ul>
+<li>Materialstamm ändern</li>
+<li>Standardkosten ändern</li>
+<li>Preise pflegen</li>
+<li>Bestellpunkt pflegen</li>
+<li>Einkaufsdaten pflegen</li>
+</ul>
+Es sind auch Auswertungen möglich über:
+<br /><br />
+<ul>
+<li>Warenbewegungen</li>
+<li>Bestandsstatus - zeigt die vorhandene Menge, den Bedarf, die verfügbare Menge, den Bestellpunkt und die bestellte Menge an</li>
+<li>Bestandsverwendung nach Monaten als Liste oder Diagramm</li>
+<li>Offene Kundenaufträge</li>
+<li>Offene Bestellungen</li>
+<li>Abgeschlossene Kundenaufträge</li>
+<li>Stückliste</li>
+</ul>
+Weiterhin ist es möglich, Vorgänge aufzurufen für:
+<br /><br />
+<ul>
+<li>Umlagerungen zwischen verschiedenen Lagerorten</li>
+<li>Korrekturen der Bestandsmengen.</li>
+</ul>
+Auf der Seite stehen außerdem Suchfelder zur Verfügung, über die Sie nach einem anderen Material suchen können.
+
+<!-- Help End: SelectProduct -->
+
+<br /><br />
+
+<!-- Help Begin: Stocks -->
+
+<font size="+2"><b>Materialstamm ändern</b></font>
+<br /><br />
+Die Stammdateninformationen können geändert werden. Das einzige Feld, welches nicht im Bild Materialdaten pflegen geändert werden kann, ist die Materialnummer. Dieser Schlüssel wird systemweit in vielen Tabellen verwendet und eine Änderung der Materialnummer würde Änderungen auch in vielen anderen Tabellen nach sich ziehen. Ein spezielles Hilfswerkzeug steht zur Verfügung, mit dem in besonderen Fällen Änderungen an einer Materialnummer vorgenommen werden können. Die Änderungen an der Datenbank sind umfangreich und es wird empfohlen, dieses Werkzeug nur außerhalb der normalen Arbeitszeit zu benutzen, weil die Belastung des Servers insbesondere bei einer großen Datenbank enorm sein kann. Lesen Sie auch den Abschnitt Hilfswerkzeuge. Die folgenden Punkte sollten bedacht werden, wenn Sie Datenfelder verändern:
+<br /><br />
+<font size="+1"><b>Änderung der Warengruppe</b></font>
+<br /><br /> 
+Die Warengruppe kann jederzeit geändert werden.
+<br /><br />
+Trotzdem sollten Sie bedenken, dass wenn die Hauptbuchintegration eingeschaltet ist, die Kontierung der Hauptbuchbuchungen nicht nachträglich geändert werden kann. Mit anderen Worten, die Konten der Hauptbuchbelege, die zu Rechnungen, Gutschriften und Warenbewegungen unter der alten Warengruppe gebucht wurden, können nicht geändert werden. Die Hauptbuchsalden müssten erforderlichenfalls mit einer manuellen Buchung in der Hauptbuchhaltung korrigiert werden.
+<br /><br />
+Hinweis: Der Ergebnisausweis nach Warengruppen erfolgt mit den Warengruppen die zum Zeitpunkt der Erstellung der Rechnung/Gutschrift aktuell waren. Die Warengruppe wird in der Tabelle der Ergebnisrechnung mitgeführt und kann nachträglich nicht geändert werden.
+<br /><br />
+<font size="+1"><b>Änderung der Materialart</b></font>
+<br /><br />
+Ein Material, zu dem ein Bestand geführt wird kann nicht in ein Dummymaterial, ein Sammelmaterial oder einen Bestellsatz geändert werden. Das System führt keine Bestandsmengen für diese Materialarten und es wäre deshalb unpassend, wenn solche Teile einen Anfangsbestand hätten. Der Bestand muss deshalb vorher für alle Lagerorte auf Null gebucht werden, ehe eine soche Änderung vorgenommen werden kann. Analog dazu kann eine Stückliste nur für Fertigerzeugnisse, Sammelmaterialien oder Bestellsätze existieren. Das Ändern von einem Fertigerzeugnis (oder Sammelmaterial oder Bestellsatz) mit einer vorhandenen Stückliste in ein Kaufteil ist ebenfalls nicht möglich. Die Stückliste muss vorher gelöscht werden.
+
+<!-- Help End: Stocks -->
+
+<br /><br />
+
+<!-- Help Begin: StockCategories -->
+
+<font size="+2"><b>Warengruppen</b></font>
+<br /><br />
+Warengruppen sind die normalen Gruppierungen, nach denen verschiedene Arten von Materialien eingeteilt werden. Ein Unternehmen wird normalerweise verschiedene eindeutige Gruppierungen haben, z. B. ein Schmuckhersteller könnte Warengruppen für Goldketten, Silberketten, Diamanten, Rubine usw. haben.
+<br /><br />
+<font size="+1"><b>Warengruppen-Schlüssel</b></font>
+<br /><br />
+Der Schlüssel der Warengruppe ist ein sechs Zeichen langes Textfeld, das vom System intern für Bezüge zwischen den Daten verwendet wird. Der Schlüssel einer Warengruppe muss sich eindeutig von den Schlüsseln der anderen Warengruppen unterscheiden. Er kann nachträglich nicht geändert werden und kann auch nicht gelöscht werden, solange Materialien zu dieser Warengruppe angelegt sind oder Summendaten der Ergebnisrechnung dazu vorhanden sind. Der Schlüssel der Warengruppe wird auch in den Summensätzen der Ergebnisrechnung zu Auswertungszwecken mitgeführt. Jedes Material muss als zu einer Warengruppe gehörig definiert werden, der Warengruppenschlüssel wird im Materialstamm gespeichert.
+<br /><br />
+<font size="+1"><b>Warengruppen-Beschreibung</b></font>
+<br /><br />
+Die Beschreibung wird in der Materialsuche sowie in den Berichten der Ergebnisrechnung angezeigt, um die Warengruppe zu beschreiben. Bis zu 20 Zeichen Text können eingegeben werden, wobei jedoch in einigen Berichten dann nicht die vollständige Beschreibung erscheint.
+<br /><br />
+<font size="+1"><b>Konto Bestand</b></font>
+<br /><br />
+Der Materialbestand ist eine Aktivposition für das Unternehmen, die nach den Bewertungsvorschriften des Handelsrechts zum niedrigeren Wert aus den Beschaffungskosten oder dem realisierbaren Nettowert zu bewerten ist. Um die Bestandswerte voll in die Buchhaltung zu integrieren, muss jeder Wareneingang den Wert der Aktiva in der Buchhaltung erhöhen. Für jede Warengruppe ist es möglich, ein eigenes Sachkonto zu hinterlegen, auf das die Bestände gebucht werden. In der Auswahlliste für dieses Feld muss das für diese Warengruppe passende Bestandskonto ausgewählt werden, auf dem die Bestandswerte geführt werden. In Buchhaltungsbegriffen ist das das Konto der Bilanzpostition der automatisch generierten Buchung. Prinzipiell würde es ausreichen, ein Bestandskonto für alle Warengruppen für Rohmaterial und ein vergleichbares Bestandskonto für alle Warengruppen für Fertigerzeugnisse einzurichten. Das Auswahlkästchen listet nur Bilanzkonten auf, Erfolgskonten werden hier ausgeblendet, weil die Bestände nicht in der GuV angezeigt werden. Wenn ein neues Hauptbuchkonto benötigt wird, so muss dies zuerst in der Hauptbuchhaltung angelegt werden. Das Feld wird nicht benötigt, wenn die Hauptbuchintegration der Bestandsführung in den Unternehmenseinstellungen ausgeschaltet ist.
+<br /><br />
+<font size="+1"><b>Konto Bestandskorrekturen</b></font>
+<br /><br />
+Wenn der Bestand korrigiert wird, werden zum Beispiel die Bestandsmengen erhöht und das hat auch eine Erhöhung des Bestandswertes zur Folge. In einem integrierten System wird die Erhöhung der Bestandswerte im Soll auf das Konto Materialbestand gebucht. Die doppelte Buchhaltung verlangt, dass sich der Wert der Bestandserhöhung in der Gewinn- und Verlustrechnung widerspiegelt. Es wird ein Ertrag für den gefundenen und korrigierten Bestand gebucht. Der umgekehrte Fall ergibt sich, wenn die Bestände nach unten korrigiert werden müssen, wobei ein Aufwand in der GuV gebucht wird, In Buchhaltungsbegriffen gesprochen, ist das das Erfolgskonto der automatisch generierten Buchung. Es kann ein Konto für alle Warengruppen oder für jede Warengruppe ein eigenes Erfolgskonto festgelegt werden. Das Auswahlkästchen zeigt alle verfügbaren Erfolgskonten an. Das Feld wird nicht benötigt, wenn die Hauptbuchintegration der Bestandsführung in den Unternehmenseinstellungen ausgeschaltet ist. 
+<br /><br />
+<font size="+1"><b>Konto Einkaufsabweichungen</b></font>
+<br /><br />
+Wenn Kreditorenrechnungen erfasst werden, kann sich der in Rechnung gestellte Wert des Materials vom Standardpreis des Materials unterscheiden. Der Unterschied wird als Einkaufspreisabweichung bezeichnet. Da webERP alle Materialien zu Standardkosten bewertet, müssen die Einkaufspreisabweichungen auf ein GuV-Konto gebucht werden. Preisabweichungen werden zum Zeitpunkt der Erfassung der Kreditorenrechnung gebucht, sofern sich nicht die Bestellposition auf einem Transport befindet. Preisabweichungen beim Transport werden berechnet, wenn der Transport abgerechnet wird. Das Feld wird nicht benötigt, wenn die Hauptbuchintegration der Bestandsführung in den Unternehmenseinstellungen ausgeschaltet ist.
+<br /><br />
+<font size="+1"><b>Konto Fertigungsabweichungen</b></font>
+<br /><br />
+WIRD NOCH NICHT VERWENDET:
+<br /><br />
+Dieses Konto wird bebucht, wenn der Wert eines für einen Fertigungsauftrag entnommenen Materials sich vom Bedarf für den Fertigungsauftrag zu Standardkosten unterscheidet. Das Feld wird nicht benötigt, wenn die Hauptbuchintegration der Bestandsführung in den Unternehmenseinstellungen ausgeschaltet ist.
+<br /><br />
+<font size="+1"><b>Ressourcentyp</b></font>
+<br /><br />
+WIRD NOCH NICHT VERWENDET:
+<br /><br />
+Dieses Feld bestimmt den Typ der Ressouce, die die Warengruppe abbildet und ist eine aus Eigenfertigung, Rohmaterial, Arbeitsleistung oder Dummymaterial. Dieses Feld wird verwendet, um die Arbeitsleistungen von anderen Komponenten für die Kalkulation von Gemeinkosten der Arbeitsplätze in der Kalkulation abzugrenzen. Es wird auch für das Auftragsreporting verwendet, um Rohmaterialien bzw.Eigenfertigung zu gruppieren.
+<br />Anmerkung: Dieses Feld darf nicht mit der Materialart im Materialstamm verwechselt werden. Obwohl hier Ähnlichkeiten vorhanden sind, gibt es keine Prüfung die eine unpassende Zuordnung verhindert.
+
+<!-- Help End: StockCategories -->
+
+<br /><br />
+
+<!-- Help Begin: Locations -->
+
+<font size="+2"><b>Betriebsstätten (Lagerorte) pflegen</b></font>
+<br /><br />
+Es wird eine Tabelle von Betriebsstätten gepflegt, die einen 5 Zeichen langen Schlüssel und eine bis zu 20 Zeichen lange Beschreibung der Betriebsstätte enthält. Die Beschreibung wird bei Rechnungen und Gutschriften angezeigt. Um die Datenbank kompakt zu halten, ist es der Schlüssel der in den Belegen der Warenbewegungen gespeichert wird. Es können so viele Betriebsstätten wie erforderlich eingerichtet werden. Wenn eine neue Betriebsstätte eingerichtet und als Lagerort definiert wird, werden gleichzeitig Bestandssätze für alle Materialien für die neue Betriebsstätte angelegt. Wenn eine Betriebsstätte gelöscht wird, werden auch diese Datensätze mit gelöscht. Eine Betriebsstätte kann allerdings dann nicht gelöscht werden, wenn Warenbewegungen oder -Bestände für diese Betriebsstätte im System vorhanden sind. Da die Betriebsstätte den Standort repräsentiert, an dem Waren ausgeliefert und Leistungen getätigt werden, ist sie wichtig für die Bestimmung der Steuern. In der Betriebsstätte muss die zutreffende Steuerregelung angegeben werden. Dieser Eintrag wird zusammen mit der Steuergruppe des Kunden und der Steuerkatgorie des verkauften Materials den anzuwendenen Steuersatz.
+<br /><br />
+Die Schlüssel der Betriebsstätten können nachträglich nicht geändert werden. Die Betriebsstätte kann auch nicht gelöscht werden, wenn Warenbewegungen, Benutzerstammsätze oder Kundenniederlassungen dazu existieren.
+
+<!-- Help End: Locations -->
+
+<br /><br />
+
+<!-- Help Begin: StockAdjustments -->
+
+<font size="+2"><b>Bestandskorrekturen</b></font>
+<br /><br />
+Mit diesem Vorgang können Bestandskorrekturen für ein bestimmtes Material erfasst werden. Dieser Vorgang kann über den Link aus der Materialsuche heraus aufgerufen werden oder aus über Hauptmenü &rarr; Bestandsführung &rarr; Vorgänge &rarr; Bestandskorrekturen.
+In letzterm Falle müssen Sie die Materialnummer wissen, da eine Suchhilfe hier nicht zur Verfügung steht.
+<br /><br />
+Wenn die Hauptbuchintegration der Bestandsführung ein geschaltet ist, erzueugt das System die erforderlichen Buchungen auf den Konten Baterialbestand und Bestandskorrekturen, wie sie über die Warengruppe gefunden werden. 
+<br /><br />
+Hinweis: Bestandskorrekturen sind nicht möglich für die Materialarten Bestellsatz, Sammelmaterial oder Dummymaterial, da dafür keine Bestände geführt werden.
+<br /><br />
+Bei Bestandskorekturen für nachweispflichtige Materialien müssen die entsprechenden Los-/Chargen-/Seriennummern angegeben werden.
+
+<!-- Help End: StockAdjustments -->
+
+<br /><br />
+
+<!-- Help Begin: StockTransfers -->
+
+<font size="+2"><b>Umlagerungen</b></font>
+<br /><br />
+Umlagerungen zwischen Betriebsstätten verringern den Bestand eines Materials in der sendenden Betriebsstätte und erhöhen den Bestand in der empfangenden Betriebsstätte. Dies erfolgt innerhalb eines Vorganges durch die Erfassung einer Umlagerung. In der gleichen Weise wie auch die Bestandskorrektur kann dieser Vorgang entweder über die Materialsuche oder über Hauptmenü &rarr; Bestandsführung &rarr; Vorgänge &rarr; Umlagerung aufgerufen werden. Sie müssen die Betriebsstätten von und nach, das Datum und die umgelagerte Menge angeben. Wenn das Material während der Umlagerung gesondert ausgewiesen werden soll, können Sie dafür eine gesonderte Betriebsstätte "Umlagerung" anlegen und eine erste Umlagerung buchen, wenn Sie das Material versenden und eine weitere Umlagerung buchen, wenn das Material ankommt. Umlagerungen werden in der Anzeige der Warenbewegungen dargestellt.
+<br /><br />
+Hinweis: Umlagerungen sind nicht möglich für die Materialarten Bestellsatz, Sammelmaterial oder Dummymaterial, da dafür keine Bestände geführt werden.
+<br /><br />
+Seit der Version 2.9 können auch Massenumlagerungen von vielen Materialien erfasst werden. Dafür wird ein Transportbeleg erstellt, der mit den Waren verschickt wird. Die Umlagerung wird dann erst verbucht, wenn die Waren in der empfangenden Betriebsstätte ankommen.
+
+<!-- Help End: StockTransfers -->
+
+<br /><br />
+<font size="+2"><b>Bestandsauswertungen und -berichte</b></font>
+<br /><br />
+Drei Arten von Auswertungen sind möglich:
+<br /><br />
+<ul>
+<li>Bestandsstatus</li>
+<li>Warenbewegungen</li>
+<li>Bestandsverwendung</li>
+</ul>
+Alle Bestandsauswertungen werden aus der Materialsuche heraus aufgerufen. Wenn ein Material ausgewählt wurde, werden die Links zu den verschiedenen Auswertungen angezeigt. 
+<br /><br />
+
+<!-- Help Begin: StockStatus -->
+
+<font size="+1"><b>Auswertung Bestandsstatus</b></font>
+<br /><br />
+Die Auswertung Bestandsstatus zeigt pro Betriebsstätte an, wie viel vom jeweiligen Material vorhanden ist, wieviel Bedarf besteht und wie viel Material frei verfügbar ist. Darüber hinaus werden der Bestellpunkt und die Mengen aus offenen Bestellungen angezeigt. Der Bedarf setzt sich sowohl aus Kundenaufträgen als auch aus Bedarf für übergeordnete Materialien (Sammelmaterial, zu fertigende Erzeugnisse) zusammen. Das sichert, dass der Gesamtbedarf angezeigt wird.
+<br /><br />
+Diese - wie auch die anderen Bestandsauswertungen können von der Materialsuche aus aufgerufen werden. Wenn Sie ein Material ausgewählt haben, werden die verfügbaren Anzeigeoptionen eingeblendet. Da das System die Ergebnisse als Webseiten ausgibt, nutzen Sie die bei den meisten Browsern vorhandenen Möglichkeiten, diese auszudrucken.
+<br /><br />
+Wenn es sich bei dem ausgewählten Material um ein nachweispflichtiges Material handelt, wird auch ein Link für die Anzeige der Los- oder Chargennummern angezeigt. Bei Seriennummernmaterial werden an dieser Stelle die Seriennummern angezeigt.
+
+<!-- Help End: StockStatus -->
+
+<br /><br />
+
+<!-- Help Begin: StockMovements -->
+
+<font size="+1"><b>Auswertung Warenbewegungen</b></font>
+<br /><br />
+Die Warenbewegungen werden nach absteigendem Datum untereinander dargestellt, so dass die neuesten Warenbewegungen ganz oben am Anfang der Liste stehen.
+<br /><br />
+Diese Auswertung zeigt die Warenbewegungen eines Materials für eine angegebene Betriebsstätte mit weiteren Links zu den Buchungspositionen der Rechnungen bzw. Gutschriften. Standardmäßig werden die Warenbewegungen der letzten 3 Monate angezeigt, aber Sie können diesen Zeitraum auch anders angeben.
+<br /><br />
+Hinweis: Die Auswertung Warenbewegungen kann auch für Sammelmaterialien und Dummymaterialien ausgeführt werden. Weil diese nicht tatsächlich gelagert werden können, wird kein Bestandsdatensatz geführt. Die angezeigte neue Menge ist daher immer 0.
+<br /><br />
+Wenn es sich bei der Warenbewegung um eine Rechnung oder eine Gutschrift handelt, werden der Kunde und seine Niederlassung sowie der Preis in der Währung der Rechnung oder Gutschrift angezeigt.
+
+<!-- Help End: StockMovements -->
+
+<br /><br />
+
+<!-- Help Begin: StockUsage -->
+
+<font size="+1"><b>Auswertung Bestandsverwendung</b></font>
+<br /><br />
+Diese Auswertung zeigt die Menge des Materials aus dem Verbrauch für den Nettoumsatz, Gutschriften und Bestandskorrekturen pro Monat für jede Betriebsstätte. Umlagerungen und Wareneingänge bleiben unberücksichtigt. Als Verwendung werden alle Warenbewegungen für das Material addiert, so dass Warenbewegungen, die sich auf den Verkauf von Sammelmaterialien beziehen, erfordern, dass die jeweiligen Komponenten in die Betrachtung einbezogen werden müssen. Die Verwendung kann für eine einzelne Betriebsstätte und für die Summe aller Betriebsstätten ausgegeben werden.
+<br /><br />
+Es gibt eine Festlegung in den Systemeinstellungen, wie viele Monate bei der Ermittlung des Durchschnittes berücksichtigt werden sollen.
+
+<!-- Help End: StockUsage -->
+
+<br /><br />
+
+<!-- Help Begin: InventoryValuation -->
+
+<font size="+1"><b>Bericht Bestandsbewertung</b></font>
+<br /><br />
+Dieser Bericht zeigt den zu Standardkosten bewerteten vorhandenen Bestand zum Zeitpunkt seiner Ausführung. Sowohl der Summen- als auch der Detailbericht zeigt den Gesamtbestand je Betriebsstätte und Warengruppe. Der Detailbericht liefert darüber hinaus die Liste der einzelnen Materialien mit Menge, Standardkosten und Wert. Materialien ohne Bestand werden nicht ausgegeben. Der Bericht kann auf eine einzelne Warengruppe und Betribsstätte eingeschränkt werden, um die Materialbestandskonten der Hauptbuchhaltung abzustimmen.
+<br /><br />
+Es gibt ein separates Skript, das zeitgesteuert den Bericht zur Bestandsbewertung ausführen und an vordefinierte Email-Adressen versenden kann. Um diese Möglichkeiten zu nutzen, muss das Skript unter Linux über einen crontab-Eintrag am letzten Tag jedes Monats mit wget aufgerufen werden. Das Skript heißt MailInventoryValuation.php. Dieses Skript muss um die Email-Adresse des Benutzers, der den Bericht erhalten soll, und die erforderlichen Aufrufparameter für den Bericht ergänzt werden. Im Normalfall wird so ein detaillierter Bericht über den Bestand in alle Betriebsstätten erstellt. Der crontab-Eintrag auf einem Linux-System, der den Bericht um 0:0 am ersten Tag jedes Monats erstellen würde lautet (angenommen wget ist in /usr/bin/wget installiert und der Webserver läuft auf der gleichen Maschine):
+<br /><br />
+
+# Zeitgesteuerte Erstellung des monatlichen Bestandsberichtes
+<br />
+-0 0 1 * * root /usr/bin/wget http://localhost/web-erp/MailInventoryValuation.php
+<br /><br />
+Die Seite selbst erzeugt keine Ausgabe auf dem Browser, so dass es witzlos wäre, sie im Webbrowser aufzurufen, obwohl sie eine weitere Email an den Empfänger auslöst.
+
+<!-- Help End: InventoryValuation -->
+
+<br /><br />
+
+<!-- Help Begin: InventoryPlanning -->
+
+<font size="+1"><b>Bericht Bestandsplanung</b></font>
+<br /><br />
+Dieser Bericht zeigt die Verwendungszahlen über die letzten vier Monate zusammen mit dem aktuellen Bestand, offenen Kundenaufträgen und offenen Bestellungen an. Es schlägt eine Wiederbestellmenge auf der Basis eine Anzahl von Monaten multipliziert mit der maximalen Verwendung in den letzten vier Monaten (über alle Betriebsstätten), vermindert um den vorhandenen Bestand und die bestellte Menge. Der Bericht wird nicht allen Ansprüchen gerecht, bietet aber eine gute Grundlage für Einkaufsentscheidungen.
+<br /><br />
+Den Bericht Bestandsplanung rufen Sie über Hauptmenü &rarr; Bestandsführung &rarr; Auswertungen und Berichte auf.
+
+<!-- Help End: InventoryPlanning -->
+
+<br /><br />
+
+<!-- Help Begin: StockCheck -->
+
+<font size="+1"><b>Inventur</b></font>
+<br /><br />
+Es sind Skripte vorgesehen um die Bestandskorrekturen in der Folge einer Inventur zu automatisieren. Diese Möglichkeit funktioniert leider (noch) nicht mit nachweispflichtigen Materialien. Das Vorgehen für die Anwendung bei Inventuren ist im Allgemeinen wie folgt:
+<br /><br />
+<b>Schritt 1:</b>
+<br /><br />
+Stellen Sie sicher, dass alle ausgelieferten Waren vollständig fakturiert sind.
+<br /><br />
+<b>Schritt 2:</b>
+<br /><br />
+Unter Hauptmenü &rarr; Bestandsführung &rarr; Auswertungen und Berichte klicken Sie auf den Link um die Inventurlisten auszudrucken.
+<br /><br />
+Diese Seite erlaubt die Auswahl der zu zählenden Betriebsstätte und eines Bereiches zu zählender Warengruppen. Beachten Sie das neue Feld:
+<br /><br />
+Aktion für Buchbestandsdatei. 
+<br /><br />
+Standardmäßig ist es so eingestellt, dass nur die Zähllisten ausgedruckt werden. Bevor die Zählung beginnt, muss es mit der Auswahl "Neue Inventurdatei anlegen" aufgerufen werden. Damit werden die vorhandenen Bestandsmengen zum Zeitpunkt des Berichtslaufes kopiert. Wenn nun Inventurlisten für eine andere Betriebsstätte erstellt wird und nun nochmals die Option "Neue Inventurdatei anlegen" ausgewählt wird, würde die vorher angelegte Inventurdatei überschrieben und ist verloren. Wenn also an einer Betriebsstätte eine Zählung im Gange ist, und eine andere Betriebsstätte auch mit der Zählung beginnen möchte, dann darf das Skript nur noch mit der Option "Inventurdatei anfügen/ergänzen" ausgeführt werden. Analog ist auch für eine weitere Warengruppe "Inventurdatei anfügen/ergänzen die richtige Option.
+<br /><br />
+<b>Schritt 3:</b>
+<br /><br />
+Wenn die Inventurdatei erstellt ist, sollte der Bestand gezählt werden.
+<br /><br />
+<b>Schritt 4:</b>
+<br /><br />
+Die Zahlen müssen erfasst werden, das System nimmt nur Zahlen für Materialien entgegen, die zu den im Schritt 2 ausgewählten Warengruppen gehören. Das System erlaubt viele Zählungen für ein bestimmtes Material, die Summe aller Zählungen wirken sich auf die erforderliche Korrekturbuchung aus. Ebenso kann ein Kürzel des Zählers oder ein Bezug auf die Zählliste eingegeben werden, um nachzuverfolgen, wo der eingegebene Bestand gezählt wurde. Sobald hier Zahlen einzugeben sind sollten die Zähler die Listen an die Datenerfasser weiterleiten, damit die Datenerfassung so schnell wie möglich nachdem die Zählung beendet ist, abgeschlossen werden kann.
+<br /><br />
+<b>Schritt 5:</b>
+<br /><br />
+Wenn die Erfassung der Zahlen abgeschossen ist, kann der Bericht Inventurauswertung laufen.
+<br /><br />
+Dieser wird über Hauptmenü &rarr; Bestandsführung &rarr; Auswertungen und Berichte aufgerufen:
+<br /><br />
+Inventurauswertung
+<br /><br />
+Es gibt eine Reihe für Optionen zu diesem Bericht. Der Standard ist der Lauf des Berichtes ohne Korrekturbuchungen. Er sollte tatsächlich erst einmal in diesem Modus aufgerufen werden, so dass man sich die vorgeschlagenen Korrekturbuchungen erst einmal ansehen kann. Korrekturen, die unlogisch erscheinen können so bei Bedarf noch doppelt geprüft (nachgezählt) werden.
+<br /><br />
+<b>Schritt 6:</b>
+<br /><br />
+Wenn Sie die durchzuführenden Buchungen nun glücklicherweise als gut befinden, kann die Inventurauswertung nochmals mit der Option "Bericht und erforderliche Bestandskorrekturen ausbuchen" aufgerufen werden.
+<br /><br />
+Bei diesem Vorgang gibt es kein Zurück mehr. Wenn Sie diese Korrekturen nicht durchführen wollten, müssen sie alle Korrekturbuchungen manuell stornieren. Seien Sie vorsichtig, wenn Sie die Inventurauswertung in diesem Modus ausführen.
+<!-- Help End: StockCheck -->

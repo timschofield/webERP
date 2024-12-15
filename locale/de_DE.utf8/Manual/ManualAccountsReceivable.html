@@ -1,0 +1,194 @@
+<br /><br />
+<a name="AccountsReceivable"><font size="+3"><b>Debitorenbuchhaltung</b></font></a>
+<br /><br />
+<font size="+2"><b>Übersicht</b></font>
+<br /><br />
+Die erstrangige Funktion der Debitorenbuchhaltung ist es, die Beträge, die die Kunden dem Unternehmen schulden, sowohl in der Hauswährung als auch der Rechnungswährung des Kunden nachzuverfolgen. Das System zeigt Rechnung für Rechnung die Salden der Debitorenkonten und überträgt den Bestand an Forderungen automatisch aus den Vormonaten. Es ist ein Offene-Posten-System. Wenn Zahlungen eingehen, werden sie den Rechnungen zugeordnet. Dabei werden Kursdifferenzen berechnet und in das Hauptbuch gebucht. Voraussetzung dafür ist, dass die Integration der Debitorenbuchhaltung mit der Hauptbuchhaltung in den Unternehmenseinstellungen eingerichtet ist.
+<br /><br />
+<font size="+2"><b>Merkmale der Debitorenbuchhaltung</b></font>
+<br /><br />
+<ul>
+<li>Eine Überfälligkeitsauswertung, welche die für dem Kunden angewendete Zahlungsbedingung und die Lieferzeiten zur Kundenniederlassung berücksichtigt, ergänzt durch eine Detailauswertung der aktuell überfälligen Rechnungen</li>
+<li>Vollständige Dialog-Auswertung über ein Debitorenkonto, mit Rechnungsdetails und Buchungstexten, die auf der Rechnung erscheinen. Abfragen über Zahlungseingänge zeigen an, wie die Zahlungen den Rechnungen zugeordnet wurden und die jeder Rechnung zuzuordnenden Kursdifferenzen.</li>
+<li>Volle Integration mit der Bestandsführung und der Hauptbuchhaltung, Fibu-Buchungen werden für jeden Vorgang angelegt. Aus der Kundenabfrage ist für jeden Vorgang eine Drill-Down-Funktion bis zu den Hauptbuchpositionen verfügbar.</li>
+<li>Offene-Posten-Buchhaltung, die vollständige Darlegung der Außenstände wird geführt und auch für die maximale Information an den Kunden auf den Kontoauszügen ausgedruckt</li>
+<li>Flexible benutzerdefinierte Ergebnisberichte als PDF zum Ausdrucken oder als CSV-Datei für die Weiterbearbeitung mit einem Tabellenkalkulationsprogramm</li>
+<li>Die nachträgliche Neuzuordnung von Zahlungseingängen oder Gutschriften zu Rechnungen mit Neuberechnung von Kursdifferenzen und den erforderlichen Hauptbuchbuchungen</li>
+<li>Eine beliebige Anzahl von Niederlassungen (Lieferanschriften) kann einem Kunden zugeordnet werden, die unterschiedlichen Verkäufern, Steuergruppen und Vertriebsbereichen für die Ergebnisrechnung zugeordnet werden können.</li>
+</ul>
+
+<!-- Help Begin: Customers -->
+
+<font size="+2"><b>Neue Kunden anlegen</b></font>
+<br /><br />
+Über Hauptmenü &rarr; Debitoren &rarr; Datenpflege klicken Sie auf "Kundenstammsatz anlegen". Der Kundenstammsatz bezeichnet gleichzeitig das Debitorenkonto, und eine beliebige Anzahl von Niederlassungen kann für jeden Kunden angelegt werden. In den Daten der Niederlassung werden die Informationen über Lieferanschrift, Steuergruppe, Vertriebsbereich und Verkäufer hinterlegt.
+<br /><br />
+<font size="+1"><b>Kundennummer</b></font>
+<br /><br />
+Dieses Feld ist ein eindeutiger Bezeichner für jeden Kunden. Das Feld ist 10 Zeichen lang und kann Buchstaben und Zahlen aufnehmen. Damit kann eine schnelle Suche in der Datenbank erfolgen und weil der Schlüssel kurz ist, wird die Datenbank klein gehalten
+<br /><br />
+Hinweis: Um eine Kundennummer nachträglich zu ändern, sind eine große Anzahl von Änderungen in den unterschiedlichsten Tabellen nötig, um die Warenbewegungen, Ergebnisrechnungssätze und Kundenaufträge neu zuzuordnen und dies kann die Systemressourcen merklich belasten. Die Möglichkeit zum Ändern einer Kundennummer ist mit einem Hilfswerkzeug unter dem Servicemenü Z_index.php gegeben, die manuell aufgerufen werden muss und nur dem Systemverwalter vorbehalten ist. Solche Änderungen sollten nur vorgenommen werden, solange keine anderen Benutzer am System arbeiten.
+<br /><br />
+<font size="+1"><b>Kundenname</b></font>
+<br /><br />
+Der Name des Kunden wird in der Kundensuche ausgewertet und erscheint auf der Korrespondez an den Kunden in exakt der hier eingegebenen Schreibweise. Ordentliche Groß- und Kleinschreibung und die Verwendung des vollen Namens sind auch ein Ausdruck der Wertschätzung, die Sie Ihrem Kunden entgegenbringen. Die maximale Länge des Namens beträgt 40 Zeichen.
+<br /><br />
+<font size="+1"><b>Adresszeilen 1, 2, 3, 4, 5 und 6</b></font>
+<br /><br />
+Dies ist die Adresse, die auf den Rechnungen und Gutschriften ausgedruckt wird. Wenn vorhanden, sollte eine Postfachnummer eingegeben werden. Die Felder sind maximal 40 Zeichen lang und sind Kannfelder. Bedenken Sie aber falls Sie diese Felder leer lassen, dass dann auf der Rechnung möglicherweise Angaben fehlen, die für eine steuerlich gültige Rechnung notwendig sind. Die Felder sind neutral benannt, damit die international unterschiedlichen Anschriftenformate berücksichtigt werden können. 
+Die Ausgabe auf einer Rechnung wird so aussehen:
+<br /><br />
+Kundenname<br />
+Adresszeile 1<br />
+Adresszeile 2<br />
+Adresszeile 3  Adresszeile 4 Adresszeile 5 Adresszeile 6.
+<br /><br />
+Zweckmäßigerweise verwenden Sie die Adresszeile 1 für Straße und Hausnummer bzw. Postfach, die Adresszeile 2 für den Ortsteil, die Adresszeile 3 für die Postleitzahl und die Adresszeile 4 für den Ort.
+<br /><br />
+<font size="+1"><b>Währung</b></font>
+<br /><br />
+Die Währung ist ein Mussfeld und bezeichnet die Währung, in der Sie die Rechnungen an den Kunden ausstellen werden. Das muss keineswegs die im Heimatland des Kunden gültige Währung sein. Der Umrechnungskurs wird aus der Währungstabelle übernommen, die Sie über die Hauptbuchhaltung pflegen. Sie werden die Umrechnungskurse wenigstens monatlich pflegen müssen.
+<br /><br />
+Hinweis: Im Rechnungsbeleg wird der Umrechnungskurs mitgeführt, nicht aber die Währung. Wenn Sie zwischenzeitlich die Währung ändern, ist es möglich, dass ein Zahlungseingang in einer neuen Währung zu einer Rechnung (die in der alten Währung gebucht wurde) zuordnen und das System berechnet riesige Kursdifferenzen. Es gibt dazu keine Fehlerprüfung und Sie müssen sehr aufpassen, falls ein solcher Fall einmal auftreten sollte, damit Zahlungsbeträge auch in der Währung zugeordnet werden, in der die Rechnung erfasst wurde. Auch unter dem Gesichtspunkt, dass Sie Forderungen in einer fremden Währung für die Bilanz bewerten müssen, ist es eine gute Wahl, die Hauswährung Ihrer Buchhaltung als Kundenwährung für alle Kunden zu übernehmen. 
+<br /><br />
+<font size="+1"><b>Rabattsatz</b></font>
+<br /><br />
+Kunden können einen allgemeinen Rabattsatz eingetragen bekommen, der auf alle Verkäufe angewendet wird. Der hier eingetragene Prozentsatz kann zum Zeitpunkt der Rechnungstellung, wenn das System den Rabatt berechnte, und nur für die aktuelle Rechnung überschrieben werden. Der dann vergebene Rabattsatz wird nicht als neuer Vorschlagswert im Stammsatz gespeichert. Das Feld wird insofern geprüft, dass nur positive Zahlen kleiner als 100% hier eingetragen werden können.
+<br /><br />
+Diese Funktion ist momentan noch nicht eingeführt/verwendet.
+<br /><br />
+<font size="+1"><b>Skontoprozentsatz</b></font>
+<br /><br />
+Kunden kann für schnelle Bezahlungen ein Skonto gewährt werden. Dieses Feld existiert nur zu Erinnerungszwecken, es wird angezeigt, wenn Zahlungseingänge von Kunden erfasst werden. Wenn der Zahlungseingang in der Zeit erfolgt ist, kann der Skonto berechnet und mit beim Zahlungseingang eingegeben werden.
+<br /><br />
+<font size="+1"><b>Kunde seit</b></font>
+<br /><br />
+Der Vorschlagswert ist das aktuelle Datum. Dieses Feld wird nur in verschiedenen Berichten verwendet, um die anzuzeigenden Kunden einzugrenzen, sowie für Kreditauswertungen. Das System akzeptiert nur Datumsangaben in diesem Feld. Das Datum kann jederzeit geändert werden. Es erfolgt keine weitere Fehlerprüfung.
+<br /><br />
+<font size="+1"><b>Zahlungsbedingungen</b></font>
+<br /><br />
+Mit einem Auswahlkästchen kann eine vorher definierte Zahlungsbedingung zugeordnet werden. Neue Zahlungsbedingungen können wenn nötig über Hauptmenü &rarr; Enstellungen &rarr; Debitoren/Kreditoren definiert werden. Die Zahlungsbedingungen werden verwendet, um zu bestimmen, wann eine Forderung überfällig ist und wann nicht und die Beschreibung wird auf Rechnungen und Kontoauszügen ausgedruckt.
+<br /><br />
+Es gibt keine Einschrängkungen gegen das jederzeitige Ändern der Zahlungsbedingung für den Kunden. Der nächste Kontoauszug oder die nächste Rechnung geben die geänderten Zahlungsbedingungen an. In den Belegen selbst wird die Zahlungsbedingung nicht mitgeführt.
+<br /><br />
+<font size="+1"><b>Kreditstatus</b></font>
+<br /><br />
+Für dieses Feld ist eine Auswahlliste vorhanden. Der Kreditstatus kann die Lieferbestätigung / Rechnungslegung für einen Kunden verhindern - unabhängig von seinem Kreditlimit. Die verschiedenen Statusausprägungen werden über Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren &rarr; Kreditstatus definiert.
+<br /><br />
+Der dem Kunden zugeordnete Kreditstatus kann jederzeit geändert werden.
+<br /><br />
+Hinweis: Der Kreditstatus wird niemals auf irgendwelchen Berichten, Rechnungen oder Gutschriften ausgegeben, die für die Augen des Kunden bestimmt sind.
+<br /><br />
+<font size="+1"><b>Kreditlimit</b></font>
+<br /><br />
+Dies ist ein Mussfeld und nimmt nur positive Werte an. Es trägt momentan nur Erinnerungscharakter.
+<br /><br />
+<font size="+1"><b>Rechnung senden an</b></font>
+<br /><br />
+Dieses Feld hat zwei Auswahlmöglichkeiten
+<br /><br />
+<ul>
+<li>Kundenanschrift - Die Rechnungen werden an die oben angegebene Postanschrift des Kundenstammsatzes geschickt. Diese Einstellung wird vorgeschlagen.</li>
+<li>Niederlassung - Die Rechnungen werden an die Postanschrift einer Kundenniederlassung geschickt. Manche Kunden möchten, dass ihre Niederlassungen erst einmal die Rechnungen abzeichnen, bevor sie zum Bezahlen an die Zentrale gesendet werden. In diesem Falle wird die Postanschrift der Niederlassung auf die Rechnung gedruckt.</li>
+</ul>
+
+<!-- Help End: Customers -->
+
+<!-- Help Begin: CustomerBranches -->
+
+<font size="+2"><b>Kundenniederlassungen anlegen</b></font>
+<br /><br />
+Die eingegebene Kundennummer allein reicht noch nicht aus, um Kundenaufträge dafür zu erfassen. Alle Kunden müssen jeweils wenigstens eine Niederlassung haben. Die Niederlassungsdaten enthalten die Informationen der Lieferanschrift. Neue Niederlassungen können jederzeit hinzugefügt werden.Der erste Schritt besteht darin, dass über die Kundensuche der Kunde ausgewählt wird, dann wählen Sie im Menü Niederlassungen anlegen/ändern/löschen. Es gibt keine Begrenzung der Zahl der Niederlassungen zu einem Kundenkonto. Es wird je Kunde nur ein Kontoauszug gedruckt, die Niederlassungen sind jedoch bei den einzelnen Rechnungen angegeben.
+<br /><br />
+<font size="+1"><b>Name der Niederlassung</b></font>
+<br /><br /> 
+Der Name der Niederlassung kann bis zu 40 Zeichen lang sein. Der Niederlassungsname wird auf den Lieferscheinen angegeben, um zu kennzeichnen, an wen die Lieferung gehen soll. Er wird auch bei der Erfassung von Kundenaufträgen in der Auswahl angezeigt Die Kundenaufträge werden für die Kombination Kundennummer-Niederlassung gespeichert.
+<br /><br />
+<font size="+1"><b>Nummer der Niederlassung</b></font>
+<br /><br />
+Die Nummer der Niederlassung wird in den Buchungen abgespeichert. Sie kann bis zu 10 Zeichen lang sein und muss die Niederlassung eindeutig bezeichnen. Zwei Niederlassungen des gleichen Kunden können nicht den selben Schlüssel der Niederlassung haben. Wie auch bei anderen Schlüsseln dürfen keine Leerzeichen, Kommas &amp; oder - vorkommen. Wenn Sie neue Niederlassungen anlegen, werden Prüfungen durchgeführt. Wenn jedoch Daten übernommen werden, ist es wichtig, dass jegliche Zeichen, die diesen Regeln widersprechen, vorher ersetzt werden.
+<br /><br />
+Niederlassungsschlüssel lassen sich nachträglich nicht ändern. Sie werden in vielen Tabellen quer durch die Datenbank verwendet, Ergebnisrechnungssätze, Kundenaufträge, Debitorenbelege und alle Daten in diesen Tabellen müssten verändert werden.
+<br /><br />
+<font size="+1"><b>Kontakt / Telefon / Fax / Adresse</b></font>
+<br /><br />
+Als Kontakt wird der Name des Einkäufers beim Kunden erfasst, an den in der Niederlassung die Waren adressiert werden. Dabei spielt es keine Rolle, ob auch die Rechnungen an die Niederlassung gesendet werden. 
+<br /><br />
+Die Adresse der Niederlassung ist die Straßenadresse für die Lieferungen. Es sollten so detaillierte Angaben wie auf den Lieferetiketten nötig eingegeben werden.<br />Für die Berechnung der Versandkosten werden die Adresszeilen 2 und 3 ausgewertet.
+<br /><br />
+<font size="+1"><b>Verkäufer</b></font>
+<br /><br />
+Eine Auswahlliste steht zur Verfügung, um den Verkäufer, der die Niederlassung bedient, anzugeben.
+<br /><br />
+<font size="+1"><b>bezieht Waren vom Lager</b></font>
+<br /><br />
+Niederlassungen in der Nähe einer bestimmten Betriebsstätte können über dieses Feld mit der lokalen Betriebsstätte als bevorzugten Versandort gekennzeichnet werden. Das hat den Effekt, dass bei der Erfassung von Kundenaufträgen das hier eingetragene Lager übernommen wird. Dieser Eintrag kann aber bei der Auftragserfassung überschrieben werden.
+<br /><br />
+<font size="+1"><b>Vordatieren nach dem (Tag im Monat)</b></font>
+<br /><br />
+Dieses Feld wird noch nicht verwendet.
+<br /><br />
+<font size="+1"><b>Lieferfrist Tage</b></font>
+<br /><br />
+Dieses Feld wird noch nicht verwendet.
+<br /><br />
+<font size="+1"><b>Telefon/Fax/Email</b></font>
+<br /><br />
+Dies sind die Kontaktangaben für die Niederlassung
+<br /><br />
+<font size="+1"><b>Steuergruppe</b></font>
+<br /><br />
+Die Steuergruppe der Niederlassung bestimmt die Art und Weise für die Steuerberechnung bei der Erstellung von Rechnungen bzw. Gutschriften.
+<br /><br />
+In Ländern mit Verkaufssteuer wird über die Steuergruppe die Finanzbehörde des Kunden definiert, an die die Verkaufssteuern in unterschiedlicher Höhe abzuführen sind. In den USA beispielsweise sind für Lieferungen nach New York andere Prozentsätze anzuwenden als für Lieferungen nach Michigan und die einbehaltene Steuer ist an unteschidliche Finanzbehörden abzuführen.
+<br /><br />
+Für deutsche Unternehmen wäre zu unterscheiden, ob es sich um Kunden in Deutschland, Kunden in der EU mit Umsatzsteuerabzug ohne USt-ID, Kunden in der EU mit USt-ID ohne Umsatzsteuerabzug oder Kunden im Ausland ohne Umsatzsteuerabzug handelt.
+<br /><br />
+Ausschlaggebend dafür ist, wo sich die Niederlassung des Kunden befindet, die die Waren oder Leistungen empfängt.
+<br /><br />
+Die Steuergruppen werden über Hauptmenü &rarr; Einstellungen &rarr; Allgemeines bearbeitet. Der Steuersatz hängt von der Steuergruppe des Kunden, den zugeordneten Steuerschlüsseln, der Steuerkategorie des verkauften Materials und der Steuerregelung der Betriebsstätte ab.
+<br /><br />
+Über ein Auswahlkästchen kann die passende Steuergruppe für die Niederlassung ausgewählt werden.
+<br /><br />
+<font size="+1"><b>Aufträge für diese Niederlassung</b></font>
+<br /><br />
+Dieser Schalter bestimmt, ob für die Niederlassung neue Kundenaufträge angelegt werden dürfen, wenn diese nicht erlaubt werden, erscheint die Niederlassung nicht in der Auswahl für die Erfassung von Kundenaufträgen.
+<br /><br />
+<font size="+1"><b>Übliche Versandart</b></font>
+<br /><br />
+Ein Auswahlkästchen erlaubt die Zuordnung einer Versandart, die kosten/servicegünstig für Lieferungen an diese Niederlassung ist. Der Eintrag in diesem Feld dient als Vorschlagswert für künftige Kundenaufträge. Wenn diese Auswahl bei einer Auftragserfassung überschrieben wird (weil sich eine andere Versandart als günstiger erweist), dann wird dies auch der neue Eintrag für dieses Feld.
+<br /><br />
+<font size="+1"><b>Postanschrift Zeilen 1, 2, 3 und 4</b></font>
+<br /><br />
+Das ist die Postanschrift der Niederlassung. Es erfolgt keine Prüfung, ob hier Einträge erfasst werden. Diese Informationen werden nur benötigt, wenn der Kunde wünscht, dass Rechungen und Gutschriften an die Niederlassung gesendet werden.
+
+<!-- Help End: CustomerBranches -->
+
+<br /><br />
+
+<!-- Help Begin: Customers -->
+
+<font size="+2"><b>Änderungen an den Kundendaten</b></font>
+<br /><br />
+Die Kundendaten können jederzeit geändert werden, und die Änderungen wirken sich auf alle künftigen Vorgänge aus. Sie wählen zuerst den Kunden über die Kundensuche aus und wählen dann den Link Kundenangaben ändern.
+<br /><br />
+Punkte die zu beachten sind:
+<br /><br />
+<ul>
+<li>Kundennummern können mit einem Werkzeug auf der Serviceseite Z_index.php durch den Systemverwalter geändert werden, das sollte nur verwendet werden, wenn keine anderen Benutzer am System arbeiten.</li>
+<li>Änderungen an den Zahlungsbedingungen wirken sich sofort auf die gerasterte Saldenauswertung aus, da die Fälligkeit jedesmal neu berechnet wird, wenn diese Auswertung läuft oder ein Kontoauszug gedruckt wird.</li>
+<li>Änderungen an der Währung des Kunden bedürfen besonderer Vorsicht, weil der Umrechnungskurs in offenen Positionen gespeichert ist. Das System merkt sich im Beleg nur den Kurs gegenüber der Hauswährung, nicht aber in welcher Währung die Rechnung erfasst wurde.</li>
+</ul>
+<!-- Help End: Customers -->
+
+<!-- Help Begin: Shippers -->
+<font size="+2"><b>Versandarten</b></font>
+<br /><br />
+Diese Tabelle wird nur als Hinweis auf der Art der Versendung benutzt, die in der Rechnung angegeben wurde wurde.  Die Versandart wird in den Auswahlkästchen verwendet und der Schlüssel in der Datenbank gespeichert, um die benutzte Versandart zu bezeichnen.  Der Frachtbriefhinweis kann im Buchungstext des Beleges gespeichert werden.  Auf diese Art kann Liefernachverfolgung realisiert werden. 
+<br /><br />
+Die Berechnung der Versandkosten kann automatisiert durchgeführt werden und das Ergebnis automatisch in die Rechnungen übernommen werden. Dazu ist es erforderlich, dass die Tabelle der Versandkosten für jede Versandart aktiv gepflegt wird. Die Versandkosten müssen pro Gewicht und Volumen für Frachten zu den Zielorten eingerichtet werden. Dabei wird angenommen, dass die Zielorte in den Adressfeldern 2 und 3 der Lieferanschrift stehen, d. h., nach Ortsteilen und Postleitzahlfeldern wird gesucht. Es ist eine erhebliche Menge Daten erforderlich.  Zum Errechnen der Versandkosten ist es auch erforderlich, dass in den Stammdaten für jedes Material eine Volumen und ein Gewicht definiert ist, über welches das Gesamtauftragsgewicht und -volumen für die Versandkostenberechnungen festgestellt wird. 
+<br /><br />
+Wenn Versandkostenberechnungen bei der Auftragserfassung durchgeführt werden sollen, müssen diese Daten erfasst werden, und es muss in den Systemeinstellunge der entsprechende Parameter gesetzt sein.
+
+<!-- Help End: Shippers -->
+

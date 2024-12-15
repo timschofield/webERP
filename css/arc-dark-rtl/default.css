@@ -1,0 +1,115 @@
+@font-face {
+font-family: 'Ubuntu';
+font-style: normal;
+font-weight: 400;
+src: local('Ubuntu'), url(https://fonts.googleapis.com/css?family=Ubuntu);
+}
+body {
+font-family: Futura,Trebuchet MS,Arial,sans-serif; ;
+font-weight:400;
+background:#404552;
+margin:0;
+padding:0;
+color:#8DCDEB;
+direction:rtl;
+}
+.summary_box{
+width:20%;
+border: 1px solid;
+text-align: right;
+padding: 1%;
+border-radius: 4px;
+}
+img {
+width:32px;
+height:32px;
+}
+img.StockImage {
+width:48px;
+transition: transform .5s;
+}
+img.StockImage:hover {
+transform: scale(5);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+img.Graph {
+width:90%;
+height:auto;
+}
+a {
+text-decoration:none;
+display:inline-block;
+color:inherit;
+}
+a:hover {
+text-decoration:underline;
+}
+a.ButtonLink {
+text-decoration:none;
+display:inline;
+}
+.centre {
+margin:0 auto;
+text-align:center;
+}
+.top {
+vertical-align:top;
+}
+.dpTD {
+border:0;
+width:20px;
+background-color:transparent;
+text-align:left;
+cursor:pointer;
+}
+.dpDayHighlight {
+border:0;
+width:20px;
+background-color:#1A1A1A;
+color:white;
+text-align:left;
+cursor:pointer;
+}
+.dpTDHover {
+border:0;
+width:20px;
+background-color:#2F343F;
+color:white;
+text-align:left;
+cursor:pointer;
+}
+.notavailable {
+font-weight:lighter;
+font-style:italic;
+}
+.gallery {
+margin: 5px;
+float: right;
+/* Class selector to let an element float to the left. */
+}
+[data-title]:hover:after {
+opacity: 1;
+transition: all 0.1s ease 0.5s;
+visibility: visible;
+}
+[data-title]:after {
+content: attr(data-title);
+background-color: #ADD8E6;
+color: #404552;
+font-size: 100%;
+font-weight:bold;
+position: absolute;
+padding: 1px 5px 2px 5px;
+bottom: -1.9em;
+right: 10%;
+white-space: nowrap;
+box-shadow: 1px 1px 3px #222222;
+opacity: 0;
+border: 1px solid #111111;
+z-index: 99999;
+visibility: hidden;
+border-radius:5px;
+}
+[data-title] {
+position: relative;
+}

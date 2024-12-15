@@ -1,0 +1,39 @@
+<br /><br />
+<a name="PaymentTerms"><font size="+3"><b>Zahlungsbedingungen</b></font></a>
+<br /><br />
+Für jeden Kunden muss die Zahlungsbedingung angegeben werden, die vereinbarten Konditionen abbildet. Das liefert die erforderlichen Informationen um zu überwachen, ob der Posten fällig ist oder nicht, zum Beispiel für Überfälligkeitsauswertungen und Berichte. Genauso enthalten die Rechnungen, Gutschriften und Kontoauszüge einen Verweis auf diese Zahlungsbedingungen damit der Kunde ständig mit jedem Beleg ganz selbstverständlich an diese Bedingungen erinnert wird.
+<br /><br />
+Zahlungsbedingungen können zwei Formen annehmen:
+<br /><br />
+<ul>
+<li>Fällig nach einer angegebenen Anzahl von Tagen nach dem Rechnungsdatum.</li>
+<li>Fällig an einem bestimmten Kalendertag im Folgemonat.</li>
+<!-- <li>Due after a specified number of days after invoice.
+<li>Due on a day in the month following invoice -->
+</ul>
+Das System gestattet das Anlegen der Zahlungsbedingungen auf beiderlei Weise.
+<br /><br />
+Hinweis: Der Überfälligkeitsbericht und die Abfragen nutzen die erwartete Anzahl von Liefertagen im Stammsatz der Niederlassung zum Bestimmen, wann der Kunde die Waren erhält, die Zahlungsfrist wird auf den Tag gerechnet, wenn die Lieferung erfolgt war.
+<br /><br />
+<font size="+1"><b>ZB-Schlüssel</b></font>
+<br /><br />
+Das ist der Schlüssel, den das System intern verwendet, um den Bezug auf die auf den Kunden angewendeten Konditionen herzustellen. Änderungen an dieser Zahlungsbedingung wirken sich auf alle Kunden aus, denen dieser Schlüssel hinterlegt ist. Wenn viele Kunden den Schlüssel verwenden, kann es eine Weile dauern, bis die Angaben bei allen Kunden geändert sind.
+<br /><br />
+Es ist ein zwei Zeichen langes Feld.
+<br /><br />
+<font size="+1"><b>Beschreibung der Zahlungsbedingung</b></font>
+<br /><br />
+Dieses Feld (40 Zeichen Text) wird auf Kontoauszügen, Rechnungen und Auswahlfeldern in den Auswertungen und Auswahlformularen angezeigt. Es sollte kurz und bündig die Zahlungskonditionen beschreiben.
+<br /><br />
+<font size="+1"><b>Fällig nach Anzahl Tage</b></font>
+<br /><br />
+Wenn dieses Optionskästchen angehakt ist, wird die folgende Zahl als Anzahl von Tagen interpretiert, nach der eine Rechnung fällig wird, andernfalls als Kalendertag im Folgemonat.
+<br /><br />
+<font size="+1"><b>Tage oder Tag im Folgemonat</b></font>
+<br /><br />
+Wenn das Optionskästchen Fällig nach Anzahl Tage angehakt ist, wird dieses Feld als Anzahl von Tagen bewertet, nach denen eine Rechnung fällig ist.<br />
+Wenn das Optionskästchen Fällig nach Anzahl Tage nicht angehakt ist, wird dieses Feld als Kalendertag im Folgemonat interpretiert. In diesem Falle muss der Wert im Bereich 0 ... 30 liegen.
+<br /><br />
+Diese Angaben werden in Überfälligkeitsauswertungen und Berichten verwendet für die Ermittlung, ob eine Rechnung fällig ist oder nicht. 
+<br /><br />
+Dieses Feld erwartet eine Zahl, andere Zeichen werden nicht angenommen.

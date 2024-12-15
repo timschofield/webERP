@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="QA Label">
+	<PaperSize name="Paper size">A6_Landscape</PaperSize>
+	<LineHeight name="Line height">22</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>20</x>
+		<y>40</y>
+		<width>0</width>
+		<height>35</height>
+	</logo>
+	<ItemNbr type="SimpleText" name="Item Number" id="ItemNbr">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>75</y>
+	</ItemNbr>
+	<ItemDesc type="SimpleText" name="Item Description" id="ItemDesc">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>100</y>
+	</ItemDesc>
+	<SupplierLot type="SimpleText" name="Supplier Lot" id="SupplierLot">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>125</y>
+	</SupplierLot>
+	<Lot type="SimpleText" name="Lot" id="Lot">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>150</y>
+	</Lot>
+	<SupplierName type="SimpleText" name="Supplier name" id="SupplierName">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>175</y>
+	</SupplierName>
+	<OrderNumber type="SimpleText" name="Order Number" id="OrderNumber">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>200</y>
+	</OrderNumber>
+	<ReceiptDate type="SimpleText" name="Date Received" id="ReceiptDate">
+		<FontSize>20</FontSize>
+		<x>20</x>
+		<y>225</y>
+	</ReceiptDate>
+	
+</form>

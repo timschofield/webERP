@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=gb2312">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Exson Qu">
+	<META NAME="CREATED" CONTENT="20110215;13224900">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGED" CONTENT="20110215;14590300">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="zh-CN" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-bottom: 0.5cm; font-weight: normal"><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>税收计算</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>概述</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>很多国家和政府采用不同的方式按商品价值计算增值税。此系统在进行如何自动计算以及配置记录到哪个总帐科目方面有灵活性。如果所有的方法都不成功，税率
+可以按照每行的方式输入发票或者红字发票。几种不同的税率可以单独适用于每个订单行，有些税率可以合并前面已经计算的税。自动计税的基础如下：</FONT></FONT></P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发票要开给的分公司是哪个</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>每个个分公司都被定义为属于某个</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税收组。税收组决定了销售适用的税。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>开发票的商品是什么</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>例如，在很多国家（省份），对于基本必须品减税。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>每个商品都被定义为属于某个&ldquo;税类&rdquo;；</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>商品是从哪里发出的。例如，商品发运的仓库是哪里。大多数国家的税收机关要求对本国内的供应征税</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-GST</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>（澳洲货物服务
+	税）</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">/VAT</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>（增值税）等等。商品或者服务发出的地点属于一个税收区域，归纳起来：商品仓库归属的税收区域，顾客分公司所属的税收组和商品本身属于的税类
+	决定了适用的税率。</FONT></FONT></P>
+</OL>
+<P><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>设置税</B></FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm">
+	<FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在设置里面的税种表（税收当局）中定义所要销售货物的税种。税种记录要求指定总帐代码以记录进项税和销项税，同时要求提供（税收当局）税种的名称。例如，
+	</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">UK
+	inland Revenue VAT, ATO-GST(Australia), NZ
+	IRD-GST(</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>新西兰）。如果某一税务局有几种不同的定义税，最好设置成另外一个税务局。例如在荷兰，收税时（有三个不同层别），可以发货给荷兰的顾客</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">--
+	</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>发自荷兰的某仓库不需要在发票上加税，顾客有免税安排并且同意自己直接向荷兰税收部门付采购的增值税。在这种情形下，可以设置单独的税务当局</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客免税
+	</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-NL-GST</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>每个顾客的分公司都被定义为属于一个特殊的税收组。税收机关是属于国家负责征税部门。在很多地方，有几个这样的部门收税。例如在加拿大有联邦税务局，负责征收</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">GST,</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>州的税务机关负责征收州销售税</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">PST</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>。税收组因此有一个或者多个税收部门（税种）组成。据此设置销售给顾客分公司的税组，它包含一个或者多个税种（税务部门）。注意，税务部门（税种）并非针对某个特殊的支付账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客账户，重要的是商品要运抵的顾客分公司决定了如何计算税收。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm">
+	<FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>每个库存地点或者仓库也被定义为属于一个特殊的税收区域。这个由仓库维护表单维护。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>每个商品都被定义为属于一个特殊的&ldquo;税类&rdquo;。
+	税类在商品（物料）维护界面设置。
+	在为每种商品设置税类时，要考虑到此商品在不同税务部门（税种）下的征税情况。很多税务当局只有两种适用税率例如</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">0%</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和正常税率，例如澳大利亚的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">10%.
+	</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>新西兰</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">12.5%.
+	</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然而，在某些税务部门，可能存几个税收层级</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">-</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>荷兰有三个税率。税类必须根据税务当局的要求设置（业务要求的销售区域），使用最多的税类。每种商品对应的税类被输入</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">stockmaster</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表中的记录。
+	系统提供了下拉查询框来显示已定义的所有税类。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"> <FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>接下来需要定义适用税率。
+	需要为每种供应定义税率，对应于每个仓库的税收区域，每个税种和税类。
+	根据要供应的顾客分公司，商品自身以及商品的来源地，这张税率表让系统来确定每个开发票的订单行上的商品适用的税率。</FONT></FONT></P>
+</UL>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>一个税收部门内销售</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=5 STYLE="font-size: 20pt"><B>--3</B></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>种税收水平</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>大多税务部门只有两种适用税率例如</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>0%</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和其他税率例如</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>10%<BR>
+<BR></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>可能对食品征收</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>0</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税率，衣服</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>5</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>％，其他商品</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>10</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>％。所有的食品的税目应该设置
+为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>0</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税率</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Zero
+Rated,</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有的衣服设置为－</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Clothing-</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有其他的应税商品设置一个税率为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Taxable
+Supply</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>销项税。这个国家的税收部门设置的税率为销项税设置为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Taxable
+suppley 10</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>％，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Zero
+Rated-0%</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和衣服</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Clothing-3.5%<BR></FONT></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>在两个税收部门销售的例子－－</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=5 STYLE="font-size: 20pt"><B>3</B></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>种税收水平</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=5 STYLE="font-size: 20pt"><B><BR></B></FONT><BR><FONT SIZE=4><BR></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>企业在另一国家有仓库</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>--(</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税收部门</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>A)</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者本国的不同省份，适用于不同的税务局，一个税务局有两种税收水平和另一税务局有三种税收水平</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>(</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税收部门</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>B),</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如上面所举例子。从每个仓库到顾客每个的分支机构，需要为每个税务局定义税率。大多情形，适用的出口税率为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>0%--</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>豁免。税务局</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>A</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会有输入选项，适用于税务局</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>A</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>管辖范围中的发货，对</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>3
+</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>种税收水平而言</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>(</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>尽管只有两项是适用的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>--</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>水平
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>3</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>和</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>1</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>是相同的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>),</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>同样也适用于发货到税务局</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>B.
+</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税务局</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>B</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>也会有设定的税率，适用于区域内的发货，同样适用于运输到税务局</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>A</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的发货</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>--</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>后者往往为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>0%.</FONT><BR></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"> <FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>决定税率的逻辑如下：</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><BR>
+</P>
+<P ALIGN=LEFT STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>货物来源地仓库的税务局</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TaxAuthority,
+</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>商品使用的税收水平</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TaxLevel,</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客分支机构所属的税务局确定后，
+使用这三种参数，税率从</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US">TaxAuthlevel</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表计算得出。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><BR><BR></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>与税收计算相关的总分类帐过帐，根据设置在税务局表的代码进行。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><BR>
+</P>
+</BODY>
+</HTML>

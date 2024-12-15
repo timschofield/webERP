@@ -1,0 +1,344 @@
+<html><head></head><body><br /><br />
+<a name="SecuritySchema"><font size="+3">
+<b>Sicherheitskonzept</b></font></a><br />
+<br />
+Das Sicherheitskonzept von webERP besteht aus den folgenden Elementen:
+<ol>
+<li><b>Benutzerkonto</b><br />
+Für jeden Anwender von webERP sollte ein persönliches Benutzerkonto eingerichtet werden.<br />
+Benutzerkonten können von Administratoren über: <i> Hauptmenü &rarr; Einstellungen &rarr; Benutzerstammsätze </i> (WWW_Users.php) angelegt werden.<br />
+Jeder Benutzer wird einer durch Auswählen aus der Drop-Down-Liste einer 'Rolle' zugeordnet.<br />
+Unten finden Sie eine Liste der standardmäßigen Rollen.<br />
+</li> 
+<li><b>Rolle</b><br />
+Rollen können von einem Administrator über <i>Hauptmenü &rarr; Einstellungen &rarr; Rollen und Berechtigungen</I> (WWW_Access.php)
+hinzugefügt oder entfernt werden.<br />
+Jeder 'Rolle' sind eine oder mehrere 'Berechtigungen' zugeordnet. Die zu einer 'Rolle' zugeordneten 'Berechtigungen' können über: <i>
+Hauptmenü &rarr; Einstellungen &rarr; Rollen und Berechtigungen </i> (WWW_Access.php) geändert werden.<br />
+Unten finden Sie eine Liste der zu den standardmäßigen 'Rollen' jeweils zugeordneten Berechtigungen.<br /></li>
+<li><b>Berechtigungen</b><br />
+Standardmäßig stehen 15 'Berechtigungen' zur Auswahl. Jede 'Berechtigung' erlaubt den Zugriff auf eine oder mehrere webERP-Seiten.<br />
+Unten finden Sie eine Liste der standardmäßigen Berechtigungen.<br />
+Es gibt kein webERP-Werkzeug, um 'Berechtigungen' hinzuzufügen, zu entfernen oder zu bearbeiten. Bei Bedarf kann ein Administrator die Datenbanktabelle (securitytokens) bearbeiten.<br />
+<br /></li>
+<li><b>Sicherheitsniveau</b><br />
+Jede webERP-Seite besitzt ein Sicherheitsiveau im Wertebereich von 1 bis 15.<br />
+Dies ist für jede Seite im Quelltext fest kodiert, zum Beispiel durch die Angabe <code> $PageSecurity = 1;</code><br />
+Für den Benutzerzugriff muss die 'Berechtigung' das Seiten-Sicherheitsniveau entsprechen.<br />
+Es gibt kein webERP-Werkzeug, um die Seiten-Sicherheitsniveaus zu ändern. Ein Administrator oder Entwickler kann die Seiten gegebenenfalls direkt bearbeiten.
+<br /></li>
+</ol>
+Diese Elemente wirken wie folgt zusammen: Mit der eingegebenen Kombination von Benutzerkonto und Passwort kann das System bei der Anmeldung die Rolle
+ermitteln. Die Rolle des Benutzers bestimmt, welche Berechtigungen der Benutzer besitzt. Dadurch darf der Benutzer auf alle die webERP-Seiten zugreifen,
+deren Sicherheitsniveau einer der Berechtigungen aus seiner Rolle entspricht.<br />
+<br />
+<br />
+<u>Eine umfangreichere Beschreibung des Sicherheitskonzeptes folgt:</u>
+<br /><br />
+Jede webERP-Seite (php-Skript) hat einen bestimmtes Niveau der Sicherheit zugeordnet. Dieses Sicherheitsniveau ist in jedem Skript fest eingetragen. Zum Zeitpunkt der
+Erstellung dieser Dokumentation ist dies eine Zahl zwischen 1 und 15.  Wenn weitere Sicherheitsniveaus erforderlich werden, so kann das durch einen Administrator oder Entwickler erweitert werden. Die vorgegebenen Sicherheitsniveaus für jede Seite finden Sie in der Tabelle unten.<br />
+<br />
+Der Benutzer erhält den Zugriff auf eine Seite, wenn das Sicherheitsniveau dieser Seite einer Berechtigung im Array SESSION AllowedPageSecurityTokens entspricht, die wiederum durch die Rolle des Benutzers bestimmt werden. Die Rolle selbst ist eine Ganzzahl, die dem Anwender in den Benutzerstammsatz über die Seite Benutzer pflegen (WWW_users.php) zugeordnet wird.<br />
+<br />
+Die Zugriffsberechtigung für die jeweilige Seite wird im Include session.php (bzw. PDF_Starter.inc für PDF-Seiten) geprüft. Die Variable $_SESSION['AccessLevel'] wird im Moment der Anmeldung des Benutzers aus der Datenbank abgerufen. Diese Variable verweist auf die Rolle des Benutzers. Das Array SESSION[AllowedPageSecurityTokens'] wird auf der Grundlage der Rolle (AccessLevel) mit den Berechtigungen aus der Datenbank gefüllt. Jede Seite mit einem Sicherheitsniveau $PageSecurity gleich einem Wert in dem ganannten Array wird als eine berechtigt Seite angesehen.<br />
+<br />
+Wenn Sie zusätzliche Rollen anlegen wollen, müssen Sie dazu das Skript "Rollen und Berechtigungen" (WWW.Access.php) anwenden. Sie müssen ebenso die Berechtigungen für die neue Rolle zuordnen.  Benutzer, die diese neue Rolle zugeordnet bekommen, werden den Zugriff auf jede Seite erhalten, deren Sicherheitsnivau einem Wert einer Berechtigung in dieser neuen Rolle entspricht. Dieser Mechanismus erlaubt es dem Systemadmiistrator zu steuern, wer worauf zugreifen darf.<br />
+<br />
+Durch Änderungen der Rollen, die den einzelnen Benutzern zugeordnet sind und das Ändern der Berechtigngen, die den einzelnen Rollen zugeordnet sind, können die Zugriffsberectigungen für alle Benutzer auf die einzelnen Seiten maßgeschneidert werden. Wenn Sie Änderungen vornehmen, beziehen Sie sich auf die Standardwerte in den untenstehenden Tabellen. Die Sicherheitsniveaus der einzelnen Seiten müssen ebenfalls bekannt sein. Die Werte der Standardeinstellungen können wie benötigt abgeändert werden.<br />
+<br />
+<u><!--Security Scheme Tables:-->Tabellen des Sicherheitskonzeptes</u><br />
+<br />
+<table border="2">
+<tbody>
+<tr>
+<th>Tabelle.Feld</th>
+<th>Beispieldaten</th>
+<th>Bemerkung</th>
+</tr>
+<tr>
+<td>www_user.userid<br />www_user.fullaccess</td>
+<td>demo<br />8</td>
+<td>Diese Felder werden durch das Skript<br />WWW_Users.php geändert.</td>
+</tr>
+<tr>
+<td>securityroles.secroleid<br />securityroles.secrolename</td>
+<td>8<br />System Administrator</td>
+<td>Diese Felder werden durch WWW_Access.php<br />
+    geändert, wenn eine Rolle angelegt oder<br />
+    gelöscht wird.</td>
+</tr>
+<tr>
+<td>securitygroups.secroleid<br />securitygroups.tokenid</td>
+<td>8<br />1</td>
+<td>Diese Felder werden durch WWW_Access.php<br />
+    geändert, wenn Sie einer Rolle eine Berechtigung<br />
+    zuordnen oder aus einer Rolle eine Berechtigung<br />
+    entfernen.</td>
+</tr>
+<tr>
+<td>securitytokens.tokenid<br />securitytokens.tokenname</td>
+<td>1<br />Auftragseingabe - Kundenzugriff</td>
+<td>Es sind standardmäßig 15 Berechtigungen definiert.<br />
+    Diese Daten können mit keinem webERP-Werkzeug<br />
+    bearbeitet werden.</td>
+</tr>
+<tr>
+<td>webERP-Seite</td>
+<td>CustomerInquiry.php<br />$PageSecurity = 1;</td>
+<td>Das Sicherheitsniveau für jede Seite<br />
+    ist vordefiniert und kann nicht mit<br />
+    webERP-Mitteln geändert werden.</td>
+</tr>
+</tbody></table>
+
+<br />
+<br />
+<b>Rollen: Standardwerte für webERP version 3.08:</b><br />
+<ol>
+<li>Inquiries/Order Entry (Auswertungen/Auftragserfassung)</li>
+<li>Manufac/Stock Admin (Fertigung/Bestandsführung)</li>
+<li>Purchasing officer (Einkaufsverantwortlicher)</li>
+<li>AP Clerk (Kreditorenbuchhalter)</li>
+<li>AR Clerk (Debitorenbuchhalter)</li>
+<li>Accountant (Bilanzbuchhalter)</li>
+<li>Customer logon only (Nur Kundenzugriff)</li>
+<li>System Administrator (Systemverwalter)</li>
+</ol>
+<b>Berechtigungszuordnungen: Standardwerte für webERP version 3.071:</b><br />
+<ol>
+<li>Inquiries/Order Entry (Auswertungen/Auftragserfassung)  = 1, 2</li>
+<li>Manufac/Stock Admin (Fertigung/Bestandsführung) = 1, 2, 11</li>
+<li>Purchasing officer (Einkaufsverantwortlicher) = 1, 2, 3, 4, 5, 11</li>
+<li>AP Clerk (Kreditorenbuchhalter) = 1, 2, 5</li>
+<li>AR Clerk (Debitorenbuchhalter) = 1, 2, 5, 11</li>
+<li>Accountant (Bilanzbuchhalter) = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11</li>
+<li>Customer logon only (Nur Kundenzugriff) = 1</li>
+<li>System Administrator (Systemverwalter) = alle aktuellen Berechtigungen</li>
+</ol>
+<b>Berechtigungen: Standardwerte für webERP Version 3.08:</b><br />
+<ol>
+<li>Order Entry/Inquiries customer access only (Auftragseingabe und -abfrage nur für den Kundenzugriff)</li>
+<li>Basic Reports and Inquiries with selection options (Grundlegende Berichte und Auswertungen mit Auswahlmöglichkeiten)</li>
+<li>Credit notes and AR management (Gutschriften und Debitoren-Verwaltung)</li>
+<li>Purchasing data/PO Entry/Reorder Levels (Einkaufsdaten / Bestellerfassung / Bestellpunkte)</li>
+<li>Accounts Payable (Kreditoren)</li>
+<li>Not used</li>
+<li>Bank Reconciliations (Bankkonten-Abstimmungen)</li>
+<li>General ledger reports/inquiries (Hauptbuchberichte und -auswertungen)</li>
+<li>Not used</li>
+<li>General Ledger Maintenance, stock valuation &amp; Configuration (Hauptbuchabwicklung, Bestandsbewertung und Konfiguration)</li>
+<li>Inventory Management and Pricing (Bestandsverwaltung und Preisbildung)</li>
+<li>Unknown</li>
+<li>Unknown</li>
+<li>Unknown</li>
+<li>User Management and System Administration (Benutzer- und Systemverwaltung)</li>
+</ol>
+<b>Sicherheitsniveau: Standardwerte für webERP Version 3.08:</b><br />
+<br />
+<!-- <th>Page (script) File Name</th><th>PageSecurity value </th> -->
+<table border="2"><tbody><tr><th>Seite Dateiname</th><th>Sicherheitsniveau</th></tr>
+<tr><td>AccountGroups.php</td><td>10</td></tr>
+<tr><td>AccountSections.php</td><td>10</td></tr>
+<tr><td>AgedDebtors.php</td><td>2</td></tr>
+<tr><td>AgedSuppliers.php</td><td>2</td></tr>
+<tr><td>Areas.php</td><td>3</td></tr>
+<tr><td>BankAccounts.php</td><td>10</td></tr>
+<tr><td>BankMatching.php</td><td>7</td></tr>
+<tr><td>BankReconciliation.php</td><td>7</td></tr>
+<tr><td>BOMInquiry.php</td><td>2</td></tr>
+<tr><td>BOMListing.php</td><td>2</td></tr>
+<tr><td>BOMs.php</td><td>9</td></tr>
+<tr><td>COGSGLPostings.php</td><td>10</td></tr>
+<tr><td>CompanyPreferences.php</td><td>10</td></tr>
+<tr><td>ConfirmDispatchControlled_Invoice.php</td><td>11</td></tr>
+<tr><td>ConfirmDispatch_Invoice.php</td><td>2</td></tr>
+<tr><td>CreditItemsControlled.php</td><td>3</td></tr>
+<tr><td>CreditStatus.php</td><td>3</td></tr>
+<tr><td>Credit_Invoice.php</td><td>3</td></tr>
+<tr><td>Currencies.php</td><td>9</td></tr>
+<tr><td>CustEDISetup.php</td><td>11</td></tr>
+<tr><td>CustomerAllocations.php</td><td>3</td></tr>
+<tr><td>CustomerBranches.php</td><td>3</td></tr>
+<tr><td>CustomerInquiry.php</td><td>1</td></tr>
+<tr><td>CustomerReceipt.php</td><td>3</td></tr>
+<tr><td>Customers.php</td><td>3</td></tr>
+<tr><td>CustomerTransInquiry.php</td><td>2</td></tr>
+<tr><td>Custwherealloc.php</td><td>2</td></tr>
+<tr><td>DebtorsAtPeriodEnd.php</td><td>2</td></tr>
+<tr><td>DeliveryDetails.php</td><td>1</td></tr>
+<tr><td>DiscountCategories.php</td><td>11</td></tr>
+<tr><td>DiscountMatrix.php</td><td>11</td></tr>
+<tr><td>EDIMessageFormat.php</td><td>10</td></tr>
+<tr><td>EDIProcessOrders.php</td><td>11</td></tr>
+<tr><td>EDISendInvoices.php</td><td>15</td></tr>
+<tr><td>EmailCustTrans.php</td><td>2</td></tr>
+<tr><td>FreightCosts.php</td><td>11</td></tr>
+<tr><td>FTP_RadioBeacon.php</td><td>2</td></tr>
+<tr><td>GetStockImage.php</td><td>1</td></tr>
+<tr><td>GLAccountInquiry.php</td><td>8</td></tr>
+<tr><td>GLAccounts.php</td><td>10</td></tr>
+<tr><td>GLBalanceSheet.php</td><td>8</td></tr>
+<tr><td>GLBudget.php</td><td>8</td></tr>
+<tr><td>GLCodesInquiry.php</td><td>8</td></tr>
+<tr><td>GLJournal.php</td><td>10</td></tr>
+<tr><td>GLProfit_Loss.php</td><td>8</td></tr>
+<tr><td>GLTransInquiry.php</td><td>8</td></tr>
+<tr><td>GLTrialBalance.php</td><td>8</td></tr>
+<tr><td>GoodsReceived.php</td><td>11</td></tr>
+<tr><td>GoodsReceivedControlled.php</td><td>11</td></tr>
+<tr><td>ImportOrdersTowebERP.php</td><td>1</td></tr>
+<tr><td>index.php</td><td>1</td></tr>
+<tr><td>InventoryPlanning.php</td><td>2</td></tr>
+<tr><td>InventoryValuation.php</td><td>2</td></tr>
+<tr><td>Locations.php</td><td>11</td></tr>
+<tr><td>Logout.php</td><td>1</td></tr>
+<tr><td>MailInventoryValuation.php</td><td>1</td></tr>
+<tr><td>OrderDetails.php</td><td>2</td></tr>
+<tr><td>OutstandingGRNs.php</td><td>2</td></tr>
+<tr><td>PaymentAllocations.php</td><td>5</td></tr>
+<tr><td>PaymentMethods.php</td><td>15</td></tr>
+<tr><td>Payments.php</td><td>5</td></tr>
+<tr><td>PaymentTerms.php</td><td>10</td></tr>
+<tr><td>PDFBankingSummary.php</td><td>3</td></tr>
+<tr><td>PDFChequeListing.php</td><td>3</td></tr>
+<tr><td>PDFCustomerList.php</td><td>2</td></tr>
+<tr><td>PDFDeliveryDifferences.php</td><td>3</td></tr>
+<tr><td>PDFDIFOT.php</td><td>3</td></tr>
+<tr><td>PDFLowGP.php</td><td>2</td></tr>
+<tr><td>PDFOrdersInvoiced.php</td><td>3</td></tr>
+<tr><td>PDFOrderStatus.php</td><td>3</td></tr>
+<tr><td>PDFPriceList.php</td><td>2</td></tr>
+<tr><td>PDFQuotation.php</td><td>2</td></tr>
+<tr><td>PDFStockCheckComparison.php</td><td>2</td></tr>
+<tr><td>PDFStockLocTransfer.php</td><td>1</td></tr>
+<tr><td>PDFStockNegatives.php</td><td>1</td></tr>
+<tr><td>PeriodsInquiry.php</td><td>2</td></tr>
+<tr><td>PO_Header.php</td><td>4</td></tr>
+<tr><td>PO_Items.php</td><td>4</td></tr>
+<tr><td>PO_OrderDetails.php</td><td>2</td></tr>
+<tr><td>PO_PDFPurchOrder.php</td><td>2</td></tr>
+<tr><td>PO_SelectOSPurchOrder.php</td><td>2</td></tr>
+<tr><td>PO_SelectPurchOrder.php</td><td>2</td></tr>
+<tr><td>Prices.php</td><td>2</td></tr>
+<tr><td>Prices_Customer.php</td><td>11</td></tr>
+<tr><td>PrintCheque.php</td><td>5</td></tr>
+<tr><td>PrintCustOrder.php</td><td>2</td></tr>
+<tr><td>PrintCustOrder_Generic.php</td><td>2</td></tr>
+<tr><td>PrintCustStatements.php</td><td>2</td></tr>
+<tr><td>PrintCustTrans.php</td><td>1</td></tr>
+<tr><td>PrintCustTransPortrait.php</td><td>1</td></tr>
+<tr><td>PurchData.php</td><td>4</td></tr>
+<tr><td>RecurringSalesOrders.php</td><td>1</td></tr>
+<tr><td>ReverseGRN.php</td><td>11</td></tr>
+<tr><td>SalesAnalReptcols.php</td><td>2</td></tr>
+<tr><td>SalesAnalRepts.php</td><td>2</td></tr>
+<tr><td>SalesAnalysis_UserDefined.php</td><td>2</td></tr>
+<tr><td>SalesCategories.php</td><td>11</td></tr>
+<tr><td>SalesGLpostings.php</td><td>10</td></tr>
+<tr><td>SalesGraph.php</td><td> 6</td></tr>
+<tr><td>SalesPeople.php</td><td>3</td></tr>
+<tr><td>SalesTypes.php</td><td>15</td></tr>
+<tr><td>SelectCompletedOrder.php</td><td>1</td></tr>
+<tr><td>SelectCreditItems.php</td><td>3</td></tr>
+<tr><td>SelectCustomer.php</td><td>2</td></tr>
+<tr><td>SelectGLAccount.php</td><td>8</td></tr>
+<tr><td>SelectOrderItems.php</td><td>1</td></tr>
+<tr><td>SelectProduct.php</td><td>2</td></tr>
+<tr><td>SelectRecurringSalesOrder.php</td><td>2</td></tr>
+<tr><td>SelectSalesorder.php</td><td>2</td></tr>
+<tr><td>SelectSupplier.php</td><td>2</td></tr>
+<tr><td>SelectWorkorder.php</td><td>2</td></tr>
+<tr><td>ShipmentCosting.php</td><td>11</td></tr>
+<tr><td>Shipments.php</td><td>11</td></tr>
+<tr><td>Shippers.php</td><td>15</td></tr>
+<tr><td>ShiptsList.php</td><td>2</td></tr>
+<tr><td>Shipt_Select.php</td><td>11</td></tr>
+<tr><td>SpecialOrder.php</td><td>4</td></tr>
+<tr><td>StockAdjustments.php</td><td>11</td></tr>
+<tr><td>StockAdjustmentsControlled.php</td><td>11</td></tr>
+<tr><td>StockCategories.php</td><td>11</td></tr>
+<tr><td>StockCheck.php</td><td>2</td></tr>
+<tr><td>StockCostUpdate.php</td><td>2</td></tr>
+<tr><td>StockCounts.php</td><td>2</td></tr>
+<tr><td>StockLocMovements.php</td><td>2</td></tr>
+<tr><td>StockLocStatus.php</td><td>2</td></tr>
+<tr><td>StockLocTransfer.php</td><td>11</td></tr>
+<tr><td>StockLocTransferReceive.php</td><td>11</td></tr>
+<tr><td>StockMovements.php</td><td>2</td></tr>
+<tr><td>StockQties_csv.php</td><td>5</td></tr>
+<tr><td>StockQuantityByDate.php</td><td>2</td></tr>
+<tr><td>StockReorderLevel.php</td><td>4</td></tr>
+<tr><td>Stocks.php</td><td>11</td></tr>
+<tr><td>StockSerialItemResearch.php</td><td>3</td></tr>
+<tr><td>StockSerialItems.php</td><td>2</td></tr>
+<tr><td>StockStatus.php</td><td>2</td></tr>
+<tr><td>StockTtransferControlled.php</td><td>11</td></tr>
+<tr><td>StockTransfers.php</td><td>11</td></tr>
+<tr><td>StockUsage.php</td><td>2</td></tr>
+<tr><td>StockUsageGraph.php</td><td>2</td></tr>
+<tr><td>SuppCreditGRNs.php</td><td>5</td></tr>
+<tr><td>SuppInvGLAnalysis.php</td><td>5</td></tr>
+<tr><td>SuppInvGRNs.php</td><td>5</td></tr>
+<tr><td>SupplierAllocations.php</td><td>5</td></tr>
+<tr><td>SupplierBalsAtPeriodEnd.php</td><td>2</td></tr>
+<tr><td>SupplierContacts.php</td><td>5</td></tr>
+<tr><td>SupplierCredit.php</td><td>5</td></tr>
+<tr><td>SupplierInquiry.php</td><td>2</td></tr>
+<tr><td>SupplierInvoice.php</td><td>5</td></tr>
+<tr><td>Suppliers.php</td><td>5</td></tr>
+<tr><td>SupplierTransInquiry.php</td><td>2</td></tr>
+<tr><td>SuppPaymentrun.php</td><td>5</td></tr>
+<tr><td>SuppShiptChgs.php</td><td>5</td></tr>
+<tr><td>SuppTransGLAnalysis.php</td><td>5</td></tr>
+<tr><td>SystemParameters.php</td><td>15</td></tr>
+<tr><td>Tax.php</td><td>2</td></tr>
+<tr><td>TaxAuthorities.php</td><td>15</td></tr>
+<tr><td>TaxAuthorityRates.php</td><td>11</td></tr>
+<tr><td>TaxCategories.php</td><td>15</td></tr>
+<tr><td>TaxGroups.php</td><td>15</td></tr>
+<tr><td>TaxProvinces.php</td><td>15</td></tr>
+<tr><td>UnitsOfMeasure.php</td><td>15</td></tr>
+<tr><td>UserSettings.php</td><td>1</td></tr>
+<tr><td>WhereUsedInquiry.php</td><td>2</td></tr>
+<tr><td>WorkCentres.php</td><td>9</td></tr>
+<tr><td>WorkOrderCosting.php</td><td>11</td></tr>
+<tr><td>WorkOrderEntry.php</td><td>10</td></tr>
+<tr><td>WorkOrderIssue.php</td><td>11</td></tr>
+<tr><td>WorkOrderReceive.php</td><td>11</td></tr>
+<tr><td>WorkOrderStatus.php</td><td>11</td></tr>
+<tr><td>WWW_Access.php</td><td>15</td></tr>
+<tr><td>WWW_Users.php</td><td>15</td></tr>
+<tr><td>Z_ChangeBranchCode.php</td><td>15</td></tr>
+<tr><td>Z_ChangeCustomerCode.php</td><td>15</td></tr>
+<tr><td>Z_ChangeStockcode.php</td><td>15</td></tr>
+<tr><td>Z_CheckAllocationsFrom.php</td><td>15</td></tr>
+<tr><td>Z_CheckAllocs.php</td><td>2</td></tr>
+<tr><td>Z_CheckDebtorsControl.php</td><td>15</td></tr>
+<tr><td>Z_CheckGLTransBalance.php</td><td>15</td></tr>
+<tr><td>Z_CreateChartDetails.php</td><td>9</td></tr>
+<tr><td>Z_CreateCompany.php</td><td>15</td></tr>
+<tr><td>Z_CurrencyDebtorsBalances.php</td><td>15</td></tr>
+<tr><td>Z_CurrencySuppliersBalances.php</td><td>15</td></tr>
+<tr><td>Z_DataExport.php</td><td>15</td></tr>
+<tr><td>Z_DeleteCreditNote.php</td><td>15</td></tr>
+<tr><td>Z_DeleteInvoice.php</td><td>15</td></tr>
+<tr><td>Z_DeleteSalesTransactions.php</td><td>15</td></tr>
+<tr><td>Z_index.php</td><td>15</td></tr>
+<tr><td>Z_MakeNewCompany.php</td><td>15</td></tr>
+<tr><td>Z_MakeStockLocns.php</td><td>15</td></tr>
+<tr><td>Z_poAddLanguage.php</td><td>15</td></tr>
+<tr><td>Z_poAdmin.php</td><td>15</td></tr>
+<tr><td>Z_poEditLangHeader.php</td><td>15</td></tr>
+<tr><td>Z_poEditLangModule.php</td><td>15</td></tr>
+<tr><td>Z_poRebuildDefault.php</td><td>15</td></tr>
+<tr><td>Z_PriceChanges.php</td><td>15</td></tr>
+<tr><td>Z_ReApplyCostToSA.php</td><td>15</td></tr>
+<tr><td>Z_RepostGLFromPeriod.php</td><td>15</td></tr>
+<tr><td>Z_ReverseSuppPaymentRun.php</td><td>15</td></tr>
+<tr><td>Z_UpdateChartDetailsBFwd.php</td><td>15</td></tr>
+<tr><td>Z_Upgrade_3.01-3.02.php</td><td>15</td></tr>
+<tr><td>Z_Upgrade_3.04-3.05.php</td><td>15</td></tr>
+<tr><td>Z_Upgrade_3.05-3.06.php</td><td>15</td></tr>
+<tr><td>Z_UploadForm.php</td><td>15</td></tr>
+<tr><td>Z_UploadResult.php</td><td>15</td></tr>
+</table></body></html>

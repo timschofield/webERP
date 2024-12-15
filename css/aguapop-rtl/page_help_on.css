@@ -1,0 +1,26 @@
+
+DIV.page_help_text {
+background:#D3D3D3 url(images/help.png) top right no-repeat;
+background-size:32px 32px;
+min-height:32px;
+border:maroon 1px solid;
+border-radius:3px;
+padding-top:2px;
+padding-bottom:2px;
+z-index:1;
+width:80%;
+float:none;
+visibility:visible;
+position:static;
+color:#000;
+text-align:center;
+padding-right:24px;
+min-height:26px;
+margin:0 auto;
+margin-bottom:4px;
+}
+
+@media only screen and (max-device-width:767px) {
+/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+.page_help_text {display:none;/* Hides field help text. */}
+}

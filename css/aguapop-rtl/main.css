@@ -1,0 +1,123 @@
+.MainBody {
+background:#B0C4DE;
+margin:5px;
+margin-top:0px;
+margin-bottom:0px;
+padding:10px;
+padding-top:0px;
+border-left: 6px solid #4682B4;
+border-right: 6px solid #4682B4;
+border-bottom: 6px solid #4682B4;
+}
+.ModuleList {
+float:right;
+background:#B0C4DE;
+white-space:nowrap;
+text-align:right;
+padding-left:10px;
+padding-right:10px;
+padding-top:3px;
+width:11%;
+width:min-content;
+border: 6px solid #4682B4;
+border-bottom-left-radius:7px;
+border-bottom-left-radius:7px;
+margin-right:5px;
+}
+.ModuleList li a,.ModuleList li a:hover {
+background:#494C56;
+color:white;
+display:block;
+border-radius:10px;
+text-decoration:none;
+margin-bottom:5px;
+padding:3px;
+border:1px solid #404552;
+padding-right:5px;
+transition-duration:0.5s;
+}
+.ModuleList .ModuleSelected a {
+border:1px solid #1A1A1A;
+background:#494C56;
+color:white;
+padding-right:5px;
+}
+.ModuleList .ModuleUnSelected a{
+border:1px solid #0E1826;
+background:#B0C4DE;
+color:#09093A;
+padding-right:5px;
+}
+.ModuleList ul,.MenuList ul {
+margin:0;
+padding:0;
+}
+.ModuleList li,.MenuList li {
+list-style:none;
+}
+.MenuList {
+display: inline;
+width:30%;
+border-radius:10px;
+margin-top:5px;
+vertical-align:top;
+margin-left:5px;
+}
+.MenuList legend {
+}
+.MenuList legend img {
+padding-left:7px;
+width:48px;
+height:48px;
+vertical-align:middle;
+}
+.MenuItem {
+color:#FFFFFF;
+text-decoration:none;
+text-align:right;
+padding:2px;
+}
+.MenuItem a {
+color:black;
+}
+.MenuItem:hover {
+background:transparent;
+text-align:right;
+color:white;
+}
+.MenuList .CustomMenuList {
+background:#4682B4;
+color:#FFF;
+font-weight:700;
+text-align:center;
+padding:3px;
+}
+.page_title_text {
+color:#000;
+font-weight:700;
+text-align:center;
+margin:0 auto;
+padding:5px;
+padding-top:10px;
+margin-bottom:1px;
+clear: both;
+}
+.page_title_text img {
+padding-left:7px;
+width:48px;
+height:48px;
+vertical-align:middle;
+}
+.toplink {
+float:right;
+margin-top:10px;
+display:inline-block;
+}
+.clearfix {
+  overflow: auto;
+}
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}

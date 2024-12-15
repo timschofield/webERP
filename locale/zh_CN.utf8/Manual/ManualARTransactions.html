@@ -1,0 +1,164 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=gb2312">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Exson Qu">
+	<META NAME="CREATED" CONTENT="20110210;15121300">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGED" CONTENT="20110210;15415600">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="zh-CN" DIR="LTR">
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>应收交易</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>为销售订单开发票</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>选择一个要开发票的订单</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有的发票均需要首先输入一张销售订单</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从主菜单选择订单。选择未完成销售订单维护。这个页面显示了所有的未完成销售订单。如果已经知道了销售定单的号码，可以直接输入。选择要开发票的订单。点击查找订单，这时销售订单应该显示在下面，并且有链接用来更改订单，打印装箱单并且开发票。点击链接来为销售订单开发票。</FONT></FONT></P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>最后，系统还设置了输入文字到发票的地方。点击开发票按钮，按照指示更新订单并且生成所有凭证，包括总帐过账（如果在公司参数设置界面设置了总帐整合的话</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>见设置）来记录发票。在<B>开发票</B>按钮被点击之前，不会有任何输入被保存到数据库，并且在任何阶段离开此页都是安全的，不会改变任何东西</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>开发票的过程可以在任何时刻终止，仅仅是点击其他链接到其他页面就好了。一旦点击了开发票按钮，那么会进行如下的处理：</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为订单上的每一行</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者对于组装部品</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>创建对应仓库的库存变化，这些仓库在创建订单时选定，价格为订单上的价格。无法再变更。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>创建</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">DebtorTrans</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>表中的记录，它记录了发票对应的顾客。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>创建总帐凭证来记录销售，顾客等等。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>根据付运数量更新订单，以及发票号码。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>创建</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">/</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>更新销售商品的销售分析记录。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>更新发票上所有行的库存数量以及订单上组装料的数量。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果订单并非开发票给订单上指定的顾客或者顾客分支机构，或者价格将会变更，那么订单必须更改。这些元素不可以在开发票的时候变更，他们必须在开发票之前确认并且修改订单。一旦发票被创建，就不可以删除或者修改。订单会根据发货的发票更新。</FONT><FONT SIZE=3>
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR><BR>
+</P>
+<P STYLE="margin-bottom: 0.5cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>红字发票</B></FONT><FONT SIZE=3>
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>红字发票的创建方式有两种：</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从
+	顾客查豹屏幕，如果用户有需要的权限（</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">$PageSecurity=3
+	--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>见安全计划），有一个链接可以用来冲回整张发票。在点击这个链接后，有机会移除不用开红字发票的商品，这时可以仅对需要开红字发票的商品开具红字发
+	票，与手动创建红字发票的页面相同，但是所有的原先在发票中的商品此时都已经输入到红字发票。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用主菜单下的应收标签，选择创建红字发票的链接来创建。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>重要注意事项</B></FONT>
+</FONT>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用红字发票来修正不正确的发票非常重要。冲回某部品的很少一部分价钱意味着商品被退回，而顾客要求退回他们价值的一部分。以此退回多收的钱，并非正确的方法。
+默认情况下，红字发票会将商品退回指定的仓库，因此库存记录会因为此红字发票退货而增加。要更正一个价格错误，必须为不正确的发票行开红字发票，这时要补
+充一张正确的新发票。这确保针对数量的销售分析记录不会被破坏，库存记录也被正确维护。有一种特殊的价格调整类型的红字发票，它不会对销售分析有任何成本
+影响也没有相关的物料库存变化。</FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>手动创建红字发票的程序为：</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR></SPAN></SPAN></FONT></FONT><BR><BR>
+</P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>选择开红字发票的顾客，这里面有通常使用的选项（输入框来输入顾客的名称片段，另一个输入框用来输入顾客的代码）</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>选
+	择要开红字发票的商品，以及要使用的价格</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如同正常订单输入一样有快速输入选项</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这里可以直接输入要开红字发票的部品代码和数量。价格是根据顾客的销
+	售类型，给顾客（或者顾客的分公司）提供的特殊价格的货币自动决定的。如果使用了查找功能，当选择了部品后，可以更新数量。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在选择了所有的商品后，可以编辑开红字发票的商品，只要点击总报告上商品旁边的代码按钮，然后编辑价格和数量。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>开红字发票的运费金额可以直接输入（如果使用了顾客查豹界面的冲销一张发票的选项，可以直接从原先的发票中输入此项）</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>税收冲回金额是根据顾客分公司默认的税务当局，订单行的总额，要冲销的运费直接计算的。也可以选择手动选项。一旦选择了手动，用户将点击更新以便自由在税收输入框输入金额。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>默认情况下，加上红字发票上的商品会被退回仓库。此仓库必须由选择框选定。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如
+	果货物不被退回仓库，他们可以被报废，比如样品或者展厅的陈列品，损坏商品，或者无论如何，红字发票类型可以更改为商品报废。更改了红字发票类型后，点击
+	更新按钮，新的选择框会运行选择新的总帐代码（加上总帐界面到应收是可用的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">-</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>假如没有整合，它不会出现）。应该从此选择框里选择合适的总帐代码。商品退回
+	仓库的选择框会消失因为不再与它相关。第三个选项是冲销价格调整</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此类型不会创建任何的库存变化，而销售分析更新仅影响价值，不会更新销售费用。</FONT></FONT></P>
+</UL>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>任何的描述开红字发票原因的文字可以输入到摘要框。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当完成所有要求的输入后，点击开红字发票按钮并且创建红字发票。系统会报告创建的红字发票号码以确认它已经被系统处理。</FONT></FONT></P>
+</UL>
+<P><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>输入收款</B></FONT><FONT SIZE=3>
+</FONT></FONT>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT><FONT SIZE=4><SPAN LANG="en-US">webERP
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>追踪尚未收付款的发票和红字发票（因此称为开放的系统</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">),</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这与从前月结转余额加减到本月交易的系统不同。经验表明余额结转系统虽然比较直观，但经常导致不
+可避免的来自顾客豹问，希望得到更多的信息&ldquo;这些余额是怎么包含什么？&rdquo;。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">webERP</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>产生的对账单显示完整的尚未结清的发票和红字发票金额，这些是尚待
+处理的，并且加总到顾客账户的金额。为了提供需要的信息以供追溯未结清金额，一张发票一张发票清清楚楚，就必须输入付款的组成。</FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收到顾客的付款因此分两个阶段输入：</FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收到的付款以外币表示的金额输入，连同存成本币时的汇率。与此收款关联的细节例如日期，付款方式和其他任何细节（供以后查豹）都在此阶段输入。</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收到的外币被分配至顾客账户的发票（以及借方凭证）。换句话说，要核销的发票与付款核对。</FONT></FONT></P>
+</UL>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果收到的付款组成细节在存款的时候没有，收款还是可以通过阶段</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">1.
+</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然而，如果要让您的对账单有意义，在发出对账单前必须进行核销。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>注意：汇率差异仅仅在收到的付款与它所对应的发票相符时才会计算。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>与总账交易相关的收款也可以同一批次作为顾客收入。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>输入收款的程序可以从主菜单</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>应收标签下找到</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在总账标签下有另一个链接。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>首先要输入收款的台头信息，包括银行账户</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这是已定义的银行账户中的一个（见设置），收款存入银行的日期，
+货币以及存款汇率以及收款方式和其他的摘要。货币可以从定义的货币中选取（见设置）。收款方式也可以选择</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>他们定义在</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">config.php</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>中。一旦此信
+息被输入，首先必须按保存，然后才可以输入此批收款。</FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>收款
+</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>-
+</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>日期</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><SPAN LANG="en-US"><BR></SPAN></SPAN></FONT><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此日期指收款收到及存入银行的日期。如果付款是以后输入的
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">-
+</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>或者几天的存款一起处理，默认日期（例如，今天）应该被替代成收款实际收到的日期。此日期被用于对账单，如果此日期不正确，顾客可能无法将付款与对账单关联起来。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>顾客账户查豹是以日期顺序显示的，因此如果输入的日期不是收到付款的日期，那么此账户就无法正确显示。此日期也用于创建总账交易。</FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>收款
+&ndash;</B></FONT> <FONT SIZE=4 STYLE="font-size: 16pt"><B>货币和汇率</B></FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><SPAN LANG="en-US"><BR></SPAN></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>选择了顾客</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">,
+</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此动作会告诉系统期望收到的货币。顾客的账户在在顾客维护界面维护，此时也选择了使用货币。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>银行将外币转换成本币的正确汇率必须输入，系统在屏幕下方显示了存入本币的计算。此收款将无法被输入直至知道本币金额为止。实际输入此处的汇率即为外币数值被本币数值除，所得到的结果。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>例如，存入本币</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">1212</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，
+以顾客的货币表示的金额为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">400.<BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>汇率是
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">400/1212
+=
+0.330033<BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>系统计算出来的本币会确认输入的汇率是正确的。如果总账整合被启用，将会产生一个本币表示的存款，显示在屏幕下方，并且在应收账户减少（贷）相同的金额。系统默认的此货币汇率是在货币表中设置的。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>当收款与发票核对时，存入的本币金额与开发票的本币金额差异会被记录，并且在总账的应收账户注销且在损益账户中记录</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>（在顾客相关的公司记录中指定），如果总账整合被在相关界面启用。
+</FONT></FONT>
+</P>
+<P><BR><BR>
+</P>
+<DIV ID="read_549" DIR="LTR">
+	<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>收款
+	</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>-
+	</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>付款方式</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><SPAN LANG="en-US"><BR></SPAN></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>付款方式存在对应的付款中，并显示在顾客对账单里。银行报告可以根据付款方式列出，并且总结当天的存款，自动完成不同凭证的整理任务以及进行总结。
+	</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><SPAN LANG="en-US"><BR></SPAN></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>收款
+	</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>-</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>金额</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><SPAN LANG="en-US"><BR></SPAN></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>以外币表示的收款金额在此输入。不可以输入</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">0</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>，
+	尽管允许输入负数（来撤销错误的收款）。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>注意：
+	在分配负数收款时要注意，要保证仅仅撤销以前分配的，如果分配并非以前分配的正数收款会出现奇怪的结果</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>尽管系统的一致性会被维护。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B><BR></B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>收款
+	</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4 STYLE="font-size: 16pt"><SPAN LANG="en-US"><B>-
+	</B></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>折扣</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>收款的折扣金额可以在此处输入，并且可以与收款收据作为一个金额一起分配。这个很有用，当顾客付款是减去折扣的净额时&mdash;这与它的付款条件完全相符，此金额自然不会与发票上的金额相等，如果没有此折扣的话。系统会计算付款的毛金额，这其中包括为此顾客设置的折扣。</FONT></FONT></P>
+	<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>分配到发票</B></FONT></FONT></P>
+</DIV>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>一旦所有需要细节均被输入
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">-
+</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>包括顾客，汇率，和外币金额，就可以将其分配到发票了。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这
+个概念对于有些企业</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>他们处理顾客的账户仅仅关注今月的交易和上个月结转的余额</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>会显得很奇特。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">webERP</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的目标在于消除顾客嘴里的问题。。。&ldquo;这
+个数是怎么回事，结转的余额是怎样组成的？&rdquo;。在&ldquo;余额结转&rdquo;的系统里，这是一个很难回答的问题，因为没有记录显示那张发票对应哪次付款。然
+而，</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">webERP</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>需要明确声明每次付款对应哪宗要清算的交易。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>在应收菜单下，点击链接清算收款或者冲销款（收款清算）。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此页显示所有未清算的收款和应冲销款。点击这些收款和冲销款对应的链接，用户会进入到顾客账户的未完成交易画面，这些是等待清算的交易。此屏幕显示了所有未分配交易，但是仅仅有发票可以清算收据或者红字发票。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>注意一次付款不可以分配至另一付款。如果需要，可以使用负数付款来撤销发票或者借方凭证（虽然这是不希望出现的）。一旦输入后，收款就不可以删除</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">--</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>（显然从内部控制的角度看，这是不希望出现的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">).<BR><BR></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果整张收据没有分配到发票或者借方收据，系统会提示这是用户想要的。不像其他的系统，清算总是可以以后完成或者修改。</FONT></FONT></P>
+<DIV ID="w_550" DIR="LTR">
+	<P STYLE="margin-bottom: 0cm"><BR>
+	</P>
+</DIV>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>汇率差异</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">分配付款到发票的过程给了系统必须的信息来计算汇率差异，
+因为收款会以在收款界面指定的汇率转换</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">,</SPAN></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">这会导致发票上本币的金额与转换金额的差异，除非收款转换汇率和发票分配时的汇率一致。</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal"><BR><BR></SPAN></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">分配时计算的差异可以在分配结束后，在收款界面看到。此界面关闭并变成发票对应清单的一项。不像其他系统，</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">webERP</SPAN></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">汇率差异可以按照每次的交易产生完整列表。收款细节查豹显示此收款对应的汇率差异。进一步查豹关于付款分配到了哪里会显示收款的汇率差异来自何处。</SPAN></FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">分配的变更也会改变汇率差异。总账界面产生一个凭证，反映给定付款分配变更时而发生的汇率差异变化。</SPAN></FONT><FONT SIZE=4>
+</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal"><BR></SPAN></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>处理收款</B></FONT>
+</FONT>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">很多顾客收款可以一次输入并且混合在一起，作为名义商品的收款，例如自动售卖机的收款或者销售固定资产，私人使用公司固定资产的补偿等等。一旦输入所有的收款，就可以进行处理了。在用户按处理按钮前，系统只是将数据存储在服务器端的称为</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">session</SPAN></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">的</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">cookie</SPAN></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">上。</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal"><BR></SPAN></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">此过程会为此批收款一个编号，并且在顾客账户插入新的收款交易，并且更新顾客的记录，包括金额，上次付款日期。另外，如果与总账整合启用，会产生记账凭证，将收款计入指定</SPAN>
+<SPAN STYLE="font-weight: normal">的银行账户，减少应收账户</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">--</SPAN></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">（这在公司设置中指定）。也会创建折扣的总账凭证</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">--</SPAN></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">如果有的话，连同相关的应付账户的输入。所有必须的账户代码必须在公司参数
+中或者银行账户设置中设置（他们均位于设置界面）。</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal"><BR></SPAN></SPAN></SPAN></FONT></FONT><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4 STYLE="font-size: 16pt"><B>存款列表</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal"><BR></SPAN></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">当处理完毕之后，会出现一个此批收款的存款列表。系统还会报告批号。列表显示了银行要处理批量支票的信息。此存款列表可以在任何时间内重新打印，</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><SPAN STYLE="font-weight: normal">webERP</SPAN></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">在应收&mdash;报告与查豹部分有相关链接。</SPAN></FONT></FONT></P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>分配退款到顾客账户</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><B><BR><BR></B></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>此选项允许分配任意金额的冲销款数量</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><B>--</B></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>无论是收款或者是红字发票分配到借方</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US"><B>--</B></SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>发票。以前的收款或者冲销款在需要的时候可以更改。有两种方法进行操作：</B></FONT></FONT></P>
+<UL>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从主菜单选择应收按钮，点击连接到&ldquo;分配冲销款到顾客账户&rdquo;
+	（付款清算）</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>从顾客菜单</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN LANG="en-US"><SPAN LANG="en-US">----
+	</SPAN></SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>此处有链接来分配顾客付款或者退款，需要用户有适当的权限。</FONT></FONT></P>
+</UL>
+<P><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>使用第一种方法，默认情况下屏幕上仅显示有余额未分配的收款，红字发票和贷方凭证。如果有很多收款有未分配金额，并且未全部分配到发票和借方凭证，这意味需要进行分配（清算）。要使顾客对账单有意义，必须完成分配。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>双击要分配的收款，
+这时会出现用来分配的表单。此界面会显示此顾客的所有的发票和凭证。已经付款的发票不会出现在这里。然而，所选的收款或者退款关联的清算的会出现。从顾客查豹屏幕点击收款或者红字发票会出现同样的画面。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果前面的分配出现了错误，这些可以通过选择前面错误分配的收款来纠正。所有使用此收款清算的发票都会出现（与尚未清算的发票一起出现）。分配的金额可以根据需要修改。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US"><BR><BR></SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>注意：屏幕背后隐藏着复杂的操作，来处理可能导致汇率差异的变化。系统计算分配付款到不同发票引起的汇率差异变化，在总账中创建必要的凭证</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如果总账整合被启用</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4><SPAN LANG="en-US">--</SPAN></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>以确保应收总账与其他的科目余额平衡。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=3><SPAN LANG="en-US"><BR></SPAN></FONT></SPAN></FONT><BR><BR>
+</P>
+<P><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><B>如果此处的程序要修改，建议寻求帮助。</B>
+</FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0cm"><BR>
+</P>
+</BODY>
+</HTML>

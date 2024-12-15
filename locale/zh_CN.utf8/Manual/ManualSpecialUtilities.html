@@ -1,0 +1,35 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=gb2312">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 3.2  (Win32)">
+	<META NAME="AUTHOR" CONTENT="Exson Qu">
+	<META NAME="CREATED" CONTENT="20110215;15023400">
+	<META NAME="CHANGEDBY" CONTENT="Exson Qu">
+	<META NAME="CHANGED" CONTENT="20110215;15225200">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { margin: 2cm }
+		P { margin-bottom: 0.21cm }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="zh-CN" DIR="LTR">
+<P STYLE="margin-bottom: 0cm"><A NAME="SpecialUtilities"></A><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>特别的工具</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有这些程序应该仅限于分配了系统管理职责的人运行，他们需要对系统有完整的理解。如果有疑问，请寻求建议。很多工具对数据库进行了重大改变，所以建议在打算运行任何一个工具前，进行备份。所有这些工具页面的安全等级默认为１５（见安全计划）。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR><BR>
+<BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>没有到工具菜单的链接，所以偶然的浏览不会撞到这个页面，尽管他们有安全权限。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>URL</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>必须被手动输入为</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Z_index.php.</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>所有的工具页前缀都是</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Z_.</FONT><BR></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>用更改的标准成本做销售分析</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=5 STYLE="font-size: 20pt"><B><BR></B></FONT><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4><SPAN STYLE="font-weight: normal">这个工具允许选择一个期间，在这个期间，目前的标准成本被运用于销售分析记录的销售数量，以重新计算销售货物的成本。</SPAN></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>必须认识到，这将破坏开发票时的创建的总分类日记帐符合的完整性，总分类帐的销售成本将不再和销售分析的销售成本相符。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>然而，偶尔不正确的成本数据，造成了销售分析和总分类帐的错误只能通过运行这个工具纠正。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>变更顾客代码</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个页面要求输入已经存在的顾客代码和新顾客代码。系统检查保证新输入的代码并不存在，并且输入的顾客代码存在。如果这两项通过，整个系统的所有涉及到此顾客的表的顾客代码数据被变更。由于变更广泛影响数据库，这个工具不应该在正常工作时间运行。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>库存代码变更</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>这个页面要求输入已经存在的库存代码和新的库存代码。系统确认新输入的代码并不存在，输入的库存代码存在。这两项通过，库存代码数据会在整个系统的表中变更。销售分析，库存变动，库存地点，物料清单，父项和部品项目，销售订单细节和采购订单细节，以及库存主记录</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Stock
+Master,</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>计价和运输费用。由于变更广泛影响数据库，这个工具不应该在正常运作时运行。</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>创建库存地点</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR><FONT SIZE=4><BR></FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>如故库存数据库从其他系统导入，可以为所有目前定义的地点创建库存地点记录，通过运行脚本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Z_MakeStockLocns.php.</FONT><BR></SPAN></FONT><BR>
+</P>
+<P STYLE="margin-bottom: 0cm"><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=5 STYLE="font-size: 20pt"><B>总分类帐重新过帐自期间</B></FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><BR><BR><BR></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>脚本</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>Z_RePostGLFromPeriod.php</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>清除了表</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>CharDetails</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>的实际数据－－他包含了每个</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>GL</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>帐户的变动，这些变动通过设置所有的</FONT></FONT><FONT FACE="楷体_GB2312, monospace"><SPAN LANG="en-US"><FONT SIZE=4>GLTrans</FONT></SPAN></FONT><FONT FACE="楷体_GB2312, monospace"><FONT SIZE=4>为未过帐状态，并且对所有交易重新计算。这是一个绝望的措施而仅仅可以在极端的情形下使用。可能会导致数据库崩溃，系统瘫痪等，最终导致试算表的不平衡。
+</FONT></FONT>
+</P>
+</BODY>
+</HTML>

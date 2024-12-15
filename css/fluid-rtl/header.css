@@ -1,0 +1,70 @@
+header {
+background:#556699;
+padding:10px;
+}
+header #Info {
+display:inline;
+padding:10px;
+font-weight:bold;
+color:white;
+}
+header #Info img {
+padding-left:7px;
+width:32px;
+height:32px;
+vertical-align:middle;
+}
+header #Info a {
+}
+header #ActionIcon {
+display:inline;
+float:left;
+padding-right:10px;
+}
+header #ActionIcon img{
+padding-left:7px;
+width:32px;
+height:32px;
+}
+header #ExitIcon {
+display:inline;
+float:left;
+padding-right:10px;
+padding-left:30px;
+}
+header #ExitIcon img {
+width:32px;
+height:32px;
+}
+header .FontSize {
+font-weight:bold;
+display:inline;
+padding:3px;
+color:#FFFFFF;
+}
+header .ScriptTitle {
+font-weight:bold;
+font-size:130%;
+display:inline;
+padding:10px;
+margin-right:0px;
+color:white;
+}
+header #favourites {
+background: url(images/descending.png) no-repeat left transparent;
+background-size:contain;
+overflow: hidden;
+color:#FFFFFF;
+font-size: 130%;
+font-weight:bold;
+padding-top: 2px;
+padding-bottom: 2px;
+padding-right: 7px;
+padding-left: 32px;
+border: solid 2px #fff;
+border-radius: 4px;
+margin: 2px;
+-moz-appearance:none;
+-webkit-appearance: none;
+cursor:pointer;
+}

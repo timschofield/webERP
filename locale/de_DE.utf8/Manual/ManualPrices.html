@@ -1,0 +1,49 @@
+<br /><br />
+
+<!-- Help Begin: Prices -->
+
+<a name="Prices"><font size="+3"><b>Preise und Rabatte</b></font></a>
+<br /><br />
+<font size="+1"><b>Übersicht</b></font>
+<br /><br />
+Preise werden für Umsatzarten und Währungen im System hinterlegt. Wenn ein Kundenstammsatze eingerichtet wird, bekommt der Kunde sowohl eine Umsatzart als auch eine Währung zugeordnet. Da es keine Begrenzung für die Zahl von Umsatzarten gibt, gibt es auch keine Begrenzung in der Zahl unterschiedlicher Preislisten. Eine weitere Flexibilität ist dadurch gegeben, dass wenn erforderlich auch kundenspezifische Preise festgelegt werden können, normalerweise für einen bestimmten Kunden, aber das System hat auch die Möglichkeit, die Preise auf eine bestimmte Kundenniederlassung zu beziehen. Wenn ein Preis als speziell für eine Niederlassung markiert ist, wird er nicht für alle anderen Niederlassungen des Kunden verwendet. Statt dessen wird der allgemeine Preis verwendet. Sie haben weiterhin die Möglichkeit, den Kunden Rabatte zu  gewähren, dies erfolgt durch die Rabattstaffeln (siehe unten). Wenn ein Material zusätzlich einen Rabatt hat, wird dieser zum Zeitpunkt der Auftragserfassung eingegeben. Der Benutzer hat auch die Möglichkeit, bei der Auftragserfassung Preise manuell zu ändern. Die Ergebnisrechnung ermöglicht die Berichterstattung nach Umsatzarten, und darüber ist auch die Möglichkeit gegeben, den Umfang der Geschäfte unter den verschiedenen Preisgestaltungen auszuwerten.
+<br /><br />
+<font size="+1"><b>Preise pflegen</b></font>
+<br /><br />
+Um Preise einzupflegen, muss jeweils zuerst das Material ausgewählt werden. Das kann über die Materialsuche oder über Hauptmenü &rarr; Bestandsführung &rarr; Datenpflege &rarr; Materialstamm/Preise ändern/löschen geschehen. Wenn die für ein bestimmtes Material möglichen Bearbeitungsfunktionen angezeigt werden, wählen Sie "Preise pflegen". Die Seite Materialpreise wird angezeigt, die bereits definierten Preise je Umsatzart / Währung werden angezeigt. Die bereits definierten Preise können bearbeitet oder gelöscht und neue Preise können hinzugefügt werden. Es ist nicht möglich, mehrere Einträge für die gleiche Kombination Umsatzart / Währung einzugeben.	
+<br /><br />
+Um Preise für einen bestimmten Kunden / Niederlassung anzulegen, muss zuerst der Kunde ausgewählt werden (verwenden Sie die Kundensuche). Wenn Sie ein Materialauswählen, nachdem Sie einen Kunden ausgewählt haben, wird ein zusätzlicher Link Kundensonderpreise pflegen - Kundennummer angezeigt. Wenn Sie darauf klicken, bekommen Sie den normalen Preis für die Umsatzart / Währung angezeigt und die vorhandenen Sonderpreise für diese Kombination Kunde / Material. Wenn keine Sonderpreise festgelegt sind, zeigt das System nur den normalen Preis mit dem Hinweis an, dass noch keine Sonderpreise eingerichtet sind, und sie können einen neuen Sonderpreis festlegen. Wenn ein Sonderpreis existiert, kann er bearbeitet oder gelöscht werden. Ein Kunde mit mehreren Niederlassungen, kann unterschiedliche Sonderpreise für jede Niederlassung haben, oder es hat nur eine einzelne Niederlassung einen Sonderpreis zusätzlich zum Sonderpreis des Kunden. Ein Sonderpreis, der für eine bestimmte Niederlassung eingerichtet ist, gilt nicht für die anderen Niederlassungen. Wenn Sie das Feld Niederlassung leer lassen, gilt der Sonderpreis für alle Niederlassungen, wenn nicht für eine bestimmte Niederlassung ein gesonderter Eintrag vorhanden ist.
+<br /><br />
+Preise können jederzeit geändert werden. Dennoch werden Preisänderungen nicht automatisch in die noch zu beliefernden Kundenaufträge weitergeleitet, diese müssen erforderlichenfalls manuell geändert werden.
+<br /><br />
+Es gib ein Hilfswerkzeug für Massenänderungen an Preisen, um ausufernde Eingabeübungen zu vermeiden. Bei diesem Werkzeug ist große Vorsicht nötig, deswegen ist die Berechtigung des Systemadministrators dafür erforderlich.  
+<br /><br />
+Das Skript heißt Z_PriceChanges.php und kann über das Servicemenü Z_index.php aufgerufen werden.
+<br /><br />
+Dieses Skript ermöglicht Massen-Preis-Erhöhungen oder -Verringerungen nach Prozent für eine oder einen Bereich von Warengruppen und bestimmte Umsatzarten. Es bietet die die Möglichkeit, Preise zu ändern:
+<br /><br />
+<ul>
+<li>alle Preise für  die Umsatzart innerhalb der ausgewähleten Warengruppen oder</li>
+<li>nur den allgemeinen Preis für die Umsatzart innerhalb der ausgewählten Warengruppen oder</li>
+<li>für die Sonderpreise des ausgewählten Kunden - vorausgesetzt der Kunde gehört zur ausgewählten Umsatzart.</li>
+</ul>
+Gleichermaßen flexible Optionen existieren für das Ausdrucken der Preislisten über Hauptmenü &rarr; Aufträge &rarr; Auswertung und Berichte &rarr; Preislisten drucken.
+<br /><br />
+<font size="+1"><b>Rabattstaffel</b></font>
+<br /><br />
+Die Rabattstaffeln erlauben Rabatte einzurichten für Mengengrenzen, die über einen Bereich von Materialnummern reichen. Nehmen wir an, eine Firma verkauft Stifte in den Farben Rot, Blau, Schwarz usw. und bietet einen Rabatt bei Bestellungen ab 100 Stück. Das ist möglich, obwohl die einzelnen Farben unter jeweils einer eigenen Materialnummer geführt werden.
+<br /><br />
+Damit Materialien eine solche Rabattierung haben können, müssen die Materialstammsätze als zur selben Rabattgruppe zugehörig definiert werden, das ist ein zwei Zeichen langer Schlüssel im Materialstamm. In unserem Beispiel oben müssen die roten, blauen und schwarzen Stifte den selben Rabattgruppenschlüssel bekommen.
+<br /><br />
+Kunden, auf die diese Rabattstruktur angewendet werden soll, werden durch die Umsatzart/Preisliste angegeben. Der Eintrag in der Rabattstaffel bezieht sich jeweils auf die Umsatzart/Preisliste und die Rabattgruppe, die Menge, oberhalb der der Rabatt gewährt werden soll, und der anzuwendende Rabattsatz. Mehrere Einträge mit steigenden Mengen und Rabatten können für die selbe Rabattgruppe und Umsatzart vorgenommen werden.
+<br /><br />
+Wenn ein Kundenauftrag erfasst wird, liest das System automatisch die Rabattgruppe der Teile und summiert die Mengen der gleichen Rabattgruppe, um zu prüfen, ob die Mengen zur Inanspruchnahme des Rabattes berechtigen. Wenn ein besonderer Rabatt manuell eingegeben wird, überschreibt der höhere manuelle Eintrag die automatische Berechnung, ein niedrigerer manueller Eintrag wird auf den Wert aus der Rabattstaffel angehoben.
+<br /><br />
+Um eine Rabattstaffel einzurichten, gibt es zwei Elemente zu beachten:
+<br /><br />
+<ol>
+<li>Die Rabattgruppen müssen definiert werden. Einzelne Materialstammsätze können über die Materialstammänderung die Rabattgruppe zugeordnet bekommen. Zusätzlich haben Sie die Möglichkeit, über Hauptmenü &rarr; Einstellungen &rarr; Bestandsführung &rarr; Rabattgruppen pflegen Materialnummern in einer Liste der Rabattgruppe zuzuordnen.</li>
+<li>Die Rabattstaffel selbst. Diese werden über einen Link unter Hauptmenü &rarr; Einstellungen &rarr; Debitoren/Kreditoren gepflegt. Für jede Umsatzart/Preisliste muss die Mengengrenze und der anwendbare Rabatt gepflegt werden.</li>
+</ol>
+
+<!-- Help End: Prices -->

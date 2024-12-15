@@ -1,0 +1,243 @@
+phplot/HorizontalBars - Documentation for an experimental new plot type
+Last updated for PHPlot-5.1.2 on 2010-06-26
+The project home page is http://sourceforge.net/projects/phplot/
+-----------------------------------------------------------------------------
+Overview:
+
+This file documents a new plot type, Horizontal Bars. This was added to
+PHPlot in version 5.1.2 as an experimental feature.
+
+    NOTICE:
+
+    This new plot type is experimental. This means anything about this
+    may change in future releases, in ways that might be incompatible
+    with the current implementation, or the new plot type might even
+    be removed completely. The new plot type is not yet documented in
+    the PHPlot Reference Manual. This text file is the only documentation.
+
+Feedback on this feature is welcome. Please use the "help & discussion"
+forum at http://sourceforge.net/projects/phplot/
+
+-----------------------------------------------------------------------------
+Usage:
+
+In a horizontal bar chart, the X axis and Y axis are oriented the same as
+in other PHPlot plot types: X axis is horizontal, increasing towards the
+right, and Y axis is vertical, increasing towards the top.
+
+    Y
+    ^
+    |
+    |==============
+    |
+    |=====
+    |
+    |=========
+    |
+    +---------------------> X
+
+To make a horizontal bar chart, use the same plot type as vertical bar
+charts ('bars'), but use the new data type 'text-data-yx'. The new data
+type indicates your data array has a different representation, mapping Y
+values to X values (instead of X values to Y values).
+
+For a normal (vertical) bar chart, the data array has type 'text-data' and
+looks like this:
+  $data = array(  array('Label1', Y11, Y12, ...),
+                  array('Label2', Y21, Y22, ...),
+                  ...);
+Each entry (row) in the data array represents one group of bars. Each group
+has a label and one or more Y values. The X values are implicit: the first
+row has the first X value, the second row has the second X value, etc.
+
+For the new horizontal bar charts, the data array has the new type
+'text-data-yx' and looks like this:
+  $data = array(  array('Label1', X11, X12, ...),
+                  array('Label2', X21, X22, ...),
+                  ...);
+Each entry (row) in the data array represents one group of bars. Each group
+has a label and one or more X values. The Y values are implicit: the first
+row has the first Y value, the second row has the second Y value, etc.
+
+As you can see, a vertical bar chart can be changed to a horizontal bar
+chart simply by changing the data type passed to SetDataType(). The data
+array itself does not change. Other issues with horizontal bar charts are
+discussed below.
+
+This complete script makes a very simple horizontal bar chart:
+    <?php
+    require 'phplot.php';
+    $p = new PHPlot(800, 800);
+    $p->SetDataValues(array(array('A', 10, 25), array('B', 30, 5)));
+    $p->SetDataType('text-data-yx');
+    $p->SetPlotType('bars');
+    $p->DrawGraph();
+
+Note that the bars in a horizontal bar chart are ordered from bottom to top
+(that is, increasing Y values). In the example above, the "A" label bar
+group is drawn below the "B" label bar group. If you need bars ordered from
+top to bottom, you will have to change your data array accordingly.
+
+-----------------------------------------------------------------------------
+Ticks and Labels:
+
+Since the X axis and Y axis do not change positions for horizontal bar
+charts, the label and tick controls still refer to the X and Y axis.
+However, the independent values are now Y, and the dependent values are
+now X. Also, the label strings in your data array are plotted along the Y
+axis for horizontal bar charts, rather than along the X axis for regular
+bar charts.
+
+To control the data labels positions, use SetYDataLabelPos(). New option
+values have been added to this function, which was previously used only to
+position bar chart value labels with the options 'plotin', 'plotstack', or
+'none'. With horizontal bar charts, SetYDataLabelPos() positions the
+regular data labels that go along the Y axis. The new option values are
+'plotleft', 'plotright', or 'both'.
+  'plotleft' : Draw data labels along the left side of the plot area.
+  'plotright' : Draw data labels along the right side of the plot area.
+  'both' : Draw data labels along both left and right sides.
+  'none' : Do not draw data labels.
+
+For bar charts, it makes no sense to have ticks or tick labels along the
+independent axis. This is the Y axis for horizontal bar charts.  Therefore,
+you should use SetYTickPos('none') to turn off the tick marks on the Y
+axis. You do not normally need to use SetYTickLabelPos('none') to turn off
+the tick labels along the Y axis, since PHPlot will do this automatically
+if your data array has labels.
+
+To control the presentation of the data labels with horizontal bar charts,
+use the correct functions that refer to the Y data labels, not X data
+labels as with vertical bar charts.
+
+   SetYDataLabelAngle() or SetYLabelAngle()
+       Set angle of data label text. Default is 0 degrees.
+
+   SetYDataLabelType() or SetYLabelType()
+       Select the type of formatting for the data labels.
+
+   SetFont(), SetFontGD(), or SetFontTTF()
+       Use the element name 'y_label' for the data labels.
+
+Note that the PHPlot Reference Manual currently says the Y Data Label
+functions are only for bar chart data value labels (see Data Value Labels
+below regarding this term). That information is out of date. These
+functions are now also used for data labels in horizontal bar charts.
+
+-----------------------------------------------------------------------------
+Grid:
+
+For horizontal bar charts, the X grid lines default on, and the Y grid lines
+default off. (This is the opposite of normal bar charts, where the X grid
+lines default off, and the Y grid lines default on.)
+
+-----------------------------------------------------------------------------
+Y Axis Position:
+
+PHPlot uses a different default for the X axis and the Y axis positions.
+This affects horizontal bar charts if you have any data values which are
+less than zero.  The X axis is normally positioned at Y=0, and the Y axis
+is normally positioned at the left side of the plot.
+
+If you have both positive and negative values in your data array, both
+vertical and horizontal bar charts will draw the bars away from the zero
+value. For vertical bar charts, the X axis will be drawn at that zero value
+(perhaps in the middle of the plot), with bars going up and down from
+there. But for horizontal bar charts, the Y axis will by default remain at
+the left edge of the plot; the bars will start from the X=0 value
+(somewhere in the middle of the plot area) and go left and right from
+there. In this situation, you might want to use SetYAxisPosition(0) to
+force the Y axis to be at X=0.
+
+-----------------------------------------------------------------------------
+Scaling:
+
+You can use SetPlotAreaWorld() to explicitly set any or all of the 4 limits
+of the plot area. Any limits you do not provide will be calculated for you.
+The algorithm is due for replacement, but it will now apply the same
+calculations to Y and X values in horizontal bar charts as it currently
+applies to X and Y (respectively) in vertical bar charts. That is, the
+range for the independent variable will be calculated to contain and center
+the bar groups, and the range for the dependent variable will include and
+usually exceed the actual data range.
+
+The example under Usage above will produce an auto-calculated Y range of 4
+to 33, with the X range set to center the two bar groups. If you change
+'text-data-yx' to 'text-data', you will get a vertical bar chart with the
+same automatic range.
+
+-----------------------------------------------------------------------------
+Data Value Labels:
+
+Data Value Labels are not yet available with horizontal bar charts. These
+are the text labels within the plot that identify the data value just above
+the bars. (See Example 5.19 "Bar Chart with Data Labels" in the manual.)
+
+Note: Data Value Labels are currently referred to in the manual as Y Data
+Labels. If horizontal bars are accepted and documented in the manual, this
+will be changed to call them 'Data Value Labels'. This is necessary to
+avoid confusion with X Data Labels and Y Data Labels.
+
+-----------------------------------------------------------------------------
+Other Plot Types Not Available:
+
+There is currently no corresponding horizontal analog for plot type
+stackedbars, nor are there any other horizontal plot types at this time.
+Using data type 'text-data-yx' with other plot types will fail.
+(Starting with 5.1.2, PHPlot always checks that the selected data type
+is supported for the selected plot type.)
+
+-----------------------------------------------------------------------------
+Implementation Notes:
+
+The following is a summary of the changes made to PHPlot to implement
+horizontal bar charts.
+
+1) Do not initialize y_tick_label_pos or y_data_label_pos. The defaults
+have to be dynamically calculated for horizontal bar charts, so tick labels
+can be suppressed. (This was already being done for X labels.) Existing
+internal function CheckLabels() was extended to do this for Y also.
+
+2) Do not initialize the X and Y grid setting variables. The defaults have
+to be dynamically calculated because they differ with swapped data arrays.
+New internal function CalcGridSettings() does this.
+
+3) SetYDataLabelPos() accepts the new arguments plotleft, plotright, and
+both. Old compatibility code that passed these values to SetYTickLabelPos()
+has been removed.
+
+4) SetDataType() accepts a new value: 'text-data-yx'.
+
+5) FindDataLimits() was changed to properly calculate minimum and maximum
+values from text-data-yx data arrays. The arrays data_miny and data_maxy
+were renamed to just data_min and data_max, since they now describe limits
+of either X or Y values, depending on the data type.
+
+6) Changes were made to CalcMargins() to account for the labels in the data
+array being drawn on the Y axis instead of X axis, in the text-data-yx
+case.
+
+7) CalcPlotAreaWorld() is extended to calculate defaulted plot ranges
+correctly for the swapped X/Y case. The algorithm is the same (and due for
+replacement). It applies a fixed range to Y and an extended range to X. It
+is also ready for possible future expansion to include swapped X/Y plots
+with explicit Y values.
+
+8) Changed CalcBarWidths() to use either the plot area width or height,
+depending on the bar directions, when calculating the bar widths.
+
+9) Extended CalcMaxDataLabelSize() to work with both X and Y labels.
+Before, it returned the maximum height of the data labels. Now it can
+instead return the maximum width of the data labels; this is used for
+horizontal bar charts.  It also has to pick the proper font, angle, and
+format code for X or Y.
+
+10) New internal function DrawYDataLabel() to draw data labels for
+horizontal bar charts.
+
+11) New internal function DrawHorizBars() draws the horizontal bar chart.
+
+12) DrawGraph() now decides to draw a bar or horizontal bar chart based on
+the data type (text-data or text-data-yx).
+
+-----------------------------------------------------------------------------
