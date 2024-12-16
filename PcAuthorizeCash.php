@@ -106,24 +106,11 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			} else { // other currencies
 				$Amount = $MyRow['amount'] / $MyRow['rate'];
 			}
-			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-				$type = 2;
-				$AccountFrom = $MyRow['glaccountassignment'];
-				$AccountTo = $MyRow['glaccountpcash'];
-				$TagTo = 0;
-			} else {
-				$type = 1;
-				$Amount = -$Amount;
-				$AccountFrom = $MyRow['glaccountpcash'];
-				$SQLAccExp = "SELECT glaccount,
-									tag
-								FROM pcexpenses
-								WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
-				$ResultAccExp = DB_query($SQLAccExp);
-				$MyRowAccExp = DB_fetch_array($ResultAccExp);
-				$AccountTo = $MyRowAccExp['glaccount'];
-				$TagTo = $MyRowAccExp['tag'];
-			}
+			// it can only be ASSIGNCASH, not expenses
+			$type = 2;
+			$AccountFrom = $MyRow['glaccountassignment'];
+			$AccountTo = $MyRow['glaccountpcash'];
+			$TagTo = 0;
 			//get typeno
 			$typeno = GetNextTransNo($type);
 			//build narrative
@@ -181,35 +168,35 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'" . $TagTo ."'
 									)";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
-			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-				// if it's a cash assignation we need to updated banktrans table as well.
-				$ReceiptTransNo = GetNextTransNo(2);
-				$SQLBank = "INSERT INTO banktrans (transno,
-												type,
-												bankact,
-												ref,
-												exrate,
-												functionalexrate,
-												transdate,
-												banktranstype,
-												amount,
-												currcode
-											) VALUES (
-												'" . $ReceiptTransNo . "',
-												1,
-												'" . $AccountFrom . "',
-												'" . $Narrative . "',
-												1,
-												'" . $MyRow['rate'] . "',
-												'" . $MyRow['date'] . "',
-												'Cash',
-												'" . -$MyRow['amount'] . "',
-												'" . $MyRow['currency'] . "'
-											)";
-				$ErrMsg = _('Cannot insert a bank transaction because');
-				$DbgMsg = _('Cannot insert a bank transaction with the SQL');
-				$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
-			}
+
+			// as it's a cash assignation we need to update banktrans table as well.
+			$ReceiptTransNo = GetNextTransNo(2);
+			$SQLBank = "INSERT INTO banktrans (transno,
+											type,
+											bankact,
+											ref,
+											exrate,
+											functionalexrate,
+											transdate,
+											banktranstype,
+											amount,
+											currcode
+										) VALUES (
+											'" . $ReceiptTransNo . "',
+											1,
+											'" . $AccountFrom . "',
+											'" . $Narrative . "',
+											1,
+											'" . $MyRow['rate'] . "',
+											'" . $MyRow['date'] . "',
+											'Cash',
+											'" . -$MyRow['amount'] . "',
+											'" . $MyRow['currency'] . "'
+										)";
+			$ErrMsg = _('Cannot insert a bank transaction because');
+			$DbgMsg = _('Cannot insert a bank transaction with the SQL');
+			$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
+
 			$SQL = "UPDATE pcashdetails
 					SET authorized = CURRENT_DATE,
 					posted = 1
