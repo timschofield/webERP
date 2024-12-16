@@ -108,13 +108,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">', _('Date of Expense'), '</th>
-					<th class="ascending">', _('Expense Code'), '</th>
-					<th class="ascending">', _('Amount'), '</th>
+					<th class="SortedColumn">', _('Date of Expense'), '</th>
+					<th class="SortedColumn">', _('Expense Code'), '</th>
+					<th class="SortedColumn">', _('Amount'), '</th>
 					<th>', _('Notes'), '</th>
 					<th>', _('Receipt'), '</th>
 					<th>', _('Receipt Attachment'), '</th>
-					<th class="ascending">', _('Date Authorised'), '</th>
+					<th class="SortedColumn">', _('Date Authorised'), '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -139,47 +139,36 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$GrossAmount = ($MyRow['amount']) / $MyRow['rate'];
 			$NetAmount = ($MyRow['amount'] - $TaxTotalRow['totaltax']) / $MyRow['rate'];
 		}
-		if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-			$Type = 2;
-			$AccountFrom = $MyRow['glaccountassignment'];
-			$AccountTo = $MyRow['glaccountpcash'];
-			$TagTo = 0;
-			$TagDescription = '0 - ' . _('None');
-			// KL RICARD
+		$Type = 1;
+		$NetAmount = -$NetAmount;
+		$AccountFrom = $MyRow['glaccountpcash'];
+		// KL RICARD add pph21 and pph23 in SQL
+		$SQLAccExp = "SELECT glaccount,
+							klretentionpph21,
+							klretentionpph23,
+							tag
+						FROM pcexpenses
+						WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
+		$ResultAccExp = DB_query($SQLAccExp);
+		$MyRowAccExp = DB_fetch_array($ResultAccExp);
+		$AccountTo = $MyRowAccExp['glaccount'];
+		$TagTo = $MyRow['tag'];
+		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
+		// KL RICARD pph21, pph23
+		if ($MyRowAccExp['klretentionpph21'] != 0){
+			// gross up method
+			$HutangPPH21 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph21']/100)))-$NetAmount);
+		}else{
 			$HutangPPH21 = 0;
-			$HutangPPH23 = 0;
-			// KL RICARD END
-		} else {
-			$Type = 1;
-			$NetAmount = -$NetAmount;
-			$AccountFrom = $MyRow['glaccountpcash'];
-			// KL RICARD add pph21 and pph23 in SQL
-			$SQLAccExp = "SELECT glaccount,
-								klretentionpph21,
-								klretentionpph23,
-								tag
-							FROM pcexpenses
-							WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
-			$ResultAccExp = DB_query($SQLAccExp);
-			$MyRowAccExp = DB_fetch_array($ResultAccExp);
-			$AccountTo = $MyRowAccExp['glaccount'];
-			$TagTo = $MyRow['tag'];
-			$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
-			// KL RICARD pph21, pph23
-			if ($MyRowAccExp['klretentionpph21'] != 0){
-				// gross up method
-				$HutangPPH21 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph21']/100)))-$NetAmount);
-			}else{
-				$HutangPPH21 = 0;
-			}
-			if ($MyRowAccExp['klretentionpph23'] != 0){
-				// gross up method
-				$HutangPPH23 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph23']/100)))-$NetAmount);
-			}else{
-				$HutangPPH23 = 0;
-			}
-			// KL RICARD END pph21, pph23
 		}
+		if ($MyRowAccExp['klretentionpph23'] != 0){
+			// gross up method
+			$HutangPPH23 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph23']/100)))-$NetAmount);
+		}else{
+			$HutangPPH23 = 0;
+		}
+		// KL RICARD END pph21, pph23
+		
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
@@ -355,35 +344,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												'" . $TagTo ."')";
 				$ResultTax = DB_Query($SQLTo, '', '', true);
 			}
-			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-				// if it's a cash assignation we need to updated banktrans table as well.
-				$ReceiptTransNo = GetNextTransNo(2);
-				$SQLBank = "INSERT INTO banktrans (transno,
-												type,
-												bankact,
-												ref,
-												exrate,
-												functionalexrate,
-												transdate,
-												banktranstype,
-												amount,
-												currcode
-											) VALUES (
-												'" . $ReceiptTransNo . "',
-												2,
-												'" . $AccountFrom . "',
-												'" . $Narrative . "',
-												1,
-												'" . $MyRow['rate'] . "',
-												'" . $MyRow['date'] . "',
-												'Cash',
-												'" . -($MyRow['amount'] / $MyRow['rate']) . "',
-												'" . $MyRow['currency'] . "'
-											)";
-				$ErrMsg = _('Cannot insert a bank transaction because');
-				$DbgMsg = _('Cannot insert a bank transaction with the SQL');
-				$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
-			}
+
 			$SQL = "UPDATE pcashdetails
 					SET authorized = CURRENT_DATE,
 					posted = 1
@@ -391,9 +352,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$Resultupdate = DB_query($SQL, '', '', true);
 			DB_Txn_Commit();
 			prnMsg(_('Expenses have been correctly authorised'), 'success');
-			unset($_POST['Submit']);
-			unset($SelectedTabs);
-			unset($_POST['SelectedTabs']);
 		}
 
 		$SQLDes = "SELECT description
@@ -401,11 +359,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 						WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
 		$ResultDes = DB_query($SQLDes);
 		$Description = DB_fetch_array($ResultDes);
-		if (!isset($Description[0])) {
-				$ExpenseCodeDes = 'ASSIGNCASH';
-		} else {
-				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
-		}
+		$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 
 		$TaxesDescription = '';
 		$TaxesTaxAmount = '';
@@ -441,8 +395,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
 				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
-			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
-				$ReceiptText = '';
 			} else {
 				$ReceiptText = _('No attachment');
 			}
