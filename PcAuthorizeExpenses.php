@@ -451,11 +451,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			<td>', ConvertSQLDate($MyRow['date']), '</td>
 			<td>', $ExpenseCodeDes, '</td>
 			<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
-			<td class="number">', $TaxesTaxAmount, '</td>
-			<td>', $TaxesDescription, '</td>
-			<td>', $TagDescription, '</td>
-			<td>', $MyRow['purpose'], '</td>
 			<td>', $MyRow['notes'], '</td>
+			<td>', $MyRow['receipt'], '</td>
 			<td>', $ReceiptText, '</td>';
 		if (isset($_POST[$MyRow['counterindex']])) {
 			echo '<td>' . ConvertSQLDate(Date('Y-m-d'));
