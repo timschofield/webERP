@@ -286,7 +286,8 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_SystemAdmin
-		OR $KL_AdministrationLeader){
+		OR $KL_AdministrationLeader
+		OR $KL_AdministrationTeam){
 		InternalBankTransfers("PTADU", 
 					"111121105AD", 1000000000, 2000000000,
 					"111121101AD",   25000000,   75000000,
@@ -1048,7 +1049,9 @@ if ($ProcessSection02){
 }
 prnMsg("Performed ". $NumberOfTestExecuted . " control tests",'success');
 
-time_finish($begintime);
+if ($KL_SystemAdmin){
+	time_finish($begintime);
+}
 
 include ('includes/footer.php');
 
@@ -2134,7 +2137,7 @@ function ImagesWithoutProduct($RootPath){
 	$i= 0;
 	// get all images in part_pics folder
 	$suffix = ".jpg";
-	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir'], 'jpg');
+	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir']);
 	foreach ($imagefiles as $file) {
 		if ($file != '.ftpquota' AND
 			$file != 'Obsolete' AND
