@@ -358,7 +358,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							pymtdiscount='" . filter_number_format($_POST['PymtDiscount']) / 100 . "',
 							creditlimit='" . filter_number_format($_POST['CreditLimit']) . "',
 							salestype = '" . $_POST['SalesType'] . "',
-							invaddrbranch='" . $_POST['AddrInvBranch'] . "',
+							invaddrbranch='" . $_POST['InvAddrBranch'] . "',
 							taxref='" . $_POST['TaxRef'] . "',
 							customerpoline='" . $_POST['CustomerPOLine'] . "',
 							typeid='" . $_POST['typeid'] . "',
@@ -476,7 +476,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				$BranchExists = (DB_num_rows($Result) > 0);
 				if ($BranchExists and $_POST['UpdateIfExists'] != 1) {
 					//do nothing
-					
+
 				} else {
 
 					if (!isset($_POST['EstDeliveryDays'])) {
