@@ -43,6 +43,8 @@ InsertRecord('dashboard_users', array('userid', 'scripts' ), array('admin', '1,2
 
 NewScript('DashboardConfig.php', 15);
 
-UpdateDBNo(basename(__FILE__, '.php'), _('New database updates for the new dashboard system'));
+if ($_SESSION['Updates']['Errors'] == 0) {
+	UpdateDBNo(basename(__FILE__, '.php'), _('New database updates for the new dashboard system'));
+}
 
 ?>
