@@ -106,7 +106,7 @@ if (isset($_POST['SearchParts'])) {
 				ON stockmaster.stockid=purchorderdetails.itemcode
 				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
 				WHERE purchorderdetails.completed=0
-				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected') 
+				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected')
 				AND stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
 				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
@@ -120,11 +120,11 @@ if (isset($_POST['SearchParts'])) {
 					stockmaster.description,
 					stockmaster.units,
 					SUM(purchorderdetails.quantityord-purchorderdetails.quantityrecd) AS qord
-				FROM stockmaster INNER JOIN purchorderdetails 
+				FROM stockmaster INNER JOIN purchorderdetails
 				ON stockmaster.stockid=purchorderdetails.itemcode
 				INNER JOIN purchorders on purchorders.orderno=purchorderdetails.orderno
 				WHERE purchorderdetails.completed=0
-				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected') 
+				AND purchorders.status NOT IN ('Completed','Cancelled','Rejected')
 				" . $WhereStockCat . "
 				GROUP BY stockmaster.stockid,
 					stockmaster.description,
@@ -411,14 +411,15 @@ else {
 				WHERE purchorderdetails.completed=0
 				AND suppliers.paymentterms = klpostatus.paymentterm
 				AND purchorders.orderno='" . $OrderNumber . "'
-				GROUP BY purchorders.orderno ASC,
+				GROUP BY purchorders.orderno,
 					suppliers.suppname,
 					purchorders.orddate,
 					purchorders.status,
 					purchorders.initiator,
 					purchorders.requisitionno,
 					purchorders.allowprint,
-					suppliers.currcode";
+					suppliers.currcode
+				ORDER BY purchorders.orderno ASC";
 	} else {
 		//$OrderNumber is not set
 		if (isset($SelectedSupplier)) {
@@ -474,7 +475,7 @@ else {
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
 						" . $WhereStockLocation 
 						 . $StatusCriteria . "
-						GROUP BY purchorders.orderno ASC,
+						GROUP BY purchorders.orderno,
 							purchorders.realorderno,
 							suppliers.suppname,
 							purchorders.orddate,
@@ -483,7 +484,8 @@ else {
 							purchorders.requisitionno,
 							purchorders.allowprint,
 							suppliers.currcode,
-							currencies.decimalplaces";
+							currencies.decimalplaces
+						ORDER BY purchorders.orderno ASC";
 			} else {
 			// KL RICARD add klstatus and custom dates in SQL
 				$SQL = "SELECT purchorders.realorderno,
@@ -520,7 +522,7 @@ else {
 						AND purchorders.supplierno='" . $SelectedSupplier . "'
 						" . $WhereStockLocation  
 						 . $StatusCriteria . "
-						GROUP BY purchorders.orderno ASC,
+						GROUP BY purchorders.orderno,
 							purchorders.realorderno,
 							suppliers.suppname,
 							purchorders.orddate,
@@ -529,7 +531,8 @@ else {
 							purchorders.requisitionno,
 							purchorders.allowprint,
 							suppliers.currcode,
-							currencies.decimalplaces";
+							currencies.decimalplaces
+						ORDER BY purchorders.orderno ASC";
 			}
 		} //isset($SelectedSupplier)
 		else { //no supplier selected
@@ -584,7 +587,7 @@ else {
 						AND purchorderdetails.itemcode='" . $SelectedStockItem . "'
 						" . $WhereStockLocation . 
 						 $StatusCriteria . "
-						GROUP BY purchorders.orderno ASC,
+						GROUP BY purchorders.orderno,
 							purchorders.realorderno,
 							suppliers.suppname,
 							purchorders.orddate,
@@ -593,7 +596,8 @@ else {
 							purchorders.requisitionno,
 							purchorders.allowprint,
 							suppliers.currcode,
-							currencies.decimalplaces";
+							currencies.decimalplaces
+						ORDER BY purchorders.orderno ASC";
 			} else {
 				// KL RICARD add klstatus and custom dates in SQL
 				$SQL = "SELECT purchorders.realorderno,
@@ -630,7 +634,7 @@ else {
 						AND orddate<='" . $DateTo . "'
 						" . $WhereStockLocation .  
 						  $StatusCriteria . "
-						GROUP BY purchorders.orderno ASC,
+						GROUP BY purchorders.orderno,
 							purchorders.realorderno,
 							suppliers.suppname,
 							purchorders.orddate,
@@ -639,7 +643,8 @@ else {
 							purchorders.requisitionno,
 							purchorders.allowprint,
 							suppliers.currcode,
-							currencies.decimalplaces";
+							currencies.decimalplaces
+						ORDER BY purchorders.orderno ASC";
 			}
 		} //end selected supplier
 	} //end not order number selected
