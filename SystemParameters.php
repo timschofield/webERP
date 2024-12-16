@@ -1306,7 +1306,7 @@ echo '<field>
 echo '<field>
 		<label for="X_InventoryManagerEmail">' . _('Inventory Manager Email Address') . ':</label>
 		<input type="email" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" />
-		<fieldhelp>' . _('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the factory manager for manual stock adjustments')  . '</fieldhelp>
+		<fieldhelp>' . _('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the inventory manager for manual stock adjustments')  . '</fieldhelp>
 	</field>';
 
 echo '<field>
