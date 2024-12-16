@@ -186,7 +186,7 @@ Class Cart {
 														" . FormatDateForSQL($ItemDue) . "',
 														" . $POLine . ")";
 				$result = DB_query($sql,
-							_('The order line for') . ' ' . mb_strtoupper($StockID) . ' ' ._('could not be inserted'));
+							_('The order line for') . ' ' . mb_strtoupper($StockID) . ' ' ._('could not be inserted'). ' ' . $sql);
 			}
 
 			$this->LineCounter = $LineNumber + 1;
