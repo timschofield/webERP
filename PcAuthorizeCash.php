@@ -221,8 +221,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			} else {
 				prnMsg(_('There was a problem authorising the cash, and the transaction has not been posted'), 'error');
 			}
-		} else if ($MyRow['posted'] == 1) {
-			prnMsg(_('This cash has already been authorised, and cannot be posted again'), 'error');
 		}
 
 		echo '<tr class="striped_row">
