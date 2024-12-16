@@ -286,7 +286,8 @@ if ($ProcessSection01){
 	}
 	
 	if ($KL_SystemAdmin
-		OR $KL_AdministrationLeader){
+		OR $KL_AdministrationLeader
+		OR $KL_AdministrationTeam){
 		InternalBankTransfers("PTADU", 
 					"111121105AD", 1000000000, 2000000000,
 					"111121101AD",   25000000,   75000000,
