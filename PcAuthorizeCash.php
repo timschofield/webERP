@@ -1,5 +1,11 @@
 <?php
 
+/******************************************************************
+*
+* KL RICARD: Multiple authorizers
+*
+*******************************************************************/
+
 include('includes/session.php');
 $Title = _('Authorisation of Assigned Cash');
 /* webERP manual links before header.php */
@@ -7,7 +13,6 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeCash';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
-
 if (isset($_POST['SelectedTabs'])) {
 	$SelectedTabs = mb_strtoupper($_POST['SelectedTabs']);
 } elseif (isset($_GET['SelectedTabs'])) {
@@ -41,12 +46,12 @@ echo '<p class="page_title_text">
 		</p>';
 
 if (isset($SelectedTabs)) {
-echo '<br /><table class="selection">';
-echo '	<tr>
-			<td>' . _('Petty Cash Tab') . ':</td>
-			<td>' . $SelectedTabs . '</td>
-		</tr>';
-echo '</table>';
+echo '<form><fieldset>';
+echo '<field>
+		<label>' . _('Petty Cash Tab') . ':</label>
+		<fieldtext>' . $SelectedTabs . '</fieldtext>
+	</field>';
+echo '</form></fieldset>';
 }
 
 if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) or isset($_POST['GO'])) {
@@ -57,15 +62,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	}
 
 	//Limit expenses history to X days
-	echo '<table class="selection">
-			<tr>
-				<td>', _('Detail of Tab Movements For Last '), ':
-					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
-					<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
-					<input type="submit" name="Go" value="', _('Go'), '" />
-				</td>
-			</tr>
-		</table>';
+	echo '<fieldset>
+			<field>
+				<label for="SelectedTabs">', _('Detail of Tab Movements For Last '), ':</label>
+				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
+				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
+				<input type="submit" name="Go" value="', _('Go'), '" />
+			</field>
+		</fieldset>';
 	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
 				pcashdetails.date,
@@ -223,8 +227,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			} else {
 				prnMsg(_('There was a problem authorising the cash, and the transaction has not been posted'), 'error');
 			}
-		} else if ($MyRow['posted'] == 1) {
-			prnMsg(_('This cash has already been authorised, and cannot be posted again'), 'error');
 		}
 
 		echo '<tr class="striped_row">
@@ -262,10 +264,12 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	/*The option to submit was not hit so display form */
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
+	// KL RICARD
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE authorizer LIKE '%" . $_SESSION['UserID'] . "%'
 		ORDER BY tabcode";
+	// KL RICARD END
 	$Result = DB_query($SQL);
 	echo '<table class="selection">
 			<tr>
