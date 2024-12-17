@@ -1430,6 +1430,8 @@ else {
 	/*a supplier is selected or the GL link is not active then set out
 	 the fields for entry of receipt amt and disc */
 
+	/******************************************************************************
+	* KL RICARD: Do not show Supplier Transactions Payment Entry
 	echo '<table>
 			<tr>
 				<th colspan="2"><h3>', _('Supplier Transactions Payment Entry') , '</h3></th>
@@ -1484,6 +1486,9 @@ else {
 				<fieldset>
 					<field>' . _('Total Input Amount') . ':<input type="text" id="ttl" value="0" readonly>' . ' <input type="button" data-ids="' . $ids . '" value="' . _('Update') . '" onclick="update1(\'' . $ids . '\')" id="update" /></field></fieldset><br />';
 
+	* KL RICARD END Do not show Supplier Transactions Payment Entry 
+	******************************************************************************************************************************/
+	
 	// If the script was called with a SupplierID, it allows to input a customised gltrans.narrative, supptrans.suppreference and supptrans.transtext:
 	// Info to be inserted on `gltrans`.`narrative` varchar(200):
 	if (!isset($_POST['gltrans_narrative'])) {
