@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Work Order Costing');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -77,7 +79,6 @@ $WOItemsResult = DB_query("SELECT woitems.stockid,
 									stockmaster.decimalplaces,
 									stockmaster.units,
 									stockmaster.actualcost AS currcost,
-									cost AS currcost,
 									woitems.qtyreqd,
 									woitems.qtyrecd,
 									woitems.stdcost,
@@ -175,7 +176,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 			$CurrQty = $RequirementsRow['requiredqty'];
 		}
 
-	} else {//stock changed 
+	} else {//stock changed
 		$CostVariedStocks[] = array('stockid'=>$CurrStock,'totalreqqty'=>$CurrQty);
 		$CurrStock = $RequirementsRow['stockid'];
 		$CurrQty = $RequirementsRow['requiredqty'];
@@ -271,7 +272,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 
 //Now need to run through the issues to the work order that weren't in the requirements
 
-$sql = "SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
 				stockmaster.description,
 				stockmaster.decimalplaces,
 				trandate,
@@ -286,7 +287,7 @@ $sql = "SELECT stockmoves.stockid,
 						FROM worequirements
 					WHERE worequirements.wo='" . $_POST['WO'] . "')";
 
-$WOIssuesResult = DB_query($sql,_('Could not get issues that were not required by the BOM because'));
+$WOIssuesResult = DB_query($SQL,_('Could not get issues that were not required by the BOM because'));
 
 if (DB_num_rows($WOIssuesResult)>0){
 	while ($WOIssuesRow = DB_fetch_array($WOIssuesResult)){
@@ -337,7 +338,7 @@ If (isset($_POST['Close'])) {
 	$TotalVariance = $TotalUsageVar + $TotalCostVar;
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$WOCloseNo = GetNextTransNo(29);
-	$TransResult = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	while ($WORow = DB_fetch_array($WOItemsResult)){
 		if ($TotalStdValueRecd==0){
@@ -544,7 +545,7 @@ If (isset($_POST['Close'])) {
 									_('Could not delete the predefined work order serial numbers'),
 									_('The SQL used to delete the predefined serial numbers was:'),
 									true);
-	$TransResult = DB_Txn_Commit();
+	DB_Txn_Commit();
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
 			prnMsg(_('The item cost as calculated from the work order has been applied against the weighted average cost and the necessary GL journals created to update stock as a result of closing this work order'),'success');
