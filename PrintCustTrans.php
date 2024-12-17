@@ -92,6 +92,7 @@ if (isset($PrintPDF)
 // gather the invoice data
 
 		if ($InvOrCredit=='Invoice') {
+			// KL RICARD Updated SQL to use of salesorders.salesperson instead of custbranch.salesman
 			$sql = "SELECT debtortrans.trandate,
 							debtortrans.ovamount,
 							debtortrans.ovdiscount,
@@ -239,6 +240,22 @@ if (isset($PrintPDF)
 		}
 		if (DB_num_rows($result)==1) {
 			$myrow = DB_fetch_array($result);
+
+			if ( $_SESSION['SalesmanLogin'] != '' AND $_SESSION['SalesmanLogin'] != $myrow['salesman'] ){
+				$Title=_('Select Invoices/Credit Notes To Print');
+				include('includes/header.php');
+					prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
+				include('includes/footer.php');
+					exit;
+			}
+			if ( $CustomerLogin == 1 AND $myrow['debtorno'] != $_SESSION['CustomerID'] ){
+				$Title=_('Select Invoices/Credit Notes To Print');
+				include('includes/header.php');
+					echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
+				include('includes/footer.php');
+					exit;
+				}
+
 			$ExchRate = $myrow['rate'];
 
 			//Change the language to the customer's language
@@ -383,26 +400,13 @@ if (isset($PrintPDF)
 							}
 						}
 					}
+
+					PrintDetail($pdf,$myrow2['narrative'],$Bottom_Margin,function(){
+							PrintLinesToBottom ();
+							include ('includes/PDFTransPageHeader.inc');
+						},null,$Left_Margin+100,$YPos,245,$FontSize);
+
 					$YPos -= ($line_height);
-
-					$lines=explode("\r\n",htmlspecialchars_decode($myrow2['narrative']));
-					for ($i=0;$i<sizeOf($lines);$i++) {
-						while (mb_strlen($lines[$i])>1) {
-							if ($YPos-$line_height <= $Bottom_Margin) {
-								/* head up a new invoice/credit note page */
-								/* draw the vertical column lines right to the bottom */
-								PrintLinesToBottom ();
-	   		        				include ('includes/PDFTransPageHeader.inc');
-			   				} //end if need a new page headed up
-
-			   				/* increment a line down for the next line item */
-			   				if (mb_strlen($lines[$i])>1){
-								$lines[$i] = $pdf->addTextWrap($Left_Margin+100,$YPos,245,$FontSize,stripslashes($lines[$i]));
-							}
-							$YPos -= ($line_height);
-						}
-					} //end for loop around lines of narrative to display
-
 
 					if ($YPos <= $Bottom_Margin) {
 						/* head up a new invoice/credit note page */
@@ -650,6 +654,7 @@ if (isset($PrintPDF)
 
 			if ($InvOrCredit=='Invoice') {
 
+			// KL RICARD Updated SQL to use of salesorders.salesperson instead of custbranch.salesman
 				$sql = "SELECT debtortrans.trandate,
 								debtortrans.ovamount,
 								debtortrans.ovdiscount,
@@ -704,6 +709,8 @@ if (isset($PrintPDF)
 							ON salesorders.salesperson=salesman.salesmancode
 							INNER JOIN locations
 							ON salesorders.fromstkloc=locations.loccode
+							INNER JOIN locationusers
+							ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 							INNER JOIN paymentterms
 							ON debtorsmaster.paymentterms=paymentterms.termsindicator
 							INNER JOIN currencies
