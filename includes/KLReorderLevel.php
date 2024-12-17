@@ -17,7 +17,7 @@ function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $EmailT
 	if ($ShowMessages){
 		prnMsg('Number of Shops Kapal-laut = ' . $Shops,'info');
 	}
-// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
+
 	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 7),       999999, 5, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 6), ($Shops * 7), 4, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL",   1,  50, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
@@ -30,7 +30,6 @@ function KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $EmailT
 	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, ($Shops * 4), ($Shops * 5), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPKL", 101, 250, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
 
-// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
 	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  30, 5, 4, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  20, 4, 3, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPKL",  10, 3, 2, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $EmailText);
@@ -48,7 +47,7 @@ function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $Ema
 	if ($ShowMessages){
 		prnMsg('Number of Shops Blink = ' . $Shops,'info');
 	}
-// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
+
 	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 7),       999999, 5, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 6), ($Shops * 7), 4, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL",   1,  50, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
@@ -61,7 +60,6 @@ function KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $Ema
 	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, ($Shops * 4), ($Shops * 5), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForTopSalesItems("SHOPBL", 101, 200, ($Shops * 3), ($Shops * 4), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
 
-// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
 	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  30, 5, 4, ($Shops * 6), $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  20, 4, 3, ($Shops * 5), $ShowMessages, $updateDB, $RootPath, $EmailText);
 	$EmailText = SetRLForLowSalesHighRL("SHOPBL",  10, 3, 2, ($Shops * 4), $ShowMessages, $updateDB, $RootPath, $EmailText);
@@ -73,21 +71,36 @@ function KL_DailyRLAdjustmentsForOutlet($ShowMessages, $updateDB, $RootPath, $Em
 
 	// for OUTLET SHOPS
 	$Shops = NumberOfShops("SHOPOU");
+	$RegularKLShopsSellingDiscount = NumberOfRegularShopsSellingDiscount("SHOPKL");
+	$RegularBlinkShopsSellingDiscount = NumberOfRegularShopsSellingDiscount("SHOPBL");
+	
 	if ($EmailText!=''){
 		$EmailText = $EmailText . "\n" . "Number of Shops Outlet = " . $Shops . "\n";
+		$EmailText = $EmailText . "\n" . "Number of regular KL Shops selling discount = " . $RegularKLShopsSellingDiscount . "\n";
+		$EmailText = $EmailText . "\n" . "Number of regular Blink Shops selling discount = " . $RegularBlinkShopsSellingDiscount . "\n";
 	}
 	if ($ShowMessages){
 		prnMsg('Number of Shops Outlet = ' . $Shops,'info');
+		prnMsg('Number of regular KL Shops selling discount = ' . $RegularKLShopsSellingDiscount,'info');
+		prnMsg('Number of regular Blink Shops selling discount = ' . $RegularBlinkShopsSellingDiscount,'info');
 	}
-// Modification COVID. All new RL have been reduced -1, to keep more stock in kantor, less at shops.
-	$EmailText = SetRLForTopSalesItems("SHOPOU",   1,  50, ($Shops * 7),       999999, 5, $ShowMessages, $updateDB, $RootPath, $EmailText);
-	$EmailText = SetRLForTopSalesItems("SHOPOU",   1,  50, ($Shops * 6), ($Shops * 7), 4, $ShowMessages, $updateDB, $RootPath, $EmailText);
-	$EmailText = SetRLForTopSalesItems("SHOPOU",   1,  50, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
 
-	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, ($Shops * 6),       999999, 4, $ShowMessages, $updateDB, $RootPath, $EmailText);
-	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, ($Shops * 5), ($Shops * 6), 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
-	$EmailText = SetRLForTopSalesItems("SHOPOU",  51, 100, ($Shops * 4), ($Shops * 5), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
+	$ShopsDiscountKL = $Shops + $RegularKLShopsSellingDiscount;
+	$EmailText = SetRLForTopSalesItems("OUTKL",   1,  50, ($ShopsDiscountKL * 5),       999999, 4, $ShowMessages, $updateDB, $RootPath, $EmailText);
+	$EmailText = SetRLForTopSalesItems("OUTKL",   1,  50, ($ShopsDiscountKL * 4), ($ShopsDiscountKL * 5), 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
+	$EmailText = SetRLForTopSalesItems("OUTKL",   1,  50, ($ShopsDiscountKL * 3), ($ShopsDiscountKL * 4), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
+
+	$EmailText = SetRLForTopSalesItems("OUTKL",  51, 100, ($ShopsDiscountKL * 4),       999999, 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
+	$EmailText = SetRLForTopSalesItems("OUTKL",  51, 100, ($ShopsDiscountKL * 3), ($ShopsDiscountKL * 4), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
 	
+	$ShopsDiscountBL = $Shops + $RegularBlinkShopsSellingDiscount;
+	$EmailText = SetRLForTopSalesItems("OUTBL",   1,  50, ($ShopsDiscountBL * 5),       999999, 4, $ShowMessages, $updateDB, $RootPath, $EmailText);
+	$EmailText = SetRLForTopSalesItems("OUTBL",   1,  50, ($ShopsDiscountBL * 4), ($ShopsDiscountBL * 5), 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
+	$EmailText = SetRLForTopSalesItems("OUTBL",   1,  50, ($ShopsDiscountBL * 3), ($ShopsDiscountBL * 4), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
+
+	$EmailText = SetRLForTopSalesItems("OUTBL",  51, 100, ($ShopsDiscountBL * 4),       999999, 3, $ShowMessages, $updateDB, $RootPath, $EmailText);
+	$EmailText = SetRLForTopSalesItems("OUTBL",  51, 100, ($ShopsDiscountBL * 3), ($ShopsDiscountBL * 4), 2, $ShowMessages, $updateDB, $RootPath, $EmailText);
+
 	return $EmailText;
 }
 
@@ -544,6 +557,7 @@ to the shops with RL > 0.
 11/03/2017 modification: filter by ShopType (brand) and simplified code with stockreadytosell
 18/12/2019 modification: change the LIKE in typeloc as we always call only one kind of typeloc
 19/12/2019 modification: simplified the main query to use klsalesperformance table, to reduce CPU time.
+18/12/2024 modofication: discounted items now can be sold in regular shops
 
 */	
 	if ($EmailText!=''){
@@ -554,8 +568,10 @@ to the shops with RL > 0.
 		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
 	}elseif ($ShopType == "SHOPBL") {
 		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . " ";
-	}elseif ($ShopType == "SHOPOU") {
-		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
+	}elseif ($ShopType == "OUTKL") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT . " ";
+	}elseif ($ShopType == "OUTBL") {
+		$WhereCat = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT . " ";
 	}else{
 		$WhereCat = " ";
 	}

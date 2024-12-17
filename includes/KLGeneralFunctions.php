@@ -1142,6 +1142,32 @@ function NumberOfShops($ShopType){
 	}
 }
 
+function NumberOfRegularShopsSellingDiscount($ShopType){
+	if ($ShopType == "SHOPKL"){
+		$Categories = "AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT . "";
+	} else if ($ShopType == "SHOPBL"){
+		$Categories = "AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT . "";
+	} else {
+		return 0;
+	}
+	
+	$SQL="SELECT COUNT(DISTINCT(locations.loccode))
+		FROM locations,locstock,stockmaster
+		WHERE locations.loccode = locstock.loccode
+			AND locstock.stockid = stockmaster.stockid
+			AND locations.typeloc = '" . $ShopType . "'
+			AND locstock.reorderlevel > 0 " .
+			$Categories;
+			
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return 0;
+	}
+}
+
 function DeleteWeberpUser($SelectedUser, $AdminRole){
 	if($AllowDemoMode AND $SelectedUser == 'admin') {
 		prnMsg(_('The demonstration user called demo cannot be deleted'),'error');

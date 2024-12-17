@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: StockReorderLevel.php 6941 2014-10-26 23:18:08Z daintree $*/
-
 include('includes/session.php');
 $Title = _('Automatic Setting of Stock Re-Order Level');
 include('includes/header.php');
