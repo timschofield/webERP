@@ -855,7 +855,7 @@ if (!isset($SupplierID)) {
 			</td>
 		</tr>';
 
-/* KL RICARD Commented out defaultgl as it seems of no use for us (or webeERP in general)
+	/* KL RICARD Commented out defaultgl as it seems of no use for us (or webeERP in general)
 	$Result = DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
@@ -865,7 +865,7 @@ if (!isset($SupplierID)) {
 	echo '<tr>
 			<td>' . _('Default GL Account') . ':</td>
 			<td><select tabindex="19" name="DefaultGL">';
-
+	echo '<option value="0">', _('None') , ' (0)</option>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
 			echo '<option selected="selected" value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
@@ -876,7 +876,7 @@ if (!isset($SupplierID)) {
 	echo '</select>
 			</td>
 		</tr>';
-*/ 
+	KL RICARD END */ 
 	echo '<tr>
 			<td>' . _('Tax Group') . ':</td>
 			<td><select name="TaxGroup">';
@@ -1163,6 +1163,7 @@ if (!isset($SupplierID)) {
 			<td>' . _('Default GL Account') . ':</td>
 			<td><select tabindex="19" name="DefaultGL">';
 
+	echo '<option value="0">', _('None') , ' (0)</option>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
 			echo '<option selected="selected" value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
