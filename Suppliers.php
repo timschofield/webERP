@@ -900,6 +900,7 @@ if (!isset($SupplierID)) {
 			<label for="DefaultGL">' . _('Default GL Account') . ':</label>
 			<select tabindex="19" name="DefaultGL">';
 
+	echo '<option value="0">', _('None') , ' (0)</option>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
 			echo '<option selected="selected" value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
