@@ -347,13 +347,14 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
 	}
-	//Delete expenses record & associated taxes
-	$SQL = "DELETE FROM pcashdetails, pcashdetailtaxes
-				USING pcashdetails
-				INNER JOIN pcashdetailtaxes
-				ON pcashdetails.counterindex = pcashdetailtaxes.pccashdetail
-				WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
-	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
+	//Delete associated taxes
+	$SQL = "DELETE FROM pcashdetailtaxes
+			WHERE pcashdetailtaxes.pccashdetail = '" . $SelectedIndex . "'";
+	$Result = DB_query($SQL, $ErrMsg);
+
+	//Delete expenses record
+	$SQL = "DELETE FROM pcashdetails
+			WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
 	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been deleted'), 'success');
 	unset($_GET['delete']);
