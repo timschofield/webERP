@@ -1,4 +1,10 @@
 <?php
+
+//KL RICARD		
+// Changed all occurences of $f = TCPDF_STATIC::fopenLocal($name, 'wb');
+// by $f = fopen($name, 'wb');
+// to prevent as returned error
+
 //============================================================+
 // File name   : tcpdf.php
 // Version     : 6.7.5
@@ -7779,10 +7785,12 @@ class TCPDF {
 			case 'FI':
 			case 'FD': {
 				// save PDF to a local file
-//				$f = fopen($name, 'wb');
+//KL RICARD		
+// Changed all occurences of $f = TCPDF_STATIC::fopenLocal($name, 'wb');
+// by $f = fopen($name, 'wb');
 				$f = fopen($name, 'wb');
 				if (!$f) {
-					$this->Error('Unable to create PDF output file: '.$name);
+					$this->Error('Unable to create output file: '.$name);
 				}
 				fwrite($f, $this->getBuffer(), $this->bufferlen);
 				fclose($f);
