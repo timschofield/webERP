@@ -1,8 +1,9 @@
 <?php
-// Display demo user name and password within login form if $AllowDemoMode is true
+
 include ($PathPrefix . 'includes/LanguageSetup.php');
 include ('LanguagesArray.php');
 
+// Display demo user name and password within login form if $AllowDemoMode is true
 if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text))) {
 	$demo_text = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('weberp') . '</i>';
 } elseif (!isset($demo_text)) {
@@ -28,7 +29,7 @@ echo '</head>';
 echo '<body>
 	<div id="container">
 		<div id="login_logo">
-			<div class="logo logo-left">web</div><div class="logo logo-right">ERP</div>
+			<div class="logo logo-left">webERP</div><div class="logo logo-right"></div>
 		</div>
 		<div id="login_box">
 			<form action="index.php" name="LogIn" method="post" class="noPrint">
