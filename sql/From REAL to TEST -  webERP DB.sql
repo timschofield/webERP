@@ -340,7 +340,7 @@ TRUNCATE test_erp.`paymentterms`;
 INSERT INTO test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE test_erp.`pcashdetails`;
-INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE `date` >= "2023-01-01"; 
+INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails; 
 
 TRUNCATE test_erp.`pcashdetailtaxes`;
 INSERT INTO test_erp.pcashdetailtaxes SELECT * FROM kurakura_kl_erp.pcashdetailtaxes;
