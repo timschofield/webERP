@@ -71,11 +71,11 @@ if ($AllowCompanySelectionBox === 'Hide') {
 	echo '</select>';
 }
 
-echo '<label for="dropdownlist">', _('Company'), ':</label>';
-
-echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
-
-echo '<ol id="dropdownlist" class="dropdownlist">';
+if ($AllowCompanySelectionBox != 'Hide') {
+	echo '<label for="dropdownlist">', _('Company'), ':</label>';
+	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
+	echo '<ol id="dropdownlist" class="dropdownlist">';
+}
 
 $DirHandle = dir('companies/');
 
@@ -86,16 +86,16 @@ while (false !== ($CompanyEntry = $DirHandle->read())) {
 		} else {
 			$CompanyName[$CompanyEntry] = $CompanyEntry;
 		}
-		/*if ($CompanyEntry == $DefaultCompany) {
-			echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
-		} else*/ {
+		if ($AllowCompanySelectionBox != 'Hide') {
 			echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
 		}
 	}
 }
 $DirHandle->close();
 
-echo '</ol>';
+if ($AllowCompanySelectionBox != 'Hide') {
+	echo '</ol>';
+}
 
 echo '<label>', _('User name'), ':</label>
 	<input type="text" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', _('User name'), '" maxlength="20" /><br />
