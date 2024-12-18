@@ -102,7 +102,7 @@ $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-echo '<table class="selection"><tbody>';
+echo '<table class="selection">';
 	echo '<thead>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
