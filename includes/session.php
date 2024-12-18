@@ -11,6 +11,13 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
 
+// KL RICARD Select teh default database depending on the code version
+if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+	$DefaultDatabase = 'kurakura_kl_erp';
+}else{
+	$DefaultDatabase = 'test_erp';
+}
+
 if (!file_exists($PathPrefix . 'config.php')) {
 	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
 	if ($RootPath == '/' or $RootPath == "\\") {
