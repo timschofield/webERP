@@ -546,21 +546,22 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		}
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . $typereport . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . $NumDaysA . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysB . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysC . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysD . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysE . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysF . _(' days') . '</th>
-							<th class="ascending">' . _('MTD') . '</th>
-							<th class="ascending">' . _('Trend') . '</th>
-							<th class="ascending">' . 'Monthly Forecast' . '</th>
-							<th class="ascending">' . $TitleTarget . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th>'					   . $typereport . '</th>
+								<th class="SortedColumn">' . _('Name') . '</th>
+								<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
+								<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
+								<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
+								<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
+								<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
+								<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
+								<th class="SortedColumn">' . _('MTD') . '</th>
+								<th class="SortedColumn">' . _('Trend') . '</th>
+								<th class="SortedColumn">' . 'Monthly Forecast' . '</th>
+							</tr>
+						</thead>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
@@ -607,7 +608,6 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						<td class="number">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
-						<td class="number">%s</td>
 						</tr>', 
 						$i,
 						$Code,
@@ -620,8 +620,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 						locale_number_format($dailyF,0),
 						$MTD,
 						$trend,
-						locale_number_format($forecast,0),
-						$target
+						locale_number_format($forecast,0)
 						);
 				
 			}
@@ -657,7 +656,6 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
-					<td class="number">%s</td>
 					</tr>', 
 					"",
 					"",
@@ -670,8 +668,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					locale_number_format($TotalDateF,0),
 					locale_number_format($TotalDateMTD,0),
 					$trend,
-					locale_number_format($TotalForecast,0),
-					""
+					locale_number_format($TotalForecast,0)
 					);
 			$i--;
 			$k = StartEvenOrOddRow($k);

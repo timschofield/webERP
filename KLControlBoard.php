@@ -2012,6 +2012,7 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 
 	$SQL = "SELECT loctransfers.stockid,
 					stockmaster.description,
+					stockcategory.categorydescription,
 					loctransfers.recdate, 
 					loctransfers.recqty AS qtytransferred,
 					(SELECT SUM(locstock.quantity)
@@ -2040,6 +2041,7 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 							<th class="ascending">' . _('Date') . '</th>
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
+							<th class="ascending">' . _('Category') . '</th>
 							<th class="ascending">' . _('Transferred') . '</th>
 							<th class="ascending">' . _('QOH') . '</th>
 						</tr>';
@@ -2053,6 +2055,7 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -2060,6 +2063,7 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 					ConvertSQLDate($myrow['recdate']),
 					$CodeLink, 
 					$myrow['description'], 
+					$myrow['categorydescription'], 
 					locale_number_format($myrow['qtytransferred'],0),
 					locale_number_format($myrow['qtytotal'],0)
 					);
