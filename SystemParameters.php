@@ -87,10 +87,10 @@ if (isset($_POST['submit'])) {
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Default maximum number of records to display must be between 1 and 500'),'error');
-	}elseif (mb_strlen($_POST['X_MaxImageSize']) > 3 OR !is_numeric($_POST['X_MaxImageSize']) OR
+	}elseif (mb_strlen($_POST['X_MaxImageSize']) > 4 OR !is_numeric($_POST['X_MaxImageSize']) OR
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
-		prnMsg(_('The maximum size of item image files must be between 50 and 500 (NB this figure refers to KB)'),'error');
+		prnMsg(_('The maximum size of item image files must be between 1 KB and 9999 KB'),'error');
 	}elseif (!IsEmailAddress($_POST['X_FactoryManagerEmail'])){
 		$InputError = 1;
 		prnMsg(_('The Factory Manager Email address does not appear to be valid'),'error');
@@ -1001,7 +1001,7 @@ echo '<field>
 //MaxImageSize
 echo '<field>
 		<label for="X_MaxImageSize">' . _('Maximum Size in KB of uploaded images') . ':</label>
-		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'._('The input should be between 1 and 999').'" placeholder="'._('1 to 999').'" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" />
+		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,4}" required="required" title="'._('The input should be between 1 and 2048').'" placeholder="'._('1 to 2048').'" name="X_MaxImageSize" size="5" maxlength="4" value="' . $_SESSION['MaxImageSize'] . '" />
 		<fieldhelp>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.')  . '</fieldhelp>
 	</field>';
 
