@@ -3,7 +3,7 @@
 //KL RICARD		
 // Changed all occurences of $f = TCPDF_STATIC::fopenLocal($name, 'wb');
 // by $f = fopen($name, 'wb');
-// to prevent as returned error
+// to prevent error Unable to create output file:
 
 //============================================================+
 // File name   : tcpdf.php
