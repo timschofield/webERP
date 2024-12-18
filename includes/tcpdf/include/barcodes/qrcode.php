@@ -888,6 +888,7 @@ class QRcode {
 			if ($col >= $this->rsblocks[0]['dataLength']) {
 				$row += $this->b1;
 			}
+			$row = (int) $row;
 			$ret = $this->rsblocks[$row]['data'][$col];
 		} elseif ($this->count < $this->dataLength + $this->eccLength) {
 			$row = ($this->count - $this->dataLength) % $this->blocks;
@@ -2471,7 +2472,7 @@ class QRcode {
 		if (($level < 0) OR ($level > 3)) {
 			return 0;
 		}
-		return $this->formatInfo[$level][$mask];
+		return $this->formatInfo[$level][$mask] ?? 0;
 	}
 
 	/**
