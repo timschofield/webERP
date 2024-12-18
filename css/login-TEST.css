@@ -1,5 +1,5 @@
 body {
-background: linear-gradient(90deg, #d4d4d4 0%, #4580af 100%);
+background: linear-gradient(90deg, #1A1A1A 0%, #777777 100%);
 font-family: Futura,Trebuchet MS,Arial,sans-serif;
 color:#E6EAF7;
 font-size:12pt;
@@ -19,7 +19,7 @@ width:65%;
 z-index:1000
 }
 #login_box {
-background: linear-gradient(90deg, #4580af 0%, #d4d4d4 100%);
+background: linear-gradient(90deg, #777777 0%, #1A1A1A 100%);
 border:solid #FFFFFF 2px;
 border-radius:15px;
 margin:0 10px 10px 20px;
