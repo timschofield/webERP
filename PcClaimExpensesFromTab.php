@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 				tag = '" . $_POST['Tag'] . "',
 				codeexpense = '" . $_POST['SelectedExpense'] . "',
 				amount = '" . -filter_number_format($_POST['Amount']) . "',
-				receipt = '" . $_POST['Receipt'] . "'
+				receipt = '" . $_POST['Receipt'] . "',
 				notes = '" . $_POST['Notes'] . "'
 			WHERE counterindex = '" . $SelectedIndex . "'";
 		$Msg = _('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been updated');
