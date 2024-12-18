@@ -110,9 +110,11 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 					$SendTo = $myrow['email'];
 				}
 
-// RICARD TEST
-//				$SendTo = 'revi@kapal-laut.com';
-// END RICARD TEST
+				// KL RICARD Send to a dummy address depending on the code version
+				if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+					// the current script filename contains TEST, we are on TEST code
+					$SendTo = 'webmaster@kapal-laut.com';
+				}
 
 				$ResultEmailEmployee = $mail->send(array($SendTo));
 				if($ResultEmailEmployee){
@@ -143,9 +145,11 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				$SendTo = 'accounting@ptadu.com';
 			}
 			
-// RICARD TEST
-//				$SendTo = 'revi@kapal-laut.com';
-// END RICARD TEST
+			// KL RICARD Send to a dummy address depending on the code version
+			if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+				// the current script filename contains TEST, we are on TEST code
+				$SendTo = 'webmaster@kapal-laut.com';
+			}
 
 			$ResultEmailAdmin = $mail->send(array($SendTo));
 			if($ResultEmailAdmin){
