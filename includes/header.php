@@ -45,11 +45,7 @@ echo '<html>
 			<link href="', $PathPrefix, $RootPath, '/css/print.css" rel="stylesheet" type="text/css" media="print" />
 			<meta name="viewport" content="width=device-width, initial-scale=1">';
 echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/MiscFunctions.js?version=1.0"></script>';
-
-// KL RICARD Comment the manual js as we don't use it
-//echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/manual.js"></script>';
-// KL RICARD END
-
+echo '<script async type="text/javascript" src = "', $PathPrefix, $RootPath, '/javascripts/manual.js"></script>';
 echo '<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
@@ -120,15 +116,12 @@ $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 
 echo '<header class="noPrint">';
 
-// KL RICARD Old stuff
-//echo '<div id="Info" data-title="', _('Company Details'), '">
-//		<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/company.png" alt="', _('Company'), '"/>', stripslashes($_SESSION['CompanyRecord']['coyname']), '
-//	</div>';
-// KL RICARD old st
-//echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
-//		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/logo.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
-//	</div>';
-
+/* KL RICARD: We don't want the logo on every page
+echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
+		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/LogoKLBlink.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
+	</div>';
+ KL RICARD END */
+ 
 echo '<div id="Info">
 		<a class="FontSize" data-title="', _('Change the settings for'), ' ', $_SESSION['UsersRealName'], '" href="', $PathPrefix, $RootPath, '/UserSettings.php">
 			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" alt="', stripslashes($_SESSION['UsersRealName']), '" />', $_SESSION['UsersRealName'], '
@@ -143,6 +136,7 @@ echo '<div id="ExitIcon">
 
 if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
+	/* KL RICARD Customized Action Icons on every page */
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Online Shop'), '" href="https://kapal-laut.com">
 			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
@@ -172,34 +166,45 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
 		</a>
 	</div>';
+	
+	/* KL RICARD END Customized action icons on every page */
 
+	/* KL RICARD No show the Manual Link
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 
-/*	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" target="_blank" href="' . $PathPrefix . $RootPath . '/doc/Manual/ManualContents.php' . $ViewTopic . $BookMark . '"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
-
-	if (strstr($_SESSION['Language'], 'en')) {
-		echo $DefaultManualLink;
-	} else {
-		if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
-			echo '<div id="ActionIcon">
-					<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
-						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" title="', _('Help'), '" alt="', _('Help'), '" />
-					</a>
-				</div>';
-		} else {
+	if ($ScriptName != 'index.php') {
+		if (strstr($_SESSION['Language'], 'en')) {
 			echo $DefaultManualLink;
+		} else {
+			if (file_exists('locale/' . $_SESSION['Language'] . '/Manual/ManualContents.php')) {
+				echo '<div id="ActionIcon">
+						<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/locale/', $_SESSION['Language'], '/Manual/ManualContents.php', $ViewTopic, $BookMark, '">
+							<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+						</a>
+					</div>';
+			} else {
+				echo $DefaultManualLink;
+			}
 		}
+	} else {
+		echo '<div id="ActionIcon">
+				<a data-title="', _('Read the manual'), '" href="', $PathPrefix, $RootPath, '/ManualContents.php" target="_blank">
+					<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" onclick="ShowHelp(', $ViewTopic,',', $BookMark, ')" title="', _('Help'), '" alt="', _('Help'), '" />
+				</a>
+			</div>';
 	}
-*/
-/*	if (!isset($_SESSION['Favourites'])) {
-		$SQL = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
-		$Result = DB_query($SQL);
-		while ($MyRow = DB_fetch_array($Result)) {
-			$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
-		}
-		if (DB_num_rows($Result) == 0) {
-			$_SESSION['Favourites'] = Array();
-		}
+	KL RICARD END No show the Manual Link */
+	
+	/* KL RICARD No show the Favourites
+	$SQL = "SELECT caption, href FROM favourites WHERE userid='" . $_SESSION['UserID'] . "'";
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$_SESSION['Favourites'][$MyRow['href']] = $MyRow['caption'];
 	}
+	if (DB_num_rows($Result) == 0) {
+		$_SESSION['Favourites'] = Array();
+	}
+
 	echo '<div id="ActionIcon">
 			<select name="Favourites" id="favourites" onchange="window.open (this.value,\'_self\',false)">';
 	echo '<option value=""><i>', _('Commonly used scripts'), '</i></option>';
@@ -223,10 +228,9 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 				</div>';
 		}
 	}
-*/
-
+	KL RICARD END  No show the Favourites */
 }
-/*
+/* KL RICARD No show the Dashboard
 if ($ScriptName != 'Dashboard.php') {
 	echo '<div id="ActionIcon">
 			<a data-title="', _('Show Dashboard'), '" href="', $PathPrefix, $RootPath, '/Dashboard.php">
@@ -235,18 +239,18 @@ if ($ScriptName != 'Dashboard.php') {
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
 }
-*/
+KL RICARD END No show the Dashboard */
 
-// KL RICARD 
+// KL RICARD Show the mani menu on every page
 //if ($ScriptName != 'index.php') {
 	echo '<div id="ActionIcon">
-			<a class="FontSize" data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
-				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />', _('Main Menu'), '
+			<a data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
+				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />
 			</a>
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
 //}
-// KL RICARD END
+// KL RICARD END Show the mani menu on every page
 
 echo '<br /><div class="ScriptTitle">', $Title, '</div>';
 if ($ScriptName == 'index.php') {
@@ -266,7 +270,8 @@ if ($ScriptName == 'index.php') {
 	} else {
 		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '">A</a>';
 	}
-/*	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+/*	KL RICARD No show the theme
+	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	echo '<div class="ScriptTitle">', _('Theme'), ':</div>';
 
 	echo '<select name="Theme" id="favourites" onchange="window.open (\'index.php?Theme=\' + this.value,\'_self\',false)">';
@@ -283,7 +288,7 @@ if ($ScriptName == 'index.php') {
 		}
 	}
 	echo '</select>';
-*/
+KL RICARD No show the theme */
 }
 
 echo '</header>';
