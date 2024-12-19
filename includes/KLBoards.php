@@ -38,16 +38,19 @@ function ActiveTransfersByLocation($RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Pending Goods to be transferred by shop') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Shop') . '</th>
-							<th class="ascending">' . _('Transfer OUT') . '</th>
-							<th class="ascending">' . _('Transfer IN') . '</th>
-							<th class="ascending">' . _('Transfer Total') . '</th>
-							<th class="ascending">' . _('Pcs OUT') . '</th>
-							<th class="ascending">' . _('Pcs IN') . '</th>
-							<th class="ascending">' . _('Pcs Total') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Shop') . '</th>
+							<th class="SortedColumn">' . _('Transfer OUT') . '</th>
+							<th class="SortedColumn">' . _('Transfer IN') . '</th>
+							<th class="SortedColumn">' . _('Transfer Total') . '</th>
+							<th class="SortedColumn">' . _('Pcs OUT') . '</th>
+							<th class="SortedColumn">' . _('Pcs IN') . '</th>
+							<th class="SortedColumn">' . _('Pcs Total') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
@@ -97,7 +100,8 @@ function ActiveTransfersByLocation($RootPath){
 				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
 				);
 		InsertKPI("Transfers","Goods Pending to be transferred @ shops (pcs)", $TotalPcsOut+$TotalPcsIn);
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>
 				</form>';
 	}
@@ -122,14 +126,17 @@ function ActiveTransferStatus($RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . _('List of Active Transfers') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-							<th class="ascending">' . _('Qty') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Date') . '</th>
+							<th class="SortedColumn">' . _('Transfer') . '</th>
+							<th class="SortedColumn">' . _('From') . '</th>
+							<th class="SortedColumn">' . _('To') . '</th>
+							<th class="SortedColumn">' . _('Qty') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
@@ -169,7 +176,8 @@ function ActiveTransferStatus($RootPath){
 				locale_number_format($total,0)
 				);
 		InsertKPI("Transfers", "Active Transfers (pcs)", $total);
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>
 				</form>';
 	}
@@ -237,18 +245,21 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 		$TitleTarget = "";
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . 'Class' . '</th>
-							<th class="ascending">' . _('Concept') . '</th>
-							<th class="ascending">' . $NumDaysA . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysB . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysC . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysD . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysE . _(' days') . '</th>
-							<th class="ascending">' . $NumDaysF . _(' days') . '</th>
-							<th class="ascending">' . _('Trend') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . 'Class' . '</th>
+							<th class="SortedColumn">' . _('Concept') . '</th>
+							<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
+							<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
+							<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
+							<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
+							<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
+							<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
+							<th class="SortedColumn">' . _('Trend') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
@@ -297,7 +308,8 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 					);
 			$i++;
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -777,18 +789,21 @@ function MaintenanceTasksList($Status, $NumDays){
 		echo '<p class="page_title_text" align="center"><strong>' . $Title .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' .  _('#') . '</th>
-							<th class="ascending">' .  _('Task') . '</th>
-							<th class="ascending">' .  _('Location') . '</th>
-							<th class="ascending">' . _('Type') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Created By') . '</th>
-							<th class="ascending">' . _('Created Date') . '</th>
-							<th class="ascending">' . _('Closed By') . '</th>
-							<th class="ascending">' . _('Closed Date') . '</th>
-							<th class="ascending">' . _('Days') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' .  _('#') . '</th>
+							<th class="SortedColumn">' .  _('Task') . '</th>
+							<th class="SortedColumn">' .  _('Location') . '</th>
+							<th class="SortedColumn">' . _('Type') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Created By') . '</th>
+							<th class="SortedColumn">' . _('Created Date') . '</th>
+							<th class="SortedColumn">' . _('Closed By') . '</th>
+							<th class="SortedColumn">' . _('Closed Date') . '</th>
+							<th class="SortedColumn">' . _('Days') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 0;
@@ -861,7 +876,8 @@ function MaintenanceTasksList($Status, $NumDays){
 						);
 			}
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
