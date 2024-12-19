@@ -1,6 +1,7 @@
 <?php
 
 function webERP_in_test(){
+	// the current script filename contains TEST, we are on TEST database
 	return (strpos($_SERVER['PHP_SELF'],"TEST")!== false);
 }
 

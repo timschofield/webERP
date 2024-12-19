@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 				tag = '" . $_POST['Tag'] . "',
 				codeexpense = '" . $_POST['SelectedExpense'] . "',
 				amount = '" . -filter_number_format($_POST['Amount']) . "',
-				receipt = '" . $_POST['Receipt'] . "'
+				receipt = '" . $_POST['Receipt'] . "',
 				notes = '" . $_POST['Notes'] . "'
 			WHERE counterindex = '" . $SelectedIndex . "'";
 		$Msg = _('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been updated');
@@ -345,27 +345,29 @@ if (isset($_POST['submit'])) {
 					FROM pcreceipts
 					WHERE pccashdetail='" . $SelectedIndex . "'
 					LIMIT 1";
-		$ReceiptResult = DB_query($ReceiptSQL);
-		$ReceiptRow = DB_fetch_assoc($ReceiptResult);
+	$ReceiptResult = DB_query($ReceiptSQL);
+	$ReceiptRow = DB_fetch_assoc($ReceiptResult);
 	if (DB_num_rows($ReceiptResult) > 0) {
-	//Delete receipt files from directory
-	$ReceiptHash = $ReceiptRow['hashfile'];
-	$ReceiptExt = $ReceiptRow['extension'];
-	$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
-	$ReceiptPath = $ReceiptDir . $ReceiptFileName;
-	unlink($ReceiptPath);
-	//Delete receipt file info from database
-	$SQL = "DELETE FROM pcreceipts
-			WHERE pccashdetail='" . $SelectedIndex . "'";
-	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
-	$Result = DB_query($SQL, $ErrMsg);
+		//Delete receipt files from directory
+		$ReceiptHash = $ReceiptRow['hashfile'];
+		$ReceiptExt = $ReceiptRow['extension'];
+		$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
+		$ReceiptPath = $ReceiptDir . $ReceiptFileName;
+		unlink($ReceiptPath);
+		//Delete receipt file info from database
+		$SQL = "DELETE FROM pcreceipts
+				WHERE pccashdetail='" . $SelectedIndex . "'";
+		$ErrMsg = _('Petty Cash Expense record could not be deleted because');
+		$Result = DB_query($SQL, $ErrMsg);
 	}
-	//Delete expenses record & associated taxes
-	$SQL = "DELETE FROM pcashdetails, pcashdetailtaxes
-				USING pcashdetails
-				INNER JOIN pcashdetailtaxes
-				ON pcashdetails.counterindex = pcashdetailtaxes.pccashdetail
-				WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
+	//Delete associated taxes
+	$SQL = "DELETE FROM pcashdetailtaxes
+			WHERE pcashdetailtaxes.pccashdetail = '" . $SelectedIndex . "'";
+	$Result = DB_query($SQL, $ErrMsg);
+
+	//Delete expenses record
+	$SQL = "DELETE FROM pcashdetails
+			WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
 	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been deleted'), 'success');
 	unset($_GET['delete']);

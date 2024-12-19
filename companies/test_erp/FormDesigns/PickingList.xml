@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="Picking List">
+	<PaperSize name="Paper size">A4_Landscape</PaperSize>
+	<LineHeight name="Line height">12</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>281</x>
+		<y>65</y>
+		<width>0</width>
+		<height>60</height>
+	</logo>
+	<Heading type="SimpleText" name="Heading" id="Heading">
+		<FontSize>18</FontSize>
+		<x>341</x>
+		<y>80</y>
+	</Heading>
+	<HeadingLine2 type="SimpleText" name="Heading Line 2" id="HeadingLine2">
+		<FontSize>18</FontSize>
+		<x>251</x>
+		<y>100</y>
+	</HeadingLine2>
+	<CompanyName type="SimpleText" name="Company name" id="CompanyName">
+		<FontSize>10</FontSize>
+		<x>340</x>
+		<y>120</y>
+	</CompanyName>
+	<CompanyAddress type="ElementArray" name="Company address">
+		<Line1 type="SimpleText" name="Line 1" id="CompanyAddress1">
+			<FontSize>10</FontSize>
+			<x>340</x>
+			<y>130</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="CompanyAddress2">
+			<FontSize>10</FontSize>
+			<x>340</x>
+			<y>140</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="CompanyAddress3">
+			<FontSize>10</FontSize>
+			<x>340</x>
+			<y>150</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="CompanyAddress4">
+			<FontSize>10</FontSize>
+			<x>340</x>
+			<y>160</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="CompanyAddress5">
+			<FontSize>10</FontSize>
+			<x>340</x>
+			<y>170</y>
+		</Line5>
+	</CompanyAddress>
+	<CompanyPhone type="SimpleText" name="Company phone number" id="CompanyPhone">
+		<FontSize>10</FontSize>
+		<x>340</x>
+		<y>180</y>
+	</CompanyPhone>
+	<CompanyFax type="SimpleText" name="Company fax number" id="CompanyFax">
+		<FontSize>10</FontSize>
+		<x>340</x>
+		<y>190</y>
+	</CompanyFax>
+	<CompanyEmail type="SimpleText" name="Company email address" id="CompanyEmail">
+		<FontSize>10</FontSize>
+		<x>340</x>
+		<y>200</y>
+	</CompanyEmail>
+	<DeliveryAddress type="ElementArray" name="Delivery address">
+		<Caption type="SimpleText" name="Caption" id="DeliveryAddressCaption">
+			<FontSize>14</FontSize>
+			<x>46</x>
+			<y>26</y>
+		</Caption>
+		<Line1 type="SimpleText" name="Line 1" id="DeliveryAddress1">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>42</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="DeliveryAddress2">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>56</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="DeliveryAddress3">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>70</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="DeliveryAddress4">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>84</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="DeliveryAddress5">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>98</y>
+		</Line5>
+	</DeliveryAddress>
+	<CustomerAddress type="ElementArray" name="Delivery address">
+		<Caption type="SimpleText" name="Caption" id="CustomerAddressCaption">
+			<FontSize>14</FontSize>
+			<x>46</x>
+			<y>119</y>
+		</Caption>
+		<Name type="SimpleText" name="Name" id="Name">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>133</y>
+		</Name>
+		<Line1 type="SimpleText" name="Line 1" id="CustomerAddress1">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>147</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="CustomerAddress2">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>161</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="CustomerAddress3">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>175</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="CustomerAddress4">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>189</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="CustomerAddress5">
+			<FontSize>12</FontSize>
+			<x>46</x>
+			<y>203</y>
+		</Line5>
+	</CustomerAddress>
+	<OrderNumberCaption type="SimpleText" name="Order Number Caption" id="OrderNumberCaption">
+		<FontSize>12</FontSize>
+		<x>620</x>
+		<y>35</y>
+	</OrderNumberCaption>
+	<OrderNumber type="SimpleText" name="Order Number" id="OrderNumber">
+		<FontSize>12</FontSize>
+		<x>700</x>
+		<y>35</y>
+	</OrderNumber>
+	<DeliveryDateCaption type="SimpleText" name="Delivery Date Caption" id="DeliveryDateCaption">
+		<FontSize>12</FontSize>
+		<x>620</x>
+		<y>49</y>
+	</DeliveryDateCaption>
+	<DeliveryDate type="SimpleText" name="Delivery Date" id="DeliveryDate">
+		<FontSize>12</FontSize>
+		<x>700</x>
+		<y>49</y>
+	</DeliveryDate>
+	<DatePrintedCaption type="SimpleText" name="Date Printed Caption" id="DatePrintedCaption">
+		<FontSize>12</FontSize>
+		<x>620</x>
+		<y>63</y>
+	</DatePrintedCaption>
+	<DatePrinted type="SimpleText" name="Date Printed" id="DatePrinted">
+		<FontSize>12</FontSize>
+		<x>700</x>
+		<y>63</y>
+	</DatePrinted>
+	<CustomerCode type="SimpleText" name="Customer Code" id="CustomerCode">
+		<FontSize>12</FontSize>
+		<x>620</x>
+		<y>83</y>
+	</CustomerCode>
+	<ShipperCode type="SimpleText" name="Shipper Code" id="ShipperCode">
+		<FontSize>12</FontSize>
+		<x>620</x>
+		<y>97</y>
+	</ShipperCode>
+	<Comments type="MultiLineText" name="Comments" id="Comments">
+		<FontSize>12</FontSize>
+		<x>620</x>
+		<y>117</y>
+		<Length>125</Length>
+	</Comments>
+	<PageNumberCaption type="SimpleText" name="Page Number Caption" id="PageNumberCaption">
+		<FontSize>12</FontSize>
+		<x>620</x>
+		<y>173</y>
+	</PageNumberCaption>
+	<PageNumber type="SimpleText" name="Page Number" id="PageNumber">
+		<FontSize>12</FontSize>
+		<x>700</x>
+		<y>173</y>
+	</PageNumber>
+	<Headings type="ElementArray" name="Column headings">
+		<Column1 type="MultiLineText" name="Heading 1" id="Heading1">
+			<FontSize>12</FontSize>
+			<x>25</x>
+			<y>228</y>
+			<Length>127</Length>
+		</Column1>
+		<Column2 type="MultiLineText" name="Heading 2" id="Heading2">
+			<FontSize>12</FontSize>
+			<x>147</x>
+			<y>228</y>
+			<Length>255</Length>
+		</Column2>
+		<Column3 type="MultiLineText" name="Heading 3" id="Heading3">
+			<FontSize>12</FontSize>
+			<x>400</x>
+			<y>228</y>
+			<Length>85</Length>
+		</Column3>
+		<Column4 type="MultiLineText" name="Heading 4" id="Heading4">
+			<FontSize>12</FontSize>
+			<x>503</x>
+			<y>228</y>
+			<Length>85</Length>
+		</Column4>
+		<Column5 type="MultiLineText" name="Heading 5" id="Heading5">
+			<FontSize>12</FontSize>
+			<x>602</x>
+			<y>228</y>
+			<Length>85</Length>
+		</Column5>
+		<Column6 type="MultiLineText" name="Heading 6" id="Heading6">
+			<FontSize>12</FontSize>
+			<x>700</x>
+			<y>228</y>
+			<Length>85</Length>
+		</Column6>
+	</Headings>
+	<Data type="ElementArray" name="Column Data">
+		<y type="StartLine" name="Y co-ordinate of first data line" id="DataStartLine">260</y>
+		<Column1 type="DataText" name="Heading 1" id="Heading1">
+			<FontSize>12</FontSize>
+			<x>25</x>
+			<Length>127</Length>
+		</Column1>
+		<Column2 type="DataText" name="Heading 2" id="Heading2">
+			<FontSize>12</FontSize>
+			<x>147</x>
+			<Length>255</Length>
+		</Column2>
+		<Column3 type="DataText" name="Heading 3" id="Heading3">
+			<FontSize>12</FontSize>
+			<x>400</x>
+			<Length>85</Length>
+		</Column3>
+		<Column4 type="DataText" name="Heading 4" id="Heading4">
+			<FontSize>12</FontSize>
+			<x>503</x>
+			<Length>85</Length>
+		</Column4>
+		<Column5 type="DataText" name="Heading 5" id="Heading5">
+			<FontSize>12</FontSize>
+			<x>602</x>
+			<Length>85</Length>
+		</Column5>
+		<Column6 type="DataText" name="Heading 6" id="Heading6">
+			<FontSize>12</FontSize>
+			<x>700</x>
+			<Length>85</Length>
+		</Column6>
+	</Data>
+	<DeliveryAddressBox type="CurvedRectangle" name="Delivery Address Box" id="DeliveryAddressBox">
+		<x>40</x>
+		<y>32</y>
+		<width>190</width>
+		<height>90</height>
+		<radius>10</radius>
+	</DeliveryAddressBox>
+	<CustomerAddressBox type="CurvedRectangle" name="Customer Address Box" id="CustomerAddressBox">
+		<x>40</x>
+		<y>126</y>
+		<width>210</width>
+		<height>100</height>
+		<radius>10</radius>
+	</CustomerAddressBox>
+	<DataBox type="CurvedRectangle" name="Data Box" id="DataBox">
+		<x>20</x>
+		<y>236</y>
+		<width>802</width>
+		<height>370</height>
+		<radius>10</radius>
+	</DataBox>
+	<LineBelowColumns type="Line" name="Line Below Columns" id="LineBelowColumns">
+		<startx>20</startx>
+		<starty>236</starty>
+		<endx>822</endx>
+		<endy>236</endy>
+	</LineBelowColumns>
+	<ColumnLine1 type="Line" name="Column Line 1" id="ColumnLine1">
+		<startx>140</startx>
+		<starty>216</starty>
+		<endx>140</endx>
+		<endy>586</endy>
+	</ColumnLine1>
+	<ColumnLine2 type="Line" name="Column Line 2" id="ColumnLine2">
+		<startx>395</startx>
+		<starty>216</starty>
+		<endx>395</endx>
+		<endy>586</endy>
+	</ColumnLine2>
+	<ColumnLine3 type="Line" name="Column Line 3" id="ColumnLine3">
+		<startx>500</startx>
+		<starty>216</starty>
+		<endx>500</endx>
+		<endy>586</endy>
+	</ColumnLine3>
+	<ColumnLine4 type="Line" name="Column Line 4" id="ColumnLine4">
+		<startx>600</startx>
+		<starty>216</starty>
+		<endx>600</endx>
+		<endy>586</endy>
+	</ColumnLine4>
+	<ColumnLine5 type="Line" name="Column Line 5" id="ColumnLine5">
+		<startx>690</startx>
+		<starty>216</starty>
+		<endx>690</endx>
+		<endy>586</endy>
+	</ColumnLine5>
+</form>
