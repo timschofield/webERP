@@ -561,7 +561,8 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 								<th class="SortedColumn">' . _('Trend') . '</th>
 								<th class="SortedColumn">' . 'Monthly Forecast' . '</th>
 							</tr>
-						</thead>';
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
@@ -701,8 +702,9 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					""
 					);
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}	
 	
 	$NumDaysA = str_pad($NumDaysA, 3, '0', STR_PAD_LEFT);
