@@ -119,7 +119,7 @@ function YesterdayServerUsage($ShowMessages, $EmailText){
 	$ErrMsg ='Could not check auditscripts table because';
 	$result = DB_query($sql,$ErrMsg);
 	$myrow = DB_fetch_array($result);
-	$Text = "CPU Usage (Seconds) = ". $myrow['SecsCPU'];
+	$Text = "Yesterday CPU Usage (Seconds) = ". $myrow['SecsCPU'];
 	InsertKPI("ServerUsage", "CPU Usage (Seconds)", $myrow['SecsCPU']);
 	InsertKPI("ServerUsage", "Scripts Run (Scripts)", $myrow['ScriptsRun']);
 	InsertKPI("ServerUsage", "CPU Usage (Seconds/Script)", round(($myrow['SecsCPU']/$myrow['ScriptsRun']),2));
