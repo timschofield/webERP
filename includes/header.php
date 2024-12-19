@@ -244,8 +244,8 @@ KL RICARD END No show the Dashboard */
 // KL RICARD Show the mani menu on every page
 //if ($ScriptName != 'index.php') {
 	echo '<div id="ActionIcon">
-			<a data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
-				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />
+			<a class="FontSize" data-title="', _('Return to the main menu'), '" href="', $PathPrefix, $RootPath, '/index.php">
+				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/home.png" alt="', _('Main Menu'), '" />', _('Main Menu'), '
 			</a>
 		</div>'; //take off inline formatting, use CSS instead ===HJ===
 
