@@ -204,7 +204,6 @@ FUNCTIONS ONLY USED IN PRICING CONTROL BOARD
 *********************************************************************************************/
 
 function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath){
-	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
 	$issues = 0;
 	
@@ -221,8 +220,8 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
-				AND prices.startdate <= '". $today. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+				AND prices.startdate <= CURRENT_DATE 
+				AND prices.enddate >= CURRENT_DATE
 				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
@@ -307,7 +306,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 							locale_number_format($QOO,0),
 							locale_number_format($myrow['standardcost'],0),
 							locale_number_format($MinPrice,0),
-							ConvertSQLDateTime($myrow['startdate']), 
+							ConvertSQLDate($myrow['startdate']), 
 							locale_number_format($myrow['retailprice'],0),
 							locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 							locale_number_format($MaxPrice,0),
@@ -327,7 +326,6 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 }
 
 function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath){
-	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
 	$issues = 0;
 	
@@ -345,8 +343,8 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate <= '". $StartDate. "' 
-				AND prices.startdate <= '". $today. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+				AND prices.startdate <= CURRENT_DATE 
+				AND prices.enddate >= CURRENT_DATE
 				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
@@ -429,7 +427,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 						locale_number_format($QOO,0),
 						locale_number_format($myrow['standardcost'],0),
 						locale_number_format($MinPrice,0),
-						ConvertSQLDateTime($myrow['startdate']), 
+						ConvertSQLDate($myrow['startdate']), 
 						locale_number_format($myrow['retailprice'],0),
 						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 						locale_number_format($MaxPrice,0),
@@ -448,7 +446,6 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 }
 
 function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
-	$today = date('Y-m-d');
 	$issues = 0;
 	
 	$SQL = "SELECT stockmaster.stockid, 
@@ -464,8 +461,8 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 			WHERE stockmaster.stockid = prices.stockid	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
-				AND prices.startdate <= '". $today. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+				AND prices.startdate <= CURRENT_DATE 
+				AND (prices.enddate >= CURRENT_DATE)
 				AND stockmaster.categoryid = '". $Stockcat ."'					
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
@@ -481,7 +478,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate > '". $today. "')
+						AND prices.startdate > CURRENT_DATE)
 			ORDER BY (prices.price / (stockmaster.actualcost))";
 
 	$result = DB_query($SQL);
@@ -549,7 +546,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 						locale_number_format($myrow['qoh'],0),
 						locale_number_format($QOO,0),
 						locale_number_format($myrow['standardcost'],0),
-						ConvertSQLDateTime($myrow['startdate']), 
+						ConvertSQLDate($myrow['startdate']), 
 						locale_number_format($myrow['retailprice'],0),
 						locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 						locale_number_format($NewPrice,0),
@@ -568,7 +565,6 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 }
 
 function PriceWrongRounding($RootPath){
-	$today = date('Y-m-d');
 	$issues = 0;
 
 	$SQL = "SELECT stockmaster.stockid, 
@@ -582,8 +578,8 @@ function PriceWrongRounding($RootPath){
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 						AND prices.currabrev = '". CURRENCY_CODE ."'
-						AND prices.startdate <= '". $today. "' 
-						AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+						AND prices.startdate <= CURRENT_DATE 
+						AND prices.enddate >= CURRENT_DATE
 					LIMIT 1) AS retailprice,
 				(stockmaster.actualcost) AS standardcost
 			FROM stockmaster				
@@ -664,7 +660,6 @@ function PriceWrongRounding($RootPath){
 }
 
 function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
-	$today = date('Y-m-d');
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Years * 365));
 	$issues = 0;
 
@@ -681,8 +676,8 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			WHERE stockmaster.stockid = prices.stockid
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
-				AND prices.startdate <= '". $StartDate. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+				AND prices.startdate <= CURRENT_DATE 
+				AND prices.enddate >= CURRENT_DATE
 				AND stockmaster.discontinued = 0
 				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
 					OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_STABLE . "
@@ -748,7 +743,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 					locale_number_format($myrow['qoh'],0),
 					locale_number_format($QOO,0),
 					locale_number_format($myrow['standardcost'],0),
-					ConvertSQLDateTime($myrow['startdate']), 
+					ConvertSQLDate($myrow['startdate']), 
 					locale_number_format($myrow['retailprice'],0),
 					locale_number_format($myrow['retailprice']/$myrow['standardcost'],2),
 					$PriceALink,
