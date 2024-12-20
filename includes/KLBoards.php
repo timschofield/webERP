@@ -52,7 +52,6 @@ function ActiveTransfersByLocation($RootPath){
 						</thead>
 						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$TotalTransferIn = $TotalTransferIn + $myrow['transferin'];
@@ -60,15 +59,15 @@ function ActiveTransfersByLocation($RootPath){
 			$TotalPcsIn = $TotalPcsIn + $myrow['qtyin'];
 			$TotalPcsOut = $TotalPcsOut + $myrow['qtyout'];
 
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
+			printf('<tr class="striped_row">
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 					</tr>',
 					$i,
 					$myrow['locationname'],
@@ -81,14 +80,15 @@ function ActiveTransfersByLocation($RootPath){
 					);
 			$i++;
 		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
+		printf('<tr class="striped_row">
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 				</tr>',
 				'',
 				'Total',
@@ -907,29 +907,31 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components NOT Used in any BOM. Use them in any product (IF QOH > 0) OR flag as obsolete (IF QOH = 0).') . '</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('#') . '</th>
-								<th class="ascending">' . _('Code') . '</th>
-								<th class="ascending">' . _('Description') . '</th>
-								<th class="ascending">' . _('QOH') . '</th>
-								<th class="ascending">' . _('UOM') . '</th>
-								<th class="ascending">' . _('Stock value') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('UOM') . '</th>
+									<th class="SortedColumn">' . _('Stock value') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 			echo $TableHeader;
 		}
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$totalcost = $totalcost + ($myrow['qoh']*$myrow['stdcost']);
 			if (!$ShowOnlyTotal){
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
+				printf('<tr class="striped_row">
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
 						</tr>',
 						$i,
 						$CodeLink,
@@ -942,12 +944,13 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 			$i++;
 		}
 		if (!$ShowOnlyTotal){
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
+			printf('<tr class="striped_row">
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
 					</tr>',
 					'',
 					'',
@@ -956,15 +959,16 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 					'',
 					locale_number_format($totalcost,0)
 					);
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				  </table>
+				  </div>
+				  </form>';
 		}elseif ($totalcost >= $ShowLimit){
 			$text = "Components NOT Used in any BOM cost over the limit. Current cost = ". locale_number_format($totalcost,0);
 			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 		}
 	}
 	InsertKPI("Components", "Components not used in any BOM (IDR)", $totalcost);
-
 }
 
 function ErrorsInTransfers($maxdays, $RootPath){
@@ -992,19 +996,22 @@ function ErrorsInTransfers($maxdays, $RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Errors on Closed Transfers during the last ') . $maxdays . _(' days ') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-							<th class="ascending">' . _('Total Models') . '</th>
-							<th class="ascending">' . _('Cancelled Models') . '</th>
-							<th class="ascending">' . _('% Models') . '</th>
-							<th class="ascending">' . _('Total Qty') . '</th>
-							<th class="ascending">' . _('Cancelled Qty') . '</th>
-							<th class="ascending">' . _('% Qty') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('Transfer') . '</th>
+								<th class="SortedColumn">' . _('Date') . '</th>
+								<th class="SortedColumn">' . _('From') . '</th>
+								<th class="SortedColumn">' . _('To') . '</th>
+								<th class="SortedColumn">' . _('Total Models') . '</th>
+								<th class="SortedColumn">' . _('Cancelled Models') . '</th>
+								<th class="SortedColumn">' . _('% Models') . '</th>
+								<th class="SortedColumn">' . _('Total Qty') . '</th>
+								<th class="SortedColumn">' . _('Cancelled Qty') . '</th>
+								<th class="SortedColumn">' . _('% Qty') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$NumTransfers = 1;
@@ -1079,7 +1086,8 @@ function ErrorsInTransfers($maxdays, $RootPath){
 				locale_number_format($TotalCancelledQty,0),
 				locale_number_format($TotalCancelledQty / $TotalShippedQty* 100,2) . '%'
 				);
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -1174,25 +1182,26 @@ function FinishedStockDistribution($kind, $byreport){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . $Titleheader . '</th>
-							<th class="ascending">' . _('QOH Pcs') . '</th>
-							<th class="ascending">' . _('RL Pcs') . '</th>
-							<th class="ascending">' . _('% Pcs') . '</th>
-							<th class="ascending">' . _('QOH Models') . '</th>
-							<th class="ascending">' . _('RL Models') . '</th>
-							<th class="ascending">' . _('% Models') . '</th>
-							<th class="ascending">' . _('QOH Pcs/Model') . '</th>
-							<th class="ascending">' . _('RL Pcs/Model') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . $Titleheader . '</th>
+								<th class="SortedColumn">' . _('QOH Pcs') . '</th>
+								<th class="SortedColumn">' . _('RL Pcs') . '</th>
+								<th class="SortedColumn">' . _('% Pcs') . '</th>
+								<th class="SortedColumn">' . _('QOH Models') . '</th>
+								<th class="SortedColumn">' . _('RL Models') . '</th>
+								<th class="SortedColumn">' . _('% Models') . '</th>
+								<th class="SortedColumn">' . _('QOH Pcs/Model') . '</th>
+								<th class="SortedColumn">' . _('RL Pcs/Model') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 
-		$k = 0; //row colour counter
 		$i = 1;
 		$totalpcs = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			if ($myrow['optimalstock'] != 0){
 				$percentStock = locale_number_format(($myrow['realstock']/$myrow['optimalstock']) * 100,0) . "%";
 			}else{
@@ -1214,16 +1223,17 @@ function FinishedStockDistribution($kind, $byreport){
 				$optimalPcsModel = "";
 			}
 			if ($byreport == "LOCATION"){
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
+				printf('<tr class="striped_row">
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
 						</tr>',
 						$i,
 						$myrow['locationname'],
@@ -1238,16 +1248,17 @@ function FinishedStockDistribution($kind, $byreport){
 						);
 			}
 			if ($byreport == "STOCKCATEGORY"){
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
+				printf('<tr class="striped_row">
+							<td class="number">%s</td>
+							<td>%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
+							<td class="number">%s</td>
 						</tr>',
 						$i,
 						$myrow['categorydescription'],
@@ -1285,16 +1296,17 @@ function FinishedStockDistribution($kind, $byreport){
 			$totalModels = "";
 			$percentModels = "";
 		}
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
+		printf('<tr class="striped_row">
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
 				</tr>',
 				"",
 				"Total",
@@ -1308,9 +1320,10 @@ function FinishedStockDistribution($kind, $byreport){
 				""
 				);
 
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			  </table>
+			  </div>
+			  </form>';
 	}
 
 	if ($kind == "DISPLAYS"){
@@ -1458,44 +1471,45 @@ function FinishedStockDistributionByShopAndCategory(){
 
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext .'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th colspan="2"></th>
-							<th colspan="6">' . 'KL Models'. '</th>
-							<th colspan="6">' . 'Blink Models'. '</th>
-							<th colspan="6">' . 'General Models'. '</th>
-							<th></th>
-						</tr>
-						<tr>
-							<th>' . _('#') . '</th>
-							<th>' . "Location" . '</th>
-							<th>' . _('Test') . '</th>
-							<th>' . _('Stable') . '</th>
-							<th>' . _('NO PO') . '</th>
-							<th>' . _('D 20%') . '</th>
-							<th>' . _('D 50%') . '</th>
-							<th>' . _('D 80%') . '</th>
-							<th>' . _('Test') . '</th>
-							<th>' . _('Stable') . '</th>
-							<th>' . _('NO PO') . '</th>
-							<th>' . _('D 20%') . '</th>
-							<th>' . _('D 50%') . '</th>
-							<th>' . _('D 80%') . '</th>
-							<th>' . _('Test') . '</th>
-							<th>' . _('Stable') . '</th>
-							<th>' . _('NO PO') . '</th>
-							<th>' . _('D 20%') . '</th>
-							<th>' . _('D 50%') . '</th>
-							<th>' . _('D 80%') . '</th>
-							<th>' . _('Total') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th colspan="2"></th>
+						<th colspan="6">' . 'KL Models'. '</th>
+						<th colspan="6">' . 'Blink Models'. '</th>
+						<th colspan="6">' . 'General Models'. '</th>
+						<th></th>
+					</tr>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . "Location" . '</th>
+						<th>' . _('Test') . '</th>
+						<th>' . _('Stable') . '</th>
+						<th>' . _('NO PO') . '</th>
+						<th>' . _('D 20%') . '</th>
+						<th>' . _('D 50%') . '</th>
+						<th>' . _('D 80%') . '</th>
+						<th>' . _('Test') . '</th>
+						<th>' . _('Stable') . '</th>
+						<th>' . _('NO PO') . '</th>
+						<th>' . _('D 20%') . '</th>
+						<th>' . _('D 50%') . '</th>
+						<th>' . _('D 80%') . '</th>
+						<th>' . _('Test') . '</th>
+						<th>' . _('Stable') . '</th>
+						<th>' . _('NO PO') . '</th>
+						<th>' . _('D 20%') . '</th>
+						<th>' . _('D 50%') . '</th>
+						<th>' . _('D 80%') . '</th>
+						<th>' . _('Total') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
+
 		$i = 1;
 		$totalpcs = 0;
 
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$TotalModelsLocation = 	$myrow['modelsTESTKL'] +
 									$myrow['modelsSTABLEKAPALLAUT'] +
 									$myrow['modelsNOPOKL'] +
@@ -1515,26 +1529,27 @@ function FinishedStockDistributionByShopAndCategory(){
 									$myrow['modelsDISC80BL'] +
 									$myrow['modelsDISC80GE'] ;
 
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
+			printf('<tr class="striped_row">
+						<td class="number">%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
 					$i,
@@ -1561,9 +1576,10 @@ function FinishedStockDistributionByShopAndCategory(){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			  </table>
+			  </div>
+			  </form>';
 	}
 }
 
@@ -1614,8 +1630,8 @@ function GetTopSalesField($TopItemsDays){
 }
 
 function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
-/* EXPLAIN SQL 2014-05-30 */
-	/* Check if there is any	component at kantor ready to be transformed into sellable goods */
+	/* EXPLAIN SQL 2014-05-30 */
+	/* Check if there is any component at kantor ready to be transformed into sellable goods */
 	if ($ParentCategory == "ONLYDISCOUNT"){
 		$WhereParentCategory = " AND stP.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . " ";
 		$OnlyDiscountExists = " AND NOT EXISTS(
@@ -1671,24 +1687,26 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 			$BusinessConcept = "Components for any items (IDR)";
 		}
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('UOM') . '</th>
-							<th class="ascending">' . _('Stock value') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('QOH') . '</th>
+						<th class="SortedColumn">' . _('UOM') . '</th>
+						<th class="SortedColumn">' . _('Stock value') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
+
 		$i = 1;
 		$totalcost = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$totalcost = $totalcost + ($myrow['availablestock']*$myrow['stdcost']);
-			$k = StartEvenOrOddRow($k);
+			$totalcost = $totalcost + ($myrow['availablestock'] * $myrow['stdcost']);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -1698,14 +1716,15 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 					$i,
 					$CodeLink,
 					$myrow['description'],
-					locale_number_format($myrow['availablestock'],0),
+					locale_number_format($myrow['availablestock'], 0),
 					$myrow['units'],
-					locale_number_format($myrow['availablestock']*$myrow['stdcost'],0)
+					locale_number_format($myrow['availablestock'] * $myrow['stdcost'], 0)
 					);
 			$i++;
 		}
 		InsertKPI("Components", $BusinessConcept, $totalcost);
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -1717,10 +1736,12 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 				'Total Cost',
 				'',
 				'',
-				locale_number_format($totalcost,0)
+				locale_number_format($totalcost, 0)
 				);
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			  </table>
+			  </div>
+			  </form>';
 	}
 }
 
@@ -2731,8 +2752,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 			WHERE purchorderdetails.completed=0 "
-			    . $SQLFilterKLStatus .
-			    $SQLFilterProduct .
+				. $SQLFilterKLStatus .
+				$SQLFilterProduct .
 				" AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
 			GROUP BY purchorders.orderno ASC,
 				purchorders.supplierno,
@@ -4063,7 +4084,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 				debtorsmaster.debtorno,
 				salesorders.deliverto AS name,
 				salesorders.orddate,
-                SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
+				SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)) AS ordervalue,
 				salesorders.freightcost,
 				salesorders.klpaidcash,
 				debtorsmaster.currcode,

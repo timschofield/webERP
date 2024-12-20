@@ -1,0 +1,31 @@
+In the PHP functions below:
+
+1) Modify the HTML tags where needed, so all tables on a form have this structure:
+<table>
+	<thead>
+		<th></th>
+        ................
+	</thead>
+	<tbody>
+		<td></td>
+		................
+    </tbody>
+</table>
+
+2) Replace <th class="ascending"> with <th class="SortedColumn">
+
+3) If there is a line $k = StartEvenOrOddRow($k);
+
+	3.1) Delete the line $k = 0; //row colour counter few lines above the line $k = StartEvenOrOddRow($k);
+
+	3.2) Delete the line $k = StartEvenOrOddRow($k);
+
+	3.2) In the printf or echo statements below it (inside or below the while structure) add or modify the <tr> tag into <tr class="striped_row">
+	
+	3.3) In the printf or echo statements below the while structure add or modify the <tr> tag into <tr class="striped_row">
+
+4) below the while statement, there will be an echo </table> statemnet. Complete this echo statements to add the </div> and </form> if needed
+
+5) Keep in mind that some tables have already been partially modifed and do not all requested modifications are needed.
+
+This is the list of functions:
