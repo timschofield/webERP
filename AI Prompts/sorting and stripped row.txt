@@ -1,4 +1,7 @@
-In the PHP functions below:
+In the PHP 2 functions defined in the file Gist: https://gist.github.com/pakricard/9446057f6f0f8d65e8e3389f4132ecfd
+
+
+I want you to:
 
 1) Modify the HTML tags where needed, so all tables on a form have this structure:
 <table>
@@ -26,6 +29,7 @@ In the PHP functions below:
 
 4) below the while statement, there will be an echo </table> statemnet. Complete this echo statements to add the </div> and </form> if needed
 
-5) Keep in mind that some tables have already been partially modifed and do not all requested modifications are needed.
+5) Do not cut long lines. 
 
-This is the list of functions:
+6) Keep in mind that some tables have already been partially modifed and do not all requested modifications are needed.
+
