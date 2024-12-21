@@ -212,11 +212,6 @@ or deletion of the records*/
 	echo '<tr>
 			<th>' . _('Code') . '</th>
 			<th>' . _('Name') . '</th>
-			<th>' . _('Telephone') . '</th>
-			<th>' . _('Facsimile') . '</th>
-			<th>' . _('Comm Rate 1') . '</th>
-			<th>' . _('Break') . '</th>
-			<th>' . _('Comm Rate 2') . '</th>
 			<th>' . _('Current') . '</th>
 		</tr>';
 
@@ -229,24 +224,14 @@ or deletion of the records*/
 	}
 
 		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
 			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
+			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedSalesPerson=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedSalesPerson=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales person?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$myrow['salesmancode'],
 			$myrow['salesmanname'],
-			$myrow['smantel'],
-			$myrow['smanfax'],
-			locale_number_format($myrow['commissionrate1'],2),
-			locale_number_format($myrow['breakpoint'],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow['commissionrate2'],2),
 			$ActiveText,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 			$myrow['salesmancode'],
