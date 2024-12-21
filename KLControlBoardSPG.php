@@ -84,21 +84,22 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Average Daily sales by SPG during the last ') . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . " days.".'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' .  _('Code') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . $NumDaysA . _(' days') . '</th>
-							<th>' . $NumDaysB . _(' days') . '</th>
-							<th>' . $NumDaysC . _(' days') . '</th>
-							<th>' . $NumDaysD . _(' days') . '</th>
-							<th>' . _('MTD') . '</th>
-							<th>' . _('Trend') . '</th>
-							<th>' . 'Forecast '. $NumDaysC . _(' days') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' .  _('Code') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
+						<th class="SortedColumn">' . _('MTD') . '</th>
+						<th class="SortedColumn">' . _('Trend') . '</th>
+						<th class="SortedColumn">' . 'Forecast '. $NumDaysC . _(' days') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($k == 1) {
@@ -127,7 +128,8 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 			$forecast = locale_number_format(round($myrow['salesC'], -5),0);
 			$MTD = locale_number_format($myrow['salesMTD'], 0);
 			
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -151,9 +153,10 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 	}
 }
 
@@ -183,28 +186,21 @@ function SPGTypePayments($SPG, $maxdays){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by SPG') .'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('% Cash') . '</th>
-							<th>' . _('% Credit') . '</th>
-							<th>' . _('% Returns') . '</th>
-							<th>' . _('% Vouchers') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('% Cash') . '</th>
+						<th class="SortedColumn">' . _('% Credit') . '</th>
+						<th class="SortedColumn">' . _('% Returns') . '</th>
+						<th class="SortedColumn">' . _('% Vouchers') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($myrow['totalshop'] != 0){
-				if ($k == 1) {
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k = 1;
-				}
-				
 				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
 				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
 				$percentreturns = locale_number_format(($myrow['returnedgoodsshop']/$myrow['totalshop'])*100,1);
@@ -216,7 +212,8 @@ function SPGTypePayments($SPG, $maxdays){
 				$totalvouchers = $totalvouchers + $myrow['vouchersshop'];
 				$total = $total + $myrow['totalshop'];
 				
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -233,9 +230,10 @@ function SPGTypePayments($SPG, $maxdays){
 				$i++;
 			}
 		}
-		echo '</table>
-		</div>
-		</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 
 	}
 }
@@ -259,32 +257,27 @@ function lastSalesSPG($spg, $NumDaysA){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>Sales of the last ' . $NumDaysA . ' days for SPG ' . $spg . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('webERP#') . '</th>
-							<th>' . _('Yellow#') . '</th>
-							<th>' . _('Date') . '</th>
-							<th>' . _('Cash') . '</th>
-							<th>' . _('Credit Card') . '</th>
-							<th>' . _('Returned Goods') . '</th>
-							<th>' . _('Vouchers') . '</th>
-							<th>' . _('Total') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('webERP#') . '</th>
+						<th class="SortedColumn">' . _('Yellow#') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Cash') . '</th>
+						<th class="SortedColumn">' . _('Credit Card') . '</th>
+						<th class="SortedColumn">' . _('Returned Goods') . '</th>
+						<th class="SortedColumn">' . _('Vouchers') . '</th>
+						<th class="SortedColumn">' . _('Total') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
 			$total = $myrow['klpaidcash'] + 
 					$myrow['klpaidcreditcard'];
 					
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -304,11 +297,11 @@ function lastSalesSPG($spg, $NumDaysA){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 	}
 }
-
 
 ?>
