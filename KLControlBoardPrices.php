@@ -236,7 +236,6 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales);
@@ -254,25 +253,27 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 						$CategoryName = GetCategoryNameFromCode($Stockcat);
 						echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . ' x standard cost. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
 						echo '<div>';
-						echo '<table class="selection">';
-						$TableHeader = '<tr>
-											<th class="ascending">' . _('#') . '</th>
-											<th class="ascending">' . _('Code') . '</th>
-											<th class="ascending">' . _('Description') . '</th>
-											<th class="ascending">' . _('TopSales') . '</th>
-											<th class="ascending">' . _('QOH') . '</th>
-											<th class="ascending">' . _('QOO') . '</th>
-											<th class="ascending">' . _('Std Cost') . '</th>
-											<th class="ascending">' . _('Minimum Price') . '</th>
-											<th class="ascending">' . _('Date Price') . '</th>
-											<th class="ascending">' . _('Current Price') . '</th>
-											<th class="ascending">' . _('Current Factor') . '</th>
-											<th class="ascending">' . _('Optimum Price') . '</th>
-											<th class="ascending">' . _('Recommended Retail') . '</th>
-											<th class="ascending">' . _('% Increase') . '</th>
-											<th class="ascending">' . _('Income Increase') . '</th>
-										</tr>';
-						echo $TableHeader;
+						echo '<table class="selection">
+								<thead>
+									<tr>
+										<th class="SortedColumn">' . _('#') . '</th>
+										<th class="SortedColumn">' . _('Code') . '</th>
+										<th class="SortedColumn">' . _('Description') . '</th>
+										<th class="SortedColumn">' . _('TopSales') . '</th>
+										<th class="SortedColumn">' . _('QOH') . '</th>
+										<th class="SortedColumn">' . _('QOO') . '</th>
+										<th class="SortedColumn">' . _('Std Cost') . '</th>
+										<th class="SortedColumn">' . _('Minimum Price') . '</th>
+										<th class="SortedColumn">' . _('Date Price') . '</th>
+										<th class="SortedColumn">' . _('Current Price') . '</th>
+										<th class="SortedColumn">' . _('Current Factor') . '</th>
+										<th class="SortedColumn">' . _('Optimum Price') . '</th>
+										<th class="SortedColumn">' . _('Recommended Retail') . '</th>
+										<th class="SortedColumn">' . _('% Increase') . '</th>
+										<th class="SortedColumn">' . _('Income Increase') . '</th>
+									</tr>
+								</thead>
+								<tbody>';
 						$ShowHeader = FALSE;
 					}
 					$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
@@ -280,9 +281,9 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 						+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 					
-					$k = StartEvenOrOddRow($k);
-					$issues++;
-					printf('<td class="number">%s</td>
+						$issues++;
+					printf('<tr class="striped_row">
+							<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td class="number">%s</td>
@@ -318,8 +319,9 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 			}
 		}
 		if (!$ShowHeader){
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 	return $issues;
@@ -360,8 +362,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
-		$ShowHeader = TRUE;
+			$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], $DaysTopSales);
 			$MaxPrice = $myrow['standardcost'] * $FactorMax;
@@ -375,25 +376,27 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
 					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. ') . 'QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('TopSales') . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-										<th class="ascending">' . _('QOO') . '</th>
-										<th class="ascending">' . _('Std Cost') . '</th>
-										<th class="ascending">' . _('Minimum Price') . '</th>
-										<th class="ascending">' . _('Date Price') . '</th>
-										<th class="ascending">' . _('Current Price') . '</th>
-										<th class="ascending">' . _('Current Factor') . '</th>
-										<th class="ascending">' . _('Optimum Price') . '</th>
-										<th class="ascending">' . _('Recommended Retail') . '</th>
-										<th class="ascending">' . _('% Decrease') . '</th>
-										<th class="ascending">' . _('Income Decrease') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('TopSales') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('QOO') . '</th>
+									<th class="SortedColumn">' . _('Std Cost') . '</th>
+									<th class="SortedColumn">' . _('Minimum Price') . '</th>
+									<th class="SortedColumn">' . _('Date Price') . '</th>
+									<th class="SortedColumn">' . _('Current Price') . '</th>
+									<th class="SortedColumn">' . _('Current Factor') . '</th>
+									<th class="SortedColumn">' . _('Optimum Price') . '</th>
+									<th class="SortedColumn">' . _('Recommended Retail') . '</th>
+									<th class="SortedColumn">' . _('% Decrease') . '</th>
+									<th class="SortedColumn">' . _('Income Decrease') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$ShowHeader = FALSE;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
@@ -401,9 +404,9 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 
-				$k = StartEvenOrOddRow($k);
-				$issues++;
-				printf('<td class="number">%s</td>
+					$issues++;
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -438,8 +441,9 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 			}
 		}
 		if (!$ShowHeader){
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 	return $issues;
@@ -483,7 +487,6 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		$i = 0;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
@@ -494,27 +497,28 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
 					echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. ') .  'QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('TopSales') . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-										<th class="ascending">' . _('QOO') . '</th>
-										<th class="ascending">' . _('Std Cost') . '</th>
-										<th class="ascending">' . _('Date Price') . '</th>
-										<th class="ascending">' . _('Current Price') . '</th>
-										<th class="ascending">' . _('Current Factor') . '</th>
-										<th class="ascending">' . _('Minimum Price') . '</th>
-										<th class="ascending">' . _('Recommended Retail') . '</th>
-										<th class="ascending">' . _('% Increase') . '</th>
-										<th class="ascending">' . _('Income Increase') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('TopSales') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('QOO') . '</th>
+									<th class="SortedColumn">' . _('Std Cost') . '</th>
+									<th class="SortedColumn">' . _('Date Price') . '</th>
+									<th class="SortedColumn">' . _('Current Price') . '</th>
+									<th class="SortedColumn">' . _('Current Factor') . '</th>
+									<th class="SortedColumn">' . _('Minimum Price') . '</th>
+									<th class="SortedColumn">' . _('Recommended Retail') . '</th>
+									<th class="SortedColumn">' . _('% Increase') . '</th>
+									<th class="SortedColumn">' . _('Income Increase') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$ShowHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
 				$issues++;
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$Increase = locale_number_format(($RecommendedPrice-$myrow['retailprice'])/$myrow['retailprice']*100,1).'%';
@@ -524,7 +528,8 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
 				$IncomeIncrease = ($myrow['qoh'] + $QOO) * ($RecommendedPrice-$myrow['retailprice']);
 
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -557,8 +562,9 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 			}
 		}
 		if(!$ShowHeader){
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 	return $issues;
@@ -606,19 +612,21 @@ function PriceWrongRounding($RootPath){
 				if($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . _('Items with WRONG rounding retail price.') . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Top Sales') . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-										<th class="ascending">' . _('QOO') . '</th>
-										<th class="ascending">' . _('Rounded Down') . '</th>
-										<th class="ascending">' . _('Current Price') . '</th>
-										<th class="ascending">' . _('Rounded Up') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('Top Sales') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('QOO') . '</th>
+									<th class="SortedColumn">' . _('Rounded Down') . '</th>
+									<th class="SortedColumn">' . _('Current Price') . '</th>
+									<th class="SortedColumn">' . _('Rounded Up') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$ShowHeader = FALSE;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
@@ -627,9 +635,9 @@ function PriceWrongRounding($RootPath){
 				$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60);
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
-				$k = StartEvenOrOddRow($k);
-				$issues++;
-				printf('<td class="number">%s</td>
+					$issues++;
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -652,8 +660,9 @@ function PriceWrongRounding($RootPath){
 			}
 		}
 		if(!$ShowHeader){
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 	return $issues;
@@ -676,7 +685,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			WHERE stockmaster.stockid = prices.stockid
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
-				AND prices.startdate <= CURRENT_DATE 
+				AND prices.startdate <= '" . $StartDate . "' 
 				AND prices.enddate >= CURRENT_DATE
 				AND stockmaster.discontinued = 0
 				AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_TEST . "
@@ -689,28 +698,29 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			ORDER BY prices.startdate";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
-		$ShowHeader = TRUE;
+			$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
 			if($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . _('Items with prices older than ') . $Years . ' years' . '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th class="ascending">' . _('#') . '</th>
-									<th class="ascending">' . _('Code') . '</th>
-									<th class="ascending">' . _('Description') . '</th>
-									<th class="ascending">' . _('Top Sales') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('QOO') . '</th>
-									<th class="ascending">' . _('Standard Cost') . '</th>
-									<th class="ascending">' . _('Price Date') . '</th>
-									<th class="ascending">' . _('Current Price') . '</th>
-									<th class="ascending">' . _('Current Factor') . '</th>
-									<th class="ascending">' . _('Increase ') . $IncreaseA. '%' . '</th>
-									<th class="ascending">' . _('Increase ') . $IncreaseB. '%' . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('Code') . '</th>
+								<th class="SortedColumn">' . _('Description') . '</th>
+								<th class="SortedColumn">' . _('Top Sales') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('QOO') . '</th>
+								<th class="SortedColumn">' . _('Standard Cost') . '</th>
+								<th class="SortedColumn">' . _('Price Date') . '</th>
+								<th class="SortedColumn">' . _('Current Price') . '</th>
+								<th class="SortedColumn">' . _('Current Factor') . '</th>
+								<th class="SortedColumn">' . _('Increase ') . $IncreaseA. '%' . '</th>
+								<th class="SortedColumn">' . _('Increase ') . $IncreaseB. '%' . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$ShowHeader = FALSE;
 			}
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
@@ -721,9 +731,9 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60);
 			$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stockid'], '') 
 				+ GetQuantityOnOrderDueToWorkOrders($myrow['stockid'], '');
-			$k = StartEvenOrOddRow($k);
-			$issues++;
-			printf('<td class="number">%s</td>
+				$issues++;
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -751,8 +761,9 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 					);
 		}
 		if(!$ShowHeader){
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 	return $issues;
