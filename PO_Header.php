@@ -853,12 +853,13 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		<tr>
 			<td>' . _('Revised') . ':</td>
 			<td><input type="hidden" name="Revised" size="11" maxlength="15" value="' . date($_SESSION['DefaultDateFormat']) . '" />' . date($_SESSION['DefaultDateFormat']) . '</td>
-		</tr>
-		<tr>
+		</tr>';
+/*	KL RICARD COMMENTED OUT as it is repeated on the order status column
+	echo '<tr>
 			<td>' . _('Delivery Date') . ':</td>
 			<td><input type="text" required="required" autofocus="autofocus" class="date" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
 		</tr>';
-
+*/
 	if (!isset($_POST['Initiator'])) {
 		$_POST['Initiator'] = $_SESSION['UserID'];
 		$_POST['InitiatorName'] = $_SESSION['UsersRealName'];
