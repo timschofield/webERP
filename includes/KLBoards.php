@@ -37,21 +37,20 @@ function ActiveTransfersByLocation($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Pending Goods to be transferred by shop') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<thead>
-						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Shop') . '</th>
-							<th class="SortedColumn">' . _('Transfer OUT') . '</th>
-							<th class="SortedColumn">' . _('Transfer IN') . '</th>
-							<th class="SortedColumn">' . _('Transfer Total') . '</th>
-							<th class="SortedColumn">' . _('Pcs OUT') . '</th>
-							<th class="SortedColumn">' . _('Pcs IN') . '</th>
-							<th class="SortedColumn">' . _('Pcs Total') . '</th>
-						</tr>
-						</thead>
-						<tbody>';
-		echo $TableHeader;
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Shop') . '</th>
+						<th class="SortedColumn">' . _('Transfer OUT') . '</th>
+						<th class="SortedColumn">' . _('Transfer IN') . '</th>
+						<th class="SortedColumn">' . _('Transfer Total') . '</th>
+						<th class="SortedColumn">' . _('Pcs OUT') . '</th>
+						<th class="SortedColumn">' . _('Pcs IN') . '</th>
+						<th class="SortedColumn">' . _('Pcs Total') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$TotalTransferIn = $TotalTransferIn + $myrow['transferin'];
@@ -125,19 +124,18 @@ function ActiveTransferStatus($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('List of Active Transfers') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<thead>
-						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . _('Date') . '</th>
-							<th class="SortedColumn">' . _('Transfer') . '</th>
-							<th class="SortedColumn">' . _('From') . '</th>
-							<th class="SortedColumn">' . _('To') . '</th>
-							<th class="SortedColumn">' . _('Qty') . '</th>
-						</tr>
-						</thead>
-						<tbody>';
-		echo $TableHeader;
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Transfer') . '</th>
+						<th class="SortedColumn">' . _('From') . '</th>
+						<th class="SortedColumn">' . _('To') . '</th>
+						<th class="SortedColumn">' . _('Qty') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		$total = 0;
 		while ($myrow = DB_fetch_array($result)) {
@@ -244,23 +242,22 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 		echo '<p class="page_title_text" align="center"><strong>' . "Average Business KPI for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
 		$TitleTarget = "";
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<thead>
-						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th class="SortedColumn">' . 'Class' . '</th>
-							<th class="SortedColumn">' . _('Concept') . '</th>
-							<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
-							<th class="SortedColumn">' . _('Trend') . '</th>
-						</tr>
-						</thead>
-						<tbody>';
-		echo $TableHeader;
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . 'Class' . '</th>
+						<th class="SortedColumn">' . _('Concept') . '</th>
+						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
+						<th class="SortedColumn">' . _('Trend') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$target = "";
@@ -556,25 +553,24 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TitleTarget = "";
 		}
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<thead>
-						<tr>
-							<th class="SortedColumn">' . _('#') . '</th>
-							<th>' . $typereport . '</th>
-							<th class="SortedColumn">' . _('Name') . '</th>
-							<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
-							<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
-							<th class="SortedColumn">' . _('MTD') . '</th>
-							<th class="SortedColumn">' . _('Trend') . '</th>
-							<th class="SortedColumn">' . 'Monthly Forecast' . '</th>
-						</tr>
-						</thead>
-						<tbody>';
-		echo $TableHeader;
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th>' . $typereport . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysC . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysD . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysE . _(' days') . '</th>
+						<th class="SortedColumn">' . $NumDaysF . _(' days') . '</th>
+						<th class="SortedColumn">' . _('MTD') . '</th>
+						<th class="SortedColumn">' . _('Trend') . '</th>
+						<th class="SortedColumn">' . 'Monthly Forecast' . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$target = "";
@@ -1912,40 +1908,40 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					if ($ExtendedVersion){
 						$TableHeader = '<thead>
 										<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Current Daily Usage') . '</th>
-										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . $Year . '</th>
-										<th class="ascending">' . _('Forecast ') . $DaysMinimumStock . ' days ' . ($Year - 1) . '</th>
-										<th class="ascending">' . _('Min QTY Gudang') . '</th>
-										<th class="ascending">' . _('QTY Optimum') . '</th>
-										<th class="ascending">' . _('QOH Gudang') . '</th>
-										<th class="ascending">' . _('QOH Shops') . '</th>
-										<th class="ascending">' . _('QOH Total') . '</th>
-										<th class="ascending">' . _('QOH Days') . '</th>
-										<th class="ascending">' . _('QTY Shortage') . '</th>
-										<th class="ascending">' . _('% Shortage') . '</th>
-										<th class="ascending">' . _('QOO Running') . '</th>
-										<th class="ascending">' . _('Next Order') . '</th>
+										<th class="SortedColumn">' . _('#') . '</th>
+										<th class="SortedColumn">' . _('Code') . '</th>
+										<th class="SortedColumn">' . _('Description') . '</th>
+										<th class="SortedColumn">' . _('Current Daily Usage') . '</th>
+										<th class="SortedColumn">' . _('Forecast ') . $DaysMinimumStock . ' days ' . $Year . '</th>
+										<th class="SortedColumn">' . _('Forecast ') . $DaysMinimumStock . ' days ' . ($Year - 1) . '</th>
+										<th class="SortedColumn">' . _('Min QTY Gudang') . '</th>
+										<th class="SortedColumn">' . _('QTY Optimum') . '</th>
+										<th class="SortedColumn">' . _('QOH Gudang') . '</th>
+										<th class="SortedColumn">' . _('QOH Shops') . '</th>
+										<th class="SortedColumn">' . _('QOH Total') . '</th>
+										<th class="SortedColumn">' . _('QOH Days') . '</th>
+										<th class="SortedColumn">' . _('QTY Shortage') . '</th>
+										<th class="SortedColumn">' . _('% Shortage') . '</th>
+										<th class="SortedColumn">' . _('QOO Running') . '</th>
+										<th class="SortedColumn">' . _('Next Order') . '</th>
 									</tr>
 									</thead>
 									<tbody>';
 					}else{
 						$TableHeader = '<thead>
 										<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Optimum QTY') . '</th>
-										<th class="ascending">' . _('QOH Gudang') . '</th>
-										<th class="ascending">' . _('QOH Shops') . '</th>
-										<th class="ascending">' . _('QOH Total') . '</th>
-										<th class="ascending">' . _('QOH Days') . '</th>
-										<th class="ascending">' . _('Shortage QTY') . '</th>
-										<th class="ascending">' . _('% Shortage') . '</th>
-										<th class="ascending">' . _('Running QOO') . '</th>
-										<th class="ascending">' . _('Next Order') . '</th>
+										<th class="SortedColumn">' . _('#') . '</th>
+										<th class="SortedColumn">' . _('Code') . '</th>
+										<th class="SortedColumn">' . _('Description') . '</th>
+										<th class="SortedColumn">' . _('Optimum QTY') . '</th>
+										<th class="SortedColumn">' . _('QOH Gudang') . '</th>
+										<th class="SortedColumn">' . _('QOH Shops') . '</th>
+										<th class="SortedColumn">' . _('QOH Total') . '</th>
+										<th class="SortedColumn">' . _('QOH Days') . '</th>
+										<th class="SortedColumn">' . _('Shortage QTY') . '</th>
+										<th class="SortedColumn">' . _('% Shortage') . '</th>
+										<th class="SortedColumn">' . _('Running QOO') . '</th>
+										<th class="SortedColumn">' . _('Next Order') . '</th>
 									</tr>
 									</thead>
 									<tbody>';
@@ -2155,25 +2151,27 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items without active retail price') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Std Cost') . '</th>
-							<th class="ascending">' . _('Factor') . '</th>
-							<th class="ascending">' . _('Recommended Retail') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Std Cost') . '</th>
+							<th class="SortedColumn">' . _('Factor') . '</th>
+							<th class="SortedColumn">' . _('Recommended Retail') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			$issues++;
-			$k = StartEvenOrOddRow($k);
 			$NewPrice = round_price($myrow['stdcost'] * $factorRetail, "UP");
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['stdcost'],0) . '</a>';
 			$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '&Action=New">' . locale_number_format($NewPrice,0) . '</a>';
 			$Factor = ($myrow['stdcost'] != 0) ? ($NewPrice/$myrow['stdcost']) : 0;
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -2188,7 +2186,8 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath){
 					$NewPriceLink
 					);
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 	return $issues;
@@ -2221,30 +2220,31 @@ function LocationInformationReview($RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Shop Information Review') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Location') . '</th>
-							<th class="ascending">' . _('Zone') . '</th>
-							<th class="ascending">' . _('Type') . '</th>
-							<th class="ascending">' . _('Partner') . '</th>
-							<th class="ascending">' . _('Rent (jt)') . '</th>
-							<th class="ascending">' . _('Priority') . '</th>
-							<th class="ascending">' . _('Max Daily Tr') . '</th>
-							<th class="ascending">' . _('Stock Online?') . '</th>
-							<th class="ascending">' . _('All Test?') . '</th>
-							<th class="ascending">' . _('All Stable?') . '</th>
-							<th class="ascending">' . _('All NOPO?') . '</th>
-							<th class="ascending">' . _('All 20%D?') . '</th>
-							<th class="ascending">' . _('All 50%D?') . '</th>
-							<th class="ascending">' . _('All 80%D?') . '</th>
-							<th class="ascending">' . _('Pack Factor') . '</th>
-							<th class="ascending">' . _('Pack Days') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Location') . '</th>
+							<th class="SortedColumn">' . _('Zone') . '</th>
+							<th class="SortedColumn">' . _('Type') . '</th>
+							<th class="SortedColumn">' . _('Partner') . '</th>
+							<th class="SortedColumn">' . _('Rent (jt)') . '</th>
+							<th class="SortedColumn">' . _('Priority') . '</th>
+							<th class="SortedColumn">' . _('Max Daily Tr') . '</th>
+							<th class="SortedColumn">' . _('Stock Online?') . '</th>
+							<th class="SortedColumn">' . _('All Test?') . '</th>
+							<th class="SortedColumn">' . _('All Stable?') . '</th>
+							<th class="SortedColumn">' . _('All NOPO?') . '</th>
+							<th class="SortedColumn">' . _('All 20%D?') . '</th>
+							<th class="SortedColumn">' . _('All 50%D?') . '</th>
+							<th class="SortedColumn">' . _('All 80%D?') . '</th>
+							<th class="SortedColumn">' . _('Pack Factor') . '</th>
+							<th class="SortedColumn">' . _('Pack Days') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/Locations.php?SelectedLocation=' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</a>';
 			if ($myrow['stockavailableforonline'] ==  1){
 				$StockOnline = "Yes";
@@ -2281,7 +2281,8 @@ function LocationInformationReview($RootPath){
 			}else{
 				$Stock80D = "No";
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2319,7 +2320,8 @@ function LocationInformationReview($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -2440,7 +2442,6 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 	if ($showReport){
 		$i = 1;
 		$ItemsToShip = 0;
-		$k = 0; //row colour counter
 
 		while ($i <= $numitems) {
 			// IF we are SHORT of that packaging material in that location...
@@ -2451,19 +2452,22 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 					'. Last transfer: ' . $LastPackagingTransferDate . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th class="ascending">' . _('Code') . '</th>
-									<th class="ascending">' . _('Description') . '</th>
-									<th class="ascending">' . _('QOH @ ') . $ParentGudang . '</th>
-									<th class="ascending">' . _('QOH @ ') . $LocCode . '</th>
-									<th class="ascending">' . _('RL @ ') . $LocCode . '</th>
-									<th class="ascending">' . _('Optimum') . '</th>
-									<th class="ascending">' . _('Needing') . '</th>
-									<th class="ascending">' . _('%') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('To Ship') . '</th>
-									<th class="ascending">' . _('Reason') . '</th>
-								</tr>';
+				$TableHeader = '<thead>
+								<tr>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('QOH @ ') . $ParentGudang . '</th>
+									<th class="SortedColumn">' . _('QOH @ ') . $LocCode . '</th>
+									<th class="SortedColumn">' . _('RL @ ') . $LocCode . '</th>
+									<th class="SortedColumn">' . _('Optimum') . '</th>
+									<th class="SortedColumn">' . _('Needing') . '</th>
+									<th class="SortedColumn">' . _('%') . '</th>
+									<th class="SortedColumn">' . _('Transit') . '</th>
+									<th class="SortedColumn">' . _('To Ship') . '</th>
+									<th class="SortedColumn">' . _('Reason') . '</th>
+								</tr>
+								</thead>
+								<tbody>';
 				echo $TableHeader;
 				$showHeader = FALSE;
 				$EmailLink = '<a href="' . $RootPath . '/KLPreparePackagingTransferFromGudang.php?From=' . $ParentGudang
@@ -2478,8 +2482,8 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 				}else{
 					$Reason = "Top up";
 				}
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -2514,15 +2518,16 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 		if (!$showHeader){
 			$EmailLink = $EmailLink . '">' . 'Send email to team' . '</a>';
 			if ($ShowLinkEmail){
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						</tr>',
 						"",
 						$EmailLink
 						);
 			}
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>';
 		}
 	}
@@ -2774,20 +2779,21 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		echo '<p class="page_title_text" align="center"><strong>' . $TitleWarning . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
+		$TableHeader = '<thead>
+						<tr>
 							<th colspan="10">' . _('Order') . '</th>
 							<th colspan="3">' . _('Supplier DP') . '</th>
 							<th colspan="3">' . _('Payment Needed') . '</th>
 							<th colspan="3">' . _('Acummulated Payment') . '</th>
 						</tr>
 						<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('PO') . '</th>
-							<th>' . _('Supplier') . '</th>
-							<th>' . $FieldName1 . '</th>
-							<th>' . $FieldName2 . '</th>
-							<th>' . $ShipmentAWB . '</th>
-							<th>' . _('# pcs') . '</th>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('PO') . '</th>
+							<th class="SortedColumn">' . _('Supplier') . '</th>
+							<th class="SortedColumn">' . $FieldName1 . '</th>
+							<th class="SortedColumn">' . $FieldName2 . '</th>
+							<th class="SortedColumn">' . $ShipmentAWB . '</th>
+							<th class="SortedColumn">' . _('# pcs') . '</th>
 							<th>' . _('IDR') . '</th>
 							<th>' . _('USD') . '</th>
 							<th>' . _('THB') . '</th>
@@ -2800,7 +2806,9 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 							<th>' . _('IDR') . '</th>
 							<th>' . _('USD') . '</th>
 							<th>' . _('THB') . '</th>
-						</tr>';
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
 
 		$TotalValueOrderIDR = 0;
@@ -2814,10 +2822,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$AcumTHB = 0;
 		$Payments = array();
 
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 
 			if (isset($Payments[$myrow['supplierno']])){
@@ -2893,7 +2899,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			}else{
 				$Date2 = ConvertSQLDate($myrow['reportdate2']);
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2947,8 +2954,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			($TypeOfCode == "STILL NOT FULLY PAID") OR
 			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
 
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3000,8 +3007,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow);
 			InsertKPI("Stock", "Current Stock Items For Sale (IDR)", $CurrentTotalValueItemsForSale);
 			InsertKPI("Stock", "Current Stock Items For Sale (PCS)", $CurrentTotalQtyItemsForSale);
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3021,28 +3028,28 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'CURRENT STOCK',
-					'IDR',
-					'',
-					'',
-					'',
+					"",
+					"",
+					"CURRENT STOCK",
+					"IDR",
+					"",
+					"",
+					"",
 					locale_number_format_zero_blank($CurrentTotalValueItemsForSale,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
-/*			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+/*			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3062,25 +3069,25 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'CURRENT STOCK',
-					'PCS',
-					'',
-					'',
-					'',
+					"",
+					"",
+					"CURRENT STOCK",
+					"PCS",
+					"",
+					"",
+					"",
 					locale_number_format_zero_blank($CurrentTotalQtyItemsForSale,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
 */		}
 
@@ -3089,8 +3096,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			($TypeOfCode == "FINISHED BUT NOT PAID") OR
 			($TypeOfCode == "STILL NOT FULLY PAID") OR
 			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3110,25 +3117,25 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'TOTAL ORDERS',
-					'IDR',
-					'',
-					'',
-					'',
+					"",
+					"",
+					"TOTAL ORDERS",
+					"IDR",
+					"",
+					"",
+					"",
 					locale_number_format_zero_blank($TotalValueAllOrders,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
 		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS")
@@ -3143,11 +3150,11 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 							OR account IN " . GL_COGS_OTHERS . ")";
 			$result = DB_query($SQL);
 			$myrow = DB_fetch_array($result);
-			$k = StartEvenOrOddRow($k);
 			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (IDR)", $TotalValueAllOrders);
 			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (IDR)", round($myrow['cogs'],-6));
-/*			printf('<td class="number">%s</td>
+/*			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3167,32 +3174,32 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'EXPECTED COGS NEXT ' . $maxdays . ' DAYS',
-					'IDR',
-					'',
-					'(APPROX)',
-					'',
+					"",
+					"",
+					"EXPECTED COGS NEXT " . $maxdays . " DAYS",
+					"IDR",
+					"",
+					"(APPROX)",
+					"",
 					locale_number_format_zero_blank(round($myrow['cogs'], -6),0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
 */
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (PCS)", round($myrow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$myrow['cogs'],-6);
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (IDR)", $ExpectedDifferenceValueStock);
-/*			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+/*			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3212,31 +3219,31 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'EXPECTED DIFFERENCE STOCK',
-					'IDR',
-					'',
-					'(APPROX)',
-					'',
+					"",
+					"",
+					"EXPECTED DIFFERENCE STOCK",
+					"IDR",
+					"",
+					"(APPROX)",
+					"",
 					locale_number_format_zero_blank($ExpectedDifferenceValueStock,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
 */
 			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (PCS)", $ExpectedDifferenceQtyStock);
-/*			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+/*			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3256,31 +3263,30 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'EXPECTED DIFFERENCE STOCK',
-					'PCS',
-					'',
-					'(APPROX)',
-					'',
+					"",
+					"",
+					"EXPECTED DIFFERENCE STOCK",
+					"PCS",
+					"",
+					"(APPROX)",
+					"",
 					locale_number_format_zero_blank($ExpectedDifferenceQtyStock,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
-*/
-			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
+*/			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (IDR)", $ExpectedFutureValueStock);
-/*			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+/*			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3300,31 +3306,31 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'EXPECTED FUTURE STOCK IN ' . $maxdays . ' DAYS',
-					'IDR',
-					'',
-					'(APPROX)',
-					'',
+					"",
+					"",
+					"EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS",
+					"IDR",
+					"",
+					"(APPROX)",
+					"",
 					locale_number_format_zero_blank($ExpectedFutureValueStock,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
 */
 			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (PCS)", $ExpectedFutureQtyStock);
-/*			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+/*			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3344,28 +3350,29 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>',
-					'',
-					'',
-					'EXPECTED FUTURE STOCK IN ' . $maxdays . ' DAYS',
-					'PCS',
-					'',
-					'(APPROX)',
-					'',
+					"",
+					"",
+					"EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS",
+					"PCS",
+					"",
+					"(APPROX)",
+					"",
 					locale_number_format_zero_blank($ExpectedFutureQtyStock,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					"",
+					""
 					);
 */		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -3398,23 +3405,24 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Process time (in days) for POs arrived during the last ') . $NumDays . " days" . ' </strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Country') . '</th>
-							<th class="ascending">' . _('#POs') . '</th>
-							<th class="ascending">' . _('Production') . '</th>
-							<th class="ascending">' . _('Payment') . '</th>
-							<th class="ascending">' . _('Ready To Ship') . '</th>
-							<th class="ascending">' . _('Transit') . '</th>
-							<th class="ascending">' . _('Customs') . '</th>
-							<th class="ascending">' . _('Min Days') . '</th>
-							<th class="ascending">' . _('Max Days') . '</th>
-							<th class="ascending">' . _('Average Days') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('Country') . '</th>
+							<th class="SortedColumn">' . _('#POs') . '</th>
+							<th class="SortedColumn">' . _('Production') . '</th>
+							<th class="SortedColumn">' . _('Payment') . '</th>
+							<th class="SortedColumn">' . _('Ready To Ship') . '</th>
+							<th class="SortedColumn">' . _('Transit') . '</th>
+							<th class="SortedColumn">' . _('Customs') . '</th>
+							<th class="SortedColumn">' . _('Min Days') . '</th>
+							<th class="SortedColumn">' . _('Max Days') . '</th>
+							<th class="SortedColumn">' . _('Average Days') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			if ($myrow['productiondays'] < 0) {$myrow['productiondays'] = 0;}
 			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
 			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
@@ -3424,7 +3432,8 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
 			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3470,7 +3479,6 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			if ($myrow['productiondays'] < 0) {$myrow['productiondays'] = 0;}
 			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
 			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
@@ -3480,7 +3488,8 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
 			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3526,7 +3535,6 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			if ($myrow['productiondays'] < 0) {$myrow['productiondays'] = 0;}
 			if ($myrow['paymentdays'] < 0) {$myrow['paymentdays'] = 0;}
 			if ($myrow['shipmentdays'] < 0) {$myrow['shipmentdays'] = 0;}
@@ -3536,7 +3544,8 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 			if ($myrow['maxtotaldays'] < 0) {$myrow['maxtotaldays'] = 0;}
 			if ($myrow['avgtotaldays'] < 0) {$myrow['avgtotaldays'] = 0;}
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3561,8 +3570,9 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 			$i++;
 		}
 
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			  </table>
+			  </div>';
 	}
 }
 
@@ -3636,24 +3646,25 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . _('POs with wrong planned dates OR wrong status') . ' </strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#PO') . '</th>
-							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . _('Order value') . '</th>
-							<th class="ascending">' . _('KL Status') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('Agreed Delivery') . '</th>
-							<th class="ascending">' . _('Delivery') . '</th>
-							<th class="ascending">' . _('Payment') . '</th>
-							<th class="ascending">' . _('Shipment') . '</th>
-							<th class="ascending">' . _('Customs') . '</th>
-							<th class="ascending">' . _('Arrival') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#PO') . '</th>
+							<th class="SortedColumn">' . _('Supplier') . '</th>
+							<th class="SortedColumn">' . _('Order value') . '</th>
+							<th class="SortedColumn">' . _('KL Status') . '</th>
+							<th class="SortedColumn">' . _('Order') . '</th>
+							<th class="SortedColumn">' . _('Agreed Delivery') . '</th>
+							<th class="SortedColumn">' . _('Delivery') . '</th>
+							<th class="SortedColumn">' . _('Payment') . '</th>
+							<th class="SortedColumn">' . _('Shipment') . '</th>
+							<th class="SortedColumn">' . _('Customs') . '</th>
+							<th class="SortedColumn">' . _('Arrival') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			$OrderDate = ConvertSQLDate(substr($myrow['orddate'],0,10));
 			if ($myrow['agreeddeliverydate'] == '0000-00-00'){
@@ -3686,7 +3697,8 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 			} else {
 				$myrow['arrivaldate'] = ConvertSQLDate($myrow['arrivaldate']);
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -3712,8 +3724,9 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			  </table>
+			  </div>';
 	}
 }
 
@@ -3742,22 +3755,24 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 		}
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-							<th class="ascending">' . _('Qty') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Date') . '</th>
+							<th class="SortedColumn">' . _('Transfer') . '</th>
+							<th class="SortedColumn">' . _('From') . '</th>
+							<th class="SortedColumn">' . _('To') . '</th>
+							<th class="SortedColumn">' . _('Qty') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		$total = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3774,7 +3789,8 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 			$i++;
 			$total = $total + $myrow['receivedqty'];
 		}
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -3788,7 +3804,8 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 				'Total',
 				locale_number_format($total,0)
 				);
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>
 				</form>';
 	}
@@ -3841,20 +3858,22 @@ function TransfersDelayed($maxdays, $RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers delayed more than ') . $maxdays . _(' days ') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Transfer') . '</th>
+							<th class="SortedColumn">' . _('Date') . '</th>
+							<th class="SortedColumn">' . _('From') . '</th>
+							<th class="SortedColumn">' . _('To') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3868,7 +3887,8 @@ function TransfersDelayed($maxdays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -3924,46 +3944,50 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 		echo '<div>';
 		echo '<table class="selection">';
 		if ($Mode == "SHOWONLY"){
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('#') . '</th>
-								<th class="ascending">' . _('Code') . '</th>
-								<th class="ascending">' . _('Description') . '</th>
-								<th class="ascending">' . _('Supplier') . '</th>
-								<th class="ascending">' . _('From') . '</th>
-								<th class="ascending">' . _('Price') . '</th>
-								<th class="ascending">' . _('Currency') . '</th>
-								<th class="ascending">' . _('Rate') . '</th>
-								<th class="ascending">' . _('Supplier UOM') . '</th>
-								<th class="ascending">' . _('UOM Factor') . '</th>
-								<th class="ascending">' . _('Date Std Cost') . '</th>
-								<th class="ascending">' . _('Wrong Std Cost') . '</th>
-								<th class="ascending">' . _('Real Std Cost') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('Code') . '</th>
+								<th class="SortedColumn">' . _('Description') . '</th>
+								<th class="SortedColumn">' . _('Supplier') . '</th>
+								<th class="SortedColumn">' . _('From') . '</th>
+								<th class="SortedColumn">' . _('Price') . '</th>
+								<th class="SortedColumn">' . _('Currency') . '</th>
+								<th class="SortedColumn">' . _('Rate') . '</th>
+								<th class="SortedColumn">' . _('Supplier UOM') . '</th>
+								<th class="SortedColumn">' . _('UOM Factor') . '</th>
+								<th class="SortedColumn">' . _('Date Std Cost') . '</th>
+								<th class="SortedColumn">' . _('Wrong Std Cost') . '</th>
+								<th class="SortedColumn">' . _('Real Std Cost') . '</th>
+							</tr>
+							</thead>
+							<tbody>';
 		}else{
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('#') . '</th>
-								<th class="ascending">' . _('Code') . '</th>
-								<th class="ascending">' . _('Description') . '</th>
-								<th class="ascending">' . _('Supplier') . '</th>
-								<th class="ascending">' . _('From') . '</th>
-								<th class="ascending">' . _('Price') . '</th>
-								<th class="ascending">' . _('Currency') . '</th>
-								<th class="ascending">' . _('Rate') . '</th>
-								<th class="ascending">' . _('Supplier UOM') . '</th>
-								<th class="ascending">' . _('UOM Factor') . '</th>
-								<th class="ascending">' . _('Date Std Cost') . '</th>
-								<th class="ascending">' . _('Wrong Std Cost') . '</th>
-								<th class="ascending">' . _('QOH') . '</th>
-								<th class="ascending">' . _('KL UOM') . '</th>
-								<th class="ascending">' . _('Real Std Cost') . '</th>
-								<th class="ascending">' . _('% Dif') . '</th>
-							</tr>';
+			$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('Code') . '</th>
+								<th class="SortedColumn">' . _('Description') . '</th>
+								<th class="SortedColumn">' . _('Supplier') . '</th>
+								<th class="SortedColumn">' . _('From') . '</th>
+								<th class="SortedColumn">' . _('Price') . '</th>
+								<th class="SortedColumn">' . _('Currency') . '</th>
+								<th class="SortedColumn">' . _('Rate') . '</th>
+								<th class="SortedColumn">' . _('Supplier UOM') . '</th>
+								<th class="SortedColumn">' . _('UOM Factor') . '</th>
+								<th class="SortedColumn">' . _('Date Std Cost') . '</th>
+								<th class="SortedColumn">' . _('Wrong Std Cost') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('KL UOM') . '</th>
+								<th class="SortedColumn">' . _('Real Std Cost') . '</th>
+								<th class="SortedColumn">' . _('% Dif') . '</th>
+							</tr>
+							</thead>
+							<tbody>';
 		}
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 
 			$NewStdCost = $myrow['price'] / $myrow['conversionfactor'] * (1/$myrow['rate']) * $StdFactor;
@@ -3971,7 +3995,8 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $myrow['stockid'] . '&SupplierID='. $myrow['supplierno'] . '&Edit=1&EffectiveFrom='. $myrow['effectivefrom']  .' ">' . $Price . '</a>';
 			if ($Mode == "SHOWONLY"){
 				$StdCostText = locale_number_format($NewStdCost,0);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -4009,7 +4034,8 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 					$StdCostText = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $myrow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
 				}
 				$percent = ($myrow['stdcost'] != 0) ? ((($myrow['price'] / $myrow['conversionfactor'] * (1/$myrow['rate']) * $StdFactor)/$myrow['stdcost'] * 100)-100) : 100 ;
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -4046,8 +4072,9 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 			}
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			  </table>
+			  </div>';
 	}
 }
 
@@ -4113,21 +4140,23 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('#MarketPlace') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Order Value') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . '' . '</th>
-							<th class="ascending">' . _('Paid Tokopedia') . '</th>
-							<th class="ascending">' . _('Paid Shopee') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Customer') . '</th>
+							<th class="SortedColumn">' . _('Name') . '</th>
+							<th class="SortedColumn">' . _('Order') . '</th>
+							<th class="SortedColumn">' . _('#MarketPlace') . '</th>
+							<th class="SortedColumn">' . _('Order Date') . '</th>
+							<th class="SortedColumn">' . _('Order Value') . '</th>
+							<th class="SortedColumn">' . _('Currency') . '</th>
+							<th class="SortedColumn">' . '' . '</th>
+							<th class="SortedColumn">' . _('Paid Tokopedia') . '</th>
+							<th class="SortedColumn">' . _('Paid Shopee') . '</th>
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		$TotalShopeeValue = 0;
 		$TotalTokopediaValue = 0;
@@ -4135,7 +4164,6 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 		$DecimalPlaces = 0;
 
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			$PaymentLinkText = 'Apply Payment';
 			$PaymentValue = $myrow['ordervalue']+$myrow['freightcost'];
@@ -4160,7 +4188,8 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 			}
 			$DecimalPlaces = $myrow['decimalplaces'];
 
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4189,7 +4218,8 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 		}
 		// for the detailed report, show totals. If only delayed more than $Days, no need to show totals
 		if ($Days == 0){
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4213,7 +4243,8 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					"",
 					""
 					);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4237,7 +4268,8 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					"",
 					""
 					);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4262,7 +4294,8 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					""
 					);
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
