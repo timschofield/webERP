@@ -43,6 +43,18 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
+	// KL RICARD INit these variables otherwise gives error
+	if (!isset($_POST['CommissionRate1'])){
+		$_POST['CommissionRate1']=0;
+	  }
+	  if (!isset($_POST['CommissionRate2'])){
+		$_POST['CommissionRate2']=0;
+	  }
+	  if (!isset($_POST['Breakpoint'])){
+		$_POST['Breakpoint']=0;
+	  }
+	// KL RICARD END
+
 	if (mb_strlen($_POST['SalesmanCode']) > 3) {
 		$InputError = 1;
 		prnMsg(_('The salesperson code must be three characters or less long'),'error');
