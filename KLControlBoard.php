@@ -1119,25 +1119,26 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . GetCategoryNameFromCode($group) . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO or WO. Move to next category step</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Category') . '</th>
-							<th class="ascending">' . _('DOB Category') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('#Top Sales 30') . '</th>
-							<th class="ascending">' . _('#Top Sales 60') . '</th>
-							<th class="ascending">' . _('#Top Sales 90') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Category') . '</th>
+						<th class="SortedColumn">' . _('DOB Category') . '</th>
+						<th class="SortedColumn">' . _('QOH') . '</th>
+						<th class="SortedColumn">' . _('#Top Sales 30') . '</th>
+						<th class="SortedColumn">' . _('#Top Sales 60') . '</th>
+						<th class="SortedColumn">' . _('#Top Sales 90') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1159,8 +1160,9 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath){
 				);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }	
 
@@ -1206,22 +1208,23 @@ function ActiveItemsWithoutPicture($RootPath){
 				if($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . _('Current Items without picture in webERP and QOH > 0') . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$k = 0; //row colour counter
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . '#' . '</th>
+									<th class="SortedColumn">' . _('Category') . '</th>
+									<th class="SortedColumn">' . _('Item Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$i = 1;
-					$TableHeader = '<tr>
-									<th class="ascending">' . '#' . '</th>
-									<th class="ascending">' . _('Category') . '</th>
-									<th class="ascending">' . _('Item Code') . '</th>
-									<th class="ascending">' . _('Description') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									</tr>';
-					echo $TableHeader;
 					$showHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -1237,7 +1240,8 @@ function ActiveItemsWithoutPicture($RootPath){
 			}
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>';
 		}
 	}
@@ -1435,25 +1439,24 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . $TitleQOH . '</th>
-							<th class="ascending">' . _('RL=?') . '</th>
-							<th class="ascending">' . _('RL=1') . '</th>
-							<th class="ascending">' . _('RL=2') . '</th>
-							<th class="ascending">' . _('RL=3') . '</th>
-							<th class="ascending">' . _('RL=4') . '</th>
-							<th class="ascending">' . _('RL=5') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . $TitleQOH . '</th>
+						<th class="SortedColumn">' . _('RL=?') . '</th>
+						<th class="SortedColumn">' . _('RL=1') . '</th>
+						<th class="SortedColumn">' . _('RL=2') . '</th>
+						<th class="SortedColumn">' . _('RL=3') . '</th>
+						<th class="SortedColumn">' . _('RL=4') . '</th>
+						<th class="SortedColumn">' . _('RL=5') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
 			$LinkRL1 = '';
@@ -1477,7 +1480,8 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 				$LinkRL5  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&LocCode=' . $Shop . '&RL=5' . '">' . '5' . '</a>';
 			}
 
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -1501,8 +1505,9 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 			);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -1526,22 +1531,23 @@ function CheckNegativeStock($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with Negative Stock') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Location') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Location') . '</th>
+						<th class="SortedColumn">' . _('Quantity') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$total += $myrow['quantity'];
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1555,7 +1561,8 @@ function CheckNegativeStock($RootPath){
 					);
 			$i++;
 		}
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -1567,8 +1574,9 @@ function CheckNegativeStock($RootPath){
 				"", 
 				locale_number_format($total,0)
 				);
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 	InsertKPI("Stock", "Negative Stock items (PCS)", abs($total));
 }
@@ -1613,21 +1621,21 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Consumables with stock ready for less than ') . $DaysMinStock . ' days and NO active PO.' . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('QOH Kantor') . '</th>
-							<th class="ascending">' . _('Used ') . $DaysUsage . ' days'. '</th>
-							<th class="ascending">' . _('Urgent Needed') . '</th>
-							<th class="ascending">' . _('Recommended Purchase') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('QOH Kantor') . '</th>
+						<th class="SortedColumn">' . _('Used ') . $DaysUsage . ' days'. '</th>
+						<th class="SortedColumn">' . _('Urgent Needed') . '</th>
+						<th class="SortedColumn">' . _('Recommended Purchase') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$Needed = (($myrow['usageKL'] / $DaysUsage) * $DaysMinStock ) - $myrow['qtyKANTOR'];
 			$Recommended = (($myrow['usageKL'] / $DaysUsage) * $DaysStockPurchase);
@@ -1649,8 +1657,9 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -1705,17 +1714,17 @@ function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Category . _(' items with wrong discount (Not ') . $DiscountCode. '%)</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -1727,8 +1736,9 @@ function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -1745,17 +1755,17 @@ function FlaggedAsObsoleteButStockAvailable($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Obsolete Items with available Stock') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -1767,8 +1777,9 @@ function FlaggedAsObsoleteButStockAvailable($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -1786,21 +1797,22 @@ function GLTransDateControl(){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Wrong dated GLTrans transactions in DB') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Counterindex') . '</th>
-							<th class="ascending">' . _('Type') . '</th>
-							<th class="ascending">' . _('Typeno') . '</th>
-							<th class="ascending">' . _('Account') . '</th>
-							<th class="ascending">' . _('Narrative') . '</th>
-							<th class="ascending">' . _('Amount') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Counterindex') . '</th>
+						<th class="SortedColumn">' . _('Type') . '</th>
+						<th class="SortedColumn">' . _('Typeno') . '</th>
+						<th class="SortedColumn">' . _('Account') . '</th>
+						<th class="SortedColumn">' . _('Narrative') . '</th>
+						<th class="SortedColumn">' . _('Amount') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -1816,8 +1828,9 @@ function GLTransDateControl(){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -1863,7 +1876,8 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath){
 		}
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
+		$TableHeader = '<thead>
+						<tr>
 							<th>' . _('#') . '</th>
 							<th>' . _('Date') . '</th>
 							<th>' . _('Code') . '</th>
@@ -1879,12 +1893,12 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath){
 							<th colspan="2">' . _('RL=5') . '</th>
 						</tr>
 						<tr>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
+							<th class="SortedColumn"></th>
+							<th class="SortedColumn"></th>
+							<th class="SortedColumn"></th>
+							<th class="SortedColumn"></th>
+							<th class="SortedColumn"></th>
+							<th class="SortedColumn"></th>
 							<th></th>
 							<th></th>
 							<th>' . _('All') . '</th>
@@ -1897,12 +1911,12 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath){
 							<th>' . _('Some') . '</th>
 							<th>' . _('All') . '</th>
 							<th>' . _('Some') . '</th>
-						</tr>';
+						</tr>
+						</thead>
+						<tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			
 			// count how many shops do we need to set the RL
 			if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT)){
@@ -1962,7 +1976,8 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath){
 				}
 			}
 
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2002,8 +2017,9 @@ function GoodsJustArrived($kind, $location, $numdays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2035,23 +2051,24 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _(' Finished Goods just transferred from ') . $locationfrom  . ' to '. $locationto . ' during the last '. $numdays . ' days and QOH <= '. $qohmax . '.</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Category') . '</th>
-							<th class="ascending">' . _('Transferred') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Category') . '</th>
+						<th class="SortedColumn">' . _('Transferred') . '</th>
+						<th class="SortedColumn">' . _('QOH') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2069,8 +2086,9 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2137,7 +2155,6 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 
 function ImagesWithoutProduct($RootPath){
 	$ShowHeader = TRUE;
-	$k = 0; //row colour counter
 	$i= 0;
 	// get all images in part_pics folder
 	$suffix = ".jpg";
@@ -2182,15 +2199,17 @@ function ImagesWithoutProduct($RootPath){
 				if ($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . _('Images without product in webERP') .'</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('File') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('File') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$ShowHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						</tr>', 
 						$_SESSION['part_pics_dir'].'/'.$file
 						);
@@ -2198,8 +2217,9 @@ function ImagesWithoutProduct($RootPath){
 		}
 	}
 	if (!$ShowHeader){
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2224,26 +2244,27 @@ function ItemsCancelledInTransfers($maxdays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items cancelled in Transfers during the last ') . $maxdays . _(' days ') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-							<th class="ascending">' . _('Cancel Qty') . '</th>
-							<th class="ascending">' . _('Cancel Date') . '</th>
-							<th class="ascending">' . _('Cancelled By') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Transfer') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('From') . '</th>
+						<th class="SortedColumn">' . _('To') . '</th>
+						<th class="SortedColumn">' . _('Cancel Qty') . '</th>
+						<th class="SortedColumn">' . _('Cancel Date') . '</th>
+						<th class="SortedColumn">' . _('Cancelled By') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -2265,8 +2286,9 @@ function ItemsCancelledInTransfers($maxdays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2322,30 +2344,31 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Change Price Procedure for more than '). $NumDays . ' days. </strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Start Date') . '</th>
-							<th class="ascending">' . _('QOH KL Shops') . '</th>
-							<th class="ascending">' . _('QOH Consignment') . '</th>
-							<th class="ascending">' . _('Transit From Kantor') . '</th>
-							<th class="ascending">' . _('Transit To Kantor') . '</th>
-							<th class="ascending">' . _('QOH Kantor') . '</th>
-							<th class="ascending">' . _('QOH Others') . '</th>
-							<th class="ascending">' . _('QOH Total') . '</th>
-							<th class="ascending">' . _('New Retail Price') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Start Date') . '</th>
+						<th class="SortedColumn">' . _('QOH KL Shops') . '</th>
+						<th class="SortedColumn">' . _('QOH Consignment') . '</th>
+						<th class="SortedColumn">' . _('Transit From Kantor') . '</th>
+						<th class="SortedColumn">' . _('Transit To Kantor') . '</th>
+						<th class="SortedColumn">' . _('QOH Kantor') . '</th>
+						<th class="SortedColumn">' . _('QOH Others') . '</th>
+						<th class="SortedColumn">' . _('QOH Total') . '</th>
+						<th class="SortedColumn">' . _('New Retail Price') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$NewPriceLink = locale_number_format($myrow['newretailprice'],0);
 			
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2373,8 +2396,9 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2409,25 +2433,26 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . GetCategoryNameFromCode($group) . ' Items for more than ' . $maxdays . ' days. Move to next step of cycle of life</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Category') . '</th>
-							<th class="ascending">' . _('DOB Category') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('#Top Sales 30') . '</th>
-							<th class="ascending">' . _('#Top Sales 60') . '</th>
-							<th class="ascending">' . _('#Top Sales 90') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Category') . '</th>
+						<th class="SortedColumn">' . _('DOB Category') . '</th>
+						<th class="SortedColumn">' . _('QOH') . '</th>
+						<th class="SortedColumn">' . _('#Top Sales 30') . '</th>
+						<th class="SortedColumn">' . _('#Top Sales 60') . '</th>
+						<th class="SortedColumn">' . _('#Top Sales 90') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2449,8 +2474,9 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }	
 
@@ -2541,23 +2567,24 @@ function ItemsInmediateShortage($Cat, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Cat . ' Items in inmediate shortage stock</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-							<th class="ascending">' . _('Qty @ PO') . '</th>
-							<th class="ascending">' . _('Qty @ WO') . '</th>
-							<th class="ascending">' . _('Demand') . '</th>
-							<th class="ascending">' . _('Shortage') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('QOH') . '</th>
+						<th class="SortedColumn">' . _('Qty @ PO') . '</th>
+						<th class="SortedColumn">' . _('Qty @ WO') . '</th>
+						<th class="SortedColumn">' . _('Demand') . '</th>
+						<th class="SortedColumn">' . _('Shortage') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2575,8 +2602,9 @@ function ItemsInmediateShortage($Cat, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }	
 
@@ -2608,22 +2636,22 @@ function ItemsInKLProcessAndRLNotZero($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with in KL process and RL not zero') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Location') . '</th>
-							<th class="ascending">' . _('RL') . '</th>
-							<th class="ascending">' . _('Changing Price') . '</th>
-							<th class="ascending">' . _('MoveTo 20% Disc') . '</th>
-							<th class="ascending">' . _('MoveTo 50% Disc') . '</th>
-							<th class="ascending">' . _('MoveTo 80% Disc') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Location') . '</th>
+						<th class="SortedColumn">' . _('RL') . '</th>
+						<th class="SortedColumn">' . _('Changing Price') . '</th>
+						<th class="SortedColumn">' . _('MoveTo 20% Disc') . '</th>
+						<th class="SortedColumn">' . _('MoveTo 50% Disc') . '</th>
+						<th class="SortedColumn">' . _('MoveTo 80% Disc') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			if ($myrow['klchangingprice'] == 1){
 				$ItemChangingPrice = "Yes";
@@ -2645,7 +2673,8 @@ function ItemsInKLProcessAndRLNotZero($RootPath){
 			}else{
 				$ItemMovingToDiscount80 = "";
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -2665,8 +2694,9 @@ function ItemsInKLProcessAndRLNotZero($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2691,19 +2721,20 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "Items Not needed for any Online Order but with QOH > 0 in Shop Online" . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Item Code') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Quantity') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$ItemLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -2713,8 +2744,9 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2780,7 +2812,6 @@ function ItemsInSetup($Check, $Category, $RootPath){
 // prnMsg($SQL);
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		$i = 1;
 		$ShowHeader = TRUE;
 		while ($myrow = DB_fetch_array($result)) {
@@ -2790,21 +2821,23 @@ function ItemsInSetup($Check, $Category, $RootPath){
 				if ($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Price') . '</th>
-										<th class="ascending">' . _('QOH') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('Price') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$ShowHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				$RLLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . locale_number_format($myrow['QOH'],0) . '</a>';
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -2820,7 +2853,8 @@ function ItemsInSetup($Check, $Category, $RootPath){
 			}
 		}
 		if(!$ShowHeader){
-			echo '</table>
+			echo '</tbody>
+					</table>
 					</div>';
 		}
 	}
@@ -2873,23 +2907,24 @@ function ItemsInWrongShops($ShopType, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Shop') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-							<th class="ascending">' . _('Reorder Level') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Shop') . '</th>
+						<th class="SortedColumn">' . _('Quantity') . '</th>
+						<th class="SortedColumn">' . _('Reorder Level') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$CodeLinkRL = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['reorderlevel'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -2905,8 +2940,9 @@ function ItemsInWrongShops($ShopType, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -2962,28 +2998,29 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Items delayed Moving To ' . $TypeDiscount . '% Discount Procedure for more than '. $NumDays . ' days. </strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Start Date') . '</th>
-							<th class="ascending">' . _('QOH KL Shops') . '</th>
-							<th class="ascending">' . _('QOH Consignment') . '</th>
-							<th class="ascending">' . _('Transit From Kantor') . '</th>
-							<th class="ascending">' . _('Transit To Kantor') . '</th>
-							<th class="ascending">' . _('QOH Kantor') . '</th>
-							<th class="ascending">' . _('QOH Others') . '</th>
-							<th class="ascending">' . _('QOH Total') . '</th>
-							<th class="ascending">' . _('Discount Code') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Start Date') . '</th>
+						<th class="SortedColumn">' . _('QOH KL Shops') . '</th>
+						<th class="SortedColumn">' . _('QOH Consignment') . '</th>
+						<th class="SortedColumn">' . _('Transit From Kantor') . '</th>
+						<th class="SortedColumn">' . _('Transit To Kantor') . '</th>
+						<th class="SortedColumn">' . _('QOH Kantor') . '</th>
+						<th class="SortedColumn">' . _('QOH Others') . '</th>
+						<th class="SortedColumn">' . _('QOH Total') . '</th>
+						<th class="SortedColumn">' . _('Discount Code') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3011,8 +3048,9 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3031,21 +3069,22 @@ function ItemsOnSpecialRequest($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items on Special Kantor Request') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-							<th class="ascending">' . _('Reorder Level') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Quantity') . '</th>
+						<th class="SortedColumn">' . _('Reorder Level') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3059,8 +3098,9 @@ function ItemsOnSpecialRequest($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3079,19 +3119,20 @@ function ItemsShouldBeInWebsite(){
 				if($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . _('Items with picture but not available in Online Shop') . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-									</tr>';
-					echo $TableHeader;
-					$k = 0; //row colour counter
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$i = 1;
 					$showHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						</tr>', 
@@ -3103,8 +3144,9 @@ function ItemsShouldBeInWebsite(){
 			}			
 		}
 		if (!$showHeader){
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 }
@@ -3148,7 +3190,6 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$PositionTopSales = PositionTopSalesItem($myrow['stockid'], 60);
@@ -3156,18 +3197,19 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 				if ($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . $MaxTopSalesItems ._(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('TopSale#') . '</th>
-										<th class="ascending">' . _('Qty ') . $Location . '</th>
-										<th class="ascending">' . _('QOH Available') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('TopSale#') . '</th>
+									<th class="SortedColumn">' . _('Qty ') . $Location . '</th>
+									<th class="SortedColumn">' . _('QOH Available') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$showHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				printf('<td class="number">%s</td>
 						<td>%s</td>
@@ -3185,8 +3227,9 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 			}
 		}
 		if (!$showHeader){
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 }
@@ -3227,19 +3270,20 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>Items without full purchasing data</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Supplier Part #') . '</th>
-							<th class="ascending">' . _('Supplier Description') . '</th>
-							<th class="ascending">' . _('UOM') . '</th>
-							<th class="ascending">' . _('Leadtime') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Supplier') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Supplier Part #') . '</th>
+						<th class="SortedColumn">' . _('Supplier Description') . '</th>
+						<th class="SortedColumn">' . _('UOM') . '</th>
+						<th class="SortedColumn">' . _('Leadtime') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$CodeLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $myrow['stockid'] . '">'. $myrow['stockid'] .'</a>';
@@ -3247,8 +3291,8 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 															'&SupplierID=' . $myrow['supplierno'] . 
 															'&Edit=1' .
 															'&EffectiveFrom=' . $myrow['latesteffectivefrom'] . '">'. $myrow['supplierno'] .'</a>';
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3268,8 +3312,9 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3291,20 +3336,21 @@ function ItemsWithoutStandardCost($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items without standard cost') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('QOH') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('QOH') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3316,8 +3362,9 @@ function ItemsWithoutStandardCost($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3340,22 +3387,23 @@ function ItemsWithoutWeightOrVolume($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Online Shop items with no gross weight, no volume or Net > Gross Weight') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Net Weight Kg') . '</th>
-							<th class="ascending">' . _('Gross Weight Kg') . '</th>
-							<th class="ascending">' . _('Volume m3') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Net Weight Kg') . '</th>
+						<th class="SortedColumn">' . _('Gross Weight Kg') . '</th>
+						<th class="SortedColumn">' . _('Volume m3') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/Stocks.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3371,8 +3419,9 @@ function ItemsWithoutWeightOrVolume($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3438,42 +3487,43 @@ No pending transfer regarding this item
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Message . ' Items with stock available (but NO changing price or category) at Kantor but RL zero for all ' . $Message . '  SHOPS' . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Category') . '</th>
-							<th>' . _('Description') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('RL=?') . '</th>
-							<th colspan="2">' . _('RL=1') . '</th>
-							<th colspan="2">' . _('RL=2') . '</th>
-							<th colspan="2">' . _('RL=3') . '</th>
-							<th colspan="2">' . _('RL=4') . '</th>
-							<th colspan="2">' . _('RL=5') . '</th>
-						<tr>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th class="ascending"></th>
-							<th></th>
-							<th>' . _('All') . '</th>
-							<th>' . _('Some') . '</th>
-							<th>' . _('All') . '</th>
-							<th>' . _('Some') . '</th>
-							<th>' . _('All') . '</th>
-							<th>' . _('Some') . '</th>
-							<th>' . _('All') . '</th>
-							<th>' . _('Some') . '</th>
-							<th>' . _('All') . '</th>
-							<th>' . _('Some') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th>' . _('#') . '</th>
+						<th>' . _('Code') . '</th>
+						<th>' . _('Category') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('QOH Kantor') . '</th>
+						<th>' . _('RL=?') . '</th>
+						<th colspan="2">' . _('RL=1') . '</th>
+						<th colspan="2">' . _('RL=2') . '</th>
+						<th colspan="2">' . _('RL=3') . '</th>
+						<th colspan="2">' . _('RL=4') . '</th>
+						<th colspan="2">' . _('RL=5') . '</th>
+					</tr>
+					<tr>
+						<th class="SortedColumn"></th>
+						<th class="SortedColumn"></th>
+						<th class="SortedColumn"></th>
+						<th class="SortedColumn"></th>
+						<th class="SortedColumn"></th>
+						<th></th>
+						<th>' . _('All') . '</th>
+						<th>' . _('Some') . '</th>
+						<th>' . _('All') . '</th>
+						<th>' . _('Some') . '</th>
+						<th>' . _('All') . '</th>
+						<th>' . _('Some') . '</th>
+						<th>' . _('All') . '</th>
+						<th>' . _('Some') . '</th>
+						<th>' . _('All') . '</th>
+						<th>' . _('Some') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 			$ManualLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . 'Manual' . '</a>';
 			// set the links to nil, and just set some if we have enough QOH
@@ -3509,7 +3559,8 @@ No pending transfer regarding this item
 					$LinkRL5Some = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $myrow['stockid'] . '&TypeOfShop=' . $TypeOfShop . '&AllShops=N' . '&RL=5' . '">' . '5' . '</a>';
 				}
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3545,8 +3596,9 @@ No pending transfer regarding this item
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3563,19 +3615,20 @@ function NotDiscountedItemsWithDiscount($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Not Discounted items with discount') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
@@ -3585,8 +3638,9 @@ function NotDiscountedItemsWithDiscount($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3604,19 +3658,20 @@ function ObsoleteComponentsInActiveBOM($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Active BOM with obsolete components') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('BOM of') . '</th>
-							<th class="ascending">' . _('Component') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('BOM of') . '</th>
+						<th class="SortedColumn">' . _('Component') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLinkParent = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['parent'] . '">' . $myrow['parent'] . '</a>';
 			$CodeLinkComponent = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['component'] . '">' . $myrow['component'] . '</a>';
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
 					$CodeLinkParent, 
@@ -3624,8 +3679,9 @@ function ObsoleteComponentsInActiveBOM($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3663,28 +3719,29 @@ function OldOnlineQuotations($NumDaysBank, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('#KL-Website') . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Order Value') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Payment Method') . '</th>
-							<th class="ascending">' . _('Action') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('#KL-Website') . '</th>
+						<th class="SortedColumn">' . _('Customer') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Order Date') . '</th>
+						<th class="SortedColumn">' . _('Order Value') . '</th>
+						<th class="SortedColumn">' . _('Currency') . '</th>
+						<th class="SortedColumn">' . _('Payment Method') . '</th>
+						<th class="SortedColumn">' . _('Action') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			$PaymentMethodText = GetPaymentMethodTextFromCode($myrow['klocpaymentcode']);
 			$DeleteLink = '<a href="' . $RootPath . '/KLDeleteSalesOrder.php?OrderNo=' . $myrow['orderno'] . '">' . 'Delete as Expired' . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -3708,8 +3765,9 @@ function OldOnlineQuotations($NumDaysBank, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3730,20 +3788,21 @@ function OldPOStillActive($maxdays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('POs older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('PO') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Supplier') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('PO') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Supplier') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/PO_OrderDetails.php?OrderNo=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3755,8 +3814,9 @@ function OldPOStillActive($maxdays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3772,19 +3832,20 @@ function OldWOStillActive($maxdays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('WOs older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('WO') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('WO') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $myrow['wo'] . '">' . $myrow['wo'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
@@ -3794,8 +3855,9 @@ function OldWOStillActive($maxdays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3820,26 +3882,27 @@ function OnlineCustomersNoOrderPlaced($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Online Customers registered but no order placed.') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Country') . '</th>
-							<th class="ascending">' . _('Currency ') . '</th>
-							<th class="ascending">' . _('Registered on') . '</th>
-							<th class="ascending">' . _('Send Email') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Customer') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Country') . '</th>
+						<th class="SortedColumn">' . _('Currency ') . '</th>
+						<th class="SortedColumn">' . _('Registered on') . '</th>
+						<th class="SortedColumn">' . _('Send Email') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a>';
 			$EmailLinkText = 'Send Now';
 			$EmailType = 'NoOrderPlaced';
 			$EmailLink = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $myrow['debtorno'] . '&EmailType=' . $EmailType. '&CustomerOrder=' . $myrow['debtorno'] . '">'. $EmailLinkText .'</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3857,8 +3920,9 @@ function OnlineCustomersNoOrderPlaced($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -3892,21 +3956,22 @@ function OnlineItemsOnProcess($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "Items on process for Online Orders" . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Order') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Order Date') . '</th>
-							<th>' . _('Item Code') . '</th>
-							<th>' . _('Quantity') . '</th>
-							<th>' . _('QOH Toko Online') . '</th>
-							<th>' . _('QOH Kantor') . '</th>
-							<th>' . _('Status') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th>' . _('#') . '</th>
+						<th>' . _('Order') . '</th>
+						<th>' . _('Customer') . '</th>
+						<th>' . _('Name') . '</th>
+						<th>' . _('Order Date') . '</th>
+						<th>' . _('Item Code') . '</th>
+						<th>' . _('Quantity') . '</th>
+						<th>' . _('QOH Toko Online') . '</th>
+						<th>' . _('QOH Kantor') . '</th>
+						<th>' . _('Status') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		$OrderInProcess = -1;
 		$OrderReadyForShipment = true;
@@ -3918,8 +3983,8 @@ function OnlineItemsOnProcess($RootPath){
 				}else{
 					$Status = "ORDER IN PROCESS";
 				}
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -3943,7 +4008,6 @@ function OnlineItemsOnProcess($RootPath){
 						);
 			$OrderReadyForShipment = true;
 			}
-			$k = StartEvenOrOddRow($k);
 			
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			$ItemLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
@@ -3960,7 +4024,8 @@ function OnlineItemsOnProcess($RootPath){
 				$Status = "In process kantor";
 				$OrderReadyForShipment = false;
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -3991,8 +4056,8 @@ function OnlineItemsOnProcess($RootPath){
 		}else{
 			$Status = "ORDER IN PROCESS";
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -4015,8 +4080,9 @@ function OnlineItemsOnProcess($RootPath){
 				$Status
 				);
 
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4103,25 +4169,25 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . '#' . '</th>
-							<th class="ascending">' . _('webERP Order') . '</th>
-							<th class="ascending">' . '#' . $Source . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Order Value') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Payment Confirmation') . '</th>
-							<th class="ascending">' . _('Tracking Number') . '</th>
-							<th class="ascending">' . _('Tracking Confirmation') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . '#' . '</th>
+						<th class="SortedColumn">' . _('webERP Order') . '</th>
+						<th class="SortedColumn">' . '#' . $Source . '</th>
+						<th class="SortedColumn">' . _('Customer') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Order Date') . '</th>
+						<th class="SortedColumn">' . _('Order Value') . '</th>
+						<th class="SortedColumn">' . _('Currency') . '</th>
+						<th class="SortedColumn">' . _('Payment Confirmation') . '</th>
+						<th class="SortedColumn">' . _('Tracking Number') . '</th>
+						<th class="SortedColumn">' . _('Tracking Confirmation') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			
 			$EmailType3 = "ThankYouOrder";
@@ -4161,7 +4227,8 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 				$EmailLink1 = '';
 				$EmailLink2 = '';
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -4187,8 +4254,9 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4227,25 +4295,25 @@ function OnlineQuotationsFollowUp($RootPath ){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . _('#KL-Website') . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Order Value') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Payment Method') . '</th>
-							<th class="ascending">' . _('OC Status') . '</th>
-							<th class="ascending">' . _('Action') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('#KL-Website') . '</th>
+						<th class="SortedColumn">' . _('Customer') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Order Date') . '</th>
+						<th class="SortedColumn">' . _('Order Value') . '</th>
+						<th class="SortedColumn">' . _('Currency') . '</th>
+						<th class="SortedColumn">' . _('Payment Method') . '</th>
+						<th class="SortedColumn">' . _('OC Status') . '</th>
+						<th class="SortedColumn">' . _('Action') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 
 			$PaymentLinkText = 'Apply Payment';
@@ -4261,7 +4329,8 @@ function OnlineQuotationsFollowUp($RootPath ){
 				$PaymentLink = ''; // do not allow Apply payment in case of an status that is not processing
 			}
 			
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -4287,8 +4356,9 @@ function OnlineQuotationsFollowUp($RootPath ){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4307,17 +4377,17 @@ function OpenCartItemsWithoutPicture($RootPath ){
 				if($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . _('Online Shop Items without picture') . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$k = 0; //row colour counter
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . '#' . '</th>
+									<th class="SortedColumn">' . _('Item Code') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$i = 1;
-					$TableHeader = '<tr>
-									<th class="ascending">' . '#' . '</th>
-									<th class="ascending">' . _('Item Code') . '</th>
-									</tr>';
-					echo $TableHeader;
 					$showHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 				printf('<td class="number">%s</td>
 						<td>%s</td>
@@ -4329,7 +4399,8 @@ function OpenCartItemsWithoutPicture($RootPath ){
 			}
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>';
 		}
 	}
@@ -4402,22 +4473,22 @@ function OutstandingOrders($customertype, $ordertype, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Order') . '</th>
-							<th class="ascending">' . $WebsiteIDName . '</th>
-							<th class="ascending">' . _('Customer') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Order Date') . '</th>
-							<th class="ascending">' . _('Total Value') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . $WebsiteIDName . '</th>
+						<th class="SortedColumn">' . _('Customer') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Order Date') . '</th>
+						<th class="SortedColumn">' . _('Total Value') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		$TotalValue = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
 			if ($customertype == "Online"){
 				$WebsiteID = locale_number_format($myrow['customerref']);
@@ -4425,7 +4496,8 @@ function OutstandingOrders($customertype, $ordertype, $RootPath){
 				$WebsiteID = "";
 			}
 
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -4444,7 +4516,8 @@ function OutstandingOrders($customertype, $ordertype, $RootPath){
 			$TotalValue += $myrow['ordervalue'];
 			$i++;
 		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -4460,8 +4533,9 @@ function OutstandingOrders($customertype, $ordertype, $RootPath){
 				"Total IDR", 
 				locale_number_format($TotalValue,0)
 				);
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4576,20 +4650,20 @@ function OvestockAtSamples($maxallowedsamples, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of samples') . '</strong></p>';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Qty of samples') . '</th>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Qty of samples') . '</th>
 						</tr>';
 		echo '<div>';
-		echo '<table class="selection">';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>' . $TableHeader . '</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4601,8 +4675,9 @@ function OvestockAtSamples($maxallowedsamples, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4632,22 +4707,23 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>Packaging items in wrong locations (must be transferred to another location)</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Shop') . '</th>
-							<th class="ascending">' . _('Quantity') . '</th>
-							<th class="ascending">' . _('RL') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Shop') . '</th>
+						<th class="SortedColumn">' . _('Quantity') . '</th>
+						<th class="SortedColumn">' . _('RL') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4663,8 +4739,9 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4697,19 +4774,20 @@ function PettyCashBalance($TypeUser){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Balance you USE with balance too Low or Too High') . '</strong></p>';
 		}
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('PC Tab Code') . '</th>
-							<th class="ascending">' . _('Amount') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('PC Tab Code') . '</th>
+						<th class="SortedColumn">' . _('Amount') . '</th>
+						<th class="SortedColumn">' . _('Currency') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -4721,8 +4799,9 @@ function PettyCashBalance($TypeUser){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4745,24 +4824,24 @@ function PettyCashToBeAuthorized($AuthorizationType){
 				AND pcashdetails.authorized = '0000-00-00'" .
 				$SQLAuthority . "
 			GROUP BY pcashdetails.tabcode";
-
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('PC Tab Code') . '</th>
-							<th class="ascending">' . _('Amount') . '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('PC Tab Code') . '</th>
+						<th class="SortedColumn">' . _('Amount') . '</th>
+						<th class="SortedColumn">' . _('Currency') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -4774,8 +4853,9 @@ function PettyCashToBeAuthorized($AuthorizationType){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4804,21 +4884,22 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 			echo '<p class="page_title_text" align="center"><strong>' . 'Transfers to Shops prepared before ' . Date($_SESSION['DefaultDateFormat']) . 
 																		' at ' . $PreparationTime . ' but not received by SPG before ' . $LimitTime . '</strong></p>';
 			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('#') . '</th>
-								<th class="ascending">' . _('Transfer') . '</th>
-								<th class="ascending">' . _('Date') . '</th>
-								<th class="ascending">' . _('From') . '</th>
-								<th class="ascending">' . _('To') . '</th>
-							</tr>';
-			echo $TableHeader;
-			$k = 0; //row colour counter
+			echo '<table class="selection">
+					<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Transfer') . '</th>
+							<th class="SortedColumn">' . _('Date') . '</th>
+							<th class="SortedColumn">' . _('From') . '</th>
+							<th class="SortedColumn">' . _('To') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 			$i = 1;
 			while ($myrow = DB_fetch_array($result)) {
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -4832,8 +4913,9 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 						);
 				$i++;
 			}
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				</table>
+				</div>';
 		}
 	}
 }
@@ -4856,20 +4938,20 @@ function SamplesNotLongerNeeded($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Samples Not Longer Needed (No More Buy, Discount, Outlet)') . '</strong></p>';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Qty of samples') . '</th>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Qty of samples') . '</th>
 						</tr>';
 		echo '<div>';
-		echo '<table class="selection">';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>' . $TableHeader . '</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -4881,8 +4963,9 @@ function SamplesNotLongerNeeded($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -4913,24 +4996,25 @@ function SPGNotReportingSalesInDays($maxdays){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Senior or Support SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' .  _('SPG') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Shop') . '</th>
-							<th class="ascending">' . _('Last Sale') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' .  _('SPG') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Shop') . '</th>
+						<th class="SortedColumn">' . _('Last Sale') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			if (isset($myrow['lastsale'])){
 				$Day = ConvertSQLDate($myrow['lastsale']);
 			}else{
 				$Day = "No sale yet";
 			}
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -4942,9 +5026,10 @@ function SPGNotReportingSalesInDays($maxdays){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 	}
 }
 
@@ -4958,17 +5043,18 @@ function SuppliersWithoutBasicData($RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Suppliers without basic data') . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
 					$myrow['supplierid'], 
@@ -4976,8 +5062,9 @@ function SuppliersWithoutBasicData($RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}
 }
 
@@ -5005,25 +5092,25 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers With Wrong Information during the last ') . $maxdays  . ' days</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Reception Date') . '</th>
-							<th class="ascending">' . _('Transfer') . '</th>
-							<th class="ascending">' . _('From') . '</th>
-							<th class="ascending">' . _('To') . '</th>
-							<th class="ascending">' . _('Item') . '</th>
-							<th class="ascending">' . _('Shipped Qty') . '</th>
-							<th class="ascending">' . _('Received Qty') . '</th>
-							<th class="ascending">' . _('Action') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Reception Date') . '</th>
+						<th class="SortedColumn">' . _('Transfer') . '</th>
+						<th class="SortedColumn">' . _('From') . '</th>
+						<th class="SortedColumn">' . _('To') . '</th>
+						<th class="SortedColumn">' . _('Item') . '</th>
+						<th class="SortedColumn">' . _('Shipped Qty') . '</th>
+						<th class="SortedColumn">' . _('Received Qty') . '</th>
+						<th class="SortedColumn">' . _('Action') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$resultTx = DB_Txn_Begin();
-		$k = 0; //row colour counter
 		$LastStockid = "";
 		$LastTransfer = "";
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $myrow['reference'] . '">' . $myrow['reference'] . '</a>';
 			if (($myrow['stockid'] != $LastStockid) OR ($myrow['reference'] != $LastTransfer)){
 				$sql = "UPDATE loctransfers SET shipqty = recqty 
@@ -5038,7 +5125,8 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 				$ResultDelete = DB_query($sql, $ErrMsg, $DbgMsg, true);
 				$Action = "Deleted";
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -5062,9 +5150,10 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 			$LastTransfer = $myrow['reference'];
 		}
 		$resultTx = DB_Txn_Commit();
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 	}
 }
 
@@ -5094,20 +5183,21 @@ function UsersNotLoggingIn($maxdays, $type, $RootPath){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
 		}
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' .  _('User ID') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Last Login') . '</th>
-							<th>' . _('Action') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' .  _('User ID') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Last Login') . '</th>
+						<th>' . _('Action') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$CodeLink = '<a href="' . $RootPath . '/WWW_User_Delete.php?UserID=' . $myrow['userid'] . '">' . 'Delete' . '</a>';
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -5119,9 +5209,10 @@ function UsersNotLoggingIn($maxdays, $type, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 	}
 }
 
@@ -5180,25 +5271,25 @@ function WrongItemsOnPurchaseOrders($RootPath){
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			if (TRUE){
 				if ($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' .'Wrong items (No More Purchasing, Discount or Obsolete) in Active POs' . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('PO') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('QOO') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('PO') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('QOO') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$showHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $myrow['itemcode'] . '">' . $myrow['itemcode'] . '</a>';
 				printf('<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -5216,7 +5307,8 @@ function WrongItemsOnPurchaseOrders($RootPath){
 			}
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>';
 		}
 	}
@@ -5241,26 +5333,27 @@ function WrongItemsOnWorkOrders($RootPath){
 	$result = DB_query($SQL);
 	$showHeader = TRUE;
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			if (TRUE){
 				if ($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' .'Wrong items (No More Purchasing, Discount or Obsolete) in Active Work Orders' . '</strong></p>';
 					echo '<div>';
-					echo '<table class="selection">';
-					$TableHeader = '<tr>
-										<th class="ascending">' . _('#') . '</th>
-										<th class="ascending">' . _('WO') . '</th>
-										<th class="ascending">' . _('Code') . '</th>
-										<th class="ascending">' . _('Description') . '</th>
-										<th class="ascending">' . _('Qty') . '</th>
-									</tr>';
-					echo $TableHeader;
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th class="SortedColumn">' . _('#') . '</th>
+									<th class="SortedColumn">' . _('WO') . '</th>
+									<th class="SortedColumn">' . _('Code') . '</th>
+									<th class="SortedColumn">' . _('Description') . '</th>
+									<th class="SortedColumn">' . _('Qty') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 					$showHeader = FALSE;
 				}
-				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -5276,7 +5369,8 @@ function WrongItemsOnWorkOrders($RootPath){
 			}
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>';
 		}
 	}
@@ -5295,7 +5389,6 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 	$result = DB_query_oc($SQL);
 	if (DB_num_rows($result) != 0){
 		$showHeader = TRUE;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($showHeader){
@@ -5310,15 +5403,17 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 				}
 				echo '<p class="page_title_text" align="center"><strong>' . $StatusText .' OpenCart Online Orders' . '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th class="ascending">' . _('#') . '</th>
-									<th class="ascending">' . _('#Order') . '</th>
-									<th class="ascending">' . _('Last Modification') . '</th>
-									<th class="ascending">' . _('Shop') . '</th>
-									<th class="ascending">' . _('Customer name') . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('#Order') . '</th>
+								<th class="SortedColumn">' . _('Last Modification') . '</th>
+								<th class="SortedColumn">' . _('Shop') . '</th>
+								<th class="SortedColumn">' . _('Customer name') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$showHeader = FALSE;
 			}
 			if ($myrow['currency_code'] == "IDR"){
@@ -5326,8 +5421,8 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 			}else{
 				$RoundingDecimals = 2;
 			}
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -5342,7 +5437,8 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 			$i++;
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>';
 		}
 	}
