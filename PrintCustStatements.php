@@ -466,7 +466,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 			} /* end of check to see that there were statement transactons to print */
 			if ($_POST['EmailOrPrint']=='email'){
-				$FileName = 'Statement_Account_' . $StmtHeader['debtorno']  . '.pdf';
+				$FileName = $_SESSION['reports_dir'] . '/' .'Statement_Account_' . $StmtHeader['debtorno']  . '.pdf';
 				$pdf->Output($FileName,'F');
 				$mail = new htmlMimeMail();
 				$Attachment = $mail->getFile($FileName);

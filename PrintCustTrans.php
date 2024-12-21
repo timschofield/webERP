@@ -523,7 +523,7 @@ if (isset($PrintPDF)
 
 
 		include ('includes/htmlMimeMail.php');
-		$FileName = $_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf';
+		$FileName = $_SESSION['reports_dir'] . '/' .$_SESSION['reports_dir'] . '/' . $_SESSION['DatabaseName'] . '_' . $InvOrCredit . '_' . $FromTransNo . '.pdf';
 		$pdf->Output($FileName,'F');
 		$mail = new htmlMimeMail();
 
