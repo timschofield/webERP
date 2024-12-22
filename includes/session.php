@@ -12,13 +12,20 @@ if (!isset($PathPrefix)) {
 }
 
 // KL RICARD Select the default database depending on the code version
-if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
-	// the current script filename contains TEST, we are on TEST code
+if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
+	// the current script filename resides in the WAMPP localhost, we are on TEST code
 	$DefaultDatabase = 'test_erp';
-}else{
-	// the current script filename does not contain TEST, we are on production code
-	$DefaultDatabase = 'kurakura_kl_erp';
+} else {
+	// the current script filename resides in the production server
+	if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
+		// the current script filename contains TEST, we are on TEST code
+		$DefaultDatabase = 'test_erp';
+	}else{
+		// the current script filename does not contain TEST, we are on production code
+		$DefaultDatabase = 'kurakura_kl_erp';
+	}
 }
+
 
 if (!file_exists($PathPrefix . 'config.php')) {
 	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
@@ -221,30 +228,30 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	}
 
 	// KL RICARD
-	/* If script is from TEST weberp, DB should be TEST as well */
-	/* DB name is hardcoded, needs to be updated if renamed*/
-	if ((strpos($_SERVER['PHP_SELF'],"TEST")!== false) AND ($_SESSION['DatabaseName'] != "test_erp")){
-		$Title = _('Wrong webERP Type');
-		include($PathPrefix . 'includes/header.php');
-		echo '<br /><br /><br />';
-		prnMsg(_('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
-		include($PathPrefix . 'includes/footer.php');
-		exit;
+	
+	if (KLwebERPScriptCalledFromTEST()){
+		/* If script is from TEST weberp or from localhost */
+		if ($_SESSION['DatabaseName'] != "test_erp"){
+			/* If DB is not test_erp we have a problem and should stop*/
+			$Title = _('Wrong webERP Type');
+			include($PathPrefix . 'includes/header.php');
+			prnMsg(_('Accessing webERP TEST but connecting to Production Database. Logout and login again.'),'error');
+			include($PathPrefix . 'includes/footer.php');
+			exit;
+		}
+	}else{
+		/* The script is not from TEST*/
+		if ($_SESSION['DatabaseName'] != "kurakura_kl_erp"){
+			/* If DB is not kurakura_kl_erp we have a problem and should stop*/
+			include($PathPrefix . 'includes/header.php');
+			prnMsg(_('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
+			include($PathPrefix . 'includes/footer.php');
+			exit;
+		}
 	}
-	/* If script is from production weberp, DB should be Production as well */
-	/* DB name is hardcoded, needs to be updated if renamed*/
-	if  ((strpos($_SERVER['PHP_SELF'],"TEST") == false) AND ($_SESSION['DatabaseName'] != "kurakura_kl_erp")){
-		$Title = _('Wrong webERP Type');
-		include($PathPrefix . 'includes/header.php');
-		echo '<br /><br /><br />';
-		prnMsg(_('Accessing webERP Production but connecting to TEST Database. Logout and login again.'),'error');
-		include($PathPrefix . 'includes/footer.php');
-		exit;
-	}
-	// KL RICARD END
-
-
 }
+
+// KL RICARD END
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
 if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
@@ -530,26 +537,38 @@ function quote_smart($value) {
 }
 
 function KLThemeSelection(){
-	if (strpos(strtoupper($_SERVER['HTTP_HOST']),"DEVELOPMENT")!== false){
-		// we are on ptadu-development.com (development code)
-		if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
-			// development environment with the test DB (safest)
-			$Theme = 'xenos'; 
-		}else{
-			// development environment with the production DB (risky)
-			$Theme = 'professional'; 
-		}
+	if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
+		// the current script filename resides in the WAMPP localhost, we are on TEST code
+		// loalhost development environment must go with the test DB (safest)
+		$Theme = 'fluid'; 
 	} else {
-		// we are on ptadu.com (production code)
-		if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
-			// Training staff environment: we are on production code with the test DB 
-			$Theme = 'gel'; 
-		}else{
-			// Production environment: we are on production code with the real production DB 
-			$Theme = 'aguapop'; 
+		if (strpos(strtoupper($_SERVER['HTTP_HOST']),"DEVELOPMENT")!== false){
+			// we are on ptadu-development.com (development code)
+			if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
+				// development environment with the test DB (safe)
+				$Theme = 'xenos'; 
+			}else{
+				// development environment with the production DB (risky)
+				$Theme = 'professional'; 
+			}
+		} else {
+			// we are on ptadu.com (production code)
+			if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
+				// Training staff environment: we are on production code with the test DB 
+				$Theme = 'gel'; 
+			}else{
+				// Production environment: we are on production code with the real production DB 
+				$Theme = 'aguapop'; 
+			}
 		}
+		
 	}
 	return $Theme;
+}
+
+function KLwebERPScriptCalledFromTEST() {
+    return (strpos(strtoupper($_SERVER['HTTP_HOST']), "LOCAL-TEST") !== false) 
+        || (strpos(strtoupper($_SERVER['PHP_SELF']), "TEST") !== false);
 }
 
 ?>

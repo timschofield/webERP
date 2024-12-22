@@ -1,5 +1,0 @@
-# Use PHP56 as default
-AddHandler application/x-httpd-php56 .php
-<IfModule mod_suphp.c>
-suPHP_ConfigPath /opt/php56/lib
-</IfModule>
