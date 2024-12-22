@@ -537,7 +537,7 @@ function KLThemeSelection(){
 			$Theme = 'xenos'; 
 		}else{
 			// development environment with the production DB (risky)
-			$Theme = 'aguapop'; 
+			$Theme = 'professional'; 
 		}
 	} else {
 		// we are on ptadu.com (production code)
@@ -546,7 +546,7 @@ function KLThemeSelection(){
 			$Theme = 'gel'; 
 		}else{
 			// Production environment: we are on production code with the real production DB 
-			$Theme = 'professional'; 
+			$Theme = 'aguapop'; 
 		}
 	}
 	return $Theme;
