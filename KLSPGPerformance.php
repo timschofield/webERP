@@ -71,7 +71,10 @@ if ($KL_SystemAdmin){
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " SPG Performance Report",'success');
-time_finish($begintime);
+
+if ($KL_SystemAdmin){
+	time_finish($begintime);
+}
 
 include ('includes/footer.php');
 

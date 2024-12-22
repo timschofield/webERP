@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFStockComparisonPageHeader.inc 6592 2014-03-02 08:41:40Z daintree $*/
 /*PDF page header for inventory check report */
 if ($PageNumber>1){
 	$pdf->newPage();

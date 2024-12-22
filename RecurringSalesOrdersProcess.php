@@ -1,14 +1,13 @@
 <?php
-/* $Id: RecurringSalesOrdersProcess.php 7021 2014-12-14 02:04:44Z tehonu $*/
 
-/*need to allow this script to run from Cron or windows scheduler */
+//*need to allow this script to run from Cron or windows scheduler */
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
 *****************************************************************************************/
 
-$AllowCronJobToBeRun = true;
+//$AllowCronJobToBeRun = true;
 
 /* Get this puppy to run from cron (cd webERP && php -f RecurringSalesOrdersProcess.php "weberpdemo") or direct URL (RecurringSalesOrdersProcess.php?Database=weberpdemo) */
 if (isset($_GET['Database'])) {
@@ -716,7 +715,7 @@ while ($RecurrOrderRow = DB_fetch_array($RecurrOrdersDueResult)){
 		$mail->setSubject(_('Recurring Order Created Advice'));
 		if($_SESSION['SmtpSetting']==0){
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . "<" . $_SESSION['CompanyRecord']['email'] . ">");
-		
+
 			$result = $mail->send(array($RecurrOrderRow['email']));
 		}else{
 			$result = SendmailBySmtp($mail,array($RecurrOrderRow['email']));

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: InventoryQuantities.php 6944 2014-10-27 07:15:34Z daintree $ */
 
 // InventoryQuantities.php - Report of parts with quantity. Sorts by part and shows
 // all locations where there are quantities of the part

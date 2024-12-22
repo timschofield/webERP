@@ -1,5 +1,4 @@
 <?php
-/* $Id: AccountSections.php 7518 2016-05-13 04:47:08Z rchacon $*/
 /* Defines the sections in the general ledger reports */
 
 include('includes/session.php');
@@ -166,7 +165,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 	$ErrMsg = _('Could not get account group sections because');
 	$result = DB_query($sql,$ErrMsg);
-/*	echo '<div id="Report">';// Division to identify the report block.*/
+
 	echo '<p class="page_title_text"><img alt="" class="noprint" src="', $RootPath, '/css/', $Theme,
 		'/images/maintenance.png" title="', // Icon image.
 		_('Account Sections'), '" /> ', // Icon title.
@@ -174,24 +173,19 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 	echo '<br />
 	<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">', _('Section Number'), '</th>
 				<th class="ascending">', _('Section Description'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
-	$k=0; //row colour counter
 	while ($myrow = DB_fetch_array($result)) {
 
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		echo	'<td class="number">', $myrow['sectionid'], '</td>
+		echo '<tr class="striped_row">
+				<td class="number">', $myrow['sectionid'], '</td>
 				<td class="text">', $myrow['sectionname'], '</td>
 				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($myrow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
 				<td class="noprint">';
@@ -203,8 +197,8 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		echo '</td>
 			</tr>';
 	} //END WHILE LIST LOOP
-	echo '</table>';
-/*	echo '</div>';// End div id="Report".*/
+	echo '</tbody>
+		</table>';
 } //end of ifs and buts!
 
 

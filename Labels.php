@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Labels.php 4950 2012-02-22 06:26:38Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Label Templates');
@@ -296,16 +295,9 @@ if (!isset($SelectedLabelID)) {
 					<th>' . _('Row Height') . '</th>
 					<th>' . _('Column Width') . '</th>
 				</tr>';
-		$k=0;
+
 		while ($myrow = DB_fetch_array($result)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
 			if ($myrow['rowheight']>0) {
 				$NoOfRows = floor(($myrow['pageheight']-$myrow['topmargin'])/$myrow['rowheight']);
 			} else {
@@ -323,7 +315,8 @@ if (!isset($SelectedLabelID)) {
 				}
 			}
 			if (isset($Paper)){
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td colspan="2">%s</td>
 						<td class="number">%s</td>
@@ -347,7 +340,8 @@ if (!isset($SelectedLabelID)) {
 						$RootPath . '/LabelFields.php?',
 						$myrow['labelid']);
 			} else {
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -527,7 +521,7 @@ echo '<tr>
 		<td>' . _('Column Width') . ' - (Cw):</td>
 		<td><input type="text" name="ColumnWidth" size="4" maxlength="4" value="' . $_POST['ColumnWidth'] . '" /></td>
 	</tr>
-	</table></td></tr>
+	</table>
 	</td></tr>
 	</table>';
 
@@ -558,19 +552,10 @@ if (isset($SelectedLabelID)) {
 						<th>' . _('Bar-code') . '</th>
 					</tr>';
 	if (DB_num_rows($result)>0){
-		$k=0;
 		while ($myrow = DB_fetch_array($result)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-
 			echo '<input type="hidden" name="LabelFieldID' . $i . '" value="' . $myrow['labelfieldid'] . '" />
-			<td><select name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
+			<tr class="striped_row"><td><select name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
 			if ($myrow['fieldvalue']=='itemcode'){
 				echo '<option selected="selected" value="itemcode">' . _('Item Code') . '</option>';
 			} else {

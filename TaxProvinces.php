@@ -1,5 +1,4 @@
 <?php
-/* $Id: TaxProvinces.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Dispatch Tax Provinces');
@@ -90,7 +89,7 @@ if(isset($_POST['submit'])) {
 			$ErrMsg = _('Could not add tax province');
 			$result = DB_query($sql, $ErrMsg);
 
-			$TaxProvinceID = DB_Last_Insert_ID( 'taxprovinces', 'taxprovinceid');
+			$TaxProvinceID = DB_Last_Insert_ID('taxprovinces', 'taxprovinceid');
 			$sql = "INSERT INTO taxauthrates (taxauthority, dispatchtaxprovince, taxcatid)
 					SELECT taxauthorities.taxid, '" . $TaxProvinceID . "', taxcategories.taxcatid
 					FROM taxauthorities CROSS JOIN taxcategories";
@@ -161,27 +160,23 @@ or deletion of the records*/
 	$result = DB_query($sql,$ErrMsg);
 
 	echo '<table class="selection">
+		<thead>
 			<tr>
 				<th class="ascending">' . _('Tax Province') . '</th>
 				<th colspan="2">&nbsp;</th>
-			</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
-	$j = 1;
 	while($myrow = DB_fetch_row($result)) {
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
-		echo '<td>' . $myrow[1] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow[1] . '</td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $myrow[0] . '">' . _('Edit') . '</a></td>
 				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxProvince=' . $myrow[0] . '&amp;delete=1">' . _('Delete')  . '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 
 

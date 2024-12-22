@@ -1,5 +1,10 @@
 <?php
-/* $Id: DefinePOClass.php 5857 2013-04-27 22:19:01Z daintree $ */
+/**********************************************************************************************
+*
+* KL RICARD: Added KL fields
+*
+***********************************************************************************************/
+
 /* Definition of the PurchOrder class to hold all the information for a purchase order and delivery
 */
 
@@ -49,6 +54,7 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
+// KL RICARD
 	var $KLStatus;
 	var $KLAgreedDeliveryDate;
 	var $KLPaymentDate;
@@ -56,6 +62,7 @@ Class PurchOrder {
 	var $KLShipmentAWB;
 	var $KLCustomsDate;
 	var $KLArrivalDate;
+// KL RICARD end
 
 	function __construct(){
 	/*Constructor function initialises a new purchase order object */

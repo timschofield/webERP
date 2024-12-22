@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: FixedAssetCategories.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 
@@ -171,17 +170,9 @@ or deletion of the records*/
 			<th>' . _('Accum Depn GL') . '</th>
 		  </tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>

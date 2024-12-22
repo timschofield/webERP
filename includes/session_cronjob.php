@@ -84,21 +84,12 @@ if (!isset($AllowCronJobToBeRun)){ /* only do security checks if AllowCronJobToB
 /*User is logged in so get configuration parameters  - save in session*/
 include($PathPrefix . 'includes/GetConfig.php');
 
-/*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-//if (strcmp($Version,$_SESSION['VersionNumber'])>0 AND (basename($_SERVER['SCRIPT_NAME'])!='UpgradeDatabase.php')) {
-//	header('Location: UpgradeDatabase.php');
-//}
+/* RICARD KL: Do not perform any Version check to run Upgrade DB when we are doing cron jobs */
 
-If (isset($_POST['Theme']) AND ($_SESSION['UsersRealName'] == $_POST['RealName'])) {
-	$_SESSION['Theme'] = $_POST['Theme'];
-	$Theme = $_POST['Theme'];
-} elseif (!isset($_SESSION['Theme'])) {
-	$Theme = $_SESSION['DefaultTheme'];
-	$_SESSION['Theme'] = $_SESSION['DefaultTheme'];
-
-} else {
-	$Theme = $_SESSION['Theme'];
-}
+/* RICARD KL Set up the login theme for production, test, development, development test webERP */
+$Theme = 'professional'; // Production environment: we are on production code with the real production DB
+$_SESSION['Theme'] = $Theme;
+/* RICARD KL END MODIFICATION Set up the login theme for production, test, development, development test webERP */
 
 /* Set the logo if not yet set.
  * will be done only once per session and each time

@@ -1,6 +1,6 @@
 <?php
-/* $Id: GLAccountInquiry.php 7706 2016-12-16 21:22:07Z rchacon $*/
-/* Shows the general ledger transactions for a specified account over a specified range of periods */
+// GLAccountInquiry.php
+// Shows the general ledger transactions for a specified account over a specified range of periods.
 
 include ('includes/session.php');
 $Title = _('General Ledger Account Inquiry');
@@ -8,8 +8,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/transactions.png" title="',// Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="',// Icon image.
 	_('General Ledger Account Inquiry'), '" /> ',// Icon title.
 	_('General Ledger Account Inquiry'), '</p>';// Page title.
 
@@ -27,16 +26,22 @@ if(isset($_POST['Period'])) {
 	$SelectedPeriod = array($_GET['Period']);
 }
 
+if(isset($_GET['Show'])) {
+	$_POST['Show'] = $_GET['Show'];
+}
+
 /* Get the start and periods, depending on how this script was called*/
 if(isset($SelectedPeriod)) { //If it was called from itself (in other words an inquiry was run and we wish to leave the periods selected unchanged
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
-} elseif(isset($_GET['FromPeriod'])) { //If it was called from the Trial Balance/P&L or Balance sheet
-	$FirstPeriodSelected = $_GET['FromPeriod'];
-	$LastPeriodSelected = $_GET['ToPeriod'];
+} elseif(isset($_GET['PeriodFrom'])) { //If it was called from the Trial Balance/P&L or Balance sheet
+	$FirstPeriodSelected = $_GET['PeriodFrom'];
+	$LastPeriodSelected = $_GET['PeriodTo'];
+	$SelectedPeriod[0] = $_GET['PeriodFrom'];
+	$SelectedPeriod[1] = $_GET['PeriodTo'];
 } else { // Otherwise just highlight the current period
-	$FirstPeriodSelected = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$LastPeriodSelected = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$FirstPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
+	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 }
 
 echo '<div class="page_help_text noprint">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
@@ -74,6 +79,30 @@ while($myrow=DB_fetch_array($Account)) {
  }
 echo '</select></td>
 	</tr>';
+
+//Select the tag
+echo '<tr>
+		<td>' . _('Select Tag') . ':</td>
+		<td><select name="tag">';
+
+$SQL = "SELECT tagref,
+			tagdescription
+		FROM tags
+		ORDER BY tagref";
+
+$result=DB_query($SQL);
+echo '<option value="0">0 - '._('All tags') . '</option>';
+
+while($myrow=DB_fetch_array($result)) {
+	if(isset($_POST['tag']) and $_POST['tag']==$myrow['tagref']) {
+		echo '<option selected="selected" value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+	} else {
+		echo '<option value="' . $myrow['tagref'] . '">' . $myrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+	}
+}
+echo '</select></td>
+	</tr>';
+// End select tag
 
 echo '<tr>
 		<td>' . _('For Period range').':</td>
@@ -129,15 +158,23 @@ if(isset($_POST['Show'])) {
 				trandate,
 				narrative,
 				amount,
-				periodno
+				periodno,
+				gltrans.tag,
+				tagdescription
 			FROM gltrans INNER JOIN systypes
 			ON systypes.typeid=gltrans.type
+			LEFT JOIN tags
+			ON gltrans.tag = tags.tagref
 			WHERE gltrans.account = '" . $SelectedAccount . "'
-				AND posted=1
-				AND periodno>='" . $FirstPeriodSelected . "'
-				AND periodno<='" . $LastPeriodSelected . "'
-			ORDER BY periodno, gltrans.trandate, counterindex";
+			AND posted=1
+			AND periodno>='" . $FirstPeriodSelected . "'
+			AND periodno<='" . $LastPeriodSelected . "'";
 
+	if($_POST['tag']!=0) {
+ 		$sql = $sql . " AND tag='" . $_POST['tag'] . "'";
+	}
+
+	$sql = $sql . " ORDER BY periodno, gltrans.trandate, counterindex";
 	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
 	$nameresult = DB_query($namesql);
 	$namerow=DB_fetch_array($nameresult);
@@ -162,7 +199,8 @@ if(isset($_POST['Show'])) {
 				<th>', _('Narrative'), '</th>
 				<th>', _('Debit'), '</th>
 				<th>', _('Credit'), '</th>
-				<th>', _('Balance'), '</th>',
+				<th>', _('Balance'), '</th>
+				<th>', _('Tag'), '</th>',
 				$BankAccountInfo, '
 			</tr>
 		</thead><tbody>';
@@ -197,7 +235,6 @@ if(isset($_POST['Show'])) {
 	$PeriodNo = -9999;
 	$ShowIntegrityReport = False;
 	$j = 1;
-	$k = 0; //row colour counter
 	$IntegrityReport='';
 	while($myrow=DB_fetch_array($TransResult)) {
 		if($myrow['periodno']!=$PeriodNo) {
@@ -239,13 +276,6 @@ if(isset($_POST['Show'])) {
 			$PeriodTotal = 0;
 		}
 
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 		$BankRef = '';
 		$OrgAmt = '';
 		$Currency = '';
@@ -290,7 +320,7 @@ if(isset($_POST['Show'])) {
 		}
 
 
-		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&amp;TransNo=' . $myrow['typeno'];
+		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . urlencode($myrow['type']) . '&amp;TransNo=' . urlencode($myrow['typeno']);
 		$FormatedTranDate = ConvertSQLDate($myrow['trandate']);
 		if($myrow['amount']>=0) {
 			$DebitAmount = locale_number_format($myrow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
@@ -301,13 +331,15 @@ if(isset($_POST['Show'])) {
 		}
 		$RunningTotal += $myrow['amount'];
 		$PeriodTotal += $myrow['amount'];
-		echo	'<td class="text">', _($myrow['typename']), '</td>
+		echo	'<tr class="striped_row">
+				<td class="text">', _($myrow['typename']), '</td>
 				<td class="number"><a href="', $URL_to_TransDetail, '">', $myrow['typeno'], '</a></td>
 				<td class="centre">', $FormatedTranDate, '</td>
 				<td class="text">', $myrow['narrative'], '</td>
 				<td class="number">', $DebitAmount, '</td>
 				<td class="number">', $CreditAmount, '</td>
-				<td class="number">', locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</td>';
+				<td class="number">', locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="text">', $myrow['tagdescription'], '</td>';
 		if(isset($BankAccount)) {
 			echo '<td class="text">', $Currency, '</td>
 				<td class="number"><b>', locale_number_format($OrgAmt, $_SESSION['CompanyRecord']['decimalplaces']), '</b></td>
@@ -336,7 +368,7 @@ if(isset($_POST['Show'])) {
 		</tbody></table>';
 } /* end of if Show button hit */
 
-if(isset($ShowIntegrityReport) AND $ShowIntegrityReport==True) {
+if(isset($ShowIntegrityReport) AND $ShowIntegrityReport==True AND $_POST['tag']=='0') {
 	if(!isset($IntegrityReport)) {
 		$IntegrityReport='';
 	}

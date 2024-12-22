@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: InventoryPlanning.php 7137 2015-02-08 02:15:28Z daintree $ */
 
 include('includes/session.php');
 /* webERP manual links before header.php */
@@ -106,12 +105,13 @@ if (isset($_POST['PrintPDF'])) {
 	   include('includes/footer.php');
 	   exit;
 	}
-	$Period_0_Name = GetMonthText(mktime(0,0,0,Date('m'),Date('d'),Date('Y')));
-	$Period_1_Name = GetMonthText(mktime(0,0,0,Date('m')-1,Date('d'),Date('Y')));
-	$Period_2_Name = GetMonthText(mktime(0,0,0,Date('m')-2,Date('d'),Date('Y')));
-	$Period_3_Name = GetMonthText(mktime(0,0,0,Date('m')-3,Date('d'),Date('Y')));
-	$Period_4_Name = GetMonthText(mktime(0,0,0,Date('m')-4,Date('d'),Date('Y')));
-	$Period_5_Name = GetMonthText(mktime(0,0,0,Date('m')-5,Date('d'),Date('Y')));
+
+	$Period_0_Name = GetMonthText(date('m', mktime(0,0,0,Date('m'),Date('d'),Date('Y'))));
+	$Period_1_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-1,Date('d'),Date('Y'))));
+	$Period_2_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-2,Date('d'),Date('Y'))));
+	$Period_3_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-3,Date('d'),Date('Y'))));
+	$Period_4_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-4,Date('d'),Date('Y'))));
+	$Period_5_Name = GetMonthText(date('m', mktime(0,0,0,Date('m')-5,Date('d'),Date('Y'))));
 
 	include ('includes/PDFInventoryPlanPageHeader.inc');
 
@@ -465,7 +465,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription';

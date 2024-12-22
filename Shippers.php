@@ -1,5 +1,9 @@
 <?php
-/* $Id: Shippers.php 6941 2014-10-26 23:18:08Z daintree $*/
+
+/**************************************************************************************
+KL RICARD MODIFICATIONS:
+- change of "consignment" to "tracking"
+***************************************************************************************/
 
 include('includes/session.php');
 $Title = _('Shipping Company Maintenance');
@@ -142,22 +146,16 @@ or deletion of the records*/
 			<th class="ascending">' .  _('PowerTrack Code'). '</th>
 		</tr>';
 
-	$k=0; //row colour counter
 
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedShipper=%s">' .  _('Edit') . '</a></td>
-			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">' .  _('Delete'). '</a></td></tr>',
+			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">' .  _('Delete'). '</a></td>
+			</tr>',
 			$myrow[0],
 			$myrow[1],
 			$myrow[3],
@@ -193,7 +191,6 @@ if (!isset($_GET['delete'])) {
 					opencart_text, 
 					powertrack_code
 				FROM shippers WHERE shipper_id='".$SelectedShipper."'";
-
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
 

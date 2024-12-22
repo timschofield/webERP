@@ -461,6 +461,7 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 
 	/* If sent from TEST weberp, add some text to not confuse the receiver */
 	if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+		// the current script filename contains TEST, we are on TEST database
 		$EmailSubject = "TEST webERP " . $EmailSubject;
 		$EmailText = "TEST webERP " . $EmailText;
 		$EmailAddress = "webmaster@kapal-laut.com";

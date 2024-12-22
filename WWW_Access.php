@@ -1,5 +1,4 @@
 <?php
-/* $Id: WWW_Access.php 7053 2014-12-28 23:21:24Z rchacon $*/
 /* This script is to maintaining access permissions. */
 
 include ('includes/session.php');
@@ -11,6 +10,11 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	'/images/group_add.png" title="' .
 	_('Access Permissions Maintenance') . '" /> ' .// Icon title.
 	_('Access Permissions Maintenance') . '</p>';// Page title.
+
+if($AllowDemoMode) {
+	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	exit;
+}
 
 if(isset($_GET['SelectedRole'])) {
 	$SelectedRole = $_GET['SelectedRole'];
@@ -115,20 +119,12 @@ if (!isset($SelectedRole)) {
 			<th>&nbsp;</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while($myrow = DB_fetch_array($result)) {
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 
 		/*The SecurityHeadings array is defined in config.php */
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td>%s</td>
 			<td><a href="%s&amp;SelectedRole=%s">' . _('Edit') . '</a></td>
 			<td><a href="%s&amp;SelectedRole=%s&amp;delete=1&amp;SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
@@ -212,43 +208,37 @@ if (isset($SelectedRole)) {
 	}
 	echo '</tr>';
 
-	$k=0; //row colour counter
 	while($AvailRow = DB_fetch_array($Result)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
 		if (in_array($AvailRow['tokenid'],$TokensUsed)){
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td><a href="%sSelectedRole=%s&amp;remove=1&amp;PageToken=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this security token from this role?') . '\');">' . _('Remove') . '</a></td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
-					<td>&nbsp;</td>',
+					<td>&nbsp;</td>
+					</tr>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
 					$SelectedRole,
 					$AvailRow['tokenid'] );
 		} else {
-			printf('<td>&nbsp;</td>
+			printf('<tr class="striped_row">
+					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>&nbsp;</td>
 					<td>%s</td>
 					<td>%s</td>
-					<td><a href="%sSelectedRole=%s&amp;add=1&amp;PageToken=%s">' . _('Add') . '</a></td>',
+					<td><a href="%sSelectedRole=%s&amp;add=1&amp;PageToken=%s">' . _('Add') . '</a></td>
+					</tr>',
 					$AvailRow['tokenid'],
 					$AvailRow['tokenname'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
 					$SelectedRole,
 					$AvailRow['tokenid'] );
 		}
-		echo '</tr>';
 	}
 	echo '</table>';
 }

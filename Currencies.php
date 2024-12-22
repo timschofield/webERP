@@ -1,19 +1,23 @@
 <?php
-/* $Id: Currencies.php 7644 2016-10-11 15:52:19Z rchacon $*/
-/* This script defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here. */
+//	Currencies.php
+//	Defines the currencies available. Each customer and supplier must be defined as transacting in one of the currencies defined here.
+/*
+	The country field is unneeded because the country_code is included inside the currency_code (firsts two letters).
+*/
 
 include('includes/session.php');
-$Title = _('Currencies Maintenance');// Screen identification.
-$ViewTopic= 'Currencies';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'Currencies';// Anchor's id in the manual's html document.
+$ViewTopic = 'Setup';
+$BookMark = 'Currencies';
+$Title = _('Currencies Maintenance');
 include('includes/header.php');
 
-include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
-include('includes/SQL_CommonFunctions.inc');
+include_once('includes/CountriesArray.php');// To get the country name from the country code.
+include_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
+include_once('includes/SQL_CommonFunctions.inc');
 
-if (isset($_GET['SelectedCurrency'])){
+if (isset($_GET['SelectedCurrency'])) {
 	$SelectedCurrency = $_GET['SelectedCurrency'];
-} elseif (isset($_POST['SelectedCurrency'])){
+} elseif (isset($_POST['SelectedCurrency'])) {
 	$SelectedCurrency = $_POST['SelectedCurrency'];
 }
 
@@ -28,10 +32,10 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/currency.png" title="' .// Icon image.
-	_('Currencies') . '" /> ' .// Icon title.
-	_('Currencies Maintenance') . '</p>';// Page title.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	'/images/currency.png" title="', // Icon image.
+	$Title, '" /> ', // Icon title.
+	$Title, '</p>';// Page title.
 
 if (isset($_POST['submit'])) {
 
@@ -44,37 +48,37 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs are sensible
 	$i=1;
 
-	$sql="SELECT count(currabrev)
+	$SQL="SELECT count(currabrev)
 			FROM currencies
 			WHERE currabrev='".$_POST['Abbreviation']."'";
 
-	$result=DB_query($sql);
-	$myrow=DB_fetch_row($result);
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_row($Result);
 
-	if ($myrow[0]!=0 AND !isset($SelectedCurrency)) {
+	if ($MyRow[0]!=0 AND !isset($SelectedCurrency)) {
 		$InputError = 1;
 		prnMsg( _('The currency already exists in the database'),'error');
 		$Errors[$i] = 'Abbreviation';
 		$i++;
 	}
 
-	if (!is_numeric(filter_number_format($_POST['ExchangeRate']))){
+	if (!is_numeric(filter_number_format($_POST['ExchangeRate']))) {
 		$InputError = 1;
 		prnMsg(_('The exchange rate must be numeric'),'error');
 		$Errors[$i] = 'ExchangeRate';
 		$i++;
 	}
-	if (!is_numeric(filter_number_format($_POST['DecimalPlaces']))){
+	if (!is_numeric(filter_number_format($_POST['DecimalPlaces']))) {
 		$InputError = 1;
 	   prnMsg(_('The number of decimal places to display for amounts in this currency must be numeric'),'error');
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
-	}elseif (filter_number_format($_POST['DecimalPlaces'])<0){
+	}elseif (filter_number_format($_POST['DecimalPlaces'])<0) {
 		$InputError = 1;
 	   prnMsg(_('The number of decimal places to display for amounts in this currency must be positive or zero'),'error');
 		$Errors[$i] = 'DecimalPlaces';
 		$i++;
-	} elseif (filter_number_format($_POST['DecimalPlaces'])>4){
+	} elseif (filter_number_format($_POST['DecimalPlaces'])>4) {
 		$InputError = 1;
 	   prnMsg(_('The number of decimal places to display for amounts in this currency is expected to be 4 or less'),'error');
 		$Errors[$i] = 'DecimalPlaces';
@@ -93,7 +97,7 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'HundredsName';
 		$i++;
 	}
-	if (($FunctionalCurrency != '') AND (isset($SelectedCurrency) AND $SelectedCurrency==$FunctionalCurrency)){
+	if (($FunctionalCurrency != '') AND (isset($SelectedCurrency) AND $SelectedCurrency==$FunctionalCurrency)) {
 		$_POST['ExchangeRate'] = 1;
 	}
 
@@ -103,11 +107,11 @@ if (isset($_POST['submit'])) {
 				FROM currencies
 				WHERE currabrev = '" . $SelectedCurrency . "'";
 		$ResultOldRate = DB_query($SQLOldRate);
-		$myrow = DB_fetch_row($ResultOldRate);
-		$OldRate = $myrow[0];
+		$MyRow = DB_fetch_row($ResultOldRate);
+		$OldRate = $MyRow[0];
 
 		/*SelectedCurrency could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		$sql = "UPDATE currencies SET	country='". $_POST['Country']. "',
+		$SQL = "UPDATE currencies SET	country='". $_POST['Country']. "',
 										hundredsname='" . $_POST['HundredsName'] . "',
 										decimalplaces='" . filter_number_format($_POST['DecimalPlaces']) . "',
 										rate='" .filter_number_format($_POST['ExchangeRate']) . "',
@@ -119,28 +123,30 @@ if (isset($_POST['submit'])) {
 	} else if ($InputError !=1) {
 
 	/*Selected currencies is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
-		$sql = "INSERT INTO currencies (currency,
-										currabrev,
-										country,
-										hundredsname,
-										decimalplaces,
-										rate,
-										webcart)
-								VALUES ('" . $CurrencyName[$_POST['Abbreviation']] . "',
-										'" . $_POST['Abbreviation'] . "',
-										'" . $_POST['Country'] . "',
-										'" . $_POST['HundredsName'] .  "',
-										'" . filter_number_format($_POST['DecimalPlaces']) . "',
-										'" . filter_number_format($_POST['ExchangeRate']) . "',
-										'" . $_POST['webcart'] . "')";
+		$SQL = "INSERT INTO currencies (
+						currency,
+						currabrev,
+						country,
+						hundredsname,
+						decimalplaces,
+						rate,
+						webcart
+					) VALUES ('" .
+						$CurrencyName[$_POST['Abbreviation']] . "', '" .
+						$_POST['Abbreviation'] . "', '" .
+						$_POST['Country'] . "', '" .
+						$_POST['HundredsName'] .  "', '" .
+						filter_number_format($_POST['DecimalPlaces']) . "', '" .
+						filter_number_format($_POST['ExchangeRate']) . "', '" .
+						$_POST['webcart'] . "')";
 		$msg = _('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
 	$ExDiffTransNo = GetNextTransNo(36);
-	$resultTx = DB_Txn_Begin();
+	DB_Txn_Begin();
 
-	$result = DB_query($sql);
-	if ($InputError!=1){
+	$Result = DB_query($SQL);
+	if ($InputError!=1) {
 		prnMsg( $msg,'success');
 	}
 
@@ -162,19 +168,19 @@ if (isset($_POST['submit'])) {
 									accountcode
 							FROM bankaccounts
 							WHERE currcode = '" . $SelectedCurrency . "'";
-		$resultBankAccounts = DB_query($SQLBankAccounts);
-		while ($myrowBankAccount=DB_fetch_array($resultBankAccounts)){
+		$ResultBankAccounts = DB_query($SQLBankAccounts);
+		while ($MyRowBankAccount=DB_fetch_array($ResultBankAccounts)) {
 
 			/*Get the balance of the bank account concerned */
 			$SQL = "SELECT bfwd+actual AS balance
 					FROM chartdetails
 					WHERE period='" . $PeriodNo . "'
-					AND accountcode='" . $myrowBankAccount['accountcode'] . "'";
+					AND accountcode='" . $MyRowBankAccount['accountcode'] . "'";
 
 			$ErrMsg = _('The bank account balance could not be returned by the SQL because');
 			$BalanceResult = DB_query($SQL,$ErrMsg);
-			$myrow = DB_fetch_row($BalanceResult);
-			$OldBalanceInFunctionalCurrency = $myrow[0];
+			$MyRow = DB_fetch_row($BalanceResult);
+			$OldBalanceInFunctionalCurrency = $MyRow[0];
 			$BalanceInAccountCurrency = $OldBalanceInFunctionalCurrency * $OldRate;
 
 			/* Now calculate the Balance in functional currency at the new rate */
@@ -182,47 +188,49 @@ if (isset($_POST['submit'])) {
 
 			/* If some adjustment has to be done, do it! */
 			$DifferenceToAdjust = $NewBalanceInFucntionalCurrency - $OldBalanceInFunctionalCurrency;
-			if($OldRate != $NewRate){
+			if($OldRate != $NewRate) {
 
-				$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-										  VALUES (36,
-											'" . $ExDiffTransNo . "',
-											'" . FormatDateForSQL($PostingDate) . "',
-											'" . $PeriodNo . "',
-											'" . $_SESSION['CompanyRecord']['exchangediffact'] . "',
-											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate,8) . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
-											'" . (-$DifferenceToAdjust) . "')";
-
+				$SQL = "INSERT INTO gltrans (
+								type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount
+							) VALUES (
+								36, '" .
+								$ExDiffTransNo . "', '" .
+								FormatDateForSQL($PostingDate) . "', '" .
+								$PeriodNo . "', '" .
+								$_SESSION['CompanyRecord']['exchangediffact'] . "', '" .
+								$MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "', '" .
+								(-$DifferenceToAdjust) . "')";
 				$ErrMsg = _('Cannot insert a GL entry for the exchange difference because');
 				$DbgMsg = _('The SQL that failed to insert the exchange difference GL entry was');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				$SQL = "INSERT INTO gltrans (type,
-											typeno,
-											trandate,
-											periodno,
-											account,
-											narrative,
-											amount)
-										  VALUES (36,
-											'" . $ExDiffTransNo . "',
-											'" . FormatDateForSQL($PostingDate) . "',
-											'" . $PeriodNo . "',
-											'" . $myrowBankAccount['accountcode'] . "',
-											'" . $myrowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate,8) . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "',
-											'" . ($DifferenceToAdjust) . "')";
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$SQL = "INSERT INTO gltrans (
+								type,
+								typeno,
+								trandate,
+								periodno,
+								account,
+								narrative,
+								amount
+							) VALUES (36, '" .
+								$ExDiffTransNo . "', '" .
+								FormatDateForSQL($PostingDate) . "', '" .
+								$PeriodNo . "', '" .
+								$MyRowBankAccount['accountcode'] . "', '" .
+								$MyRowBankAccount['bankaccountname'] . ' ' . _('currency rate adjustment to') . ' ' . locale_number_format($NewRate, 'Variable') . ' ' . $SelectedCurrency . '/' . $_SESSION['CompanyRecord']['currencydefault']. "', '" .
+								($DifferenceToAdjust) . "')";
 
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				prnMsg(_('Bank Account') . ' ' . $myrowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust,$_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				prnMsg(_('Bank Account') . ' ' . $MyRowBankAccount['bankaccountname'] . ' ' . _('Currency Rate difference of') . ' ' . locale_number_format($DifferenceToAdjust, $_SESSION['CompanyRecord']['decimalplaces']) . ' ' . _('has been posted'),'success');
 			}
 		}
 	}
-	$resultTx = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	unset($SelectedCurrency);
 	unset($_POST['Country']);
@@ -237,44 +245,44 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN DebtorsMaster
 
-	$sql= "SELECT COUNT(*) FROM debtorsmaster
+	$SQL= "SELECT COUNT(*) FROM debtorsmaster
 			WHERE currcode = '" . $SelectedCurrency . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0] > 0)
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0] > 0)
 	{
 		prnMsg(_('Cannot delete this currency because customer accounts have been created referring to this currency') .
-		 	'<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
+		 	'<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('customer accounts that refer to this currency'),'warn');
 	} else {
-		$sql= "SELECT COUNT(*) FROM suppliers
+		$SQL= "SELECT COUNT(*) FROM suppliers
 				WHERE suppliers.currcode = '".$SelectedCurrency."'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0] > 0) {
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0] > 0) {
 			prnMsg(_('Cannot delete this currency because supplier accounts have been created referring to this currency')
-			 . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
+			 . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('supplier accounts that refer to this currency'),'warn');
 		} else {
-			$sql= "SELECT COUNT(*) FROM banktrans
+			$SQL= "SELECT COUNT(*) FROM banktrans
 					WHERE currcode = '" . $SelectedCurrency . "'";
-			$result = DB_query($sql);
-			$myrow = DB_fetch_row($result);
-			if ($myrow[0] > 0){
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_row($Result);
+			if ($MyRow[0] > 0) {
 				prnMsg(_('Cannot delete this currency because there are bank transactions that use this currency') .
-				'<br />' . ' ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank transactions that refer to this currency'),'warn');
-			} elseif ($FunctionalCurrency==$SelectedCurrency){
+				'<br />' . ' ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('bank transactions that refer to this currency'),'warn');
+			} elseif ($FunctionalCurrency==$SelectedCurrency) {
 				prnMsg(_('Cannot delete this currency because it is the functional currency of the company'),'warn');
 			} else {
-				$sql= "SELECT COUNT(*) FROM bankaccounts
+				$SQL= "SELECT COUNT(*) FROM bankaccounts
 					WHERE currcode = '" . $SelectedCurrency . "'";
-				$result = DB_query($sql);
-				$myrow = DB_fetch_row($result);
-				if ($myrow[0] > 0){
+				$Result = DB_query($SQL);
+				$MyRow = DB_fetch_row($Result);
+				if ($MyRow[0] > 0) {
 					prnMsg(_('Cannot delete this currency because there are bank accounts that use this currency') .
-					'<br />' . ' ' . _('There are') . ' ' . $myrow[0] . ' ' . _('bank accounts that refer to this currency'),'warn');
+					'<br />' . ' ' . _('There are') . ' ' . $MyRow[0] . ' ' . _('bank accounts that refer to this currency'),'warn');
 				} else {
 					//only delete if used in neither customer or supplier, comp prefs, bank trans accounts
-					$sql="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
-					$result = DB_query($sql);
+					$SQL="DELETE FROM currencies WHERE currabrev='" . $SelectedCurrency . "'";
+					$Result = DB_query($SQL);
 					prnMsg(_('The currency definition record has been deleted'),'success');
 				}
 			}
@@ -290,31 +298,30 @@ then none of the above are true and the list of payment termss will be displayed
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT	currabrev,
+	$SQL = "SELECT	currabrev,
 					country,
 					hundredsname,
 					rate,
 					decimalplaces,
 					webcart
 				FROM currencies";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>&nbsp;</th>
+			<th>' . _('Country') . '</th>
 			<th>' . _('ISO4217 Code') . '</th>
 			<th>' . _('Currency Name') . '</th>
-			<th>' . _('Country') . '</th>
 			<th>' . _('Hundredths Name') . '</th>
 			<th>' . _('Decimal Places') . '</th>
-			<th>' . _('Show in Online Shop')  . '</th>
+			<th>' . _('Show in webSHOP')  . '</th>
 			<th>' . _('Exchange Rate') . '</th>
 			<th>' . _('1 / Ex Rate') . '</th>
 			<th>' . _('Ex Rate - ECB')  . '</th>
 			<th colspan="3">' . _('Maintenance')  . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
 	/*Get published currency rates from Eurpoean Central Bank */
 	if ($_SESSION['UpdateCurrencyRatesDaily'] != '0') {
 		$CurrencyRatesArray = GetECBCurrencyRates();
@@ -322,88 +329,66 @@ or deletion of the records*/
 		$CurrencyRatesArray = array();
 	}
 
-	while ($myrow = DB_fetch_array($result)) {
-		if ($myrow['currabrev']==$FunctionalCurrency){
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['currabrev']==$FunctionalCurrency) {
 			echo '<tr style="background-color:#FFbbbb">';
-		} elseif ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
 		} else {
-			echo  '<tr class="OddTableRows">';
-			$k++;
+			echo  '<tr class="striped_row">';
 		}
 		// Lets show the country flag
-		$ImageFile = 'flags/' . mb_strtoupper($myrow['currabrev']) . '.gif';
+		$ImageFile = 'flags/' . mb_strtoupper($MyRow['currabrev']) . '.gif';
 
-		if(!file_exists($ImageFile)){
+		if(!file_exists($ImageFile)) {
 			$ImageFile =  'flags/blank.gif';
 		}
-		if ($myrow['webcart'] == 1) {
+		if ($MyRow['webcart'] == 1) {
 			$ShowInWebText = _('Yes');
 		} else {
 			$ShowInWebText = _('No');
 		}
 
-		if ($myrow['currabrev']!=$FunctionalCurrency){
-			printf('<td><img src="%s" alt="" /></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="centre">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td><a href="%s&amp;SelectedCurrency=%s">%s</a></td>
-					<td><a href="%s&amp;SelectedCurrency=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">%s</a></td>
-					<td><a href="%s/ExchangeRateTrend.php?%s">' . _('Graph') . '</a></td>
-					</tr>',
-					$ImageFile,
-					$myrow['currabrev'],
-					$CurrencyName[$myrow['currabrev']],
-					$myrow['country'],
-					$myrow['hundredsname'],
-					locale_number_format($myrow['decimalplaces'],0),
-					$ShowInWebText,
-					locale_number_format($myrow['rate'],8),
-					locale_number_format(1/$myrow['rate'],2),
-					locale_number_format(GetCurrencyRate($myrow['currabrev'],$CurrencyRatesArray),8),
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$myrow['currabrev'],
-					_('Edit'),
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$myrow['currabrev'],
-					_('Delete'),
-					$RootPath,
-					'&amp;CurrencyToShow=' . $myrow['currabrev']);
-		} else {
-			printf('<td><img src="%s" alt="" /></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="centre">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?&amp;SelectedCurrency=' . urlencode($myrow['currabrev']) . '">' . _('Edit') . '</a></td>
-					<td colspan="2"><a href="CompanyPreferences.php#CurrencyDefault">' . _('Functional Currency') . '</a></td>
-					</tr>',
-					$ImageFile,
-					$myrow['currabrev'],
-					$CurrencyName[$myrow['currabrev']],
-					$myrow['country'],
-					$myrow['hundredsname'],
-					locale_number_format($myrow['decimalplaces'],0),
-					$ShowInWebText,
-					locale_number_format(1,8),
-					locale_number_format(1,2),
-					locale_number_format(1,8),
-					_('Home Currency'));
+		if ($MyRow['rate'] == 0) {
+			$MyRow['rate'] = 1;
+		}
+		if (!array_key_exists($MyRow['currabrev'], $CurrencyRatesArray)) {
+			$CurrencyRatesArray[$FunctionalCurrency] = 0;
+			$CurrencyRatesArray[$MyRow['currabrev']] = 0;
+		}
+		$Rate = GetCurrencyRate($MyRow['currabrev'],$CurrencyRatesArray);
+		if ($Rate == 0) {
+			$Rate = 1;
 		}
 
+		if ($MyRow['currabrev']!=$FunctionalCurrency) {
+			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
+					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
+					<td>', $MyRow['currabrev'], '</td>
+					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
+					<td>', $MyRow['hundredsname'], '</td>
+					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
+					<td class="centre">', $ShowInWebText, '</td>
+					<td class="number">', locale_number_format($MyRow['rate'], 'Variable'), '</td>
+					<td class="number">', locale_number_format(1/$MyRow['rate'], 2), '</td>
+					<td class="number">', locale_number_format($Rate, 8), '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '">', _('Edit'), '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedCurrency=', $MyRow['currabrev'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this currency?') . '\');">', _('Delete'), '</a></td>
+					<td><a href="', $RootPath, '/ExchangeRateTrend.php?&amp;CurrencyToShow=' . $MyRow['currabrev'], '">' . _('Graph') . '</a></td>
+				</tr>';
+		} else {
+			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
+					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>
+					<td>', $MyRow['currabrev'], '</td>
+					<td>', $CurrencyName[$MyRow['currabrev']], '</td>
+					<td>', $MyRow['hundredsname'], '</td>
+					<td class="number">', locale_number_format($MyRow['decimalplaces'], 0), '</td>
+					<td class="centre">', $ShowInWebText, '</td>
+					<td class="number">', locale_number_format(1, 8), '</td>
+					<td class="number">', locale_number_format(1, 2), '</td>
+					<td class="number">', locale_number_format(1, 8), '</td>
+					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?&amp;SelectedCurrency=' . urlencode($MyRow['currabrev']) . '">' . _('Edit') . '</a></td>
+					<td colspan="2"><a href="CompanyPreferences.php#CurrencyDefault">' . _('Functional Currency') . '</a></td>
+				</tr>';
+		}
 	} //END WHILE LIST LOOP
 	echo '</table>
 			<br />';
@@ -414,129 +399,126 @@ if (isset($SelectedCurrency)) {
 	echo '<div class="centre"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '">' . _('Show all currency definitions') . '</a></div>';
 }
 
-echo '<br />';
-
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedCurrency) AND $SelectedCurrency!='') {
 		//editing an existing currency
 
-		$sql = "SELECT	currabrev,
-						country,
-						hundredsname,
-						decimalplaces,
-						rate,
-						webcart
+		$SQL = "SELECT
+					currabrev,
+					country,
+					hundredsname,
+					decimalplaces,
+					rate,
+					webcart
 				FROM currencies
 				WHERE currabrev='" . $SelectedCurrency . "'";
 
 		$ErrMsg = _('An error occurred in retrieving the currency information');;
-		$result = DB_query($sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
+		$MyRow = DB_fetch_array($Result);
 
-		$myrow = DB_fetch_array($result);
-
-		$_POST['Abbreviation'] = $myrow['currabrev'];
-		$_POST['Country']  = $myrow['country'];
-		$_POST['HundredsName']  = $myrow['hundredsname'];
-		$_POST['ExchangeRate']  = locale_number_format($myrow['rate'],8);
-		$_POST['DecimalPlaces']  = locale_number_format($myrow['decimalplaces'],0);
-		$_POST['webcart']  = $myrow['webcart'];
+		$_POST['Abbreviation'] = $MyRow['currabrev'];
+		$_POST['Country']  = $MyRow['country'];
+		$_POST['HundredsName']  = $MyRow['hundredsname'];
+		$_POST['ExchangeRate']  = locale_number_format($MyRow['rate'], 'Variable');
+		$_POST['DecimalPlaces']  = locale_number_format($MyRow['decimalplaces'], 0);
+		$_POST['webcart']  = $MyRow['webcart'];
 
 		echo '<input type="hidden" name="SelectedCurrency" value="' . $SelectedCurrency . '" />';
 		echo '<input type="hidden" name="Abbreviation" value="' . $_POST['Abbreviation'] . '" />';
-		echo '<table class="selection">
-			<tr>
-				<td>' . _('ISO 4217 Currency Code').':</td>
-				<td>' . $_POST['Abbreviation'] . '</td>
-			</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit Currency Details'), '</legend>
+				<field>
+					<label for="Abbreviation">' . _('ISO 4217 Currency Code').':</label>
+					<fieldtext>' . $_POST['Abbreviation'] . '</fieldtext>
+				</field>';
 
 	} else { //end of if $SelectedCurrency only do the else when a new record is being entered
 		if (!isset($_POST['Abbreviation'])) {$_POST['Abbreviation']='';}
-		echo '<table class="selection">
-			<tr>
-				<td>' ._('Currency') . ':</td>
-				<td><select name="Abbreviation">';
+		echo '<fieldset>
+				<legend>', _('New currency Details'), '</legend>
+				<field>
+					<label for="Abbreviation">' ._('Currency') . ':</label>
+					<select name="Abbreviation">';
 		foreach ($CurrencyName as $CurrencyCode => $CurrencyNameTxt) {
 			echo '<option value="' . $CurrencyCode . '">' . $CurrencyCode . ' - ' . $CurrencyNameTxt . '</option>';
 		}
 
-		echo '</select></td>
-			</tr>';
+		echo '</select>
+			</field>';
 	}
 
-	echo '<tr>
-			<td>' . _('Country') . ':</td>';
+	echo '<field>
+			<label for="Country">' . _('Country') . ':</label>';
 	if (!isset($_POST['Country'])) {
 		$_POST['Country'] = '';
 	}
 	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
-		echo '<td><input type="text" name="Country" size="30" required="required" minlength="1" maxlength="50" value="' . $_POST['Country'] . '" /></td>';
+		echo '<input type="text" name="Country" size="30" required="required" minlength="1" maxlength="50" value="' . $_POST['Country'] . '" />';
 	} else {
-		echo '<td>' . $_POST['Country'] . '</td>';
+		echo '<fieldtext>' . $_POST['Country'] . '</fieldtext>';
 		echo '<input type="hidden" name="Country" value="' . $_POST['Country'] . '" />';
 	}
-	echo '</tr>
-		<tr>
-			<td>' . _('Hundredths Name') . ':</td>
-			<td>';
+	echo '</field>';
+
+	echo '<field>
+			<label for="HundredsName">' . _('Hundredths Name') . ':</label>';
 	if (!isset($_POST['HundredsName'])) {
 		$_POST['HundredsName'] = '';
 	}
-	echo '<input type="text" name="HundredsName" size="10" required="required" minlength="1" maxlength="15" value="' . $_POST['HundredsName'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Decimal Places to Display') . ':</td>
-			<td>';
+	echo '<input type="text" name="HundredsName" size="10" required="required" minlength="1" maxlength="15" value="' . $_POST['HundredsName'] . '" />
+		</field>';
+
+	echo '<field>
+			<label for="DecimalPlaces">' . _('Decimal Places to Display') . ':</label>';
 	if (!isset($_POST['DecimalPlaces'])) {
 		$_POST['DecimalPlaces'] = 2;
 	}
-	echo '<input class="integer" type="text" name="DecimalPlaces" size="2" required="required" minlength="1" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Exchange Rate') . ':</td>';
+	echo '<input class="integer" type="text" name="DecimalPlaces" size="2" required="required" minlength="1" maxlength="2" value="' . $_POST['DecimalPlaces'] . '" />
+		</field>';
+
+	echo '<field>
+			<label for="ExchangeRate">' . _('Exchange Rate') . ':</label>';
 	if (!isset($_POST['ExchangeRate'])) {
 		$_POST['ExchangeRate'] = 1;
 	}
 	if ($_POST['Abbreviation'] != $FunctionalCurrency) {
-		echo '<td><input type="text" class="number" name="ExchangeRate" size="10" required="required" minlength="1" maxlength="10" value="' . $_POST['ExchangeRate'] . '" /></td>';
+		echo '<input class="number" maxlength="16" minlength="1" name="ExchangeRate" required="required" size="16" type="text" value="', $_POST['ExchangeRate'], '" />';
 	} else {
-		echo '<td>' . $_POST['ExchangeRate'] . '</td>';
-		echo '<input type="hidden" class="number" name="ExchangeRate" value="' . $_POST['ExchangeRate'] . '" />';
+		echo '<fieldtext>', $_POST['ExchangeRate'], '</fieldtext>',
+			 '<input class="number" name="ExchangeRate" type="hidden" value="', $_POST['ExchangeRate'], '" />';
 	}
-	echo '</tr>';
+	echo '</field>';
 	if (!isset($_POST['webcart'])) {
 		$_POST['webcart'] = 1;
 	}
 
-	echo '<tr>
-			<td>' . _('Show in Online Shop') . ':</td>
-			<td><select name="webcart">';
+	echo '<field>
+			<label for="webcart">' . _('Show in webSHOP') . ':</label>
+			<select name="webcart">';
 
-	if ($_POST['webcart']==1){
+	if ($_POST['webcart']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
-	if ($_POST['webcart']==0){
+	if ($_POST['webcart']==0) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
 
 	echo '</select>
-			</td>
-		</tr>
-		</table>';
+		</field>
+		</fieldset>';
 
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

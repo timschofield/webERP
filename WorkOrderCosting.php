@@ -1,8 +1,9 @@
 <?php
-/* $Id: WorkOrderCosting.php 7576 2016-07-27 10:10:03Z exsonqu $*/
 
 include('includes/session.php');
 $Title = _('Work Order Costing');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -151,24 +152,46 @@ $RequirementsResult = DB_query("SELECT worequirements.stockid,
 								GROUP BY worequirements.stockid,
 										stockmaster.description,
 										stockmaster.decimalplaces,
-										worequirements.stdcost");
+										worequirements.stdcost
+								ORDER BY worequirements.stockid");
 
-$k=0;
 $TotalUsageVar =0;
 $TotalCostVar =0;
 $TotalIssuedCost=0;
 $TotalReqdCost=0;
 $RequiredItems =array();
+$RequiredQty = array();
+$RequiredStocks = array();
+$CostVariedStocks = array();
+$CurrStock = '';
+$CurrQty = 0;
+while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
+	if ($CurrStock == '') {
+		$CurrStock = $RequirementsRow['stockid'];
+	}
+	if ($CurrStock == $RequirementsRow['stockid']) {
+		if (in_array($RequirementsRow['stockid'],$RequiredStocks)){
+			$CurrQty += $RequirementsRow['requiredqty'];
+		} else {
+			$CurrQty = $RequirementsRow['requiredqty'];
+		}
+
+	} else {//stock changed
+		$CostVariedStocks[] = array('stockid'=>$CurrStock,'totalreqqty'=>$CurrQty);
+		$CurrStock = $RequirementsRow['stockid'];
+		$CurrQty = $RequirementsRow['requiredqty'];
+
+	}
+	$RequiredStocks[] = $RequirementsRow['stockid'];
+}
+
+DB_data_seek($RequirementsResult,0);
 
 while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	$RequiredItems[] = $RequirementsRow['stockid'];
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-	} else {
-		echo '<tr class="OddTableRows">';
-	}
 
-	echo '<td>' .  $RequirementsRow['stockid'] . '</td>
+	echo '<tr class="striped_row">
+		<td>' .  $RequirementsRow['stockid'] . '</td>
 		<td>' .  $RequirementsRow['description'] . '</td>
         </tr>';
 
@@ -187,41 +210,47 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 
 	if (DB_num_rows($IssuesResult)>0){
 		while ($IssuesRow = DB_fetch_array($IssuesResult)){
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-			} else {
-				echo '<tr class="OddTableRows">';
-			}
-			echo '<td colspan="4"></td><td>' . ConvertSQLDate($IssuesRow['trandate']) . '</td>
+			echo '<tr class="striped_row">
+				<td colspan="4"></td>
+				<td>' . ConvertSQLDate($IssuesRow['trandate']) . '</td>
 				<td class="number">' . locale_number_format(-$IssuesRow['qty'],$RequirementsRow['decimalplaces']) . '</td>
-				<td class="number">' . locale_number_format(-($IssuesRow['qty']*$IssuesRow['standardcost']),$IssuesRow['decimalplaces']) . '</td></tr>';
+				<td class="number">' . locale_number_format(-($IssuesRow['qty']*$IssuesRow['standardcost']),$IssuesRow['decimalplaces']) . '</td>
+			</tr>';
 			$IssueQty -= $IssuesRow['qty'];// because qty for the stock movement will be negative
 			$IssueCost -= ($IssuesRow['qty']*$IssuesRow['standardcost']);
 
 		}
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-		} else {
-			echo '<tr class="OddTableRows">';
-		}
-		echo '<td colspan="9"><hr /></td>
+
+		echo '<tr class="striped_row">
+				<td colspan="9"><hr /></td>
 			</tr>';
-	}
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-	} else {
-		echo '<tr class="OddTableRows">';
 	}
 
 	if ($IssueQty != 0){
-	  $CostVar = $IssueQty *(($RequirementsRow['stdcost']) -($IssueCost/$IssueQty));
+		$MultiCost = false;
+		foreach ($CostVariedStocks as $key=>$value){
+			if ($value['stockid'] == $RequirementsRow['stockid']){
+				if ($value['totalreqqty']!=0){
+					$CostVar = $IssueQty * $RequirementsRow['requiredqty']/$value['totalreqqty']*(($RequirementsRow['stdcost']) -($IssueCost/$IssueQty));
+				} else {
+					$CostVar = 0;
+				}
+				$MultiCost = true;
+				break;
+
+			}
+		}
+		if (!$MultiCost){
+			$CostVar = $IssueQty *(($RequirementsRow['stdcost']) -($IssueCost/$IssueQty));
+		}
 	} else {
 		$CostVar = 0;
 	}
 	/*Required quantity is the quantity required of the component based on the quantity of the finished item received */
 	$UsageVar =($RequirementsRow['requiredqty']-$IssueQty)*($RequirementsRow['stdcost']);
 
-	echo '<td colspan="2"></td>
+	echo '<tr class="striped_row">
+			<td colspan="2"></td>
 			<td class="number">'  . locale_number_format($RequirementsRow['requiredqty'],$RequirementsRow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($RequirementsRow['expectedcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 			<td></td>
@@ -234,11 +263,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 	$TotalIssuedCost += $IssueCost;
 	$TotalCostVar += $CostVar;
 	$TotalUsageVar += $UsageVar;
-	if ($k==1){
-		$k=0;
-	} else {
-		$k++;
-	}
+
 	echo '<tr>
 			<td colspan="9"><hr /></td>
 		</tr>';
@@ -247,7 +272,7 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 
 //Now need to run through the issues to the work order that weren't in the requirements
 
-$sql = "SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
 				stockmaster.description,
 				stockmaster.decimalplaces,
 				trandate,
@@ -262,19 +287,13 @@ $sql = "SELECT stockmoves.stockid,
 						FROM worequirements
 					WHERE worequirements.wo='" . $_POST['WO'] . "')";
 
-$WOIssuesResult = DB_query($sql,_('Could not get issues that were not required by the BOM because'));
+$WOIssuesResult = DB_query($SQL,_('Could not get issues that were not required by the BOM because'));
 
 if (DB_num_rows($WOIssuesResult)>0){
 	while ($WOIssuesRow = DB_fetch_array($WOIssuesResult)){
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 
-		echo '<td>' .  $WOIssuesRow['stockid'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' .  $WOIssuesRow['stockid'] . '</td>
 				<td>' .  $WOIssuesRow['description'] . '</td>
 				<td class="number">0</td>
 				<td class="number">0</td>
@@ -319,7 +338,7 @@ If (isset($_POST['Close'])) {
 	$TotalVariance = $TotalUsageVar + $TotalCostVar;
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$WOCloseNo = GetNextTransNo(29);
-	$TransResult = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	while ($WORow = DB_fetch_array($WOItemsResult)){
 		if ($TotalStdValueRecd==0){
@@ -366,7 +385,7 @@ If (isset($_POST['Close'])) {
 										'" . $PeriodNo . "',
 										'" . $WORow['materialuseagevarac'] . "',
 										'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
-										'" .round((-$TotalVariance*$ShareProportion*(1-$ProportionOnHand)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+										'" .round((-$TotalCostVar*$ShareProportion*(1-$ProportionOnHand)),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
 					$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -387,7 +406,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['stockact'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
-							'" . round((-$TotalVariance*$ShareProportion*$ProportionOnHand),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+							'" . round((-$TotalCostVar*$ShareProportion*$ProportionOnHand),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the work order variance could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -406,7 +425,7 @@ If (isset($_POST['Close'])) {
 							'" . $PeriodNo . "',
 							'" . $WORow['wipact'] . "',
 							'" . $_POST['WO'] . ' - ' . $WORow['stockid'] . ' ' . _('share of variance') . "',
-							'" . round(($TotalVariance*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
+							'" . round(($TotalCostVar*$ShareProportion),$_SESSION['CompanyRecord']['decimalplaces']) . "')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The GL posting for the WIP side of the work order variance posting could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the GLTrans record was used');
@@ -414,7 +433,7 @@ If (isset($_POST['Close'])) {
 
 			}
 			if ($TotalOnHand>0) {//to avoid negative quantity make cost data abnormal
-				$NewCost = $WORow['currcost'] +(-$TotalVariance	* $ShareProportion *$ProportionOnHand)/$TotalOnHand;
+				$NewCost = $WORow['currcost'] +(-$TotalCostVar* $ShareProportion *$ProportionOnHand)/$TotalOnHand;
 			} else {
 				$NewCost = $WORow['currcost'];
 			}
@@ -526,7 +545,7 @@ If (isset($_POST['Close'])) {
 									_('Could not delete the predefined work order serial numbers'),
 									_('The SQL used to delete the predefined serial numbers was:'),
 									true);
-	$TransResult = DB_Txn_Commit();
+	DB_Txn_Commit();
 	if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 		if ($_SESSION['WeightedAverageCosting']==1){
 			prnMsg(_('The item cost as calculated from the work order has been applied against the weighted average cost and the necessary GL journals created to update stock as a result of closing this work order'),'success');

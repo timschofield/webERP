@@ -1,188 +1,152 @@
 <?php
-/* $Id: MiscFunctions.php 7097 2015-01-24 17:32:11Z rchacon $*/
-
-/*  ******************************************  */
+// MiscFunctions.php
+/*
+ * included from includes/ConnectDB.inc
+ * ******************************************  */
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg,$Type='info', $Prefix=''){
-
-	echo getMsg($Msg, $Type, $Prefix);
-
-}//prnMsg
-
-function reverse_escape($str) {
-  $search=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
-  $replace=array("\\","\0","\n","\r","\x1a","'",'"');
-  return str_replace($search,$replace,$str);
+function prnMsg($Msg, $Type = 'info', $Prefix = '', $return = false) {
+	global $Messages;
+    if($return){
+        $Prefix = $Type == 'info'
+            ? _('INFORMATION') . ' ' . _('Message')
+            : ($Type == 'warning' || $Type == 'warn'
+                ? _('WARNING') . ' ' . _('Report')
+                : ($Type == 'error'
+                    ? _('ERROR') . ' ' . _('Report')
+                    : _('SUCCESS') . ' ' . _('Report')
+                )
+            );
+        return '<div id="MessageContainerFoot">
+				<div class="Message '. $Type . ' noPrint">
+					<span class="MessageCloseButton">&times;</span>
+					<b>'. $Prefix . '</b> : ' .  $Msg . '
+				</div>
+			</div>';
+    }
+    else{
+        $Messages[] = array($Msg, $Type, $Prefix);
+    }
 }
 
-function getMsg($Msg,$Type='info',$Prefix=''){
-	$Colour='';
-	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
-		$LogFile=fopen($_SESSION['LogPath'].'/webERP.log', 'a');
+function reverse_escape($str) {
+	if (is_null($str)) {
+		$str = '';
 	}
-	switch($Type){
-		case 'error':
-			$Class = 'error';
-			$Prefix = $Prefix ? $Prefix : _('ERROR') . ' ' ._('Message Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>0) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'warn':
-			$Class = 'warn';
-			$Prefix = $Prefix ? $Prefix : _('WARNING') . ' ' . _('Message Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>1) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'success':
-			$Class = 'success';
-			$Prefix = $Prefix ? $Prefix : _('SUCCESS') . ' ' . _('Report');
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>3) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-			break;
-		case 'info':
-		default:
-			$Prefix = $Prefix ? $Prefix : _('INFORMATION') . ' ' ._('Message');
-			$Class = 'info';
-			if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity']>2) {
-				fwrite($LogFile, date('Y-m-d H:i:s').','.$Type.','.$_SESSION['UserID'].','.trim(str_replace("<br />", " ", $Msg),',')."\n");
-			}
-	}
-	return '<div class="'.$Class.'"><b>' . $Prefix . '</b> : ' .$Msg . '</div>';
-}//getMsg
 
-function IsEmailAddress($Email){
+	$search = array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"');
+	$replace = array("\\", "\0", "\n", "\r", "\x1a", "'", '"');
+	return str_replace($search, $replace, $str);
+}
 
-	$AtIndex = strrpos ($Email, "@");
+function IsEmailAddress($Email) {
+	$AtIndex = strrpos($Email, "@");
 	if ($AtIndex == false) {
-	    return  false;	// No @ sign is not acceptable.
+		return false; // No @ sign is not acceptable.
 	}
-
-	if (preg_match('/\\.\\./', $Email)){
-	    return  false;	// > 1 consecutive dot is not allowed.
+	if (preg_match('/\\.\\./', $Email)) {
+		return false; // > 1 consecutive dot is not allowed.
 	}
 	//  Check component length limits
-	$Domain = mb_substr ($Email, $AtIndex+1);
-	$Local= mb_substr ($Email, 0, $AtIndex);
-	$LocalLen = mb_strlen ($Local);
-	$DomainLen = mb_strlen ($Domain);
-	if ($LocalLen < 1 || $LocalLen > 64){
-	    // local part length exceeded
-	    return  false;
+	$Domain = mb_substr($Email, $AtIndex + 1);
+	$Local = mb_substr($Email, 0, $AtIndex);
+	$LocalLen = mb_strlen($Local);
+	$DomainLen = mb_strlen($Domain);
+	if ($LocalLen < 1 || $LocalLen > 64) {
+		// local part length exceeded
+		return false;
 	}
-	if ($DomainLen < 1 || $DomainLen > 255){
-	    // domain part length exceeded
-	    return  false;
+	if ($DomainLen < 1 || $DomainLen > 255) {
+		// domain part length exceeded
+		return false;
 	}
-
-	if ($Local[0] == '.' OR $Local[$LocalLen-1] == '.') {
-	    // local part starts or ends with '.'
-	    return  false;
+	if ($Local[0] == '.' or $Local[$LocalLen - 1] == '.') {
+		// local part starts or ends with '.'
+		return false;
 	}
-	if (!preg_match ('/^[A-Za-z0-9\\-\\.]+$/', $Domain )){
-	    // character not valid in domain part
-	    return  false;
+	if (!preg_match('/^[A-Za-z0-9\\-\\.]+$/', $Domain)) {
+		// character not valid in domain part
+		return false;
 	}
-	if (!preg_match ('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/', str_replace ("\\\\", "" ,$Local) )){
-	    // character not valid in local part unless local part is quoted
-	    if (!preg_match ('/^"(\\\\"|[^"])+"$/', str_replace("\\\\", "", $Local) ))  {
-			return  false;
-	    }
+	if (!preg_match('/^(\\\\.|[A-Za-z0-9!#%&`_=\\/$\'*+?^{}|~.-])+$/', str_replace("\\\\", "", $Local))) {
+		// character not valid in local part unless local part is quoted
+		if (!preg_match('/^"(\\\\"|[^"])+"$/', str_replace("\\\\", "", $Local))) {
+			return false;
+		}
 	}
-
 	//  Check for a DNS 'MX' or 'A' record.
 	//  Windows supported from PHP 5.3.0 on - so check.
 	$Ret = true;
 	/*  Apparentely causes some problems on some versions - perhaps bleeding edge just yet
-	if (version_compare(PHP_VERSION, '5.3.0') >= 0 OR mb_strtoupper(mb_substr(PHP_OS, 0, 3) !== 'WIN')) {
-	    $Ret = checkdnsrr( $Domain, 'MX' ) OR checkdnsrr( $Domain, 'A' );
+	if (version_compare(PHP_VERSION, '5.3.0') >= 0 or mb_strtoupper(mb_substr(PHP_OS, 0, 3) !== 'WIN')) {
+		$Ret = checkdnsrr($Domain, 'MX') or checkdnsrr($Domain, 'A');
 	}
 	*/
-	return  $Ret;
+	return $Ret;
 }
 
-
-function ContainsIllegalCharacters ($CheckVariable) {
-
-	if (mb_strstr($CheckVariable,"'")
-		OR mb_strstr($CheckVariable,'+')
-		OR mb_strstr($CheckVariable,'?')
-		OR mb_strstr($CheckVariable,'.')
-		OR mb_strstr($CheckVariable,"\"")
-		OR mb_strstr($CheckVariable,'&')
-		OR mb_strstr($CheckVariable,"\\")
-		OR mb_strstr($CheckVariable,'"')
-		OR mb_strstr($CheckVariable,'>')
-		OR mb_strstr($CheckVariable,'<')){
-
+function ContainsIllegalCharacters($CheckVariable) {
+	if (mb_strstr($CheckVariable, "'") or mb_strstr($CheckVariable, '+') or mb_strstr($CheckVariable, '?') or mb_strstr($CheckVariable, '.') or mb_strstr($CheckVariable, "\"") or mb_strstr($CheckVariable, '&') or mb_strstr($CheckVariable, "\\") or mb_strstr($CheckVariable, '"') or mb_strstr($CheckVariable, '>') or mb_strstr($CheckVariable, '<')) {
 		return true;
 	} else {
 		return false;
 	}
 }
 
-
-function pre_var_dump(&$var){
+function pre_var_dump(&$var) {
 	echo '<div align=left><pre>';
 	var_dump($var);
 	echo '</pre></div>';
 }
 
-
-
 class XmlElement {
-  var $name;
-  var $attributes;
-  var $content;
-  var $children;
-};
+	var $name;
+	var $attributes;
+	var $content;
+	var $children;
+}
 
-function GetECBCurrencyRates () {
-/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
-for detail of the European Central Bank rates - published daily */
-	if (http_file_exists('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
-		$xml = file_get_contents('http://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
+function GetECBCurrencyRates() {
+	/* See http://www.ecb.int/stats/exchange/eurofxref/html/index.en.html
+	for detail of the European Central Bank rates - published daily */
+	if (http_file_exists('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml')) {
+		$xml = file_get_contents('https://www.ecb.int/stats/eurofxref/eurofxref-daily.xml');
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
 		xml_parse_into_struct($parser, $xml, $tags);
 		xml_parser_free($parser);
 
-		$elements = array();  // the currently filling [child] XmlElement array
+		$elements = array(); // the currently filling [child] XmlElement array
 		$stack = array();
 		foreach ($tags as $tag) {
 			$index = count($elements);
-			if ($tag['type'] == 'complete' OR $tag['type'] == 'open') {
+			if ($tag['type'] == 'complete' or $tag['type'] == 'open') {
 				$elements[$index] = new XmlElement;
 				$elements[$index]->name = $tag['tag'];
-				if (isset($tag['attributes'])){
+				if (isset($tag['attributes'])) {
 					$elements[$index]->attributes = $tag['attributes'];
 				}
-				if (isset($tag['value'])){
+				if (isset($tag['value'])) {
 					$elements[$index]->content = $tag['value'];
 				}
-				if ($tag['type'] == 'open') {  // push
+				if ($tag['type'] == 'open') { // push
 					$elements[$index]->children = array();
-					$stack[count($stack)] = &$elements;
-					$elements = &$elements[$index]->children;
+					$stack[count($stack)] = & $elements;
+					$elements = & $elements[$index]->children;
 				}
 			}
-			if ($tag['type'] == 'close') {  // pop
-				$elements = &$stack[count($stack) - 1];
+			if ($tag['type'] == 'close') { // pop
+				$elements = & $stack[count($stack) - 1];
 				unset($stack[count($stack) - 1]);
 			}
 		}
-
-
 		$Currencies = array();
-		foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails){
-			$Currencies[$CurrencyDetails->attributes['currency']]= $CurrencyDetails->attributes['rate'] ;
+		foreach ($elements[0]->children[2]->children[0]->children as $CurrencyDetails) {
+			$Currencies[$CurrencyDetails->attributes['currency']] = $CurrencyDetails->attributes['rate'];
 		}
-		$Currencies['EUR']=1; //ECB delivers no rate for Euro
+		$Currencies['EUR'] = 1; //ECB delivers no rate for Euro
 		//return an array of the currencies and rates
 		return $Currencies;
 	} else {
@@ -190,44 +154,42 @@ for detail of the European Central Bank rates - published daily */
 	}
 }
 
-function GetCurrencyRate($CurrCode,$CurrenciesArray) {
-	if ((!isset($CurrenciesArray[$CurrCode]) OR !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']])) AND $_SESSION['UpdateCurrencyRatesDaily'] != '0') {
+function GetCurrencyRate($CurrCode, $CurrenciesArray) {
+	if ((!isset($CurrenciesArray[$CurrCode]) or !isset($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']])) and $_SESSION['UpdateCurrencyRatesDaily'] != '0') {
 		return quote_oanda_currency($CurrCode);
-	} elseif ($CurrCode=='EUR'){
-		if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]==0) {
+	} elseif ($CurrCode == 'EUR') {
+		if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']] == 0) {
 			return 0;
 		} else {
-			return 1/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
+			return 1 / $CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
 		}
 	} else {
-		if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']]==0) {
+		if ($CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']] == 0) {
 			return 0;
 		} else {
-			return $CurrenciesArray[$CurrCode]/$CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
+			return $CurrenciesArray[$CurrCode] / $CurrenciesArray[$_SESSION['CompanyRecord']['currencydefault']];
 		}
 	}
 }
 
 function quote_oanda_currency($CurrCode) {
-	if (http_file_exists('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
-		$page = file('http://www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode .  '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
+	if (http_file_exists('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault'])) {
+		$page = file('//www.oanda.com/convert/fxdaily?value=1&redirected=1&exch=' . $CurrCode . '&format=CSV&dest=Get+Table&sel_list=' . $_SESSION['CompanyRecord']['currencydefault']);
 		$match = array();
 		preg_match('/(.+),(\w{3}),([0-9.]+),([0-9.]+)/i', implode('', $page), $match);
-
-			if ( sizeof($match) > 0 ){
-				return $match[3];
-			} else {
-				return false;
+		if (sizeof($match) > 0) {
+			return $match[3];
+		} else {
+			return false;
 		}
 	}
 }
 
 function google_currency_rate($CurrCode) {
-
 	$Rate = 0;
-	$PageLines = file('http://www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
-	foreach ($PageLines as $Line){
-		if (mb_strpos($Line,'currency_converter_result')){
+	$PageLines = file('//www.google.com/finance/converter?a=1&from=' . $_SESSION['CompanyRecord']['currencydefault'] . '&to=' . $CurrCode);
+	foreach ($PageLines as $Line) {
+		if (mb_strpos($Line, 'currency_converter_result')) {
 			$Length = mb_strpos($Line, '</span>') - 58;
 			$Rate = floatval(mb_substr($Line, 58, $Length));
 		}
@@ -236,92 +198,214 @@ function google_currency_rate($CurrCode) {
 }
 
 function AddCarriageReturns($str) {
-	return str_replace('\r\n',chr(10),$str);
+	return str_replace('\r\n', chr(10), $str);
+}
+//Replace all text/html line breaks with PHP_EOL(default) or given line break.
+function Convert_line_breaks($string, $line_break=PHP_EOL)
+{
+    $patterns = array(  "/(<br>|<br \/>|<br\/>)\s*/i",
+                        "/(\r\n|\r|\n)/" );
+    $replacements = array(  $line_break,
+                            $line_break );
+    $string = preg_replace($patterns, $replacements, $string);
+    return $string;
+}
+//Replace all text line breaks with PHP_EOL(default) or given line break.
+function Convert_CRLF($string, $line_break=PHP_EOL)
+{
+    $patterns = array(  "/(\r\n|\r|\n)/" );
+    $replacements = array(  $line_break );
+    $string = preg_replace($patterns, $replacements, $string);
+    return $string;
 }
 
 
+//NPFunc - New Page Function, can be a direct function call or an anonymous function for more complex behavior
+//         Null if not used
+//NPINC  - New Page Include, where a PHP script is included again to facilitate a new page
+//         Null if not used
+//&$YPos - return the updated value
+//         Coming in, YPos=prior line, so update it before we print anything, and don't update it if we don't print anything
+//Defaults come from addTextWrap
+function PrintDetail($PDF,$Text,$YLim,$XPos,&$YPos,$Width,$FontSize,$NPFunc=null,$NPInc=null,$Align='J',$border=0,$fill=0)
+{
+	$InitialExtraSpace=2;		//shift down slightly from above text
+
+	$Text=Convert_line_breaks(htmlspecialchars_decode($Text));
+	$Split = explode(PHP_EOL, $Text);
+	foreach ($Split as $LeftOvers) {
+		$LeftOvers = stripslashes($LeftOvers);
+		while(mb_strlen($LeftOvers)>1) {
+			if ($YPos < $YLim) {// If the description line reaches the bottom margin, do PageHeader(), PageInclude(), etc.
+				if($NPFunc!=null) {
+					$NPFunc();
+				}
+				if($NPInc!=null) {
+					include ($NPInc);
+				}
+			}
+			$YPos=$YPos-$FontSize-$InitialExtraSpace;
+			$InitialExtraSpace=0;
+			$LeftOvers = $PDF->addTextWrap($XPos, $YPos, $Width, $FontSize, $LeftOvers, $Align, $border, $fill);
+		}
+	}
+}
+
+function PrintOurCompanyInfo($PDF,$CompanyRecord,$XPos,$YPos)
+{
+	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
+
+	$FontSize = 14;
+	$PDF->addText($XPos, $YPos, $FontSize, $CompanyRecord['coyname']);
+	$YPos -= $FontSize;
+	$FontSize = 10;
+
+	//webERP default:
+	$PDF->addText($XPos, $YPos, $FontSize, $_SESSION['CompanyRecord']['regoffice1']);
+	$PDF->addText($XPos, $YPos-$FontSize*1, $FontSize, $_SESSION['CompanyRecord']['regoffice2']);
+	$PDF->addText($XPos, $YPos-$FontSize*2, $FontSize, $_SESSION['CompanyRecord']['regoffice3']);
+	$PDF->addText($XPos, $YPos-$FontSize*3, $FontSize, $_SESSION['CompanyRecord']['regoffice4']);
+	$PDF->addText($XPos, $YPos-$FontSize*4, $FontSize, $_SESSION['CompanyRecord']['regoffice5'] .
+		' ' . $_SESSION['CompanyRecord']['regoffice6']);
+	$PDF->addText($XPos, $YPos-$FontSize*5, $FontSize,  _('Ph') . ': ' . $_SESSION['CompanyRecord']['telephone'] .
+		' ' . _('Fax'). ': ' . $_SESSION['CompanyRecord']['fax']);
+	$PDF->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['email']);
+
+}
+
+//Generically move down 82 units after printing this
+function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
+{
+	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
+
+	$FontSize = 14;
+	$line_height=15;
+	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+
+	//webERP default:
+	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['deliverto']);
+	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['deladd1']);
+	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['deladd2']);
+	$PDF->addText($XPos, $YPos-60,$FontSize, ltrim($CompanyRecord['deladd3'] . ' ' . $CompanyRecord['deladd4'] . ' ' . $CompanyRecord['deladd5'] . ' ' . $CompanyRecord['deladd6']));
+
+	// Draws a box with round corners around 'Delivery To' info:
+	$PDF->RoundRectangle(
+		$XPos-6,// RoundRectangle $XPos.
+		$YPos+2,// RoundRectangle $YPos.
+		245,// RoundRectangle $Width.
+		80,// RoundRectangle $Height.
+		10,// RoundRectangle $RadiusX.
+		10);// RoundRectangle $RadiusY.
+}
+
+//Generically move down 82 units after printing this
+function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
+{
+	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
+
+	$FontSize = 14;
+	$line_height=15;
+	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
+
+	//webERP default:
+	$PDF->addText($XPos, $YPos-15,$FontSize, $CompanyRecord['name']);
+	$PDF->addText($XPos, $YPos-30,$FontSize, $CompanyRecord['address1']);
+	$PDF->addText($XPos, $YPos-45,$FontSize, $CompanyRecord['address2']);
+	$PDF->addText($XPos, $YPos-60,$FontSize, $CompanyRecord['address3'] . ' ' . $CompanyRecord['address4'] . ' ' . $CompanyRecord['address5']. ' ' . $CompanyRecord['address6']);
+
+	// Draws a box with round corners around 'Delivery To' info:
+	$PDF->RoundRectangle(
+		$XPos-6,// RoundRectangle $XPos.
+		$YPos+2,// RoundRectangle $YPos.
+		245,// RoundRectangle $Width.
+		80,// RoundRectangle $Height.
+		10,// RoundRectangle $RadiusX.
+		10);// RoundRectangle $RadiusY.
+}
+
+//Assemble URL for configured Wiki Application
 function wikiLink($WikiType, $WikiPageID) {
 	if (strstr($_SESSION['WikiPath'], 'http:')) {
-		$WikiPath=$_SESSION['WikiPath'];
+		$WikiPath = $_SESSION['WikiPath'];
+	} elseif (strstr($_SESSION['WikiPath'], 'https:')) {
+		$WikiPath = $_SESSION['WikiPath'];
 	} else {
-		$WikiPath='../' . $_SESSION['WikiPath'] . '/';
+		$WikiPath = '../' . $_SESSION['WikiPath'] . '/';
 	}
-	if ($_SESSION['WikiApp']==_('WackoWiki')){
-		echo '<a target="_blank" href="' . $WikiPath . $WikiType .  $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
-	} elseif ($_SESSION['WikiApp']==_('MediaWiki')){
+
+	if ($_SESSION['WikiApp'] == _('WackoWiki')) {
+		echo '<a target="_blank" href="' . $WikiPath . $WikiType . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . ' </a>  <br />';
+	} elseif ($_SESSION['WikiApp'] == _('MediaWiki')) {
 		echo '<a target="_blank" href="' . $WikiPath . 'index.php?title=' . $WikiType . '/' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
-	} elseif ($_SESSION['WikiApp']==_('DokuWiki')){
+	} elseif ($_SESSION['WikiApp'] == _('DokuWiki')) {
 		echo '<a target="_blank" href="' . $WikiPath . '/doku.php?id=' . $WikiType . ':' . $WikiPageID . '">' . _('Wiki ' . $WikiType . ' Knowledge Base') . '</a><br />';
 	}
 }
 
 //  Lindsay debug stuff
-function LogBackTrace( $dest = 0 ) {
-    error_log( "***BEGIN STACK BACKTRACE***", $dest );
+function LogBackTrace($dest = 0) {
 
-    $stack = debug_backtrace();
-    //  Leave out our frame and the topmost - huge for xmlrpc!
-    for( $ii = 1; $ii < count( $stack ) - 3; $ii++ )
-    {
-	$frame = $stack[$ii];
-	$msg = "FRAME " . $ii . ": ";
-	if( isset( $frame['file'] ) ) {
-	    $msg .= "; file=" . $frame['file'];
-	}
-	if( isset( $frame['line'] ) ) {
-	    $msg .= "; line=" . $frame['line'];
-	}
-	if( isset( $frame['function'] ) ) {
-	    $msg .= "; function=" . $frame['function'];
-	}
-	if( isset( $frame['args'] ) ) {
-	    // Either function args, or included file name(s)
-	    $msg .= ' (';
-	    foreach( $frame['args'] as $val ) {
+	$stack = debug_backtrace();
+	error_log("***BEGIN STACK BACKTRACE***", $dest);
+	//  Leave out our frame and the topmost - huge for xmlrpc!
+	for ($ii = 1;$ii < count($stack) - 3;$ii++) {
+		$frame = $stack[$ii];
+		$msg = "FRAME " . $ii . ": ";
+		if (isset($frame['file'])) {
+			$msg.= "; file=" . $frame['file'];
+		}
+		if (isset($frame['line'])) {
+			$msg.= "; line=" . $frame['line'];
+		}
+		if (isset($frame['function'])) {
+			$msg.= "; function=" . $frame['function'];
+		}
+		if (isset($frame['args'])) {
+			// Either function args, or included file name(s)
+			$msg.= ' (';
+			foreach ($frame['args'] as $val) {
+				$typ = gettype($val);
+				switch ($typ) {
+					case 'array':
+						$msg.= '[ ';
+						foreach ($val as $v2) {
+							if (gettype($v2) == 'array') {
+								$msg.= '[ ';
+								foreach ($v2 as $v3) $msg.= $v3;
+								$msg.= ' ]';
+							} else {
+								$msg.= $v2 . ', ';
+							}
+							$msg.= ' ]';
+							break;
+						}
+					case 'string':
+						$msg.= $val . ', ';
+						break;
 
-			$typ = gettype( $val );
-			switch( $typ ) {
-				case 'array':
-				    $msg .= '[ ';
-				    foreach( $val as $v2 ) {
-						if( gettype( $v2 ) == 'array' ) {
-						    $msg .= '[ ';
-						    foreach( $v2 as $v3 )
-							$msg .= $v3;
-						    $msg .= ' ]';
-						} else {
-						    $msg .= $v2 . ', ';
-					    }
-					    $msg .= ' ]';
-					    break;
+					case 'integer':
+						$msg.= sprintf("%d, ", $val);
+						break;
+
+					default:
+						$msg.= '<' . gettype($val) . '>, ';
+						break;
+
 					}
-				case 'string':
-				    $msg .= $val . ', ';
-				    break;
-
-				case 'integer':
-				    $msg .= sprintf( "%d, ", $val );
-				    break;
-
-				default:
-				    $msg .= '<' . gettype( $val ) . '>, ';
-				    break;
-
-		    	}
-		    $msg .= ' )';
+					$msg.= ' )';
 			}
 		}
-	error_log( $msg, $dest );
-    }
+		error_log($msg, $dest);
+	}
 
-    error_log( '++++END STACK BACKTRACE++++', $dest );
+	error_log('++++END STACK BACKTRACE++++', $dest);
 
-    return;
+	return;
 }
 
-function http_file_exists($url)  {
-	$f=@fopen($url,'r');
-	if($f) {
+function http_file_exists($url) {
+	$f = @fopen($url, 'r');
+	if ($f) {
 		fclose($f);
 		return true;
 	}
@@ -330,19 +414,20 @@ function http_file_exists($url)  {
 
 /*Functions to display numbers in locale of the user */
 
-function locale_number_format($Number, $DecimalPlaces=0) {
+function locale_number_format($Number, $DecimalPlaces = 0) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
-	if(substr($_SESSION['Language'], 3, 2)=='IN') {// If country is India (??_IN.utf8). See Indian Numbering System in Manual, Multilanguage, Technical Overview.
-		return indian_number_format(floatval($Number),$DecimalPlaces);
+	if ($DecimalPlaces == null) $DecimalPlaces = 0;
+	if (substr($_SESSION['Language'], 3, 2) == 'IN') { // If country is India (??_IN.utf8). See Indian Numbering System in Manual, Multilanguage, Technical Overview.
+		return indian_number_format(floatval($Number), $DecimalPlaces);
 	} else {
-		if (!is_numeric($DecimalPlaces) AND $DecimalPlaces == 'Variable'){
+		if (!is_numeric($DecimalPlaces) and $DecimalPlaces == 'Variable') {
 			$DecimalPlaces = mb_strlen($Number) - mb_strlen(intval($Number));
-			if ($DecimalPlaces > 0){
+			if ($DecimalPlaces > 0) {
 				$DecimalPlaces--;
 			}
 		}
-		return number_format(floatval($Number),$DecimalPlaces,$DecimalPoint,$ThousandsSeparator);
+		return number_format(floatval($Number), $DecimalPlaces, $DecimalPoint, $ThousandsSeparator);
 	}
 }
 
@@ -351,10 +436,10 @@ function locale_number_format($Number, $DecimalPlaces=0) {
 function filter_number_format($Number) {
 	global $DecimalPoint;
 	global $ThousandsSeparator;
-	$SQLFormatNumber = str_replace($DecimalPoint,'.',str_replace($ThousandsSeparator,'',trim($Number)));
+	$SQLFormatNumber = str_replace($DecimalPoint, '.', str_replace($ThousandsSeparator, '', trim($Number)));
 	/*It is possible if the user entered the $DecimalPoint as a thousands separator and the $DecimalPoint is a comma that the result of this could contain several periods "." so need to ditch all but the last "." */
-	if (mb_substr_count($SQLFormatNumber,'.')>1){
-		return  str_replace('.','',mb_substr($SQLFormatNumber,0,mb_strrpos($SQLFormatNumber,'.'))) . mb_substr($SQLFormatNumber,mb_strrpos($SQLFormatNumber,'.'));
+	if (mb_substr_count($SQLFormatNumber, '.') > 1) {
+		return str_replace('.', '', mb_substr($SQLFormatNumber, 0, mb_strrpos($SQLFormatNumber, '.'))) . mb_substr($SQLFormatNumber, mb_strrpos($SQLFormatNumber, '.'));
 
 		echo '<br /> Number of periods: ' . $NumberOfPeriods . ' $SQLFormatNumber = ' . $SQLFormatNumber;
 
@@ -363,94 +448,94 @@ function filter_number_format($Number) {
 	}
 }
 
-
-function indian_number_format($Number,$DecimalPlaces){
+function indian_number_format($Number, $DecimalPlaces) {
 	$IntegerNumber = intval($Number);
 	$DecimalValue = $Number - $IntegerNumber;
-	if ($DecimalPlaces !='Variable'){
-		$DecimalValue= round($DecimalValue,$DecimalPlaces);
+	if ($DecimalPlaces != 'Variable') {
+		$DecimalValue = round($DecimalValue, $DecimalPlaces);
 	}
-	if ($DecimalPlaces!='Variable' AND strlen(substr($DecimalValue,2))>0){
+	if ($DecimalPlaces != 'Variable' and strlen(substr($DecimalValue, 2)) > 0) {
 		/*If the DecimalValue is longer than '0.' then chop off the leading 0*/
-		$DecimalValue = substr($DecimalValue,1);
-		if ($DecimalPlaces > 0){
-			$DecimalValue = str_pad($DecimalValue,$DecimalPlaces,'0');
+		$DecimalValue = substr($DecimalValue, 1);
+		if ($DecimalPlaces > 0) {
+			$DecimalValue = str_pad($DecimalValue, $DecimalPlaces, '0');
 		} else {
-			$DecimalValue ='';
+			$DecimalValue = '';
 		}
 	} else {
-		if ($DecimalPlaces!='Variable' AND $DecimalPlaces > 0){
-			$DecimalValue = '.' . str_pad($DecimalValue,$DecimalPlaces,'0');
-		} elseif($DecimalPlaces==0) {
-			$DecimalValue ='';
+		if ($DecimalPlaces != 'Variable' and $DecimalPlaces > 0) {
+			$DecimalValue = '.' . str_pad($DecimalValue, $DecimalPlaces, '0');
+		} elseif ($DecimalPlaces == 0) {
+			$DecimalValue = '';
 		}
 	}
-	if(strlen($IntegerNumber)>3){
-		$LastThreeNumbers = substr($IntegerNumber, strlen($IntegerNumber)-3, strlen($IntegerNumber));
-		$RestUnits = substr($IntegerNumber, 0, strlen($IntegerNumber)-3); // extracts the last three digits
-		$RestUnits = (strlen($RestUnits)%2 == 1)?'0'.$RestUnits:$RestUnits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
-		$FirstPart ='';
+	if (strlen($IntegerNumber) > 3) {
+		$LastThreeNumbers = substr($IntegerNumber, strlen($IntegerNumber) - 3, strlen($IntegerNumber));
+		$RestUnits = substr($IntegerNumber, 0, strlen($IntegerNumber) - 3); // extracts the last three digits
+		$RestUnits = ((strlen($RestUnits) % 2) == 1) ? '0' . $RestUnits : $RestUnits; // explodes the remaining digits in 2's formats, adds a zero in the beginning to maintain the 2's grouping.
+		$FirstPart = '';
 		$ExplodedUnits = str_split($RestUnits, 2);
-		for($i=0; $i<sizeof($ExplodedUnits); $i++){
-			$FirstPart .= intval($ExplodedUnits[$i]).','; // creates each of the 2's group and adds a comma to the end
-		}
+		for ($i = 0;$i < sizeof($ExplodedUnits);$i++) {
+			if ($i == 0) {
+				$FirstPart.= intval($ExplodedUnits[$i]) . ','; // creates each of the 2's group and adds a comma to the end
 
-		return $FirstPart.$LastThreeNumbers.$DecimalValue;
+			} else {
+				$FirstPart.= $ExplodedUnits[$i] . ',';
+
+			}
+		}
+		return $FirstPart . $LastThreeNumbers . $DecimalValue;
 	} else {
-		return $IntegerNumber. $DecimalValue;
+		return $IntegerNumber . $DecimalValue;
 	}
 }
 
-function SendMailBySmtp(&$mail,$To) {
-	if(IsEmailAddress($_SESSION['SMTPSettings']['username'])){//user has set the fully mail address as user name
+function SendMailBySmtp(&$mail, $To) {
+	if (IsEmailAddress($_SESSION['SMTPSettings']['username'])) { //user has set the fully mail address as user name
 		$SendFrom = $_SESSION['SMTPSettings']['username'];
-	}else{//user only set it's name instead of fully mail address
-		if(strpos($_SESSION['SMTPSettings']['host'],'mail') !== false){
+	} else { //user only set it's name instead of fully mail address
+		if (strpos($_SESSION['SMTPSettings']['host'], 'mail') !== false) {
 			$SubStr = 'mail';
 
-		}elseif(strpos($_SESSION['SMTPSettings']['host'],'smtp') !== false){
+		} elseif (strpos($_SESSION['SMTPSettings']['host'], 'smtp') !== false) {
 			$SubStr = 'smtp';
 		}
 
-			$Domain = substr($_SESSION['SMTPSettings']['host'],strpos($_SESSION['SMTPSettings']['host'],$SubStr)+5);
-			$SendFrom = $_SESSION['SMTPSettings']['username'].'@'.$Domain;
+		$Domain = substr($_SESSION['SMTPSettings']['host'], strpos($_SESSION['SMTPSettings']['host'], $SubStr) + 5);
+		$SendFrom = $_SESSION['SMTPSettings']['username'] . '@' . $Domain;
 	}
 	$mail->setFrom($SendFrom);
-	$result = $mail->send($To,'smtp');
-	return $result;
+	$Result = $mail->send($To, 'smtp');
+	return $Result;
 }
 
-function GetMailList($MailGroup){
+function GetMailList($MailGroup) {
 	$ToList = array();
-	$sql = "SELECT email,realname
+	$SQL = "SELECT email,realname
 			FROM mailgroupdetails INNER JOIN www_users
 			ON www_users.userid=mailgroupdetails.userid
 			WHERE mailgroupdetails.groupname='" . $MailGroup . "'";
 	$ErrMsg = _('Failed to retrieve mail lists');
-	$result = DB_query($sql,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-
+	$Result = DB_query($SQL, $ErrMsg);
+	if (DB_num_rows($Result) != 0) {
 		//Create the string which meets the Recipients requirements
-		while($myrow = DB_fetch_array($result)){
-			$ToList[]= $myrow['realname'] . '<'.$myrow['email'].'>';
-
+		while ($MyRow = DB_fetch_array($Result)) {
+			$ToList[] = $MyRow['realname'] . '<' . $MyRow['email'] . '>';
 		}
-
 	}
 	return $ToList;
 }
 
-function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue){
+function ChangeFieldInTable($TableName, $FieldName, $OldValue, $NewValue) {
 	/* Used in Z_ scripts to change one field across the table.
 	*/
 	echo '<br />' . _('Changing') . ' ' . $TableName . ' ' . _('records');
-	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
+	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
 	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 	echo ' ... ' . _('completed');
 }
-
 
 /* Used in report scripts for standard periods.
  * Parameter $Choice is from the 'Period' combobox value.
@@ -500,8 +585,14 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 	$ThisMonth = date('m');
 	$ThisYear = date('Y');
 	$LastMonth = $ThisMonth - 1;
+	if ($LastMonth == 0) {
+		$LastMonth = 12;
+	}
 	$LastYear = $ThisYear - 1;
 	$NextMonth = $ThisMonth + 1;
+	if ($NextMonth == 13) {
+		$NextMonth = 1;
+	}
 	$NextYear = $ThisYear + 1;
 	// Find total number of days in this month:
 	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
@@ -636,173 +727,3 @@ function fShowPageHelp($HelpText) {
 function checkLanguageChoice($language) {
 	return preg_match('/^([a-z]{2}\_[A-Z]{2})(\.utf8)$/', $language);
 }
-
-function ChangeGLAcoountCode ($NewGL, $OldGL){
-	/*First check the code exists */
-	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $OldGL . "'");
-	if(DB_num_rows($result)==0) {
-		prnMsg(_('The GL account code') . ': ' . $OldGL . ' ' . _('does not currently exist as a GL account code in the system'),'error');
-		$InputError =1;
-	}
-
-	if(ContainsIllegalCharacters($NewGL)) {
-		prnMsg(_('The new GL account code to change the old code to contains illegal characters - no changes will be made'),'error');
-		$InputError =1;
-	}
-
-	if($NewGL=='') {
-		prnMsg(_('The new GL account code to change the old code to must be entered as well'),'error');
-		$InputError =1;
-	}
-
-	/*Now check that the new code doesn't already exist */
-	$result=DB_query("SELECT accountcode FROM chartmaster WHERE accountcode='" . $NewGL . "'");
-	if(DB_num_rows($result)!=0) {
-		echo '<br /><br />';
-		prnMsg(_('The replacement GL account code') . ': ' . $NewGL . ' ' . _('already exists as a GL account code in the system') . ' - ' . _('a unique GL account code must be entered for the new code'),'error');
-		$InputError =1;
-	}
-
-
-	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
-		echo '<br />' . _('Adding the new chartmaster record');
-		$sql = "INSERT INTO chartmaster (accountcode,
-										accountname,
-										group_,
-										cashflowsactivity,
-										controlled)
-				SELECT '" . $NewGL . "',
-					accountname,
-					group_,
-					cashflowsactivity,
-					controlled
-				FROM chartmaster
-				WHERE accountcode='" . $OldGL . "'";
-
-		$DbgMsg = _('The SQL statement that failed was');
-		$ErrMsg =_('The SQL to insert the new chartmaster record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
-		echo ' ... ' . _('completed');
-
-		DB_IgnoreForeignKeys();
-
-		ChangeFieldInTable("bankaccounts", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("bankaccountusers", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("banktrans", "bankact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("chartdetails", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("cogsglpostings", "glcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("companies", "debtorsact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "pytdiscountact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "creditorsact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "payrollact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "grnact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "exchangediffact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "purchasesexchangediffact", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "retainedearnings", $OldGL, $NewGL);
-		ChangeFieldInTable("companies", "freightact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("fixedassetcategories", "costact", $OldGL, $NewGL);
-		ChangeFieldInTable("fixedassetcategories", "depnact", $OldGL, $NewGL);
-		ChangeFieldInTable("fixedassetcategories", "disposalact", $OldGL, $NewGL);
-		ChangeFieldInTable("fixedassetcategories", "accumdepnact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("glaccountusers", "accountcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("gltrans", "account", $OldGL, $NewGL);
-
-		ChangeFieldInTable("lastcostrollup", "stockact", $OldGL, $NewGL);
-		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("locations", "glaccountcode", $OldGL, $NewGL);// Location's ledger account.
-
-		ChangeFieldInTable("pcexpenses", "glaccount", $OldGL, $NewGL);
-
-		ChangeFieldInTable("pctabs", "glaccountassignment", $OldGL, $NewGL);
-		ChangeFieldInTable("pctabs", "glaccountpcash", $OldGL, $NewGL);
-
-		ChangeFieldInTable("purchorderdetails", "glcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("salesglpostings", "discountglcode", $OldGL, $NewGL);
-		ChangeFieldInTable("salesglpostings", "salesglcode", $OldGL, $NewGL);
-
-		ChangeFieldInTable("stockcategory", "stockact", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "adjglact", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "issueglact", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "purchpricevaract", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "materialuseagevarac", $OldGL, $NewGL);
-		ChangeFieldInTable("stockcategory", "wipact", $OldGL, $NewGL);
-
-		ChangeFieldInTable("taxauthorities", "taxglcode", $OldGL, $NewGL);
-		ChangeFieldInTable("taxauthorities", "purchtaxglaccount", $OldGL, $NewGL);
-		ChangeFieldInTable("taxauthorities", "bankacctype", $OldGL, $NewGL);
-
-		ChangeFieldInTable("workcentres", "overheadrecoveryact", $OldGL, $NewGL);
-
-		DB_ReinstateForeignKeys();
-		// KL RICARD tables
-		ChangeFieldInTable("chartmasterADU", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterSMH", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterBB", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterIK", "accountcode", $OldGL, $NewGL);
-		ChangeFieldInTable("chartmasterPI", "accountcode", $OldGL, $NewGL);
-		
-		ChangeFieldInTable("klretailpartners", "accountppn", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accounthppcompensation", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountbankdanamon", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountbankmandiri", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountbankbca", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissioncreditcard", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountconsignmentsalesptadu", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountconsignmentcogspartner", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountwechat", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissionwechat", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountqris", $OldGL, $NewGL);
-		ChangeFieldInTable("klretailpartners", "accountcomissionqris", $OldGL, $NewGL);
-
-		ChangeFieldInTable("klonlinepartners", "accountdokuidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountdokucomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalaud", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionaud", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalusd", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissionusd", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypaleur", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountpaypalcomissioneur", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountxenditidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountxenditcomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountcomissionppn", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttransfermandiri", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttransferbca", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttransferdanamon", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountmidtransidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttokopediaidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accounttokopediacomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountshopeeidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountshopeecomissionidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountlazadaidr", $OldGL, $NewGL);
-		ChangeFieldInTable("klonlinepartners", "accountlazadacomissionidr", $OldGL, $NewGL);
-
-
-
-
-		DB_ReinstateForeignKeys();
-
-		$result = DB_Txn_Commit();
-
-		echo '<br />' . _('Deleting the old chartmaster record');
-		$sql = "DELETE FROM chartmaster WHERE accountcode='" . $OldGL . "'";
-		$ErrMsg = _('The SQL to delete the old chartmaster record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
-		echo ' ... ' . _('completed');
-
-		echo '<p>' . _('GL account Code') . ': ' . $OldGL . ' ' . _('was successfully changed to') . ' : ' . $NewGL;
-	}//only do the stuff above if  $InputError==0
-	
-}
-
-?>

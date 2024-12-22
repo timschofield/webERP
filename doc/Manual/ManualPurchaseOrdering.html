@@ -20,7 +20,7 @@
 
 <p>It is necessary to create purchase orders to receive stock. Stock cannot be received in without an order - except by entering a stock adjustment. The receiving of stock creates a GRN - Goods Received Note that can be printed and signed off by the person entering the receipt of stock. The system retains records of the GRNs and these must be matched off against purchase invoices to ensure that only those goods received are paid for.</p>
 
-<p><img src="images/Purchasing.jpg"></p>
+<p><img src="doc/Manual/images/Purchasing.jpg"></p>
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
@@ -185,7 +185,13 @@
 <ul>
 	<li><b>Select period from.</b> Select the beginning of the reporting period. Default: one year before current date.</li>
 	<li><b>Select period to.</b> Select the end of the reporting period. Default: current date.</li>
-	<li><b>Show details.</b> Check this box to show purchase invoices. With <i>show details <b>on</b></i>, the report has links to view where allocated and to view the General Ledger transaction. With <i>show details <b>off</b></i>, the report has links to view the supplier account inquiry. Default: off.</li>
+	<li><b>Show details.</b> Check this box to show purchase invoices. Default: off.</li>
+</ul>
+<p>Links within the report:</p>
+<ul>
+	<li><b>In <i>Supplier Name</i>.</b> It links to view the supplier account inquiry.</li>
+	<li><b>In <i>Original Overall Total</i> column.</b> Only with <i>show details <b>on</b></i>, the report links to view where allocated.</li>
+	<li><b>In <i>GL Overall Total</i> column.</b> Only with <i>show details <b>on</b></i>, the report links to view the General Ledger transaction.</li>
 </ul>
 <p><b>Note</b>. The conversion between the supplier's currency and the functional currency is done with the exchange rate used in the respective transaction.</p>
 

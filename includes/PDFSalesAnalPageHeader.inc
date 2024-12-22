@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFSalesAnalPageHeader.inc 5766 2012-12-19 06:45:03Z daintree $*/
 
 /*PDF page header for user defined sales reports */
 

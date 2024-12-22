@@ -63,9 +63,7 @@ $MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOr
 													'/SelectRecurringSalesOrder.php',
 													'/RecurringSalesOrdersProcess.php');
 
-//if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
 if ($KL_BusinessDevelopmentManager){
-//if (false){
 	$TextControlBoard01 = _('KL Control Board Section 01');
 	$LinkControlBoard01 = "/KLControlBoard.php?Section=01";
 	$TextControlBoard02 = _('KL Control Board Section 02');
@@ -77,7 +75,6 @@ if ($KL_BusinessDevelopmentManager){
 	$LinkControlBoard02 = '';
 }	
 													
-//if ($KL_SystemAdmin OR $KL_BusinessDevelopmentManager){
 if (false){
 	$TextPricingControlBoard01 = _('KL Pricing Control Board Section 01');
 	$LinkPricingControlBoard01 = "/KLControlBoardPrices.php?Section=01";
@@ -706,13 +703,15 @@ $MenuItems['FA']['Maintenance']['URL'] = array(	'/FixedAssetCategories.php',
 												'/KLMaintenanceTypes.php');
 
 $MenuItems['PC']['Transactions']['Caption'] = array(_('Assign Cash to PC Tab'),
-							_('Cash Transfer Between Tabs'),
+													_('Cash Transfer Between Tabs'),
 													_('Claim Expenses From PC Tab'),
-													_('Expenses Authorisation'));
+													_('Authorize Cash Assign To PC Tab'),
+													_('Authorize Expenses From PC Tab'));
 
 $MenuItems['PC']['Transactions']['URL'] = array('/PcAssignCashToTab.php',
 												'/PcAssignCashTabToTab.php',
 												'/PcClaimExpensesFromTab.php',
+												'/PcAuthorizeCash.php',
 												'/PcAuthorizeExpenses.php');
 
 $MenuItems['PC']['Reports']['Caption'] = array(_('PC Tab General Report'),
@@ -782,7 +781,6 @@ $MenuItems['system']['Transactions']['Caption'] = array(_('Company Preferences')
 														_('Dispatch Tax Province Maintenance'),
 														_('Tax Category Maintenance'),
 														_('List Periods Defined'),
-														_('Report Builder Tool'),
 														_('View Audit Trail'),
 														_('View Scripts Audit'),
 														_('Geocode Maintenance'),
@@ -806,7 +804,6 @@ $MenuItems['system']['Transactions']['URL'] = array('/CompanyPreferences.php',
 													'/TaxProvinces.php',
 													'/TaxCategories.php',
 													'/PeriodsInquiry.php',
-													'/reportwriter/admin/ReportCreator.php',
 													'/AuditTrail.php',
 													'/AuditScripts.php',
 													'/GeocodeSetup.php',

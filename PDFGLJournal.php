@@ -1,6 +1,5 @@
 <?php
 
-/* $Id$*/
 
 /* $Revision: 1.5 $ */
 
@@ -59,7 +58,7 @@ if ($JournalNo=='Preview') {
 	$myrow=DB_fetch_array($result);
 	$JournalDate=$myrow['trandate'];
 	DB_data_seek($result, 0);
-	include('includes/PDFGLJournalheader.php');
+	include('includes/PDFGLJournalHeader.inc');
 }
 $counter=1;
 $YPos=$FormDesign->Data->y;

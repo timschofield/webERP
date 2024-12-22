@@ -1,0 +1,25 @@
+div.page_help_text {
+background-color:#ccc;
+background-size:32px 32px;
+min-height:32px;
+border:#a52a2a 1px solid;
+border-radius:5px;
+padding-top:9px;
+padding-bottom:9px;
+padding-left:3px;
+z-index:1;
+width:50%;
+float:none;
+visibility:visible;
+position:static;
+color:#000;
+text-align:center;
+margin:0 auto;
+margin-top:10px;
+margin-bottom:10px;
+}
+
+@media only screen and (max-device-width:767px) {
+/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+.page_help_text {display:none;/* Hides field help text. */}
+}

@@ -1,5 +1,4 @@
 <?php
-/* $Id: SalesGraph.php 7682 2016-11-24 14:10:25Z rchacon $*/
 
 include('includes/session.php');
 include('includes/phplot/phplot.php');
@@ -39,7 +38,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<table class="selection">
-			<tr><td>' . _('Select Period From:') . '</td>
+			<tr><td>' . _('Select Period From') . ':</td>
 			<td><select name="FromPeriod">';
 
 	if (Date('m') > $_SESSION['YearEnd']){
@@ -75,7 +74,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	echo '<tr>
-			<td>' . _('Select Period To:')  . '</td>
+			<td>' . _('Select Period To')  . ':</td>
 			<td><select name="ToPeriod">';
 
 	$RetResult = DB_data_seek($Periods,0);
@@ -89,6 +88,21 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 		}
 	}
 	echo '</select></td></tr>';
+
+	echo '<tr>
+			<td>
+				<h3>', _('OR'), '</h3>
+			</td>
+		</tr>';
+
+	if (!isset($_POST['Period'])) {
+		$_POST['Period'] = '';
+	}
+
+	echo '<tr>
+			<td>', _('Select Period'), '</td>
+			<td>', ReportPeriodList($_POST['Period'], array('l', 't')), '</td>
+		</tr>';
 
 	$AreasResult = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescription");
 
@@ -203,21 +217,39 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	include('includes/footer.php');
 } else {
 
+	$graph = new PHPlot(1200,600);
 	$SelectClause ='';
 	$WhereClause ='';
 	$GraphTitle ='';
 	if ($_POST['GraphValue']=='Net') {
 		$GraphTitle = _('Sales Value');
-		$SelectClause = 'amt';
+		$SelectClause = 'amt - disc';
 	} elseif ($_POST['GraphValue']=='GP'){
 		$GraphTitle = _('Gross Profit');
-		$SelectClause = '(amt - cost)';
+		$SelectClause = '(amt - disc - cost)';
 	} else {
 		$GraphTitle = _('Unit Sales');
 		$SelectClause = 'qty';
 	}
 
-	$GraphTitle .= ' ' . _('From Period') . ' ' . $_POST['FromPeriod'] . ' ' . _('to') . ' ' . $_POST['ToPeriod'] . "\n\r";
+	if ($_POST['Period'] != '') {
+		$_POST['FromPeriod'] = ReportPeriod($_POST['Period'], 'From');
+		$_POST['ToPeriod'] = ReportPeriod($_POST['Period'], 'To');
+	}
+
+	$SQL = "SELECT YEAR(`lastdate_in_period`) AS year, MONTHNAME(`lastdate_in_period`) AS month
+			  FROM `periods`
+			 WHERE `periodno`='" . $_POST['FromPeriod'] . "' OR periodno='" . $_POST['ToPeriod'] . "'";
+
+	$result = DB_query($SQL);
+
+	$fromPeriod = DB_fetch_array($result);
+	$starting = $fromPeriod['month'] . ' ' . $fromPeriod['year'];
+
+	$toPeriod = DB_fetch_array($result);
+	$ending = $toPeriod['month'] . ' ' . $toPeriod['year'];
+
+	$GraphTitle .= ' ' . _('From Period') . ' ' . $starting . ' ' . _('to') . ' ' . $ending . "\n\r";
 
 	if ($_POST['SalesArea']=='All'){
 		$GraphTitle .= ' ' . _('For All Sales Areas');
@@ -265,7 +297,7 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 			periods.lastdate_in_period
 		ORDER BY salesanalysis.periodno";
 
-	$graph = new PHPlot(1200,600);
+
 	$graph->SetTitle($GraphTitle);
 	$graph->SetTitleColor('blue');
 	$graph->SetOutputFile('companies/' .$_SESSION['DatabaseName'] .  '/reports/salesgraph.png');
@@ -290,23 +322,16 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	$graph->SetDataType('text-data');
 	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
 	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
-	$graph->SetDataColors(
-		array('grey'),  //Data Colors
-		array('black')	//Border Colors
-	);
-//	$graph->SetYDataLabelPos('plotin');
-	$graph->SetYDataLabelPos('none');
 
 	$SalesResult = DB_query($SQL);
 	if (DB_error_no() !=0) {
+
 		prnMsg(_('The sales graph data for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-		prnMsg($SQL);
 		include('includes/footer.php');
 		exit;
 	}
 	if (DB_num_rows($SalesResult)==0){
 		prnMsg(_('There is not sales data for the criteria entered to graph'),'info');
-		prnMsg($SQL);
 		include('includes/footer.php');
 		exit;
 	}
@@ -319,6 +344,12 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	}
 
 	$graph->SetDataValues($GraphArray);
+	$graph->SetDataColors(
+		array('grey'),  //Data Colors
+		array('black')	//Border Colors
+	);
+//	$graph->SetYDataLabelPos('plotin');
+	$graph->SetYDataLabelPos('none');
 
 	//Draw it
 	$graph->DrawGraph();

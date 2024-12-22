@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFSellThroughSupportClaim.php 5788 2013-01-02 03:22:38Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Sell Through Support Claims Report');
@@ -116,7 +115,7 @@ if (isset($_POST['PrintPDF'])) {
 			$SupplierClaimTotal=0;
 			$pdf->SetFont('helvetica', $style='N', $size=8);
 			$FontSize =8;
-			$YPos -=$line_height;	
+			$YPos -=$line_height;
 		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,60,$FontSize,$SellThroRow['typename'] . '-' . $SellThroRow['transno']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+63,$YPos,160,$FontSize,$SellThroRow['stockid']. '-' . $SellThroRow['description']);
@@ -125,8 +124,8 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+334,$YPos,60,$FontSize,$DisplaySellingPrice,'right');
 		$ClaimAmount = (($SellThroRow['fxcost']*$SellThroRow['rebatepercent']) + $SellThroRow['rebateamount']) * -$SellThroRow['qty'];
 		$SupplierClaimTotal += $ClaimAmount;
-		
-		
+
+
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,60,$FontSize,locale_number_format(-$SellThroRow['qty']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
 
@@ -140,15 +139,15 @@ if (isset($_POST['PrintPDF'])) {
 		$YPos -=5;
 		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
 		$YPos -=$line_height;
-		
+
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,470,$FontSize,$Supplier . ' ' . _('Total Claim:'),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
 		$YPos -=5;
-		
+
 		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
 		$YPos -=1;
 		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
-		
+
 	}
 	$FontSize =10;
 
@@ -174,11 +173,11 @@ if (isset($_POST['PrintPDF'])) {
 				<table class="selection">
 					<tr>
 						<td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-						<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+						<td><input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
 					</tr>
 					<tr>
 						<td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-						<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+						<td><input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
 					</tr>
 				</table>
 				<br />

@@ -1271,7 +1271,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 	$k = 0; //row colour counter
 	$i= 0;
 	// get all images in part_pics folder (ideally should be OpenCart images folder...)
-	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir'], 'jpg');
+	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir']);
 	foreach ($imagefiles as $file) {
 		$multipleimage = 1;
 		$exist_multiple = TRUE;

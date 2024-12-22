@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFStockLocTransferHeader.inc 6167 2013-07-31 21:38:51Z rchacon $*/
 
 /*PDF page header for inventory check report */
 if ($PageNumber>1){
@@ -44,7 +43,7 @@ _('From').' ' . $TransferRow['shiplocname']);
 
 $YPos -=15;
 $FontSize=12;
-$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize, 
+$LeftOvers2 = $pdf->addTextWrap($Left_Margin,$YPos,550,$FontSize,
 _('to').' ' . $TransferRow['reclocname']);
 
 /*Draw a rectangle to put the headings in     */

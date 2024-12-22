@@ -126,8 +126,14 @@ INSERT INTO kurakura_kl_test_erpolddata.edi_orders_seg_groups SELECT * FROM kura
 TRUNCATE kurakura_kl_test_erpolddata.`emailsettings`;
 INSERT INTO kurakura_kl_test_erpolddata.emailsettings SELECT * FROM kurakura_kl_erpolddata.emailsettings;
 
+TRUNCATE kurakura_kl_test_erpolddata.`employees`;
+INSERT INTO kurakura_kl_test_erpolddata.employees SELECT * FROM kurakura_kl_erpolddata.employees;
+
 TRUNCATE kurakura_kl_test_erpolddata.`factorcompanies`;
 INSERT INTO kurakura_kl_test_erpolddata.factorcompanies SELECT * FROM kurakura_kl_erpolddata.factorcompanies;
+
+TRUNCATE kurakura_kl_test_erpolddata.`favourites`;
+INSERT INTO kurakura_kl_test_erpolddata.favourites SELECT * FROM kurakura_kl_erpolddata.favourites;
 
 TRUNCATE kurakura_kl_test_erpolddata.`fixedassetcategories`;
 INSERT INTO kurakura_kl_test_erpolddata.fixedassetcategories SELECT * FROM kurakura_kl_erpolddata.fixedassetcategories;
@@ -170,6 +176,12 @@ INSERT INTO kurakura_kl_test_erpolddata.holdreasons SELECT * FROM kurakura_kl_er
 
 TRUNCATE kurakura_kl_test_erpolddata.`internalstockcatrole`;
 INSERT INTO kurakura_kl_test_erpolddata.internalstockcatrole SELECT * FROM kurakura_kl_erpolddata.internalstockcatrole;
+
+TRUNCATE kurakura_kl_test_erpolddata.`jnltmplheader`;
+INSERT INTO kurakura_kl_test_erpolddata.jnltmplheader SELECT * FROM kurakura_kl_erpolddata.jnltmplheader;
+
+TRUNCATE kurakura_kl_test_erpolddata.`jnltmpldetails`;
+INSERT INTO kurakura_kl_test_erpolddata.jnltmpldetails SELECT * FROM kurakura_kl_erpolddata.jnltmpldetails;
 
 TRUNCATE kurakura_kl_test_erpolddata.`kladjustrl`;
 INSERT INTO kurakura_kl_test_erpolddata.kladjustrl SELECT * FROM kurakura_kl_erpolddata.kladjustrl;
@@ -297,8 +309,14 @@ INSERT INTO kurakura_kl_test_erpolddata.paymentterms SELECT * FROM kurakura_kl_e
 TRUNCATE kurakura_kl_test_erpolddata.`pcashdetails`;
 INSERT INTO kurakura_kl_test_erpolddata.pcashdetails SELECT * FROM kurakura_kl_erpolddata.pcashdetails;
 
+TRUNCATE kurakura_kl_test_erpolddata.`pcashdetailtaxes`;
+INSERT INTO kurakura_kl_test_erpolddata.pcashdetailtaxes SELECT * FROM kurakura_kl_erpolddata.pcashdetailtaxes;
+
 TRUNCATE kurakura_kl_test_erpolddata.`pcexpenses`;
 INSERT INTO kurakura_kl_test_erpolddata.pcexpenses SELECT * FROM kurakura_kl_erpolddata.pcexpenses;
+
+TRUNCATE kurakura_kl_test_erpolddata.`pcreceipts`;
+INSERT INTO kurakura_kl_test_erpolddata.pcreceipts SELECT * FROM kurakura_kl_erpolddata.pcreceipts;
 
 TRUNCATE kurakura_kl_test_erpolddata.`pctabexpenses`;
 INSERT INTO kurakura_kl_test_erpolddata.pctabexpenses SELECT * FROM kurakura_kl_erpolddata.pctabexpenses;
@@ -320,6 +338,15 @@ INSERT INTO kurakura_kl_test_erpolddata.pickinglistdetails SELECT * FROM kurakur
 
 TRUNCATE kurakura_kl_test_erpolddata.`pickinglists`;
 INSERT INTO kurakura_kl_test_erpolddata.pickinglists SELECT * FROM kurakura_kl_erpolddata.pickinglists;
+
+TRUNCATE kurakura_kl_test_erpolddata.`pickreq`;
+INSERT INTO kurakura_kl_test_erpolddata.pickreq SELECT * FROM kurakura_kl_erpolddata.pickreq;
+
+TRUNCATE kurakura_kl_test_erpolddata.`pickreqdetails`;
+INSERT INTO kurakura_kl_test_erpolddata.pickreqdetails SELECT * FROM kurakura_kl_erpolddata.pickreqdetails;
+
+TRUNCATE kurakura_kl_test_erpolddata.`pickserialdetails`;
+INSERT INTO kurakura_kl_test_erpolddata.pickserialdetails SELECT * FROM kurakura_kl_erpolddata.pickserialdetails;
 
 TRUNCATE kurakura_kl_test_erpolddata.`pricematrix`;
 INSERT INTO kurakura_kl_test_erpolddata.pricematrix SELECT * FROM kurakura_kl_erpolddata.pricematrix;
@@ -539,6 +566,9 @@ INSERT INTO kurakura_kl_test_erpolddata.tenders SELECT * FROM kurakura_kl_erpold
 
 TRUNCATE kurakura_kl_test_erpolddata.`tendersuppliers`;
 INSERT INTO kurakura_kl_test_erpolddata.tendersuppliers SELECT * FROM kurakura_kl_erpolddata.tendersuppliers;
+
+TRUNCATE kurakura_kl_test_erpolddata.`timesheets`;
+INSERT INTO kurakura_kl_test_erpolddata.timesheets SELECT * FROM kurakura_kl_erpolddata.timesheets;
 
 TRUNCATE kurakura_kl_test_erpolddata.`unitsofdimension`;
 INSERT INTO kurakura_kl_test_erpolddata.unitsofdimension SELECT * FROM kurakura_kl_erpolddata.unitsofdimension;

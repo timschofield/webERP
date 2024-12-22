@@ -1,5 +1,4 @@
 <?php
-/* $Id: AddCustomerTypeNotes.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Customer Type (Group) Notes');
@@ -114,22 +113,15 @@ if (!isset($Id)) {
 			<th>' . _('Priority') . '</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td><a href="%sId=%s&amp;DebtorType=%s">' .  _('Edit') . '</a></td>
-				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td></tr>',
+				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td>
+				</tr>',
 				$myrow['date'],
 				$myrow['note'],
 				$myrow['href'],
@@ -209,7 +201,7 @@ if (!isset($_GET['delete'])) {
 		</tr>
 		<tr>
 			<td>' .  _('Date').':</td>
-			<td><input type="text" required="required" name="NoteDate" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" value="'. $_POST['NoteDate']. '" size="10" maxlength="10" /></td>
+			<td><input type="text" required="required" name="NoteDate" class="date" value="'. $_POST['NoteDate']. '" size="11" maxlength="10" /></td>
 		</tr>
 		<tr>
 			<td>' .  _('Priority').':</td>

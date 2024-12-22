@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: PO_PDFPurchOrder.php 6941 2014-10-26 23:18:08Z daintree $*/
-
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Print webERP code and supplier code if possible
@@ -12,7 +10,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/DefinePOClass.php');
 
 if (!isset($_GET['OrderNo']) AND !isset($_POST['OrderNo'])) {
-	$Title = _('Select a Purchase Order');
+	$Title = _('Select a purchase order');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
 	prnMsg(_('Select a Purchase Order Number to Print before calling this page'), 'error');

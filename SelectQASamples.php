@@ -1,5 +1,4 @@
 <?php
-/* $Id: SelectQASamples.php 1 2014-09-08 10:42:50Z agaluski $*/
 
 include('includes/session.php');
 $Title = _('Select QA Samples');
@@ -248,7 +247,7 @@ if (!isset($SelectedSampleID)) {
 			echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 		}
 		echo _('Lot Number') . ': <input name="LotNumber" autofocus="autofocus" maxlength="20" size="12" value="' . $LotNumber . '"/> ' . _('Sample ID') . ': <input name="SampleID" maxlength="10" size="10" value="' . $SampleID . '"/> ';
-		echo _('From Sample Date') . ': <input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '"/> ' . _('To Sample Date') . ': <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '"/> ';
+		echo _('From Sample Date') . ': <input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '" /> ' . _('To Sample Date') . ': <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '" /> ';
 		echo '<input type="submit" name="SearchSamples" value="' . _('Search Samples') . '" /></td>
 			</tr>
 			</table>';
@@ -293,39 +292,27 @@ if (!isset($SelectedSampleID)) {
 		<br />';
 
 	if (isset($StockItemsResult)) {
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
+		echo '<table class="selection">
+			<thead>
+				<tr>
 							<th class="ascending">' . _('Code') . '</th>
 							<th class="ascending">' . _('Description') . '</th>
 							<th class="ascending">' . _('On Hand') . '</th>
 							<th class="ascending">' . _('Units') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$j = 1;
-		$k = 0; //row colour counter
+				</tr>
+			</thead>
+			<tbody>';
+
 		while ($myrow = DB_fetch_array($StockItemsResult)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
-			echo '<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
+			echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="' . $myrow['stockid'] . '"</td>
 				<td>' . $myrow['description'] . '</td>
 				<td class="number">' . locale_number_format($myrow['qoh'],$myrow['decimalplaces']) . '</td>
 				<td>' . $myrow['units'] . '</td>
 				</tr>';
-			$j++;
-			if ($j == 12) {
-				$j = 1;
-				echo $TableHeader;
-			}
-			//end of page full new headings if
-
 		}
 		//end of while loop
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 	//end if stock search results to show
 	else {
@@ -390,8 +377,9 @@ if (!isset($SelectedSampleID)) {
 		$SampleResult = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($SampleResult) > 0) {
 
-			echo '<table cellpadding="2" width="90%" class="selection">';
-			$TableHeader = '<tr>
+			echo '<table cellpadding="2" width="90%" class="selection">
+				<thead>
+					<tr>
 								<th class="ascending">' . _('Enter Results') . '</th>
 								<th class="ascending">' . _('Specification') . '</th>
 								<th class="ascending">' . _('Description') . '</th>
@@ -401,18 +389,11 @@ if (!isset($SelectedSampleID)) {
 								<th class="ascending">' . _('Sample Date') . '</th>
 								<th class="ascending">' . _('Comments') . '</th>
 								<th class="ascending">' . _('Cert Allowed') . '</th>
-							</tr>';
-			echo $TableHeader;
-			$j = 1;
-			$k = 0; //row colour counter
+					</tr>
+				</thead>
+				<tbody>';
+
 			while ($myrow = DB_fetch_array($SampleResult)) {
-				if ($k == 1) { /*alternate bgcolour of row for highlighting */
-					echo '<tr class="EvenTableRows">';
-					$k = 0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k++;
-				}
 				$ModifySampleID = $RootPath . '/TestPlanResults.php?SelectedSampleID=' . $myrow['sampleid'];
 				$Edit = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSampleID=' . $myrow['sampleid'] .'">' . _('Edit') .'</a>';
 				$Delete = '<a href="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  .'?delete=yes&amp;SelectedSampleID=' . $myrow['sampleid'].'" onclick="return confirm(\'' . _('Are you sure you wish to delete this Sample ID ?') . '\');">' . _('Delete').'</a>';
@@ -426,7 +407,8 @@ if (!isset($SelectedSampleID)) {
 					$CertAllowed=_('No');
 				}
 
-				echo '<td><a href="' . $ModifySampleID . '">' . str_pad($myrow['sampleid'],10,'0',STR_PAD_LEFT) . '</a></td>
+				echo '<tr class="striped_row">
+						<td><a href="' . $ModifySampleID . '">' . str_pad($myrow['sampleid'],10,'0',STR_PAD_LEFT) . '</a></td>
 						<td>' . $myrow['prodspeckey'] . '</td>
 						<td>' . $myrow['description'] . '</td>
 						<td>' . $myrow['lotkey'] . '</td>
@@ -438,14 +420,8 @@ if (!isset($SelectedSampleID)) {
 						<td>' . $Edit . '</td>
 						<td>' . $Delete . '</td>
 						</tr>';
-				$j++;
-				if ($j == 12) {
-					$j = 1;
-					//echo $TableHeader;
-				}
-				//end of page full new headings if
 			} //end of while loop
-			echo '</table>';
+			echo '</tbody></table>';
 		} // end if Pick Lists to show
 	}
 	echo '</div>

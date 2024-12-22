@@ -1,5 +1,4 @@
 <?php
-/* $Id: QATests.php 1 2014-09-08 10:42:50Z agaluski $*/
 
 include('includes/session.php');
 $Title = _('QA Tests Maintenance');
@@ -259,7 +258,7 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	if ($_POST['Type']==0){
 		echo '<option selected="selected" value="0">' . _('Text Box') . '</option>';
 	} else {
-		echo '<option Type="0">' . _('Text Box') . '</option>';
+		echo '<option value="0">' . _('Text Box') . '</option>';
 	}
 	if ($_POST['Type']==1){
 		echo '<option selected="selected" value="1">' . _('Select Box') . '</option>';
@@ -269,7 +268,7 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	if ($_POST['Type']==2){
 		echo '<option selected="selected" value="2">' . _('Check Box') . '</option>';
 	} else {
-		echo '<option Type="2">' . _('Check Box') . '</option>';
+		echo '<option value="2">' . _('Check Box') . '</option>';
 	}
 	if ($_POST['Type']==3){
 		echo '<option selected="selected" value="3">' . _('Date Box') . '</option>';
@@ -385,8 +384,9 @@ or deletion of the records*/
 			ORDER BY name";
 	$result = DB_query($sql);
 
-	echo '<table class="selection">';
-	echo '<tr>
+	echo '<table class="selection">
+		<thead>
+			<tr>
 			<th class="ascending">' . _('Test ID') . '</th>
 			<th class="ascending">' . _('Name') . '</th>
 			<th class="ascending">' . _('Method') . '</th>
@@ -399,17 +399,12 @@ or deletion of the records*/
 			<th class="ascending">' . _('Show on Spec') . '</th>
 			<th class="ascending">' . _('Show on Test Plan') . '</th>
 			<th class="ascending">' . _('Active') . '</th>
-		</tr>';
-	$k=0;
+			</tr>
+		</thead>
+		<tbody>';
+
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 	if ($myrow['active'] == 1) {
 		$ActiveText = _('Yes');
 	} else {
@@ -435,6 +430,7 @@ or deletion of the records*/
 	} else {
 		$ShowOnTestPlanText = _('No');
 	}
+
 	switch ($myrow['type']) {
 	 	case 0; //textbox
 	 		$TypeDisp='Text Box';
@@ -452,7 +448,9 @@ or deletion of the records*/
 			$TypeDisp='Range';
 			break;
 	} //end switch
-	printf('<td class="number">%s</td>
+
+	printf('<tr class="striped_row">
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -485,7 +483,7 @@ or deletion of the records*/
 			$myrow['testid']);
 
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody></table><br />';
 } //end of ifs and buts!
 include('includes/footer.php');
 ?>

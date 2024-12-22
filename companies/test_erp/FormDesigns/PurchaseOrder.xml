@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="Purchase Order">
+	<PaperSize name="Paper size">A4_Landscape</PaperSize>
+	<LineHeight name="Line height">16</LineHeight>
+	<logo type="image" name="Logo" id="Logo">
+		<x>-5</x>
+		<y>124</y>
+		<width>0</width>
+		<height>120</height>
+	</logo>
+	<OrderNumber type="SimpleText" name="Order Number" id="OrderNumber">
+		<FontSize>15</FontSize>
+		<x>391</x>
+		<y>46</y>
+	</OrderNumber>
+	<ViewingOnly type="SimpleText" name="Viewing only warning text" id="ViewingOnly">
+		<FontSize>16</FontSize>
+		<x>391</x>
+		<y>62</y>
+	</ViewingOnly>
+	<PageNumber type="SimpleText" name="Page number" id="PageNumber">
+		<FontSize>10</FontSize>
+		<x>762</x>
+		<y>30</y>
+	</PageNumber>
+	<CompanyName type="SimpleText" name="Company name" id="CompanyName">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>112</y>
+	</CompanyName>
+	<TaxAuthority type="SimpleText" name="Tax Authority" id="TaxAuthority">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>122</y>
+	</TaxAuthority>
+	<CompanyAddress type="ElementArray" name="Company address">
+		<Line1 type="SimpleText" name="Line 1" id="CompanyAddress1">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>132</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="CompanyAddress2">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>142</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="CompanyAddress3">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>152</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="CompanyAddress4">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>162</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="CompanyAddress5">
+			<FontSize>10</FontSize>
+			<x>40</x>
+			<y>172</y>
+		</Line5>
+	</CompanyAddress>
+	<CompanyPhone type="SimpleText" name="Company phone number" id="CompanyPhone">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>182</y>
+	</CompanyPhone>
+	<CompanyFax type="SimpleText" name="Company fax number" id="CompanyFax">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>192</y>
+	</CompanyFax>
+	<CompanyEmail type="SimpleText" name="Company email address" id="CompanyEmail">
+		<FontSize>10</FontSize>
+		<x>40</x>
+		<y>202</y>
+	</CompanyEmail>
+	<DeliveryAddress type="ElementArray" name="Delivery address">
+		<Caption type="SimpleText" name="Caption" id="DeliveryAddressCaption">
+			<FontSize>12</FontSize>
+			<x>448</x>
+			<y>142</y>
+		</Caption>
+		<Line1 type="SimpleText" name="Line 1" id="DeliveryAddress1">
+			<FontSize>12</FontSize>
+			<x>448</x>
+			<y>154</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="DeliveryAddress2">
+			<FontSize>12</FontSize>
+			<x>448</x>
+			<y>166</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="DeliveryAddress3">
+			<FontSize>12</FontSize>
+			<x>448</x>
+			<y>178</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="DeliveryAddress4">
+			<FontSize>12</FontSize>
+			<x>448</x>
+			<y>190</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="DeliveryAddress5">
+			<FontSize>12</FontSize>
+			<x>448</x>
+			<y>202</y>
+		</Line5>
+	</DeliveryAddress>
+	<DeliveryAddressBox type="CurvedRectangle" name="Delivery address box" id="DeliveryAddressBox">
+		<x>436</x>
+		<y>154</y>
+		<width>252</width>
+		<height>96</height>
+		<radius>12</radius>
+	</DeliveryAddressBox>
+	<SupplierName type="SimpleText" name="Supplier name" id="SupplierName">
+		<FontSize>12</FontSize>
+		<x>41</x>
+		<y>226</y>
+	</SupplierName>
+	<SupplierAddress type="ElementArray" name="Supplier address">
+		<Line1 type="SimpleText" name="Line 1" id="SupplierAddress1">
+			<FontSize>12</FontSize>
+			<x>71</x>
+			<y>238</y>
+		</Line1>
+		<Line2 type="SimpleText" name="Line 2" id="SupplierAddress2">
+			<FontSize>12</FontSize>
+			<x>71</x>
+			<y>250</y>
+		</Line2>
+		<Line3 type="SimpleText" name="Line 3" id="SupplierAddress3">
+			<FontSize>12</FontSize>
+			<x>71</x>
+			<y>262</y>
+		</Line3>
+		<Line4 type="SimpleText" name="Line 4" id="SupplierAddress4">
+			<FontSize>12</FontSize>
+			<x>71</x>
+			<y>274</y>
+		</Line4>
+		<Line5 type="SimpleText" name="Line 5" id="SupplierAddress5">
+			<FontSize>12</FontSize>
+			<x>71</x>
+			<y>286</y>
+		</Line5>
+	</SupplierAddress>
+	<RequisitionNumber type="SimpleText" name="Requisition Number" id="RequisitionNumber">
+		<FontSize>12</FontSize>
+		<x>446</x>
+		<y>236</y>
+	</RequisitionNumber>
+	<OrderDate type="SimpleText" name="Order date" id="OrderDate">
+		<FontSize>12</FontSize>
+		<x>446</x>
+		<y>250</y>
+	</OrderDate>
+	<Initiator type="SimpleText" name="Order initiator" id="Initiator">
+		<FontSize>12</FontSize>
+		<x>446</x>
+		<y>264</y>
+	</Initiator>
+	<PaymentTerms type="SimpleText" name="Payment terms" id="PaymentTerms">
+		<FontSize>12</FontSize>
+		<x>446</x>
+		<y>278</y>
+	</PaymentTerms>
+	<Comments type="MultiLineText" name="Comments" id="Comments">
+		<FontSize>12</FontSize>
+		<Length>250</Length>
+		<x>446</x>
+		<y>302</y>
+	</Comments>
+	<Currency type="SimpleText" name="Currency text" id="Currency">
+		<FontSize>12</FontSize>
+		<x>40</x>
+		<y>300</y>
+	</Currency>
+	<HeaderRectangle type="Rectangle" name="Header rectangle" id="HeaderRectangle">
+		<x>40</x>
+		<y>320</y>
+		<width>772</width>
+		<height>32</height>
+	</HeaderRectangle>
+	<Headings type="ElementArray" name="Column headings">
+		<Column1 type="SimpleText" name="Heading 1" id="Heading1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<y>330</y>
+		</Column1>
+		<Column2 type="SimpleText" name="Heading 2" id="Heading2">
+			<FontSize>10</FontSize>
+			<x>136</x>
+			<y>330</y>
+		</Column2>
+		<Column3 type="SimpleText" name="Heading 3" id="Heading3">
+			<FontSize>10</FontSize>
+			<x>441</x>
+			<y>330</y>
+		</Column3>
+		<Column4 type="SimpleText" name="Heading 4" id="Heading4">
+			<FontSize>10</FontSize>
+			<x>491</x>
+			<y>330</y>
+		</Column4>
+		<Column5 type="SimpleText" name="Heading 5" id="Heading5">
+			<FontSize>10</FontSize>
+			<x>526</x>
+			<y>330</y>
+		</Column5>
+		<Column6 type="SimpleText" name="Heading 6" id="Heading6">
+			<FontSize>10</FontSize>
+			<x>641</x>
+			<y>330</y>
+		</Column6>
+		<Column7 type="SimpleText" name="Heading 7" id="Heading7">
+			<FontSize>10</FontSize>
+			<x>761</x>
+			<y>330</y>
+		</Column7>
+	</Headings>
+	<DataRectangle type="Rectangle" name="Data rectangle" id="DataRectangle">
+		<x>40</x>
+		<y>352</y>
+		<width>772</width>
+		<height>213</height>
+	</DataRectangle>
+	<Data type="ElementArray" name="Column Data">
+		<y type="StartLine" name="Y co-ordinate of first data line" id="DataStartLine">362</y>
+		<Column1 type="DataText" name="Column 1" id="Data1">
+			<FontSize>10</FontSize>
+			<x>41</x>
+			<Length>94</Length>
+		</Column1>
+		<Column2 type="DataText" name="Column 2" id="Data2">
+			<FontSize>10</FontSize>
+			<x>136</x>
+			<Length>270</Length>
+		</Column2>
+		<Column3 type="DataText" name="Column 3" id="Data3">
+			<FontSize>10</FontSize>
+			<x>441</x>
+			<Length>40</Length>
+		</Column3>
+		<Column4 type="DataText" name="Column 4" id="Data4">
+			<FontSize>10</FontSize>
+			<x>491</x>
+			<Length>37</Length>
+		</Column4>
+		<Column5 type="DataText" name="Column 5" id="Data5">
+			<FontSize>10</FontSize>
+			<x>526</x>
+			<Length>60</Length>
+		</Column5>
+		<Column6 type="DataText" name="Column 6" id="Data6">
+			<FontSize>10</FontSize>
+			<x>591</x>
+			<Length>85</Length>
+		</Column6>
+		<Column7 type="DataText" name="Column 7" id="Data7">
+			<FontSize>10</FontSize>
+			<x>661</x>
+			<Length>130</Length>
+		</Column7>
+	</Data>
+	<OrderTotalCaption type="SimpleText" name="Order total caption" id="OrderTotalCaption">
+		<FontSize>14</FontSize>
+		<x>450</x>
+		<y>549</y>
+	</OrderTotalCaption>
+	<OrderTotal type="MultiLineText" name="Order total" id="OrderTotal">
+		<FontSize>14</FontSize>
+		<x>665</x>
+		<y>549</y>
+		<Length>125</Length>
+	</OrderTotal>
+</form>

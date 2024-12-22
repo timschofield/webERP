@@ -1,0 +1,243 @@
+body {
+background: linear-gradient(90deg, #d4d4d4 0%, #4580af 100%);
+font-family: Futura,Trebuchet MS,Arial,sans-serif;
+color:#E6EAF7;
+font-size:12pt;
+margin:0;
+padding:0;
+text-align:center
+}
+@media only screen and (min-width: 401px) {
+#container {
+border:solid #FFFFFF 1px;
+border-radius:15px;
+margin:90px auto 0;
+opacity:1.0;
+padding:10px 0 36px;
+text-align:left;
+width:65%;
+z-index:1000
+}
+#login_box {
+background: linear-gradient(90deg, #4580af 0%, #d4d4d4 100%);
+border:solid #FFFFFF 2px;
+border-radius:15px;
+margin:0 10px 10px 20px;
+}
+form {
+margin:0
+}
+input {
+background-color:transparent;
+border-color:#FFFFFF;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+color:#E6EAF7;
+font-size:100%;
+margin:10px 0 0;
+vertical-align:middle;
+width:50%
+}
+input:hover, input:focus {
+background-color:transparent;
+border-color:#FFFFFF;
+border-style:solid;
+border-width:1px;
+font-size:100%;
+box-shadow:0 0 5px #000000
+}
+span {
+margin:0 0 0 50px
+}
+label {
+display:block;
+float:left;
+font-weight:700;
+line-height:normal;
+margin:10px 0 0 50px;
+position:relative;
+width:30%
+}
+#demo_text {
+margin:10px 0 0 50px
+}
+#eye{
+background: url(eye.png) no-repeat right white;
+background-size:contain;
+display:inline-block;
+width:18px;
+margin-left:-29px;
+cursor:pointer;
+}
+#eye:focus{
+box-shadow:none;
+}
+#CompanySelect {
+background: url(descending.png) no-repeat right transparent;
+background-size:contain;
+cursor:pointer;
+margin-bottom:2px;
+padding-right:24px;
+}
+.dropdownlist{
+background:#4D4D4D;
+position:absolute;
+left:0%;
+max-height:0px;
+list-style: none;
+display:block;
+margin-top:0px;
+border-radius:5px;
+box-shadow: 3px 3px 10px 0px rgba(5,7,41,0.75);
+overflow:hidden;
+scrollbar-color: #77AAC3 #324377;
+}
+.option {
+position:relative;
+left:-10%;
+background:#4D4D4D;
+padding-left:5px;
+padding-top:1px;
+cursor:pointer;
+border:0px solid transparent;
+margin-bottom:0px;
+width:108%;
+}
+.option:hover {
+border:0px solid navy;
+background:#000000;
+}
+#optionlogo {
+position:relative;
+height:24px;
+width:96px;
+left:0%;
+}
+#optionlabel {
+position:relative;
+left:-10%;
+top:-8px;
+color:#FFFFFF;
+}
+}
+@media only screen and (max-width: 400px) {
+.dropdownlist{
+background:#BFBFBF;
+position:absolute;
+left:0%;
+max-height:0px;
+list-style: none;
+display:block;
+margin-top:0px;
+border-radius:5px;
+box-shadow: 3px 3px 10px 0px rgba(5,7,41,0.75);
+overflow:hidden;
+scrollbar-color: #77AAC3 #324377;
+}
+#optionlogo {
+position:relative;
+height:24px;
+width:96px;
+left:0%;
+display:none;
+}
+.option {
+position:relative;
+left:-20%;
+background:#BFBFBF;
+padding-left:5px;
+padding-top:1px;
+cursor:pointer;
+border:0px solid transparent;
+margin-bottom:0px;
+width:108%;
+}
+.option:hover {
+border:0px solid navy;
+background:#BFBFBF;
+}
+label {
+display:block;
+font-weight:700;
+line-height:normal;
+margin:10px 0 0 20px;
+position:relative;
+text-align:left;
+width:90%;
+}
+#CompanySelect {
+background: url(descending.png) no-repeat right transparent;
+background-size:contain;
+cursor:pointer;
+display:block;
+margin-bottom:2px;
+padding-right:24px;
+margin:10px 0 0 20px;
+width:90%;
+}
+#eye{
+background: url(eye.png) no-repeat right transparent;
+background-size:contain;
+display:inline-block;
+width:24px;
+margin-left:-28px;
+cursor:pointer;
+}
+#eye:focus{
+box-shadow:none;
+}
+input {
+display:block;
+background-color:transparent;
+border-color:#FFFFFF;
+border-radius:3px;
+border-style:solid;
+border-width:1px;
+color:#E6EAF7;
+font-size:100%;
+margin:10px 0 0 20px;
+width:90%;
+}
+input[type="password"] {
+display:inline;
+margin:10px 0 0 0px;
+width:90%;
+}
+}
+#login_logo {
+height:51px;
+margin:0 auto 10px;
+width:200px
+}
+#CompanyNameField{
+display:none;
+}
+button {
+background:transparent;
+border:solid #FFFFFF 2px;
+border-radius:7px;
+color:#E6EAF7;
+font-size:100%;
+font-weight:700;
+margin:10px 10px 10px 50px;
+padding:4px;
+width:30%;
+transition-property:background;
+transition-duration:0.5s;
+}
+button:hover {
+background:#030343;
+color:#E6EAF7;
+cursor:pointer;
+box-shadow:0 0 5px #7E7575
+}
+input.button:active {
+background:#000
+}
+.waiting_show {
+position:absolute;
+float:left;
+width:20px;
+display:none;
+}

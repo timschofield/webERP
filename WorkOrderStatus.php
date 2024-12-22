@@ -1,5 +1,4 @@
 <?php
-/* $Id: WorkOrderStatus.php 7611 2016-09-04 06:12:47Z exsonqu $*/
 
 include('includes/session.php');
 $Title = _('Work Order Status Inquiry');

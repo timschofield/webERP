@@ -1,5 +1,4 @@
 <?php
-/* $Id: class.pdf.php 7730 2017-01-25 02:38:37Z tehonu $ */
 
      /* -----------------------------------------------------------------------------------------------
 	This class was an extension to the FPDF class to use the syntax of the R&OS pdf.php class,
@@ -144,7 +143,7 @@ if (!class_exists('Cpdf', false)) {
 			$ns=0;
             $cw = $this->GetStringWidth($s, '', '', 0, true);
 			while($i<$nb) {
-				/*$c=$s{$i};*/
+
 				$c=mb_substr($s, $i, 1, 'UTF-8');
 				if($c===' ' AND $i>0) {
 					$sep=$i;

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFBankingSummary.php 6943 2014-10-27 07:06:42Z daintree $*/
 
 include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');

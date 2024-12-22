@@ -1,5 +1,4 @@
 <?php
-/* $Id: SupplierInquiry.php 7660 2016-11-01 18:42:38Z rchacon $*/
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
 include('includes/session.php');
@@ -159,7 +158,7 @@ echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': '  . '<input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
+echo _('Show all transactions after') . ': '  . '<input type="text" class="date" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
 	    <input class="noprint" name="Refresh Inquiry" type="submit" value="' . _('Refresh Inquiry') . '" />
     </div>
 	</form>
@@ -200,6 +199,7 @@ if(DB_num_rows($TransResult) == 0) {
 /*show a table of the transactions returned by the SQL */
 
 echo '<table class="selection"><thead>
+	<thead>
 	<tr>
 		<th class="ascending">' . _('Date') . '</th>
 		<th class="ascending">' . _('Type') . '</th>
@@ -212,7 +212,8 @@ echo '<table class="selection"><thead>
 		<th class="noprint">' . _('More Info') . '</th>
 		<th class="noprint">' . _('More Info') . '</th>
 	</tr>
-	</thead><tbody>';
+	</thead>
+	<tbody>';
 
 $AuthSQL = "SELECT offhold
 			FROM purchorderauth
@@ -222,7 +223,6 @@ $AuthResult = DB_query($AuthSQL);
 $AuthRow = DB_fetch_array($AuthResult);
 
 $j = 1;
-$k = 0;// Row colour counter.
 
 while($MyRow = DB_fetch_array($TransResult)) {
 	if($MyRow['hold'] == 0 AND $MyRow['settled'] == 0) {
@@ -236,14 +236,9 @@ while($MyRow = DB_fetch_array($TransResult)) {
 	// Comment: All table-row (tag tr) must have 10 table-datacells (tag td).
 
 	if($MyRow['hold'] == 1) {
-		echo '<tr bgcolor="#DD99BB">';
-/*		echo '<tr class="Highlight">';*/
-	} elseif($k == 1) {
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
+		echo '<tr style="backgroud-color:#DD99BB">';
 	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
+		echo '<tr class="striped_row">';
 	}
 
 	// Prints first 8 columns that are in common (columns 1-8):

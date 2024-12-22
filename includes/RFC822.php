@@ -1,5 +1,4 @@
 <?php
-/* $Id: RFC822.php 6310 2013-08-29 10:42:50Z daintree $*/
 /**
 * RFC 822 Email address list validation Utility
 *

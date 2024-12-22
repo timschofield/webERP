@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustomerAccount.php 7004 2014-11-24 15:56:19Z rchacon $*/
 /* Shows customer account/statement on screen rather than PDF. */
 
 include('includes/session.php');
@@ -64,7 +63,7 @@ if ($_SESSION['Show_Settled_LastMonth']==1) {
 						debtortrans.order_,
 						debtortrans.transno,
 						debtortrans.trandate,
-						debtortrans.ovamount + debtortrans.ovdiscount + debtortrans.ovfreight + debtortrans.ovgst AS totalamount,
+						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst AS totalamount,
 						debtortrans.alloc,
 						debtortrans.balance AS balance,
 						debtortrans.settled
@@ -100,7 +99,7 @@ $sql = "SELECT debtortrans.id,
 			debtortrans.trandate,
 			debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst as totalamount,
 			debtortrans.alloc,
-			debtortrans.balance as balance,
+			debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc as balance,
 			debtortrans.settled
 		FROM debtortrans INNER JOIN systypes
 			ON debtortrans.type=systypes.typeid
@@ -165,7 +164,8 @@ $SQL = "SELECT debtorsmaster.name,
 				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
 				interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
 				>= " . $_SESSION['PastDueDays2'] . ")
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +	debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
+				debtortrans.ovdiscount - debtortrans.alloc
 				ELSE 0 END
 			END) AS overdue2
 		FROM debtorsmaster INNER JOIN paymentterms
@@ -205,7 +205,7 @@ $CustomerResult = DB_query($SQL, $ErrMsg);
 
 $CustomerRecord = DB_fetch_array($CustomerResult);
 
-echo '<div class="noprint toplink">
+echo '<div class="noprint centre">
 		<a href="', $RootPath, '/SelectCustomer.php">', _('Back to Customer Screen'), '</a>
 	</div>';
 
@@ -231,7 +231,7 @@ if ($CustomerRecord['dissallowinvoices'] != 0) {
 }
 echo '<br /><form onSubmit="return VerifyForm(this);" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post" class="centre noprint">
 		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
-		_('Show all transactions after'), ':<input alt="', $_SESSION['DefaultDateFormat'], '" class="date" id="datepicker" maxlength="10" minlength="0" name="TransAfterDate" required="required" size="12" tabindex="1" type="text" value="', $_POST['TransAfterDate'], '" />',
+		_('Show all transactions after'), ':<input class="date" maxlength="10" name="TransAfterDate" required="required" size="11" tabindex="1" type="text" value="', $_POST['TransAfterDate'], '" />',
 		'<input name="Refresh Inquiry" tabindex="3" type="submit" value="', _('Refresh Inquiry'), '" />
 	</form>';
 
@@ -255,7 +255,6 @@ echo '<br /><table class="selection">
 		</tr>
 	</thead><tbody>';
 
-$k = 0; //row colour counter
 $OutstandingOrSettled = '';
 if ($_SESSION['InvoicePortraitFormat'] == 1) { //Invoice/credits in portrait
 	$PrintCustomerTransactionScript = 'PrintCustTransPortrait.php';
@@ -272,20 +271,11 @@ foreach ($Transactions as $MyRow) {
 		$OutstandingOrSettled='Outstanding';
 	}
 
-	if ($k == 1) {
-		echo '<tr class="EvenTableRows">';
-		$k = 0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k = 1;
-	}
-
-
 	$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-
 	if ($MyRow['type']==10) { //its an invoice
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+			<td>', _($MyRow['typename']), '</td>
 			<td class="number">', $MyRow['transno'], '</td>
 			<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 			<td>', $MyRow['branchcode'], '</td>
@@ -309,7 +299,8 @@ foreach ($Transactions as $MyRow) {
 		</tr>';
 
 	} elseif ($MyRow['type'] == 11) {
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+				<td>', _($MyRow['typename']), '</td>
 				<td class="number">', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>
@@ -338,7 +329,8 @@ foreach ($Transactions as $MyRow) {
 		/* Show transactions where:
 		 * - Is receipt
 		 */
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+				<td>', _($MyRow['typename']), '</td>
 				<td class="number">', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>
@@ -362,7 +354,8 @@ foreach ($Transactions as $MyRow) {
 		* - Is a negative receipt
 		* - User cannot view GL transactions
 		*/
-		echo '<td>', _($MyRow['typename']), '</td>
+		echo '<tr class="striped_row">
+				<td>', _($MyRow['typename']), '</td>
 				<td class="number">', $MyRow['transno'], '</td>
 				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
 				<td>', $MyRow['branchcode'], '</td>

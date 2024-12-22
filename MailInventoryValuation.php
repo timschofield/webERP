@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: MailInventoryValuation.php 6966 2014-11-06 09:15:09Z daintree $ */
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -249,7 +248,7 @@ if ($ListCount == 0) {
 			include('includes/footer.php');
 			exit;
 
-	}else{
+	} else {
 			$Title = _('Print Inventory Valuation Error');
 			include('includes/header.php');
 			prnMsg(_('There are errors lead to mails not sent'),'error');

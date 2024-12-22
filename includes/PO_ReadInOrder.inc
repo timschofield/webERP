@@ -1,5 +1,4 @@
 <?php
-/* $Id: PO_ReadInOrder.inc 6941 2014-10-26 23:18:08Z daintree $*/
 /*PO_ReadInOrder.inc is used by the modify existing order code in PO_Header.php and also by GoodsReceived.php */
 
 	if (isset($_SESSION['PO'.$identifier])){

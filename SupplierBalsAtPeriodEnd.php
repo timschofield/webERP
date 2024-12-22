@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SupplierBalsAtPeriodEnd.php 6944 2014-10-27 07:15:34Z daintree $*/
 
 include('includes/session.php');
 

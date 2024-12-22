@@ -1,5 +1,4 @@
 <?php
-/* $Id: GLAccounts.php 7712 2016-12-21 23:44:26Z rchacon $*/
 /* Defines the general ledger accounts */
 /* To delete, insert, or update an account. */
 
@@ -7,7 +6,7 @@
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
 	switch($Activity) {
-		case -1: return '<b>' . _('Without setting up') . '</b>';
+		case -1: return '<b>' . _('Not set up') . '</b>';
 		case 0: return _('No effect on cash flow');
 		case 1: return _('Operating activity');
 		case 2: return _('Investing activity');
@@ -25,8 +24,7 @@ $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/transactions.png" title="', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
 
@@ -58,21 +56,21 @@ if(isset($_POST['submit'])) {
 
 	if(isset($SelectedAccount) AND $InputError != 1) {
 
-		$Sql = "UPDATE
+		$SQL = "UPDATE
 					chartmaster SET accountname='" . $_POST['AccountName'] . "',
 					controlled='" . $_POST['Controlled'] . "',
 					group_='" . $_POST['Group'] . "',
 					cashflowsactivity='" . $_POST['CashFlowsActivity'] . "'
 				WHERE accountcode ='" . $SelectedAccount . "'";
 		$ErrMsg = _('Could not update the account because');
-		$Result = DB_query($Sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg (_('The general ledger account has been updated'),'success');
 	} elseif($InputError != 1) {
 
 		/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
 
-		$Sql = "INSERT INTO chartmaster (
+		$SQL = "INSERT INTO chartmaster (
 					accountcode,
 					accountname,
 					group_,
@@ -85,7 +83,7 @@ if(isset($_POST['submit'])) {
 					$_POST['Controlled'] . "', '" .
 					$_POST['CashFlowsActivity'] . "')";
 		$ErrMsg = _('Could not add the new account code');
-		$Result = DB_query($Sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
 		// update GL accounts for PTADU, PTBB, POIK, POPI, etc...
@@ -104,11 +102,11 @@ if(isset($_POST['submit'])) {
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartDetails'
 
-	$Sql= "SELECT COUNT(*)
+	$SQL= "SELECT COUNT(*)
 			FROM chartdetails
 			WHERE chartdetails.accountcode ='" . $SelectedAccount . "'
 			AND chartdetails.actual <>0";
-	$Result = DB_query($Sql);
+	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if($MyRow[0] > 0) {
 		$CancelDelete = 1;
@@ -117,11 +115,11 @@ if(isset($_POST['submit'])) {
 
 	} else {
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'GLTrans'
-		$Sql = "SELECT COUNT(*)
+		$SQL = "SELECT COUNT(*)
 				FROM gltrans
 				WHERE gltrans.account ='" . $SelectedAccount . "'";
 		$ErrMsg = _('Could not test for existing transactions because');
-		$Result = DB_query($Sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 
 		$MyRow = DB_fetch_row($Result);
 		if($MyRow[0] > 0) {
@@ -131,7 +129,7 @@ if(isset($_POST['submit'])) {
 
 		} else {
 			//PREVENT DELETES IF Company default accounts set up to this account
-			$Sql = "SELECT COUNT(*) FROM companies
+			$SQL = "SELECT COUNT(*) FROM companies
 					WHERE debtorsact='" . $SelectedAccount . "'
 					OR pytdiscountact='" . $SelectedAccount . "'
 					OR creditorsact='" . $SelectedAccount . "'
@@ -141,7 +139,7 @@ if(isset($_POST['submit'])) {
 					OR purchasesexchangediffact='" . $SelectedAccount . "'
 					OR retainedearnings='" . $SelectedAccount . "'";
 			$ErrMsg = _('Could not test for default company GL codes because');
-			$Result = DB_query($Sql, $ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 
 			$MyRow = DB_fetch_row($Result);
 			if($MyRow[0] > 0) {
@@ -150,11 +148,11 @@ if(isset($_POST['submit'])) {
 
 			} else {
 				//PREVENT DELETES IF Company default accounts set up to this account
-				$Sql = "SELECT COUNT(*) FROM taxauthorities
+				$SQL = "SELECT COUNT(*) FROM taxauthorities
 					WHERE taxglcode='" . $SelectedAccount ."'
 					OR purchtaxglaccount ='" . $SelectedAccount ."'";
 				$ErrMsg = _('Could not test for tax authority GL codes because');
-				$Result = DB_query($Sql, $ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 
 				$MyRow = DB_fetch_row($Result);
 				if($MyRow[0] > 0) {
@@ -162,11 +160,11 @@ if(isset($_POST['submit'])) {
 					prnMsg(_('Cannot delete this account because it is used as one of the tax authority accounts'), 'warn');
 				} else {
 //PREVENT DELETES IF SALES POSTINGS USE THE GL ACCOUNT
-					$Sql = "SELECT COUNT(*) FROM salesglpostings
+					$SQL = "SELECT COUNT(*) FROM salesglpostings
 						WHERE salesglcode='" . $SelectedAccount . "'
 						OR discountglcode='" . $SelectedAccount . "'";
 					$ErrMsg = _('Could not test for existing sales interface GL codes because');
-					$Result = DB_query($Sql, $ErrMsg);
+					$Result = DB_query($SQL, $ErrMsg);
 
 					$MyRow = DB_fetch_row($Result);
 					if($MyRow[0] > 0) {
@@ -174,11 +172,11 @@ if(isset($_POST['submit'])) {
 						prnMsg(_('Cannot delete this account because it is used by one of the sales GL posting interface records'), 'warn');
 					} else {
 //PREVENT DELETES IF COGS POSTINGS USE THE GL ACCOUNT
-						$Sql = "SELECT COUNT(*)
+						$SQL = "SELECT COUNT(*)
 								FROM cogsglpostings
 								WHERE glcode='" . $SelectedAccount . "'";
 						$ErrMsg = _('Could not test for existing cost of sales interface codes because');
-						$Result = DB_query($Sql, $ErrMsg);
+						$Result = DB_query($SQL, $ErrMsg);
 
 						$MyRow = DB_fetch_row($Result);
 						if($MyRow[0]>0) {
@@ -187,14 +185,14 @@ if(isset($_POST['submit'])) {
 
 						} else {
 //PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
-							$Sql = "SELECT COUNT(*) FROM stockcategory
+							$SQL = "SELECT COUNT(*) FROM stockcategory
 									WHERE stockact='" . $SelectedAccount . "'
 									OR adjglact='" . $SelectedAccount . "'
 									OR purchpricevaract='" . $SelectedAccount . "'
 									OR materialuseagevarac='" . $SelectedAccount . "'
 									OR wipact='" . $SelectedAccount . "'";
 							$Errmsg = _('Could not test for existing stock GL codes because');
-							$Result = DB_query($Sql,$ErrMsg);
+							$Result = DB_query($SQL,$ErrMsg);
 
 							$MyRow = DB_fetch_row($Result);
 							if($MyRow[0]>0) {
@@ -202,10 +200,10 @@ if(isset($_POST['submit'])) {
 								prnMsg(_('Cannot delete this account because it is used by one of the stock GL posting interface records'), 'warn');
 							} else {
 //PREVENT DELETES IF STOCK POSTINGS USE THE GL ACCOUNT
-								$Sql= "SELECT COUNT(*) FROM bankaccounts
+								$SQL= "SELECT COUNT(*) FROM bankaccounts
 								WHERE accountcode='" . $SelectedAccount ."'";
 								$ErrMsg = _('Could not test for existing bank account GL codes because');
-								$Result = DB_query($Sql,$ErrMsg);
+								$Result = DB_query($SQL,$ErrMsg);
 
 								$MyRow = DB_fetch_row($Result);
 								if($MyRow[0]>0) {
@@ -213,10 +211,10 @@ if(isset($_POST['submit'])) {
 									prnMsg(_('Cannot delete this account because it is used by one the defined bank accounts'), 'warn');
 								} else {
 
-									$Sql = "DELETE FROM chartdetails WHERE accountcode='" . $SelectedAccount ."'";
-									$Result = DB_query($Sql);
-									$Sql="DELETE FROM chartmaster WHERE accountcode= '" . $SelectedAccount ."'";
-									$Result = DB_query($Sql);
+									$SQL = "DELETE FROM chartdetails WHERE accountcode='" . $SelectedAccount ."'";
+									$Result = DB_query($SQL);
+									$SQL = "DELETE FROM chartmaster WHERE accountcode= '" . $SelectedAccount ."'";
+									$Result = DB_query($SQL);
 									prnMsg(_('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'), 'succes');
 									// update GL accounts for PTADU, PTBB, POIK, POPI, etc...
 									UpdateMultiCompanyAccounts();
@@ -237,8 +235,8 @@ if(!isset($_GET['delete'])) {
 
 	if(isset($SelectedAccount)) {// Edit an existing account.
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
-		$Sql = "SELECT accountcode, accountname, group_, controlled, cashflowsactivity FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
-		$Result = DB_query($Sql);
+		$SQL = "SELECT accountcode, accountname, group_, controlled, cashflowsactivity FROM chartmaster WHERE accountcode='" . $SelectedAccount ."'";
+		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 
 		$_POST['AccountCode'] = $MyRow['accountcode'];
@@ -246,9 +244,13 @@ if(!isset($_GET['delete'])) {
 		$_POST['Controlled']  = $MyRow['controlled'];
 		$_POST['Group'] = $MyRow['group_'];
 		$_POST['CashFlowsActivity'] = $MyRow['cashflowsactivity'];
+		$Legend = _('Edit GL Account Details');
 	} else {
 		$_POST['AccountCode'] = '';
 		$_POST['AccountName'] = '';
+		$_POST['Controlled']  = 0;
+		$_POST['CashFlowsActivity'] = 0;
+		$Legend = _('Create GL Account Details');
 	}
 
 	echo '<table class="selection">
@@ -260,8 +262,8 @@ if(!isset($_GET['delete'])) {
 			<td>' . _('Account Name') . ':</td>
 			<td><input ', (empty($_POST['AccountCode']) ? '' : 'autofocus="autofocus" '), 'maxlength="50" name="AccountName" required="required" size="51" title="' . _('Enter up to 50 alpha-numeric characters for the general ledger account name') . '" type="text" value="', $_POST['AccountName'], '" /></td></tr>';
 
-	$Sql = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
-	$Result = DB_query($Sql);
+	$SQL = "SELECT groupname FROM accountgroups ORDER BY sequenceintb";
+	$Result = DB_query($SQL);
 
 	echo '<tr>
 			<td>' . _('Account Group') . ':</td>
@@ -285,6 +287,9 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		echo '<option value="1">' . _('Yes') . '</option>';
+	}
+	if (!isset($_POST['CashFlowsActivity'])){
+		$_POST['CashFlowsActivity']=0;
 	}
 	
 	echo '</select></td>
@@ -320,17 +325,20 @@ or deletion of the records*/
 
 	echo '<br />
 		<table class="selection">
+		<thead>
 			<tr>
-				<th class="ascending">', _('Account Code'), '</th>
-				<th class="ascending">', _('Account Name'), '</th>
-				<th class="ascending">', _('Account Group'), '</th>
-				<th class="ascending">', _('P/L or B/S'), '</th>
-				<th class="ascending">' . _('Controlled') . '</th>
-				<th class="ascending">', _('Cash Flows Activity'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
-			</tr>';
+				<th class="SortedColumn">', _('Account Code'), '</th>
+				<th class="SortedColumn">', _('Account Name'), '</th>
+				<th class="SortedColumn">', _('Account Group'), '</th>
+				<th class="SortedColumn">', _('P/L or B/S'), '</th>
+				<th class="SortedColumn">' . _('Controlled') . '</th>
+				<th class="SortedColumn">', _('Cash Flows Activity'), '</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>';
 
-	$Sql = "SELECT
+	$SQL = "SELECT
 				accountcode,
 				accountname,
 				group_,
@@ -341,35 +349,27 @@ or deletion of the records*/
 			WHERE chartmaster.group_=accountgroups.groupname
 			ORDER BY chartmaster.accountcode";
 	$ErrMsg = _('The chart accounts could not be retrieved because');
-	$Result = DB_query($Sql, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 
-	$k = 1;// Row colour counter.
-	foreach($Result as $MyRow) {
-		if($k == 1) {
-			echo '<tr class="OddTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k = 1;
-		}
+	while ($MyRow = DB_fetch_array($Result)) {
 		if ($MyRow['controlled'] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');
 		}
-
-		echo	'<td class="text">', $MyRow['accountcode'], '</td>
+		echo '<tr class="striped_row">
+				<td class="text">', $MyRow['accountcode'], '</td>
 				<td class="text">', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8'), '</td>
 				<td class="text">', $MyRow['group_'], '</td>
 				<td class="text">', $MyRow['acttype'], '</td>
 				<td class="text">', $ActiveText, '</td>
 				<td class="text">', CashFlowsActivityName($MyRow['cashflowsactivity']), '</td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '">', _('Edit'), '</a></td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.'), '\');">', _('Delete'), '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '">', _('Edit'), '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedAccount=', $MyRow['accountcode'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.'), '\');">', _('Delete'), '</a></td>
 			</tr>';
 	}// END foreach($Result as $MyRow).
 
-	echo '</table>';
+	echo '</tbody></table>';
 } //END IF selected ACCOUNT
 
 //end of ifs and buts!

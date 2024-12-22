@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: ContractCosting.php 3692 2010-08-15 09:22:08Z daintree $*/
 
 include('includes/DefineContractClass.php');
 include('includes/session.php');
@@ -235,7 +234,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 //Compare actual costs to original budgeted contract costs - if actual > budgeted - CR WIP and DR usage variance
 	$Variance =  ($OtherReqtsBudget+$ContractBOMBudget)-($OtherReqtsActual+$ContractBOMActual);
 
-	$ContractCloseNo = GetNextTransNo(32);
+	$ContractCloseNo = GetNextTransNo( 32 );
 	$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 	DB_Txn_Begin();
@@ -443,7 +442,7 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 
 if ($_SESSION['Contract'.$identifier]->Status ==2){//the contract is an order being processed now
 
-	echo '<form  method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedContract=' . $_SESSION['Contract'.$identifier]->ContractRef . '&amp;identifier=' . $identifier . '">';
+	echo '<form  method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedContract=' . urlencode($_SESSION['Contract'.$identifier]->ContractRef) . '&amp;identifier=' . urlencode($identifier) . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<br />

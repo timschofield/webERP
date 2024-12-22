@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: EmailCustTrans.php 7245 2015-03-30 21:46:47Z vvs2012 $*/
 
 include('includes/session.php');
 include('includes/header.php');

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_RePostGLFromPeriod.php 7506 2016-05-06 03:25:37Z exsonqu $*/
 
 include ('includes/session.php');
 $Title = _('Recalculation of GL Balances in Chart Details Table');
@@ -40,24 +39,20 @@ if (!isset($_POST['FromPeriod'])){
 	/* Make the posted flag on all GL entries including and after the period selected = 0 */
 	$sql = "UPDATE gltrans SET posted=0 WHERE periodno >='" . $_POST['FromPeriod'] . "'";
 	$UpdGLTransPostedFlag = DB_query($sql);
-	prnMsg(_('Done') . ': ' . $sql,'success');
 
 	/* Now make all the actuals 0 for all periods including and after the period from */
 	$sql = "UPDATE chartdetails SET actual =0 WHERE period >= '" . $_POST['FromPeriod'] . "'";
 	$UpdActualChartDetails = DB_query($sql);
-	prnMsg(_('Done') . ': ' . $sql,'success');
 
 	$ChartDetailBFwdResult = DB_query("SELECT accountcode, bfwd FROM chartdetails WHERE period='" . $_POST['FromPeriod'] . "'");
 	while ($ChartRow=DB_fetch_array($ChartDetailBFwdResult)){
 		$sql = "UPDATE chartdetails SET bfwd ='" . $ChartRow['bfwd'] . "' WHERE period > '" . $_POST['FromPeriod'] . "' AND accountcode='" . $ChartRow['accountcode'] . "'";
 		$UpdActualChartDetails = DB_query($sql);
-		prnMsg(_('Done') . ': ' . $sql,'success');
 	}
 
 	/*Now repost the lot */
 
 	include('includes/GLPostingsZero.inc');
-//	include('includes/GLPostingsZeroNoCommit.inc'); // ALLOW LARGE REPOSTS AND AVOID ERROR 405.
 
 	prnMsg(_('All general ledger postings have been reposted from period') . ' ' . $_POST['FromPeriod'],'success');
 }

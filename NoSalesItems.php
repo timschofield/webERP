@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: NoSalesItems.php 2012-05-12 $*/
 
 include ('includes/session.php');
 $Title = _('No Sales Items Searching');
@@ -183,7 +182,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 				ORDER BY stockmaster.stockid";
 	}
 	$result = DB_query($SQL);
-	echo '<p class="page_title_text" align="center"><strong>' . _('No Sales Items') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . _('No Sales Items') . '</strong></p>';
 	echo '<form action="PDFNoSalesItems.php"  method="GET">
 		<table class="selection">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -200,16 +199,9 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	echo '<input type="hidden" value="' . $_POST['Location'] . '" name="Location" />
 			<input type="hidden" value="' . filter_number_format($_POST['NumberOfDays']) . '" name="NumberOfDays" />
 			<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />';
-	$k = 0; //row colour counter
+
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		$QOHResult = DB_query("SELECT sum(quantity)
 				FROM locstock
 				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
@@ -220,7 +212,8 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 
 		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 		if ($_POST['Location'][0] == 'All') {
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -237,7 +230,8 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 					$myrow['units'] //unit
 					);
 		}else{
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>

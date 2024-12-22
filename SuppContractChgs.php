@@ -1,6 +1,5 @@
 <?php
 
-/* $Id:  $*/
 
 /*The supplier transaction uses the SuppTrans class to hold the information about the invoice
 the SuppTrans class contains an array of Contract objects - containing details of all contract charges
@@ -19,7 +18,7 @@ include('includes/header.php');
 if (!isset($_SESSION['SuppTrans'])){
 	prnMsg(_('Contract charges or credits are entered against supplier invoices or credit notes respectively. To enter supplier transactions the supplier must first be selected from the supplier selection screen, then the link to enter a supplier invoice or credit note must be clicked on'),'info');
 	echo '<br />
-		<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select A Supplier') . '</a>';
+		<a href="' . $RootPath . '/SelectSupplier.php">' . _('Select a supplier') . '</a>';
 	exit;
 	/*It all stops here if there aint no supplier selected and invoice/credit initiated ie $_SESSION['SuppTrans'] started off*/
 }
@@ -73,14 +72,16 @@ echo  $_SESSION['SuppTrans']->SuppReference . ' ' ._('From') . ' ' . $_SESSION['
 
 echo '</p></div>';
 
-echo '<table class="selection">';
-$TableHeader = '<tr>
+echo '<table class="selection">
+	<thead>
+		<tr>
 					<th class="ascending">' . _('Contract') . '</th>
 					<th class="ascending">' . _('Amount') . '</th>
 					<th class="ascending">' . _('Narrative') . '</th>
 					<th class="ascending">' . _('Anticipated') . '</th>
-				</tr>';
-echo $TableHeader;
+		</tr>
+	</thead>
+	<tbody>';
 
 $TotalContractsValue = 0;
 
@@ -103,7 +104,9 @@ foreach ($_SESSION['SuppTrans']->Contracts as $EnteredContract){
 
 }
 
-echo '</table><table class="selection"><tr>
+echo '</tbody></table>
+	<table class="selection">
+		<tr>
 		<td class="number">' . _('Total') . ':</td>
 		<td class="number">' . locale_number_format($TotalContractsValue,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 	</tr>

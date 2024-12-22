@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_BottomUpCosts.php 6945 2014-10-27 07:20:48Z daintree $*/
 /* Script to update costs for all BOM items, from the bottom up */
 
 include('includes/session.php');

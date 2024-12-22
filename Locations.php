@@ -1,5 +1,11 @@
 <?php
-/* $Id: Locations.php 7308 2015-05-19 14:13:54Z rchacon $*/
+
+/************************************************************************************
+*
+* KL RICARD Manage customs fields
+*
+*************************************************************************************/
+
 /* Defines the inventory stocking locations or warehouses */
 
 include('includes/session.php');
@@ -13,7 +19,9 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Location Maintenance'), '</p>';// Page title.
 
 include('includes/CountriesArray.php');
+// KL RICARD
 include ('includes/OpenCartGeneralFunctions.php');
+// KL RICARD END
 
 if(isset($_GET['SelectedLocation'])) {
 	$SelectedLocation = $_GET['SelectedLocation'];
@@ -60,7 +68,7 @@ if(isset($_POST['submit'])) {
 		} else {
 			$_POST['Managed'] = 0;
 		}
-		
+		// KL RICARD Added custom fields to sql
 		$sql = "UPDATE locations SET loccode='" . $_POST['LocCode'] . "',
 									locationname='" . $_POST['LocationName'] . "',
 									deladd1='" . $_POST['DelAdd1'] . "',
@@ -109,11 +117,16 @@ if(isset($_POST['submit'])) {
 		$DbgMsg = _('The SQL used to update the location record was');
 
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
-
-		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
 		
+		// KL RICARD 
+		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
+		// KL RICARD End
+
+
+
 		prnMsg(_('The location record has been updated'),'success');
 
+		// KL RICARD Unset custom fields
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -170,6 +183,7 @@ if(isset($_POST['submit'])) {
 
 		/*SelectedLocation is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
+		// KL RICARD Added custom fields to sql
 		$sql = "INSERT INTO locations (loccode,
 										locationname,
 										deladd1,
@@ -259,7 +273,9 @@ if(isset($_POST['submit'])) {
 		$DbgMsg = _('The SQL used to insert the location record was');
 		$result = DB_query($sql,$ErrMsg,$DbgMsg);
 
+		// KL RICARD
 		UpdateOnlinePartnerPaypalSettingsInOpenCart($_POST['TypeLoc'], $_POST['OnlinePartnerCode']);
+		// KL RICARD END
 
 		prnMsg(_('The new location record has been added'),'success');
 
@@ -298,6 +314,7 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query($sql,$ErrMsg);
 		prnMsg(_('Existing users have been authorized for this location'),'success');
 
+		// KL RICARD unset custom fields
 		unset($_POST['LocCode']);
 		unset($_POST['LocationName']);
 		unset($_POST['DelAdd1']);
@@ -506,6 +523,7 @@ then none of the above are true and the list of Locations will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
+	// KL RICARD: added custom fields. We don't need the inner join with tax provinces
 	$sql = "SELECT loccode,
 				locationname,
 				priority,
@@ -526,8 +544,7 @@ or deletion of the records*/
 				rlfactorforpackaging,
 				rldaysforpackaging,
 				managed
-			FROM locations INNER JOIN taxprovinces
-			ON locations.taxprovinceid=taxprovinces.taxprovinceid
+			FROM locations
 			ORDER BY locationname";
 	$result = DB_query($sql);
 
@@ -535,7 +552,9 @@ or deletion of the records*/
 		prnMsg(_('There are no locations that match up with a tax province record to display. Check that tax provinces are set up for all dispatch locations'),'error');
 	}
 
+	// KL RICARD Show our needed fields, not standard webERP
 	echo '<table class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">', _('Code'), '</th>
 			<th class="ascending">', _('Location Name'), '</th>
@@ -553,17 +572,19 @@ or deletion of the records*/
 			<th class="ascending">', _('Pack Factor'), '</th>
 			<th class="ascending">', _('Pack Days'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
-$k=0;//row colour counter
 while ($myrow = DB_fetch_array($result)) {
-	if($k==1) {
-		echo '<tr class="EvenTableRows">';
-		$k=0;
+/* warehouse management not implemented ... yet
+	if($myrow['managed'] == 1) {
+		$myrow['managed'] = _('Yes');
 	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
+		$myrow['managed'] = _('No');
 	}
+*/
+	// KL RICARD Custom fields
 	if($myrow['stockreadytosell'] == 1) {
 		$ReadyToSell = _('Yes');
 	} else {
@@ -584,7 +605,9 @@ while ($myrow = DB_fetch_array($result)) {
 	} else {
 		$AvailableForOnline = _('No');
 	}
-	printf('<td>%s</td>
+
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -621,7 +644,7 @@ while ($myrow = DB_fetch_array($result)) {
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['loccode']);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!
@@ -640,7 +663,7 @@ if(!isset($_GET['delete'])) {
 
 	if(isset($SelectedLocation)) {
 		//editing an existing Location
-
+		// KL RICARD add custom fields to SQL
 		$sql = "SELECT loccode,
 					locationname,
 					deladd1,
@@ -684,8 +707,7 @@ if(!isset($_GET['delete'])) {
 					alldisc80items,
 					allowinvoicing
 				FROM locations
-				WHERE loccode='" . $SelectedLocation . "'
-				ORDER BY locationname";
+				WHERE loccode='" . $SelectedLocation . "'";
 
 		$result = DB_query($sql);
 		$myrow = DB_fetch_array($result);
@@ -801,6 +823,7 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['AllowInvoicing'])) {
 		$_POST['AllowInvoicing'] = 1;// If not set, set value to "Yes".
 	}
+	// KL RICARD 
 	if(!isset($_POST['StockReadyToSell'])) {
 		$_POST['StockReadyToSell'] = 0;
 	}
@@ -825,7 +848,7 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['AllDisc80Items'])) {
 		$_POST['AllDisc80Items'] = 1;
 	}
-
+	// KL RICARD END
 	echo '<tr>
 			<td>' . _('Location Name') . ':' . '</td>
 			<td><input type="text" name="LocationName" required="required" value="'. $_POST['LocationName'] . '" title="' . _('Enter the inventory location name this could be either a warehouse or a factory') . '" namesize="51" maxlength="50" /></td>
@@ -857,35 +880,32 @@ if(!isset($_GET['delete'])) {
 		<tr>
 			<td>' . _('Country') . ':</td>
 			<td><select name="DelAdd6">';
-	foreach ($CountriesArray as $CountryEntry => $CountryName) {
-		if(isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-		} elseif(!isset($_POST['Address6']) AND $CountryName == "") {
-			echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
-		} else {
-			echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
+		foreach ($CountriesArray as $CountryEntry => $CountryName) {
+			if(isset($_POST['DelAdd6']) AND (strtoupper($_POST['DelAdd6']) == strtoupper($CountryName))) {
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+			} elseif(!isset($_POST['Address6']) AND $CountryName == "") {
+				echo '<option selected="selected" value="' . $CountryName . '">' . $CountryName . '</option>';
+			} else {
+				echo '<option value="' . $CountryName . '">' . $CountryName . '</option>';
+			}
 		}
-	}
-	echo '</select></td>
-	</tr>
-	<tr>
-		<td>' . _('Telephone No') . ':' . '</td>
-		<td><input name="Tel" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Facsimile No') . ':' . '</td>
-		<td><input name="Fax" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
-	</tr>';
-	// Email address:
-	echo '<tr title="', _('The email address should be an email format such as adm@weberp.org'), '">
-		<td><label for="Email">', _('Email'), ':</label></td>
-		<td><input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" /></td>
-	</tr>';
-
-	// Tax Province:
-	echo '<tr>
-		<td>' . _('Tax Province') . ':' . '</td>
-		<td><select name="TaxProvince">';
+		echo '</select></td>
+		</tr>
+		<tr>
+			<td>' . _('Telephone No') . ':' . '</td>
+			<td><input name="Tel" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Tel'] . '" size="31" maxlength="30" title="' . _('The phone number should consist of numbers, spaces, parentheses, or the + character') . '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Facsimile No') . ':' . '</td>
+			<td><input name="Fax" type="tel" pattern="[0-9+\-\s()]*" value="' . $_POST['Fax'] . '" size="31" maxlength="30" title="' . _('The fax number should consist of numbers, parentheses, spaces or the + character') . '"/></td>
+		</tr>
+		<tr title="', _('The email address should be an email format such as name@domain.com'), '">
+			<td><label for="Email">', _('Email'), ':</label></td>
+			<td><input id="Email" maxlength="55" name="Email" size="31" type="email" value="', $_POST['Email'], '" /></td>
+		</tr>
+		<tr>
+			<td>' . _('Tax Province') . ':' . '</td>
+			<td><select name="TaxProvince">';
 
 	$TaxProvinceResult = DB_query("SELECT taxprovinceid, taxprovincename FROM taxprovinces");
 	while ($myrow=DB_fetch_array($TaxProvinceResult)) {
@@ -899,13 +919,14 @@ if(!isset($_GET['delete'])) {
 	echo '</select></td>
 		</tr>
 		<tr>
-			<td>' . _('Default Counter Sales Customer Code') . ':' . '</td>
+			<td>' . _('Default POS Shop Code') . ':' . '</td>
 			<td><input type="text" name="CashSaleCustomer" data-type="no-illegal-chars" title="' . _('If counter sales are being used for this location then an existing customer account code needs to be entered here. All sales created from the counter sales will be recorded against this customer account') . '" value="' . $_POST['CashSaleCustomer'] . '" size="11" maxlength="10" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Counter Sales Branch Code') . ':' . '</td>
+		</tr>
+		<tr>
+			<td>' . _('POS Shop Branch Code') . ':' . '</td>
 			<td><input type="text" name="CashSaleBranch" data-type="no-illegal-chars" title="' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '" value="' . $_POST['CashSaleBranch'] . '" size="11" maxlength="10" /></td>
 		</tr>';
+	// KL RICARD Custom fields
 	echo '
 		<tr>
 			<td>' . _('KL Priority for KL Smart Transfers') . ':' . '</td>
@@ -1127,6 +1148,7 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="RLDaysForPackaging" class="number" title="' . _('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" /></td>
 		</tr>';
 
+	// KL RICARD END
 	echo '<tr>
 			<td>' . _('Allow internal requests?') . ':</td>
 			<td><select name="InternalRequest">';
@@ -1186,6 +1208,7 @@ if(!isset($_GET['delete'])) {
 
 include('includes/footer.php');
 
+// KL RICARD
 function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlinePartnerCode){
 	if ($NewLocationType == 'ONLINE'){
 		// we are modifying an ONLINE Location
@@ -1207,7 +1230,5 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 		}
 	}
 }
-
-
-
+// KL RICARD END
 ?>

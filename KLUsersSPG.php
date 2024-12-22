@@ -8,7 +8,7 @@ KL RICARD WWW_Users modified for KL use ONLY to maintain SPG accounts
 $ModulesAllowed = "1,0,0,0,1,0,0,1,0,0,0,0,";
 $PDFLanguage = 0;
 $Language = "en_GB.utf8";
-$ThemeSPG = "fresh";
+$ThemeSPG = "aguapop";
 $PageSize = "A4";
 $CanCreateTender = 0;
 $Email = '';

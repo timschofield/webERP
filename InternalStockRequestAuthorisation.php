@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: InternalStockRequestAuthorisation.php 4576 2011-05-27 10:59:20Z daintree $*/
 
 include('includes/session.php');
 
@@ -21,7 +20,7 @@ if (isset($_POST['UpdateAll'])) {
 					WHERE dispatchid='" . $RequestNo . "'";
 			$result=DB_query($sql);
 		}
-		if (strpos($POSTVariableName, 'cancel')!== false) {
+		if (strpos($POSTVariableName, 'cancel')) {
  			$CancelItems = explode('cancel', $POSTVariableName);
  			$sql = "UPDATE stockrequestitems
  						SET completed=1

@@ -26,7 +26,7 @@ $SQL = "SELECT stockmaster.stockid,
 $result = DB_query($SQL);
 if (DB_num_rows($result) != 0){
 	$TotalValue = 0;
-	echo '<p class="page_title_text" align="center"><strong>' . _('Raw Materials Not Used in any BOM') . '</strong></p>';
+	echo '<p class="page_title_text"><strong>' . _('Raw Materials Not Used in any BOM') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
@@ -38,21 +38,15 @@ if (DB_num_rows($result) != 0){
 						<th>' . _('Value') . '</th>
 					</tr>';
 	echo $TableHeader;
-	$k = 0; //row colour counter
 	$i = 1;
+
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 		$LineValue = $myrow['qoh'] * $myrow['stdcost'];
 		$TotalValue = $TotalValue + $LineValue;
 		
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -69,7 +63,8 @@ if (DB_num_rows($result) != 0){
 		$i++;
 	}
 
-	printf('<td colspan="4">%s</td>
+	printf('<tr>
+			<td colspan="4">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 

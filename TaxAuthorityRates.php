@@ -1,5 +1,4 @@
 <?php
-/* $Id: TaxAuthorityRates.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Tax Rates');
@@ -77,22 +76,18 @@ if(DB_num_rows($TaxRatesResult)>0) {
 	echo '<div class="centre"><h1>' . $myrow[0] . '</h1></div>';// TaxAuthorityRates table title.
 
 	echo '<table class="selection">
+		<thead>
 		<tr>
 			<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
 			<th class="ascending">' . _('Tax Category') . '</th>
 			<th class="ascending">' . _('Tax Rate') . '</th>
-		</tr>';
+			</tr>
+		</thead>
+		<tbody>';
 
-	$j = 1;
 	while($myrow = DB_fetch_array($TaxRatesResult)) {
-		if ($j==1) {
-		    echo '<tr class="OddTableRows">';
-		    $j=0;
-		} else {
-		    echo '<tr class="EvenTableRows">';
-		    $j++;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td><input class="number" maxlength="5" name="%s" required="required" size="5" title="' . _('Input must be numeric') . '" type="text" value="%s" /></td>
 				</tr>',
@@ -104,7 +99,7 @@ if(DB_num_rows($TaxRatesResult)>0) {
 			$myrow['dispatchtaxprovince'] . '_' . $myrow['taxcatid'],
 			locale_number_format($myrow['taxrate']*100,2));
 	}// End of while loop.
-	echo '</table><br />
+	echo '</tbody></table><br />
 		<div class="centre">
 		<input type="submit" name="UpdateRates" value="' . _('Update Rates') . '" />';
 	//end if tax taxcatid/rates to show

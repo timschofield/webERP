@@ -1,6 +1,9 @@
 <?php
 define('MAX_LINES_PER_LABEL', 5);
+
+// KL RICARD 
 define('LABELS_FILE', $PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/labels.xml');
+// KL RICARD end
 
 /**
  *  These tags contains the more general data of the labels

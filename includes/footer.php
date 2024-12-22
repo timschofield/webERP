@@ -1,7 +1,4 @@
 <?php
-
-/* $Id: footer.php 7726 2017-01-13 23:02:10Z daintree $*/
-
 /* KL RICARD Log the script we run so we can optimize CPU time*/
 if (isset($Title)) {
 	$TitleScriptRunning = $Title;
@@ -29,31 +26,75 @@ $Result = DB_query($AuditSQL);
 
 /* END of logging the script */ 
 
-echo '</div>'; // BodyWrapDiv
-echo '</div>'; // BodyDiv
+echo '<div id="mask">
+		<div id="dialog"></div>
+	</div>';
 
-echo '<div id="FooterDiv">';
-echo '<div id="FooterWrapDiv">';
+if (isset($Messages) and count($Messages) > 0) {
+	$LogFile = false;
 
-echo '<div id="FooterLogoDiv">';
-	echo '<img src="'. $RootPath . '/' . $_SESSION['LogoFile'] . '" width="120" alt="webERP" title="webERP ' . _('Copyright') . ' &copy; PT. Angin Dingin Utara - ' . date('Y') . '" />';
-echo '</div>';
+	if (isset($_SESSION['LogSeverity']) and $_SESSION['LogSeverity'] > 0) { // add these 3 lines
+		$LogFile = fopen($_SESSION['LogPath'] . '/weberp.log', 'a');
+	}
 
-echo '<div id="FooterTimeDiv">';
-	echo DisplayDateTime();
-echo '</div>';
+	echo '<div id="MessageContainerFoot">';
 
-echo '<div id="FooterVersionDiv">';
-	echo 'webERP ' . _('version') . ' ' . '4.13.1 - Pre 4.15.2';
-echo '</div>';
+	foreach ($Messages as $Message) {
+		switch ($Message[1]) {
+			case 'error':
+				$Class = 'error';
+				$Message[2] = $Message[2] ? $Message[2] : _('ERROR') . ' ' . _('Report');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 0) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+				}
+			    break;
 
-echo '</div>'; // FooterWrapDiv
-echo '</div>'; // FooterDiv
-echo '</div>'; // Canvas
+			case 'warn':
+			case 'warning':
+				$Class = 'warn';
+				$Message[2] = $Message[2] ? $Message[2] : _('WARNING') . ' ' . _('Report');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 1) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+				}
+				break;
 
-echo '</body>
-	</html>';
-	
+            case 'info':
+                $Class = 'info';
+                $Message[2] = $Message[2] ? $Message[2] : _('INFORMATION') . ' ' . _('Message');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 2) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+				}
+				break;
 
+            case 'success':
+			default:
+                $Class = 'success';
+                $Message[2] = $Message[2] ? $Message[2] : _('SUCCESS') . ' ' . _('Report');
+				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 3) {
+					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+				}
+		}
 
+		echo '<div class="Message ', $Class, ' noPrint">
+					<span class="MessageCloseButton">&times;</span>
+					<b>', $Message[2], '</b> : ', $Message[0], '
+			</div>';
+	}
+
+	if (!empty($LogFile)) {
+		fclose($LogFile);
+	}
+	echo '</div>';
+}
+
+echo '</section>'; // BodyDiv
+echo '<footer class="noPrint">
+		<a class="FooterLogo">
+			<img src="', $RootPath, '/', $_SESSION['LogoFile'], '" width="120" alt="webERP" title="webERP ' . ' &copy; PT. Angin Dingin Utara - ' . date('Y') . '" />
+		</a>
+		<div class="FooterVersion">webERP ', _('version'), ' ', $_SESSION['VersionNumber'], '-' , _('PHP'), ' ' , phpversion() ,'</div>
+		<div class="FooterTime">', DisplayDateTime(), '</div>
+	</footer>'; // FooterDiv
+echo '</body>';
+echo '</html>';
 ?>

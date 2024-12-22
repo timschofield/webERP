@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockDispatch.php 7494 2016-04-25 09:53:53Z daintree $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -59,7 +58,7 @@ if (isset($_POST['PrintPDF'])) {
 	$sqlto="SELECT locationname,
 					cashsalecustomer,
 					cashsalebranch
-			FROM `locations` 
+			FROM `locations`
 			WHERE loccode='" . $_POST['ToLocation'] . "'";
 	$resultto = DB_query($sqlto,$ErrMsg);
 	$RowTo = DB_fetch_row($resultto);
@@ -72,15 +71,15 @@ if (isset($_POST['PrintPDF'])) {
 						debtorsmaster.salestype,
 						currencies.decimalplaces
 				FROM debtorsmaster, currencies
-				WHERE debtorsmaster.currcode = currencies.currabrev 
+				WHERE debtorsmaster.currcode = currencies.currabrev
 					AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
 		$ResultPrices = DB_query($SqlPrices,$ErrMsg);
 		$RowPrices = DB_fetch_row($ResultPrices);
 		$ToCurrency=$RowPrices['0'];
 		$ToPriceList=$RowPrices['1'];
-		$ToDecimalPlaces=$RowPrices['2'];	
+		$ToDecimalPlaces=$RowPrices['2'];
 	}
-	
+
 	// Creates WHERE clause for stock categories. StockCat is defined as an array so can choose
 	// more than one category
 	if ($_POST['StockCat'] != 'All') {
@@ -94,6 +93,7 @@ if (isset($_POST['PrintPDF'])) {
 // KL RICARD 18/12/2013
 		$WhereCategory = " AND stockmaster.categoryid !='SHCONS'
 						   AND stockmaster.categoryid !='SHPACK' ";
+// KL RICARD END
 	}
 
 	// If Strategy is "Items needed at TO location with overstock at FROM" we need to control the "needed at TO" part
@@ -216,7 +216,7 @@ if (isset($_POST['PrintPDF'])) {
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
 			$fill = False;
-		
+
 			if($template=='simple'){
 				//for simple template
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
@@ -247,7 +247,7 @@ if (isset($_POST['PrintPDF'])) {
 				$pdf->addTextWrap(450,$YPos,40,11,locale_number_format($ShipQty,$myrow['decimalplaces']),'right',0,$fill);
 				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
 				if($template=='fullprices'){
-					// looking for price info  
+					// looking for price info
 					$DefaultPrice = GetPrice($myrow['stockid'],$ToCustomer, $ToBranch, $ShipQty, false);
 					if ($myrow['discountcategory'] != "")
 					{
@@ -349,7 +349,7 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$sql = "SELECT locations.loccode,
 			locationname
-		FROM locations 
+		FROM locations
 		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 	$resultStkLocs = DB_query($sql);
 	if (!isset($_POST['FromLocation'])) {

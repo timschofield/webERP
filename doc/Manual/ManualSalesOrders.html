@@ -32,7 +32,7 @@
     <li>Invoices for cash sales can be entered directly without first entering an order</li>
 </ul>
 
-<p><img src="images/Sales.jpg"></p>
+<p><img src="doc/Manual/images/Sales.jpg"></p>
 
 <div class="floatright">
     <a class="minitext" href="#top">⬆ Top</a>
@@ -98,8 +98,7 @@
 
 <p>webERP looks at the user's default location and then looks up against the location record to find the cash sales debtor account (and branch) to use for counter sales entered. Each location for which counter sales are required must first be set up with the cash sales customer and branch which is to be used for counter sales entered. Note that the default location of the customer branch is ignored - the user's default location (see Setup-&gt;General-&gt;User Maintenance - the script webERP/WWW_Users.php) is used as the location and stock movements are all created from this location against the customer specified in the location record (Setup - &gt; Inventory Setup -&gt; Location Maintenance - the script webERP/Locations.php). To specify the customer and branch to use for counter sales for an inventory location (or warehouse), the customer code and branch code must be entered.</p>
 
-<h3>Counter Returns</h3>
-
+<h3><a id="CounterReturns">Counter Sales Returns</a></h3>
 <p>To produce credit notes in a customer facing situation it was difficult to first create the credit note manually, then enter a negative receipt (payment) against the customer account, then allocate the credit note to the negative receipt (payment). This has all been simplified with this Counter Returns functionality (new script to 4.09.2). This script allows the return of goods or services with the usual stock functionality and the capability to enter a payment to the customer that automatically allocates directly to the credit note.</p>
 
 <!-- Help Begin: SelectSalesOrder -->
@@ -201,7 +200,7 @@
 
 <p>If there are no currently available discount categories then enter a discount category code - otherwise select the discount category that you wish to allocate the item to.</p>
 
-<p align="center"><img src="images/NewDiscountCategory.jpg"></p>
+<p align="center"><img src="doc/Manual/images/NewDiscountCategory.jpg"></p>
 
 <p>You can now search for additional items and add as many items to the discount group as you wish from this screen.</p>
 
@@ -209,6 +208,6 @@
 
 <p>From the main menu go to -&gt; Setup -&gt; Receivables/Payables section -&gt; Discount Matrix</p>
 
-<p align="center"><img src="images/MaintainDiscountMatrix.jpg"></p>
+<p align="center"><img src="doc/Manual/images/MaintainDiscountMatrix.jpg"></p>
 
 <p>This form allows you to select any of the discount groups defined above and any sales type (price list)and then enter any quantity break and discount applicable given the quantity break - if the discount is applicable for all sales then enter a quantity break of 1 <!-- Help End: Setting Up Discounts --></p>

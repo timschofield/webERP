@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: SalesAnalReptCols.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 
@@ -263,16 +262,8 @@ if (DB_num_rows($result)!=0){
 			<th>' . _('Operator') . '</th>
 			<th>' . _('Budget') . '<br />' . _('Or Actual') . '</th>
 		</tr>';
-	$k=0; //row colour counter
 
 	do {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
 	if ($myrow[11]==1){
 		$BudOrAct = _('Actual');
 	} else {
@@ -285,7 +276,8 @@ if (DB_num_rows($result)!=0){
 		$BudOrAct = _('N/A');
 	}
 
-	printf('<td><a href=\'%sReportID=%s&amp;SelectedCol=%s\'>%s</a></td>
+		printf('<tr class="striped_row">
+			<td><a href=\'%sReportID=%s&amp;SelectedCol=%s\'>%s</a></td>
           	<td>%s</td>
           	<td>%s</td>
           	<td>%s</td>

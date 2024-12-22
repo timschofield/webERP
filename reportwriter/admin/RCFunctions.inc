@@ -52,7 +52,7 @@ function PrepStep($StepNum) {
 }
 
 function RetrieveReports() {
-	global $db, $ReportGroups, $FormGroups;
+	global $ReportGroups, $FormGroups;
 
 	$OutputString = '';
 	foreach ($ReportGroups as $key=>$GName) {
@@ -75,7 +75,7 @@ function RetrieveReports() {
 			WHERE defaultreport='1' AND reporttype='frm'
 			ORDER BY groupname, reportname";
 		$Result=DB_query($sql,'','',false,true);
-		$FormList = '';
+		$FormList = array();
 		while ($Temp = DB_fetch_array($Result)) $FormList[] = $Temp;
 		foreach ($FormGroups as $index=>$value) {
 			$Group=explode(':',$index); // break into main group and form group array
@@ -95,7 +95,7 @@ function RetrieveReports() {
 }
 
 function RetrieveFields($EntryType) {
-	global $db, $ReportID;
+	global $ReportID;
 	$FieldListings['fields'] = '';
 	$sql= "SELECT *	FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."'
@@ -118,7 +118,7 @@ function RetrieveFields($EntryType) {
 }
 
 function UpdatePageFields($ReportID) {
-	global $db, $Type;
+	global $Type;
 	// For both reports and forms start sql string
 	$sql = "UPDATE ".DBReports." SET
 			papersize = '".$_POST['PaperSize']."',
@@ -188,7 +188,7 @@ function UpdatePageFields($ReportID) {
 }
 
 function UpdateCritFields($ReportID, $DateString) {
-	global $db, $Type;
+	global $Type;
 	$sql = "UPDATE ".DBRptFields." SET
 		reportid = '".$ReportID."',
 		entrytype = 'dateselect',
@@ -222,7 +222,6 @@ function UpdateCritFields($ReportID, $DateString) {
 }
 
 function UpdateDBFields($ReportID) {
-	global $db;
 	// Test inputs to see if they are valid
 	$strTable = DB_escape_string($_POST['Table1']);
 	if ($_POST['Table2']) $strTable .= ' INNER JOIN '.DB_escape_string($_POST['Table2']).' ON '.DB_escape_string($_POST['Table2Criteria']);
@@ -258,7 +257,7 @@ function UpdateDBFields($ReportID) {
 }
 
 function UpdateSequence($EntryType) {
-	global $db, $ReportID, $Type;
+	global $ReportID, $Type;
 	if (!isset($_POST['Visible'])) $_POST['Visible'] = '0';
 	if (!isset($_POST['ColumnBreak'])) $_POST['ColumnBreak'] = '0';
 	if (!isset($_POST['Params'])) $Params = '0'; else $Params = $_POST['Params'];
@@ -275,7 +274,7 @@ function UpdateSequence($EntryType) {
 }
 
 function ChangeSequence($SeqNum, $EntryType, $UpDown) {
-	global $db, $ReportID;
+	global $ReportID;
 	// find the id of the row to move
 	$sql = "SELECT id FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$SeqNum.";";
@@ -294,7 +293,7 @@ function ChangeSequence($SeqNum, $EntryType, $UpDown) {
 
 function InsertSequence($SeqNum, $EntryType) {
 // This function creates a hole in the sequencing to allow inserting new data
-	global $db, $ReportID, $Type;
+	global $ReportID, $Type;
 	if (!$SeqNum) $SeqNum = 999; // set sequence to max if not entered
 	// read the sequence numbers for the given EntryType
 	$sql = "SELECT id FROM ".DBRptFields."
@@ -330,7 +329,7 @@ function InsertSequence($SeqNum, $EntryType) {
 
 function DeleteSequence($SeqNum, $EntryType) {
 // This function removes a sequence field and fills the sequence hole left behind
-	global $db, $ReportID;
+	global $ReportID;
 	//  delete the sequence number from the list
 	$sql = "DELETE FROM ".DBRptFields."
 		WHERE reportid = ".$ReportID." AND entrytype = '".$EntryType."' AND seqnum = ".$SeqNum.";";
@@ -424,7 +423,7 @@ function ModFormTblEntry(&$Params) {
 }
 
 function ValidateField($ReportID, $FieldName, $Description) {
-	global $db, $Type;
+	global $Type;
 	// This function checks the fieldname and field reference and validates that it is good.
 	// first check if a form (fieldname is not provided unless it's the form page break field)
 	if ($Type=='frm' AND $Description<>'TestField') { // then check for non-zero description unless a fieldname is present
@@ -514,7 +513,6 @@ function ReadImages($Default) {
 }
 
 function ImportImage() {
-	global $db;
 	if ($_POST['ImgChoice']=='Select') { // then a locally stored image was chosen, return with image name
 		$Rtn['result'] = 'success';
 		$Rtn['message'] = $_POST['ImgFileName'].RPT_IMP_ERMSG9;
@@ -550,7 +548,6 @@ function ImportImage() {
 }
 
 function ExportReport($ReportID) {
-	global $db;
 	$crlf = chr(10);
 	$CSVOutput = '/* Report Builder Export Tool */'.$crlf;
 	$CSVOutput .= 'version:1.0'.$crlf;
@@ -612,7 +609,6 @@ function ExportReport($ReportID) {
 }
 
 function ImportReport($RptName) {
-	global $db;
 	if ($_POST['RptFileName']<>'') { // then a locally stored report was chosen
 		$arrSQL = file(DefRptPath.$_POST['RptFileName']);
 	} else { // check for an uploaded file
@@ -706,7 +702,6 @@ function ImportReport($RptName) {
 }
 
 function CreateTableList($ReportID,$Table) {
-	global $db;
 	$sql = "SELECT table".$Table." FROM ".DBReports." WHERE id='".$ReportID."'";
 	$Result=DB_query($sql,'','',false,true);
 	$myrow = DB_fetch_row($Result);
@@ -724,7 +719,6 @@ function CreateTableList($ReportID,$Table) {
 } // CreateTableList
 
 function CreateLinkList($ReportID,$Table) {
-	global $db;
 	$sql = "SELECT table1, table2, table3, table4, table5, table6
 		FROM ".DBReports." WHERE id='".$ReportID."'";
 	$Result=DB_query($sql,'','',false,true);
@@ -733,7 +727,6 @@ function CreateLinkList($ReportID,$Table) {
 
 	/* Get list of link tables from foreign keys */
 	for ($i = 0; $i < $Table; $i++) {
-		$comments = '';
 		$sql = "SELECT table1, table2 FROM reportlinks WHERE table1 = '" . $myrow[$i] . "'";
 		$Result=DB_query($sql,'','',false,true);
 		while($mytable=DB_fetch_row($Result)) {
@@ -760,7 +753,6 @@ function CreateLinkList($ReportID,$Table) {
 }
 
 function CreateLinkEqList($ReportID,$Table) {
-	global $db;
 	$sql = "SELECT table1,
 		table2, table2criteria,
 		table3, table3criteria,
@@ -774,7 +766,6 @@ function CreateLinkEqList($ReportID,$Table) {
 
 	/* Get list of foreign key constraints */
 	for ($i = 0; $i < $Table; $i++) {
-		$comments = '';
 		$sql = "SELECT table1, table2, equation FROM reportlinks WHERE table1 = '" . $myrow[$i] . "'";
 		$Result=DB_query($sql,'','',false,true);
 		while($mytable=DB_fetch_row($Result)) {
@@ -801,7 +792,6 @@ function CreateLinkEqList($ReportID,$Table) {
 } // CreateLinkEqList
 
 function CreateFieldList($ReportID,$FName,$Type) {
-	global $db;
 	if ($Type=='Company') { // then pull from the company information table
 		$myrow[]=CompanyDataBase;
 	} else { // pull from user selected tables for this report

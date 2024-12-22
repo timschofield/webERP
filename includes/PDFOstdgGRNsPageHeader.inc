@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFOstdgGRNsPageHeader.inc 7421 2015-12-24 08:23:20Z exsonqu $*/
 /*PDF page header for outstanding GRNs report */
 if ($PageNumber>1){
 	$pdf->newPage();

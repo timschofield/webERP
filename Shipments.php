@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: Shipments.php 7194 2015-03-07 10:13:21Z exsonqu $*/
-
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - change of "consignment" to "tracking"
@@ -313,7 +311,7 @@ echo '<table class="selection">
 echo '<tr>
 		<td>' .  _('Vessel Name /Transport Agent'). ': </td>
 		<td colspan="3"><input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
-		<td>' . _('Voyage Ref / Tracking #').': </td>
+		<td>' . _('Tracking #').': </td>
 		<td><input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
 	</tr>';
 
@@ -325,9 +323,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 
 echo '<tr><td>' .  _('Expected Arrival Date (ETA)'). ': </td>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text" name="ETA" class="date" alt="'.$_SESSION['DefaultDateFormat'].'"  maxlength="10" size="10" value="' . $ETA . '" /></td>';
+	echo '<td><input type="text" name="ETA" class="date"  maxlength="10" size="11" value="' . $ETA . '" /></td>';
 } else {
-	echo '<td><input type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ETA" maxlength="10" size="10" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<td><input type="text" class="date" name="ETA" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
 }
 echo '<td>' .  _('Into').' ';
 
@@ -412,7 +410,6 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 
 	/*show the line items on the shipment with the quantity being received for modification */
 
-	$k=0; //row colour counter
 	$RowCounter =0;
 
 	foreach ($_SESSION['Shipment']->LineItems as $LnItm) {
@@ -423,16 +420,8 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 		}
 		$RowCounter++;
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-
-		echo '<td>' . $LnItm->OrderNo . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $LnItm->OrderNo . '</td>
 			<td>' .  $LnItm->StockID .' - '. $LnItm->ItemDescription. '</td><td class="number">' . locale_number_format($LnItm->QuantityOrd,$LnItm->DecimalPlaces) . '</td>
 			<td>' .  $LnItm->UOM  . '</td>
 			<td class="number">' . locale_number_format($LnItm->QuantityRecd,$LnItm->DecimalPlaces) . '</td>
@@ -497,7 +486,6 @@ if (DB_num_rows($result)>0){
 
 	/*show the PO items that could be added to the shipment */
 
-	$k=0; //row colour counter
 	$RowCounter =0;
 
 	while ($myrow=DB_fetch_array($result)){
@@ -508,15 +496,8 @@ if (DB_num_rows($result)>0){
 		}
 		$RowCounter++;
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-		echo '<td>' . $myrow['orderno'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['orderno'] . '</td>
 				<td>' . $myrow['itemcode'] . ' - ' . $myrow['itemdescription'] . '</td>
 				<td class="number">' . locale_number_format($myrow['quantityord'],$myrow['decimalplaces']) . '</td>
 				<td>' . $myrow['units'] . '</td>

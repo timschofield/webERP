@@ -207,7 +207,7 @@ function correction_for_low_end_prices($n){
 
 
 function multiple_of($n, $x=1){
-	return ($n % $x == 0);
+	return ((int)$n % $x === 0);
 }
 
 function UpdateTablePrice($StockId, $RetailPrice){

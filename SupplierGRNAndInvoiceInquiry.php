@@ -42,7 +42,7 @@ echo '<table class="selection">
 	
 	</tr>
 	</table>';
-echo '<div class="center">
+echo '<div class="centre">
 		<input type="submit" name="Submit" value="' . _('Submit') . '" />
 	</div>';
 if (isset($_POST['Submit'])) {
@@ -68,29 +68,26 @@ if (isset($_POST['Submit'])) {
 	$result = DB_query($sql,$ErrMsg);
 	if (DB_num_rows($result)>0) {
 		echo '<table class="selection">
+			<thead>
 			<tr>
-				<th>' . _('Supplier Delivery Note') . '</th>
-				<th>' . _('GRN Batch No') . '</th>
-				<th>' . _('PO No') . '</th>
-				<th>' . _('Invoice No') . '</th>
-			</tr>';
-		$k = 0;
+					<th class="ascending">' . _('Supplier Delivery Note') . '</th>
+					<th class="ascending">' . _('GRN Batch No') . '</th>
+					<th class="ascending">' . _('PO No') . '</th>
+					<th class="ascending">' . _('Invoice No') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
+
 		while ($myrow = DB_fetch_array($result)){
-			if ($k == 0) {
-				echo '<tr class="EvenTableRows">';
-				$k = 1;
-			} else{
-				echo '<tr class="OddTableRows">';
-				$k = 0;
-			}
-				echo '<td class="ascending">' . $myrow['supplierref'] . '</td>
-					<td class="ascending"><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
-					<td class="ascending">' . $myrow['orderno'] . '</td>
-					<td class="ascending">' . $myrow['suppinv'] . '</td>
+			echo '<tr class="striped_row">
+				<td>' . $myrow['supplierref'] . '</td>
+				<td><a href="' . $RootPath .'/PDFGrn.php?GRNNo=' . $myrow['grnbatch'] . '&amp;PONo=' . $myrow['orderno'] . '">' . $myrow['grnbatch']. '</td>
+				<td>' . $myrow['orderno'] . '</td>
+				<td>' . $myrow['suppinv'] . '</td>
 				</tr>';
 
 		}
-		echo '</table><br/>';
+		echo '</tbody></table><br/>';
 
 	}
 

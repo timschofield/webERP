@@ -1,5 +1,4 @@
 <?php
-/* $Id: AddCustomerContacts.php 7542 2016-05-28 03:45:56Z daintree $*/
 /* Adds customer contacts */
 
 include('includes/session.php');
@@ -132,31 +131,24 @@ if (!isset($Id)) {
 	echo '<tr>
 			<th class="text">', _('Name'), '</th>
 			<th class="text">', _('Role'), '</th>
-			<th class="text">', _('Phone no'), '</th>
+			<th class="text">', _('Phone No'), '</th>
 			<th class="text">', _('Email'), '</th>
 			<th class="text">', _('Statement'), '</th>
 			<th class="text">', _('Notes'), '</th>
 			<th class="noprint" colspan="2">&nbsp;</th>
 		</tr>';
 
-	$k=0; //row colour counter
-
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k==1){
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-		printf('<td class="text">%s</td>
+		printf('<tr class="striped_row">
+				<td class="text">%s</td>
 				<td class="text">%s</td>
 				<td class="text">%s</td>
 				<td class="text"><a href="mailto:%s">%s</a></td>
 				<td class="text">%s</td>
 				<td class="text">%s</td>
 				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td></tr>',
+				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td>
+				</tr>',
 				$myrow['contactname'],
 				$myrow['role'],
 				$myrow['phoneno'],

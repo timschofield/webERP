@@ -446,9 +446,15 @@ function StartSameColourRow($k){
 	return $k;
 }
 
-function getDirectoryTree( $outerDir , $x){ 
-    $dirs = array_diff( scandir( $outerDir ), Array( ".", ".." ) ); 
-    return $dirs; 
+function getDirectoryTree($outerDir){ 
+	$dirs = FALSE; 
+	if (is_dir($outerDir)){
+		$Directory = scandir( $outerDir );
+		if (is_array($Directory)){
+			$dirs = array_diff( $Directory, Array( ".", ".." ) ); 
+		}
+	}
+   return $dirs; 
 } 
 
 function ItemInList($Item, $List){
@@ -1127,6 +1133,32 @@ function NumberOfShops($ShopType){
 	$SQL="SELECT COUNT(*)
 		FROM locations
 		WHERE typeloc = '" . $ShopType . "'";
+	$result = DB_query($SQL);
+	if (DB_num_rows($result) != 0){
+		$myrow = DB_fetch_array($result);
+		return $myrow[0];
+	}else{
+		return 0;
+	}
+}
+
+function NumberOfRegularShopsSellingDiscount($ShopType){
+	if ($ShopType == "SHOPKL"){
+		$Categories = "AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_ONLY_DISCOUNT . "";
+	} else if ($ShopType == "SHOPBL"){
+		$Categories = "AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_ONLY_DISCOUNT . "";
+	} else {
+		return 0;
+	}
+	
+	$SQL="SELECT COUNT(DISTINCT(locations.loccode))
+		FROM locations,locstock,stockmaster
+		WHERE locations.loccode = locstock.loccode
+			AND locstock.stockid = stockmaster.stockid
+			AND locations.typeloc = '" . $ShopType . "'
+			AND locstock.reorderlevel > 0 " .
+			$Categories;
+			
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
 		$myrow = DB_fetch_array($result);

@@ -1,6 +1,8 @@
 <?php
-/* $Id: GLCashFlowsSetup.php 7672 2016-11-17 03:27:51Z rchacon $ */
-/* Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity */
+// GLCashFlowsSetup.php
+// Classifies accounts in any of the three sections of statement of cash flows to assign each account to an activity.
+// This program is under the GNU General Public License, last version. 2016-10-08.
+// This creative work is under the CC BY-NC-SA, last version. 2016-10-08.
 
 // BEGIN: Procedure division ---------------------------------------------------
 include('includes/session.php');
@@ -141,18 +143,15 @@ switch($_POST['Action']) {
 		// No reset , nor Automatic
 }
 
-echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
-	'/images/maintenance.png" title="', // Icon image.
+echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
 	$Title, '</p>';// Page title.
-	// BEGIN menu.
-if(!isset($page_help) OR $page_help) {
-	// If it is not set the $page_help parameter OR it is TRUE, shows the page help text:
-	echo '<div class="page_help_text">',
-		_('The statement of cash flows, using direct and indirect methods, is partitioned into three sections: operating activities, investing activities and financing activities.'), '<br />',
-		_('You must classify all accounts in any of those three sections of the cash flow statement, or as no effect on cash flow, or as cash or cash equivalent.'),
-		 '</div>';
-}
+
+echo '<div class="page_help_text">',
+	_('The statement of cash flows, using direct and indirect methods, is partitioned into three sections: operating activities, investing activities and financing activities.'), '<br />',
+	_('You must classify all accounts in any of those three sections of the cash flow statement, or as no effect on cash flow, or as cash or cash equivalent.'),
+	 '</div>';
+
 // Show a form to allow input of the action for the script to do:
 echo '<br />',
 	'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
@@ -168,16 +167,11 @@ echo '<br />',
 			<tr>
 				<td colspan="2">',
 					'<div class="centre">',
-						'<button name="Action" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
-						'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
-						'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
-						'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
-						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-							'/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+						'<button name="Action" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
+						'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
+						'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
+						'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
+						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
 					'</div>',
 				'</td>
 			</tr>
@@ -205,7 +199,7 @@ if(!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=
 		$_SESSION['PeriodProfitAccount'] = $Result['confvalue'];
 	}
 }
-foreach($GLAccounts as $MyRow) {
+while($MyRow = DB_fetch_array($GLAccounts)) {
 	echo			'<option', ($MyRow['accountcode'] == $_SESSION['PeriodProfitAccount'] ? ' selected="selected"' : '' ), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
 echo				'</select>',
@@ -225,7 +219,8 @@ if(!isset($_SESSION['RetainedEarningsAccount']) OR $_SESSION['RetainedEarningsAc
 		$_SESSION['RetainedEarningsAccount'] = $Result['retainedearnings'];
 	}
 }
-foreach($GLAccounts as $MyRow) {
+DB_data_seek($GLAccounts,0);
+while($MyRow = DB_fetch_array($GLAccounts)) {
 	echo			'<option', ($MyRow['accountcode'] == $_SESSION['RetainedEarningsAccount'] ? ' selected="selected"' : '' ), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
 echo				'</select>',

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: AuditTrail.php 7196 2015-03-07 11:06:33Z exsonqu $ */
 
 include('includes/session.php');
 
@@ -42,11 +41,11 @@ echo '<table class="selection">';
 
 echo '<tr>
 		<td>' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+		<td><input tabindex="1" type="text" class="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
 	</tr>
 	<tr>
 		<td>' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+		<td><input tabindex="2" type="text" class="date" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
 	</tr>';
 
 // Show user selections
@@ -180,7 +179,6 @@ if (isset($_POST['View'])) {
 			<th>' . _('Field Name') . '</th>
 			<th>' . _('Value') . '</th></tr>';
 	while ($myrow = DB_fetch_row($result)) {
-				
 		if (Query_Type($myrow[2]) == "INSERT") {
 			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));
 			$RowColour = '#a8ff90';
@@ -194,9 +192,8 @@ if (isset($_POST['View'])) {
 			$RowColour = '#fe90bf';
 		}
 
-		if ((trim($_SESSION['SQLString']['table']) != 'auditscripts') AND 
-		   ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  OR
-			($_POST['SelectedTable'] == 'ALL'))) {
+		if ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  ||
+			($_POST['SelectedTable'] == 'ALL')) {
 			if (!isset($_SESSION['SQLString']['values'])) {
 				$_SESSION['SQLString']['values'][0]='';
 			}

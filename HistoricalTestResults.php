@@ -1,5 +1,4 @@
 <?php
-/* $Id: HsitoricalTestResults.php 1 2014-09-08 10:42:50Z agaluski $*/
 
 include('includes/session.php');
 $Title = _('Historical Test Results');
@@ -70,11 +69,11 @@ echo '</select></td>';
 echo '</tr>
 	  <tr>
 		<td>' . _('From Sample Date') . ': </td>
-		<td><input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '"/></td>
+		<td><input name="FromDate" maxlength="10" size="11" class="date" value="' . $_POST['FromDate'] . '" /></td>
 	</tr>
 	<tr>
 		<td> ' . _('To Sample Date') . ':</td>
-		<td> <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '"/></td>
+		<td> <input name="ToDate" maxlength="10" size="11" class="date" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	</table>
 	</div>
@@ -132,21 +131,19 @@ while ($MyTestRow=DB_fetch_array($TestResult)) {
 
 if ($TotResults>0) {
 	echo '<br/>' . _('Historical Test Results for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/>';
-	$k = 0; //row colour counter
-	echo '<div><div style="overflow:auto; width:98%; padding:10px; "><table width="90%" style="overflow: scroll;"><tr><th style="white-space:nowrap; text-align:right">' . _('Sample ID:') . '<br>' . _('Lot/Serial:') . '<br>' . _('Identifier:') . '<br>' . _('Sample Date:') .'</th>';
+
+	echo '<div>
+		<div style="overflow:auto; width:98%; padding:10px; ">
+			<table width="90%" style="overflow: scroll;">
+			<tr>
+				<th style="white-space:nowrap;" class="number">' . _('Sample ID:') . '<br>' . _('Lot/Serial:') . '<br>' . _('Identifier:') . '<br>' . _('Sample Date:') .'</th>';
 	foreach ($SamplesArray as $samplekey => $samplevalue) {
 		echo '<th>'. $samplekey . '<br>' . $samplevalue['lotkey'] . '<br>' . $samplevalue['identifier'] . '<br>' . ConvertSQLDate($samplevalue['sampledate']).'</th>';
 	}
 	echo '</tr>';
 	foreach ($TestsArray as $testkey => $testvalue) {
-		if ($k == 1) { /*alternate bgcolour of row for highlighting */
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-		echo '<td class="select" style="white-space:nowrap;">'.$testvalue.'</th>';
+		echo '<tr class="striped_row">
+				<td class="select" style="white-space:nowrap;">'.$testvalue.'</td>';
 		foreach ($SamplesArray as $samplekey => $samplevalue) {
 			if ($AllResultsArray[$testkey][$samplekey]['testvalue']=='' OR !isset($AllResultsArray[$testkey][$samplekey]['testvalue'])) {
 				$AllResultsArray[$testkey][$samplekey]['testvalue']='&nbsp;';

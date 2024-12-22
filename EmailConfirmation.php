@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: EmailConfirmation.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -270,7 +269,7 @@ $MailMessage .= '</table>
 	// echo $MailMessage . "=mailMessage<br />";
 	if($_SESSION['SmtpSetting']==0){
 		$result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
-	
+
 	}else{
 		include('includes/htmlMimeMail.php');
 		$mail = new htmlMimeMail();
@@ -278,7 +277,7 @@ $MailMessage .= '</table>
 		$mail->setHTML($MailMessage);
 		$result = SendmailBySmtp($mail,array($MailTo));
 	}
-					
+
 if($result){
 	echo ' ' ._('The following E-Mail was sent to') . ' ' . $MailTo . ' :';
 }

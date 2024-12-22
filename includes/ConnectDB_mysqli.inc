@@ -1,11 +1,5 @@
 <?php
-/* $Id: ConnectDB_mysqli.inc 7724 2017-01-12 16:41:38Z rchacon $ */
 /* Database abstraction for mysqli */
-
-/* PeterMoulding.com
-20071102 Change from mysql to mysqli;
-20071102 Add $db to DB_escape_string();
-*/
 
 define ('LIKE', 'LIKE');
 
@@ -14,8 +8,7 @@ if(!isset($mysqlport)) {
 }
 global $db;	// Make sure it IS global, regardless of our context
 
-$db = mysqli_connect($host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
-//$result=DB_query('SET sql_mode = ANSI');
+$db = mysqli_connect($Host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
 
 
 //this statement sets the charset to be used for sending data to and from the db server
@@ -40,15 +33,14 @@ if(!$db) {
 if(isset($DatabaseName)) {
 	if(!mysqli_select_db($db,$DatabaseName)) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
+		echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
 		unset ($DatabaseName);
 		exit;
 	}
 } else {
 	if(!mysqli_select_db($db,$_SESSION['DatabaseName'])) {
 		echo '<br />' . _('The company name entered does not correspond to a database on the database server specified in the config.php configuration file. Try logging in with a different company name');
-		echo '<br /><a href="index.php">' . _('Back to login page') . '</A>';
-
+		echo '<br /><a href="index.php">' . _('Back to login page') . '</a>';
 		unset ($_SESSION['DatabaseName']);
 		exit;
 	}
@@ -61,9 +53,9 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	global $debug;
 	global $PathPrefix;
 	global $db;
+	global $Messages;
 
 	$result = mysqli_query($db, $SQL);
-
 	$_SESSION['LastInsertId'] = mysqli_insert_id($db);
 
 	if($DebugMessage == '') {
@@ -71,10 +63,8 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	}
 
 	if(DB_error_no() != 0 AND $TrapErrors==true) {
-		if($TrapErrors) {
-			require_once($PathPrefix . 'includes/header.php');
-		}
-		prnMsg($ErrorMessage . '<br />' . DB_error_msg(),'error', _('Database Error'). ' ' .DB_error_no());
+		require_once($PathPrefix . 'includes/header.php');
+		prnMsg($ErrorMessage . '<br />' . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
 		if($debug==1) {
 			prnMsg($DebugMessage. '<br />' . $SQL . '<br />','error',_('Database SQL Failure'));
 		}
@@ -87,10 +77,8 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 				prnMsg(_('Rolling Back Transaction OK'), 'error', _('Database Rollback Due to Error Above'));
 			}
 		}
-		if($TrapErrors) {
-			include($PathPrefix . 'includes/footer.php');
-			exit;
-		}
+		include($PathPrefix . 'includes/footer.php');
+		exit;
 	} elseif(isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($result)>0)) {
 
 		$SQLArray = explode(' ', $SQL);
@@ -111,6 +99,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			}
 		}
 	}
+
 	return $result;
 }
 
@@ -146,7 +135,6 @@ function DB_num_rows($ResultIndex) {
 function DB_affected_rows($ResultIndex) {
 	global $db;
 	return mysqli_affected_rows($db);
-
 }
 
 function DB_error_no() {
@@ -175,33 +163,31 @@ function DB_escape_string($String) {
 	return mysqli_real_escape_string($db, $String);
 }
 
-function DB_show_tables($Conn='') {
-	global $db;
+function DB_show_tables() {
 	$Result = DB_query('SHOW TABLES');
 	return $Result;
 }
 
-function DB_show_fields($TableName, $Conn='') {
+function DB_show_fields($TableName) {
 	$Result = DB_query("DESCRIBE $TableName");
 	return $Result;
 }
 
-function interval($val, $Inter) {
-		global $dbtype;
+function interval( $val, $Inter ) {
 		return "\n".'interval ' . $val . ' ' . $Inter . "\n";
 }
 
 function DB_Maintenance() {
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 
-	$TablesResult = DB_query("SHOW TABLES");
+	$TablesResult = DB_show_tables();
 	while ($myrow = DB_fetch_row($TablesResult)) {
 		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0]);
 	}
 
 	$Result = DB_query("UPDATE config
-				SET confvalue='" . Date('Y-m-d') . "'
-				WHERE confname='DB_Maintenance_LastRun'");
+				SET confvalue = CURRENT_DATE
+				WHERE confname = 'DB_Maintenance_LastRun'");
 }
 
 function DB_Txn_Begin() {
@@ -229,5 +215,18 @@ function DB_IgnoreForeignKeys() {
 function DB_ReinstateForeignKeys() {
 	global $db;
 	mysqli_query($db, 'SET FOREIGN_KEY_CHECKS=1');
+}
+
+function DB_table_exists($TableName) {
+	global $db;
+
+	$SQL = "SELECT TABLE_NAME FROM information_schema.tables WHERE TABLE_SCHEMA = '" . $_SESSION['DatabaseName'] . "' AND TABLE_NAME = '" . $TableName . "'";
+	$Result = DB_query($SQL);
+
+	if (DB_num_rows($Result) > 0) {
+		return True;
+	} else {
+		return False;
+	}
 }
 ?>

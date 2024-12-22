@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFCOA.php 1 2014-09-15 06:31:08Z agaluski $ */
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -88,6 +87,7 @@ if (isset($SelectedCOA)) {
 					type,
 					testvalue,
 					sampledate,
+					prodspeckey,
 					groupby
 				FROM qasamples INNER JOIN sampleresults
 				ON sampleresults.sampleid=qasamples.sampleid
@@ -108,6 +108,7 @@ if (isset($SelectedCOA)) {
 					type,
 					testvalue,
 					sampledate,
+					prodspeckey,
 					groupby
 				FROM qasamples INNER JOIN sampleresults
 				ON sampleresults.sampleid=qasamples.sampleid
@@ -312,7 +313,7 @@ $Disclaimer=$myrow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
 while (mb_strlen($LeftOvers) > 1) {
 	$YPos -= $line_height;
-	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,445,$FontSize, $LeftOvers, 'left');
+	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize, $LeftOvers, 'left');
 }
 
 $pdf->OutputI($_SESSION['DatabaseName'] . 'COA' . date('Y-m-d') . '.pdf');

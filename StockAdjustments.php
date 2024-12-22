@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: StockAdjustments.php 7278 2015-04-26 02:56:08Z exsonqu $*/
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -222,7 +221,8 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										reference,
 										qty,
 										newqoh,
-										standardcost)
+										standardcost,
+										narrative)
 									VALUES ('" . $_SESSION['Adjustment' . $identifier]->StockID . "',
 										17,
 										'" . $AdjustmentNumber . "',
@@ -233,7 +233,8 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										'" . $_SESSION['Adjustment' . $identifier]->Narrative ."',
 										'" . $_SESSION['Adjustment' . $identifier]->Quantity . "',
 										'" . ($QtyOnHandPrior + $_SESSION['Adjustment' . $identifier]->Quantity) . "',
-										'" . $_SESSION['Adjustment' . $identifier]->StandardCost . "')";
+										'" . $_SESSION['Adjustment' . $identifier]->StandardCost . "',
+										'')";
 
 		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
@@ -387,6 +388,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 				$mail->setText($ConfirmationText);
 				$result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
 			}
+
 		}
 		$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 		unset ($_SESSION['Adjustment' . $identifier]);
@@ -395,7 +397,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 }/* end if the user hit enter the adjustment */
 
 
-echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -448,7 +450,7 @@ echo '</td>
 	</tr>';
 if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjustment' . $identifier]->ItemDescription)>1){
 	echo '<tr>
-			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) ' . '</h3></td>
+			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . _('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</h3></td>
 		</tr>';
 }
 
@@ -466,13 +468,15 @@ echo '</select></td></tr>';
 if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->Narrative)) {
 	$_SESSION['Adjustment' . $identifier]->Narrative = '';
 	$Narrative ='';
+} elseif(isset($_SESSION['Adjustment'.$identifier]->Narrative)) {
+	$Narrative = $_SESSION['Adjustment'.$identifier]->Narrative;
 } else {
 	$Narrative ='';
 }
 
 echo '<tr>
 		<td>' .  _('Comments On Why').':</td>
-		<td><input type="text" name="Narrative" size="32" maxlength="30" value="' . $Narrative . '" /></td>
+		<td><input type="text" name="Narrative" size="32" onchange="submit()" maxlength="100" value="' . $Narrative . '" /></td>
 	</tr>';
 
 echo '<tr><td>' . _('Adjustment Quantity').':</td>';

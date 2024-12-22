@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PrintCustStatements.php 7590 2016-08-16 13:26:43Z tehonu $*/
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -100,7 +99,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 		echo '<table class="selection">
 			<tr>
-				<th class="text">', _('Account #'), '</th>
+				<th class="text">', _('Account Code'), '</th>
 				<th class="text">', _('Customer Name'), '</th>
 				<th class="text">', _('Recipients'), '</th>
 			</tr>';

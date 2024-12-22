@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_ChangeStockCategory.php 7050 2014-12-28 20:48:56Z rchacon $ */
 /* This script is an utility to change a stock category code. */
 
 include ('includes/session.php');
@@ -8,7 +7,7 @@ $ViewTopic = 'SpecialUtilities'; // Filename's id in ManualContents.php's TOC.
 $BookMark = 'Z_ChangeStockCategory'; // Anchor's id in the manual's html document
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
-	'/images/inventory.png" title="' . 
+	'/images/inventory.png" title="' .
 	_('Change A Stock Category Code') . '" /> ' .// Icon title.
 	_('Change A Stock Category Code') . '</p>';// Page title.
 
@@ -96,7 +95,7 @@ if (isset($_POST['ProcessStockChange'])) {
 	$ErrMsg = _('The SQL to update internal stock category role records failed');
 	$result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 	echo ' ... ' . _('completed');
-	
+
 	$sql = 'SET FOREIGN_KEY_CHECKS=1';
 	$result = DB_query($sql, $ErrMsg, $DbgMsg, true);
 	$result = DB_Txn_Commit();

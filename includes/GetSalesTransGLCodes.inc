@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: GetSalesTransGLCodes.inc 6942 2014-10-27 02:48:29Z daintree $*/
 
 /*Functions to get the GL codes for customer transactions based on
 $Area, $StockID to determine the stock category and the SalesType (Price List)

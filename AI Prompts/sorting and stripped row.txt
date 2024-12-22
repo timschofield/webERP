@@ -1,0 +1,42 @@
+In the PHP 2 functions defined in the file Gist: https://gist.github.com/pakricard/9446057f6f0f8d65e8e3389f4132ecfd
+
+
+
+In the functions defined in this file:
+
+
+1) Modify the HTML tags where needed, so all tables on a form have this structure:
+<table>
+	<thead>
+		<th></th>
+        ................
+	</thead>
+	<tbody>
+		<td></td>
+		................
+    </tbody>
+</table>
+
+2) Replace <th class="ascending"> with <th class="SortedColumn">. The <th> tags without class="ascending" do not need to be replaced.
+
+3) If there is a line $k = StartEvenOrOddRow($k);
+
+	3.1) Delete the lines: $k = 0; //row colour counter
+
+	3.2) Delete the lines: $k = StartEvenOrOddRow($k);
+
+	3.2) In the printf or echo statements below it (inside or below the while structure) add or modify the <tr> tag into <tr class="striped_row">
+	
+	3.3) In the printf or echo statements below the while structure add or modify the <tr> tag into <tr class="striped_row">
+
+4) below the while statement, there will be an echo </table> statemnet. Complete this echo statements to add the </div> and </form> if needed
+
+5) Do not cut long lines. 
+
+6) Apply these changes to the file in my editor.
+
+In this file, 
+delete all occurrences of the lines:
+
+1) k = 0; //row colour counter
+2) $k = StartEvenOrOddRow($k);

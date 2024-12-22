@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: InventoryValuation.php 7336 2015-08-10 01:43:46Z tehonu $ */
 
 include('includes/session.php');
 if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
@@ -84,7 +83,7 @@ if (isset($_POST['PrintPDF'])){
 	$line_height=12;
 
 
-	
+
 	if (DB_num_rows($InventoryResult)==0){
 		$Title = _('Print Inventory Valuation Error');
 		include('includes/header.php');
@@ -191,7 +190,7 @@ if (isset($_POST['PrintPDF'])){
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Valuation_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
-	
+
 } elseif (isset($_POST['CSV'])) {
 
 	$CSVListing = _('Category ID') .','. _('Category Description') .','. _('Stock ID') .','. _('Description') .','. _('Decimal Places') .','. _('Qty On Hand') .','. _('Units') .','. _('Unit Cost') .','. _('Total') . "\n";
@@ -224,9 +223,9 @@ if (isset($_POST['PrintPDF'])){
 		echo '<table class="selection">
 			<tr>
 				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
+				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
+	$SQL = 'SELECT categoryid, categorydescription
+			FROM stockcategory
 			ORDER BY categorydescription';
 	$CatResult = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($CatResult)) {

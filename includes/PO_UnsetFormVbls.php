@@ -1,5 +1,4 @@
 <?php
-/* $Id: PO_UnsetFormVbls.php 5766 2012-12-19 06:45:03Z daintree $*/
 /*PO_UnsetFormVariable on the purchase order line items */
                     unset($_POST['StockID']);
                     unset($_POST['Qty']);

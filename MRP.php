@@ -1,9 +1,11 @@
 <?php
 
-/* $Id: MRP.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
+/* $Id: MRP.php 7959 2018-02-13 04:04:59Z turbopt $*/
 
 include('includes/session.php');
 $Title = _('Run MRP Calculation');
+$ViewTopic= 'MRP';
+$BookMark = 'MRP_Overview';
 include('includes/header.php');
 if (isset($_POST['submit'])) {
 
@@ -270,7 +272,7 @@ if (isset($_POST['submit'])) {
 									SUM(CASE WHEN stockmoves.qty IS NOT NULL
 										THEN stockmoves.qty
 										ELSE 0
-										END))						
+										END))
 									AS netqty,
 									'WO',
 									woitems.wo,
@@ -756,7 +758,7 @@ function LevelNetting($Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 				if ($SupplyCount > $supi) {
 					$TotalSupply += $Supplies[$supi]['supplyquantity'];
 				}
-			} 
+			}
 		} // End of while
 	} // End of if
 

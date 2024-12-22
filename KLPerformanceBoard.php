@@ -373,7 +373,10 @@ if ($ProcessSection03){
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " performance tests",'success');
-time_finish($begintime);
+
+if ($KL_SystemAdmin){
+	time_finish($begintime);
+}
 
 include ('includes/footer.php');
 
@@ -502,25 +505,26 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $BrandText . " " . $typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . $typereport . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . 'IDR/Invoice.'. '</th>
-							<th class="ascending">' . '# Invoice/Day'. '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_01,0) . '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_02,0) . '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_03,0) . '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_04,0) . '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_05,0) . '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_06,0) . '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_07,0) . '</th>
-							<th class="ascending">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
-							<th class="ascending">' . '>'. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . $typereport . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . 'IDR/Invoice.'. '</th>
+						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_01,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_02,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_03,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_04,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_05,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_06,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_07,0) . '</th>
+						<th class="SortedColumn">' . '<='. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
+						<th class="SortedColumn">' . '>'. locale_number_format(AVERAGE_INVOICE_VALUE_08,0) . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 
@@ -532,8 +536,8 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 			}
 			
 			if ($myrow['invoicesum'] > 0){
-				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -577,7 +581,8 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 			$SumInvoice08    += $myrow['invoice08'];
 			$SumInvoice09    += $myrow['invoice09'];
 		}
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -607,7 +612,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 				locale_number_format_zero_blank($SumInvoice08/$SumInvoiceCount*100,1).'%', 
 				locale_number_format_zero_blank($SumInvoice09/$SumInvoiceCount*100,1).'%'
 				);
-		echo '</table>
+		echo '</tbody></table>
 				</div>';
 		InsertKPI("Sales", "Avg Invoice Value Last " . $NumDaysA . " days (IDR) " . $BrandText, $SumInvoiceSum/$SumInvoiceCount);
 		InsertKPI("Sales", "Avg Invoices Last " . $NumDaysA . " days (INVOICES) " . $BrandText, $SumInvoiceCount/$NumDaysA);
@@ -768,34 +773,38 @@ function CashStatus($Year,
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Angin Dingin Utara ' . $Year . '</strong></p>';
 	echo '<div>';
-	echo '<table class="selection">';
-
-	$TableHeader = '<tr>
-						<th>' . 'Concept' . '</th>
-						<th>' . 'Value' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . 'Concept' . '</th>
+					<th>' . 'Value' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 	$i = 1;
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash ADU in Brankas Kantor end of ' . ($Year-1), 
 			locale_number_format($CashEndOfPreviousYearADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Sales Retail PT ADU Cash during '. $Year, 
 			locale_number_format($SalesCashADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Floating Cash still in shops PT ADU', 
 			locale_number_format(-$FloatingCashADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash received from shops PT ADU in Brankas Kantor during '. $Year, 
@@ -806,43 +815,50 @@ function CashStatus($Year,
 	}else{
 		$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTADU ';
 	}
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			$Text, 
 			locale_number_format($BankToCashADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PT ADU Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
 			locale_number_format(-$ExpensesADUPaidCash,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PT ADU Small Suppliers Paid from Cash Kantor', 
 			locale_number_format(-$CashToSmallSuppliersADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PT ADU Rent Paid from Cash Kantor', 
 			locale_number_format(-$CashToRentADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Dividends PT ADU Paid from Cash Kantor', 
 			locale_number_format(-$CashToDividendsADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Current Cash PT ADU in Brankas Kantor', 
 			locale_number_format($CurrentBalanceADU,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash ADU in Brankas Kantor Goal for end of '. $Year, 
@@ -853,7 +869,8 @@ function CashStatus($Year,
 	}else{
 		$Text = 'Cash ADU BELOW goal in Brankas Kantor';
 	}
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			$Text, 
@@ -866,15 +883,15 @@ function CashStatus($Year,
 		}elseif ($ToBeTransferredADU < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR ADU to Brankas Kantor';
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				$Text, 
 				locale_number_format(abs($ToBeTransferredADU),0)
 				);
 	}
-	echo '</table>
+	echo '</tbody></table>
 		</div>';
 	
 	////////////////////////////////////////////////////////
@@ -961,65 +978,73 @@ function CashStatus($Year,
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status USD PT. Angin Dingin Utara ' . '</strong></p>';
 	echo '<div>';
-	echo '<table class="selection">';
-
-	$TableHeader = '<tr>
-						<th>' . 'Concept' . '</th>
-						<th>' . 'Value' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . 'Concept' . '</th>
+					<th class="SortedColumn">' . 'Value' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 	$i = 1;
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Running PO for items for sale (USD approx)', 
 			locale_number_format($PORunningTotalUSD,0)
 			);
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
 			locale_number_format($POPaymentsPendingUSDuntilEndOfMonth,0)
 			);
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Current balance Danamon USD ADU (USD approx)', 
 			locale_number_format($SaldoADUDanamonUSD,0)
 			);
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Current balance Payoneer USD ADU (USD approx)', 
 			locale_number_format($SaldoADUPayoneerUSD,0)
 			);
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Current balance Aye Cargo ADU (USD approx)', 
 			locale_number_format($SaldoAyeCargoUSD,0)
 			);
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Current balance available USD ADU (USD approx)', 
 			locale_number_format($SaldoUSD,0)
 			);
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'USD already exchanged from IDR this month for ADU (USD approx)', 
 			locale_number_format($USDAlreadyExhangedThisMonth,0)
 			);
 
-	printf('<td>%s</td>
+	printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'USD needed until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
@@ -1027,8 +1052,8 @@ function CashStatus($Year,
 				);
 
 	if ($ToBeExchanged > 0){
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'ACTION NEEDED --> Purchase USD from ADU Danamon IDR to ADU Danamon USD', 
@@ -1037,8 +1062,8 @@ function CashStatus($Year,
 	}
 	
 	if ($ToBeTransferredToPayoneer > 0){
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Payoneer USD', 
@@ -1046,7 +1071,7 @@ function CashStatus($Year,
 				);
 	}
 
-	echo '</table>
+	echo '</tbody></table>
 		</div>';
 
 	////////////////////////////////////////////////////////
@@ -1182,34 +1207,38 @@ function CashStatus($Year,
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Sungai Mutiara Hitam ' . $Year . '</strong></p>';
 	echo '<div>';
-	echo '<table class="selection">';
-
-	$TableHeader = '<tr>
-						<th>' . 'Concept' . '</th>
-						<th>' . 'Value' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . 'Concept' . '</th>
+					<th class="SortedColumn">' . 'Value' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 	$i = 1;
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash SMH in Brankas Kantor end of ' . ($Year-1), 
 			locale_number_format($CashEndOfPreviousYearSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Sales Retail PT SMH Cash during '. $Year, 
 			locale_number_format($SalesCashSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Floating Cash still in shops PT SMH', 
 			locale_number_format(-$FloatingCashSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash received from shops PT SMH in Brankas Kantor during '. $Year, 
@@ -1220,43 +1249,50 @@ function CashStatus($Year,
 	}else{
 		$Text = 'Total deposit from Brankas Kantor to Danamon/Mandiri IDR PTSMH ';
 	}
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			$Text, 
 			locale_number_format($BankToCashSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PT SMH Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
 			locale_number_format(-$ExpensesSMHPaidCash,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PT SMH Small Suppliers Paid from Cash Kantor', 
 			locale_number_format(-$CashToSmallSuppliersSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PT SMH Rent Paid from Cash Kantor', 
 			locale_number_format(-$CashToRentSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Dividends PT SMH Paid from Cash Kantor', 
 			locale_number_format(-$CashToDividendsSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Current Cash PT SMH in Brankas Kantor', 
 			locale_number_format($CurrentBalanceSMH,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash SMH in Brankas Kantor Goal for end of '. $Year, 
@@ -1267,7 +1303,8 @@ function CashStatus($Year,
 	}else{
 		$Text = 'Cash SMH BELOW goal in Brankas Kantor';
 	}
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			$Text, 
@@ -1280,15 +1317,15 @@ function CashStatus($Year,
 		}elseif ($ToBeTransferredSMH < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR SMH to Brankas Kantor';
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				$Text, 
 				locale_number_format(abs($ToBeTransferredSMH),0)
 				);
 	}
-	echo '</table>
+	echo '</tbody></table>
 		</div>';
 
 	////////////////////////////////////////////////////////
@@ -1408,34 +1445,38 @@ function CashStatus($Year,
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Bumi Biru ' . $Year . '</strong></p>';
 	echo '<div>';
-	echo '<table class="selection">';
-
-	$TableHeader = '<tr>
-						<th>' . 'Concept' . '</th>
-						<th>' . 'Value' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . 'Concept' . '</th>
+					<th class="SortedColumn">' . 'Value' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 	$i = 1;
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash PTBB in Brankas Kantor end of ' . ($Year-1), 
 			locale_number_format($CashEndOfPreviousYearBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Sales Retail PTBB Cash during '. $Year, 
 			locale_number_format($SalesCashBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Floating Cash still in shops PTBB', 
 			locale_number_format(-$FloatingCashBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash received from shops PTBB in Brankas Kantor during '. $Year, 
@@ -1446,43 +1487,50 @@ function CashStatus($Year,
 	}else{
 		$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTBB ';
 	}
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			$Text, 
 			locale_number_format($BankToCashBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PTBB Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
 			locale_number_format(-$ExpensesBBPaidCash,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
 			locale_number_format(-$CashToSmallSuppliersBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Expenses PTBB Rent Paid from Cash Kantor', 
 			locale_number_format(-$CashToRentBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Dividends PTBB Paid from Cash Kantor', 
 			locale_number_format(-$CashToDividendsBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Current Cash PTBB in Brankas Kantor', 
 			locale_number_format($CurrentBalanceBB,0)
 			);
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'Cash PTBB in Brankas Kantor Goal for end of '. $Year, 
@@ -1493,7 +1541,8 @@ function CashStatus($Year,
 	}else{
 		$Text = 'Cash PTBB BELOW goal in Brankas Kantor';
 	}
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			$Text, 
@@ -1506,15 +1555,15 @@ function CashStatus($Year,
 		}elseif ($ToBeTransferredBB < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR BB to Brankas Kantor';
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				$Text, 
 				locale_number_format(abs($ToBeTransferredBB),0)
 				);
 	}
-	echo '</table>
+	echo '</tbody></table>
 		</div>';	
 
 	////////////////////////////////////////////////////////
@@ -1549,66 +1598,71 @@ function CashStatus($Year,
 	if ($AdminRole){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR Brankas Kantor and Shareholders ' . $Year . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th>' . 'Concept' . '</th>
+						<th>' . 'Value' . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		
 		$FreeSaldoBrankasKantor = $SaldoBrankasKantor - $CurrentBalanceADU - $CurrentBalanceSMH - $CurrentBalanceBB;
 		$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
 		$ToBeDistributedToShareholders = round_multiple_of($FreeSaldoBrankasShareholders, $MinMoveFree);	
 
-		$TableHeader = '<tr>
-							<th>' . 'Concept' . '</th>
-							<th>' . 'Value' . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Cash belonging to PTADU', 
 				locale_number_format($CurrentBalanceADU,0)
 				);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Cash belonging to PTSMH', 
 				locale_number_format($CurrentBalanceSMH,0)
 				);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Cash belonging to PTBB', 
 				locale_number_format($CurrentBalanceBB,0)
 				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Total Cash PTADU+PTSMH+PTBB', 
 				locale_number_format($CurrentBalanceADU+$CurrentBalanceSMH+$CurrentBalanceBB,0)
 				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Saldo Cash in Brankas Kantor ', 
 				locale_number_format($SaldoBrankasKantor,0)
 				);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Saldo Cash in Brankas Shareholders', 
 				locale_number_format($SaldoBrankasShareholders,0)
 				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Total Saldo Cash', 
 				locale_number_format($SaldoBrankasKantor + $SaldoBrankasShareholders,0)
 				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				'Free Cash', 
@@ -1620,15 +1674,15 @@ function CashStatus($Year,
 			}else{
 				$Text = 'ACTION NEEDED -> Get Cash from Shareholders to Brankas Shareholders';
 			}
-			StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				$Text, 
 				locale_number_format(abs($ToBeDistributedToShareholders),0)
 				);
 		}
-		echo '</table>
+		echo '</tbody></table>
 			</div>';	
 
 		InsertKPI("Cash", "Free Cash", $FreeSaldoBrankasShareholders);
@@ -1666,18 +1720,19 @@ function DailySalesRecords($Days, $NumDays, $Since){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' .  _('#') . '</th>
-							<th class="ascending">' .  _('Date') . '</th>
-							<th class="ascending">' . _('Sales') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' .  _('#') . '</th>
+						<th class="SortedColumn">' .  _('Date') . '</th>
+						<th class="SortedColumn">' . _('Sales') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -1687,7 +1742,7 @@ function DailySalesRecords($Days, $NumDays, $Since){
 					);
 			$i++;
 		}
-		echo '</table>
+		echo '</tbody></table>
 				</div>
 				</form>';
 	}
@@ -1758,36 +1813,36 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "General Customer Behaviour by " . $BrandText  . " shop during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th colspan="3"></th>
-							<th colspan="5">' . 'This year'. '</th>
-							<th colspan="5">' . 'Last year'. '</th>
-						</tr>';
-		echo $TableHeader;
-		$TableHeader = '<tr>
-							<th>' . _('#') . '</th>
-							<th>' . _('Shop') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . 'IDR/Invoice'. '</th>
-							<th>' . 'IDR/Piece'. '</th>
-							<th>' . '# Invoice/Day'. '</th>
-							<th>' . '# Pcs/Day'. '</th>
-							<th>' . '# Pcs/Inv'. '</th>
-							<th>' . 'IDR/Invoice'. '</th>
-							<th>' . 'IDR/Piece'. '</th>
-							<th>' . '# Invoice/Day'. '</th>
-							<th>' . '# Pcs/Day'. '</th>
-							<th>' . '# Pcs/Inv'. '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th colspan="3"></th>
+						<th colspan="5">' . 'This year'. '</th>
+						<th colspan="5">' . 'Last year'. '</th>
+					</tr>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Shop') . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . 'IDR/Invoice'. '</th>
+						<th class="SortedColumn">' . 'IDR/Piece'. '</th>
+						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
+						<th class="SortedColumn">' . '# Pcs/Day'. '</th>
+						<th class="SortedColumn">' . '# Pcs/Inv'. '</th>
+						<th class="SortedColumn">' . 'IDR/Invoice'. '</th>
+						<th class="SortedColumn">' . 'IDR/Piece'. '</th>
+						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
+						<th class="SortedColumn">' . '# Pcs/Day'. '</th>
+						<th class="SortedColumn">' . '# Pcs/Inv'. '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$TotalInvoiceSum = 0;
 		$TotalInvoiceCount = 0;
 		$TotalItemCount = 0;		
 		$TotalInvoiceSumLastYear = 0;
 		$TotalInvoiceCountLastYear = 0;
-		$TotalItemCountLastYear = 0;		
-		$k = 0; //row colour counter
+		$TotalItemCountLastYear = 0;
 		$i = 0;
 		while ($myrow = DB_fetch_array($result)) {
 			$i++;
@@ -1815,8 +1870,8 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				$AvgItemsPerDayLastYear = ($NumDaysA != 0) ? $myrow['itemcount_lastyear']/$NumDaysA : 0;
 				$AvgItemsPerInvoiceLastYear = ($myrow['invoicecount_lastyear'] != 0) ? $myrow['itemcount_lastyear']/$myrow['invoicecount_lastyear'] : 0;
 
-				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -1847,8 +1902,8 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				
 			}
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -1862,9 +1917,9 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				'',
-				'',
-				'Brand Average',
+				"",
+				"",
+				"Brand Average",
 				locale_number_format_zero_blank($TotalInvoiceSum/$TotalInvoiceCount,0), 
 				locale_number_format_zero_blank($TotalInvoiceSum/$TotalItemCount,0), 
 				locale_number_format_zero_blank($TotalInvoiceCount/$NumDaysA,1),
@@ -1876,7 +1931,7 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				locale_number_format_zero_blank($TotalItemCountLastYear/$NumDaysA,1),
 				locale_number_format_zero_blank($TotalItemCountLastYear/$TotalInvoiceCountLastYear,1)
 				);
-		echo '</table>
+		echo '</tbody></table>
 				</div>';
 		InsertKPI("Sales", "Items x Invoice Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
 	}
@@ -2014,64 +2069,65 @@ function PackagingStatusForBlink($RootPath){
 	$showHeader = TRUE;
 	$i = 1;
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th>' . _('') . '</th>
-									<th>' . _('') . '</th>
-									<th>' . _('') . '</th>
-									<th colspan="3">' . _('BLINK Box L') . '</th>
-									<th colspan="3">' . _('BLINK Box M') . '</th>
-									<th colspan="3">' . _('BLINK Box S') . '</th>
-									<th colspan="3">' . _('BLINK PouchBag L') . '</th>
-									<th colspan="3">' . _('BLINK PouchBag M') . '</th>
-									<th colspan="3">' . _('BLINK PouchBag S') . '</th>
-									<th colspan="3">' . _('BLINK ShoppingBag L') . '</th>
-									<th colspan="3">' . _('BLINK ShoppingBag M') . '</th>
-									<th colspan="3">' . _('BLINK ShoppingBag S') . '</th>
-								</tr>';
-				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('BLINK Shop') . '</th>
-									<th class="ascending">' . _('Days RL') . '</th>
-									<th class="ascending">' . _('Factor') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th colspan="3">' . _('BLINK Box L') . '</th>
+								<th colspan="3">' . _('BLINK Box M') . '</th>
+								<th colspan="3">' . _('BLINK Box S') . '</th>
+								<th colspan="3">' . _('BLINK PouchBag L') . '</th>
+								<th colspan="3">' . _('BLINK PouchBag M') . '</th>
+								<th colspan="3">' . _('BLINK PouchBag S') . '</th>
+								<th colspan="3">' . _('BLINK ShoppingBag L') . '</th>
+								<th colspan="3">' . _('BLINK ShoppingBag M') . '</th>
+								<th colspan="3">' . _('BLINK ShoppingBag S') . '</th>
+							</tr>
+							<tr>
+								<th class="SortedColumn">' . _('BLINK Shop') . '</th>
+								<th class="SortedColumn">' . _('Days RL') . '</th>
+								<th class="SortedColumn">' . _('Factor') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$showHeader = FALSE;
 			}
-			$k = StartEvenOrOddRow($k);
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2137,7 +2193,7 @@ function PackagingStatusForBlink($RootPath){
 			$i++;
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -2275,64 +2331,65 @@ function PackagingStatusForKapalLaut($RootPath){
 	$showHeader = TRUE;
 	$i = 1;
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th>' . _('') . '</th>
-									<th>' . _('') . '</th>
-									<th>' . _('') . '</th>
-									<th colspan="3">' . _('KL Box L') . '</th>
-									<th colspan="3">' . _('KL Box M') . '</th>
-									<th colspan="3">' . _('KL Box S') . '</th>
-									<th colspan="3">' . _('KL PouchBag L') . '</th>
-									<th colspan="3">' . _('KL PouchBag M') . '</th>
-									<th colspan="3">' . _('KL PouchBag S') . '</th>
-									<th colspan="3">' . _('KL ShoppingBag L') . '</th>
-									<th colspan="3">' . _('KL ShoppingBag M') . '</th>
-									<th colspan="3">' . _('KL ShoppingBag S') . '</th>
-								</tr>';
-				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('KL Shop') . '</th>
-									<th class="ascending">' . _('Days RL') . '</th>
-									<th class="ascending">' . _('Factor') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th colspan="3">' . _('KL Box L') . '</th>
+								<th colspan="3">' . _('KL Box M') . '</th>
+								<th colspan="3">' . _('KL Box S') . '</th>
+								<th colspan="3">' . _('KL PouchBag L') . '</th>
+								<th colspan="3">' . _('KL PouchBag M') . '</th>
+								<th colspan="3">' . _('KL PouchBag S') . '</th>
+								<th colspan="3">' . _('KL ShoppingBag L') . '</th>
+								<th colspan="3">' . _('KL ShoppingBag M') . '</th>
+								<th colspan="3">' . _('KL ShoppingBag S') . '</th>
+							</tr>
+							<tr>
+								<th class="SortedColumn">' . _('KL Shop') . '</th>
+								<th class="SortedColumn">' . _('Days RL') . '</th>
+								<th class="SortedColumn">' . _('Factor') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$showHeader = FALSE;
 			}
-			$k = StartEvenOrOddRow($k);
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2398,7 +2455,7 @@ function PackagingStatusForKapalLaut($RootPath){
 			$i++;
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -2471,44 +2528,45 @@ function PackagingStatusForOutlet($RootPath){
 	$showHeader = TRUE;
 	$i = 1;
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th>' . _('') . '</th>
-									<th>' . _('') . '</th>
-									<th>' . _('') . '</th>
-									<th colspan="3">' . _('OUTLET PouchBag L') . '</th>
-									<th colspan="3">' . _('OUTLET PouchBag M') . '</th>
-									<th colspan="3">' . _('OUTLET PouchBag S') . '</th>
-									<th colspan="3">' . _('OUTLET ShoppingBag') . '</th>
-								</tr>';
-				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('KL Shop') . '</th>
-									<th class="ascending">' . _('Days RL') . '</th>
-									<th class="ascending">' . _('Factor') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Transit') . '</th>
-									<th class="ascending">' . _('RL') . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+								<th colspan="3">' . _('OUTLET PouchBag L') . '</th>
+								<th colspan="3">' . _('OUTLET PouchBag M') . '</th>
+								<th colspan="3">' . _('OUTLET PouchBag S') . '</th>
+								<th colspan="3">' . _('OUTLET ShoppingBag') . '</th>
+							</tr>
+							<tr>
+								<th class="SortedColumn">' . _('KL Shop') . '</th>
+								<th class="SortedColumn">' . _('Days RL') . '</th>
+								<th class="SortedColumn">' . _('Factor') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Transit') . '</th>
+								<th class="SortedColumn">' . _('RL') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$showHeader = FALSE;
 			}
-			$k = StartEvenOrOddRow($k);
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2544,7 +2602,7 @@ function PackagingStatusForOutlet($RootPath){
 			$i++;
 		}
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -2670,60 +2728,61 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 	$totalsales_shopping_s  = 0;
 
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th>' . _('') . '</th>
-									<th colspan="3">' . _('BLINK Box L') . '</th>
-									<th colspan="3">' . _('BLINK Box M') . '</th>
-									<th colspan="3">' . _('BLINK Box S') . '</th>
-									<th colspan="3">' . _('BLINK PouchBag L') . '</th>
-									<th colspan="3">' . _('BLINK PouchBag M') . '</th>
-									<th colspan="3">' . _('BLINK PouchBag S') . '</th>
-									<th colspan="3">' . _('BLINK ShoppingBag L') . '</th>
-									<th colspan="3">' . _('BLINK ShoppingBag M') . '</th>
-									<th colspan="3">' . _('BLINK ShoppingBag S') . '</th>
-								</tr>';
-				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('BL Shop') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th></th>
+								<th colspan="3">' . _('BLINK Box L') . '</th>
+								<th colspan="3">' . _('BLINK Box M') . '</th>
+								<th colspan="3">' . _('BLINK Box S') . '</th>
+								<th colspan="3">' . _('BLINK PouchBag L') . '</th>
+								<th colspan="3">' . _('BLINK PouchBag M') . '</th>
+								<th colspan="3">' . _('BLINK PouchBag S') . '</th>
+								<th colspan="3">' . _('BLINK ShoppingBag L') . '</th>
+								<th colspan="3">' . _('BLINK ShoppingBag M') . '</th>
+								<th colspan="3">' . _('BLINK ShoppingBag S') . '</th>
+							</tr>
+							<tr>
+								<th class="SortedColumn">' . _('Shop') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$showHeader = FALSE;
 			}
-			$k = StartEvenOrOddRow($k);
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2805,7 +2864,8 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 			$i++;
 		}
 		if (!$showHeader){
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -2863,7 +2923,7 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 					locale_number_format_zero_blank($totalsales_shopping_s,0),
 					locale_number_format_zero_blank($totalqty_shopping_s/($totalsales_shopping_s/$NumDays),0)
 					);
-			echo '</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -2989,60 +3049,61 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 	$totalsales_shopping_s  = 0;
 
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th>' . _('') . '</th>
-									<th colspan="3">' . _('Box L') . '</th>
-									<th colspan="3">' . _('Box M') . '</th>
-									<th colspan="3">' . _('Box S') . '</th>
-									<th colspan="3">' . _('PouchBag L') . '</th>
-									<th colspan="3">' . _('PouchBag M') . '</th>
-									<th colspan="3">' . _('PouchBag S') . '</th>
-									<th colspan="3">' . _('ShoppingBag L') . '</th>
-									<th colspan="3">' . _('ShoppingBag M') . '</th>
-									<th colspan="3">' . _('ShoppingBag S') . '</th>
-								</tr>';
-				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('KL Shop') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th></th>
+								<th colspan="3">' . _('Box L') . '</th>
+								<th colspan="3">' . _('Box M') . '</th>
+								<th colspan="3">' . _('Box S') . '</th>
+								<th colspan="3">' . _('PouchBag L') . '</th>
+								<th colspan="3">' . _('PouchBag M') . '</th>
+								<th colspan="3">' . _('PouchBag S') . '</th>
+								<th colspan="3">' . _('ShoppingBag L') . '</th>
+								<th colspan="3">' . _('ShoppingBag M') . '</th>
+								<th colspan="3">' . _('ShoppingBag S') . '</th>
+							</tr>
+							<tr>
+								<th class="SortedColumn">' . _('KL Shop') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$showHeader = FALSE;
 			}
-			$k = StartEvenOrOddRow($k);
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3124,7 +3185,8 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 			$i++;
 		}
 		if (!$showHeader){
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3182,12 +3244,11 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 					locale_number_format_zero_blank($totalsales_shopping_s,0),
 					locale_number_format_zero_blank($totalqty_shopping_s/($totalsales_shopping_s/$NumDays),0)
 					);
-			echo '</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
 }
-
 
 function PackagingUsageByWeeks($RootPath){
 
@@ -3257,27 +3318,26 @@ function PackagingUsageByWeeks($RootPath){
 	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		echo '<p class="page_title_text" align="center"><strong>' . 'Shop Packaging Usage by week'. '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek1) . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek2) . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek3) . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek4) . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek5) . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek6) . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek7) . '</th>
-							<th class="ascending">' . ConvertSQLDate($StartWeek8) . '</th>
-							<th class="ascending">' . _('Average') . '</th>
-						</tr>';
-		echo $TableHeader;
-
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek1) . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek2) . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek3) . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek4) . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek5) . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek6) . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek7) . '</th>
+						<th class="SortedColumn">' . ConvertSQLDate($StartWeek8) . '</th>
+						<th class="SortedColumn">' . _('Average') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			$Average = ($myrow['useweek1'] + 
 					$myrow['useweek2'] + 
 					$myrow['useweek3'] + 
@@ -3287,7 +3347,8 @@ function PackagingUsageByWeeks($RootPath){
 					$myrow['useweek7'] + 
 					$myrow['useweek8']) / 8;
 					
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3312,7 +3373,7 @@ function PackagingUsageByWeeks($RootPath){
 					locale_number_format_zero_blank($Average,0) 
 					);
 		}
-		echo '</table>
+		echo '</tbody></table>
 			</div>';
 	}
 }
@@ -3381,40 +3442,41 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 	$totalsales_shopping_m  = 0;
 
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th>' . _('') . '</th>
-									<th colspan="3">' . _('OUTLET PouchBag L') . '</th>
-									<th colspan="3">' . _('OUTLET PouchBag M') . '</th>
-									<th colspan="3">' . _('OUTLET PouchBag S') . '</th>
-									<th colspan="3">' . _('OUTLET ShoppingBag M') . '</th>
-								</tr>';
-				$TableHeader = $TableHeader . '<tr>
-									<th class="ascending">' . _('KL Shop') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-									<th class="ascending">' . _('QOH') . '</th>
-									<th class="ascending">' . _('Use ') . $NumDays . ' d</th>
-									<th class="ascending">' . _('Days Stock') . '</th>
-								</tr>';
-				echo $TableHeader;
+				echo '<table class="selection">
+						<thead>
+							<tr>
+								<th></th>
+								<th colspan="3">' . _('OUTLET PouchBag L') . '</th>
+								<th colspan="3">' . _('OUTLET PouchBag M') . '</th>
+								<th colspan="3">' . _('OUTLET PouchBag S') . '</th>
+								<th colspan="3">' . _('OUTLET ShoppingBag M') . '</th>
+							</tr>
+							<tr>
+								<th class="SortedColumn">' . _('KL Shop') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+								<th class="SortedColumn">' . _('QOH') . '</th>
+								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+								<th class="SortedColumn">' . _('Days Stock') . '</th>
+							</tr>
+						</thead>
+						<tbody>';
 				$showHeader = FALSE;
 			}
-			$k = StartEvenOrOddRow($k);
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3456,7 +3518,8 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 			$i++;
 		}
 		if (!$showHeader){
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3484,7 +3547,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 					locale_number_format_zero_blank($totalsales_shopping_m,0),
 					locale_number_format_zero_blank($totalqty_shopping_m/($totalsales_shopping_m/$NumDays),0)
 					);
-			echo '</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -3506,19 +3569,20 @@ function PettyCashStatus($currency){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $currency . ' accounts'  . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('PC Tab Code') . '</th>
-							<th class="ascending">' . _('Amount') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('PC Tab Code') . '</th>
+						<th class="SortedColumn">' . _('Amount') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		$total = 0;
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -3529,7 +3593,8 @@ function PettyCashStatus($currency){
 			$i++;
 			$total = $total + $myrow['amount'];
 		}
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
@@ -3538,7 +3603,7 @@ function PettyCashStatus($currency){
 				locale_number_format($total,0)
 				);
 		
-		echo '</table>
+		echo '</tbody></table>
 				</div>';
 	}
 }
@@ -3681,19 +3746,19 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Title  .'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . $typereport . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . $TitleCurrent . '</th>
-							<th class="ascending">' . $TitlePrevious . '</th>
-							<th class="ascending">' . _('Trend') . '</th>
-							<th class="ascending">' . _('%Rent/Sales') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . $typereport . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . $TitleCurrent . '</th>
+						<th class="SortedColumn">' . $TitlePrevious . '</th>
+						<th class="SortedColumn">' . _('Trend') . '</th>
+						<th class="SortedColumn">' . _('%Rent/Sales') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 
@@ -3724,8 +3789,8 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
 			if (($myrow['salesA'] > 0) OR ($myrow['salesB'] > 0)){
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -3770,9 +3835,9 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 			if ($percent < 0){
 				$trend = "Degrading ". locale_number_format($percent,1) . "%";
 			}
-			$k = StartEvenOrOddRow($k);
 			$Rent = round(($TotalBothYearsRent / 365 * $NumDaysA) / $TotalBothYearsDateA * 100) . '%';
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3789,9 +3854,9 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 					$Rent
 					);
 			if ($TotalNewDateA > 0){
-				$k = StartEvenOrOddRow($k);
 				$Rent = round(($TotalNewRent / 365 * $NumDaysA) / $TotalNewDateA * 100) . '%';
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -3809,9 +3874,9 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 						);
 			}
 			if ($TotalOldDateB > 0){
-				$k = StartEvenOrOddRow($k);
 				$Rent = round(($TotalOldRent / 365 * $NumDaysA) / $TotalOldDateB * 100) . '%';
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -3838,9 +3903,9 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 			if ($percent < 0){
 				$trend = "Degrading ". locale_number_format($percent,1) . "%";
 			}
-			$k = StartEvenOrOddRow($k);
 			$Rent = round(($TotalRent / 365 * $NumDaysA) / $TotalDateA * 100) . '%';
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3857,7 +3922,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 					$Rent
 					);
 		}
-		echo '</table>
+		echo '</tbody></table>
 				</div>';
 		if (($typereport == "Shop") AND ($typeperiod == "YEAR")){
 			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $percent);
@@ -3881,24 +3946,24 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		echo '<p class="page_title_text" align="center"><strong>' . 'Unbalanced GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Type') . '</th>
-							<th class="ascending">' . _('TypeNo') . '</th>
-							<th class="ascending">' . _('Unbalance') . '</th>
-						</tr>';
-		echo $TableHeader;
-
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Type') . '</th>
+						<th class="SortedColumn">' . _('TypeNo') . '</th>
+						<th class="SortedColumn">' . _('Unbalance') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 
 			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'] . '">' . $myrow['typeno'] . '</a>';
 					
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -3909,7 +3974,7 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 					locale_number_format($myrow['unbalance'],0)
 					);
 		}
-		echo '</table>
+		echo '</tbody></table>
 			</div>';
 	}
 }
@@ -3928,25 +3993,25 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 	$result = DB_query($SQL);
 	
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		echo '<p class="page_title_text" align="center"><strong>' . 'Empty account code GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Date') . '</th>
-							<th class="ascending">' . _('Type') . '</th>
-							<th class="ascending">' . _('TypeNo') . '</th>
-							<th class="ascending">' . _('Amount') . '</th>
-						</tr>';
-		echo $TableHeader;
-
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Type') . '</th>
+						<th class="SortedColumn">' . _('TypeNo') . '</th>
+						<th class="SortedColumn">' . _('Amount') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 
 			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'] . '">' . $myrow['typeno'] . '</a>';
 					
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3960,7 +4025,8 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 					);
 			$TotalAmount += $myrow['amount'];
 		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -3972,7 +4038,7 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 				"", 
 				locale_number_format($TotalAmount,0)
 				);
-		echo '</table>
+		echo '</tbody></table>
 			</div>';
 	}
 }
@@ -3991,22 +4057,22 @@ function ShowKPIHistory($NumDays){
 			ORDER BY class, concept";
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		echo '<p class="page_title_text" align="center"><strong>' . 'General KPI last ' . $NumDays . ' days' . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Class') . '</th>
-							<th class="ascending">' . _('Concept') . '</th>
-							<th class="ascending">' . _('Minimum') . '</th>
-							<th class="ascending">' . _('Average') . '</th>
-							<th class="ascending">' . _('Maximum') . '</th>
-						</tr>';
-		echo $TableHeader;
-
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Class') . '</th>
+						<th class="SortedColumn">' . _('Concept') . '</th>
+						<th class="SortedColumn">' . _('Minimum') . '</th>
+						<th class="SortedColumn">' . _('Average') . '</th>
+						<th class="SortedColumn">' . _('Maximum') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4019,7 +4085,7 @@ function ShowKPIHistory($NumDays){
 					locale_number_format_kpi($myrow['maximumvalue'])
 					);
 		}
-		echo '</table>
+		echo '</tbody></table>
 			</div>';
 	}
 }
@@ -4065,25 +4131,28 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 			$TableResult[$myrow['loccode']][$myrow['maintenancetype']] = $myrow['total'];
 		}
 		$TableHeader = '<tr>
-						<th class="ascending">' . _('Location') . '</th>
-						<th class="ascending">' . _('AC') . '</th>
-						<th class="ascending">' . _('Bocor') . '</th>
-						<th class="ascending">' . _('Furniture') . '</th>
-						<th class="ascending">' . _('IT') . '</th>
-						<th class="ascending">' . _('Kanopi') . '</th>
-						<th class="ascending">' . _('Lampu') . '</th>
-						<th class="ascending">' . _('Listrik') . '</th>
-						<th class="ascending">' . _('Paint') . '</th>
-						<th class="ascending">' . _('Pintukaca') . '</th>
-						<th class="ascending">' . _('Toilet') . '</th>
-						<th class="ascending">' . _('Wallpaper') . '</th>
-						<th class="ascending">' . _('DLL') . '</th>
-						<th class="ascending">' . _('Total') . '</th>
+						<th class="SortedColumn">' . _('Location') . '</th>
+						<th class="SortedColumn">' . _('AC') . '</th>
+						<th class="SortedColumn">' . _('Bocor') . '</th>
+						<th class="SortedColumn">' . _('Furniture') . '</th>
+						<th class="SortedColumn">' . _('IT') . '</th>
+						<th class="SortedColumn">' . _('Kanopi') . '</th>
+						<th class="SortedColumn">' . _('Lampu') . '</th>
+						<th class="SortedColumn">' . _('Listrik') . '</th>
+						<th class="SortedColumn">' . _('Paint') . '</th>
+						<th class="SortedColumn">' . _('Pintukaca') . '</th>
+						<th class="SortedColumn">' . _('Toilet') . '</th>
+						<th class="SortedColumn">' . _('Wallpaper') . '</th>
+						<th class="SortedColumn">' . _('DLL') . '</th>
+						<th class="SortedColumn">' . _('Total') . '</th>
 					</tr>';
 		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
+		echo '<table class="selection">
+				<thead>';
 		echo $TableHeader;
+		echo '</thead>
+				<tbody>';
 		$TotalIssuesAC = 0;
 		$TotalIssuesBOCOR = 0;
 		$TotalIssuesFURNITURE = 0;
@@ -4097,10 +4166,8 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 		$TotalIssuesWALLPAPER = 0;
 		$TotalIssuesDLL = 0;
 		$TotalIssues = 0;
-		$k = 0; //row colour counter
 		foreach ($TableResult as $row) {
 			$TotalIssuesLocation = 0;
-			$k = StartEvenOrOddRow($k);
 			if (isset($row['AC'])){
 				$IssuesAC = $row['AC'];
 				$TotalIssuesAC += $IssuesAC;
@@ -4197,7 +4264,8 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 			}else{
 				$IssuesDLL = '';
 			}
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -4228,8 +4296,8 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 					$TotalIssuesLocation 
 					);
 		}
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -4260,7 +4328,7 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 				$TotalIssues
 				);
 		
-		echo '</table>
+		echo '</tbody></table>
 			</div>';
 
 		if ($Status == "OPEN"){
@@ -4319,56 +4387,54 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 	
 	echo '<p class="page_title_text" align="center"><strong>' . 'Stock for Brand ' . $BrandText. '</strong></p>';
 	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . 'Concept' . '</th>
-						<th>' . 'Value' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . 'Concept' . '</th>
+					<th>' . 'Value' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			'# Shops Open', 
 			locale_number_format($Shops,0)
 			);
-	$k = StartEvenOrOddRow($k);
-
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Total Models (MODELS)", 
 			locale_number_format($TotalModels,0)
 			);
-	$k = StartEvenOrOddRow($k);
-
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Total Stock (PCS)", 
 			locale_number_format($TotalItems,0)
 			);
-	$k = StartEvenOrOddRow($k);
-
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Stock needed for display (PCS)", 
 			locale_number_format($DisplayItems,0)
 			);
-	$k = StartEvenOrOddRow($k);
-
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Stock available for sale (PCS)", 
 			locale_number_format($AvailableForSaleItems,0)
 			);
-	$k = StartEvenOrOddRow($k);
 
 	if ($ShowFullDetails){
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Daily Stock sold last " . $NumDays . " days " . 
@@ -4376,11 +4442,11 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				ConvertSQLDate($ToLastDaysThisYear). " (PCS)", 
 				locale_number_format($DailySoldItemsThisYearPastDays,0)
 				);
-		$k = StartEvenOrOddRow($k);
 	}
 
 	if ($ShowFullDetails AND ($Brand != "SHOPOU")){
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Daily Stock sold same last " . $NumDays . " days last year " . 
@@ -4388,21 +4454,21 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				ConvertSQLDate($ToLastDaysLastYear). " (PCS)", 
 				locale_number_format($DailySoldItemsLastYearPastDays,0)
 				);
-		$k = StartEvenOrOddRow($k);
 	}
 	
 	if ($Brand != "SHOPOU"){
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Retail trend from same days last year (%)", 
 				locale_number_format($TrendThisYear*100,1). "%"
 				);
-		$k = StartEvenOrOddRow($k);
 	}
 	
 	if ($ShowFullDetails AND ($Brand != "SHOPOU")){
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Daily Stock sold next " . $NumDaysLastYear . " days last year " . 
@@ -4410,63 +4476,61 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				ConvertSQLDate($ToNextDaysLastYear). " (PCS)", 
 				locale_number_format($DailySoldItemsLastYearNextDays,0)
 				);
-		$k = StartEvenOrOddRow($k);
-
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Items to be sold next " . $NumDaysLastYear . " days based on trend (PCS)", 
 				locale_number_format($ItemsToBeSoldNextDaysBasedOnTrendLastYear,0)
 				);
-		$k = StartEvenOrOddRow($k);
 	}
 
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Estimation daily Stock to be sold next " . $NumDays . " days  (PCS)", 
 			locale_number_format($EstimationDailyItemsToBeSoldNextDays,0)
 			);
-	$k = StartEvenOrOddRow($k);
-
-	printf('<td>%s</td>
+	printf('<tr>
+			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Days left of stock (DAYS)", 
 			locale_number_format($DaysStockForSale,0)
 			);
-	$k = StartEvenOrOddRow($k);
 
 	if ($Brand != "SHOPOU"){
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Stock to be received by PO (PCS)", 
 				locale_number_format($ItemsPO,0)
 				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Stock to be received by WO (PCS)", 
 				locale_number_format($ItemsWO,0)
 				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr>
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
 				"Days left of stock including PO & WO (DAYS)", 
 				locale_number_format($DaysStockForSaleIncludingPOWO,0)
 				);
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				"Stock needed to reach " . $OptimalDaysStock . " days of optimal stock+PO+WO (PCS)", 
+				"ACTION: Stock needed to reach " . $OptimalDaysStock . " days of optimal stock+PO+WO (PCS)", 
 				locale_number_format($ItemsToGetOptimalDaysStock,0)
 				);
 	}
-	echo '</table>
+	echo '</tbody></table>
 			</div>
 			</form>';
 

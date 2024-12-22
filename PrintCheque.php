@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PrintCheque.php 5768 2012-12-20 08:38:22Z daintree $*/
 
 /*Hard coded for currencies with 2 decimal places */
 

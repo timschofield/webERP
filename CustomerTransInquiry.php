@@ -1,5 +1,5 @@
 <?php
-/* $Id: CustomerTransInquiry.php 7184 2015-03-04 00:06:20Z rchacon $*/
+// CustomerTransInquiry.php
 
 include('includes/session.php');
 $Title = _('Customer Transactions Inquiry');
@@ -48,14 +48,14 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 echo '<td>' . _('From') . ':</td>
-	<td><input alt="'.$_SESSION['DefaultDateFormat'].'" class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" /></td>
+	<td><input class="date" maxlength="10" name="FromDate" required="required" size="11" tabindex="2" type="text" value="' . $_POST['FromDate'] . '" /></td>
 	<td>' . _('To') . ':</td>
-	<td><input alt="'.$_SESSION['DefaultDateFormat'].'" class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" /></td>
+	<td><input class="date" maxlength="10" name="ToDate" required="required" size="11" tabindex="3" type="text" value="' . $_POST['ToDate'] . '" /></td>
 	</tr>
 	</table>
 	<br />
 	<div class="centre">
-		<input name="ShowResults" tabindex="4" type="submit" value="' . _('Show Transactions') . '" />
+		<input name="ShowResults" tabindex="4" type="submit" value="' . _('Show transactions') . '" />
 	</div>
     </div>
 	</form>';
@@ -110,19 +110,11 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 	echo $TableHeader;
 
 	$RowCounter = 1;
-	$k = 0; //row colour counter
 
 	while ($myrow=DB_fetch_array($TransResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-
-		$format_base = '<td>%s</td>
+		$format_base = '<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>

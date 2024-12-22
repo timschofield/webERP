@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFQALabel.php agaluski $*/
 
 include('includes/session.php');
 
@@ -60,12 +59,12 @@ if ($NoOfGRNs >0){
 		if ($GRNNo!='Preview'){
 			$myrow = DB_fetch_array($GRNResult);
 		}
-		$DeliveryDate = ConvertSQLDate($myrow['deliverydate']);				
+		$DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
 		$SQL = "SELECT stockmaster.controlled
 			    FROM stockmaster WHERE stockid ='" . $myrow['itemcode'] . "'";
 		$CheckControlledResult = DB_query($SQL,'<br />' . _('Could not determine if the item was controlled or not because') . ' ');
 		$ControlledRow = DB_fetch_row($CheckControlledResult);
-		
+
 		if ($ControlledRow[0]==1) { /*Then its a controlled item */
 			$SQL = "SELECT stockserialmoves.serialno
 					FROM stockmoves INNER JOIN stockserialmoves
@@ -88,9 +87,12 @@ if ($NoOfGRNs >0){
 				$LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize,'P/O: ' . $myrow['orderno']);
 				$PageNumber++;
 			} //while SerialStockMoves
-			
+
 		} //controlled item*/
 		else {
+			if ($PageNumber>1){
+				$pdf->newPage();
+			}
 			$pdf->addJpegFromFile($_SESSION['LogoFile'] ,$FormDesign->logo->x,$Page_Height-$FormDesign->logo->y,$FormDesign->logo->width,$FormDesign->logo->height);
 			$LeftOvers = $pdf->addText($FormDesign->ItemNbr->x,$Page_Height-$FormDesign->ItemNbr->y,$FormDesign->ItemNbr->FontSize,'Item: ' . $myrow['itemcode']);
 			$LeftOvers = $pdf->addText($FormDesign->ItemDesc->x,$Page_Height-$FormDesign->ItemDesc->y,$FormDesign->ItemDesc->FontSize,'Description: ' . $myrow['itemdescription']);
@@ -99,15 +101,12 @@ if ($NoOfGRNs >0){
 			//$LeftOvers = $pdf->addText($FormDesign->Lot->x,$Page_Height-$FormDesign->Lot->y,$FormDesign->Lot->FontSize,'Lot: ' . $myrow['serialno']);
 			$LeftOvers = $pdf->addText($FormDesign->ReceiptDate->x,$Page_Height-$FormDesign->ReceiptDate->y,$FormDesign->ReceiptDate->FontSize,'Receipt Date: ' . $myrow['deliverydate']);
 			$LeftOvers = $pdf->addText($FormDesign->OrderNumber->x,$Page_Height-$FormDesign->OrderNumber->y,$FormDesign->OrderNumber->FontSize,'P/O: ' . $myrow['orderno']);
-			if ($PageNumber>1){
-				$pdf->newPage();
-			}
 			$PageNumber++;
 		} //else not controlled
 	} //end of loop around GRNs to print
 
 
-    $pdf->OutputD($_SESSION['DatabaseName'] . '_GRN_' . $GRNNo . '_' . date('Y-m-d').'.pdf');
+    $pdf->OutputD($_SESSION['DatabaseName'] . '_QALabel_' . $GRNNo . '_' . date('Y-m-d').'.pdf');
     $pdf->__destruct();
 } else { //there were not GRNs to print
 	$Title = _('GRN Error');

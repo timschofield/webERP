@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: WhereUsedInquiry.php 7093 2015-01-22 20:15:40Z vvs2012 $*/
 
 include('includes/session.php');
 $Title = _('Where Used Inquiry');
@@ -67,6 +66,7 @@ if (isset($StockID)) {
 	} else {
 
 		echo '<table width="97%" class="selection">
+			<thead>
 				<tr>
 					<th class="ascending">' . _('Used By') . '</th>
 					<th class="ascending">' . _('Status') . '</th>
@@ -75,23 +75,19 @@ if (isset($StockID)) {
 					<th class="ascending">' . _('Quantity Required') . '</th>
 					<th class="ascending">' . _('Effective After') . '</th>
 					<th class="ascending">' . _('Effective To') . '</th>
-				</tr>';
-		$k=0;
+				</tr>
+			</thead>
+			<tbody>';
+
 		while ($myrow=DB_fetch_array($result)) {
 
-			if ($k==1){
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';;
-				$k=1;
-			}
 			if ($myrow['discontinued'] == 1){
 				$Status = _('Obsolete');
 			}else{
 				$Status = _('Current');
 			}
-			echo '<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
+			echo '<tr class="striped_row">
+					<td><a target="_blank" href="' . $RootPath . '/BOMInquiry.php?StockID=' . $myrow['parent'] . '" alt="' . _('Show Bill Of Material') . '">' . $myrow['parent']. ' - ' . $myrow['description']. '</a></td>
 					<td>' . $Status. '</td>
 					<td>' . $myrow['workcentreadded']. '</td>
 					<td>' . $myrow['loccode']. '</td>
@@ -102,7 +98,7 @@ if (isset($StockID)) {
 
 			//end of page full new headings if
 		}
-		echo '</table>';
+		echo '</tbody></table>';
 	}
 } // StockID is set
 echo '</form>';

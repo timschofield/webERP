@@ -1,5 +1,4 @@
 <?php
-/* $Id: SuppWhereAlloc.php 7449 2016-01-14 10:08:51Z exsonqu $*/
 /* Suppliers Where allocated */
 
 include('includes/session.php');
@@ -73,7 +72,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			ON suppliers.currcode=currencies.currabrev
 			WHERE type='" . $_POST['TransType'] . "'
 			AND transno = '" . $_POST['TransNo']."'";
-	
+
 	if($_SESSION['SalesmanLogin'] != '') {
 			$sql .= " AND supptrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
@@ -97,7 +96,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 		if($_POST['TransType']==22 OR $_POST['TransType'] == 21) {
 
 			$TitleInfo = ($_POST['TransType'] == 22)?_('Payment'):_('Debit Note');
-			$sql .= "ON supptrans.id = suppallocs.transid_allocto 
+			$sql .= "ON supptrans.id = suppallocs.transid_allocto
 				WHERE suppallocs.transid_allocfrom = '" . $AllocToID . "'";
 		} else {
 			$TitleInfo = _('invoice');
@@ -142,18 +141,9 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 				<tbody>';
 
 			$RowCounter = 1;
-			$k = 0; //row colour counter
 			$AllocsTotal = 0;
 
 			while($myrow=DB_fetch_array($TransResult)) {
-				if($k==1) {
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k++;
-				}
-
 				if($myrow['type']==21) {
 					$TransType = _('Debit Note');
 				} elseif($myrow['type'] == 20) {
@@ -161,7 +151,8 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 				} else {
 					$TransType = _('Payment');
 				}
-				echo '	<td class="centre">', ConvertSQLDate($myrow['trandate']), '</td>
+				echo '<tr class="striped_row">
+						<td class="centre">', ConvertSQLDate($myrow['trandate']), '</td>
 						<td class="text">' . $TransType . '</td>
 						<td class="number">' . $myrow['transno'] . '</td>
 						<td class="text">' . $myrow['suppreference'] . '</td>

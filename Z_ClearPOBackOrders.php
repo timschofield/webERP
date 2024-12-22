@@ -1,5 +1,7 @@
 <?php
-/* $Id: Z_ClearPOBackOrders.php 4466 2011-01-13 09:33:59Z daintree $*/
+// Z_ClearPOBackOrders.php
+//
+
 $PageSecurity =15;
 include ('includes/session.php');
 $Title = _('UTILITY PAGE To Clear purchase orders with quantity on back order');
@@ -9,7 +11,7 @@ if (isset($_POST['ClearSupplierBackOrders'])) {
 	$SQL = "UPDATE purchorderdetails INNER JOIN purchorders ON purchorderdetails.orderno=purchorders.orderno SET purchorderdetails.quantityord=purchorderdetails.quantityrecd, purchorderdetails.completed=1 WHERE quantityrecd >0 AND supplierno>= '" . $_POST['FromSupplierNo'] . "' AND supplierno <= '" . $_POST['ToSupplierNo'] . "'";
 	echo $SQL;
 	$result = DB_query($SQL);
-	
+
 }
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';

@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFInventoryValnPageHeader.inc 5768 2012-12-20 08:38:22Z daintree $*/
 /*PDF page header for inventory valuation report */
 if ($PageNumber>1){
 	$pdf->newPage();

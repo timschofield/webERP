@@ -1,5 +1,4 @@
 <?php
-/* $Id UpgradeDatabase.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 $PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
 
@@ -66,7 +65,7 @@ if (isset($_POST['DoUpgrade'])){
 		$SQLScripts = array();
 
 		if ($_POST['OldVersion']=='Manual') {
-			prnMsg(_('No datbase updates have been done as you selected to apply these manually - upgrade SQL scripts are under sql/mysql/ directory in the distribution'),'info');
+			prnMsg(_('No database updates have been done as you selected to apply these manually - upgrade SQL scripts are in the sql/mysql/country_sql/ directory in the distribution'),'info');
 		} else { //we are into automatically applying database upgrades
 
 			prnMsg(_('If there are any failures then please check with your system administrator. Please read all notes carefully to ensure they are expected'),'info');
@@ -196,6 +195,17 @@ if (isset($_POST['DoUpgrade'])){
 					$SQLScripts[] = './sql/mysql/upgrade4.12.3-4.13.sql';
 				case '4.13':
 					$SQLScripts[] = './sql/mysql/upgrade4.13-4.13.1.sql';
+				case '4.13.1':
+					$SQLScripts[] = './sql/mysql/upgrade4.13.1-4.14.sql';
+				case '4.14':
+					$SQLScripts[] = './sql/mysql/upgrade4.14-4.14.1.sql';
+				case '4.14.1':
+					$SQLScripts[] = './sql/mysql/upgrade4.14.1-4.15.sql';
+				case '4.15':
+					$SQLScripts[] = './sql/mysql/upgrade4.15-4.15.1.sql';
+					break;
+				case '4.15.1':
+					$SQLScripts[] = './sql/mysql/upgrade4.15.1-4.15.2.sql';
 					break;
 			} //end switch
 		}

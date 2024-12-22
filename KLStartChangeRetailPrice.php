@@ -36,7 +36,7 @@ $sql = "INSERT INTO klchangeprice
 		VALUES ('" . $_GET['Item'] . "',
 			'" . Date('Y-m-d') . "',
 			'" . filter_number_format($_GET['NewPrice']) . "',
-			'9999-12-31')";
+			'0000-00-00')";
 $msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_GET['Item'] . ' ' . _('has been created');
 $ErrMsg = _('The insert or update of the KL Retail Price Change Step 01 failed because');
 $DbgMsg = _('The SQL that was used and failed was');

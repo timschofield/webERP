@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFPaymentRun_PymtFooter.php 6945 2014-10-27 07:20:48Z daintree $*/
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
 $YPos -= (0.5*$line_height);

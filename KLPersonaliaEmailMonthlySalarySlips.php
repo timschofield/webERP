@@ -76,7 +76,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 
 				// save the pdf file for later attachment
 				$FileName= $CoreFileName . '.pdf';
-				$pdf->Output($_SESSION['reports_dir'] . '/' . $FileName, 'F');
+				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
+
+				// KL RICARD for any weird reason it fails in TCPDF 6.2 and 6.7.5. 
+				// as calls to $f = TCPDF_STATIC::fopenLocal($name, 'wb');
+				// but if changed into $f = fopen($name, 'wb'); then it works
+
+				$pdf->Output($PathFileName, 'F');
 				$pdf-> __destruct();
 
 				// prepare the email fields to employees
@@ -89,7 +95,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				$mail->setText($Text);
 				$mail->setSubject($Subject);
 
-				$attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $FileName);
+				$attachment = $mail->getFile($PathFileName);
 				$mail->addAttachment($attachment, $FileName, 'application/pdf');
 				
 				// set the from address depending on the company
@@ -110,9 +116,11 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 					$SendTo = $myrow['email'];
 				}
 
-// RICARD TEST
-//				$SendTo = 'revi@kapal-laut.com';
-// END RICARD TEST
+				// KL RICARD Send to a dummy address depending on the code version
+				if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+					// the current script filename contains TEST, we are on TEST code
+					$SendTo = 'webmaster@kapal-laut.com';
+				}
 
 				$ResultEmailEmployee = $mail->send(array($SendTo));
 				if($ResultEmailEmployee){
@@ -143,9 +151,11 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				$SendTo = 'accounting@ptadu.com';
 			}
 			
-// RICARD TEST
-//				$SendTo = 'revi@kapal-laut.com';
-// END RICARD TEST
+			// KL RICARD Send to a dummy address depending on the code version
+			if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+				// the current script filename contains TEST, we are on TEST code
+				$SendTo = 'webmaster@kapal-laut.com';
+			}
 
 			$ResultEmailAdmin = $mail->send(array($SendTo));
 			if($ResultEmailAdmin){

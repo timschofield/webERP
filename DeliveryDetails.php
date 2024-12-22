@@ -1,5 +1,4 @@
 <?php
-/* $Id: DeliveryDetails.php 7714 2016-12-26 08:51:03Z tehonu $ */
 /* Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc. */
 
 /*
@@ -860,7 +859,8 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/c
 echo '</b>&nbsp;' . _('Customer Name') . ' :<b> ' . $_SESSION['Items'.$identifier]->CustomerName . '</b></p>';
 
 
-echo '<form action="' . $_SERVER['PHP_SELF'] . '?identifier='.$identifier  . '" method="post">';
+echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
+
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -899,15 +899,8 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 		$DisplayDiscount = locale_number_format(($StockItem->DiscountPercent * 100),2);
 
 
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-		echo '<td>' . $StockItem->StockID . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $StockItem->StockID . '</td>
 			<td title="' . $StockItem->LongDescription . '">' . $StockItem->ItemDescription . '</td>
 			<td class="number">' . $DisplayQuantity . '</td>
 			<td>' . $StockItem->Units . '</td>
@@ -922,7 +915,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	}
 
 	$DisplayTotal = number_format($_SESSION['Items'.$identifier]->total,2);
-	echo '<tr class="EvenTableRows">
+	echo '<tr class="striped_row">
 			<td colspan="6" class="number"><b>' .  _('TOTAL Excl Tax/Freight')  . '</b></td>
 			<td class="number">' . $DisplayTotal . '</td>
 		</tr>
@@ -932,7 +925,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$DisplayWeight = locale_number_format($_SESSION['Items'.$identifier]->totalWeight,2);
 	echo '<br />
 		<table>
-		<tr class="EvenTableRows">
+		<tr class="striped_row">
 			<td>' .  _('Total Weight') .':</td>
 			<td class="number">' . $DisplayWeight . '</td>
 			<td>' .  _('Total Volume') .':</td>
@@ -957,7 +950,7 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 	$_SESSION['Items'.$identifier]->total = 0;
 	$_SESSION['Items'.$identifier]->totalVolume = 0;
 	$_SESSION['Items'.$identifier]->totalWeight = 0;
-	$k=0;// row colour counter
+
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $StockItem) {
 
 		$LineTotal = $StockItem->Quantity * $StockItem->Price * (1 - $StockItem->DiscountPercent);
@@ -965,14 +958,8 @@ if(in_array(2,$_SESSION['AllowedPageSecurityTokens'])) {
 		$DisplayPrice = locale_number_format($StockItem->Price,$_SESSION['Items'.$identifier]->CurrDecimalPlaces);
 		$DisplayQuantity = locale_number_format($StockItem->Quantity,$StockItem->DecimalPlaces);
 
-		if($k==1) {
-			echo '<tr class="OddTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$k=1;
-		}
-		echo '<td>' . $StockItem->ItemDescription  . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $StockItem->ItemDescription  . '</td>
 				<td class="number">' . $DisplayQuantity . '</td>
 				<td>' . $StockItem->Units . '</td>
 				<td class="number">' . $DisplayPrice . '</td>
@@ -1046,17 +1033,17 @@ if(!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
 // The estimated Dispatch date or Delivery date for this order
 echo '<tr>
 		<td>' .  _('Estimated Delivery Date') .':</td>
-		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title="' . _('Enter the estimated delivery date requested by the customer') . '"/></td>
+		<td><input class="date" type="text" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title="' . _('Enter the estimated delivery date requested by the customer') . '"/></td>
 	</tr>';
 // The date when a quote was issued to the customer
 echo '<tr>
 		<td>' .  _('Quote Date') .':</td>
-		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" /></td>
+		<td><input class="date" type="text" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" /></td>
 	</tr>';
 // The date when the customer confirmed their order
 echo '<tr>
 		<td>' .  _('Confirmed Order Date') .':</td>
-		<td><input class="date" alt="'.$_SESSION['DefaultDateFormat'].'" type="text" size="15" maxlength="14" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" /></td>
+		<td><input class="date" type="text" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" /></td>
 	</tr>
 	<tr>
 		<td>' .  _('Delivery Address 1 (Street)') . ':</td>
@@ -1103,7 +1090,7 @@ echo'	<tr>
 	</tr>
 	<tr>
 		<td>' .  _('OpenCart/Marketplace/Other Inv. Number') .':</td>
-		<td><input type="text" size="25" maxlength="25" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="' . _('Enter the customer\'s purchase order reference relevant to this order') . '" /></td>
+		<td><input type="text" size="25"  maxlength="50" name="CustRef" value="' . $_SESSION['Items'.$identifier]->CustRef . '" title="' . _('Enter the customer\'s purchase order reference relevant to this order') . '" /></td>
 	</tr>
 	<tr>
 		<td>' .  _('Comments') .':</td>

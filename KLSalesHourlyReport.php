@@ -25,7 +25,10 @@ if ($KL_SystemAdmin
 }
 
 prnMsg("Performed ". $NumberOfTestExecuted . " Sales Hourly Report",'success');
-time_finish($begintime);
+
+if ($KL_SystemAdmin){
+	time_finish($begintime);
+}
 
 include ('includes/footer.php');
 

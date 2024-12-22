@@ -18,7 +18,7 @@ require_once($PathPrefix . 'includes/DateFunctions.inc');
 require('languages/'.$ReportLanguage.'/reports.php'); // include translation before defaults.php
 require('admin/defaults.php'); // load default values
 
-$usrMsg = ''; // setup array for return messages
+$usrMsg = array(); // setup array for return messages
 $GoBackURL = $RootPath.'/index.php'; // set the return path to the index.php page
 
 if (isset($_GET['id'])) { // then entered with form group requested
@@ -131,7 +131,7 @@ include ( $PathPrefix . 'includes/footer.php');
 
 // Begin functions
 function BuildFormList($GroupID) {
-	global $db, $ReportGroups, $FormGroups;
+	global $ReportGroups, $FormGroups;
 
 	$OutputString = '';
 	if ($GroupID=='') { // then fetchthe complete form list for all groups
@@ -147,7 +147,7 @@ function BuildFormList($GroupID) {
 					ORDER BY groupname,
 												reportname";
 			$Result=DB_query($sql,'','',false,true);
-			$FormList = '';
+			$FormList = array();
 			while ($Temp = DB_fetch_array($Result)) $FormList[] = $Temp;
 			foreach ($FormGroups as $index=>$value) {
 				$Group=explode(':',$index); // break into main group and form group array
@@ -180,7 +180,6 @@ function BuildFormList($GroupID) {
 }
 
 function FetchReportDetails($ReportID) {
-	global $db;
 	$sql= "SELECT reportname,
 					reporttype,
 					groupname,
@@ -217,8 +216,7 @@ function FetchReportDetails($ReportID) {
 }
 
 function RetrieveFields($ReportID, $EntryType) {
-	global $db;
-	$FieldListings = '';
+	$FieldListings = array();
 	$sql= "SELECT *	FROM ".DBRptFields."
 			WHERE reportid = '".$ReportID."'
 			AND entrytype = '".$EntryType."'
@@ -229,7 +227,7 @@ function RetrieveFields($ReportID, $EntryType) {
 }
 
 function BuildCriteria($FieldListings) {
-	global $db, $CritChoices;
+	global $CritChoices;
 	$SeqNum = $FieldListings['seqnum'];
 	$CriteriaString = '<tr><td>'.$FieldListings['displaydesc'].'</td>'; // add the description
 	// retrieve the dropdown based on the params field (dropdown type)

@@ -1,5 +1,11 @@
 <?php
 
+/***************************************************************************************
+*
+* KL RICARD: Added start date
+*
+****************************************************************************************/
+
 include('includes/session.php');
 $Title = _('WO items can be produced with available stock');
 include('includes/header.php');

@@ -1,5 +1,4 @@
 <?php
-/* $Id: WriteReport.inc 7698 2016-12-02 23:02:33Z turbopt $*/
 
 require_once($PathPrefix .'/includes/class.pdf.php');
 
@@ -30,31 +29,44 @@ var $pageY; // y value of bottom of page less bottom margin
 	function Header() {
 		global $Prefs, $Heading, $Seq;
 		define(RowSpace,2); // define separation between the heading rows
+		$this->SetTopMargin($Prefs['margintop']);
 		if ($Prefs['coynameshow']) { // Show the company name
+			$this->SetFont($Prefs['coynamefont']);
+			$this->SetFontSize($Prefs['coynamefontsize']);
 			$Colors = explode(':',$Prefs['coynamefontcolor']);
 			$this->SetTextColor($Colors[0], $Colors[1], $Colors[2]);
 			$CellHeight = ($Prefs['coynamefontsize']+RowSpace)*0.35;
 			$this->Cell(0,$CellHeight,$_SESSION['CompanyRecord']['coyname'],0,1,$Prefs['coynamealign']);
 		}
 		if ($Prefs['title1show']) { // Set title 1 heading
+			$this->SetFont($Prefs['title1font']);
+			$this->SetFontSize($Prefs['title1fontsize']);
 			$Colors = explode(':',$Prefs['title1fontcolor']);
 			$this->SetTextColor($Colors[0], $Colors[1], $Colors[2]);
 			$CellHeight = ($Prefs['title1fontsize']+RowSpace)*0.35;
 			$this->Cell(0,$CellHeight,$this->SubTitle($Prefs['title1desc']),0,1,$Prefs['title1fontalign']);
 		}
 		if ($Prefs['title2show']) { // Set Title 2 heading
+			$this->SetFont($Prefs['title2font']);
+			$this->SetFontSize($Prefs['title2fontsize']);
 			$Colors = explode(':',$Prefs['title2fontcolor']);
 			$this->SetTextColor($Colors[0], $Colors[1], $Colors[2]);
 			$CellHeight = ($Prefs['title2fontsize']+RowSpace)*0.35;
 			$this->Cell(0,$CellHeight,$this->SubTitle($Prefs['title2desc']),0,1,$Prefs['title2fontalign']);
 		}
 		// Set the filter heading
+		$this->SetFont($Prefs['filterfont']);
+		$this->SetFontSize($Prefs['filterfontsize']);
 		$Colors = explode(':',$Prefs['filterfontcolor']);
 		$this->SetTextColor($Colors[0], $Colors[1], $Colors[2]);
-		$CellHeight = ($Prefs['filterfontsize']+RowSpace)*0.35; // convert points to mm
-		$this->MultiCell(0,$CellHeight,$Prefs['filterdesc'],'B',1,$Prefs['filterfontalign']);
+		$CellHeight = ($Prefs['filterfontsize']+RowSpace)*0.35*2;
+		$this->Cell(0,$CellHeight,$Prefs['filterdesc'],'B',1,$Prefs['filterfontalign']);
 		$this->y0=$this->GetY(); // set y position after report headings before column titles
 		// Set the table header
+		if (substr($Prefs['datafont'], -2) <> 'BI') {
+			$this->SetFont($Prefs['datafont'].'BI');
+		}
+		$this->SetFontSize($Prefs['datafontsize']);
 		$Colors = explode(':',$Prefs['datafontcolor']);
 		$this->SetTextColor($Colors[0], $Colors[1], $Colors[2]);
 		$this->SetDrawColor(128,0,0);
@@ -91,7 +103,7 @@ var $pageY; // y value of bottom of page less bottom margin
 			if ($trunc) {
 				$value=$this->TruncData($value, $Prefs['col'.$col.'width']);
 			}
-			$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value);
+			$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value,0,$Prefs['datafontalign']);
 			if ($ColBreak[$key]) {
 				$col++;
 				$LastY = $this->y0;
@@ -102,30 +114,33 @@ var $pageY; // y value of bottom of page less bottom margin
 		$this->SetLeftMargin($CellXPos[0]);
 		$this->SetX($CellXPos[0]);
 		$this->SetY($this->y0);
-		$this->Cell(0,$maxY-$this->y0,' ','B');
+		$this->Cell(0,$maxY-$this->y0,'','B');
 		$this->y0=$maxY+0.35;
 	}
 
 	function SubTitle($Title) {
 		global $Prefs;
 		// substitutes a command string with current information
+		$Title=preg_replace('/%time%/', date('g:i A',time()), $Title);
 		$Title=preg_replace('/%date%/', date('Y-m-d',time()), $Title);
 		$Title=preg_replace('/%reportname%/', $Prefs['reportname'], $Title);
 		return $Title;
 	}
 
 	function Footer() {
-	    //Position at 1.5 cm from bottom
-	    $this->SetY(-15);
-	    //Arial italic 8
-	    $this->SetTextColor(0);
-	    //Page number
-	    $this->Cell(0,10,'Page '.$this->PageNo().'/{nb}',0,0,'C');
+		//Position at 1.5 cm from bottom
+		$this->SetY(-15);
+		$this->SetFontSize(8);
+		$this->SetTextColor(0);
+		//Page number
+		$this->Cell(0,(8+RowSpace)*0.35,'Page '.$this->PageNo().' / '.$this->getNumPages(),0,0,'C');
 	}
 
 	function ReportTable($Data) {
 		global $Prefs, $Seq;
 
+		$this->SetFont($Prefs['datafont']);
+		$this->SetFontSize($Prefs['datafontsize']);
 		$FillColor = array(224, 235, 255);
 		$this->SetFillColor($FillColor[0],$FillColor[1],$FillColor[2]);
 		$Colors = explode(':',$Prefs['datafontcolor']);
@@ -149,16 +164,20 @@ var $pageY; // y value of bottom of page less bottom margin
 			$trunc=false;
 		}
 		// Ready to draw the column data
-	       $fill=false;
+		$fill=false;
 		$NeedTop='No';
 		$MaxRowHt = 0; //track the tallest row to estimate page breaks
-	    foreach($Data as $myrow) {
+		foreach($Data as $myrow) {
 			$Action = array_shift($myrow);
 			$todo = explode(':',$Action); // contains a letter of the date type and title/groupname
+			$this->SetFontSize($Prefs['datafontsize']);
+			$this->SetFont($Prefs['datafont']);
 			switch ($todo[0]) {
 				case "r": // Report Total
 				case "g": // Group Total
 					// Draw a fill box
+					$this->SetFont($Prefs['totalsfont']);
+					$this->SetFontSize($Prefs['totalsfontsize']);
 					if ($this->y0+(2*$MaxRowHt)>$this->pageY) {
 						// Fill the end of the report with white space
 						$this->SetLeftMargin($CellXPos[0]);
@@ -173,7 +192,7 @@ var $pageY; // y value of bottom of page less bottom margin
 					$this->SetX($CellXPos[0]);
 					$this->SetY($this->y0);
 					$this->SetFillColor(240);
-					$this->Cell(0,$this->pageY-$this->y0,'',$brdr,0,'L',1);
+					$this->Cell(0,$CellHeight,'',$brdr,0,'L',1);
 					// Add total heading
 					$this->SetLeftMargin($CellXPos[0]);
 					$this->SetX($CellXPos[0]);
@@ -212,7 +231,7 @@ var $pageY; // y value of bottom of page less bottom margin
 					$this->SetX($CellXPos[0]);
 					$this->SetY($this->y0);
 					if ($fill) $this->SetFillColor($FillColor[0],$FillColor[1],$FillColor[2]); else $this->SetFillColor(255);
-					$this->Cell(0,$this->pageY-$this->y0,'',$brdr,0,'L',1);
+					$this->Cell(0,$CellHeight,'',$brdr,0,'L',1);
 					// fill in the data
 					$maxY = $this->y0; // set to current top of row
 					$col = 1;
@@ -223,7 +242,7 @@ var $pageY; // y value of bottom of page less bottom margin
 						$this->SetY($LastY);
 						// truncate data if necessary
 						if ($trunc) $value=$this->TruncData($value, $Prefs['col'.$col.'width']);
-						$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value,$Prefs['datafontalign'],1);
+						$this->MultiCell($CellXPos[$col]-$CellXPos[$col-1],$CellHeight,$value,1,$Prefs['datafontalign']);
 						if ($ColBreak[$key]) {
 							$col++;
 							$LastY = $this->y0;
@@ -279,7 +298,7 @@ function BuildSQL($Prefs) {
 	}
 	$strField = mb_substr($strField,0,-2); // strip the last comma
 
-	$Prefs['filterdesc'] = RPT_RPTFILTER; // Initialize the filter display string
+	$Prefs['filterdesc'] = RPT_RPTBASIS.' | '.RPT_RPTFILTER; // Initialize the filter display string
 	//fetch the groupings and build first level of SORT BY string (for sub totals)
 	$strGroup = '';
 	if (is_array($Prefs['GroupListings'])) while ($FieldValues = array_shift($Prefs['GroupListings'])) {
@@ -301,11 +320,19 @@ function BuildSQL($Prefs) {
 	// fetch date filter info
 	$df = $Prefs['DateListings']['fieldname'];
 	$Today = date('Y-m-d', time());
-	$ThisDay = date('d');
 	$ThisMonth = date('m');
 	$ThisYear = date('Y');
+	$Yesterday = date('Y-m-d', time()-86400);
+	$LastMonth = $ThisMonth-1;
+	$LastYear = $ThisYear-1;
+	$NextMonth = $ThisMonth+1;
+	$NextYear = $ThisYear+1;
 	// Find total number of days in this month:
 	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);
+	// Find total number of days in last month:
+	$TotalDaysLast = cal_days_in_month(CAL_GREGORIAN, $LastMonth, $ThisYear);
+	// Find total number of days in next month:
+	$TotalDaysNext = cal_days_in_month(CAL_GREGORIAN, $NextMonth, $ThisYear);
 	// Calculate date range
 	$DateArray=explode(':',$Prefs['DateListings']['params']);
 	switch ($DateArray[0]) { // based on the date choice selected
@@ -333,14 +360,14 @@ function BuildSQL($Prefs) {
 			$fildesc = ' '.RPT_DATERANGE.'='.ConvertSQLDate($Today).';';
 			break;
 		case "d": // RPT_GROUP_WEEK
-			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j',$t)-date('w',$t), $ThisYear));
-			$we = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j',$t)-date('w',$t)+6, $ThisYear));
+			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')+0, $ThisYear));
+			$we = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')+6, $ThisYear));
 			$d = $df.">='".$ws."'";
 			$d .= " AND ".$df."<='".$we."'";
 			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ws).' '.RPT_TO.' '.ConvertSQLDate($we).';';
 			break;
 		case "e": // RPT_GROUP_WTD
-			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j',$t)-date('w',$t), $ThisYear));
+			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w'), $ThisYear));
 			$d = $df.">='".$ws."'";
 			$d .= " AND ".$df."<='".$Today."'";
 			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ws).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
@@ -361,7 +388,7 @@ function BuildSQL($Prefs) {
 		case "h": // RPT_GROUP_QUARTER
 			$QtrStrt = intval(($ThisMonth-1)/3)*3+1;
 			$QtrEnd = intval(($ThisMonth-1)/3)*3+3;
-			if ( $QtrEnd == 4 OR $QtrEnd == 6 OR $QtrEnd == 9 OR $QtrEnd == 11 ) { $TotalDays=30; }
+			$TotalDays = cal_days_in_month(CAL_GREGORIAN, $QtrEnd, $ThisYear);
 			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
 			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
 			$d = $df.">='".$qs."'";
@@ -388,9 +415,105 @@ function BuildSQL($Prefs) {
 			$d .= " AND ".$df."<='".$Today."'";
 			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ys).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
 			break;
+		case "l": // RPT_GROUP_YESTERDAY
+			$d = $df."='".$Yesterday."'";
+			$fildesc = ' '.RPT_DATERANGE.'='.ConvertSQLDate($Yesterday).';';
+			break;
+		case "m": // RPT_GROUP_LASTWEEK
+			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')-7, $ThisYear));
+			$we = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')-1, $ThisYear));
+			$d = $df.">='".$ws."'";
+			$d .= " AND ".$df."<='".$we."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ws).' '.RPT_TO.' '.ConvertSQLDate($we).';';
+			break;
+		case "n": // RPT_GROUP_LASTWTD
+			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')-7, $ThisYear));
+			$d = $df.">='".$ws."'";
+			$d .= " AND ".$df."<='".$Today."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ws).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
+			break;
+		case "o": // RPT_GROUP_LASTMONTH
+			$ms = date('Y-m-d', mktime(0,0,0, $LastMonth, 1, $ThisYear));
+			$me = date('Y-m-d', mktime(0,0,0, $LastMonth, $TotalDaysLast, $ThisYear));
+			$d = $df.">='".$ms."'";
+			$d .= " AND ".$df."<='".$me."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ms).' '.RPT_TO.' '.ConvertSQLDate($me).';';
+			break;
+		case "p": // RPT_GROUP_LASTMTD
+			$ms = date('Y-m-d', mktime(0,0,0, $LastMonth, 1, $ThisYear));
+			$d = $df.">='".date('Y-m-d', mktime(0,0,0, $LastMonth, 1, $ThisYear))."'";
+			$d .= " AND ".$df."<='".$Today."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ms).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
+			break;
+		case "q": // RPT_GROUP_LASTQUARTER
+			$QtrStrt = intval(($ThisMonth-1)/3)*3-2;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+0;
+			$TotalDays = cal_days_in_month(CAL_GREGORIAN, $QtrEnd, $ThisYear);
+			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			$d = $df.">='".$qs."'";
+			$d .= " AND ".$df."<='".$qe."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($qs).' '.RPT_TO.' '.ConvertSQLDate($qe).';';
+			break;
+		case "r": // RPT_GROUP_LASTQTD
+			$QtrStrt = intval(($ThisMonth-1)/3)*3-2;
+			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$d = $df.">='".$qs."'";
+			$d .= " AND ".$df."<='".$Today."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($qs).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
+			break;
+		case "s": // RPT_GROUP_LASTYEAR
+			$ys = date('Y-m-d', mktime(0,0,0, 1, 1, $LastYear));
+			$ye = date('Y-m-d', mktime(0,0,0, 12, 31, $LastYear));
+			$d = $df.">='".$ys."'";
+			$d .= " AND ".$df."<='".$ye."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ys).' '.RPT_TO.' '.ConvertSQLDate($ye).';';
+			break;
+		case "t": // RPT_GROUP_LASTYTD
+			$ys = date('Y-m-d', mktime(0,0,0, 1, 1, $LastYear));
+			$d = $df.">='".$ys."'";
+			$d .= " AND ".$df."<='".$Today."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ys).' '.RPT_TO.' '.ConvertSQLDate($Today).';';
+			break;
+		case "u": // RPT_GROUP_NEXTWEEK
+			$ws = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')+7, $ThisYear));
+			$we = date('Y-m-d', mktime(0,0,0, $ThisMonth, date('j')-date('w')+13, $ThisYear));
+			$d = $df.">='".$ws."'";
+			$d .= " AND ".$df."<='".$we."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ws).' '.RPT_TO.' '.ConvertSQLDate($we).';';
+			break;
+		case "v": // RPT_GROUP_NEXTMONTH
+			$ms = date('Y-m-d', mktime(0,0,0, $NextMonth, 1, $ThisYear));
+			$me = date('Y-m-d', mktime(0,0,0, $NextMonth, $TotalDaysNext, $ThisYear));
+			$d = $df.">='".$ms."'";
+			$d .= " AND ".$df."<='".$me."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ms).' '.RPT_TO.' '.ConvertSQLDate($me).';';
+			break;
+		case "w": // RPT_GROUP_NEXTQUARTER
+			$QtrStrt = intval(($ThisMonth-1)/3)*3+4;
+			$QtrEnd = intval(($ThisMonth-1)/3)*3+6;
+			$TotalDays = cal_days_in_month(CAL_GREGORIAN, $QtrEnd, $ThisYear);
+			$qs = date('Y-m-d', mktime(0,0,0, $QtrStrt, 1, $ThisYear));
+			$qe = date('Y-m-d', mktime(0,0,0, $QtrEnd, $TotalDays, $ThisYear));
+			$d = $df.">='".$qs."'";
+			$d .= " AND ".$df."<='".$qe."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($qs).' '.RPT_TO.' '.ConvertSQLDate($qe).';';
+			break;
+		case "x": // RPT_GROUP_NEXTYEAR
+			$ys = date('Y-m-d', mktime(0,0,0, 1, 1, $NextYear));
+			$ye = date('Y-m-d', mktime(0,0,0, 12, 31, $NextYear));
+			$d = $df.">='".$ys."'";
+			$d .= " AND ".$df."<='".$ye."'";
+			$fildesc = ' '.RPT_DATERANGE.' '.RPT_FROM.' '.ConvertSQLDate($ys).' '.RPT_TO.' '.ConvertSQLDate($ye).';';
+			break;
 	}
 	$strDate = $d;
-	if ($fildesc<>'') $Prefs['filterdesc'] .= $fildesc; // update the filter description string
+	// update the filter description string
+	if ($fildesc<>'') {
+		$Prefs['filterdesc'] .= $fildesc;
+	} else {
+		$Prefs['filterdesc'] .= ' '.RPT_DATERANGE.' All Transactions'.';';
+	}
 
 	// Fetch the Criteria
 	$strCrit = '';
@@ -460,7 +583,7 @@ function BuildSQL($Prefs) {
 }
 
 function BuildDataArray($ReportID, $sql, $Prefs) {
-	global $db, $Heading, $Seq;
+	global $Heading, $Seq;
 	// first see if we have data
 	$Result=DB_query($sql,'','',false,true);
 	if (DB_num_rows($Result)==0) return false; // No data so bail now

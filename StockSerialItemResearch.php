@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockSerialItemResearch.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Serial Item Research');

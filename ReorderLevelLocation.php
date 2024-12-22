@@ -1,7 +1,5 @@
 <?php
 
-/* $Id: ReorderLevelLocation.php 6941 2014-10-26 23:18:08Z daintree $*/
-
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Added 4 fields. 3 KL fields from stockmaster to calculate and show notes (KL status of the item)
@@ -22,7 +20,7 @@ if (isset($_POST['submit'])){
 	for ($i=1;$i<count($_POST);$i++){ //loop through the returned customers
 		if (isset($_POST['StockID' . $i]) AND is_numeric(filter_number_format($_POST['ReorderLevel'.$i]))){
 			$SQLUpdate="UPDATE locstock SET reorderlevel = '" . filter_number_format($_POST['ReorderLevel'.$i]) . "',
-											bin = '" . strtoupper($_POST['BinLocation'.$i]) . "' 
+											bin = '" . strtoupper($_POST['BinLocation'.$i]) . "'
 						WHERE loccode = '" . $_POST['StockLocation'] . "'
 						AND stockid = '" . $_POST['StockID' . $i] . "'";
 			$Result = DB_query($SQLUpdate);
@@ -73,12 +71,11 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	echo'<p class="page_title_text"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
 	echo'<p class="page_title_text"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
-	$k=0; //row colour counter
-	echo '<form action="ReorderLevelLocation.php" method="post" id="Update">';
+
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="Update">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<table>';
- 	/* KL RICARD: Add Notes field */
     echo '<tr>
             <th>' . _('Code') . '</th>
             <th>' . _('Description') . '</th>
@@ -87,19 +84,11 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
             <th>' . _('On Hand')  . '<br />' ._('At Location') . '</th>
             <th>' . _('Reorder Level') . '</th>
             <th>' . _('Bin Location') . '</th>
-            <th>' . _('Notes') . '</th>
+			<th>' . _('Notes') . '</th>
         </tr>';
 
 	$i=1;
 	while ($myrow=DB_fetch_array($result))	{
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows"><td>';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows"><td>';
-			$k=1;
-		}
 
 		//variable for update data
 
@@ -140,7 +129,8 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			$Notes = "";
 		}
 
-		echo $myrow['stockid'] . '</td>
+		echo '<tr class="striped_row">
+			<td>' . $myrow['stockid'] . '</td>
 			<td>' . $myrow['description'] . '</td>
 			<td class="number">' . locale_number_format($SalesRow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($TotQtyRow['qty'],$myrow['decimalplaces']) . '</td>
@@ -153,14 +143,14 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 		} else {
 			echo locale_number_format($myrow['reorderlevel'],0) . '</td><td>' . $myrow['bin'] . '</td>';
 		}
-			
+
 		echo '</td>
 			<td>'.$Notes.'</td>
 			</tr> ';
 		$i++;
 	} //end of looping
 	echo'<tr>
-			<td style="text-align:center" colspan="8">
+			<td class="centre" colspan="8">
 				<input type="submit" name="submit" value="' . _('Update') . '" />
 			</td>
 		</tr>

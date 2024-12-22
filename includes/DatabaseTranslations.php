@@ -1,5 +1,4 @@
 <?php
-/*	$Id: DatabaseTranslations.php 6651 2014-08-13 19:52:39Z rchacon $*/
 /*******************************************************************************
 The script includes/DatabaseTranslations.php is a locale language file for the
 contents of the fields in the database. The purpose of this file is to translate

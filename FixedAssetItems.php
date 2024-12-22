@@ -1,6 +1,11 @@
 <?php
 
-/* $Id: FixedAssetItems.php 7494 2016-04-25 09:53:53Z daintree $ */
+/**************************************************************************************
+*
+* KL RICARD: Keep the v4.13.1 version, as we want to keep the same SOP standard v4.15.2 
+* uses a different accountint SOP for fixed assets. To be improved probably in v5
+*
+**************************************************************************************/
 
 include('includes/session.php');
 $Title = _('Fixed Assets');
@@ -145,7 +150,7 @@ if (isset($_POST['submit'])) {
 		OR filter_number_format($_POST['DepnRate'])<0){
 
 		$InputError = 1;
-		prnMsg(_('The depreciation rate (yearly loss of value) is expected to be a number between 0 and 100'),'error');
+		prnMsg(_('The depreciation rate is expected to be a number between 0 and 100'),'error');
 		$Errors[$i] = 'DepnRate';
 		$i++;
 	}
@@ -181,7 +186,7 @@ if (isset($_POST['submit'])) {
 									WHERE categoryid='" . $_POST['AssetCategoryID'] . "'");
 				$NewAccounts = DB_fetch_array($result);
 
-				$TransNo = GetNextTransNo(42); /* transaction type is asset category change */
+				$TransNo = GetNextTransNo( 42 ); /* transaction type is asset category change */
 
 				//credit cost for the old category
 				$SQL = "INSERT INTO gltrans (type,
@@ -280,7 +285,7 @@ if (isset($_POST['submit'])) {
 			$result = DB_query($sql,$ErrMsg,$DbgMsg);
 			prnMsg( _('Asset') . ' ' . $AssetID . ' ' . _('has been updated'), 'success');
 			echo '<br />';
-			$result = DB_Txn_Commit();
+			DB_Txn_Commit();
 		} else { //it is a NEW part
 			$sql = "INSERT INTO fixedassets (description,
 											longdescription,
@@ -406,7 +411,7 @@ if (isset($_POST['submit'])) {
 
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-		$TransNo = GetNextTransNo(43); /* transaction type is asset deletion - (and remove cost/accumdepn from GL) */
+		$TransNo = GetNextTransNo( 43 ); /* transaction type is asset deletion - (and remove cost/acc5umdepn from GL) */
 		if ($AssetRow['cost'] > 0){
 			//credit cost for the asset deleted
 			$SQL = "INSERT INTO gltrans (type,
@@ -454,7 +459,7 @@ if (isset($_POST['submit'])) {
 		$result=DB_query($sql, _('Could not delete the asset record'),'',true);
 
 		$result = DB_Txn_Commit();
-		
+
 		// Delete the AssetImage
 		foreach ($SupportedImgExt as $ext) {
 			$file = $_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.' . $ext;
@@ -721,8 +726,6 @@ echo '</select></td>
 	</tr>
 	</table>';
 
-
-	
 if (isset($AssetRow)){
 	echo '<table>
 		<tr>

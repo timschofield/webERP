@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_UploadResult.php 5784 2012-12-29 04:00:43Z daintree $*/
 
 //$PageSecurity=15;
 

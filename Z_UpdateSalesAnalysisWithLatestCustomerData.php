@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_UpdateSalesAnalysisWithLatestCustomerData.php 5784 2012-12-29 04:00:43Z daintree $*/
 
 include('includes/session.php');
 $Title=_('Apply Current Customer and Branch Data to Sales Analysis');
@@ -17,7 +16,7 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 if (isset($_POST['UpdateSalesAnalysis'])){
 
 	/* Loop around each customer/branch combo */
-	
+
 	$sql = "SELECT debtorsmaster.debtorno,
 					branchcode,
 					salestype,

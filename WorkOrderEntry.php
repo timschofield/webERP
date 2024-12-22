@@ -1,5 +1,4 @@
 <?php
-/* $Id: WorkOrderEntry.php 7675 2016-11-21 14:55:36Z rchacon $*/
 /* Entry of new work orders */
 
 include('includes/session.php');
@@ -386,7 +385,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 			unset($NewItem);
 		}
 	} else {
-		DB_Txn_Begin();
+		DB_txn_begin();
 		foreach ($NewItem as $ItemDetail) {
 				$Itm = $ItemDetail['item'];
 				if($ItemDetail['qty']>0) {
@@ -398,6 +397,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 										controlled
 									FROM stockmaster
 									WHERE stockid='" . $Itm . "'");
+
 		if(DB_num_rows($CheckItemResult)==1) {
 			$CheckItemRow = DB_fetch_array($CheckItemResult);
 			if($CheckItemRow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1) { //need to add serial nos or batches to determine quantity
@@ -438,6 +438,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
 										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 
+
 			$CostRow = DB_fetch_array($CostResult);
 			if(is_null($CostRow['cost'])) {
 					$Cost =0;
@@ -470,11 +471,11 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 			WoRealRequirements($_POST['WO'], $CostRow['loccode'], $Itm);
 		} //end if there were no input errors
 		else {
-			DB_Txn_Rollback();
+			DB_txn_rollback();
 			}
 	}//end of foreach loop;
 
-		DB_Txn_Commit();
+		DB_txn_commit();
 		unset($NewItem);
 	}
 } //adding a new item to the work order
@@ -671,7 +672,7 @@ if(isset($_GET['Delete'])) {
 		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		DB_Txn_Commit();
 		prnMsg(_('The item in this work order has been cancelled'),'success');
-		header('Location: '. $_SERVER['PHP_SELF'] . '?WO=' . $_GET['WO']);
+		header('Location: '. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_GET['WO']);
 	}
 }
 
@@ -779,7 +780,7 @@ if(!isset($_POST['StartDate'])) {
 
 echo '<tr>
 		<td class="label">' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_POST['StartDate'] .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_POST['StartDate'] .'" class="date" /></td>
 	</tr>';
 
 if(!isset($_POST['RequiredBy'])) {
@@ -788,7 +789,7 @@ if(!isset($_POST['RequiredBy'])) {
 
 echo '<tr>
 		<td class="label">' . _('Required By') . ':</td>
-		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_POST['RequiredBy'] .'" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" /></td>
+		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_POST['RequiredBy'] .'" class="date" /></td>
 	</tr>';
 if(!isset($_POST['Ref'])) {
 	$_POST['Ref'] = '';
@@ -819,17 +820,11 @@ echo '<tr><th>' . _('Output Item') . '</th>
 		  <th>' . _('Balance Remaining') . '</th>
 		  <th>' . _('Next Lot/SN Ref') . '</th>
 		  </tr>';
-$j=0;
+
 if(isset($NumberOfOutputs)) {
 	for ($i=1;$i<=$NumberOfOutputs;$i++) {
-		if($j==1) {
-			echo '<tr class="OddTableRows">';
-			$j=0;
-		} else {
-			echo '<tr class="EvenTableRows">';
-			$j=1;
-		}
-		echo '<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' .
+		echo '<tr class="striped_row">
+			<td><input type="hidden" name="OutputItem' . $i . '" value="' . $_POST['OutputItem' .$i] . '" />' .
 			$_POST['OutputItem' . $i] . ' - ' . $_POST['OutputItemDesc' .$i] . '
 			</td>';
 		echo'<td><textarea style="width:100%" rows="5" cols="20" name="WOComments' . $i . '" >' . $_POST['WOComments' . $i] . '</textarea>
@@ -964,14 +959,18 @@ if(isset($SearchResult)) {
 			$PageBar .= '<input type="submit" name="Next" value="'._('Next').'" disabled="disabled"/>';
 		$PageBar .= '</td></tr>';
 
-		echo '<br /><table cellpadding="2" class="selection">';
+		echo '<br /><table cellpadding="2" class="selection">
+			<thead>';
 		echo $PageBar;
 		echo '<tr>
 				<th class="ascending">' . _('Code') . '</th>
 	   			<th class="ascending">' . _('Description') . '</th>
-	   			<th>' . _('Units') . '</th></tr>';
+	   			<th>' . _('Units') . '</th>
+			</tr>
+			</thead>
+			<tbody>';
+
 		$j = 1;
-		$k=0; //row colour counter
 		$ItemCodes = array();
 		for ($i=1;$i<=$NumberOfOutputs;$i++) {
 			$ItemCodes[] =$_POST['OutputItem'.$i];
@@ -996,16 +995,10 @@ if(isset($SearchResult)) {
 					$ImageSource = _('No Image');
 				}
 
-				if($k==1) {
-					echo '<tr class="EvenTableRows">';
-					$k=0;
-				} else {
-					echo '<tr class="OddTableRows">';
-					$k=1;
-				}
 				if($myrow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1) { //need to add serial nos or batches to determine quantity
 
-				printf('<td><font size="1">%s</font></td>
+				printf('<tr class="striped_row">
+						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td>%s</td>
@@ -1024,14 +1017,14 @@ if(isset($SearchResult)) {
 						if(!isset($myrow['quantity'])) {
 							$myrow['quantity'] = 0;
 						}
-						printf('<td><font size="1">%s</font></td>
+						printf('<tr class="striped_row">
+						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td><font size="1">%s</font></td>
 						<td>%s</td>
 						<td><font size="1"><a href="%s">'
 						. _('Add to Work Order') . '</a></font></td>
 						<td><input type="text" name="Qty_%s" value="%s" size="10" /><input type="hidden" value="%s" name="Item_%s" /></td>
-
 						</tr>',
 						$myrow['stockid'],
 						$myrow['description'],
@@ -1049,8 +1042,8 @@ if(isset($SearchResult)) {
 			} //end if not already on work order
 		}//end of while loop
 	} //end if more than 1 row to show
-	echo '</table>';
-	echo '<div class="center">
+	echo '</tbody></table>';
+	echo '<div class="centre">
 			<input type="submit" name="Add" value="' . _('Add To Work Order') . '" />
 			<input type="hidden" name="WO" value="' . $_POST['WO'] . '" />
 			</div>';

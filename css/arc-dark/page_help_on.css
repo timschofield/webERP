@@ -1,0 +1,23 @@
+DIV.page_help_text {
+background:transparent;
+background-size:32px 32px;
+min-height:32px;
+border:maroon 1px solid;
+border-radius:3px;
+padding-top:2px;
+padding-bottom:2px;
+z-index:1;
+width:80%;
+float:none;
+position:static;
+text-align:center;
+padding-left:24px;
+min-height:26px;
+margin:0 auto;
+margin-bottom:4px;
+}
+
+@media only screen and (max-device-width:767px) {
+/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+.page_help_text {display:none;/* Hides field help text. */}
+}

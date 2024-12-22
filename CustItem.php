@@ -1,5 +1,4 @@
 <?php
-/* $Id: CustItem.php 1 2014-04-23 05:10:46Z agaluski $*/
 
 include ('includes/session.php');
 
@@ -139,26 +138,21 @@ if ($Edit == false) {
 		$NoCustItemData=1;
     } else if ($StockID != '') {
 
-        echo '<table cellpadding="2" class="selection">';
-        $TableHeader = '<tr>
+		echo '<table cellpadding="2" class="selection">
+			<thead>
+				<tr>
 							<th class="ascending">' . _('Customer') . '</th>
 							<th>' . _('Customer Unit') . '</th>
 							<th>' . _('Conversion Factor') . '</th>
 							<th class="ascending">' . _('Customer Item') . '</th>
 							<th class="ascending">' . _('Customer Description') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($custitemResult)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -178,7 +172,8 @@ if ($Edit == false) {
 					$StockID,
 					$myrow['debtorno']);
         } //end of while loop
-        echo '</table><br/>';
+        echo '</tbody>
+			</table><br/>';
     } // end of there are rows to show
     echo '<br/>';
 } /* Only show the existing records if one is not being edited */
@@ -229,7 +224,7 @@ if (isset($DebtorNo) AND $DebtorNo != '' AND !isset($_POST['Searchcustomer'])) {
 			</form>';
         include ('includes/footer.php');
         exit;
-    };
+    }
 }
 
 if ($Edit == true) {
@@ -291,27 +286,23 @@ if (isset($debtorsmasterResult) AND DB_num_rows($debtorsmasterResult) > 0) {
 		$StockUOM = 'each';
 	}
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF']) . '" method="post">
-			<table cellpadding="2" colspan="7" class="selection">';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    $TableHeader = '<tr>
+			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+			<table cellpadding="2" colspan="7" class="selection">
+			<thead>
+				<tr>
 						<th class="ascending">' . _('Code') . '</th>
 	                	<th class="ascending">' . _('Customer Name') . '</th>
 						<th class="ascending">' . _('Currency') . '</th>
 						<th class="ascending">' . _('Address 1') . '</th>
 						<th class="ascending">' . _('Address 2') . '</th>
 						<th class="ascending">' . _('Address 3') . '</th>
-					</tr>';
-    echo $TableHeader;
-	$k = 0;
+				</tr>
+			</thead>
+			<tbody>';
+
     while ($myrow = DB_fetch_array($debtorsmasterResult)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-       printf('<td><input type="submit" name="DebtorNo" value="%s" /></td>
+		printf('<tr class="striped_row">
+				<td><input type="submit" name="DebtorNo" value="%s" /></td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -330,7 +321,8 @@ if (isset($debtorsmasterResult) AND DB_num_rows($debtorsmasterResult) > 0) {
 
     }
     //end of while loop
-    echo '</table>
+    echo '</tbody>
+		</table>
 			<br/>
 			</form>';
 }

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFChequeListing.php 7726 2017-01-13 23:02:10Z daintree $*/
 
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
@@ -38,10 +37,10 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	echo '<table class="selection">
 	 		<tr>
 				<td>' . _('Enter the date from which cheques are to be listed') . ':</td>
-				<td><input type="text" name="FromDate" maxlength="10" size="10" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+				<td><input type="text" name="FromDate" maxlength="10" size="11" class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 			</tr>';
 	 echo '<tr><td>' . _('Enter the date to which cheques are to be listed') . ':</td>
-	 		<td><input type="text" name="ToDate" maxlength="10" size="10"  class="date" alt="' . $_SESSION['DefaultDateFormat'] . '"  value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
+	 		<td><input type="text" name="ToDate" maxlength="10" size="11"  class="date" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
 	</tr>';
 	 echo '<tr><td>' . _('Bank Account') . '</td><td>';
 
@@ -100,7 +99,7 @@ $sql= "SELECT amount,
 		AND (banktrans.type=1 or banktrans.type=22)
 		AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
-	
+
 $Result=DB_query($sql,'','',false,false);
 if (DB_error_no()!=0){
 	$Title = _('Payment Listing');

@@ -1,5 +1,4 @@
 <?php
-/* $Id: SalesTypes.php 6998 2014-11-22 02:28:56Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Sales Types') . ' / ' . _('Price List Maintenance');
@@ -185,23 +184,18 @@ or deletion of the records*/
 	$result = DB_query($sql);
 
 	echo '<table class="selection">
+		<thead>
 		<tr>
 				<th class="ascending">' . _('Type Code') . '</th>
 				<th class="ascending">' . _('Type Name') . '</th>
-		</tr>';
-
-$k=0; //row colour counter
+			</tr>
+		</thead>
+		<tbody>';
 
 while ($myrow = DB_fetch_row($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+		<td>%s</td>
 		<td>%s</td>
 		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . _('Delete') . '</a></td>
@@ -212,7 +206,7 @@ while ($myrow = DB_fetch_row($result)) {
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!

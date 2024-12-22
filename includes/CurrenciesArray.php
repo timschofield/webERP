@@ -1,8 +1,7 @@
 <?php
-/*	$Id: CurrenciesArray.php 2 2013-05-23 18:10:36Z chacon $*/
-/*	Currency codes based on the three-letter alphabetic code from 
-	ISO 4217:2008 Codes for the representation of currencies and funds.
-	This program is under the GNU General Public License version 3.	*/
+// CurrenciesArray.php
+// Currency codes based on the three-letter alphabetic code from ISO 4217:2008 Codes for the representation of currencies and funds.
+// This program is under the GNU General Public License version 3.
 
 $CurrencyName = array();
 
@@ -76,7 +75,7 @@ $CurrencyName['ILS'] = _('Israeli new shekel');
 $CurrencyName['INR'] = _('Indian rupee');
 $CurrencyName['IQD'] = _('Iraqi dinar');
 $CurrencyName['IRR'] = _('Iranian rial');
-$CurrencyName['ISK'] = _('Icelandic króna');
+$CurrencyName['ISK'] = _('Icelandic krona');
 $CurrencyName['JMD'] = _('Jamaican dollar');
 $CurrencyName['JOD'] = _('Jordanian dinar');
 $CurrencyName['JPY'] = _('Japanese yen');
@@ -114,7 +113,7 @@ $CurrencyName['MYR'] = _('Malaysian ringgit');
 $CurrencyName['MZN'] = _('Mozambican metical');
 $CurrencyName['NAD'] = _('Namibian dollar');
 $CurrencyName['NGN'] = _('Nigerian naira');
-$CurrencyName['NIO'] = _('Nicaraguan córdoba');
+$CurrencyName['NIO'] = _('Nicaraguan cordoba');
 $CurrencyName['NOK'] = _('Norwegian krone');
 $CurrencyName['NPR'] = _('Nepalese rupee');
 $CurrencyName['NZD'] = _('New Zealand dollar');
@@ -124,8 +123,8 @@ $CurrencyName['PEN'] = _('Peruvian nuevo sol');
 $CurrencyName['PGK'] = _('Papua New Guinean kina');
 $CurrencyName['PHP'] = _('Philippine peso');
 $CurrencyName['PKR'] = _('Pakistani rupee');
-$CurrencyName['PLN'] = _('Polish złoty');
-$CurrencyName['PYG'] = _('Paraguayan guaraní');
+$CurrencyName['PLN'] = _('Polish zloty');
+$CurrencyName['PYG'] = _('Paraguayan guarani');
 $CurrencyName['QAR'] = _('Qatari riyal');
 $CurrencyName['RON'] = _('Romanian new leu');
 $CurrencyName['RSD'] = _('Serbian dinar');
@@ -142,14 +141,14 @@ $CurrencyName['SLL'] = _('Sierra Leonean leone');
 $CurrencyName['SOS'] = _('Somali shilling');
 $CurrencyName['SRD'] = _('Surinamese dollar');
 $CurrencyName['SSP'] = _('South Sudanese pound');
-$CurrencyName['STD'] = _('São Tomé and Príncipe dobra');
+$CurrencyName['STD'] = _('Sao Tome and Principe dobra');
 $CurrencyName['SYP'] = _('Syrian pound');
 $CurrencyName['SZL'] = _('Swazi lilangeni');
 $CurrencyName['THB'] = _('Thai baht');
 $CurrencyName['TJS'] = _('Tajikistani somoni');
 $CurrencyName['TMT'] = _('Turkmenistani manat');
 $CurrencyName['TND'] = _('Tunisian dinar');
-$CurrencyName['TOP'] = _('Tongan paʻanga');
+$CurrencyName['TOP'] = _('Tongan pa\'anga');
 $CurrencyName['TRY'] = _('Turkish lira');
 $CurrencyName['TTD'] = _('Trinidad and Tobago dollar');
 $CurrencyName['TWD'] = _('Taiwan new dollar');
@@ -162,7 +161,7 @@ $CurrencyName['USS'] = _('United States dollar same day (funds code)');
 $CurrencyName['UYI'] = _('Uruguayan unidad indexada (funds code)');
 $CurrencyName['UYU'] = _('Uruguayan peso');
 $CurrencyName['UZS'] = _('Uzbekistan som');
-$CurrencyName['VEF'] = _('Venezuelan bolívar fuerte');
+$CurrencyName['VEF'] = _('Venezuelan bolivar fuerte');
 $CurrencyName['VND'] = _('Vietnamese dong');
 $CurrencyName['VUV'] = _('Vanuatu vatu');
 $CurrencyName['WST'] = _('Samoan tala');

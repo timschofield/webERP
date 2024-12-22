@@ -1,5 +1,4 @@
 <?php
-/* $Id BackupDatabase.php 4183 2010-12-14 09:30:20Z daintree $ */
 
 $PageSecurity = 15; //hard coded in case database is old and PageSecurity stuff cannot be retrieved
 

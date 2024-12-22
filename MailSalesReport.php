@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: MailSalesReport.php 6033 2013-06-24 07:36:26Z daintree $*/
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:
@@ -17,14 +16,11 @@ and an array of the receipients */
 KL RICARD MODIFICATIONS:
 - Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
 *****************************************************************************************/
-
-
 $_GET['ReportID'] = 2;
 $AllowCronJobToBeRun = true;
-$DatabaseName = 'kurakura_kl_erp';
 include('includes/session.php');
 /*The company database to use */
-
+$DatabaseName = $_SESSION['DatabaseName'];
 /*The people to receive the emailed report */
 $Recipients = GetMailList('SalesAnalysisReportRecipients');
 if (sizeOf($Recipients) == 0) {
@@ -41,7 +37,7 @@ include('includes/htmlMimeMail.php');
 $mail = new htmlMimeMail();
 
 if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie there is a report to send! */
-	$pdf->Output($_SESSION['reports_dir'] .'/SalesAnalysis_' . date('Y-m-d') . '.pdf','F'); //save to file 
+	$pdf->Output($_SESSION['reports_dir'] .'/SalesAnalysis_' . date('Y-m-d') . '.pdf','F'); //save to file
 	$pdf->__destruct();
 	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/SalesAnalysis_' . date('Y-m-d') . '.pdf');
 	$mail->setText(_('Please find herewith sales report'));
@@ -61,7 +57,7 @@ if ($Counter >0){ /* the number of lines of the sales report is more than 0  ie 
 	}else{
 		$result = SendmailBySmtp($mail,$Recipients);
 	}
-	
+
 }
 
 ?>

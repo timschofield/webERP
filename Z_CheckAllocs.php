@@ -1,5 +1,4 @@
 <?php
-/* $Id: Z_CheckAllocs.php 6941 2014-10-26 23:18:08Z daintree $*/
 /*This page adds the total of allocation records and compares this to the recorded allocation total in DebtorTrans table */
 
 include('includes/session.php');
@@ -68,18 +67,9 @@ while ($myrow = DB_fetch_array($result)){
 	echo $tableheader;
 
 	$RowCounter = 1;
-	$k = 0; //row colour counter
 	$AllocsTotal = 0;
 
 	while ($myrow1=DB_fetch_array($TransResult)) {
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 
 		if ($myrow1['type']==11){
 			$TransType = _('Credit Note');
@@ -88,7 +78,8 @@ while ($myrow = DB_fetch_array($result)){
 		}
 		$CurrDecimalPlaces = $myrow1['currdecimalplaces'];
 
-		printf( '<td>%s</td>
+		printf( '<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>

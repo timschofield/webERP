@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: MailSalesReport_csv.php 5963 2013-05-12 14:42:40Z exsonqu $*/
 /*Now this is not secure so a malicious user could send multiple emails of the report to the intended receipients
 
 The intention is that this script is called from cron at intervals defined with a command like:

@@ -1,5 +1,4 @@
 <?php
-/* $Id: SalesPeople.php 7548 2016-05-30 09:59:55Z daintree $*/
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -44,6 +43,18 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs sensible
 
+	// KL RICARD INit these variables otherwise gives error
+	if (!isset($_POST['CommissionRate1'])){
+		$_POST['CommissionRate1']=0;
+	  }
+	  if (!isset($_POST['CommissionRate2'])){
+		$_POST['CommissionRate2']=0;
+	  }
+	  if (!isset($_POST['Breakpoint'])){
+		$_POST['Breakpoint']=0;
+	  }
+	// KL RICARD END
+
 	if (mb_strlen($_POST['SalesmanCode']) > 3) {
 		$InputError = 1;
 		prnMsg(_('The salesperson code must be three characters or less long'),'error');
@@ -59,6 +70,13 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The salesperson name must be thirty characters or less long'),'error');
 		$Errors[$i] = 'SalesmanName';
 		$i++;
+	} elseif (!is_numeric(filter_number_format($_POST['CommissionRate1']))
+			OR !is_numeric(filter_number_format($_POST['CommissionRate2']))) {
+		$InputError = 1;
+		prnMsg(_('The commission rates must be a floating point number'),'error');
+	} elseif (!is_numeric(filter_number_format($_POST['Breakpoint']))) {
+		$InputError = 1;
+		prnMsg(_('The breakpoint should be a floating point number'),'error');
 	}
 
 	if (!isset($_POST['SManTel'])){
@@ -199,6 +217,7 @@ or deletion of the records*/
 			FROM salesman
 			ORDER BY current DESC,
 				salesmancode";
+
 	$result = DB_query($sql);
 
 	echo '<table class="selection">';
@@ -207,23 +226,17 @@ or deletion of the records*/
 			<th>' . _('Name') . '</th>
 			<th>' . _('Current') . '</th>
 		</tr>';
-	$k=0;
+
 	while ($myrow=DB_fetch_array($result)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
 	if ($myrow[7] == 1) {
 		$ActiveText = _('Yes');
 	} else {
 		$ActiveText = _('No');
 	}
 
-	printf('<td>%s</td>
+		printf('<tr class="striped_row">
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedSalesPerson=%s">' .  _('Edit') . '</a></td>
@@ -282,7 +295,7 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SalesmanCode" value="' . $_POST['SalesmanCode'] . '" />';
 		echo '<table class="selection">
 				<tr>
-					<td>' . _('Salesperson code') . ':</td>
+					<td>' . _('SPG code') . ':</td>
 					<td>' . $_POST['SalesmanCode'] . '</td>
 				</tr>';
 
@@ -290,7 +303,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<table class="selection">
 				<tr>
-					<td>' . _('SPG Code') . ':</td>
+					<td>' . _('SPG code') . ':</td>
 					<td><input type="text" '. (in_array('SalesmanCode',$Errors) ? 'class="inputerror"' : '' ) .' name="SalesmanCode" size="3" maxlength="3" /></td>
 				</tr>';
 	}

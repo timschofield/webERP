@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFStockCheckComparison.php 7679 2016-11-23 19:08:09Z rchacon $*/
 /* Creates a pdf comparing the quantites entered as counted at a given range of locations against the quantity stored as on hand as at the time a stock check was initiated. */
 
 include('includes/session.php');
@@ -42,7 +41,7 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 			exit;
 		}
 
-		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 		$AdjustmentNumber = GetNextTransNo(17);
 
@@ -105,7 +104,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 								prd,
 								reference,
 								qty,
-								newqoh)
+								newqoh,
+								standardcost)
 						VALUES ('" . $myrow['stockid'] . "',
 							17,
 							'" . $AdjustmentNumber . "',
@@ -115,7 +115,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 							'" . $PeriodNo . "',
 							'" . _('Inventory Check') . "',
 							'" . $StockQtyDifference . "',
-							'" . ($QtyOnHandPrior + $StockQtyDifference) . "'
+							'" . ($QtyOnHandPrior + $StockQtyDifference) . "',
+							'" . $myrow['standardcost'] . "'
 						)";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock movement record cannot be inserted because');

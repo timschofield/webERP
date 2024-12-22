@@ -8,7 +8,7 @@
 include ('includes/session.php');
 $Title = _('Balance Sheet for Retail partner PI');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/AccountSectionsDef.inc'); // This loads the $Sections variable
+include('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 
 if (! isset($_POST['BalancePeriodEnd']) or isset($_POST['SelectADifferentPeriod'])){
 

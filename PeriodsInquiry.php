@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PeriodsInquiry.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.php');
 
@@ -34,17 +33,11 @@ for ($i=0;$i<3;$i++) {
 	echo '<td valign="top">';
 	echo '<table cellpadding="2" class="selection">';
 	echo $TableHeader;
-	$k=0;
 	$j=0;
+
 	while ($myrow=DB_fetch_array($PeriodsResult)){
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
-		echo '<td>' . $myrow['periodno'] . '</td>
+		echo '<tr class="striped_row">
+				<td>' . $myrow['periodno'] . '</td>
 			  <td>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</td>
 			</tr>';
 		$j++;

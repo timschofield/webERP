@@ -1,5 +1,4 @@
 <?php
-/* $Id: PDFSuppTransListingPageHeader.inc 5620 2012-09-03 10:34:54Z daintree $*/
 if ($PageNumber>1){
 	$pdf->newPage();
 }

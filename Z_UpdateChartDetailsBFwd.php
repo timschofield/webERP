@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: Z_UpdateChartDetailsBFwd.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include ('includes/session.php');
 $Title = _('Recalculation of Brought Forward Balances in Chart Details Table');

@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: PDFStockLocTransfer.php 6941 2014-10-26 23:18:08Z daintree $*/
 include('includes/session.php');
 $Title = _('Stock Location Transfer Docket Error');
 

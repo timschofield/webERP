@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockLocTransferReceive.php 7343 2015-08-19 07:37:57Z tehonu $*/
 
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -7,7 +6,6 @@ KL RICARD MODIFICATIONS:
 - block "To" options for SPG
 ***************************************************************************************/
 
-/* $Id: StockLocTransferReceive.php 6808 2014-08-11 21:27:11Z agaluski $*/
 /* Inventory Transfer - Receive */
 
 include('includes/DefineSerialItems.php');
@@ -21,7 +19,7 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
-// RICARD: later on we find who is using this script to block "To" locations if it's SPG or SPG Support
+// KL RICARD: later on we find who is using this script to block "To" locations if it's SPG or SPG Support
 include('includes/KLRoles.php');
 
 if(isset($_GET['NewTransfer'])) {
@@ -30,6 +28,7 @@ if(isset($_GET['NewTransfer'])) {
 if(isset($_SESSION['Transfer']) and $_SESSION['Transfer']->TrfID == '') {
 	unset($_SESSION['Transfer']);
 }
+
 
 if(isset($_POST['ProcessTransfer'])) {
 /*Ok Time To Post transactions to Inventory Transfers, and Update Posted variable & received Qty's  to LocTransfers */
@@ -93,7 +92,7 @@ if(isset($_POST['ProcessTransfer'])) {
 					/* There must actually be some error this should never happen */
 					$QtyOnHandPrior = 0;
 				}
-				
+
 				/* Insert the stock movement for the stock going out of the from location */
 				$SQL = "INSERT INTO stockmoves (stockid,
 												type,
@@ -160,11 +159,13 @@ if(isset($_POST['ProcessTransfer'])) {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 												loccode,
 												serialno,
-												quantity)
+												quantity,
+												qualitytext)
 								VALUES ('" . $TrfLine->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationFrom . "',
 								'" . $Item->BundleRef . "',
-								'" . -$Item->BundleQty . "')";
+								'" . -$Item->BundleQty . "',
+								'')";
 
 							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item for the stock being transferred out of the existing location could not be inserted because');
 							$DbgMsg = _('The following SQL to update the serial stock item record was used');
@@ -209,7 +210,8 @@ if(isset($_POST['ProcessTransfer'])) {
 				}
 
 				// Insert outgoing inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' OR $_SESSION['Transfer']->StockLocationToAccount !='') AND
+					($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationFromAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationFromAccount;
@@ -313,11 +315,13 @@ if(isset($_POST['ProcessTransfer'])) {
 							$SQL = "INSERT INTO stockserialitems (stockid,
 											loccode,
 											serialno,
-											quantity)
+											quantity,
+											qualitytext)
 								VALUES ('" . $TrfLine->StockID . "',
 								'" . $_SESSION['Transfer']->StockLocationTo . "',
 								'" . $Item->BundleRef . "',
-								'" . $Item->BundleQty . "')";
+								'" . $Item->BundleQty . "',
+								'')";
 
 							$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The serial stock item record for the stock coming in could not be added because');
 							$DbgMsg =  _('The following SQL to update the serial stock item record was used');
@@ -362,7 +366,8 @@ if(isset($_POST['ProcessTransfer'])) {
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 				// Insert incoming inventory GL transaction if any of the locations has a GL account code:
-				if(($_SESSION['Transfer']->StockLocationFromAccount !='' or $_SESSION['Transfer']->StockLocationToAccount !='')) {
+				if(($_SESSION['Transfer']->StockLocationFromAccount !='' OR $_SESSION['Transfer']->StockLocationToAccount !='') AND
+					($_SESSION['Transfer']->StockLocationFromAccount != $_SESSION['Transfer']->StockLocationToAccount)) {
 					// Get the account code:
 					if($_SESSION['Transfer']->StockLocationToAccount !='') {
 						$AccountCode = $_SESSION['Transfer']->StockLocationToAccount;
@@ -430,6 +435,7 @@ if(isset($_POST['ProcessTransfer'])) {
 // KL RICARD NEVER SEND THIS EMAIL
 //				if ($_SESSION['InventoryManagerEmail']!=''){
 				if (FALSE){
+
 					$ConfirmationText = _('Cancelled balance of transfer'). ': ' . $_SESSION['Transfer']->TrfID .
 										"\r\n" . _('From Location') . ': ' . $_SESSION['Transfer']->StockLocationFrom .
 										"\r\n" . _('To Location') . ': ' . $_SESSION['Transfer']->StockLocationTo .
@@ -535,7 +541,7 @@ if(isset($_SESSION['Transfer'])) {
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Dispatch') .
 		'" alt="" />' . ' ' . $Title . '</p>';
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?'. SID . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -560,17 +566,11 @@ if(isset($_SESSION['Transfer'])) {
 					</tr>';
 
 	echo $tableheader;
-	$k=0;
-	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
-		if($k==1) {
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 
-		echo '<td>' . $TrfLine->StockID . '</td>
+	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
+
+		echo '<tr class="striped_row">
+			<td>' . $TrfLine->StockID . '</td>
 			<td>' . $TrfLine->ItemDescription . '</td>';
 
 		echo '<td class="number">' . locale_number_format($TrfLine->ShipQty, $TrfLine->DecimalPlaces) . '</td>';
@@ -647,12 +647,14 @@ if(isset($_SESSION['Transfer'])) {
 		if($myrow['loccode'] == $_POST['RecLocation']) {
 			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 		} else {
-			// RICARD let's find who is using this script to block "To" locations if it's SPG ot SPG Support
+// KL RICARD let's find who is using this script to block "To" locations if it's SPG ot SPG Support
+//			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
 			}else{
 				// if user is not SPG or SPG Support, then show all options.
 				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
 			}
+// KL RICARD END
 		}
 	}
 	echo '</select>
@@ -680,17 +682,11 @@ if(isset($_SESSION['Transfer'])) {
 			<th>' .  _('Transfer Ref'). '</th>
 			<th>' .  _('Transfer From'). '</th>
 			<th>' .  _('Dispatch Date'). '</th></tr>';
-		$k=0;
+
 		while ($myrow=DB_fetch_array($TrfResult)) {
 
-			if($k==1) {
-				echo '<tr class="EvenTableRows">';
-				$k=0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k++;
-			}
-			echo '<td class="number">' . $myrow['reference'] . '</td>
+			echo '<tr class="striped_row">
+					<td class="number">' . $myrow['reference'] . '</td>
 					<td>' . $myrow['trffromloc'] . '</td>
 					<td>' . ConvertSQLDateTime($myrow['shipdate']) . '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Trf_ID=' . $myrow['reference'] . '">' .  _('Receive'). '</a></td>

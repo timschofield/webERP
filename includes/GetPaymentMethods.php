@@ -1,5 +1,4 @@
 <?php
-/* $Id: GetPaymentMethods.php 7726 2017-01-13 23:02:10Z daintree $*/
 
 $PaytTypes    = array();
 $ReceiptTypes = array();

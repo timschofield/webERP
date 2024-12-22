@@ -1,6 +1,5 @@
 <?php
 
-/* $Id: CustomerAllocations.php 6596 2014-03-03 02:32:31Z exsonqu $*/
 
 /*
 Call this page with:
@@ -107,7 +106,7 @@ if (isset($_GET['DebtorNo'])) {
 			$BalToAllocate += $ThisAllocation;//since $BalToAllocate is negative
 		}
 		DB_free_result($TransResult);
-		
+
 		ProcessAllocation();
 	}
 	echo '</table>';
@@ -116,7 +115,6 @@ if (isset($_GET['DebtorNo'])) {
 include('includes/footer.php');
 
 function ProcessAllocation() {
-	global $db;
 	if ($InputError==0) {
 		//
 		//========[ START TRANSACTION ]===========

@@ -1,0 +1,9 @@
+in plesk 18
+I want to create a symlink to access the current contents 
+of the folder /var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics
+from /var/www/vhosts/kapal-laut.com/ptadu.com/weberp-new/companies/kurakura_kl_erp/part_pics
+
+What is the command?
+
+cd /var/www/vhosts/kapal-laut.com/ptadu.com/weberp-new/companies/kurakura_kl_erp
+ln -s /var/www/vhosts/kapal-laut.com/httpdocs/image/catalog/KL/part_pics part_pics

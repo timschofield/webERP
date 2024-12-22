@@ -1,16 +1,16 @@
 <?php
 
-/* $Id: AgedControlledInventory.php 1 2014-08-08 04:47:42Z agaluski $ */
 
 include('includes/session.php');
 $PricesSecurity = 12;//don't show pricing info unless security token 12 available to user
+
 $Today =  time();
-$Title = _('Aged Controlled Inventory') . ' ' ._('as-of') .' ' . Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' + 0 days'));
+$Title = _('Aged Controlled Inventory') . ' ' . _('as-of') . ' ' . Date(($_SESSION['DefaultDateFormat']), $Today);
+
 include('includes/header.php');
 
 echo '<p class="page_title_text">
-		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
-'" alt="" /><b>' . $Title. '</b>
+		<img src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', _('Inventory'), '" alt="" /><b>', $Title, '</b>
 	</p>';
 
 $sql = "SELECT stockserialitems.stockid,
@@ -18,78 +18,88 @@ $sql = "SELECT stockserialitems.stockid,
 				stockserialitems.serialno,
 				stockserialitems.quantity,
 				stockmoves.trandate,
+				stockmaster.units,
 				stockmaster.actualcost AS cost,
+				createdate,
 				decimalplaces
 			FROM stockserialitems
-			LEFT JOIN stockserialmoves ON stockserialitems.serialno=stockserialmoves.serialno
-			LEFT JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
-			INNER JOIN stockmaster ON stockmaster.stockid = stockserialitems.stockid
-			INNER JOIN locationusers ON locationusers.loccode=stockserialitems.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
+			LEFT JOIN stockserialmoves
+				ON stockserialitems.serialno=stockserialmoves.serialno
+			LEFT JOIN stockmoves
+				ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
+			INNER JOIN stockmaster
+				ON stockmaster.stockid = stockserialitems.stockid
+			INNER JOIN locationusers
+				ON locationusers.loccode=stockserialitems.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
 			WHERE quantity > 0
-			GROUP BY stockid, serialno
-			ORDER BY trandate";
+			ORDER BY createdate, quantity";
 
 $ErrMsg =  _('The stock held could not be retrieved because');
 $LocStockResult = DB_query($sql, $ErrMsg);
 $NumRows = DB_num_rows($LocStockResult);
 
-$j = 1;
 $TotalQty=0;
 $TotalVal=0;
-$k=0; //row colour counter
+
 echo '<table>
+		<thead>
 		<tr>
-			<th class="ascending">' . _('Stock') . '</th>
-			<th class="ascending">' . _('Description') . '</th>
-			<th class="ascending">' . _('Batch') . '</th>
-			<th class="ascending">' . _('Quantity Remaining') . '</th>
-			<th class="ascending">' . _('Inventory Value') . '</th>
-			<th class="ascending">' . _('Date') . '</th>
-			<th class="ascending">' . _('Days Old') . '</th>
-		</tr>';
+			<th class="ascending">', _('Stock'), '</th>
+			<th class="ascending">', _('Description'), '</th>
+			<th class="ascending">', _('Batch'), '</th>
+			<th class="ascending">', _('Quantity Remaining'), '</th>
+			<th class="ascending">', _('Units'), '</th>
+			<th class="ascending">', _('Inventory Value'), '</th>
+			<th class="ascending">', _('Date'), '</th>
+			<th class="ascending">', _('Days Old'), '</th>
+			</tr>
+		</thead>
+		<tbody>';
+
 while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 
-	if ($k==1){
-		echo '<tr class="OddTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="EvenTableRows">';
-		$k=1;
-	}
-	$DaysOld=floor(($Today - strtotime($LocQtyRow['trandate']))/(60*60*24));
-	$TotalQty +=$LocQtyRow['quantity'];
-	//$TotalVal +=($LocQtyRow['quantity'] *$LocQtyRow['cost']);
+	$DaysOld = floor(($Today - strtotime($LocQtyRow['createdate']))/(60*60*24));
+	$TotalQty += $LocQtyRow['quantity'];
 	$DispVal =  '-----------';
+
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
-		$DispVal =locale_number_format(($LocQtyRow['quantity']*$LocQtyRow['cost']),$LocQtyRow['decimalplaces']);
-		$TotalVal +=($LocQtyRow['quantity'] *$LocQtyRow['cost']);
+		$DispVal = locale_number_format(($LocQtyRow['quantity']*$LocQtyRow['cost']),$LocQtyRow['decimalplaces']);
+		$TotalVal += ($LocQtyRow['quantity'] * $LocQtyRow['cost']);
 	}
-	printf('<td>%s</td>
+
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
-			<td class="number">%s</td></tr>',
+			<td class="number">%s</td>
+		</tr>',
 			mb_strtoupper($LocQtyRow['stockid']),
 			$LocQtyRow['description'],
 			$LocQtyRow['serialno'],
 			locale_number_format($LocQtyRow['quantity'],$LocQtyRow['decimalplaces']),
+			$LocQtyRow['units'],
 			$DispVal,
-			ConvertSQLDate($LocQtyRow['trandate']),
-			$DaysOld);
-
-
+			ConvertSQLDate($LocQtyRow['createdate']),
+			$DaysOld
+		);
 } //while
-if ($k==1){
-	echo '<tfoot><tr class="OddTableRows">';
-	$k=0;
-} else {
-	echo '<tfoot><tr class="EvenTableRows">';
-	$k=1;
-}
-echo '<td colspan="3"><b>' . _('Total') . '</b></td><td class="number"><b>' . locale_number_format($TotalQty,2) . '</td><td class="number"><b>' . locale_number_format($TotalVal,2) . '</td><td colspan="2"></td>';
-echo '</table>';
+
+echo '</tbody>
+		<tfoot>
+			<tr class="striped_row">
+				<td colspan="3"><b>', _('Total'), '</b></td>
+				<td class="number"><b>', locale_number_format($TotalQty,2), '</b></td>
+				<td class="number"><b>', locale_number_format($TotalVal,2), '</b></td>
+      <td colspan="2"></td>
+			</tr>
+		</tfoot>
+	</table>';
 
 include('includes/footer.php');
 ?>

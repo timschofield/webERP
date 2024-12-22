@@ -1,5 +1,4 @@
 <?php
-/* $Id: StockSerialItems.php 6942 2014-10-27 02:48:29Z daintree $*/
 
 include('includes/session.php');
 $Title = _('Stock Of Controlled Items');
@@ -132,16 +131,10 @@ echo $tableheader;
 $TotalQuantity =0;
 $j = 1;
 $Col =0;
-$BGColor ='#CCCCCC';
+
 while ($myrow=DB_fetch_array($LocStockResult)) {
 
-	if ($Col==0 AND $BGColor=='#EEEEEE'){
-		$BGColor ='#CCCCCC';
-		echo '<tr class="EvenTableRows">';
-	} elseif ($Col==0){
-		$BGColor ='#EEEEEE';
-		echo '<tr class="OddTableRows">';
-	}
+	echo '<tr class="striped_row">';
 
 	$TotalQuantity += $myrow['quantity'];
 
