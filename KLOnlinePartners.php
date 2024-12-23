@@ -308,48 +308,45 @@ or deletion of the records*/
 	}
 
 	echo '<table class="selection">
-		<tr>
-			<th class="ascending">', _('Code'), '</th>
-			<th class="ascending">', _('Name'), '</th>
-			<th class="ascending">', _('PayPal Account'), '</th>
-			<th class="ascending">', _('Test?'), '</th>
-			<th class="ascending">', _('Foreign Factor'), '</th>
-			<th class="noprint" colspan="2">&nbsp;</th>
-		</tr>';
+		<thead>
+			<tr>
+				<th class="SortedColumn">', _('Code'), '</th>
+				<th class="SortedColumn">', _('Name'), '</th>
+				<th class="SortedColumn">', _('PayPal Account'), '</th>
+				<th class="SortedColumn">', _('Test?'), '</th>
+				<th class="SortedColumn">', _('Foreign Factor'), '</th>
+				<th class="noprint" colspan="2">&nbsp;</th>
+			</tr>
+		</thead>
+		<tbody>';
 
-$k=0;//row colour counter
-while ($myrow = DB_fetch_array($result)) {
-	if($k==1) {
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-	if($myrow['paypaltest'] == 1) {
-		$PayPalTest = _('Yes');
-	} else {
-		$PayPalTest = _('No');
-	}
+	while ($myrow = DB_fetch_array($result)) {
+		echo '<tr class="striped_row">';
+		if($myrow['paypaltest'] == 1) {
+			$PayPalTest = _('Yes');
+		} else {
+			$PayPalTest = _('No');
+		}
 
-	printf('<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
-			<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this online partner?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$myrow['onlinepartnercode'],
-			$myrow['onlinepartnername'],
-			$myrow['paypalaccount'],
-			$PayPalTest,
-			locale_number_format($myrow['foreigncurrencysurchargefactor'],2),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode']);
+		printf('<tr class="striped_row">
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
+				<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this online partner?') . '\');">' . _('Delete') . '</a></td>
+				</tr>',
+				$myrow['onlinepartnercode'],
+				$myrow['onlinepartnername'],
+				$myrow['paypalaccount'],
+				$PayPalTest,
+				locale_number_format($myrow['foreigncurrencysurchargefactor'],2),
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode'],
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode']);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 }
 
 //end of ifs and buts!
@@ -1007,7 +1004,7 @@ if(!isset($_GET['delete'])) {
 			<td><input type="text" name="ComissionXenditPercentCC" class="number"  value="' . $_POST['ComissionXenditPercentCC'] . '" size="5" maxlength="5" /></td>
 		</tr>';
 
-	echo '</table>
+	echo '</tbody></table>
 		<br />
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />

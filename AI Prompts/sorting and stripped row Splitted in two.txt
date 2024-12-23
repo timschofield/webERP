@@ -1,7 +1,5 @@
 In all the functions defined in this file in my main editor tab:
 
-Do not use the file includes/KLObsoleteFunctions.php
-
 1) Modify the HTML tags where needed, so all tables on a form have this structure:
 <table>
 	<thead>
@@ -36,7 +34,6 @@ In all the functions defined in this file in my main editor tab:
 	2.3) In the printf or echo statements below it (inside or below the while structure) add or modify the <tr> tag into <tr class="striped_row">
 	
 	3.4) In the printf or echo statements below the while structure add or modify the <tr> tag into <tr class="striped_row">
-
 
 3) Do not cut long lines. 
 

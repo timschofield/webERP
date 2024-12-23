@@ -62,18 +62,20 @@ function submit($SelectedFile) {
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 		
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Item Code') . '</th>
-							<th class="ascending">' . _('Lazada Product Id') . '</th>
-							<th class="ascending">' . _('Lazada Store Id') . '</th>
-							<th class="ascending">' . _('URL Lazada') . '</th>
-							<th class="ascending">' . _('QOH Lazada') . '</th>
-							<th class="ascending">' . _('Error') . '</th>
-							<th class="ascending">' . _('Action') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table>
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Lazada Product Id') . '</th>
+						<th class="SortedColumn">' . _('Lazada Store Id') . '</th>
+						<th class="SortedColumn">' . _('URL Lazada') . '</th>
+						<th class="SortedColumn">' . _('QOH Lazada') . '</th>
+						<th class="SortedColumn">' . _('Error') . '</th>
+						<th class="SortedColumn">' . _('Action') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$k = 0; //row colour counter
 		$i = 1;
 
@@ -111,30 +113,32 @@ function submit($SelectedFile) {
 				}
 
 				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i,
-						$StockId,
-						$LazadaProductId,
-						$LazadaStoreId,
-						$LinkLazada,
-						$QOH,
-						$Error,
-						$Action
-						);
+				printf('<tr class="striped_row">
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					</tr>', 
+					$i,
+					$StockId,
+					$LazadaProductId,
+					$LazadaStoreId,
+					$LinkLazada,
+					$QOH,
+					$Error,
+					$Action
+					);
 				$i++;
 			}
 		}
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 	}
 } // End of function submit()
 
