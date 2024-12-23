@@ -1,5 +1,11 @@
 <?php
 
+/**********************************************************************************************
+*
+* KL RICARD for our use, we prefer AND locationusers.canview=1
+*
+**********************************************************************************************/ 
+
 include ('includes/DefineStockRequestClass.php');
 
 include ('includes/session.php');
