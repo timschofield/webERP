@@ -139,23 +139,18 @@ or deletion of the records*/
 	$result = DB_query($sql);
 
 	echo '<table class="selection">
+		<thead>
 		<tr>
-				<th class="ascending">' . _('Type Code') . '</th>
-				<th class="ascending">' . _('Type Description') . '</th>
-		</tr>';
-
-$k=0; //row colour counter
+				<th class="SortedColumn">' . _('Type Code') . '</th>
+				<th class="SortedColumn">' . _('Type Description') . '</th>
+		</tr>
+		</thead>
+		<tbody>';
 
 while ($myrow = DB_fetch_row($result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
 
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+		<td>%s</td>
 		<td>%s</td>
 		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this maintenace type?') . '\');">' . _('Delete') . '</a></td>
@@ -166,7 +161,8 @@ while ($myrow = DB_fetch_row($result)) {
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 }
 
 //end of ifs and buts!

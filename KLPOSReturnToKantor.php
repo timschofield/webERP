@@ -230,15 +230,21 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	echo '<input type="hidden" name="FromStockLocation" value="' . $_SESSION['UserStockLocation'] . '" />';
 	echo '<input type="hidden" name="ToStockLocation" value="'."KANTO".'" />';
 
-	echo '<table class="selection">';
+	echo '<table class="selection">
+		<thead>
+			<tr>
+				<th colspan="4"><h3>' . _('Return Transfer from Shop to Kantor') . '</h3></th>
+			</tr>';
 	echo '<tr>
 			<th colspan="4"><input type="hidden" name="Trf_ID" value="' . $Trf_ID . '" /><h3>' .  _('Return Transfer from Shop to Kantor').' # '. $Trf_ID. '</h3></th>
 		</tr>';
 	echo '<tr>
-			<th class="ascending">' . _('Code') . '</th>
-			<th class="ascending">' . _('Quantity') . '</th>
+			<th class="SortedColum">' . _('Code') . '</th>
+			<th class="SortedColum">' . _('Quantity') . '</th>
 			<th colspan="2"></th>
-		</tr>';
+		</tr>
+		</thead>
+		<tbody>';
 	$j=0; /* row counter for reindexing */
 	if(isset($_POST['LinesCounter'])){
 
@@ -273,7 +279,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 		</tr>';
 	$j++;
 
-	echo '</table>
+	echo '</tbody>
+		</table>
 		<br />
 		<div class="centre">
 		<input type="hidden" name="LinesCounter" value="'. $j .'" />

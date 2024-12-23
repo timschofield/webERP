@@ -104,16 +104,17 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 		$InsertErrMsg = _('The SQL to insert Imported Salary Info failed');
 		
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Type') . '</th>
-							<th class="ascending">' . _('Code Name') . '</th>
-							<th class="ascending">' . _('Position') . '</th>
-							<th class="ascending">' . _('Via') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . _('#') . '</th>
+					<th class="SortedColumn">' . _('Type') . '</th>
+					<th class="SortedColumn">' . _('Code Name') . '</th>
+					<th class="SortedColumn">' . _('Position') . '</th>
+					<th class="SortedColumn">' . _('Via') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 		$i = 1;
 
 		for ($row = 2; $row <= $highestRow; ++ $row) {
@@ -301,8 +302,8 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 									)";
 					$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
 					
-					$k = StartEvenOrOddRow($k);
-					printf('<td class="number">%s</td>
+					printf('<tr class="striped_row">
+							<td class="number">%s</td>
 							<td>%s</td>
 							<td>%s</td>
 							<td>%s</td>
@@ -318,9 +319,10 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 				}
 			}
 		}
-		echo '</table>
-				</div>
-				</form>';
+		echo '</tbody>
+			</table>
+			</div>
+			</form>';
 
 	}
 } // End of function submit()
