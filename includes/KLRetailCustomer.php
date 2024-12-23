@@ -62,16 +62,17 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 		echo '<p class="page_title_text" align="center"><strong>' . $Title . ' in shop ' . $ListShops . '</strong></p>';
 	}
 	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Value') . '</th>
-						<th>' . _('Cases') . '</th>
-						<th>' . '%' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . _('Value') . '</th>
+					<th>' . _('Cases') . '</th>
+					<th>' . '%' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -80,9 +81,9 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 			''
 			);
 
-	$k = StartEvenOrOddRow($k);
 	$NumberCases = $NumberFemales + $NumberMales;
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -91,8 +92,8 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 			locale_number_format(($NumberCases/$NumberSales)*100,1).'%'
 			);
 
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -101,8 +102,8 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 			locale_number_format(($NumberFemales/$NumberCases)*100,1).'%'
 			);
 
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -111,7 +112,8 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 			locale_number_format(($NumberMales/$NumberCases)*100,1).'%'
 			);
 
-	echo '</table>
+	echo '</tbody>
+		</table>
 		</div>
 		</form>';
 			
@@ -197,16 +199,17 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
 		}
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Value') . '</th>
-							<th>' . _('Cases') . '</th>
-							<th>' . '%' . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th>' . _('Value') . '</th>
+						<th>' . _('Cases') . '</th>
+						<th>' . '%' . '</th>
+					</tr>
+				</thead>
+				<tbody>';
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
@@ -215,8 +218,8 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 				''
 				);
 
-		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
@@ -228,8 +231,8 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 		$TotalOtherCountries = 0;	
 		while ($myrow = DB_fetch_array($result)) {
 			if ($myrow['numberofcustomers'] > $MinimCustomersToShow){
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -243,7 +246,8 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 		
 		}
 		if($TotalOtherCountries > 0){
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
@@ -252,7 +256,8 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 				locale_number_format(($TotalOtherCountries/$NumberCases)*100,1).'%'
 				);
 		}
-		echo '</table>
+		echo '</tbody>
+			</table>
 			</div>
 			</form>';
 	}
@@ -308,16 +313,17 @@ function EmailHarvested($NumDays, $TypeOfShops){
 
 	echo '<p class="page_title_text" align="center"><strong>' . _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
 	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Value') . '</th>
-						<th>' . _('Cases') . '</th>
-						<th>' . '%' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . _('Value') . '</th>
+					<th>' . _('Cases') . '</th>
+					<th>' . '%' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -326,8 +332,8 @@ function EmailHarvested($NumDays, $TypeOfShops){
 			''
 			);
 
-	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -336,13 +342,14 @@ function EmailHarvested($NumDays, $TypeOfShops){
 			locale_number_format(($NumberEmails/$NumberSales)*100,1).'%'
 			);
 
-	echo '</table>
+	echo '</tbody>
+		</table>
 		</div>
 		</form>';
 			
 }
 
-function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail){
+function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 	if ($NumDays == -1){
 		// today only
 		$Yesterday  = Date('Y-m-d');
@@ -507,16 +514,19 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
 	}
 	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Value') . '</th>
-						<th>' . _('Cases') . '</th>
-						<th>' . '%' . '</th>
-					</tr>';
-	echo $TableHeader;
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . _('Value') . '</th>
+					<th>' . _('Cases') . '</th>
+					<th>' . '%' . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 	$k = 0; //row colour counter
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -526,7 +536,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -536,7 +547,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 			
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -546,7 +558,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -556,7 +569,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -566,7 +580,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -576,7 +591,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -586,7 +602,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -596,7 +613,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -606,7 +624,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			);
 
 	$k = StartEvenOrOddRow($k);
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -615,7 +634,8 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops, $CountriesForRetail
 			locale_number_format(($NumberCases08/$NumberCases)*100,1).'%'
 			);
 
-	echo '</table>
+	echo '</tbody>
+		</table>
 		</div>
 		</form>';
 }
@@ -671,24 +691,23 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
-							<th class="ascending">' . _('SPG') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('# Sales') . '</th>
-							<th class="ascending">' . _('% Data') . '</th>
-							<th class="ascending">' . _('% First') . '</th>
-							<th class="ascending">' . _('% Last') . '</th>
-							<th class="ascending">' . _('% Country') . '</th>
-							<th class="ascending">' . _('% DOB') . '</th>
-							<th class="ascending">' . _('% Email') . '</th>
-							<th class="ascending">' . _('% Sex') . '</th>
-							<th class="ascending">' . _('% VIP-PACK') . '</th>
+							<th class="SortedColumn">' . _('SPG') . '</th>
+							<th class="SortedColumn">' . _('Name') . '</th>
+							<th class="SortedColumn">' . _('# Sales') . '</th>
+							<th class="SortedColumn">' . _('% Data') . '</th>
+							<th class="SortedColumn">' . _('% First') . '</th>
+							<th class="SortedColumn">' . _('% Last') . '</th>
+							<th class="SortedColumn">' . _('% Country') . '</th>
+							<th class="SortedColumn">' . _('% DOB') . '</th>
+							<th class="SortedColumn">' . _('% Email') . '</th>
+							<th class="SortedColumn">' . _('% Sex') . '</th>
+							<th class="SortedColumn">' . _('% VIP-PACK') . '</th>
 						</tr>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>

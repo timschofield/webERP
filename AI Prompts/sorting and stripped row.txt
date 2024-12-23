@@ -29,3 +29,4 @@ In all the functions defined in this file in my main editor tab:
 5) Do not cut long lines. 
 
 6) Apply these changes directly to the file in my editor.
+
