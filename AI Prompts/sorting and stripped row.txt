@@ -1,9 +1,4 @@
-In the PHP 2 functions defined in the file Gist: https://gist.github.com/pakricard/9446057f6f0f8d65e8e3389f4132ecfd
-
-
-
-In the functions defined in this file:
-
+In all the functions defined in this file in my main editor tab:
 
 1) Modify the HTML tags where needed, so all tables on a form have this structure:
 <table>
@@ -33,10 +28,4 @@ In the functions defined in this file:
 
 5) Do not cut long lines. 
 
-6) Apply these changes to the file in my editor.
-
-In this file, 
-delete all occurrences of the lines:
-
-1) k = 0; //row colour counter
-2) $k = StartEvenOrOddRow($k);
+6) Apply these changes directly to the file in my editor.
