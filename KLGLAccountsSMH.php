@@ -150,44 +150,38 @@ or deletion of the records*/
 
 	$result = DB_query($sql,$ErrMsg);
 
-	echo '<br /><table class="selection">';
-	echo '<tr>
-		<th>' . _('Account Code') . '</th>
-		<th>' . _('Account Name') . '</th>
-		<th>' . _('Account Group') . '</th>
-		<th>' . _('P/L or B/S') . '</th>
-	</tr>';
-
-	$k=0; //row colour counter
+	echo '<br /><table class="selection">
+			<thead>
+				<tr>
+					<th>' . _('Account Code') . '</th>
+					<th>' . _('Account Name') . '</th>
+					<th>' . _('Account Group') . '</th>
+					<th>' . _('P/L or B/S') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($myrow = DB_fetch_row($result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
-
-	printf("<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td><a href=\"%s&SelectedAccount=%s\">" . _('Edit') . "</td>
-		<td><a href=\"%s&SelectedAccount=%s&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
-		</tr>",
-		$myrow[0],
-		$myrow[1],
-		$myrow[2],
-		$myrow[3],
-		htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-		$myrow[0],
-		htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-		$myrow[0]);
+		echo '<tr class="striped_row">';
+		printf("<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td>%s</td>
+			<td><a href=\"%s&SelectedAccount=%s\">" . _('Edit') . "</td>
+			<td><a href=\"%s&SelectedAccount=%s&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
+			</tr>",
+			$myrow[0],
+			$myrow[1],
+			$myrow[2],
+			$myrow[3],
+			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			$myrow[0],
+			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
+			$myrow[0]);
 
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody></table>';
 } //END IF selected ACCOUNT
 
 //end of ifs and buts!

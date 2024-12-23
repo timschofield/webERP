@@ -31,7 +31,11 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class="selection"><tr><td>'._('Account').':</td><td><select name="Account">';
+echo '<table class="selection">
+	<thead>
+		<tr>
+			<th>' . _('Account') . ':</th>
+			<th><select name="Account">';
 $sql = "SELECT accountcode, accountname FROM chartmasterSMH ORDER BY accountcode";
 $Account = DB_query($sql);
 while ($myrow=DB_fetch_array($Account)){
@@ -41,7 +45,9 @@ while ($myrow=DB_fetch_array($Account)){
 		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' ' . htmlspecialchars($myrow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	}
  }
-echo '</select></td></tr>';
+echo '</select></th></tr>
+	</thead>
+	<tbody>';
 
 //Select the tag
 echo '<tr><td>' . _('Select Tag') . ':</td><td><select name="tag">';
@@ -74,7 +80,7 @@ while ($myrow=DB_fetch_array($Periods)){
 		echo '<option value="' . $myrow['periodno'] . '">' . _(MonthAndYearFromSQLDate($myrow['lastdate_in_period'])) . '</option>';
 	}
 }
-echo '</select></td></tr></table>';
+echo '</select></td></tr></tbody></table>';
 echo '<br /><div class="centre"><input type="submit" name="Show" value="'._('Show Account Transactions').'" /></div>
       </div>
       </form>';
@@ -146,21 +152,20 @@ if (isset($_POST['Show'])){
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$ErrMsg);
 
-	echo '<br /><table class="selection">';
-
-	echo '<tr><th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
-	$TableHeader = '<tr>
-			<th>' . _('Type') . '</th>
-			<th>' . _('Number') . '</th>
-			<th>' . _('Date') . '</th>
-			<th>' . _('Debit') . '</th>
-			<th>' . _('Credit') . '</th>
-			<th>' . _('Narrative') . '</th>
-			<th>' . _('Balance') . '</th>
-			<th>' . _('Tag') . '</th>
-			</tr>';
-
-	echo $TableHeader;
+	echo '<br /><table class="selection">
+		<thead>
+			<tr>
+				<th>' . _('Type') . '</th>
+				<th>' . _('Number') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Debit') . '</th>
+				<th>' . _('Credit') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Balance') . '</th>
+				<th>' . _('Tag') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 	if ($PandLAccount==True) {
 		$RunningTotal = 0;
@@ -244,13 +249,7 @@ if (isset($_POST['Show'])){
 			$PeriodTotal = 0;
 		}
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
+		echo '<tr class="striped_row">';
 
 		$RunningTotal += $myrow['amount'];
 		$PeriodTotal += $myrow['amount'];
@@ -305,7 +304,7 @@ if (isset($_POST['Show'])){
 	}else {
 		echo '<td></td><td class="number"><b>' . locale_number_format((-$RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td><td colspan="2"></td></tr>';
 	}
-	echo '</table>';
+	echo '</tbody></table>';
 } /* end of if Show button hit */
 
 

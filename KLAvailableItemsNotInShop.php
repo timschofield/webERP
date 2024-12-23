@@ -18,9 +18,10 @@ if (!(isset($_POST['Search']))) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<table class="selection">
-			<tr>
-				<td>' . _('Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
+			<thead>
+				<tr>
+					<th>' . _('Inventory Categories') . ':</th>
+					<th><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
 	$SQL = 'SELECT categoryid, categorydescription 
 			FROM stockcategory 
 			ORDER BY categorydescription';
@@ -33,8 +34,10 @@ if (!(isset($_POST['Search']))) {
 		}
 	}
 	echo '</select>
-			</td>
-		</tr>';
+			</th>
+		</tr>
+	</thead>
+	<tbody>';
 
 	// location selection
 	$SQL="SELECT loccode,
@@ -88,6 +91,7 @@ if (!(isset($_POST['Search']))) {
 			<td></td>
 		</tr>';
 */	echo '
+	</tbody>
 	</table>
 	<br />
 	<div class="centre">
@@ -128,38 +132,23 @@ if (!(isset($_POST['Search']))) {
 					) > 0
 			ORDER BY stockmaster.stockid";
 
-/*				AND stockmaster.stockid IN (SELECT salesorderdetails.stkcode
-							FROM salesorderdetails, salesorders
-						WHERE salesorderdetails.orderno = salesorders.orderno 
-							AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
-						GROUP BY salesorderdetails.stkcode
-						ORDER BY SUM(salesorderdetails.qtyinvoiced) DESC
-						LIMIT " . filter_number_format($_POST['NumberOfTopItems']) .")
-*/			
-			
-			
 	$result = DB_query($SQL);
 	
 	echo '<p class="page_title_text" align="center"><strong>' . _('Items with Stock Available at ') . $_POST['FromLoc'] . _(' but RL = 0 in Shop ') . $_POST['Shop'] . '</strong></p>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Category') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Qty at ') . $_POST['FromLoc'] . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . _('#') . '</th>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Category') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Qty at ') . $_POST['FromLoc'] . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 	$i = 1;
 	while ($myrow = DB_fetch_array($result)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
+		echo '<tr class="striped_row">';
 		$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
 		printf('<td class="number">%s</td>
 				<td>%s</td>
@@ -175,7 +164,8 @@ if (!(isset($_POST['Search']))) {
 				);
 		$i++;
 	}
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 
 }
 include ('includes/footer.php');

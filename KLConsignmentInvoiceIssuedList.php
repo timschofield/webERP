@@ -61,23 +61,23 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 		if (DB_num_rows($result) != 0){
 			echo '<p class="page_title_text" align="center"><strong>' . "Consignment Invoices Issued by " . $CompanyFrom . " between " . ConvertSQLDate($StartDate) . " and " . ConvertSQLDate($EndDate) . '</strong></p>';
 			echo '<div>';
-			echo '<table class="selection">';
-		
-			$NumberConsignmentInvoices = 0;
-			$TotalInvoiceValue = 0;
-			$TotalGoodsValue = 0;
-			$TotalPPNValue = 0;
-
-			$TableHeader = '<tr>
+			echo '<table class="selection">
+					<thead>
+						<tr>
 							<th>' . _('Partner') . '</th>
 							<th>' . _('Date') . '</th>
 							<th>' . _('Invoice Number') . '</th>
 							<th>' . _('Goods') . '</th>
 							<th>' . _('PPN') . '</th>
 							<th>' . _('Total') . '</th>
-						</tr>';
-			echo $TableHeader;
-			$k = 0; //row colour counter
+						</tr>
+					</thead>
+					<tbody>';
+		
+			$NumberConsignmentInvoices = 0;
+			$TotalInvoiceValue = 0;
+			$TotalGoodsValue = 0;
+			$TotalPPNValue = 0;
 
 			while ($myrow = DB_fetch_array($result)) {
 
@@ -87,10 +87,9 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 				$PPNInvoice = $myrow['valueinvoice'] - $GoodsInvoice;
 				$TotalGoodsValue += $GoodsInvoice;
 				$TotalPPNValue += $PPNInvoice;
-			
-				$k = StartEvenOrOddRow($k);
 
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -106,8 +105,8 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 						);
 			}
 
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -121,8 +120,10 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 					locale_number_format($TotalPPNValue,0),
 					locale_number_format($TotalInvoiceValue,0)
 					);
-			echo '</table>
-				</div>';
+			echo '</tbody>
+				</table>
+				</div>
+				</form>';
 		}
 	}
 } // End of function submit()
@@ -142,19 +143,19 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
-
-	echo '<tr>
-			<td>' . 'From' . ':</td>
-			<td><select name="CompanyFrom">';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . 'From' . ':</th>
+					<th><select name="CompanyFrom">';
 	if($_POST['CompanyFrom']=="PTADU") {
 		echo '<option selected="selected" value="PTADU">' . 'PT ADU' . '</option>';
-//		echo '<option value="CASH">' . 'PT BB (temporary until end of stock)' . '</option>';
 	} else {
-//		echo '<option selected="selected" value="CASH">' . 'PT BB (temporary until end of stock)' . '</option>';
 		echo '<option value="PTADU">' . 'PT ADU' . '</option>';
 	}
-	echo '</select></td></tr>';	
+	echo '</select></th></tr>
+			</thead>
+			<tbody>';	
 
 	echo '<tr>
 			<td>' . _('Invoice Consignment Issued from') . '</td>
@@ -171,6 +172,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 			<td>&nbsp;</td>
 			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
 		</tr>
+		</tbody>
 		</table>
 		<br />';
 	echo '</div>
