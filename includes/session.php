@@ -12,20 +12,7 @@ if (!isset($PathPrefix)) {
 }
 
 // KL RICARD Select the default database depending on the code version
-if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
-	// the current script filename resides in the WAMPP localhost, we are on TEST code
-	$DefaultDatabase = 'test_erp';
-} else {
-	// the current script filename resides in the production server
-	if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
-		// the current script filename contains TEST, we are on TEST code
-		$DefaultDatabase = 'test_erp';
-	}else{
-		// the current script filename does not contain TEST, we are on production code
-		$DefaultDatabase = 'kurakura_kl_erp';
-	}
-}
-
+$DefaultDatabase = KLDatabaseSelection();
 
 if (!file_exists($PathPrefix . 'config.php')) {
 	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
@@ -250,7 +237,6 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		}
 	}
 }
-
 // KL RICARD END
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
@@ -277,7 +263,6 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
 	$Title = _('Account Error Report');
 	include ($PathPrefix . 'includes/header.php');
-	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
 	include ($PathPrefix . 'includes/footer.php');
 	exit;
@@ -536,11 +521,31 @@ function quote_smart($value) {
 	return $value;
 }
 
+function KLDatabaseSelection(){
+	// KL RICARD Select the default database depending on the code version
+	if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
+		// the current script filename resides in the WAMPP localhost, we are on TEST code
+		$DefaultDatabase = 'test_erp';
+	} else {
+		// the current script filename resides in the production server
+		if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
+			// the current script filename contains TEST, we are on TEST code
+			$DefaultDatabase = 'test_erp';
+		}else{
+			// the current script filename does not contain TEST, we are on production code
+			$DefaultDatabase = 'kurakura_kl_erp';
+		}
+	}
+	return $DefaultDatabase;	
+}
+
+
+
 function KLThemeSelection(){
 	if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
 		// the current script filename resides in the WAMPP localhost, we are on TEST code
 		// loalhost development environment must go with the test DB (safest)
-		$Theme = 'fluid'; 
+		$Theme = 'silverwolf'; 
 	} else {
 		if (strpos(strtoupper($_SERVER['HTTP_HOST']),"DEVELOPMENT")!== false){
 			// we are on ptadu-development.com (development code)
