@@ -54,64 +54,52 @@ $SQL = "SELECT reference,
 $result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . 'Transfers still in transit from / to ' . $LocationName .'</strong></p>';
-echo '<table class="selection">';
-$TableHeader = '<tr>
-					<th class="ascending">' . '# Transfer' . '</th>
-					<th class="ascending">' . _('Date') . '</th>
-					<th class="ascending">' . _('Item') . '</th>
-					<th class="ascending">' . _('From') . '</th>
-					<th class="ascending">' . _('Qty Send') . '</th>
-					<th class="ascending">' . _('To') . '</th>
-					<th class="ascending">' . _('Qty Received') . '</th>
-				</tr>';
-echo $TableHeader;
-$k = 0; //row colour counter
-$i = 1;
-$Transfer = -1;
+echo '<table class="selection">
+		<thead>
+			<tr>
+				<th>' . '# Transfer' . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Item') . '</th>
+				<th>' . _('From') . '</th>
+				<th>' . _('Qty Send') . '</th>
+				<th>' . _('To') . '</th>
+				<th>' . _('Qty Received') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
+
+$CurrentTransfer = -1;
 while ($myrow = DB_fetch_array($result)) {
-	$k = StartEvenOrOddRow($k);
 	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $myrow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $myrow['stockid'] . '</a>';
-	if ($Transfer != $myrow['reference']){
+	if ($CurrentTransfer != $myrow['reference']){
 		// The first item of the transfer
-		$Transfer = $myrow['reference'];
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				locale_number_format($myrow['reference'],0),
-				ConvertSQLDate($myrow['shipdate']),
-				$CodeLink, 
-				$myrow['shiploc'], 
-				locale_number_format($myrow['shipqty'],0),
-				$myrow['recloc'], 
-				locale_number_format($myrow['recqty'],0)
-				);
+		$CurrentTransfer = $myrow['reference'];
+		$Transfer = locale_number_format($myrow['reference'],0);
+		$TransferDate = ConvertSQLDate($myrow['shipdate']);
 	}else{
 		// the other items of the transfer
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'',
-				'',
-				$CodeLink, 
-				$myrow['shiploc'], 
-				locale_number_format($myrow['shipqty'],0),
-				$myrow['recloc'], 
-				locale_number_format($myrow['recqty'],0)
-				);
+		$Transfer = '';
+		$TransferDate = '';
 	}
-	$i++;
+	printf('<tr class="striped_row">
+		<td class="number">%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td class="number">%s</td>
+		<td>%s</td>
+		<td class="number">%s</td>
+		</tr>', 
+		$Transfer,
+		$TransferDate,
+		$CodeLink, 
+		GetLocationNameFromCode($myrow['shiploc']), 
+		locale_number_format($myrow['shipqty'],0),
+		GetLocationNameFromCode($myrow['recloc']), 
+		locale_number_format($myrow['recqty'],0)
+	);
 }
-echo '</table>';
+echo '</tbody></table>';
 
 /********************************************************************************************************
 ITEMS PROCESSED BY TRANSFERS ON THE LAST X DAYS
@@ -138,69 +126,55 @@ $SQL = "SELECT transno,
 $result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . 'Transfers already processed from / to ' . $LocationName  . ' of last ' . TRANSFER_LIST_DAYS_FOR_SPG .' days</strong></p>';
-echo '<table class="selection">';
-$TableHeader = '<tr>
-					<th class="ascending">' . '# Transfer' . '</th>
-					<th class="ascending">' . _('From / To') . '</th>
-					<th class="ascending">' . _('Date') . '</th>
-					<th class="ascending">' . _('Item') . '</th>
-					<th class="ascending">' . _('Qty') . '</th>
-					<th class="ascending">' . _('QOH') . '</th>
-					<th class="ascending">' . _('User') . '</th>
-					<th class="ascending">' . _('Notes') . '</th>
-				</tr>';
-echo $TableHeader;
-$k = 0; //row colour counter
-$i = 1;
-$Transfer = -1;
+echo '<table class="selection">
+		<thead>
+			<tr>
+				<th>' . '# Transfer' . '</th>
+				<th>' . _('From / To') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Item') . '</th>
+				<th>' . _('Qty') . '</th>
+				<th>' . _('QOH') . '</th>
+				<th>' . _('User') . '</th>
+				<th>' . _('Notes') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
+$CurrentTransfer = -1;
 while ($myrow = DB_fetch_array($result)) {
-	$k = StartEvenOrOddRow($k);
 	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $myrow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $myrow['stockid'] . '</a>';
-	if ($Transfer != $myrow['transno']){
+	if ($CurrentTransfer != $myrow['transno']){
 		// The first item of the transfer
-		$Transfer = $myrow['transno'];
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				locale_number_format($myrow['transno'],0),
-				$myrow['reference'], 
-				ConvertSQLDate($myrow['trandate']),
-				$CodeLink, 
-				locale_number_format($myrow['qty'],0),
-				locale_number_format($myrow['newqoh'],0),
-				$myrow['userid'],
-				$myrow['narrative']
-				);
+		$CurrentTransfer = $myrow['transno'];
+		$Transfer = locale_number_format($myrow['transno'],0);
+		$FromTo = $myrow['reference'];
 	}else{
 		// the other items of the transfer
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				'',
-				'', 
-				ConvertSQLDate($myrow['trandate']),
-				$CodeLink, 
-				locale_number_format($myrow['qty'],0),
-				locale_number_format($myrow['newqoh'],0),
-				$myrow['userid'],
-				$myrow['narrative']
-				);
+		$Transfer = '';
+		$FromTo = '';
 	}
-	$i++;
+	printf('<tr class="striped_row">
+		<td class="number">%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		<td class="number">%s</td>
+		<td class="number">%s</td>
+		<td>%s</td>
+		<td>%s</td>
+		</tr>', 
+		$Transfer,
+		$FromTo, 
+		ConvertSQLDate($myrow['trandate']),
+		$CodeLink, 
+		locale_number_format($myrow['qty'],0),
+		locale_number_format($myrow['newqoh'],0),
+		$myrow['userid'],
+		$myrow['narrative']
+	);
+
 }
-echo '</table>';
+echo '</tbody></table>';
 echo '<br />';
 
 include ('includes/footer.php');

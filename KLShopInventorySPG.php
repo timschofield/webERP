@@ -18,20 +18,22 @@ $SQL = "SELECT locstock.stockid,
 $result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . _('Stock Available at ') . $LocationName  . '</strong></p>';
-echo '<table class="selection">';
+echo '<table class="selection">
+		<thead>';
 $TableHeader = '<tr>
-					<th class="ascending">' . '#' . '</th>
-					<th class="ascending">' . _('Code') . '</th>
-					<th class="ascending">' . _('Description') . '</th>
-					<th class="ascending">' . _('QOH') . '</th>
+					<th class="SortedColumn">' . '#' . '</th>
+					<th class="SortedColumn">' . _('Code') . '</th>
+					<th class="SortedColumn">' . _('Description') . '</th>
+					<th class="SortedColumn">' . _('QOH') . '</th>
 				</tr>';
 echo $TableHeader;
-$k = 0; //row colour counter
+echo '</thead>
+	<tbody>';
 $i = 1;
 while ($myrow = DB_fetch_array($result)) {
-	$k = StartEvenOrOddRow($k);
 	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $myrow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $myrow['stockid'] . '</a>';
-	printf('<td class="number">%s</td>
+	printf('<tr class="striped_row">
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -43,7 +45,10 @@ while ($myrow = DB_fetch_array($result)) {
 			);
 	$i++;
 }
-echo '</table>';
+echo '</tbody>
+	</table>
+	</div>
+	</form>';
 echo '<br />';
 
 include ('includes/footer.php');
