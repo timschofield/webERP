@@ -1791,7 +1791,7 @@ if (!isset($_POST['ProcessSale'])){
 	$i=1;
 	echo '<tr class="OddTableRow">';
 	/* Do not display column unless customer requires po line number by sales order line*/
-	echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" /></td>
+	echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" autofocus/></td>
 			<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6"value="' . $DefaultQuantityInput . '" /></td>
 				<input type="hidden" class="date" name="ItemDue_' . $i . '"value="' . $DefaultDeliveryDate . '" /></tr>';
 
