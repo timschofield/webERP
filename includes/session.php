@@ -504,9 +504,9 @@ function CryptPass( $Password ) {
 if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$Title = _('Error in form verification');
+		$Title = _('Session verification error');
 		include ('includes/header.php');
-		prnMsg(_('This form was not submitted with a correct ID'), 'error');
+		prnMsg(_('This page was not submitted with a correct FormID'), 'error');
 		include ('includes/footer.php');
 		exit;
 	}
