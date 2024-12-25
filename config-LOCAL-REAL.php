@@ -60,7 +60,6 @@ $AllowCompanySelectionBox = 'Hide';
 //otherwise the user is expected to know the name of the company to log into.
 // KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.this seems to be obsolete
 
-$DefaultCompany  = 'kurakura_kl_erp';
 $DefaultDatabase = 'kurakura_kl_erp';
 
 //The maximum time that a login session can be idle before automatic logout

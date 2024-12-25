@@ -48,6 +48,8 @@ echo '<body>
 
 if (isset($_COOKIE['Login'])) {
 	$DefaultCompany = $_COOKIE['Login'];
+}else{
+	$DefaultCompany = $DefaultDatabase;
 }
 
 if ($AllowCompanySelectionBox === 'Hide') {
