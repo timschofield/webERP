@@ -1,5 +1,11 @@
 <?php
 
+/**********************************************************************************************
+*
+* KL RICARD for our use, we prefer AND locationusers.canview=1
+*
+**********************************************************************************************/ 
+
 include ('includes/DefineStockRequestClass.php');
 
 include ('includes/session.php');
@@ -216,12 +222,15 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('Location from which to request stock') . ':</td>';
+
+/* KL RICARD for our use, we prefer AND locationusers.canview=1 */
 $SQL = "SELECT locations.loccode,
 			locationname
 		FROM locations
-		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1
+		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1
 		WHERE internalrequest = 1
 		ORDER BY locationname";
+/* KL RICARD END for our use, we prefer AND locationusers.canview=1 */
 
 $Result = DB_query($SQL);
 echo '<td><select name="Location">

@@ -40,14 +40,15 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		if (DB_num_rows($result) != 0){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Reorder Levels Assigned to Location ') . $_POST['ToLocationID'] . '</strong></p>';
 			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('#') . '</th>
-								<th class="ascending">' . _('Item Code') . '</th>
-								<th class="ascending">' . _('Reorder Level') . '</th>
-							</tr>';
-			echo $TableHeader;
-			$k = 0; //row colour counter
+			echo '<table class="selection">
+					<thead>
+						<tr>
+							<th class="SortedColumn">' . _('#') . '</th>
+							<th class="SortedColumn">' . _('Item Code') . '</th>
+							<th class="SortedColumn">' . _('Reorder Level') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 			$i = 1;
 			while ($myrow = DB_fetch_array($result)) {
 				
@@ -59,9 +60,9 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				$ErrMsg = "The SQL to set RL to item " . $myrow['stockid'] . " at location '".  $_POST['ToLocationID'] ."' failed";
 				$resultitem = DB_query($sql,$ErrMsg,$DbgMsg,true);
 
-				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
@@ -71,8 +72,9 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 						);
 				$i++;
 			}
-			echo '</table>
-					</div>';
+			echo '</tbody>
+				  </table>
+				  </div>';
 		}
 		$result = DB_Txn_Commit();
 

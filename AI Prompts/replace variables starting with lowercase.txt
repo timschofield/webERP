@@ -1,0 +1,5 @@
+On the files open in my editor tab:
+
+List me the names of variables starting with just one lowercase character just after the $ symbol.
+Include the variable names that have the first character lowercase and one or more UpperCase characters
+Don't show me the code, just the list of variables

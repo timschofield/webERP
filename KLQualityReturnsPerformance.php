@@ -51,13 +51,15 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 					AND oldinvoicedate >= '". $StartDate . "'
 				GROUP BY itemcodes";
 		$TitleReport = 'Customer Quality Issues by items on the last ' . $numdays . ' days';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Incidences') . '</th>
-							<th class="ascending">' . _('Qty Sold') . '</th>
-							<th class="ascending">' . _('%Incidences') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('Code') . '</th>
+								<th class="SortedColumn">' . _('Incidences') . '</th>
+								<th class="SortedColumn">' . _('Qty Sold') . '</th>
+								<th class="SortedColumn">' . _('%Incidences') . '</th>
+							</tr>
+						</thead>';
 	}elseif ($typereport == "QualityIssuesByFamily"){
 		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
 						COUNT(*) AS incidences,
@@ -71,13 +73,15 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 					AND returneditems.oldinvoicedate >= '". $StartDate . "'
 				GROUP BY SUBSTRING(returneditems.itemcodes,1,2)";
 		$TitleReport = 'Customer Quality Issues by Families of items on the last ' . $numdays . ' days';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Family') . '</th>
-							<th class="ascending">' . _('Incidences') . '</th>
-							<th class="ascending">' . _('Qty Sold') . '</th>
-							<th class="ascending">' . _('%Incidences') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('Family') . '</th>
+								<th class="SortedColumn">' . _('Incidences') . '</th>
+								<th class="SortedColumn">' . _('Qty Sold') . '</th>
+								<th class="SortedColumn">' . _('%Incidences') . '</th>
+							</tr>
+						</thead>';
 	}elseif ($typereport == "ChangeOfMindByFamily"){
 		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
 						COUNT(*) AS incidences,
@@ -91,13 +95,15 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 					AND returneditems.oldinvoicedate >= '". $StartDate . "'
 				GROUP BY SUBSTRING(returneditems.itemcodes,1,2)";
 		$TitleReport = 'Change Of Mind by Families of items on the last ' . $numdays . ' days';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Family') . '</th>
-							<th class="ascending">' . _('Incidences') . '</th>
-							<th class="ascending">' . _('Qty Sold') . '</th>
-							<th class="ascending">' . _('%Incidences') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('#') . '</th>
+								<th class="SortedColumn">' . _('Family') . '</th>
+								<th class="SortedColumn">' . _('Incidences') . '</th>
+								<th class="SortedColumn">' . _('Qty Sold') . '</th>
+								<th class="SortedColumn">' . _('%Incidences') . '</th>
+							</tr>
+						</thead>';
 	}					
 	$result = DB_query($SQL);
 	if (DB_num_rows($result) != 0){
@@ -105,12 +111,12 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 		echo '<div>';
 		echo '<table class="selection">';
 		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			$PercentIncidences = ($myrow['qtysold'] != 0) ? $myrow['incidences']/$myrow['qtysold'] : 0;
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -124,10 +130,10 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody></table></div>';
 	}
 }
+
 /*
 function ReturnsBySPG($SPG, $NumDays){
 
@@ -164,25 +170,26 @@ function ReturnsBySPG($SPG, $NumDays){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('SPG') . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('# Sales') . '</th>
-							<th class="ascending">' . _('% Data') . '</th>
-							<th class="ascending">' . _('% First') . '</th>
-							<th class="ascending">' . _('% Last') . '</th>
-							<th class="ascending">' . _('% Country') . '</th>
-							<th class="ascending">' . _('% DOB') . '</th>
-							<th class="ascending">' . _('% Email') . '</th>
-							<th class="ascending">' . _('% Sex') . '</th>
-							<th class="ascending">' . _('% VIP-PACK') . '</th>
-						</tr>';
+		$TableHeader = '<thead>
+							<tr>
+								<th class="SortedColumn">' . _('SPG') . '</th>
+								<th class="SortedColumn">' . _('Name') . '</th>
+								<th class="SortedColumn">' . _('# Sales') . '</th>
+								<th class="SortedColumn">' . _('% Data') . '</th>
+								<th class="SortedColumn">' . _('% First') . '</th>
+								<th class="SortedColumn">' . _('% Last') . '</th>
+								<th class="SortedColumn">' . _('% Country') . '</th>
+								<th class="SortedColumn">' . _('% DOB') . '</th>
+								<th class="SortedColumn">' . _('% Email') . '</th>
+								<th class="SortedColumn">' . _('% Sex') . '</th>
+								<th class="SortedColumn">' . _('% VIP-PACK') . '</th>
+							</tr>
+						</thead>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
-
+		echo '<tbody>';
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -207,11 +214,8 @@ function ReturnsBySPG($SPG, $NumDays){
 				locale_number_format(($myrow['onlinevipcards']/$myrow['totalorders'])*100,0).'%'
 				);
 		}
-		echo '</table>
-			</div>
-			</form>';
+		echo '</tbody></table></div></form>';
 	}
 }
 */
-
 ?>

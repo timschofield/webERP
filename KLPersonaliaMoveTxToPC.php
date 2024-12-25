@@ -101,22 +101,23 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 		$result = DB_query($SQL);
 		if (DB_num_rows($result) != 0){
 			echo '<div>';
-			echo '<table class="selection">';
-			$TableHeader = '<tr>
-								<th class="ascending">' . _('Name') . '</th>
-								<th class="ascending">' . _('Fixed') . '</th>
-								<th class="ascending">' . _('Makan') . '</th>
-								<th class="ascending">' . _('Bensin') . '</th>
-								<th class="ascending">' . _('Commissions') . '</th>
-								<th class="ascending">' . _('Shifts') . '</th>
-								<th class="ascending">' . _('THR') . '</th>
-								<th class="ascending">' . _('Lain2') . '</th>
-								<th class="ascending">' . _('JHT ASKES') . '</th>
-								<th class="ascending">' . _('PPH21') . '</th>
-								<th class="ascending">' . _('Rounding') . '</th>
-							</tr>';
-			echo $TableHeader;
-			$k = 0; //row colour counter
+			echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('Fixed') . '</th>
+						<th class="SortedColumn">' . _('Makan') . '</th>
+						<th class="SortedColumn">' . _('Bensin') . '</th>
+						<th class="SortedColumn">' . _('Commissions') . '</th>
+						<th class="SortedColumn">' . _('Shifts') . '</th>
+						<th class="SortedColumn">' . _('THR') . '</th>
+						<th class="SortedColumn">' . _('Lain2') . '</th>
+						<th class="SortedColumn">' . _('JHT ASKES') . '</th>
+						<th class="SortedColumn">' . _('PPH21') . '</th>
+						<th class="SortedColumn">' . _('Rounding') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 			while ($myrow = DB_fetch_array($result)) {
 				// Fixed
 				$FixedSalary = $myrow['upahpokok'] +
@@ -179,8 +180,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 				$Rounding = $myrow['bulatan'];
 				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "ROUND", $PaymentDate, $Rounding, $myrow['codename']);
 
-				$k = StartEvenOrOddRow($k);
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -205,7 +206,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 						locale_number_format_zero_blank($Rounding,0)
 						);
 			}
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>
 				</form>';
 		}else{

@@ -7,19 +7,20 @@
 echo '<p class="page_title_text" align="center"><strong>' . 'Pajak Ratio (for the period selected and same period last year) '. '</strong></p>';
 
 echo '<div>
-	  <table class="selection">';
-$TableHeader = '<tr>
-					<th class="ascending">' . _('Ratio') . '</th>
-					<th class="ascending">' . _('Benchmark') . '</th>
-					<th class="ascending">' . _('Period Actual') . '</th>
-					<th class="ascending">' . _('Last Year') . '</th>
-				</tr>';
-echo $TableHeader;
-$k = 0; //row colour counter
+      <table class="selection">
+      <thead>
+          <tr>
+              <th class="SortedColumn">' . _('Ratio') . '</th>
+              <th class="SortedColumn">' . _('Benchmark') . '</th>
+              <th class="SortedColumn">' . _('Period Actual') . '</th>
+              <th class="SortedColumn">' . _('Last Year') . '</th>
+          </tr>
+      </thead>
+      <tbody>';
 
 // Ratio GPM
-printf('<td>%s</td>
-		<td class="number">%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		</tr>', 
@@ -28,7 +29,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_HPP,0),
 		locale_number_format($PajakRatio_HPP_LY,0)
 		);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -38,8 +40,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_Sales,0),
 		locale_number_format($PajakRatio_Sales_LY,0)
 		);
-$k = StartEvenOrOddRow($k);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -52,7 +54,8 @@ printf('<td>%s</td>
 
 
 // Ratio CTTOR
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -62,7 +65,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_Taxes,0),
 		locale_number_format($PajakRatio_Taxes_LY,0)
 		);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -72,9 +76,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_Sales,0),
 		locale_number_format($PajakRatio_Sales_LY,0)
 		);
-$k = StartEvenOrOddRow($k);
-$k = StartEvenOrOddRow($k);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -87,7 +90,8 @@ printf('<td>%s</td>
 
 		
 // Ratio NPM
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -97,7 +101,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_ProfitAfterTax,0),
 		locale_number_format($PajakRatio_ProfitAfterTax_LY,0)
 		);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -107,9 +112,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_Sales,0),
 		locale_number_format($PajakRatio_Sales_LY,0)
 		);
-$k = StartEvenOrOddRow($k);
-$k = StartEvenOrOddRow($k);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -122,7 +126,8 @@ printf('<td>%s</td>
 
 	
 // Ratio G
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -132,7 +137,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_Salaries,0),
 		locale_number_format($PajakRatio_Salaries_LY,0)
 		);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -142,9 +148,8 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_Sales,0),
 		locale_number_format($PajakRatio_Sales_LY,0)
 		);
-$k = StartEvenOrOddRow($k);
-$k = StartEvenOrOddRow($k);
-printf('<td>%s</td>
+printf('<tr class="striped_row">
+		<td>%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
 		<td class="number">%s</td>
@@ -155,6 +160,7 @@ printf('<td>%s</td>
 		locale_number_format($PajakRatio_Salaries_LY / $PajakRatio_Sales_LY * 100, 2). "%"
 		);		
 			
-echo '</table>
-	  </div>';
+echo '</tbody>
+	</table>
+	</div>';
 ?>

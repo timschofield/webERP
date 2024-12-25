@@ -125,38 +125,40 @@ function HourlyPerformance($numDays, $RootPath){
 	$ValueSalesToday = 0;
 	
 	if (DB_num_rows($result) != 0){
-		$k = 0; //row colour counter
 		$i = 0; // row counter
 		while ($myrow = DB_fetch_array($result)) {
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly Sales Performance until '. $Now .'</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
-				$TableHeader = '<tr>
-									<th class="ascending">#</th>
-									<th class="ascending">' . _('Shop') . '</th>
-									<th class="ascending" colspan=2>' . 'Last ' . $numDays . ' days</th>
-									<th class="ascending" colspan=2>' . 'Last ' . $numDays . ' days until ' . $Now . '</th>
-									<th class="ascending" colspan=4>' . 'Today' . '</th>
-								</tr>
-								<tr>
-									<th class="ascending">#</th>
-									<th class="ascending">' . _('Name') . '</th>
-									<th class="ascending">' . _('# Sales') . '</th>
-									<th class="ascending">' . _('Value Sales') . '</th>
-									<th class="ascending">' . _('# Sales') . '</th>
-									<th class="ascending">' . _('Value Sales') . '</th>
-									<th class="ascending">' . _('First Sale ') . '</th>
-									<th class="ascending">' . _('Last Sale ') . '</th>
-									<th class="ascending">' . _('# Sales ') . '</th>
-									<th class="ascending">' . _('Value Sales') . '</th>
-								</tr>';
+				$TableHeader = '<thead>
+									<tr>
+										<th>#</th>
+										<th>' . _('Shop') . '</th>
+										<th colspan=2>' . 'Last ' . $numDays . ' days</th>
+										<th colspan=2>' . 'Last ' . $numDays . ' days until ' . $Now . '</th>
+										<th colspan=4>' . 'Today' . '</th>
+									</tr>
+									<tr>
+										<th class="SortedColumn">#</th>
+										<th class="SortedColumn">' . _('Name') . '</th>
+										<th class="SortedColumn">' . _('# Sales') . '</th>
+										<th class="SortedColumn">' . _('Value Sales') . '</th>
+										<th class="SortedColumn">' . _('# Sales') . '</th>
+										<th class="SortedColumn">' . _('Value Sales') . '</th>
+										<th class="SortedColumn">' . _('First Sale ') . '</th>
+										<th class="SortedColumn">' . _('Last Sale ') . '</th>
+										<th class="SortedColumn">' . _('# Sales ') . '</th>
+										<th class="SortedColumn">' . _('Value Sales') . '</th>
+									</tr>
+								</thead>
+								<tbody>';
 				echo $TableHeader;
 				$showHeader = FALSE;
 			}
-			$k = StartEvenOrOddRow($k);
 			$i++;
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -219,9 +221,13 @@ function HourlyPerformance($numDays, $RootPath){
 			$ValueSalesToday = $ValueSalesToday + $myrow['valuesalestoday'];
 			
 		}
+		
+		echo '</tbody>
+			<tfooter>';
+
 		if (!$showHeader){
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -247,8 +253,8 @@ function HourlyPerformance($numDays, $RootPath){
 			$TotalPercent = ($ValueSalesFull != 0)? ($ValueSales/$ValueSalesFull*100) : 0 ;
 			$TodayRythm = ($ValueSales != 0) ? ($ValueSalesToday/($ValueSales/$numDays)*100) : 0 ;
 
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -273,8 +279,8 @@ function HourlyPerformance($numDays, $RootPath){
 
 			$TodayForecast = ($ValueSalesToday != 0) ? (round($ValueSalesFull/$ValueSales*$ValueSalesToday/JUTA)*JUTA) : 0 ;
 			
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr>
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -296,8 +302,7 @@ function HourlyPerformance($numDays, $RootPath){
 					'',
 					locale_number_format_zero_blank($TodayForecast,0)
 					);
-			echo '</table>
-				</div>';
+			echo '</tfooter></table></div>';
 		}
 	}
 }

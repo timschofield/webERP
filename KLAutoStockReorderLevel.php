@@ -61,10 +61,13 @@ $result = DB_query("SELECT description,
 					WHERE stockid='" . $StockID . "'");
 $myitem=DB_fetch_array($result);
 
-echo '<table class="selection">';
-echo '<tr>
-		<th colspan="3"><h3><b>' . $StockID . ' - ' . $myitem['description'] . '</b>  (' . _('In Units of') . ' ' . $myitem['units'] . ')</h3></th>
-	</tr>';
+echo '<table class="selection">
+	<thead>
+		<tr>
+			<th colspan="3"><h3><b>' . $StockID . ' - ' . $myitem['description'] . '</b>  (' . _('In Units of') . ' ' . $myitem['units'] . ')</h3></th>
+		</tr>
+	</thead>
+	<tbody>';
 
 if ($LocCode != ''){
 	// we want to distribute to a specific location
@@ -117,10 +120,10 @@ $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that failed was');
 $LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
-$TableHeader = '<tbody><tr>
-					<th class="ascending">' . _('Location') . '</th>
-					<th class="ascending">' . _('Quantity On Hand') . '</th>
-					<th class="ascending">' . _('Re-Order Level') . '</th>
+$TableHeader = '<tr>
+					<th class="SortedColumn">' . _('Location') . '</th>
+					<th class="SortedColumn">' . _('Quantity On Hand') . '</th>
+					<th class="SortedColumn">' . _('Re-Order Level') . '</th>
 				</tr>';
 
 echo $TableHeader;
@@ -128,27 +131,8 @@ $k=0; //row colour counter
 
 while ($myrow=DB_fetch_array($LocStockResult)) {
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	if(($myrow['typeloc'] == $TypeOfShop) 
-		OR ($myrow['loccode'] == $LocCode)){
-		$sql = "UPDATE locstock SET reorderlevel = '" . $RL . "'
-			WHERE stockid = '" . $StockID . "'
-			AND loccode = '"  . $myrow['loccode'] ."'";
-
-		$UpdateReorderLevel = DB_query($sql);
-		$NewRL = $RL;
-	}else{
-		$NewRL = $myrow['reorderlevel'];
-	}
-	
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
@@ -161,8 +145,6 @@ while ($myrow=DB_fetch_array($LocStockResult)) {
 //end of while loop
 
 
-echo '</table></div>
-    </div>
-	</form>';
+echo '</tbody></table></div></form>';
 include('includes/footer.php');
 ?>

@@ -269,21 +269,24 @@ if (isset($_POST['CommitBatch'])){
 		<br />';
 
 	echo '<table class="selection">
-			<tr>
-				<th>' . _('Batch Number') . '</th>
-				<th>' . _('Date Banked') . '</th>
-				<th>' . _('Customer Name') . '</th>
-				<th>' . _('GL Code') . '</th>
-				<th>' . _('Amount of Receipt') . '</th>
-			</tr>';
+			<thead>
+				<tr>
+					<th>' . _('Batch Number') . '</th>
+					<th>' . _('Date Banked') . '</th>
+					<th>' . _('Customer Name') . '</th>
+					<th>' . _('GL Code') . '</th>
+					<th>' . _('Amount of Receipt') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	foreach ($_SESSION['ReceiptBatch']->Items as $ReceiptItem) {
 
 		if ($k==1){
-			echo '<tr class="OddTableRows">';
+			echo '<tr class="striped_row">';
 			$k=0;
 		} else {
-			echo '<tr class="EvenTableRows">';
+			echo '<tr class="striped_row">';
 			$k=1;
 		}
 
@@ -463,7 +466,8 @@ if (isset($_POST['CommitBatch'])){
 		$BatchReceiptsTotal += ($ReceiptItem->Amount/$_SESSION['ReceiptBatch']->ExRate/$_SESSION['ReceiptBatch']->FunctionalExRate);
 
 	} /*end foreach $ReceiptItem */
-	echo '</table>';
+	echo '</tbody>
+	</table>';
 
 	/*now enter the BankTrans entry */
 
@@ -1206,10 +1210,10 @@ if (((isset($_SESSION['CustomerRecord'])
 		while ($myrow=DB_fetch_array($CustomerSearchResult)) {
 
 			if ($k==1){
-				echo '<tr class="OddTableRows">';
+				echo '<tr class="striped_row">';
 				$k=0;
 			} else {
-				echo '<tr class="EvenTableRows">';
+				echo '<tr class="striped_row">';
 				$k=1;
 			}
 			printf('<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="%s" /></td>

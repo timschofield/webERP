@@ -146,21 +146,20 @@ if (isset($_POST['Show'])){
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because') ;
 	$TransResult = DB_query($sql,$ErrMsg);
 
-	echo '<br /><table class="selection">';
-
-	echo '<tr><th colspan="8"><b>' ._('Transactions for account').' '.$SelectedAccount. ' - '. $SelectedAccountName.'</b></th></tr>';
-	$TableHeader = '<tr>
-			<th>' . _('Type') . '</th>
-			<th>' . _('Number') . '</th>
-			<th>' . _('Date') . '</th>
-			<th>' . _('Debit') . '</th>
-			<th>' . _('Credit') . '</th>
-			<th>' . _('Narrative') . '</th>
-			<th>' . _('Balance') . '</th>
-			<th>' . _('Tag') . '</th>
-			</tr>';
-
-	echo $TableHeader;
+	echo '<br /><table class="selection">
+		<thead>
+			<tr>
+				<th>' . _('Type') . '</th>
+				<th>' . _('Number') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('Debit') . '</th>
+				<th>' . _('Credit') . '</th>
+				<th>' . _('Narrative') . '</th>
+				<th>' . _('Balance') . '</th>
+				<th>' . _('Tag') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 	if ($PandLAccount==True) {
 		$RunningTotal = 0;
@@ -244,13 +243,6 @@ if (isset($_POST['Show'])){
 			$PeriodTotal = 0;
 		}
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k++;
-		}
 
 		$RunningTotal += $myrow['amount'];
 		$PeriodTotal += $myrow['amount'];
@@ -272,6 +264,7 @@ if (isset($_POST['Show'])){
 		if ($tagrow['tagdescription']=='') {
 			$tagrow['tagdescription']=_('None');
 		}
+		echo '<tr class="striped_row">';
 		printf('<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
@@ -292,20 +285,7 @@ if (isset($_POST['Show'])){
 
 	}
 
-	echo '<tr style="background-color:#FDFEEF"><td colspan="3"><b>';
-	if ($PandLAccount==True){
-		echo _('Total Period Movement');
-	} else { /*its a balance sheet account*/
-		echo _('Balance C/Fwd');
-	}
-	echo '</b></td>';
-
-	if ($RunningTotal >0){
-		echo '<td class="number"><b>' . locale_number_format(($RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td><td colspan="2"></td></tr>';
-	}else {
-		echo '<td></td><td class="number"><b>' . locale_number_format((-$RunningTotal),$_SESSION['CompanyRecord']['decimalplaces']) . '</b></td><td colspan="2"></td></tr>';
-	}
-	echo '</table>';
+	echo '</tbody></table></div></form>';
 } /* end of if Show button hit */
 
 

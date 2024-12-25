@@ -29,7 +29,7 @@ $myrow = DB_fetch_array($result);
 
 $DecimalPlaces = $myrow['decimalplaces'];
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') .
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . 
 	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -39,7 +39,14 @@ echo _('Stock Code') . ':<input type="text" data-type="no-illegal-chars" title =
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Availability') . '" />';
 
 echo '<br />
-		<table class="selection"><tbody>';
+		<table class="selection">
+		<thead>
+			<th></th>
+			<th class="SortedColumn">' . _('Location') . '</th>
+			<th class="SortedColumn">' . _('QOH') . '</th>
+			<th class="SortedColumn">' . _('In Transit') . '</th>
+		</thead>
+		<tbody>';
 
 if ($StockID != ''){
 	$sql = "SELECT locstock.loccode,
@@ -56,17 +63,8 @@ if ($StockID != ''){
 	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 	$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
-	$TableHeader = '<tr>
-						<th class="ascending">' . _('Location') . '</th>
-						<th class="ascending">' . _('QOH') . '</th>
-						<th class="ascending">' . _('In Transit') . '</th>
-					</tr>';
-
 	echo $TableHeader;
-	$j = 1;
-	$k = 0; //row colour counter
 	while ($myrow=DB_fetch_array($LocStockResult)) {
-		$k = StartEvenOrOddRow($k);
 
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
@@ -95,7 +93,8 @@ if ($StockID != ''){
 		$InTransit = $InTransitQuantityIn+$InTransitQuantityOut;
 		$Available = $myrow['quantity'];
 
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
@@ -107,11 +106,7 @@ if ($StockID != ''){
 	}
 }
 
-echo '</tbody><tr>
-		<td></td>
-	</tr>
-	</table>';
-
+echo '</tbody></table>';
 echo '</div></form>';
 include('includes/footer.php');
 
