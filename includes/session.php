@@ -24,6 +24,11 @@ if (!file_exists($PathPrefix . 'config.php')) {
 }
 include ($PathPrefix . 'config.php');
 
+// KL RICARD: Include the specific KL config file
+include ($PathPrefix . 'config-KL.php');
+// KL RICARD END: Include the specific KL config file
+
+
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
 	$DBUser = $dbuser;
 	$DBPassword = $dbpassword;
