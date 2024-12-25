@@ -125,22 +125,21 @@ function RetailTypePayments($typereport, $maxdays){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$typereport .'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . $typereport . '</th>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('% Cash') . '</th>
-							<th class="ascending">' . _('% Credit') . '</th>
-							<th class="ascending">' . _('% Returns') . '</th>
-							<th class="ascending">' . _('% Vouchers') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . $typereport . '</th>
+						<th class="SortedColumn">' . _('Name') . '</th>
+						<th class="SortedColumn">' . _('% Cash') . '</th>
+						<th class="SortedColumn">' . _('% Credit') . '</th>
+						<th class="SortedColumn">' . _('% Returns') . '</th>
+						<th class="SortedColumn">' . _('% Vouchers') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 		while ($myrow = DB_fetch_array($result)) {
 			if ($myrow['totalshop'] != 0){
-				$k = StartEvenOrOddRow($k);
-				
 				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
 				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
 				$percentreturns = locale_number_format(($myrow['returnedgoodsshop']/$myrow['totalshop'])*100,1);
@@ -152,7 +151,8 @@ function RetailTypePayments($typereport, $maxdays){
 				$totalvouchers = $totalvouchers + $myrow['vouchersshop'];
 				$total = $total + $myrow['totalshop'];
 				
-				printf('<td>%s</td>
+				printf('<tr class="striped_row">
+						<td>%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -175,14 +175,8 @@ function RetailTypePayments($typereport, $maxdays){
 		$percentreturns = locale_number_format(($totalreturned/$total)*100,1);
 		$percentvouchers = locale_number_format(($totalvouchers/$total)*100,1);
 		
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -197,7 +191,8 @@ function RetailTypePayments($typereport, $maxdays){
 				$percentvouchers
 				);
 		
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -294,34 +289,33 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days". '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th colspan="3">' . _('SPG') . '</th>
-							<th colspan="2">' . $NumDaysA . ' last days' . '</th>
-							<th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' previous days' . '</th>
-							<th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' previous days' . '</th>
-						</tr>';
-		echo $TableHeader;
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Name') . '</th>
-							<th>' . _('Role') . '</th>
-							<th>' . _('Days') . '</th>
-							<th>' . _('Avg Daily Sales') . '</th>
-							<th>' . _('Days') . '</th>
-							<th>' . _('Avg Daily Sales') . '</th>
-							<th>' . _('Days') . '</th>
-							<th>' . _('Avg Daily Sales') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th colspan="3">' . _('SPG') . '</th>
+						<th colspan="2">' . $NumDaysA . ' last days' . '</th>
+						<th colspan="2">' . $NumDaysA . '-' . $NumDaysB . ' previous days' . '</th>
+						<th colspan="2">' . $NumDaysB . '-' . $NumDaysC . ' previous days' . '</th>
+					</tr>
+					<tr>
+						<th>' . _('Code') . '</th>
+						<th>' . _('Name') . '</th>
+						<th>' . _('Role') . '</th>
+						<th class="SortedColumn">' . _('Days') . '</th>
+						<th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
+						<th class="SortedColumn">' . _('Days') . '</th>
+						<th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
+						<th class="SortedColumn">' . _('Days') . '</th>
+						<th class="SortedColumn">' . _('Avg Daily Sales') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
-			
 			$DailyA = ($myrow['daysA'] != 0) ? ($myrow['salesA']/$myrow['daysA']) : 0;
 			$DailyB = ($myrow['daysB'] != 0) ? ($myrow['salesB']/$myrow['daysB']) : 0;
 			$DailyC = ($myrow['daysC'] != 0) ? ($myrow['salesC']/$myrow['daysC']) : 0;
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -342,7 +336,8 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 					locale_number_format_zero_blank($DailyC,0)
 					);
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -552,38 +547,38 @@ function SPGPerformanceMonthy(){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "SPG Monthly performance". '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th colspan="4">' . 'SPG' . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayD) . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayC) . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayB) . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayA) . '</th>
-						</tr>';
-		echo $TableHeader;
-		
-		$TableHeader = '<tr>
-							<th>' . 'Zone' . '</th>
-							<th>' . 'Shop' . '</th>
-							<th>' . 'SPG' . '</th>
-							<th>' . 'Name' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 30d' . '</th>
-							<th>' . 'last 60d' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 30d' . '</th>
-							<th>' . 'last 60d' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 30d' . '</th>
-							<th>' . 'last 60d' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 30d' . '</th>
-							<th>' . 'last 60d' . '</th>
-						</tr>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th colspan="4">' . 'SPG' . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayD) . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayC) . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayB) . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayA) . '</th>
+					</tr>
+					<tr>
+						<th>' . 'Zone' . '</th>
+						<th>' . 'Shop' . '</th>
+						<th>' . 'SPG' . '</th>
+						<th>' . 'Name' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 30d' . '</th>
+						<th>' . 'last 60d' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 30d' . '</th>
+						<th>' . 'last 60d' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 30d' . '</th>
+						<th>' . 'last 60d' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 30d' . '</th>
+						<th>' . 'last 60d' . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$k = 0; //row colour counter
 		$lastshop = "";
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			if ($lastshop != $myrow['loccode']){
 				echo $TableHeader;
 			}
@@ -595,7 +590,8 @@ function SPGPerformanceMonthy(){
 			$Last60B = ($myrow['days60B'] != 0) ? ($myrow['last60B']/$myrow['days60B']) : 0;
 			$Last30A = ($myrow['days30A'] != 0) ? ($myrow['last30A']/$myrow['days30A']) : 0;
 			$Last60A = ($myrow['days60A'] != 0) ? ($myrow['last60A']/$myrow['days60A']) : 0;
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -631,7 +627,8 @@ function SPGPerformanceMonthy(){
 					);
 			$lastshop = $myrow['loccode'];
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -840,38 +837,38 @@ function SPGPerformanceWeekly(){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "SPG Weekly performance". '</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th colspan="4">' . 'SPG' . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayD) . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayC) . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayB) . '</th>
-							<th colspan="3">' . ConvertSQLDate($YesterdayA) . '</th>
-						</tr>';
-		echo $TableHeader;
-		
-		$TableHeader = '<tr>
-							<th>' . 'Zone' . '</th>
-							<th>' . 'Shop' . '</th>
-							<th>' . 'SPG' . '</th>
-							<th>' . 'Name' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 7d' . '</th>
-							<th>' . 'last 30d' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 7d' . '</th>
-							<th>' . 'last 30d' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 7d' . '</th>
-							<th>' . 'last 30d' . '</th>
-							<th>' . 'MTD' . '</th>
-							<th>' . 'Last 7d' . '</th>
-							<th>' . 'last 30d' . '</th>
-						</tr>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th colspan="4">' . 'SPG' . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayD) . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayC) . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayB) . '</th>
+						<th colspan="3">' . ConvertSQLDate($YesterdayA) . '</th>
+					</tr>
+					<tr>
+						<th>' . 'Zone' . '</th>
+						<th>' . 'Shop' . '</th>
+						<th>' . 'SPG' . '</th>
+						<th>' . 'Name' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 7d' . '</th>
+						<th>' . 'last 30d' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 7d' . '</th>
+						<th>' . 'last 30d' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 7d' . '</th>
+						<th>' . 'last 30d' . '</th>
+						<th>' . 'MTD' . '</th>
+						<th>' . 'Last 7d' . '</th>
+						<th>' . 'last 30d' . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$k = 0; //row colour counter
 		$lastshop = "";
 		while ($myrow = DB_fetch_array($result)) {
-			$k = StartEvenOrOddRow($k);
 			if ($lastshop != $myrow['loccode']){
 				echo $TableHeader;
 			}
@@ -883,7 +880,8 @@ function SPGPerformanceWeekly(){
 			$Last7B = ($myrow['days7B'] != 0) ? ($myrow['last7B']/$myrow['days7B']) : 0;
 			$Last30A = ($myrow['days30A'] != 0) ? ($myrow['last30A']/$myrow['days30A']) : 0;
 			$Last7A = ($myrow['days7A'] != 0) ? ($myrow['last7A']/$myrow['days7A']) : 0;
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -919,7 +917,8 @@ function SPGPerformanceWeekly(){
 					);
 			$lastshop = $myrow['loccode'];
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>';
 	}
 }
@@ -1098,33 +1097,36 @@ function HourlySales($numDays, $RootPath){
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly sales and value for the last ' . $numDays . ' days</strong></p>';
 				echo '<div>';
-				echo '<table class="selection">';
+				echo '<table class="selection">
+						<thead>';
 			}
 			if (($showHeader) OR ($ZoneName != $myrow['zone'])){
 				$TableHeader = '<tr>
-									<th class="ascending">' . _('Zone') . '</th>
-									<th class="ascending">' . _('Shop') . '</th>
-									<th class="ascending">' . _('Type') . '</th>
-									<th class="ascending">' . _('First Sale') . '</th>
-									<th class="ascending">' . _('00-08') . '</th>
-									<th class="ascending">' . _('08-09') . '</th>
-									<th class="ascending">' . _('09-10') . '</th>
-									<th class="ascending">' . _('10-11') . '</th>
-									<th class="ascending">' . _('11-12') . '</th>
-									<th class="ascending">' . _('12-13') . '</th>
-									<th class="ascending">' . _('13-14') . '</th>
-									<th class="ascending">' . _('14-15') . '</th>
-									<th class="ascending">' . _('15-16') . '</th>
-									<th class="ascending">' . _('16-17') . '</th>
-									<th class="ascending">' . _('17-18') . '</th>
-									<th class="ascending">' . _('18-19') . '</th>
-									<th class="ascending">' . _('19-20') . '</th>
-									<th class="ascending">' . _('20-21') . '</th>
-									<th class="ascending">' . _('21-22') . '</th>
-									<th class="ascending">' . _('22-23') . '</th>
-									<th class="ascending">' . _('23-24') . '</th>
-									<th class="ascending">' . _('Last Sale') . '</th>
-								</tr>';
+									<th class="SortedColumn">' . _('Zone') . '</th>
+									<th class="SortedColumn">' . _('Shop') . '</th>
+									<th class="SortedColumn">' . _('Type') . '</th>
+									<th class="SortedColumn">' . _('First Sale') . '</th>
+									<th class="SortedColumn">' . _('00-08') . '</th>
+									<th class="SortedColumn">' . _('08-09') . '</th>
+									<th class="SortedColumn">' . _('09-10') . '</th>
+									<th class="SortedColumn">' . _('10-11') . '</th>
+									<th class="SortedColumn">' . _('11-12') . '</th>
+									<th class="SortedColumn">' . _('12-13') . '</th>
+									<th class="SortedColumn">' . _('13-14') . '</th>
+									<th class="SortedColumn">' . _('14-15') . '</th>
+									<th class="SortedColumn">' . _('15-16') . '</th>
+									<th class="SortedColumn">' . _('16-17') . '</th>
+									<th class="SortedColumn">' . _('17-18') . '</th>
+									<th class="SortedColumn">' . _('18-19') . '</th>
+									<th class="SortedColumn">' . _('19-20') . '</th>
+									<th class="SortedColumn">' . _('20-21') . '</th>
+									<th class="SortedColumn">' . _('21-22') . '</th>
+									<th class="SortedColumn">' . _('22-23') . '</th>
+									<th class="SortedColumn">' . _('23-24') . '</th>
+									<th class="SortedColumn">' . _('Last Sale') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
 				echo $TableHeader;
 				$showHeader = FALSE;
 			}
@@ -1252,7 +1254,8 @@ function HourlySales($numDays, $RootPath){
 			}		
 
 			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1300,7 +1303,8 @@ function HourlySales($numDays, $RootPath){
 					);
 
 			$k = StartSameColourRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1350,7 +1354,8 @@ function HourlySales($numDays, $RootPath){
 					$i++;
 		}
 		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -1398,7 +1403,8 @@ function HourlySales($numDays, $RootPath){
 				);
 
 		$k = StartEvenOrOddRow($k);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -1446,7 +1452,8 @@ function HourlySales($numDays, $RootPath){
 				);
 				
 		if (!$showHeader){
-			echo '</table>
+			echo '</tbody>
+				</table>
 				</div>';
 		}
 	}
@@ -1480,17 +1487,20 @@ function DaysOfWeekSales($numDays, $RootPath){
 	if (DB_num_rows($result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution of retail sales by week days for the last ') . $numDays . _(' days') .'</strong></p>';
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('Day') . '</th>
-							<th class="ascending">' . _('% Sales') . '</th>
-							<th class="ascending">' . _('Avg Distance') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Day') . '</th>
+						<th class="SortedColumn">' . _('% Sales') . '</th>
+						<th class="SortedColumn">' . _('Avg Distance') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$k = 0; //row colour counter
 		while ($myrow = DB_fetch_array($result)) {
 			$k = StartEvenOrOddRow($k);
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
@@ -1500,7 +1510,8 @@ function DaysOfWeekSales($numDays, $RootPath){
 					);
 		}
 	}
-	echo '</table>
+	echo '</tbody>
+			</table>
 			</div>';
 }
 

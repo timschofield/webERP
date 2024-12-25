@@ -26,7 +26,14 @@ echo _('Stock Code Begins with ') . ':<input type="text" data-type="no-illegal-c
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Availability') . '" />';
 
 echo '<br />
-		<table class="selection"><tbody>';
+		<table class="selection">
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . _('Location') . '</th>
+				<th class="SortedColumn">' . _('Available') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 
 if ($StockID != ''){
 	$sql = "SELECT locstock.loccode,
@@ -44,25 +51,11 @@ if ($StockID != ''){
 	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 	$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
 
-	$TableHeader = '<tr>
-						<th class="ascending">' . _('Location') . '</th>
-						<th class="ascending">' . _('Available') . '</th>
-					</tr>';
-
-	echo $TableHeader;
-	$j = 1;
-	$k=0; //row colour counter
 	$total = 0;
 	
 	while ($myrow=DB_fetch_array($LocStockResult)) {
 
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
+		echo '<tr class="striped_row">';
 
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
@@ -104,19 +97,19 @@ if ($StockID != ''){
 
 		echo '</tr>';
 	}
-	echo '<td>Total available:</td>';
+	echo '</tbody>
+		<tfooter>';
+	echo '<tr class="striped_row"><td>Total available:</td>';
 
-	printf('<td class="number">%s</td>',
+	printf('<td class="number">%s</td></tr>',
 			locale_number_format_zero_blank($total, 0)
 			);
 }
 
-echo '</tbody><tr>
-		<td></td>
-	</tr>
-	</table>';
-
-echo '</div></form>';
+echo '</tfooter>
+	</table>
+	</div>
+	</form>';
 include('includes/footer.php');
 
 ?>

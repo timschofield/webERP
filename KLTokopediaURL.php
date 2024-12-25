@@ -57,18 +57,19 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 		
 		echo '<div>';
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th class="ascending">' . _('#') . '</th>
-							<th class="ascending">' . _('Item Code') . '</th>
-							<th class="ascending">' . _('Tokopedia Product Id') . '</th>
-							<th class="ascending">' . _('URL Tokopedia') . '</th>
-							<th class="ascending">' . _('QOH Tokopedia') . '</th>
-							<th class="ascending">' . _('Error') . '</th>
-							<th class="ascending">' . _('Action') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Tokopedia Product Id') . '</th>
+						<th class="SortedColumn">' . _('URL Tokopedia') . '</th>
+						<th class="SortedColumn">' . _('QOH Tokopedia') . '</th>
+						<th class="SortedColumn">' . _('Error') . '</th>
+						<th class="SortedColumn">' . _('Action') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 		$i = 1;
 
 		for ($row = 4; $row <= $highestRow; ++ $row) {
@@ -94,8 +95,8 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				$Action = "Insert";
 			}
 
-			$k = StartEvenOrOddRow($k);
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -113,7 +114,8 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 					);
 			$i++;
 		}
-		echo '</table>
+		echo '</tbody>
+				</table>
 				</div>
 				</form>';
 	}
@@ -126,21 +128,20 @@ function display($RootPath, $Theme, $Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
-	echo '<table class="selection">';
+	echo '<table class="selection">
+			<thead>
+				<tr><th>' . _('Excel file with Tokopedia Information:') . '</th></tr>
+			</thead>
+			<tbody>
+				<tr><td><input type="file"  name="SelectedFile" id="SelectedFile"/></td></tr>';
 
-	echo '<tr><td>' . _('Excel file with Tokopedia Information:') . '</td><td><input type="file"  name="SelectedFile" id="SelectedFile"/></td><td>
-			</td></tr>
-		</table>';
-
-	echo '<table>
-		<tr><td>&nbsp;</td></tr>
-		<tr>
+	echo '<tr>
 			<td>&nbsp;</td>
 			<td><input type="submit" name="submit" value="' . _('Import File') . '" /></td>
 		</tr>
+		</tbody>
 		</table>
-		<br />';
-	echo '</div>
+		</div>
 		</form>';
 
 } // End of function display()
