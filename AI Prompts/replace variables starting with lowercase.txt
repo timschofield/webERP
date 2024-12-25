@@ -1,5 +1,6 @@
-On the files open in my editor tab:
+On all the files with name like KL*.php:
 
 List me the names of variables starting with just one lowercase character just after the $ symbol.
-Include the variable names that have the first character lowercase and one or more UpperCase characters
+Include the variable names with the first character (after the $ symbol) lowercase and one or more UpperCase characters
+Exclude the variable names with the first character (after the $ symbol) uppercase
 Don't show me the code, just the list of variables
