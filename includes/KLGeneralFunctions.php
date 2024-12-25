@@ -276,10 +276,10 @@ function ItemCodeQOH($Stockid, $CodeDetail, $Where){
 		$SQL .= " AND locstock.loccode = '". $Where . "'"; 
 	}
 
-	$result = DB_query($SQL,$ErrMsg);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$qty = $myrow['total'];
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$qty = $MyRow['total'];
 	}else{
 		$qty = 0;
 	}
@@ -312,8 +312,8 @@ function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDeta
 				if ($Debtorno != ''){
 		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
 	}
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -346,8 +346,8 @@ function ItemCodeAvgPriceInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDeta
 	if ($Debtorno != ''){
 		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
 	}
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -376,8 +376,8 @@ function ItemCodeQOO_PurchaseOrders($Stockid, $CodeDetail){
 			AND purchorders.status<>'Pending'
 			AND purchorders.status<>'Rejected'
 			AND purchorders.status<>'Completed'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -402,8 +402,8 @@ function ItemCodeQOO_WorkOrders($Stockid,$CodeDetail){
 					ON woitems.wo=workorders.wo
 			WHERE workorders.closed=0 ". 
 				$WhereCondition ." ";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -505,13 +505,13 @@ function ReviseEmailAddress($email){
 	$email = strtolower(trim($email));
 	$atposition = strpos($email,'@');
 	$domain = substr($email,$atposition+1);
-	$sql = "SELECT fixeddomain
+	$SQL = "SELECT fixeddomain
 			FROM klrevisedemaildomains
 			WHERE wrongdomain = '" . $domain . "'";
-	$result = DB_query($sql);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$revisedemail = substr($email,0,$atposition+1).$myrow['fixeddomain'] ;
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$revisedemail = substr($email,0,$atposition+1).$MyRow['fixeddomain'] ;
 	}else{
 		// seems OK. At least we can't detect an error
 		$revisedemail = $email;
@@ -530,8 +530,8 @@ function GetAreaFromCustomer($CustomerCode){
 			FROM custbranch
 			WHERE custbranch.debtorno ='". $CustomerCode . "'
 			AND custbranch.branchcode = '" . $CustomerCode . "'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -540,8 +540,8 @@ function GetCurrencyFromCustomer($CustomerCode){
 	$SQL = "SELECT currcode
 			FROM debtorsmaster
 			WHERE debtorsmaster.debtorno ='". $CustomerCode . "'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -552,48 +552,48 @@ function GetOnlinePartnerFromArea($Area){
 function GetCategoryNameFromCode($CategoryId){
 	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
 	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid='" . $CategoryId . "'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
 function GetDefaultLocationFromUser($UserId){
 	$ErrMsg = 'Error in function GetDefaultLocationFromUser()';
 	$SQL = "SELECT defaultlocation FROM www_users WHERE userid='".$UserId."'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
 function GetLocationNameFromCode($LocCode){
 	$ErrMsg = 'Error in function GetLocationNameFromCode()';
 	$SQL="SELECT locationname FROM locations WHERE loccode='" . $LocCode . "'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
 function GetItemDescriptionFromCode($Stockid){
 	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
 	$SQL="SELECT description FROM stockmaster WHERE stockid='" . $Stockid . "'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
 function GetTotalItemsChangingPrice(){
 	$ErrMsg = 'Error in function GetTotalItemsChangingPrice()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klchangingprice='1'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
 function GetTotalItemsMovingToDiscount($DiscountLevel){
 	$ErrMsg = 'Error in function GetTotalItemsMovingToDiscount()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klmovingdiscount".$DiscountLevel."='1'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -616,8 +616,8 @@ function PositiveNumber($Value){
 function FindReasonOfReturn($ReasonCode){
 	$ErrMsg = 'Error in function FindReasonOfReturn()';
 	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid='" . $ReasonCode . "'";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -695,11 +695,11 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 		$SQL = "SELECT manufacturers_id
 				FROM salescatprod 
 				WHERE stockid = '" . $Stockid . "'";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			// assign the current brand
-			$myrow = DB_fetch_array($result);
-			$Brand = $myrow['manufacturers_id'];	
+			$MyRow = DB_fetch_array($Result);
+			$Brand = $MyRow['manufacturers_id'];	
 		}else{
 			// we check the description, if we get any info
 				if (mb_stristr($Description, "silver") != FALSE){
@@ -762,53 +762,53 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				FROM klonlinepartners
 				WHERE klonlinepartners.onlinepartnercode = '" . $OnlinePartner . "'";
 		$ErrMsg ='Could not get the GL Transfers and Commissions for online shop payments because';
-		$resultAccounts = DB_query($SQLAccounts,$ErrMsg);
-		if(DB_num_rows($resultAccounts) != 0){
-			$myrowAccounts = DB_fetch_array($resultAccounts);
+		$ResultAccounts = DB_query($SQLAccounts,$ErrMsg);
+		if(DB_num_rows($ResultAccounts) != 0){
+			$MyRowAccounts = DB_fetch_array($ResultAccounts);
 			if ($PaymentCode == "bank_mandiri"){
 				// bank Mandiri direct transfer has no commissions 
-				$GLAccountTransfer = $myrowAccounts['accounttransfermandiri'];
+				$GLAccountTransfer = $MyRowAccounts['accounttransfermandiri'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
 			}elseif ($PaymentCode == "bank_bca"){
 				// bank bca direct transfer has no commissions 
-				$GLAccountTransfer = $myrowAccounts['accounttransferbca'];
+				$GLAccountTransfer = $MyRowAccounts['accounttransferbca'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
 			}elseif ($PaymentCode == "bank_danamon"){
 				// bank Danamon direct transfer has no commissions
-				$GLAccountTransfer = $myrowAccounts['accounttransferdanamon'];
+				$GLAccountTransfer = $MyRowAccounts['accounttransferdanamon'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
 			}elseif  ($PaymentCode == "snap"){
 				// MidTrans has commissions but we can't integrate them. We account full order, later manually we process commissions
-				$GLAccountTransfer = $myrowAccounts['accountmidtransidr'];
+				$GLAccountTransfer = $MyRowAccounts['accountmidtransidr'];
 				$GLAccountCommission = "";
 				$GLAccountCommissionPPN = "";
 				$Commission = 0;
 			}elseif  ($PaymentCode == "xenditmandiriva"){
 				// Xendit transfer via mandiri has commissions
-				$GLAccountTransfer = $myrowAccounts['accountxenditidr'];
-				$GLAccountCommission = $myrowAccounts['accountxenditcomissionidr'];
-				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
-				$Commission = round($myrowAccounts['comissionxenditflattransfer'],0);
+				$GLAccountTransfer = $MyRowAccounts['accountxenditidr'];
+				$GLAccountCommission = $MyRowAccounts['accountxenditcomissionidr'];
+				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
+				$Commission = round($MyRowAccounts['comissionxenditflattransfer'],0);
 			}elseif  ($PaymentCode == "xenditcc"){
 				// Xendit transfer via CC has commissions
-				$GLAccountTransfer = $myrowAccounts['accountxenditidr'];
-				$GLAccountCommission = $myrowAccounts['accountxenditcomissionidr'];
-				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
-				$Commission = round(($myrowAccounts['comissionxenditflatcc'] + ($TotalAmount * ($myrowAccounts['comissionxenditpercentcc']/100))) ,0);
+				$GLAccountTransfer = $MyRowAccounts['accountxenditidr'];
+				$GLAccountCommission = $MyRowAccounts['accountxenditcomissionidr'];
+				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
+				$Commission = round(($MyRowAccounts['comissionxenditflatcc'] + ($TotalAmount * ($MyRowAccounts['comissionxenditpercentcc']/100))) ,0);
 			}elseif  ($PaymentCode == "tokopedia"){
 				// Tokopedia payments  has commissions
-				$GLAccountTransfer = $myrowAccounts['accounttokopediaidr'];
-				$GLAccountCommission = $myrowAccounts['accounttokopediacomissionidr'];
-				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
-				$CommissionTokopediaPercent = $myrowAccounts['comissiontokopediapercent'];
-				$CommissionTokopediaFreeShippingPerItem = $myrowAccounts['comissiontokopediafreeshippingperitempercent'];
-				$CommissionTokopediaFreeShippingMaximum = $myrowAccounts['comissiontokopediafreeshippingperitemmaximum'];
+				$GLAccountTransfer = $MyRowAccounts['accounttokopediaidr'];
+				$GLAccountCommission = $MyRowAccounts['accounttokopediacomissionidr'];
+				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
+				$CommissionTokopediaPercent = $MyRowAccounts['comissiontokopediapercent'];
+				$CommissionTokopediaFreeShippingPerItem = $MyRowAccounts['comissiontokopediafreeshippingperitempercent'];
+				$CommissionTokopediaFreeShippingMaximum = $MyRowAccounts['comissiontokopediafreeshippingperitemmaximum'];
 				$Commission = CalculateCommissionTokopedia($CustomerCode, 
 															$OrderNo, 
 															$TotalAmount,
@@ -817,12 +817,12 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 															$CommissionTokopediaFreeShippingMaximum);
 			}elseif  ($PaymentCode == "shopee"){
 				// Shopee payments  has commissions
-				$GLAccountTransfer = $myrowAccounts['accountshopeeidr'];
-				$GLAccountCommission = $myrowAccounts['accountshopeecomissionidr'];
-				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
-				$CommissionShopeePercent = $myrowAccounts['comissionshopeepercent'];
-				$CommissionShopeeFreeShippingPerItem = $myrowAccounts['comissionshopeefreeshippingperitempercent'];
-				$CommissionShopeeFreeShippingMaximum = $myrowAccounts['comissionshopeefreeshippingperitemmaximum'];
+				$GLAccountTransfer = $MyRowAccounts['accountshopeeidr'];
+				$GLAccountCommission = $MyRowAccounts['accountshopeecomissionidr'];
+				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
+				$CommissionShopeePercent = $MyRowAccounts['comissionshopeepercent'];
+				$CommissionShopeeFreeShippingPerItem = $MyRowAccounts['comissionshopeefreeshippingperitempercent'];
+				$CommissionShopeeFreeShippingMaximum = $MyRowAccounts['comissionshopeefreeshippingperitemmaximum'];
 				$Commission = CalculateCommissionShopee($CustomerCode, 
 														$OrderNo, 
 														$TotalAmount,
@@ -831,10 +831,10 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 														$CommissionShopeeFreeShippingMaximum);
 			}elseif  ($PaymentCode == "lazada"){
 				// Lazada payments  has commissions
-				$GLAccountTransfer = $myrowAccounts['accountlazadaidr'];
-				$GLAccountCommission = $myrowAccounts['accountlazadacomissionidr'];
-				$GLAccountCommissionPPN = $myrowAccounts['accountcomissionppn'];
-				$CommissionLazadaPercent = $myrowAccounts['comissionlazadapercent'];
+				$GLAccountTransfer = $MyRowAccounts['accountlazadaidr'];
+				$GLAccountCommission = $MyRowAccounts['accountlazadacomissionidr'];
+				$GLAccountCommissionPPN = $MyRowAccounts['accountcomissionppn'];
+				$CommissionLazadaPercent = $MyRowAccounts['comissionlazadapercent'];
 				$Commission = CalculateCommissionLazada($CustomerCode, 
 														$OrderNo, 
 														$TotalAmount,
@@ -844,7 +844,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			$NetAmount = $TotalAmount - $Commission - $CommissionPPN;
 		}
 
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 
 		$BatchNo = GetNextTransNo(12);
 		$Today = date('Y-m-d');
@@ -887,7 +887,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				
 		$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 		$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$SQL = "UPDATE debtorsmaster
 					SET lastpaiddate = '" . $Today . "',
@@ -896,7 +896,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 
 		$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 		$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$SQL="INSERT INTO banktrans (type,
 									transno,
@@ -922,7 +922,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			)";
 		$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 		$ErrMsg = _('Cannot insert a bank transaction');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$SQL="INSERT INTO gltrans (type,
 									typeno,
@@ -942,7 +942,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			)";
 		$DbgMsg = _('The SQL that failed to insert the GL transaction from the bank account debit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		if ($Commission > 0){
 			$SQL="INSERT INTO gltrans (type,
@@ -963,7 +963,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction from the commission was');
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		}
 
 		if ($CommissionPPN > 0){
@@ -985,7 +985,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									)";
 			$DbgMsg = _('The SQL that failed to insert the GL transaction from the PPN commission was');
 			$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		}
 
 		$SQL="INSERT INTO gltrans ( type,
@@ -1006,7 +1006,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									)";
 		$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 		$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);			
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);			
 
 		// update the salesorder table, from quotation to confirmed order
 		if  (($PaymentCode == "tokopedia") OR 
@@ -1026,7 +1026,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		}
 		$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');
 		$ErrMsg = _('Cannot update the quotation flag of the sales order because');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		if (($CustomerCode == "WEB-KL-IDR") OR ($CustomerCode == "WEB-WH-IDR")) {
 			// online sale from our website, we must update the status of the order in OpenCart
@@ -1036,23 +1036,23 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			UpdateOpenCartOrderPayment($OnlineOrderNo);
 		}
 
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 
 	}else{
 		// marketplace customers MANUAL_MARKETPLACE, just mark the order as paid
 		// accounting has been done manually
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 
 		$SQL = "UPDATE salesorders
 					SET klpaidcash = '" . $TotalAmount . "'
 				WHERE salesorders.orderno='" . $OrderNo . "'";
 		$DbgMsg = _('The SQL that failed to update the payment flag of the sales order was');
 		$ErrMsg = _('Cannot update the payment flag of the sales order because');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 	}
-	return $result;
+	return $Result;
 }
 
 function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOfPackaging){
@@ -1099,11 +1099,11 @@ function DataExistsInWebERP($table, $f1, $v1, $f2 = '', $v2 = ''){
 					AND " . $f2 . " = '" . $v2 . "'";
 	}
 	$ErrMsg =_('Could not check existence of data in webERP because');
-	$result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$Exists = ($myrow[0] > 0);
+	if(DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$Exists = ($MyRow[0] > 0);
 	}else{
 		$Exists = false;
 	}
@@ -1133,10 +1133,10 @@ function NumberOfShops($ShopType){
 	$SQL="SELECT COUNT(*)
 		FROM locations
 		WHERE typeloc = '" . $ShopType . "'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[0];
 	}else{
 		return 0;
 	}
@@ -1159,10 +1159,10 @@ function NumberOfRegularShopsSellingDiscount($ShopType){
 			AND locstock.reorderlevel > 0 " .
 			$Categories;
 			
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[0];
 	}else{
 		return 0;
 	}
@@ -1182,30 +1182,30 @@ function DeleteWeberpUser($SelectedUser, $AdminRole){
 			AND (!$AdminRole )){
 		prnMsg('You do not have enough rights to delete user '. $SelectedUser ,'error');
 	}else{
-		$sql="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
-		$result=DB_query($sql);
-		if(DB_num_rows($result)!=0) {
+		$SQL="SELECT userid FROM audittrail where userid='" . $SelectedUser ."'";
+		$Result=DB_query($SQL);
+		if(DB_num_rows($Result)!=0) {
 			prnMsg(_('Cannot delete user as entries still exist in the audit trail'), 'error');
 		} else {
-			$sql="DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM locationusers WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The Location - User could not be deleted because');;
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
-			$sql="DELETE FROM glaccountusers WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM glaccountusers WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The GL Account - User could not be deleted because');;
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
-			$sql="DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM bankaccountusers WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The Bank Accounts - User could not be deleted because');;
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
-			$sql="DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
-			$sql="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
+			$SQL="DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');;
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
 			KLSendEmail("UserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser);
 			prnMsg('User ' . $SelectedUser . ' deleted', 'success');
@@ -1239,9 +1239,9 @@ function GetLastKPIValue($Class,$Concept){
 				AND concept LIKE '".$Concept."'
 			ORDER BY date DESC
 			LIMIT 1";
-	$result = DB_query($SQL);		
-	$myrow = DB_fetch_array($result);
-	return $myrow['value'];
+	$Result = DB_query($SQL);		
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow['value'];
 	
 }
 
@@ -1272,8 +1272,8 @@ function TotalItemsToBeReceivedByPO($Brand){
 		WHERE purchorderdetails.completed=0
 			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
 			$operator1." ";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -1297,8 +1297,8 @@ function TotalItemsToBeReceivedByWO($Brand){
 		WHERE workorders.closed = 0
 			AND woitems.qtyreqd > woitems.qtyrecd ".
 			$operator1." ";
-	$result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$Result = DB_query($SQL,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	return $Row['0'];
 }
 
@@ -1317,9 +1317,9 @@ function TotalModels($Brand){
 			FROM stockmaster
 			WHERE discontinued = 0 " . 
 				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	return $myrow['0'];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow['0'];
 }
  
 function TotalItems($Brand){
@@ -1337,9 +1337,9 @@ function TotalItems($Brand){
 			FROM locstock, stockmaster
 			WHERE stockmaster.stockid = locstock.stockid " . 
 				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	return $myrow['0'];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow['0'];
 }
 
 function TotalDisplayItems($Brand){
@@ -1358,9 +1358,9 @@ function TotalDisplayItems($Brand){
 			WHERE stockmaster.stockid = locstock.stockid 
 				AND locstock.quantity >= 1" . 
 				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	return $myrow['0'];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow['0'];
 }
 
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
@@ -1379,9 +1379,9 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 				AND salesorderdetails.itemdue >= '" . $FromDate . "'
 				AND salesorderdetails.itemdue <= '" . $ToDate . "'" . 
 				$operator1 ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	return ($myrow['0']);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return ($MyRow['0']);
 }
 
 function BrandTextFromCode($Brand){

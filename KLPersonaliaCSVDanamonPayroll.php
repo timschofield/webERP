@@ -81,8 +81,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 					AND bankcode LIKE '%Danamon%'
 				ORDER BY joiningdate,
 					fullname";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			// prepare CSV file
 			header("Content-Type: text/csv");
 			if ($SalaryType == "MONTHLY"){
@@ -94,25 +94,25 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 			$Separator = ",";
 			$EOL = "\n";
 			$i = 0;
-			while ($myrow = DB_fetch_array($result)) {
-				$ValueTransfer = $myrow['upahpokok'] +
-								$myrow['tunjanganmakan'] +
-								$myrow['tunjangantransport'] +
-								$myrow['tunjanganjabatan'] +
-								$myrow['tunjanganmasakerja'] +
-								$myrow['tunjangankendaraan'] +
-								$myrow['komisitetap'] +
-								$myrow['komisiretail'] +
-								$myrow['komisisupport'] +
-								$myrow['bonuspenjualan'] +
-								$myrow['lembur'] +
-								$myrow['thr'] +
-								$myrow['penerimaanlain'] +
-								$myrow['potonganjht'] +
-								$myrow['potonganaskes'] +
-								$myrow['potonganpph21'] +
-								$myrow['potonganabsen'] +
-								$myrow['potonganlain2'];
+			while ($MyRow = DB_fetch_array($Result)) {
+				$ValueTransfer = $MyRow['upahpokok'] +
+								$MyRow['tunjanganmakan'] +
+								$MyRow['tunjangantransport'] +
+								$MyRow['tunjanganjabatan'] +
+								$MyRow['tunjanganmasakerja'] +
+								$MyRow['tunjangankendaraan'] +
+								$MyRow['komisitetap'] +
+								$MyRow['komisiretail'] +
+								$MyRow['komisisupport'] +
+								$MyRow['bonuspenjualan'] +
+								$MyRow['lembur'] +
+								$MyRow['thr'] +
+								$MyRow['penerimaanlain'] +
+								$MyRow['potonganjht'] +
+								$MyRow['potonganaskes'] +
+								$MyRow['potonganpph21'] +
+								$MyRow['potonganabsen'] +
+								$MyRow['potonganlain2'];
 
 				if ($SalaryType == "MONTHLY"){
 					$TextMessage = substr('Gaji' . ' '. $PeriodMonth,0,20);
@@ -120,10 +120,10 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 					$TextMessage = substr('THR' . ' '. $PeriodMonth,0,20);
 				}
 								
-				$Line = $myrow['bankaccount'] . $Separator . 
+				$Line = $MyRow['bankaccount'] . $Separator . 
 						$ValueTransfer . $Separator . 
 						$TextMessage . $Separator . 
-						substr($myrow['fullname'],0,30) . $EOL;
+						substr($MyRow['fullname'],0,30) . $EOL;
 
 				fwrite($output, $Line);
 				$i++;

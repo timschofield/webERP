@@ -56,9 +56,9 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 				GROUP BY klconsignment.invoicedtopartner, klconsignment.partnercode 
 				ORDER BY klconsignment.invoicedtopartner, klconsignment.partnercode";
 
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 		
-		if (DB_num_rows($result) != 0){
+		if (DB_num_rows($Result) != 0){
 			echo '<p class="page_title_text" align="center"><strong>' . "Consignment Invoices Issued by " . $CompanyFrom . " between " . ConvertSQLDate($StartDate) . " and " . ConvertSQLDate($EndDate) . '</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">
@@ -79,12 +79,12 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 			$TotalGoodsValue = 0;
 			$TotalPPNValue = 0;
 
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
 				$NumberConsignmentInvoices++;
-				$TotalInvoiceValue += $myrow['valueinvoice'];
-				$GoodsInvoice = $myrow['valueinvoice'] / ((100 + PPN_PERCENT) / 100);
-				$PPNInvoice = $myrow['valueinvoice'] - $GoodsInvoice;
+				$TotalInvoiceValue += $MyRow['valueinvoice'];
+				$GoodsInvoice = $MyRow['valueinvoice'] / ((100 + PPN_PERCENT) / 100);
+				$PPNInvoice = $MyRow['valueinvoice'] - $GoodsInvoice;
 				$TotalGoodsValue += $GoodsInvoice;
 				$TotalPPNValue += $PPNInvoice;
 
@@ -96,12 +96,12 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$myrow['partnercode'], 
-						ConvertSQLDate($myrow['invoicedtopartner']), 
-						CreateConsignmentInvoiceNumber($CompanyFrom, $myrow['partnercode'], $myrow['invoicedtopartner']),
+						$MyRow['partnercode'], 
+						ConvertSQLDate($MyRow['invoicedtopartner']), 
+						CreateConsignmentInvoiceNumber($CompanyFrom, $MyRow['partnercode'], $MyRow['invoicedtopartner']),
 						locale_number_format($GoodsInvoice,0),
 						locale_number_format($PPNInvoice,0),
-						locale_number_format($myrow['valueinvoice'],0)
+						locale_number_format($MyRow['valueinvoice'],0)
 						);
 			}
 

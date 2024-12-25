@@ -222,23 +222,23 @@ function InsertItemSoldIntoSalesAnalysis ($Area,
 	$DbgMsg = _('SQL to count the no of sales analysis records');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$myrow = DB_fetch_row($Result);
+	$MyRow = DB_fetch_row($Result);
 
-	if ($myrow[0]>0){  /*Update the existing record that already exists */
+	if ($MyRow[0]>0){  /*Update the existing record that already exists */
 
 		$SQL = "UPDATE salesanalysis
 					SET amt=amt+" . ($Price * $Quantity / $ExRate) . ",
 						cost=cost+" . ($StandardCost * $Quantity) . ",
 						qty=qty +" . $Quantity . ",
 						disc=disc+" . ($DiscountPercent * $Price * $Quantity / $ExRate) . "
-					WHERE salesanalysis.area='" . $myrow[5] . "'
-						AND salesanalysis.salesperson='" . $myrow[8] . "'
+					WHERE salesanalysis.area='" . $MyRow[5] . "'
+						AND salesanalysis.salesperson='" . $MyRow[8] . "'
 						AND typeabbrev ='" . $SalesType . "'
 						AND periodno = '" . $PeriodNo . "'
 						AND cust " . LIKE . " '" . $DebtorNo . "'
 						AND custbranch " . LIKE . " '" . $DebtorBranch . "'
 						AND stockid " . LIKE . " '" . $StockID . "'
-						AND salesanalysis.stkcategory ='" . $myrow[2] . "'
+						AND salesanalysis.stkcategory ='" . $MyRow[2] . "'
 						AND budgetoractual=1";
 
 	} else { /* insert a new sales analysis record */
@@ -487,11 +487,11 @@ function AccountDebtorPayment($ReceiptNumber,
 
 	//Now need to add the receipt banktrans record
 	//First get the account currency that it has been banked into
-	$result = DB_query("SELECT rate FROM currencies
+	$Result = DB_query("SELECT rate FROM currencies
 						INNER JOIN bankaccounts ON currencies.currabrev=bankaccounts.currcode
 						WHERE bankaccounts.accountcode='" . $BankAccount . "'");
-	$myrow = DB_fetch_row($result);
-	$BankAccountExRate = $myrow[0];
+	$MyRow = DB_fetch_row($Result);
+	$BankAccountExRate = $MyRow[0];
 
 	//insert the banktrans record in the currency of the bank account
 	// RICARD: Only the NET amount (after bank comissions) gets its way to the bank account. :-(((
@@ -519,7 +519,7 @@ function AccountDebtorPayment($ReceiptNumber,
 
 	$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-001 FAILED Insert banktrans');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	//insert a new debtortrans for the receipt
 
@@ -549,7 +549,7 @@ function AccountDebtorPayment($ReceiptNumber,
 				'" . $Description . "')";
 	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-002 FAILED Insert debtortrans');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
@@ -559,7 +559,7 @@ function AccountDebtorPayment($ReceiptNumber,
 
 	$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-003 FAILED Update debtorsmaster');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	//and finally add the allocation record between receipt and invoice
 
@@ -573,7 +573,7 @@ function AccountDebtorPayment($ReceiptNumber,
 									 '" . $DebtorTransID . "')";
 	$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 	$ErrMsg = _('Report to Office: AccountDebtorPayment ERROR-004 FAILED Insert custallocns');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);							
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);							
 	return $ReceiptNumber;
 }
 
@@ -634,7 +634,7 @@ function AccountDebtorDiscount($ReceiptNumber,
 				'" . $Description . "')";
 	$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 	$ErrMsg = _('Report to Office: AccountDebtorDiscount ERROR-002 FAILED Insert debtortrans');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 	return $ReceiptNumber;
 }

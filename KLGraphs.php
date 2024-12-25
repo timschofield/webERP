@@ -56,11 +56,11 @@ if (!isset($_POST['FromDate'])
 	echo '<tr>
 			<td>' . _('For KPI Concept:')  . '</td>
 			<td><select name="Concept">';
-	while ($myrow=DB_fetch_array($ConceptResult)){
-		if($myrow['concept']==$_POST['Concept']){
-			echo '<option selected="selected" value="' . $myrow['concept'] . '">' . $myrow['class'] . ' - ' . $myrow['concept'] . '</option>';
+	while ($MyRow=DB_fetch_array($ConceptResult)){
+		if($MyRow['concept']==$_POST['Concept']){
+			echo '<option selected="selected" value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['concept'] . '">' . $myrow['class'] . ' - ' . $myrow['concept'] . '</option>';
+			echo '<option value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -117,13 +117,13 @@ if (!isset($_POST['FromDate'])
 	$i = 0;
 	$InitialDate = "";
 	$FinalDate = "";
-	while ($myrow = DB_fetch_array($KPIResult)){
+	while ($MyRow = DB_fetch_array($KPIResult)){
 		if ($InitialDate == ""){
 			// first row, we can get the frist date, in case we don't have the full range requested
-			$InitialDate = $myrow['date'];
+			$InitialDate = $MyRow['date'];
 		}
-		$FinalDate = $myrow['date'];
-		$GraphArray[$i] = array($myrow['date'],$myrow['value']);
+		$FinalDate = $MyRow['date'];
+		$GraphArray[$i] = array($MyRow['date'],$MyRow['value']);
 		$i++;
 	}
 

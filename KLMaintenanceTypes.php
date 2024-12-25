@@ -53,7 +53,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedType) AND $InputError !=1) {
 
-		$sql = "UPDATE klmaintenancetypes
+		$SQL = "UPDATE klmaintenancetypes
 			SET description = '" . $_POST['Description'] . "'
 			WHERE maintenancetype = '".$SelectedType."'";
 
@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO klmaintenancetypes (maintenancetype,
+			$SQL = "INSERT INTO klmaintenancetypes (maintenancetype,
 											description)
 							VALUES ('" . str_replace(' ', '', $_POST['MaintenanceType']) . "',
 									'" . $_POST['Description'] . "')";
@@ -84,14 +84,14 @@ if (isset($_POST['submit'])) {
 			$msg = _('Maintenance type') . ' ' . $_POST['Description'] .  ' ' . _('has been created');
 			$checkSql = "SELECT COUNT(maintenancetype)
 						FROM klmaintenancetypes";
-			$result = DB_query($checkSql);
-			$row = DB_fetch_row($result);
+			$Result = DB_query($checkSql);
+			$row = DB_fetch_row($Result);
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		prnMsg($msg,'success');
 		unset($SelectedType);
 		unset($_POST['MaintenanceType']);
@@ -102,20 +102,20 @@ if (isset($_POST['submit'])) {
 
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'klmaintenancetasks'
 
-	$sql= "SELECT COUNT(*)
+	$SQL= "SELECT COUNT(*)
 	       FROM klmaintenancetasks
 	       WHERE klmaintenancetasks.maintenancetype='".$SelectedType."'";
 
 	$ErrMsg = _('The number of maintenance tasks using this maintenance type could not be retrieved');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this maintenance type because maintenance tasks have been created using this maintenance type') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('tasks using this maintenance type code'),'error');
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
+		prnMsg(_('Cannot delete this maintenance type because maintenance tasks have been created using this maintenance type') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('tasks using this maintenance type code'),'error');
 	} else {
-			$sql="DELETE FROM klmaintenancetypes WHERE maintenancetype='" . $SelectedType . "'";
+			$SQL="DELETE FROM klmaintenancetypes WHERE maintenancetype='" . $SelectedType . "'";
 			$ErrMsg = _('The Maintenance Type record could not be deleted because');
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 			prnMsg(_('Maintenance type') . ' ' . $SelectedType  . ' ' . _('has been deleted') ,'success');
 			unset ($SelectedType);
 			unset($_GET['delete']);
@@ -135,8 +135,8 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT maintenancetype,description FROM klmaintenancetypes ORDER BY maintenancetype";
-	$result = DB_query($sql);
+	$SQL = "SELECT maintenancetype,description FROM klmaintenancetypes ORDER BY maintenancetype";
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<thead>
@@ -147,7 +147,7 @@ or deletion of the records*/
 		</thead>
 		<tbody>';
 
-while ($myrow = DB_fetch_row($result)) {
+while ($MyRow = DB_fetch_row($Result)) {
 
 	printf('<tr class="striped_row">
 		<td>%s</td>
@@ -155,10 +155,10 @@ while ($myrow = DB_fetch_row($result)) {
 		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this maintenace type?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
-		$myrow[0],
-		$myrow[1],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0]);
+		$MyRow[0],
+		$MyRow[1],
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow[0],
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody>
@@ -184,16 +184,16 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
 
-		$sql = "SELECT maintenancetype,
+		$SQL = "SELECT maintenancetype,
 			       description
 		        FROM klmaintenancetypes
 		        WHERE maintenancetype='" . $SelectedType . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['MaintenanceType'] = $myrow['maintenancetype'];
-		$_POST['Description']  = $myrow['description'];
+		$_POST['MaintenanceType'] = $MyRow['maintenancetype'];
+		$_POST['Description']  = $MyRow['description'];
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />
 			<input type="hidden" name="MaintenanceType" value="' . $_POST['MaintenanceType'] . '" />

@@ -19,16 +19,16 @@
 	echo '<tr>
 			<td>' . 'To' . ':</td>
 			<td><select name="CompanyTo">';
-	$sql="SELECT partnercode, 
+	$SQL="SELECT partnercode, 
 				partnernameinvoice 
 		FROM klretailpartners 
 		WHERE partnercode != 'NORETAIL' ";
-	$PartnerResult= DB_query($sql);
-	while ($myrow = DB_fetch_array($PartnerResult)){
-		if ($_POST['CompanyTo']==$myrow['partnercode']){
-			echo '<option selected="selected" value="' . $myrow['partnercode'] . '">' . $myrow['partnernameinvoice']  . '</option>';
+	$PartnerResult= DB_query($SQL);
+	while ($MyRow = DB_fetch_array($PartnerResult)){
+		if ($_POST['CompanyTo']==$MyRow['partnercode']){
+			echo '<option selected="selected" value="' . $MyRow['partnercode'] . '">' . $MyRow['partnernameinvoice']  . '</option>';
 		}else{
-			echo '<option value="' . $myrow['partnercode'] . '">' . $myrow['partnernameinvoice']  . '</option>';
+			echo '<option value="' . $MyRow['partnercode'] . '">' . $MyRow['partnernameinvoice']  . '</option>';
 		}
 	}
 	echo '</select></td></tr>';

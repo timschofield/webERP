@@ -57,9 +57,9 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 				GROUP BY klconsignment.stockid
 				ORDER BY klconsignment.stockid";
 
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 
-		if (DB_num_rows($result) != 0){
+		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
 			require_once('includes/tcpdf/tcpdf.php');
 			
@@ -131,8 +131,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 								daysinvoicedue
 							FROM klretailpartners
 							WHERE partnercode = '" . $CompanyTo . "'";
-			$resultCompanyTo = DB_query($SQLCompanyTo);
-			$myCompanyTo= DB_fetch_array($resultCompanyTo);
+			$ResultCompanyTo = DB_query($SQLCompanyTo);
+			$myCompanyTo= DB_fetch_array($ResultCompanyTo);
 			
 			$AddressPartner = $myCompanyTo['partneraddressjalan'];
 			if ($myCompanyTo['partneraddressblok'] != ''){
@@ -201,18 +201,18 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 			$LineNum = 0;
 			$pdf->SetFont($FontType, '', $FontSizeS);
 			
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
 				$LineNum++;
-				$TotalLine = $myrow['consignmentsale'];
-				$AveragePrice = round($TotalLine / $myrow['qty']);
+				$TotalLine = $MyRow['consignmentsale'];
+				$AveragePrice = round($TotalLine / $MyRow['qty']);
 				$TotalInvoice = $TotalInvoice + $TotalLine;
-				$TotalItems = $TotalItems + $myrow['qty'];
+				$TotalItems = $TotalItems + $MyRow['qty'];
 				
 				$pdf->MultiCell($WidthColumn1, 0, locale_number_format($LineNum), 1, 'R', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn2, 0, $myrow['stockid'], 1, 'L', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn3, 0, $myrow['description'], 1, 'L', 0, 0, '', '', true);
-				$pdf->MultiCell($WidthColumn4, 0, locale_number_format($myrow['qty']), 1, 'R', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn2, 0, $MyRow['stockid'], 1, 'L', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn3, 0, $MyRow['description'], 1, 'L', 0, 0, '', '', true);
+				$pdf->MultiCell($WidthColumn4, 0, locale_number_format($MyRow['qty']), 1, 'R', 0, 0, '', '', true);
 				$pdf->MultiCell($WidthColumn5, 0, locale_number_format($AveragePrice), 1, 'R', 0, 0, '', '', true);
 				$pdf->MultiCell($WidthColumn6, 0, locale_number_format($TotalLine), 1, 'R', 0, 1, '', '', true);
 			}
@@ -272,7 +272,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 							AND saledate <= '" . $EndDate . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00001';		
 				$DbgMsg = 'SQL to update klconsignment record: ';
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				if ($CompanyFrom == 'PTADU'){
 					$PeriodNo = GetPeriod(ConvertSQLDate($EndDate));

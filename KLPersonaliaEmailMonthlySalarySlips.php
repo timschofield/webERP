@@ -55,19 +55,19 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 	if(!$InputError){
 		$TextAdmin = "";
 		
-		// populates $SQL and $result with the data to extract the salary slips
+		// populates $SQL and $Result with the data to extract the salary slips
 		include('includes/KLPersonaliaSQLSalarySlips.php');
 		
-		if (DB_num_rows($result) != 0){
+		if (DB_num_rows($Result) != 0){
 
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				// Let's start the real PDF creation 
 				require_once('includes/tcpdf/tcpdf.php');
 
  				if ($SalaryType == "MONTHLY"){
-					$CoreFileName = $myrow['codename'] . '-SlipGaji-' . substr($LastDateOfPeriod,0,7);
+					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . substr($LastDateOfPeriod,0,7);
 				}else{
-					$CoreFileName = $myrow['codename'] . '-SlipTHR-' . substr($LastDateOfPeriod,0,7);
+					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . substr($LastDateOfPeriod,0,7);
 				}
 				
 				include('includes/KLPersonaliaPDFNewSalarySlip.php');
@@ -86,8 +86,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				$pdf-> __destruct();
 
 				// prepare the email fields to employees
-				$Subject  = $myrow['codename'] . " " . $PageTitle;
-				$Text = EmailTextForEmployee($myrow['fullname'],$Company, $SalaryType);
+				$Subject  = $MyRow['codename'] . " " . $PageTitle;
+				$Text = EmailTextForEmployee($MyRow['fullname'],$Company, $SalaryType);
 				$Text = $Text . "\n---\r\n"; // \r is needed for signature separating
 				$Text = $Text . 'Email sent by ' . $AdminTeam . ' at '.date('d/M/Y H:i:s').'';
 				
@@ -111,9 +111,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				}
 	
 				// set the to address
-				if ($myrow['email'] != ""){
+				if ($MyRow['email'] != ""){
 					// if we have employee email, send to employee email, overwritting default email.
-					$SendTo = $myrow['email'];
+					$SendTo = $MyRow['email'];
 				}
 
 				// KL RICARD Send to a dummy address depending on the code version
@@ -124,9 +124,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 
 				$ResultEmailEmployee = $mail->send(array($SendTo));
 				if($ResultEmailEmployee){
-					$TextAdmin = $TextAdmin . "Slip gaji for ". $myrow['codename'] . " sent to " . $SendTo . " at " . date('d/M/Y H:i:s') ." \n";
+					$TextAdmin = $TextAdmin . "Slip gaji for ". $MyRow['codename'] . " sent to " . $SendTo . " at " . date('d/M/Y H:i:s') ." \n";
 				}else{
-					$TextAdmin = $TextAdmin . "Email with slip gaji to ". $myrow['codename'] . " FAILED. \n";
+					$TextAdmin = $TextAdmin . "Email with slip gaji to ". $MyRow['codename'] . " FAILED. \n";
 				}
 				sleep(1);
 			}

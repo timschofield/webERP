@@ -501,8 +501,8 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 	$SumInvoice08    = 0;
 	$SumInvoice09    = 0;
 						
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $BrandText . " " . $typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -526,16 +526,16 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			if ($typereport == "Shop"){
-				$Code = $myrow['debtorno'];
-				$Name = $myrow['name'];
+				$Code = $MyRow['debtorno'];
+				$Name = $MyRow['name'];
 			}else{
 				return;
 			}
 			
-			if ($myrow['invoicesum'] > 0){
+			if ($MyRow['invoicesum'] > 0){
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -555,31 +555,31 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 						$i,
 						$Code,
 						$Name,
-						locale_number_format($myrow['invoicesum']/$myrow['invoicecount'],0), 
-						locale_number_format($myrow['invoicecount']/$NumDaysA,1),
-						locale_number_format($myrow['invoice01']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice02']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice03']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice04']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice05']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice06']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice07']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice08']/$myrow['invoicecount']*100,1).'%', 
-						locale_number_format($myrow['invoice09']/$myrow['invoicecount']*100,1).'%'
+						locale_number_format($MyRow['invoicesum']/$MyRow['invoicecount'],0), 
+						locale_number_format($MyRow['invoicecount']/$NumDaysA,1),
+						locale_number_format($MyRow['invoice01']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice02']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice03']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice04']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice05']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice06']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice07']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice08']/$MyRow['invoicecount']*100,1).'%', 
+						locale_number_format($MyRow['invoice09']/$MyRow['invoicecount']*100,1).'%'
 						);
 			}
 			$i++;
-			$SumInvoiceSum   += $myrow['invoicesum'];
-			$SumInvoiceCount += $myrow['invoicecount'] ;
-			$SumInvoice01    += $myrow['invoice01'];
-			$SumInvoice02    += $myrow['invoice02'];
-			$SumInvoice03    += $myrow['invoice03'];
-			$SumInvoice04    += $myrow['invoice04'];
-			$SumInvoice05    += $myrow['invoice05'];
-			$SumInvoice06    += $myrow['invoice06'];
-			$SumInvoice07    += $myrow['invoice07'];
-			$SumInvoice08    += $myrow['invoice08'];
-			$SumInvoice09    += $myrow['invoice09'];
+			$SumInvoiceSum   += $MyRow['invoicesum'];
+			$SumInvoiceCount += $MyRow['invoicecount'] ;
+			$SumInvoice01    += $MyRow['invoice01'];
+			$SumInvoice02    += $MyRow['invoice02'];
+			$SumInvoice03    += $MyRow['invoice03'];
+			$SumInvoice04    += $MyRow['invoice04'];
+			$SumInvoice05    += $MyRow['invoice05'];
+			$SumInvoice06    += $MyRow['invoice06'];
+			$SumInvoice07    += $MyRow['invoice07'];
+			$SumInvoice08    += $MyRow['invoice08'];
+			$SumInvoice09    += $MyRow['invoice09'];
 		}
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
@@ -651,9 +651,9 @@ function CashStatus($Year,
 	$SQL = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno = '".$Period."'";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$LastDateOfMonth = $myrow['lastdate_in_period'];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$LastDateOfMonth = $MyRow['lastdate_in_period'];
 	$DaysUntilEndOfMonth = DaysBetween($Today, $LastDateOfMonth)+1;
 
 	////////////////////////////////////////////////////////
@@ -668,8 +668,8 @@ function CashStatus($Year,
 				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$SalesCashADU = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$SalesCashADU = -$MyRow[0];
 
 	// Cash sales still floating (still not received in kantor)
 	$SQL = "SELECT SUM(gltrans.amount)
@@ -681,8 +681,8 @@ function CashStatus($Year,
 										WHERE partnercode = 'PTADU'
 											AND typeloc LIKE 'SHOP%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$FloatingCashADU = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$FloatingCashADU = $MyRow[0];
 	
 	// Cash Danamon IDR PTADU to Cash Kantor
 	$Account = "111121105AD";
@@ -697,8 +697,8 @@ function CashStatus($Year,
 					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$BankToCashADU = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$BankToCashADU = -$MyRow[0];
 
 	// Expenses ADU Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "AD";
@@ -716,8 +716,8 @@ function CashStatus($Year,
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$ExpensesADUPaidCash = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$ExpensesADUPaidCash = -$MyRow[0];
 	
 	// Cash in Kantor to Small Suppliers PTADU
 	$Account = "510010070AD";
@@ -729,8 +729,8 @@ function CashStatus($Year,
 				AND (gltrans.narrative LIKE '%CASH%'
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToSmallSuppliersADU = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToSmallSuppliersADU = $MyRow[0];
 
 	// Cash in Kantor to Pay rents PTADU
 	$Account = "211030200AD";
@@ -741,8 +741,8 @@ function CashStatus($Year,
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToRentADU = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToRentADU = $MyRow[0];
 
 	// Cash in Kantor to Pay dividends PTADU
 	$Account = "614012400AD";
@@ -753,8 +753,8 @@ function CashStatus($Year,
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToDividendsADU = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToDividendsADU = $MyRow[0];
 
 	$CurrentBalanceADU = $CashEndOfPreviousYearADU
 						+$SalesCashADU
@@ -901,9 +901,9 @@ function CashStatus($Year,
 	$SQL = "SELECT rate
 			FROM currencies
 			WHERE currabrev = 'USD'";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$CurrentUSDRate = $myrow['rate'];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$CurrentUSDRate = $MyRow['rate'];
 	
 	$Account = "111203010AD"; // Danamon PTADU USD in IDR
 	$SQL = "SELECT (bfwd + actual) as saldo
@@ -911,9 +911,9 @@ function CashStatus($Year,
 			WHERE chartdetails.accountcode = chartmaster.accountcode
 				AND chartdetails.accountcode = '" . $Account . "'
 				AND chartdetails.period = ". $Period . "";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$SaldoADUDanamonUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$SaldoADUDanamonUSD = round($MyRow['saldo']*$CurrentUSDRate, 0);
 
 	$Account = "111203020AD"; // Payoneer PTADU USD in IDR
 	$SQL = "SELECT (bfwd + actual) as saldo
@@ -921,9 +921,9 @@ function CashStatus($Year,
 			WHERE chartdetails.accountcode = chartmaster.accountcode
 				AND chartdetails.accountcode = '" . $Account . "'
 				AND chartdetails.period = ". $Period . "";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$SaldoADUPayoneerUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$SaldoADUPayoneerUSD = round($MyRow['saldo']*$CurrentUSDRate, 0);
 
 	$Account = "111204030"; // Cash in Agent Aye Cargo in BKK in IDR
 	$SQL = "SELECT (bfwd + actual) as saldo
@@ -931,9 +931,9 @@ function CashStatus($Year,
 			WHERE chartdetails.accountcode = chartmaster.accountcode
 				AND chartdetails.accountcode = '" . $Account . "'
 				AND chartdetails.period = ". $Period . "";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$SaldoAyeCargoUSD = round($myrow['saldo']*$CurrentUSDRate, 0);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$SaldoAyeCargoUSD = round($MyRow['saldo']*$CurrentUSDRate, 0);
 
 	$Account = "111203010AD"; // USD already exchanged current month
 	$SQL = "SELECT SUM(banktrans.amount) AS saldo
@@ -941,9 +941,9 @@ function CashStatus($Year,
 			WHERE banktrans.bankact = '" . $Account . "'
 				AND banktrans.transdate >= '". $FirstDateOfMonth . "'
 				AND banktrans.amount > 0";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$USDAlreadyExhangedThisMonth = round($myrow['saldo'], 0);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$USDAlreadyExhangedThisMonth = round($MyRow['saldo'], 0);
 
 	$PORunningTotalUSD = round(GetLastKPIValue("Purchase Orders","PO Items for sale arriving next % days (IDR)")*$CurrentUSDRate,0);
 	$POPaymentsPendingUSD = round(GetLastKPIValue("Purchase Orders","Payments pending%")*$CurrentUSDRate,0);
@@ -1086,8 +1086,8 @@ function CashStatus($Year,
 				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$SalesCashSMH = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$SalesCashSMH = -$MyRow[0];
 
 	// Cash sales still floating (still not received in kantor)
 	$SQL = "SELECT SUM(gltrans.amount)
@@ -1099,8 +1099,8 @@ function CashStatus($Year,
 										WHERE partnercode = 'PTSMH'
 											AND typeloc LIKE 'SHOP%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$FloatingCashSMH = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$FloatingCashSMH = $MyRow[0];
 	
 	// Cash Danamon IDR PTSMH to Cash Kantor
 	$Account = "111121105SM";
@@ -1115,8 +1115,8 @@ function CashStatus($Year,
 					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$BankToCashSMH = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$BankToCashSMH = -$MyRow[0];
 	
 	// Cash Mandiri IDR PTSMH to Cash Kantor
 	$Account = "111121100SM";
@@ -1131,8 +1131,8 @@ function CashStatus($Year,
 					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$BankToCashSMH -= $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$BankToCashSMH -= $MyRow[0];
 
 	// Expenses SMH Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "SM";
@@ -1150,8 +1150,8 @@ function CashStatus($Year,
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$ExpensesSMHPaidCash = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$ExpensesSMHPaidCash = -$MyRow[0];
 	
 	// Cash in Kantor to Small Suppliers PTSMH
 	$Account = "510010070SM";
@@ -1163,8 +1163,8 @@ function CashStatus($Year,
 				AND (gltrans.narrative LIKE '%CASH%'
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToSmallSuppliersSMH = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToSmallSuppliersSMH = $MyRow[0];
 
 	// Cash in Kantor to Pay rents PTSMH
 	$Account = "211030200SM";
@@ -1175,8 +1175,8 @@ function CashStatus($Year,
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToRentSMH = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToRentSMH = $MyRow[0];
 
 	// Cash in Kantor to Pay dividends PTSMH
 	$Account = "614012400SM";
@@ -1187,8 +1187,8 @@ function CashStatus($Year,
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToDividendsSMH = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToDividendsSMH = $MyRow[0];
 
 	$CurrentBalanceSMH = $CashEndOfPreviousYearSMH
 						+$SalesCashSMH
@@ -1340,8 +1340,8 @@ function CashStatus($Year,
 				AND gltrans.trandate <= '" . $EndOfYear . "'
 				AND gltrans.account = '" . $Account . "'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$SalesCashBB = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$SalesCashBB = -$MyRow[0];
 
 	// Cash sales still floating (still not received in kantor)
 	$SQL = "SELECT SUM(gltrans.amount)
@@ -1353,8 +1353,8 @@ function CashStatus($Year,
 										WHERE partnercode = 'PTBB'
 											AND typeloc LIKE 'SHOP%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$FloatingCashBB = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$FloatingCashBB = $MyRow[0];
 
 	// Cash Danamon IDR PTBB to Cash Kantor
 	$Account = "111121105BB";
@@ -1369,8 +1369,8 @@ function CashStatus($Year,
 					OR gltrans.narrative LIKE '%CASH TO BANK%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$BankToCashBB = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$BankToCashBB = -$MyRow[0];
 
 	// Expenses PT Paid by Petty Cash (excluding salaries, Corporate CC)
 	$AccountSuffix = "BB";
@@ -1388,8 +1388,8 @@ function CashStatus($Year,
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%".$AccountSuffix."'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$ExpensesBBPaidCash = -$myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$ExpensesBBPaidCash = -$MyRow[0];
 	
 	// Cash in Kantor to Small Suppliers PTBB
 	$Account = "510010070BB";
@@ -1401,8 +1401,8 @@ function CashStatus($Year,
 				AND (gltrans.narrative LIKE '%CASH%'
 					OR gltrans.narrative LIKE '%KANTOR%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToSmallSuppliersBB = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToSmallSuppliersBB = $MyRow[0];
 
 	// Cash in Kantor to Pay rents PTBB
 	$Account = "211030200BB";
@@ -1413,8 +1413,8 @@ function CashStatus($Year,
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToRentBB = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToRentBB = $MyRow[0];
 	
 	// Cash in Kantor to Pay dividends PTBB
 	$Account = "614012400BB";
@@ -1425,8 +1425,8 @@ function CashStatus($Year,
 				AND gltrans.account = '" . $Account . "'
 				AND gltrans.narrative LIKE '%CASH%'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	$CashToDividendsBB = $myrow[0];
+	$MyRow = DB_fetch_array($Result);
+	$CashToDividendsBB = $MyRow[0];
 
 	$CurrentBalanceBB = $CashEndOfPreviousYearBB
 						+$SalesCashBB
@@ -1577,9 +1577,9 @@ function CashStatus($Year,
 				AND chartdetails.accountcode = '" . $Account . "'
 				AND chartdetails.period = ". $Period . "";
 				
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$SaldoBrankasKantor = $myrow['saldo'];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$SaldoBrankasKantor = $MyRow['saldo'];
 
 	$Account = "111131100";
 	$SQL = "SELECT (bfwd + actual) as saldo, accountname
@@ -1587,9 +1587,9 @@ function CashStatus($Year,
 			WHERE chartdetails.accountcode = chartmaster.accountcode
 				AND chartdetails.accountcode = '" . $Account . "'
 				AND chartdetails.period = ". $Period . "";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$SaldoBrankasShareholders = $myrow['saldo'];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$SaldoBrankasShareholders = $MyRow['saldo'];
 		
 	////////////////////////////////////////////////////////
 	// CASH STATUS STATUS BRANKAS KANTOR & SHAREHOLDERS IDR SHOW TABLE
@@ -1716,8 +1716,8 @@ function DailySalesRecords($Days, $NumDays, $Since){
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
 			LIMIT ". $Days . "";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -1730,15 +1730,15 @@ function DailySalesRecords($Days, $NumDays, $Since){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
+		while (($MyRow = DB_fetch_array($Result)) AND ($i <= $Days)) {
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
 					locale_number_format($i,0),
-					ConvertSQLDate($myrow['orddate']),
-					locale_number_format($myrow['sales'],0)
+					ConvertSQLDate($MyRow['orddate']),
+					locale_number_format($MyRow['sales'],0)
 					);
 			$i++;
 		}
@@ -1809,8 +1809,8 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 					GROUP BY salesorders.debtorno) DESC";
 	
 						
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "General Customer Behaviour by " . $BrandText  . " shop during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -1844,31 +1844,31 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 		$TotalInvoiceCountLastYear = 0;
 		$TotalItemCountLastYear = 0;
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$i++;
-			$Code = $myrow['debtorno'];
-			$Name = $myrow['name'];
+			$Code = $MyRow['debtorno'];
+			$Name = $MyRow['name'];
 			
-			if ($myrow['invoicesum'] > 0){
+			if ($MyRow['invoicesum'] > 0){
 
-				$TotalInvoiceSum += $myrow['invoicesum'];
-				$TotalInvoiceCount += $myrow['invoicecount'];
-				$TotalItemCount += $myrow['itemcount'];		
-				$TotalInvoiceSumLastYear += $myrow['invoicesum_lastyear'];
-				$TotalInvoiceCountLastYear += $myrow['invoicecount_lastyear'];
-				$TotalItemCountLastYear += $myrow['itemcount_lastyear'];		
+				$TotalInvoiceSum += $MyRow['invoicesum'];
+				$TotalInvoiceCount += $MyRow['invoicecount'];
+				$TotalItemCount += $MyRow['itemcount'];		
+				$TotalInvoiceSumLastYear += $MyRow['invoicesum_lastyear'];
+				$TotalInvoiceCountLastYear += $MyRow['invoicecount_lastyear'];
+				$TotalItemCountLastYear += $MyRow['itemcount_lastyear'];		
 
-				$AvgIDRPerInvoice = ($myrow['invoicecount'] !=0) ? $myrow['invoicesum']/$myrow['invoicecount'] : 0;
-				$AvgIDRPerItem = ($myrow['itemcount'] !=0) ? $myrow['invoicesum']/$myrow['itemcount'] : 0;
-				$AvgInvoicesPerDay = ($NumDaysA != 0) ? $myrow['invoicecount']/$NumDaysA : 0;
-				$AvgItemsPerDay = ($NumDaysA != 0) ? $myrow['itemcount']/$NumDaysA : 0;
-				$AvgItemsPerInvoice = ($myrow['invoicecount'] != 0) ? $myrow['itemcount']/$myrow['invoicecount'] : 0;
+				$AvgIDRPerInvoice = ($MyRow['invoicecount'] !=0) ? $MyRow['invoicesum']/$MyRow['invoicecount'] : 0;
+				$AvgIDRPerItem = ($MyRow['itemcount'] !=0) ? $MyRow['invoicesum']/$MyRow['itemcount'] : 0;
+				$AvgInvoicesPerDay = ($NumDaysA != 0) ? $MyRow['invoicecount']/$NumDaysA : 0;
+				$AvgItemsPerDay = ($NumDaysA != 0) ? $MyRow['itemcount']/$NumDaysA : 0;
+				$AvgItemsPerInvoice = ($MyRow['invoicecount'] != 0) ? $MyRow['itemcount']/$MyRow['invoicecount'] : 0;
 
-				$AvgIDRPerInvoiceLastYear = ($myrow['invoicecount_lastyear'] !=0) ? $myrow['invoicesum_lastyear']/$myrow['invoicecount_lastyear'] : 0;
-				$AvgIDRPerItemLastYear = ($myrow['itemcount_lastyear'] !=0) ? $myrow['invoicesum_lastyear']/$myrow['itemcount_lastyear'] : 0;
-				$AvgInvoicesPerDayLastYear = ($NumDaysA != 0) ? $myrow['invoicecount_lastyear']/$NumDaysA: 0;
-				$AvgItemsPerDayLastYear = ($NumDaysA != 0) ? $myrow['itemcount_lastyear']/$NumDaysA : 0;
-				$AvgItemsPerInvoiceLastYear = ($myrow['invoicecount_lastyear'] != 0) ? $myrow['itemcount_lastyear']/$myrow['invoicecount_lastyear'] : 0;
+				$AvgIDRPerInvoiceLastYear = ($MyRow['invoicecount_lastyear'] !=0) ? $MyRow['invoicesum_lastyear']/$MyRow['invoicecount_lastyear'] : 0;
+				$AvgIDRPerItemLastYear = ($MyRow['itemcount_lastyear'] !=0) ? $MyRow['invoicesum_lastyear']/$MyRow['itemcount_lastyear'] : 0;
+				$AvgInvoicesPerDayLastYear = ($NumDaysA != 0) ? $MyRow['invoicecount_lastyear']/$NumDaysA: 0;
+				$AvgItemsPerDayLastYear = ($NumDaysA != 0) ? $MyRow['itemcount_lastyear']/$NumDaysA : 0;
+				$AvgItemsPerInvoiceLastYear = ($MyRow['invoicecount_lastyear'] != 0) ? $MyRow['itemcount_lastyear']/$MyRow['invoicecount_lastyear'] : 0;
 
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
@@ -2065,11 +2065,11 @@ function PackagingStatusForBlink($RootPath){
 				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
@@ -2158,36 +2158,36 @@ function PackagingStatusForBlink($RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['locationname'], 
-					$myrow['rldaysforpackaging'], 
-					$myrow['rlfactorforpackaging'], 
-					locale_number_format_zero_blank($myrow['qty_box_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_box_l'],0),
-					locale_number_format_zero_blank($myrow['rl_box_l'],0),
-					locale_number_format_zero_blank($myrow['qty_box_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_box_m'],0),
-					locale_number_format_zero_blank($myrow['rl_box_m'],0),
-					locale_number_format_zero_blank($myrow['qty_box_s'],0), 
-					locale_number_format_zero_blank($myrow['ot_box_s'],0),
-					locale_number_format_zero_blank($myrow['rl_box_s'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_l'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_l'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_m'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_m'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_s'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_s'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_s'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_s'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_s'],0)
+					$MyRow['locationname'], 
+					$MyRow['rldaysforpackaging'], 
+					$MyRow['rlfactorforpackaging'], 
+					locale_number_format_zero_blank($MyRow['qty_box_l'],0), 
+					locale_number_format_zero_blank($MyRow['ot_box_l'],0),
+					locale_number_format_zero_blank($MyRow['rl_box_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_box_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_box_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_s'],0), 
+					locale_number_format_zero_blank($MyRow['ot_box_s'],0),
+					locale_number_format_zero_blank($MyRow['rl_box_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_l'],0), 
+					locale_number_format_zero_blank($MyRow['ot_shopping_l'],0),
+					locale_number_format_zero_blank($MyRow['rl_shopping_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_s'],0), 
+					locale_number_format_zero_blank($MyRow['ot_shopping_s'],0),
+					locale_number_format_zero_blank($MyRow['rl_shopping_s'],0)
 					);
 
 			$i++;
@@ -2327,11 +2327,11 @@ function PackagingStatusForKapalLaut($RootPath){
 				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
@@ -2420,36 +2420,36 @@ function PackagingStatusForKapalLaut($RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['locationname'], 
-					$myrow['rldaysforpackaging'], 
-					$myrow['rlfactorforpackaging'], 
-					locale_number_format_zero_blank($myrow['qty_box_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_box_l'],0),
-					locale_number_format_zero_blank($myrow['rl_box_l'],0),
-					locale_number_format_zero_blank($myrow['qty_box_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_box_m'],0),
-					locale_number_format_zero_blank($myrow['rl_box_m'],0),
-					locale_number_format_zero_blank($myrow['qty_box_s'],0), 
-					locale_number_format_zero_blank($myrow['ot_box_s'],0),
-					locale_number_format_zero_blank($myrow['rl_box_s'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_l'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_l'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_m'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_m'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_s'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_s'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_s'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_s'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_s'],0)
+					$MyRow['locationname'], 
+					$MyRow['rldaysforpackaging'], 
+					$MyRow['rlfactorforpackaging'], 
+					locale_number_format_zero_blank($MyRow['qty_box_l'],0), 
+					locale_number_format_zero_blank($MyRow['ot_box_l'],0),
+					locale_number_format_zero_blank($MyRow['rl_box_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_box_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_box_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_s'],0), 
+					locale_number_format_zero_blank($MyRow['ot_box_s'],0),
+					locale_number_format_zero_blank($MyRow['rl_box_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_l'],0), 
+					locale_number_format_zero_blank($MyRow['ot_shopping_l'],0),
+					locale_number_format_zero_blank($MyRow['rl_shopping_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_s'],0), 
+					locale_number_format_zero_blank($MyRow['ot_shopping_s'],0),
+					locale_number_format_zero_blank($MyRow['rl_shopping_s'],0)
 					);
 
 			$i++;
@@ -2524,11 +2524,11 @@ function PackagingStatusForOutlet($RootPath){
 				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
@@ -2582,21 +2582,21 @@ function PackagingStatusForOutlet($RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['locationname'], 
-					$myrow['rldaysforpackaging'], 
-					$myrow['rlfactorforpackaging'], 
-					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_l'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_l'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_m'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_m'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($myrow['ot_bag_s'],0),
-					locale_number_format_zero_blank($myrow['rl_bag_s'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($myrow['ot_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['rl_shopping_m'],0)
+					$MyRow['locationname'], 
+					$MyRow['rldaysforpackaging'], 
+					$MyRow['rlfactorforpackaging'], 
+					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+					locale_number_format_zero_blank($MyRow['ot_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['rl_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+					locale_number_format_zero_blank($MyRow['ot_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['rl_shopping_m'],0)
 					);
 
 			$i++;
@@ -2702,7 +2702,7 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
 	
@@ -2727,8 +2727,8 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 	$totalqty_shopping_s    = 0;
 	$totalsales_shopping_s  = 0;
 
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
@@ -2811,55 +2811,55 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['locationname'], 
-					locale_number_format_zero_blank($myrow['qty_box_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_box_l'],0),
-					locale_number_format_zero_blank($myrow['qty_box_l']/($myrow['sales_box_l']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_box_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_box_m'],0),
-					locale_number_format_zero_blank($myrow['qty_box_m']/($myrow['sales_box_m']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_box_s'],0), 
-					locale_number_format_zero_blank($myrow['sales_box_s'],0),
-					locale_number_format_zero_blank($myrow['qty_box_s']/($myrow['sales_box_s']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_l'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_l']/($myrow['sales_bag_l']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_m'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_m']/($myrow['sales_bag_m']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_s'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_s']/($myrow['sales_bag_s']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l']/($myrow['sales_shopping_l']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m']/($myrow['sales_shopping_m']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_s'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_s'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_s']/($myrow['sales_shopping_s']/$NumDays),0)
+					$MyRow['locationname'], 
+					locale_number_format_zero_blank($MyRow['qty_box_l'],0), 
+					locale_number_format_zero_blank($MyRow['sales_box_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_l']/($MyRow['sales_box_l']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_box_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_box_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_m']/($MyRow['sales_box_m']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_box_s'],0), 
+					locale_number_format_zero_blank($MyRow['sales_box_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_s']/($MyRow['sales_box_s']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_l']/($MyRow['sales_bag_l']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m']/($MyRow['sales_bag_m']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s']/($MyRow['sales_bag_s']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_l'],0), 
+					locale_number_format_zero_blank($MyRow['sales_shopping_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_l']/($MyRow['sales_shopping_l']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_s'],0), 
+					locale_number_format_zero_blank($MyRow['sales_shopping_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_s']/($MyRow['sales_shopping_s']/$NumDays),0)
 					);
-			$totalqty_box_l   = $totalqty_box_l + $myrow['qty_box_l'];
-			$totalsales_box_l = $totalsales_box_l + $myrow['sales_box_l'];
-			$totalqty_box_m   = $totalqty_box_m + $myrow['qty_box_m'];
-			$totalsales_box_m = $totalsales_box_m + $myrow['sales_box_m'];
-			$totalqty_box_s   = $totalqty_box_s + $myrow['qty_box_s'];
-			$totalsales_box_s = $totalsales_box_s + $myrow['sales_box_s'];
+			$totalqty_box_l   = $totalqty_box_l + $MyRow['qty_box_l'];
+			$totalsales_box_l = $totalsales_box_l + $MyRow['sales_box_l'];
+			$totalqty_box_m   = $totalqty_box_m + $MyRow['qty_box_m'];
+			$totalsales_box_m = $totalsales_box_m + $MyRow['sales_box_m'];
+			$totalqty_box_s   = $totalqty_box_s + $MyRow['qty_box_s'];
+			$totalsales_box_s = $totalsales_box_s + $MyRow['sales_box_s'];
 
-			$totalqty_bag_l   = $totalqty_bag_l + $myrow['qty_bag_l'];
-			$totalsales_bag_l = $totalsales_bag_l + $myrow['sales_bag_l'];
-			$totalqty_bag_m   = $totalqty_bag_m + $myrow['qty_bag_m'];
-			$totalsales_bag_m = $totalsales_bag_m + $myrow['sales_bag_m'];
-			$totalqty_bag_s   = $totalqty_bag_s + $myrow['qty_bag_s'];
-			$totalsales_bag_s = $totalsales_bag_s + $myrow['sales_bag_s'];
+			$totalqty_bag_l   = $totalqty_bag_l + $MyRow['qty_bag_l'];
+			$totalsales_bag_l = $totalsales_bag_l + $MyRow['sales_bag_l'];
+			$totalqty_bag_m   = $totalqty_bag_m + $MyRow['qty_bag_m'];
+			$totalsales_bag_m = $totalsales_bag_m + $MyRow['sales_bag_m'];
+			$totalqty_bag_s   = $totalqty_bag_s + $MyRow['qty_bag_s'];
+			$totalsales_bag_s = $totalsales_bag_s + $MyRow['sales_bag_s'];
 
-			$totalqty_shopping_l    = $totalqty_shopping_l + $myrow['qty_shopping_l'];
-			$totalsales_shopping_l  = $totalsales_shopping_l + $myrow['sales_shopping_l'];
-			$totalqty_shopping_m    = $totalqty_shopping_m + $myrow['qty_shopping_m'];
-			$totalsales_shopping_m  = $totalsales_shopping_m + $myrow['sales_shopping_m'];
-			$totalqty_shopping_s    = $totalqty_shopping_s + $myrow['qty_shopping_s'];
-			$totalsales_shopping_s  = $totalsales_shopping_s + $myrow['sales_shopping_s'];
+			$totalqty_shopping_l    = $totalqty_shopping_l + $MyRow['qty_shopping_l'];
+			$totalsales_shopping_l  = $totalsales_shopping_l + $MyRow['sales_shopping_l'];
+			$totalqty_shopping_m    = $totalqty_shopping_m + $MyRow['qty_shopping_m'];
+			$totalsales_shopping_m  = $totalsales_shopping_m + $MyRow['sales_shopping_m'];
+			$totalqty_shopping_s    = $totalqty_shopping_s + $MyRow['qty_shopping_s'];
+			$totalsales_shopping_s  = $totalsales_shopping_s + $MyRow['sales_shopping_s'];
 
 			$i++;
 		}
@@ -3023,7 +3023,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
 	
@@ -3048,8 +3048,8 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 	$totalqty_shopping_s    = 0;
 	$totalsales_shopping_s  = 0;
 
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
@@ -3132,55 +3132,55 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['locationname'], 
-					locale_number_format_zero_blank($myrow['qty_box_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_box_l'],0),
-					locale_number_format_zero_blank($myrow['qty_box_l']/($myrow['sales_box_l']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_box_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_box_m'],0),
-					locale_number_format_zero_blank($myrow['qty_box_m']/($myrow['sales_box_m']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_box_s'],0), 
-					locale_number_format_zero_blank($myrow['sales_box_s'],0),
-					locale_number_format_zero_blank($myrow['qty_box_s']/($myrow['sales_box_s']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_l'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_l']/($myrow['sales_bag_l']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_m'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_m']/($myrow['sales_bag_m']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_s'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_s']/($myrow['sales_bag_s']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_l'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_l']/($myrow['sales_shopping_l']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m']/($myrow['sales_shopping_m']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_s'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_s'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_s']/($myrow['sales_shopping_s']/$NumDays),0)
+					$MyRow['locationname'], 
+					locale_number_format_zero_blank($MyRow['qty_box_l'],0), 
+					locale_number_format_zero_blank($MyRow['sales_box_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_l']/($MyRow['sales_box_l']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_box_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_box_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_m']/($MyRow['sales_box_m']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_box_s'],0), 
+					locale_number_format_zero_blank($MyRow['sales_box_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_box_s']/($MyRow['sales_box_s']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_l']/($MyRow['sales_bag_l']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m']/($MyRow['sales_bag_m']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s']/($MyRow['sales_bag_s']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_l'],0), 
+					locale_number_format_zero_blank($MyRow['sales_shopping_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_l']/($MyRow['sales_shopping_l']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_s'],0), 
+					locale_number_format_zero_blank($MyRow['sales_shopping_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_s']/($MyRow['sales_shopping_s']/$NumDays),0)
 					);
-			$totalqty_box_l   = $totalqty_box_l + $myrow['qty_box_l'];
-			$totalsales_box_l = $totalsales_box_l + $myrow['sales_box_l'];
-			$totalqty_box_m   = $totalqty_box_m + $myrow['qty_box_m'];
-			$totalsales_box_m = $totalsales_box_m + $myrow['sales_box_m'];
-			$totalqty_box_s   = $totalqty_box_s + $myrow['qty_box_s'];
-			$totalsales_box_s = $totalsales_box_s + $myrow['sales_box_s'];
+			$totalqty_box_l   = $totalqty_box_l + $MyRow['qty_box_l'];
+			$totalsales_box_l = $totalsales_box_l + $MyRow['sales_box_l'];
+			$totalqty_box_m   = $totalqty_box_m + $MyRow['qty_box_m'];
+			$totalsales_box_m = $totalsales_box_m + $MyRow['sales_box_m'];
+			$totalqty_box_s   = $totalqty_box_s + $MyRow['qty_box_s'];
+			$totalsales_box_s = $totalsales_box_s + $MyRow['sales_box_s'];
 
-			$totalqty_bag_l   = $totalqty_bag_l + $myrow['qty_bag_l'];
-			$totalsales_bag_l = $totalsales_bag_l + $myrow['sales_bag_l'];
-			$totalqty_bag_m   = $totalqty_bag_m + $myrow['qty_bag_m'];
-			$totalsales_bag_m = $totalsales_bag_m + $myrow['sales_bag_m'];
-			$totalqty_bag_s   = $totalqty_bag_s + $myrow['qty_bag_s'];
-			$totalsales_bag_s = $totalsales_bag_s + $myrow['sales_bag_s'];
+			$totalqty_bag_l   = $totalqty_bag_l + $MyRow['qty_bag_l'];
+			$totalsales_bag_l = $totalsales_bag_l + $MyRow['sales_bag_l'];
+			$totalqty_bag_m   = $totalqty_bag_m + $MyRow['qty_bag_m'];
+			$totalsales_bag_m = $totalsales_bag_m + $MyRow['sales_bag_m'];
+			$totalqty_bag_s   = $totalqty_bag_s + $MyRow['qty_bag_s'];
+			$totalsales_bag_s = $totalsales_bag_s + $MyRow['sales_bag_s'];
 
-			$totalqty_shopping_l    = $totalqty_shopping_l + $myrow['qty_shopping_l'];
-			$totalsales_shopping_l  = $totalsales_shopping_l + $myrow['sales_shopping_l'];
-			$totalqty_shopping_m    = $totalqty_shopping_m + $myrow['qty_shopping_m'];
-			$totalsales_shopping_m  = $totalsales_shopping_m + $myrow['sales_shopping_m'];
-			$totalqty_shopping_s    = $totalqty_shopping_s + $myrow['qty_shopping_s'];
-			$totalsales_shopping_s  = $totalsales_shopping_s + $myrow['sales_shopping_s'];
+			$totalqty_shopping_l    = $totalqty_shopping_l + $MyRow['qty_shopping_l'];
+			$totalsales_shopping_l  = $totalsales_shopping_l + $MyRow['sales_shopping_l'];
+			$totalqty_shopping_m    = $totalqty_shopping_m + $MyRow['qty_shopping_m'];
+			$totalsales_shopping_m  = $totalsales_shopping_m + $MyRow['sales_shopping_m'];
+			$totalqty_shopping_s    = $totalqty_shopping_s + $MyRow['qty_shopping_s'];
+			$totalsales_shopping_s  = $totalsales_shopping_s + $MyRow['sales_shopping_s'];
 
 			$i++;
 		}
@@ -3315,9 +3315,9 @@ function PackagingUsageByWeeks($RootPath){
 			WHERE stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND stockmaster.discontinued = 0
 			ORDER BY stockmaster.stockid";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Shop Packaging Usage by week'. '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -3337,15 +3337,15 @@ function PackagingUsageByWeeks($RootPath){
 					</tr>
 				</thead>
 				<tbody>';
-		while ($myrow = DB_fetch_array($result)) {
-			$Average = ($myrow['useweek1'] + 
-					$myrow['useweek2'] + 
-					$myrow['useweek3'] + 
-					$myrow['useweek4'] + 
-					$myrow['useweek5'] + 
-					$myrow['useweek6'] + 
-					$myrow['useweek7'] + 
-					$myrow['useweek8']) / 8;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$Average = ($MyRow['useweek1'] + 
+					$MyRow['useweek2'] + 
+					$MyRow['useweek3'] + 
+					$MyRow['useweek4'] + 
+					$MyRow['useweek5'] + 
+					$MyRow['useweek6'] + 
+					$MyRow['useweek7'] + 
+					$MyRow['useweek8']) / 8;
 					
 			printf('<tr class="striped_row">
 					<td>%s</td>
@@ -3360,16 +3360,16 @@ function PackagingUsageByWeeks($RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['stockid'], 
-					$myrow['description'], 
-					locale_number_format_zero_blank($myrow['useweek1'],0), 
-					locale_number_format_zero_blank($myrow['useweek2'],0), 
-					locale_number_format_zero_blank($myrow['useweek3'],0), 
-					locale_number_format_zero_blank($myrow['useweek4'],0), 
-					locale_number_format_zero_blank($myrow['useweek5'],0), 
-					locale_number_format_zero_blank($myrow['useweek6'],0), 
-					locale_number_format_zero_blank($myrow['useweek7'],0), 
-					locale_number_format_zero_blank($myrow['useweek8'],0), 
+					$MyRow['stockid'], 
+					$MyRow['description'], 
+					locale_number_format_zero_blank($MyRow['useweek1'],0), 
+					locale_number_format_zero_blank($MyRow['useweek2'],0), 
+					locale_number_format_zero_blank($MyRow['useweek3'],0), 
+					locale_number_format_zero_blank($MyRow['useweek4'],0), 
+					locale_number_format_zero_blank($MyRow['useweek5'],0), 
+					locale_number_format_zero_blank($MyRow['useweek6'],0), 
+					locale_number_format_zero_blank($MyRow['useweek7'],0), 
+					locale_number_format_zero_blank($MyRow['useweek8'],0), 
 					locale_number_format_zero_blank($Average,0) 
 					);
 		}
@@ -3427,7 +3427,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
 			ORDER BY locations.loccode";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$i = 1;
 	
@@ -3441,8 +3441,8 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 	$totalqty_shopping_m    = 0;
 	$totalsales_shopping_m  = 0;
 
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			if($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
@@ -3490,30 +3490,30 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['locationname'], 
-					locale_number_format_zero_blank($myrow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_l'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_l']/($myrow['sales_bag_l']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_m'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_m']/($myrow['sales_bag_m']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($myrow['sales_bag_s'],0),
-					locale_number_format_zero_blank($myrow['qty_bag_s']/($myrow['sales_bag_s']/$NumDays),0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($myrow['sales_shopping_m'],0),
-					locale_number_format_zero_blank($myrow['qty_shopping_m']/($myrow['sales_shopping_m']/$NumDays),0)
+					$MyRow['locationname'], 
+					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_l'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_l']/($MyRow['sales_bag_l']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_m']/($MyRow['sales_bag_m']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+					locale_number_format_zero_blank($MyRow['sales_bag_s'],0),
+					locale_number_format_zero_blank($MyRow['qty_bag_s']/($MyRow['sales_bag_s']/$NumDays),0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+					locale_number_format_zero_blank($MyRow['sales_shopping_m'],0),
+					locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0)
 					);
 
-			$totalqty_bag_l   = $totalqty_bag_l + $myrow['qty_bag_l'];
-			$totalsales_bag_l = $totalsales_bag_l + $myrow['sales_bag_l'];
-			$totalqty_bag_m   = $totalqty_bag_m + $myrow['qty_bag_m'];
-			$totalsales_bag_m = $totalsales_bag_m + $myrow['sales_bag_m'];
-			$totalqty_bag_s   = $totalqty_bag_s + $myrow['qty_bag_s'];
-			$totalsales_bag_s = $totalsales_bag_s + $myrow['sales_bag_s'];
+			$totalqty_bag_l   = $totalqty_bag_l + $MyRow['qty_bag_l'];
+			$totalsales_bag_l = $totalsales_bag_l + $MyRow['sales_bag_l'];
+			$totalqty_bag_m   = $totalqty_bag_m + $MyRow['qty_bag_m'];
+			$totalsales_bag_m = $totalsales_bag_m + $MyRow['sales_bag_m'];
+			$totalqty_bag_s   = $totalqty_bag_s + $MyRow['qty_bag_s'];
+			$totalsales_bag_s = $totalsales_bag_s + $MyRow['sales_bag_s'];
 
-			$totalqty_shopping_m    = $totalqty_shopping_m + $myrow['qty_shopping_m'];
-			$totalsales_shopping_m  = $totalsales_shopping_m + $myrow['sales_shopping_m'];
+			$totalqty_shopping_m    = $totalqty_shopping_m + $MyRow['qty_shopping_m'];
+			$totalsales_shopping_m  = $totalsales_shopping_m + $MyRow['sales_shopping_m'];
 
 			$i++;
 		}
@@ -3565,8 +3565,8 @@ function PettyCashStatus($currency){
 			HAVING ( SUM(pcashdetails.amount) <= -0.01
 					OR SUM(pcashdetails.amount) >= 0.01)";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $currency . ' accounts'  . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -3580,18 +3580,18 @@ function PettyCashStatus($currency){
 				<tbody>';
 		$i = 1;
 		$total = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					</tr>', 
 					$i, 
-					$myrow['tabcode'], 
-					locale_number_format($myrow['amount'],0)
+					$MyRow['tabcode'], 
+					locale_number_format($MyRow['amount'],0)
 					);
 			$i++;
-			$total = $total + $myrow['amount'];
+			$total = $total + $MyRow['amount'];
 		}
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
@@ -3742,8 +3742,8 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 							AND salesorders.orddate <= '". $YesterdayA . "'
 							AND salesorders.salesperson = salesman.salesmancode) DESC";
 	}
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Title  .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -3760,24 +3760,24 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			if (($typereport == "Shop") OR ($typereport == "Online")){
-				$Code = $myrow['debtorno'];
-				$Name = $myrow['name'];
-				if (($myrow['salesA'] > 0) AND ($myrow['yearlyrent'] > 0)){
-					$Rent = round(($myrow['yearlyrent'] / 365 * $NumDaysA) / $myrow['salesA'] * 100) . '%';
+				$Code = $MyRow['debtorno'];
+				$Name = $MyRow['name'];
+				if (($MyRow['salesA'] > 0) AND ($MyRow['yearlyrent'] > 0)){
+					$Rent = round(($MyRow['yearlyrent'] / 365 * $NumDaysA) / $MyRow['salesA'] * 100) . '%';
 				}else{
 					$Rent = "";
 				}
 			}else{
-				$Code = $myrow['salesmancode'];
-				$Name = $myrow['salesmanname'];
+				$Code = $MyRow['salesmancode'];
+				$Name = $MyRow['salesmanname'];
 				$Rent = "";
 			}
 			
-			if ($myrow['salesB'] != 0){
-				$percent = (($myrow['salesA'])-($myrow['salesB']))/($myrow['salesB']) * 100;
+			if ($MyRow['salesB'] != 0){
+				$percent = (($MyRow['salesA'])-($MyRow['salesB']))/($MyRow['salesB']) * 100;
 			}else{
 				$percent = 0;
 			}
@@ -3788,7 +3788,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 			if ($percent < -MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
-			if (($myrow['salesA'] > 0) OR ($myrow['salesB'] > 0)){
+			if (($MyRow['salesA'] > 0) OR ($MyRow['salesB'] > 0)){
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -3801,30 +3801,30 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 						$i,
 						$Code,
 						$Name,
-						locale_number_format($myrow['salesA'],0), 
-						locale_number_format($myrow['salesB'],0), 
+						locale_number_format($MyRow['salesA'],0), 
+						locale_number_format($MyRow['salesB'],0), 
 						$trend,
 						$Rent
 						);
 				$i++;
 			}
 
-			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] > 0)){
-				$TotalBothYearsDateA = $TotalBothYearsDateA +($myrow['salesA']);
-				$TotalBothYearsDateB = $TotalBothYearsDateB +($myrow['salesB']);
-				$TotalBothYearsRent = $TotalBothYearsRent +($myrow['yearlyrent']);
+			if (($MyRow['salesA'] > 0) AND ($MyRow['salesB'] > 0)){
+				$TotalBothYearsDateA = $TotalBothYearsDateA +($MyRow['salesA']);
+				$TotalBothYearsDateB = $TotalBothYearsDateB +($MyRow['salesB']);
+				$TotalBothYearsRent = $TotalBothYearsRent +($MyRow['yearlyrent']);
 			}
-			if (($myrow['salesA'] > 0) AND ($myrow['salesB'] == 0)){
-				$TotalNewDateA = $TotalNewDateA +($myrow['salesA']);
-				$TotalNewRent = $TotalNewRent +($myrow['yearlyrent']);
+			if (($MyRow['salesA'] > 0) AND ($MyRow['salesB'] == 0)){
+				$TotalNewDateA = $TotalNewDateA +($MyRow['salesA']);
+				$TotalNewRent = $TotalNewRent +($MyRow['yearlyrent']);
 			}
-			if (($myrow['salesA'] == 0) AND ($myrow['salesB'] > 0)){
-				$TotalOldDateB = $TotalOldDateB +($myrow['salesB']);
-				$TotalOldRent = $TotalOldRent +($myrow['yearlyrent']);
+			if (($MyRow['salesA'] == 0) AND ($MyRow['salesB'] > 0)){
+				$TotalOldDateB = $TotalOldDateB +($MyRow['salesB']);
+				$TotalOldRent = $TotalOldRent +($MyRow['yearlyrent']);
 			}
-			$TotalDateA = $TotalDateA +($myrow['salesA']);
-			$TotalRent = $TotalRent +($myrow['yearlyrent']);
-			$TotalDateB = $TotalDateB +($myrow['salesB']);
+			$TotalDateA = $TotalDateA +($MyRow['salesA']);
+			$TotalRent = $TotalRent +($MyRow['yearlyrent']);
+			$TotalDateB = $TotalDateB +($MyRow['salesB']);
 		}
 		if ($typereport == "Shop"){
 			$percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
@@ -3943,9 +3943,9 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 			GROUP BY gltrans.type, gltrans.typeno 
 			HAVING ABS(SUM(gltrans.amount)) >= 1
 			ORDER BY gltrans.trandate";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Unbalanced GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -3958,9 +3958,9 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 					</tr>
 				</thead>
 				<tbody>';
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
-			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'] . '">' . $myrow['typeno'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&TransNo=' . $MyRow['typeno'] . '">' . $MyRow['typeno'] . '</a>';
 					
 			printf('<tr class="striped_row">
 					<td>%s</td>
@@ -3968,10 +3968,10 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					ConvertSQLDateTime($myrow['trandate']), 
-					$myrow['typename'], 
+					ConvertSQLDateTime($MyRow['trandate']), 
+					$MyRow['typename'], 
 					$CodeLink, 
-					locale_number_format($myrow['unbalance'],0)
+					locale_number_format($MyRow['unbalance'],0)
 					);
 		}
 		echo '</tbody></table>
@@ -3990,9 +3990,9 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 			WHERE gltrans.trandate >= '" . $StartDate . "'
 				AND account = ''
 			ORDER BY gltrans.counterindex";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Empty account code GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -4006,9 +4006,9 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 					</tr>
 				</thead>
 				<tbody>';
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
-			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $myrow['type'] . '&TransNo=' . $myrow['typeno'] . '">' . $myrow['typeno'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&TransNo=' . $MyRow['typeno'] . '">' . $MyRow['typeno'] . '</a>';
 					
 			printf('<tr class="striped_row">
 					<td>%s</td>
@@ -4017,13 +4017,13 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					locale_number_format($myrow['counterindex'],0),
-					ConvertSQLDateTime($myrow['trandate']), 
-					$myrow['type'], 
+					locale_number_format($MyRow['counterindex'],0),
+					ConvertSQLDateTime($MyRow['trandate']), 
+					$MyRow['type'], 
 					$CodeLink, 
-					locale_number_format($myrow['amount'],0)
+					locale_number_format($MyRow['amount'],0)
 					);
-			$TotalAmount += $myrow['amount'];
+			$TotalAmount += $MyRow['amount'];
 		}
 		printf('<tr class="striped_row">
 				<td>%s</td>
@@ -4055,8 +4055,8 @@ function ShowKPIHistory($NumDays){
 			WHERE date >= '" . $StartDate . "'
 			GROUP BY class, concept
 			ORDER BY class, concept";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . 'General KPI last ' . $NumDays . ' days' . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -4070,7 +4070,7 @@ function ShowKPIHistory($NumDays){
 					</tr>
 				</thead>
 				<tbody>';
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s</td>
@@ -4078,11 +4078,11 @@ function ShowKPIHistory($NumDays){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['class'], 
-					$myrow['concept'], 
-					locale_number_format_kpi($myrow['minimumvalue']),
-					locale_number_format_kpi($myrow['averagevalue']),
-					locale_number_format_kpi($myrow['maximumvalue'])
+					$MyRow['class'], 
+					$MyRow['concept'], 
+					locale_number_format_kpi($MyRow['minimumvalue']),
+					locale_number_format_kpi($MyRow['averagevalue']),
+					locale_number_format_kpi($MyRow['maximumvalue'])
 					);
 		}
 		echo '</tbody></table>
@@ -4108,7 +4108,7 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 	}
 	$TableResult = array();
 	// now populate the array with info
-	$sql = "SELECT COUNT(counterindex) AS total, 
+	$SQL = "SELECT COUNT(counterindex) AS total, 
 				klmaintenancetasks.loccode,
 				locations.locationname,
 				klmaintenancetasks.maintenancetype
@@ -4124,11 +4124,11 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 			$WhereStatus . "
 			GROUP BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype
 			ORDER BY locationname, klmaintenancetasks.maintenancetype";
-	$result = DB_query($sql);
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
-			$TableResult[$myrow['loccode']]['locationname'] = $myrow['locationname'];
-			$TableResult[$myrow['loccode']][$myrow['maintenancetype']] = $myrow['total'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
+			$TableResult[$MyRow['loccode']]['locationname'] = $MyRow['locationname'];
+			$TableResult[$MyRow['loccode']][$MyRow['maintenancetype']] = $MyRow['total'];
 		}
 		$TableHeader = '<tr>
 						<th class="SortedColumn">' . _('Location') . '</th>

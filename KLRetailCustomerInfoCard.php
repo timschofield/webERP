@@ -64,9 +64,9 @@ if (isset($_POST['submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 
-	$sql="DELETE FROM klretailcustomers WHERE orderno='". $SelectedOrder."'";
+	$SQL="DELETE FROM klretailcustomers WHERE orderno='". $SelectedOrder."'";
 	$ErrMsg = _('The customer retail info could not be deleted because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 	prnMsg(_('Customer Info Card for order') . ' ' . $SelectedOrder . ' ' . _('has been deleted'),'success');
 	unset ($SelectedOrder);
@@ -80,7 +80,7 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT salesorders.orderno,
+	$SQL = "SELECT salesorders.orderno,
 					salesorders.customerref,
 					salesorders.orddate,
 					salesorders.klpaidcash,
@@ -100,7 +100,7 @@ or deletion of the records*/
 			WHERE salesorders.salesperson ='".$_SESSION['SalesmanLogin']."'
 				AND salesorders.orddate >=CURDATE()
 			ORDER BY salesorders.orddate DESC";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -115,7 +115,7 @@ or deletion of the records*/
 			<th>' . _('Sex') . '</th>
 		</tr>';
 	$k=0;
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
@@ -125,15 +125,15 @@ or deletion of the records*/
 		$k++;
 	}
 
-	if ($myrow['date_of_birth'] == '') {
+	if ($MyRow['date_of_birth'] == '') {
 		$TextDOB = '';
 	} else {
-		$TextDOB = ConvertSQLDate($myrow['date_of_birth']);
+		$TextDOB = ConvertSQLDate($MyRow['date_of_birth']);
 	}
-	if ($myrow['Country'] == '0') {
+	if ($MyRow['Country'] == '0') {
 		$TextCountry = '';
 	} else {
-		$TextCountry = $myrow['Country'];
+		$TextCountry = $MyRow['Country'];
 	}
 
 	printf('<td>%s</td>
@@ -148,17 +148,17 @@ or deletion of the records*/
 			<td><a href="%sSelectedOrder=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedOrder=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer info card data?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['orderno'],
-			$myrow['customerref'],
-			ConvertSQLDate($myrow['orddate']),
-			$myrow['firstname'],
-			$myrow['lastname'],
+			$MyRow['orderno'],
+			$MyRow['customerref'],
+			ConvertSQLDate($MyRow['orddate']),
+			$MyRow['firstname'],
+			$MyRow['lastname'],
 			$TextCountry,
 			$TextDOB,
-			$myrow['email'],
-			$myrow['sex'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['orderno'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['orderno']);
+			$MyRow['email'],
+			$MyRow['sex'],
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['orderno'],
+			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['orderno']);
 
 	} //END WHILE LIST LOOP
 	echo '</table>
@@ -179,7 +179,7 @@ if (! isset($_GET['delete'])) {
 
 	if (isset($SelectedOrder)) {
 		//editing an existing Order
-	$sql = "SELECT salesorders.orderno,
+	$SQL = "SELECT salesorders.orderno,
 					salesorders.customerref,
 					salesorders.orddate,
 					salesorders.klpaidcash,
@@ -197,22 +197,22 @@ if (! isset($_GET['delete'])) {
 				ON salesorders.orderno = klretailcustomers.orderno
 			WHERE salesorders.orderno = '".$SelectedOrder."'";
 				
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['orderno'] = $myrow['orderno'];
-		$_POST['customerref'] = $myrow['customerref'];
-		$_POST['orddate'] = $myrow['orddate'];
-		$_POST['klpaidcash'] = $myrow['klpaidcash'];
-		$_POST['klpaidcreditcard'] = $myrow['klpaidcreditcard'];
-		$_POST['klreturnedgoods'] = $myrow['klreturnedgoods'];
-		$_POST['klvouchers'] = $myrow['klvouchers'];
-		$_POST['FirstName'] = $myrow['firstname'];
-		$_POST['LastName'] = $myrow['lastname'];
-		$_POST['Country'] = $myrow['country'];
-		$_POST['date_of_birth'] = $myrow['date_of_birth'];
-		$_POST['Email'] = $myrow['email'];
-		$_POST['Sex'] = $myrow['sex'];
+		$_POST['orderno'] = $MyRow['orderno'];
+		$_POST['customerref'] = $MyRow['customerref'];
+		$_POST['orddate'] = $MyRow['orddate'];
+		$_POST['klpaidcash'] = $MyRow['klpaidcash'];
+		$_POST['klpaidcreditcard'] = $MyRow['klpaidcreditcard'];
+		$_POST['klreturnedgoods'] = $MyRow['klreturnedgoods'];
+		$_POST['klvouchers'] = $MyRow['klvouchers'];
+		$_POST['FirstName'] = $MyRow['firstname'];
+		$_POST['LastName'] = $MyRow['lastname'];
+		$_POST['Country'] = $MyRow['country'];
+		$_POST['date_of_birth'] = $MyRow['date_of_birth'];
+		$_POST['Email'] = $MyRow['email'];
+		$_POST['Sex'] = $MyRow['sex'];
 
 		echo '<input type="hidden" name="SelectedOrder" value="' . $SelectedOrder . '" />';
 		echo '<table class="selection">

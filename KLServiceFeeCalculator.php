@@ -26,12 +26,12 @@ if (isset($_GET['ServiceCode'])){
 	$ServiceCode = '';
 }
 
-$result = DB_query("SELECT stockid
+$Result = DB_query("SELECT stockid
 					FROM stockmaster
 					WHERE stockid='".$StockID."'",
 					_('Could not retrieve the requested item'),
 					_('The SQL used to retrieve the items was'));
-$myrow = DB_fetch_array($result);
+$MyRow = DB_fetch_array($Result);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -42,17 +42,17 @@ $SQL = "SELECT servicecode,
 	FROM klservicetypes
 	ORDER BY servicedescription";
 
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 echo '<tr>
 	<td>' . _('Type of Service') . ':</td>
 	<td><select name="ServiceCode" required="required" autofocus="autofocus" >';
-while($myrow = DB_fetch_array($result)) {
-	if(isset($_POST['ServiceCode']) and $myrow['servicecode']==$_POST['ServiceCode']) {
+while($MyRow = DB_fetch_array($Result)) {
+	if(isset($_POST['ServiceCode']) and $MyRow['servicecode']==$_POST['ServiceCode']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['servicecode'] . '">' . $myrow['servicedescription'] . '</option>';
+	echo $MyRow['servicecode'] . '">' . $MyRow['servicedescription'] . '</option>';
 }
 echo '</select></td>
 	</tr>';
@@ -81,14 +81,14 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				AND stockmaster.stockid='".$StockID."'
 			ORDER BY prices.startdate DESC";
 
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	if (DB_num_rows($result) == 0){
+	if (DB_num_rows($Result) == 0){
 		$Message = "Stock code can't be found";
 	}else{
-		if (($myrow['discontinued'] == 1) 
-			OR (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))){
+		if (($MyRow['discontinued'] == 1) 
+			OR (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET))){
 			// for discounted or obsolete //
 			if (($ServiceCode == "BENTUKBENGKOK") 
 				OR ($ServiceCode == "CRYSTALLEPAS") 
@@ -107,15 +107,15 @@ if (($StockID != '') AND ($ServiceCode != '')){
 					OR ($ServiceCode == "RANTAIPUTUS")){
 					$Message = "CAN'T be serviced.";
 				}else{
-					if ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
-						$FeeService = $myrow['pricetier01'];
-					}elseif ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
-						$FeeService = $myrow['pricetier02'];
+					if ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
+						$FeeService = $MyRow['pricetier01'];
+					}elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+						$FeeService = $MyRow['pricetier02'];
 					}else{
-						$FeeService = $myrow['pricetier03'];
+						$FeeService = $MyRow['pricetier03'];
 					}
-					if ($myrow['klservicebyreplacement'] == 1){
-						$FeeReplacement = $myrow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
+					if ($MyRow['klservicebyreplacement'] == 1){
+						$FeeReplacement = $MyRow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
 					}else{
 						$FeeReplacement = 0;
 					}
@@ -132,18 +132,18 @@ if (($StockID != '') AND ($ServiceCode != '')){
 				$Message = "Service fee can't be calculated now. Send to office to be evaluated.";
 			}else{
 				if (($ServiceCode == "BERUBAHWARNA") 
-					AND (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
+					AND (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_BLINK))){
 					$Message = "CAN'T be serviced.";
 				}else{
-					if ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
-						$FeeService = $myrow['pricetier01'];
-					}elseif ($myrow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
-						$FeeService = $myrow['pricetier02'];
+					if ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_01){
+						$FeeService = $MyRow['pricetier01'];
+					}elseif ($MyRow['price'] <= RETAIL_PRICE_FOR_SERVICE_TIER_02){
+						$FeeService = $MyRow['pricetier02'];
 					}else{
-						$FeeService = $myrow['pricetier03'];
+						$FeeService = $MyRow['pricetier03'];
 					}
-					if ($myrow['klservicebyreplacement'] == 1){
-						$FeeReplacement = $myrow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
+					if ($MyRow['klservicebyreplacement'] == 1){
+						$FeeReplacement = $MyRow['actualcost'] * FACTOR_SC_SERVICE_BY_REPLACEMENT;
 					}else{
 						$FeeReplacement = 0;
 					}
@@ -161,7 +161,7 @@ if (($StockID != '') AND ($ServiceCode != '')){
 			}
 		}
 	}
-	echo '<p class="page_title_text" align="center"><strong>' . $StockID . " - " . $myrow['description'] . '</strong></p>';
+	echo '<p class="page_title_text" align="center"><strong>' . $StockID . " - " . $MyRow['description'] . '</strong></p>';
 	echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
 }
 include('includes/footer.php');

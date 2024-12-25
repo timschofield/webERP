@@ -17,7 +17,7 @@ $begintime = time_start();
 
 // let's start from an emprty table
 /*$SQL = "TRUNCATE relateditems";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 */
 // Select items and classify them
 $SQL = "SELECT stockmaster.stockid,
@@ -25,8 +25,8 @@ $SQL = "SELECT stockmaster.stockid,
 		FROM stockmaster
 		WHERE discontinued = 0
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL);
-if (DB_num_rows($result) != 0){
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Find Related Items For Online Shop') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -38,39 +38,39 @@ if (DB_num_rows($result) != 0){
 	echo $TableHeader;
 	$k = 0; //row colour counter
 	$i = 0;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		
 /*		// Exception for DRAR items
-		if (substr($myrow['stockid'], 0,4) == "DRAR"){
-			$CodePreffix = substr($myrow['stockid'], 0,4);
+		if (substr($MyRow['stockid'], 0,4) == "DRAR"){
+			$CodePreffix = substr($MyRow['stockid'], 0,4);
 		}else{
-			$CodePreffix = substr($myrow['stockid'], 0,6);
+			$CodePreffix = substr($MyRow['stockid'], 0,6);
 		}
 
 		$SQLRelated = "SELECT stockmaster.stockid
 						FROM stockmaster
 						WHERE stockmaster.stockid LIKE '" . $CodePreffix. "%'
 							AND stockmaster.discontinued = 0
-							AND stockmaster.stockid != '" . $myrow['stockid'] . "'
+							AND stockmaster.stockid != '" . $MyRow['stockid'] . "'
 						ORDER BY stockmaster.stockid";
-		$resultrelated = DB_query($SQLRelated);
+		$Resultrelated = DB_query($SQLRelated);
 		
-		while ($myrelated = DB_fetch_array($resultrelated)) {
+		while ($myrelated = DB_fetch_array($Resultrelated)) {
 			$SQLExists = "SELECT *
 							FROM relateditems
-							WHERE relateditems.stockid = '" . $myrow['stockid'] . "'
+							WHERE relateditems.stockid = '" . $MyRow['stockid'] . "'
 								AND relateditems.related = '" . $myrelated['stockid'] . "'";
-			$resultExists = DB_query($SQLExists);
+			$ResultExists = DB_query($SQLExists);
 			
-			if (DB_num_rows($resultExists) == 0){
-				$sqlinsert = "INSERT INTO relateditems (
+			if (DB_num_rows($ResultExists) == 0){
+				$SQLinsert = "INSERT INTO relateditems (
 							stockid,
 							related)
 						VALUES (
-							UPPER('" . $myrow['stockid'] . "'),
+							UPPER('" . $MyRow['stockid'] . "'),
 							UPPER('" . $myrelated['stockid'] . "'))";
 				$ErrMsg =_('Could not insert the related items because');
-				$resultinsert = DB_query($sqlinsert,$ErrMsg);
+				$Resultinsert = DB_query($SQLinsert,$ErrMsg);
 
 				$i++;
 				$k = StartEvenOrOddRow($k);
@@ -79,28 +79,28 @@ if (DB_num_rows($result) != 0){
 						<td>%s</td>
 						</tr>', 
 						$i, 
-						$myrow['stockid'], 
+						$MyRow['stockid'], 
 						$myrelated['stockid']
 						);
 			}
 		}
 */		
-		if (ItemInList($myrow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISC_20_50)){
+		if (ItemInList($MyRow['categoryid'], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISC_20_50)){
 			$SQLExists = "SELECT *
 							FROM relateditems
-							WHERE relateditems.stockid = '" . $myrow['stockid'] . "'
+							WHERE relateditems.stockid = '" . $MyRow['stockid'] . "'
 								AND relateditems.related = 'WKPC01'";
-			$resultExists = DB_query($SQLExists);
+			$ResultExists = DB_query($SQLExists);
 			
-			if (DB_num_rows($resultExists) == 0){
-				$sqlinsert = "INSERT INTO relateditems (
+			if (DB_num_rows($ResultExists) == 0){
+				$SQLinsert = "INSERT INTO relateditems (
 							stockid,
 							related)
 						VALUES (
-							UPPER('" . $myrow['stockid'] . "'),
+							UPPER('" . $MyRow['stockid'] . "'),
 							'WKPC01')";
 				$ErrMsg =_('Could not insert the related items because');
-				$resultinsert = DB_query($sqlinsert,$ErrMsg);
+				$Resultinsert = DB_query($SQLinsert,$ErrMsg);
 
 				$i++;
 				$k = StartEvenOrOddRow($k);
@@ -109,7 +109,7 @@ if (DB_num_rows($result) != 0){
 						<td>%s</td>
 						</tr>', 
 						$i, 
-						$myrow['stockid'], 
+						$MyRow['stockid'], 
 						'WKPC01'
 						);
 			}

@@ -65,8 +65,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				GROUP BY klconsignment.stockid
 				ORDER BY klconsignment.stockid";
 
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			// prepare CSV file
 			header("Content-Type: text/csv");
 			header("Content-Disposition: attachment; filename=FakturPajak-" . $CompanyFrom . "-". $CompanyTo . "-". $NomorSeriFP . ".csv");
@@ -85,17 +85,17 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			$JumlahDPP = 0;
 			$JumlahPPN = 0;
 			$OFLines = '';
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
 				$LineType = 'OF';
-				$KodeObjek = $myrow['stockid'];
-				$Nama = $myrow['description'];
-				$HargaSatuan = round(($myrow['consignmentsale']/$myrow['qty']) / ((100 + PPN_PERCENT) / 100),$DecimalDigits);
-				$JumlahBarang = round($myrow['qty'],0);
+				$KodeObjek = $MyRow['stockid'];
+				$Nama = $MyRow['description'];
+				$HargaSatuan = round(($MyRow['consignmentsale']/$MyRow['qty']) / ((100 + PPN_PERCENT) / 100),$DecimalDigits);
+				$JumlahBarang = round($MyRow['qty'],0);
 				$HargaTotal = $HargaSatuan * $JumlahBarang;
 				$Diskon = 0;
 				$DPP = round($JumlahBarang *($HargaSatuan-$Diskon),$DecimalDigits);
-				$PPN = round($JumlahBarang *(($myrow['consignmentsale']/$myrow['qty'])-$HargaSatuan),$DecimalDigits);
+				$PPN = round($JumlahBarang *(($MyRow['consignmentsale']/$MyRow['qty'])-$HargaSatuan),$DecimalDigits);
 				$TarifPPNBM = 0;
 				$PPNBM = 0;
 				
@@ -136,8 +136,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 								daysinvoicedue
 							FROM klretailpartners
 							WHERE partnercode = '" . $CompanyTo . "'";
-			$resultCompanyTo = DB_query($SQLCompanyTo);
-			$myCompanyTo= DB_fetch_array($resultCompanyTo);
+			$ResultCompanyTo = DB_query($SQLCompanyTo);
+			$myCompanyTo= DB_fetch_array($ResultCompanyTo);
 
 
 			// Prepare the 1st line (FK) of the file 
@@ -299,7 +299,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 							AND saledate <= '" . $EndDateSQL . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
 				$DbgMsg = 'SQL to update klconsignment record: ';
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				$rTx = DB_Txn_Commit();
 			}
 

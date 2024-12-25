@@ -10,17 +10,17 @@ include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
 if (!isset($_POST['FromDate'])){
-	$sql = "SELECT 	salesorders.orddate
+	$SQL = "SELECT 	salesorders.orddate
 			FROM klretailcustomers, salesorders
 			WHERE klretailcustomers.orderno = salesorders.orderno
 				AND klretailcustomers.email != ''
 				AND klretailcustomers.exported = 'N'
 			ORDER BY salesorders.orddate ASC";
-	$result = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result) != 0){
 		// get the first date only
-		$myrow = DB_fetch_array($result);
-		$_POST['FromDate'] = ConvertSQLDate($myrow['orddate']);
+		$MyRow = DB_fetch_array($Result);
+		$_POST['FromDate'] = ConvertSQLDate($MyRow['orddate']);
 	}else{
 		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
@@ -59,7 +59,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		
-		$sql = "SELECT 	klretailcustomers.email,
+		$SQL = "SELECT 	klretailcustomers.email,
 						klretailcustomers.firstname,
 						klretailcustomers.lastname,
 						klretailcustomers.country,
@@ -85,8 +85,8 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 				ORDER BY klretailcustomers.orderno";
 		
 		$ErrMsg = _('The SQL to find the Retail Customer Data to export to Sendinblue');
-		$result = DB_query($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
 			$TxResult = DB_Txn_Begin();
 
 		// Create new PHPExcel object
@@ -117,34 +117,34 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 
 			// Add data
 			$i = 2;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, ReviseEmailAddress($myrow['email']));
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($myrow['lastname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['firstname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$myrow['country']]);
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['sex']);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, ReviseEmailAddress($MyRow['email']));
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($MyRow['lastname']));
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($MyRow['firstname']));
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$MyRow['country']]);
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $MyRow['sex']);
 				
-				if (($myrow['date_of_birth'] != '0000-00-00') AND ($myrow['date_of_birth'] < Date('Y-m-d'))){
-					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['date_of_birth']);
+				if (($MyRow['date_of_birth'] != '0000-00-00') AND ($MyRow['date_of_birth'] < Date('Y-m-d'))){
+					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $MyRow['date_of_birth']);
 				}
 				
-				if ($myrow['age'] != '0'){
-					$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $myrow['age']);
+				if ($MyRow['age'] != '0'){
+					$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $MyRow['age']);
 				}
 				
-				if ($myrow['vipcards'] == 0){
+				if ($MyRow['vipcards'] == 0){
 					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'N');
 				}else{
 					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'Y');
 				}
 				
-				if ($myrow['orddate'] != '0000-00-00'){
-					$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['orddate']);
+				if ($MyRow['orddate'] != '0000-00-00'){
+					$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['orddate']);
 				}
 
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $myrow['purchase_items']);
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $myrow['purchase_value']);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $MyRow['purchase_items']);
+				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $MyRow['purchase_value']);
 				
 				$i++;
 			}
@@ -182,7 +182,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			$objWriter->save('php://output');
 
 			if ($MarkExported == "Y"){
-				$sql = "UPDATE klretailcustomers 
+				$SQL = "UPDATE klretailcustomers 
 						SET exported = 'Y' 
 						WHERE exported = 'N' 
 							AND EXISTS (SELECT *
@@ -190,7 +190,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 										WHERE salesorders.orderno = klretailcustomers.orderno
 											AND salesorders.orddate >= '" . $FromDate . "'
 											AND salesorders.orddate <= '" . $ToDate . "')";
-				$resultUpdate = DB_query($sql,'','',true);
+				$ResultUpdate = DB_query($SQL,'','',true);
 			}
 			DB_Txn_Commit();
 

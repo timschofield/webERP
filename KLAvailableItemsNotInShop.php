@@ -44,17 +44,17 @@ if (!(isset($_POST['Search']))) {
 					locationname
 			FROM locations
 			ORDER BY locationname";
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td>' . _('Available AT') . ': </td>
 			<td><select name="FromLoc">';
 
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['loccode']==$_POST['FromLoc']){
-			echo '<option selected="selected" value="' . $myrow1['loccode'] . '">' . $myrow1['locationname'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['loccode']==$_POST['FromLoc']){
+			echo '<option selected="selected" value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['loccode'] . '">' . $myrow1['locationname'] . '</option>';
+			echo '<option value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
 		}
 	}
     echo '</select></td>
@@ -66,17 +66,17 @@ if (!(isset($_POST['Search']))) {
 			FROM locations
 			WHERE typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 			ORDER BY locationname";
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td>' . _('But NOT Available At') . ': </td>
 			<td><select name="Shop">';
 
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['loccode']==$_POST['Shop']){
-			echo '<option selected="selected" value="' . $myrow1['loccode'] . '">' . $myrow1['locationname'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['loccode']==$_POST['Shop']){
+			echo '<option selected="selected" value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['loccode'] . '">' . $myrow1['locationname'] . '</option>';
+			echo '<option value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
 		}
 	}
     echo '</select></td>
@@ -132,7 +132,7 @@ if (!(isset($_POST['Search']))) {
 					) > 0
 			ORDER BY stockmaster.stockid";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	
 	echo '<p class="page_title_text" align="center"><strong>' . _('Items with Stock Available at ') . $_POST['FromLoc'] . _(' but RL = 0 in Shop ') . $_POST['Shop'] . '</strong></p>';
 	echo '<table class="selection">
@@ -147,9 +147,9 @@ if (!(isset($_POST['Search']))) {
 			</thead>
 			<tbody>';
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">';
-		$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+		$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 		printf('<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -158,9 +158,9 @@ if (!(isset($_POST['Search']))) {
 				</tr>', 
 				$i, 
 				$CodeLink, 
-				$myrow['categoryid'], 
-				$myrow['description'], 
-				locale_number_format($myrow['QOHFrom'],0)
+				$MyRow['categoryid'], 
+				$MyRow['description'], 
+				locale_number_format($MyRow['QOHFrom'],0)
 				);
 		$i++;
 	}

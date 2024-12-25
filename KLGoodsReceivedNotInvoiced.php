@@ -29,9 +29,9 @@ $SQL = "SELECT grns.supplierid,
 		ORDER BY grns.supplierid,
 			purchorderdetails.orderno,
 			grns.itemcode";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
-if (DB_num_rows($result) != 0){
+if (DB_num_rows($Result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
 
 	echo '<div class="page_help_text">'
@@ -65,7 +65,7 @@ if (DB_num_rows($result) != 0){
 	$i = 1;
 	$TotalHomeCurrency = 0;
 	$TotalAtStandardCost = 0;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		if ($k == 1) {
 			echo '<tr class="EvenTableRows">';
 			$k = 0;
@@ -73,9 +73,9 @@ if (DB_num_rows($result) != 0){
 			echo '<tr class="OddTableRows">';
 			$k = 1;
 		}
-		$QtyPending = $myrow['qtyrecd'] - $myrow['quantityinv'];
-		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $myrow['unitprice'] / $myrow['rate']);
-		$TotalAtStandardCost = $TotalAtStandardCost + ($QtyPending * $myrow['standardcost']);
+		$QtyPending = $MyRow['qtyrecd'] - $MyRow['quantityinv'];
+		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $MyRow['unitprice'] / $MyRow['rate']);
+		$TotalAtStandardCost = $TotalAtStandardCost + ($QtyPending * $MyRow['standardcost']);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -94,22 +94,22 @@ if (DB_num_rows($result) != 0){
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>', 
-				$myrow['supplierid'], 
-				$myrow['orderno'], 
-				$myrow['itemcode'], 
-				ConvertSQLDate($myrow['deliverydate']), 
-				$myrow['qtyrecd'], 
-				$myrow['quantityinv'], 
+				$MyRow['supplierid'], 
+				$MyRow['orderno'], 
+				$MyRow['itemcode'], 
+				ConvertSQLDate($MyRow['deliverydate']), 
+				$MyRow['qtyrecd'], 
+				$MyRow['quantityinv'], 
 				$QtyPending, 
-				locale_number_format($myrow['unitprice'],$myrow['decimalplaces']), 
-				$myrow['currcode'], 
-				locale_number_format(($QtyPending * $myrow['unitprice']),$myrow['decimalplaces']), 
-				$myrow['currcode'], 
-				locale_number_format(($QtyPending * $myrow['unitprice'] / $myrow['rate']),$_SESSION['CompanyRecord']['decimalplaces']),
+				locale_number_format($MyRow['unitprice'],$MyRow['decimalplaces']), 
+				$MyRow['currcode'], 
+				locale_number_format(($QtyPending * $MyRow['unitprice']),$MyRow['decimalplaces']), 
+				$MyRow['currcode'], 
+				locale_number_format(($QtyPending * $MyRow['unitprice'] / $MyRow['rate']),$_SESSION['CompanyRecord']['decimalplaces']),
 				$_SESSION['CompanyRecord']['currencydefault'],
-				locale_number_format($myrow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces']), 
-				locale_number_format(($QtyPending * $myrow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']), 
-				locale_number_format(($QtyPending * $myrow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']),
+				locale_number_format($MyRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces']), 
+				locale_number_format(($QtyPending * $MyRow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']), 
+				locale_number_format(($QtyPending * $MyRow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']),
 				$_SESSION['CompanyRecord']['currencydefault']
 				);
 

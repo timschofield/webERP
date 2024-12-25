@@ -80,8 +80,8 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 			FROM salesman
 			WHERE salesman.salesmancode = '" . $SPG . "'";
 						
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Average Daily sales by SPG during the last ') . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . " days.".'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -101,7 +101,7 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($k == 1) {
 				echo '<tr class="EvenTableRows">';
 				$k = 0;
@@ -110,14 +110,14 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 				$k = 1;
 			}
 
-			$Code = $myrow['salesmancode'];
-			$Name = $myrow['salesmanname'];
+			$Code = $MyRow['salesmancode'];
+			$Name = $MyRow['salesmanname'];
 			
-			$dailyA = locale_number_format(($myrow['salesA']/$NumDaysA),0);
-			$dailyB = locale_number_format(($myrow['salesB']/$NumDaysB),0);
-			$dailyC = locale_number_format(($myrow['salesC']/$NumDaysC),0);
-			$dailyD = locale_number_format(($myrow['salesD']/$NumDaysD),0);
-			$percent = (($myrow['salesD']/$NumDaysD)-($myrow['salesC']/$NumDaysC))/($myrow['salesC']/$NumDaysC) * 100;
+			$dailyA = locale_number_format(($MyRow['salesA']/$NumDaysA),0);
+			$dailyB = locale_number_format(($MyRow['salesB']/$NumDaysB),0);
+			$dailyC = locale_number_format(($MyRow['salesC']/$NumDaysC),0);
+			$dailyD = locale_number_format(($MyRow['salesD']/$NumDaysD),0);
+			$percent = (($MyRow['salesD']/$NumDaysD)-($MyRow['salesC']/$NumDaysC))/($MyRow['salesC']/$NumDaysC) * 100;
 			$trend = " ";
 			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Improving ". locale_number_format($percent,0) . "%";
@@ -125,8 +125,8 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 			if ($percent < -MINIMUM_AVERAGE_SALES_TREND){
 				$trend = "Degrading ". locale_number_format($percent,0) . "%";
 			}
-			$forecast = locale_number_format(round($myrow['salesC'], -5),0);
-			$MTD = locale_number_format($myrow['salesMTD'], 0);
+			$forecast = locale_number_format(round($MyRow['salesC'], -5),0);
+			$MTD = locale_number_format($MyRow['salesMTD'], 0);
 			
 			printf('<tr class="striped_row">
 					<td>%s</td>
@@ -182,8 +182,8 @@ function SPGTypePayments($SPG, $maxdays){
 			AND salesman.salesmancode = '" . $SPG . "'
 			AND salesorders.orddate >= '". $StartDate. "'";
 			
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by SPG') .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -199,18 +199,18 @@ function SPGTypePayments($SPG, $maxdays){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['totalshop'] != 0){
-				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
-				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
-				$percentreturns = locale_number_format(($myrow['returnedgoodsshop']/$myrow['totalshop'])*100,1);
-				$percentvouchers = locale_number_format(($myrow['vouchersshop']/$myrow['totalshop'])*100,1);
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['totalshop'] != 0){
+				$percentcash = locale_number_format(($MyRow['cashshop']/$MyRow['totalshop'])*100,1);
+				$percentcredit = locale_number_format(($MyRow['creditshop']/$MyRow['totalshop'])*100,1);
+				$percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
+				$percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
 				
-				$totalcash = $totalcash + $myrow['cashshop'];
-				$totalcredit = $totalcredit + $myrow['creditshop'];
-				$totalreturned = $totalreturned + $myrow['returnedgoodsshop'];
-				$totalvouchers = $totalvouchers + $myrow['vouchersshop'];
-				$total = $total + $myrow['totalshop'];
+				$totalcash = $totalcash + $MyRow['cashshop'];
+				$totalcredit = $totalcredit + $MyRow['creditshop'];
+				$totalreturned = $totalreturned + $MyRow['returnedgoodsshop'];
+				$totalvouchers = $totalvouchers + $MyRow['vouchersshop'];
+				$total = $total + $MyRow['totalshop'];
 				
 				printf('<tr class="striped_row">
 						<td>%s</td>
@@ -220,8 +220,8 @@ function SPGTypePayments($SPG, $maxdays){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$myrow['reportunit'],
-						$myrow['reportname'],
+						$MyRow['reportunit'],
+						$MyRow['reportname'],
 						$percentcash, 
 						$percentcredit, 
 						$percentreturns, 
@@ -253,8 +253,8 @@ function lastSalesSPG($spg, $NumDaysA){
 				AND salesorders.orddate >= '". $StartDateA . "'
 			ORDER BY salesorders.orderno DESC";
 	
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>Sales of the last ' . $NumDaysA . ' days for SPG ' . $spg . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -272,9 +272,9 @@ function lastSalesSPG($spg, $NumDaysA){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$total = $myrow['klpaidcash'] + 
-					$myrow['klpaidcreditcard'];
+		while ($MyRow = DB_fetch_array($Result)) {
+			$total = $MyRow['klpaidcash'] + 
+					$MyRow['klpaidcreditcard'];
 					
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
@@ -286,13 +286,13 @@ function lastSalesSPG($spg, $NumDaysA){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					locale_number_format($myrow['orderno'],0),
-					$myrow['customerref'],
-					ConvertSQLDate($myrow['orddate']), 
-					locale_number_format($myrow['klpaidcash'],0),
-					locale_number_format($myrow['klpaidcreditcard'],0),
-					locale_number_format($myrow['klreturnedgoods'],0),
-					locale_number_format($myrow['klvouchers'],0),
+					locale_number_format($MyRow['orderno'],0),
+					$MyRow['customerref'],
+					ConvertSQLDate($MyRow['orddate']), 
+					locale_number_format($MyRow['klpaidcash'],0),
+					locale_number_format($MyRow['klpaidcreditcard'],0),
+					locale_number_format($MyRow['klreturnedgoods'],0),
+					locale_number_format($MyRow['klvouchers'],0),
 					locale_number_format($total,0)
 					);
 			$i++;

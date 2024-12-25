@@ -69,9 +69,9 @@ function submit($TypeOfShop, $TypeOfFile) {
 					AND prices.startdate <= '". $Now. "' 
 					AND (prices.enddate >= '". $Now. "' OR prices.enddate = '9999-12-31')
 				ORDER BY stockmaster.stockid";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 
-		if (DB_num_rows($result) != 0){
+		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
 			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
@@ -142,14 +142,14 @@ function submit($TypeOfShop, $TypeOfFile) {
 			// Add data in the following row number
 			$i = $StartingRow;
 
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				
-				if (!ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't send discounted items to marketplaces
 					
-					$StockId = $myrow['stockid'];
+					$StockId = $MyRow['stockid'];
 
-					if ($myrow['manufacturers_id'] == 1){
+					if ($MyRow['manufacturers_id'] == 1){
 						$NameOfShop = "Kapal-Laut";
 						$Brand = "Kapal-Laut. Your Essential Jewellery";
 					}else{
@@ -169,14 +169,14 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$OnlySize = "";
 					}
 
-					$Name = ItemMarketplaceName($StockId, $myrow['description'], $myrow['descriptiontranslation']);
-					$Price = round($myrow['price']);
+					$Name = ItemMarketplaceName($StockId, $MyRow['description'], $MyRow['descriptiontranslation']);
+					$Price = round($MyRow['price']);
 					$PriceDiscount = '';
-					$Description = trim($myrow['longdescriptiontranslation']). " " . 
+					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
 							$TextSizeIndonesian . " - "  . 
-							trim($myrow['longdescription']) . " " .
+							trim($MyRow['longdescription']) . " " .
 							$TextSizeEnglish;
-					$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
+					$Weight = $MyRow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
 					$QOH = ItemMarketplaceQOH($StockId);
 					$Category = FindShopeeCategory($StockId, $Name, $Description);
@@ -185,28 +185,28 @@ function submit($TypeOfShop, $TypeOfFile) {
 					$WhatsInTheBox = WhatsInTheBox($StockId);
 					$Color = FindLAzadaColor($Name);
 
-					if ($myrow['unitsdimension'] == 'mm'){
+					if ($MyRow['unitsdimension'] == 'mm'){
 						$FactorLenght = 10;
-					}elseif ($myrow['unitsdimension'] == 'cm'){
+					}elseif ($MyRow['unitsdimension'] == 'cm'){
 						$FactorLenght = 1;
 					}else{
 						// should be meter
 						$FactorLenght = 0.1;
 					}
-					$Length = $myrow['length']/$FactorLenght; 
-					$Width = $myrow['width']/$FactorLenght; 
-					$Height = $myrow['height']/$FactorLenght; 
-					$Weight = $myrow['grossweight'] * 1000; // weight in grams
+					$Length = $MyRow['length']/$FactorLenght; 
+					$Width = $MyRow['width']/$FactorLenght; 
+					$Height = $MyRow['height']/$FactorLenght; 
+					$Weight = $MyRow['grossweight'] * 1000; // weight in grams
 
 					$PackagingImage = FALSE;
-					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $myrow['klpackaging']);
-					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $myrow['klpackaging']);
-					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $myrow['klpackaging']);
-					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $myrow['klpackaging']);
-					list($Url_5, $PackagingImage) = ItemImagesURL($StockId,   5, $PackagingImage, $myrow['klpackaging']);
-					list($Url_6, $PackagingImage) = ItemImagesURL($StockId,   6, $PackagingImage, $myrow['klpackaging']);
-					list($Url_7, $PackagingImage) = ItemImagesURL($StockId,   7, $PackagingImage, $myrow['klpackaging']);
-					list($Url_8, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $myrow['klpackaging']);
+					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_5, $PackagingImage) = ItemImagesURL($StockId,   5, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_6, $PackagingImage) = ItemImagesURL($StockId,   6, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_7, $PackagingImage) = ItemImagesURL($StockId,   7, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_8, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $MyRow['klpackaging']);
 					// only a packaging pic for the 8th URL (if not yet)
 
 					if ($TypeOfFile == "FSMaster"){
@@ -304,8 +304,8 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			FROM manufacturers 
 			ORDER BY manufacturers_name";
 	$LocResult = DB_query($SQL);
-	while ($myrow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $myrow['manufacturers_id'] . '">' . $myrow['manufacturers_name'] . '</option>';
+	while ($MyRow=DB_fetch_array($LocResult)){
+		 echo '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
 	}
 
 	echo '<tr>

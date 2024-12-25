@@ -121,8 +121,8 @@ function RetailTypePayments($typereport, $maxdays){
 			ORDER BY salesorders.salesperson";
 	}
 	
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$typereport .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -138,18 +138,18 @@ function RetailTypePayments($typereport, $maxdays){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['totalshop'] != 0){
-				$percentcash = locale_number_format(($myrow['cashshop']/$myrow['totalshop'])*100,1);
-				$percentcredit = locale_number_format(($myrow['creditshop']/$myrow['totalshop'])*100,1);
-				$percentreturns = locale_number_format(($myrow['returnedgoodsshop']/$myrow['totalshop'])*100,1);
-				$percentvouchers = locale_number_format(($myrow['vouchersshop']/$myrow['totalshop'])*100,1);
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['totalshop'] != 0){
+				$percentcash = locale_number_format(($MyRow['cashshop']/$MyRow['totalshop'])*100,1);
+				$percentcredit = locale_number_format(($MyRow['creditshop']/$MyRow['totalshop'])*100,1);
+				$percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
+				$percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
 				
-				$totalcash = $totalcash + $myrow['cashshop'];
-				$totalcredit = $totalcredit + $myrow['creditshop'];
-				$totalreturned = $totalreturned + $myrow['returnedgoodsshop'];
-				$totalvouchers = $totalvouchers + $myrow['vouchersshop'];
-				$total = $total + $myrow['totalshop'];
+				$totalcash = $totalcash + $MyRow['cashshop'];
+				$totalcredit = $totalcredit + $MyRow['creditshop'];
+				$totalreturned = $totalreturned + $MyRow['returnedgoodsshop'];
+				$totalvouchers = $totalvouchers + $MyRow['vouchersshop'];
+				$total = $total + $MyRow['totalshop'];
 				
 				printf('<tr class="striped_row">
 						<td>%s</td>
@@ -159,8 +159,8 @@ function RetailTypePayments($typereport, $maxdays){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$myrow['reportunit'],
-						$myrow['reportname'],
+						$MyRow['reportunit'],
+						$MyRow['reportname'],
 						$percentcash, 
 						$percentcredit, 
 						$percentreturns, 
@@ -203,9 +203,9 @@ function SPGPerformanceAllShops($NumDaysA, $NumDaysB, $NumDaysC){
 			WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 			ORDER BY locations.zone,
 				locations.loccode";
-	$result = DB_query($SQL);
-	while ($myrow = DB_fetch_array($result)) {
-		SPGPerformanceByShop($myrow['cashsalecustomer'], $NumDaysA, $NumDaysB, $NumDaysC);
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		SPGPerformanceByShop($MyRow['cashsalecustomer'], $NumDaysA, $NumDaysB, $NumDaysC);
 	}
 }
 
@@ -285,8 +285,8 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 						AND salesorders.salesperson = salesman.salesmancode) > 0)
 			ORDER BY salesman.salesmancode";
 				
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days". '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -310,10 +310,10 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 					</tr>
 				</thead>
 				<tbody>';
-		while ($myrow = DB_fetch_array($result)) {
-			$DailyA = ($myrow['daysA'] != 0) ? ($myrow['salesA']/$myrow['daysA']) : 0;
-			$DailyB = ($myrow['daysB'] != 0) ? ($myrow['salesB']/$myrow['daysB']) : 0;
-			$DailyC = ($myrow['daysC'] != 0) ? ($myrow['salesC']/$myrow['daysC']) : 0;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$DailyA = ($MyRow['daysA'] != 0) ? ($MyRow['salesA']/$MyRow['daysA']) : 0;
+			$DailyB = ($MyRow['daysB'] != 0) ? ($MyRow['salesB']/$MyRow['daysB']) : 0;
+			$DailyC = ($MyRow['daysC'] != 0) ? ($MyRow['salesC']/$MyRow['daysC']) : 0;
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s</td>
@@ -325,14 +325,14 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['salesmancode'],
-					$myrow['salesmanname'],
-					$myrow['secrolename'],
-					locale_number_format_zero_blank($myrow['daysA'],0),
+					$MyRow['salesmancode'],
+					$MyRow['salesmanname'],
+					$MyRow['secrolename'],
+					locale_number_format_zero_blank($MyRow['daysA'],0),
 					locale_number_format_zero_blank($DailyA,0),
-					locale_number_format_zero_blank($myrow['daysB'],0),
+					locale_number_format_zero_blank($MyRow['daysB'],0),
 					locale_number_format_zero_blank($DailyB,0),
-					locale_number_format_zero_blank($myrow['daysC'],0),
+					locale_number_format_zero_blank($MyRow['daysC'],0),
 					locale_number_format_zero_blank($DailyC,0)
 					);
 		}
@@ -543,8 +543,8 @@ function SPGPerformanceMonthy(){
 				locations.loccode,
 				salesman.salesmancode";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "SPG Monthly performance". '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -578,18 +578,18 @@ function SPGPerformanceMonthy(){
 				<tbody>';
 		$k = 0; //row colour counter
 		$lastshop = "";
-		while ($myrow = DB_fetch_array($result)) {
-			if ($lastshop != $myrow['loccode']){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($lastshop != $MyRow['loccode']){
 				echo $TableHeader;
 			}
-			$Last30D = ($myrow['days30D'] != 0) ? ($myrow['last30D']/$myrow['days30D']) : 0;
-			$Last60D = ($myrow['days60D'] != 0) ? ($myrow['last60D']/$myrow['days60D']) : 0;
-			$Last30C = ($myrow['days30C'] != 0) ? ($myrow['last30C']/$myrow['days30C']) : 0;
-			$Last60C = ($myrow['days60C'] != 0) ? ($myrow['last60C']/$myrow['days60C']) : 0;
-			$Last30B = ($myrow['days30B'] != 0) ? ($myrow['last30B']/$myrow['days30B']) : 0;
-			$Last60B = ($myrow['days60B'] != 0) ? ($myrow['last60B']/$myrow['days60B']) : 0;
-			$Last30A = ($myrow['days30A'] != 0) ? ($myrow['last30A']/$myrow['days30A']) : 0;
-			$Last60A = ($myrow['days60A'] != 0) ? ($myrow['last60A']/$myrow['days60A']) : 0;
+			$Last30D = ($MyRow['days30D'] != 0) ? ($MyRow['last30D']/$MyRow['days30D']) : 0;
+			$Last60D = ($MyRow['days60D'] != 0) ? ($MyRow['last60D']/$MyRow['days60D']) : 0;
+			$Last30C = ($MyRow['days30C'] != 0) ? ($MyRow['last30C']/$MyRow['days30C']) : 0;
+			$Last60C = ($MyRow['days60C'] != 0) ? ($MyRow['last60C']/$MyRow['days60C']) : 0;
+			$Last30B = ($MyRow['days30B'] != 0) ? ($MyRow['last30B']/$MyRow['days30B']) : 0;
+			$Last60B = ($MyRow['days60B'] != 0) ? ($MyRow['last60B']/$MyRow['days60B']) : 0;
+			$Last30A = ($MyRow['days30A'] != 0) ? ($MyRow['last30A']/$MyRow['days30A']) : 0;
+			$Last60A = ($MyRow['days60A'] != 0) ? ($MyRow['last60A']/$MyRow['days60A']) : 0;
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s</td>
@@ -608,24 +608,24 @@ function SPGPerformanceMonthy(){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['zone'],
-					$myrow['loccode'],
-					$myrow['salesmancode'],
-					$myrow['salesmanname'],
-					locale_number_format_zero_blank($myrow['mtdD'],0),
+					$MyRow['zone'],
+					$MyRow['loccode'],
+					$MyRow['salesmancode'],
+					$MyRow['salesmanname'],
+					locale_number_format_zero_blank($MyRow['mtdD'],0),
 					locale_number_format_zero_blank($Last30D,0),
 					locale_number_format_zero_blank($Last60D,0),
-					locale_number_format_zero_blank($myrow['mtdC'],0),
+					locale_number_format_zero_blank($MyRow['mtdC'],0),
 					locale_number_format_zero_blank($Last30C,0),
 					locale_number_format_zero_blank($Last60C,0),
-					locale_number_format_zero_blank($myrow['mtdB'],0),
+					locale_number_format_zero_blank($MyRow['mtdB'],0),
 					locale_number_format_zero_blank($Last30B,0),
 					locale_number_format_zero_blank($Last60B,0),
-					locale_number_format_zero_blank($myrow['mtdA'],0),
+					locale_number_format_zero_blank($MyRow['mtdA'],0),
 					locale_number_format_zero_blank($Last30A,0),
 					locale_number_format_zero_blank($Last60A,0)
 					);
-			$lastshop = $myrow['loccode'];
+			$lastshop = $MyRow['loccode'];
 		}
 		echo '</tbody>
 				</table>
@@ -833,8 +833,8 @@ function SPGPerformanceWeekly(){
 			ORDER BY locations.zone,
 				locations.loccode,
 				salesman.salesmancode";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . "SPG Weekly performance". '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -868,18 +868,18 @@ function SPGPerformanceWeekly(){
 				<tbody>';
 		$k = 0; //row colour counter
 		$lastshop = "";
-		while ($myrow = DB_fetch_array($result)) {
-			if ($lastshop != $myrow['loccode']){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($lastshop != $MyRow['loccode']){
 				echo $TableHeader;
 			}
-			$Last30D = ($myrow['days30D'] != 0) ? ($myrow['last30D']/$myrow['days30D']) : 0;
-			$Last7D = ($myrow['days7D'] != 0) ? ($myrow['last7D']/$myrow['days7D']) : 0;
-			$Last30C = ($myrow['days30C'] != 0) ? ($myrow['last30C']/$myrow['days30C']) : 0;
-			$Last7C = ($myrow['days7C'] != 0) ? ($myrow['last7C']/$myrow['days7C']) : 0;
-			$Last30B = ($myrow['days30B'] != 0) ? ($myrow['last30B']/$myrow['days30B']) : 0;
-			$Last7B = ($myrow['days7B'] != 0) ? ($myrow['last7B']/$myrow['days7B']) : 0;
-			$Last30A = ($myrow['days30A'] != 0) ? ($myrow['last30A']/$myrow['days30A']) : 0;
-			$Last7A = ($myrow['days7A'] != 0) ? ($myrow['last7A']/$myrow['days7A']) : 0;
+			$Last30D = ($MyRow['days30D'] != 0) ? ($MyRow['last30D']/$MyRow['days30D']) : 0;
+			$Last7D = ($MyRow['days7D'] != 0) ? ($MyRow['last7D']/$MyRow['days7D']) : 0;
+			$Last30C = ($MyRow['days30C'] != 0) ? ($MyRow['last30C']/$MyRow['days30C']) : 0;
+			$Last7C = ($MyRow['days7C'] != 0) ? ($MyRow['last7C']/$MyRow['days7C']) : 0;
+			$Last30B = ($MyRow['days30B'] != 0) ? ($MyRow['last30B']/$MyRow['days30B']) : 0;
+			$Last7B = ($MyRow['days7B'] != 0) ? ($MyRow['last7B']/$MyRow['days7B']) : 0;
+			$Last30A = ($MyRow['days30A'] != 0) ? ($MyRow['last30A']/$MyRow['days30A']) : 0;
+			$Last7A = ($MyRow['days7A'] != 0) ? ($MyRow['last7A']/$MyRow['days7A']) : 0;
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s</td>
@@ -898,24 +898,24 @@ function SPGPerformanceWeekly(){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$myrow['zone'],
-					$myrow['loccode'],
-					$myrow['salesmancode'],
-					$myrow['salesmanname'],
-					locale_number_format_zero_blank($myrow['mtdD'],0),
+					$MyRow['zone'],
+					$MyRow['loccode'],
+					$MyRow['salesmancode'],
+					$MyRow['salesmanname'],
+					locale_number_format_zero_blank($MyRow['mtdD'],0),
 					locale_number_format_zero_blank($Last7D,0),
 					locale_number_format_zero_blank($Last30D,0),
-					locale_number_format_zero_blank($myrow['mtdC'],0),
+					locale_number_format_zero_blank($MyRow['mtdC'],0),
 					locale_number_format_zero_blank($Last7C,0),
 					locale_number_format_zero_blank($Last30C,0),
-					locale_number_format_zero_blank($myrow['mtdB'],0),
+					locale_number_format_zero_blank($MyRow['mtdB'],0),
 					locale_number_format_zero_blank($Last7B,0),
 					locale_number_format_zero_blank($Last30B,0),
-					locale_number_format_zero_blank($myrow['mtdA'],0),
+					locale_number_format_zero_blank($MyRow['mtdA'],0),
 					locale_number_format_zero_blank($Last7A,0),
 					locale_number_format_zero_blank($Last30A,0)
 					);
-			$lastshop = $myrow['loccode'];
+			$lastshop = $MyRow['loccode'];
 		}
 		echo '</tbody>
 				</table>
@@ -1067,11 +1067,11 @@ function HourlySales($numDays, $RootPath){
 			ORDER BY locations.zone, 
 				debtorsmaster.debtorno";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$GrandTotal = 0;
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$k = 0; //row colour counter
 		$i = 1;
 		$Total07 = 0;
@@ -1093,14 +1093,14 @@ function HourlySales($numDays, $RootPath){
 		$Total23 = 0;
 		$ZoneName = '';
 		
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly sales and value for the last ' . $numDays . ' days</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>';
 			}
-			if (($showHeader) OR ($ZoneName != $myrow['zone'])){
+			if (($showHeader) OR ($ZoneName != $MyRow['zone'])){
 				$TableHeader = '<tr>
 									<th class="SortedColumn">' . _('Zone') . '</th>
 									<th class="SortedColumn">' . _('Shop') . '</th>
@@ -1130,125 +1130,125 @@ function HourlySales($numDays, $RootPath){
 				echo $TableHeader;
 				$showHeader = FALSE;
 			}
-			$TotalSales = $myrow['sales07'] +
-						$myrow['sales08'] +
-						$myrow['sales09'] +
-						$myrow['sales10'] +
-						$myrow['sales11'] +
-						$myrow['sales12'] +
-						$myrow['sales13'] +
-						$myrow['sales14'] +
-						$myrow['sales15'] +
-						$myrow['sales16'] +
-						$myrow['sales17'] +
-						$myrow['sales18'] +
-						$myrow['sales19'] +
-						$myrow['sales20'] +
-						$myrow['sales21'] +
-						$myrow['sales22'] +
-						$myrow['sales23'] ;
+			$TotalSales = $MyRow['sales07'] +
+						$MyRow['sales08'] +
+						$MyRow['sales09'] +
+						$MyRow['sales10'] +
+						$MyRow['sales11'] +
+						$MyRow['sales12'] +
+						$MyRow['sales13'] +
+						$MyRow['sales14'] +
+						$MyRow['sales15'] +
+						$MyRow['sales16'] +
+						$MyRow['sales17'] +
+						$MyRow['sales18'] +
+						$MyRow['sales19'] +
+						$MyRow['sales20'] +
+						$MyRow['sales21'] +
+						$MyRow['sales22'] +
+						$MyRow['sales23'] ;
 			$GrandTotal += $TotalSales;
-			$ZoneName = $myrow['zone'];
+			$ZoneName = $MyRow['zone'];
 			
-			if ($myrow['sales07'] != 0){
-				$Sales07 = locale_number_format_zero_blank($myrow['sales07']/$TotalSales*100,0).'%';
-				$Total07 += $myrow['sales07'];
+			if ($MyRow['sales07'] != 0){
+				$Sales07 = locale_number_format_zero_blank($MyRow['sales07']/$TotalSales*100,0).'%';
+				$Total07 += $MyRow['sales07'];
 			}else{
 				$Sales07 = '';
 			}		
-			if ($myrow['sales08'] != 0){
-				$Sales08 = locale_number_format_zero_blank($myrow['sales08']/$TotalSales*100,0).'%';
-				$Total08 += $myrow['sales08'];
+			if ($MyRow['sales08'] != 0){
+				$Sales08 = locale_number_format_zero_blank($MyRow['sales08']/$TotalSales*100,0).'%';
+				$Total08 += $MyRow['sales08'];
 			}else{
 				$Sales08 = '';
 			}		
-			if ($myrow['sales09'] != 0){
-				$Sales09 = locale_number_format_zero_blank($myrow['sales09']/$TotalSales*100,0).'%';
-				$Total09 += $myrow['sales09'];
+			if ($MyRow['sales09'] != 0){
+				$Sales09 = locale_number_format_zero_blank($MyRow['sales09']/$TotalSales*100,0).'%';
+				$Total09 += $MyRow['sales09'];
 			}else{
 				$Sales09 = '';
 			}		
-			if ($myrow['sales10'] != 0){
-				$Sales10 = locale_number_format_zero_blank($myrow['sales10']/$TotalSales*100,0).'%';
-				$Total10 += $myrow['sales10'];
+			if ($MyRow['sales10'] != 0){
+				$Sales10 = locale_number_format_zero_blank($MyRow['sales10']/$TotalSales*100,0).'%';
+				$Total10 += $MyRow['sales10'];
 			}else{
 				$Sales10 = '';
 			}		
-			if ($myrow['sales11'] != 0){
-				$Sales11 = locale_number_format_zero_blank($myrow['sales11']/$TotalSales*100,0).'%';
-				$Total11 += $myrow['sales11'];
+			if ($MyRow['sales11'] != 0){
+				$Sales11 = locale_number_format_zero_blank($MyRow['sales11']/$TotalSales*100,0).'%';
+				$Total11 += $MyRow['sales11'];
 			}else{
 				$Sales11 = '';
 			}		
-			if ($myrow['sales12'] != 0){
-				$Sales12 = locale_number_format_zero_blank($myrow['sales12']/$TotalSales*100,0).'%';
-				$Total12 += $myrow['sales12'];
+			if ($MyRow['sales12'] != 0){
+				$Sales12 = locale_number_format_zero_blank($MyRow['sales12']/$TotalSales*100,0).'%';
+				$Total12 += $MyRow['sales12'];
 			}else{
 				$Sales12 = '';
 			}		
-			if ($myrow['sales13'] != 0){
-				$Sales13 = locale_number_format_zero_blank($myrow['sales13']/$TotalSales*100,0).'%';
-				$Total13 += $myrow['sales13'];
+			if ($MyRow['sales13'] != 0){
+				$Sales13 = locale_number_format_zero_blank($MyRow['sales13']/$TotalSales*100,0).'%';
+				$Total13 += $MyRow['sales13'];
 			}else{
 				$Sales13 = '';
 			}		
-			if ($myrow['sales14'] != 0){
-				$Sales14 = locale_number_format_zero_blank($myrow['sales14']/$TotalSales*100,0).'%';
-				$Total14 += $myrow['sales14'];
+			if ($MyRow['sales14'] != 0){
+				$Sales14 = locale_number_format_zero_blank($MyRow['sales14']/$TotalSales*100,0).'%';
+				$Total14 += $MyRow['sales14'];
 			}else{
 				$Sales14 = '';
 			}		
-			if ($myrow['sales15'] != 0){
-				$Sales15 = locale_number_format_zero_blank($myrow['sales15']/$TotalSales*100,0).'%';
-				$Total15 += $myrow['sales15'];
+			if ($MyRow['sales15'] != 0){
+				$Sales15 = locale_number_format_zero_blank($MyRow['sales15']/$TotalSales*100,0).'%';
+				$Total15 += $MyRow['sales15'];
 			}else{
 				$Sales15 = '';
 			}		
-			if ($myrow['sales16'] != 0){
-				$Sales16 = locale_number_format_zero_blank($myrow['sales16']/$TotalSales*100,0).'%';
-				$Total16 += $myrow['sales16'];
+			if ($MyRow['sales16'] != 0){
+				$Sales16 = locale_number_format_zero_blank($MyRow['sales16']/$TotalSales*100,0).'%';
+				$Total16 += $MyRow['sales16'];
 			}else{
 				$Sales16 = '';
 			}		
-			if ($myrow['sales17'] != 0){
-				$Sales17 = locale_number_format_zero_blank($myrow['sales17']/$TotalSales*100,0).'%';
-				$Total17 += $myrow['sales17'];
+			if ($MyRow['sales17'] != 0){
+				$Sales17 = locale_number_format_zero_blank($MyRow['sales17']/$TotalSales*100,0).'%';
+				$Total17 += $MyRow['sales17'];
 			}else{
 				$Sales17 = '';
 			}		
-			if ($myrow['sales18'] != 0){
-				$Sales18 = locale_number_format_zero_blank($myrow['sales18']/$TotalSales*100,0).'%';
-				$Total18 += $myrow['sales18'];
+			if ($MyRow['sales18'] != 0){
+				$Sales18 = locale_number_format_zero_blank($MyRow['sales18']/$TotalSales*100,0).'%';
+				$Total18 += $MyRow['sales18'];
 			}else{
 				$Sales18 = '';
 			}		
-			if ($myrow['sales19'] != 0){
-				$Sales19 = locale_number_format_zero_blank($myrow['sales19']/$TotalSales*100,0).'%';
-				$Total19 += $myrow['sales19'];
+			if ($MyRow['sales19'] != 0){
+				$Sales19 = locale_number_format_zero_blank($MyRow['sales19']/$TotalSales*100,0).'%';
+				$Total19 += $MyRow['sales19'];
 			}else{
 				$Sales19 = '';
 			}		
-			if ($myrow['sales20'] != 0){
-				$Sales20 = locale_number_format_zero_blank($myrow['sales20']/$TotalSales*100,0).'%';
-				$Total20 += $myrow['sales20'];
+			if ($MyRow['sales20'] != 0){
+				$Sales20 = locale_number_format_zero_blank($MyRow['sales20']/$TotalSales*100,0).'%';
+				$Total20 += $MyRow['sales20'];
 			}else{
 				$Sales20 = '';
 			}		
-			if ($myrow['sales21'] != 0){
-				$Sales21 = locale_number_format_zero_blank($myrow['sales21']/$TotalSales*100,0).'%';
-				$Total21 += $myrow['sales21'];
+			if ($MyRow['sales21'] != 0){
+				$Sales21 = locale_number_format_zero_blank($MyRow['sales21']/$TotalSales*100,0).'%';
+				$Total21 += $MyRow['sales21'];
 			}else{
 				$Sales21 = '';
 			}		
-			if ($myrow['sales22'] != 0){
-				$Sales22 = locale_number_format_zero_blank($myrow['sales22']/$TotalSales*100,0).'%';
-				$Total22 += $myrow['sales22'];
+			if ($MyRow['sales22'] != 0){
+				$Sales22 = locale_number_format_zero_blank($MyRow['sales22']/$TotalSales*100,0).'%';
+				$Total22 += $MyRow['sales22'];
 			}else{
 				$Sales22 = '';
 			}		
-			if ($myrow['sales23'] != 0){
-				$Sales23 = locale_number_format_zero_blank($myrow['sales23']/$TotalSales*100,0).'%';
-				$Total23 += $myrow['sales23'];
+			if ($MyRow['sales23'] != 0){
+				$Sales23 = locale_number_format_zero_blank($MyRow['sales23']/$TotalSales*100,0).'%';
+				$Total23 += $MyRow['sales23'];
 			}else{
 				$Sales23 = '';
 			}		
@@ -1278,10 +1278,10 @@ function HourlySales($numDays, $RootPath){
 					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
-					$myrow['zone'],
-					$myrow['debtorno'],
+					$MyRow['zone'],
+					$MyRow['debtorno'],
 					'Sales',
-					$myrow['firstsale'],
+					$MyRow['firstsale'],
 					$Sales07,
 					$Sales08,
 					$Sales09,
@@ -1299,7 +1299,7 @@ function HourlySales($numDays, $RootPath){
 					$Sales21,
 					$Sales22,
 					$Sales23,
-					$myrow['lastsale']
+					$MyRow['lastsale']
 					);
 
 			$k = StartSameColourRow($k);
@@ -1331,23 +1331,23 @@ function HourlySales($numDays, $RootPath){
 					'',
 					'Value',
 					'',
-					locale_number_format_zero_blank($myrow['sales07']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales08']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales09']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales10']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales11']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales12']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales13']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales14']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales15']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales16']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales17']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales18']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales19']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales20']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales21']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales22']/$numDays,0),
-					locale_number_format_zero_blank($myrow['sales23']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales07']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales08']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales09']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales10']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales11']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales12']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales13']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales14']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales15']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales16']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales17']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales18']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales19']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales20']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales21']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales22']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['sales23']/$numDays,0),
 					locale_number_format_zero_blank($TotalSales/$numDays,0)
 					);
 					
@@ -1469,9 +1469,9 @@ function DaysOfWeekSales($numDays, $RootPath){
 			FROM salesorders
 			WHERE orddate >= '" . $InitialDate . "'
 				AND orddate <='" . $Yesterday . "'";
-	$result = DB_query($SQL);
-	if ($myrow = DB_fetch_array($result)){
-		$TotalSales = $myrow['TotalSales'];
+	$Result = DB_query($SQL);
+	if ($MyRow = DB_fetch_array($Result)){
+		$TotalSales = $MyRow['TotalSales'];
 	}else{
 		return;
 	}
@@ -1483,8 +1483,8 @@ function DaysOfWeekSales($numDays, $RootPath){
 				AND orddate <='" . $Yesterday . "' 
 			GROUP BY DAYOFWEEK(orddate)
 			ORDER BY WeekDaySales DESC";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution of retail sales by week days for the last ') . $numDays . _(' days') .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -1497,16 +1497,16 @@ function DaysOfWeekSales($numDays, $RootPath){
 				</thead>
 				<tbody>';
 		$k = 0; //row colour counter
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					GetDayNameFromWeekDay($myrow['WeekDay']),
-					locale_number_format(($myrow['WeekDaySales']/$TotalSales)*100,1) . '%', 
-					locale_number_format((($myrow['WeekDaySales']/$TotalSales/(1/7))-1)*100,1) . '%' 
+					GetDayNameFromWeekDay($MyRow['WeekDay']),
+					locale_number_format(($MyRow['WeekDaySales']/$TotalSales)*100,1) . '%', 
+					locale_number_format((($MyRow['WeekDaySales']/$TotalSales/(1/7))-1)*100,1) . '%' 
 					);
 		}
 	}

@@ -59,9 +59,9 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 										AND stockmoves.qty >0) 
 					ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL);		
+	$Result = DB_query($SQL);		
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $location . ' </strong></p>';
 			echo '<div>';
@@ -81,20 +81,20 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 					<tbody>';
 		}
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$newRL = 0;
 			$notes = "";
 			// Check if belongs to a special category
 			// comented on change of category structure 2014-05-06
-/*			if ($myrow['categoryid'] == "KLPRGE"){
-				$newRL = $myrow['reorderlevel'];
+/*			if ($MyRow['categoryid'] == "KLPRGE"){
+				$newRL = $MyRow['reorderlevel'];
 				$notes = "KLPRGE - Tali. RL Not changed";
 			}
 */			// check if RING and we have sold on the same location same model, other sizes, then should be RL = 1.
-			if (isRing($myrow['stockid'])){
+			if (isRing($MyRow['stockid'])){
 				// get the model code and see if the location has sold of different sizes, so we need to keep all sizes at the shop
 				// even if no sales.
-				$RingModel = CodeModelRing($myrow['stockid']);
+				$RingModel = CodeModelRing($MyRow['stockid']);
 				$SalesModel = SalesOfItemByLocation($RingModel, $location, $maxdays);
 				if ($SalesModel != 0){
 					// sales for some size, so we want to keep it in stock (just 1, in case there were 2 or more)...
@@ -102,15 +102,15 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 					$notes = $SalesModel . " sold other sizes.";
 				}
 			}
-			if (isTopSalesItem($myrow['stockid'], $topitems, $TopItemsDays)){
-				$newRL = $myrow['reorderlevel'];
+			if (isTopSalesItem($MyRow['stockid'], $topitems, $TopItemsDays)){
+				$newRL = $MyRow['reorderlevel'];
 				$notes = "Top ". $topitems . " sales.";
 			}
 /* KL RICARD COMMENTED ON 2014-06-10
 			// if manually reseted, not change it
-			$lastManualModification = isReorderLevelManuallyChanged($myrow['stockid'], $location, $maxmanualchanges);
+			$lastManualModification = isReorderLevelManuallyChanged($MyRow['stockid'], $location, $maxmanualchanges);
 			if ($lastManualModification != '0000-00-00'){
-				$newRL = $myrow['reorderlevel'];
+				$newRL = $MyRow['reorderlevel'];
 				$notes = "Manually changed on ". ConvertSQLDate($lastManualModification);
 			}
 */			if ($ShowMessages){
@@ -126,16 +126,16 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						$myrow['description'], 
-						$myrow['categoryid'], 
-						locale_number_format($myrow['quantity'],0),
-						locale_number_format($myrow['reorderlevel'],0),
+						$MyRow['description'], 
+						$MyRow['categoryid'], 
+						locale_number_format($MyRow['quantity'],0),
+						locale_number_format($MyRow['reorderlevel'],0),
 						locale_number_format($newRL,0),
 						$notes
 						);
 				$i++;
 			}
-			SetReorderLevel("AdjustNoSales", $myrow['stockid'],$location, $myrow['reorderlevel'], $newRL, $updateDB);
+			SetReorderLevel("AdjustNoSales", $MyRow['stockid'],$location, $MyRow['reorderlevel'], $newRL, $updateDB);
 		}
 		if ($ShowMessages){
 			echo '</tbody>
@@ -162,8 +162,8 @@ function DailySalesRecordsByShops($Days, $FromDate){
 			ORDER BY SUM(salesorderdetails.qtyinvoiced * (salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent))) DESC
 			LIMIT ". $Days . "";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days by shop since '). ConvertSQLDate($FromDate) .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -177,7 +177,7 @@ function DailySalesRecordsByShops($Days, $FromDate){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while (($myrow = DB_fetch_array($result)) AND ($i <= $Days)) {
+		while (($MyRow = DB_fetch_array($Result)) AND ($i <= $Days)) {
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -185,9 +185,9 @@ function DailySalesRecordsByShops($Days, $FromDate){
 					<td class="number">%s</td>
 					</tr>', 
 					locale_number_format($i,0),
-					ConvertSQLDate($myrow['orddate']),
-					$myrow['debtorno'],
-					locale_number_format($myrow['sales'],0)
+					ConvertSQLDate($MyRow['orddate']),
+					$MyRow['debtorno'],
+					locale_number_format($MyRow['sales'],0)
 					);
 			$i++;
 		}
@@ -233,8 +233,8 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath){
 						AND salesorders.orddate >= '". $StartDate ."') >= ". $minsales .")
 			ORDER BY stockmaster.stockid ASC";
 	
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " with more than " . $minsales . " pcs sold in the last " . $days . " days.(GOOD ITEMS)" . ' </strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -249,7 +249,7 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -259,9 +259,9 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath){
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['qoh'],0),
-					locale_number_format($myrow['sold'],0)
+					$MyRow['description'], 
+					locale_number_format($MyRow['qoh'],0),
+					locale_number_format($MyRow['sold'],0)
 					);
 			$i++;
 		}
@@ -351,11 +351,11 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 							OR loccode = " . CODE_KANTOR . ")) < " . $MinimumStock . "
 			ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL);		
+	$Result = DB_query($SQL);		
 	$showHeader = TRUE;
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
-		$QtyNeeded = $OptimalStock - $myrow['qoh'];
+	while ($MyRow = DB_fetch_array($Result)) {
+		$QtyNeeded = $OptimalStock - $MyRow['qoh'];
 		if ($QtyNeeded > 0){
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . $ItemDescription . ' Items with QOH (kantor+toko) < ' . $MinimumStock . ' pcs.</strong></p>';
@@ -375,7 +375,7 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 			}
 
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -385,8 +385,8 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['qoh'],0),
+					$MyRow['description'], 
+					locale_number_format($MyRow['qoh'],0),
 					locale_number_format($QtyNeeded,0)
 					);
 		}
@@ -418,9 +418,9 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 						WHERE m2.stockid = l2.stockid
 							AND m2.categoryid = '" . $StockCat ."'
 						AND l2.quantity != 0) ";
-	$resultTI = DB_query($SQL);		
-	$myrowTI = DB_fetch_array($resultTI);
-	$NumberOfTopItems = ceil($myrowTI[0]/100*$PercentageOfTopItems);
+	$ResultTI = DB_query($SQL);		
+	$MyRowTI = DB_fetch_array($ResultTI);
+	$NumberOfTopItems = ceil($MyRowTI[0]/100*$PercentageOfTopItems);
 	
 	$SQL = "SELECT 	salesorderdetails.stkcode,
 					SUM(salesorderdetails.qtyinvoiced) AS totalinvoiced,
@@ -457,12 +457,12 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 			ORDER BY totalinvoiced DESC
 			LIMIT " . $NumberOfTopItems;
 	
-	$result = DB_query($SQL);		
+	$Result = DB_query($SQL);		
 	$showHeader = TRUE;
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
-		$Forecast = ceil($myrow['totalinvoiced'] / $DaysTopSales * $DaysMinimumStock);
-		$QtyNeeded = $Forecast - $myrow['qoh'] - $myrow['qoo'] - $myrow['qow'];
+	while ($MyRow = DB_fetch_array($Result)) {
+		$Forecast = ceil($MyRow['totalinvoiced'] / $DaysTopSales * $DaysMinimumStock);
+		$QtyNeeded = $Forecast - $MyRow['qoh'] - $MyRow['qoo'] - $MyRow['qow'];
 		if ($QtyNeeded > 0){
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . $NumberOfTopItems . ' Top Items from ' . strtoupper($StockCatDescription) . ' with insufficient stock for the next ' . $DaysMinimumStock . ' days (Excluded Samples).</strong></p>';
@@ -486,7 +486,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 			}
 
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -500,12 +500,12 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['totalinvoiced'],0),
+					$MyRow['description'], 
+					locale_number_format($MyRow['totalinvoiced'],0),
 					locale_number_format($Forecast,0),
-					locale_number_format($myrow['qoh'],0),
-					locale_number_format($myrow['qoo'],0),
-					locale_number_format($myrow['qow'],0),
+					locale_number_format($MyRow['qoh'],0),
+					locale_number_format($MyRow['qoo'],0),
+					locale_number_format($MyRow['qow'],0),
 					locale_number_format($QtyNeeded,0)
 					);
 		}
@@ -532,10 +532,10 @@ function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges){
 			AND querystring LIKE '%locstock%reorderlevel%' 
 		ORDER BY transactiondate DESC
 		LIMIT 1";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$lastdate = $myrow['transactiondate'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$lastdate = $MyRow['transactiondate'];
 	}else{
 		$lastdate = '0000-00-00';
 	}
@@ -550,11 +550,11 @@ function isTopSalesItem($stockid, $topitems, $TopItemsDays){
 	$SQL="SELECT ". $TopSalesField." AS topsalesposition
 		  FROM klsalesperformance
 		  WHERE stockid = '" . $stockid . "'";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$istopsales = false;
-	if (DB_num_rows($result) != 0){
-		if ($myrow = DB_fetch_array($result)) {
-			if ($myrow['topsalesposition'] <= $topitems){
+	if (DB_num_rows($Result) != 0){
+		if ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['topsalesposition'] <= $topitems){
 				$istopsales = true;
 			}
 		}
@@ -605,8 +605,8 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 				AND stockmaster.categoryid = '" . $CategoryId . "'
 			ORDER BY stockid";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
 			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
 		}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
@@ -628,9 +628,9 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -640,9 +640,9 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['categoryid'], 
-					$myrow['description'], 
-					locale_number_format($myrow['QtyKantor'],0)
+					$MyRow['categoryid'], 
+					$MyRow['description'], 
+					locale_number_format($MyRow['QtyKantor'],0)
 					);
 			$i++;
 		}
@@ -661,10 +661,10 @@ function ItemsNeedingAutomaticTranslation($RootPath){
 				AND LENGTH(stockmaster.description) > 2
 				AND (descriptiontranslation = ''
 					OR longdescriptiontranslation = '')";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	if ($myrow[0] > 0){
-		$text = locale_number_format($myrow[0],0) . " items need Automatic Description Translation";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	if ($MyRow[0] > 0){
+		$text = locale_number_format($MyRow[0],0) . " items need Automatic Description Translation";
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
@@ -675,10 +675,10 @@ function ItemsNeedingTranslationRevision($RootPath){
 			WHERE stockmaster.stockid = stockdescriptiontranslations.stockid
 				AND stockmaster.discontinued = 0
 				AND needsrevision = '1'";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	if ($myrow[0] > 0){
-		$text = locale_number_format($myrow[0],0) . " items need Translation Revision";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	if ($MyRow[0] > 0){
+		$text = locale_number_format($MyRow[0],0) . " items need Translation Revision";
 		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 	}
 }
@@ -737,9 +737,9 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 										AND stockmoves.qty >0) 
 					ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL);		
+	$Result = DB_query($SQL);		
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $location . ' with stock <= ' . $QOHAvailable . ' at shops or kantor</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -755,9 +755,9 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -768,10 +768,10 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['description'], 
-					$myrow['categoryid'], 
-					locale_number_format($myrow['quantity'],0),
-					locale_number_format($myrow['qtyavailable'],0)
+					$MyRow['description'], 
+					$MyRow['categoryid'], 
+					locale_number_format($MyRow['quantity'],0),
+					locale_number_format($MyRow['qtyavailable'],0)
 					);
 			$i++;
 		}
@@ -816,12 +816,12 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($endtopitems - 1) . ", 99999999";			
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$i = $endtopitems;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['rl'] > 0){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['rl'] > 0){
 				if($showHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $codeshop . ' shop. ' . '</strong></p>';
 					echo '<div>';
@@ -841,7 +841,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 					$showHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -853,11 +853,11 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						$myrow['description'], 
-						$myrow['categoryid'], 
-						$myrow['qohtotal'],
-						$myrow['rl'],
-						$myrow['qoh']
+						$MyRow['description'], 
+						$MyRow['categoryid'], 
+						$MyRow['qohtotal'],
+						$MyRow['rl'],
+						$MyRow['qoh']
 						);
 			}
 			$i++;
@@ -921,8 +921,8 @@ No pending transfer regarding this item
 							AND loctransfers.stockid =  stockmaster.stockid)
 			ORDER BY stockid";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $MessageCategory . _(' Items with stock available (but NO changing price or category) at Kantor but RL = 0 at ') . $Location . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
@@ -937,9 +937,9 @@ No pending transfer regarding this item
 				</thead>
 				<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -949,9 +949,9 @@ No pending transfer regarding this item
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['categoryid'], 
-					$myrow['description'], 
-					locale_number_format($myrow['QtyKantor'],0)
+					$MyRow['categoryid'], 
+					$MyRow['description'], 
+					locale_number_format($MyRow['QtyKantor'],0)
 					);
 			$i++;
 		}
@@ -987,8 +987,8 @@ function NewCustomers($NumDays, $RootPath){
 				AND debtorsmaster.clientsince > '".$StartDate."'
 			ORDER BY debtorsmaster.clientsince";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('New customers registered during the last ') . $NumDays . ' days.' . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1004,9 +1004,9 @@ function NewCustomers($NumDays, $RootPath){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/Customers.php?DebtorNo=' . $MyRow['debtorno'] . '">' . $MyRow['debtorno'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1017,11 +1017,11 @@ function NewCustomers($NumDays, $RootPath){
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['name'], 
-					$myrow['address6'], 
-					$myrow['currcode'], 
-					ConvertSQLDateTime($myrow['clientsince']), 
-					$myrow['typename']				
+					$MyRow['name'], 
+					$MyRow['address6'], 
+					$MyRow['currcode'], 
+					ConvertSQLDateTime($MyRow['clientsince']), 
+					$MyRow['typename']				
 					);
 			$i++;
 		}
@@ -1064,8 +1064,8 @@ function OvestockAtShops($kind, $RootPath){
 											AND loctransfers.stockid =  locstock.stockid)
 				ORDER BY locstock.loccode, stockmaster.categoryid, locstock.stockid";
 	}
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if($kind == "OVERSTOCK"){			
 			echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of items at shops') . '</strong></p>';
 			$TableHeader = '<tr>
@@ -1090,9 +1090,9 @@ function OvestockAtShops($kind, $RootPath){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1100,10 +1100,10 @@ function OvestockAtShops($kind, $RootPath){
 					<td class="number">%s</td>
 					</tr>', 
 					$i, 
-					$myrow['loccode'], 
+					$MyRow['loccode'], 
 					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['qty'],0)
+					$MyRow['description'], 
+					locale_number_format($MyRow['qty'],0)
 					);
 			$i++;
 		}
@@ -1164,8 +1164,8 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 	}
 	$SQL = $SQL . " ORDER BY stockmaster.lastcategoryupdate ASC, stockmaster.stockid ASC";
 	
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ReportType == "GOOD"){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for less than " . $maxdays . " days with more than " . $percentsales . "% of sold stock (" . $TextTitle . " Items)." . ' </strong></p>';
 		}else{
@@ -1185,12 +1185,12 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			$DaysInCategory = DateDiff(Date($_SESSION['DefaultDateFormat']), ConvertSQLDate($StartDate), 'd');
-			if (($myrow['sold'] + $myrow['qoh']) != 0){
-				$ActualSales = ($myrow['sold'] / ($myrow['sold'] + $myrow['qoh'])) * 100;
+			if (($MyRow['sold'] + $MyRow['qoh']) != 0){
+				$ActualSales = ($MyRow['sold'] / ($MyRow['sold'] + $MyRow['qoh'])) * 100;
 			}else{
 				$ActualSales = 0 ;
 			}
@@ -1204,12 +1204,12 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 					<td class="number">%s</td>
 					</tr>', 
 					$i, 
-					ConvertSQLDate($myrow['lastcategoryupdate']), 
+					ConvertSQLDate($MyRow['lastcategoryupdate']), 
 					$CodeLink, 
-					$myrow['description'], 
-					locale_number_format($myrow['qoh']  + $myrow['sold'],0),
-					locale_number_format($myrow['qoh'],0),
-					locale_number_format($myrow['sold'],0),
+					$MyRow['description'], 
+					locale_number_format($MyRow['qoh']  + $MyRow['sold'],0),
+					locale_number_format($MyRow['qoh'],0),
+					locale_number_format($MyRow['sold'],0),
 					locale_number_format($ActualSales,0)
 					);
 			$i++;
@@ -1245,8 +1245,8 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 				AND stockmaster.klmovingdiscount80 = 0
 			ORDER BY stockmaster.stockid";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $percentageIncrease . '%</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1262,12 +1262,12 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$NewPrice = round_price($myrow['price'] * (1 + $percentageIncrease/100), "UP");
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-		//	$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $myrow['stockid'] . '">' . locale_number_format($myrow['price'],0) . '</a>';
-			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $myrow['stockid'] . '&NewPrice='. $NewPrice .  '">' . locale_number_format($NewPrice,0) . '</a>';
+			$NewPrice = round_price($MyRow['price'] * (1 + $percentageIncrease/100), "UP");
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
+		//	$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $MyRow['stockid'] . '">' . locale_number_format($MyRow['price'],0) . '</a>';
+			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $NewPrice .  '">' . locale_number_format($NewPrice,0) . '</a>';
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -1278,10 +1278,10 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['description'],
-					locale_number_format($myrow['stdcost'],0),
-					ConvertSQLDate($myrow['startdate']), 
-					locale_number_format($myrow['price'],0),
+					$MyRow['description'],
+					locale_number_format($MyRow['stdcost'],0),
+					ConvertSQLDate($MyRow['startdate']), 
+					locale_number_format($MyRow['price'],0),
 					$NewPriceLink
 					);
 			$i++;
@@ -1300,10 +1300,10 @@ function SalesOfItemByLocation($stockid, $location, $maxdays){
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.fromstkloc = '". $location . "'
 				AND salesorderdetails.stkcode LIKE '". $stockid . "%'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$sales = $myrow['sales'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$sales = $MyRow['sales'];
 	}else{
 		$sales = 999;
 	}
@@ -1328,30 +1328,30 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		$showHeader = true;
 		$k = 0; //row colour counter
 		$i = $starttopitems;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$SQLDistribution = "SELECT locstock.loccode, 
 									locstock.reorderlevel AS oldrl
 								FROM locstock,locations
-								WHERE locstock.stockid = '" . $myrow['stockid'] . "'
+								WHERE locstock.stockid = '" . $MyRow['stockid'] . "'
 									AND locstock.loccode = locations.loccode
 									AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 									AND locstock.reorderlevel > 0";
-			$resultdistribution = DB_query($SQLDistribution);
-			$LocationsToDistribute = DB_num_rows($resultdistribution);
+			$Resultdistribution = DB_query($SQLDistribution);
+			$LocationsToDistribute = DB_num_rows($Resultdistribution);
 			if ($LocationsToDistribute != 0){
 				if ($k == 1) {
 					$k = 0;
 				} else {
 					$k = 1;
 				}
-				while ($mydistribution = DB_fetch_array($resultdistribution)) {
+				while ($mydistribution = DB_fetch_array($Resultdistribution)) {
 					if($mydistribution['oldrl'] > $NewRL){
-						SetReorderLevel("LowSalesAdjust", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB);
+						SetReorderLevel("LowSalesAdjust", $MyRow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB);
 						if ($ShowMessages){
 							if($showHeader){
 								echo '<p class="page_title_text" align="center"><strong>' . _('Set RL Max to ') . $NewRL . ' for Low Sales '. $starttopitems . '-'. $endtopitems . ' for at least ' . $daystopitems . ' days </strong></p>';
@@ -1374,7 +1374,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 							} else {
 								echo '<tr class="OddTableRows">';
 							}
-							$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+							$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 							printf('<td class="number">%s</td>
 								<td>%s</td>
 								<td>%s</td>
@@ -1385,8 +1385,8 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 								</tr>', 
 								$i, 
 								$CodeLink, 
-								$myrow['categoryid'], 
-								$myrow['description'], 
+								$MyRow['categoryid'], 
+								$MyRow['description'], 
 								$mydistribution['loccode'],
 								locale_number_format($mydistribution['oldrl'],0),
 								locale_number_format($NewRL,0)
@@ -1440,8 +1440,8 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales){
 						AND salesorders.salesperson = salesman.salesmancode) ASC";
 //prnMsg($SQL);
 	
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with daily sales below minimum of ') . locale_number_format($MinimumSales,0) . "/day during the last " . $NumDaysA . " days in ". $Shop .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1454,13 +1454,13 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
 
-			$Code = $myrow['salesmancode'];
-			$Name = $myrow['salesmanname'];
+			$Code = $MyRow['salesmancode'];
+			$Name = $MyRow['salesmanname'];
 			
-			$dailyA = locale_number_format(($myrow['salesA']/$NumDaysA),0);
+			$dailyA = locale_number_format(($MyRow['salesA']/$NumDaysA),0);
 			
 			printf('<td>%s</td>
 					<td>%s</td>
@@ -1501,8 +1501,8 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 		HAVING COUNT(salesorders.klpaidcash + salesorders.klpaidcreditcard) >= '" . $maxsplitted . "'
 		ORDER BY salesorders.salesperson";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with ') . $maxsplitted . _(' or more splitted payments during the last ') . $maxdays . _(' days.') .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1519,7 +1519,7 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td class="number">%s</td>
@@ -1530,9 +1530,9 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 					<td>%s</td>
 					<td>%s</td>
 					</tr>', 
-					$myrow['salesperson'],
-					locale_number_format($myrow['splitted'],0),
-					locale_number_format($myrow['amount'],0),
+					$MyRow['salesperson'],
+					locale_number_format($MyRow['splitted'],0),
+					locale_number_format($MyRow['amount'],0),
 					'',
 					'',
 					'',
@@ -1546,12 +1546,12 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 								orddate								
 						FROM salesorders
 						WHERE orddate >= '". $StartDate. "'
-							AND salesperson = '". $myrow['salesperson']. "'
+							AND salesperson = '". $MyRow['salesperson']. "'
 							AND klpaidcash > 0
 							AND klpaidcreditcard > 0
 						ORDER BY orderno";
-			$resultdetails = DB_query($SQLDetails);
-			while ($myrowdetails = DB_fetch_array($resultdetails)) {
+			$Resultdetails = DB_query($SQLDetails);
+			while ($MyRowdetails = DB_fetch_array($Resultdetails)) {
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
 						<td>%s</td>
@@ -1565,11 +1565,11 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 						'',
 						'',
 						'',
-						ConvertSQLDate($myrowdetails['orddate']),
-						$myrowdetails['orderno'],
-						$myrowdetails['customerref'],
-						locale_number_format($myrowdetails['klpaidcash'],0),
-						locale_number_format($myrowdetails['klpaidcreditcard'],0)
+						ConvertSQLDate($MyRowdetails['orddate']),
+						$MyRowdetails['orderno'],
+						$MyRowdetails['customerref'],
+						locale_number_format($MyRowdetails['klpaidcash'],0),
+						locale_number_format($MyRowdetails['klpaidcreditcard'],0)
 						);
 			}
 			$i++;
@@ -1623,12 +1623,12 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$i = $starttopitems;
-		while ($myrow = DB_fetch_array($result)) {
-			if (($myrow['availableshops'] < $minshops) && ($myrow['qoh'] > $myrow['availableshops'])){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (($MyRow['availableshops'] < $minshops) && ($MyRow['qoh'] > $MyRow['availableshops'])){
 				if($showHeader){
 					if ($categories == "DISC20"){
 						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 20% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
@@ -1659,7 +1659,7 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 					$showHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -1671,11 +1671,11 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						$myrow['description'], 
-						$myrow['categoryid'], 
-						$myrow['totalinvoiced'], 
-						$myrow['qoh'], 
-						$myrow['availableshops'] 
+						$MyRow['description'], 
+						$MyRow['categoryid'], 
+						$MyRow['totalinvoiced'], 
+						$MyRow['qoh'], 
+						$MyRow['availableshops'] 
 						);
 			}
 			$i++;
@@ -1747,8 +1747,8 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 								WHERE salesorders.orderno = so2.orderno 
 								AND so2.stkcode LIKE '" . $stockid . "' )". 
 			" ORDER BY salesorders.orderno";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -1764,9 +1764,9 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 		echo $TableHeader;
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$CodeLink = '<a href="' . $RootPath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'] . '">' . $myrow['orderno'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/OrderDetails.php?OrderNumber=' . $MyRow['orderno'] . '">' . $MyRow['orderno'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td class="number">%s</td>
@@ -1778,11 +1778,11 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 					</tr>', 
 					$i, 
 					$CodeLink, 
-					$myrow['customerref'], 
-					$myrow['name'], 
-					$myrow['salesmanname'], 
-					ConvertSQLDate($myrow['orddate']), 
-					locale_number_format($myrow['ordervalue'],0)
+					$MyRow['customerref'], 
+					$MyRow['name'], 
+					$MyRow['salesmanname'], 
+					ConvertSQLDate($MyRow['orddate']), 
+					locale_number_format($MyRow['ordervalue'],0)
 					);
 			$i++;
 		}
@@ -1824,9 +1824,9 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 				AND ( oc_dokuonecheckout.date_created >= '" . $LastTimeRun . "'
 					OR oc_dokuonecheckout.date_updated >= '" . $LastTimeRun . "')
 		ORDER BY oc_dokuonecheckout.trx_id";
-	$result = DB_query_oc($SQL);
+	$Result = DB_query_oc($SQL);
 
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('DOKU Payments from OpenCart') .'</strong></p>';
 			echo '<div>';
@@ -1860,7 +1860,7 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 
 		$k = 0; //row colour counter
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -1871,29 +1871,29 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 				}
 			}
 			/* FIELD MATCHING */
-			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($myrow['customer_group_id'], $myrow['ordercurrency']);
-			$OrderNo = GetWeberpOrderNo($CustomerCode, $myrow['order_id']);
+			$CustomerCode = GetWeberpCustomerIdFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $MyRow['ordercurrency']);
+			$OrderNo = GetWeberpOrderNo($CustomerCode, $MyRow['order_id']);
 			$PaymentSystem = OPENCART_DOKU_PAYMENT_SYSTEM;
-			$CurrencyOrder = $myrow['ordercurrency'];
-			$CurrencyPayment = $myrow['ordercurrency'];
-			$TotalOrder = round($myrow['ordertotal'] * $myrow['currency_value'],0); // from OC default currency to order and payment currency
+			$CurrencyOrder = $MyRow['ordercurrency'];
+			$CurrencyPayment = $MyRow['ordercurrency'];
+			$TotalOrder = round($MyRow['ordertotal'] * $MyRow['currency_value'],0); // from OC default currency to order and payment currency
 			$Rate = GetWeberpCurrencyRate($CurrencyOrder);
-			$AmountPaid = $myrow['amount'];
-			$TransactionID = $myrow['trx_id'];
-			$GLAccount = GetWeberpGLAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment);
-			$GLCommissionAccount = GetWeberpGLCommissionAccountPayPalFromCustomerGroupAndCurrency($myrow['customer_group_id'], $CurrencyPayment);
+			$AmountPaid = $MyRow['amount'];
+			$TransactionID = $MyRow['trx_id'];
+			$GLAccount = GetWeberpGLAccountPayPalFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $CurrencyPayment);
+			$GLCommissionAccount = GetWeberpGLCommissionAccountPayPalFromCustomerGroupAndCurrency($MyRow['customer_group_id'], $CurrencyPayment);
 			
 			$Commission = $ComissionFlatDOKU; // For each tx there is a flat comission
-			if (($myrow['payment_channel'] == "15") OR ($myrow['payment_channel'] == "16")){
+			if (($MyRow['payment_channel'] == "15") OR ($MyRow['payment_channel'] == "16")){
 				// if it is a payment via CC there is a CC commission extra from DOKU to add to the flat commission
 				$Commission += round(($AmountPaid * $ComissionCCDOKU /100),0);
 			}
 			
-			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $myrow['created'] . -$TimeDifference . ' hours'));
-			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $myrow['order_id']) * $myrow['currency_value'],$myrow['ordercurrency']);
+			$WebERPDateOrder = date('Y-m-d H:i:s', strtotime( $MyRow['created'] . -$TimeDifference . ' hours'));
+			$FreightCost = RoundPriceFromCart(GetTotalFromOrder("shipping", $MyRow['order_id']) * $MyRow['currency_value'],$MyRow['ordercurrency']);
 
 
-			if (($myrow['ordercurrency'] == 'IDR') AND ($myrow['result_msg'] == 'SUCCESS')) {
+			if (($MyRow['ordercurrency'] == 'IDR') AND ($MyRow['result_msg'] == 'SUCCESS')) {
 				// order currency is IDR
 				// AND has been paid OK
 				$PaymentOK = true;
@@ -1930,41 +1930,41 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 						<td>%s</td>
 						<td>%s</td>
 						</tr>',
-						$myrow['customer_id'],
-						$myrow['email'],
+						$MyRow['customer_id'],
+						$MyRow['email'],
 						$CustomerCode,
-						$myrow['order_id'],
+						$MyRow['order_id'],
 						$OrderNo,
 						$TotalOrder,
-						$myrow['ordercurrency'],
+						$MyRow['ordercurrency'],
 						$AmountPaid,
 						$FreightCost,
-						$myrow['ordercurrency'],
+						$MyRow['ordercurrency'],
 						$TransactionID,
-						$myrow['amount'],
-						$myrow['payment_channel'],
+						$MyRow['amount'],
+						$MyRow['payment_channel'],
 						$Commission,
 						$WebERPDateOrder,
-						$myrow['process_type'],
-						$myrow['result_msg'],
-						$myrow['status_code'],
-						$myrow['approval_code']
+						$MyRow['process_type'],
+						$MyRow['result_msg'],
+						$MyRow['status_code'],
+						$MyRow['approval_code']
 						);
 			}
 			if ($EmailText !=''){
-				$EmailText = $EmailText . $myrow['customer_id'] .
-									      " = " . $myrow['email'] .
+				$EmailText = $EmailText . $MyRow['customer_id'] .
+									      " = " . $MyRow['email'] .
 									      " = " . $CustomerCode .
-									      " = " . $myrow['order_id'] .
+									      " = " . $MyRow['order_id'] .
 									      " = " . $TotalOrder .
-									      " = " . $myrow['ordercurrency'] .
+									      " = " . $MyRow['ordercurrency'] .
 									      " = " . $AmountPaid .
 									      " = " . $FreightCost .
-									      " = " . $myrow['payment_channel'] .
-									      " = " . $myrow['process_type'] .
-									      " = " . $myrow['result_msg'] .
-									      " = " . $myrow['status_code'] .
-									      " = " . $myrow['approval_code'] .
+									      " = " . $MyRow['payment_channel'] .
+									      " = " . $MyRow['process_type'] .
+									      " = " . $MyRow['result_msg'] .
+									      " = " . $MyRow['status_code'] .
+									      " = " . $MyRow['approval_code'] .
 										  " --> " . $Action . "\n";
 			}
 			$i++;
@@ -2200,47 +2200,47 @@ Updated 3 index in loctransfers
 			WHERE locations.typeloc = '".$TypeLoc."' " .  
 			$OrderBy;
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$numshops = 0;
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			$numshops++;
 			$TableResult[$numshops]['show'] = FALSE; // to start we don't need to show any result
-			$TableResult[$numshops]['loccode'] = $myrow['loccode'];
-			$TableResult[$numshops]['locationname'] = $myrow['locationname'];
-			$TableResult[$numshops]['rlfactorforpackaging'] = $myrow['rlfactorforpackaging'];
-			$TableResult[$numshops]['klemaillastpackacgingtransfer'] = $myrow['klemaillastpackacgingtransfer'];
+			$TableResult[$numshops]['loccode'] = $MyRow['loccode'];
+			$TableResult[$numshops]['locationname'] = $MyRow['locationname'];
+			$TableResult[$numshops]['rlfactorforpackaging'] = $MyRow['rlfactorforpackaging'];
+			$TableResult[$numshops]['klemaillastpackacgingtransfer'] = $MyRow['klemaillastpackacgingtransfer'];
 
-			$TableResult[$numshops]['qty_box_l'] = $myrow['qty_box_l'];
-			$TableResult[$numshops]['qty_box_m'] = $myrow['qty_box_m'];
-			$TableResult[$numshops]['qty_box_s'] = $myrow['qty_box_s'];
-			$TableResult[$numshops]['qty_bag_l'] = $myrow['qty_bag_l'];
-			$TableResult[$numshops]['qty_bag_m'] = $myrow['qty_bag_m'];
-			$TableResult[$numshops]['qty_bag_s'] = $myrow['qty_bag_s'];
-			$TableResult[$numshops]['qty_shopping_l'] = $myrow['qty_shopping_l'];
-			$TableResult[$numshops]['qty_shopping_m'] = $myrow['qty_shopping_m'];
-			$TableResult[$numshops]['qty_shopping_s'] = $myrow['qty_shopping_s'];
+			$TableResult[$numshops]['qty_box_l'] = $MyRow['qty_box_l'];
+			$TableResult[$numshops]['qty_box_m'] = $MyRow['qty_box_m'];
+			$TableResult[$numshops]['qty_box_s'] = $MyRow['qty_box_s'];
+			$TableResult[$numshops]['qty_bag_l'] = $MyRow['qty_bag_l'];
+			$TableResult[$numshops]['qty_bag_m'] = $MyRow['qty_bag_m'];
+			$TableResult[$numshops]['qty_bag_s'] = $MyRow['qty_bag_s'];
+			$TableResult[$numshops]['qty_shopping_l'] = $MyRow['qty_shopping_l'];
+			$TableResult[$numshops]['qty_shopping_m'] = $MyRow['qty_shopping_m'];
+			$TableResult[$numshops]['qty_shopping_s'] = $MyRow['qty_shopping_s'];
 
-			$TableResult[$numshops]['ot_box_l'] = $myrow['ot_box_l'];
-			$TableResult[$numshops]['ot_box_m'] = $myrow['ot_box_m'];
-			$TableResult[$numshops]['ot_box_s'] = $myrow['ot_box_s'];
-			$TableResult[$numshops]['ot_bag_l'] = $myrow['ot_bag_l'];
-			$TableResult[$numshops]['ot_bag_m'] = $myrow['ot_bag_m'];
-			$TableResult[$numshops]['ot_bag_s'] = $myrow['ot_bag_s'];
-			$TableResult[$numshops]['ot_shopping_l'] = $myrow['ot_shopping_l'];
-			$TableResult[$numshops]['ot_shopping_m'] = $myrow['ot_shopping_m'];
-			$TableResult[$numshops]['ot_shopping_s'] = $myrow['ot_shopping_s'];
+			$TableResult[$numshops]['ot_box_l'] = $MyRow['ot_box_l'];
+			$TableResult[$numshops]['ot_box_m'] = $MyRow['ot_box_m'];
+			$TableResult[$numshops]['ot_box_s'] = $MyRow['ot_box_s'];
+			$TableResult[$numshops]['ot_bag_l'] = $MyRow['ot_bag_l'];
+			$TableResult[$numshops]['ot_bag_m'] = $MyRow['ot_bag_m'];
+			$TableResult[$numshops]['ot_bag_s'] = $MyRow['ot_bag_s'];
+			$TableResult[$numshops]['ot_shopping_l'] = $MyRow['ot_shopping_l'];
+			$TableResult[$numshops]['ot_shopping_m'] = $MyRow['ot_shopping_m'];
+			$TableResult[$numshops]['ot_shopping_s'] = $MyRow['ot_shopping_s'];
 
-			$TableResult[$numshops]['rl_box_l'] = $myrow['rl_box_l'];
-			$TableResult[$numshops]['rl_box_m'] = $myrow['rl_box_m'];
-			$TableResult[$numshops]['rl_box_s'] = $myrow['rl_box_s'];
-			$TableResult[$numshops]['rl_bag_l'] = $myrow['rl_bag_l'];
-			$TableResult[$numshops]['rl_bag_m'] = $myrow['rl_bag_m'];
-			$TableResult[$numshops]['rl_bag_s'] = $myrow['rl_bag_s'];
-			$TableResult[$numshops]['rl_shopping_l'] = $myrow['rl_shopping_l'];
-			$TableResult[$numshops]['rl_shopping_m'] = $myrow['rl_shopping_m'];
-			$TableResult[$numshops]['rl_shopping_s'] = $myrow['rl_shopping_s'];
+			$TableResult[$numshops]['rl_box_l'] = $MyRow['rl_box_l'];
+			$TableResult[$numshops]['rl_box_m'] = $MyRow['rl_box_m'];
+			$TableResult[$numshops]['rl_box_s'] = $MyRow['rl_box_s'];
+			$TableResult[$numshops]['rl_bag_l'] = $MyRow['rl_bag_l'];
+			$TableResult[$numshops]['rl_bag_m'] = $MyRow['rl_bag_m'];
+			$TableResult[$numshops]['rl_bag_s'] = $MyRow['rl_bag_s'];
+			$TableResult[$numshops]['rl_shopping_l'] = $MyRow['rl_shopping_l'];
+			$TableResult[$numshops]['rl_shopping_m'] = $MyRow['rl_shopping_m'];
+			$TableResult[$numshops]['rl_shopping_s'] = $MyRow['rl_shopping_s'];
 		}
 	}
 
@@ -2521,32 +2521,32 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath){
 			WHERE locations.typeloc = 'SHOPOU' " .  
 			$OrderBy;
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$numshops = 0;
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
 			$numshops++;
 			$TableResult[$numshops]['show'] = FALSE; // to start we don't need to show any result
-			$TableResult[$numshops]['loccode'] = $myrow['loccode'];
-			$TableResult[$numshops]['locationname'] = $myrow['locationname'];
-			$TableResult[$numshops]['rlfactorforpackaging'] = $myrow['rlfactorforpackaging'];
-			$TableResult[$numshops]['klemaillastpackacgingtransfer'] = $myrow['klemaillastpackacgingtransfer'];
+			$TableResult[$numshops]['loccode'] = $MyRow['loccode'];
+			$TableResult[$numshops]['locationname'] = $MyRow['locationname'];
+			$TableResult[$numshops]['rlfactorforpackaging'] = $MyRow['rlfactorforpackaging'];
+			$TableResult[$numshops]['klemaillastpackacgingtransfer'] = $MyRow['klemaillastpackacgingtransfer'];
 
-			$TableResult[$numshops]['qty_bag_l'] = $myrow['qty_bag_l'];
-			$TableResult[$numshops]['qty_bag_m'] = $myrow['qty_bag_m'];
-			$TableResult[$numshops]['qty_bag_s'] = $myrow['qty_bag_s'];
-			$TableResult[$numshops]['qty_shopping_m'] = $myrow['qty_shopping_m'];
+			$TableResult[$numshops]['qty_bag_l'] = $MyRow['qty_bag_l'];
+			$TableResult[$numshops]['qty_bag_m'] = $MyRow['qty_bag_m'];
+			$TableResult[$numshops]['qty_bag_s'] = $MyRow['qty_bag_s'];
+			$TableResult[$numshops]['qty_shopping_m'] = $MyRow['qty_shopping_m'];
 
-			$TableResult[$numshops]['ot_bag_l'] = $myrow['ot_bag_l'];
-			$TableResult[$numshops]['ot_bag_m'] = $myrow['ot_bag_m'];
-			$TableResult[$numshops]['ot_bag_s'] = $myrow['ot_bag_s'];
-			$TableResult[$numshops]['ot_shopping_m'] = $myrow['ot_shopping_m'];
+			$TableResult[$numshops]['ot_bag_l'] = $MyRow['ot_bag_l'];
+			$TableResult[$numshops]['ot_bag_m'] = $MyRow['ot_bag_m'];
+			$TableResult[$numshops]['ot_bag_s'] = $MyRow['ot_bag_s'];
+			$TableResult[$numshops]['ot_shopping_m'] = $MyRow['ot_shopping_m'];
 
-			$TableResult[$numshops]['rl_bag_l'] = $myrow['rl_bag_l'];
-			$TableResult[$numshops]['rl_bag_m'] = $myrow['rl_bag_m'];
-			$TableResult[$numshops]['rl_bag_s'] = $myrow['rl_bag_s'];
-			$TableResult[$numshops]['rl_shopping_m'] = $myrow['rl_shopping_m'];
+			$TableResult[$numshops]['rl_bag_l'] = $MyRow['rl_bag_l'];
+			$TableResult[$numshops]['rl_bag_m'] = $MyRow['rl_bag_m'];
+			$TableResult[$numshops]['rl_bag_s'] = $MyRow['rl_bag_s'];
+			$TableResult[$numshops]['rl_shopping_m'] = $MyRow['rl_shopping_m'];
 		}
 	}
 	
@@ -2669,10 +2669,10 @@ function GetLenghtClassId($webERPDimensions, $language_id){
 			WHERE unit = '" . $webERPDimensions . "'
 				AND language_id = '" . $language_id . "'";
 	$ErrMsg =_('Could not get the LenghtClassId in OpenCart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
+	$Result = DB_query_oc($SQL,$ErrMsg);
+	if(DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[0];
 	}else{
 		return '';
 	}
@@ -2684,10 +2684,10 @@ function GetLenghtUnits($LenghtClassId, $language_id){
 			WHERE length_class_id = '" . $LenghtClassId . "'
 				AND language_id = '" . $language_id . "'";
 	$ErrMsg =_('Could not get the Lenght Units in OpenCart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
+	$Result = DB_query_oc($SQL,$ErrMsg);
+	if(DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[0];
 	}else{
 		return '';
 	}
@@ -2700,10 +2700,10 @@ function GetOpenCartSettingValue($Store, $Code, $Key){
 				AND `code` = '" . $Code . "'
 				AND `key` = '" . $Key . "'";
 	$ErrMsg =_('Could not get the SettingId in OpenCart because');
-	$result = DB_query_oc($SQL,$ErrMsg);
-	if(DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		return $myrow[0];
+	$Result = DB_query_oc($SQL,$ErrMsg);
+	if(DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow[0];
 	}else{
 		return 0;
 	}
@@ -2712,13 +2712,13 @@ function GetOpenCartSettingValue($Store, $Code, $Key){
 function UpdateSettingValueOpenCartByCodeAndKey($Store, $Code, $Key, $Value){
 	$DbgMsg = _('The SQL statement that failed was');
 	$UpdateErrMsg = _('The SQL to update setting value in Opencart failed');
-	$sqlUpdate = "UPDATE oc_setting
+	$SQLUpdate = "UPDATE oc_setting
 					SET	value = '" . $Value . "'
 				WHERE `code` = '" . $Code . "'
 					AND `key` = '" . $Key . "'
 					AND `store_id` = '" . $Store . "'";
 
-	$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+	$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
 function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $EmailText=''){
@@ -2728,8 +2728,8 @@ function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $Email
 	$SQL = "SELECT salescatprod.stockid
 			FROM salescatprod
 			WHERE salescatprod.salescatid IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-		$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Maintain webERP Outlet Sales Categories') .'</strong></p>';
 			echo '<div>';
@@ -2745,16 +2745,16 @@ function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $Email
 
 		$k = 0; //row colour counter
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
 
-			$ProductId = $myrow['stockid'];
+			$ProductId = $MyRow['stockid'];
 
 			$Action = "Delete sales categories not OUTLET";
-			$sqlDelete = "DELETE FROM salescatprod
+			$SQLDelete = "DELETE FROM salescatprod
 							WHERE stockid = '" . $ProductId . "'
 								AND salescatid NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-			$resultDelete = DB_query($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
+			$ResultDelete = DB_query($SQLDelete,$UpdateErrMsg,$DbgMsg,true);
 			if ($ShowMessages){
 				printf('<td>%s</td>
 						<td>%s</td>
@@ -2797,8 +2797,8 @@ function SyncFeaturedList($ShowMessages, $LastTimeRun, $EmailText= ''){
 			FROM salescatprod
 			WHERE salescatprod.featured ='1'
 			ORDER BY salescatprod.stockid";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Create featured list in OpenCart') .'</strong></p>';
 			echo '<div>';
@@ -2813,9 +2813,9 @@ function SyncFeaturedList($ShowMessages, $LastTimeRun, $EmailText= ''){
 		$Action = "Added";
 		$k = 0; //row colour counter
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			/* Field Matching */
-			$Model = $myrow['stockid'];
+			$Model = $MyRow['stockid'];
 
 			// Let's get the OpenCart primary key for product
 			$ProductId = GetOpenCartProductId($Model);
@@ -2873,8 +2873,8 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 				OR date_updated >= '" . $LastTimeRun . "'
 			ORDER BY salescatid";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Sales categories') .'</strong></p>';
 			echo '<div>';
@@ -2892,10 +2892,10 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 
 		$k = 0; //row colour counter
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			/* FIELD MATCHING */
-			if ($myrow['parentcatid'] == 0){
+			if ($MyRow['parentcatid'] == 0){
 				$Top = 1;
 			}else{
 				$Top = 0;
@@ -2904,22 +2904,22 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 			$Column = 1;
 			$Language_Id = 1; // for now NO multi language
 			$SortOrder = 1;
-			$Name = trim($myrow['salescatname']);
-			$Description = trim($myrow['salescatname']);
-			$MetaTitle = trim($myrow['salescatname']);
-			$MetaDescription = CreateMetaDescriptionSalesCategory('Sales category', trim($myrow['salescatname']));
-			$CategoryId = $myrow['salescatid'];
-			if (DataExistsInOpenCart('oc_category', 'category_id', $myrow['salescatid'])){
+			$Name = trim($MyRow['salescatname']);
+			$Description = trim($MyRow['salescatname']);
+			$MetaTitle = trim($MyRow['salescatname']);
+			$MetaDescription = CreateMetaDescriptionSalesCategory('Sales category', trim($MyRow['salescatname']));
+			$CategoryId = $MyRow['salescatid'];
+			if (DataExistsInOpenCart('oc_category', 'category_id', $MyRow['salescatid'])){
 				$Action = "Update";
-				$sqlUpdate = "UPDATE oc_category
-								SET parent_id 		= '" . $myrow['parentcatid'] . "',
-									status 			= '" . $myrow['active'] . "',
+				$SQLUpdate = "UPDATE oc_category
+								SET parent_id 		= '" . $MyRow['parentcatid'] . "',
+									status 			= '" . $MyRow['active'] . "',
 									top 			= '" . $Top . "',
 									date_modified 	= '" . $ServerNow . "'
 								WHERE category_id 	= '" . $CategoryId . "'";
-				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
 
-				$sqlUpdate = "UPDATE oc_category_description
+				$SQLUpdate = "UPDATE oc_category_description
 								SET language_id 		= '" . $Language_Id . "',
 									name	 			= '" . $Name . "',
 									description			= '" . $Description . "',
@@ -2927,11 +2927,11 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 									meta_description	= '" . $MetaDescription . "',
 									meta_keyword		= '" . $MetaKeyword . "'
 								WHERE category_id 	= '" . $CategoryId . "'";
-				$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
 
 			}else{
 				$Action = "Insert";
-				$sqlInsert = "INSERT INTO oc_category
+				$SQLInsert = "INSERT INTO oc_category
 								(category_id,
 								image,
 								parent_id,
@@ -2944,16 +2944,16 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 							VALUES
 								('" . $CategoryId . "',
 								'',
-								'" . $myrow['parentcatid'] . "',
+								'" . $MyRow['parentcatid'] . "',
 								'" . $Top . "',
 								'" . $Column . "',
 								'" . $SortOrder . "',
-								'" . $myrow['active'] . "',
+								'" . $MyRow['active'] . "',
 								'" . $ServerNow . "',
 								'" . $ServerNow . "'
 								)";
-				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
-				$sqlInsert = "INSERT INTO oc_category_description
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$SQLInsert = "INSERT INTO oc_category_description
 								(category_id,
 								language_id,
 								name,
@@ -2970,15 +2970,15 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 								'" . $MetaDescription . "',
 								'" . $MetaKeyword . "'
 								)";
-				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
-				$sqlInsert = "INSERT INTO oc_category_to_store
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+				$SQLInsert = "INSERT INTO oc_category_to_store
 								(category_id,
 								store_id)
 							VALUES
 								('" . $CategoryId . "',
 								'" . $StoreId . "'
 								)";
-				$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+				$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 				$SortOrder++;
 
 			}
@@ -2999,13 +2999,13 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 						<td>%s</td>
 						<td>%s</td>
 						</tr>',
-						$myrow['salescatid'],
+						$MyRow['salescatid'],
 						$Name,
 						$Action
 						);
 			}
 			if ($EmailText !=''){
-				$EmailText = $EmailText . $myrow['salescatid'] . " = " . $Name. " --> " . $Action . "\n";
+				$EmailText = $EmailText . $MyRow['salescatid'] . " = " . $Name. " --> " . $Action . "\n";
 			}
 			$i++;
 		}
@@ -3047,8 +3047,8 @@ function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $EmailText=
 			WHERE active = 1
 				AND parentcatid != 0
 			ORDER BY salescatname";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Activate/Inactivate Sales Categories depending on QOH') .'</strong></p>';
 			echo '<div>';
@@ -3065,15 +3065,15 @@ function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $EmailText=
 
 		$k = 0; //row colour counter
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			/* Field Matching */
-			$CategoryId = $myrow['salescatid'];
-			$CategoryName = $myrow['salescatname'];
-			$CategoryQOH = $myrow['qoh'];
-			if (isset($myrow['qoh'])){
+			$CategoryId = $MyRow['salescatid'];
+			$CategoryName = $MyRow['salescatname'];
+			$CategoryQOH = $MyRow['qoh'];
+			if (isset($MyRow['qoh'])){
 				if ($CategoryQOH > 0){
-					$CategoryQOH = $myrow['qoh'];
+					$CategoryQOH = $MyRow['qoh'];
 					$Status = 1;
 					$Action = "Active";
 				}else{
@@ -3087,10 +3087,10 @@ function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $EmailText=
 				$Action = "Inactive QOH = 0";
 			}
 
-			$sqlUpdate = "UPDATE oc_category SET
+			$SQLUpdate = "UPDATE oc_category SET
 								status = '" . $Status . "'
 							WHERE category_id = '" . $CategoryId . "'";
-			$resultUpdate = DB_query_oc($sqlUpdate,$UpdateErrMsg,$DbgMsg,true);
+			$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
@@ -3131,8 +3131,8 @@ function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $Ema
 				 oc_product
 			WHERE oc_product.product_id = oc_product_to_category.product_id
 				AND category_id IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-		$result = DB_query_oc($SQL);
-	if (DB_num_rows($result) != 0){
+		$Result = DB_query_oc($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Maintain Outlet Sales Categories') .'</strong></p>';
 			echo '<div>';
@@ -3148,16 +3148,16 @@ function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $Ema
 
 		$k = 0; //row colour counter
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
-			$ProductId = $myrow['product_id'];
-			$Model = $myrow['model'];
+			$ProductId = $MyRow['product_id'];
+			$Model = $MyRow['model'];
 
 			$Action = "Delete sales categories not OUTLET";
-			$sqlDelete = "DELETE FROM oc_product_to_category
+			$SQLDelete = "DELETE FROM oc_product_to_category
 							WHERE product_id = '" . $ProductId . "'
 								AND category_id NOT IN (" . ONLINESHOP_OUTLET_SALES_CATEGORIES . ")";
-			$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
+			$ResultDelete = DB_query_oc($SQLDelete,$UpdateErrMsg,$DbgMsg,true);
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
 				printf('<td>%s</td>
@@ -3201,8 +3201,8 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $EmailText = ''){
 			ORDER BY relateditems.stockid, 
 				relateditems.related";
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Related Items') .'</strong></p>';
 			echo '<div>';
@@ -3222,11 +3222,11 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $EmailText = ''){
 
 		$k = 0; //row colour counter
 		$i = 0;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			/* FIELD MATCHING */
-			$ProductId = GetOpenCartProductId($myrow['stockid']);
-			$RelatedId = GetOpenCartProductId($myrow['related']);
+			$ProductId = GetOpenCartProductId($MyRow['stockid']);
+			$RelatedId = GetOpenCartProductId($MyRow['related']);
 			if (($ProductId != '') AND ($RelatedId != '')){
 				// if both products still exist in OpenCart
 				if (((isRing($ProductId)) AND (isRing($RelatedId))) == FALSE){
@@ -3236,14 +3236,14 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $EmailText = ''){
 						$Action = "Update";
 					}else{
 						$Action = "Insert";
-						$sqlInsert = "INSERT INTO oc_product_related
+						$SQLInsert = "INSERT INTO oc_product_related
 										(product_id,
 										related_id)
 									VALUES
 										('" . $ProductId . "',
 										'" . $RelatedId . "'
 										)";
-						$resultInsert = DB_query_oc($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+						$ResultInsert = DB_query_oc($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 					}
 					if ($ShowMessages){
 						printf('<td>%s</td>
@@ -3252,8 +3252,8 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $EmailText = ''){
 								<td>%s</td>
 								<td>%s</td>
 								</tr>',
-								$myrow['stockid'],
-								$myrow['related'],
+								$MyRow['stockid'],
+								$MyRow['related'],
 								$ProductId,
 								$RelatedId,
 								$Action
@@ -3290,18 +3290,18 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $EmailText = ''){
 		FROM oc_seo_url
 		ORDER BY oc_seo_url.query,
 				oc_seo_url.seo_url_id DESC";
-	$result = DB_query_oc($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query_oc($SQL);
+	if (DB_num_rows($Result) != 0){
 		$k = 0; //row colour counter
 		$i = 0;
 		$PreviousQuery = "";
 		$PreviousKeyword = "";
 		$ShowHeader = TRUE;
-		while ($myrow = DB_fetch_array($result)) {
-			if ($PreviousQuery == $myrow['query']){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($PreviousQuery == $MyRow['query']){
 				// we have a duplicated
-				$DuplicatedQuery = $myrow['query'];
-				$DuplicatedKeyword = $myrow['keyword'];
+				$DuplicatedQuery = $MyRow['query'];
+				$DuplicatedKeyword = $MyRow['keyword'];
 
 				if ($ShowHeader){
 					if ($ShowMessages){
@@ -3318,19 +3318,19 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $EmailText = ''){
 					$ShowHeader = FALSE;
 				}
 				// we delete the duplicated
-				$sqlDelete = "DELETE FROM oc_seo_url
-							WHERE seo_url_id = '" .  $myrow['seo_url_id'] . "'";
-				$resultDelete = DB_query_oc($sqlDelete,$UpdateErrMsg,$DbgMsg,true);
+				$SQLDelete = "DELETE FROM oc_seo_url
+							WHERE seo_url_id = '" .  $MyRow['seo_url_id'] . "'";
+				$ResultDelete = DB_query_oc($SQLDelete,$UpdateErrMsg,$DbgMsg,true);
 
 				// we set it up as a redirect just in case someome uses this old URL keyword
-				if ($PreviousKeyword != $myrow['keyword']){
+				if ($PreviousKeyword != $MyRow['keyword']){
 					$Active = 1;
-					$FromURL = PATH_OPENCART_BASE . '/'. $myrow['keyword'];
-					$ToURL = PATH_OPENCART_BASE . '/' . ROUTE_TO_PRODUCT . $myrow['query'];
+					$FromURL = PATH_OPENCART_BASE . '/'. $MyRow['keyword'];
+					$ToURL = PATH_OPENCART_BASE . '/' . ROUTE_TO_PRODUCT . $MyRow['query'];
 					$ResponseCode = REDIRECT_RESPONSE_CODE;
 					$FromDate = date('Y-m-d');
 					$TimesUsed = 0;
-					$sqlInsert = "INSERT INTO oc_redirect
+					$SQLInsert = "INSERT INTO oc_redirect
 								(active,
 								from_url,
 								to_url,
@@ -3345,7 +3345,7 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $EmailText = ''){
 								'" . $FromDate . "',
 								'" . $TimesUsed . "'
 								)";
-					$resultInsert = DB_query_oc($sqlInsert,$UpdateErrMsg,$DbgMsg,true);
+					$ResultInsert = DB_query_oc($SQLInsert,$UpdateErrMsg,$DbgMsg,true);
 				}
 
 				if ($ShowMessages){
@@ -3354,18 +3354,18 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $EmailText = ''){
 							<td>%s</td>
 							<td>%s</td>
 							</tr>',
-							locale_number_format($myrow['seo_url_id'],0),
-							$myrow['query'],
-							$myrow['keyword']
+							locale_number_format($MyRow['seo_url_id'],0),
+							$MyRow['query'],
+							$MyRow['keyword']
 							);
 				}
 				if ($EmailText !=''){
-					$EmailText = $EmailText . locale_number_format($myrow['seo_url_id'],0) . " --> " . $myrow['query'] . " --> ". $myrow['keyword'] . "\n";
+					$EmailText = $EmailText . locale_number_format($MyRow['seo_url_id'],0) . " --> " . $MyRow['query'] . " --> ". $MyRow['keyword'] . "\n";
 				}
 				$i++;
 			}
-			$PreviousQuery = $myrow['query'];
-			$PreviousKeyword = $myrow['keyword'];
+			$PreviousQuery = $MyRow['query'];
+			$PreviousKeyword = $MyRow['keyword'];
 		}
 		if (!$ShowHeader){
 			if ($ShowMessages){

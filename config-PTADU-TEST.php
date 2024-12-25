@@ -60,7 +60,6 @@ $AllowCompanySelectionBox = 'Hide';
 //otherwise the user is expected to know the name of the company to log into.
 // KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.this seems to be obsolete
 
-$DefaultCompany  = 'test_erp';
 $DefaultDatabase = 'test_erp';
 
 //The maximum time that a login session can be idle before automatic logout
@@ -72,8 +71,7 @@ $MaximumExecutionTime =720;
 
 //The path to which session files should be stored in the server - useful for some multi-host web servers
 //this can be left commented out
-//$SessionSavePath = '/tmp';
-
+$SessionSavePath = '/var/www/vhosts/kapal-laut.com/.sessions_weberp/ptadu.com/TEST/';
 
 // which encryption function should be used
 //$CryptFunction = "md5"; // MD5 Hash

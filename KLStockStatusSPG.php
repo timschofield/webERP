@@ -16,7 +16,7 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-$result = DB_query("SELECT description,
+$Result = DB_query("SELECT description,
 						   units,
 						   mbflag,
 						   decimalplaces
@@ -25,12 +25,12 @@ $result = DB_query("SELECT description,
 					_('Could not retrieve the requested item'),
 					_('The SQL used to retrieve the items was'));
 
-$myrow = DB_fetch_array($result);
+$MyRow = DB_fetch_array($Result);
 
-$DecimalPlaces = $myrow['decimalplaces'];
+$DecimalPlaces = $MyRow['decimalplaces'];
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . 
-	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $myrow['description'] . ' : ' . _('in units of') . ' : ' . $myrow['units'] . '</b></p>';
+	'" alt="" /><b>' . ' ' . $StockID . ' - ' . $MyRow['description'] . ' : ' . _('in units of') . ' : ' . $MyRow['units'] . '</b></p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -49,7 +49,7 @@ echo '<br />
 		<tbody>';
 
 if ($StockID != ''){
-	$sql = "SELECT locstock.loccode,
+	$SQL = "SELECT locstock.loccode,
 					locations.locationname,
 					locstock.quantity
 			FROM locstock INNER JOIN locations
@@ -61,15 +61,15 @@ if ($StockID != ''){
 
 	$ErrMsg = _('The stock held at each location cannot be retrieved because');
 	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-	$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
+	$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	echo $TableHeader;
-	while ($myrow=DB_fetch_array($LocStockResult)) {
+	while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
-							AND shiploc='".$myrow['loccode']."'";
+							AND shiploc='".$MyRow['loccode']."'";
 		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
@@ -81,7 +81,7 @@ if ($StockID != ''){
 		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
-							AND recloc='".$myrow['loccode']."'";
+							AND recloc='".$MyRow['loccode']."'";
 		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
@@ -91,14 +91,14 @@ if ($StockID != ''){
 		}
 
 		$InTransit = $InTransitQuantityIn+$InTransitQuantityOut;
-		$Available = $myrow['quantity'];
+		$Available = $MyRow['quantity'];
 
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
-				$myrow['locationname'],
+				$MyRow['locationname'],
 				locale_number_format_zero_blank($Available, $DecimalPlaces),
 				locale_number_format_zero_blank($InTransit, $DecimalPlaces)
 				);

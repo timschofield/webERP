@@ -51,25 +51,25 @@ if ((!isset($_POST['FromPeriod'])
 			<tr><td>' . _('Select Period From') . ':</td>
 				<td><select name="FromPeriod">';
 
-	$sql = "SELECT periodno,
+	$SQL = "SELECT periodno,
 					lastdate_in_period
 			FROM periods
 			ORDER BY periodno DESC";
-	$Periods = DB_query($sql);
+	$Periods = DB_query($SQL);
 
 
-	while ($myrow=DB_fetch_array($Periods)){
+	while ($MyRow=DB_fetch_array($Periods)){
 		if(isset($_POST['FromPeriod']) AND $_POST['FromPeriod']!=''){
-			if( $_POST['FromPeriod']== $myrow['periodno']){
-				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			if( $_POST['FromPeriod']== $MyRow['periodno']){
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' .MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		} else {
-			if($myrow['lastdate_in_period']==$DefaultFromDate){
-				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			if($MyRow['lastdate_in_period']==$DefaultFromDate){
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		}
 	}
@@ -78,8 +78,8 @@ if ((!isset($_POST['FromPeriod'])
 		</tr>';
 	if (!isset($_POST['ToPeriod']) OR $_POST['ToPeriod']==''){
 		$LastDate = date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y')));
-		$sql = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
-		$MaxPrd = DB_query($sql);
+		$SQL = "SELECT periodno FROM periods where lastdate_in_period = '" . $LastDate . "'";
+		$MaxPrd = DB_query($SQL);
 		$MaxPrdrow = DB_fetch_row($MaxPrd);
 		$DefaultToPeriod = (int) ($MaxPrdrow[0]);
 
@@ -93,12 +93,12 @@ if ((!isset($_POST['FromPeriod'])
 
 	$RetResult = DB_data_seek($Periods,0);
 
-	while ($myrow=DB_fetch_array($Periods)){
+	while ($MyRow=DB_fetch_array($Periods)){
 
-		if($myrow['periodno']==$DefaultToPeriod){
-			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+		if($MyRow['periodno']==$DefaultToPeriod){
+			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -149,10 +149,10 @@ if ((!isset($_POST['FromPeriod'])
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql);
-	$myrow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['ToPeriod'] . "'";
+	$PrdResult = DB_query($SQL);
+	$MyRow = DB_fetch_row($PrdResult);
+	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
 
 
 	$SQL = "SELECT accountgroups.sectioninaccounts,
@@ -226,17 +226,17 @@ if ((!isset($_POST['FromPeriod'])
 	$PeriodBudgetProfitLoss=0;
 	$PeriodLYProfitLoss=0;
 
-	while ($myrow = DB_fetch_array($AccountsResult)){
+	while ($MyRow = DB_fetch_array($AccountsResult)){
 
 		// Print heading if at end of page
 		if ($YPos < ($Bottom_Margin)){
 			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
 
-		if ($myrow['groupname'] != $ActGrp){
+		if ($MyRow['groupname'] != $ActGrp){
 			if ($ActGrp != ''){
-				if ($myrow['parentgroupname']!=$ActGrp){
-					while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+				if ($MyRow['parentgroupname']!=$ActGrp){
+					while ($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 						if ($_POST['Detail'] == 'Detailed'){
 							$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 						} else {
@@ -296,7 +296,7 @@ if ((!isset($_POST['FromPeriod'])
 			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
 
-		if ($myrow['sectioninaccounts'] != $Section){
+		if ($MyRow['sectioninaccounts'] != $Section){
 			$pdf->setFont('','B');
 			$FontSize =10;
 			if ($Section != ''){
@@ -355,35 +355,35 @@ if ((!isset($_POST['FromPeriod'])
 			$SectionPrdActual = 0;
 			$SectionPrdBudget = 0;
 
-			$Section = $myrow['sectioninaccounts'];
+			$Section = $MyRow['sectioninaccounts'];
 
 			if ($_POST['Detail'] == 'Detailed'){
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$myrow['sectioninaccounts']]);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$MyRow['sectioninaccounts']]);
 				$YPos -= (2 * $line_height);
 			}
 			$FontSize =8;
 			$pdf->setFont('',''); //sets to normal type in the default font
 		}
 
-		if ($myrow['groupname'] != $ActGrp){
-			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
+		if ($MyRow['groupname'] != $ActGrp){
+			if ($MyRow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
 				$Level++;
 			}
-			$ActGrp = $myrow['groupname'];
+			$ActGrp = $MyRow['groupname'];
 			$ParentGroups[$Level]=$ActGrp;
 			if ($_POST['Detail'] == 'Detailed'){
 				$FontSize =10;
 				$pdf->setFont('','B');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$myrow['groupname']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$MyRow['groupname']);
 				$YPos -= (2 * $line_height);
 				$FontSize =8;
 				$pdf->setFont('','');
 			}
 		}
 
-		$AccountPeriodActual = $myrow['lastprdcfwd'] - $myrow['firstprdbfwd'];
-		$AccountPeriodLY = $myrow['lylastprdcfwd'] - $myrow['lyfirstprdbfwd'];
-		$AccountPeriodBudget = $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
+		$AccountPeriodActual = $MyRow['lastprdcfwd'] - $MyRow['firstprdbfwd'];
+		$AccountPeriodLY = $MyRow['lylastprdcfwd'] - $MyRow['lyfirstprdbfwd'];
+		$AccountPeriodBudget = $MyRow['lastprdbudgetcfwd'] - $MyRow['firstprdbudgetbfwd'];
 		$PeriodProfitLoss += $AccountPeriodActual;
 		$PeriodBudgetProfitLoss += $AccountPeriodBudget;
 		$PeriodLYProfitLoss += $AccountPeriodLY;
@@ -411,8 +411,8 @@ if ((!isset($_POST['FromPeriod'])
 		if ($_POST['Detail'] == 'Detailed') {
 
 			if (isset($_POST['ShowZeroBalances']) OR (!isset($_POST['ShowZeroBalances']) AND ($AccountPeriodActual <> 0 OR $AccountPeriodBudget <> 0 OR $AccountPeriodLY <> 0))){ //condition for pdf
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$myrow['accountcode']);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$myrow['accountname']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$MyRow['accountcode']);
+				$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$MyRow['accountname']);
 
 				if ($Section == 1) { /*Income*/
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
@@ -431,9 +431,9 @@ if ((!isset($_POST['FromPeriod'])
 
 	if ($ActGrp != ''){
 
-		if ($myrow['parentgroupname']!=$ActGrp){
+		if ($MyRow['parentgroupname']!=$ActGrp){
 
-			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+			while ($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 				if ($_POST['Detail'] == 'Detailed'){
 					$ActGrpLabel = $ParentGroups[$Level] . ' ' . _('total');
 				} else {
@@ -579,10 +579,10 @@ if ((!isset($_POST['FromPeriod'])
 		exit;
 	}
 
-	$sql = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['ToPeriod'] . "'";
-	$PrdResult = DB_query($sql);
-	$myrow = DB_fetch_row($PrdResult);
-	$PeriodToDate = MonthAndYearFromSQLDate($myrow[0]);
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['ToPeriod'] . "'";
+	$PrdResult = DB_query($SQL);
+	$MyRow = DB_fetch_row($PrdResult);
+	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
 
 	$SQL = "SELECT accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
@@ -673,10 +673,10 @@ if ((!isset($_POST['FromPeriod'])
 	$TotalBudgetIncome=0;
 	$TotalLYIncome=0;
 
-	while ($myrow=DB_fetch_array($AccountsResult)) {
-		if ($myrow['groupname']!= $ActGrp){
-			if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
-				while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+	while ($MyRow=DB_fetch_array($AccountsResult)) {
+		if ($MyRow['groupname']!= $ActGrp){
+			if ($MyRow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
+				while ($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 					if ($_POST['Detail']=='Detailed'){
 						echo '<tr>
 								<td colspan="2"></td>
@@ -770,7 +770,7 @@ if ((!isset($_POST['FromPeriod'])
 			$j++;
 		}
 
-		if ($myrow['sectioninaccounts']!= $Section){
+		if ($MyRow['sectioninaccounts']!= $Section){
 
 			if ($SectionPrdLY+$SectionPrdActual+$SectionPrdBudget !=0){
 				if ($Section==1) { /*Income*/
@@ -934,13 +934,13 @@ if ((!isset($_POST['FromPeriod'])
 			$SectionPrdActual =0;
 			$SectionPrdBudget =0;
 
-			$Section = $myrow['sectioninaccounts'];
+			$Section = $MyRow['sectioninaccounts'];
 
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
 					<td colspan="6"><h2><b>%s</b></h2></td>
 					</tr>',
-					$Sections[$myrow['sectioninaccounts']]);
+					$Sections[$MyRow['sectioninaccounts']]);
 			}
 			$j++;
 
@@ -948,26 +948,26 @@ if ((!isset($_POST['FromPeriod'])
 
 
 
-		if ($myrow['groupname']!= $ActGrp){
+		if ($MyRow['groupname']!= $ActGrp){
 
-			if ($myrow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
+			if ($MyRow['parentgroupname']==$ActGrp AND $ActGrp !=''){ //adding another level of nesting
 				$Level++;
 			}
 
-			$ParentGroups[$Level] = $myrow['groupname'];
-			$ActGrp = $myrow['groupname'];
+			$ParentGroups[$Level] = $MyRow['groupname'];
+			$ActGrp = $MyRow['groupname'];
 			if ($_POST['Detail']=='Detailed'){
 				printf('<tr>
 					<th colspan="8"><b>%s</b></th>
 					</tr>',
-					$myrow['groupname']);
+					$MyRow['groupname']);
 					echo $TableHeader;
 			}
 		}
 
-		$AccountPeriodActual = $myrow['lastprdcfwd'] - $myrow['firstprdbfwd'];
-		$AccountPeriodLY = $myrow['lylastprdcfwd'] - $myrow['lyfirstprdbfwd'];
-		$AccountPeriodBudget = $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
+		$AccountPeriodActual = $MyRow['lastprdcfwd'] - $MyRow['firstprdbfwd'];
+		$AccountPeriodLY = $MyRow['lylastprdcfwd'] - $MyRow['lyfirstprdbfwd'];
+		$AccountPeriodBudget = $MyRow['lastprdbudgetcfwd'] - $MyRow['firstprdbudgetbfwd'];
 		$PeriodProfitLoss += $AccountPeriodActual;
 		$PeriodBudgetProfitLoss += $AccountPeriodBudget;
 		$PeriodLYProfitLoss += $AccountPeriodLY;
@@ -994,7 +994,7 @@ if ((!isset($_POST['FromPeriod'])
 					echo '<tr class="OddTableRows">';
 					$k++;
 				}
-				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryIK.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $myrow['accountcode'] . '&amp;Show=Yes">' . $myrow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryIK.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $MyRow['accountcode'] . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';
 				if ($Section ==1){
 					 printf('<td>%s</td>
 							<td>%s</td>
@@ -1006,7 +1006,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td class="number">%s</td>
 							</tr>',
 							$ActEnquiryURL,
-							htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
+							htmlspecialchars($MyRow['accountname'], ENT_QUOTES,'UTF-8', false),
 							locale_number_format(-$AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format(-$AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format(-$AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));
@@ -1021,7 +1021,7 @@ if ((!isset($_POST['FromPeriod'])
 							<td></td>
 							</tr>',
 							$ActEnquiryURL,
-							htmlspecialchars($myrow['accountname'], ENT_QUOTES,'UTF-8', false),
+							htmlspecialchars($MyRow['accountname'], ENT_QUOTES,'UTF-8', false),
 							locale_number_format($AccountPeriodActual,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']));
@@ -1033,9 +1033,9 @@ if ((!isset($_POST['FromPeriod'])
 	//end of loop
 
 
-	if ($myrow['groupname']!= $ActGrp){
-		if ($myrow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
-			while ($myrow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+	if ($MyRow['groupname']!= $ActGrp){
+		if ($MyRow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
+			while ($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
 				if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
 						<td colspan="2"></td>
@@ -1128,7 +1128,7 @@ if ((!isset($_POST['FromPeriod'])
 		$j++;
 	}
 
-	if ($myrow['sectioninaccounts']!= $Section){
+	if ($MyRow['sectioninaccounts']!= $Section){
 
 		if ($Section==1) { /*Income*/
 
@@ -1236,13 +1236,13 @@ if ((!isset($_POST['FromPeriod'])
 		$SectionPrdActual =0;
 		$SectionPrdBudget =0;
 
-		$Section = $myrow['sectioninaccounts'];
+		$Section = $MyRow['sectioninaccounts'];
 
-		if ($_POST['Detail']=='Detailed' and isset($Sections[$myrow['sectioninaccounts']])){
+		if ($_POST['Detail']=='Detailed' and isset($Sections[$MyRow['sectioninaccounts']])){
 			printf('<tr>
 				<td colspan="6"><h2><b>%s</b></h2></td>
 				</tr>',
-				$Sections[$myrow['sectioninaccounts']]);
+				$Sections[$MyRow['sectioninaccounts']]);
 		}
 
 		$j++;

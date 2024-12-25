@@ -74,8 +74,8 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 					AND UPPER(paymentmethod) != 'CASH'
 				ORDER BY zonepph21,
 					fullname";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
 			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
@@ -125,27 +125,27 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 			$objPHPExcel->setActiveSheetIndex(0);
 			$ActiveSheet = $objPHPExcel->getActiveSheet();
 			
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
-				$ActiveSheet->setCellValue('A'.$i, $myrow['zonepph21']);
-				$ActiveSheet->setCellValue('B'.$i, $myrow['fullname']);
-				$ActiveSheet->setCellValue('C'.$i, round($myrow['upahpokok'],0));
-				$ActiveSheet->setCellValue('D'.$i, round($myrow['tunjanganmakan'],0));
-				$ActiveSheet->setCellValue('E'.$i, round($myrow['tunjangantransport'],0));
-				$ActiveSheet->setCellValue('F'.$i, round($myrow['tunjanganjabatan'],0));
-				$ActiveSheet->setCellValue('G'.$i, round($myrow['tunjanganmasakerja'],0));
-				$ActiveSheet->setCellValue('H'.$i, round($myrow['tunjangankendaraan'],0));
-				$ActiveSheet->setCellValue('I'.$i, round($myrow['komisitetap'],0));
-				$ActiveSheet->setCellValue('J'.$i, round($myrow['komisiretail'],0));
-				$ActiveSheet->setCellValue('K'.$i, round($myrow['komisisupport'],0));
-				$ActiveSheet->setCellValue('L'.$i, round($myrow['bonuspenjualan'],0));
-				$ActiveSheet->setCellValue('M'.$i, round($myrow['lembur'],0));
-				$ActiveSheet->setCellValue('N'.$i, round($myrow['thr'],0));
-				$ActiveSheet->setCellValue('O'.$i, round($myrow['penerimaanlain'],0));
-				$ActiveSheet->setCellValue('P'.$i, $myrow['penerimaanlainnotes']);
-				$ActiveSheet->setCellValue('Q'.$i, round($myrow['potonganjht'],0));
-				$ActiveSheet->setCellValue('R'.$i, round($myrow['potonganaskes'],0));
-				$ActiveSheet->setCellValue('S'.$i, round($myrow['potonganabsen'],0));
+				$ActiveSheet->setCellValue('A'.$i, $MyRow['zonepph21']);
+				$ActiveSheet->setCellValue('B'.$i, $MyRow['fullname']);
+				$ActiveSheet->setCellValue('C'.$i, round($MyRow['upahpokok'],0));
+				$ActiveSheet->setCellValue('D'.$i, round($MyRow['tunjanganmakan'],0));
+				$ActiveSheet->setCellValue('E'.$i, round($MyRow['tunjangantransport'],0));
+				$ActiveSheet->setCellValue('F'.$i, round($MyRow['tunjanganjabatan'],0));
+				$ActiveSheet->setCellValue('G'.$i, round($MyRow['tunjanganmasakerja'],0));
+				$ActiveSheet->setCellValue('H'.$i, round($MyRow['tunjangankendaraan'],0));
+				$ActiveSheet->setCellValue('I'.$i, round($MyRow['komisitetap'],0));
+				$ActiveSheet->setCellValue('J'.$i, round($MyRow['komisiretail'],0));
+				$ActiveSheet->setCellValue('K'.$i, round($MyRow['komisisupport'],0));
+				$ActiveSheet->setCellValue('L'.$i, round($MyRow['bonuspenjualan'],0));
+				$ActiveSheet->setCellValue('M'.$i, round($MyRow['lembur'],0));
+				$ActiveSheet->setCellValue('N'.$i, round($MyRow['thr'],0));
+				$ActiveSheet->setCellValue('O'.$i, round($MyRow['penerimaanlain'],0));
+				$ActiveSheet->setCellValue('P'.$i, $MyRow['penerimaanlainnotes']);
+				$ActiveSheet->setCellValue('Q'.$i, round($MyRow['potonganjht'],0));
+				$ActiveSheet->setCellValue('R'.$i, round($MyRow['potonganaskes'],0));
+				$ActiveSheet->setCellValue('S'.$i, round($MyRow['potonganabsen'],0));
 
 				$i++;
 			}

@@ -23,9 +23,9 @@ if ( !isset($_GET['TypeID']) OR !isset($_GET['TransNo']) ) {
 			prnMsg(_('No transaction of this type with id') . ' ' . $_GET['TypeID'],'error');
 			echo $MenuURL;
 	} else {
-		$myrow = DB_fetch_row($TypeResult);
+		$MyRow = DB_fetch_row($TypeResult);
 		DB_free_result($TypeResult);
-		$TransName = $myrow[0];
+		$TransName = $MyRow[0];
 
 		// Context Navigation and Title
 		echo $MenuURL;

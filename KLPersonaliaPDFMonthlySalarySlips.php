@@ -50,10 +50,10 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 	}
 
 	if(!$InputError){
-		// populates $SQL and $result with the data to extract the salary slips
+		// populates $SQL and $Result with the data to extract the salary slips
 		include('includes/KLPersonaliaSQLSalarySlips.php');
 
-		if (DB_num_rows($result) != 0){
+		if (DB_num_rows($Result) != 0){
 			// Let's start the real PDF creation 
 			require_once('includes/tcpdf/tcpdf.php');
 			
@@ -76,26 +76,26 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 			$AmountByCash = 0;
 			$Cash = array();
 
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				include('includes/KLPersonaliaPDFCalculatedFields.php');
 				
 				// set information depending on payment method
-				if (strtoupper($myrow['paymentmethod']) == 'BANK'){
-					if (strtoupper($myrow['bankcode']) == 'DANAMON'){
+				if (strtoupper($MyRow['paymentmethod']) == 'BANK'){
+					if (strtoupper($MyRow['bankcode']) == 'DANAMON'){
 						$EmployeesByBankTransferPayroll++;
 						$AmountByBankTransferPayroll += $TotalBawaPulang;
 					}else{
 						$EmployeesByBankTransferLLG++;
 						$AmountByBankTransferLLG += $TotalBawaPulang;
 					}
-				}elseif (strtoupper($myrow['paymentmethod']) == 'CHECK'){
+				}elseif (strtoupper($MyRow['paymentmethod']) == 'CHECK'){
 					$EmployeesByCheck++;
-					$Check[$EmployeesByCheck]['Name'] = $myrow['codename'];
+					$Check[$EmployeesByCheck]['Name'] = $MyRow['codename'];
 					$Check[$EmployeesByCheck]['Amount'] = $TotalBawaPulang;
 					$AmountByCheck += $TotalBawaPulang;
-				}elseif (strtoupper($myrow['paymentmethod']) == 'CASH'){
+				}elseif (strtoupper($MyRow['paymentmethod']) == 'CASH'){
 					$EmployeesByCash++;
-					$Cash[$EmployeesByCash]['Name'] = $myrow['codename'];
+					$Cash[$EmployeesByCash]['Name'] = $MyRow['codename'];
 					$Cash[$EmployeesByCash]['Amount'] = $TotalBawaPulang;
 					$AmountByCash += $TotalBawaPulang;
 				}

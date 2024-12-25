@@ -40,7 +40,7 @@ function submit($FromDate, $ToDate) {
 		$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
 		$OrderBy		= " ORDER BY accountgroups.groupname ASC, gltrans.account ASC, gltrans.trandate ASC";
 		
-		$sql = "SELECT accountgroups.groupname AS 'Group',
+		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
 					chartmasterPI.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
@@ -58,8 +58,8 @@ function submit($FromDate, $ToDate) {
 				;
 		
 		$ErrMsg = _('The SQL to find the KL GL Transactions ');
-		$result = DB_query($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
@@ -84,14 +84,14 @@ function submit($FromDate, $ToDate) {
 
 			// Add data
 			$i = 2;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['Group']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['AccountCode']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['AccountName']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['Date']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['Amount'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['Description']);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $MyRow['Description']);
 				$i++;
 			}
 			

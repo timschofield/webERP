@@ -109,7 +109,7 @@ function HourlyPerformance($numDays, $RootPath){
 					AND salesorders.orddate <= '". $Yesterday ."') DESC,
 				debtorsmaster.debtorno";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	$showHeader = TRUE;
 	$FirstSaleFull = '99:99:99';
 	$LastSaleFull = '00:00:00';
@@ -124,9 +124,9 @@ function HourlyPerformance($numDays, $RootPath){
 	$TotalSalesToday = 0;
 	$ValueSalesToday = 0;
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		$i = 0; // row counter
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($showHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly Sales Performance until '. $Now .'</strong></p>';
 				echo '<div>';
@@ -170,55 +170,55 @@ function HourlyPerformance($numDays, $RootPath){
 					<td class="number">%s</td>
 					</tr>', 
 					locale_number_format_zero_blank($i,0),
-					$myrow['name'],
-					locale_number_format_zero_blank($myrow['totalsalesfull']/$numDays,0),
-					locale_number_format_zero_blank($myrow['valuesalesfull']/$numDays,0),
-					locale_number_format_zero_blank($myrow['totalsales']/$numDays,0),
-					locale_number_format_zero_blank($myrow['valuesales']/$numDays,0),
-					$myrow['firstsaletoday'],
-					$myrow['lastsaletoday'],
-					locale_number_format_zero_blank($myrow['totalsalestoday'],0),
-					locale_number_format_zero_blank($myrow['valuesalestoday'],0)
+					$MyRow['name'],
+					locale_number_format_zero_blank($MyRow['totalsalesfull']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['valuesalesfull']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['totalsales']/$numDays,0),
+					locale_number_format_zero_blank($MyRow['valuesales']/$numDays,0),
+					$MyRow['firstsaletoday'],
+					$MyRow['lastsaletoday'],
+					locale_number_format_zero_blank($MyRow['totalsalestoday'],0),
+					locale_number_format_zero_blank($MyRow['valuesalestoday'],0)
 					);
 					
-			if (isset($myrow['firstsalefull'])){		
-				if ($FirstSaleFull > $myrow['firstsalefull']){
-					$FirstSaleFull = $myrow['firstsalefull'];
+			if (isset($MyRow['firstsalefull'])){		
+				if ($FirstSaleFull > $MyRow['firstsalefull']){
+					$FirstSaleFull = $MyRow['firstsalefull'];
 				}
 			}
-			if (isset($myrow['lastsalefull'])){		
-				if ($LastSaleFull < $myrow['lastsalefull']){
-					$LastSaleFull = $myrow['lastsalefull'];
+			if (isset($MyRow['lastsalefull'])){		
+				if ($LastSaleFull < $MyRow['lastsalefull']){
+					$LastSaleFull = $MyRow['lastsalefull'];
 				}
 			}
-			$TotalSalesFull = $TotalSalesFull + $myrow['totalsalesfull'];
-			$ValueSalesFull = $ValueSalesFull + $myrow['valuesalesfull'];
+			$TotalSalesFull = $TotalSalesFull + $MyRow['totalsalesfull'];
+			$ValueSalesFull = $ValueSalesFull + $MyRow['valuesalesfull'];
 
-			if (isset($myrow['firstsale'])){		
-				if ($FirstSale > $myrow['firstsale']){
-					$FirstSale = $myrow['firstsale'];
+			if (isset($MyRow['firstsale'])){		
+				if ($FirstSale > $MyRow['firstsale']){
+					$FirstSale = $MyRow['firstsale'];
 				}
 			}
-			if (isset($myrow['lastsale'])){		
-				if ($LastSale < $myrow['lastsale']){
-					$LastSale = $myrow['lastsale'];
+			if (isset($MyRow['lastsale'])){		
+				if ($LastSale < $MyRow['lastsale']){
+					$LastSale = $MyRow['lastsale'];
 				}
 			}
-			$TotalSales = $TotalSales + $myrow['totalsales'];
-			$ValueSales = $ValueSales + $myrow['valuesales'];
+			$TotalSales = $TotalSales + $MyRow['totalsales'];
+			$ValueSales = $ValueSales + $MyRow['valuesales'];
 			
-			if (isset($myrow['firstsaletoday'])){		
-				if ($FirstSaleToday > $myrow['firstsaletoday']){
-					$FirstSaleToday = $myrow['firstsaletoday'];
+			if (isset($MyRow['firstsaletoday'])){		
+				if ($FirstSaleToday > $MyRow['firstsaletoday']){
+					$FirstSaleToday = $MyRow['firstsaletoday'];
 				}
 			}
-			if (isset($myrow['lastsaletoday'])){		
-				if ($LastSaleToday < $myrow['lastsaletoday']){
-					$LastSaleToday = $myrow['lastsaletoday'];
+			if (isset($MyRow['lastsaletoday'])){		
+				if ($LastSaleToday < $MyRow['lastsaletoday']){
+					$LastSaleToday = $MyRow['lastsaletoday'];
 				}
 			}
-			$TotalSalesToday = $TotalSalesToday + $myrow['totalsalestoday'];
-			$ValueSalesToday = $ValueSalesToday + $myrow['valuesalestoday'];
+			$TotalSalesToday = $TotalSalesToday + $MyRow['totalsalestoday'];
+			$ValueSalesToday = $ValueSalesToday + $MyRow['valuesalestoday'];
 			
 		}
 		

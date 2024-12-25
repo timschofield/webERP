@@ -23,7 +23,7 @@ if (isset($_GET['Location'])){
 	$Location = $_SESSION['UserStockLocation'];
 }
 
-$result = DB_query("SELECT description,
+$Result = DB_query("SELECT description,
 						   units,
 						   mbflag,
 						   decimalplaces
@@ -31,8 +31,8 @@ $result = DB_query("SELECT description,
 					WHERE stockid='".$StockID."'",
 					_('Could not retrieve the requested item'),
 					_('The SQL used to retrieve the items was'));
-$myrow = DB_fetch_array($result);
-$DecimalPlaces = $myrow['decimalplaces'];
+$MyRow = DB_fetch_array($Result);
+$DecimalPlaces = $MyRow['decimalplaces'];
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
@@ -43,13 +43,13 @@ echo ' <input type="submit" name="ShowStatus" value="' . _('Show Item Movements 
 echo '<br /><br />';
 
 if ($StockID != ''){
-	$result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='".$StockID."'");
-	$myrow = DB_fetch_row($result);
+	$Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='".$StockID."'");
+	$MyRow = DB_fetch_row($Result);
 
 	$Today  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-STOCK_MOVEMENT_DAYS_FOR_SPG));
 
-	$sql = "SELECT stockmoves.stockid,
+	$SQL = "SELECT stockmoves.stockid,
 					systypes.typename,
 					stockmoves.type,
 					stockmoves.transno,
@@ -76,7 +76,7 @@ if ($StockID != ''){
 	$ErrMsg = _('The stock movements for the selected criteria could not be retrieved because') . ' - ';
 	$DbgMsg = _('The SQL that failed was') . ' ';
 
-	$MovtsResult = DB_query($sql, $ErrMsg, $DbgMsg);
+	$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	echo '<p class="page_title_text" align="center"><strong>' . _('Movements of ') . $StockID . " at " . $LocationName . " for the last " . STOCK_MOVEMENT_DAYS_FOR_SPG . " days" .'</strong></p>';
 	echo '<div>';
@@ -96,14 +96,14 @@ if ($StockID != ''){
 	$j = 1;
 	$k=0; //row colour counter
 
-	while ($myrow=DB_fetch_array($MovtsResult)) {
+	while ($MyRow=DB_fetch_array($MovtsResult)) {
 		$k = StartEvenOrOddRow($k);
 
-		$DisplayTranDate = ConvertSQLDate($myrow['trandate']);
+		$DisplayTranDate = ConvertSQLDate($MyRow['trandate']);
 
-		if ($myrow['type']==10){ /*its a sales invoice allow link to show invoice it was sold on*/
+		if ($MyRow['type']==10){ /*its a sales invoice allow link to show invoice it was sold on*/
 
-			$InvoiceLink = '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $myrow['transno'] . '&amp;InvOrCredit=Invoice">' . $myrow['typename'] . '</a>';
+			$InvoiceLink = '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $MyRow['transno'] . '&amp;InvOrCredit=Invoice">' . $MyRow['typename'] . '</a>';
 
 			printf('<td>%s</td>
 					<td>%s</td>
@@ -114,14 +114,14 @@ if ($StockID != ''){
 					<td class="number">%s</td>
 					</tr>',
 					$DisplayTranDate,
-					$myrow['userid'],
+					$MyRow['userid'],
 					$InvoiceLink,
-					$myrow['transno'],
+					$MyRow['transno'],
 					'',
-					locale_number_format($myrow['qty'],$myrow['decimalplaces']),
-					locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
+					locale_number_format($MyRow['qty'],$MyRow['decimalplaces']),
+					locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']));
 
-		} elseif ($myrow['type']==11){
+		} elseif ($MyRow['type']==11){
 
 			printf('<td>%s</td>
 					<td>%s</td>
@@ -132,14 +132,14 @@ if ($StockID != ''){
 					<td class="number">%s</td>
 					</tr>',
 					$DisplayTranDate,
-					$myrow['userid'],
+					$MyRow['userid'],
 					$RootPath,
-					$myrow['transno'],
-					$myrow['typename'],
-					$myrow['transno'],
+					$MyRow['transno'],
+					$MyRow['typename'],
+					$MyRow['transno'],
 					'',
-					locale_number_format($myrow['qty'],$myrow['decimalplaces']),
-					locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
+					locale_number_format($MyRow['qty'],$MyRow['decimalplaces']),
+					locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']));
 		} else {
 
 			printf('<td>%s</td>
@@ -151,12 +151,12 @@ if ($StockID != ''){
 					<td class="number">%s</td>
 					</tr>',
 					$DisplayTranDate,
-					$myrow['userid'],
-					$myrow['typename'],
-					$myrow['transno'],
-					$myrow['reference'],
-					locale_number_format($myrow['qty'],$myrow['decimalplaces']),
-					locale_number_format($myrow['newqoh'],$myrow['decimalplaces']));
+					$MyRow['userid'],
+					$MyRow['typename'],
+					$MyRow['transno'],
+					$MyRow['reference'],
+					locale_number_format($MyRow['qty'],$MyRow['decimalplaces']),
+					locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']));
 		}
 	//end of page full new headings if
 	}

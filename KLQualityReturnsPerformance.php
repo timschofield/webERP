@@ -105,16 +105,16 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 							</tr>
 						</thead>';
 	}					
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . $TitleReport . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		echo $TableHeader;
 		echo '<tbody>';
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			$PercentIncidences = ($myrow['qtysold'] != 0) ? $myrow['incidences']/$myrow['qtysold'] : 0;
+		while ($MyRow = DB_fetch_array($Result)) {
+			$PercentIncidences = ($MyRow['qtysold'] != 0) ? $MyRow['incidences']/$MyRow['qtysold'] : 0;
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -123,9 +123,9 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 					<td class="number">%s</td>
 					</tr>', 
 					$i, 
-					$myrow['item'],
-					locale_number_format($myrow['incidences'],0),
-					locale_number_format($myrow['qtysold'],0),
+					$MyRow['item'],
+					locale_number_format($MyRow['incidences'],0),
+					locale_number_format($MyRow['qtysold'],0),
 					locale_number_format($PercentIncidences*100,1).'%'
 					);
 			$i++;
@@ -164,9 +164,9 @@ function ReturnsBySPG($SPG, $NumDays){
 				AND salesorders.orddate <= '". $Yesterday ."'
 			GROUP BY salesorders.salesperson
 			ORDER BY salesorders.salesperson";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -187,7 +187,7 @@ function ReturnsBySPG($SPG, $NumDays){
 						</thead>';
 		echo $TableHeader;
 		echo '<tbody>';
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
@@ -201,17 +201,17 @@ function ReturnsBySPG($SPG, $NumDays){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				$myrow['salesperson'],
-				$myrow['salesmanname'],
-				locale_number_format($myrow['totalorders'],0),
-				locale_number_format(($myrow['harvested']/$myrow['totalorders'])*100,0).'%',
-				locale_number_format(($myrow['firstnames']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['lastnames']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['countries']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['date_of_births']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['emails']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['sexs']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['onlinevipcards']/$myrow['totalorders'])*100,0).'%'
+				$MyRow['salesperson'],
+				$MyRow['salesmanname'],
+				locale_number_format($MyRow['totalorders'],0),
+				locale_number_format(($MyRow['harvested']/$MyRow['totalorders'])*100,0).'%',
+				locale_number_format(($MyRow['firstnames']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['lastnames']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['countries']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['date_of_births']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['emails']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['sexs']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['onlinevipcards']/$MyRow['totalorders'])*100,0).'%'
 				);
 		}
 		echo '</tbody></table></div></form>';

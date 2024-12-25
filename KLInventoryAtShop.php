@@ -129,14 +129,14 @@ if (isset($_POST['PrintPDF'])){
 				<td>' . _('For Inventory in Location') . ':</td>
 				<td><select name="Location">';
 
-		$sql = "SELECT loccode,
+		$SQL = "SELECT loccode,
 						locationname
 				FROM locations";
 
-		$LocnResult=DB_query($sql);
+		$LocnResult=DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		while ($MyRow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
@@ -145,13 +145,13 @@ if (isset($_POST['PrintPDF'])){
 			<td>' . _('For Stock Categories') . ':</td>
 			<td><select name="Category">';
 
-		$sql = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-		$CatResult=DB_query($sql);
+		$SQL = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
+		$CatResult=DB_query($SQL);
 
 		echo '<option value="All">' . _('All Stock Categories') . '</option>';
 
-		while ($myrow=DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		while ($MyRow=DB_fetch_array($CatResult)){
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
 		echo '</select>
 				</td>

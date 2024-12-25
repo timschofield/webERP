@@ -30,7 +30,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 	$PeriodPPH21 = GetPeriod(ConvertSQLDate($_POST['DateOfFile']));
 	$PeriodName = MonthAndYearFromSQLDate($_POST['DateOfFile']);
 
-	$sql="SELECT codename,
+	$SQL="SELECT codename,
 				fullname,
 				zonepph21,
 				potonganpph21
@@ -41,7 +41,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			ORDER BY zonepph21,
 				fullname";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo'<p class="page_title_text"><strong>' . _('Company: ') . '' . $_POST['Company'] . ' </strong></p>';
 	echo'<p class="page_title_text"><strong>' . _('Month: ') . '' . $PeriodName . ' </strong></p>';
@@ -60,7 +60,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
         </tr>';
 
 	$i=1;
-	while ($myrow=DB_fetch_array($result))	{
+	while ($MyRow=DB_fetch_array($Result))	{
 
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
@@ -77,11 +77,11 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			<input type="hidden" value="' . $_POST['SalaryType'] . '" name="SalaryType" />
 			<input type="hidden" value="' . $PeriodPPH21 . '" name="PeriodPPH21" />';
 
-		echo '<td>'. $myrow['zonepph21'] . '</td>
-			<td>' . $myrow['fullname'] . '</td>
-			<td>' . $myrow['codename'] . '</td>';
-		echo '<td><input type="text" class="number" name="PotonganPPH21' . $i .'" maxlength="12" size="12" value="'. locale_number_format($myrow['potonganpph21'],0) .'" />
-			<input type="hidden" name="CodeName' . $i . '" value="' . $myrow['codename'] . '" /></td>
+		echo '<td>'. $MyRow['zonepph21'] . '</td>
+			<td>' . $MyRow['fullname'] . '</td>
+			<td>' . $MyRow['codename'] . '</td>';
+		echo '<td><input type="text" class="number" name="PotonganPPH21' . $i .'" maxlength="12" size="12" value="'. locale_number_format($MyRow['potonganpph21'],0) .'" />
+			<input type="hidden" name="CodeName' . $i . '" value="' . $MyRow['codename'] . '" /></td>
 			</tr> ';
 		$i++;
 	} //end of looping

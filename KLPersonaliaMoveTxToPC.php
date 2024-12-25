@@ -98,8 +98,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 				ORDER BY paymentmethod,
 					joiningdate,
 					codename";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			echo '<div>';
 			echo '<table class="selection">
 				<thead>
@@ -118,67 +118,67 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 					</tr>
 				</thead>
 				<tbody>';
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				// Fixed
-				$FixedSalary = $myrow['upahpokok'] +
-								$myrow['tunjanganjabatan'] +
-								$myrow['tunjanganmasakerja'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "FIXED", $PaymentDate, $FixedSalary, $myrow['codename']);
+				$FixedSalary = $MyRow['upahpokok'] +
+								$MyRow['tunjanganjabatan'] +
+								$MyRow['tunjanganmasakerja'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "FIXED", $PaymentDate, $FixedSalary, $MyRow['codename']);
 				
 				// Makan
-				$Makan = $myrow['tunjanganmakan'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "MAKAN", $PaymentDate, $Makan, $myrow['codename']);
+				$Makan = $MyRow['tunjanganmakan'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "MAKAN", $PaymentDate, $Makan, $MyRow['codename']);
 
 				// Bensin
-				$Bensin = $myrow['tunjangantransport'] +
-								$myrow['tunjangankendaraan'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "BENSIN", $PaymentDate, $Bensin, $myrow['codename']);
+				$Bensin = $MyRow['tunjangantransport'] +
+								$MyRow['tunjangankendaraan'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "BENSIN", $PaymentDate, $Bensin, $MyRow['codename']);
 				
 				//Commissions
-				$Commissions = $myrow['komisitetap'] +
-								$myrow['komisiretail'] +
-								$myrow['komisisupport'] +
-								$myrow['bonuspenjualan'];
-//				if (($myrow['codename'] == 'Ricard') OR 
-//					($myrow['codename'] == 'Laia')){
+				$Commissions = $MyRow['komisitetap'] +
+								$MyRow['komisiretail'] +
+								$MyRow['komisisupport'] +
+								$MyRow['bonuspenjualan'];
+//				if (($MyRow['codename'] == 'Ricard') OR 
+//					($MyRow['codename'] == 'Laia')){
 //					// Bonus paid as commissions to Ricard and Laia for PTADU goes to different GL than karyawan
-//					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $myrow['codename']);
+//					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $MyRow['codename']);
 //				}else{
-					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $myrow['codename']);
+					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $MyRow['codename']);
 //				}
 				
 				//Shifts
-				$Shifts = $myrow['lembur'] +
-								$myrow['potonganabsen'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "SHIFTS", $PaymentDate, $Shifts, $myrow['codename']);
+				$Shifts = $MyRow['lembur'] +
+								$MyRow['potonganabsen'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "SHIFTS", $PaymentDate, $Shifts, $MyRow['codename']);
 				
 				//THR
-				$THR = $myrow['thr'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "THR", $PaymentDate, $THR, $myrow['codename']);
+				$THR = $MyRow['thr'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "THR", $PaymentDate, $THR, $MyRow['codename']);
 				
 				//Lain2
-				$Lain2 = $myrow['penerimaanlain'] +
-								$myrow['potonganlain2'];
-				if (($myrow['codename'] == 'Ricard') OR 
-					($myrow['codename'] == 'Laia')){
+				$Lain2 = $MyRow['penerimaanlain'] +
+								$MyRow['potonganlain2'];
+				if (($MyRow['codename'] == 'Ricard') OR 
+					($MyRow['codename'] == 'Laia')){
 					// Dividends paid as lain2 to shareholders for PTADU goes to different GL than karyawan
-					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Lain2, $myrow['codename']);
+					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Lain2, $MyRow['codename']);
 				}else{
-					MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $myrow['codename']);
+					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "OTHERS", $PaymentDate, $Lain2, $MyRow['codename']);
 				}
 				
 				//JHT
-				$JHT = $myrow['potonganjht'] +
-								$myrow['potonganaskes'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "JAMSOSTEK", $PaymentDate, $JHT, $myrow['codename']);
+				$JHT = $MyRow['potonganjht'] +
+								$MyRow['potonganaskes'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "JAMSOSTEK", $PaymentDate, $JHT, $MyRow['codename']);
 
 				//PPH21
-				$PPH21 = $myrow['potonganpph21'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "PPH21", $PaymentDate, $PPH21, $myrow['codename']);
+				$PPH21 = $MyRow['potonganpph21'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "PPH21", $PaymentDate, $PPH21, $MyRow['codename']);
 
 				//Rounding
-				$Rounding = $myrow['bulatan'];
-				MoveSalaryTxToPC($Company, $myrow['paymentmethod'], "ROUND", $PaymentDate, $Rounding, $myrow['codename']);
+				$Rounding = $MyRow['bulatan'];
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "ROUND", $PaymentDate, $Rounding, $MyRow['codename']);
 
 				printf('<tr class="striped_row">
 						<td>%s</td>
@@ -193,7 +193,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$myrow['codename'],
+						$MyRow['codename'],
 						locale_number_format_zero_blank($FixedSalary,0),
 						locale_number_format_zero_blank($Makan,0),
 						locale_number_format_zero_blank($Bensin,0),
@@ -237,11 +237,11 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 				WHERE salariescompany = '" . $Company . "'
 					AND salariespaymentmethod = '" . $PaymentMethod . "'
 					AND salariesexpense = '" . $Expense . "'";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
-			$myrow = DB_fetch_array($result);
-			$TabCode = $myrow['pctabcode'];
-			$ExpenseType = $myrow['pcexpensecode'];
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
+			$MyRow = DB_fetch_array($Result);
+			$TabCode = $MyRow['pctabcode'];
+			$ExpenseType = $MyRow['pcexpensecode'];
 			$InsertErrMsg = _('The SQL to insert Salary Transaction to Petty Cash failed');
 			$SQL = "INSERT INTO pcashdetails (counterindex, 
 											tabcode, 
@@ -261,7 +261,7 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 							 0,
 							 '',
 							 '" . $Receipt . "')";
-			$resultInsert = DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
+			$ResultInsert = DB_query($SQL,$InsertErrMsg,$DbgMsg,true);
 		}else{
 			prnMsg('ERROR CODE: PERS00001. Can not find the PC info for expense: '. $SQL, 'error');
 		}
