@@ -92,7 +92,7 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 		$SQL = "DELETE FROM salariescalculated
 				WHERE periodno = '" . $PeriodDateOfFile . "'
 					AND salarytype = '" . $SalaryType . "'";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 		
 		$ExcelSheetName = "SalaryToPrint";
 		$objPHPExcel->setActiveSheetIndexByName($ExcelSheetName);
@@ -221,7 +221,7 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 				if ((($SalaryType == "MONTHLY") 
 					OR (($SalaryType == "THRONLY") AND ($EmployeeWithTHR == "YES")))
 					AND ($TotalBawaPulang > 0)){
-					$sqlInsert = "INSERT INTO salariescalculated
+					$SQLInsert = "INSERT INTO salariescalculated
 									(periodno,
 									salarytype,
 									codename,
@@ -300,7 +300,7 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 									'" . $PotonganLain2Notes . "',
 									'" . $Bulatan . "'
 									)";
-					$resultInsert = DB_query($sqlInsert,$InsertErrMsg,$DbgMsg,true);
+					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 					
 					printf('<tr class="striped_row">
 							<td class="number">%s</td>

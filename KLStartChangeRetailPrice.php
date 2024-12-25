@@ -28,7 +28,7 @@ if (!isset($_GET['Item']) or !isset($_GET['NewPrice'])){
 
 DB_Txn_Begin();
 
-$sql = "INSERT INTO klchangeprice 
+$SQL = "INSERT INTO klchangeprice 
 				(stockid,
 				startprocessdate,
 				newretailprice,
@@ -40,7 +40,7 @@ $sql = "INSERT INTO klchangeprice
 $msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_GET['Item'] . ' ' . _('has been created');
 $ErrMsg = _('The insert or update of the KL Retail Price Change Step 01 failed because');
 $DbgMsg = _('The SQL that was used and failed was');
-$result = DB_query($sql,$ErrMsg, $DbgMsg);
+$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 prnMsg($msg , 'success');
 
 SetRLZeroAtPointOfSales($_GET['Item']);

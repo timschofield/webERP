@@ -211,15 +211,15 @@ function selCategory(&$categ) {
 	return selectTable('SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription', $categ);
 }
 
-function selectTable($sql, &$currentKey) {
+function selectTable($SQL, &$currentKey) {
 	global $db;
-	$result = DB_query($sql);
-	while ($myrow=DB_fetch_row($result)) {
+	$Result = DB_query($SQL);
+	while ($MyRow=DB_fetch_row($Result)) {
 		if (empty($currentKey))
-			$currentKey=$myrow[0];
-		$list[$myrow[0]] = $myrow[1];
+			$currentKey=$MyRow[0];
+		$list[$MyRow[0]] = $MyRow[1];
 	}
-	DB_free_result($result);
+	DB_free_result($Result);
 	return selectOptions($list, $currentKey);
 }
 
@@ -240,8 +240,8 @@ function tableItems($CategoryID, &$ok) {
 		$ok=false;
 		return noneButton( _('Select a Category') );
 	}
-	$result = getStockItems($CategoryID, $_POST['Currency'], $_POST['SalesType'], FormatDateForSQL($_POST['EffectiveDate']));
-	if (!DB_num_rows($result)) {
+	$Result = getStockItems($CategoryID, $_POST['Currency'], $_POST['SalesType'], FormatDateForSQL($_POST['EffectiveDate']));
+	if (!DB_num_rows($Result)) {
 		$ok=false;
 		return noneButton( _('This category has no items to show') );
 	}
@@ -268,17 +268,17 @@ function tableItems($CategoryID, &$ok) {
 		<tbody>';
 	$ok=true;
 	$odd=true;
-	while ($myrow=DB_fetch_array($result)) {
-		$price = locale_number_format($myrow['price'],$DecimalPlaces);
+	while ($MyRow=DB_fetch_array($Result)) {
+		$price = locale_number_format($MyRow['price'],$DecimalPlaces);
 		$oddEven=$odd?"Odd":"Even";
 		$odd = !$odd;
 		$html .= <<<ZZZ
 			<tr class="{$oddEven}TableRows">
-				<td>{$myrow['stockid']}</td>
-				<td>{$myrow['description']}</td>
+				<td>{$MyRow['stockid']}</td>
+				<td>{$MyRow['description']}</td>
 				<td class="number">{$price}</td>
 				<td><div class="centre">
-					<input type="checkbox" checked="checked" name="StockID[{$myrow['stockid']}]" id="item" />
+					<input type="checkbox" checked="checked" name="StockID[{$MyRow['stockid']}]" id="item" />
 					</div>
 				</td>
 				<td>&nbsp;&nbsp;&nbsp;</td>
@@ -313,7 +313,7 @@ function getStockItems($CategoryID, $CurrCode, $SalesType, $EffectiveDate, $Stoc
 
 	$WhereClause = " stockmaster.discontinued!=1 AND " . $WhereClause;
 
-	$sql="SELECT stockmaster.stockid,
+	$SQL="SELECT stockmaster.stockid,
 				stockmaster.description,
 				stockmaster.longdescription,
 				stockmaster.barcode,
@@ -327,12 +327,12 @@ function getStockItems($CategoryID, $CurrCode, $SalesType, $EffectiveDate, $Stoc
 			AND prices.debtorno=''
 			WHERE " . $WhereClause;
 
-	return DB_query($sql);
+	return DB_query($SQL);
 }
 
 function getStockData($StockID, $Currency, $salesType, $EffectiveDate) {
-	$result = getStockItems(null, $Currency, $salesType, $EffectiveDate, $StockID);
-	return DB_fetch_array($result);
+	$Result = getStockItems(null, $Currency, $salesType, $EffectiveDate, $StockID);
+	return DB_fetch_array($Result);
 }
 
 /**
@@ -510,11 +510,11 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) 
 
 function getDecimalPlaces($Currency) {
 	global $db;
-	$sql="SELECT decimalplaces FROM currencies WHERE currabrev='$Currency'";
-	$result = DB_query($sql);
-	if (!DB_num_rows($result))
+	$SQL="SELECT decimalplaces FROM currencies WHERE currabrev='$Currency'";
+	$Result = DB_query($SQL);
+	if (!DB_num_rows($Result))
 		abortMsg(_('Couldnt get the currency data'));
-	$myrow=DB_fetch_row($result);
-	return $myrow[0];
+	$MyRow=DB_fetch_row($Result);
+	return $MyRow[0];
 }
 ?>

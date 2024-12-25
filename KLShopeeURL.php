@@ -87,13 +87,13 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 					FROM stockmaster, salescatprod
 					WHERE stockmaster.stockid = salescatprod.stockid
 						AND stockmaster.stockid = '" . $StockId . "'";
-			$result = DB_query($SQL);
-			if (DB_num_rows($result) != 0){
-				$myrow = DB_fetch_array($result);
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) != 0){
+				$MyRow = DB_fetch_array($Result);
 				
-				if ($myrow['manufacturers_id'] == "1"){
+				if ($MyRow['manufacturers_id'] == "1"){
 					$ShopeeStoreId = SHOPEE_KAPAL_LAUT_STOREID;
-				}else if ($myrow['manufacturers_id'] == "2"){
+				}else if ($MyRow['manufacturers_id'] == "2"){
 					$ShopeeStoreId = SHOPEE_BLINK_STOREID;
 				}else{
 					$Error = "STORE";

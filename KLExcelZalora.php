@@ -46,7 +46,7 @@ function submit($FromPrice, $ToPrice) {
 		$FromPrice = $_POST['FromPrice'];
 		$ToPrice = $_POST['ToPrice'];
 		
-		$sql = "SELECT 	oc_product.product_id,
+		$SQL = "SELECT 	oc_product.product_id,
 						oc_product_description.name,
 						oc_product.model,
 						oc_product.sku,
@@ -61,8 +61,8 @@ function submit($FromPrice, $ToPrice) {
 				ORDER BY oc_product.model";
 		
 		$ErrMsg = _('The SQL to find the OpenCart Products to export to Zalora');
-		$result = DB_query_oc($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query_oc($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
@@ -87,14 +87,14 @@ function submit($FromPrice, $ToPrice) {
 
 			// Add data
 			$i = 2;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['name']);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['name']);
 /*				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, '');
 				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, '');
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, '');
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, '');
-*/				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['quantity']);
+*/				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $MyRow['quantity']);
 				$i++;
 			}
 			

@@ -18,7 +18,7 @@ $SQL = "SELECT salesorders.orddate,
 		GROUP BY salesorders.orddate, salesorderdetails.stkcode
 		ORDER BY salesorders.orddate DESC, salesorderdetails.stkcode";
 				
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . 'Items sold in ' . $LocationName  . ' in the last ' . TRANSFER_LIST_DAYS_FOR_SPG .' days</strong></p>';
 echo '<table class="selection">
@@ -32,16 +32,16 @@ echo $TableHeader;
 echo '</thead>
 	<tbody>';
 
-while ($myrow = DB_fetch_array($result)) {
-	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $myrow['stkcode'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $myrow['stkcode'] . '</a>';
+while ($MyRow = DB_fetch_array($Result)) {
+	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $MyRow['stkcode'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $MyRow['stkcode'] . '</a>';
 	printf('<tr class="striped_row">
 		<td>%s</td>
 		<td>%s</td>
 		<td class="number">%s</td>
 		</tr>', 
-		ConvertSQLDate($myrow['orddate']),
+		ConvertSQLDate($MyRow['orddate']),
 		$CodeLink, 
-		locale_number_format($myrow['sold'],0)
+		locale_number_format($MyRow['sold'],0)
 	);
 }
 

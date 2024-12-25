@@ -91,9 +91,9 @@ function submit($SelectedFile) {
 					FROM stockmaster, salescatprod
 					WHERE stockmaster.stockid = salescatprod.stockid
 						AND stockmaster.stockid = '" . $StockId . "'";
-			$result = DB_query($SQL);
-			if (DB_num_rows($result) != 0){
-				$myrow = DB_fetch_array($result);
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result) != 0){
+				$MyRow = DB_fetch_array($Result);
 		
 				$URLLazada = LAZADA_PREFIX_URL . $LazadaProductId . ".html";
 				$LinkLazada = '<li><a rel="external" href="' . $URLLazada . '">' . _('Lazada') . '</a></li>';

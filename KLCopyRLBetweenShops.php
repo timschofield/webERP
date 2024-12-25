@@ -21,12 +21,12 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 	}
 	
 	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 
-		$sql = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['ToLocationID'] . "'";
+		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['ToLocationID'] . "'";
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to set RL = 0 at location TO failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		
 		$SQL = "SELECT stockid,
@@ -36,8 +36,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 					AND reorderlevel > 0
 				ORDER BY stockid";
 				
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Reorder Levels Assigned to Location ') . $_POST['ToLocationID'] . '</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">
@@ -50,17 +50,17 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 					</thead>
 					<tbody>';
 			$i = 1;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				
-				$sql = "UPDATE locstock 
-						SET reorderlevel = '". $myrow['reorderlevel']. "' 
-						WHERE stockid = '" . $myrow['stockid'] . "'
+				$SQL = "UPDATE locstock 
+						SET reorderlevel = '". $MyRow['reorderlevel']. "' 
+						WHERE stockid = '" . $MyRow['stockid'] . "'
 							AND loccode = '" . $_POST['ToLocationID'] . "'";
 				$DbgMsg = "The SQL statement that failed was";
-				$ErrMsg = "The SQL to set RL to item " . $myrow['stockid'] . " at location '".  $_POST['ToLocationID'] ."' failed";
-				$resultitem = DB_query($sql,$ErrMsg,$DbgMsg,true);
+				$ErrMsg = "The SQL to set RL to item " . $MyRow['stockid'] . " at location '".  $_POST['ToLocationID'] ."' failed";
+				$Resultitem = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -68,7 +68,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 						</tr>', 
 						$i, 
 						$CodeLink,
-						locale_number_format($myrow['reorderlevel'],0)
+						locale_number_format($MyRow['reorderlevel'],0)
 						);
 				$i++;
 			}
@@ -76,7 +76,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				  </table>
 				  </div>';
 		}
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0
 }

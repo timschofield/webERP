@@ -13,9 +13,9 @@ If (!isset($_GET['StockId']) OR $_GET['OldCat']=='' OR $_GET['NewCat']==''){
 	exit;
 }
 
-$result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'");
-$myrow = DB_fetch_row($result);
-if (DB_num_rows($result)==0) {
+$Result = DB_query("SELECT * FROM stockmaster WHERE stockid='" . $_GET['StockId'] . "'");
+$MyRow = DB_fetch_row($Result);
+if (DB_num_rows($Result)==0) {
 	prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
 } elseif ($_GET['OldCat'] != $_GET['NewCat']){
 	ChangeItemStockCategory( $_GET['StockId'], $_GET['OldCat'], $_GET['NewCat']);
@@ -27,14 +27,14 @@ include('includes/footer.php');
 function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 	$Result = DB_Txn_Begin();
 	
-	$sql = "SELECT SUM(locstock.quantity) AS qoh
+	$SQL = "SELECT SUM(locstock.quantity) AS qoh
 			FROM locstock
 			WHERE stockid='".$StockID."'";
-	$QOHResult = DB_query($sql);
+	$QOHResult = DB_query($SQL);
 	$StockQtyRow = DB_fetch_array($QOHResult);
 	$QOH = $StockQtyRow['qoh'];
 
-	$sql = "SELECT stockcategory.stockact,
+	$SQL = "SELECT stockcategory.stockact,
 				stockcategory.wipact,
 				actualcost AS itemcost,
 				stockmaster.categoryid
@@ -42,13 +42,13 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 		INNER JOIN stockcategory
 		ON stockmaster.categoryid=stockcategory.categoryid
 		WHERE stockid = '".$StockID."'";
-		$OldResult = DB_query($sql);
-		$myrow = DB_fetch_array($OldResult);
+		$OldResult = DB_query($SQL);
+		$MyRow = DB_fetch_array($OldResult);
 		
-	$OldStockAccount = $myrow['stockact'];
-	$OldWIPAccount = $myrow['wipact'];
-	$OldCatInStockMaster = $myrow['categoryid']; 
-	$UnitCost = $myrow['itemcost']; 
+	$OldStockAccount = $MyRow['stockact'];
+	$OldWIPAccount = $MyRow['wipact'];
+	$OldCatInStockMaster = $MyRow['categoryid']; 
+	$UnitCost = $MyRow['itemcost']; 
 	
 	$NewResult = DB_query("SELECT stockact,
 								wipact
@@ -78,7 +78,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										'" . round($UnitCost * $QOH) . "')";
 			$ErrMsg =  _('The stock cost journal could not be inserted because');
 			$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
-			$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -93,7 +93,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 										'" . $OldStockAccount . "',
 										'" . $StockID . ' ' . _('Change stock category') . "',
 										'" . round(-$UnitCost * $QOH) . "')";
-			$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 
 		} /* end if the stock category changed and forced a change in stock cost account */
 		if ($OldWIPAccount != $NewWIPAct) {
@@ -132,7 +132,7 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											'" . $WIPValue . "')";
 				$ErrMsg =  _('The WIP cost journal could not be inserted because');
 				$DbgMsg = _('The SQL that was used to create the WIP cost journal and failed was');
-				$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 				$SQL = "INSERT INTO gltrans (type,
 											typeno,
 											trandate,
@@ -147,16 +147,16 @@ function ChangeItemStockCategory($StockID, $OldCat, $NewCat){
 											'" . $OldWIPAccount . "',
 											'" . $StockID . ' ' . _('Change stock category') . "',
 											'" . (-$WIPValue) . "')";
-				$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 			}
 		} /* end if the stock category changed and forced a change in WIP account */
-		$sql = "UPDATE stockmaster
+		$SQL = "UPDATE stockmaster
 				SET categoryid='" . $NewCat . "' 
 				WHERE stockid='".$StockID."'";
 
 		$ErrMsg = _('The stock item could not be updated because');
 		$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			
 		prnMsg ('CHANGE OF Stock Category of ' . $StockID . ' QOH='. $QOH . ' SC=' . $UnitCost. ' changed from ' . $OldCat . ' to ' . $NewCat ,'success');
 	}else{

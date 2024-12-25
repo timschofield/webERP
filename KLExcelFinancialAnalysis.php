@@ -258,8 +258,8 @@ function MovementAccountsBetweenPeriods($AccountList, $PeriodFrom, $PeriodTo){
 				AND chartdetails.period >='" . $PeriodFrom . "'
 				AND chartdetails.period <='" . $PeriodTo . "'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	return $myrow[0]/JUTA;
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow[0]/JUTA;
 }
 
 function ExpensesPaidCashForAccountsPT($DateFrom, $DateTo){
@@ -276,8 +276,8 @@ function ExpensesPaidCashForAccountsPT($DateFrom, $DateTo){
 				AND pctabs.tabcode NOT LIKE 'CC-BCA%'
 				AND pcexpenses.glaccount LIKE '%BB'";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	return $myrow[0]/JUTA;
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow[0]/JUTA;
 }
 
 function MovementsFromDanamonToCashKantor($DateFrom, $DateTo){
@@ -290,8 +290,8 @@ function MovementsFromDanamonToCashKantor($DateFrom, $DateTo){
 					OR gltrans.narrative LIKE '%BANK TO CASH%'
 					OR gltrans.narrative LIKE '%UANG KECIL%')";
 	$Result = DB_query($SQL);
-	$myrow = DB_fetch_array($Result);
-	return $myrow[0]/JUTA;
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow[0]/JUTA;
 }
 
 ?>

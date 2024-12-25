@@ -31,8 +31,8 @@ $SQL = "SELECT stockmaster.stockid,
 					OR stockmaster.klpackaging = ''
 					OR stockmaster.volume = 0)
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL);
-if (DB_num_rows($result) != 0){
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Items To Classify for Online Shop Categories') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -50,39 +50,39 @@ if (DB_num_rows($result) != 0){
 	$k = 0; //row colour counter
 	$i = 1;
 	$ItemsAdded = 0;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
 		$WebsiteDescription = "";
 		$FeaturedAsTopSales = 0;
 		$FeaturedText = "";
-		$Brand = FindWebsiteBrand($myrow['stockid'], $myrow['categoryid'], $myrow['description']);
-		$Weight = $myrow['grossweight'];
-		$Packaging = $myrow['klpackaging'];
-		$Volume = $myrow['volume'];
+		$Brand = FindWebsiteBrand($MyRow['stockid'], $MyRow['categoryid'], $MyRow['description']);
+		$Weight = $MyRow['grossweight'];
+		$Packaging = $MyRow['klpackaging'];
+		$Volume = $MyRow['volume'];
 
 		if ($Weight == 0){
-			$Weight = UpdateWeight($myrow['stockid'], $Weight, $UpdateDB);
+			$Weight = UpdateWeight($MyRow['stockid'], $Weight, $UpdateDB);
 		}
 
 		if ($Packaging == ""){
-			$Packaging = UpdatePackaging($myrow['stockid'],$myrow['categoryid'], $Brand, $UpdateDB);
-			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB);
+			$Packaging = UpdatePackaging($MyRow['stockid'],$MyRow['categoryid'], $Brand, $UpdateDB);
+			$Volume = UpdateVolumeByPackaging($MyRow['stockid'], $Packaging, $UpdateDB);
 		}
 		
 		if ($Volume == 0){
-			$Volume = UpdateVolumeByPackaging($myrow['stockid'], $Packaging, $UpdateDB);
+			$Volume = UpdateVolumeByPackaging($MyRow['stockid'], $Packaging, $UpdateDB);
 		}
 		// if we have some kind of description, long enough, we can move ahead. Otherwise, we miss the descriptiob
-		if (strlen($myrow['description']) >= 8){
+		if (strlen($MyRow['description']) >= 8){
 			// if we have picture, then we can publish online, otherwise not yet!
-			if(file_exists($_SESSION['part_pics_dir'] . '/' .$myrow['stockid'].'.jpg') ) {
+			if(file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
 				// From the brand we know if it gors to KL online shop or Blink online shop
 
 				if ($Brand == 1){
 					// KL brand detected ;-) select the sub category 
-					$WebsiteCategory = WebsiteCategorySilverJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+					$WebsiteCategory = WebsiteCategorySilverJewellery($MyRow['stockid'], $MyRow['description'], $MyRow['longdescription'], $MyRow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{
@@ -90,9 +90,9 @@ if (DB_num_rows($result) != 0){
 					}
 				}else{
 					// Blink brand detected ;-)
-					$WebsiteCategory = WebsiteCategoryBlinkJewellery($myrow['stockid'], $myrow['description'], $myrow['longdescription'], $myrow['categoryid']);
+					$WebsiteCategory = WebsiteCategoryBlinkJewellery($MyRow['stockid'], $MyRow['description'], $MyRow['longdescription'], $MyRow['categoryid']);
 					if ($WebsiteCategory > 0){ 
-						InsertWebsiteSalesCategory($myrow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
+						InsertWebsiteSalesCategory($MyRow['stockid'], $WebsiteCategory, $Brand, FALSE, $FeaturedAsTopSales, $UpdateDB);
 						$WebsiteDescription = FindWebsiteDescription($WebsiteCategory);
 						$ItemsAdded++;
 					}else{
@@ -126,9 +126,9 @@ if (DB_num_rows($result) != 0){
 				<td>%s</td>
 				</tr>', 
 				$i, 
-				$myrow['stockid'], 
-				$myrow['description'], 
-				$myrow['categoryid'], 
+				$MyRow['stockid'], 
+				$MyRow['description'], 
+				$MyRow['categoryid'], 
 				$Weight, 
 				$Volume, 
 				$BrandText,
@@ -149,10 +149,10 @@ include ('includes/footer.php');
 
 function DeleteWebsiteSalesCategories($Stockid, $UpdateDB){
 	if($UpdateDB){
-		$sql =	"DELETE FROM salescatprod 
+		$SQL =	"DELETE FROM salescatprod 
 					WHERE stockid ='" .  $Stockid . "'";
 		$ErrMsg =_('Could not delete the previous website category for the item because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 	}
 }
 
@@ -200,11 +200,11 @@ function UpdateWeight($Stockid, $UpdateDB){
 	}
 	
 	if($UpdateDB){
-		$sql = "UPDATE stockmaster 
+		$SQL = "UPDATE stockmaster 
 				SET grossweight = " . $Weight . "
 				WHERE stockid =	'" . $Stockid . "'";
 		$ErrMsg =_('Could not update the item weight because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 	}
 	return $Weight;
 }
@@ -295,14 +295,14 @@ function UpdateVolume($Stockid, $UpdateDB){
 	$Volume = round(($Length/1000)*($Width/1000)*($Height/1000),4,PHP_ROUND_HALF_UP); // dimensions in mm and volume in m3
 	
 	if($UpdateDB){
-		$sql = "UPDATE stockmaster 
+		$SQL = "UPDATE stockmaster 
 				SET volume = " . $Volume . ",
 					length =  " . $Length . ",
 					width =  " . $Width . ",
 					height =  " . $Height . "
 				WHERE stockid =	'" . $Stockid . "'";
 		$ErrMsg =_('Could not update the item volume and dimensions because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 	}
 	return $Volume;
 }
@@ -334,14 +334,14 @@ function UpdateVolumeByPackaging($Stockid, $Packaging, $UpdateDB){
 	$Volume = round(($Length/1000)*($Width/1000)*($Height/1000),4,PHP_ROUND_HALF_UP); // dimensions in mm and volume in m3
 	
 	if($UpdateDB){
-		$sql = "UPDATE stockmaster 
+		$SQL = "UPDATE stockmaster 
 				SET volume = " . $Volume . ",
 					length =  " . $Length . ",
 					width =  " . $Width . ",
 					height =  " . $Height . "
 				WHERE stockid =	'" . $Stockid . "'";
 		$ErrMsg =_('Could not update the item volume and dimensions because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 	}
 	return $Volume;
 }
@@ -399,11 +399,11 @@ function UpdatePackaging($Stockid, $Category, $Brand, $UpdateDB){
 	}
 	
 	if (($Packaging != "") AND ($UpdateDB)){
-		$sql = "UPDATE stockmaster 
+		$SQL = "UPDATE stockmaster 
 				SET klpackaging = '" . $Packaging . "'
 				WHERE stockid =	'" . $Stockid . "'";
 		$ErrMsg =_('Could not update the packaging set because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 	}
 	
 	return $Packaging;
@@ -536,9 +536,9 @@ function FindWebsiteDescription($WebsiteCategory){
 	$SQLCat = "SELECT salescat.salescatname
 			FROM salescat
 			WHERE salescat.salescatid = '". $WebsiteCategory . "'";
-	$resultCat = DB_query($SQLCat);
-	while ($myrowCat = DB_fetch_array($resultCat)) {
-		$WebsiteDescription = $WebsiteCategory . ' -> ' . $myrowCat['salescatname'];
+	$ResultCat = DB_query($SQLCat);
+	while ($MyRowCat = DB_fetch_array($ResultCat)) {
+		$WebsiteDescription = $WebsiteCategory . ' -> ' . $MyRowCat['salescatname'];
 	}
 	return $WebsiteDescription;
 }

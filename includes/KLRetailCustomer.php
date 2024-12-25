@@ -28,9 +28,9 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 			WHERE salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberSales = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberSales = $MyRow[0];
 	
 	// Get the result of F 
 	$SQL = "SELECT COUNT(*)
@@ -40,9 +40,9 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.sex = 'F'".
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberFemales = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberFemales = $MyRow[0];
 
 	// Get the result of M 
 	$SQL = "SELECT COUNT(*)
@@ -52,9 +52,9 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.sex = 'M'".
 				$WhereListShops;;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberMales = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberMales = $MyRow[0];
 
 	if ($ListShops == 'ALL'){
 		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
@@ -159,9 +159,9 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops .
 				$WhereShopArea;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberSales = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberSales = $MyRow[0];
 
 	// Get the total of cases 
 	$SQL = "SELECT COUNT(klretailcustomers.country)
@@ -173,9 +173,9 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 				AND klretailcustomers.country != '0'".
 				$WhereListShops . 
 				$WhereShopArea;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases = $MyRow[0];
 	
 	// Get the result of customers per country 
 	$SQL = "SELECT klretailcustomers.country, COUNT(klretailcustomers.country) AS numberofcustomers
@@ -190,9 +190,9 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 			GROUP BY klretailcustomers.country 
 			ORDER BY COUNT(klretailcustomers.country) DESC,
 				klretailcustomers.country ASC"	;
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		if ($NumDays == -1){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during today in ') . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
 		}else{
@@ -229,19 +229,19 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 				);
 
 		$TotalOtherCountries = 0;	
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['numberofcustomers'] > $MinimCustomersToShow){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['numberofcustomers'] > $MinimCustomersToShow){
 				printf('<tr class="striped_row">
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$CountriesForRetail[$myrow['country']],
-					locale_number_format($myrow['numberofcustomers'],0),
-					locale_number_format(($myrow['numberofcustomers']/$NumberCases)*100,1).'%'
+					$CountriesForRetail[$MyRow['country']],
+					locale_number_format($MyRow['numberofcustomers'],0),
+					locale_number_format(($MyRow['numberofcustomers']/$NumberCases)*100,1).'%'
 					);
 			}else{
-				$TotalOtherCountries += $myrow['numberofcustomers'];
+				$TotalOtherCountries += $MyRow['numberofcustomers'];
 			}
 		
 		}
@@ -294,9 +294,9 @@ function EmailHarvested($NumDays, $TypeOfShops){
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberSales = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberSales = $MyRow[0];
 	
 	// Get the result of emails harvested 
 	$SQL = "SELECT COUNT(*)
@@ -307,9 +307,9 @@ function EmailHarvested($NumDays, $TypeOfShops){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.email != ''".
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberEmails = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberEmails = $MyRow[0];
 
 	echo '<p class="page_title_text" align="center"><strong>' . _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
 	echo '<div>';
@@ -380,9 +380,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.orddate <= '". $Yesterday . "'".
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberSales = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberSales = $MyRow[0];
 
 	// Get the total of cases 
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -393,9 +393,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age != 0".
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases = $MyRow[0];
 	
 	// Get the cases for AGE_STEP_01
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -407,9 +407,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND klretailcustomers.age != 0
 				AND klretailcustomers.age <= ". AGE_STEP_01 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases01 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases01 = $MyRow[0];
 
 	// Get the cases for AGE_STEP_02
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -421,9 +421,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND klretailcustomers.age > ". AGE_STEP_01 . "
 				AND klretailcustomers.age <= ". AGE_STEP_02 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases02 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases02 = $MyRow[0];
 
 	// Get the cases for AGE_STEP_03
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -435,9 +435,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND klretailcustomers.age > ". AGE_STEP_02 . "
 				AND klretailcustomers.age <= ". AGE_STEP_03 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases03 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases03 = $MyRow[0];
 
 	// Get the cases for AGE_STEP_04
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -449,9 +449,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND klretailcustomers.age > ". AGE_STEP_03 . "
 				AND klretailcustomers.age <= ". AGE_STEP_04 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases04 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases04 = $MyRow[0];
 
 	// Get the cases for AGE_STEP_05
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -463,9 +463,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND klretailcustomers.age > ". AGE_STEP_04 . "
 				AND klretailcustomers.age <= ". AGE_STEP_05 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases05 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases05 = $MyRow[0];
 	
 	// Get the cases for AGE_STEP_06
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -477,9 +477,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND klretailcustomers.age > ". AGE_STEP_05 . "
 				AND klretailcustomers.age <= ". AGE_STEP_06 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases06 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases06 = $MyRow[0];
 	
 	// Get the cases for AGE_STEP_07
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -491,9 +491,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND klretailcustomers.age > ". AGE_STEP_06 . "
 				AND klretailcustomers.age <= ". AGE_STEP_07 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases07 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases07 = $MyRow[0];
 
 	// Get the cases for over AGE_STEP_07
 	$SQL = "SELECT COUNT(klretailcustomers.age)
@@ -504,9 +504,9 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 				AND salesorders.orddate <= '". $Yesterday . "'
 				AND klretailcustomers.age > ". AGE_STEP_07 .
 				$WhereListShops;
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
-	$NumberCases08 = $myrow[0];
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$NumberCases08 = $MyRow[0];
 
 	if ($NumDays == -1){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during today in ') . $NameOfShops . ' shops</strong></p>';
@@ -684,9 +684,9 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 				AND salesorders.orddate <= '". $Yesterday ."'
 			GROUP BY salesorders.salesperson
 			ORDER BY salesorders.salesperson";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		echo '<p class="page_title_text" align="center"><strong>' . _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -705,7 +705,7 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 						</tr>';
 		echo $TableHeader;
 
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
@@ -719,17 +719,17 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				$myrow['salesperson'],
-				$myrow['salesmanname'],
-				locale_number_format($myrow['totalorders'],0),
-				locale_number_format(($myrow['harvested']/$myrow['totalorders'])*100,0).'%',
-				locale_number_format(($myrow['firstnames']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['lastnames']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['countries']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['date_of_births']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['emails']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['sexs']/$myrow['harvested'])*100,0).'%',
-				locale_number_format(($myrow['onlinevipcards']/$myrow['totalorders'])*100,0).'%'
+				$MyRow['salesperson'],
+				$MyRow['salesmanname'],
+				locale_number_format($MyRow['totalorders'],0),
+				locale_number_format(($MyRow['harvested']/$MyRow['totalorders'])*100,0).'%',
+				locale_number_format(($MyRow['firstnames']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['lastnames']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['countries']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['date_of_births']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['emails']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['sexs']/$MyRow['harvested'])*100,0).'%',
+				locale_number_format(($MyRow['onlinevipcards']/$MyRow['totalorders'])*100,0).'%'
 				);
 		}
 		echo '</table>

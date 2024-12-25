@@ -36,15 +36,15 @@ function submit($FromDate, $ToDate) {
 		prnMsg(_('Invalid To Date'),'error');
 	}
 
-	$sqlSettings =  "SELECT klretailpartners.accountcomissioncreditcard
+	$SQLSettings =  "SELECT klretailpartners.accountcomissioncreditcard
 					 FROM klretailpartners
 					 WHERE klretailpartners.partnercode = 'PTSMH'";
-	$resultSettings = DB_query($sqlSettings);
-	if (DB_num_rows($resultSettings)==0) {
+	$ResultSettings = DB_query($SQLSettings);
+	if (DB_num_rows($ResultSettings)==0) {
 		$InputError = 1;
 		prnMsg(_('Invalid Retail partner Settings'),'error');
 	} else {
-		$myrowSettings = DB_fetch_array($resultSettings); //get the only row returned
+		$MyRowSettings = DB_fetch_array($ResultSettings); //get the only row returned
 	}
 
 	if ($InputError == 0){
@@ -78,7 +78,7 @@ function submit($FromDate, $ToDate) {
 		$ErrMsg = _('The SQL to find the KL GL Transactions ');
 		
 		// Regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
-		$sql = "SELECT accountgroups.groupname AS 'Group',
+		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
 					chartmasterSMH.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
@@ -91,30 +91,30 @@ function submit($FromDate, $ToDate) {
 					AND chartmasterSMH.group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
 					AND accountgroups.groupname NOT IN ('Penjualan', 'HPP (COGS)') 
-					AND gltrans.account != '" . $myrowSettings['accountcomissioncreditcard'] . "' ".
+					AND gltrans.account != '" . $MyRowSettings['accountcomissioncreditcard'] . "' ".
 					$WhereFrom .
 					$WhereTo . " 
 				ORDER BY accountgroups.groupname ASC, 
 					gltrans.account ASC, 
 					gltrans.trandate ASC ";
 					
-		$result = DB_query($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
 			// Add data
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['Group']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['AccountCode']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['AccountName']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['Date']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['Amount'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $myrow['Description']);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $MyRow['Description']);
 				$i++;
 			}
 		}
 
 		// Exception GL accounts grouped (HPP (COGS) OR PENJUALAN))
-		$sql = "SELECT accountgroups.groupname AS 'Group',
+		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
 					chartmasterSMH.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
@@ -127,7 +127,7 @@ function submit($FromDate, $ToDate) {
 					AND chartmasterSMH.group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
 					AND ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
-						OR gltrans.account = '" . $myrowSettings['accountcomissioncreditcard'] . "') ".
+						OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "') ".
 					$WhereFrom .
 					$WhereTo . " 
 				GROUP BY accountgroups.groupname,
@@ -137,17 +137,17 @@ function submit($FromDate, $ToDate) {
 					gltrans.account ASC, 
 					gltrans.trandate ASC ";
 					
-		$result = DB_query($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
 			// Add data
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['Group']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['AccountCode']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['AccountName']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['Date']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($myrow['Amount'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, 'Total harian ' . $myrow['AccountName']);
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, 'Total harian ' . $MyRow['AccountName']);
 				$i++;
 			}
 		}

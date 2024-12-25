@@ -28,8 +28,8 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 	$InputError = False; /*Start off hoping for the best */
 	$TotalItems = 0;
 	//Make sure this Transfer has not already been entered... aka one way around the refresh & insert new records problem
-	$result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'");
-	if (DB_num_rows($result)!=0){
+	$Result = DB_query("SELECT * FROM loctransfers WHERE reference='" . $_POST['Trf_ID'] . "'");
+	if (DB_num_rows($Result)!=0){
 		$InputError = true;
 		$ErrorMessage = _('This transaction has already been entered') . '. ' . _('Please start over now') . '<br />';
 		unset($_POST['submit']);
@@ -55,14 +55,14 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 			}
 			if (isset($_POST['StockID' . $i]) AND $_POST['StockID' . $i]!=''){
 				$_POST['StockID' . $i]=trim(mb_strtoupper($_POST['StockID' . $i]));
-				$result = DB_query("SELECT COUNT(*) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'");
-				$myrow = DB_fetch_row($result);
-				if ($myrow[0]==0){
+				$Result = DB_query("SELECT COUNT(*) FROM stockmaster WHERE stockid='" . $_POST['StockID' . $i] . "'");
+				$MyRow = DB_fetch_row($Result);
+				if ($MyRow[0]==0){
 					$InputError = True;
 					$ErrorMessage .= _('The part code entered of'). ' ' . $_POST['StockID' . $i] . ' '. _('is not set up in the database') . '. ' . _('Only valid parts can be entered for transfers'). '<br />';
 					$_POST['LinesCounter'] -= 1;
 				}
-				DB_free_result( $result );
+				DB_free_result( $Result );
 				if (!is_numeric(filter_number_format($_POST['StockQTY' . $i]))){
 					$InputError = True;
 					$ErrorMessage .= _('The quantity entered of'). ' ' . $_POST['StockQTY' . $i] . ' '. _('for part code'). ' ' . $_POST['StockID' . $i] . ' '. _('is not numeric') . '. ' . _('The quantity entered for transfers is expected to be numeric') . '<br />';
@@ -83,12 +83,12 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					$InTransitRow=DB_fetch_array($InTransitResult);
 					$InTransitQuantity=$InTransitRow['intransit'];
 					// Only if stock exists at this location
-					$result = DB_query("SELECT quantity
+					$Result = DB_query("SELECT quantity
 										FROM locstock
 										WHERE stockid='" . $_POST['StockID' . $i] . "'
 										AND loccode='".$_POST['FromStockLocation']."'");
 
-					$myrow = DB_fetch_array($result);
+					$MyRow = DB_fetch_array($Result);
 				}
 				// Check if the last one entered already exists on the transfer
 				$LastItem = $_POST['LinesCounter']-1;
@@ -100,7 +100,7 @@ if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 					prnMsg("Item ". $_POST['StockID' . $i] . " was already in the transfer. Just updating quantity to " . $_POST['StockQTY' . $i],"warn");
 				}
 
-				DB_free_result( $result );
+				DB_free_result( $Result );
 				$TotalItems++;
 			}
 		}//for all LinesCounter
@@ -147,7 +147,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 							WHERE stockid='" . $_POST['StockID' . $i] . "'";
 			$DecimalResult = DB_query($DecimalsSql);
 			$DecimalRow = DB_fetch_array($DecimalResult);
-			$sql = "INSERT INTO loctransfers (reference,
+			$SQL = "INSERT INTO loctransfers (reference,
 								stockid,
 								shipqty,
 								shipdate,
@@ -160,7 +160,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 							'" . $_POST['FromStockLocation']  ."',
 							'" . $_POST['ToStockLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$_POST['StockID' . $i];
-			$resultLocShip = DB_query($sql, $ErrMsg);
+			$ResultLocShip = DB_query($SQL, $ErrMsg);
 
 			if ($_POST['ToStockLocation'] == 'SERDE'){
 				KLSendEmail("ItemTransferredToSpecialLocation", "Silent", $_POST['StockID' . $i], round(filter_number_format($_POST['StockQTY' . $i]), $DecimalRow['decimalplaces']),$_POST['FromStockLocation'], $_POST['ToStockLocation']);

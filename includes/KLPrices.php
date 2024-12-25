@@ -2,114 +2,114 @@
 
 function SetChangePriceFlag($Flag, $StockId){
 	/* sets $flag value to changingprice flag in stockmaster */
-	$sql = "UPDATE stockmaster 
+	$SQL = "UPDATE stockmaster 
 			SET klchangingprice = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing Price Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 function SetMoveDiscount20Flag($Flag, $StockId){
 	/* sets $flag value to flag in stockmaster */
-	$sql = "UPDATE stockmaster 
+	$SQL = "UPDATE stockmaster 
 			SET klmovingdiscount20 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing Move To 20% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 function SetMoveDiscount50Flag($Flag, $StockId){
 	/* sets $flag value to flag in stockmaster */
-	$sql = "UPDATE stockmaster 
+	$SQL = "UPDATE stockmaster 
 			SET klmovingdiscount50 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing Move To 50% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 function SetMoveDiscount80Flag($Flag, $StockId){
 	/* sets $flag value to  flag in stockmaster */
-	$sql = "UPDATE stockmaster 
+	$SQL = "UPDATE stockmaster 
 			SET klmovingdiscount80 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing Move To Outlet Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 function SetFlagPriceChangedInChangePrice($StockId, $value){
-	$sql = "UPDATE klchangeprice 
+	$SQL = "UPDATE klchangeprice 
 			SET pricechanged = '" . $value . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing flag PriceChanged for item') . ' ' . $StockId . ' ' . _('to') . ' ' . $value;
 	$ErrMsg = _('SetFlagPriceChangedInChangePrice failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 
 function SetEndDateChangePrice($StockId){
-	$sql = "UPDATE klchangeprice 
+	$SQL = "UPDATE klchangeprice 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Price change set to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 function SetEndDateMoveDiscount20($StockId){
-	$sql = "UPDATE klmovetodiscount20 
+	$SQL = "UPDATE klmovetodiscount20 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 function SetEndDateMoveDiscount50($StockId){
-	$sql = "UPDATE klmovetodiscount50 
+	$SQL = "UPDATE klmovetodiscount50 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
 function SetEndDateMoveDiscount80($StockId){
-	$sql = "UPDATE klmovetodiscount80 
+	$SQL = "UPDATE klmovetodiscount80 
 			SET endprocessdate = '" . Date('Y-m-d') . "'
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
@@ -117,7 +117,7 @@ function SetEndDateMoveDiscount80($StockId){
 
 function SetRLZeroAtPointOfSales($StockId){
 	/* sets RL = 0 for all locations NOT phisically at the kantor, so the existing pieces will return to office via regular Transfers */
-	$sql = "UPDATE locstock 
+	$SQL = "UPDATE locstock 
 			SET reorderlevel = 0
 			WHERE stockid = '".$StockId."'
 				AND loccode NOT IN " . LIST_KANTOR_LOCATIONS  ;
@@ -125,7 +125,7 @@ function SetRLZeroAtPointOfSales($StockId){
 	$msg = _('Reorder Level set to 0 for') . ' ' . $StockId . ' ' . _('at all Point Of Sale locations');
 	$ErrMsg = _('The update of the Reorder Levels = 0 failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
-	$result = DB_query($sql,$ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 	prnMsg($msg , 'success');
 }
 
@@ -216,12 +216,12 @@ function UpdateTablePrice($StockId, $RetailPrice){
 	$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 
 	/* 1st: Set enddate for current prices to yesterday */
-	$sql = "UPDATE prices 
+	$SQL = "UPDATE prices 
 			SET enddate='" . $Yesterday . "'
 			WHERE stockid ='" . $StockId . "'
 			AND  (enddate > '" . $Yesterday . "' OR enddate = '9999-12-31') ";
 	$ErrMsg = _('Could not update the price because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg (_('The end date of current prices has been changed to yesterday'),'success');
 
 	/* 2nd: set prices in IDR */
@@ -259,7 +259,7 @@ function UpdateTablePrice($StockId, $RetailPrice){
 
 
 function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $ShowMessages){
-	$sql = "INSERT INTO prices 
+	$SQL = "INSERT INTO prices 
 				(stockid, 
 				typeabbrev, 
 				currabrev, 
@@ -279,7 +279,7 @@ function UpdatePriceItem($StockId, $SalesType, $Currency, $Price, $StartDate, $S
 			'9999-12-31')";
 			
 	$ErrMsg = _('Could not add the new KL price');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	if($ShowMessages){
 		prnMsg (_('The ') . $SalesType . _(' price for '). $StockId .  ' has been set to '. locale_number_format($Price, 2) .  ' ' . $Currency,'success');
 	}
@@ -309,7 +309,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 	}
 
 	// Search for the GL account for the Old Category
-	$sql = "SELECT actualcost AS itemcost,
+	$SQL = "SELECT actualcost AS itemcost,
 					stockcategory.stockact,
 					stockcategory.wipact,
 					stockmaster.categoryid
@@ -317,27 +317,27 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 			INNER JOIN stockcategory 
 			ON stockmaster.categoryid=stockcategory.categoryid
 			WHERE stockid = '".$StockId."'";
-	$MBFlagResult = DB_query($sql);
-	$myrow = DB_fetch_row($MBFlagResult);
-	$UnitCost = $myrow[0];
-	$OldStockAccount = $myrow[1];
-	$OldWIPAccount = $myrow[2];
-	$OldCategoryId = $myrow[3]; 
+	$MBFlagResult = DB_query($SQL);
+	$MyRow = DB_fetch_row($MBFlagResult);
+	$UnitCost = $MyRow[0];
+	$OldStockAccount = $MyRow[1];
+	$OldWIPAccount = $MyRow[2];
+	$OldCategoryId = $MyRow[3]; 
 
 	// search for the total qty we have
-	$sql = "SELECT SUM(locstock.quantity)
+	$SQL = "SELECT SUM(locstock.quantity)
 			FROM locstock
 			WHERE stockid='".$StockId."'
 			GROUP BY stockid";
-	$result = DB_query($sql);
-	$StockQtyRow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$StockQtyRow = DB_fetch_row($Result);
 
 	// search for the GL accounts data for the new category.
-	$result = DB_query("SELECT stockact,
+	$Result = DB_query("SELECT stockact,
 								wipact
 						FROM stockcategory
 						WHERE categoryid='" . $NewCategory . "'");
-	$NewStockActRow = DB_fetch_array($result);
+	$NewStockActRow = DB_fetch_array($Result);
 	$NewStockAct = $NewStockActRow['stockact'];
 	$NewWIPAct = $NewStockActRow['wipact'];
 	
@@ -360,7 +360,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 									'" . ($UnitCost* $StockQtyRow[0]) . "')";
 		$ErrMsg =  _('The stock cost journal could not be inserted because');
 		$DbgMsg = _('The SQL that was used to create the stock cost journal and failed was');
-		$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 		prnMsg ('Changed the value of stock of item: '. $StockId . ' to category ' . $NewCategory . ' Account: ' . $NewStockAct ,'success');
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -376,19 +376,19 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 									'" . $OldStockAccount . "',
 									'" . $StockId . ' ' .$reason . "',
 									'" . (-$UnitCost* $StockQtyRow[0]) . "')";
-		$result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg,true);
 		prnMsg (_('Changed the value of stock of item: '). $StockId . ' from category ' . $OldCategoryId . ' Account: ' . $OldStockAccount ,'success');
 	}	
 	
 	/* Update the stockmaster record */
-	$sql = "UPDATE stockmaster 
+	$SQL = "UPDATE stockmaster 
 			SET categoryid='" . $NewCategory . "',
 				lastcategoryupdate = '" .Date('Y-m-d') . "',
 				discountcategory = '" . $DiscountCode . "'
 			WHERE stockid ='" . $StockId . "'";
 
 	$ErrMsg = _('Could not update the price because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg (_('Updated the Stockmaster record for item: '). $StockId,'success');
 
 }
@@ -417,17 +417,17 @@ function SendEmailChangePriceReadyForStep02($EmailText){
 			WHERE stockmaster.stockid = klchangeprice.stockid
 				AND klchangeprice.endprocessdate = '0000-00-00'";
 				
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($EmailText !=''){
 			$EmailText = $EmailText . "\n"; 
 		}
-		while ($myrow = DB_fetch_array($result)) {
-			if (($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal']){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (($MyRow['qohkantor'] + $MyRow['qohotherlocs']) == $MyRow['qohtotal']){
 				// Send Email
-				KLSendEmail("ItemReadyChangePriceStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal']);
+				KLSendEmail("ItemReadyChangePriceStep02", "Silent", $MyRow['stockid'], $MyRow['description'],$MyRow['qohtotal']);
 				if ($EmailText !=''){
-					$EmailText = $EmailText . _('Item Ready for Price Change Step 02 = '). $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
+					$EmailText = $EmailText . _('Item Ready for Price Change Step 02 = '). $MyRow['stockid'] . " QOH = " . $MyRow['qohtotal'] . "\n"; 
 				}
 			}
 		}
@@ -459,17 +459,17 @@ function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $EmailText){
 			WHERE stockmaster.stockid = klmovetodiscount".$TypeDiscount.".stockid
 				AND klmovetodiscount".$TypeDiscount.".endprocessdate = '0000-00-00'";
 				
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($EmailText !=''){
 			$EmailText = $EmailText . "\n"; 
 		}
-		while ($myrow = DB_fetch_array($result)) {
-			if (($myrow['qohkantor'] + $myrow['qohotherlocs']) == $myrow['qohtotal']){
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (($MyRow['qohkantor'] + $MyRow['qohotherlocs']) == $MyRow['qohtotal']){
 				// Send Email
-				KLSendEmail("ItemReadyMoveToDiscountStep02", "Silent", $myrow['stockid'], $myrow['description'],$myrow['qohtotal'], $TypeDiscount);
+				KLSendEmail("ItemReadyMoveToDiscountStep02", "Silent", $MyRow['stockid'], $MyRow['description'],$MyRow['qohtotal'], $TypeDiscount);
 				if ($EmailText !=''){
-					$EmailText = $EmailText . 'Item Ready Move To ' . $TypeDiscount . '% Discount Step 02 = '. $myrow['stockid'] . " QOH = " . $myrow['qohtotal'] . "\n"; 
+					$EmailText = $EmailText . 'Item Ready Move To ' . $TypeDiscount . '% Discount Step 02 = '. $MyRow['stockid'] . " QOH = " . $MyRow['qohtotal'] . "\n"; 
 				}
 			}
 		}

@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
 	$i=1;
 
 	//first off validate inputs sensible
-	$result = DB_query("SELECT klchangingprice, 
+	$Result = DB_query("SELECT klchangingprice, 
 								klmovingdiscount20,
 								klmovingdiscount50,
 								klmovingdiscount80,
@@ -41,8 +41,8 @@ if (isset($_POST['submit'])) {
 								discontinued 
 						FROM stockmaster 
 						WHERE stockid='" . $_POST['Stockid'] . "'");
-	$myrow = DB_fetch_array($result);
-	if (DB_num_rows($result)==0) {
+	$MyRow = DB_fetch_array($Result);
+	if (DB_num_rows($Result)==0) {
 		prnMsg( _('The entered item code does not exist'),'error');
 		$InputError = 1;
 		$Errors[$i] = 'StockId';
@@ -57,32 +57,32 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'MaxItemsMovingToDiscount';
 		$i++;
 		prnMsg('Too many items moving to Discount 50% at the same time. Maximum = '. MAX_ITEMS_MOVING_DISC50,'error');
-	}elseif (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)) {
+	}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_DISCOUNT_50)) {
 		$InputError = 1;
 		$Errors[$i] = 'AlreadyDiscount50';
 		$i++;
 		prnMsg(_('This item is already in DISCOUNT category. No need to move it.'),'error');
-	}elseif ($myrow['klchangingprice'] == 1) {
+	}elseif ($MyRow['klchangingprice'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'ChangingPrice';
 		$i++;
 		prnMsg(_('This item is already in Change Price procedure. Finish or delete this process first'),'error');
-	}elseif ($myrow['klmovingdiscount20'] == 1) {
+	}elseif ($MyRow['klmovingdiscount20'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount20';
 		$i++;
 		prnMsg(_('This item is already in Move To 20% Discount procedure. Finish or delete this process first.'),'error');
-	}elseif ($myrow['klmovingdiscount50'] == 1) {
+	}elseif ($MyRow['klmovingdiscount50'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount50';
 		$i++;
 		prnMsg(_('This item is already in Move To 50% Discount procedure. No need to do it twice'),'error');
-	}elseif ($myrow['klmovingdiscount80'] == 1) {
+	}elseif ($MyRow['klmovingdiscount80'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'MovingDiscount80';
 		$i++;
 		prnMsg(_('This item is already in Move To 80% Discount procedure. Finish or delete this process first.'),'error');
-	}elseif ($myrow['discontinued'] == 1) {
+	}elseif ($MyRow['discontinued'] == 1) {
 		$InputError = 1;
 		$Errors[$i] = 'Discontinued';
 		$i++;
@@ -98,7 +98,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedMovement) AND $InputError !=1) {
 		/*SelectedMovement could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
-		$sql = "UPDATE klmovetodiscount50 
+		$SQL = "UPDATE klmovetodiscount50 
 				SET stockid='" . $_POST['Stockid'] . "',
 					startprocessdate='" . Date('Y-m-d') . "',
 					discountcategory='50',
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('Move Item To 50% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
-		$sql = "INSERT INTO klmovetodiscount50 
+		$SQL = "INSERT INTO klmovetodiscount50 
 						(stockid,
 						startprocessdate,
 						discountcategory,
@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('The insert or update of the Move Item To 50% Discount Step 01 failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid']);
@@ -134,13 +134,13 @@ if (isset($_POST['submit'])) {
 		KLSendEmail("MoveToDiscount50Started", "Silent", $_POST['Stockid']);
 
 		// check if there is stock in consignment, so we need to send an extra email to kantor team
-		$sql = "SELECT SUM(quantity)
+		$SQL = "SELECT SUM(quantity)
 				FROM locstock
 				WHERE stockid ='". $_POST['Stockid'] ."' 
 					AND loccode IN " . LIST_CONSIGNMENT_LOCATIONS ;
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
-		if ($myrow[0] != 0){
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
+		if ($MyRow[0] != 0){
 			// send the email as there is some stock in consignment
 			KLSendEmail("MoveToDiscountFromConsignment", "Silent", $_POST['Stockid']);
 		}
@@ -154,16 +154,16 @@ if (isset($_POST['submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
-	$sql = "SELECT stockid
+	$SQL = "SELECT stockid
 			FROM klmovetodiscount50
 			WHERE countermovediscount='".$SelectedMovement."'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
-	SetMoveDiscount50Flag(0,$myrow['stockid']);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	SetMoveDiscount50Flag(0,$MyRow['stockid']);
 
-	$sql="DELETE FROM klmovetodiscount50 WHERE countermovediscount='". $SelectedMovement."'";
+	$SQL="DELETE FROM klmovetodiscount50 WHERE countermovediscount='". $SelectedMovement."'";
 	$ErrMsg = _('The Move Item To 50% Discount Step 01 could not be deleted because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 	prnMsg(_('Move Item To 50% Discount Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
 
@@ -179,7 +179,7 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT klmovetodiscount50.countermovediscount,
+	$SQL = "SELECT klmovetodiscount50.countermovediscount,
 				stockmaster.stockid,
 				stockmaster.categoryid,
 				klmovetodiscount50.discountcategory,
@@ -187,7 +187,7 @@ or deletion of the records*/
 			FROM klmovetodiscount50,stockmaster
 			WHERE stockmaster.stockid = klmovetodiscount50.stockid
 				AND klmovetodiscount50.endprocessdate = '0000-00-00'";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -199,7 +199,7 @@ or deletion of the records*/
 		</tr>';
 	$i=1;
 	$k=0;
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 		$k = StartEvenOrOddRow($k);
 		printf('<td class="number">%s</td>
 				<td>%s</td>
@@ -208,10 +208,10 @@ or deletion of the records*/
 				<td>%s</td>
 				</tr>',
 				$i,
-				$myrow['stockid'],
-				GetCategoryNameFromCode($myrow['categoryid']),
-				$myrow['discountcategory'],
-				ConvertSQLDate($myrow['startprocessdate']));
+				$MyRow['stockid'],
+				GetCategoryNameFromCode($MyRow['categoryid']),
+				$MyRow['discountcategory'],
+				ConvertSQLDate($MyRow['startprocessdate']));
 		$i++;
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -230,17 +230,17 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedMovement)) {
 		//editing an existing Price Change
 
-		$sql = "SELECT countermovediscount,
+		$SQL = "SELECT countermovediscount,
 					stockid,
 					discountcategory
 				FROM klmovetodiscount50
 				WHERE countermovediscount='".$SelectedMovement."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['Stockid'] = $myrow['stockid'];
-		$_POST['DiscountCategory']  = $myrow['discountcategory'];
+		$_POST['Stockid'] = $MyRow['stockid'];
+		$_POST['DiscountCategory']  = $MyRow['discountcategory'];
 
 
 		echo '<input type="hidden" name="SelectedMovement" value="' . $SelectedMovement . '" />';

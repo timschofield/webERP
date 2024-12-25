@@ -180,8 +180,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						WHERE  pendingqty > 0
 							AND loctransfers.stockid =  stockmaster.stockid)
 			ORDER BY stockmaster.stockid";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Rebalancing between shops (Stock available at kantor = 0)') . '</strong></p>';
 			echo '<div>';
@@ -200,21 +200,21 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 		}
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowMessages){
 				$k = StartEvenOrOddRow($k);
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			}
 			$rebalancinglocationfrom = "";
 			$strategy = "";
 			$PrintLine = TRUE;
 
 			//Look for the WORST location with overstock.
-			$locationoverstock  = WorstLocationForItem($myrow['stockid'], "OVERSTOCK", $maxdays);
+			$locationoverstock  = WorstLocationForItem($MyRow['stockid'], "OVERSTOCK", $maxdays);
 			if ($locationoverstock == ""){
 				// NO location with overstock
 				// We need to reduce RL at the worst selling location with some stock available (qty > 0)
-				$locationworst  = WorstLocationForItem($myrow['stockid'], "AVAILABLE", $maxdays);
+				$locationworst  = WorstLocationForItem($MyRow['stockid'], "AVAILABLE", $maxdays);
 				if ($locationworst == ""){
 					// Does not exist any shop with available stock. This was the last one!
 					// No need to do anything!!!
@@ -223,9 +223,9 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				}else{
 					// let's distribute available stock between the shops with RL > 0.
 					// if RL = 0 we suppose we do not want it there for any reason 
-					$QtyToDistribute = QtyAvailable($myrow['stockid'], "ALLSHOPS");
+					$QtyToDistribute = QtyAvailable($MyRow['stockid'], "ALLSHOPS");
 					if ($EmailText!=''){
-						$EmailText = $EmailText . $myrow['stockid']. " Quantity to distribute = " . $QtyToDistribute . "\n";
+						$EmailText = $EmailText . $MyRow['stockid']. " Quantity to distribute = " . $QtyToDistribute . "\n";
 					}
 					$QOH =$QtyToDistribute;
 					$LocationsDistributed = 0;
@@ -234,11 +234,11 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					// so we order firsts shops with all collection = TRUE, as normally shops with all collection = FALSE
 					// are the small shops or slow shops
 					
-					if (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
+					if (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_TEST)){
 						$OrderBy = " locations.alltestitems DESC, ";
-					}elseif (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
+					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_STABLE)){
 						$OrderBy = " locations.allstableitems DESC, ";
-					}elseif (ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
+					}elseif (ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_NO_MORE_PURCHASING)){
 						$OrderBy = " locations.allnopoitems DESC, ";
 					}else{
 						$OrderBy = "";
@@ -247,7 +247,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 											locstock.reorderlevel AS oldrl
 										FROM locstock, locations
 										WHERE  locstock.loccode = locations.loccode
-											AND locstock.stockid = '" . $myrow['stockid'] . "'
+											AND locstock.stockid = '" . $MyRow['stockid'] . "'
 											AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
 											AND locstock.reorderlevel > 0 
 										ORDER BY locations.priority ASC, ".
@@ -258,7 +258,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 														AND salesorderdetails.completed = 1
 														AND salesorders.orddate >= '". $StartDate . "'
 														AND salesorders.fromstkloc = locstock.loccode
-														AND salesorderdetails.stkcode = '". $myrow['stockid'] . "') DESC, 
+														AND salesorderdetails.stkcode = '". $MyRow['stockid'] . "') DESC, 
 												(SELECT COUNT(qtyinvoiced)
 													FROM salesorderdetails, salesorders
 													WHERE salesorderdetails.orderno = salesorders.orderno
@@ -266,13 +266,13 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 														AND salesorders.orddate >= '". $StartDate . "'
 														AND salesorders.fromstkloc = locstock.loccode) DESC";
 														
-					$resultdistribution = DB_query($SQLDistribution);
-					$LocationsToDistribute = DB_num_rows($resultdistribution);
+					$Resultdistribution = DB_query($SQLDistribution);
+					$LocationsToDistribute = DB_num_rows($Resultdistribution);
 					if ($LocationsToDistribute != 0){
-						while ($mydistribution = DB_fetch_array($resultdistribution)) {
+						while ($mydistribution = DB_fetch_array($Resultdistribution)) {
 							$NewRL = ceil($QtyToDistribute / ($LocationsToDistribute - $LocationsDistributed));
-							$NewRL = MaxRLCorrectionSomeModels($myrow['stockid'], $mydistribution['loccode'], $NewRL);
-							SetReorderLevel("Rebalancing", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB);
+							$NewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $mydistribution['loccode'], $NewRL);
+							SetReorderLevel("Rebalancing", $MyRow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB);
 							$strategy = "Distribute all available stock between shops with RL > 0";
 							$QtyToDistribute = $QtyToDistribute - $NewRL;
 							$LocationsDistributed++;
@@ -289,17 +289,17 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 									</tr>', 
 									$i, 
 									$CodeLink, 
-									$myrow['categoryid'], 
-									$myrow['description'], 
+									$MyRow['categoryid'], 
+									$MyRow['description'], 
 									$mydistribution['loccode'],
 									locale_number_format($mydistribution['oldrl'],0),
-									$myrow['locationneeded'],
+									$MyRow['locationneeded'],
 									$strategy
 									);
 								$PrintLine = FALSE;
 							}
 							if ($EmailText!=''){
-								$EmailText = $EmailText . $myrow['stockid'] .
+								$EmailText = $EmailText . $MyRow['stockid'] .
 														" OldRL @ " . 
 														$mydistribution['loccode'] . 
 														" = " . 
@@ -335,18 +335,18 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						$myrow['categoryid'], 
-						$myrow['description'], 
+						$MyRow['categoryid'], 
+						$MyRow['description'], 
 						$rebalancinglocationfrom,
 						"",
-						$myrow['locationneeded'],
+						$MyRow['locationneeded'],
 						$strategy
 						);
 				}
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stockid'] . " needed @ " . 
-										$myrow['locationneeded'] .
+				$EmailText = $EmailText . $MyRow['stockid'] . " needed @ " . 
+										$MyRow['locationneeded'] .
 										" Strategy used: " . 
 										$strategy . " " . 
 										"\n\n";
@@ -386,10 +386,10 @@ function WorstLocationForItem($stockid, $kind, $maxdays){
 							AND salesorders.orddate >= '". $StartDate . "'
 							AND salesorders.fromstkloc = locstock.loccode
 							AND salesorderdetails.stkcode = '". $stockid . "') ASC";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$location = $myrow['loccode'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$location = $MyRow['loccode'];
 	}else{
 		$location = "";
 	}
@@ -411,10 +411,10 @@ function LocationOrderForItem($stockid, $order, $maxdays){
 							AND salesorders.fromstkloc = locstock.loccode
 							AND salesorderdetails.stkcode = '". $stockid . "') DESC
 			LIMIT ". $order . ", 1";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$location = $myrow['loccode'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$location = $MyRow['loccode'];
 	}else{
 		$location = "";
 	}
@@ -435,10 +435,10 @@ function QtyAvailable($stockid, $location){
 	}else{
 		$SQL = $SQL . " AND locstock.loccode = '". $location . "'"; 
 	}
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$qty = $myrow['total'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$qty = $MyRow['total'];
 	}else{
 		$qty = 0;
 	}
@@ -450,10 +450,10 @@ function ActiveLocationsForItem($stockid){
 			FROM locstock
 			WHERE locstock.stockid = '" . $stockid . "'
 				AND locstock.reorderlevel > 0";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$qty = $myrow['total'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$qty = $MyRow['total'];
 	}else{
 		$qty = 0;
 	}
@@ -488,8 +488,8 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $Ema
 								AND loc2.stockreadytosell = 1)
 			GROUP BY locstock.stockid
 			HAVING SUM(locstock.quantity) = 0";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . 'Set RL = 0 for items with NO stock available at shops or kantor. </strong></p>';
 			echo '<div>';
@@ -503,7 +503,7 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $Ema
 		}
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -512,21 +512,21 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $Ema
 					echo '<tr class="OddTableRows">';
 					$k = 1;
 				}
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 					</tr>', 
 						$i, 
 						$CodeLink, 
-						$myrow['description']
+						$MyRow['description']
 						);
 				$i++;
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stockid'] . "\n";
+				$EmailText = $EmailText . $MyRow['stockid'] . "\n";
 			}
-			SetReorderLevel("NotAvailable", $myrow['stockid'],"SHOPS", 999999, 0, $updateDB);
+			SetReorderLevel("NotAvailable", $MyRow['stockid'],"SHOPS", 999999, 0, $updateDB);
 		}
 		if ($ShowMessages){
 			echo '</table>
@@ -588,44 +588,44 @@ to the shops with RL > 0.
 			ORDER BY topsales60 DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
 
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
 		$showHeader = true;
 		$k = 0; //row colour counter
 		$i = $starttopitems;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			$SQLQtyAvailable = "SELECT SUM(locstock.quantity) AS QtyAvailable
 								FROM locstock, locations loc2
-								WHERE locstock.stockid  = '" . $myrow['stockid'] . "'
+								WHERE locstock.stockid  = '" . $MyRow['stockid'] . "'
 									AND locstock.loccode = loc2.loccode
 									AND loc2.stockreadytosell = 1";
-			$resultQtyAvailable = DB_query($SQLQtyAvailable);
-			$myrowQtyAvailable = DB_fetch_array($resultQtyAvailable);
+			$ResultQtyAvailable = DB_query($SQLQtyAvailable);
+			$MyRowQtyAvailable = DB_fetch_array($ResultQtyAvailable);
 			
-			if (($myrowQtyAvailable['QtyAvailable'] > $minstockavailable) 
-				AND ($myrowQtyAvailable['QtyAvailable'] <= $maxstockavailable)){
+			if (($MyRowQtyAvailable['QtyAvailable'] > $minstockavailable) 
+				AND ($MyRowQtyAvailable['QtyAvailable'] <= $maxstockavailable)){
 				$SQLDistribution = "SELECT locstock.loccode, 
 										locstock.reorderlevel AS oldrl
 									FROM locstock,locations
-									WHERE locstock.stockid = '" . $myrow['stockid'] . "'
+									WHERE locstock.stockid = '" . $MyRow['stockid'] . "'
 										AND locstock.loccode = locations.loccode
 										AND locations.stockreadytosell = 1
 										AND locstock.reorderlevel > 0";
-				$resultdistribution = DB_query($SQLDistribution);
-				$LocationsToDistribute = DB_num_rows($resultdistribution);
+				$Resultdistribution = DB_query($SQLDistribution);
+				$LocationsToDistribute = DB_num_rows($Resultdistribution);
 				if ($LocationsToDistribute != 0){
 					if ($k == 1) {
 						$k = 0;
 					} else {
 						$k = 1;
 					}
-					while ($mydistribution = DB_fetch_array($resultdistribution)) {
+					while ($mydistribution = DB_fetch_array($Resultdistribution)) {
 
-						$CurrentNewRL = MaxRLCorrectionSomeModels($myrow['stockid'], $mydistribution['loccode'], $NewRL);
+						$CurrentNewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $mydistribution['loccode'], $NewRL);
 
 						if($mydistribution['oldrl'] < $CurrentNewRL){
-							SetReorderLevel("TopSalesLowRL", $myrow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $CurrentNewRL, $updateDB);
+							SetReorderLevel("TopSalesLowRL", $MyRow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $CurrentNewRL, $updateDB);
 							if ($ShowMessages){
 								if($showHeader){
 									echo '<p class="page_title_text" align="center"><strong>' . 'Set RL minimum to ' . $NewRL . 
@@ -654,7 +654,7 @@ to the shops with RL > 0.
 								} else {
 									echo '<tr class="OddTableRows">';
 								}
-								$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+								$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 								printf('<td class="number">%s</td>
 									<td>%s</td>
 									<td>%s</td>
@@ -666,16 +666,16 @@ to the shops with RL > 0.
 									</tr>', 
 									$i, 
 									$CodeLink, 
-									$myrow['categoryid'], 
-									$myrow['description'], 
-									locale_number_format($myrowQtyAvailable['QtyAvailable'],0),
+									$MyRow['categoryid'], 
+									$MyRow['description'], 
+									locale_number_format($MyRowQtyAvailable['QtyAvailable'],0),
 									$mydistribution['loccode'],
 									locale_number_format($mydistribution['oldrl'],0),
 									locale_number_format($CurrentNewRL,0)
 									);
 							}
 							if ($EmailText!=''){
-								$EmailText = $EmailText . $myrow['stockid'] . " @ " . $mydistribution['loccode'] . " Old RL = " . $mydistribution['oldrl'] .  " New RL = " . $CurrentNewRL . "\n";
+								$EmailText = $EmailText . $MyRow['stockid'] . " @ " . $mydistribution['loccode'] . " Old RL = " . $mydistribution['oldrl'] .  " New RL = " . $CurrentNewRL . "\n";
 							}
 						}
 					}
@@ -708,9 +708,9 @@ function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
 			FROM klsalesperformance, stockmaster
 			WHERE klsalesperformance.stockid = stockmaster.stockid" .
 			$WhereCat;
-	$result = DB_query($SQL);		
-	$myrow = DB_fetch_array($result);
-	return $myrow['maxtopsales'];
+	$Result = DB_query($SQL);		
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow['maxtopsales'];
 }
 
 function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxRL, $minavailablestock, $ShowMessages, $updateDB, $RootPath, $EmailText){
@@ -759,9 +759,9 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 							AND loc2.stockreadytosell = 1) <= ".$minavailablestock."
 			ORDER BY stockmaster.stockid";
 	
-	$result = DB_query($SQL);		
+	$Result = DB_query($SQL);		
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . 'Items in ' . $ShopType . ' with Top Sales Rank in the bottom ' . $BottomPercentTopSales . '% with RL >= ' . $oldRL . ' and stock available <= ' . $minavailablestock . ' </strong></p>';
 			echo '<div>';
@@ -779,8 +779,8 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 		}
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
-			SetReorderLevel("BottomSalesHighRL", $myrow['stockid'],$myrow['loccode'], $myrow['reorderlevel'], $maxRL, $updateDB);
+		while ($MyRow = DB_fetch_array($Result)) {
+			SetReorderLevel("BottomSalesHighRL", $MyRow['stockid'],$MyRow['loccode'], $MyRow['reorderlevel'], $maxRL, $updateDB);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -789,7 +789,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 					echo '<tr class="OddTableRows">';
 					$k = 1;
 				}
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -800,15 +800,15 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						$myrow['description'], 
-						$myrow['categoryid'], 
-						$myrow['loccode'], 
-						locale_number_format($myrow['reorderlevel'],0),
+						$MyRow['description'], 
+						$MyRow['categoryid'], 
+						$MyRow['loccode'], 
+						locale_number_format($MyRow['reorderlevel'],0),
 						locale_number_format($maxRL,0)
 						);
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText .  $myrow['stockid'] . " @ " . $myrow['loccode'] . " OldRL = " . locale_number_format($myrow['reorderlevel'],0) . " NewRL = " . locale_number_format($maxRL,0) . "\n";
+				$EmailText = $EmailText .  $MyRow['stockid'] . " @ " . $MyRow['loccode'] . " OldRL = " . locale_number_format($MyRow['reorderlevel'],0) . " NewRL = " . locale_number_format($maxRL,0) . "\n";
 			}
 			$i++;
 		}
@@ -830,26 +830,26 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB)
 	if ($updateDB){
 		if ($oldRL != $newRL){
 			if ($loccode == "ALL"){
-				$sql = "UPDATE locstock
+				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $newRL ."'
 						WHERE stockid = '". $stockid ."'";
 			}elseif ($loccode == "SHOPS"){
-				$sql = "UPDATE locstock
+				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $newRL ."'
 						WHERE stockid = '". $stockid ."'
 							AND loccode IN (SELECT locations.loccode
 											FROM locations
 											WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ")";
 			}else{
-				$sql = "UPDATE locstock
+				$SQL = "UPDATE locstock
 						SET reorderlevel = '" . $newRL ."'
 						WHERE stockid = '". $stockid ."'
 							AND loccode = '". $loccode ."'";
 			}
 			$ErrMsg =_('Could not update reorder level because');
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 			// insert the change in the KLAdjustRL table (acting as a log of these automatic changes)
-			$sql = "INSERT INTO kladjustrl 
+			$SQL = "INSERT INTO kladjustrl 
 						(adjustdate,
 						reason,
 						loccode,
@@ -865,7 +865,7 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB)
 						'". $newRL ."')";		
 		$ErrMsg =_('Could not insert the KLAdjustRL Log');
 		$DbgMsg = _('The following SQL to insert the request header record was used');
-		$Result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		}
 	}
@@ -905,9 +905,9 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $Ema
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY salesorderdetails.stkcode";
 				
-	$result = DB_query($SQL);		
+	$Result = DB_query($SQL);		
 	
-	if (DB_num_rows($result) != 0){
+	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Adjustment RL for Toko Online') . ' </strong></p>';
 			echo '<div>';
@@ -925,9 +925,9 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $Ema
 		}
 		$k = 0; //row colour counter
 		$i = 1;
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			/* set the RL to the total of qty requested by customers */
-			SetReorderLevel("OnlineSales", $myrow['stkcode'],'TOKWS', 0, $myrow['totalqty'], $updateDB);
+			SetReorderLevel("OnlineSales", $MyRow['stkcode'],'TOKWS', 0, $MyRow['totalqty'], $updateDB);
 			if ($ShowMessages){
 				if ($k == 1) {
 					echo '<tr class="EvenTableRows">';
@@ -936,7 +936,7 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $Ema
 					echo '<tr class="OddTableRows">';
 					$k = 1;
 				}
-				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
+				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
 				printf('<td class="number">%s</td>
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -944,13 +944,13 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $Ema
 						</tr>', 
 						$i, 
 						$CodeLink, 
-						locale_number_format($myrow['totalqty'],0),
-						locale_number_format($myrow['reorderlevel'],0)
+						locale_number_format($MyRow['totalqty'],0),
+						locale_number_format($MyRow['reorderlevel'],0)
 						);
 				$i++;
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $myrow['stkcode'] . " Old RL = " . $myrow['reorderlevel'] . " New RL = " . $myrow['totalqty'] . "\n";
+				$EmailText = $EmailText . $MyRow['stkcode'] . " Old RL = " . $MyRow['reorderlevel'] . " New RL = " . $MyRow['totalqty'] . "\n";
 			}
 		}
 		if ($ShowMessages){
@@ -984,12 +984,12 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 			FROM locations
 			WHERE locations.packagingfrom = '" . $GudangCode . "'
 				AND locations.loccode != '" . $GudangCode . "'";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$RLFactorGudang = round($myrow['rlfactor']*$FactorGudangPackaging, 2);
-		$RLDaysGudang = round($myrow['rldays']*$FactorGudangPackaging, 0);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$RLFactorGudang = round($MyRow['rlfactor']*$FactorGudangPackaging, 2);
+		$RLDaysGudang = round($MyRow['rldays']*$FactorGudangPackaging, 0);
 		$text = $GudangCode . ' RL Factor for Packaging = ' . $RLFactorGudang;
 		if ($ShowMessages){
 			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
@@ -1004,12 +1004,12 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 		if ($EmailText!=''){
 			$EmailText = $EmailText . $text . "\n";
 		}
-		$sql = "UPDATE locations
+		$SQL = "UPDATE locations
 				SET rlfactorforpackaging = '" . $RLFactorGudang ."',
 					rldaysforpackaging = '" . $RLDaysGudang ."'
 				WHERE loccode = '". $GudangCode ."'";
 		$ErrMsg = 'Could not update RL packaging settings for Gudang because';
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 	}	
 
 	// Now, update the RL for the items to be stocked at the gudang
@@ -1024,18 +1024,18 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 				AND stockmaster.discontinued = 0
 			GROUP BY stockmaster.stockid
 			ORDER BY stockmaster.stockid";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
-			$text = $GudangCode . ' ' . $myrow['stockid'] . ' New RL = ' . $myrow['rl'];
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
+			$text = $GudangCode . ' ' . $MyRow['stockid'] . ' New RL = ' . $MyRow['rl'];
 			if ($ShowMessages){
 				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 			}
 			if ($EmailText!=''){
 				$EmailText = $EmailText . $text . "\n";
 			}
-			SetReorderLevel("PackagingGudangOptimization", $myrow['stockid'], $GudangCode, 0, $myrow['rl'], $updateDB);
+			SetReorderLevel("PackagingGudangOptimization", $MyRow['stockid'], $GudangCode, 0, $MyRow['rl'], $updateDB);
 		}
 	}	
 
@@ -1066,9 +1066,9 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootP
 	$SQL = "SELECT locations.loccode
 			FROM locations
 			WHERE locations.typeloc = '" . $ShopType . "'";
-	$resultloc = DB_query($SQL);
-	if (DB_num_rows($resultloc) != 0){
-		while ($myloc = DB_fetch_array($resultloc)) {
+	$Resultloc = DB_query($SQL);
+	if (DB_num_rows($Resultloc) != 0){
+		while ($myloc = DB_fetch_array($Resultloc)) {
 			$iItem = 0;
 			while ($iItem < $CountItem){
 				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $myloc['loccode'], $DaysSales, $ShowMessages, $updateDB, $RootPath, $EmailText);
@@ -1096,24 +1096,24 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 							AND locstock.stockid = '" . $Item . "') AS rl
 			FROM locations
 			WHERE locations.loccode = '" . $Shop . "'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
 		// New RL is the daily needs x number of days to keep as RL
-		$NewRL = max(round($myrow['sales'] / $DaysSales * $myrow['rldaysforpackaging'],0),MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP);
-		$OldRL = $myrow['rl'];
+		$NewRL = max(round($MyRow['sales'] / $DaysSales * $MyRow['rldaysforpackaging'],0),MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP);
+		$OldRL = $MyRow['rl'];
 		if ($NewRL != $OldRL){
 			if ($ShowMessages){
 				$text = $Shop . ' ' . $Item .  
 					' Old RL = ' . $OldRL . 
-					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] . 
+					' Used ' . $DaysSales . ' days = ' . $MyRow['sales'] . 
 					' New RL = ' . $NewRL;
 				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
 			}
 			if ($EmailText!=''){
 				$text = $Shop . ' ' . $Item .  
 					' Old RL = ' . $OldRL .  
-					' Used ' . $DaysSales . ' days = ' . $myrow['sales'] .  
+					' Used ' . $DaysSales . ' days = ' . $MyRow['sales'] .  
 					' New RL = ' . $NewRL . "\n";
 				$EmailText = $EmailText . $text;
 			}

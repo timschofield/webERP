@@ -42,6 +42,6 @@ $SQL = "SELECT 	codename,
 			AND salarytype = '" . $SalaryType . "'
 		ORDER BY paymentmethod,
 			codename";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 ?>

@@ -35,13 +35,13 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/g
 	<br />';
 
 // Make an array of the security roles 17 and 22 ONLY
-$sql = "SELECT secroleid,
+$SQL = "SELECT secroleid,
 				secrolename
 		FROM securityroles
 		WHERE secroleid = 17 OR secroleid = 22
 		ORDER BY secrolename";
 
-$Sec_Result = DB_query($sql);
+$Sec_Result = DB_query($SQL);
 $SecurityRoles = array();
 // Now load it into an a ray using Key/Value pairs
 while( $Sec_row = DB_fetch_row($Sec_Result) ) {
@@ -60,23 +60,23 @@ if (isset($_POST['submit'])) {
 	// Calculate fields
 	$_POST['UserID'] = $_POST['Salesman'] . '-' . substr($_POST['DefaultLocation'], 3,2);
 
-	$sql = "SELECT cashsalecustomer,
+	$SQL = "SELECT cashsalecustomer,
 					locationname
 			FROM locations 
 			WHERE loccode = '".$_POST['DefaultLocation']."'";
-	$result = DB_query($sql);
-	while ($myrow=DB_fetch_array($result)){
-		$CustomerID = $myrow['cashsalecustomer'];
-		$BranchCode = $myrow['cashsalecustomer'];
-		$LocationName = $myrow['locationname'];
+	$Result = DB_query($SQL);
+	while ($MyRow=DB_fetch_array($Result)){
+		$CustomerID = $MyRow['cashsalecustomer'];
+		$BranchCode = $MyRow['cashsalecustomer'];
+		$LocationName = $MyRow['locationname'];
 	}
 
-	$sql = "SELECT salesmanname
+	$SQL = "SELECT salesmanname
 			FROM salesman 
 			WHERE salesmancode = '".$_POST['Salesman']."'";
-	$result = DB_query($sql);
-	while ($myrow=DB_fetch_array($result)){
-		$SalesmanName = $myrow['salesmanname'];
+	$Result = DB_query($SQL);
+	while ($MyRow=DB_fetch_array($Result)){
+		$SalesmanName = $MyRow['salesmanname'];
 	}
 
 	$SPGName = substr($SalesmanName,0,strpos($SalesmanName, '-') -1);
@@ -108,8 +108,8 @@ if (isset($_POST['submit'])) {
 
 	if (!isset($SelectedUser)){
 		/* check to ensure the user id is not already entered */
-		$result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'");
-		if (DB_num_rows($result)==1){
+		$Result = DB_query("SELECT userid FROM www_users WHERE userid='" . $_POST['UserID'] . "'");
+		if (DB_num_rows($Result)==1){
 			$InputError =1;
 			prnMsg(_('The user ID') . ' ' . $_POST['UserID'] . ' ' . _('already exists and cannot be used again'),'error');
 		}
@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 			$UpdatePassword = "password='" . CryptPass($_POST['Password']) . "',";
 		}
 
-		$sql = "UPDATE www_users SET realname='" . $RealName . "',
+		$SQL = "UPDATE www_users SET realname='" . $RealName . "',
 						customerid='" . $CustomerID ."',
 						phone='" . $Phone ."',
 						email='" . $Email ."',
@@ -178,7 +178,7 @@ if (isset($_POST['submit'])) {
 												)";
 		$Result = DB_query($LocationSql, $ErrMsg, $DbgMsg);
 
-		$sql = "INSERT INTO www_users (userid,
+		$SQL = "INSERT INTO www_users (userid,
 						realname,
 						customerid,
 						branchcode,
@@ -226,7 +226,7 @@ if (isset($_POST['submit'])) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The user alterations could not be processed because');
 		$DbgMsg = _('The SQL that was used to update the user and failed was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		unset($_POST['UserID']);
 		unset($_POST['Salesman']);
@@ -247,7 +247,7 @@ if (!isset($SelectedUser)) {
 
 /* If its the first time the page has been displayed with no parameters then none of the above are true and the list of Users will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT userid,
+	$SQL = "SELECT userid,
 					realname,
 					phone,
 					www_users.email,
@@ -271,7 +271,7 @@ if (!isset($SelectedUser)) {
 					AND (fullaccess = 17 OR fullaccess = 22)
 				ORDER BY salesman, defaultlocation";
 	// Only SPG (17) or SPG-Support	(22)	
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -285,7 +285,7 @@ if (!isset($SelectedUser)) {
 
 	$k=0; //row colour counter
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		if ($k==1){
 			echo '<tr class="EvenTableRows">';
 			$k=0;
@@ -294,13 +294,13 @@ if (!isset($SelectedUser)) {
 			$k=1;
 		}
 
-		if ($myrow['lastvisitdate']=='') {
+		if ($MyRow['lastvisitdate']=='') {
 			$LastVisitDate = Date($_SESSION['DefaultDateFormat']);
 		} else {
-			$LastVisitDate = ConvertSQLDate($myrow['lastvisitdate']);
+			$LastVisitDate = ConvertSQLDate($MyRow['lastvisitdate']);
 		}
 
-		if ($myrow['blocked']=='0') {
+		if ($MyRow['blocked']=='0') {
 			$Status = 'Open';
 		} else {
 			$Status = 'Blocked';
@@ -317,16 +317,16 @@ if (!isset($SelectedUser)) {
 				<td><a href="%s&amp;SelectedUser=%s">' . _('Edit') . '</a></td>
 				<td><a href="%s&amp;SelectedUser=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
-				$myrow['userid'],
-				$myrow['salesmanname'],
-				$myrow['locationname'],
+				$MyRow['userid'],
+				$MyRow['salesmanname'],
+				$MyRow['locationname'],
 				$LastVisitDate,
-				$SecurityRoles[($myrow['fullaccess'])],
+				$SecurityRoles[($MyRow['fullaccess'])],
 				$Status,
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
-				$myrow['userid'],
+				$MyRow['userid'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['userid']);
+				$MyRow['userid']);
 
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -344,7 +344,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedUser)) {
 	//editing an existing User
 
-	$sql = "SELECT userid,
+	$SQL = "SELECT userid,
 			realname,
 			phone,
 			email,
@@ -366,15 +366,15 @@ if (isset($SelectedUser)) {
 		FROM www_users
 		WHERE userid='" . $SelectedUser . "'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['UserID'] = $myrow['userid'];
-	$_POST['Salesman'] = $myrow['salesman'];
-	$_POST['Access'] = $myrow['fullaccess'];
-	$_POST['DefaultLocation'] = $myrow['defaultlocation'];
-	$_POST['Blocked'] = $myrow['blocked'];
-	$_POST['Department'] = $myrow['department'];
+	$_POST['UserID'] = $MyRow['userid'];
+	$_POST['Salesman'] = $MyRow['salesman'];
+	$_POST['Access'] = $MyRow['fullaccess'];
+	$_POST['DefaultLocation'] = $MyRow['defaultlocation'];
+	$_POST['Blocked'] = $MyRow['blocked'];
+	$_POST['Department'] = $MyRow['department'];
 
 	echo '<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
@@ -386,19 +386,19 @@ echo '<tr>
 		<td>' . _('SPG') . ':</td>
 		<td><select name="Salesman">';
 
-$sql = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmancode";
-$result = DB_query($sql);
+$SQL = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmancode";
+$Result = DB_query($SQL);
 if ((isset($_POST['Salesman']) AND $_POST['Salesman']=='') OR !isset($_POST['Salesman'])){
 	echo '<option selected="selected" value=""></option>';
 } else {
 	echo '<option value=""></option>';
 }
-while ($myrow=DB_fetch_array($result)){
+while ($MyRow=DB_fetch_array($Result)){
 
-	if (isset($_POST['Salesman']) AND $myrow['salesmancode'] == $_POST['Salesman']){
-		echo '<option selected="selected" value="' . $myrow['salesmancode'] . '">' . $myrow['salesmancode'] . ' -> ' . $myrow['salesmanname'] . '</option>';
+	if (isset($_POST['Salesman']) AND $MyRow['salesmancode'] == $_POST['Salesman']){
+		echo '<option selected="selected" value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmancode'] . ' -> ' . $MyRow['salesmanname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmancode'] . ' -> ' . $myrow['salesmanname'] . '</option>';
+		echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmancode'] . ' -> ' . $MyRow['salesmanname'] . '</option>';
 	}
 
 }
@@ -409,22 +409,22 @@ echo '<tr>
 		<td>' . _('KL Shop') . ':</td>
 		<td><select name="DefaultLocation">';
 
-$sql = "SELECT loccode, 
+$SQL = "SELECT loccode, 
 				locationname
 		FROM locations 
 		WHERE typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " 
 		ORDER BY locationname";
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 if ((isset($_POST['DefaultLocation']) AND $_POST['DefaultLocation']=='') OR !isset($_POST['DefaultLocation'])){
 	echo '<option selected="selected" value=""></option>';
 } else {
 	echo '<option value=""></option>';
 }
-while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['DefaultLocation']) AND $myrow['loccode'] == $_POST['DefaultLocation']){
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+while ($MyRow=DB_fetch_array($Result)){
+	if (isset($_POST['DefaultLocation']) AND $MyRow['loccode'] == $_POST['DefaultLocation']){
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
 	}
 }
 
@@ -436,24 +436,24 @@ echo '</select></td>
 echo '<tr>
 		<td>' . _('KL Shop for Internal Requests') . ':</td>';
 
-$sql="SELECT departmentid,
+$SQL="SELECT departmentid,
 			description
 		FROM departments
 		WHERE departmentid <> 1
 		ORDER BY description";
 
-$result=DB_query($sql);
+$Result=DB_query($SQL);
 echo '<td><select name="Department">';
 if ((isset($_POST['Department']) AND $_POST['Department']=='0') OR !isset($_POST['Department'])){
 	echo '<option selected="selected" value="0"></option>';
 } else {
 	echo '<option value=""></option>';
 }
-while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['Department']) AND $myrow['departmentid'] == $_POST['Department']){
-		echo '<option selected="selected" value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+while ($MyRow=DB_fetch_array($Result)){
+	if (isset($_POST['Department']) AND $MyRow['departmentid'] == $_POST['Department']){
+		echo '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+		echo '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 	}
 }
 echo '</select></td>

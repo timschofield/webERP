@@ -35,7 +35,7 @@ if(isset($_POST['submit'])) {
 
 	if(isset($SelectedPartner) AND $InputError !=1) {
 
-		$sql = "UPDATE klonlinepartners 
+		$SQL = "UPDATE klonlinepartners 
 				SET onlinepartnername ='" . $_POST['OnlinePartnerName'] . "',
 					paypalaccount ='" . $_POST['PayPalAccount'] . "',
 					paypaltest ='" . $_POST['PayPalTest'] . "',
@@ -81,7 +81,7 @@ if(isset($_POST['submit'])) {
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedPartner . ' ' . _('online partner record because');
 		$DbgMsg = _('The SQL used to update the online partner record was');
 
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The online partner record has been updated'),'success');
 
@@ -132,7 +132,7 @@ if(isset($_POST['submit'])) {
 
 		/*SelectedPartner is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
-		$sql = "INSERT INTO klonlinepartners 
+		$SQL = "INSERT INTO klonlinepartners 
 								(onlinepartnercode,
 								onlinepartnername,
 								paypalaccount,
@@ -218,7 +218,7 @@ if(isset($_POST['submit'])) {
 
 		$ErrMsg = _('An error occurred inserting the new online partner record because');
 		$DbgMsg = _('The SQL used to insert the online partner record was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The new online partner record has been added'),'success');
 
@@ -270,16 +270,16 @@ if(isset($_POST['submit'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 	$CancelDelete = 0;
 	// PREVENT DELETES IF DEPENDENT RECORDS
-	$sql= "SELECT COUNT(*) FROM locations WHERE onlinepartnercode='". $SelectedPartner . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if($myrow[0]>0) {
+	$SQL= "SELECT COUNT(*) FROM locations WHERE onlinepartnercode='". $SelectedPartner . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if($MyRow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg(_('Cannot delete this online partner because there are locations related to it.'),'warn');
-		echo _('There are') . ' ' . $myrow[0] . ' ' . _('locations using this online partner');
+		echo _('There are') . ' ' . $MyRow[0] . ' ' . _('locations using this online partner');
 	}
 	if(! $CancelDelete) {
-		$result = DB_query("DELETE FROM klonlinepartners WHERE onlinepartnercode='" . $SelectedPartner . "'");
+		$Result = DB_query("DELETE FROM klonlinepartners WHERE onlinepartnercode='" . $SelectedPartner . "'");
 		prnMsg(_('Online Partner') . ' ' . $SelectedPartner . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedPartner);
 	}//end if Delete Online Partner
@@ -294,16 +294,16 @@ then none of the above are true and the list of Locations will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT onlinepartnercode,
+	$SQL = "SELECT onlinepartnercode,
 				onlinepartnername,
 				paypalaccount,
 				paypaltest,
 				foreigncurrencysurchargefactor
 			FROM klonlinepartners
 			ORDER BY onlinepartnername";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
-	if(DB_num_rows($result)==0) {
+	if(DB_num_rows($Result)==0) {
 		prnMsg(_('There are no online partners'),'error');
 	}
 
@@ -320,9 +320,9 @@ or deletion of the records*/
 		</thead>
 		<tbody>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">';
-		if($myrow['paypaltest'] == 1) {
+		if($MyRow['paypaltest'] == 1) {
 			$PayPalTest = _('Yes');
 		} else {
 			$PayPalTest = _('No');
@@ -337,13 +337,13 @@ or deletion of the records*/
 				<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
 				<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this online partner?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
-				$myrow['onlinepartnercode'],
-				$myrow['onlinepartnername'],
-				$myrow['paypalaccount'],
+				$MyRow['onlinepartnercode'],
+				$MyRow['onlinepartnername'],
+				$MyRow['paypalaccount'],
 				$PayPalTest,
-				locale_number_format($myrow['foreigncurrencysurchargefactor'],2),
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['onlinepartnercode']);
+				locale_number_format($MyRow['foreigncurrencysurchargefactor'],2),
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['onlinepartnercode'],
+				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['onlinepartnercode']);
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody></table>';
@@ -366,7 +366,7 @@ if(!isset($_GET['delete'])) {
 	if(isset($SelectedPartner)) {
 		//editing an existing Location
 
-		$sql = "SELECT onlinepartnercode,
+		$SQL = "SELECT onlinepartnercode,
 					onlinepartnername,
 					paypalaccount,
 					paypaltest,
@@ -410,50 +410,50 @@ if(!isset($_GET['delete'])) {
 				FROM klonlinepartners
 				WHERE onlinepartnercode='" . $SelectedPartner . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['OnlinePartnerCode'] = $myrow['onlinepartnercode'];
-		$_POST['OnlinePartnerName'] = $myrow['onlinepartnername'];
-		$_POST['PayPalAccount'] = $myrow['paypalaccount'];
-		$_POST['PayPalTest'] = $myrow['paypaltest'];
-		$_POST['PayPalUsername'] = $myrow['paypalusername'];
-		$_POST['PayPalPassword'] = $myrow['paypalpassword'];
-		$_POST['PayPalSignature'] = $myrow['paypalsignature'];
-		$_POST['AccountTransferMandiri'] = $myrow['accounttransfermandiri'];
-		$_POST['AccountTransferBCA'] = $myrow['accounttransferbca'];
-		$_POST['AccountTransferDanamon'] = $myrow['accounttransferdanamon'];
-		$_POST['AccountDokuIDR'] = $myrow['accountdokuidr'];
-		$_POST['AccountDokuComissionIDR'] = $myrow['accountdokucomissionidr'];
-		$_POST['ComissionFlatDoku'] = $myrow['comissionflatdoku'];
-		$_POST['ComissionCCDoku'] = $myrow['comissionccdoku'];
-		$_POST['AccountPayPalAUD'] = $myrow['accountpaypalaud'];
-		$_POST['AccountPayPalComissionAUD'] = $myrow['accountpaypalcomissionaud'];
-		$_POST['AccountPayPalUSD'] = $myrow['accountpaypalusd'];
-		$_POST['AccountPayPalComissionUSD'] = $myrow['accountpaypalcomissionusd'];
-		$_POST['AccountPayPalEUR'] = $myrow['accountpaypaleur'];
-		$_POST['AccountPayPalComissionEUR'] = $myrow['accountpaypalcomissioneur'];
-		$_POST['ForeignCurrencySurchargeFactor'] = $myrow['foreigncurrencysurchargefactor'];
-		$_POST['AccountXenditIDR'] = $myrow['accountxenditidr'];
-		$_POST['AccountXenditComissionIDR'] = $myrow['accountxenditcomissionidr'];
-		$_POST['ComissionXenditFlatTransfer'] = $myrow['comissionxenditflattransfer'];
-		$_POST['ComissionXenditFlatCC'] = $myrow['comissionxenditflatcc'];
-		$_POST['ComissionXenditPercentCC'] = $myrow['comissionxenditpercentcc'];
-		$_POST['AccountMidtransIDR'] = $myrow['accountmidtransidr'];
-		$_POST['AccountTokopediaIDR'] = $myrow['accounttokopediaidr'];
-		$_POST['AccountTokopediaComissionIDR'] = $myrow['accounttokopediacomissionidr'];
-		$_POST['AccountShopeeIDR'] = $myrow['accountshopeeidr'];
-		$_POST['AccountShopeeComissionIDR'] = $myrow['accountshopeecomissionidr'];
-		$_POST['AccountLazadaIDR'] = $myrow['accountlazadaidr'];
-		$_POST['AccountLazadaComissionIDR'] = $myrow['accountlazadacomissionidr'];
-		$_POST['AccountComissionPPN'] = $myrow['accountcomissionppn'];
-		$_POST['ComissionTokopediaPercent'] = $myrow['comissiontokopediapercent'];
-		$_POST['ComissionTokopediaFreeShippingPerItem'] = $myrow['comissiontokopediafreeshippingperitempercent'];
-		$_POST['ComissionTokopediaFreeShippingMaximum'] = $myrow['comissiontokopediafreeshippingperitemmaximum'];
-		$_POST['ComissionShopeePercent'] = $myrow['comissionshopeepercent'];
-		$_POST['ComissionShopeeFreeShippingPerItem'] = $myrow['comissionshopeefreeshippingperitempercent'];
-		$_POST['ComissionShopeeFreeShippingMaximum'] = $myrow['comissionshopeefreeshippingperitemmaximum'];
-		$_POST['ComissionLazadaPercent'] = $myrow['comissionlazadapercent'];
+		$_POST['OnlinePartnerCode'] = $MyRow['onlinepartnercode'];
+		$_POST['OnlinePartnerName'] = $MyRow['onlinepartnername'];
+		$_POST['PayPalAccount'] = $MyRow['paypalaccount'];
+		$_POST['PayPalTest'] = $MyRow['paypaltest'];
+		$_POST['PayPalUsername'] = $MyRow['paypalusername'];
+		$_POST['PayPalPassword'] = $MyRow['paypalpassword'];
+		$_POST['PayPalSignature'] = $MyRow['paypalsignature'];
+		$_POST['AccountTransferMandiri'] = $MyRow['accounttransfermandiri'];
+		$_POST['AccountTransferBCA'] = $MyRow['accounttransferbca'];
+		$_POST['AccountTransferDanamon'] = $MyRow['accounttransferdanamon'];
+		$_POST['AccountDokuIDR'] = $MyRow['accountdokuidr'];
+		$_POST['AccountDokuComissionIDR'] = $MyRow['accountdokucomissionidr'];
+		$_POST['ComissionFlatDoku'] = $MyRow['comissionflatdoku'];
+		$_POST['ComissionCCDoku'] = $MyRow['comissionccdoku'];
+		$_POST['AccountPayPalAUD'] = $MyRow['accountpaypalaud'];
+		$_POST['AccountPayPalComissionAUD'] = $MyRow['accountpaypalcomissionaud'];
+		$_POST['AccountPayPalUSD'] = $MyRow['accountpaypalusd'];
+		$_POST['AccountPayPalComissionUSD'] = $MyRow['accountpaypalcomissionusd'];
+		$_POST['AccountPayPalEUR'] = $MyRow['accountpaypaleur'];
+		$_POST['AccountPayPalComissionEUR'] = $MyRow['accountpaypalcomissioneur'];
+		$_POST['ForeignCurrencySurchargeFactor'] = $MyRow['foreigncurrencysurchargefactor'];
+		$_POST['AccountXenditIDR'] = $MyRow['accountxenditidr'];
+		$_POST['AccountXenditComissionIDR'] = $MyRow['accountxenditcomissionidr'];
+		$_POST['ComissionXenditFlatTransfer'] = $MyRow['comissionxenditflattransfer'];
+		$_POST['ComissionXenditFlatCC'] = $MyRow['comissionxenditflatcc'];
+		$_POST['ComissionXenditPercentCC'] = $MyRow['comissionxenditpercentcc'];
+		$_POST['AccountMidtransIDR'] = $MyRow['accountmidtransidr'];
+		$_POST['AccountTokopediaIDR'] = $MyRow['accounttokopediaidr'];
+		$_POST['AccountTokopediaComissionIDR'] = $MyRow['accounttokopediacomissionidr'];
+		$_POST['AccountShopeeIDR'] = $MyRow['accountshopeeidr'];
+		$_POST['AccountShopeeComissionIDR'] = $MyRow['accountshopeecomissionidr'];
+		$_POST['AccountLazadaIDR'] = $MyRow['accountlazadaidr'];
+		$_POST['AccountLazadaComissionIDR'] = $MyRow['accountlazadacomissionidr'];
+		$_POST['AccountComissionPPN'] = $MyRow['accountcomissionppn'];
+		$_POST['ComissionTokopediaPercent'] = $MyRow['comissiontokopediapercent'];
+		$_POST['ComissionTokopediaFreeShippingPerItem'] = $MyRow['comissiontokopediafreeshippingperitempercent'];
+		$_POST['ComissionTokopediaFreeShippingMaximum'] = $MyRow['comissiontokopediafreeshippingperitemmaximum'];
+		$_POST['ComissionShopeePercent'] = $MyRow['comissionshopeepercent'];
+		$_POST['ComissionShopeeFreeShippingPerItem'] = $MyRow['comissionshopeefreeshippingperitempercent'];
+		$_POST['ComissionShopeeFreeShippingMaximum'] = $MyRow['comissionshopeefreeshippingperitemmaximum'];
+		$_POST['ComissionLazadaPercent'] = $MyRow['comissionlazadapercent'];
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
 		echo '<input type="hidden" name="OnlinePartnerCode" value="' . $_POST['OnlinePartnerCode'] . '" />';
@@ -614,11 +614,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('PPN Paid in Commissions GL Account') . ':' . '</td>
 		<td><select name="AccountComissionPPN">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountComissionPPN']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountComissionPPN']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -631,11 +631,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Mandiri Bank Transfer IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTransferMandiri">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTransferMandiri']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTransferMandiri']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -644,11 +644,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('BCA Bank Transfer IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTransferBCA">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTransferBCA']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTransferBCA']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -657,11 +657,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Danamon Bank Transfer IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTransferDanamon">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTransferDanamon']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTransferDanamon']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -704,11 +704,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('PayPal AUD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalAUD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalAUD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountPayPalAUD']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -716,11 +716,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission PayPal AUD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionAUD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalComissionAUD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountPayPalComissionAUD']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -729,11 +729,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('PayPal USD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalUSD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalUSD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountPayPalUSD']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -741,11 +741,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission PayPal USD GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionUSD">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalComissionUSD']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountPayPalComissionUSD']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -754,11 +754,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('PayPal EUR GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalEUR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalEUR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountPayPalEUR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -766,11 +766,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission PayPal EUR GL Account') . ':' . '</td>
 		<td><select name="AccountPayPalComissionEUR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPayPalComissionEUR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountPayPalComissionEUR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -783,11 +783,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Midtrans IDR GL Account') . ':' . '</td>
 		<td><select name="AccountMidtransIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountMidtransIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountMidtransIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -806,11 +806,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Tokopedia IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTokopediaIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTokopediaIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTokopediaIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -818,11 +818,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission Tokopedia IDR GL Account') . ':' . '</td>
 		<td><select name="AccountTokopediaComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountTokopediaComissionIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountTokopediaComissionIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -850,11 +850,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Shopee IDR GL Account') . ':' . '</td>
 		<td><select name="AccountShopeeIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountShopeeIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountShopeeIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -862,11 +862,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission Shopee IDR GL Account') . ':' . '</td>
 		<td><select name="AccountShopeeComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountShopeeComissionIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountShopeeComissionIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';	
@@ -894,11 +894,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Lazada IDR GL Account') . ':' . '</td>
 		<td><select name="AccountLazadaIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountLazadaIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountLazadaIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -906,11 +906,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission Lazada IDR GL Account') . ':' . '</td>
 		<td><select name="AccountLazadaComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountLazadaComissionIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountLazadaComissionIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -928,11 +928,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Doku IDR GL Account') . ':' . '</td>
 		<td><select name="AccountDokuIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountDokuIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountDokuIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -940,11 +940,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission Doku IDR GL Account') . ':' . '</td>
 		<td><select name="AccountDokuComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountDokuComissionIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountDokuComissionIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -967,11 +967,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Xendit IDR GL Account') . ':' . '</td>
 		<td><select name="AccountXenditIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountXenditIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountXenditIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -980,11 +980,11 @@ if(!isset($_GET['delete'])) {
 		<td>' . _('Comission Xendit IDR GL Account') . ':' . '</td>
 		<td><select name="AccountXenditComissionIDR">';
 	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($myrow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountXenditComissionIDR']==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	while ($MyRow=DB_fetch_array($GLAccount)) {
+		if($_POST['AccountXenditComissionIDR']==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['accountcode'] .  '">' . $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 		}
 	}
 	echo '</select></td></tr>';

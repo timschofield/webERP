@@ -26,13 +26,13 @@ function submit($Period) {
 	$LastMonth = $CurrentMonth -1;
 	$CurrentMonthLastYear = $CurrentMonth -12;
 	
-	$sql = "SELECT lastdate_in_period
+	$SQL = "SELECT lastdate_in_period
 			FROM periods
 			WHERE periodno = '". $CurrentMonth . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$StartOfYear = $CurrentMonth - substr($myrow['lastdate_in_period'],5,2) + 1;
+	$StartOfYear = $CurrentMonth - substr($MyRow['lastdate_in_period'],5,2) + 1;
 	$StartOfYearLastYear = $StartOfYear - 12;
 	
 	//first off validate inputs sensible
@@ -134,28 +134,28 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sales Monthly Report') . '" alt="" />' . ' ' . _('Excel file for Sales Monthly Report') . '
 		</p>';
 
-	$sql = "SELECT periodno,
+	$SQL = "SELECT periodno,
 					lastdate_in_period
 			FROM periods
 			ORDER BY periodno DESC";
-	$Periods = DB_query($sql);
+	$Periods = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '	<tr><td>' . _('Select Month for Report') . ':</td>
 				<td><select name="Period">';
 
-	while ($myrow=DB_fetch_array($Periods)){
+	while ($MyRow=DB_fetch_array($Periods)){
 		if(isset($_POST['Period']) AND $_POST['Period']!=''){
-			if( $_POST['Period']== $myrow['periodno']){
-				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' .MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			if( $_POST['Period']== $MyRow['periodno']){
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' .MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		} else {
-			if($myrow['lastdate_in_period']==$DefaultFromDate){
-				echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			if($MyRow['lastdate_in_period']==$DefaultFromDate){
+				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			} else {
-				echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 			}
 		}
 	}
@@ -188,10 +188,10 @@ function SalesForPeriod($PeriodFrom, $PeriodTo, $CategoryList){
 			WHERE periodno >= '". $PeriodFrom. "'
 				AND periodno <= '". $PeriodTo. "'
 				AND stkcategory IN " . $CategoryList ."";
-	$result = DB_query($SQL);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 	
-	return array ($myrow['sales'], $myrow['pcs'], $myrow['grosscost']);
+	return array ($MyRow['sales'], $MyRow['pcs'], $MyRow['grosscost']);
 }
 
 function TitleCells($objPHPExcel, $Title, $Start, $End){

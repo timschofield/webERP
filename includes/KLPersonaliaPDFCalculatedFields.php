@@ -4,28 +4,28 @@
 //  Calculated fields data for salary slip prints or emails
 /////////////////////////////////////////////////////////////////////
 
-$GajiPokok = $myrow['upahpokok'] +
-		$myrow['tunjanganmakan'] +
-		$myrow['tunjangantransport'] +
-		$myrow['tunjanganjabatan'] +
-		$myrow['komisitetap'];
+$GajiPokok = $MyRow['upahpokok'] +
+		$MyRow['tunjanganmakan'] +
+		$MyRow['tunjangantransport'] +
+		$MyRow['tunjanganjabatan'] +
+		$MyRow['komisitetap'];
 
 $TotalPenerimaan = $GajiPokok +
-				$myrow['tunjanganmasakerja'] +
-				$myrow['tunjangankendaraan'] +
-				$myrow['komisiretail'] +
-				$myrow['komisisupport'] +
-				$myrow['bonuspenjualan'] +
-				$myrow['lembur'] +
-				$myrow['thr'] +
-				$myrow['penerimaanlain'];
+				$MyRow['tunjanganmasakerja'] +
+				$MyRow['tunjangankendaraan'] +
+				$MyRow['komisiretail'] +
+				$MyRow['komisisupport'] +
+				$MyRow['bonuspenjualan'] +
+				$MyRow['lembur'] +
+				$MyRow['thr'] +
+				$MyRow['penerimaanlain'];
 		
-$TotalPotongan = $myrow['potonganjht'] +
-				$myrow['potonganaskes'] +
-				$myrow['potonganpph21'] +
-				$myrow['potonganabsen'] +
-				$myrow['potonganlain2'];
+$TotalPotongan = $MyRow['potonganjht'] +
+				$MyRow['potonganaskes'] +
+				$MyRow['potonganpph21'] +
+				$MyRow['potonganabsen'] +
+				$MyRow['potonganlain2'];
 
-$TotalBawaPulang = $TotalPenerimaan + $TotalPotongan + $myrow['bulatan'];
+$TotalBawaPulang = $TotalPenerimaan + $TotalPotongan + $MyRow['bulatan'];
 
 ?>

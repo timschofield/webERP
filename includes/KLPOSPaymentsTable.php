@@ -130,12 +130,12 @@ $SQL = "SELECT reasonid,
 				reasonname
 		FROM returnitemreasons
 		ORDER BY reasonname";
-$result=DB_query($SQL);
-while ($myrow=DB_fetch_array($result)){
-	if (isset($_POST['ReturnedGoodsReason']) and $_POST['ReturnedGoodsReason']==$myrow['reasonid']){
-		echo '<option selected="selected" value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+$Result=DB_query($SQL);
+while ($MyRow=DB_fetch_array($Result)){
+	if (isset($_POST['ReturnedGoodsReason']) and $_POST['ReturnedGoodsReason']==$MyRow['reasonid']){
+		echo '<option selected="selected" value="' . $MyRow['reasonid'] . '">' . $MyRow['reasonname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+		echo '<option value="' . $MyRow['reasonid'] . '">' . $MyRow['reasonname'] . '</option>';
 	}
 }
 echo '</select></td>';

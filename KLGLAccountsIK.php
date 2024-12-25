@@ -35,25 +35,25 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedAccount) AND $InputError !=1) {
 
-		$sql = "UPDATE chartmasterIK SET accountname='" . $_POST['AccountName'] . "',
+		$SQL = "UPDATE chartmasterIK SET accountname='" . $_POST['AccountName'] . "',
 						group_='" . $_POST['Group'] . "'
 				WHERE accountcode ='" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not update the account because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg (_('The general ledger account has been updated'),'success');
 	} elseif ($InputError !=1) {
 
 	/*SelectedAccount is null cos no item selected on first time round so must be adding a	record must be submitting new entries */
 
 		$ErrMsg = _('Could not add the new account code');
-		$sql = "INSERT INTO chartmasterIK (accountcode,
+		$SQL = "INSERT INTO chartmasterIK (accountcode,
 						accountname,
 						group_)
 					VALUES ('" . $_POST['AccountCode'] . "',
 							'" . $_POST['AccountName'] . "',
 							'" . $_POST['Group'] . "')";
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
 	}
@@ -65,8 +65,8 @@ if (isset($_POST['submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
-	$sql="DELETE FROM chartmasterIK WHERE accountcode= '" . $SelectedAccount ."'";
-	$result = DB_query($sql);
+	$SQL="DELETE FROM chartmasterIK WHERE accountcode= '" . $SelectedAccount ."'";
+	$Result = DB_query($SQL);
 	prnMsg( _('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'),'succes');
 }
 
@@ -78,14 +78,14 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedAccount)) {
 		//editing an existing account
 
-		$sql = "SELECT accountcode, accountname, group_ FROM chartmasterIK WHERE accountcode='" . $SelectedAccount ."'";
+		$SQL = "SELECT accountcode, accountname, group_ FROM chartmasterIK WHERE accountcode='" . $SelectedAccount ."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['AccountCode'] = $myrow['accountcode'];
-		$_POST['AccountName']	= $myrow['accountname'];
-		$_POST['Group'] = $myrow['group_'];
+		$_POST['AccountCode'] = $MyRow['accountcode'];
+		$_POST['AccountName']	= $MyRow['accountname'];
+		$_POST['Group'] = $MyRow['group_'];
 
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 		echo '<input type="hidden" name="AccountCode" value="' . $_POST['AccountCode'] .'" />';
@@ -102,18 +102,18 @@ if (!isset($_GET['delete'])) {
 	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
 	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="Text" size="51" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
 
-	$sql = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
-	$result = DB_query($sql);
+	$SQL = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
+	$Result = DB_query($SQL);
 
 	echo '<tr><td>' . _('Account Group') . ':</td><td><select name=Group>';
 
-	while ($myrow = DB_fetch_array($result)){
-		if (isset($_POST['Group']) and $myrow[0]==$_POST['Group']){
+	while ($MyRow = DB_fetch_array($Result)){
+		if (isset($_POST['Group']) and $MyRow[0]==$_POST['Group']){
 			echo '<option selected="selected" value="';
 		} else {
 			echo '<option value="';
 		}
-		echo $myrow[0] . '">' . $myrow[0] . '</option>';
+		echo $MyRow[0] . '">' . $MyRow[0] . '</option>';
 	}
 
 	if (!isset($_GET['SelectedAccount']) or $_GET['SelectedAccount']=='') {
@@ -137,7 +137,7 @@ then none of the above are true and the list of chartmasterIK will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT accountcode,
+	$SQL = "SELECT accountcode,
 			accountname,
 			group_,
 			CASE WHEN pandl=0 THEN '" . _('Balance Sheet') . "' ELSE '" . _('Profit/Loss') . "' END AS acttype
@@ -148,7 +148,7 @@ or deletion of the records*/
 
 	$ErrMsg = _('The chart accounts could not be retrieved because');
 
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 	echo '<br /><table class="selection">
 			<thead>
@@ -161,7 +161,7 @@ or deletion of the records*/
 			</thead>
 			<tbody>';
 
-	while ($myrow = DB_fetch_row($result)) {
+	while ($MyRow = DB_fetch_row($Result)) {
 		echo '<tr class="striped_row">';
 		printf("<td>%s</td>
 			<td>%s</td>
@@ -170,14 +170,14 @@ or deletion of the records*/
 			<td><a href=\"%s&SelectedAccount=%s\">" . _('Edit') . "</td>
 			<td><a href=\"%s&SelectedAccount=%s&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
 			</tr>",
-			$myrow[0],
-			$myrow[1],
-			$myrow[2],
-			$myrow[3],
+			$MyRow[0],
+			$MyRow[1],
+			$MyRow[2],
+			$MyRow[3],
 			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-			$myrow[0],
+			$MyRow[0],
 			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-			$myrow[0]);
+			$MyRow[0]);
 	}
 	echo '</tbody></table></div></form>';
 } //END IF selected ACCOUNT

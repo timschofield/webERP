@@ -22,10 +22,10 @@ function CalculateCommissionTokopedia($CustomerCode,
 	$SQL = "SELECT salesorders.shipvia
 		FROM salesorders 
 		WHERE salesorders.orderno = '" . $OrderNo . "' ";			
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$Shipper = $myrow['shipvia'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$Shipper = $MyRow['shipvia'];
 		$CommissionTPFreeShipping = 0;
 		if ($Shipper == '12'){
 			// if shipper is 12 = GRATIS ONGKIR TOKOPEDIA... then we shipped it via free shipping, we must pay 
@@ -35,11 +35,11 @@ function CalculateCommissionTokopedia($CustomerCode,
 					salesorderdetails.discountpercent
 				FROM salesorderdetails
 				WHERE salesorderdetails.orderno = '" . $OrderNo . "' ";			
-			$result = DB_query($SQL);
-			while ($myrow = DB_fetch_array($result)) {
-				$ItemPrice = $myrow['unitprice']*(1-$myrow['discountpercent']);
+			$Result = DB_query($SQL);
+			while ($MyRow = DB_fetch_array($Result)) {
+				$ItemPrice = $MyRow['unitprice']*(1-$MyRow['discountpercent']);
 				$CommissionItem = min(round($ItemPrice * $CommissionTokopediaFreeShippingPerItem /100 ,0), $CommissionTokopediaFreeShippingMaximum); 
-				$CommissionTPFreeShipping += $CommissionItem * $myrow['qtyinvoiced']; // this commission still has PPN
+				$CommissionTPFreeShipping += $CommissionItem * $MyRow['qtyinvoiced']; // this commission still has PPN
 			}
 		}
 	}else{
@@ -71,10 +71,10 @@ function CalculateCommissionShopee($CustomerCode,
 	$SQL = "SELECT salesorders.shipvia
 		FROM salesorders 
 		WHERE salesorders.orderno = '" . $OrderNo . "' ";			
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) != 0){
-		$myrow = DB_fetch_array($result);
-		$Shipper = $myrow['shipvia'];
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		$MyRow = DB_fetch_array($Result);
+		$Shipper = $MyRow['shipvia'];
 		$CommissionTPFreeShipping = 0;
 		if ($Shipper == '12'){
 			// if shipper is 12 = GRATIS ONGKIR SHOPEE... then we shipped it via free shipping, we must pay 
@@ -84,11 +84,11 @@ function CalculateCommissionShopee($CustomerCode,
 					salesorderdetails.discountpercent
 				FROM salesorderdetails
 				WHERE salesorderdetails.orderno = '" . $OrderNo . "' ";			
-			$result = DB_query($SQL);
-			while ($myrow = DB_fetch_array($result)) {
-				$ItemPrice = $myrow['unitprice']*(1-$myrow['discountpercent']);
+			$Result = DB_query($SQL);
+			while ($MyRow = DB_fetch_array($Result)) {
+				$ItemPrice = $MyRow['unitprice']*(1-$MyRow['discountpercent']);
 				$CommissionItem = min(round($ItemPrice * $CommissionShopeeFreeShippingPerItem /100 ,0), $CommissionShopeeFreeShippingMaximum); 
-				$CommissionTPFreeShipping += $CommissionItem * $myrow['qtyinvoiced']; // this commission still has PPN
+				$CommissionTPFreeShipping += $CommissionItem * $MyRow['qtyinvoiced']; // this commission still has PPN
 			}
 		}
 	}else{
@@ -199,7 +199,7 @@ function ItemEnableLazadaInfo($StockId, $EnabledLazada){
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Lazada marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Lazada marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemEnableShopeeInfo($StockId, $EnabledShopee){
@@ -215,7 +215,7 @@ function ItemEnableShopeeInfo($StockId, $EnabledShopee){
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Shopee marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Shopee marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia){
@@ -231,7 +231,7 @@ function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia){
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Tokopedia marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada){
@@ -248,7 +248,7 @@ function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLa
 
 	$DbgMsg = _('The SQL that failed to insert the Lazada marketplace info was');
 	$ErrMsg = _('Cannot insert the Lazada marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee){
@@ -265,7 +265,7 @@ function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLSh
 
 	$DbgMsg = _('The SQL that failed to insert the Shopee marketplace info was');
 	$ErrMsg = _('Cannot insert the Shopee marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
@@ -282,7 +282,7 @@ function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductI
 
 	$DbgMsg = _('The SQL that failed to insert the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot insert the Tokopedia marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada){
@@ -294,7 +294,7 @@ function ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLa
 
 	$DbgMsg = _('The SQL that failed to update the Lazada marketplace info was');
 	$ErrMsg = _('Cannot update the Lazada marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee){
@@ -306,7 +306,7 @@ function ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLSh
 
 	$DbgMsg = _('The SQL that failed to update the Shopee marketplace info was');
 	$ErrMsg = _('Cannot update the Shopee marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
@@ -318,7 +318,7 @@ function ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductI
 
 	$DbgMsg = _('The SQL that failed to update the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot update the Tokopedia marketplace info because');
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
 function FindShopeeCategory($StockId, $Name, $Description){

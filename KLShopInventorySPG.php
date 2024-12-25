@@ -15,7 +15,7 @@ $SQL = "SELECT locstock.stockid,
 			AND locstock.loccode = '". $_SESSION['UserStockLocation'] ."'
 			AND locstock.quantity > 0
 		ORDER BY locstock.stockid";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . _('Stock Available at ') . $LocationName  . '</strong></p>';
 echo '<table class="selection">
@@ -30,8 +30,8 @@ echo $TableHeader;
 echo '</thead>
 	<tbody>';
 $i = 1;
-while ($myrow = DB_fetch_array($result)) {
-	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $myrow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $myrow['stockid'] . '</a>';
+while ($MyRow = DB_fetch_array($Result)) {
+	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $MyRow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $MyRow['stockid'] . '</a>';
 	printf('<tr class="striped_row">
 			<td class="number">%s</td>
 			<td>%s</td>
@@ -40,8 +40,8 @@ while ($myrow = DB_fetch_array($result)) {
 			</tr>', 
 			locale_number_format($i,0),
 			$CodeLink, 
-			$myrow['description'], 
-			locale_number_format($myrow['quantity'],0)
+			$MyRow['description'], 
+			locale_number_format($MyRow['quantity'],0)
 			);
 	$i++;
 }

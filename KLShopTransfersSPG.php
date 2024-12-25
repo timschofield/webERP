@@ -51,7 +51,7 @@ $SQL = "SELECT reference,
 			AND pendingqty != 0
 		ORDER BY reference ASC,
 				stockid ASC";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . 'Transfers still in transit from / to ' . $LocationName .'</strong></p>';
 echo '<table class="selection">
@@ -69,13 +69,13 @@ echo '<table class="selection">
 		<tbody>';
 
 $CurrentTransfer = -1;
-while ($myrow = DB_fetch_array($result)) {
-	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $myrow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $myrow['stockid'] . '</a>';
-	if ($CurrentTransfer != $myrow['reference']){
+while ($MyRow = DB_fetch_array($Result)) {
+	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $MyRow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $MyRow['stockid'] . '</a>';
+	if ($CurrentTransfer != $MyRow['reference']){
 		// The first item of the transfer
-		$CurrentTransfer = $myrow['reference'];
-		$Transfer = locale_number_format($myrow['reference'],0);
-		$TransferDate = ConvertSQLDate($myrow['shipdate']);
+		$CurrentTransfer = $MyRow['reference'];
+		$Transfer = locale_number_format($MyRow['reference'],0);
+		$TransferDate = ConvertSQLDate($MyRow['shipdate']);
 	}else{
 		// the other items of the transfer
 		$Transfer = '';
@@ -93,10 +93,10 @@ while ($myrow = DB_fetch_array($result)) {
 		$Transfer,
 		$TransferDate,
 		$CodeLink, 
-		GetLocationNameFromCode($myrow['shiploc']), 
-		locale_number_format($myrow['shipqty'],0),
-		GetLocationNameFromCode($myrow['recloc']), 
-		locale_number_format($myrow['recqty'],0)
+		GetLocationNameFromCode($MyRow['shiploc']), 
+		locale_number_format($MyRow['shipqty'],0),
+		GetLocationNameFromCode($MyRow['recloc']), 
+		locale_number_format($MyRow['recqty'],0)
 	);
 }
 echo '</tbody></table>';
@@ -123,7 +123,7 @@ $SQL = "SELECT transno,
 		ORDER BY transno DESC,
 				stockid ASC";
 				
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . 'Transfers already processed from / to ' . $LocationName  . ' of last ' . TRANSFER_LIST_DAYS_FOR_SPG .' days</strong></p>';
 echo '<table class="selection">
@@ -141,13 +141,13 @@ echo '<table class="selection">
 		</thead>
 		<tbody>';
 $CurrentTransfer = -1;
-while ($myrow = DB_fetch_array($result)) {
-	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $myrow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $myrow['stockid'] . '</a>';
-	if ($CurrentTransfer != $myrow['transno']){
+while ($MyRow = DB_fetch_array($Result)) {
+	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $MyRow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $MyRow['stockid'] . '</a>';
+	if ($CurrentTransfer != $MyRow['transno']){
 		// The first item of the transfer
-		$CurrentTransfer = $myrow['transno'];
-		$Transfer = locale_number_format($myrow['transno'],0);
-		$FromTo = $myrow['reference'];
+		$CurrentTransfer = $MyRow['transno'];
+		$Transfer = locale_number_format($MyRow['transno'],0);
+		$FromTo = $MyRow['reference'];
 	}else{
 		// the other items of the transfer
 		$Transfer = '';
@@ -165,12 +165,12 @@ while ($myrow = DB_fetch_array($result)) {
 		</tr>', 
 		$Transfer,
 		$FromTo, 
-		ConvertSQLDate($myrow['trandate']),
+		ConvertSQLDate($MyRow['trandate']),
 		$CodeLink, 
-		locale_number_format($myrow['qty'],0),
-		locale_number_format($myrow['newqoh'],0),
-		$myrow['userid'],
-		$myrow['narrative']
+		locale_number_format($MyRow['qty'],0),
+		locale_number_format($MyRow['newqoh'],0),
+		$MyRow['userid'],
+		$MyRow['narrative']
 	);
 
 }

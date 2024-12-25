@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedTag) AND $InputError !=1) {
 
-		$sql = "UPDATE stocktags
+		$SQL = "UPDATE stocktags
 			SET tagname = LOWER('" . $_POST['TagName'] . "'),
 				tagnamebahasa = LOWER('" . $_POST['TagNameBahasa'] . "')
 			WHERE tagid = '" .$SelectedTag."'";
@@ -101,7 +101,7 @@ if (isset($_POST['submit'])) {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO stocktags
+			$SQL = "INSERT INTO stocktags
 						(tagname,
 						tagnamebahasa)
 					VALUES (LOWER('" . $_POST['TagName'] . "'),
@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if ( $InputError !=1) {
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		echo '<br />';
 		prnMsg($msg,'success');
 		unset($SelectedTag);
@@ -125,15 +125,15 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-	$result = DB_query("SELECT tagname, tagnamebahasa FROM stocktags WHERE tagid='".$SelectedTag."'");
-	if (DB_Num_Rows($result)>0){
-		$TypeRow = DB_fetch_array($result);
+	$Result = DB_query("SELECT tagname, tagnamebahasa FROM stocktags WHERE tagid='".$SelectedTag."'");
+	if (DB_Num_Rows($Result)>0){
+		$TypeRow = DB_fetch_array($Result);
 		$TagName = $TypeRow['tagname'];
 		$TagNameBahasa = $TypeRow['tagnamebahasa'];
 
-		$sql="DELETE FROM stocktags WHERE tagid='".$SelectedTag."'";
+		$SQL="DELETE FROM stocktags WHERE tagid='".$SelectedTag."'";
 		$ErrMsg = _('The tag record could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		echo '<br />';
 		prnMsg(_('Item tag') . ' ' . $TagName  . ' - ' . $TagNameBahasa  . ' ' . _('has been deleted') ,'success');
 	}
@@ -148,8 +148,8 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT tagid, tagname, tagnamebahasa FROM stocktags ORDER BY tagname";
-	$result = DB_query($sql);
+	$SQL = "SELECT tagid, tagname, tagnamebahasa FROM stocktags ORDER BY tagname";
+	$Result = DB_query($SQL);
 
 	echo '<br /><table>
 			<thead>
@@ -162,19 +162,19 @@ or deletion of the records*/
 
 $k=0; //row colour counter
 
-while ($myrow = DB_fetch_row($result)) {
+while ($MyRow = DB_fetch_row($Result)) {
 	printf('<tr class="striped_row">
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedTag=%s">' . _('Edit') . '</a></td>
 			<td><a href="%sSelectedTag=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this Tag?') . '");\'>' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow[1],
-			$myrow[2],
+			$MyRow[1],
+			$MyRow[2],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow[0],
+			$MyRow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow[0]);
+			$MyRow[0]);
 	}
 	echo '</tbody>
 		</table>';
@@ -195,18 +195,18 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedTag) AND $SelectedTag!='' ) {
 
-		$sql = "SELECT tagid,
+		$SQL = "SELECT tagid,
 			       tagname,
 				   tagnamebahasa
 		        FROM stocktags
 		        WHERE tagid='".$SelectedTag."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['tagid'] = $myrow['tagid'];
-		$_POST['TagName']  = $myrow['tagname'];
-		$_POST['TagNameBahasa']  = $myrow['tagnamebahasa'];
+		$_POST['tagid'] = $MyRow['tagid'];
+		$_POST['TagName']  = $MyRow['tagname'];
+		$_POST['TagNameBahasa']  = $MyRow['tagnamebahasa'];
 
 		echo '<input type="hidden" name="SelectedTag" value="' . $SelectedTag . '" />
 			<input type="hidden" name="tagid" value="' . $_POST['tagid'] . '" />

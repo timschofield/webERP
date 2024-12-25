@@ -16,16 +16,16 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 	$InputError =0;
 
 	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 
 		echo '<br />' . _('Setting ZERO to all Reorder Levels of location ') . ' ' .  $_POST['FromLocationID'];
-		$sql = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['FromLocationID'] . "'";
+		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['FromLocationID'] . "'";
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to set RL = 0 at location failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0
 }

@@ -25,7 +25,7 @@ function submit($MarkExported) {
 
 	if ($InputError == 0){
 		
-		$sql = "SELECT 	oc_ne_marketing.firstname,
+		$SQL = "SELECT 	oc_ne_marketing.firstname,
 						oc_ne_marketing.lastname,
 						oc_ne_marketing.email
 				FROM oc_ne_marketing
@@ -33,8 +33,8 @@ function submit($MarkExported) {
 					AND oc_ne_marketing.exported = 'N'";
 		
 		$ErrMsg = _('The SQL to find the OpenCart Newsletter Subscribers Data to export to Sendinblue');
-		$result = DB_query_oc($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query_oc($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
@@ -56,11 +56,11 @@ function submit($MarkExported) {
 
 			// Add data
 			$i = 2;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['email']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($myrow['lastname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['firstname']));
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['email']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($MyRow['lastname']));
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($MyRow['firstname']));
 				
 				$i++;
 			}
@@ -98,10 +98,10 @@ function submit($MarkExported) {
 			$objWriter->save('php://output');
 
 			if ($MarkExported == "Y"){
-				$sql = "UPDATE 	oc_ne_marketing 
+				$SQL = "UPDATE 	oc_ne_marketing 
 						SET exported = 'Y' 
 						WHERE exported = 'N'";
-				$resultUpdate = DB_query_oc($sql,'','',true);
+				$ResultUpdate = DB_query_oc($SQL,'','',true);
 			}
 
 		}else{

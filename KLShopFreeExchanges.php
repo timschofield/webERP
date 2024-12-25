@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
 		DB_Txn_Begin();
 		$Now = Date('Y-m-d H-i-s');
 		
-		$sql = "INSERT INTO klfreeexchanges
+		$SQL = "INSERT INTO klfreeexchanges
 						(itemfrom,
 						itemto,
 						date,
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 		$msg = _('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . _('has been created');
 		$ErrMsg = _('The insert of the KL tali exchange failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 		prnMsg($msg , 'success');
 
 		$AdjustmentNumber = GetNextTransNo(17);
@@ -238,7 +238,7 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT counterexchange,
+	$SQL = "SELECT counterexchange,
 				date,
 				itemfrom,
 				itemto,
@@ -249,7 +249,7 @@ or deletion of the records*/
 			ORDER BY counterexchange DESC
 			LIMIT 0, 10";
 			
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -260,7 +260,7 @@ or deletion of the records*/
 			<th>' . _('Yellow#') . '</th>
 		</tr>';
 	$k=0;
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
@@ -276,11 +276,11 @@ or deletion of the records*/
 			<td>%s</td>
 			<td>%s</td>
 			</tr>',
-			$myrow['counterexchange'],
-			ConvertSQLDateTime($myrow['date']),
-			$myrow['itemfrom'],
-			$myrow['itemto'],
-			$myrow['invoicenumber']
+			$MyRow['counterexchange'],
+			ConvertSQLDateTime($MyRow['date']),
+			$MyRow['itemfrom'],
+			$MyRow['itemto'],
+			$MyRow['invoicenumber']
 			);
 	} //END WHILE LIST LOOP
 	echo '</table><br />';
@@ -310,29 +310,29 @@ if (! isset($_GET['delete'])) {
 	echo '<tr>
 			<td>' . _('From') . ':</td>
 			<td><select name="ItemFrom">';
-	$sql="SELECT stockid 
+	$SQL="SELECT stockid 
 		FROM stockmaster
 		WHERE discontinued = 0
 			AND stockid LIKE 'TM-%'";
-	$TaliResult= DB_query($sql);
+	$TaliResult= DB_query($SQL);
 	echo '<option selected="selected" value="">' . _('Select Tali Model')  . '</option>';
 
-	While ($myrow = DB_fetch_array($TaliResult)){
-		echo '<option value="' . $myrow['stockid'] . '">' . $myrow['stockid']  . '</option>';
+	While ($MyRow = DB_fetch_array($TaliResult)){
+		echo '<option value="' . $MyRow['stockid'] . '">' . $MyRow['stockid']  . '</option>';
 	}
 	echo '</select></td></tr>';
 
 	echo '<tr>
 			<td>' . _('To') . ':</td>
 			<td><select name="ItemTo">';
-	$sql="SELECT stockid 
+	$SQL="SELECT stockid 
 		FROM stockmaster
 		WHERE discontinued = 0
 			AND stockid LIKE 'TM-%'";
-	$TaliResult= DB_query($sql);
+	$TaliResult= DB_query($SQL);
 	echo '<option selected="selected" value="">' . _('Select Tali Model')  . '</option>';
-	While ($myrow = DB_fetch_array($TaliResult)){
-		echo '<option value="' . $myrow['stockid'] . '">' . $myrow['stockid']  . '</option>';
+	While ($MyRow = DB_fetch_array($TaliResult)){
+		echo '<option value="' . $MyRow['stockid'] . '">' . $MyRow['stockid']  . '</option>';
 	}
 	echo '</select></td></tr>';
 

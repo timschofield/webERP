@@ -61,8 +61,8 @@ function submit($TypeOfShop, $TypeOfFile) {
 					AND prices.startdate <= '". $Now. "' 
 					AND (prices.enddate >= '". $Now. "' OR prices.enddate = '9999-12-31')
 				ORDER BY stockmaster.stockid";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
 			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
@@ -117,16 +117,16 @@ function submit($TypeOfShop, $TypeOfFile) {
 			$objPHPExcel->setActiveSheetIndex(0);
 			$ActiveSheet = $objPHPExcel->getActiveSheet();
 			
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
-				if (!ItemInLIst($myrow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
+				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't send discounted items to marketplaces
 					
-					$StockId = $myrow['stockid'];
+					$StockId = $MyRow['stockid'];
 
-					$TextSizeIndonesian = CreateTextSize($myrow['stockid'], "ID", true);
-					$TextSizeEnglish = CreateTextSize($myrow['stockid'], "EN", true);
-					$TextSizeGrouping = CreateTextSize($myrow['stockid'], "EN", false);
+					$TextSizeIndonesian = CreateTextSize($MyRow['stockid'], "ID", true);
+					$TextSizeEnglish = CreateTextSize($MyRow['stockid'], "EN", true);
+					$TextSizeGrouping = CreateTextSize($MyRow['stockid'], "EN", false);
 					
 					if ($TextSizeGrouping != ""){
 						$NamaVariant = "Ukuran";
@@ -134,23 +134,23 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$NamaVariant = "";
 					}
 
-					$Name = ItemMarketplaceName($myrow['stockid'], $myrow['description'], $myrow['descriptiontranslation']);
-					$Price = round($myrow['price']);
+					$Name = ItemMarketplaceName($MyRow['stockid'], $MyRow['description'], $MyRow['descriptiontranslation']);
+					$Price = round($MyRow['price']);
 					$PriceDiscount = '';
-					$Description = trim($myrow['longdescriptiontranslation']). " " . 
+					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
 							$TextSizeIndonesian . " - "  . 
-							trim($myrow['longdescription']) . " " .
+							trim($MyRow['longdescription']) . " " .
 							$TextSizeEnglish;
-					$Weight = $myrow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
+					$Weight = $MyRow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
-					$QOH = ItemMarketplaceQOH($myrow['stockid']);
+					$QOH = ItemMarketplaceQOH($MyRow['stockid']);
 
 					$PackagingImage = FALSE;
-					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $myrow['klpackaging']);
-					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $myrow['klpackaging']);
-					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $myrow['klpackaging']);
-					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $myrow['klpackaging']);
-					list($Url_5, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $myrow['klpackaging']);
+					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_5, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $MyRow['klpackaging']);
 
 					$Category = FindShopeeCategory($StockId, $Name, $Description);
 
@@ -248,8 +248,8 @@ function display($RootPath, $Theme) {
 			FROM manufacturers 
 			ORDER BY manufacturers_name";
 	$LocResult = DB_query($SQL);
-	while ($myrow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $myrow['manufacturers_id'] . '">' . $myrow['manufacturers_name'] . '</option>';
+	while ($MyRow=DB_fetch_array($LocResult)){
+		 echo '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
 	}
 
 	echo '<tr>

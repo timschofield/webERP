@@ -36,7 +36,7 @@ echo '<br />
 		<tbody>';
 
 if ($StockID != ''){
-	$sql = "SELECT locstock.loccode,
+	$SQL = "SELECT locstock.loccode,
 					locations.locationname,
 					SUM(locstock.quantity) AS quantity
 			FROM locstock INNER JOIN locations
@@ -49,18 +49,18 @@ if ($StockID != ''){
 
 	$ErrMsg = _('The stock held at each location cannot be retrieved because');
 	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
-	$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
+	$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	$total = 0;
 	
-	while ($myrow=DB_fetch_array($LocStockResult)) {
+	while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 		echo '<tr class="striped_row">';
 
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid LIKE '" . $StockID . "%'
-							AND shiploc='".$myrow['loccode']."'";
+							AND shiploc='".$MyRow['loccode']."'";
 		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
@@ -72,7 +72,7 @@ if ($StockID != ''){
 		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid LIKE '" . $StockID . "%'
-							AND recloc='".$myrow['loccode']."'";
+							AND recloc='".$MyRow['loccode']."'";
 		$InTransitResult=DB_query($InTransitSQL);
 		$InTransitRow=DB_fetch_array($InTransitResult);
 		if ($InTransitRow['intransit']!='') {
@@ -82,14 +82,14 @@ if ($StockID != ''){
 		}
 
 		if (($InTransitQuantityIn+$InTransitQuantityOut) < 0) {
-			$Available = $myrow['quantity'] + ($InTransitQuantityIn+$InTransitQuantityOut);
+			$Available = $MyRow['quantity'] + ($InTransitQuantityIn+$InTransitQuantityOut);
 		} else {
-			$Available = $myrow['quantity'];
+			$Available = $MyRow['quantity'];
 		}
 		
 		$total += $Available;
 		
-		echo '<td>' . $myrow['locationname'] . '</td>';
+		echo '<td>' . $MyRow['locationname'] . '</td>';
 
 		printf('<td class="number">%s</td>',
 				locale_number_format_zero_blank($Available, 0)

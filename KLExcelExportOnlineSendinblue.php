@@ -10,18 +10,18 @@ include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
 if (!isset($_POST['FromDate'])){
-	$sql = "SELECT 	salesorders.orddate
+	$SQL = "SELECT 	salesorders.orddate
 			FROM salesorders, debtorsmaster
 			WHERE salesorders.debtorno = debtorsmaster.debtorno
 				AND salesorders.contactemail != ''
 				AND salesorders.klexported = 'N'
 				AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ")
 			ORDER BY salesorders.orddate ASC";
-	$result = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($result) != 0){
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result) != 0){
 		// get the first date only
-		$myrow = DB_fetch_array($result);
-		$_POST['FromDate'] = ConvertSQLDate($myrow['orddate']);
+		$MyRow = DB_fetch_array($Result);
+		$_POST['FromDate'] = ConvertSQLDate($MyRow['orddate']);
 	}else{
 		$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
 	}
@@ -66,7 +66,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			$SqlCustomers = " AND salesorders.debtorno NOT LIKE 'WEB%'";
 		}
 		
-		$sql = "SELECT 	salesorders.contactemail AS email,
+		$SQL = "SELECT 	salesorders.contactemail AS email,
 						salesorders.deliverto AS firstname,
 						salesorders.deladd6 AS country,
 						salesorders.orddate,
@@ -96,8 +96,8 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 				ORDER BY salesorders.debtorno, salesorders.orderno";
 				
 		$ErrMsg = _('The SQL to find the webERP Customer Data to export to Sendinblue');
-		$result = DB_query($sql,$ErrMsg);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
 			$TxResult = DB_Txn_Begin();
 
 			// Create new PHPExcel object
@@ -129,29 +129,29 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			// Add data
 			$i = 2;
 			$PreviousEmail = "";
-			while ($myrow = DB_fetch_array($result)) {
-				if ($PreviousEmail != $myrow['email']){
+			while ($MyRow = DB_fetch_array($Result)) {
+				if ($PreviousEmail != $MyRow['email']){
 					$objPHPExcel->setActiveSheetIndex(0);
 
-					$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['email']);
-					$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($myrow['firstname']));
-					$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $myrow['country']);
+					$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['email']);
+					$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($MyRow['firstname']));
+					$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $MyRow['country']);
 					
-					if ($myrow['vipcards'] == 0){
+					if ($MyRow['vipcards'] == 0){
 						$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'N');
 					}else{
 						$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'Y');
 					}
 					
-					if ($myrow['orddate'] != '0000-00-00'){
-						$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['orddate']);
+					if ($MyRow['orddate'] != '0000-00-00'){
+						$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['orddate']);
 					}
 
-					$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $myrow['purchase_items']);
-					$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round($myrow['purchase_value'] / $myrow['rate']));
+					$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $MyRow['purchase_items']);
+					$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, round($MyRow['purchase_value'] / $MyRow['rate']));
 					
 					$i++;
-					$PreviousEmail = $myrow['email'];
+					$PreviousEmail = $MyRow['email'];
 				}
 			}
 			
@@ -188,7 +188,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			$objWriter->save('php://output');
 
 			if ($MarkExported == "Y"){
-				$sql = "UPDATE salesorders, debtorsmaster
+				$SQL = "UPDATE salesorders, debtorsmaster
 						SET klexported = 'Y' 
 						WHERE salesorders.debtorno = debtorsmaster.debtorno
 							AND salesorders.klexported = 'N' 
@@ -196,7 +196,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 							AND salesorders.orddate <= '" . $ToDate . "'
 							AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ")" .
 						$SqlCustomers;
-				$resultUpdate = DB_query($sql,'','',true);
+				$ResultUpdate = DB_query($SQL,'','',true);
 			}
 			DB_Txn_Commit();
 

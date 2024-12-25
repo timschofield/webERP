@@ -81,8 +81,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 					AND UPPER(paymentmethod) = 'BANK'
 				ORDER BY joiningdate,
 					fullname";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			
 			if ($SalaryType == "MONTHLY"){
 				$HeaderDisposition = "Content-Disposition: attachment; filename=GajiTransferDanamon-" . $Today . ".csv";
@@ -123,28 +123,28 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 			fwrite($output, $Line);
 			
 			$i = 0;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				
-				$ValueTransfer = $myrow['upahpokok'] +
-								$myrow['tunjanganmakan'] +
-								$myrow['tunjangantransport'] +
-								$myrow['tunjanganjabatan'] +
-								$myrow['tunjanganmasakerja'] +
-								$myrow['tunjangankendaraan'] +
-								$myrow['komisitetap'] +
-								$myrow['komisiretail'] +
-								$myrow['komisisupport'] +
-								$myrow['bonuspenjualan'] +
-								$myrow['lembur'] +
-								$myrow['thr'] +
-								$myrow['penerimaanlain'] +
-								$myrow['potonganjht'] +
-								$myrow['potonganaskes'] +
-								$myrow['potonganpph21'] +
-								$myrow['potonganabsen'] +
-								$myrow['potonganlain2'];
+				$ValueTransfer = $MyRow['upahpokok'] +
+								$MyRow['tunjanganmakan'] +
+								$MyRow['tunjangantransport'] +
+								$MyRow['tunjanganjabatan'] +
+								$MyRow['tunjanganmasakerja'] +
+								$MyRow['tunjangankendaraan'] +
+								$MyRow['komisitetap'] +
+								$MyRow['komisiretail'] +
+								$MyRow['komisisupport'] +
+								$MyRow['bonuspenjualan'] +
+								$MyRow['lembur'] +
+								$MyRow['thr'] +
+								$MyRow['penerimaanlain'] +
+								$MyRow['potonganjht'] +
+								$MyRow['potonganaskes'] +
+								$MyRow['potonganpph21'] +
+								$MyRow['potonganabsen'] +
+								$MyRow['potonganlain2'];
 								
-				$BeneficiaryBankCode = FindBeneficiaryBankCode($myrow['bankcode']);
+				$BeneficiaryBankCode = FindBeneficiaryBankCode($MyRow['bankcode']);
 				
 				if ($BeneficiaryBankCode == "DANAMON"){
 					// internal Danamon transfer
@@ -157,13 +157,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 							"" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
-							$myrow['bankaccount'] . $Separator . 
-							$myrow['bankaccountholder'] . $Separator . 
+							$MyRow['bankaccount'] . $Separator . 
+							$MyRow['bankaccountholder'] . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
-							$myrow['email'] . $Separator . 
+							$MyRow['email'] . $Separator . 
 							"" . $Separator . 
 							$ToAccountDescrption . $Separator . 
 							"" . $Separator . 
@@ -198,13 +198,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 							"" . $Separator . 
 							$BeneficiaryBankCode . $Separator . 
 							"" . $Separator . 
-							$myrow['bankaccount'] . $Separator . 
-							$myrow['bankaccountholder'] . $Separator . 
+							$MyRow['bankaccount'] . $Separator . 
+							$MyRow['bankaccountholder'] . $Separator . 
 							"IDR" . $Separator . 
 							"Bali" . $Separator . 
 							"" . $Separator . 
 							"" . $Separator . 
-							$myrow['email'] . $Separator . 
+							$MyRow['email'] . $Separator . 
 							"" . $Separator . 
 							$ToAccountDescrption . $Separator . 
 							"" . $Separator . 

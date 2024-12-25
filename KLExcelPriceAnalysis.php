@@ -46,8 +46,8 @@ function submit($ListCategories, $DaysTopSales) {
 				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
 			ORDER BY stockmaster.stockid";
 		
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPExcel object
 			$objPHPExcel = new PHPExcel();
@@ -76,18 +76,18 @@ function submit($ListCategories, $DaysTopSales) {
  
 			// Add data
 			$i = 2;
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $myrow['stockid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $myrow['description']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $myrow['categoryid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($myrow['lastcategoryupdate']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $myrow['qoh']);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, PositionTopSalesItem($myrow['stockid'], $DaysTopSales));
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($myrow['standardcost'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, ConvertSQLDate($myrow['DOB_price']));
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $myrow['retailprice']);
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(($myrow['retailprice']/$myrow['standardcost']),2));
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['stockid']);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['description']);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['categoryid']);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['lastcategoryupdate']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $MyRow['qoh']);
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, PositionTopSalesItem($MyRow['stockid'], $DaysTopSales));
+				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($MyRow['standardcost'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, ConvertSQLDate($MyRow['DOB_price']));
+				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['retailprice']);
+				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(($MyRow['retailprice']/$MyRow['standardcost']),2));
 				
 				$i++;
 			}

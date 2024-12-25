@@ -54,12 +54,12 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-$result = DB_query("SELECT description,
+$Result = DB_query("SELECT description,
 						categoryid,
 						units 
 					FROM stockmaster 
 					WHERE stockid='" . $StockID . "'");
-$myitem=DB_fetch_array($result);
+$myitem=DB_fetch_array($Result);
 
 echo '<table class="selection">
 	<thead>
@@ -97,7 +97,7 @@ if ($LocCode != ''){
 	}
 }
 
-$sql = "SELECT locstock.loccode,
+$SQL = "SELECT locstock.loccode,
 				locations.locationname,
 				locations.typeloc,
 				locstock.quantity,
@@ -118,7 +118,7 @@ $sql = "SELECT locstock.loccode,
 
 $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that failed was');
-$LocStockResult = DB_query($sql, $ErrMsg, $DbgMsg);
+$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 $TableHeader = '<tr>
 					<th class="SortedColumn">' . _('Location') . '</th>
@@ -129,16 +129,16 @@ $TableHeader = '<tr>
 echo $TableHeader;
 $k=0; //row colour counter
 
-while ($myrow=DB_fetch_array($LocStockResult)) {
+while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
 			</tr>', 
-			$myrow['locationname'], 
-			locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
-			locale_number_format($NewRL,$myrow['decimalplaces'])
+			$MyRow['locationname'], 
+			locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']),
+			locale_number_format($NewRL,$MyRow['decimalplaces'])
 			);
 
 }

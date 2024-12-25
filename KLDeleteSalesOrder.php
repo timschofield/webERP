@@ -15,7 +15,7 @@ if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){
 	exit;
 }
 
-$result = DB_Txn_Begin();
+$Result = DB_Txn_Begin();
 
 // online sale from our website, we must update the status of the order in OpenCart
 $OnlineOrderNo = GetOnlineOrderNoFromWeberp($_GET['OrderNo']);
@@ -25,17 +25,17 @@ UpdateOpenCartOrderStatus($OnlineOrderNo, OPENCART_ORDER_STATUS_EXPIRED, 1, "", 
 $SQL = "DELETE FROM salesorderdetails WHERE salesorderdetails.orderno='" . $_GET['OrderNo'] . "'";
 $DbgMsg = _('The SQL that failed to delete the sales order details was');
 $ErrMsg = _('Cannot delete the sales order details because');
-$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg( _('Deleted Sales Order Lines ').  $_GET['OrderNo']);
 
 $SQL = "DELETE FROM salesorders WHERE salesorders.orderno='" . $_GET['OrderNo'] . "'";
 $DbgMsg = _('The SQL that failed to delete the sales order was');
 $ErrMsg = _('Cannot delete the sales order because');
-$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg( _('Deleted Sales Order Header ').  $_GET['OrderNo']);
 
 
-$result = DB_Txn_Commit();
+$Result = DB_Txn_Commit();
 
 include('includes/footer.php');
 

@@ -540,8 +540,8 @@ function rewrite($list) {
 	// First rename the previous XML file
 	if (is_file(LABELS_FILE) AND !rename(LABELS_FILE, LABELS_FILE.".bak"))
 		abortMsg(_('Could not rename the previous file.'));
-	$result=$list->asXML(LABELS_FILE);
-	if (!$result)
+	$Result=$list->asXML(LABELS_FILE);
+	if (!$Result)
 		abortMsg(_('Could not create the new XML file.').': '.LABELS_FILE);
 }
 

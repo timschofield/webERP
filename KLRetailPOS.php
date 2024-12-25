@@ -197,17 +197,17 @@ if (isset($_POST['OrderItems'])
 			unset($NewItem);
 		}else{
 			/*Now figure out if the item is shop packaging or not*/
-			$sql = "SELECT stockmaster.categoryid
+			$SQL = "SELECT stockmaster.categoryid
 							FROM stockmaster
 							WHERE stockmaster.stockid='". $NewItem ."'";
 
 			$ErrMsg = _('Could not determine if the part was shop packaging or not because');
 			$DbgMsg = _('The sql that was used to determine if the part being ordered was shop packaging or not was ');
-			$PackagingResult = DB_query($sql,$ErrMsg,$DbgMsg);
+			$PackagingResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 			if (DB_num_rows($PackagingResult)==0){
 				prnMsg( _('The item code') . ' ' . $NewItem . ' ' . _('could not be retrieved from the database'),'warn');
-			} elseif ($myrow=DB_fetch_array($PackagingResult)){
-				if ($myrow['categoryid'] == "SHPACK"){
+			} elseif ($MyRow=DB_fetch_array($PackagingResult)){
+				if ($MyRow['categoryid'] == "SHPACK"){
 					// It's a packaging item
 					switch ($NewItem) {
 						case 'PKBX01-L':
@@ -400,17 +400,17 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 				$QuantityOfDiscCat += $StkItems_2->Quantity;
 			} 
 		}
-		$result = DB_query("SELECT MAX(discountrate) AS discount
+		$Result = DB_query("SELECT MAX(discountrate) AS discount
 							FROM discountmatrix
 							WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 								AND discountcategory ='" . $OrderLine->DiscCat . "'
 								AND quantitybreak <='" . $QuantityOfDiscCat . "'");
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]!=0){ /* need to update the lines affected */
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0]!=0){ /* need to update the lines affected */
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
 				/* add up total quantity of all lines of this DiscCat */
 				if ($StkItems_2->DiscCat==$OrderLine->DiscCat AND $StkItems_2->DiscountPercent == 0){
-					$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $myrow[0];
+					$_SESSION['Items'.$identifier]->LineItems[$StkItems_2->LineNumber]->DiscountPercent = $MyRow[0];
 				}
 			}
 		}
@@ -592,7 +592,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
 		// *************************************************************************
 
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 		/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30);
 		$InvoiceNo = GetNextTransNo(10);
@@ -611,7 +611,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		}else{
 			/*The area is wrong for any reason */
 			prnMsg('ERROR POS0050: The area ' . $Area . ' is not defined. Please call the office inmediately', 'error');
-			$result = DB_Txn_Rollback();
+			$Result = DB_Txn_Rollback();
 			include('includes/footer.php');
 			exit;
 		}
@@ -778,8 +778,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			 /* Update location stock records if not a dummy stock item
 			 need the MBFlag later too so save it to $MBFlag */
 			$Result = DB_query("SELECT mbflag FROM stockmaster WHERE stockid = '" . $OrderLine->StockID . "'");
-			$myrow = DB_fetch_row($Result);
-			$MBFlag = $myrow[0];
+			$MyRow = DB_fetch_row($Result);
+			$MBFlag = $MyRow[0];
 			if ($MBFlag=='B' OR $MBFlag=='M') {
 				$Assembly = False;
 

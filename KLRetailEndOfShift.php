@@ -46,9 +46,9 @@ $SQL = "SELECT salesorders.orderno,
 			AND salesorders.salesperson = '" . $_SESSION['SalesmanLogin'] . "'
 		ORDER BY salesorders.orderno ASC";
 		
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
-if (DB_num_rows($result) != 0){
+if (DB_num_rows($Result) != 0){
 	echo '<p class="page_title_text" align="center"><strong>' . $_SESSION['SalesmanLogin'] . ' SPG End Of Shift Report' . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -65,19 +65,19 @@ if (DB_num_rows($result) != 0){
 	echo $TableHeader;
 	$k = 0; //row colour counter
 	
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		$Invoices++;
-		$SubTotal = $myrow['klpaidcash'] + $myrow['klpaidcreditcard'] + $myrow['klreturnedgoods'] + $myrow['klvouchers'];
-		$TotalCash += $myrow['klpaidcash'];
-		$TotalCreditCard += $myrow['klpaidcreditcard'];
-		$TotalReturned += $myrow['klreturnedgoods'];
-		$TotalVouchers += $myrow['klvouchers'];
+		$SubTotal = $MyRow['klpaidcash'] + $MyRow['klpaidcreditcard'] + $MyRow['klreturnedgoods'] + $MyRow['klvouchers'];
+		$TotalCash += $MyRow['klpaidcash'];
+		$TotalCreditCard += $MyRow['klpaidcreditcard'];
+		$TotalReturned += $MyRow['klreturnedgoods'];
+		$TotalVouchers += $MyRow['klvouchers'];
 		$Total += $SubTotal;
 		$FirstLinePrinted = FALSE;
 
-		$TextInvoice = $myrow['customerref'];
-		if ($myrow['klpaidcash'] > 0){
-			$TextPayment = 'Cash: ' . number_format($myrow['klpaidcash'],0);
+		$TextInvoice = $MyRow['customerref'];
+		if ($MyRow['klpaidcash'] > 0){
+			$TextPayment = 'Cash: ' . number_format($MyRow['klpaidcash'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = TRUE;
@@ -85,8 +85,8 @@ if (DB_num_rows($result) != 0){
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
-		if ($myrow['klpaidcreditcard'] > 0){
-			$TextPayment = 'Credit Card: ' . number_format($myrow['klpaidcreditcard'],0);
+		if ($MyRow['klpaidcreditcard'] > 0){
+			$TextPayment = 'Credit Card: ' . number_format($MyRow['klpaidcreditcard'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = TRUE;
@@ -94,8 +94,8 @@ if (DB_num_rows($result) != 0){
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
-		if ($myrow['klreturnedgoods'] > 0){
-			$TextPayment = 'Returned Goods: ' . number_format($myrow['klreturnedgoods'],0);
+		if ($MyRow['klreturnedgoods'] > 0){
+			$TextPayment = 'Returned Goods: ' . number_format($MyRow['klreturnedgoods'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = TRUE;
@@ -103,8 +103,8 @@ if (DB_num_rows($result) != 0){
 				$TextToPrint .=  $RightJustified . $TextPayment . $NewLine;
 			}
 		}
-		if ($myrow['klvouchers'] > 0){
-			$TextPayment = 'Voucher/Discount: ' . number_format($myrow['klvouchers'],0);
+		if ($MyRow['klvouchers'] > 0){
+			$TextPayment = 'Voucher/Discount: ' . number_format($MyRow['klvouchers'],0);
 			if(!$FirstLinePrinted){
 				$TextToPrint .= DoubleJustified($TextInvoice, $TextPayment, $LineLenghtCharA, " ");
 				$FirstLinePrinted = TRUE;
@@ -124,12 +124,12 @@ if (DB_num_rows($result) != 0){
 				<td class="number">%s</td>
 				</tr>', 
 				$Invoices, 
-				number_format($myrow['orderno']), 
-				$myrow['customerref'], 
-				number_format($myrow['klpaidcash']), 
-				number_format($myrow['klpaidcreditcard']), 
-				number_format($myrow['klreturnedgoods']), 
-				number_format($myrow['klvouchers']), 
+				number_format($MyRow['orderno']), 
+				$MyRow['customerref'], 
+				number_format($MyRow['klpaidcash']), 
+				number_format($MyRow['klpaidcreditcard']), 
+				number_format($MyRow['klreturnedgoods']), 
+				number_format($MyRow['klvouchers']), 
 				number_format($SubTotal)
 				);
 	}

@@ -75,7 +75,7 @@ $SQL = "SELECT stockmaster.stockid,
 		WHERE stockmaster.categoryid IN('SHCONS')
 			AND stockmaster.discontinued = 0 
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<p class="page_title_text" align="center"><strong>' . _('Usage of Internal Stock - Shop Consumables during the last ') . $NumberOfDays . ' days' . '</strong></p>';
 echo '<table class="selection">';
@@ -100,7 +100,7 @@ $TableHeader = '<tr>
 echo $TableHeader;
 $k = 0; //row colour counter
 $i = 1;
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	if ($k == 1) {
 		echo '<tr class="EvenTableRows">';
 		$k = 0;
@@ -111,18 +111,18 @@ while ($myrow = DB_fetch_array($result)) {
 	if ($i % 20 == 0){
 		echo $TableHeader;
 	}
-//	$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-	$totalused = $myrow['usageKANTOR'] +
-				$myrow['usage66'] +
-				$myrow['usageSA'] +
-				$myrow['usageKS'] +
-				$myrow['usageLE'] +
-				$myrow['usageJC'] +
-				$myrow['usageBW'] +
-				$myrow['usageUB'] +
-				$myrow['usageMF'];
+//	$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
+	$totalused = $MyRow['usageKANTOR'] +
+				$MyRow['usage66'] +
+				$MyRow['usageSA'] +
+				$MyRow['usageKS'] +
+				$MyRow['usageLE'] +
+				$MyRow['usageJC'] +
+				$MyRow['usageBW'] +
+				$MyRow['usageUB'] +
+				$MyRow['usageMF'];
 	if ($totalused != 0){
-		$daysstock = $myrow['qtyKANTOR'] / $totalused * 30;
+		$daysstock = $MyRow['qtyKANTOR'] / $totalused * 30;
 	}else{
 		$daysstock = 0;
 	}			
@@ -144,19 +144,19 @@ while ($myrow = DB_fetch_array($result)) {
 			<td class="number">%s</td>
 			</tr>', 
 			$i, 
-			$myrow['stockid'], 
-			$myrow['description'], 
-			locale_number_format($myrow['qtyKANTOR'],0),
-			$myrow['units'], 
-			locale_number_format($myrow['usageKANTOR'],0),
-			locale_number_format($myrow['usage66'],0),
-			locale_number_format($myrow['usageSA'],0),
-			locale_number_format($myrow['usageKS'],0),
-			locale_number_format($myrow['usageLE'],0),
-			locale_number_format($myrow['usageJC'],0),
-			locale_number_format($myrow['usageBW'],0),
-			locale_number_format($myrow['usageUB'],0),
-			locale_number_format($myrow['usageMF'],0),
+			$MyRow['stockid'], 
+			$MyRow['description'], 
+			locale_number_format($MyRow['qtyKANTOR'],0),
+			$MyRow['units'], 
+			locale_number_format($MyRow['usageKANTOR'],0),
+			locale_number_format($MyRow['usage66'],0),
+			locale_number_format($MyRow['usageSA'],0),
+			locale_number_format($MyRow['usageKS'],0),
+			locale_number_format($MyRow['usageLE'],0),
+			locale_number_format($MyRow['usageJC'],0),
+			locale_number_format($MyRow['usageBW'],0),
+			locale_number_format($MyRow['usageUB'],0),
+			locale_number_format($MyRow['usageMF'],0),
 			locale_number_format($totalused,0),
 			locale_number_format($daysstock,0)
 			);

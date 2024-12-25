@@ -42,8 +42,8 @@ function submit($ListCategories, $Location) {
 					AND stockmaster.discontinued = 0
 					AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				ORDER BY stockmaster.stockid";
-		$result = DB_query($SQL);
-		if (DB_num_rows($result) != 0){
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
 			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
@@ -104,19 +104,19 @@ function submit($ListCategories, $Location) {
 			$objPHPExcel->setActiveSheetIndex(0);
 			$ActiveSheet = $objPHPExcel->getActiveSheet();
 			
-			while ($myrow = DB_fetch_array($result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
-				$ActiveSheet->setCellValue('A'.$i, $myrow['stockid']);
-				$ActiveSheet->setCellValue('B'.$i, $myrow['description']);
-				$ActiveSheet->setCellValue('C'.$i, $myrow['categoryid']);
+				$ActiveSheet->setCellValue('A'.$i, $MyRow['stockid']);
+				$ActiveSheet->setCellValue('B'.$i, $MyRow['description']);
+				$ActiveSheet->setCellValue('C'.$i, $MyRow['categoryid']);
 
-				$ActiveSheet->setCellValue('D'.$i, round($myrow['quantity'],0));
-				$ActiveSheet->setCellValue('E'.$i, round($myrow['intransitout'],0));
-				$ActiveSheet->setCellValue('F'.$i, round($myrow['intransitin'],0));
+				$ActiveSheet->setCellValue('D'.$i, round($MyRow['quantity'],0));
+				$ActiveSheet->setCellValue('E'.$i, round($MyRow['intransitout'],0));
+				$ActiveSheet->setCellValue('F'.$i, round($MyRow['intransitin'],0));
 
 // We need to count whatever is in QOH - transit OUT, not transit IN
-//				$Available = $myrow['quantity']+$myrow['intransitin']-$myrow['intransitout'];
-				$Available = $myrow['quantity']-$myrow['intransitout'];
+//				$Available = $MyRow['quantity']+$MyRow['intransitin']-$MyRow['intransitout'];
+				$Available = $MyRow['quantity']-$MyRow['intransitout'];
 
 				$ActiveSheet->setCellValue('G'.$i, round($Available,0));
 //				$ActiveSheet->setCellValue('H'.$i, '=COUNTIFS(Barcodes!$A$1:$A$9999,A'.$i.')');
@@ -225,8 +225,8 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
 	$LocResult = DB_query($SQL);
-	while ($myrow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($LocResult)){
+		 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 
 	echo '</table>

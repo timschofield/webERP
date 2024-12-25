@@ -29,9 +29,9 @@ function submit($ListCategories, $ListLocations) {
 			FROM locations		
 			WHERE loccode IN ('". implode("','",$ListLocations)."')
 			ORDER BY locationname";
-		$resultLocation = DB_query($SQL);
+		$ResultLocation = DB_query($SQL);
 		
-		if (DB_num_rows($resultLocation) != 0){
+		if (DB_num_rows($ResultLocation) != 0){
 			echo '<p class="page_title_text" align="center"><strong>' . "Inventory distribution of models by type " . '</strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
@@ -68,18 +68,18 @@ function submit($ListCategories, $ListLocations) {
 			echo $TableHeader;
 			$k = 0; //row colour counter
 
-			while ($myrowLoc = DB_fetch_array($resultLocation)) {
+			while ($MyRowLoc = DB_fetch_array($ResultLocation)) {
 				// for every location, select all items with stock, RL, and classify by type 
 				$SQL = "SELECT locstock.stockid,
 							locstock.reorderlevel
 						FROM locstock, stockmaster		
 						WHERE locstock.stockid = stockmaster.stockid 
 							AND stockmaster.categoryid IN ('". implode("','",$ListCategories)."')
-							AND locstock.loccode = '" .  $myrowLoc['loccode']. "'
+							AND locstock.loccode = '" .  $MyRowLoc['loccode']. "'
 							AND locstock.quantity > 0";
-				$resultItems = DB_query($SQL);
+				$ResultItems = DB_query($SQL);
 
-				if (DB_num_rows($resultItems) != 0){
+				if (DB_num_rows($ResultItems) != 0){
 				
 					$TotalRingByLoc = 0;
 					$TotalToeRingByLoc = 0;
@@ -94,8 +94,8 @@ function submit($ListCategories, $ListLocations) {
 					$TotalTaliByLoc = 0;
 					$TotalUnknownByLoc = 0;
 
-					while ($myrow = DB_fetch_array($resultItems)) {
-						$Type = TypeOfItem($myrow['stockid']);
+					while ($MyRow = DB_fetch_array($ResultItems)) {
+						$Type = TypeOfItem($MyRow['stockid']);
 						if ($Type == "Ring"){
 							$TotalRingByLoc++;
 						}elseif ($Type == "ToeRing"){
@@ -153,7 +153,7 @@ function submit($ListCategories, $ListLocations) {
 							<td class="number">%s</td>
 							<td class="number">%s</td>
 							</tr>', 
-							$myrowLoc['locationname'], 
+							$MyRowLoc['locationname'], 
 							locale_number_format_zero_blank($TotalRingByLoc,0) . ' ('. locale_number_format_zero_blank($TotalRingByLoc/$Total*100,0) . '%)',
 							locale_number_format_zero_blank($TotalToeRingByLoc,0) . ' ('. locale_number_format_zero_blank($TotalToeRingByLoc/$Total*100,0) . '%)',
 							locale_number_format_zero_blank($TotalBeadByLoc,0) . ' ('. locale_number_format_zero_blank($TotalBeadByLoc/$Total*100,0) . '%)',
@@ -180,9 +180,9 @@ function submit($ListCategories, $ListLocations) {
 						AND locstock.loccode IN ('". implode("','",$ListLocations)."')
 						AND locstock.quantity > 0
 					GROUP BY locstock.stockid";
-			$resultItems = DB_query($SQL);
+			$ResultItems = DB_query($SQL);
 
-			if (DB_num_rows($resultItems) != 0){
+			if (DB_num_rows($ResultItems) != 0){
 			
 				$TotalRingByLoc = 0;
 				$TotalToeRingByLoc = 0;
@@ -197,8 +197,8 @@ function submit($ListCategories, $ListLocations) {
 				$TotalTaliByLoc = 0;
 				$TotalUnknownByLoc = 0;
 
-				while ($myrow = DB_fetch_array($resultItems)) {
-					$Type = TypeOfItem($myrow['stockid']);
+				while ($MyRow = DB_fetch_array($ResultItems)) {
+					$Type = TypeOfItem($MyRow['stockid']);
 					if ($Type == "Ring"){
 						$TotalRingByLoc++;
 					}elseif ($Type == "ToeRing"){

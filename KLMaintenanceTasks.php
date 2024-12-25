@@ -30,16 +30,16 @@ if (isset($_POST['submit'])) {
 
 	//first off validate inputs are sensible
 
-	$sql=	"SELECT COUNT(*)
+	$SQL=	"SELECT COUNT(*)
 			FROM klmaintenancetasks 
 			WHERE loccode = '". $_POST['LocCode']. "'
 				AND maintenancetype  = '". $_POST['MaintenanceType']. "'
 				AND closed = 0";
-	$result=DB_query($sql);
-	$myrow=DB_fetch_row($result);
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_row($Result);
 
 	$i=1;
-//	if ($myrow[0]!=0 and !isset($SelectedIndex)) {
+//	if ($MyRow[0]!=0 and !isset($SelectedIndex)) {
 //		$InputError = TRUE;
 //		prnMsg( _('Already exists an open maintenance task for the location and type of maintenace in the database. If you need, you can UPDATE the existing one.'),'error');
 //		$Errors[$i] = 'CounterIndex';
@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 		if (isset($SelectedIndex)) {
 			/*SelectedIndex could also exist if submit had not been clicked this code would not run in this case cos submit is false of course	see the close code below*/
 			if (isset($_POST['Description']) AND ($_POST['Description'] != '')){
-				$sql = "INSERT INTO klmaintenancetaskupdates 
+				$SQL = "INSERT INTO klmaintenancetaskupdates 
 							(taskcounter,
 							description,
 							updateuser,
@@ -63,14 +63,14 @@ if (isset($_POST['submit'])) {
 							NOW())";
 
 				$msg = 'The maintenance task '. $SelectedIndex .' has been updated';
-				$result = DB_query($sql);
+				$Result = DB_query($SQL);
 				prnMsg($msg,'success');
 			}else{
 				prnMsg("Trask description update was empty, so no update was recroded",'warn');
 			}
 		}else{
 			/*SelectedIndex is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new status code form */
-			$sql = "INSERT INTO klmaintenancetasks 
+			$SQL = "INSERT INTO klmaintenancetasks 
 						(loccode,
 						maintenancetype,
 						description,
@@ -85,7 +85,7 @@ if (isset($_POST['submit'])) {
 						NOW())";
 
 			$msg = _('A new maintenance task has been created');
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			prnMsg($msg,'success');
 			unset ($SelectedIndex);
 			unset ($_POST['LocCode']);
@@ -94,13 +94,13 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['close'])) {
 	//the link to close a selected record was clicked instead of the submit button
 
-	$sql = "UPDATE klmaintenancetasks SET
+	$SQL = "UPDATE klmaintenancetasks SET
 					closed = 1,
 					closeuser = '" . $_SESSION['UserID'] . "',
 					closedate = NOW() 
 			WHERE counterindex = '".$SelectedIndex."'";
 	$msg = 'The maintenance task '. $SelectedIndex .' has been closed';
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	prnMsg($msg,'success');
 	
 	//end if status code used in customer or supplier accounts
@@ -115,7 +115,7 @@ then none of the above are true and the list of status codes will be displayed w
 links to close or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT klmaintenancetasks.counterindex, 
+	$SQL = "SELECT klmaintenancetasks.counterindex, 
 				klmaintenancetasks.loccode,
 				locations.locationname,
 				klmaintenancetasks.maintenancetype,
@@ -134,7 +134,7 @@ or deletion of the records*/
 						AND locationusers.canupd=1
 			WHERE klmaintenancetasks.closed = 0
 			ORDER BY klmaintenancetasks.counterindex";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
@@ -147,7 +147,7 @@ or deletion of the records*/
         </tr>';
 
 	$k=0; //row colour counter
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
 		$k = StartEvenOrOddRow($k);
 		printf('<td class="number">%s</td>
@@ -159,27 +159,27 @@ or deletion of the records*/
 				<td><a href="%s?SelectedIndex=%s">' . _('Update') . '</a></td>
 				<td><a href="%s?SelectedIndex=%s&amp;close=1" onclick="return confirm(\'' . _('Are you sure you wish to close this maintenance task?') . '\');">' .  _('Close')  . '</a></td>
 				</tr>',
-				$myrow['counterindex'],
-				$myrow['locationname'],
-				$myrow['typedescription'],
-				$myrow['creationuser'],
-				ConvertSQLDateTime($myrow['creationdate']),
-				$myrow['taskdescription'],
+				$MyRow['counterindex'],
+				$MyRow['locationname'],
+				$MyRow['typedescription'],
+				$MyRow['creationuser'],
+				ConvertSQLDateTime($MyRow['creationdate']),
+				$MyRow['taskdescription'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$myrow['counterindex'],
+				$MyRow['counterindex'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$myrow['counterindex']);
+				$MyRow['counterindex']);
 
 		// check if there are any updates to show
-		$sqlupdates = "SELECT klmaintenancetaskupdates.counterindex, 
+		$SQLupdates = "SELECT klmaintenancetaskupdates.counterindex, 
 							klmaintenancetaskupdates.description AS updatedescription,
 							klmaintenancetaskupdates.updateuser,
 							klmaintenancetaskupdates.updatedate
 						FROM klmaintenancetaskupdates
-						WHERE klmaintenancetaskupdates.taskcounter = '".$myrow['counterindex']."'
+						WHERE klmaintenancetaskupdates.taskcounter = '".$MyRow['counterindex']."'
 						ORDER BY klmaintenancetaskupdates.counterindex";
-		$resultupdates = DB_query($sqlupdates);
-		while ($myupdates=DB_fetch_array($resultupdates)) {
+		$Resultupdates = DB_query($SQLupdates);
+		while ($myupdates=DB_fetch_array($Resultupdates)) {
 			$k = StartSameColourRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
@@ -222,7 +222,7 @@ if (!isset($_GET['close'])) {
 		//editing an existing status code
 		$ButtonText = "Update Task";
 
-		$sql = "SELECT klmaintenancetasks.counterindex,
+		$SQL = "SELECT klmaintenancetasks.counterindex,
 					klmaintenancetasks.loccode,
 					locations.locationname,
 					klmaintenancetasks.creationuser,
@@ -235,13 +235,13 @@ if (!isset($_GET['close'])) {
 					AND klmaintenancetypes.maintenancetype = klmaintenancetasks.maintenancetype
 					AND counterindex='".$SelectedIndex."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['CounterIndex'] = $myrow['counterindex'];
-		$_POST['LocCode']  = $myrow['loccode'];
-		$_POST['MaintenanceType']  = $myrow['maintenancetype'];
-		$_POST['Description']  = $myrow['description'];
+		$_POST['CounterIndex'] = $MyRow['counterindex'];
+		$_POST['LocCode']  = $MyRow['loccode'];
+		$_POST['MaintenanceType']  = $MyRow['maintenancetype'];
+		$_POST['Description']  = $MyRow['description'];
 
 		echo '<input type="hidden" name="SelectedIndex" value="' . $SelectedIndex . '" />';
 		echo '<input type="hidden" name="CounterIndex" value="' . $_POST['CounterIndex'] . '" />';
@@ -252,26 +252,26 @@ if (!isset($_GET['close'])) {
 				</tr>';
 		echo '	<tr>
 					<td>' .  _('Location') .':</td>
-					<td>' . $myrow['locationname'] . '</td>
+					<td>' . $MyRow['locationname'] . '</td>
 				</tr>';
 		echo '	<tr>
 					<td>' .  _('Maintenance Type') .':</td>
-					<td>' . $myrow['typedescription'] . '</td>
+					<td>' . $MyRow['typedescription'] . '</td>
 				</tr>';
 		echo '	<tr>
 					<td>' .  _('Description') .':</td>
-					<td>' . $myrow['creationuser']. " @ " . ConvertSQLDateTime($myrow['creationdate']) . ": " . $myrow['description'] . '</td>
+					<td>' . $MyRow['creationuser']. " @ " . ConvertSQLDateTime($MyRow['creationdate']) . ": " . $MyRow['description'] . '</td>
 				</tr>';
 		// check if there are any updates to show
-		$sqlupdates = "SELECT klmaintenancetaskupdates.counterindex, 
+		$SQLupdates = "SELECT klmaintenancetaskupdates.counterindex, 
 							klmaintenancetaskupdates.description AS updatedescription,
 							klmaintenancetaskupdates.updateuser,
 							klmaintenancetaskupdates.updatedate
 						FROM klmaintenancetaskupdates
 						WHERE klmaintenancetaskupdates.taskcounter = '".$SelectedIndex."'
 						ORDER BY klmaintenancetaskupdates.counterindex";
-		$resultupdates = DB_query($sqlupdates);
-		while ($myupdates=DB_fetch_array($resultupdates)) {
+		$Resultupdates = DB_query($SQLupdates);
+		while ($myupdates=DB_fetch_array($Resultupdates)) {
 			echo '	<tr>
 						<td></td>
 						<td>' . $myupdates['updateuser']. " @ " . ConvertSQLDateTime($myupdates['updatedate']) . ": " .$myupdates['updatedescription'] . '</td>
@@ -293,7 +293,7 @@ if (!isset($_GET['close'])) {
 		echo '<br />
 			<table class="selection">';
 
-		$sql = "SELECT locations.loccode, 
+		$SQL = "SELECT locations.loccode, 
 					locations.locationname 
 				FROM locations 
 					INNER JOIN locationusers 
@@ -301,44 +301,44 @@ if (!isset($_GET['close'])) {
 							AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
 							AND locationusers.canupd=1
 				ORDER BY locationname";
-		$resultStkLocs = DB_query($sql);
+		$ResultStkLocs = DB_query($SQL);
 
 		echo '<tr>
 				<td>' . _('Location') . ':</td>
 				<td><select name="LocCode">';
 
-		while ($myrow=DB_fetch_array($resultStkLocs)){
+		while ($MyRow=DB_fetch_array($ResultStkLocs)){
 			if (isset($_POST['LocCode'])){
-				if ($myrow['loccode'] == $_POST['LocCode']){
-					echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']. '</option>';
+				if ($MyRow['loccode'] == $_POST['LocCode']){
+					echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']. '</option>';
 				} else {
-					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				}
 			} else {
-				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
 		}
 		echo '</select></td>';
 
-		$sql = "SELECT maintenancetype,
+		$SQL = "SELECT maintenancetype,
 					description
 				FROM klmaintenancetypes 
 				ORDER BY description";
-		$resultTypes = DB_query($sql);
+		$ResultTypes = DB_query($SQL);
 
 		echo '<tr>
 				<td>' . _('Maintenance Type') . ':</td>
 				<td><select name="MaintenanceType">';
 
-		while ($myrow=DB_fetch_array($resultTypes)){
+		while ($MyRow=DB_fetch_array($ResultTypes)){
 			if (isset($_POST['MaintenanceType'])){
-				if ($myrow['maintenancetype'] == $_POST['MaintenanceType']){
-					echo '<option selected="selected" value="' . $myrow['maintenancetype'] . '">' . $myrow['description']. '</option>';
+				if ($MyRow['maintenancetype'] == $_POST['MaintenanceType']){
+					echo '<option selected="selected" value="' . $MyRow['maintenancetype'] . '">' . $MyRow['description']. '</option>';
 				} else {
-					echo '<option value="' . $myrow['maintenancetype'] . '">' . $myrow['description'] . '</option>';
+					echo '<option value="' . $MyRow['maintenancetype'] . '">' . $MyRow['description'] . '</option>';
 				}
 			} else {
-				echo '<option value="' . $myrow['maintenancetype'] . '">' . $myrow['description'] . '</option>';
+				echo '<option value="' . $MyRow['maintenancetype'] . '">' . $MyRow['description'] . '</option>';
 			}
 		}
 		echo '</select></td>';

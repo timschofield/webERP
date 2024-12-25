@@ -103,7 +103,7 @@ $MailMessage .= '
 			</tr>
 			<tr>
 				<td colspan="4">
-					<p>' . $Text0010 . ' ' . DB_escape_string($myrow['customername']) . ':</p>
+					<p>' . $Text0010 . ' ' . DB_escape_string($MyRow['customername']) . ':</p>
 				</td>
 			</tr>';
 			
@@ -111,7 +111,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 	  $MailMessage .= '
 			<tr>
 				<td colspan="4">
-					<p>' . $Text0020 . ' ' . ConvertSQLDate($myrow['clientsince']) . ' ' . $Text0030 . '</p>
+					<p>' . $Text0020 . ' ' . ConvertSQLDate($MyRow['clientsince']) . ' ' . $Text0030 . '</p>
 				</td>
 			</tr>
 			</table>';
@@ -120,60 +120,60 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 				<tr>
 					<th> ' . $Text0040 . ':
 					</th>
-					<td>' . DB_escape_string($myrow['customername']) . '
+					<td>' . DB_escape_string($MyRow['customername']) . '
 					</td>
 				</tr>';
-	if(mb_strlen(trim($myrow['address1']))) {
+	if(mb_strlen(trim($MyRow['address1']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['address1']) . '
-					</td>
-				</tr>';
-	}
-	if(mb_strlen(trim($myrow['address2']))) {
-		  $MailMessage .= '
-				<tr>
-					<td>
-					</td>
-					<td>' . DB_escape_string($myrow['address2']) . '
+					<td>' . DB_escape_string($MyRow['address1']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['address3']))) {
+	if(mb_strlen(trim($MyRow['address2']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['address3']) . '
+					<td>' . DB_escape_string($MyRow['address2']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['address4']))) {
+	if(mb_strlen(trim($MyRow['address3']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['address4']) . '
+					<td>' . DB_escape_string($MyRow['address3']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['address5']))) {
+	if(mb_strlen(trim($MyRow['address4']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['address5']) . '
+					<td>' . DB_escape_string($MyRow['address4']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['address6']))) {
+	if(mb_strlen(trim($MyRow['address5']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['address6']) . '
+					<td>' . DB_escape_string($MyRow['address5']) . '
+					</td>
+				</tr>';
+	}
+	if(mb_strlen(trim($MyRow['address6']))) {
+		  $MailMessage .= '
+				<tr>
+					<td>
+					</td>
+					<td>' . DB_escape_string($MyRow['address6']) . '
 					</td>
 				</tr>';
 	}
@@ -204,11 +204,11 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 		$MailMessage .= '
 				<tr>
 					<td colspan="4">
-						<p>' . $Text0020 . ' ' . ConvertSQLDate($myrow['orddate']) . ' ' . $Text0080 . '</p>
+						<p>' . $Text0020 . ' ' . ConvertSQLDate($MyRow['orddate']) . ' ' . $Text0080 . '</p>
 					</td>
 				</tr>
 				</table>';
-		$MailMessage .=  ShowBankDetails($_GET['PaymentCode'], $myrow['currcode'], $_GET['TransNo'], $Language);
+		$MailMessage .=  ShowBankDetails($_GET['PaymentCode'], $MyRow['currcode'], $_GET['TransNo'], $Language);
 		$MailMessage .= '
 				<table cellpadding="2" cellspacing="2">
 				<tr>
@@ -222,7 +222,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 		  $MailMessage .= '
 				<tr>
 					<td colspan="4">
-						<p>' . $Text0020 . ' ' . ConvertSQLDate($myrow['orddate']) . ' ' . $Text0100 . '</p>
+						<p>' . $Text0020 . ' ' . ConvertSQLDate($MyRow['orddate']) . ' ' . $Text0100 . '</p>
 					</td>
 				</tr>
 				</table>';
@@ -244,7 +244,7 @@ if ($_GET['EmailType']=='RemindBankTransfer'){
 		  $MailMessage .= '
 				<tr>
 					<td colspan="4">
-						<p>' . $Text0020 . ' ' . ConvertSQLDate($myrow['orddate']) . ' ' . $Text0130 . '</p>
+						<p>' . $Text0020 . ' ' . ConvertSQLDate($MyRow['orddate']) . ' ' . $Text0130 . '</p>
 					</td>
 				</tr>
 				</table>';
@@ -269,7 +269,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 }
 
 if ($_GET['EmailType']=='TrackingConfirmation'){
-	if($myrow['shippername'] == 'Pick up from store') {
+	if($MyRow['shippername'] == 'Pick up from store') {
 		$MailMessage .= '
 			<tr>
 				<td colspan="4">
@@ -280,10 +280,10 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 		$MailMessage .= '
 			<tr>
 				<td colspan="4">
-					<p>' . $Text0170 . ' ' . DB_escape_string($myrow['shippername']) . '. ' . $Text0180 .':' . DB_escape_string($myrow['consignment']) .'</p>
+					<p>' . $Text0170 . ' ' . DB_escape_string($MyRow['shippername']) . '. ' . $Text0180 .':' . DB_escape_string($MyRow['consignment']) .'</p>
 				</td>
 			</tr>';
-		if($myrow['shippername'] == 'EMS'){
+		if($MyRow['shippername'] == 'EMS'){
 			$MailMessage .= '
 				<tr>
 					<td colspan="4">
@@ -317,7 +317,7 @@ if ($_GET['EmailType']=='ThankYouOrder'){
 	 $MailMessage .= '
 			<tr>
 				<td colspan="4">
-					<p>' . $Text0020 . ' '. ConvertSQLDate($myrow['orddate']) .' ' . $Text0220 . ' ' . DB_escape_string($myrow['shippername']). '.</p>
+					<p>' . $Text0020 . ' '. ConvertSQLDate($MyRow['orddate']) .' ' . $Text0220 . ' ' . DB_escape_string($MyRow['shippername']). '.</p>
 					<p>' . $Text0230 . '</p>
 					<p>' . $Text0240 . '</p>
 					<p>' . $Text0250 . ' http://www.facebook.com/KapalLautBali' . '</p>
@@ -337,60 +337,60 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 				<tr>
 					<th> <b>' . $Text0270 . ':</b>
 					</th>
-					<td>' . DB_escape_string($myrow['customername']) . '
+					<td>' . DB_escape_string($MyRow['customername']) . '
 					</td>
 				</tr>';
-	if(mb_strlen(trim($myrow['deladd1']))) {
+	if(mb_strlen(trim($MyRow['deladd1']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['deladd1']) . '
-					</td>
-				</tr>';
-	}
-	if(mb_strlen(trim($myrow['deladd2']))) {
-		  $MailMessage .= '
-				<tr>
-					<td>
-					</td>
-					<td>' . DB_escape_string($myrow['deladd2']) . '
+					<td>' . DB_escape_string($MyRow['deladd1']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['deladd3']))) {
+	if(mb_strlen(trim($MyRow['deladd2']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['deladd3']) . '
+					<td>' . DB_escape_string($MyRow['deladd2']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['deladd4']))) {
+	if(mb_strlen(trim($MyRow['deladd3']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['deladd4']) . '
+					<td>' . DB_escape_string($MyRow['deladd3']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['deladd5']))) {
+	if(mb_strlen(trim($MyRow['deladd4']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['deladd5']) . '
+					<td>' . DB_escape_string($MyRow['deladd4']) . '
 					</td>
 				</tr>';
 	}
-	if(mb_strlen(trim($myrow['deladd6']))) {
+	if(mb_strlen(trim($MyRow['deladd5']))) {
 		  $MailMessage .= '
 				<tr>
 					<td>
 					</td>
-					<td>' . DB_escape_string($myrow['deladd6']) . '
+					<td>' . DB_escape_string($MyRow['deladd5']) . '
+					</td>
+				</tr>';
+	}
+	if(mb_strlen(trim($MyRow['deladd6']))) {
+		  $MailMessage .= '
+				<tr>
+					<td>
+					</td>
+					<td>' . DB_escape_string($MyRow['deladd6']) . '
 					</td>
 				</tr>';
 	}
@@ -412,7 +412,7 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 					<th>' . $Text0320 . '</th>
 				</tr>';
 		
-	$sql = "SELECT salesorderdetails.stkcode,
+	$SQL = "SELECT salesorderdetails.stkcode,
 			stockmaster.description,
 			stockmaster.grossweight,
 			stockmaster.volume,
@@ -427,25 +427,25 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		WHERE salesorderdetails.orderno=" . $_GET['TransNo'] . "
 		ORDER BY poline";
-	$result=DB_query($sql, $ErrMsg);
+	$Result=DB_query($SQL, $ErrMsg);
 	$CartTotalValue  = 0;
 	$CartTotalWeight = 0;
 	$CartTotalVolume = 0;
-	if (DB_num_rows($result)>0){
-		while ($myrow2=DB_fetch_array($result)){
+	if (DB_num_rows($Result)>0){
+		while ($MyRow2=DB_fetch_array($Result)){
 // 			ONLINE ORDERS already come with NET prices
-			$GrossPrice = round($myrow2['unitprice'],$myrow['decimalplaces']) ;
-			$LineTotal = $GrossPrice * $myrow2['quantity'];
+			$GrossPrice = round($MyRow2['unitprice'],$MyRow['decimalplaces']) ;
+			$LineTotal = $GrossPrice * $MyRow2['quantity'];
 			$CartTotalValue += $LineTotal;
 			$CartTotalWeight += $CartItem->Weight * $CartItem->Quantity;
 			$CartTotalVolume += $CartItem->Volume * $CartItem->Quantity;
 			$MailMessage .= '
 					<tr>
-						<td>' . $myrow2['stkcode'] . '</td>
-						<td>' . $myrow2['description'] . '</td>
-						<td align="right">' . locale_number_format($myrow2['quantity'],0) . '</td>
-						<td align="right">' .  locale_number_format($GrossPrice,$myrow['decimalplaces'])  . '</td>
-						<td align="right">' .  locale_number_format($LineTotal,$myrow['decimalplaces'])  . '</td>
+						<td>' . $MyRow2['stkcode'] . '</td>
+						<td>' . $MyRow2['description'] . '</td>
+						<td align="right">' . locale_number_format($MyRow2['quantity'],0) . '</td>
+						<td align="right">' .  locale_number_format($GrossPrice,$MyRow['decimalplaces'])  . '</td>
+						<td align="right">' .  locale_number_format($LineTotal,$MyRow['decimalplaces'])  . '</td>
 					</tr>';		
 		} //end while there are line items to print out
 	} /*end if there are order details to show on the order*/
@@ -453,23 +453,23 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 	$MailMessage .= '
 				<tr>
 					<td colspan="4" align="right">' . $Text0330 . '</td>
-					<td align="right">' . locale_number_format($CartTotalValue,$myrow['decimalplaces']) . '</td>
+					<td align="right">' . locale_number_format($CartTotalValue,$MyRow['decimalplaces']) . '</td>
 				</tr>';
 
 	/* freight details */
-	if ($myrow['freightcost'] != 0){
+	if ($MyRow['freightcost'] != 0){
 		$MailMessage .=  '
 			<tr>
 				<td colspan="4" align="right">' . $Text0340 . '</td>
-				<td align="right">' . locale_number_format($myrow['freightcost'],$myrow['decimalplaces']) . '</td>
+				<td align="right">' . locale_number_format($MyRow['freightcost'],$MyRow['decimalplaces']) . '</td>
 			</tr>';
 	}else{
-		if ($myrow['shippername'] == 'Pick up from store'){
+		if ($MyRow['shippername'] == 'Pick up from store'){
 			$MailMessage .=  '
 				<tr>
 					<td colspan="4" align="right">' . $Text0350 . '</td>
 				</tr>';
-		}elseif ($myrow['shippername'] == 'Wholesale Order Shipping'){
+		}elseif ($MyRow['shippername'] == 'Wholesale Order Shipping'){
 			$MailMessage .=  '
 				<tr>
 					<td colspan="4" align="right">' . $Text0365 . '</td>
@@ -483,8 +483,8 @@ if (($_GET['EmailType']=='PaymentConfirmation')
 	}
 	$MailMessage .=  '
 		<tr>
-			<td colspan="4" align="right">' . $Text0370 . ' (' . $myrow['currcode'] . ') ' . '</td>
-			<td align="right">' . locale_number_format($CartTotalValue + $myrow['freightcost'],$myrow['decimalplaces']) . '</td>
+			<td colspan="4" align="right">' . $Text0370 . ' (' . $MyRow['currcode'] . ') ' . '</td>
+			<td align="right">' . locale_number_format($CartTotalValue + $MyRow['freightcost'],$MyRow['decimalplaces']) . '</td>
 		</tr>';
 	$MailMessage .= '
 			</table>';
