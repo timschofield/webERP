@@ -129,13 +129,6 @@ if (DB_num_rows($AccountsResults)==0) {
 			((isset($_POST['BankAccount']) and $_POST['BankAccount'] == $MyRow['accountcode']) ? ' selected="selected"' : '' ),
 			' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 
-
-		/*list the bank account names */
-		if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		}
 	}
 	echo '</select></td>
 		</tr>';
