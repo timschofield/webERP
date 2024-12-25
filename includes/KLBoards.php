@@ -137,7 +137,7 @@ function ActiveTransferStatus($RootPath){
 				</thead>
 				<tbody>';
 		$i = 1;
-		$total = 0;
+		$Total = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
 			printf('<tr class="striped_row">
@@ -156,7 +156,7 @@ function ActiveTransferStatus($RootPath){
 					locale_number_format($MyRow['pendingqty'], 0)
 					);
 			$i++;
-			$total = $total + $MyRow['pendingqty'];
+			$Total = $Total + $MyRow['pendingqty'];
 		}
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
@@ -171,9 +171,9 @@ function ActiveTransferStatus($RootPath){
 				'',
 				'',
 				'Total',
-				locale_number_format($total, 0)
+				locale_number_format($Total, 0)
 				);
-		InsertKPI("Transfers", "Active Transfers (pcs)", $total);
+		InsertKPI("Transfers", "Active Transfers (pcs)", $Total);
 		echo '</tbody>
 			  </table>
 			  </div>
@@ -183,7 +183,6 @@ function ActiveTransferStatus($RootPath){
 
 function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF){
 
-	$Today  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', 0));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysA));
 	$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysB));
 	$StartDateC = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysC));
@@ -200,37 +199,37 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateA . "'
-						AND bh2.date <= '". $Today . "') AS salesA,
+						AND bh2.date <= CURRENT_DATE) AS salesA,
 				(SELECT AVG(value)
 					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateB . "'
-						AND bh2.date <= '". $Today . "') AS salesB,
+						AND bh2.date <= CURRENT_DATE) AS salesB,
 				(SELECT AVG(value)
 					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateC . "'
-						AND bh2.date <= '". $Today . "') AS salesC,
+						AND bh2.date <= CURRENT_DATE) AS salesC,
 				(SELECT AVG(value)
 					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateD . "'
-						AND bh2.date <= '". $Today . "') AS salesD,
+						AND bh2.date <= CURRENT_DATE) AS salesD,
 				(SELECT AVG(value)
 					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateE . "'
-						AND bh2.date <= '". $Today . "') AS salesE,
+						AND bh2.date <= CURRENT_DATE) AS salesE,
 				(SELECT AVG(value)
 					FROM klkpi bh2
 					WHERE bh1.class =  bh2.class
 						AND bh1.concept =  bh2.concept
 						AND bh2.date >= '". $StartDateF . "'
-						AND bh2.date <= '". $Today . "') AS salesF
+						AND bh2.date <= CURRENT_DATE) AS salesF
 			FROM klkpi bh1
 			GROUP BY bh1.class,
 					bh1.concept
@@ -260,7 +259,7 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$target = "";
+			$Target = "";
 			$Code = $MyRow['class'];
 			$Name = $MyRow['concept'];
 
@@ -310,7 +309,7 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	}
 }
 
-function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop){
+function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop){
 
 	if ($Year == "LastYear"){
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-365-1));
@@ -350,7 +349,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 		$SQLByShop = " AND salesorders.debtorno =  '". $Shop . "' ";
 	}
 
-	if ($typereport == "Shop"){
+	if ($TypeReport == "Shop"){
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					(SELECT SUM(linenetprice)
@@ -411,7 +410,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 							AND salesorders.orddate >= '". $StartDateSort . "'
 							AND salesorders.orddate <= '". $Yesterday . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) DESC";
-	}elseif ($typereport == "Online"){
+	}elseif ($TypeReport == "Online"){
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
 					(SELECT SUM(linenetprice)/currencies.rate
@@ -542,13 +541,13 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Year == "LastYear"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('LAST YEAR Moving Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('LAST YEAR Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
 			$TitleTarget = "";
 		} else {
 			if ($Shop == "All"){
-				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales by ') . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
 			} else {
-				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales in ') . $Shop . ' by ' . $typereport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
+				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales in ') . $Shop . ' by ' . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
 			}
 			$TitleTarget = "";
 		}
@@ -557,7 +556,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				<thead>
 					<tr>
 						<th class="SortedColumn">' . _('#') . '</th>
-						<th>' . $typereport . '</th>
+						<th>' . $TypeReport . '</th>
 						<th class="SortedColumn">' . _('Name') . '</th>
 						<th class="SortedColumn">' . $NumDaysA . _(' days') . '</th>
 						<th class="SortedColumn">' . $NumDaysB . _(' days') . '</th>
@@ -573,8 +572,8 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$target = "";
-			if (($typereport == "Shop") OR ($typereport == "Online")){
+			$Target = "";
+			if (($TypeReport == "Shop") OR ($TypeReport == "Online")){
 				$Code = $MyRow['debtorno'];
 				$Name = $MyRow['name'];
 			} else {
@@ -642,7 +641,7 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalForecast = $TotalForecast + $forecast;
 			$i++;
 		}
-		if (($typereport == "Shop") OR ($typereport == "Online")){
+		if (($TypeReport == "Shop") OR ($TypeReport == "Online")){
 			$trend = " ";
 			if ($percent > 0){
 				$trend = "Improving " . locale_number_format($percent, 0) . "%";
@@ -719,11 +718,11 @@ function AverageSales($typereport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$NumDaysD = str_pad($NumDaysD, 3, '0', STR_PAD_LEFT);
 	$NumDaysE = str_pad($NumDaysE, 3, '0', STR_PAD_LEFT);
 
-	if (($typereport == "Shop") AND ($Year == "CurrentYear")){
+	if (($TypeReport == "Shop") AND ($Year == "CurrentYear")){
 		InsertKPI("Sales", "Retail Daily Sales Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
 		InsertKPI("Sales", "Retail Daily Sales Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
 	}
-	if (($typereport == "Online") AND ($Year == "CurrentYear")){
+	if (($TypeReport == "Online") AND ($Year == "CurrentYear")){
 		InsertKPI("Sales", "Online Daily Sales Average Last " . $NumDaysD . " days (IDR)", $TotalDateD);
 		InsertKPI("Sales", "Online Daily Sales Average Last " . $NumDaysE . " days (IDR)", $TotalDateE);
 	}
@@ -834,15 +833,15 @@ function MaintenanceTasksList($Status, $NumDays){
 					$DaysOpen
 					);
 			// check if there are any updates to show
-			$SQLupdates = "SELECT klmaintenancetaskupdates.counterindex,
+			$SQLUpdates = "SELECT klmaintenancetaskupdates.counterindex,
 								klmaintenancetaskupdates.description AS updatedescription,
 								klmaintenancetaskupdates.updateuser,
 								klmaintenancetaskupdates.updatedate
 							FROM klmaintenancetaskupdates
 							WHERE klmaintenancetaskupdates.taskcounter = '" . $MyRow['counterindex'] . "'
 							ORDER BY klmaintenancetaskupdates.counterindex";
-			$Resultupdates = DB_query($SQLupdates);
-			while ($myupdates = DB_fetch_array($Resultupdates)) {
+			$ResultUpdates = DB_query($SQLUpdates);
+			while ($MyUpdates = DB_fetch_array($ResultUpdates)) {
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td class="number">%s</td>
@@ -859,9 +858,9 @@ function MaintenanceTasksList($Status, $NumDays){
 						'',
 						'',
 						'',
-						$myupdates['updatedescription'],
-						$myupdates['updateuser'],
-						ConvertSQLDateTime($myupdates['updatedate']),
+						$MyUpdates['updatedescription'],
+						$MyUpdates['updateuser'],
+						ConvertSQLDateTime($MyUpdates['updatedate']),
 						'',
 						'',
 						''
@@ -893,7 +892,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 						AND s.stockid = bom.component
 						AND stP.discontinued = 0)";
 	$Result = DB_query($SQL);
-	$totalcost = 0;
+	$Totalcost = 0;
 	if (DB_num_rows($Result) != 0){
 		if (!$ShowOnlyTotal){
 			echo '<p class="page_title_text" align="center"><strong>' . _('Components NOT Used in any BOM. Use them in any product (IF QOH > 0) OR flag as obsolete (IF QOH = 0).') . '</strong></p>';
@@ -914,7 +913,7 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 		}
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$totalcost = $totalcost + ($MyRow['qoh'] * $MyRow['stdcost']);
+			$Totalcost = $Totalcost + ($MyRow['qoh'] * $MyRow['stdcost']);
 			if (!$ShowOnlyTotal){
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				printf('<tr class="striped_row">
@@ -949,18 +948,18 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 					'Total Cost',
 					'',
 					'',
-					locale_number_format($totalcost, 0)
+					locale_number_format($Totalcost, 0)
 					);
 			echo '</tbody>
 				  </table>
 				  </div>
 				  </form>';
-		} elseif ($totalcost >= $ShowLimit){
-			$text = "Components NOT Used in any BOM cost over the limit. Current cost = " . locale_number_format($totalcost, 0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		} elseif ($Totalcost >= $ShowLimit){
+			$Text = "Components NOT Used in any BOM cost over the limit. Current cost = " . locale_number_format($Totalcost, 0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 	}
-	InsertKPI("Components", "Components not used in any BOM (IDR)", $totalcost);
+	InsertKPI("Components", "Components not used in any BOM (IDR)", $Totalcost);
 }
 
 function ErrorsInTransfers($maxdays, $RootPath){
@@ -1190,7 +1189,7 @@ function FinishedStockDistribution($kind, $byreport){
 		echo $TableHeader;
 
 		$i = 1;
-		$totalpcs = 0;
+		$Totalpcs = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['optimalstock'] != 0){
 				$percentStock = locale_number_format(($MyRow['realstock']/$MyRow['optimalstock']) * 100,0) . "%";
@@ -1263,7 +1262,7 @@ function FinishedStockDistribution($kind, $byreport){
 						);
 			}
 			$i++;
-			$totalpcs = $totalpcs + $MyRow['realstock'];
+			$Totalpcs = $Totalpcs + $MyRow['realstock'];
 		}
 		if ($byreport == "STOCKCATEGORY"){
 			$SQL =	"SELECT COUNT(DISTINCT(l2.stockid)) AS realmodels
@@ -1278,12 +1277,12 @@ function FinishedStockDistribution($kind, $byreport){
 			$Result1 = DB_query($SQL);
 			if (DB_num_rows($Result1) != 0){
 				while ($MyRow1 = DB_fetch_array($Result1)) {
-					$totalModels = locale_number_format($MyRow1['realmodels'],0);
-					$percentModels =locale_number_format(($totalpcs/$MyRow1['realmodels']),1);
+					$TotalModels = locale_number_format($MyRow1['realmodels'],0);
+					$percentModels =locale_number_format(($Totalpcs/$MyRow1['realmodels']),1);
 				}
 			}
 		}else{
-			$totalModels = "";
+			$TotalModels = "";
 			$percentModels = "";
 		}
 		printf('<tr class="striped_row">
@@ -1300,10 +1299,10 @@ function FinishedStockDistribution($kind, $byreport){
 				</tr>',
 				"",
 				"Total",
-				locale_number_format($totalpcs,0),
+				locale_number_format($Totalpcs,0),
 				"",
 				"",
-				$totalModels,
+				$TotalModels,
 				"",
 				"",
 				$percentModels,
@@ -1317,7 +1316,7 @@ function FinishedStockDistribution($kind, $byreport){
 	}
 
 	if ($kind == "DISPLAYS"){
-		InsertKPI("Stock", "Stock of Displays (PCS)", $totalpcs);
+		InsertKPI("Stock", "Stock of Displays (PCS)", $Totalpcs);
 	}
 }
 
@@ -1497,7 +1496,7 @@ function FinishedStockDistributionByShopAndCategory(){
 				<tbody>';
 
 		$i = 1;
-		$totalpcs = 0;
+		$Totalpcs = 0;
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			$TotalModelsLocation = 	$MyRow['modelsTESTKL'] +
@@ -1691,9 +1690,9 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 				<tbody>';
 
 		$i = 1;
-		$totalcost = 0;
+		$Totalcost = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$totalcost = $totalcost + ($MyRow['availablestock'] * $MyRow['stdcost']);
+			$Totalcost = $Totalcost + ($MyRow['availablestock'] * $MyRow['stdcost']);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
@@ -1712,7 +1711,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 					);
 			$i++;
 		}
-		InsertKPI("Components", $BusinessConcept, $totalcost);
+		InsertKPI("Components", $BusinessConcept, $Totalcost);
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -1726,7 +1725,7 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 				'Total Cost',
 				'',
 				'',
-				locale_number_format($totalcost, 0)
+				locale_number_format($Totalcost, 0)
 				);
 		echo '</tbody>
 			  </table>
@@ -2121,9 +2120,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 	}
 }
 
-function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath){
+function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 	/* Check if there is any item without retail price */
-	$today = date('Y-m-d');
 	$issues = 0;
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
@@ -2136,18 +2134,18 @@ function ItemsWithoutRetailPrice($stockcat, $factorRetail, $RootPath){
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
 				AND stockcategory.stocktype ='F'
-				AND stockmaster.categoryid = '". $stockcat ."'
+				AND stockmaster.categoryid = '". $StockCat ."'
 				AND NOT EXISTS (SELECT *
 								FROM prices
 								WHERE stockmaster.stockid = prices.stockid
 									AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 									AND prices.currabrev = '". CURRENCY_CODE ."'
-									AND prices.startdate <= '". $today. "'
-									AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31'))";
+									AND prices.startdate <= CURRENT_DATE
+									AND (prices.enddate >= CURRENT_DATE OR prices.enddate = '9999-12-31'))";
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$CategoryName = GetCategoryNameFromCode($stockcat);
+		$CategoryName = GetCategoryNameFromCode($StockCat);
 		echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items without active retail price') . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
@@ -3577,7 +3575,6 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 }
 
 function PurchaseOrdersWrongPlannedDates($RootPath){
-	$Today = date('Y-m-d');
 
 	$SQL = "SELECT purchorders.orderno,
 				purchorders.supplierno,
@@ -3599,43 +3596,43 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 				AND purchorderdetails.completed = 0
 				AND purchorders.status IN ('Authorised', 'Printed', 'Pending')
 				AND ( (purchorders.klstatus > '1000' AND purchorders.klstatus <= '2000'
-						AND (purchorders.deliverydate < '" . $Today ."'))
+						AND (purchorders.deliverydate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1'
-						AND (purchorders.paymentdate < '" . $Today ."'))
+						AND (purchorders.paymentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2'
-						AND (purchorders.paymentdate < '" . $Today ."'))
+						AND (purchorders.paymentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O1'
-						AND (purchorders.paymentdate < '" . $Today ."'))
+						AND (purchorders.paymentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O2'
-						AND (purchorders.paymentdate < '" . $Today ."'))
+						AND (purchorders.paymentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O3'
-						AND (purchorders.paymentdate < '" . $Today ."'))
+						AND (purchorders.paymentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O4'
-						AND (purchorders.paymentdate < '" . $Today ."'))
+						AND (purchorders.paymentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '4000' AND suppliers.paymentterms = 'O5'
-						AND (purchorders.arrivaldate < '" . $Today ."'))
+						AND (purchorders.arrivaldate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O1'
-						AND (purchorders.shipmentdate < '" . $Today ."'))
+						AND (purchorders.shipmentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O2'
-						AND (purchorders.shipmentdate < '" . $Today ."'))
+						AND (purchorders.shipmentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O3'
-						AND (purchorders.shipmentdate < '" . $Today ."'))
+						AND (purchorders.shipmentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O4'
-						AND (purchorders.shipmentdate < '" . $Today ."'))
+						AND (purchorders.shipmentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5000' AND suppliers.paymentterms = 'O5'
-						AND (purchorders.shipmentdate < '" . $Today ."'))
+						AND (purchorders.shipmentdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O1'
-						AND (purchorders.customsdate < '" . $Today ."'))
+						AND (purchorders.customsdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O2'
-						AND (purchorders.customsdate < '" . $Today ."'))
+						AND (purchorders.customsdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O3'
-						AND (purchorders.customsdate < '" . $Today ."'))
+						AND (purchorders.customsdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O4'
-						AND (purchorders.customsdate < '" . $Today ."'))
+						AND (purchorders.customsdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '5500' AND suppliers.paymentterms = 'O5'
-						AND (purchorders.customsdate < '" . $Today ."'))
+						AND (purchorders.customsdate < CURRENT_DATE))
 					 OR (purchorders.klstatus > '1000' AND purchorders.klstatus < '6000'
-						AND (purchorders.arrivaldate < '" . $Today ."'))
+						AND (purchorders.arrivaldate < CURRENT_DATE))
 					)
 				AND purchorders.arrivaldate != purchorders.orddate
 			GROUP BY purchorders.orderno
@@ -3768,7 +3765,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 						<tbody>';
 		echo $TableHeader;
 		$i = 1;
-		$total = 0;
+		$Total = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
 			printf('<tr class="striped_row">
@@ -3787,7 +3784,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 					locale_number_format($MyRow['receivedqty'],0)
 					);
 			$i++;
-			$total = $total + $MyRow['receivedqty'];
+			$Total = $Total + $MyRow['receivedqty'];
 		}
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
@@ -3802,7 +3799,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 				'',
 				'',
 				'Total',
-				locale_number_format($total,0)
+				locale_number_format($Total,0)
 				);
 		echo '</tbody>
 				</table>
