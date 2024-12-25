@@ -751,13 +751,13 @@ class qrCode extends barcode {
 					if($i%2==0) {
 						$data[$dataCounter] = array(
 							6,
-							$this->alphanumCodingTable[$text{$i}],
+							$this->alphanumCodingTable[$text[$i]],
 						);
 						$addToTotalData = 6;
 					} else {
 						$data[$dataCounter] = array(
 							11,
-							$data[$dataCounter][1]*45 + $this->alphanumCodingTable[$text{$i}],
+							$data[$dataCounter][1]*45 + $this->alphanumCodingTable[$text[$i]],
 
 						);
 						$totalDataBits += 11;
@@ -777,7 +777,7 @@ class qrCode extends barcode {
 					for($i=0;$i<$this->charsNum;$i++) {
 						$data[] = array(
 							8,
-							ord($text{$i}),
+							ord($text[$i]),
 						);
 						$totalDataBits += 8;
 					}

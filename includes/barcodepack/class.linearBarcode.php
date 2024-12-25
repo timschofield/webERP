@@ -70,7 +70,7 @@ class linearBarcode extends barcode {
 	protected function checkAllowedChars($text, $allowedChars)
 	{
 		for($i=0; $i<strlen($text); $i++) {
-			if(!in_array($text{$i}, $allowedChars)) {
+			if(!in_array($text[$i], $allowedChars)) {
 				throw new Exception('Input text contains nonallowed characters.', E_BAD_CHARS);
 				return false;
 			}
@@ -120,7 +120,7 @@ class linearBarcode extends barcode {
 				case 'DATA2':
 					// Data
 					for($i=0;$i<strlen($values);$i++) {
-						$color = (($values{$i})=='1') ? $black : $white;
+						$color = (($values[$i])=='1') ? $black : $white;
 						imagefilledrectangle($im, $pos*$this->moduleSize+$margin, $margin,
 								($pos+1)*$this->moduleSize+$margin,
 								$this->height-5*$this->moduleSize+$margin, $color);
@@ -132,7 +132,7 @@ class linearBarcode extends barcode {
 					// will be longer
 					for($i=0;$i<strlen($values);$i++) {
 
-						$color = (($values{$i})=='1') ? $black : $white;
+						$color = (($values[$i])=='1') ? $black : $white;
 						imagefilledrectangle($im, $pos*$this->moduleSize+$margin, $margin,
 								($pos+1)*$this->moduleSize+$margin, $this->height+$margin,
 								$color);
