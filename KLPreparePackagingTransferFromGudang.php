@@ -45,7 +45,7 @@ KLSendEmail("SendPackagingFromGudang", "ShortConfirmation", $LocationNameTo, $Em
 DB_Txn_Begin();
 
 $SQL = "UPDATE locations 
-		SET klemaillastpackacgingtransfer = '" . Date('Y-m-d') . "'
+		SET klemaillastpackacgingtransfer = CURRENT_DATE
 		WHERE loccode =	'" . $_GET['To'] . "'";
 $ErrMsg =_('Could not update the date of the last packaging transfer reminder because');
 $Result = DB_query($SQL,$ErrMsg);

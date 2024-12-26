@@ -1,11 +1,5 @@
 <?php
 
-function webERP_in_test(){
-	// the current script filename contains TEST, we are on TEST database
-	return (strpos($_SERVER['PHP_SELF'],"TEST")!== false);
-}
-
-
 function zerofill($mStretch, $iLength = 2){
     $sPrintfString = '%0' . (int)$iLength . 's';
     return sprintf($sPrintfString, $mStretch);
@@ -88,7 +82,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					'" . $_SESSION['UserStockLocation'] . "',
 					'" . $StockId . "',
 					'" . $QtyDelivered . "',
-					'" . Date('Y-m-d') . "')";
+					CURRENT_DATE)";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0030');
 		$DbgMsg = _('The following SQL to insert the packaging used was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -125,7 +119,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					10,
 					'" . $InvoiceNo . "',
 					'" . $_SESSION['UserStockLocation'] . "',
-					'" . Date('Y-m-d') . "',
+					CURRENT_DATE,
 					'" . $_SESSION['UserID'] . "',
 					'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 					'" . $_SESSION['Items'.$identifier]->Branch . "',
@@ -512,7 +506,7 @@ function AccountDebtorPayment($ReceiptNumber,
 				'" . $Description . "',
 				'" . $ExRate . "',
 				'" . $BankAccountExRate . "',
-				'" . Date('Y-m-d') . "',
+				CURRENT_DATE,
 				'3',
 				'" . $NetPayment . "',
 				'" . $Currency . "')";
@@ -553,7 +547,7 @@ function AccountDebtorPayment($ReceiptNumber,
 
 	$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
-	$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
+	$SQL = "UPDATE debtorsmaster SET lastpaiddate = CURRENT_DATE,
 									lastpaid='" . $AmountPaid . "'
 							WHERE debtorsmaster.debtorno='" . $DebtorNo . "'";
 
@@ -568,7 +562,7 @@ function AccountDebtorPayment($ReceiptNumber,
 										transid_allocfrom,
 										transid_allocto )
 							VALUES  ('" . $AmountPaid . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									 '" . $ReceiptDebtorTransID . "',
 									 '" . $DebtorTransID . "')";
 	$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
@@ -657,7 +651,7 @@ function GetFilenameFromPOSIdentifier($id){
 function KLPrintReceiptTestWarning($KindOfDoc){
 	include('includes/wcpESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
-	if (webERP_in_test()){
+	if (KLwebERPScriptCalledFromTEST()){
 		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID " . $KindOfDoc . $NewLine;
 	}
 	return $TextToPrint;

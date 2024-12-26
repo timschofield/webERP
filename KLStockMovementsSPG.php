@@ -69,7 +69,7 @@ if ($StockID != ''){
 			WHERE  stockmoves.loccode='" . $Location . "'
 			AND stockmoves.trandate >= '". $StartDate . "'
 			AND stockmoves.stockid = '" . $StockID . "'
-			AND stockmoves.trandate <= '" . $Today . "'
+			AND stockmoves.trandate <= CURRENT_DATE
 			AND hidemovt=0
 			ORDER BY stkmoveno DESC";
 

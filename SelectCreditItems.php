@@ -1427,8 +1427,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $CreditLine->StockID . "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+                            AND bom.effectiveto > CURRENT_DATE";
 
 					$ErrMsg =  _('Could not retrieve assembly components from the database for') . ' ' . $CreditLine->StockID . ' ' . _('because');
 				 	$DbgMsg = _('The SQL that failed was');

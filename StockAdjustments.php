@@ -328,8 +328,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										periodno,
 										account,
 										amount,
-										narrative,
-										tag)
+										narrative)
 								VALUES (17,
 									'" .$AdjustmentNumber . "',
 									'" . $SQLAdjustmentDate . "',
@@ -337,8 +336,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 									'" .  $StockGLCodes['adjglact'] . "',
 									'" . round($_SESSION['Adjustment' . $identifier]->StandardCost * -($_SESSION['Adjustment' . $identifier]->Quantity), $_SESSION['CompanyRecord']['decimalplaces']) . "',
 									'" . $_SESSION['Adjustment' . $identifier]->StockID . " x " . $_SESSION['Adjustment' . $identifier]->Quantity . " @ " .
-										$_SESSION['Adjustment' . $identifier]->StandardCost . " " . $_SESSION['Adjustment' . $identifier]->Narrative . "',
-									'" . $_SESSION['Adjustment' . $identifier]->tag . "')";
+										$_SESSION['Adjustment' . $identifier]->StandardCost . " " . $_SESSION['Adjustment' . $identifier]->Narrative . "')";
 
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
@@ -350,16 +348,14 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 										periodno,
 										account,
 										amount,
-										narrative,
-										tag)
+										narrative)
 								VALUES (17,
 									'" .$AdjustmentNumber . "',
 									'" . $SQLAdjustmentDate . "',
 									'" . $PeriodNo . "',
 									'" .  $StockGLCodes['stockact'] . "',
 									'" . round($_SESSION['Adjustment' . $identifier]->StandardCost * $_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['CompanyRecord']['decimalplaces']) . "',
-									'" . $_SESSION['Adjustment' . $identifier]->StockID . ' x ' . $_SESSION['Adjustment' . $identifier]->Quantity . ' @ ' . $_SESSION['Adjustment' . $identifier]->StandardCost . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative . "',
-									'" . $_SESSION['Adjustment' . $identifier]->tag . "'
+									'" . $_SESSION['Adjustment' . $identifier]->StockID . ' x ' . $_SESSION['Adjustment' . $identifier]->Quantity . ' @ ' . $_SESSION['Adjustment' . $identifier]->StandardCost . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative . "'
 									)";
 
 			$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');

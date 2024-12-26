@@ -1,4 +1,4 @@
 <?php
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "003";
+$KLCodeVersion = "004";
 ?>

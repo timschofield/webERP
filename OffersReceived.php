@@ -31,7 +31,7 @@ if (!isset($_POST['supplierid'])) {
 		LEFT JOIN suppliers
 			ON suppliers.supplierid=offers.supplierid
 		WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
-		AND offers.expirydate>'" . date('Y-m-d') . "'
+		AND offers.expirydate>CURRENT_DATE
 		AND purchorderauth.cancreate=0";
 	$result=DB_query($sql);
 	if (DB_num_rows($result)==0) {
@@ -86,7 +86,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			LEFT JOIN stockmaster
 				ON stockmaster.stockid=offers.stockid
 			WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
-			AND offers.expirydate>='" . date('Y-m-d') . "'
+			AND offers.expirydate>=CURRENT_DATE
 			AND offers.supplierid='" . $_POST['supplierid'] . "'
 			ORDER BY offerid";
 	$result=DB_query($sql);
@@ -188,11 +188,11 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 				VALUES (
 					'" . $OrderNo."',
 					'" . $_POST['supplierid'] . "',
-					'".date('Y-m-d')."',
+					CURRENT_DATE,
 					'" . $Rate."',
 					'" . $_SESSION['UserID'] . "',
 					'" . $_SESSION['DefaultFactoryLocation'] . "',
-					'".date('Y-m-d')."',
+					CURRENT_DATE,
 					'"._('Pending')."',
 					'"._('Automatically generated from tendering system')."',
 					'" . $PaymentTerms."')";
@@ -221,7 +221,7 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 												suppliersunit)
 									VALUES ('" . $OrderNo."',
 											'" . $myrow['stockid'] . "',
-											'".date('Y-m-d')."',
+											CURRENT_DATE,
 											'".DB_escape_string($myrow['description'])."',
 											'" . $myrow['price'] . "',
 											'" . $myrow['price'] . "',

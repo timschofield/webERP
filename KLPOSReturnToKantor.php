@@ -15,7 +15,6 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
-
 include('includes/KLPOSGeneral.php');
 
 include ('includes/WebClientPrint/WebClientPrint.php');

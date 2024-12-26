@@ -1,6 +1,6 @@
-1) Start in line 1
+1) Only in all KL*.php files
 
-2) Look for SQL sentences and find references to variables containing the today's date, e.g. $today, $Today and replace it by the MySQL expression CURRENT_DATE in the SQL sentences.
+2) Look for SQL sentences and find references to variables containing the today's date, e.g. $today, $Today, date('Y-m-d') and replace it by the MySQL expression CURRENT_DATE in the SQL sentences.
 
 3) Do not change any other part of the code.
 
@@ -8,3 +8,10 @@ General propmt rules
 1) Do not cut long lines. 
 2) Do not delete any comment in the code
 3) Apply all changes above directly to the file in the editor.
+
+Variables to consider:
+$today
+$Today
+$now
+$Now
+date('Y-m-d')

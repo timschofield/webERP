@@ -137,7 +137,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 							FROM klretailpartners
 							WHERE partnercode = '" . $CompanyTo . "'";
 			$ResultCompanyTo = DB_query($SQLCompanyTo);
-			$myCompanyTo= DB_fetch_array($ResultCompanyTo);
+			$MyCompanyTo= DB_fetch_array($ResultCompanyTo);
 
 
 			// Prepare the 1st line (FK) of the file 
@@ -149,35 +149,35 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			$TahunPajak = substr($EndDate,-4);
 			$TanggalFaktur = $EndDate;
 			$CharsToStripFromNPWP = array(".", "-");
-			$NPWP = str_replace($CharsToStripFromNPWP,"",$myCompanyTo['partnernpwpinvoice']); //NPWP number only, no format
-			$Nama = $myCompanyTo['partnernameinvoice'];
-			$AlamatLengkap = $myCompanyTo['partneraddressjalan'];
-			if ($myCompanyTo['partneraddressblok'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressblok'];
+			$NPWP = str_replace($CharsToStripFromNPWP,"",$MyCompanyTo['partnernpwpinvoice']); //NPWP number only, no format
+			$Nama = $MyCompanyTo['partnernameinvoice'];
+			$AlamatLengkap = $MyCompanyTo['partneraddressjalan'];
+			if ($MyCompanyTo['partneraddressblok'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddressblok'];
 			}
-			if ($myCompanyTo['partneraddressnomor'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressnomor'];
+			if ($MyCompanyTo['partneraddressnomor'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddressnomor'];
 			}
-			if ($myCompanyTo['partneraddressrt'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressrt'];
+			if ($MyCompanyTo['partneraddressrt'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddressrt'];
 			}
-			if ($myCompanyTo['partneraddressrw'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddressrw'];
+			if ($MyCompanyTo['partneraddressrw'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddressrw'];
 			}
-			if ($myCompanyTo['partneraddresskecamatan'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskecamatan'];
+			if ($MyCompanyTo['partneraddresskecamatan'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddresskecamatan'];
 			}
-			if ($myCompanyTo['partneraddresskelurahan'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskelurahan'];
+			if ($MyCompanyTo['partneraddresskelurahan'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddresskelurahan'];
 			}
-			if ($myCompanyTo['partneraddresskabupaten'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskabupaten'];
+			if ($MyCompanyTo['partneraddresskabupaten'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddresskabupaten'];
 			}
-			if ($myCompanyTo['partneraddresspropinsi'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresspropinsi'];
+			if ($MyCompanyTo['partneraddresspropinsi'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddresspropinsi'];
 			}
-			if ($myCompanyTo['partneraddresskodepos'] != ''){
-				$AlamatLengkap .= ' ' . $myCompanyTo['partneraddresskodepos'];
+			if ($MyCompanyTo['partneraddresskodepos'] != ''){
+				$AlamatLengkap .= ' ' . $MyCompanyTo['partneraddresskodepos'];
 			}
 			$JumlahPPNBM = '0';
 			$IDKeteranganTambahan = '';
@@ -214,61 +214,61 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 
 			$LineType = 'LT';
 			$CharsToStripFromNPWP = array(".", "-");
-			$NPWP = str_replace($CharsToStripFromNPWP,"",$myCompanyTo['partnernpwpinvoice']); //NPWP number only, no format
-			$Nama = $myCompanyTo['partnernameinvoice'];
+			$NPWP = str_replace($CharsToStripFromNPWP,"",$MyCompanyTo['partnernpwpinvoice']); //NPWP number only, no format
+			$Nama = $MyCompanyTo['partnernameinvoice'];
 
-			if ($myCompanyTo['partneraddressjalan'] != ''){
-				$Jalan = $myCompanyTo['partneraddressjalan'];
+			if ($MyCompanyTo['partneraddressjalan'] != ''){
+				$Jalan = $MyCompanyTo['partneraddressjalan'];
 			} else {
 				$Jalan = '-';
 			}
-			if ($myCompanyTo['partneraddressblok'] != ''){
-				$Blok = $myCompanyTo['partneraddressblok'];
+			if ($MyCompanyTo['partneraddressblok'] != ''){
+				$Blok = $MyCompanyTo['partneraddressblok'];
 			} else {
 				$Blok = '-';
 			}
-			if ($myCompanyTo['partneraddressnomor'] != ''){
-				$Nomor = $myCompanyTo['partneraddressnomor'];
+			if ($MyCompanyTo['partneraddressnomor'] != ''){
+				$Nomor = $MyCompanyTo['partneraddressnomor'];
 			} else {
 				$Nomor = '-';
 			}
-			if ($myCompanyTo['partneraddressrt'] != ''){
-				$RT = $myCompanyTo['partneraddressrt'];
+			if ($MyCompanyTo['partneraddressrt'] != ''){
+				$RT = $MyCompanyTo['partneraddressrt'];
 			} else {
 				$RT = '0';
 			}
-			if ($myCompanyTo['partneraddressrw'] != ''){
-				$RW = $myCompanyTo['partneraddressrw'];
+			if ($MyCompanyTo['partneraddressrw'] != ''){
+				$RW = $MyCompanyTo['partneraddressrw'];
 			} else {
 				$RW = '0';
 			}
-			if ($myCompanyTo['partneraddresskecamatan'] != ''){
-				$Kecamatan = $myCompanyTo['partneraddresskecamatan'];
+			if ($MyCompanyTo['partneraddresskecamatan'] != ''){
+				$Kecamatan = $MyCompanyTo['partneraddresskecamatan'];
 			} else {
 				$Kecamatan = '-';
 			}
-			if ($myCompanyTo['partneraddresskelurahan'] != ''){
-				$Kelurahan = $myCompanyTo['partneraddresskelurahan'];
+			if ($MyCompanyTo['partneraddresskelurahan'] != ''){
+				$Kelurahan = $MyCompanyTo['partneraddresskelurahan'];
 			} else {
 				$Kelurahan = '-';
 			}
-			if ($myCompanyTo['partneraddresskabupaten'] != ''){
-				$Kabupaten = $myCompanyTo['partneraddresskabupaten'];
+			if ($MyCompanyTo['partneraddresskabupaten'] != ''){
+				$Kabupaten = $MyCompanyTo['partneraddresskabupaten'];
 			} else {
 				$Kabupaten = '-';
 			}
-			if ($myCompanyTo['partneraddresspropinsi'] != ''){
-				$Propinsi = $myCompanyTo['partneraddresspropinsi'];
+			if ($MyCompanyTo['partneraddresspropinsi'] != ''){
+				$Propinsi = $MyCompanyTo['partneraddresspropinsi'];
 			} else {
 				$Propinsi = '-';
 			}
-			if ($myCompanyTo['partneraddresskodepos'] != ''){
-				$KodePos = $myCompanyTo['partneraddresskodepos'];
+			if ($MyCompanyTo['partneraddresskodepos'] != ''){
+				$KodePos = $MyCompanyTo['partneraddresskodepos'];
 			} else {
 				$KodePos = '-';
 			}
-			if ($myCompanyTo['partnertelepon'] != ''){
-				$NomorTelepon = $myCompanyTo['partnertelepon'];
+			if ($MyCompanyTo['partnertelepon'] != ''){
+				$NomorTelepon = $MyCompanyTo['partnertelepon'];
 			} else {
 				$NomorTelepon = '-';
 			}

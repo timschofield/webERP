@@ -170,7 +170,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 									amount)
 						VALUES ('35',
 						'" . $CostUpdateNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['adjglact'] . "',
 						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') . ' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
@@ -189,7 +189,7 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 						amount)
 					VALUES ('35',
 						'" . $CostUpdateNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'" . $StockGLCode['stockact'] . "',
 						'" . $StockID . ' ' . _('cost was') . ' ' . $OldCost . ' ' . _('changed to') .' ' . $NewCost . ' x ' . _('Quantity on hand of') . ' ' . $QOH . "',
@@ -215,8 +215,8 @@ function BomMaterialCost($Parent) {
 	   					FROM bom LEFT JOIN stockmaster
 						ON bom.component = stockmaster.stockid
 						WHERE bom.parent='". $Parent . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE";
 	$result = DB_query($SQL);
 	$MyRow = DB_fetch_row($result);
 	$MaterialCost = $MyRow[0];
@@ -272,8 +272,8 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 			ON bom.component=stockmaster.stockid
 			WHERE bom.parent='" . $StockID . "'
 			AND bom.loccode ='" . $LocCode . "'
-            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-            AND bom.effectiveto > '" . date('Y-m-d') . "'
+            AND bom.effectiveafter <= CURRENT_DATE
+            AND bom.effectiveto > CURRENT_DATE
 			AND stockmaster.mbflag<>'G'
 			AND bom.component NOT IN (
 				SELECT stockid
@@ -300,8 +300,8 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 						ON bom.component=stockmaster.stockid
 						WHERE bom.parent='" . $StockID . "'
 						AND bom.loccode ='" . $LocCode . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE
 						AND stockmaster.mbflag<>'G'
 						AND bom.component IN (
 							SELECT stockid
@@ -324,8 +324,8 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 			ON bom.component=stockmaster.stockid
 			WHERE parent='" . $StockID . "'
 			AND loccode ='" . $LocCode . "'
-            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-            AND bom.effectiveto > '" . date('Y-m-d') . "'
+            AND bom.effectiveafter <= CURRENT_DATE
+            AND bom.effectiveto > CURRENT_DATE
 			AND stockmaster.mbflag='G'";
 	$result = DB_query($sql);
 	while ($MyRow=DB_fetch_array($result)) {
@@ -471,7 +471,7 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 										'" . $Comments  . "',
 										'" . $Cert  . "',
 										'" . $_SESSION['UserID'] . "',
-										'" . date('Y-m-d') . "')";
+										CURRENT_DATE)";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The create of the qasamples record failed');
 			$DbgMsg = _('The following SQL to create the qasamples was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);

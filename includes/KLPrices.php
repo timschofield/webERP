@@ -67,7 +67,7 @@ function SetFlagPriceChangedInChangePrice($StockId, $value){
 
 function SetEndDateChangePrice($StockId){
 	$SQL = "UPDATE klchangeprice 
-			SET endprocessdate = '" . Date('Y-m-d') . "'
+			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Price change set to today for item code') . ' ' . $StockId;
@@ -79,7 +79,7 @@ function SetEndDateChangePrice($StockId){
 
 function SetEndDateMoveDiscount20($StockId){
 	$SQL = "UPDATE klmovetodiscount20 
-			SET endprocessdate = '" . Date('Y-m-d') . "'
+			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockId;
@@ -91,7 +91,7 @@ function SetEndDateMoveDiscount20($StockId){
 
 function SetEndDateMoveDiscount50($StockId){
 	$SQL = "UPDATE klmovetodiscount50 
-			SET endprocessdate = '" . Date('Y-m-d') . "'
+			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockId;
@@ -103,7 +103,7 @@ function SetEndDateMoveDiscount50($StockId){
 
 function SetEndDateMoveDiscount80($StockId){
 	$SQL = "UPDATE klmovetodiscount80 
-			SET endprocessdate = '" . Date('Y-m-d') . "'
+			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
 	$msg = _('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockId;
@@ -227,34 +227,6 @@ function UpdateTablePrice($StockId, $RetailPrice){
 	/* 2nd: set prices in IDR */
 	UpdatePriceItem($StockId, 'RT', 'IDR', $RetailPrice, $Today, TRUE);
 
-/*	$Wholesale25 = round_multiple_of($RetailPrice * (0.75), 500);
-	UpdatePriceItem($StockId, 'W2', 'IDR', $Wholesale25, $Today, TRUE );
-	
-	$Wholesale30 = round_multiple_of($RetailPrice * (0.70), 500);
-	UpdatePriceItem($StockId, 'W3', 'IDR', $Wholesale30, $Today, TRUE );
-
-	$Wholesale40 = round_multiple_of($RetailPrice * (0.60), 500);
-	UpdatePriceItem($StockId, 'W4', 'IDR', $Wholesale40, $Today, TRUE );
-
-	$Wholesale50 = round_multiple_of($RetailPrice * (0.50), 500);
-	UpdatePriceItem($StockId, 'W5', 'IDR', $Wholesale50, $Today, TRUE );
-*/
-	/* 3rd: set prices in USD */
-/*	$RetailUSD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE, 0.05);
-	UpdatePriceItem($StockId, 'RT', 'USD', $RetailUSD, $Today, TRUE );
-
-	$Wholesale25USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.75), 0.05);
-	UpdatePriceItem($StockId, 'W2', 'USD', $Wholesale25USD, $Today, TRUE );
-
-	$Wholesale30USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.70), 0.05);
-	UpdatePriceItem($StockId, 'W3', 'USD', $Wholesale30USD, $Today, TRUE );
-
-	$Wholesale40USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.60), 0.05);
-	UpdatePriceItem($StockId, 'W4', 'USD', $Wholesale40USD, $Today, TRUE );
-
-	$Wholesale50USD = round_multiple_of($RetailPrice / RATE_IDRUSD_FOR_RETAIL_WEBSTORE * (0.50), 0.05);
-	UpdatePriceItem($StockId, 'W5', 'USD', $Wholesale50USD, $Today, TRUE );
-*/
 }
 
 
@@ -353,7 +325,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 									amount)
 							VALUES ( 0,
 									'" . $JournalNo . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 									'" . $NewStockAct . "',
 									'" . $StockId . ' ' . $reason . "',
@@ -371,7 +343,7 @@ function UpdateDiscountCategory($StockId, $NewCategory, $DiscountCode){
 									amount)
 							VALUES ( 0,
 									'" . $JournalNo . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . GetPeriod(Date($_SESSION['DefaultDateFormat']),true) . "',
 									'" . $OldStockAccount . "',
 									'" . $StockId . ' ' .$reason . "',

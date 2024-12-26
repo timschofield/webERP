@@ -86,7 +86,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 											labourcost='" . (double) $myrow[2] . "',
 											overheadcost='" . (double) $myrow[3] . "',
 											lastcost='" . $OldCost . "',
-											lastcostupdate ='" . Date('Y-m-d')."'
+											lastcostupdate = CURRENT_DATE
 									WHERE stockid='" . $StockID . "'";
 
 			$ErrMsg = _('The cost details for the stock item could not be updated because');

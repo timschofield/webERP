@@ -178,7 +178,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 							VALUES(	'" . $_SESSION['PO'.$identifier]->OrderNo . "',
 									'" . $_SESSION['PO'.$identifier]->SupplierID . "',
 									'" . $_SESSION['PO'.$identifier]->Comments . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $_SESSION['PO'.$identifier]->ExRate . "',
 									'" . $_SESSION['PO'.$identifier]->Initiator . "',
 									'" . $_SESSION['PO'.$identifier]->RequisitionNo . "',
@@ -200,7 +200,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 									'" . $_SESSION['PO'.$identifier]->SuppTel. "',
 									'" . $_SESSION['PO'.$identifier]->Contact . "',
 									'" . $_SESSION['PO'.$identifier]->Version . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $_SESSION['PO'.$identifier]->DeliveryBy . "',
 									'" . $_SESSION['PO'.$identifier]->Status . "',
 									'" . $_SESSION['PO'.$identifier]->KLStatus . "',
@@ -294,7 +294,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 										shipmentawb='" . $_SESSION['PO'.$identifier]->KLShipmentAWB . "',
 										customsdate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLCustomsDate) . "',
 										arrivaldate='" . FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) . "',
-										revised= '" . Date('Y-m-d') . "',
+										revised= CURRENT_DATE,
 										intostocklocation='" . $_SESSION['PO'.$identifier]->Location . "',
 										deladd1='" . $_SESSION['PO'.$identifier]->DelAdd1 . "',
 										deladd2='" . $_SESSION['PO'.$identifier]->DelAdd2 . "',
@@ -620,7 +620,7 @@ if (isset($_POST['NewItem'])
 								MAX(purchdata.effectivefrom) AS latesteffectivefrom
 							FROM purchdata
 							WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-							AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
+							AND purchdata.effectivefrom <=CURRENT_DATE
 							AND purchdata.stockid = '". $ItemCode . "'
 							GROUP BY purchdata.price,
 									purchdata.conversionfactor,
@@ -641,8 +641,8 @@ if (isset($_POST['NewItem'])
 										discountamount
 								FROM supplierdiscounts
 								WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-								AND effectivefrom <='" . Date('Y-m-d') . "'
-								AND effectiveto >='" . Date('Y-m-d') . "'
+								AND effectivefrom <=CURRENT_DATE
+								AND effectiveto >=CURRENT_DATE
 								AND stockid = '". $ItemCode . "'";
 
 						$ItemDiscountPercent = 0;
@@ -783,7 +783,7 @@ if (isset($_POST['UploadFile'])) {
 									MAX(purchdata.effectivefrom) AS latesteffectivefrom
 								FROM purchdata
 								WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-								AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
+								AND purchdata.effectivefrom <=CURRENT_DATE
 								AND purchdata.stockid = '". $ItemCode . "'
 								GROUP BY purchdata.price,
 										purchdata.conversionfactor,
@@ -804,8 +804,8 @@ if (isset($_POST['UploadFile'])) {
 											discountamount
 									FROM supplierdiscounts
 									WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-									AND effectivefrom <='" . Date('Y-m-d') . "'
-									AND effectiveto >='" . Date('Y-m-d') . "'
+									AND effectivefrom <=CURRENT_DATE
+									AND effectiveto >=CURRENT_DATE
 									AND stockid = '". $ItemCode . "'";
 
 							$ItemDiscountPercent = 0;

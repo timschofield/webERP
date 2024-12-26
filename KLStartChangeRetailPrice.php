@@ -34,7 +34,7 @@ $SQL = "INSERT INTO klchangeprice
 				newretailprice,
 				endprocessdate)
 		VALUES ('" . $_GET['Item'] . "',
-			'" . Date('Y-m-d') . "',
+			CURRENT_DATE,
 			'" . filter_number_format($_GET['NewPrice']) . "',
 			'0000-00-00')";
 $msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_GET['Item'] . ' ' . _('has been created');

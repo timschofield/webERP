@@ -179,7 +179,7 @@ or deletion of the records*/
 						WHERE klmaintenancetaskupdates.taskcounter = '".$MyRow['counterindex']."'
 						ORDER BY klmaintenancetaskupdates.counterindex";
 		$Resultupdates = DB_query($SQLupdates);
-		while ($myupdates=DB_fetch_array($Resultupdates)) {
+		while ($MyUpdates=DB_fetch_array($Resultupdates)) {
 			$k = StartSameColourRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
@@ -193,9 +193,9 @@ or deletion of the records*/
 					'',
 					'',
 					'',
-					$myupdates['updateuser'],
-					ConvertSQLDateTime($myupdates['updatedate']),
-					$myupdates['updatedescription'],
+					$MyUpdates['updateuser'],
+					ConvertSQLDateTime($MyUpdates['updatedate']),
+					$MyUpdates['updatedescription'],
 					'',
 					'',
 					'',
@@ -271,10 +271,10 @@ if (!isset($_GET['close'])) {
 						WHERE klmaintenancetaskupdates.taskcounter = '".$SelectedIndex."'
 						ORDER BY klmaintenancetaskupdates.counterindex";
 		$Resultupdates = DB_query($SQLupdates);
-		while ($myupdates=DB_fetch_array($Resultupdates)) {
+		while ($MyUpdates=DB_fetch_array($Resultupdates)) {
 			echo '	<tr>
 						<td></td>
-						<td>' . $myupdates['updateuser']. " @ " . ConvertSQLDateTime($myupdates['updatedate']) . ": " .$myupdates['updatedescription'] . '</td>
+						<td>' . $MyUpdates['updateuser']. " @ " . ConvertSQLDateTime($MyUpdates['updatedate']) . ": " .$MyUpdates['updatedescription'] . '</td>
 					</tr>';
 		}
 

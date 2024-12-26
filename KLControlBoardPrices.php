@@ -205,7 +205,7 @@ FUNCTIONS ONLY USED IN PRICING CONTROL BOARD
 
 function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
-	$issues = 0;
+	$Issues = 0;
 	
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -281,7 +281,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
 						+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
 					
-						$issues++;
+						$Issues++;
 					printf('<tr class="striped_row">
 							<td class="number">%s</td>
 							<td>%s</td>
@@ -299,7 +299,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 							<td>%s</td>
 							<td class="number">%s</td>
 							</tr>', 
-							$issues, 
+							$Issues, 
 							$CodeLink, 
 							$MyRow['description'], 
 							locale_number_format($PositionTopSales,0),
@@ -324,12 +324,12 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 				</div>';
 		}
 	}
-	return $issues;
+	return $Issues;
 }
 
 function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $DaysTopSales, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysTopSales));
-	$issues = 0;
+	$Issues = 0;
 	
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -404,7 +404,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
 
-					$issues++;
+					$Issues++;
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -422,7 +422,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$issues, 
+						$Issues, 
 						$CodeLink, 
 						$MyRow['description'], 
 						locale_number_format($PositionTopSales,0),
@@ -446,11 +446,11 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				</div>';
 		}
 	}
-	return $issues;
+	return $Issues;
 }
 
 function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
-	$issues = 0;
+	$Issues = 0;
 	
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -519,7 +519,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 							<tbody>';
 					$ShowHeader = FALSE;
 				}
-				$issues++;
+				$Issues++;
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				$Increase = locale_number_format(($RecommendedPrice-$MyRow['retailprice'])/$MyRow['retailprice']*100,1).'%';
 				$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
@@ -544,7 +544,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 						<td>%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$issues, 
+						$Issues, 
 						$CodeLink, 
 						$MyRow['description'], 
 						locale_number_format($PositionTopSales,0),
@@ -567,11 +567,11 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 				</div>';
 		}
 	}
-	return $issues;
+	return $Issues;
 }
 
 function PriceWrongRounding($RootPath){
-	$issues = 0;
+	$Issues = 0;
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -635,7 +635,7 @@ function PriceWrongRounding($RootPath){
 				$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
 					+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
-					$issues++;
+					$Issues++;
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -647,7 +647,7 @@ function PriceWrongRounding($RootPath){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						</tr>', 
-						$issues, 
+						$Issues, 
 						$CodeLink, 
 						$MyRow['description'], 
 						$PositionTopSales,
@@ -665,12 +665,12 @@ function PriceWrongRounding($RootPath){
 				</div>';
 		}
 	}
-	return $issues;
+	return $Issues;
 }
 
 function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Years * 365));
-	$issues = 0;
+	$Issues = 0;
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -731,7 +731,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
 			$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
 				+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
-				$issues++;
+				$Issues++;
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -746,7 +746,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$issues, 
+					$Issues, 
 					$CodeLink, 
 					$MyRow['description'], 
 					$PositionTopSales,
@@ -766,7 +766,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 				</div>';
 		}
 	}
-	return $issues;
+	return $Issues;
 }
 
 ?>

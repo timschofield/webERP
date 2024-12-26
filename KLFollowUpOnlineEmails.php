@@ -286,7 +286,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 
 if ($_GET['EmailType']=='NoOrderPlaced'){
 	$SQL = "UPDATE debtorsmaster 
-			SET klemailnowebshoporder = '" . Date('Y-m-d') . "'
+			SET klemailnowebshoporder = CURRENT_DATE
 			WHERE debtorno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the customers KL email no order placed date because');
 	$Result = DB_query($SQL,$ErrMsg);
@@ -295,7 +295,7 @@ if ($_GET['EmailType']=='NoOrderPlaced'){
 
 if ($_GET['EmailType']=='RemindBankTransfer'){
 	$SQL = "UPDATE salesorders 
-			SET klemailremindbanktransfer = '" . Date('Y-m-d') . "'
+			SET klemailremindbanktransfer = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email remind bank transfer date because');
 	$Result = DB_query($SQL,$ErrMsg);
@@ -320,7 +320,7 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 	}
 	// update the sales order, as we send the payment confirmation
 	$SQL = "UPDATE salesorders 
-			SET klemailpaymentconfirm = '" . Date('Y-m-d') . "'
+			SET klemailpaymentconfirm = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email payment confirmation date because');
 	$Result = DB_query($SQL,$ErrMsg);
@@ -343,7 +343,7 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 
 	// update the sales order, as we send shipped it
 	$SQL = "UPDATE salesorders 
-			SET klemailtrackingconfirm = '" . Date('Y-m-d') . "'
+			SET klemailtrackingconfirm = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email tracking confirm date because');
 	$Result = DB_query($SQL,$ErrMsg);
@@ -352,7 +352,7 @@ if ($_GET['EmailType']=='TrackingConfirmation'){
 
 if (($_GET['EmailType']=='ThankYouOrder') OR ($_GET['EmailType']=='NoSendThankYou')){
 	$SQL = "UPDATE salesorders 
-			SET klemailthankyouorder = '" . Date('Y-m-d') . "'
+			SET klemailthankyouorder = CURRENT_DATE
 			WHERE orderno =	'" . $_GET['TransNo'] . "'";
 	$ErrMsg =_('Could not update the sales order KL email thank you date because');
 	$Result = DB_query($SQL,$ErrMsg);

@@ -10,6 +10,7 @@
 include ('includes/DefinePaymentClass.php');
 
 include ('includes/session.php');
+
 if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);};
 $Title = _('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
@@ -813,7 +814,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 						$PaymentItem->Narrative . "\n" ;
 		}
 
-		if ($emailToBeSent){
+		if (($emailToBeSent) AND (!KLwebERPScriptCalledFromTEST())){
 			$GLAccountEmail = "kl-glcontrolledtx@kapal-laut.com";
 			$EmailSubject = _('GL transaction to be controlled'); 
 			$EmailText .= _('Email sent by webERP'). ' ' .date('d/M/Y H:i:s').'';
@@ -1248,7 +1249,6 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 			ORDER BY tagref";
 
 	$Result = DB_query($SQL);
-	echo '<option value=0>0 - None</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['Tag']) and $_POST['Tag'] == $MyRow['tagref']) {
 			echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
@@ -1258,7 +1258,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 		}
 	} //$MyRow = DB_fetch_array($Result)
 	echo '</select>
-			<fieldhelp>', _('Select one or more tags from the list. Use the CTL button to select multiple tags') , '</fieldhelp>
+			<fieldhelp>', _('Select one or more tags from the list. Use the CTRL button to select multiple tags') , '</fieldhelp>
 		</field>';
 	// End select Tag
 	/*now set up a GLCode field to select from avaialble GL accounts */

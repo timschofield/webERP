@@ -576,7 +576,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 											'" . $CustomerDetailsRow['email'] . "',
 											'" . $_SESSION['Contract'.$identifier]->LocCode ."',
 											'" . FormatDateForSQL($_SESSION['Contract'.$identifier]->RequiredDate) . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'1' )";
 
 	$ErrMsg = _('The quotation cannot be added because');

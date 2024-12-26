@@ -643,8 +643,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				periodno,
 				account,
 				narrative,
-				amount,
-				tag)
+				amount)
 			VALUES 
 				('" . $Type . "',
 				'" . $Typeno . "',
@@ -652,8 +651,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				'" . $Period . "',
 				'" . $Account . "',
 				'" . $Narrative . "',
-				'" . $Amount . "',
-				'" . $Tag . "')";
+				'" . $Amount . "')";
 	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
 	$DbgMsg = 'SQL to insert GLTrans record: ';
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -847,7 +845,6 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$Result = DB_Txn_Begin();
 
 		$BatchNo = GetNextTransNo(12);
-		$Today = date('Y-m-d');
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$Narrative = 'Online ' . $OrderNo . ' ' . $PaymentCode;
 		$BankTransType = "Transfer";
@@ -873,8 +870,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					'" . $CustomerCode . "',
 					'',
 					'" . $OrderNo . "',
-					'" . $Today . "',
-					'" . $Today . "',
+					CURRENT_DATE,
+					CURRENT_DATE,
 					'" . $PeriodNo . "',
 					'" . $Narrative . "',
 					'',
@@ -890,7 +887,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$SQL = "UPDATE debtorsmaster
-					SET lastpaiddate = '" . $Today . "',
+					SET lastpaiddate = CURRENT_DATE,
 					lastpaid='" . $TotalAmount ."'
 				WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
@@ -915,7 +912,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . $Narrative . "',
 				'" . $ExRate . "',
 				'" . $FunctionalExRate . "',
-				'" . $Today . "',
+				CURRENT_DATE,
 				'" . $BankTransType . "',
 				'" . ($NetAmount * $FunctionalExRate * $ExRate) . "',
 				'" . $Currency . "'
@@ -934,7 +931,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			VALUES (
 				12,
 				'" . $BatchNo . "',
-				'" . $Today . "',
+				CURRENT_DATE,
 				'" . $PeriodNo . "',
 				'" . $GLAccountTransfer . "',
 				'" . $Narrative . "',
@@ -955,7 +952,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									VALUES (
 										12,
 										'" . $BatchNo . "',
-										'" . $Today . "',
+										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommission . "',
 										'" . $Narrative . "',
@@ -977,7 +974,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									VALUES (
 										12,
 										'" . $BatchNo . "',
-										'" . $Today . "',
+										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommissionPPN . "',
 										'" . $Narrative . "',
@@ -998,7 +995,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 								VALUES (
 									12,
 									'" . $BatchNo . "',
-									'" . $Today . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 									'" . $Narrative . "',
@@ -1016,12 +1013,12 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			$SQL = "UPDATE salesorders
 						SET klpaidcash = '" . $TotalAmount . "',
 							quotation = '0',
-							confirmeddate = '" . $Today . "'
+							confirmeddate = CURRENT_DATE
 					WHERE salesorders.orderno='" . $OrderNo . "'";
 		}else{
 			$SQL = "UPDATE salesorders
 						SET quotation = '0',
-							confirmeddate = '" . $Today . "'
+							confirmeddate = CURRENT_DATE
 					WHERE salesorders.orderno='" . $OrderNo . "'";
 		}
 		$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');
@@ -1256,9 +1253,9 @@ function TotalItemsToBeReceivedByPO($Brand){
 	$ErrMsg = 'Error in function TotalItemsToBeReceivedByPO()';
 
 	if ($Brand == "SHOPKL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
 	}else if ($Brand == "SHOPBL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
 	}else{
 		return 0;	
 	} 
@@ -1271,7 +1268,7 @@ function TotalItemsToBeReceivedByPO($Brand){
 			ON stockmaster.stockid = purchorderdetails.itemcode
 		WHERE purchorderdetails.completed=0
 			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
-			$operator1." ";
+			$Operator1." ";
 	$Result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($Result);
 	return $Row['0'];
@@ -1281,9 +1278,9 @@ function TotalItemsToBeReceivedByWO($Brand){
 	$ErrMsg = 'Error in function TotalItemsToBeReceivedByWO()';
 
 	if ($Brand == "SHOPKL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
 	}else if ($Brand == "SHOPBL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
 	}else{
 		return 0;	
 	} 
@@ -1296,7 +1293,7 @@ function TotalItemsToBeReceivedByWO($Brand){
 			ON workorders.wo = woitems.wo
 		WHERE workorders.closed = 0
 			AND woitems.qtyreqd > woitems.qtyrecd ".
-			$operator1." ";
+			$Operator1." ";
 	$Result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($Result);
 	return $Row['0'];
@@ -1306,17 +1303,17 @@ function TotalModels($Brand){
 	$ErrMsg = 'Error in TotalModels()';
 
 	if ($Brand == "SHOPKL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
 	}else if ($Brand == "SHOPBL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
 	}else{
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
 
 	$SQL =	"SELECT COUNT(stockmaster.stockid) AS totalmodels
 			FROM stockmaster
 			WHERE discontinued = 0 " . 
-				$operator1 ."";
+				$Operator1 ."";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	return $MyRow['0'];
@@ -1326,17 +1323,17 @@ function TotalItems($Brand){
 	$ErrMsg = 'Error in TotalItems()';
 
 	if ($Brand == "SHOPKL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP ."";
 	}else if ($Brand == "SHOPBL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP ."";
 	}else{
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
 
 	$SQL =	"SELECT SUM(locstock.quantity) AS totalitems
 			FROM locstock, stockmaster
 			WHERE stockmaster.stockid = locstock.stockid " . 
-				$operator1 ."";
+				$Operator1 ."";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	return $MyRow['0'];
@@ -1346,18 +1343,18 @@ function TotalDisplayItems($Brand){
 	$ErrMsg = 'Error in TotalDisplayItems()';
 
 	if ($Brand == "SHOPKL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
 	}else if ($Brand == "SHOPBL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
 	}else{
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
 
 	$SQL =	"SELECT COUNT(locstock.quantity) AS displayitems
 			FROM locstock, stockmaster
 			WHERE stockmaster.stockid = locstock.stockid 
 				AND locstock.quantity >= 1" . 
-				$operator1 ."";
+				$Operator1 ."";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	return $MyRow['0'];
@@ -1366,11 +1363,11 @@ function TotalDisplayItems($Brand){
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 	$ErrMsg = 'Error in DailySoldItems()';
 	if ($Brand == "SHOPKL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT ."";
 	}else if ($Brand == "SHOPBL"){
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK ."";
 	}else{
-		$operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
+		$Operator1 = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET ."";
 	} 
 
 	$SQL =	"SELECT SUM(salesorderdetails.qtyinvoiced) AS solditems
@@ -1378,7 +1375,7 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 			WHERE stockmaster.stockid = salesorderdetails.stkcode 
 				AND salesorderdetails.itemdue >= '" . $FromDate . "'
 				AND salesorderdetails.itemdue <= '" . $ToDate . "'" . 
-				$operator1 ."";
+				$Operator1 ."";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	return ($MyRow['0']);

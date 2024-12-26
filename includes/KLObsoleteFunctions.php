@@ -352,12 +352,12 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 			ORDER BY stockmaster.stockid";
 	
 	$Result = DB_query($SQL);		
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$QtyNeeded = $OptimalStock - $MyRow['qoh'];
 		if ($QtyNeeded > 0){
-			if ($showHeader){
+			if ($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . $ItemDescription . ' Items with QOH (kantor+toko) < ' . $MinimumStock . ' pcs.</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -371,7 +371,7 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			$k = StartEvenOrOddRow($k);
@@ -392,7 +392,7 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 		}
 		$i++;
 	}
-	if (!$showHeader){
+	if (!$ShowHeader){
 		echo '</tbody>
 			  </table>
 			  </div>
@@ -458,13 +458,13 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 			LIMIT " . $NumberOfTopItems;
 	
 	$Result = DB_query($SQL);		
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Forecast = ceil($MyRow['totalinvoiced'] / $DaysTopSales * $DaysMinimumStock);
 		$QtyNeeded = $Forecast - $MyRow['qoh'] - $MyRow['qoo'] - $MyRow['qow'];
 		if ($QtyNeeded > 0){
-			if ($showHeader){
+			if ($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . $NumberOfTopItems . ' Top Items from ' . strtoupper($StockCatDescription) . ' with insufficient stock for the next ' . $DaysMinimumStock . ' days (Excluded Samples).</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -482,7 +482,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			$k = StartEvenOrOddRow($k);
@@ -511,7 +511,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 		}
 		$i++;
 	}
-	if (!$showHeader){
+	if (!$ShowHeader){
 		echo '</tbody>
 			  </table>
 			  </div>
@@ -817,12 +817,12 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($endtopitems - 1) . ", 99999999";			
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	if (DB_num_rows($Result) != 0){
 		$i = $endtopitems;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['rl'] > 0){
-				if($showHeader){
+				if($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $codeshop . ' shop. ' . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">
@@ -838,7 +838,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 								</tr>
 							</thead>
 							<tbody>';
-					$showHeader = FALSE;
+					$ShowHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
@@ -862,7 +862,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 			}
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</tbody>
 				  </table>
 				  </div>
@@ -1031,9 +1031,9 @@ function NewCustomers($NumDays, $RootPath){
 
 }
 
-function OvestockAtShops($kind, $RootPath){
+function OvestockAtShops($Kind, $RootPath){
 
-	if($kind == "OVERSTOCK"){			
+	if($Kind == "OVERSTOCK"){			
 		$SQL = "SELECT locstock.loccode, 
 						locstock.stockid, 
 						stockmaster.description, 
@@ -1066,7 +1066,7 @@ function OvestockAtShops($kind, $RootPath){
 	}
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		if($kind == "OVERSTOCK"){			
+		if($Kind == "OVERSTOCK"){			
 			echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of items at shops') . '</strong></p>';
 			$TableHeader = '<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
@@ -1112,7 +1112,7 @@ function OvestockAtShops($kind, $RootPath){
 	}
 }
 
-function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percentsales, $TextTitle, $RootPath){
+function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $Percentsales, $TextTitle, $RootPath){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	
@@ -1153,7 +1153,7 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 					WHERE salesorderdetails.stkcode = stockmaster.stockid) +
 					(SELECT SUM(quantity)
 					FROM locstock
-					WHERE locstock.stockid = stockmaster.stockid)))	". $Sign . " ('" . $percentsales ."' / 100)";
+					WHERE locstock.stockid = stockmaster.stockid)))	". $Sign . " ('" . $Percentsales ."' / 100)";
 
 	if ($ReportType == "GOOD"){
 		$SQL = $SQL . ")";
@@ -1167,9 +1167,9 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ReportType == "GOOD"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for less than " . $maxdays . " days with more than " . $percentsales . "% of sold stock (" . $TextTitle . " Items)." . ' </strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for less than " . $maxdays . " days with more than " . $Percentsales . "% of sold stock (" . $TextTitle . " Items)." . ' </strong></p>';
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for more than " . $maxdays . " days with less than " . $percentsales . "% of sold stock (" . $TextTitle . " Items).". ' </strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for more than " . $maxdays . " days with less than " . $Percentsales . "% of sold stock (" . $TextTitle . " Items).". ' </strong></p>';
 		}echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1219,10 +1219,9 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $percent
 	}
 }
 
-function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
+function PricesNotUpdatedinXDays($numDays, $PercentageIncrease, $RootPath){
 	
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
-	$today = date('Y-m-d');
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -1237,7 +1236,7 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
 				AND prices.startdate <= '". $InitialDate. "' 
-				AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+				AND prices.enddate >= CURRENT_DATE)
 				AND stockmaster.discontinued = 0					
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
@@ -1247,7 +1246,7 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $percentageIncrease . '%</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $PercentageIncrease . '%</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1264,7 +1263,7 @@ function PricesNotUpdatedinXDays($numDays, $percentageIncrease, $RootPath){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			$NewPrice = round_price($MyRow['price'] * (1 + $percentageIncrease/100), "UP");
+			$NewPrice = round_price($MyRow['price'] * (1 + $PercentageIncrease/100), "UP");
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 		//	$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $MyRow['stockid'] . '">' . locale_number_format($MyRow['price'],0) . '</a>';
 			$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $NewPrice .  '">' . locale_number_format($NewPrice,0) . '</a>';
@@ -1330,7 +1329,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$showHeader = true;
+		$ShowHeader = true;
 		$k = 0; //row colour counter
 		$i = $starttopitems;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -1349,11 +1348,11 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 				} else {
 					$k = 1;
 				}
-				while ($mydistribution = DB_fetch_array($Resultdistribution)) {
-					if($mydistribution['oldrl'] > $NewRL){
-						SetReorderLevel("LowSalesAdjust", $MyRow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB);
+				while ($MyDistribution = DB_fetch_array($Resultdistribution)) {
+					if($MyDistribution['oldrl'] > $NewRL){
+						SetReorderLevel("LowSalesAdjust", $MyRow['stockid'], $MyDistribution['loccode'], $MyDistribution['oldrl'], $NewRL, $updateDB);
 						if ($ShowMessages){
-							if($showHeader){
+							if($ShowHeader){
 								echo '<p class="page_title_text" align="center"><strong>' . _('Set RL Max to ') . $NewRL . ' for Low Sales '. $starttopitems . '-'. $endtopitems . ' for at least ' . $daystopitems . ' days </strong></p>';
 								echo '<div>';
 								echo '<table class="selection">';
@@ -1367,7 +1366,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 													<th>' . _('New RL') . '</th>
 												</tr>';
 								echo $TableHeader;
-								$showHeader = false;
+								$ShowHeader = false;
 							}
 							if ($k == 0) {
 								echo '<tr class="EvenTableRows">';
@@ -1387,8 +1386,8 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 								$CodeLink, 
 								$MyRow['categoryid'], 
 								$MyRow['description'], 
-								$mydistribution['loccode'],
-								locale_number_format($mydistribution['oldrl'],0),
+								$MyDistribution['loccode'],
+								locale_number_format($MyDistribution['oldrl'],0),
 								locale_number_format($NewRL,0)
 								);
 						}
@@ -1398,7 +1397,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 			$i++;
 		}
 		if ($ShowMessages){
-			if(!$showHeader){
+			if(!$ShowHeader){
 				echo '</table>
 						</div>';
 			}
@@ -1624,12 +1623,12 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 			ORDER BY totalinvoiced DESC
 			LIMIT " . ($starttopitems - 1) . "," . ($endtopitems - $starttopitems + 1);			
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	if (DB_num_rows($Result) != 0){
 		$i = $starttopitems;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (($MyRow['availableshops'] < $minshops) && ($MyRow['qoh'] > $MyRow['availableshops'])){
-				if($showHeader){
+				if($ShowHeader){
 					if ($categories == "DISC20"){
 						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 20% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
 					}		
@@ -1656,7 +1655,7 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 								</tr>
 							</thead>
 							<tbody>';
-					$showHeader = FALSE;
+					$ShowHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
@@ -1680,7 +1679,7 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 			}
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</tbody>
 				  </table>
 				  </div>
@@ -2201,7 +2200,7 @@ Updated 3 index in loctransfers
 			$OrderBy;
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$numshops = 0;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -2271,7 +2270,7 @@ Updated 3 index in loctransfers
 			if ($ShowAll OR ($TableResult[$i]['show'])) {
 				// IF we are SHORT of any packaging material in that shop...
 				// Or we show All the shops 
-				if($showHeader){
+				if($ShowHeader){
 					if ($ShopType == "KAPAL-LAUT"){
 						echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shops needing Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
 					}else{
@@ -2326,7 +2325,7 @@ Updated 3 index in loctransfers
 										<th class="SortedColumn">' . _('Action') . '</th>
 									</tr>';
 					echo $TableHeader;
-					$showHeader = FALSE;
+					$ShowHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
 
@@ -2445,7 +2444,7 @@ Updated 3 index in loctransfers
 			}
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</table>
 				</div>';
 		}
@@ -2522,7 +2521,7 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath){
 			$OrderBy;
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$numshops = 0;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -2566,7 +2565,7 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath){
 			if ($ShowAll OR ($TableResult[$i]['show'])) {
 				// IF we are SHORT of any packaging material in that shop...
 				// Or we show All the shops 
-				if($showHeader){
+				if($ShowHeader){
 					echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shops needing OUTLET Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">';
@@ -2597,7 +2596,7 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath){
 										<th class="SortedColumn">' . _('Action') . '</th>
 									</tr>';
 					echo $TableHeader;
-					$showHeader = FALSE;
+					$ShowHeader = FALSE;
 				}
 				$k = StartEvenOrOddRow($k);
 
@@ -2656,7 +2655,7 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath){
 			}
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</table>
 				</div>';
 		}

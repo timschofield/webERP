@@ -19,7 +19,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 						WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 							AND prices.currabrev = '". CURRENCY_CODE ."'
 							AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-							AND (prices.enddate='9999-12-31' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+							AND prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 							AND prices.debtorno=''";
 	}elseif ($_POST['LabelID'] == 'CodeSticker'){
 		$SQLPrice = "0 AS price, ";
@@ -56,22 +56,22 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			$SQLChange = " AND EXISTS (SELECT *
 								FROM klchangeprice
 								WHERE klchangeprice.stockid = prices.stockid
-									AND klchangeprice.endprocessdate = '" . Date('Y-m-d') . "')";
+									AND klchangeprice.endprocessdate = CURRENT_DATE)";
 		}elseif ($_POST['ChangeToday'] == "ChangeDisc20"){
 			$SQLChange = " AND EXISTS (SELECT *
 										FROM klmovetodiscount20
 										WHERE klmovetodiscount20.stockid = prices.stockid
-											AND klmovetodiscount20.endprocessdate = '" . Date('Y-m-d') . "')";
+											AND klmovetodiscount20.endprocessdate = CURRENT_DATE)";
 		}elseif ($_POST['ChangeToday'] == "ChangeDisc50"){
 			$SQLChange = " AND EXISTS (SELECT *
 										FROM klmovetodiscount50
 										WHERE klmovetodiscount50.stockid = prices.stockid
-											AND klmovetodiscount50.endprocessdate = '" . Date('Y-m-d') . "')";
+											AND klmovetodiscount50.endprocessdate = CURRENT_DATE)";
 		}elseif ($_POST['ChangeToday'] == "ChangeDisc80"){
 			$SQLChange = " AND EXISTS (SELECT *
 										FROM klmovetodiscount80
 										WHERE klmovetodiscount80.stockid = prices.stockid
-											AND klmovetodiscount80.endprocessdate = '" . Date('Y-m-d') . "')";
+											AND klmovetodiscount80.endprocessdate = CURRENT_DATE)";
 		}
 	}
 

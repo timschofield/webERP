@@ -179,15 +179,16 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
 								AND branchcode=''
-								AND startdate <= '". Date('Y-m-d') ."' AND ( enddate >= '" . Date('Y-m-d') . "' OR enddate = '9999-12-31')
+								AND startdate <= '". Date('Y-m-d') ."' 
+								AND enddate >= CURRENT_DATE
 								AND stockid='" . $StockID . "'");
 		if ($myrow['mbflag'] == 'K' OR $myrow['mbflag'] == 'A' OR $myrow['mbflag'] == 'G') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.actualcost)) AS cost
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
-                                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                    AND bom.effectiveto > '" . date('Y-m-d') . "'");
+                                    AND bom.effectiveafter <= CURRENT_DATE
+                                    AND bom.effectiveto > CURRENT_DATE");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {

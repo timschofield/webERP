@@ -702,8 +702,8 @@ function ConvertToSQLDate($DateEntry) {
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $CN_Line['stockid'] . "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-							AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+							AND bom.effectiveto > CURRENT_DATE";
 
 				$AssResult = api_DB_query($SQL);
 
@@ -1129,7 +1129,7 @@ function ConvertToSQLDate($DateEntry) {
 													 amt,
 													 transid_allocfrom,
 													 transid_allocto)
-							VALUES ('" . date('Y-m-d') . "',
+							VALUES (CURRENT_DATE,
 									'" . $AllocateAmount . "',
 									'" . $DebtorTransID . "',
 									'" . $InvoiceRow['id'] . "')";
@@ -1375,7 +1375,7 @@ function ConvertToSQLDate($DateEntry) {
 												transid_allocfrom,
 												transid_allocto)
 									VALUE('" . $AllocateAmount . "',
-										'" . Date('Y-m-d') . "',
+										CURRENT_DATE,
 										'" . $LeftToAllocRow['id'] . "',
 										'" . $OSInvRow['id'] . "')";
 				$Result = api_DB_query($SQL,'','',true);
@@ -1440,7 +1440,7 @@ function ConvertToSQLDate($DateEntry) {
 													transid_allocfrom,
 													transid_allocto)
 										VALUE('" . $AllocateAmount . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'" . $OSCreditRow['id'] . "',
 											'" . $LeftToAllocRow['id'] . "')";
 					$Result = api_DB_query($SQL,'','',true);

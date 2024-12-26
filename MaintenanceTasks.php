@@ -28,7 +28,7 @@ if (isset($_POST['Submit'])) {
 								'" . filter_number_format($_POST['FrequencyDays']) . "',
 								'" . $_POST['UserResponsible'] . "',
 								'" . $_POST['Manager'] . "',
-								'" . Date('Y-m-d') . "' )";
+								CURRENT_DATE )";
 		$ErrMsg = _('The authentication details cannot be inserted because');
 		$Result=DB_query($sql,$ErrMsg);
 		unset($_POST['AssetID']);

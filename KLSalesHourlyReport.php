@@ -110,7 +110,7 @@ function HourlyPerformance($numDays, $RootPath){
 				debtorsmaster.debtorno";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$FirstSaleFull = '99:99:99';
 	$LastSaleFull = '00:00:00';
 	$TotalSalesFull = 0;
@@ -127,7 +127,7 @@ function HourlyPerformance($numDays, $RootPath){
 	if (DB_num_rows($Result) != 0){
 		$i = 0; // row counter
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($showHeader){
+			if ($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly Sales Performance until '. $Now .'</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">';
@@ -154,7 +154,7 @@ function HourlyPerformance($numDays, $RootPath){
 								</thead>
 								<tbody>';
 				echo $TableHeader;
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 			$i++;
 			printf('<tr class="striped_row">
@@ -225,7 +225,7 @@ function HourlyPerformance($numDays, $RootPath){
 		echo '</tbody>
 			<tfooter>';
 
-		if (!$showHeader){
+		if (!$ShowHeader){
 			printf('<tr>
 					<td class="number">%s</td>
 					<td>%s</td>

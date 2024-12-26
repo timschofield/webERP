@@ -117,15 +117,15 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 			$dailyB = locale_number_format(($MyRow['salesB']/$NumDaysB),0);
 			$dailyC = locale_number_format(($MyRow['salesC']/$NumDaysC),0);
 			$dailyD = locale_number_format(($MyRow['salesD']/$NumDaysD),0);
-			$percent = (($MyRow['salesD']/$NumDaysD)-($MyRow['salesC']/$NumDaysC))/($MyRow['salesC']/$NumDaysC) * 100;
-			$trend = " ";
-			if ($percent > MINIMUM_AVERAGE_SALES_TREND){
-				$trend = "Improving ". locale_number_format($percent,0) . "%";
+			$Percent = (($MyRow['salesD']/$NumDaysD)-($MyRow['salesC']/$NumDaysC))/($MyRow['salesC']/$NumDaysC) * 100;
+			$Trend = " ";
+			if ($Percent > MINIMUM_AVERAGE_SALES_TREND){
+				$Trend = "Improving ". locale_number_format($Percent,0) . "%";
 			}
-			if ($percent < -MINIMUM_AVERAGE_SALES_TREND){
-				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+			if ($Percent < -MINIMUM_AVERAGE_SALES_TREND){
+				$Trend = "Degrading ". locale_number_format($Percent,0) . "%";
 			}
-			$forecast = locale_number_format(round($MyRow['salesC'], -5),0);
+			$Forecast = locale_number_format(round($MyRow['salesC'], -5),0);
 			$MTD = locale_number_format($MyRow['salesMTD'], 0);
 			
 			printf('<tr class="striped_row">
@@ -148,8 +148,8 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 					$dailyC,
 					$dailyD,
 					$MTD,
-					$trend,
-					$forecast
+					$Trend,
+					$Forecast
 					);
 			$i++;
 		}
@@ -201,10 +201,10 @@ function SPGTypePayments($SPG, $maxdays){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['totalshop'] != 0){
-				$percentcash = locale_number_format(($MyRow['cashshop']/$MyRow['totalshop'])*100,1);
-				$percentcredit = locale_number_format(($MyRow['creditshop']/$MyRow['totalshop'])*100,1);
-				$percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
-				$percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
+				$Percentcash = locale_number_format(($MyRow['cashshop']/$MyRow['totalshop'])*100,1);
+				$Percentcredit = locale_number_format(($MyRow['creditshop']/$MyRow['totalshop'])*100,1);
+				$Percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
+				$Percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
 				
 				$totalcash = $totalcash + $MyRow['cashshop'];
 				$totalcredit = $totalcredit + $MyRow['creditshop'];
@@ -222,10 +222,10 @@ function SPGTypePayments($SPG, $maxdays){
 						</tr>', 
 						$MyRow['reportunit'],
 						$MyRow['reportname'],
-						$percentcash, 
-						$percentcredit, 
-						$percentreturns, 
-						$percentvouchers
+						$Percentcash, 
+						$Percentcredit, 
+						$Percentreturns, 
+						$Percentvouchers
 						);
 				$i++;
 			}

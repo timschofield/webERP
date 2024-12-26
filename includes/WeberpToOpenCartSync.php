@@ -111,7 +111,6 @@ function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = TRUE, $EmailTex
 function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= ''){
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
-	$Today = date('Y-m-d');
 	$TagSeparator = ", ";
 
 	if ($EmailText !=''){

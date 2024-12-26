@@ -299,7 +299,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']==1 AND !isset($_POST['R
 			INNER JOIN stockmaster
 				ON offers.stockid=stockmaster.stockid
 			WHERE offers.supplierid='" . $_POST['SupplierID'] . "'
-			AND offers.expirydate>='" . date('Y-m-d') . "'";
+			AND offers.expirydate>=CURRENT_DATE";
 	$result=DB_query($sql);
 	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
 	$_SESSION['offer'.$identifier]->CurrCode=$Currency;

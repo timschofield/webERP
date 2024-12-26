@@ -326,8 +326,7 @@ if (isset($_POST['CommitBatch'])){
 											periodno,
 											account,
 											narrative,
-											amount,
-											tag)
+											amount)
 					VALUES (
 						12,
 						'" . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . "',
@@ -335,8 +334,7 @@ if (isset($_POST['CommitBatch'])){
 						'" . $PeriodNo . "',
 						'" . $ReceiptItem->GLCode . "',
 						'" . $ReceiptItem->Narrative . "',
-						'" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate) . "',
-						'" . $ReceiptItem->tag . "'" . "
+						'" . -($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate) . "'
 					)";
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');

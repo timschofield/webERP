@@ -191,8 +191,7 @@ function PurgetableGltrans($PurgeToPeriod){
 									narrative,
 									amount,
 									posted,
-									jobref,
-									tag
+									jobref
 								) VALUES (
 								'" . $MyRow['counterindex'] . "',
 								'" . $MyRow['type'] . "',
@@ -204,8 +203,7 @@ function PurgetableGltrans($PurgeToPeriod){
 								'" . $MyRow['narrative'] . "',
 								'" . $MyRow['amount'] . "',
 								'" . $MyRow['posted'] . "',
-								'" . $MyRow['jobref'] . "',
-								'" . $MyRow['tag'] . "')";
+								'" . $MyRow['jobref'] . "')";
 				$ResultInsert = DB_query_od($SQLInsert,$ErrMsg,$DbgMsg);
 				$RecordCounter++;
 			}
@@ -223,11 +221,11 @@ function PurgetableGltrans($PurgeToPeriod){
 							account";
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) != 0){
-				while ($mycosolidatedrow = DB_fetch_array($Result)) {
+				while ($MyConsolidatedRow = DB_fetch_array($Result)) {
 					
 					$SQLDelete = "DELETE FROM gltrans 
-									WHERE periodno = ".$mycosolidatedrow['periodno']."
-										AND account = '".$mycosolidatedrow['account']."'";
+									WHERE periodno = ".$MyConsolidatedRow['periodno']."
+										AND account = '".$MyConsolidatedRow['account']."'";
 					$ResultDelete = DB_query($SQLDelete,$ErrMsg,$DbgMsg);
 					
 					$Typeno = GetNextTransNo(1000);
@@ -241,20 +239,18 @@ function PurgetableGltrans($PurgeToPeriod){
 										narrative,
 										amount,
 										posted,
-										jobref,
-										tag
+										jobref
 									) VALUES (
 									'1000',
 									'" . $Typeno . "',
 									'0',
-									'" . $mycosolidatedrow['maxdate'] . "',
-									'" . $mycosolidatedrow['periodno'] . "',
-									'" . $mycosolidatedrow['account'] . "',
+									'" . $MyConsolidatedRow['maxdate'] . "',
+									'" . $MyConsolidatedRow['periodno'] . "',
+									'" . $MyConsolidatedRow['account'] . "',
 									'CONSOLIDATED ACCOUNTING',
-									'" . $mycosolidatedrow['consolidated'] . "',
+									'" . $MyConsolidatedRow['consolidated'] . "',
 									'1',
-									'',
-									'0')";
+									'')";
 					$ResultInsert = DB_query($SQLInsert,$ErrMsg,$DbgMsg);
 				}
 				prnMsg("Inserted consolidated accounting records");

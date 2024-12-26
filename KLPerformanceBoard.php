@@ -2066,11 +2066,11 @@ function PackagingStatusForBlink($RootPath){
 			ORDER BY locations.loccode";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($showHeader){
+			if($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -2123,7 +2123,7 @@ function PackagingStatusForBlink($RootPath){
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			printf('<tr class="striped_row">
@@ -2192,7 +2192,7 @@ function PackagingStatusForBlink($RootPath){
 
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</tbody></table>
 				</div>';
 		}
@@ -2328,11 +2328,11 @@ function PackagingStatusForKapalLaut($RootPath){
 			ORDER BY locations.loccode";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($showHeader){
+			if($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -2385,7 +2385,7 @@ function PackagingStatusForKapalLaut($RootPath){
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			printf('<tr class="striped_row">
@@ -2454,7 +2454,7 @@ function PackagingStatusForKapalLaut($RootPath){
 
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</tbody></table>
 				</div>';
 		}
@@ -2525,11 +2525,11 @@ function PackagingStatusForOutlet($RootPath){
 			ORDER BY locations.loccode";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($showHeader){
+			if($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Stock Status by Shop' . '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -2562,7 +2562,7 @@ function PackagingStatusForOutlet($RootPath){
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			printf('<tr class="striped_row">
@@ -2601,7 +2601,7 @@ function PackagingStatusForOutlet($RootPath){
 
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</tbody></table>
 				</div>';
 		}
@@ -2703,7 +2703,7 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 			ORDER BY locations.loccode";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	
 	$totalqty_box_l   = 0;
@@ -2729,7 +2729,7 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($showHeader){
+			if($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -2778,7 +2778,7 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			printf('<tr class="striped_row">
@@ -2863,7 +2863,7 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3024,7 +3024,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 			ORDER BY locations.loccode";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	
 	$totalqty_box_l   = 0;
@@ -3050,7 +3050,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($showHeader){
+			if($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -3099,7 +3099,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			printf('<tr class="striped_row">
@@ -3184,7 +3184,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3428,7 +3428,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 			ORDER BY locations.loccode";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$i = 1;
 	
 	$totalqty_bag_l   = 0;
@@ -3443,7 +3443,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			if($showHeader){
+			if($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
@@ -3472,7 +3472,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 							</tr>
 						</thead>
 						<tbody>';
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 
 			printf('<tr class="striped_row">
@@ -3517,7 +3517,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 
 			$i++;
 		}
-		if (!$showHeader){
+		if (!$ShowHeader){
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td class="number">%s</td>
@@ -3777,16 +3777,16 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 			}
 			
 			if ($MyRow['salesB'] != 0){
-				$percent = (($MyRow['salesA'])-($MyRow['salesB']))/($MyRow['salesB']) * 100;
+				$Percent = (($MyRow['salesA'])-($MyRow['salesB']))/($MyRow['salesB']) * 100;
 			}else{
-				$percent = 0;
+				$Percent = 0;
 			}
-			$trend = " ";
-			if ($percent > MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
-				$trend = "Improving ". locale_number_format($percent,0) . "%";
+			$Trend = " ";
+			if ($Percent > MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
+				$Trend = "Improving ". locale_number_format($Percent,0) . "%";
 			}
-			if ($percent < -MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
-				$trend = "Degrading ". locale_number_format($percent,0) . "%";
+			if ($Percent < -MINIMUM_AVERAGE_SALES_COMPARED_LAST_YEAR_TREND){
+				$Trend = "Degrading ". locale_number_format($Percent,0) . "%";
 			}
 			if (($MyRow['salesA'] > 0) OR ($MyRow['salesB'] > 0)){
 				printf('<tr class="striped_row">
@@ -3803,7 +3803,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 						$Name,
 						locale_number_format($MyRow['salesA'],0), 
 						locale_number_format($MyRow['salesB'],0), 
-						$trend,
+						$Trend,
 						$Rent
 						);
 				$i++;
@@ -3827,13 +3827,13 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 			$TotalDateB = $TotalDateB +($MyRow['salesB']);
 		}
 		if ($typereport == "Shop"){
-			$percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
-			$trend = " ";
-			if ($percent > 0){
-				$trend = "Improving ". locale_number_format($percent,1) . "%";
+			$Percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
+			$Trend = " ";
+			if ($Percent > 0){
+				$Trend = "Improving ". locale_number_format($Percent,1) . "%";
 			}
-			if ($percent < 0){
-				$trend = "Degrading ". locale_number_format($percent,1) . "%";
+			if ($Percent < 0){
+				$Trend = "Degrading ". locale_number_format($Percent,1) . "%";
 			}
 			$Rent = round(($TotalBothYearsRent / 365 * $NumDaysA) / $TotalBothYearsDateA * 100) . '%';
 			printf('<tr class="striped_row">
@@ -3850,7 +3850,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 					"EXISTING SHOPS",
 					locale_number_format($TotalBothYearsDateA,0), 
 					locale_number_format($TotalBothYearsDateB,0), 
-					$trend,
+					$Trend,
 					$Rent
 					);
 			if ($TotalNewDateA > 0){
@@ -3895,13 +3895,13 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 			}
 		}
 		if (($typereport == "Shop") OR ($typereport == "Online")){
-			$percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
-			$trend = " ";
-			if ($percent > 0){
-				$trend = "Improving ". locale_number_format($percent,1) . "%";
+			$Percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
+			$Trend = " ";
+			if ($Percent > 0){
+				$Trend = "Improving ". locale_number_format($Percent,1) . "%";
 			}
-			if ($percent < 0){
-				$trend = "Degrading ". locale_number_format($percent,1) . "%";
+			if ($Percent < 0){
+				$Trend = "Degrading ". locale_number_format($Percent,1) . "%";
 			}
 			$Rent = round(($TotalRent / 365 * $NumDaysA) / $TotalDateA * 100) . '%';
 			printf('<tr class="striped_row">
@@ -3918,14 +3918,14 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 					"TOTAL",
 					locale_number_format($TotalDateA,0), 
 					locale_number_format($TotalDateB,0), 
-					$trend,
+					$Trend,
 					$Rent
 					);
 		}
 		echo '</tbody></table>
 				</div>';
 		if (($typereport == "Shop") AND ($typeperiod == "YEAR")){
-			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $percent);
+			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $Percent);
 		}
 	}
 }

@@ -49,7 +49,7 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
 
-	$Result = DB_query("UPDATE config SET confvalue='" . Date('Y-m-d') . "'	WHERE confname='KL_DailyChecks_LastRun'");
+	$Result = DB_query("UPDATE config SET confvalue=CURRENT_DATE	WHERE confname='KL_DailyChecks_LastRun'");
 	if ($EmailText ==''){
 		prnMsg(_('The system has just run the daily Kapal-Laut checks.'),'info');
 		KLSendEmail("UserLoggingIn", "Silent", $_SESSION['UserID'], date('d/M/Y H:i'), $_SERVER["REMOTE_ADDR"]);
@@ -326,20 +326,18 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						FROM stockmaster
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
-				AND (enddate > '"  . date('Y-m-d') ."'
-				  OR enddate = '9999-12-31')";
+				AND enddate > CURRENT_DATE";
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	InsertKPI("Stock", "Models moved to obsolete (MODELS)", $MyRow['items']);
 
 	$SQL = "UPDATE prices
-			SET enddate = '" . date('Y-m-d') ."'
+			SET enddate = CURRENT_DATE
 			WHERE EXISTS (SELECT *
 						FROM stockmaster
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
-				AND (enddate > '"  . date('Y-m-d') ."'
-				  OR enddate = '9999-12-31')";
+				AND enddate > CURRENT_DATE";
 	$ErrMsg =_('Could not set end date to today for obsolete items because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Text = "Prices End Date updated to today for obsolete items.";

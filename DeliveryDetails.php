@@ -504,8 +504,8 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 												 startdate)
 								 VALUES ('" . $WONo . "',
 										'" . $_SESSION['DefaultFactoryLocation'] . "',
-										'" . Date('Y-m-d') . "',
-										'" . Date('Y-m-d'). "')",
+										CURRENT_DATE,
+										CURRENT_DATE)",
 										$ErrMsg,
 										$DbgMsg,
 										true);
@@ -687,7 +687,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 													stockid,
 													workcentreadded,
 													'" . $_SESSION['Items'.$identifier]->Location ."',
-													'" . Date('Y-m-d') . "',
+													CURRENT_DATE,
 													'2099-12-31',
 													quantity
 											FROM contractbom
@@ -703,7 +703,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 											 VALUES ('" . $WONo . "',
 													'" . $_SESSION['Items'.$identifier]->Location ."',
 													'" . $ContractRow['requireddate'] . "',
-													'" . Date('Y-m-d'). "')",
+													CURRENT_DATE)",
 										$ErrMsg,
 										$DbgMsg);
 			//Need to get the latest BOM to roll up cost but also add the contract other requirements

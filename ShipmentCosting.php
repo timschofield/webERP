@@ -275,7 +275,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 											amount)
 				  					VALUES (31,
 				   					'" . $_GET['SelectedShipment'] . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 							 		'" . $StockGLCodes['purchpricevaract'] . "',
 								 	'" . $myrow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['deicmalplaces']) . _('shipment quantity > stock held - variance write off') . "',
@@ -295,7 +295,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 											amount)
 											VALUES (31,
 							   					'" . $_GET['SelectedShipment'] . "',
-												'" . Date('Y-m-d') . "',
+												CURRENT_DATE,
 												'" . $PeriodNo . "',
 										 		'" . $StockGLCodes['stockact'] . "',
 											 	'" . $myrow['itemcode'] . ' ' . _('shipment avg cost adjt') . "',
@@ -325,7 +325,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 					$sql = "UPDATE stockmaster
 								SET lastcost=materialcost+overheadcost+labourcost,
 									materialcost=materialcost+" . $CostIncrement . ",
-									lastcostupdate='" . Date('Y-m-d') . "'
+									lastcostupdate=CURRENT_DATE
 							WHERE stockid='" . $myrow['itemcode'] . "'";
 
 					$Result = DB_query($sql, $ErrMsg, $DbgMsg,'',TRUE);
@@ -334,7 +334,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 					$sql = "UPDATE stockmaster
 								SET lastcost=materialcost+overheadcost+labourcost,
 									materialcost='" . $ItemShipmentCost . "',
-									lastcostupdate='" . Date('Y-m-d') . "'
+									lastcostupdate=CURRENT_DATE
 								WHERE stockid='" . $myrow['itemcode'] . "'";
 
 					$Result = DB_query($sql, $ErrMsg, $DbgMsg,'',TRUE);
@@ -355,7 +355,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												amount)
 									VALUES (31,
 										'" . $_GET['SelectedShipment'] . "',
-										'" . Date('Y-m-d') . "',
+										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $StockGLCodes['purchpricevaract'] . "',
 										'" . $myrow['itemcode'] . ' ' . _('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty recd') .' ' . $myrow['totqtyrecd'] . "',
@@ -378,7 +378,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 										amount)
 							VALUES (31,
 								'" . $_GET['SelectedShipment'] . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $_SESSION['CompanyRecord']['grnact'] . "',
 								'" . $myrow['itemcode'] . ' ' ._('shipment cost') . ' ' .  locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('Qty invoiced') . ' ' . $myrow['totqtyinvoiced'] . "',
@@ -413,7 +413,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												amount)
 										VALUES (35,
 											'" . $CostUpdateNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'" . $PeriodNo . "',
 											'" . $StockGLCodes['adjglact'] . "',
 											'" . _('Shipment of') . ' ' . $myrow['itemcode'] . " " . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "',
@@ -432,7 +432,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 										amount)
 								VALUES (35,
 									'" . $CostUpdateNo . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $StockGLCodes['stockact'] . "',
 									'" . _('Shipment of') . ' ' . $myrow['itemcode'] .  ' ' . _('cost was') . ' ' . $StdCostUnit . ' ' . _('changed to') . ' ' . locale_number_format($ItemShipmentCost,$_SESSION['CompanyRecord']['decimalplaces']) . ' x ' . _('QOH of') . ' ' . $QOH . "',
@@ -449,7 +449,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												labourcost=0,
 												overheadcost=0,
 												lastcost='" . $StdCostUnit . "',
-												lastcostupdate='" . Date('Y-m-d') . "'
+												lastcostupdate=CURRENT_DATE
 										WHERE stockid='" . $myrow['itemcode'] . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg();

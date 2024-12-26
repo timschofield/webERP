@@ -34,7 +34,7 @@ if ($debug) {
 
 /** Check if some action has been requested
 */
-$showList=true; // By default will show the tamplates list
+$ShowList=true; // By default will show the tamplates list
 
 /**
  *  Save the changes in template?
@@ -46,7 +46,7 @@ if (isset($_POST['Update'])) {
 	if (!$ok OR !updateLabel($Label)) {
 		// show the data label from the input data as update data (id read only)}
 		showLabel($Label, _('Correct data'), $Theme, false);
-		$showList=false;
+		$ShowList=false;
 	}
 
 /**
@@ -57,7 +57,7 @@ if (isset($_POST['Update'])) {
 	$Label=getData($_POST, true, $ok);
 	if (!$ok OR !createLabel($Label)) { //
 		showLabel($Label, _('Correct data'), $Theme, false);
-		$showList=false;
+		$ShowList=false;
 	}
 
 /**
@@ -67,7 +67,7 @@ if (isset($_POST['Update'])) {
 	$Label=$allLabels->getLabel($_POST['labelID']);
 	$Label->id = _('New ID');   // Well, where did I get it? of course from the user, but ..
 	showLabel($Label, _('Edit data new label'), $Theme, false);
-	$showList=false;
+	$ShowList=false;
 
 /**
  *  Change some data from an old template?
@@ -75,7 +75,7 @@ if (isset($_POST['Update'])) {
 } elseif (isset($_POST['Edit'])) {
 	$Label=$allLabels->getLabel($_POST['labelID']);
 	showLabel($Label, _('Edit data label'), $Theme, true);
-	$showList=false;
+	$ShowList=false;
 
 /**
  *  Eliminate an unnecesary template?
@@ -88,7 +88,7 @@ if (isset($_POST['Update'])) {
  */
 } elseif (isset($_POST['New'])) {
 	showLabel(null, _('New label'), $Theme);
-	$showList=false;
+	$ShowList=false;
 
 /**
  *  Do nothing? only show the list (if it exist))
@@ -102,7 +102,7 @@ if (isset($_POST['Update'])) {
 } else {
 	if ($allLabels==null OR count($allLabels->label)<1) {
 		showLabel(null, _('There is no labels, create a new one'), $Theme);
-		$showList=false;
+		$ShowList=false;
 	}
 }
 
@@ -111,7 +111,7 @@ if (isset($_POST['Update'])) {
  *  the exception occurs when previously has been selected a particular
  *  template, for edit, copy or to create a new one
  */
-if ($showList) {
+if ($ShowList) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title.'</p>';
 	showLabelsList($allLabels->label);
 }

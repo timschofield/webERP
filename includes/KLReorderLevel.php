@@ -269,10 +269,10 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 					$Resultdistribution = DB_query($SQLDistribution);
 					$LocationsToDistribute = DB_num_rows($Resultdistribution);
 					if ($LocationsToDistribute != 0){
-						while ($mydistribution = DB_fetch_array($Resultdistribution)) {
+						while ($MyDistribution = DB_fetch_array($Resultdistribution)) {
 							$NewRL = ceil($QtyToDistribute / ($LocationsToDistribute - $LocationsDistributed));
-							$NewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $mydistribution['loccode'], $NewRL);
-							SetReorderLevel("Rebalancing", $MyRow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $NewRL, $updateDB);
+							$NewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $MyDistribution['loccode'], $NewRL);
+							SetReorderLevel("Rebalancing", $MyRow['stockid'], $MyDistribution['loccode'], $MyDistribution['oldrl'], $NewRL, $updateDB);
 							$strategy = "Distribute all available stock between shops with RL > 0";
 							$QtyToDistribute = $QtyToDistribute - $NewRL;
 							$LocationsDistributed++;
@@ -291,8 +291,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 									$CodeLink, 
 									$MyRow['categoryid'], 
 									$MyRow['description'], 
-									$mydistribution['loccode'],
-									locale_number_format($mydistribution['oldrl'],0),
+									$MyDistribution['loccode'],
+									locale_number_format($MyDistribution['oldrl'],0),
 									$MyRow['locationneeded'],
 									$strategy
 									);
@@ -301,9 +301,9 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							if ($EmailText!=''){
 								$EmailText = $EmailText . $MyRow['stockid'] .
 														" OldRL @ " . 
-														$mydistribution['loccode'] . 
+														$MyDistribution['loccode'] . 
 														" = " . 
-														locale_number_format($mydistribution['oldrl'],0) .
+														locale_number_format($MyDistribution['oldrl'],0) .
 														" NewRL = " . 
 														locale_number_format($NewRL,0) .
 														"\n";
@@ -364,16 +364,16 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 	return $EmailText;
 }
 
-function WorstLocationForItem($stockid, $kind, $maxdays){
+function WorstLocationForItem($stockid, $Kind, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT locstock.loccode
 			FROM locstock, locations
 			WHERE locstock.loccode = locations.loccode
 				AND locstock.stockid = '" . $stockid . "'";
 
-	if ($kind == "OVERSTOCK"){
+	if ($Kind == "OVERSTOCK"){
 		$SQL = $SQL . " AND locstock.quantity > locstock.reorderlevel"; 
-	}elseif ($kind == "AVAILABLE"){
+	}elseif ($Kind == "AVAILABLE"){
 		$SQL = $SQL . " AND locstock.quantity > 0 "; 
 	}
 
@@ -551,7 +551,7 @@ to the shops with RL > 0.
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = 'RT'
 						AND prices.currabrev = 'IDR'
-						AND prices.startdate > '". $Today. "')
+						AND prices.startdate > CURRENT_DATE)
 19/04/2013 modification: Change the condition of "not changing price" to the new flag
 24/07/2013 modification: Do not increase RL for toko online
 11/03/2017 modification: filter by ShopType (brand) and simplified code with stockreadytosell
@@ -590,7 +590,7 @@ to the shops with RL > 0.
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$showHeader = true;
+		$ShowHeader = true;
 		$k = 0; //row colour counter
 		$i = $starttopitems;
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -620,14 +620,14 @@ to the shops with RL > 0.
 					} else {
 						$k = 1;
 					}
-					while ($mydistribution = DB_fetch_array($Resultdistribution)) {
+					while ($MyDistribution = DB_fetch_array($Resultdistribution)) {
 
-						$CurrentNewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $mydistribution['loccode'], $NewRL);
+						$CurrentNewRL = MaxRLCorrectionSomeModels($MyRow['stockid'], $MyDistribution['loccode'], $NewRL);
 
-						if($mydistribution['oldrl'] < $CurrentNewRL){
-							SetReorderLevel("TopSalesLowRL", $MyRow['stockid'], $mydistribution['loccode'], $mydistribution['oldrl'], $CurrentNewRL, $updateDB);
+						if($MyDistribution['oldrl'] < $CurrentNewRL){
+							SetReorderLevel("TopSalesLowRL", $MyRow['stockid'], $MyDistribution['loccode'], $MyDistribution['oldrl'], $CurrentNewRL, $updateDB);
 							if ($ShowMessages){
-								if($showHeader){
+								if($ShowHeader){
 									echo '<p class="page_title_text" align="center"><strong>' . 'Set RL minimum to ' . $NewRL . 
 																								' for Top Sales '. $starttopitems . '-'. $endtopitems . 
 																								' with Stock Available > '. $minstockavailable .
@@ -647,7 +647,7 @@ to the shops with RL > 0.
 														<th>' . _('New RL') . '</th>
 													</tr>';
 									echo $TableHeader;
-									$showHeader = false;
+									$ShowHeader = false;
 								}
 								if ($k == 0) {
 									echo '<tr class="EvenTableRows">';
@@ -669,13 +669,13 @@ to the shops with RL > 0.
 									$MyRow['categoryid'], 
 									$MyRow['description'], 
 									locale_number_format($MyRowQtyAvailable['QtyAvailable'],0),
-									$mydistribution['loccode'],
-									locale_number_format($mydistribution['oldrl'],0),
+									$MyDistribution['loccode'],
+									locale_number_format($MyDistribution['oldrl'],0),
 									locale_number_format($CurrentNewRL,0)
 									);
 							}
 							if ($EmailText!=''){
-								$EmailText = $EmailText . $MyRow['stockid'] . " @ " . $mydistribution['loccode'] . " Old RL = " . $mydistribution['oldrl'] .  " New RL = " . $CurrentNewRL . "\n";
+								$EmailText = $EmailText . $MyRow['stockid'] . " @ " . $MyDistribution['loccode'] . " Old RL = " . $MyDistribution['oldrl'] .  " New RL = " . $CurrentNewRL . "\n";
 							}
 						}
 					}
@@ -684,7 +684,7 @@ to the shops with RL > 0.
 			$i++;
 		}
 		if ($ShowMessages){
-			if(!$showHeader){
+			if(!$ShowHeader){
 				echo '</table>
 						</div>';
 			}
@@ -1068,10 +1068,10 @@ function AdjustPackaging($DaysSales, $ShopType, $ShowMessages, $updateDB, $RootP
 			WHERE locations.typeloc = '" . $ShopType . "'";
 	$Resultloc = DB_query($SQL);
 	if (DB_num_rows($Resultloc) != 0){
-		while ($myloc = DB_fetch_array($Resultloc)) {
+		while ($MyLoc = DB_fetch_array($Resultloc)) {
 			$iItem = 0;
 			while ($iItem < $CountItem){
-				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $myloc['loccode'], $DaysSales, $ShowMessages, $updateDB, $RootPath, $EmailText);
+				$EmailText = AdjustPackagingItemByShop($Items[$iItem], $MyLoc['loccode'], $DaysSales, $ShowMessages, $updateDB, $RootPath, $EmailText);
 				$iItem++;
 			}
 		}
