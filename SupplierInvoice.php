@@ -1113,8 +1113,7 @@ then do the updates and inserts to process the invoice entered */
 											trandate,
 											periodno,
 											account,
-											narrative,
-											tag,
+											narrative
 											amount)
 									VALUES (20,
 										'" . $InvoiceNo . "',
@@ -1122,7 +1121,6 @@ then do the updates and inserts to process the invoice entered */
 										'" . $PeriodNo . "',
 										'" . $EnteredGLCode->GLCode . "',
 										'" . $_SESSION['SuppTrans']->SupplierID . ' - ' . $EnteredGLCode->Narrative . "',
-										'" . $EnteredGLCode->Tag . "',
 										'" . $EnteredGLCode->Amount/ $_SESSION['SuppTrans']->ExRate ."')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');

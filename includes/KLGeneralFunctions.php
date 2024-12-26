@@ -643,8 +643,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				periodno,
 				account,
 				narrative,
-				amount,
-				tag)
+				amount)
 			VALUES 
 				('" . $Type . "',
 				'" . $Typeno . "',
@@ -652,8 +651,7 @@ function InsertIntoGLTrans($Type, $Typeno, $Trandate, $Period, $Account, $Narrat
 				'" . $Period . "',
 				'" . $Account . "',
 				'" . $Narrative . "',
-				'" . $Amount . "',
-				'" . $Tag . "')";
+				'" . $Amount . "')";
 	$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: '. $ErrCode;		
 	$DbgMsg = 'SQL to insert GLTrans record: ';
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);

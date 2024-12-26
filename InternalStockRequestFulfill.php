@@ -152,16 +152,14 @@ if (isset($_POST['UpdateAll'])) {
 												periodno,
 												account,
 												amount,
-												narrative,
-												tag)
+												narrative)
 											VALUES (17,
 												'"  .$AdjustmentNumber . "',
 												'" . $SQLAdjustmentDate . "',
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['issueglact'] . "',
 												'" . $StandardCost * ($Quantity) . "',
-												'" . $Narrative . "',
-												'" . $Tag . "'
+												'" . $Narrative . "'
 											)";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
@@ -174,16 +172,14 @@ if (isset($_POST['UpdateAll'])) {
 												periodno,
 												account,
 												amount,
-												narrative,
-												tag)
+												narrative)
 											VALUES (17,
 												'" . $AdjustmentNumber . "',
 												'" . $SQLAdjustmentDate . "',
 												'" . $PeriodNo . "',
 												'" . $StockGLCodes['stockact'] . "',
 												'" . $StandardCost * -$Quantity . "',
-												'" . $Narrative . "',
-												'" . $Tag . "'
+												'" . $Narrative . "'
 											)";
 
 					$Errmsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');

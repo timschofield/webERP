@@ -709,16 +709,14 @@ then do the updates and inserts to process the credit note entered */
 											periodno,
 											account,
 											narrative,
-											amount,
-											tag)
+											amount)
 								 	VALUES (21,
 										'" . $CreditNoteNo . "',
 										'" . $SQLCreditNoteDate . "',
 										'" . $PeriodNo . "',
 										'" . $EnteredGLCode->GLCode . "',
 										'" . $_SESSION['SuppTrans']->SupplierID . " " . $EnteredGLCode->Narrative . "',
-								 		'" . -$EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate ."',
-								 		'" . $EnteredGLCode->Tag . "' )";
+								 		'" . -$EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate ."')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction could not be added because');
 
