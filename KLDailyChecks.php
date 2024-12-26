@@ -326,8 +326,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						FROM stockmaster
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
-				AND (enddate > '"  . date('Y-m-d') ."'
-				  OR enddate = '9999-12-31')";
+				AND enddate > '"  . date('Y-m-d') ."'";
 	$Result = DB_query($SQL,$ErrMsg);
 	$MyRow = DB_fetch_array($Result);
 	InsertKPI("Stock", "Models moved to obsolete (MODELS)", $MyRow['items']);
@@ -338,8 +337,7 @@ function SetEndDatePriceToObsolete($ShowMessages, $EmailText){
 						FROM stockmaster
 						WHERE stockmaster.stockid = prices.stockid
 						AND stockmaster.discontinued = 1)
-				AND (enddate > '"  . date('Y-m-d') ."'
-				  OR enddate = '9999-12-31')";
+				AND enddate > '"  . date('Y-m-d') ."'";
 	$ErrMsg =_('Could not set end date to today for obsolete items because');
 	$Result = DB_query($SQL,$ErrMsg);
 	$Text = "Prices End Date updated to today for obsolete items.";

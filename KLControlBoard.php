@@ -2764,7 +2764,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 							FROM prices
 							WHERE stockmaster.stockid = prices.stockid
 								AND prices.startdate <= '". $today. "' 
-								AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+								AND prices.enddate >= '". $today. "'
 								AND prices.typeabbrev = 'RT'
 								AND currabrev = 'IDR') IS NOT NULL
 					AND NOT EXISTS (SELECT *
@@ -2798,7 +2798,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 				WHERE stockmaster.stockid = prices.stockid
 					AND prices.typeabbrev = 'RT'
 					AND prices.startdate <= '". $today. "' 
-					AND (prices.enddate >= '". $today. "' OR prices.enddate = '9999-12-31')
+					AND prices.enddate >= '". $today. "'
 					AND currabrev = 'IDR') AS price,
 			(SELECT SUM(locstock.quantity)
 				FROM locstock

@@ -42,7 +42,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				AND   prices.price" . $Comparator . "(stockmaster.actualcost) * '" . filter_number_format($_POST['Margin']) . "'
 				AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 				AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-				AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='9999-12-31')";
+				AND prices.enddate>='" . Date('Y-m-d') . "'";
 	$result = DB_query($sql);
 	$numrow = DB_num_rows($result);
 
