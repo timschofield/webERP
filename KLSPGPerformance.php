@@ -140,10 +140,10 @@ function RetailTypePayments($typereport, $maxdays){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['totalshop'] != 0){
-				$percentcash = locale_number_format(($MyRow['cashshop']/$MyRow['totalshop'])*100,1);
-				$percentcredit = locale_number_format(($MyRow['creditshop']/$MyRow['totalshop'])*100,1);
-				$percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
-				$percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
+				$Percentcash = locale_number_format(($MyRow['cashshop']/$MyRow['totalshop'])*100,1);
+				$Percentcredit = locale_number_format(($MyRow['creditshop']/$MyRow['totalshop'])*100,1);
+				$Percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
+				$Percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
 				
 				$totalcash = $totalcash + $MyRow['cashshop'];
 				$totalcredit = $totalcredit + $MyRow['creditshop'];
@@ -161,19 +161,19 @@ function RetailTypePayments($typereport, $maxdays){
 						</tr>', 
 						$MyRow['reportunit'],
 						$MyRow['reportname'],
-						$percentcash, 
-						$percentcredit, 
-						$percentreturns, 
-						$percentvouchers
+						$Percentcash, 
+						$Percentcredit, 
+						$Percentreturns, 
+						$Percentvouchers
 						);
 				$i++;
 			}
 		}
 
-		$percentcash = locale_number_format(($totalcash/$total)*100,1);
-		$percentcredit = locale_number_format(($totalcredit/$total)*100,1);
-		$percentreturns = locale_number_format(($totalreturned/$total)*100,1);
-		$percentvouchers = locale_number_format(($totalvouchers/$total)*100,1);
+		$Percentcash = locale_number_format(($totalcash/$total)*100,1);
+		$Percentcredit = locale_number_format(($totalcredit/$total)*100,1);
+		$Percentreturns = locale_number_format(($totalreturned/$total)*100,1);
+		$Percentvouchers = locale_number_format(($totalvouchers/$total)*100,1);
 		
 		printf('<tr class="striped_row">
 				<td>%s</td>
@@ -185,10 +185,10 @@ function RetailTypePayments($typereport, $maxdays){
 				</tr>', 
 				"",
 				"Average",
-				$percentcash, 
-				$percentcredit, 
-				$percentreturns, 
-				$percentvouchers
+				$Percentcash, 
+				$Percentcredit, 
+				$Percentreturns, 
+				$Percentvouchers
 				);
 		
 		echo '</tbody>
@@ -1068,7 +1068,7 @@ function HourlySales($numDays, $RootPath){
 				debtorsmaster.debtorno";
 
 	$Result = DB_query($SQL);
-	$showHeader = TRUE;
+	$ShowHeader = TRUE;
 	$GrandTotal = 0;
 	
 	if (DB_num_rows($Result) != 0){
@@ -1094,13 +1094,13 @@ function HourlySales($numDays, $RootPath){
 		$ZoneName = '';
 		
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($showHeader){
+			if ($ShowHeader){
 				echo '<p class="page_title_text" align="center"><strong>' .'Hourly sales and value for the last ' . $numDays . ' days</strong></p>';
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>';
 			}
-			if (($showHeader) OR ($ZoneName != $MyRow['zone'])){
+			if (($ShowHeader) OR ($ZoneName != $MyRow['zone'])){
 				$TableHeader = '<tr>
 									<th class="SortedColumn">' . _('Zone') . '</th>
 									<th class="SortedColumn">' . _('Shop') . '</th>
@@ -1128,7 +1128,7 @@ function HourlySales($numDays, $RootPath){
 							</thead>
 							<tbody>';
 				echo $TableHeader;
-				$showHeader = FALSE;
+				$ShowHeader = FALSE;
 			}
 			$TotalSales = $MyRow['sales07'] +
 						$MyRow['sales08'] +
@@ -1451,7 +1451,7 @@ function HourlySales($numDays, $RootPath){
 				''
 				);
 				
-		if (!$showHeader){
+		if (!$ShowHeader){
 			echo '</tbody>
 				</table>
 				</div>';

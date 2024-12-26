@@ -132,35 +132,35 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 							FROM klretailpartners
 							WHERE partnercode = '" . $CompanyTo . "'";
 			$ResultCompanyTo = DB_query($SQLCompanyTo);
-			$myCompanyTo= DB_fetch_array($ResultCompanyTo);
+			$MyCompanyTo= DB_fetch_array($ResultCompanyTo);
 			
-			$AddressPartner = $myCompanyTo['partneraddressjalan'];
-			if ($myCompanyTo['partneraddressblok'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddressblok'];
+			$AddressPartner = $MyCompanyTo['partneraddressjalan'];
+			if ($MyCompanyTo['partneraddressblok'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddressblok'];
 			}
-			if ($myCompanyTo['partneraddressnomor'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddressnomor'];
+			if ($MyCompanyTo['partneraddressnomor'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddressnomor'];
 			}
-			if ($myCompanyTo['partneraddressrt'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddressrt'];
+			if ($MyCompanyTo['partneraddressrt'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddressrt'];
 			}
-			if ($myCompanyTo['partneraddressrw'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddressrw'];
+			if ($MyCompanyTo['partneraddressrw'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddressrw'];
 			}
-			if ($myCompanyTo['partneraddresskecamatan'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskecamatan'];
+			if ($MyCompanyTo['partneraddresskecamatan'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddresskecamatan'];
 			}
-			if ($myCompanyTo['partneraddresskelurahan'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskelurahan'];
+			if ($MyCompanyTo['partneraddresskelurahan'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddresskelurahan'];
 			}
-			if ($myCompanyTo['partneraddresskabupaten'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskabupaten'];
+			if ($MyCompanyTo['partneraddresskabupaten'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddresskabupaten'];
 			}
-			if ($myCompanyTo['partneraddresspropinsi'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddresspropinsi'];
+			if ($MyCompanyTo['partneraddresspropinsi'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddresspropinsi'];
 			}
-			if ($myCompanyTo['partneraddresskodepos'] != ''){
-				$AddressPartner .= ' ' . $myCompanyTo['partneraddresskodepos'];
+			if ($MyCompanyTo['partneraddresskodepos'] != ''){
+				$AddressPartner .= ' ' . $MyCompanyTo['partneraddresskodepos'];
 			}
 			
 			$pdf->ln(6);
@@ -168,17 +168,17 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 			$WidthColumn2 = 0;
 			$pdf->SetFont($FontType, '', $FontSizeM);
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice to:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernameinvoice'], 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, $MyCompanyTo['partnernameinvoice'], 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Address:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $AddressPartner, 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'NPWP:', 0, '', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, $myCompanyTo['partnernpwpinvoice'], 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, $MyCompanyTo['partnernpwpinvoice'], 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice number:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, $InvoiceNumber, 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Invoice date:', 0, 'L', 0, 0, '', '', true);
 			$pdf->MultiCell($WidthColumn2, 0, ConvertSQLDate($EndDate), 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell($WidthColumn1, 0, 'Due date:', 0, 'L', 0, 0, '', '', true);
-			$pdf->MultiCell($WidthColumn2, 0, DateAdd(ConvertSQLDate($EndDate),'d',+$myCompanyTo['daysinvoicedue']), 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell($WidthColumn2, 0, DateAdd(ConvertSQLDate($EndDate),'d',+$MyCompanyTo['daysinvoicedue']), 0, 'L', 0, 1, '', '', true);
 
 			// Line header
 			$pdf->ln(8);
@@ -283,7 +283,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 									$TransNo, 
 									$EndDate,
 									$PeriodNo,
-									$myCompanyTo['accountconsignmentsalesptadu'],
+									$MyCompanyTo['accountconsignmentsalesptadu'],
 									"Invoice " . $InvoiceNumber,
 									-round($TotalGoods),
 									"",
@@ -294,7 +294,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 									$TransNo, 
 									$EndDate,
 									$PeriodNo,
-									$myCompanyTo['accountconsignmentcogspartner'],
+									$MyCompanyTo['accountconsignmentcogspartner'],
 									"Invoice " . $InvoiceNumber,
 									round($TotalGoods),
 									"",
@@ -317,7 +317,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 									$TransNo, 
 									$EndDate,
 									$PeriodNo,
-									$myCompanyTo['accountppn'],
+									$MyCompanyTo['accountppn'],
 									"PPN Paid Invoice " . $InvoiceNumber,
 									round($TotalPPN),
 									"",

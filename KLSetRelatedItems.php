@@ -55,11 +55,11 @@ if (DB_num_rows($Result) != 0){
 						ORDER BY stockmaster.stockid";
 		$Resultrelated = DB_query($SQLRelated);
 		
-		while ($myrelated = DB_fetch_array($Resultrelated)) {
+		while ($MyRelated = DB_fetch_array($Resultrelated)) {
 			$SQLExists = "SELECT *
 							FROM relateditems
 							WHERE relateditems.stockid = '" . $MyRow['stockid'] . "'
-								AND relateditems.related = '" . $myrelated['stockid'] . "'";
+								AND relateditems.related = '" . $MyRelated['stockid'] . "'";
 			$ResultExists = DB_query($SQLExists);
 			
 			if (DB_num_rows($ResultExists) == 0){
@@ -68,7 +68,7 @@ if (DB_num_rows($Result) != 0){
 							related)
 						VALUES (
 							UPPER('" . $MyRow['stockid'] . "'),
-							UPPER('" . $myrelated['stockid'] . "'))";
+							UPPER('" . $MyRelated['stockid'] . "'))";
 				$ErrMsg =_('Could not insert the related items because');
 				$Resultinsert = DB_query($SQLinsert,$ErrMsg);
 
@@ -80,7 +80,7 @@ if (DB_num_rows($Result) != 0){
 						</tr>', 
 						$i, 
 						$MyRow['stockid'], 
-						$myrelated['stockid']
+						$MyRelated['stockid']
 						);
 			}
 		}
