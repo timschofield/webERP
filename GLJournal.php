@@ -1,5 +1,12 @@
 <?php
 
+/********************************************************************************************************
+*
+* KL RICARD; Avoid checks for The general ledger debtors and creditors ledger (AR) (AP) integration
+*			Default the date to today	
+*
+********************************************************************************************************/
+
 include ('includes/DefineJournalClass.php');
 
 include ('includes/session.php');
@@ -342,6 +349,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 		// If a manual code was entered need to check it exists and isnt a bank account
 		$AllowThisPosting = true; //by default
 		if ($_SESSION['ProhibitJournalsToControlAccounts'] == 1) {
+			/* KL RICARD Do not perform these tests
 			if ($_SESSION['CompanyRecord']['gllink_debtors'] == '1' and $_POST['GLManualCode'] == $_SESSION['CompanyRecord']['debtorsact']) {
 				prnMsg(_('GL Journals involving the debtors control account cannot be entered. The general ledger debtors ledger (AR) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'), 'warn');
 				$AllowThisPosting = false;
@@ -350,6 +358,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 				prnMsg(_('GL Journals involving the creditors control account cannot be entered. The general ledger creditors ledger (AP) integration is enabled so control accounts are automatically maintained by webERP. This setting can be disabled in System Configuration'), 'warn');
 				$AllowThisPosting = false;
 			}
+			KL RICARD END */
 		}
 		if (in_array($_POST['GLManualCode'], $_SESSION['JournalDetail']->BankAccounts)) {
 			prnMsg(_('GL Journals involving a bank account cannot be entered') . '. ' . _('Bank account general ledger entries must be entered by either a bank account receipt or a bank account payment'), 'info');
@@ -433,8 +442,8 @@ echo '<p class="page_title_text">
 
 // A new table in the first column of the main table
 if (!Is_Date($_SESSION['JournalDetail']->JnlDate)) {
-	// Default the date to the last day of the previous month
-	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), 0, date('Y')));
+	// KL RICARD Default the date to today
+	$_SESSION['JournalDetail']->JnlDate = Date($_SESSION['DefaultDateFormat']);
 }
 
 echo '<table>
