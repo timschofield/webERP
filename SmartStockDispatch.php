@@ -214,7 +214,7 @@ if (isset($_POST['PrintPDF'])) {
 											VALUES ('" . $Trf_ID . "',
 												'" . $myrow['stockid'] . "',
 												'" . $ShipQty . "',
-												'" . Date('Y-m-d') . "',
+												CURRENT_DATE,
 												'" . $_POST['FromLocation']  ."',
 												'" . $_POST['ToLocation'] . "')";
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];

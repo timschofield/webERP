@@ -340,7 +340,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO']!=''){
 													'" . $GRN . "',
 													'" . FormatDateForSQL($DeliveryDate) . "',
 													'" . $PeriodNo . "',
-													'" . Date('Y-m-d') . "',
+													CURRENT_DATE,
 													'" . _('cost') . "',
 													'" . $CurrentStandardCost * $OrderLine->ReceiveQty . "')";
 							$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
@@ -1510,7 +1510,7 @@ then do the updates and inserts to process the invoice entered */
 								'" . $TaxTotal . "',
 								'" .  $_SESSION['SuppTrans']->ExRate . "',
 								'" . $_SESSION['SuppTrans']->Comments . "',
-								'" . Date('Y-m-d') ."')";
+								CURRENT_DATE)";
 
 		$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The supplier invoice transaction could not be added to the database because');
 		$DbgMsg = _('The following SQL to insert the supplier invoice was used');
@@ -1789,7 +1789,7 @@ then do the updates and inserts to process the invoice entered */
 													'" . $InvoiceNo . "',
 													'" . $SQLInvoiceDate . "',
 													'" . $PeriodNo . "',
-													'" . Date('Y-m-d') . "',
+													CURRENT_DATE,
 													'cost',
 													'" . ($PurchPriceVar) . "')";
 					$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');
@@ -1876,7 +1876,7 @@ then do the updates and inserts to process the invoice entered */
 											'" . $InvoiceNo . "',
 											'" . $SQLInvoiceDate . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'" . _('cost') . "',
 											'" . ($AssetAddition->Amount / $_SESSION['SuppTrans']->ExRate)  . "')";
 			$ErrMsg = _('CRITICAL ERROR! NOTE DOWN THIS ERROR AND SEEK ASSISTANCE The fixed asset transaction could not be inserted because');

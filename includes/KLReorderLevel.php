@@ -551,7 +551,7 @@ to the shops with RL > 0.
 					WHERE stockmaster.stockid = prices.stockid	
 						AND prices.typeabbrev = 'RT'
 						AND prices.currabrev = 'IDR'
-						AND prices.startdate > '". $Today. "')
+						AND prices.startdate > CURRENT_DATE)
 19/04/2013 modification: Change the condition of "not changing price" to the new flag
 24/07/2013 modification: Do not increase RL for toko online
 11/03/2017 modification: filter by ShopType (brand) and simplified code with stockreadytosell

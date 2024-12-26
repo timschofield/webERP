@@ -345,8 +345,8 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $NewItem . "'
 										AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
-										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
+										AND bom.effectiveafter<=CURRENT_DATE
+										AND bom.effectiveto>=CURRENT_DATE");
 			$CostRow = DB_fetch_array($CostResult);
 			if(is_null($CostRow['cost'])) {
 					$Cost =0;
@@ -435,8 +435,8 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $Itm . "'
 										AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
-										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
+										AND bom.effectiveafter<=CURRENT_DATE
+										AND bom.effectiveto>=CURRENT_DATE");
 
 
 			$CostRow = DB_fetch_array($CostResult);
@@ -548,8 +548,8 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 												INNER JOIN bom ON stockmaster.stockid=bom.component
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
 												AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
-												AND bom.effectiveafter<='" . Date('Y-m-d') . "'
-												AND bom.effectiveto>='" . Date('Y-m-d') . "'");
+												AND bom.effectiveafter<=CURRENT_DATE
+												AND bom.effectiveto>=CURRENT_DATE");
 				$CostRow = DB_fetch_array($CostResult);
 				if(is_null($CostRow['cost'])) {
 					$Cost =0;

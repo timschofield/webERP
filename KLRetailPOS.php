@@ -656,8 +656,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						'" . "" . "',
 						'" . "" . "',
 						'" . $_SESSION['Items'.$identifier]->Location ."',
-						'" . Date('Y-m-d') . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
+						CURRENT_DATE,
 						0,
 						'" . $_SESSION['SalesmanLogin'] . "',
 						'" . $_POST['AmountPaidCash'] . "',
@@ -700,8 +700,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								'" . $StockItem->Quantity . "',
 								'" . floatval($StockItem->DiscountPercent) . "',
 								'" . DB_escape_string($StockItem->Narrative) . "',
-								'" . Date('Y-m-d') . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
+								CURRENT_DATE,
 								'" . $StockItem->Quantity . "',
 								1)";
 
@@ -840,7 +840,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 						10,
 						'" . $InvoiceNo . "',
 						'" . $_SESSION['Items'.$identifier]->Location . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $_SESSION['UserID'] . "',
 						'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 						'" . $_SESSION['Items'.$identifier]->Branch . "',
@@ -1011,7 +1011,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 							standardcost,
 							invoicedtopartner)
 						VALUES 
-							('" . Date('Y-m-d') . "',
+							(CURRENT_DATE,
 							'" . $_SESSION['PartnerCode']  . "',
 							'PTADU',
 							'" . $_SESSION['Items'.$identifier]->CustRef  . "',
@@ -1069,8 +1069,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								'1',
 								'0',
 								'Voucher,Discount,VIP Card',
-								'" . Date('Y-m-d') . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
+								CURRENT_DATE,
 								'1',
 								1)";
 
@@ -1127,8 +1127,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 								'1',
 								'0',
 								'Returned Goods',
-								'" . Date('Y-m-d') . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
+								CURRENT_DATE,
 								'1',
 								1)";
 
@@ -1653,7 +1653,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 											VALUES ( '" . $OrderNo . "',
 												'" . $_POST['ReturnedGoodsReason'] . "',
 												'" . mb_strtoupper($_POST['ReturnedGoodsItems']) . "',
-												'" . Date('Y-m-d') . "',
+												CURRENT_DATE,
 												'" . mb_strtoupper($_POST['ReturnedGoodsOldInvoice']) . "',
 												'" . FormatDateForSQL($_POST['ReturnDate']) . "')";
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The returned goods record could not be inserted because');

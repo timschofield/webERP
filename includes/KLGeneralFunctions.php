@@ -845,7 +845,6 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$Result = DB_Txn_Begin();
 
 		$BatchNo = GetNextTransNo(12);
-		$Today = date('Y-m-d');
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$Narrative = 'Online ' . $OrderNo . ' ' . $PaymentCode;
 		$BankTransType = "Transfer";
@@ -871,8 +870,8 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 					'" . $CustomerCode . "',
 					'',
 					'" . $OrderNo . "',
-					'" . $Today . "',
-					'" . $Today . "',
+					CURRENT_DATE,
+					CURRENT_DATE,
 					'" . $PeriodNo . "',
 					'" . $Narrative . "',
 					'',
@@ -888,7 +887,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$SQL = "UPDATE debtorsmaster
-					SET lastpaiddate = '" . $Today . "',
+					SET lastpaiddate = CURRENT_DATE,
 					lastpaid='" . $TotalAmount ."'
 				WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
@@ -913,7 +912,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 				'" . $Narrative . "',
 				'" . $ExRate . "',
 				'" . $FunctionalExRate . "',
-				'" . $Today . "',
+				CURRENT_DATE,
 				'" . $BankTransType . "',
 				'" . ($NetAmount * $FunctionalExRate * $ExRate) . "',
 				'" . $Currency . "'
@@ -932,7 +931,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			VALUES (
 				12,
 				'" . $BatchNo . "',
-				'" . $Today . "',
+				CURRENT_DATE,
 				'" . $PeriodNo . "',
 				'" . $GLAccountTransfer . "',
 				'" . $Narrative . "',
@@ -953,7 +952,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									VALUES (
 										12,
 										'" . $BatchNo . "',
-										'" . $Today . "',
+										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommission . "',
 										'" . $Narrative . "',
@@ -975,7 +974,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 									VALUES (
 										12,
 										'" . $BatchNo . "',
-										'" . $Today . "',
+										CURRENT_DATE,
 										'" . $PeriodNo . "',
 										'" . $GLAccountCommissionPPN . "',
 										'" . $Narrative . "',
@@ -996,7 +995,7 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 								VALUES (
 									12,
 									'" . $BatchNo . "',
-									'" . $Today . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $_SESSION['CompanyRecord']['debtorsact'] . "',
 									'" . $Narrative . "',
@@ -1014,12 +1013,12 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 			$SQL = "UPDATE salesorders
 						SET klpaidcash = '" . $TotalAmount . "',
 							quotation = '0',
-							confirmeddate = '" . $Today . "'
+							confirmeddate = CURRENT_DATE
 					WHERE salesorders.orderno='" . $OrderNo . "'";
 		}else{
 			$SQL = "UPDATE salesorders
 						SET quotation = '0',
-							confirmeddate = '" . $Today . "'
+							confirmeddate = CURRENT_DATE
 					WHERE salesorders.orderno='" . $OrderNo . "'";
 		}
 		$DbgMsg = _('The SQL that failed to update the quotation flag of the sales order was');

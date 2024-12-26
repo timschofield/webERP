@@ -117,7 +117,7 @@ if (isset($_GET['Edit'])) {
 				FROM tenders
 				INNER JOIN locationusers ON locationusers.loccode=tenders.location AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1
 				WHERE closed=0
-					AND requiredbydate > '" . Date('Y-m-d') . "'";
+					AND requiredbydate > CURRENT_DATE";
 	$Result = DB_query($SQL);
 	echo '<table class="selection">';
 	echo '<tr>

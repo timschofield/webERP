@@ -1735,7 +1735,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 							'" . $_SESSION['Items'.$identifier]->Location . "',
 							'" . $OrderLine->StockID . "',
 							'" . $OrderLine->QtyDispatched . "',
-							'" . Date('Y-m-d') . "')";
+							CURRENT_DATE)";
 				$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-1030');
 				$DbgMsg = _('The following SQL to insert the packaging used was used');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);

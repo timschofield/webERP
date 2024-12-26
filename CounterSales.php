@@ -454,8 +454,8 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 							bom.quantity
 						FROM bom
 						WHERE bom.parent='" . $NewItem . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE";
 
 				$ErrMsg =  _('Could not retrieve kitset components from the database because') . ' ';
 				$KitResult = DB_query($SQL,$ErrMsg,$DbgMsg);
@@ -565,8 +565,8 @@ if (isset($_POST['Recalculate'])) {
 								bom.quantity
 							FROM bom
 							WHERE bom.parent='" . $OrderLine->StockID. "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+                            AND bom.effectiveto > CURRENT_DATE";
 
 				$ErrMsg = _('Could not retrieve kitset components from the database because');
 				$KitResult = DB_query($SQL,$ErrMsg);
@@ -615,8 +615,8 @@ Now figure out if the item is a kit set - the field MBFlag='K'
 						bom.quantity
 					FROM bom
 					WHERE bom.parent='" . $NewItem . "'
-                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                    AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                    AND bom.effectiveafter <= CURRENT_DATE
+                    AND bom.effectiveto > CURRENT_DATE";
 
 			$ErrMsg = _('Could not retrieve kitset components from the database because');
 			$KitResult = DB_query($SQL,$ErrMsg);
@@ -667,8 +667,8 @@ if (isset($NewItemArray) AND isset($_POST['SelectingOrderItems'])) {
 	        					bom.quantity
 		          			FROM bom
 							WHERE bom.parent='" . $NewItem . "'
-                            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                            AND bom.effectiveafter <= CURRENT_DATE
+                            AND bom.effectiveto > CURRENT_DATE";
 
 					$ErrMsg = _('Could not retrieve kitset components from the database because');
 					$KitResult = DB_query($SQL,$ErrMsg);
@@ -1026,8 +1026,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 						ON stockmaster.stockid=bom.component
 						WHERE bom.parent='" . $OrderLine->StockID . "'
 						AND locstock.loccode='" . $_SESSION['Items'.$identifier]->Location . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE";
 
 				$ErrMsg = _('Could not retrieve the component quantity left at the location once the assembly item on this order is invoiced (for the purposes of checking that stock will not go negative because)');
 				$Result = DB_query($SQL,$ErrMsg);
@@ -1121,8 +1121,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 												'" . $_SESSION['Items'.$identifier]->PhoneNo . "',
 												'" . $_SESSION['Items'.$identifier]->Email . "',
 												'" . $_SESSION['Items'.$identifier]->Location ."',
-												'" . Date('Y-m-d') . "',
-												'" . Date('Y-m-d') . "',
+												CURRENT_DATE,
+												CURRENT_DATE,
 												0,
 												'" . $_SESSION['Items'.$identifier]->SalesPerson . "')";
 		$DbgMsg = _('Trouble inserting the sales order header. The SQL that failed was');
@@ -1153,8 +1153,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 					'" . $StockItem->Quantity . "',
 					'" . floatval($StockItem->DiscountPercent) . "',
 					'" . $StockItem->Narrative . "',
-					'" . Date('Y-m-d') . "',
-					'" . Date('Y-m-d') . "',
+					CURRENT_DATE,
+					CURRENT_DATE,
 					'" . $StockItem->Quantity . "',
 					1)";
 
@@ -1222,8 +1222,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 													 startdate)
 									 VALUES ('" . $WONo . "',
 											'" . $_SESSION['DefaultFactoryLocation'] . "',
-											'" . Date('Y-m-d') . "',
-											'" . Date('Y-m-d'). "')",
+											CURRENT_DATE,
+											CURRENT_DATE)",
 											$ErrMsg,
 											$DbgMsg,
 											true);
@@ -1433,8 +1433,8 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 							stockmaster
 						WHERE bom.component=stockmaster.stockid
 						AND bom.parent='" . $OrderLine->StockID . "'
-                        AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                        AND bom.effectiveto > '" . date('Y-m-d') . "'";
+                        AND bom.effectiveafter <= CURRENT_DATE
+                        AND bom.effectiveto > CURRENT_DATE";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('Could not retrieve assembly components from the database for'). ' '. $OrderLine->StockID . _('because').' ';
 				$DbgMsg = _('The SQL that failed was');

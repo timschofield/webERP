@@ -1222,7 +1222,6 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $Percent
 function PricesNotUpdatedinXDays($numDays, $PercentageIncrease, $RootPath){
 	
 	$InitialDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
-	$today = date('Y-m-d');
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,

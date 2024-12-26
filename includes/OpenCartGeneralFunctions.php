@@ -731,7 +731,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 	$InsertQryResult = DB_query($HeaderSQL,$ErrMsg,$DbgMsg);
 
 	$SQL = "UPDATE debtorsmaster
-				SET lastpaiddate = '" . Date('Y-m-d') . "',
+				SET lastpaiddate = CURRENT_DATE,
 				lastpaid='" . $AmountPaid ."'
 			WHERE debtorsmaster.debtorno='" . $CustomerCode . "'";
 
@@ -761,7 +761,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 			'" . _('OC Receipt') . ' ' . $CustomerCode . ' ' . $TransactionID  . "',
 			'" . $Rate / $FunctionalRate  . "',
 			'" . $FunctionalRate . "',
-			'" . Date('Y-m-d') . "',
+			CURRENT_DATE,
 			'" . $PaymentSystem . ' ' . _('online') . "',
 			'" . ($AmountPaid * $Rate / $FunctionalRate) . "',
 			'" . $CustomerCurrency . "'
@@ -783,7 +783,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 								amount)
 			VALUES (12,
 					'" . $CustomerReceiptNo . "',
-					'" . Date('Y-m-d') . "',
+					CURRENT_DATE,
 					'" . $PeriodNo . "',
 					'" . $BankAccount . "',
 					'" . $Narrative . "',
@@ -803,7 +803,7 @@ function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $Custo
 								amount)
 				VALUES (12,
 						'" . $CustomerReceiptNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'". $_SESSION['CompanyRecord']['debtorsact'] . "',
 						'" . $Narrative . "',
@@ -867,7 +867,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 							'" . $PaymentSystem . ' ' . _('Transaction Fees') . ' ' . $CustomerCode . ' ' . $TransactionID  . "',
 							'" . $Rate / $FunctionalRate  . "',
 							'" . $FunctionalRate . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PaymentSystem . ' ' . _('Transaction Fees') . "',
 							'" . -($Commission * $Rate / $FunctionalRate) . "',
 							'" .$Currency . "'
@@ -887,7 +887,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 								amount)
 			VALUES (1,
 					'" . $PaymentNo . "',
-					'" . Date('Y-m-d') . "',
+					CURRENT_DATE,
 					'" . $PeriodNo . "',
 					'" . $BankAccount . "',
 					'" . $Narrative . "',
@@ -907,7 +907,7 @@ function TransactionCommissionGL ($CustomerCode, $BankAccount, $CommissionAccoun
 								amount)
 				VALUES (1,
 						'" . $PaymentNo . "',
-						'" . Date('Y-m-d') . "',
+						CURRENT_DATE,
 						'" . $PeriodNo . "',
 						'". $CommissionAccount . "',
 						'" . $Narrative . "',

@@ -88,7 +88,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					'" . $_SESSION['UserStockLocation'] . "',
 					'" . $StockId . "',
 					'" . $QtyDelivered . "',
-					'" . Date('Y-m-d') . "')";
+					CURRENT_DATE)";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0030');
 		$DbgMsg = _('The following SQL to insert the packaging used was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
@@ -125,7 +125,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					10,
 					'" . $InvoiceNo . "',
 					'" . $_SESSION['UserStockLocation'] . "',
-					'" . Date('Y-m-d') . "',
+					CURRENT_DATE,
 					'" . $_SESSION['UserID'] . "',
 					'" . $_SESSION['Items'.$identifier]->DebtorNo . "',
 					'" . $_SESSION['Items'.$identifier]->Branch . "',
@@ -512,7 +512,7 @@ function AccountDebtorPayment($ReceiptNumber,
 				'" . $Description . "',
 				'" . $ExRate . "',
 				'" . $BankAccountExRate . "',
-				'" . Date('Y-m-d') . "',
+				CURRENT_DATE,
 				'3',
 				'" . $NetPayment . "',
 				'" . $Currency . "')";
@@ -553,7 +553,7 @@ function AccountDebtorPayment($ReceiptNumber,
 
 	$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
-	$SQL = "UPDATE debtorsmaster SET lastpaiddate = '" . Date('Y-m-d') . "',
+	$SQL = "UPDATE debtorsmaster SET lastpaiddate = CURRENT_DATE,
 									lastpaid='" . $AmountPaid . "'
 							WHERE debtorsmaster.debtorno='" . $DebtorNo . "'";
 
@@ -568,7 +568,7 @@ function AccountDebtorPayment($ReceiptNumber,
 										transid_allocfrom,
 										transid_allocto )
 							VALUES  ('" . $AmountPaid . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									 '" . $ReceiptDebtorTransID . "',
 									 '" . $DebtorTransID . "')";
 	$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');

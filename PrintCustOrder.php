@@ -241,7 +241,7 @@ if (DB_num_rows($result)>0){
 	$pdf-> __destruct();
 
 	$sql = "UPDATE salesorders SET printedpackingslip=1,
-									datepackingslipprinted='" . Date('Y-m-d') . "'
+									datepackingslipprinted=CURRENT_DATE
 			WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 	$result = DB_query($sql);
 } else {

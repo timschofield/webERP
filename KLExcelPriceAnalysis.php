@@ -42,8 +42,8 @@ function submit($ListCategories, $DaysTopSales) {
 				AND stockmaster.discontinued = 0	
 				AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 				AND prices.currabrev = '". CURRENCY_CODE ."'
-				AND prices.startdate <= '". $today. "' 
-				AND prices.enddate >= '". $today. "'
+				AND prices.startdate <= CURRENT_DATE 
+				AND prices.enddate >= CURRENT_DATE
 			ORDER BY stockmaster.stockid";
 		
 		$Result = DB_query($SQL);

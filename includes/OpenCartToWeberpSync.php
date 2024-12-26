@@ -1038,7 +1038,7 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 
 			// update the sales order, as we start the process
 			$sqlUpdate = "UPDATE salesorders 
-					SET klemailpaymentconfirm = '" . Date('Y-m-d') . "'
+					SET klemailpaymentconfirm = CURRENT_DATE
 					WHERE orderno =	'" . $myrow['orderno'] . "'";
 			$ErrMsg =_('Could not update the sales order KL email payment confirmation date because');
 			$resultUpdate = DB_query($sqlUpdate,$ErrMsg);

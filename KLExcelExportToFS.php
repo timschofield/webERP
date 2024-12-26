@@ -40,8 +40,6 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 	if ($InputError == 0){
 			
-		$Now = Date('Y-m-d H-i-s');
-		
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.categoryid,
 						stockmaster.description,
@@ -66,8 +64,8 @@ function submit($TypeOfShop, $TypeOfFile) {
 					AND salescatprod.manufacturers_id = '" . $TypeOfShop . "'
 					AND prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 					AND prices.currabrev = '". CURRENCY_CODE ."'
-					AND prices.startdate <= '". $Now. "' 
-					AND prices.enddate >= '". $Now. "'
+					AND prices.startdate <= CURRENT_DATE 
+					AND prices.enddate >= CURRENT_DATE
 				ORDER BY stockmaster.stockid";
 		$Result = DB_query($SQL);
 

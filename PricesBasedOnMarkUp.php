@@ -283,8 +283,8 @@ if (isset($_POST['UpdatePrices'])){
 							WHERE typeabbrev= '" . $_POST['BasePriceList'] . "'
 								AND currabrev='" . $_POST['CurrCode'] . "'
 								AND debtorno=''
-								AND startdate <='" . Date('Y-m-d') . "'
-								AND enddate >= '" . Date('Y-m-d') . "'
+								AND startdate <=CURRENT_DATE
+								AND enddate >= CURRENT_DATE
 								AND stockid='" . $myrow['stockid'] . "'
 							ORDER BY startdate DESC";
 				$ErrMsg = _('Could not get the base price for the item') . ' ' . $myrow['stockid'] . _('from the price list') . ' ' . $_POST['BasePriceList'];
@@ -323,8 +323,8 @@ if (isset($_POST['UpdatePrices'])){
 													WHERE typeabbrev= '" . $_POST['PriceList'] . "'
 													AND debtorno =''
 													AND currabrev='" . $_POST['CurrCode'] . "'
-													AND startdate <='" . Date('Y-m-d') . "'
-													AND enddate>='" . Date('Y-m-d') . "'
+													AND startdate <=CURRENT_DATE
+													AND enddate>=CURRENT_DATE
 													AND stockid='" . $myrow['stockid'] . "'");
 				if (DB_num_rows($CurrentPriceResult)==1){
 					$DayPriorToNewPrice = DateAdd($_POST['PriceStartDate'],'d',-1);

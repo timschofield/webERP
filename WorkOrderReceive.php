@@ -262,7 +262,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								amount)
 							VALUES (35,
 								'" . $CostUpdateNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['adjglact'] . "',
 								'" . _('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'] . "',
@@ -281,7 +281,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								amount)
 							VALUES (35,
 								'" . $CostUpdateNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
 								'" . _('Cost roll on release of WO') . ': ' . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('cost was') . ' ' . $ItemCostRow['cost'] . ' ' . _('changed to') . ' ' . $Cost . ' x ' . _('Quantity on hand of') . ' ' . $ItemCostRow['totalqoh'] . "',
@@ -293,7 +293,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				}
 
 				$SQL = "UPDATE stockmaster SET
-							lastcostupdate='" . Date('Y-m-d') . "',
+							lastcostupdate=CURRENT_DATE,
 							materialcost='" . $Cost . "',
 							labourcost='" . $ItemCostRow['labourcost'] . "',
 							overheadcost='" . $ItemCostRow['overheadcost'] . "',
@@ -368,7 +368,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 								28,
 								'" . $WOIssueNo . "',
 								'" . $WORow['loccode'] . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $_SESSION['UserID'] . "',
 								'" . $PeriodNo . "',
 								'" . $_POST['WO'] . "',
@@ -402,7 +402,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (28,
 								'" . $WOIssueNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['wipact'] . "',
 								'" . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' ' . _('Component') . ': ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
@@ -421,7 +421,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (28,
 								'" . $WOIssueNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $AutoIssueCompRow['stockact'] . "',
 								'" . $_POST['WO'] . ' - ' . $_POST['StockID'] . ' -> ' . $AutoIssueCompRow['stockid'] . ' - ' . $QuantityReceived . ' x ' . $AutoIssueCompRow['qtypu'] . ' @ ' . locale_number_format($AutoIssueCompRow['cost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
@@ -477,7 +477,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 							26,
 							'" . $WOReceiptNo . "',
 							'" . $_POST['IntoLocation'] . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $_SESSION['UserID'] . "',
 							'" . $WORow['stdcost'] . "',
 							'" . $PeriodNo . "',
@@ -702,7 +702,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (26,
 								'" . $WOReceiptNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['stockact'] . "',
 								'" . $_POST['WO'] . " " . $_POST['StockID'] . " - " . DB_escape_string($WORow['description']) . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',
@@ -722,7 +722,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									amount)
 							VALUES (26,
 								'" . $WOReceiptNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $StockGLCode['wipact'] . "',
 								'" . $_POST['WO'] . " " . $_POST['StockID'] . " - " . DB_escape_string($WORow['description']) . ' x ' . $QuantityReceived . " @ " . locale_number_format($WORow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']) . "',

@@ -198,7 +198,7 @@ if (isset($_POST['submit'])) {
 											amount)
 							VALUES ('42',
 								'" . $TransNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $OldDetails['costact'] . "',
 								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
@@ -218,7 +218,7 @@ if (isset($_POST['submit'])) {
 											amount)
 							VALUES ('42',
 								'" . $TransNo . "',
-								'" . Date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $PeriodNo . "',
 								'" . $NewAccounts['costact'] . "',
 								'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
@@ -238,7 +238,7 @@ if (isset($_POST['submit'])) {
 												amount)
 								VALUES ('42',
 									'" . $TransNo . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $OldDetails['accumdepnact'] . "',
 									'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
@@ -258,7 +258,7 @@ if (isset($_POST['submit'])) {
 												amount)
 								VALUES ('42',
 									'" . $TransNo . "',
-									'" . Date('Y-m-d') . "',
+									CURRENT_DATE,
 									'" . $PeriodNo . "',
 									'" . $NewAccounts['accumdepnact'] . "',
 									'" . $AssetID . ' ' . _('change category') . ' ' . $OldDetails['assetcategoryid'] . ' - ' . $_POST['AssetCategoryID'] . "',
@@ -332,7 +332,7 @@ if (isset($_POST['submit'])) {
 											'" . $TransNo . "',
 											'" . FormatDateForSQL($_POST['DatePurchased']) . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'cost',
 											'" . filter_number_format($_POST['Cost']) . "')";
 
@@ -353,7 +353,7 @@ if (isset($_POST['submit'])) {
 											'" . $TransNo . "',
 											'" . FormatDateForSQL($_POST['DatePurchased']) . "',
 											'" . $PeriodNo . "',
-											'" . Date('Y-m-d') . "',
+											CURRENT_DATE,
 											'depn',
 											'" . filter_number_format($_POST['AccumDepn']) . "')";
 
@@ -423,7 +423,7 @@ if (isset($_POST['submit'])) {
 										amount)
 						VALUES ('43',
 							'" . $TransNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $AssetRow['costact'] . "',
 							'" . _('Delete asset') . ' ' . $AssetID . "',
@@ -443,7 +443,7 @@ if (isset($_POST['submit'])) {
 										amount)
 						VALUES ('43',
 							'" . $TransNo . "',
-							'" . Date('Y-m-d') . "',
+							CURRENT_DATE,
 							'" . $PeriodNo . "',
 							'" . $AssetRow['accumdepnact'] . "',
 							'" . _('Delete asset') . ' ' . $AssetID . "',

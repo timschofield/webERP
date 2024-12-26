@@ -469,7 +469,7 @@ if (isset($_POST['submit'])) {
 							categoryid='" . $_POST['CategoryID'] . "', ";
 				// KL RICARD
 				if ($OldCategoryId != $_POST['CategoryID']){
-					$SQL = $SQL . "lastcategoryupdate='" . date('Y-m-d') . "', ";
+					$SQL = $SQL . "lastcategoryupdate=CURRENT_DATE, ";
 				}
 				$SQL = $SQL . "length='" . filter_number_format($_POST['Length']) . "',
 							width='" . filter_number_format($_POST['Width']) . "',
@@ -570,7 +570,7 @@ if (isset($_POST['submit'])) {
 												amount)
 										VALUES ( 0,
 												'" . $JournalNo . "',
-												'" . Date('Y-m-d') . "',
+												CURRENT_DATE,
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $NewStockAct . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
@@ -587,7 +587,7 @@ if (isset($_POST['submit'])) {
 												amount)
 										VALUES ( 0,
 												'" . $JournalNo . "',
-												'" . Date('Y-m-d') . "',
+												CURRENT_DATE,
 												'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 												'" . $OldStockAccount . "',
 												'" . $StockID . ' ' . _('Change stock category') . "',
@@ -623,7 +623,7 @@ if (isset($_POST['submit'])) {
 													amount)
 											VALUES ( 0,
 													'" . $JournalNo . "',
-													'" . Date('Y-m-d') . "',
+													CURRENT_DATE,
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $NewWIPAct . "',
 													'" . $StockID . ' ' . _('Change stock category') . "',
@@ -640,7 +640,7 @@ if (isset($_POST['submit'])) {
 													amount)
 											VALUES ( 0,
 													'" . $JournalNo . "',
-													'" . Date('Y-m-d') . "',
+													CURRENT_DATE,
 													'" . GetPeriod(Date($_SESSION['DefaultDateFormat'])) . "',
 													'" . $OldWIPAccount . "',
 													'" . $StockID . ' ' . _('Change stock category') . "',
@@ -666,7 +666,7 @@ if (isset($_POST['submit'])) {
 				$i++;
 			} else {
 				DB_Txn_Begin();
-			    // KL Ricard: ADDED lastcategoryupdate, to query and '" . date('Y-m-d') . "', to values
+			    // KL Ricard: ADDED lastcategoryupdate, to query and CURRENT_DATE, to values
 				// Added fields length, width, height and unitsdimension
 				$SQL = "INSERT INTO stockmaster (stockid,
 												description,
@@ -700,7 +700,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['Description'] . "',
 								'" . $_POST['LongDescription'] . "',
 								'" . $_POST['CategoryID'] . "',
-								'" . date('Y-m-d') . "',
+								CURRENT_DATE,
 								'" . $_POST['Units'] . "',
 								'" . $_POST['MBFlag'] . "',
 								'" . filter_number_format($_POST['EOQ']) . "',

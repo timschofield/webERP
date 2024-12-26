@@ -52,8 +52,8 @@ if (isset($_POST['PrintPDF'])) {
 					   CONCAT(bom.parent,bom.component) AS sortpart
 					  FROM bom
 			  WHERE bom.parent ='" . $_POST['Part'] . "'
-              AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-              AND bom.effectiveto > '" . date('Y-m-d') . "'";
+              AND bom.effectiveafter <= CURRENT_DATE
+              AND bom.effectiveto > CURRENT_DATE";
 	$result = DB_query($sql);
 
 	$LevelCounter = 2;
@@ -79,8 +79,8 @@ if (isset($_POST['PrintPDF'])) {
 					 (" . filter_number_format($_POST['Quantity']) . " * bom.quantity) as extendedqpa
 			FROM bom
 			WHERE bom.parent ='" . $_POST['Part'] . "'
-            AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-            AND bom.effectiveto > '" . date('Y-m-d') . "'";
+            AND bom.effectiveafter <= CURRENT_DATE
+            AND bom.effectiveto > CURRENT_DATE";
 	$result = DB_query($sql);
 	//echo "<br />sql is $sql<br />";
 	// This while routine finds the other levels as long as $ComponentCounter - the
@@ -111,8 +111,8 @@ if (isset($_POST['PrintPDF'])) {
 					 (bom.quantity * passbom.extendedqpa)
 			 FROM bom,passbom
 			 WHERE bom.parent = passbom.part
-             AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-             AND bom.effectiveto > '" . date('Y-m-d') . "'";
+             AND bom.effectiveafter <= CURRENT_DATE
+             AND bom.effectiveto > CURRENT_DATE";
 		$result = DB_query($sql);
 
 		$result = DB_query("DROP TABLE IF EXISTS passbom2");
@@ -133,8 +133,8 @@ if (isset($_POST['PrintPDF'])) {
 									FROM bom
 									INNER JOIN passbom2
 									ON bom.parent = passbom2.part
-									WHERE bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                    AND bom.effectiveto > '" . date('Y-m-d') . "'";
+									WHERE bom.effectiveafter <= CURRENT_DATE
+                                    AND bom.effectiveto > CURRENT_DATE";
 		$result = DB_query($sql);
 
 		$sql = "SELECT COUNT(bom.parent) AS components
