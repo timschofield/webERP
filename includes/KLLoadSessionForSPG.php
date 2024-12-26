@@ -3,7 +3,7 @@
 if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 	AND (!isset($_SESSION['cashsalecustomer']))){
 	/*Get the default customer-branch combo from the user's default location record */
-	$sql = "SELECT 	locations.cashsalecustomer,
+	$SQL = "SELECT 	locations.cashsalecustomer,
 					locations.cashsalebranch,
 					locations.locationname,
 					locations.deladd1,
@@ -78,83 +78,83 @@ if (($KL_SPGSeniorOrSupport OR $KL_SPGJunior)
 				AND custbranch.branchcode = locations.cashsalebranch
 				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
 
-	$result = DB_query($sql);
-	if (DB_num_rows($result)==0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)==0) {
 		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
 		include('includes/footer.php');
 		exit;
 	} else {
-		$myrow = DB_fetch_array($result); //get the only row returned
+		$MyRow = DB_fetch_array($Result); //get the only row returned
 
-		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
+		if ($MyRow['cashsalecustomer']=='' OR $MyRow['cashsalebranch']==''){
 			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location.'),'error');
 			include('includes/footer.php');
 			exit;
 		}
 
-		if ($myrow['partnercode']=='NORETAIL'){
+		if ($MyRow['partnercode']=='NORETAIL'){
 			prnMsg(_('To use this script it is first necessary to define a retail partner for the location that is your default location. '),'error');
 			include('includes/footer.php');
 			exit;
 		}
 
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress2'] = $myrow['deladd2'];
-		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
-		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
-		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
-		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
-		$_SESSION['klpostag'] = $myrow['klpostag'];
+		$_SESSION['ShopAddress1'] = $MyRow['deladd1'];
+		$_SESSION['ShopAddress2'] = $MyRow['deladd2'];
+		$_SESSION['ShopAddress3'] = $MyRow['deladd3'];
+		$_SESSION['ShopAddress4'] = $MyRow['deladd4'];
+		$_SESSION['ShopAddress5'] = $MyRow['deladd5'];
+		$_SESSION['klposcashaccount'] = $MyRow['klposcashaccount'];
+		$_SESSION['klpostag'] = $MyRow['klpostag'];
 
-		$_SESSION['cashsalebranch'] = $myrow['cashsalebranch'];
-		$_SESSION['cashsalecustomer'] = $myrow['cashsalecustomer'];
-		$_SESSION['locationname'] = $myrow['locationname'];
-		$_SESSION['taxprovinceid'] = $myrow['taxprovinceid'];
-		$_SESSION['customername'] = $myrow['name'];
-		$_SESSION['salestype'] = $myrow['salestype'];
-		$_SESSION['sales_type'] = $myrow['sales_type'];
-		$_SESSION['currcode'] = $myrow['currcode'];
-		$_SESSION['terms'] = $myrow['terms'];
-		$_SESSION['braddress1'] = $myrow['braddress1'];
-		$_SESSION['specialinstructions'] = $myrow['specialinstructions'];
-		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
-		$_SESSION['TypeLoc'] = $myrow['typeloc'];
+		$_SESSION['cashsalebranch'] = $MyRow['cashsalebranch'];
+		$_SESSION['cashsalecustomer'] = $MyRow['cashsalecustomer'];
+		$_SESSION['locationname'] = $MyRow['locationname'];
+		$_SESSION['taxprovinceid'] = $MyRow['taxprovinceid'];
+		$_SESSION['customername'] = $MyRow['name'];
+		$_SESSION['salestype'] = $MyRow['salestype'];
+		$_SESSION['sales_type'] = $MyRow['sales_type'];
+		$_SESSION['currcode'] = $MyRow['currcode'];
+		$_SESSION['terms'] = $MyRow['terms'];
+		$_SESSION['braddress1'] = $MyRow['braddress1'];
+		$_SESSION['specialinstructions'] = $MyRow['specialinstructions'];
+		$_SESSION['taxgroupid'] = $MyRow['taxgroupid'];
+		$_SESSION['TypeLoc'] = $MyRow['typeloc'];
 		
-		$_SESSION['PartnerCode'] = $myrow['partnercode'];
-		$_SESSION['PartnerName'] = $myrow['partnername'];
-		$_SESSION['PartnerAddress'] = $myrow['partneraddress'];
-		$_SESSION['PartnerNPWP'] = $myrow['partnernpwp'];
-		$_SESSION['PPN'] = $myrow['ppn'];
-		$_SESSION['AreaSalesCreditCard'] = $myrow['areasalescreditcard'];
-		$_SESSION['AreaSalesCash'] = $myrow['areasalescash'];
-		$_SESSION['AreaSalesCashOthers'] = $myrow['areasalescashothers'];
-		$_SESSION['CashSalesReported'] = $myrow['cashsalesreported'];
-		$_SESSION['HPPCompensation'] = $myrow['hppcompensation'];
-		$_SESSION['AccountHPPCompensation'] = $myrow['accounthppcompensation'];
-		$_SESSION['AccountBankDanamon'] = $myrow['accountbankdanamon'];
-		$_SESSION['AccountBankBNI'] = $myrow['accountbankbni'];
-		$_SESSION['AccountBankMandiri'] = $myrow['accountbankmandiri'];
-		$_SESSION['AccountBankBCA'] = $myrow['accountbankbca'];
-		$_SESSION['AccountComissionCreditCard'] = $myrow['accountcomissioncreditcard'];
-		$_SESSION['ComissionCCDanamon'] = $myrow['comissionccdanamon'];
-		$_SESSION['ComissionAmexDanamon'] = $myrow['comissionamexdanamon'];
-		$_SESSION['ComissionCCBNI'] = $myrow['comissionccbni'];
-		$_SESSION['ComissionAmexBNI'] = $myrow['comissionamexbni'];
-		$_SESSION['ComissionCCMandiri'] = $myrow['comissionccmandiri'];
-		$_SESSION['ComissionCCBCA'] = $myrow['comissionccbca'];
-		$_SESSION['ComissionAmexBCA'] = $myrow['comissionamexbca'];
-		$_SESSION['PercentConsignmentPTADU'] = $myrow['percentconsignmentptadu'];
-		$_SESSION['AccountConsignmentSalesPTADU'] = $myrow['accountconsignmentsalesptadu'];
-		$_SESSION['AccountConsignmentCOGSPartner'] = $myrow['accountconsignmentcogspartner'];
-		$_SESSION['AccountWeChat'] = $myrow['accountwechat'];
-		$_SESSION['ComissionWeChat'] = $myrow['comissionwechat'];
-		$_SESSION['AccountComissionWeChat'] = $myrow['accountcomissionwechat'];
-		$_SESSION['AccountQRIS'] = $myrow['accountqris'];
-		$_SESSION['ComissionQRIS'] = $myrow['comissionqris'];
-		$_SESSION['AccountComissionQRIS'] = $myrow['accountcomissionqris'];
-		$_SESSION['CounterInvoiceA'] = $myrow['counterinvoicea'];
-		$_SESSION['CounterInvoiceB'] = $myrow['counterinvoiceb'];
-		$_SESSION['CounterInvoiceC'] = $myrow['counterinvoicec'];
+		$_SESSION['PartnerCode'] = $MyRow['partnercode'];
+		$_SESSION['PartnerName'] = $MyRow['partnername'];
+		$_SESSION['PartnerAddress'] = $MyRow['partneraddress'];
+		$_SESSION['PartnerNPWP'] = $MyRow['partnernpwp'];
+		$_SESSION['PPN'] = $MyRow['ppn'];
+		$_SESSION['AreaSalesCreditCard'] = $MyRow['areasalescreditcard'];
+		$_SESSION['AreaSalesCash'] = $MyRow['areasalescash'];
+		$_SESSION['AreaSalesCashOthers'] = $MyRow['areasalescashothers'];
+		$_SESSION['CashSalesReported'] = $MyRow['cashsalesreported'];
+		$_SESSION['HPPCompensation'] = $MyRow['hppcompensation'];
+		$_SESSION['AccountHPPCompensation'] = $MyRow['accounthppcompensation'];
+		$_SESSION['AccountBankDanamon'] = $MyRow['accountbankdanamon'];
+		$_SESSION['AccountBankBNI'] = $MyRow['accountbankbni'];
+		$_SESSION['AccountBankMandiri'] = $MyRow['accountbankmandiri'];
+		$_SESSION['AccountBankBCA'] = $MyRow['accountbankbca'];
+		$_SESSION['AccountComissionCreditCard'] = $MyRow['accountcomissioncreditcard'];
+		$_SESSION['ComissionCCDanamon'] = $MyRow['comissionccdanamon'];
+		$_SESSION['ComissionAmexDanamon'] = $MyRow['comissionamexdanamon'];
+		$_SESSION['ComissionCCBNI'] = $MyRow['comissionccbni'];
+		$_SESSION['ComissionAmexBNI'] = $MyRow['comissionamexbni'];
+		$_SESSION['ComissionCCMandiri'] = $MyRow['comissionccmandiri'];
+		$_SESSION['ComissionCCBCA'] = $MyRow['comissionccbca'];
+		$_SESSION['ComissionAmexBCA'] = $MyRow['comissionamexbca'];
+		$_SESSION['PercentConsignmentPTADU'] = $MyRow['percentconsignmentptadu'];
+		$_SESSION['AccountConsignmentSalesPTADU'] = $MyRow['accountconsignmentsalesptadu'];
+		$_SESSION['AccountConsignmentCOGSPartner'] = $MyRow['accountconsignmentcogspartner'];
+		$_SESSION['AccountWeChat'] = $MyRow['accountwechat'];
+		$_SESSION['ComissionWeChat'] = $MyRow['comissionwechat'];
+		$_SESSION['AccountComissionWeChat'] = $MyRow['accountcomissionwechat'];
+		$_SESSION['AccountQRIS'] = $MyRow['accountqris'];
+		$_SESSION['ComissionQRIS'] = $MyRow['comissionqris'];
+		$_SESSION['AccountComissionQRIS'] = $MyRow['accountcomissionqris'];
+		$_SESSION['CounterInvoiceA'] = $MyRow['counterinvoicea'];
+		$_SESSION['CounterInvoiceB'] = $MyRow['counterinvoiceb'];
+		$_SESSION['CounterInvoiceC'] = $MyRow['counterinvoicec'];
 		
 	}
 }
