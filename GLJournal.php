@@ -502,7 +502,6 @@ $Result = DB_query($SQL);
 echo '<field>
 	<label for="tag">', _('GL Tag') , '</label>
 	<select multiple="multiple" name="tag[]">';
-echo '<option value="0">0 - ', _('None') , '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_GET['Edit']) and isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] or (isset($_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) and in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
 		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';

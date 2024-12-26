@@ -383,12 +383,11 @@ if (isset($_POST['Location'])) {
 
 			//Select the tag
 			$SQL = "SELECT tagref,
-			tagdescription
-	FROM tags
-	ORDER BY tagref";
+							tagdescription
+					FROM tags
+					ORDER BY tagref";
 			$Result = DB_query($SQL);
 			echo '<td><select multiple="multiple" name="' . $LineRow['dispatchid'] . 'Tag' . $LineRow['dispatchitemsid'] . '[]">';
-			echo '<option value="0">0 - ', _('None') , '</option>';
 			while ($MyRow = DB_fetch_array($Result)) {
 				if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] and in_array($MyRow['tagref'])) {
 					echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';

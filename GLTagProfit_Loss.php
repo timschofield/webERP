@@ -127,7 +127,6 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 				ORDER BY tagref";
 
 	$Result = DB_query($SQL);
-	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 			echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
