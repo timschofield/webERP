@@ -131,6 +131,19 @@ $k=0; //row colour counter
 
 while ($MyRow=DB_fetch_array($LocStockResult)) {
 
+	// update the RL if the location is the same as the type of shop or the location code
+	if(($myrow['typeloc'] == $TypeOfShop) 
+		OR ($myrow['loccode'] == $LocCode)){
+		$sql = "UPDATE locstock SET reorderlevel = '" . $RL . "'
+			WHERE stockid = '" . $StockID . "'
+			AND loccode = '"  . $myrow['loccode'] ."'";
+
+		$UpdateReorderLevel = DB_query($sql);
+		$NewRL = $RL;
+	}else{
+		$NewRL = $myrow['reorderlevel'];
+	}
+
 	printf('<tr class="striped_row">
 			<td>%s</td>
 			<td class="number">%s</td>
