@@ -7,9 +7,6 @@ include('includes/session.php');
 $Title = _('Sales Inquiry');
 include('includes/header.php');
 
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
-
 # Sets default date range for current month
 if (!isset($_POST['FromDate'])){
 

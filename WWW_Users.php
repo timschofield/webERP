@@ -30,7 +30,6 @@ if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
-include('includes/KLRoles.php');
 // KL RICARD END
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,

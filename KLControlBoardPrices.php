@@ -14,9 +14,6 @@ include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 include('includes/SQL_CommonFunctions.inc');
 
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
-
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 $IssuesFound = 0;

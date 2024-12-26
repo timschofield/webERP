@@ -7,8 +7,6 @@ include('includes/KLDefines.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 include('includes/KLGeneralFunctions.php');
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
 
 if (isset($_GET['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_GET['SelectedPriceChange']);

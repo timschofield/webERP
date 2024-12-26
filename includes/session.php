@@ -11,10 +11,13 @@ if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
 
-// KL RICARD Select the default database depending on the code version
+// KL RICARD: Include the specific KL config files
 include ($PathPrefix . 'KLsession.php');
+// KL RICARD END: Include the specific KL config files
 
+// KL RICARD Select the default database depending on the code version
 $DefaultDatabase = KLDatabaseSelection();
+// KL RICARD END Select the default database depending on the code version
 
 if (!file_exists($PathPrefix . 'config.php')) {
 	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
@@ -29,7 +32,6 @@ include ($PathPrefix . 'config.php');
 // KL RICARD: Include the specific KL config file
 include ($PathPrefix . 'config-KL.php');
 // KL RICARD END: Include the specific KL config file
-
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
 	$DBUser = $dbuser;
@@ -113,7 +115,6 @@ if (isset($_SESSION['DatabaseName'])) {
 include ($PathPrefix . 'includes/LanguageSetup.php');
 $FirstLogin = False;
 
-
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
 		//retrieve the sql data;
@@ -187,6 +188,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		$rc = UL_OK;
 	}
 	
+	// KL RICARD: Include the specific KL config file to assign a KL Role to each user
+	include ($PathPrefix . 'includes/KLRoles.php');
+	// KL RICARD END: Include the specific KL config file
+
 	/* RICARD KL Set up the login theme for production, test, development, development test webERP */
 	$Theme = KLThemeSelection();
 	/* RICARD KL END MODIFICATION Set up the login theme for production, test, development, development test webERP */
@@ -221,8 +226,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	
 	}
 
-	// KL RICARD
-	
+	// KL RICARD Check if the user is allowed to access the page
 	if (KLwebERPScriptCalledFromTEST()){
 		/* If script is from TEST weberp or from localhost */
 		if ($_SESSION['DatabaseName'] != "test_erp"){
@@ -243,8 +247,8 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit;
 		}
 	}
+	// KL RICARD END Check if the user is allowed to access the page
 }
-// KL RICARD END
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
 if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
@@ -255,7 +259,6 @@ if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCR
 $_SESSION['Theme'] = KLThemeSelection();
 /* RICARD KL END MODIFICATION Set up the theme for production, test, development, development test webERP */
 
-
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
@@ -265,7 +268,6 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 
 // Now check that the user as logged in has access to the page being called. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
-
 
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
 	$Title = _('Account Error Report');

@@ -5,9 +5,6 @@ $Title = _('GLAccount - Users Authority Copy Authority');// Screen identificator
 include('includes/header.php');
 include('includes/KLEmails.php');
 
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
-
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
 	_('Copy Authority of GL Accounts from one user to another'), '" /> ',// Icon title.

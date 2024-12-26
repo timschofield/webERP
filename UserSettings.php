@@ -15,8 +15,6 @@ $ViewTopic = 'GettingStarted';
 $BookMark = 'UserSettings';
 
 include('includes/header.php');
-// KL RICARD
-include('includes/KLRoles.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/user.png" title="', // Icon image.

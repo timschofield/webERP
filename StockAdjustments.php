@@ -4,7 +4,6 @@
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
-include ('includes/KLRoles.php');
 
 $Title = _('Stock Adjustments');
 

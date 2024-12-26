@@ -8,9 +8,6 @@ include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
-
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
