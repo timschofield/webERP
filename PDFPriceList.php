@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 					AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-					AND (prices.enddate='9999-12-31' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+					AND prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "'" .
 					$WhereCurrency .
 					$ShowObsolete . "
 				ORDER BY
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					AND prices.typeabbrev='" . $_POST['SalesType'] . "'
 					AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-					AND (prices.enddate='9999-12-31' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+					AND prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "'" .
 					$WhereCurrency .
 					$ShowObsolete . "
 					AND prices.debtorno LIKE '%%'

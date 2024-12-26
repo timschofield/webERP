@@ -720,7 +720,7 @@
 				 AND typeabbrev='" .$SalesType. "'
 				 AND currabrev='".$Currency. "'
 				 AND startdate<=CURRENT_DATE
-				 AND (enddate>CURRENT_DATE OR enddate='9999-12-31')";
+				 AND enddate>CURRENT_DATE";
 		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);
 		if ($myrow[0]==0) {
@@ -732,7 +732,7 @@
 							 AND typeabbrev='" .$SalesType. "'
 							 AND currabrev='".$Currency. "'
 							 AND startdate<=CURRENT_DATE
-							 AND (enddate>CURRENT_DATE OR enddate='9999-12-31')";
+							 AND enddate>CURRENT_DATE";
 		}
 		$result = DB_query($sql);
 		$myrow = DB_fetch_row($result);

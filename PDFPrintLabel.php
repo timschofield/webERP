@@ -28,7 +28,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			AND prices.typeabbrev='" . $_POST['SalesType'] . "'
 			AND prices.currabrev='" . $_POST['Currency'] . "'
 			AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-			AND (prices.enddate='9999-12-31' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')
+			AND prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "'
 			AND prices.debtorno=''
 			ORDER BY prices.currabrev,
 				stockmaster.categoryid,
