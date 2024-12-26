@@ -37,10 +37,10 @@ if (isset($SelectedPeriod)) { //If it was called from itself (in other words an 
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 }
-elseif (isset($_GET['PeriodFrom'])) { //If it was called from the Trial Balance/P&L or Balance sheet
-	$FirstPeriodSelected = $_GET['PeriodFrom'];
+elseif (isset($_GET['PeriodTo'])) { //If it was called from the Trial Balance/P&L or Balance sheet, select the just last period
+	$FirstPeriodSelected = $_GET['PeriodTo'];
 	$LastPeriodSelected = $_GET['PeriodTo'];
-	$SelectedPeriod[0] = $_GET['PeriodFrom'];
+	$SelectedPeriod[0] = $_GET['PeriodTo'];
 	$SelectedPeriod[1] = $_GET['PeriodTo'];
 }
 else { // Otherwise just highlight the current period
