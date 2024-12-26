@@ -10,6 +10,7 @@
 include ('includes/DefinePaymentClass.php');
 
 include ('includes/session.php');
+
 if (isset($_POST['DatePaid'])){$_POST['DatePaid'] = ConvertSQLDate($_POST['DatePaid']);};
 $Title = _('Payment Entry');
 if (isset($_GET['SupplierID'])) { // Links to Manual before header.php
@@ -813,7 +814,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 						$PaymentItem->Narrative . "\n" ;
 		}
 
-		if ($emailToBeSent){
+		if (($emailToBeSent) AND (!KLwebERPScriptCalledFromTEST())){
 			$GLAccountEmail = "kl-glcontrolledtx@kapal-laut.com";
 			$EmailSubject = _('GL transaction to be controlled'); 
 			$EmailText .= _('Email sent by webERP'). ' ' .date('d/M/Y H:i:s').'';

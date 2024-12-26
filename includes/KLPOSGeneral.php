@@ -1,11 +1,5 @@
 <?php
 
-function webERP_in_test(){
-	// the current script filename contains TEST, we are on TEST database
-	return (strpos($_SERVER['PHP_SELF'],"TEST")!== false);
-}
-
-
 function zerofill($mStretch, $iLength = 2){
     $sPrintfString = '%0' . (int)$iLength . 's';
     return sprintf($sPrintfString, $mStretch);
@@ -657,7 +651,7 @@ function GetFilenameFromPOSIdentifier($id){
 function KLPrintReceiptTestWarning($KindOfDoc){
 	include('includes/wcpESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
-	if (webERP_in_test()){
+	if (KLwebERPScriptCalledFromTEST()){
 		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID " . $KindOfDoc . $NewLine;
 	}
 	return $TextToPrint;
