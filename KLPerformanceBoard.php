@@ -34,8 +34,6 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 

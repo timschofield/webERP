@@ -91,7 +91,7 @@ margin-top:0px;
 border-radius:5px;
 box-shadow: 3px 3px 10px 0px rgba(5,7,41,0.75);
 overflow:hidden;
-scrollbar-color: #77AAC3 #324377;
+scrollbar-color: #BFBFBF #4D4D4D;
 }
 .option {
 position:relative;
@@ -227,7 +227,7 @@ transition-property:background;
 transition-duration:0.5s;
 }
 button:hover {
-background:#030343;
+background:#1A1A1A;
 color:#E6EAF7;
 cursor:pointer;
 box-shadow:0 0 5px #7E7575

@@ -3,18 +3,23 @@
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Set up the login theme for development, production and test webERP
+- Control match of DB and Code
 - Commented out the standard call to Dashboard
 - Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+- Load the KLRoles Variables
 *****************************************************************************************/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
 
-// KL RICARD Select the default database depending on the code version
+// KL RICARD: Include the specific KL session functions
 include ($PathPrefix . 'KLsession.php');
+// KL RICARD END: Include the specific KL session functions
 
+// KL RICARD Select the default database depending on the code version
 $DefaultDatabase = KLDatabaseSelection();
+// KL RICARD END Select the default database depending on the code version
 
 if (!file_exists($PathPrefix . 'config.php')) {
 	$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
@@ -29,7 +34,6 @@ include ($PathPrefix . 'config.php');
 // KL RICARD: Include the specific KL config file
 include ($PathPrefix . 'config-KL.php');
 // KL RICARD END: Include the specific KL config file
-
 
 if (isset($dbuser)) { //this gets past an upgrade issue where old versions used lower case variable names
 	$DBUser = $dbuser;
@@ -187,6 +191,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		$rc = UL_OK;
 	}
 	
+	// KL RICARD: Include the specific KL config file to assign a KL Role to each user
+	include ($PathPrefix . 'includes/KLRoles.php');
+	// KL RICARD END: Include the specific KL config file
+
 	/* RICARD KL Set up the login theme for production, test, development, development test webERP */
 	$Theme = KLThemeSelection();
 	/* RICARD KL END MODIFICATION Set up the login theme for production, test, development, development test webERP */
@@ -221,8 +229,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	
 	}
 
-	// KL RICARD
-	
+	// KL RICARD Check if the user is allowed to access the page
 	if (KLwebERPScriptCalledFromTEST()){
 		/* If script is from TEST weberp or from localhost */
 		if ($_SESSION['DatabaseName'] != "test_erp"){
@@ -243,19 +250,25 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit;
 		}
 	}
+	// KL RICARD END Check if the user is allowed to access the page
 }
-// KL RICARD END
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
-	header('Location: UpgradeDatabase.php');
+//if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
+//	header('Location: UpgradeDatabase.php');
+//}
+/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
+$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+	header('Location: Z_UpgradeDatabase.php');
 }
+// else {
+//	unset($_SESSION['DBVersion']);
+//}
 
 /* RICARD KL Set up the theme for production, test, development, development test webERP */
 $_SESSION['Theme'] = KLThemeSelection();
 /* RICARD KL END MODIFICATION Set up the theme for production, test, development, development test webERP */
-
-
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
@@ -270,6 +283,7 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
 	$Title = _('Account Error Report');
 	include ($PathPrefix . 'includes/header.php');
+	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
 	include ($PathPrefix . 'includes/footer.php');
 	exit;
@@ -318,192 +332,41 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 }
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
+
 } else {
 	$debug = 0; //don't allow debug messages
+
+}
+if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
+	header('Location: ' . $PathPrefix . 'Dashboard.php');
 }
 
-/* KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.*/
-include('includes/KLRoles.php');
-if ($KL_SPGSeniorOrSupport OR $KL_SPGJunior){
-	/*Get the default customer-branch combo from the user's default location record */
-	$sql = "SELECT 	locations.cashsalecustomer,
-					locations.cashsalebranch,
-					locations.locationname,
-					locations.deladd1,
-					locations.deladd2,
-					locations.deladd3,
-					locations.deladd4,
-					locations.deladd5,
-					locations.klposcashaccount,
-					locations.klpostag,
-					locations.taxprovinceid,
-					locations.typeloc,
-					debtorsmaster.name,
-					debtorsmaster.salestype,
-					debtorsmaster.currcode,
-					debtorsmaster.customerpoline,
-					klretailpartners.partnercode,
-					klretailpartners.partnername,
-					klretailpartners.partneraddress,
-					klretailpartners.partnernpwp,
-					klretailpartners.ppn,
-					klretailpartners.areasalescreditcard,
-					klretailpartners.areasalescash,
-					klretailpartners.areasalescashothers,
-					klretailpartners.cashsalesreported,
-					klretailpartners.hppcompensation,
-					klretailpartners.accounthppcompensation,
-					klretailpartners.accountbankdanamon,
-					klretailpartners.accountbankbni,
-					klretailpartners.accountbankmandiri,
-					klretailpartners.accountbankbca,
-					klretailpartners.accountcomissioncreditcard,
-					klretailpartners.comissionccdanamon,
-					klretailpartners.comissionamexdanamon,
-					klretailpartners.comissionccbni,
-					klretailpartners.comissionamexbni,
-					klretailpartners.comissionccmandiri,
-					klretailpartners.comissionccbca,
-					klretailpartners.comissionamexbca,
-					klretailpartners.percentconsignmentptadu,
-					klretailpartners.accountconsignmentsalesptadu,
-					klretailpartners.accountconsignmentcogspartner,
-					klretailpartners.accountwechat,
-					klretailpartners.comissionwechat,
-					klretailpartners.accountcomissionwechat,
-					klretailpartners.accountqris,
-					klretailpartners.comissionqris,
-					klretailpartners.accountcomissionqris,
-					klretailpartners.counterinvoicea,
-					klretailpartners.counterinvoiceb,
-					klretailpartners.counterinvoicec,
-					custbranch.brname,
-					custbranch.braddress1,
-					custbranch.specialinstructions,
-					custbranch.salesman,
-					custbranch.taxgroupid,
-					holdreasons.dissallowinvoices,
-					salestypes.sales_type,
-					paymentterms.terms
-			 FROM locations,
-					debtorsmaster,
-					klretailpartners,
-					holdreasons,
-					salestypes,
-					paymentterms,
-					custbranch
-			 WHERE debtorsmaster.salestype=salestypes.typeabbrev
-				AND debtorsmaster.holdreason=holdreasons.reasoncode
-				AND debtorsmaster.paymentterms=paymentterms.termsindicator
-				AND debtorsmaster.debtorno = locations.cashsalecustomer
-				AND locations.partnercode = klretailpartners.partnercode
-				AND custbranch.debtorno = locations.cashsalecustomer
-				AND custbranch.branchcode = locations.cashsalebranch
-				AND loccode='" . $_SESSION['UserStockLocation'] ."'";
-
-	$result = DB_query($sql);
-	if (DB_num_rows($result)==0) {
-		prnMsg(_('Your SPG user account is not linked to any valid shop. Please contact Kantor IT inmediately.'),'error');
-		include('includes/footer.php');
-		exit;
+function CryptPass($Password) {
+	if (PHP_VERSION_ID < 50500) {
+		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+		$Salt = str_replace('+', '.', $Salt);
+		$Hash = crypt($Password, '$2y$10$' . $Salt . '$');
 	} else {
-		$myrow = DB_fetch_array($result); //get the only row returned
+		$Hash = password_hash($Password, PASSWORD_DEFAULT);
+	}
+	return $Hash;
+}
 
-		if ($myrow['cashsalecustomer']=='' OR $myrow['cashsalebranch']==''){
-			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location.'),'error');
-			include('includes/footer.php');
-			exit;
-		}
-
-		if ($myrow['partnercode']=='NORETAIL'){
-			prnMsg(_('To use this script it is first necessary to define a retail partner for the location that is your default location. '),'error');
-			include('includes/footer.php');
-			exit;
-		}
-
-		$_SESSION['ShopAddress1'] = $myrow['deladd1'];
-		$_SESSION['ShopAddress2'] = $myrow['deladd2'];
-		$_SESSION['ShopAddress3'] = $myrow['deladd3'];
-		$_SESSION['ShopAddress4'] = $myrow['deladd4'];
-		$_SESSION['ShopAddress5'] = $myrow['deladd5'];
-		$_SESSION['klposcashaccount'] = $myrow['klposcashaccount'];
-		$_SESSION['klpostag'] = $myrow['klpostag'];
-
-		$_SESSION['cashsalebranch'] = $myrow['cashsalebranch'];
-		$_SESSION['cashsalecustomer'] = $myrow['cashsalecustomer'];
-		$_SESSION['locationname'] = $myrow['locationname'];
-		$_SESSION['taxprovinceid'] = $myrow['taxprovinceid'];
-		$_SESSION['customername'] = $myrow['name'];
-		$_SESSION['salestype'] = $myrow['salestype'];
-		$_SESSION['sales_type'] = $myrow['sales_type'];
-		$_SESSION['currcode'] = $myrow['currcode'];
-		$_SESSION['terms'] = $myrow['terms'];
-		$_SESSION['braddress1'] = $myrow['braddress1'];
-		$_SESSION['specialinstructions'] = $myrow['specialinstructions'];
-		$_SESSION['taxgroupid'] = $myrow['taxgroupid'];
-		$_SESSION['TypeLoc'] = $myrow['typeloc'];
-		
-		$_SESSION['PartnerCode'] = $myrow['partnercode'];
-		$_SESSION['PartnerName'] = $myrow['partnername'];
-		$_SESSION['PartnerAddress'] = $myrow['partneraddress'];
-		$_SESSION['PartnerNPWP'] = $myrow['partnernpwp'];
-		$_SESSION['PPN'] = $myrow['ppn'];
-		$_SESSION['AreaSalesCreditCard'] = $myrow['areasalescreditcard'];
-		$_SESSION['AreaSalesCash'] = $myrow['areasalescash'];
-		$_SESSION['AreaSalesCashOthers'] = $myrow['areasalescashothers'];
-		$_SESSION['CashSalesReported'] = $myrow['cashsalesreported'];
-		$_SESSION['HPPCompensation'] = $myrow['hppcompensation'];
-		$_SESSION['AccountHPPCompensation'] = $myrow['accounthppcompensation'];
-		$_SESSION['AccountBankDanamon'] = $myrow['accountbankdanamon'];
-		$_SESSION['AccountBankBNI'] = $myrow['accountbankbni'];
-		$_SESSION['AccountBankMandiri'] = $myrow['accountbankmandiri'];
-		$_SESSION['AccountBankBCA'] = $myrow['accountbankbca'];
-		$_SESSION['AccountComissionCreditCard'] = $myrow['accountcomissioncreditcard'];
-		$_SESSION['ComissionCCDanamon'] = $myrow['comissionccdanamon'];
-		$_SESSION['ComissionAmexDanamon'] = $myrow['comissionamexdanamon'];
-		$_SESSION['ComissionCCBNI'] = $myrow['comissionccbni'];
-		$_SESSION['ComissionAmexBNI'] = $myrow['comissionamexbni'];
-		$_SESSION['ComissionCCMandiri'] = $myrow['comissionccmandiri'];
-		$_SESSION['ComissionCCBCA'] = $myrow['comissionccbca'];
-		$_SESSION['ComissionAmexBCA'] = $myrow['comissionamexbca'];
-		$_SESSION['PercentConsignmentPTADU'] = $myrow['percentconsignmentptadu'];
-		$_SESSION['AccountConsignmentSalesPTADU'] = $myrow['accountconsignmentsalesptadu'];
-		$_SESSION['AccountConsignmentCOGSPartner'] = $myrow['accountconsignmentcogspartner'];
-		$_SESSION['AccountWeChat'] = $myrow['accountwechat'];
-		$_SESSION['ComissionWeChat'] = $myrow['comissionwechat'];
-		$_SESSION['AccountComissionWeChat'] = $myrow['accountcomissionwechat'];
-		$_SESSION['AccountQRIS'] = $myrow['accountqris'];
-		$_SESSION['ComissionQRIS'] = $myrow['comissionqris'];
-		$_SESSION['AccountComissionQRIS'] = $myrow['accountcomissionqris'];
-		$_SESSION['CounterInvoiceA'] = $myrow['counterinvoicea'];
-		$_SESSION['CounterInvoiceB'] = $myrow['counterinvoiceb'];
-		$_SESSION['CounterInvoiceC'] = $myrow['counterinvoicec'];
-		
+function VerifyPass($Password, $Hash) {
+	if (PHP_VERSION_ID < 50500) {
+		return (crypt($Password, $Hash) == $Hash);
+	} else {
+		return password_verify($Password, $Hash);
 	}
 }
-/* END KL RICARD */
 
-function CryptPass( $Password ) {
-    if (PHP_VERSION_ID < 50500) {
-        $Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-        $Salt = str_replace('+', '.', $Salt);
-        $Hash = crypt($Password, '$2y$10$' . $Salt . '$');
-    } else {
-        $Hash = password_hash($Password,PASSWORD_DEFAULT);
-    }
-    return $Hash;
- }
+function HighestFileName($PathPrefix) {
+	$files = glob('sql/updates/*.php');
+	natsort($files);
+	return basename(array_pop($files), ".php");
+}
 
- function VerifyPass($Password,$Hash) {
-     if(PHP_VERSION_ID < 50500) {
-         return (crypt($Password,$Hash)==$Hash);
-     } else {
-         return password_verify($Password,$Hash);
-     }
- }
-
-
-if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
+if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Session verification error');

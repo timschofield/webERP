@@ -19,9 +19,6 @@ include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
 
-// KL RICARD: later on we find who is using this script to block "To" locations if it's SPG or SPG Support
-include('includes/KLRoles.php');
-
 if(isset($_GET['NewTransfer'])) {
 	unset($_SESSION['Transfer']);
 }

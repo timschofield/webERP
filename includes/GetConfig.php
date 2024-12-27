@@ -2,6 +2,12 @@
 // Systems can temporarily force a reload by setting the variable
 // $ForceConfigReload to true
 
+/*****************************************************************************************
+KL RICARD MODIFICATIONS:
+- Load the KLRoles Variables
+- Load the $_SESSION variables specific for SPG
+*****************************************************************************************/
+
 if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['CompanyDefaultsLoaded'])) {
 	$sql = "SELECT confname, confvalue FROM config";
 	$ErrMsg = _('Could not get the configuration parameters from the database because');
@@ -14,6 +20,9 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 			$_SESSION[$myrow['confname']] =  $myrow['confvalue'];
 		}
 	} //end loop through all config variables
+	if (!isset($_SESSION['DBUpdateNumber'])) {
+		$_SESSION['DBUpdateNumber'] = -1;
+	}
 	$_SESSION['CompanyDefaultsLoaded'] = true;
 
 	DB_free_result($ConfigResult); // no longer needed
@@ -115,6 +124,11 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 			$_SESSION['Favourites'][$myrow['href']] = $myrow['caption'];
 		}
 	}
+
+	// KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
+	include ($PathPrefix . 'includes/KLRoles.php');
+	include ($PathPrefix . 'includes/KLLoadSessionForSPG.php');
+	// KL RICARD END If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
 
 } //end if force reload or not set already
 

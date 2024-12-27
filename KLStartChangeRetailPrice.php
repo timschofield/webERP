@@ -8,8 +8,6 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' .
 				_('Retail Price') . '" alt="" />' . ' ' . _('KL Start the Process of Change Retail Prices for').' ' . $_GET['Item']. '.</p>';

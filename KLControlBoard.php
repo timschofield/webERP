@@ -39,9 +39,6 @@ include('includes/OpenCartConnectDB.php');
 /* Do the pending GL Postings to get the latest financial control reports*/
 include('includes/GLPostings.inc');
 
-/* ASSIGN users to groups */
-include('includes/KLRoles.php');
-
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 

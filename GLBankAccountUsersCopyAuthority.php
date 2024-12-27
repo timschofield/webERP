@@ -5,9 +5,6 @@ $Title = _('Bank Accounts - Users Authority Copy Authority');// Screen identific
 include('includes/header.php');
 include('includes/KLEmails.php');
 
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
-
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
 	_('Copy Authority of Bank Accounts from one user to another'), '" /> ',// Icon title.

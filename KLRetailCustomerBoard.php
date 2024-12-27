@@ -10,9 +10,6 @@ include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLRetailCustomer.php');
 
-/* ASSIGN users to groups */
-include ('includes/KLRoles.php');
-
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
