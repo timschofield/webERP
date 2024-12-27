@@ -3,17 +3,19 @@
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Set up the login theme for development, production and test webERP
+- Control match of DB and Code
 - Commented out the standard call to Dashboard
 - Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+- Load the KLRoles Variables
 *****************************************************************************************/
 
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
 
-// KL RICARD: Include the specific KL config files
+// KL RICARD: Include the specific KL session functions
 include ($PathPrefix . 'KLsession.php');
-// KL RICARD END: Include the specific KL config files
+// KL RICARD END: Include the specific KL session functions
 
 // KL RICARD Select the default database depending on the code version
 $DefaultDatabase = KLDatabaseSelection();
@@ -324,9 +326,6 @@ if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['Allowed
 	$debug = 0; //don't allow debug messages
 }
 
-// KL RICARD If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
-include('includes/KLLoadSessionForSPG.php');
-// KL RICARD END If it's an SPG logging in, charge all info in _SESSION to avoid the same SQL for every retail sale.
 
 function CryptPass( $Password ) {
     if (PHP_VERSION_ID < 50500) {
