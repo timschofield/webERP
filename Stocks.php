@@ -324,11 +324,11 @@ if (isset($_POST['submit'])) {
 			$OldSerialised = $MyRow[2];
 			$UnitCost = $MyRow[3];
 			$OldStockAccount = $MyRow[4];
-			$OldWIPAccount = $myrow[5];
-			$OldCategoryId = $myrow[6]; // KL Ricard: ADDED THIS line
-			$OldDescription = $myrow[7];
-			$OldLongDescription = $myrow[8];
-			$OldKLPackaging = $myrow[9]; // KL Ricard: ADDED THIS line
+			$OldWIPAccount = $MyRow[5];
+			$OldCategoryId = $MyRow[6]; // KL Ricard: ADDED THIS line
+			$OldDescription = $MyRow[7];
+			$OldLongDescription = $MyRow[8];
+			$OldKLPackaging = $MyRow[9]; // KL Ricard: ADDED THIS line
 
 			$SQL = "SELECT SUM(locstock.quantity)
 					FROM locstock
@@ -1299,8 +1299,8 @@ echo '<tr>
 		<td>' . _('Packaging Set') . ':</td>
 		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="KLPackaging">';
 
-$sql = "SELECT packagingcode, packagingdescription FROM klpackaging ORDER BY packagingdescription";
-$KLPResult = DB_query($sql);
+$SQL = "SELECT packagingcode, packagingdescription FROM klpackaging ORDER BY packagingdescription";
+$KLPResult = DB_query($SQL);
 
 if (!isset($_POST['KLPackaging']) OR ($_POST['KLPackaging'] == '')) {
 	$KLProw['packagingdescription']=_('-');
@@ -1319,8 +1319,8 @@ echo '<tr>
 		<td>' . _('Units of Dimension') . ':</td>
 		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
 
-$sql = "SELECT unitname FROM unitsofdimension ORDER by unitname";
-$UODResult = DB_query($sql);
+$SQL = "SELECT unitname FROM unitsofdimension ORDER by unitname";
+$UODResult = DB_query($SQL);
 
 if (!isset($_POST['UnitsDimension'])) {
 	$UODrow['unitname']=_('mm');
