@@ -117,6 +117,7 @@ if (isset($_SESSION['DatabaseName'])) {
 include ($PathPrefix . 'includes/LanguageSetup.php');
 $FirstLogin = False;
 
+
 if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	if (isset($_SESSION['Favourites'])) {
 		//retrieve the sql data;
@@ -253,14 +254,21 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 }
 
 /*If the Code $Version - held in ConnectDB.inc is > than the Database VersionNumber held in config table then do upgrades */
-if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
-	header('Location: UpgradeDatabase.php');
+//if (strcmp($Version, $_SESSION['VersionNumber']) > 0 and (basename($_SERVER['SCRIPT_NAME']) != 'UpgradeDatabase.php')) {
+//	header('Location: UpgradeDatabase.php');
+//}
+/*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
+$_SESSION['DBVersion'] = HighestFileName($PathPrefix);
+if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+	header('Location: Z_UpgradeDatabase.php');
 }
+// else {
+//	unset($_SESSION['DBVersion']);
+//}
 
 /* RICARD KL Set up the theme for production, test, development, development test webERP */
 $_SESSION['Theme'] = KLThemeSelection();
 /* RICARD KL END MODIFICATION Set up the theme for production, test, development, development test webERP */
-
 if ($_SESSION['HTTPS_Only'] == 1) {
 	if ($_SERVER['HTTPS'] != 'on') {
 		prnMsg(_('webERP is configured to allow only secure socket connections. Pages must be called with https://') . ' .....', 'error');
@@ -271,9 +279,11 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 // Now check that the user as logged in has access to the page being called. $SecurityGroups is an array of
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
+
 if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
 	$Title = _('Account Error Report');
 	include ($PathPrefix . 'includes/header.php');
+	echo '<br /><br /><br />';
 	prnMsg(_('Security settings have not been defined for your user account. Please advise your system administrator. It could also be that there is a session problem with your PHP web server'), 'error');
 	include ($PathPrefix . 'includes/footer.php');
 	exit;
@@ -322,32 +332,41 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 }
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
 	$debug = 1; //allow debug messages
+
 } else {
 	$debug = 0; //don't allow debug messages
+
+}
+if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
+	header('Location: ' . $PathPrefix . 'Dashboard.php');
 }
 
+function CryptPass($Password) {
+	if (PHP_VERSION_ID < 50500) {
+		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
+		$Salt = str_replace('+', '.', $Salt);
+		$Hash = crypt($Password, '$2y$10$' . $Salt . '$');
+	} else {
+		$Hash = password_hash($Password, PASSWORD_DEFAULT);
+	}
+	return $Hash;
+}
 
-function CryptPass( $Password ) {
-    if (PHP_VERSION_ID < 50500) {
-        $Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
-        $Salt = str_replace('+', '.', $Salt);
-        $Hash = crypt($Password, '$2y$10$' . $Salt . '$');
-    } else {
-        $Hash = password_hash($Password,PASSWORD_DEFAULT);
-    }
-    return $Hash;
- }
+function VerifyPass($Password, $Hash) {
+	if (PHP_VERSION_ID < 50500) {
+		return (crypt($Password, $Hash) == $Hash);
+	} else {
+		return password_verify($Password, $Hash);
+	}
+}
 
- function VerifyPass($Password,$Hash) {
-     if(PHP_VERSION_ID < 50500) {
-         return (crypt($Password,$Hash)==$Hash);
-     } else {
-         return password_verify($Password,$Hash);
-     }
- }
+function HighestFileName($PathPrefix) {
+	$files = glob('sql/updates/*.php');
+	natsort($files);
+	return basename(array_pop($files), ".php");
+}
 
-
-if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
+if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Session verification error');
