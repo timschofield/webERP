@@ -62,11 +62,11 @@ if (isset($_GET['TemplateID'])) {
 }
 
 if (isset($_POST['JournalProcessDate'])) {
-	$_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
-
 	if (!Is_Date($_POST['JournalProcessDate'])) {
 		prnMsg(_('The date entered was not valid please enter the date to process the journal in the format') . $_SESSION['DefaultDateFormat'], 'warn');
 		$_POST['CommitBatch'] = 'Do not do it the date is wrong';
+	}else{
+		$_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
 	}
 }
 
@@ -260,7 +260,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	 A GL entry is created for each GL entry
 	*/
 
-	$PeriodNo = GetPeriod(ConvertSQLDate($_SESSION['JournalDetail']->JnlDate));
+	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate);
 
 	/*Start a transaction to do the whole lot inside */
 	DB_Txn_Begin();
