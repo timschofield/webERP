@@ -76,7 +76,7 @@ if (isset($_SESSION['DatabaseName'])) {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				/*
 				 if(get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
+					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
 					}
 				*/
 				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
@@ -359,18 +359,18 @@ if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowA
 	}
 }
 
-function quote_smart($value) {
+function quote_smart($Value) {
 	// Stripslashes
 	if (phpversion() < "5.3") {
 		if (get_magic_quotes_gpc()) {
-			$value = stripslashes($value);
+			$Value = stripslashes($Value);
 		}
 	}
 	// Quote if not integer
-	if (!is_numeric($value)) {
-		$value = "'" . DB_escape_string($value) . "'";
+	if (!is_numeric($Value)) {
+		$Value = "'" . DB_escape_string($Value) . "'";
 	}
-	return $value;
+	return $Value;
 }
 
 ?>

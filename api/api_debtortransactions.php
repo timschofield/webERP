@@ -7,8 +7,8 @@
 				FROM debtortrans
 				WHERE type='".$Type."' and transno='".$TransNo . "'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]>0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]>0) {
 			$Errors[$i] = TransactionNumberAlreadyExists;
 		}
 		return $Errors;
@@ -131,8 +131,8 @@ function ConvertToSQLDate($DateEntry) {
 
 /* Check that the transaction reference is 20 characters
  *  or less long */
-	function VerifyReference($reference, $i, $Errors) {
-		if (mb_strlen($reference)>20) {
+	function VerifyReference($Reference, $i, $Errors) {
+		if (mb_strlen($Reference)>20) {
 			$Errors[$i] = IncorrectReference;
 		}
 		return $Errors;
@@ -147,8 +147,8 @@ function ConvertToSQLDate($DateEntry) {
 	}
 
 /* Verify that the order number is numeric */
-	function VerifyOrderNumber($order, $i, $Errors) {
-		if (!is_numeric($order)) {
+	function VerifyOrderNumber($Order, $i, $Errors) {
+		if (!is_numeric($Order)) {
 			$Errors[$i] = InvalidOrderNumbers;
 		}
 		return $Errors;
@@ -1184,8 +1184,8 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($InvoiceDetails as $key => $value) {
-			$InvoiceDetails[$key] = DB_escape_string($value);
+		foreach ($InvoiceDetails as $key => $Value) {
+			$InvoiceDetails[$key] = DB_escape_string($Value);
 		}
 		$PartCode=$InvoiceDetails['partcode'];
 		$Errors=VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors );
@@ -1247,9 +1247,9 @@ function ConvertToSQLDate($DateEntry) {
 		$FieldValues='';
 		$InvoiceDetails['trandate']=ConvertToSQLDate($InvoiceDetails['trandate']);
 		$InvoiceDetails['prd']=GetPeriodFromTransactionDate($InvoiceDetails['trandate'], sizeof($Errors), $Errors);
-		foreach ($InvoiceDetails as $key => $value) {
+		foreach ($InvoiceDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
 			DB_Txn_Begin();
@@ -1482,8 +1482,8 @@ function ConvertToSQLDate($DateEntry) {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($CreditDetails as $key => $value) {
-			$CreditDetails[$key] = DB_escape_string($value);
+		foreach ($CreditDetails as $key => $Value) {
+			$CreditDetails[$key] = DB_escape_string($Value);
 		}
 		$PartCode=$CreditDetails['partcode'];
 		$Errors=VerifyStockCodeExists($PartCode, sizeof($Errors), $Errors );
@@ -1545,9 +1545,9 @@ function ConvertToSQLDate($DateEntry) {
 		$FieldValues='';
 		$CreditDetails['trandate']=ConvertToSQLDate($CreditDetails['trandate']);
 		$CreditDetails['prd']=GetPeriodFromTransactionDate($CreditDetails['trandate'], sizeof($Errors), $Errors);
-		foreach ($CreditDetails as $key => $value) {
+		foreach ($CreditDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
 			DB_Txn_Begin();

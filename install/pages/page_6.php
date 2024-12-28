@@ -145,52 +145,52 @@ $configArray += [
 ];
 
 // Define the paths relative to the `installer` directory
-$sampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
-$newConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
+$SampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
+$NewConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
 
 // Read the content of the sample config file
-if (!file_exists($sampleConfigFile)) {    
+if (!file_exists($SampleConfigFile)) {    
 	echo '<div class="error">' . _('The sample configuration file does not exist.') . '</div>';
 }
 
 // Open the sample file for reading and create the new config file for writing
-$sampleHandle = fopen($sampleConfigFile, 'r');
-$newLines = [];
+$SampleHandle = fopen($SampleConfigFile, 'r');
+$NewLines = [];
 
-if ($sampleHandle) {
-    while (($Line = fgets($sampleHandle)) !== false) {
+if ($SampleHandle) {
+    while (($Line = fgets($SampleHandle)) !== false) {
         // Check if the line is commented (starting with //, #, or within /* */)
         $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
 
         // Skip replacements on comment lines, otherwise process a config line.
         if (!$isComment) {
             // Loop Installer Data
-            foreach ($configArray as $key => $value) {
+            foreach ($configArray as $key => $Value) {
                 // if (strpos($Line, $key) !== false) {
 				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $Line)) {
-                    $newValue = addslashes($value);
-                    $Line = "\$$key = '$newValue';\n";
+                    $NewValue = addslashes($Value);
+                    $Line = "\$$key = '$NewValue';\n";
                     unset($configArray[$key]);
                 }
             }
 			// Replace date_default_timezone_set            
 			if (strpos($Line, 'date_default_timezone_set') !== false) {
-                $newValue = addslashes($_SESSION['Installer']['TimeZone']);                
-				$Line = "date_default_timezone_set('".$newValue."');\n";
+                $NewValue = addslashes($_SESSION['Installer']['TimeZone']);                
+				$Line = "date_default_timezone_set('".$NewValue."');\n";
             }
         }
         // Append the line to the new content
-        $newLines[] = $Line;
+        $NewLines[] = $Line;
     }
 
-    fclose($sampleHandle);
+    fclose($SampleHandle);
 } else {    
 	echo '<div class="error">' . _('Unable to read the sample configuration file.') . '</div>';
 }
 
 // Write the updated content to the new config file
-$newConfigContent = implode($newLines);
-if (file_put_contents($newConfigFile, $newConfigContent)) {
+$NewConfigContent = implode($NewLines);
+if (file_put_contents($NewConfigFile, $NewConfigContent)) {
     echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
 } else {
 	echo '<div class="error">' . _('Cannot write to the configuration file') . $Config_File . '</div>';

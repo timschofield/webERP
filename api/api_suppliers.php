@@ -10,8 +10,8 @@
   				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] != 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] != 0) {
 			$Errors[$i] = SupplierNoAlreadyExists;
 		}
 		return $Errors;
@@ -27,8 +27,8 @@
 				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = SupplierNoDoesntExists;
 		}
 		return $Errors;
@@ -112,8 +112,8 @@
 					 FROM factorcompanies
 					  WHERE id='".$factorco."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = FactorCompanyNotSetup;
 		}
 		return $Errors;
@@ -131,8 +131,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($SupplierDetails as $key => $value) {
-			$SupplierDetails[$key] = DB_escape_string($value);
+		foreach ($SupplierDetails as $key => $Value) {
+			$SupplierDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifySupplierNo($SupplierDetails['supplierid'], sizeof($Errors), $Errors);
 		$Errors=VerifySupplierName($SupplierDetails['suppname'], sizeof($Errors), $Errors);
@@ -198,9 +198,9 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($SupplierDetails as $key => $value) {
+		foreach ($SupplierDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		$SQL = 'INSERT INTO suppliers ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
@@ -222,8 +222,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($SupplierDetails as $key => $value) {
-			$SupplierDetails[$key] = DB_escape_string($value);
+		foreach ($SupplierDetails as $key => $Value) {
+			$SupplierDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifySupplierNoExists($SupplierDetails['supplierid'], sizeof($Errors), $Errors);
 		$Errors=VerifySupplierName($SupplierDetails['suppname'], sizeof($Errors), $Errors);
@@ -288,8 +288,8 @@
 			$Errors=VerifyTaxRef($CustomerDetails['taxref'], sizeof($Errors), $Errors);
 		}
 		$SQL='UPDATE suppliers SET ';
-		foreach ($SupplierDetails as $key => $value) {
-			$SQL .= $key.'="'.$value.'", ';
+		foreach ($SupplierDetails as $key => $Value) {
+			$SQL .= $key.'="'.$Value.'", ';
 		}
 		$SQL = mb_substr($SQL,0,-2)." WHERE supplierid='".$SupplierDetails['supplierid']."'";
 		if (sizeof($Errors)==0) {

@@ -181,7 +181,7 @@ if (!class_exists('Cpdf', false)) {
 			return mb_substr($s, $sep,$nb-$sep,'UTF-8');
 		}// End function addTextWrap.
 
-		function addInfo($label, $value) {
+		function addInfo($label, $Value) {
 			if ($label == 'Creator') {
 
 	/* Javier: Some scripts set the creator to be WebERP like this
@@ -193,16 +193,16 @@ if (!class_exists('Cpdf', false)) {
 	/* Javier: Many scripts set the author to be WebERP like this
 				$pdf->addInfo('Author', 'WebERP ' . $Version);
 		But the Author might be set to be the user or make it constant here.
-	*/			$this->SetAuthor( $value );
+	*/			$this->SetAuthor( $Value );
 			}
 			if ($label == 'Title') {
-				$this->SetTitle( $value );
+				$this->SetTitle( $Value );
 			}
 			if ($label == 'Subject') {
-				$this->SetSubject( $value );
+				$this->SetSubject( $Value );
 			}
 			if ($label == 'Keywords') {
-				$this->SetKeywords( $value );
+				$this->SetKeywords( $Value );
 			}
 		}
 

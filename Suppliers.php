@@ -406,20 +406,20 @@ if (isset($_POST['submit'])) {
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$Resultgeo = DB_query($SQL, $ErrMsg);
 			$Row = DB_fetch_array($Resultgeo);
-			$api_key = $Row['geocode_key'];
-			$map_host = $Row['map_host'];
-			define('MAPS_HOST', $map_host);
-			define('KEY', $api_key);
+			$APIKey = $Row['geocode_key'];
+			$MapHost = $Row['map_host'];
+			define('MAPS_HOST', $MapHost);
+			define('KEY', $APIKey);
 			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
-			if ($map_host == "") {
+			if ($MapHost == "") {
 				echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 			} else {
-				$address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
-				$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
-				$request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
+				$Address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
+				$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+				$RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
-				$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
-				//			$xml = simplexml_load_file($request_url) or die("url not loading");
+				$xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
+				//			$xml = simplexml_load_file($RequestURL) or die("url not loading");
 				$coordinates = $xml->Response->Placemark->Point->coordinates;
 
 				$status = $xml->status;
@@ -432,26 +432,26 @@ if (isset($_POST['submit'])) {
 				} else {
 					// failure to geocode
 					$geocode_pending = false;
-					echo '<p>' . _('Address') . ': ' . $address . ' ' . _('failed to geocode') . "\n";
+					echo '<p>' . _('Address') . ': ' . $Address . ' ' . _('failed to geocode') . "\n";
 					echo _('Received status') . ' ' . $status . "\n" . '</p>';
 				}
 			}
 		}
 		if (!isset($_POST['New'])) {
 
-			$supptranssql = "SELECT supplierno
+			$SuppTransSQL = "SELECT supplierno
 							FROM supptrans
 							WHERE supplierno='" . $SupplierID . "'";
-			$suppresult = DB_query($supptranssql);
-			$supptrans = DB_num_rows($suppresult);
+			$SuppResult = DB_query($SuppTransSQL);
+			$SuppTrans = DB_num_rows($SuppResult);
 
-			$suppcurrssql = "SELECT currcode
+			$SuppCurrsSQL = "SELECT currcode
 							FROM suppliers
 							WHERE supplierid='" . $SupplierID . "'";
-			$Currresult = DB_query($suppcurrssql);
-			$suppcurr = DB_fetch_row($Currresult);
+			$Currresult = DB_query($SuppCurrsSQL);
+			$SuppCurrs = DB_fetch_row($Currresult);
 
-			if ($supptrans == 0) {
+			if ($SuppTrans == 0) {
 				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
 							address1='" . $_POST['Address1'] . "',
 							address2='" . $_POST['Address2'] . "',
@@ -481,7 +481,7 @@ if (isset($_POST['submit'])) {
 							defaultgl='" . $_POST['DefaultGL'] . "'
 						WHERE supplierid = '" . $SupplierID . "'";
 			} else {
-				if ($suppcurr[0] != $_POST['CurrCode']) {
+				if ($SuppCurrs[0] != $_POST['CurrCode']) {
 					prnMsg(_('Cannot change currency code as transactions already exist'), 'info');
 				}
 				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',

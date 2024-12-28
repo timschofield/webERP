@@ -6,8 +6,8 @@
     				  FROM stockmaster
 	    			  WHERE stockid='".$StockCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]>0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]>0) {
 			$Errors[$i] = StockCodeAlreadyExists;
 		}
 		return $Errors;
@@ -19,8 +19,8 @@
 				      FROM stockmaster
 				      WHERE stockid='".$StockCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = StockCodeDoesntExist;
 		}
 		return $Errors;
@@ -32,8 +32,8 @@
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = StockCategoryDoesntExist;
 		}
 		return $Errors;
@@ -217,8 +217,8 @@
 				      FROM taxcategories
 				      WHERE taxcatid='".$TaxCat."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = TaxCategoriesDoesntExist;
 		}
 		return $Errors;
@@ -277,8 +277,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($StockItemDetails as $key => $value) {
-			$StockItemDetails[$key] = DB_escape_string($value);
+		foreach ($StockItemDetails as $key => $Value) {
+			$StockItemDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyStockCode($StockItemDetails['stockid'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockDescription($StockItemDetails['decription'], sizeof($Errors), $Errors);
@@ -348,9 +348,9 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($StockItemDetails as $key => $value) {
+		foreach ($StockItemDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
 			$stocksql = 'INSERT INTO stockmaster ('.mb_substr($FieldNames,0,-2).') '.
@@ -387,8 +387,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($StockItemDetails as $key => $value) {
-			$StockItemDetails[$key] = DB_escape_string($value);
+		foreach ($StockItemDetails as $key => $Value) {
+			$StockItemDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyStockCodeExists($StockItemDetails['stockid'], sizeof($Errors), $Errors);
 		if (in_array(StockCodeDoesntExist, $Errors)) {
@@ -464,8 +464,8 @@
 			$Errors=VerifyDecimalPlaces($StockItemDetails['decimalplaces'], sizeof($Errors), $Errors);
 		}
 		$SQL='UPDATE stockmaster SET ';
-		foreach ($StockItemDetails as $key => $value) {
-			$SQL .= $key.'="'.$value.'", ';
+		foreach ($StockItemDetails as $key => $Value) {
+			$SQL .= $key.'="'.$Value.'", ';
 		}
 		$SQL = mb_substr($SQL,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
 		if (sizeof($Errors)==0) {
@@ -553,12 +553,12 @@
 		if (sizeof($Errors)==0) {
 			$i=0;
 			while ($MyRow=DB_fetch_array($Result)) {
-				$answer[$i]['quantity']=$MyRow['quantity'];
-				$answer[$i]['loccode']=$MyRow['loccode'];
+				$Answer[$i]['quantity']=$MyRow['quantity'];
+				$Answer[$i]['loccode']=$MyRow['loccode'];
 				$i++;
 			}
 			$Errors[0]=0;
-			$Errors[1]=$answer;
+			$Errors[1]=$Answer;
 			return $Errors;
 		} else {
 			return $Errors;
@@ -581,12 +581,12 @@
 		if (sizeof($Errors)==0) {
 			$i=0;
 			while ($MyRow=DB_fetch_array($Result)) {
-				$answer[$i]['reorderlevel']=$MyRow['reorderlevel'];
-				$answer[$i]['loccode']=$MyRow['loccode'];
+				$Answer[$i]['reorderlevel']=$MyRow['reorderlevel'];
+				$Answer[$i]['loccode']=$MyRow['loccode'];
 				$i++;
 			}
 			$Errors[0]=0;
-			$Errors[1]=$answer;
+			$Errors[1]=$Answer;
 			return $Errors;
 		} else {
 			return $Errors;
@@ -776,10 +776,10 @@
 		for ($i=0; $i<sizeof($balances); $i++) {
 			$balance=$balance+$balances[$i]['quantity'];
 		}
-		$newqoh = $Quantity + $balance;
-		$itemdetails = GetStockItem($StockID, $user, $password);
-		$adjglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'adjglact');
-		$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact');
+		$Newqoh = $Quantity + $balance;
+		$Itemdetails = GetStockItem($StockID, $user, $password);
+		$adjglact=GetCategoryGLCode($Itemdetails[1]['categoryid'], 'adjglact');
+		$stockact=GetCategoryGLCode($Itemdetails[1]['categoryid'], 'stockact');
 
 		$stockmovesql="INSERT INTO stockmoves (stockid,
                                                type,
@@ -798,7 +798,7 @@
                                        '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                        'api adjustment',
                                        '" .$Quantity."',
-                                       '" .$newqoh."')";
+                                       '" .$Newqoh."')";
 		$locstocksql='UPDATE locstock SET quantity = quantity + '.$Quantity."
                              WHERE loccode='".$Location."'
                              AND stockid='".$StockID."'";
@@ -814,8 +814,8 @@
                                            '" . $TranDate. "',
                                            '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                                            '" .$adjglact."',
-                                           '".$itemdetails['materialcost']*-$Quantity. "',
-                                           '" .$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost']."')";
+                                           '".$Itemdetails['materialcost']*-$Quantity. "',
+                                           '" .$StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost']."')";
 		$glupdatesql2="INSERT INTO gltrans (type,
                                             typeno,
                                             trandate,
@@ -828,8 +828,8 @@
                         '" .$TranDate."',
                         '" .GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                         '" .$stockact."',
-                        '" .$itemdetails['materialcost']*$Quantity. "',
-                        '" .$StockID.' x '.$Quantity.' @ '.$itemdetails['materialcost']."')";
+                        '" .$Itemdetails['materialcost']*$Quantity. "',
+                        '" .$StockID.' x '.$Quantity.' @ '.$Itemdetails['materialcost']."')";
 		$systypessql = "UPDATE systypes set typeno='".GetNextTransNo(17)."' where typeid='17'";
 
 		DB_Txn_Begin();
@@ -876,10 +876,10 @@
 		if (sizeof($Errors)==0) {
 			$i=0;
 			while ($MyRow=DB_fetch_array($Result)) {
-				$answer[$i]=$MyRow;
+				$Answer[$i]=$MyRow;
 				$i++;
 			}
-			return $answer;
+			return $Answer;
 		} else {
 			return $Errors;
 		}

@@ -28,17 +28,17 @@ if (isset($Run)) { //start bom processing
 
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	while ($item = DB_fetch_array($Result)) {
-		$inputerror=UpdateCost($item['component']);
-		if ($inputerror==0) {
-			prnMsg( _('Component') .' ' . $item['component']  . ' '. _('has been processed'),'success');
+	while ($Item = DB_fetch_array($Result)) {
+		$InputError=UpdateCost($Item['component']);
+		if ($InputError==0) {
+			prnMsg( _('Component') .' ' . $Item['component']  . ' '. _('has been processed'),'success');
 		} else {
 			break;
 		}
 	}
 
-	if ($inputerror == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on item') . ' ' . $item['component']. ' ' . _('Cost update has been rolled back'),'error');
+	if ($InputError == 1) { //exited loop with errors so rollback
+		prnMsg(_('Failed on item') . ' ' . $Item['component']. ' ' . _('Cost update has been rolled back'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();

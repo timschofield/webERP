@@ -59,9 +59,9 @@
 
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($SalesmanDetails as $key => $value) {
+		foreach ($SalesmanDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		$SQL = 'INSERT INTO salesman ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';

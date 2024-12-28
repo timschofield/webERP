@@ -53,8 +53,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($PurchDataDetails as $key => $value) {
-			$PurchDataDetails[$key] = DB_escape_string($value);
+		foreach ($PurchDataDetails as $key => $Value) {
+			$PurchDataDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors);
 		$Errors=VerifySupplierNoExists($PurchDataDetails['supplierno'], sizeof($Errors), $Errors);
@@ -78,9 +78,9 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($PurchDataDetails as $key => $value) {
+		foreach ($PurchDataDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
 			$SQL = "INSERT INTO purchdata (".mb_substr($FieldNames,0,-2).")
@@ -104,8 +104,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($PurchDataDetails as $key => $value) {
-			$PurchDataDetails[$key] = DB_escape_string($value);
+		foreach ($PurchDataDetails as $key => $Value) {
+			$PurchDataDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyPurchDataLineExists($PurchDataDetails['supplierno'], $PurchDataDetails['stockid'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockCodeExists($PurchDataDetails['stockid'], sizeof($Errors), $Errors);
@@ -129,8 +129,8 @@
 			$Errors=VerifyPreferredFlag($PurchDataDetails['preferred'], sizeof($Errors), $Errors);
 		}
 		$SQL="UPDATE purchdata SET ";
-		foreach ($PurchDataDetails as $key => $value) {
-			$SQL .= $key."='" . $value."', ";
+		foreach ($PurchDataDetails as $key => $Value) {
+			$SQL .= $key."='" . $Value."', ";
 		}
 		$SQL = mb_substr($SQL,0,-2) . " WHERE stockid='" . $PurchDataDetails['stockid'] ."'
 								AND supplierno='" . $PurchDataDetails['supplierno'] ."'";

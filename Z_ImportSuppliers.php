@@ -208,17 +208,17 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 				$UpdatedNum++;
 			}elseif($SuppExists) {
 				$UpdatedNum++;
-				$supptranssql = "SELECT supplierno
+				$SuppTransSQL = "SELECT supplierno
 								FROM supptrans
 								WHERE supplierno='".$SupplierID ."'";
-				$suppresult = DB_query($supptranssql);
-				$supptrans = DB_num_rows($suppresult);
+				$SuppResult = DB_query($SuppTransSQL);
+				$SuppTrans = DB_num_rows($SuppResult);
 
-				$suppcurrssql = "SELECT currcode
+				$SuppCurrsSQL = "SELECT currcode
 								FROM suppliers
 								WHERE supplierid='".$SupplierID ."'";
-				$Currresult = DB_query($suppcurrssql);
-				$suppcurr = DB_fetch_row($Currresult);
+				$Currresult = DB_query($SuppCurrsSQL);
+				$SuppCurrs = DB_fetch_row($Currresult);
 
 				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
 							address1='" . $_POST['Address1'] . "',
@@ -231,7 +231,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 							fax = '". $_POST['Fax']."',
 							email = '" . $_POST['Email'] . "',
 							supptype = '".$_POST['SupplierType']."',";
-				if($supptrans == 0)$SQL.="currcode='" . $_POST['CurrCode'] . "',";
+				if($SuppTrans == 0)$SQL.="currcode='" . $_POST['CurrCode'] . "',";
 							$SQL.="suppliersince='".$SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
@@ -245,7 +245,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 							taxref='". $_POST['TaxRef'] ."'
 						WHERE supplierid = '".$SupplierID."'";
 
-				if($suppcurr[0] != $_POST['CurrCode']) {
+				if($SuppCurrs[0] != $_POST['CurrCode']) {
 					prnMsg( _('Cannot change currency code as transactions already exist'), 'info');
 				}
 

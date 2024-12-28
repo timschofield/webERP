@@ -256,10 +256,10 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	The first 6 Columns are defined by the group by fields so for eg the first col
 	defined will be col 7 and so on - thats why need to add 6 to the col defined as */
 
-	$length_ColNum = mb_strpos($SQLSelectCls, 'AS col' . ($Cols['colnumerator'] + 8) , 7);
+	$Length_ColNum = mb_strpos($SQLSelectCls, 'AS col' . ($Cols['colnumerator'] + 8) , 7);
 
 
-	 If ($length_ColNum == 0) {
+	 If ($Length_ColNum == 0) {
 
 	     $Title = _('User Defined Sales Analysis Problem') . ' ....';
 	    include('includes/header.php');
@@ -275,20 +275,20 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	do {
 	     $strt_ColNum = mb_strpos( $SQLSelectCls, ',', $strt_ColNum + 1) + 1;
 
-	} while (mb_strpos($SQLSelectCls, ',', $strt_ColNum) < $length_ColNum && mb_strpos($SQLSelectCls, ',' , $strt_ColNum)!=0);
+	} while (mb_strpos($SQLSelectCls, ',', $strt_ColNum) < $Length_ColNum && mb_strpos($SQLSelectCls, ',' , $strt_ColNum)!=0);
 
 
 /*The length of the element in the select clause defining the column will be from the comma to the
 'AS ColX' bit found above */
 
-	 $length_ColNum = $length_ColNum - $strt_ColNum - 1;
+	 $Length_ColNum = $Length_ColNum - $strt_ColNum - 1;
 
 	if (!($Cols['calcoperator']=='C' OR $Cols['calcoperator']=='*')){
 
 	/*The denominator column is also required if the constant is not used so do the same again for the denominator */
 
-	$length_ColDen = mb_strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
-	 If ($length_ColDen == 0){
+	$Length_ColDen = mb_strpos($SQLSelectCls, 'AS col' . (($Cols['coldenominator']) + 8), 7);
+	 If ($Length_ColDen == 0){
 	     prnMsg (_('Calculated fields must use columns defined in the report specification') . '. ' . _('The denominator column number entered for this calculation is not defined in the report'),'error',_('Calculation With Undefined Denominator'));
 	     Exit;
 	}
@@ -300,18 +300,18 @@ while ($Cols = DB_fetch_array($ColsResult)){
 	do {
 	     $strt_ColDen = mb_strpos( $SQLSelectCls, ',', $strt_ColDen +1)+1;
 
-	} while (mb_strpos($SQLSelectCls, ',', $strt_ColDen) < $length_ColDen && mb_strpos($SQLSelectCls, ',' , $strt_ColDen)!=0);
+	} while (mb_strpos($SQLSelectCls, ',', $strt_ColDen) < $Length_ColDen && mb_strpos($SQLSelectCls, ',' , $strt_ColDen)!=0);
 
-	 $length_ColDen = $length_ColDen - $strt_ColDen - 1;
+	 $Length_ColDen = $Length_ColDen - $strt_ColDen - 1;
 
-	 $SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . $Cols['calcoperator'] . mb_substr($SQLSelectCls, $strt_ColDen, $length_ColDen) . ' AS col' . ($Cols['colno'] + 8);
+	 $SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $Length_ColNum) . $Cols['calcoperator'] . mb_substr($SQLSelectCls, $strt_ColDen, $Length_ColDen) . ' AS col' . ($Cols['colno'] + 8);
 
 	} elseif ($Cols['calcoperator']=='C') {  /* its a calculation divided by Constant */
 
-		$SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . '/' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
+		$SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $Length_ColNum) . '/' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
 
 	} elseif ($Cols['calcoperator']=='*') {  /* its a calculation multiplied by constant */
-		$SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $length_ColNum) . '*' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
+		$SQLSelectCls = $SQLSelectCls . ', ' . mb_substr($SQLSelectCls, $strt_ColNum, $Length_ColNum) . '*' . $Cols['constant'] . ' AS col' . ($Cols['colno'] + 8);
 
 	}
 

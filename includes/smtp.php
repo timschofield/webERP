@@ -72,8 +72,8 @@
 
 		$this->errors   		= array();
 
-			foreach($params as $key => $value){
-				$this->$key = $value;
+			foreach($params as $key => $Value){
+				$this->$key = $Value;
 			}
 		}
 
@@ -128,8 +128,8 @@
 
 		function send($params = array()){
 
-			foreach($params as $key => $value){
-				$this->set($key, $value);
+			foreach($params as $key => $Value){
+				$this->set($key, $Value);
 			}
 
 			if($this->is_connected()){
@@ -142,8 +142,8 @@
 
 				$this->mail($this->from);
 				if(is_array($this->recipients))
-					foreach($this->recipients as $value)
-						$this->rcpt($value);
+					foreach($this->recipients as $Value)
+						$this->rcpt($Value);
 				else
 					$this->rcpt($this->recipients);
 
@@ -362,9 +362,9 @@
         * Sets a variable
         */
 
-		function set($var, $value){
+		function set($var, $Value){
 
-			$this->$var = $value;
+			$this->$var = $Value;
 			return TRUE;
 		}
 

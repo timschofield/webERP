@@ -92,10 +92,10 @@ if (isset($_POST['Submit'])) {
 		//run the SQL from either of the above possibilites
 		if (is_array($SQL)) {
 			DB_Txn_Begin();
-			$tmpErr = _('Could not update unit of measure');
+			$TmpErr = _('Could not update unit of measure');
 			$tmpDbg = _('The sql that failed was') . ':';
 			foreach ($SQL as $stmt ) {
-				$Result = DB_query($stmt, $tmpErr,$tmpDbg,true);
+				$Result = DB_query($stmt, $TmpErr,$tmpDbg,true);
 				if(!$Result) {
 					$InputError = 1;
 					break;

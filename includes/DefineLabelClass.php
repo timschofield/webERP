@@ -137,18 +137,18 @@ class LabelList extends SimpleXMLElement {
 
     function addLabel($label) {
         global $GlobalTags, $DimensionTags, $DataTags;
-        $new=$this->addChild('label');
+        $New=$this->addChild('label');
         foreach ($GlobalTags as $iTag=>$Tag)
-            $new->addChild($iTag, (string)$label->$iTag);
-        $dimensions=$new->addChild('dimensions');
+            $New->addChild($iTag, (string)$label->$iTag);
+        $dimensions=$New->addChild('dimensions');
         foreach ($DimensionTags as $iTag=>$Tag)
             $dimensions->addChild($iTag, (string)$label->dimensions->$iTag);
     // $data[$Tag][$i] begining with $data['row'][$i]
-        $data=$new->addChild('data');
+        $data=$New->addChild('data');
         foreach ($label->data->line as $Line) {
-            $newLine=$data->addChild('line');
+            $NewLine=$data->addChild('line');
             foreach ($DataTags as $iTag=>$Tag)
-                $newLine->addChild($iTag, (string)$Line->$iTag);
+                $NewLine->addChild($iTag, (string)$Line->$iTag);
         }
         return true;
     }

@@ -50,14 +50,14 @@ if (isset($_POST['update'])) {
 			$client->setDebug($DebugLevel);
 
 			$response = $client->send($Msg);
-			$answer = php_xmlrpc_decode($response->value());
-			if ($answer[0]==0) {
+			$Answer = php_xmlrpc_decode($response->value());
+			if ($Answer[0]==0) {
 				echo '<tr '.$SuccessStyle.'><td>' . $ItemDetails['stockid'] . '</td><td>' . 'Success' . '</td></tr>';
 				$successes++;
 			} else {
 				echo '<tr '.$FailureStyle.'><td>' . $ItemDetails['stockid'] . '</td><td>' . 'Failure' . '</td><td>';
-				for ($i=0; $i<sizeof($answer); $i++) {
-					echo 'Error no '.$answer[$i].' - '.$ErrorDescription[$answer[$i]] . '<br />';
+				for ($i=0; $i<sizeof($Answer); $i++) {
+					echo 'Error no '.$Answer[$i].' - '.$ErrorDescription[$Answer[$i]] . '<br />';
 				}
 				echo '</td></tr>';
 				$failures++;

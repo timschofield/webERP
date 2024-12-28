@@ -87,7 +87,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 					AND  accountcode = '" . $MyRow['accountcode'] . "'";
 
 			$ErrMsg =_('Could not update the chartdetails record because');
-			$updresult = DB_query($SQL,$ErrMsg);
+			$UpdResult = DB_query($SQL,$ErrMsg);
 		}
 	} /* end of for loop */
 }

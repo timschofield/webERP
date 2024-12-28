@@ -504,8 +504,8 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$center_lat = $MyRow['center_lat'];
 		$map_height = $MyRow['map_height'];
 		$map_width = $MyRow['map_width'];
-		$map_host = $MyRow['map_host'];
-		if($map_host == '') {$map_host = 'maps.googleapis.com';}// If $map_host is empty, use a default map host.
+		$MapHost = $MyRow['map_host'];
+		if($MapHost == '') {$MapHost = 'maps.googleapis.com';}// If $MapHost is empty, use a default map host.
 
 		$SQL = "SELECT
 					debtorsmaster.debtorno,
@@ -532,16 +532,16 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 
 		if($Lat == 0 and $MyRow2["braddress1"] != '' and $_SESSION['BranchCode'] != '') {
 			$delay = 0;
-			$base_url = "https://" . $map_host . "/maps/api/geocode/xml?address=";
+			$BaseURLl = "https://" . $MapHost . "/maps/api/geocode/xml?address=";
 
 			$geocode_pending = true;
 			while ($geocode_pending) {
-				$address = urlencode($MyRow2["braddress1"] . "," . $MyRow2["braddress2"] . "," . $MyRow2["braddress3"] . "," . $MyRow2["braddress4"]);
+				$Address = urlencode($MyRow2["braddress1"] . "," . $MyRow2["braddress2"] . "," . $MyRow2["braddress3"] . "," . $MyRow2["braddress4"]);
 				$id = $MyRow2["branchcode"];
 				$DebtorNo =$MyRow2["debtorno"];
-				$request_url = $base_url . $address . '&key=' . $API_key . '&sensor=true';
+				$RequestURL = $BaseURLl . $Address . '&key=' . $API_key . '&sensor=true';
 
-				$buffer = file_get_contents($request_url)/* or die("url not loading")*/;
+				$buffer = file_get_contents($RequestURL)/* or die("url not loading")*/;
 				$xml = simplexml_load_string($buffer);
 				// echo $xml->asXML();
 
@@ -632,7 +632,7 @@ function initMap() {
 	});
 }
 </script>
-<script src="https://', $map_host , '/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
+<script src="https://', $MapHost , '/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
 		}
 
 	}// end if Geocode integration is turned on

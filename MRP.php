@@ -122,8 +122,8 @@ if (isset($_POST['submit'])) {
 			$ctr = 0;
 			foreach ($Parts as $Part) {
 			   $ctr++;
-			   $newlevel = $Level - $ctr;
-			   $SQL = "INSERT INTO bomlevels (part, level) VALUES('" . $Part . "','" . $newlevel . "')";
+			   $Newlevel = $Level - $ctr;
+			   $SQL = "INSERT INTO bomlevels (part, level) VALUES('" . $Part . "','" . $Newlevel . "')";
 			   $Result2 = DB_query($SQL);
 			} // End of foreach
 	}  //end of while loop

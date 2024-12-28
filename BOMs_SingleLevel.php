@@ -945,9 +945,9 @@ function arrayUnique($array, $preserveKeys = false)
 	$arrayRewrite = array();
 	//Array with the md5 hashes
 	$arrayHashes = array();
-	foreach($array as $key => $item) {
+	foreach($array as $key => $Item) {
 		// Serialize the current element and create a md5 hash
-		$hash = md5(serialize($item));
+		$hash = md5(serialize($Item));
 		// If the md5 didn't come up yet, add the element to
 		// arrayRewrite, otherwise drop it
 		if (!isset($arrayHashes[$hash])) {
@@ -955,9 +955,9 @@ function arrayUnique($array, $preserveKeys = false)
 			$arrayHashes[$hash] = $hash;
 			//Add element to the unique Array
 			if ($preserveKeys) {
-				$arrayRewrite[$key] = $item;
+				$arrayRewrite[$key] = $Item;
 			} else {
-				$arrayRewrite[] = $item;
+				$arrayRewrite[] = $Item;
 			}
 		}
 	}
