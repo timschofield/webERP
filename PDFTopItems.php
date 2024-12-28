@@ -6,7 +6,7 @@ include ('includes/PDFStarter.php');
 $FontSize = 10;
 $pdf->addInfo('Title', _('Top Items Search Result'));
 $PageNumber = 1;
-$line_height = 12;
+$LineHeight = 12;
 include ('includes/PDFTopItemsHeader.inc');
 $FontSize = 10;
 $FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$_GET['NumberOfDays']));
@@ -86,35 +86,35 @@ if (($_GET['Location'] == 'All') AND ($_GET['Customers'] == 'All')) {
 		}
 	}
 }
-$result = DB_query($SQL);
-if (DB_num_rows($result)>0){
+$Result = DB_query($SQL);
+if (DB_num_rows($Result)>0){
 	$YPos = $YPos - 6;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		//find the quantity onhand item
-		$sqloh = "SELECT sum(quantity)as qty
+		$SQLoh = "SELECT sum(quantity)as qty
 					FROM locstock
 					INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-					WHERE stockid='" . DB_escape_string($myrow['stkcode']) . "'";
-		$oh = DB_query($sqloh);
+					WHERE stockid='" . DB_escape_string($MyRow['stkcode']) . "'";
+		$oh = DB_query($SQLoh);
 		$ohRow = DB_fetch_row($oh);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 1, $YPos, 80, $FontSize, $myrow['stkcode']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 100, $YPos, 100, $FontSize, $myrow['description']);
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 330, $YPos, 30, $FontSize, locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 370, $YPos, 300 - $Left_Margin, $FontSize, $myrow['units'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 400, $YPos, 70, $FontSize, locale_number_format($myrow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 490, $YPos, 30, $FontSize, locale_number_format($ohRow[0],$myrow['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 1, $YPos, 80, $FontSize, $MyRow['stkcode']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 100, $YPos, 100, $FontSize, $MyRow['description']);
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 330, $YPos, 30, $FontSize, locale_number_format($MyRow['totalinvoiced'],$MyRow['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 370, $YPos, 300 - $Left_Margin, $FontSize, $MyRow['units'], 'left');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 400, $YPos, 70, $FontSize, locale_number_format($MyRow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 490, $YPos, 30, $FontSize, locale_number_format($ohRow[0],$MyRow['decimalplaces']), 'right');
 		if (mb_strlen($LeftOvers) > 1) {
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $line_height, 270, $FontSize, $LeftOvers, 'left');
-			$YPos-= $line_height;
+			$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $LineHeight, 270, $FontSize, $LeftOvers, 'left');
+			$YPos-= $LineHeight;
 		}
-		if ($YPos - $line_height <= $Bottom_Margin) {
+		if ($YPos - $LineHeight <= $Bottom_Margin) {
 			/* We reached the end of the page so finish off the page and start a newy */
 			$PageNumber++;
 			include ('includes/PDFTopItemsHeader.inc');
 			$FontSize = 10;
 		} //end if need a new page headed up
 		/*increment a line down for the next line item */
-		$YPos-= $line_height;
+		$YPos-= $LineHeight;
 	}
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_TopItemsListing_' . date('Y-m-d').'.pdf');

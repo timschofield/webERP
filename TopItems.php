@@ -29,14 +29,14 @@ if (!(isset($_POST['Search']))) {
 			<td style="width:150px">' . _('Select Location') . '  </td>
 			<td>:</td>
 			<td><select name="Location">';
-	$sql = "SELECT locations.loccode,
+	$SQL = "SELECT locations.loccode,
 					locationname
 			FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1 ORDER BY locations.locationname";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	echo '<option value="All">' . _('All') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
@@ -46,14 +46,14 @@ if (!(isset($_POST['Search']))) {
 			<td>:</td>
 			<td><select name="Customers">';
 
-	$sql = "SELECT typename,
+	$SQL = "SELECT typename,
 					typeid
 			FROM debtortype
 			ORDER BY typename";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	echo '<option value="All">' . _('All') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
@@ -63,7 +63,7 @@ if (!(isset($_POST['Search']))) {
 					categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 
 	echo '<tr>
 			<td style="width:150px">' . _('In Stock Category') . ' </td>
@@ -77,11 +77,11 @@ if (!(isset($_POST['Search']))) {
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['categoryid']==$_POST['StockCat']){
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
     echo '</select></td>
@@ -163,7 +163,7 @@ if (!(isset($_POST['Search']))) {
 					ORDER BY `" . $_POST['Sequence'] . "` DESC
 					LIMIT " . filter_number_format($_POST['NumberOfTopItems']);
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 
 	echo '<p class="page_title_text"><strong>' . _('Top Sales Items List') . '</strong></p>';
 	echo '<form action="PDFTopItems.php"  method="GET">
@@ -191,10 +191,10 @@ if (!(isset($_POST['Search']))) {
 		<tbody>';
 
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		$QOH = 0;
 		$QOO = 0;
-		switch ($myrow['mbflag']) {
+		switch ($MyRow['mbflag']) {
 			case 'A':
 			case 'D':
 			case 'K':
@@ -206,30 +206,30 @@ if (!(isset($_POST['Search']))) {
 				$QOHResult = DB_query("SELECT sum(quantity)
 								FROM locstock
 								INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-								WHERE stockid = '" . DB_escape_string($myrow['stkcode']) . "'");
+								WHERE stockid = '" . DB_escape_string($MyRow['stkcode']) . "'");
 				$QOHRow = DB_fetch_row($QOHResult);
 				$QOH = $QOHRow[0];
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($myrow['stkcode'], '');
+				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stkcode'], '');
 				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($myrow['stkcode'], '');
+				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stkcode'], '');
 			break;
 		}
 	        if(is_numeric($QOH) and is_numeric($QOO)){
-			$DaysOfStock = ($QOH + $QOO) / ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = ($QOH + $QOO) / ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		}elseif(is_numeric($QOH)){
-			$DaysOfStock = $QOH/ ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = $QOH/ ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 		}elseif(is_numeric($QOO)){
-			$DaysOfStock = $QOO/ ($myrow['totalinvoiced'] / $_POST['NumberOfDays']);
+			$DaysOfStock = $QOO/ ($MyRow['totalinvoiced'] / $_POST['NumberOfDays']);
 
 		}else{
 			$DaysOfStock = 0;
 		}
 		if ($DaysOfStock < $_POST['MaxDaysOfStock']){
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stkcode'] . '">' . $myrow['stkcode'] . '</a>';
-			$QOH = is_numeric($QOH)?locale_number_format($QOH,$myrow['decimalplaces']):$QOH;
-			$QOO = is_numeric($QOO)?locale_number_format($QOO,$myrow['decimalplaces']):$QOO;
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
+			$QOH = is_numeric($QOH)?locale_number_format($QOH,$MyRow['decimalplaces']):$QOH;
+			$QOO = is_numeric($QOO)?locale_number_format($QOO,$MyRow['decimalplaces']):$QOO;
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -243,10 +243,10 @@ if (!(isset($_POST['Search']))) {
 					</tr>',
 					$i,
 					$CodeLink,
-					$myrow['description'],
-					locale_number_format($myrow['totalinvoiced'],$myrow['decimalplaces']), //total invoice here
-					$myrow['units'], //unit
-					locale_number_format($myrow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
+					$MyRow['description'],
+					locale_number_format($MyRow['totalinvoiced'],$MyRow['decimalplaces']), //total invoice here
+					$MyRow['units'], //unit
+					locale_number_format($MyRow['valuesales'],$_SESSION['CompanyRecord']['decimalplaces']), //value sales here
 					$QOH,  //on hand
 					$QOO, //on order
 					locale_number_format($DaysOfStock, 0) //days of available stock

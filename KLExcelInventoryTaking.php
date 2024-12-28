@@ -132,10 +132,10 @@ function submit($ListCategories, $Location) {
 			$ActiveSheet->setCellValue('A2', '=SUBTOTAL(3,A'.$StartingRow.':A'.$i.')');
 			$ActiveSheet->setCellValue('A3', '=A2/A1');
 
-			foreach(range('G','K') as $columnID) {
-				$ActiveSheet->setCellValue(''.$columnID.'1', '=SUM('.$columnID.$StartingRow.':'.$columnID.$i.')');
-				$ActiveSheet->setCellValue(''.$columnID.'2', '=SUBTOTAL(9,'.$columnID.$StartingRow.':'.$columnID.$i.')');
-				$ActiveSheet->setCellValue(''.$columnID.'3', '='.$columnID.'2/'.$columnID.'1');
+			foreach(range('G','K') as $ColumnID) {
+				$ActiveSheet->setCellValue(''.$ColumnID.'1', '=SUM('.$ColumnID.$StartingRow.':'.$ColumnID.$i.')');
+				$ActiveSheet->setCellValue(''.$ColumnID.'2', '=SUBTOTAL(9,'.$ColumnID.$StartingRow.':'.$ColumnID.$i.')');
+				$ActiveSheet->setCellValue(''.$ColumnID.'3', '='.$ColumnID.'2/'.$ColumnID.'1');
 			}
 
 			// Freeze panes
@@ -145,8 +145,8 @@ function submit($ListCategories, $Location) {
 			$ActiveSheet->setAutoFilter('A5:L' . $i);
 			
 			// Auto Size columns
-			foreach(range('E','L') as $columnID) {
-				$ActiveSheet->getColumnDimension($columnID)->setAutoSize(true);
+			foreach(range('E','L') as $ColumnID) {
+				$ActiveSheet->getColumnDimension($ColumnID)->setAutoSize(true);
 			}
 			
 

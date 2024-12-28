@@ -145,8 +145,8 @@ function submit($FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('I11', '=H11/$H$8');
 
 			// Auto Size columns
-			foreach(range('A','C') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			foreach(range('A','C') as $ColumnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 
@@ -175,8 +175,8 @@ function submit($FromDate, $ToDate) {
 			$objPHPExcel->getActiveSheet()->setCellValue('B9', '=B5-B7');
 
 			// Auto Size columns
-			foreach(range('A','B') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			foreach(range('A','B') as $ColumnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 					

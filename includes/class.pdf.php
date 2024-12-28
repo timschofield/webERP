@@ -252,9 +252,9 @@ if (!class_exists('Cpdf', false)) {
 
 			$astart = deg2rad((float)$astart);
 			$afinish = deg2rad((float)$afinish);
-			$totalAngle =$afinish-$astart;
+			$TotalAngle =$afinish-$astart;
 
-			$dt = $totalAngle/$nSeg;
+			$dt = $TotalAngle/$nSeg;
 			$dtm = $dt/3;
 
 			if ($angle != 0){

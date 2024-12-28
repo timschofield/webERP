@@ -68,11 +68,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT loccode FROM locations";
-		$result = DB_query($sql);
+		$SQL = "SELECT loccode FROM locations";
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$LocationList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$LocationList[$i]=$MyRow[0];
 			$i++;
 		}
 		return array(0, $LocationList);
@@ -90,9 +90,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM locations WHERE loccode='".$location."'";
-		$result = DB_query($sql);
-		return array(0, DB_fetch_array($result));
+		$SQL = "SELECT * FROM locations WHERE loccode='".$location."'";
+		$Result = DB_query($SQL);
+		return array(0, DB_fetch_array($Result));
 	}
 
 /* Inserts a Location in webERP.
@@ -148,10 +148,10 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ")
+			$SQL = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -207,13 +207,13 @@
 		if (isset($Location['contact'])){
 			$Errors=VerifyContactName($Location['contact'], sizeof($Errors), $Errors);
 		}
-		$sql="UPDATE locations SET ";
+		$SQL="UPDATE locations SET ";
 		foreach ($Location as $key => $value) {
-			$sql .= $key."='" . $value."', ";
+			$SQL .= $key."='" . $value."', ";
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
+		$SQL = mb_substr($SQL,0,-2)." WHERE loccode='".$Location['loccode']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

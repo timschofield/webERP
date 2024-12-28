@@ -231,7 +231,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			WoRealRequirements($_POST['WO'], $WORow['loccode'], $_POST['StockID']);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
-			$sql = "SELECT materialcost+labourcost+overheadcost AS cost,
+			$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
 						  sum(quantity) AS totalqoh,
 						  labourcost,
 						  overheadcost
@@ -241,7 +241,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 					GROUP BY materialcost,
 							labourcost,
 							overheadcost";
-			$ItemResult = DB_query($sql);
+			$ItemResult = DB_query($SQL);
 			$ItemCostRow = DB_fetch_array($ItemResult);
 
 			if (($Cost + $ItemCostRow['labourcost'] + $ItemCostRow['overheadcost']) != $ItemCostRow['cost']){ //the cost roll-up cost <> standard cost

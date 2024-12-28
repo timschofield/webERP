@@ -992,17 +992,17 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 					AND suppliers.supplierid = '" . $_SESSION['PO' . $identifier]->SupplierID . "'
 				ORDER BY code";
 				
-		$result=DB_query($SQL);
+		$Result=DB_query($SQL);
 
 		echo '<tr>
 				<td>' . _('KL Status') . ':</td>
 				<td><select name="KLStatus">';
 
-		while ($myrow = DB_fetch_array($result)) {
-			if ($_POST['KLStatus'] == $myrow['code']) {
-			echo '<option selected="selected" value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($_POST['KLStatus'] == $MyRow['code']) {
+			echo '<option selected="selected" value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 			} else {
-			echo '<option value="' . $myrow['code'] . '">' . $myrow['description'] . '</option>';
+			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 			}
 		} //end while loop
 		echo '</select></td>

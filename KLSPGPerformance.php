@@ -79,15 +79,15 @@ include ('includes/footer.php');
 FUNCTIONS ONLY USED IN SPG PERFORMANCE BOARD
 *********************************************************************************************/
 
-function RetailTypePayments($typereport, $maxdays){
+function RetailTypePayments($Typereport, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$totalcash = 0;
-	$totalcredit = 0;
-	$totalreturned = 0;
-	$totalvouchers = 0;
-	$total = 0;
+	$Totalcash = 0;
+	$Totalcredit = 0;
+	$Totalreturned = 0;
+	$Totalvouchers = 0;
+	$Total = 0;
 
-	if ($typereport == "Shop"){
+	if ($Typereport == "Shop"){
 		$SQL = "SELECT salesorders.debtorno AS reportunit,
 					debtorsmaster.name AS reportname,
 					SUM(salesorders.klpaidcash) AS cashshop, 
@@ -120,12 +120,12 @@ function RetailTypePayments($typereport, $maxdays){
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$typereport .'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$Typereport .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="SortedColumn">' . $typereport . '</th>
+						<th class="SortedColumn">' . $Typereport . '</th>
 						<th class="SortedColumn">' . _('Name') . '</th>
 						<th class="SortedColumn">' . _('% Cash') . '</th>
 						<th class="SortedColumn">' . _('% Credit') . '</th>
@@ -142,11 +142,11 @@ function RetailTypePayments($typereport, $maxdays){
 				$Percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
 				$Percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
 				
-				$totalcash = $totalcash + $MyRow['cashshop'];
-				$totalcredit = $totalcredit + $MyRow['creditshop'];
-				$totalreturned = $totalreturned + $MyRow['returnedgoodsshop'];
-				$totalvouchers = $totalvouchers + $MyRow['vouchersshop'];
-				$total = $total + $MyRow['totalshop'];
+				$Totalcash = $Totalcash + $MyRow['cashshop'];
+				$Totalcredit = $Totalcredit + $MyRow['creditshop'];
+				$Totalreturned = $Totalreturned + $MyRow['returnedgoodsshop'];
+				$Totalvouchers = $Totalvouchers + $MyRow['vouchersshop'];
+				$Total = $Total + $MyRow['totalshop'];
 				
 				printf('<tr class="striped_row">
 						<td>%s</td>
@@ -167,10 +167,10 @@ function RetailTypePayments($typereport, $maxdays){
 			}
 		}
 
-		$Percentcash = locale_number_format(($totalcash/$total)*100,1);
-		$Percentcredit = locale_number_format(($totalcredit/$total)*100,1);
-		$Percentreturns = locale_number_format(($totalreturned/$total)*100,1);
-		$Percentvouchers = locale_number_format(($totalvouchers/$total)*100,1);
+		$Percentcash = locale_number_format(($Totalcash/$Total)*100,1);
+		$Percentcredit = locale_number_format(($Totalcredit/$Total)*100,1);
+		$Percentreturns = locale_number_format(($Totalreturned/$Total)*100,1);
+		$Percentvouchers = locale_number_format(($Totalvouchers/$Total)*100,1);
 		
 		printf('<tr class="striped_row">
 				<td>%s</td>

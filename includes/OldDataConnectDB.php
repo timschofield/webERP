@@ -9,13 +9,13 @@ if (!file_exists('config_OldData.php')){
 	include ('config_OldData.php');
 }
 
-if (!isset($mysqlport)){
-	$mysqlport = 3306;
+if (!isset($MySQLPort)){
+	$MySQLPort = 3306;
 }
 
 global $db_od;	// Make sure it IS global, regardless of our context
 
-$db_od = mysqli_connect($OldData_db_host , $OldData_db_user, $OldData_db_pwd, $OldData_db_name, $mysqlport);
+$db_od = mysqli_connect($OldData_db_host , $OldData_db_user, $OldData_db_pwd, $OldData_db_name, $MySQLPort);
 mysqli_set_charset($db_od, 'utf8');
 
 if ( !$db_od ) {

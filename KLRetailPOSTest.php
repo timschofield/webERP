@@ -15,8 +15,8 @@ include('includes/wcpESCPOSCommands.php');
 $TextToPrint = "x1B@0x1Ba0x010x1B!0x38Blink by Kapal-Laut0x0A0x1B!0x01     0x0A0x1B!0x38SPG END OF SHIFT REPORT0x0A0x1B!0x000x0A0x1Ba0x01Sunday 8 September 2024 15:070x0ASPG Code: 2310x0AShop Code: K20x0A0x0A0x0AK2-0103757-B             Returned Goods: 675,0000x0AK2-0230777-A                Credit Card: 490,0000x0AK2-0230779-A                Credit Card: 885,0000x0AK2-0056745-C                       Cash: 195,0000x0AK2-0103762-B                       Cash: 750,0000x0AK2-0230794-A              Credit Card: 1,120,0000x0AK2-0230795-A                Credit Card: 225,0000x0AK2-0230796-A                Credit Card: 520,0000x0AK2-0230797-A              Credit Card: 1,300,0000x0AK2-0056747-C                       Cash: 195,0000x0AK2-0230798-A                Credit Card: 425,0000x0AK2-0230799-A              Credit Card: 1,120,0000x0AK2-0230802-A              Credit Card: 1,475,0000x0AK2-0230819-A                Credit Card: 325,0000x0A0x0A# Invoices: 14             Total Cash: 1,140,0000x0A0x1Ba0x02Total Credit Card: 7,885,0000x0ATotal Returned Goods: 675,0000x0ATotal Voucher/Discounts: 00x0A0x1B!0x38Total include returns/vouchers: 9,700,0000x0ATotal Personal Sales SPG: 9,025,0000x0A0x1B!0x000x0A0x1Ba0x000x0A0x0A0x0A0x1D0x560x410x00";
 
 $identifier=GetPOSIdentifier();
-$filename = GetFilenameFromPOSIdentifier($identifier);  
-file_put_contents($filename, $TextToPrint);
+$FileName = GetFilenameFromPOSIdentifier($identifier);  
+file_put_contents($FileName, $TextToPrint);
 $textActionToPrint = 'Print the Daily SPG End Of Shift Test';
 
 include ('includes/SilentPrinting.php');

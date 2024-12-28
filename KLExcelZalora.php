@@ -102,8 +102,8 @@ function submit($FromPrice, $ToPrice) {
 			$objPHPExcel->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
-			foreach(range('A','F') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			foreach(range('A','F') as $ColumnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 			

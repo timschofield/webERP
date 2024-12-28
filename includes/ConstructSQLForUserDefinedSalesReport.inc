@@ -332,9 +332,9 @@ exit;
 /*Now let her go .... */
 $ErrMsg = _('There was a problem running the SQL to retrieve the sales analysis information');
 $DbgMsg = _('The SQL that was used to retrieve the user defined sales analysis info was');
-$result=DB_query($SQLTheLot,$ErrMsg,$DbgMsg);
+$Result=DB_query($SQLTheLot,$ErrMsg,$DbgMsg);
 
-if (DB_num_rows($result)==0){
+if (DB_num_rows($Result)==0){
     $Title = _('User Defined Sales Analysis Problem') . ' ....';
    include('includes/header.php');
     prnMsg(_('The user defined sales analysis SQL did not return any rows') . ' - ' . _('have another look at the criteria specified'),'error',_('Nothing To Report'));

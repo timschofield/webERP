@@ -17,8 +17,8 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (!isset($_POST['MonthToShow'])){
 	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['MonthToShow'] . "'");
-	$myrow = DB_fetch_array($Result);
-	$EndDateSQL = $myrow['lastdate_in_period'];
+	$MyRow = DB_fetch_array($Result);
+	$EndDateSQL = $MyRow['lastdate_in_period'];
 }
 
 echo '<table class="selection">
@@ -111,7 +111,7 @@ if (mb_strlen($Date_Array[2])>4) {
 $StartDateSQL =  date('Y-m-d', mktime(0,0,0, (int)$Date_Array[1],1,(int)$Date_Array[0]));
 
 /* KL RICARD Change the SQL to use salesorders table to filter by SPG correctly*/
-$sql = "SELECT 	orddate AS trandate,
+$SQL = "SELECT 	orddate AS trandate,
 				SUM(unitprice*(1-discountpercent)* (qtyinvoiced) / currencies.rate) as salesvalue,
 				SUM(CASE WHEN mbflag='A' THEN 0 ELSE ((actualcost) * qtyinvoiced) END) as cost
 			FROM salesorders
@@ -126,16 +126,16 @@ $sql = "SELECT 	orddate AS trandate,
 if ($_SESSION['SalesmanLogin'] != '') {
 	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }elseif ($_POST['Salesperson']!='All') {
-	$sql .= " AND salesorders.salesperson='" . $_POST['Salesperson'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_POST['Salesperson'] . "'";
 }
 
 if ($_POST['CustomerType']!='All') {
-	$sql .= " AND debtorsmaster.typeid='" . $_POST['CustomerType'] . "'";
+	$SQL .= " AND debtorsmaster.typeid='" . $_POST['CustomerType'] . "'";
 }
-$sql .= " GROUP BY salesorders.orddate ORDER BY salesorders.orddate";
+$SQL .= " GROUP BY salesorders.orddate ORDER BY salesorders.orddate";
 
 $ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-$SalesResult = DB_query($sql,$ErrMsg);
+$SalesResult = DB_query($SQL,$ErrMsg);
 
 echo '<table class="selection">
 	<tr>

@@ -344,10 +344,10 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO custbranch ('.mb_substr($FieldNames,0,-2).') '.
+		$SQL = 'INSERT INTO custbranch ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -463,14 +463,14 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql='UPDATE custbranch SET ';
+		$SQL='UPDATE custbranch SET ';
 		foreach ($BranchDetails as $key => $value) {
-			$sql .= $key.'="'.$value.'", ';
+			$SQL .= $key.'="'.$value.'", ';
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."'
+		$SQL = mb_substr($SQL,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."'
                                    AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -494,15 +494,15 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT branchcode FROM custbranch
+		$SQL = "SELECT branchcode FROM custbranch
                 WHERE debtorno = '" . $DebtorNumber . "'";
-		$result = api_DB_query($sql);
+		$Result = api_DB_query($SQL);
 		if (DB_error_no() != 0)
 			$Errors[0] = DatabaseUpdateFailed;
 		else {
 			$Errors[0] = 0;	    // Signal data may follow.
-			while ($myrow = DB_fetch_row($result)) {
-				$Errors[] = $myrow[0];
+			while ($MyRow = DB_fetch_row($Result)) {
+				$Errors[] = $MyRow[0];
 			}
 		}
 
@@ -523,16 +523,16 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM custbranch
+		$SQL="SELECT * FROM custbranch
                      WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchCode."'";
-		$result = api_DB_query($sql);
+		$Result = api_DB_query($SQL);
 		if (DB_error_no() != 0 ) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
-			if (DB_num_rows($result) > 0)
-			    $Errors += DB_fetch_array($result);
+			if (DB_num_rows($Result) > 0)
+			    $Errors += DB_fetch_array($Result);
 		}
 		return  $Errors;
 	}

@@ -22,8 +22,8 @@ function time_finish($begintime){
 	$time = explode(" ", $time);
 	$time = $time[1] + $time[0];
 	$endtime = $time;
-	$totaltime = ($endtime - $begintime);
-	prnMsg('Script execution time: ' . locale_number_format($totaltime,2) . ' seconds.','success');
+	$Totaltime = ($endtime - $begintime);
+	prnMsg('Script execution time: ' . locale_number_format($Totaltime,2) . ' seconds.','success');
 }
 
 function function_finish($begintime){
@@ -31,8 +31,8 @@ function function_finish($begintime){
 	$time = explode(" ", $time);
 	$time = $time[1] + $time[0];
 	$endtime = $time;
-	$totaltime = ($endtime - $begintime);
-	prnMsg('Function execution time: ' . locale_number_format($totaltime,3) . ' seconds.','info');
+	$Totaltime = ($endtime - $begintime);
+	prnMsg('Function execution time: ' . locale_number_format($Totaltime,3) . ' seconds.','info');
 }
 
 function CodeModel($stockid){
@@ -1082,16 +1082,16 @@ function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 	return array($URL,$PackagingImage);
 }
 
-function DataExistsInWebERP($table, $f1, $v1, $f2 = '', $v2 = ''){
+function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	if ($f2 == ''){
 		/* Primary key is 1 field only */
 		$SQL = "SELECT COUNT(*)
-				FROM " . $table . "
+				FROM " . $Table . "
 				WHERE " . $f1 . " = '" . $v1 . "'";
 	}else{
 		/* Primary key is 2 fields */
 		$SQL = "SELECT COUNT(*)
-				FROM " . $table . "
+				FROM " . $Table . "
 				WHERE " . $f1 . " = '" . $v1 . "'
 					AND " . $f2 . " = '" . $v2 . "'";
 	}

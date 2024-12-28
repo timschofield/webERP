@@ -74,9 +74,9 @@ if (isset($_POST['QuickEntry'])){
 }
 
 if (isset($_POST['OrderItems'])){
-	foreach ($_POST as $key => $value) {
+	foreach ($_POST as $key => $Value) {
 		if (strstr($key,'itm')) {
-			$NewItemArray[substr($key,3)] = trim($value);
+			$NewItemArray[substr($key,3)] = trim($Value);
 		}
 	}
 }
@@ -387,11 +387,11 @@ if (isset($NewItemArray) and isset($_POST['OrderItems'])){
 
 /* Run through each line of the order and work out the appropriate discount from the discount matrix */
 $DiscCatsDone = array();
-$counter =0;
+$Counter =0;
 foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 	if ($OrderLine->DiscCat !="" AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
-		$DiscCatsDone[$counter]=$OrderLine->DiscCat;
+		$DiscCatsDone[$Counter]=$OrderLine->DiscCat;
 		$QuantityOfDiscCat =0;
 
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -1750,8 +1750,8 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$Receipt = $HeaderText . $CustomerFooter . $HeaderText . $ShopFooter;
 
 		//################## PRINTING STUFF ##################### 
-		$filename = GetFilenameFromPOSIdentifier($identifier);   
-		file_put_contents($filename, $Receipt);
+		$FileName = GetFilenameFromPOSIdentifier($identifier);   
+		file_put_contents($FileName, $Receipt);
 		$textActionToPrint = 'Print the customer receipt';
 		include ('includes/SilentPrinting.php');
 	   //################## PRINTING STUFF ##################### 

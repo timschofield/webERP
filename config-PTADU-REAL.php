@@ -29,10 +29,10 @@ $SysAdminEmail = 'webmaster@kapal-laut.com';
 date_default_timezone_set('Asia/Singapore');
 
 // Connection information for the database
-// $host is the computer ip address or name where the database is located
+// $Host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
 $Host = 'localhost';
-$mysqlport=3306;
+$MySQLPort=3306;
 
 //The type of db server being used
 //$DBType = 'postgres' - now DEPRECIATED;

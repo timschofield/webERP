@@ -29,11 +29,11 @@ if(isset($_POST['Submit'])) {
 		$NewStockID = $_POST['ExStockID'];
 	}
 	if ($InputError==0){
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 
 		if($NewOrExisting == 'N') {
 	      /* duplicate rows into stockmaster */
-			$sql = "INSERT INTO stockmaster( stockid,
+			$SQL = "INSERT INTO stockmaster( stockid,
 									categoryid,
 									description,
 									longdescription,
@@ -89,9 +89,9 @@ if(isset($_POST['Submit'])) {
 									netweight
 							FROM stockmaster
 							WHERE stockid='".$StockID."';";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		} else {
-			$sql = "SELECT lastcostupdate,
+			$SQL = "SELECT lastcostupdate,
 							actualcost,
 							lastcost,
 							materialcost,
@@ -100,23 +100,23 @@ if(isset($_POST['Submit'])) {
 							lowestlevel
 						FROM stockmaster
 						WHERE stockid='".$StockID."';";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 
-			$myrow = DB_fetch_row($result);
+			$MyRow = DB_fetch_row($Result);
 
-			$sql = "UPDATE stockmaster set
-					lastcostupdate  = '" . $myrow[0] . "',
-					actualcost      = " . $myrow[1] . ",
-					lastcost        = " . $myrow[2] . ",
-					materialcost    = " . $myrow[3] . ",
-					labourcost      = " . $myrow[4] . ",
-					overheadcost    = " . $myrow[5] . ",
-					lowestlevel     = " . $myrow[6] . "
+			$SQL = "UPDATE stockmaster set
+					lastcostupdate  = '" . $MyRow[0] . "',
+					actualcost      = " . $MyRow[1] . ",
+					lastcost        = " . $MyRow[2] . ",
+					materialcost    = " . $MyRow[3] . ",
+					labourcost      = " . $MyRow[4] . ",
+					overheadcost    = " . $MyRow[5] . ",
+					lowestlevel     = " . $MyRow[6] . "
 					WHERE stockid='".$NewStockID."';";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		}
 
-		$sql = "INSERT INTO bom
+		$SQL = "INSERT INTO bom
 					SELECT '".$NewStockID."' AS parent,
 					        sequence,
 							component,
@@ -130,10 +130,10 @@ if(isset($_POST['Submit'])) {
 							digitals
 					FROM bom
 					WHERE parent='".$StockID."';";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 		if($NewOrExisting == 'N') {
-			$sql = "INSERT INTO locstock (loccode,
+			$SQL = "INSERT INTO locstock (loccode,
 								            stockid,
 								            quantity,
 								            reorderlevel,
@@ -146,10 +146,10 @@ if(isset($_POST['Submit'])) {
 						FROM locstock
 						WHERE stockid='".$StockID."'";
 
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		}
 
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 
 		UpdateCost($NewStockID);
 
@@ -164,19 +164,19 @@ if(isset($_POST['Submit'])) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$sql = "SELECT stockid,
+	$SQL = "SELECT stockid,
 					description
 				FROM stockmaster
 				WHERE stockid IN (SELECT DISTINCT parent FROM bom)
 				AND  mbflag IN ('M', 'A', 'K', 'G');";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 			<tr>
 				<td>' . _('From Stock ID') . '</td>';
 	echo '<td><select name="StockID">';
-	while($myrow = DB_fetch_row($result)) {
-		echo '<option value="'.$myrow[0].'">' . $myrow[0].' -- '.$myrow[1] . '</option>';
+	while($MyRow = DB_fetch_row($Result)) {
+		echo '<option value="'.$MyRow[0].'">' . $MyRow[0].' -- '.$MyRow[1] . '</option>';
 	}
 	echo '</select></td>
 			</tr>';
@@ -184,19 +184,19 @@ if(isset($_POST['Submit'])) {
 			<td><input type="radio" name="NewOrExisting" value="N" />' . _(' To New Stock ID') . '</td>';
 	echo '<td><input type="text" maxlength="20" autofocus="autofocus" pattern="[a-zA-Z0-9_\-]*" name="ToStockID" title="' . _('Enter a new item code to copy the existing item and its bill of material to. Item codes can contain only alpha-numeric characters, underscore or hyphens.') . '" /></td></tr>';
 
-	$sql = "SELECT stockid,
+	$SQL = "SELECT stockid,
 					description
 				FROM stockmaster
 				WHERE stockid NOT IN (SELECT DISTINCT parent FROM bom)
 				AND mbflag IN ('M', 'A', 'K', 'G');";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
-	if (DB_num_rows($result) > 0) {
+	if (DB_num_rows($Result) > 0) {
 		echo '<tr>
 				<td><input type="radio" name="NewOrExisting" checked="checked" value="E" />' . _('To Existing Stock ID') . '</td><td>';
 		echo '<select name="ExStockID">';
-		while($myrow = DB_fetch_row($result)) {
-			echo '<option value="'.$myrow[0].'">' . $myrow[0].' -- '.$myrow[1] . '</option>';
+		while($MyRow = DB_fetch_row($Result)) {
+			echo '<option value="'.$MyRow[0].'">' . $MyRow[0].' -- '.$MyRow[1] . '</option>';
 		}
 		echo '</select></td></tr>';
 	}

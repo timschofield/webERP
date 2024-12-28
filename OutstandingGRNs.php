@@ -47,7 +47,7 @@ if (isset($_POST['FromCriteria'])
 	  prnMsg(_('The outstanding GRNs valuation details could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
-	   if ($debug==1){
+	   if ($Debug==1){
 		  echo '<br />' . $SQL;
 	   }
 	   * */
@@ -60,7 +60,7 @@ if (isset($_POST['FromCriteria'])
 	  prnMsg(_('No outstanding GRNs valuation details retrieved'), 'warn');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		/*
-	   if ($debug==1){
+	   if ($Debug==1){
 		  echo '<br />' . $SQL;
 	   }
 	   * */
@@ -77,7 +77,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 	$pdf->addInfo('Subject',_('Outstanding GRNs Valuation'));
 	$FontSize=10;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 	$Left_Margin=30;
 
 	include ('includes/PDFOstdgGRNsPageHeader.inc');
@@ -91,23 +91,23 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 
 			if ($Supplier!=''){ /*Then it's NOT the first time round */
 				/* need to print the total of previous supplier */
-               if ($YPos < $Bottom_Margin + $line_height * 5){
+               if ($YPos < $Bottom_Margin + $LineHeight * 5){
                   include('includes/PDFOstdgGRNsPageHeader.inc');
                }
-				$YPos -= (2*$line_height);
+				$YPos -= (2*$LineHeight);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
 				$DisplaySuppTotVal = locale_number_format($SuppTot_Val,$GRNs['currdecimalplaces']);
 				$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
-				$YPos -=$line_height;
-				$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-				$YPos -=(2*$line_height);
+				$YPos -=$LineHeight;
+				$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+				$YPos -=(2*$LineHeight);
 				$SuppTot_Val=0;
 			}
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$GRNs['supplierid'] . ' - ' . $GRNs['suppname']);
 			$Supplier = $GRNs['supplierid'];
 			$SupplierName = $GRNs['suppname'];
 		}
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 
 		if ($GRNs['itemdecimalplaces']==null){
 			$ItemDecimalPlaces = 2;
@@ -133,7 +133,7 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 		$Tot_Val += $LineValue;
 		$SuppTot_Val += $LineValue;
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   include('includes/PDFOstdgGRNsPageHeader.inc');
 		}
 
@@ -141,24 +141,24 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 
 
 /*Print out the supplier totals */
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName, 'left');
 
 	$DisplaySuppTotVal = locale_number_format($SuppTot_Val,2);
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
 
 	/*draw a line under the SUPPLIER TOTAL*/
-	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-	$YPos -=(2*$line_height);
+	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$YPos -=(2*$LineHeight);
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 
 /*Print out the grand totals */
 	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = locale_number_format($Tot_Val,2);
 	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-	$YPos -=(2*$line_height);
+	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$YPos -=(2*$LineHeight);
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
 	$pdf->__destruct();

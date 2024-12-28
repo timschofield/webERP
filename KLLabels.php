@@ -17,14 +17,14 @@ include('includes/session.php');
 $Title=_('Label Templates Maintainance');
 include('includes/header.php');
 
-$debug=false;
+$Debug=false;
 include('includes/DefineLabelClass.php');
 
 $allLabels =				 //!< The variable $allLabels is the global variable that contains the list
 		getXMLFile(LABELS_FILE); //!< of all the label objects defined until now. In case of a fresh
 								 //!<  installation or an empty XML labels file it holds a NULL value.
 
-if ($debug) {
+if ($Debug) {
 	echo '<br />' ;
 	echo '<pre>';
 	print_r($_POST);
@@ -136,90 +136,90 @@ function validData($data, $new) {
 	global $allLabels, $DimensionTags, $DataTags;
 
 // Check the heading data
-	$errors=array();
+	$Errors=array();
 	if ($new) {
 		if (empty($data['id']))
-			$errors[]=_('Id required');
+			$Errors[]=_('Id required');
 		elseif ($allLabels!=null AND $allLabels->findLabel($data['id'])!==false)
-			$errors[]=_('This id exists in previous list');
+			$Errors[]=_('This id exists in previous list');
 	}
 	if (empty($data['description']))
-		$errors=_('the description is required');
+		$Errors=_('the description is required');
 
 // Check the dimensions data
-	foreach ($DimensionTags as $iTag=>$tag) {
-		if ($tag['type']=='s') continue;  // select type does not require validation
+	foreach ($DimensionTags as $iTag=>$Tag) {
+		if ($Tag['type']=='s') continue;  // select type does not require validation
 		$dd = trim($data[$iTag]);
-		$desc=$tag['desc'];
-		switch ($tag['type']) {
+		$desc=$Tag['desc'];
+		switch ($Tag['type']) {
 		case 'n':
 			if (!is_numeric($dd))
-				$errors[]= _('The value of').' '.$desc.' '._('would be numeric');
+				$Errors[]= _('The value of').' '.$desc.' '._('would be numeric');
 			elseif ((float)$data[$iTag]<=0)
-				$errors[]= _('The value of').' '.$desc.' '._('requires a positive value').$dd;
+				$Errors[]= _('The value of').' '.$desc.' '._('requires a positive value').$dd;
 			break;
 		case 'i':
 			if (!is_numeric($dd) OR (int)$data[$iTag]<=0)
-				$errors[]= _('The value of').' '.$tag['desc'].' '._('would be a positive integer');
+				$Errors[]= _('The value of').' '.$Tag['desc'].' '._('would be a positive integer');
 			break;
 		}
 	}
 	// Checking consistency between data
 	// Rh > He
-	$tag = $DimensionTags[$iTag='Rh'];
+	$Tag = $DimensionTags[$iTag='Rh'];
 	if ((float)$data['Rh'] < (float)$data['He'] ) {
-		$desc=$tag['desc'];
-		$errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the height of the labels');
+		$desc=$Tag['desc'];
+		$Errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the height of the labels');
 	}
 	// Sh >= rows*Rh+Tm
-	$tag = $DimensionTags[$iTag='Sh'];
+	$Tag = $DimensionTags[$iTag='Sh'];
 	if ((float)$data['Sh'] <= (float)$data['Tm'] + ( (int)$data['Rows']*((float)$data['Rh']) ) ) {
-		$desc=$tag['desc'];
-		$errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the height of all the rows, including the top margin');
+		$desc=$Tag['desc'];
+		$Errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the height of all the rows, including the top margin');
 	}
 	// Cw > Wi
-	$tag = $DimensionTags[$iTag='Cw'];
+	$Tag = $DimensionTags[$iTag='Cw'];
 	if ((float)$data['Cw'] < (float)$data['Wi'] ) {
-		$desc=$tag['desc'];
-		$errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the width of the labels');
+		$desc=$Tag['desc'];
+		$Errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the width of the labels');
 	}
 	// Sw >= Cols*Cw+Lm
-	$tag = $DimensionTags[$iTag='Sw'];
+	$Tag = $DimensionTags[$iTag='Sw'];
 	if ((float)$data['Sw'] <= (float)$data['Lm'] + ( (int)$data['Cols']*((float)$data['Cw']) ) ) {
-		$desc=$tag['desc'];
-		$errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the width of all the cols, including the left margin');
+		$desc=$Tag['desc'];
+		$Errors[]= _('The value of').' '.$desc.' '._('requires to be greater than the width of all the cols, including the left margin');
 	}
 
-	$rowCount=0;
+	$RowCount=0;
 	$jRow=0;
-	foreach ($data['row'] as $iRow=>$row) {
+	foreach ($data['row'] as $iRow=>$Row) {
 		$jRow++;
-		if (empty($row)) continue; // The empty row indicates no data
-		$rowCount++;  // we have data
+		if (empty($Row)) continue; // The empty row indicates no data
+		$RowCount++;  // we have data
 
-		if (!is_numeric($row) ) $row=0;
-		else $row = (float)$row;
-		if ($row<=0)
-			$errors[]= _('The vert. pos. value would be positive') ." ($jRow)";
-		elseif ((float)$row>(float)$data['He'])
-			$errors[]= _('The value of the vert. pos. would be less than')." ". $data['He'] ."($jRow)";
+		if (!is_numeric($Row) ) $Row=0;
+		else $Row = (float)$Row;
+		if ($Row<=0)
+			$Errors[]= _('The vert. pos. value would be positive') ." ($jRow)";
+		elseif ((float)$Row>(float)$data['He'])
+			$Errors[]= _('The value of the vert. pos. would be less than')." ". $data['He'] ."($jRow)";
 
 	// now the rest of the line data is validated
-		foreach ($DataTags as $iTag=>$tag) {
-			if ($tag['type']=='s'  // select type does not require validation
+		foreach ($DataTags as $iTag=>$Tag) {
+			if ($Tag['type']=='s'  // select type does not require validation
 				OR $iTag == 'row') continue;  // the row is just validated
 			$dd = trim($data[$iTag][$iRow]);
-			$desc=$tag['desc'];
-			if ($tag['type']=='n') {
+			$desc=$Tag['desc'];
+			if ($Tag['type']=='n') {
 				if (!is_numeric($dd))
-					$errors[]= _('The value of').' '.$desc.' '._('would be numeric')." ($jRow)";
+					$Errors[]= _('The value of').' '.$desc.' '._('would be numeric')." ($jRow)";
 				elseif (empty($dd) OR (float)$dd<=0)
-					$errors[]= _('The value of').' '.$desc.' '._('requires a positive value')." ($jRow)";
+					$Errors[]= _('The value of').' '.$desc.' '._('requires a positive value')." ($jRow)";
 			}
 			switch ($iTag) {
 			case 'font':
-				if ((float)$dd+$row >= (float)$data['He']) {
-					$errors[]= _('The value of').' '.$desc.' '._('in this position exceeds the label height').
+				if ((float)$dd+$Row >= (float)$data['He']) {
+					$Errors[]= _('The value of').' '.$desc.' '._('in this position exceeds the label height').
 						" ($jRow)";
 				}
 				break;
@@ -228,15 +228,15 @@ function validData($data, $new) {
 				break;
 			case 'max':
 				if ((float)$dd+$posD >= (float)$data['Wi']) {
-					$errors[]= _('The position and lenght of the string leads the text to get out of the label'). " ($jRow)";
+					$Errors[]= _('The position and lenght of the string leads the text to get out of the label'). " ($jRow)";
 				}
 				break;
 			}
 		}
 	}
 	// Display the errors detected
-	if (count($errors)>0) {
-		foreach($errors as $err)
+	if (count($Errors)>0) {
+		foreach($Errors as $err)
 			prnMsg($err);
 		return false;
 	}
@@ -250,16 +250,16 @@ function validData($data, $new) {
  *  possible that the combination $data valid and $ReadOnly false occurs when
  *  invalid data needs to be recaptured because an error in a new label capture.
  */
-function showLabel($Label, $msg, $Theme, $ReadOnly=false) {
+function showLabel($Label, $Msg, $Theme, $ReadOnly=false) {
 	global $RootPath;
 	if ($Label==null)
 		$Label = newLabel();
 	if  ($ReadOnly) {
-		$name = 'Update';
-		$value = _('Update');
+		$Name = 'Update';
+		$Value = _('Update');
 	} else {
-		$name = 'Save';
-		$value = _('Save');
+		$Name = 'Save';
+		$Value = _('Save');
 	}
 
 	$vCancel = _('Cancel');
@@ -267,7 +267,7 @@ function showLabel($Label, $msg, $Theme, $ReadOnly=false) {
 	$TableGD = setTableGD($Label, $ReadOnly);
 	$TableLines = setTableLines($Label->data->line);
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $msg.'</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Msg.'</p>';
 
 	echo '<br />
 	<form action="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'" method="post">
@@ -286,7 +286,7 @@ function showLabel($Label, $msg, $Theme, $ReadOnly=false) {
 			</tr>
 			</tbody>
 		</table>
-		<br /><input type="submit" name="'.$name.'" value="'.$value.'" />
+		<br /><input type="submit" name="'.$Name.'" value="'.$Value.'" />
 		<input type="submit" name="Cancel" value="'.$vCancel.'" />
         </div>
     </div>
@@ -303,14 +303,14 @@ function setTableGD($Label, $ReadOnly) {
 	return $html;
 }
 
-function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=false) {
+function setDataFields($Tags, $withTagId, $data, $specialTag=false, $ReadOnly=false) {
 	$iCol=0;
 	$html = '';
-	foreach ($tags as $iTag=>$tag) {
+	foreach ($Tags as $iTag=>$Tag) {
 		$vDat = (is_object($data) AND isset($data->$iTag))?$data->$iTag:'';
-		if ($tag['type']=='s') {
+		if ($Tag['type']=='s') {
 			$input ='<select name="'. $iTag . '">';
-			foreach ($tag['values'] as $i=>$val) {
+			foreach ($Tag['values'] as $i=>$val) {
 				$xSel = ($vDat==$i)?' selected="selected"' : '';
 				$input .= '
 					<option value="'. $i .'"'. $xSel .'>'.$val.'</option>';
@@ -321,7 +321,7 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=fa
 			$ro='';
 			if ($ReadOnly AND $specialTag==$iTag)
 				$ro='readonly="readonly"';
-			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'" size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'" '. $ro .' />';
+			$input = '<input type="text" name="'. $iTag .'" value="'. $vDat .'" size="'. $Tag['sz'] .'" maxlength="'. $Tag['maxsz'] .'" '. $ro .' />';
 		}
 		if (!$iCol++)  // when zero begins a line
 			$html .= '
@@ -330,7 +330,7 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=fa
 			$iCol=0;
 		$wTag= $withTagId ? ('&nbsp;('.$iTag.')') :'';
 		$html .= '
-				<td align="right">' . $tag['desc'] . $wTag . ':</td>
+				<td align="right">' . $Tag['desc'] . $wTag . ':</td>
 				<td>' . $input . '</td>';
 		if (!$iCol)
 			$html .= '
@@ -343,14 +343,14 @@ function setDataFields($tags, $withTagId, $data, $specialTag=false, $ReadOnly=fa
 	return $html;
 }
 
-function setTableLines($lineArray) {
+function setTableLines($LineArray) {
 	global $DataTags;
 	$html='
 		<table border="0" cellspacing="1" class="selection">';
 	$html .= setTableHeader($DataTags);
 
 	$iCount=MAX_LINES_PER_LABEL;
-	foreach ($lineArray as $i=>$data) {
+	foreach ($LineArray as $i=>$data) {
 
 		$iCount--;
 		$html .= setLineFields($DataTags, $data);
@@ -362,24 +362,24 @@ function setTableLines($lineArray) {
 	return $html;
 }
 
-function setTableHeader($tags) {
+function setTableHeader($Tags) {
 	$html= '
 			<tr>';
-	foreach ($tags as $tit)
+	foreach ($Tags as $tit)
 		$html .= '
 				<th>' . $tit['desc'] . '</th>';
 	return $html . '
 			</tr>';
 }
 
-function setLineFields($tags, $data) {
+function setLineFields($Tags, $data) {
 	$html = '
 		<tr>';
-	foreach ($tags as $iTag=>$tag) {
+	foreach ($Tags as $iTag=>$Tag) {
 		$vDat = ($data!=null AND isset($data->$iTag))?$data->$iTag:'';
-		if ($tag['type']=='s') {
+		if ($Tag['type']=='s') {
 			$input ='<select name="'. $iTag . '[]">';
-			foreach ($tag['values'] as $kI=>$kVal) {
+			foreach ($Tag['values'] as $kI=>$kVal) {
 				$xSel = ($vDat==$kI) ? ' selected="selected"':'';
 				$input .= '
 					<option value="'. $kI .'"'. $xSel .'>'.$kVal.'</option>';
@@ -387,7 +387,7 @@ function setLineFields($tags, $data) {
 			$input .= '
 				</select>';
 		} else {
-			$input = '<input type="text" name="'. $iTag .'[]" value="'. $vDat .'" size="'. $tag['sz'] .'" maxlength="'. $tag['maxsz'] .'" />';
+			$input = '<input type="text" name="'. $iTag .'[]" value="'. $vDat .'" size="'. $Tag['sz'] .'" maxlength="'. $Tag['maxsz'] .'" />';
 		}
 		$html .= '
 				<td align="center">' . $input . '</td>';

@@ -84,7 +84,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  */
 	if ($InputError!=1){
 
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 
 		/*figure out what status to set the order to */
 		if (IsEmailAddress($_SESSION['UserEmail'])){
@@ -136,7 +136,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			/*Insert to purchase order header record */
 			// KL RICARD Add custom fields to SQL
-			$sql = "INSERT INTO purchorders ( orderno,
+			$SQL = "INSERT INTO purchorders ( orderno,
 											supplierno,
 											comments,
 											orddate,
@@ -217,12 +217,12 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$ErrMsg =  _('The purchase order header record could not be inserted into the database because');
 			$DbgMsg = _('The SQL statement used to insert the purchase order header record and failed was');
-			$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		     /*Insert the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 				if ($POLine->Deleted==False) {
-					$sql = "INSERT INTO purchorderdetails (orderno,
+					$SQL = "INSERT INTO purchorderdetails (orderno,
 														itemcode,
 														deliverydate,
 														itemdescription,
@@ -251,7 +251,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 					$ErrMsg =_('One of the purchase order detail records could not be inserted into the database because');
 					$DbgMsg =_('The SQL statement used to insert the purchase order detail record and failed was');
 
-					$result =DB_query($sql,$ErrMsg,$DbgMsg,true);
+					$Result =DB_query($SQL,$ErrMsg,$DbgMsg,true);
 				}
 			} /* end of the loop round the detail line items on the order */
 			echo '<p />';
@@ -280,7 +280,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			}
 		     /*Update the purchase order header with any changes */
 
-			$sql = "UPDATE purchorders SET supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "' ,
+			$SQL = "UPDATE purchorders SET supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "' ,
 										comments='" . $_SESSION['PO'.$identifier]->Comments . "',
 										rate='" . $_SESSION['PO'.$identifier]->ExRate . "',
 										initiator='" . $_SESSION['PO'.$identifier]->Initiator . "',
@@ -321,24 +321,24 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 			$ErrMsg =  _('The purchase order could not be updated because');
 			$DbgMsg = _('The SQL statement used to update the purchase order header record, that failed was');
-			$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			/*Now Update the purchase order detail records */
 			foreach ($_SESSION['PO'.$identifier]->LineItems as $POLine) {
 
 				if ($POLine->Deleted==true) {
 					if ($POLine->PODetailRec!='') {
-						$sql="DELETE FROM purchorderdetails WHERE podetailitem='" . $POLine->PODetailRec . "'";
+						$SQL="DELETE FROM purchorderdetails WHERE podetailitem='" . $POLine->PODetailRec . "'";
 						$ErrMsg =  _('The purchase order detail line could not be deleted because');
 						$DbgMsg = _('The SQL statement used to delete the purchase order detail record, that failed was');
-						$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+						$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 					}
 				} else if ($POLine->PODetailRec=='') {
 						/*When the purchase order line is an existing record the auto-increment
 						 * field PODetailRec is given to the session for that POLine
 						 * So it will only be a new POLine if PODetailRec is empty
 						*/
-					$sql = "INSERT INTO purchorderdetails ( orderno,
+					$SQL = "INSERT INTO purchorderdetails ( orderno,
 														itemcode,
 														deliverydate,
 														itemdescription,
@@ -368,7 +368,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 				} else {
 					if ($POLine->Quantity==$POLine->QtyReceived){
-						$sql = "UPDATE purchorderdetails SET itemcode='" . $POLine->StockID . "',
+						$SQL = "UPDATE purchorderdetails SET itemcode='" . $POLine->StockID . "',
 															deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
 															itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
 															glcode='" . $POLine->GLCode . "',
@@ -383,7 +383,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 															conversionfactor = '" . $POLine->ConversionFactor . "'
 								WHERE podetailitem='" . $POLine->PODetailRec . "'";
 					} else {
-						$sql = "UPDATE purchorderdetails SET itemcode='" . $POLine->StockID . "',
+						$SQL = "UPDATE purchorderdetails SET itemcode='" . $POLine->StockID . "',
 															deliverydate ='" . FormatDateForSQL($POLine->ReqDelDate) . "',
 															itemdescription='" . DB_escape_string($POLine->ItemDescription) . "',
 															glcode='" . $POLine->GLCode . "',
@@ -401,7 +401,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 				$ErrMsg = _('One of the purchase order detail records could not be updated because');
 				$DbgMsg = _('The SQL statement used to update the purchase order detail record that failed was');
-				$result =DB_query($sql,$ErrMsg,$DbgMsg,true);
+				$Result =DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			} /* end of the loop round the detail line items on the order */
 			echo '<br /><br />';
@@ -473,17 +473,17 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 	*/
 	if ($_SESSION['PO'.$identifier]->GLLink==1 OR $_SESSION['CompanyRecord']['gllink_creditors']==1){
 
-		$sql = "SELECT accountname
+		$SQL = "SELECT accountname
 				FROM chartmaster
 				WHERE accountcode ='" . $_POST['GLCode'] . "'";
 		$ErrMsg =  _('The account details for') . ' ' . $_POST['GLCode'] . ' ' . _('could not be retrieved because');
 		$DbgMsg =  _('The SQL used to retrieve the details of the account, but failed was');
-		$GLValidResult = DB_query($sql,$ErrMsg,$DbgMsg,false,false);
+		$GLValidResult = DB_query($SQL,$ErrMsg,$DbgMsg,false,false);
 		if (DB_error_no() !=0) {
 			$AllowUpdate = false;
 			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg(), 'error');
-			if ($debug==1){
-				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $sql,'error');
+			if ($Debug==1){
+				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $SQL,'error');
 			}
 			include('includes/footer.php');
 			exit;
@@ -492,8 +492,8 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 			$AllowUpdate = false;
 			prnMsg( _('Cannot enter this order line') . ':<br />' . _('The general ledger code') . ' - ' . $_POST['GLCode'] . ' ' . _('is not a general ledger code that is defined in the chart of accounts') . ' . ' . _('Please use a code that is already defined') . '. ' . _('See the Chart list from the link below'),'error');
 		} else {
-			$myrow = DB_fetch_row($GLValidResult);
-			$GLAccountName = $myrow[0];
+			$MyRow = DB_fetch_row($GLValidResult);
+			$GLAccountName = $MyRow[0];
 		}
 	} /* dont bother checking the GL Code if there is no GL code to check ie not linked to GL */
 	 else {
@@ -592,7 +592,7 @@ if (isset($_POST['NewItem'])
 				}
 			}
 			if ($AlreadyOnThisOrder!=1 AND filter_number_format($Quantity) > 0){
-				$sql = "SELECT description,
+				$SQL = "SELECT description,
 							longdescription,
 							stockid,
 							units,
@@ -607,11 +607,11 @@ if (isset($_POST['NewItem'])
 
 				$ErrMsg = _('The item details for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-				$ItemResult = DB_query($sql,$ErrMsg,$DbgMsg);
+				$ItemResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 				if (DB_num_rows($ItemResult)==1){
 					$ItemRow = DB_fetch_array($ItemResult);
 
-					$sql = "SELECT price,
+					$SQL = "SELECT price,
 								conversionfactor,
 								supplierdescription,
 								suppliersuom,
@@ -632,12 +632,12 @@ if (isset($_POST['NewItem'])
 
 					$ErrMsg = _('The purchasing data for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 					$DbgMsg = _('The SQL used to retrieve the purchasing data but failed was');
-					$PurchDataResult = DB_query($sql,$ErrMsg,$DbgMsg);
+					$PurchDataResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 					if (DB_num_rows($PurchDataResult)>0){ //the purchasing data is set up
 						$PurchRow = DB_fetch_array($PurchDataResult);
 
 						/* Now to get the applicable discounts */
-						$sql = "SELECT discountpercent,
+						$SQL = "SELECT discountpercent,
 										discountamount
 								FROM supplierdiscounts
 								WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
@@ -649,7 +649,7 @@ if (isset($_POST['NewItem'])
 						$ItemDiscountAmount = 0;
 						$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
 						$DbgMsg = _('The SQL used to retrive the supplier discounts that failed was');
-						$DiscountResult = DB_query($sql,$ErrMsg,$DbgMsg);
+						$DiscountResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 						while ($DiscountRow = DB_fetch_array($DiscountResult)) {
 							$ItemDiscountPercent += $DiscountRow['discountpercent'];
 							$ItemDiscountAmount += $DiscountRow['discountamount'];
@@ -710,8 +710,8 @@ if (isset($_POST['NewItem'])
 															$SuppliersPartNo);
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
-					if ($debug==1){
-						echo '<br />' . $sql;
+					if ($Debug==1){
+						echo '<br />' . $SQL;
 					}
 					include('includes/footer.php');
 					exit;
@@ -755,7 +755,7 @@ if (isset($_POST['UploadFile'])) {
 					}
 				}
 				if ($AlreadyOnThisOrder!=1 AND filter_number_format($Quantity) > 0){
-					$sql = "SELECT description,
+					$SQL = "SELECT description,
 								longdescription,
 								stockid,
 								units,
@@ -770,11 +770,11 @@ if (isset($_POST['UploadFile'])) {
 
 					$ErrMsg = _('The item details for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 					$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-					$ItemResult = DB_query($sql,$ErrMsg,$DbgMsg);
+					$ItemResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 					if (DB_num_rows($ItemResult)==1){
 						$ItemRow = DB_fetch_array($ItemResult);
 
-						$sql = "SELECT price,
+						$SQL = "SELECT price,
 									conversionfactor,
 									supplierdescription,
 									suppliersuom,
@@ -795,12 +795,12 @@ if (isset($_POST['UploadFile'])) {
 
 						$ErrMsg = _('The purchasing data for') . ' ' . $ItemCode . ' ' . _('could not be retrieved because');
 						$DbgMsg = _('The SQL used to retrieve the purchasing data but failed was');
-						$PurchDataResult = DB_query($sql,$ErrMsg,$DbgMsg);
+						$PurchDataResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 						if (DB_num_rows($PurchDataResult)>0){ //the purchasing data is set up
 							$PurchRow = DB_fetch_array($PurchDataResult);
 
 							/* Now to get the applicable discounts */
-							$sql = "SELECT discountpercent,
+							$SQL = "SELECT discountpercent,
 											discountamount
 									FROM supplierdiscounts
 									WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
@@ -812,7 +812,7 @@ if (isset($_POST['UploadFile'])) {
 							$ItemDiscountAmount = 0;
 							$ErrMsg = _('Could not retrieve the supplier discounts applicable to the item');
 							$DbgMsg = _('The SQL used to retrive the supplier discounts that failed was');
-							$DiscountResult = DB_query($sql,$ErrMsg,$DbgMsg);
+							$DiscountResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 							while ($DiscountRow = DB_fetch_array($DiscountResult)) {
 								$ItemDiscountPercent += $DiscountRow['discountpercent'];
 								$ItemDiscountAmount += $DiscountRow['discountamount'];
@@ -874,8 +874,8 @@ if (isset($_POST['UploadFile'])) {
 						++$InsertNum;
 					} else { //no rows returned by the SQL to get the item
 						prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
-						if ($debug==1){
-							echo '<br />' . $sql;
+						if ($Debug==1){
+							echo '<br />' . $SQL;
 						}
 					}
 				} /* end of if not already on the order */
@@ -998,14 +998,14 @@ if (isset($_POST['NonStockOrder'])) {
 	echo '<tr>
 			<td>' . _('General Ledger Code') . '</td>
 			<td><select name="GLCode">';
-	$sql="SELECT accountcode,
+	$SQL="SELECT accountcode,
 				  accountname
 				FROM chartmaster
 				ORDER BY accountcode ASC";
 
-	$result=DB_query($sql);
-	while ($myrow=DB_fetch_array($result)) {
-		echo '<option value="'.$myrow['accountcode'].'">' . $myrow['accountcode'].' - '.$myrow['accountname'] . '</option>';
+	$Result=DB_query($SQL);
+	while ($MyRow=DB_fetch_array($Result)) {
+		echo '<option value="'.$MyRow['accountcode'].'">' . $MyRow['accountcode'].' - '.$MyRow['accountname'] . '</option>';
 	}
 	echo '</select></td></tr>';
 	echo '<tr>
@@ -1061,7 +1061,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 
 		if ($_POST['StockCat']=='All'){
 			if ($_POST['SupplierItemsOnly']=='on'){
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
@@ -1078,7 +1078,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid";
 			} else { // not just supplier purchdata items
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -1093,7 +1093,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 			}
 		} else { //for a specific stock category
 			if ($_POST['SupplierItemsOnly']=='on'){
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
@@ -1111,7 +1111,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
@@ -1133,7 +1133,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 
 		if ($_POST['StockCat']=='All'){
 			if ($_POST['SupplierItemsOnly']=='on'){
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
@@ -1150,7 +1150,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -1165,7 +1165,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 			}
 		} else { //for a specific stock category and LIKE stock code
 			if ($_POST['SupplierItemsOnly']=='on'){
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
@@ -1183,7 +1183,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -1202,7 +1202,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 	} else {
 		if ($_POST['StockCat']=='All'){
 			if (isset($_POST['SupplierItemsOnly'])){
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
@@ -1218,7 +1218,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -1232,7 +1232,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 			}
 		} else { // for a specific stock category
 			if (isset($_POST['SupplierItemsOnly']) AND $_POST['SupplierItemsOnly']=='on'){
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 								stockmaster.description,
 								stockmaster.units
 						FROM stockmaster INNER JOIN stockcategory
@@ -1249,7 +1249,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 						GROUP BY stockmaster.stockid
 						ORDER BY stockmaster.stockid ";
 			} else {
-				$sql = "SELECT stockmaster.stockid,
+				$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -1265,16 +1265,16 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 		}
 	}
 
-	$SQLCount = substr($sql,strpos($sql,   "FROM"));
+	$SQLCount = substr($SQL,strpos($SQL,   "FROM"));
 	$SQLCount = substr($SQLCount,0, strpos($SQLCount,   "ORDER"));
 	$SQLCount = 'SELECT COUNT(*) '.$SQLCount;
 	$ErrMsg = _('Failed to retrieve result count');
 	$DbgMsg = _('The SQL failed is ');
 	$SearchResult = DB_query($SQLCount,$ErrMsg,$DbgMsg);
-	$myrow=DB_fetch_array($SearchResult);
+	$MyRow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
 	unset($SearchResult);
-	$ListCount = $myrow[0];
+	$ListCount = $MyRow[0];
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
 	if ($ListPageMax < 0) {
 		$ListPageMax = 0;
@@ -1295,35 +1295,35 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 		$Offset = $ListPageMax;
 	}
 
-	$sql = $sql . " LIMIT " . $_SESSION['DisplayRecordsMax']." OFFSET " . strval($_SESSION['DisplayRecordsMax']*$Offset);
+	$SQL = $SQL . " LIMIT " . $_SESSION['DisplayRecordsMax']." OFFSET " . strval($_SESSION['DisplayRecordsMax']*$Offset);
 
 
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL statement that failed was');
-	$SearchResult = DB_query($sql,$ErrMsg,$DbgMsg);
+	$SearchResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($SearchResult)==0 AND $debug==1){
+	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
 
-		$myrow=DB_fetch_array($SearchResult);
-		$_GET['NewItem'] = $myrow['stockid'];
+		$MyRow=DB_fetch_array($SearchResult);
+		$_GET['NewItem'] = $MyRow['stockid'];
 		DB_data_seek($SearchResult,0);
 	}
 
 } //end of if search
 
 if (!isset($_GET['Edit'])) {
-	$sql="SELECT categoryid,
+	$SQL="SELECT categoryid,
 				categorydescription
 			FROM stockcategory
 			WHERE stocktype<>'D'
 			ORDER BY categorydescription";
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
-	$result1 = DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 	echo '<table class="selection">
 			<tr>
@@ -1334,11 +1334,11 @@ if (!isset($_GET['Edit'])) {
 
 			<option selected="selected" value="All">' . _('All') . '</option>';
 
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-			echo '<option selected="selected" value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if (isset($_POST['StockCat']) and $_POST['StockCat']==$MyRow1['categoryid']){
+			echo '<option selected="selected" value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -1416,52 +1416,52 @@ if (isset($SearchResult)) {
 
 	$j = 1;
 
-	while ($myrow=DB_fetch_array($SearchResult)) {
+	while ($MyRow=DB_fetch_array($SearchResult)) {
 
 		$SupportedImgExt = array('png','jpg','jpeg');
 
-		$imagefilearray = (glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-		$imagefile = reset($imagefilearray);
+		$ImageFilearray = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($ImageFilearray);
 
-		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
 			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-			'&amp;StockID='.urlencode($myrow['stockid']).
+			'&amp;StockID='.urlencode($MyRow['stockid']).
 			'&amp;text='.
 			'&amp;width=64'.
 			'&amp;height=64'.
 			'" alt="" />';
-		} else if (file_exists ($imagefile)) {
-			$ImageSource = '<img src="' . $imagefile . '" height="100" width="100" />';
+		} else if (file_exists ($ImageFile)) {
+			$ImageSource = '<img src="' . $ImageFile . '" height="100" width="100" />';
 		} else {
 			$ImageSource = _('No Image');
 		}
 
 		/*Get conversion factor and supplier units if any */
-		$sql =  "SELECT purchdata.conversionfactor,
+		$SQL =  "SELECT purchdata.conversionfactor,
 						purchdata.suppliersuom
 					FROM purchdata
 					WHERE purchdata.supplierno='" . $_SESSION['PO'.$identifier]->SupplierID . "'
-					AND purchdata.stockid='" . $myrow['stockid'] . "'";
+					AND purchdata.stockid='" . $MyRow['stockid'] . "'";
 		$ErrMsg = _('Could not retrieve the purchasing data for the item');
-		$PurchDataResult = DB_query($sql,$ErrMsg);
+		$PurchDataResult = DB_query($SQL,$ErrMsg);
 
 		if (DB_num_rows($PurchDataResult)>0) {
 			$PurchDataRow = DB_fetch_array($PurchDataResult);
 			$OrderUnits=$PurchDataRow['suppliersuom'];
 			$ConversionFactor = locale_number_format($PurchDataRow['conversionfactor'],'Variable');
 		} else {
-			$OrderUnits=$myrow['units'];
+			$OrderUnits=$MyRow['units'];
 			$ConversionFactor =1;
 		}
 		echo '<tr class="striped_row">
-			<td>' . $myrow['stockid']  . '</td>
-			<td>' . $myrow['description']  . '</td>
-			<td>' . $myrow['units']  . '</td>
+			<td>' . $MyRow['stockid']  . '</td>
+			<td>' . $MyRow['description']  . '</td>
+			<td>' . $MyRow['units']  . '</td>
 			<td class="number">' . $ConversionFactor  . '</td>
 			<td>' . $OrderUnits . '</td>
 			<td>' . $ImageSource . '</td>
 			<td><input class="number" type="text" size="6" value="0" name="NewQty' . $j . '" /></td>
-			<input type="hidden" name="StockID' . $j .'" . value="' . $myrow['stockid'] . '" />
+			<input type="hidden" name="StockID' . $j .'" . value="' . $MyRow['stockid'] . '" />
 			</tr>';
 		$j++;
 		$PartsDisplayed++;

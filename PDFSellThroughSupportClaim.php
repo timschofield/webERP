@@ -11,7 +11,7 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addInfo('Subject', _('Sell Through Support Claim'));
 	$FontSize=10;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
 	$Title = _('Sell Through Support Claim') . ' - ' . _('Problem Report');
 
@@ -71,7 +71,7 @@ if (isset($_POST['PrintPDF'])) {
 	  include('includes/header.php');
 		prnMsg(_('The sell through support items to claim could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -83,7 +83,7 @@ if (isset($_POST['PrintPDF'])) {
 		include('includes/header.php');
 		prnMsg(_('No sell through support items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -96,7 +96,7 @@ if (isset($_POST['PrintPDF'])) {
 	$FontSize=8;
 	while ($SellThroRow = DB_fetch_array($ClaimsResult)){
 
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 		if ($SellThroRow['suppname']!=$Supplier){
 			if ($SupplierClaimTotal > 0) {
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$Supplier . ' ' . _('Total Claim:') . ' (' . $CurrCode . ')');
@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF'])) {
 		if ($SellThroRow['suppname']!=$Supplier){
 			$pdf->SetFont('helvetica', $style='B', $size=11);
 			$FontSize = 10;
-			$YPos -=$line_height;
+			$YPos -=$LineHeight;
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,250,$FontSize,$SellThroRow['suppname']);
 			$Supplier = $SellThroRow['suppname'];
 			$CurrDecimalPlaces = $SellThroRow['currdecimalplaces'];
@@ -115,7 +115,7 @@ if (isset($_POST['PrintPDF'])) {
 			$SupplierClaimTotal=0;
 			$pdf->SetFont('helvetica', $style='N', $size=8);
 			$FontSize =8;
-			$YPos -=$line_height;
+			$YPos -=$LineHeight;
 		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,60,$FontSize,$SellThroRow['typename'] . '-' . $SellThroRow['transno']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+63,$YPos,160,$FontSize,$SellThroRow['stockid']. '-' . $SellThroRow['description']);
@@ -129,7 +129,7 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+395,$YPos,60,$FontSize,locale_number_format(-$SellThroRow['qty']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize,locale_number_format($ClaimAmount,$CurrDecimalPlaces), 'right');
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 			include('includes/PDFSellThroughSupportClaimPageHeader.inc');
 		}
 
@@ -138,7 +138,7 @@ if (isset($_POST['PrintPDF'])) {
 	if ($SupplierClaimTotal > 0) {
 		$YPos -=5;
 		$pdf->line($Left_Margin+480, $YPos,$Left_Margin+480+60, $YPos);
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,470,$FontSize,$Supplier . ' ' . _('Total Claim:'),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+480,$YPos,60,$FontSize, locale_number_format($SupplierClaimTotal,$CurrDecimalPlaces), 'right');
@@ -151,7 +151,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 	$FontSize =10;
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_SellThroughSupportClaim_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 

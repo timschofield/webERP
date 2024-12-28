@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1){
 
-		$sql = "UPDATE companies SET coyname='" . $_POST['CoyName'] . "',
+		$SQL = "UPDATE companies SET coyname='" . $_POST['CoyName'] . "',
 									companynumber = '" . $_POST['CompanyNumber'] . "',
 									gstno='" . $_POST['GSTNo'] . "',
 									regoffice1='" . $_POST['RegOffice1'] . "',
@@ -69,21 +69,21 @@ if (isset($_POST['submit'])) {
 								WHERE coycode=1";
 
 			$ErrMsg =  _('The company preferences could not be updated because');
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 			prnMsg( _('Company preferences updated'),'success');
 
 			/* Alter the exchange rates in the currencies table */
 
 			/* Get default currency rate */
-			$sql="SELECT rate from currencies WHERE currabrev='" . $_POST['CurrencyDefault'] . "'";
-			$result = DB_query($sql);
-			$myrow = DB_fetch_row($result);
-			$NewCurrencyRate=$myrow[0];
+			$SQL="SELECT rate from currencies WHERE currabrev='" . $_POST['CurrencyDefault'] . "'";
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_row($Result);
+			$NewCurrencyRate=$MyRow[0];
 
 			/* Set new rates */
-			$sql="UPDATE currencies SET rate=rate/" . $NewCurrencyRate;
+			$SQL="UPDATE currencies SET rate=rate/" . $NewCurrencyRate;
 			$ErrMsg =  _('Could not update the currency rates');
-			$result = DB_query($sql,$ErrMsg);
+			$Result = DB_query($SQL,$ErrMsg);
 
 			/* End of update currencies */
 
@@ -106,7 +106,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 if ($InputError != 1) {
-	$sql = "SELECT coyname,
+	$SQL = "SELECT coyname,
 					gstno,
 					companynumber,
 					regoffice1,
@@ -135,36 +135,36 @@ if ($InputError != 1) {
 				WHERE coycode=1";
 
 	$ErrMsg =  _('The company preferences could not be retrieved because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 
-	$myrow = DB_fetch_array($result);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['CoyName'] = $myrow['coyname'];
-	$_POST['GSTNo'] = $myrow['gstno'];
-	$_POST['CompanyNumber']  = $myrow['companynumber'];
-	$_POST['RegOffice1']  = $myrow['regoffice1'];
-	$_POST['RegOffice2']  = $myrow['regoffice2'];
-	$_POST['RegOffice3']  = $myrow['regoffice3'];
-	$_POST['RegOffice4']  = $myrow['regoffice4'];
-	$_POST['RegOffice5']  = $myrow['regoffice5'];
-	$_POST['RegOffice6']  = $myrow['regoffice6'];
-	$_POST['Telephone']  = $myrow['telephone'];
-	$_POST['Fax']  = $myrow['fax'];
-	$_POST['Email']  = $myrow['email'];
-	$_POST['CurrencyDefault']  = $myrow['currencydefault'];
-	$_POST['DebtorsAct']  = $myrow['debtorsact'];
-	$_POST['PytDiscountAct']  = $myrow['pytdiscountact'];
-	$_POST['CreditorsAct']  = $myrow['creditorsact'];
-	$_POST['PayrollAct']  = $myrow['payrollact'];
-	$_POST['GRNAct'] = $myrow['grnact'];
-	$_POST['ExchangeDiffAct']  = $myrow['exchangediffact'];
-	$_POST['PurchasesExchangeDiffAct']  = $myrow['purchasesexchangediffact'];
-	$_POST['RetainedEarnings'] = $myrow['retainedearnings'];
-	$_POST['GLLink_Debtors'] = $myrow['gllink_debtors'];
-	$_POST['GLLink_Creditors'] = $myrow['gllink_creditors'];
-	$_POST['GLLink_Stock'] = $myrow['gllink_stock'];
-	$_POST['FreightAct'] = $myrow['freightact'];
+	$_POST['CoyName'] = $MyRow['coyname'];
+	$_POST['GSTNo'] = $MyRow['gstno'];
+	$_POST['CompanyNumber']  = $MyRow['companynumber'];
+	$_POST['RegOffice1']  = $MyRow['regoffice1'];
+	$_POST['RegOffice2']  = $MyRow['regoffice2'];
+	$_POST['RegOffice3']  = $MyRow['regoffice3'];
+	$_POST['RegOffice4']  = $MyRow['regoffice4'];
+	$_POST['RegOffice5']  = $MyRow['regoffice5'];
+	$_POST['RegOffice6']  = $MyRow['regoffice6'];
+	$_POST['Telephone']  = $MyRow['telephone'];
+	$_POST['Fax']  = $MyRow['fax'];
+	$_POST['Email']  = $MyRow['email'];
+	$_POST['CurrencyDefault']  = $MyRow['currencydefault'];
+	$_POST['DebtorsAct']  = $MyRow['debtorsact'];
+	$_POST['PytDiscountAct']  = $MyRow['pytdiscountact'];
+	$_POST['CreditorsAct']  = $MyRow['creditorsact'];
+	$_POST['PayrollAct']  = $MyRow['payrollact'];
+	$_POST['GRNAct'] = $MyRow['grnact'];
+	$_POST['ExchangeDiffAct']  = $MyRow['exchangediffact'];
+	$_POST['PurchasesExchangeDiffAct']  = $MyRow['purchasesexchangediffact'];
+	$_POST['RetainedEarnings'] = $MyRow['retainedearnings'];
+	$_POST['GLLink_Debtors'] = $MyRow['gllink_debtors'];
+	$_POST['GLLink_Creditors'] = $MyRow['gllink_creditors'];
+	$_POST['GLLink_Stock'] = $MyRow['gllink_stock'];
+	$_POST['FreightAct'] = $MyRow['freightact'];
 }
 
 echo '<tr>
@@ -228,27 +228,27 @@ echo '<tr>
 	</tr>';
 
 
-$result=DB_query("SELECT currabrev, currency FROM currencies");
+$Result=DB_query("SELECT currabrev, currency FROM currencies");
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 
 echo '<tr>
 		<td><label for="CurrencyDefault">', _('Home Currency'), ':</label></td>
 		<td><select id="CurrencyDefault" name="CurrencyDefault" tabindex="13" >';
 
-while ($myrow = DB_fetch_array($result)) {
-	if ($_POST['CurrencyDefault']==$myrow['currabrev']){
-		echo '<option selected="selected" value="'. $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if ($_POST['CurrencyDefault']==$MyRow['currabrev']){
+		echo '<option selected="selected" value="'. $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
+		echo '<option value="' . $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';
 	}
 } //end while loop
 
-DB_free_result($result);
+DB_free_result($Result);
 
 echo '</select></td>
 	</tr>';
 
-$result=DB_query("SELECT accountcode,
+$Result=DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
@@ -259,15 +259,15 @@ echo '<tr>
 		<td>' . _('Debtors Control GL Account') . ':</td>
 		<td><select tabindex="14" title="' . _('Select the general ledger account to be used for posting the local currency value of all customer transactions to. This account will always represent the total amount owed by customers to the business. Only balance sheet accounts are available for this selection.') . '" name="DebtorsAct">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['DebtorsAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['DebtorsAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '</select></td>
 	</tr>';
@@ -276,15 +276,15 @@ echo '<tr>
 		<td>' . _('Creditors Control GL Account') . ':</td>
 		<td><select tabindex="15" title="' . _('Select the general ledger account to be used for posting the local currency value of all supplier transactions to. This account will always represent the total amount owed by the business to suppliers. Only balance sheet accounts are available for this selection.') . '" name="CreditorsAct">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['CreditorsAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['CreditorsAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="' . $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '</select></td>
 	</tr>';
@@ -293,15 +293,15 @@ echo '<tr>
 		<td>' . _('Payroll Net Pay Clearing GL Account') . ':</td>
 		<td><select tabindex="16" name="PayrollAct">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['PayrollAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['PayrollAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '</select></td>
 	</tr>';
@@ -310,15 +310,15 @@ echo '<tr>
 		<td>' . _('Goods Received Clearing GL Account') . ':</td>
 		<td><select title="' . _('Select the general ledger account to be used for posting the cost of goods received pending the entry of supplier invoices for the goods. This account will represent the value of goods received yet to be invoiced by suppliers. Only balance sheet accounts are available for this selection.') . '" tabindex="17" name="GRNAct">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['GRNAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['GRNAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 echo '</select></td>
 	</tr>';
 
@@ -326,15 +326,15 @@ echo '<tr>
 		<td>' . _('Retained Earning Clearing GL Account') . ':</td>
 		<td><select title="' . _('Select the general ledger account to be used for clearing profit and loss accounts to that represents the accumulated retained profits of the business. Only balance sheet accounts are available for this selection.') . '" tabindex="18" name="RetainedEarnings">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['RetainedEarnings']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['RetainedEarnings']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_free_result($result);
+DB_free_result($Result);
 
 echo '</select></td>
 	</tr>';
@@ -343,22 +343,22 @@ echo '<tr>
 		<td>' . _('Freight Re-charged GL Account') . ':</td>
 		<td><select tabindex="19" name="FreightAct">';
 
-$result=DB_query("SELECT accountcode,
+$Result=DB_query("SELECT accountcode,
 						accountname
 					FROM chartmaster INNER JOIN accountgroups
 					ON chartmaster.group_=accountgroups.groupname
 					WHERE accountgroups.pandl=1
 					ORDER BY chartmaster.accountcode");
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['FreightAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['FreightAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '</select></td>
 	</tr>';
@@ -367,15 +367,15 @@ echo '<tr>
 		<td>' . _('Sales Exchange Variances GL Account') . ':</td>
 		<td><select title="' . _('Select the general ledger account to be used for posting accounts receivable exchange rate differences to - where the exchange rate on sales invocies is different to the exchange rate of currency receipts from customers, the exchange rate is calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '" tabindex="20" name="ExchangeDiffAct">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['ExchangeDiffAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['ExchangeDiffAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '</select></td>
 	</tr>';
@@ -384,15 +384,15 @@ echo '<tr>
 		<td>' . _('Purchases Exchange Variances GL Account') . ':</td>
 		<td><select tabindex="21" title="' . _('Select the general ledger account to be used for posting the exchange differences on the accounts payable transactions to. Supplier invoices entered at one currency and paid in the supplier currency at a different exchange rate have the differences calculated automatically and posted to this general ledger account. Only profit and loss general ledger accounts are available for this selection.') . '" name="PurchasesExchangeDiffAct">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['PurchasesExchangeDiffAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['PurchasesExchangeDiffAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option  value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option  value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '</select></td>
 	</tr>';
@@ -401,15 +401,15 @@ echo '<tr>
 		<td>' . _('Payment Discount GL Account') . ':</td>
 		<td><select title="' . _('Select the general ledger account to be used for posting the value of payment discounts given to customers at the time of entering a receipt. Only profit and loss general ledger accounts are available for this selection.') . '" tabindex="22" name="PytDiscountAct">';
 
-while ($myrow = DB_fetch_row($result)) {
-	if ($_POST['PytDiscountAct']==$myrow[0]){
-		echo '<option selected="selected" value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+while ($MyRow = DB_fetch_row($Result)) {
+	if ($_POST['PytDiscountAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	} else {
-		echo '<option value="'. $myrow[0] . '">' . htmlspecialchars($myrow[1],ENT_QUOTES,'UTF-8') . ' ('.$myrow[0].')</option>';
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
 	}
 } //end while loop
 
-DB_data_seek($result,0);
+DB_data_seek($Result,0);
 
 echo '</select></td>
 	</tr>';

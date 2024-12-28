@@ -23,23 +23,23 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Page') .': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
-$YPos -= $line_height;
+$YPos -= $Line_height;
 
 $pdf->addText($XPos, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 $FontSize=10;
 
-$YPos -=$line_height;
+$YPos -=$Line_height;
 $XPos = $Left_Margin;
 
 
-$pdf->addText($XPos, $YPos,$FontSize, _('Date of Banking') .': ' . ConvertSQLDate($myrow['transdate']));
-$YPos -= $line_height;
+$pdf->addText($XPos, $YPos,$FontSize, _('Date of Banking') .': ' . ConvertSQLDate($MyRow['transdate']));
+$YPos -= $Line_height;
 $pdf->addText($XPos, $YPos,$FontSize, _('Banked into') . ': ' . $BankActName . ' - ' . _('Account Number') . ': ' . $BankActNumber);
-$YPos -= $line_height;
+$YPos -= $Line_height;
 $pdf->addText($XPos, $YPos,$FontSize, _('Reference') . ': ' . $BankingReference);
-$YPos -= $line_height;
+$YPos -= $Line_height;
 $pdf->addText($XPos, $YPos,$FontSize, _('Currency') . ': ' . $Currency);
-$YPos -= $line_height;
+$YPos -= $Line_height;
 
 /*draw a square grid for entering line items */
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
@@ -47,7 +47,7 @@ $pdf->line($Page_Width-$Right_Margin, $YPos,$Page_Width-$Right_Margin, $Bottom_M
 $pdf->line($Page_Width-$Right_Margin, $Bottom_Margin,$XPos, $Bottom_Margin);
 $pdf->line($XPos, $Bottom_Margin,$XPos, $YPos);
 
-$YPos -= $line_height;
+$YPos -= $Line_height;
 /*Set up headings */
 $FontSize=8;
 
@@ -55,10 +55,10 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Amount'), 'cen
 $LeftOvers = $pdf->addTextWrap($Left_Margin+62,$YPos,150,$FontSize,_('Customer'), 'centre');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+212,$YPos,100,$FontSize,_('Bank Details'), 'centre');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,100,$FontSize,_('Narrative'), 'centre');
-$YPos-=$line_height;
+$YPos-=$Line_height;
 
 /*draw a line */
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
 
-$YPos -= ($line_height);
+$YPos -= ($Line_height);
 ?>

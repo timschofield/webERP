@@ -115,29 +115,29 @@ function GetECBCurrencyRates() {
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-		xml_parse_into_struct($parser, $xml, $tags);
+		xml_parse_into_struct($parser, $xml, $Tags);
 		xml_parser_free($parser);
 
 		$elements = array(); // the currently filling [child] XmlElement array
 		$stack = array();
-		foreach ($tags as $tag) {
+		foreach ($Tags as $Tag) {
 			$index = count($elements);
-			if ($tag['type'] == 'complete' or $tag['type'] == 'open') {
+			if ($Tag['type'] == 'complete' or $Tag['type'] == 'open') {
 				$elements[$index] = new XmlElement;
-				$elements[$index]->name = $tag['tag'];
-				if (isset($tag['attributes'])) {
-					$elements[$index]->attributes = $tag['attributes'];
+				$elements[$index]->name = $Tag['tag'];
+				if (isset($Tag['attributes'])) {
+					$elements[$index]->attributes = $Tag['attributes'];
 				}
-				if (isset($tag['value'])) {
-					$elements[$index]->content = $tag['value'];
+				if (isset($Tag['value'])) {
+					$elements[$index]->content = $Tag['value'];
 				}
-				if ($tag['type'] == 'open') { // push
+				if ($Tag['type'] == 'open') { // push
 					$elements[$index]->children = array();
 					$stack[count($stack)] = & $elements;
 					$elements = & $elements[$index]->children;
 				}
 			}
-			if ($tag['type'] == 'close') { // pop
+			if ($Tag['type'] == 'close') { // pop
 				$elements = & $stack[count($stack) - 1];
 				unset($stack[count($stack) - 1]);
 			}
@@ -201,20 +201,20 @@ function AddCarriageReturns($str) {
 	return str_replace('\r\n', chr(10), $str);
 }
 //Replace all text/html line breaks with PHP_EOL(default) or given line break.
-function Convert_line_breaks($string, $line_break=PHP_EOL)
+function Convert_line_breaks($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(<br>|<br \/>|<br\/>)\s*/i",
                         "/(\r\n|\r|\n)/" );
-    $replacements = array(  $line_break,
-                            $line_break );
+    $replacements = array(  $Line_break,
+                            $Line_break );
     $string = preg_replace($patterns, $replacements, $string);
     return $string;
 }
 //Replace all text line breaks with PHP_EOL(default) or given line break.
-function Convert_CRLF($string, $line_break=PHP_EOL)
+function Convert_CRLF($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(\r\n|\r|\n)/" );
-    $replacements = array(  $line_break );
+    $replacements = array(  $Line_break );
     $string = preg_replace($patterns, $replacements, $string);
     return $string;
 }
@@ -279,7 +279,7 @@ function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$line_height=15;
+	$Line_height=15;
 	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
@@ -304,7 +304,7 @@ function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$line_height=15;
+	$Line_height=15;
 	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:

@@ -1482,10 +1482,10 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales){
 
 function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$totalcash = 0;
-	$totalcredit = 0;
-	$totalreturned = 0;
-	$total = 0;
+	$Totalcash = 0;
+	$Totalcredit = 0;
+	$Totalreturned = 0;
+	$Total = 0;
 
 	$SQL = "SELECT salesorders.salesperson, 
 				COUNT(salesorders.klpaidcash + salesorders.klpaidcreditcard) AS splitted, 

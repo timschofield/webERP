@@ -507,7 +507,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		$Narrative = str_replace('\r\n', '<br />', $LnItm->Narrative);
 		echo $RowStarter . '<td colspan="12">' . stripslashes($Narrative) . '</td></tr>';
 	}
-} //end foreach ($line)
+} //end foreach ($Line)
 /*Don't re-calculate freight if some of the order has already been delivered -
 depending on the business logic required this condition may not be required.
 It seems unfair to charge the customer twice for freight if the order
@@ -760,7 +760,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 		/*there should be the same number of items returned from this query as there are lines on the invoice - if not 	then someone has already invoiced or credited some lines */
 
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 			echo '<br />' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
 			echo '<br />' . _('Count of items in the session') . ' ' . count($_SESSION['Items' . $identifier]->LineItems);
@@ -1406,7 +1406,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 					$AccountCOGS = ACCOUNT_COGS_ADU; // when retail partner sells PTADU items COGS should go to PTADU
 					
-					$sql = "SELECT 	klretailpartners.partnercode,
+					$SQL = "SELECT 	klretailpartners.partnercode,
 									klretailpartners.percentconsignmentptadu,
 									klretailpartners.accountconsignmentsalesptadu,
 									klretailpartners.accountconsignmentcogspartner
@@ -1415,23 +1415,23 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 							 WHERE locations.partnercode = klretailpartners.partnercode
 								AND locations.loccode='" . $_SESSION['Items'.$identifier]->Location ."'";
 
-					$result = DB_query($sql);
-					if (DB_num_rows($result)==0) {
+					$Result = DB_query($SQL);
+					if (DB_num_rows($Result)==0) {
 						prnMsg(_('ERROR-INV-00001. The location used as warehouse delivery can not sell PTADU items.'),'error');
 						include('includes/footer.php');
 						exit;
 					}
-					$myrow = DB_fetch_array($result); //get the only row returned
+					$MyRow = DB_fetch_array($Result); //get the only row returned
 
-					if ($myrow['partnercode']=='NORETAIL'){
+					if ($MyRow['partnercode']=='NORETAIL'){
 						prnMsg(_('ERROR-INV-00002. The location used as warehouse delivery can not sell PTADU items.'),'error');
 						include('includes/footer.php');
 						exit;
 					}
-					$PartnerCode = $myrow['partnercode'];
-					$PercentConsignmentPTADU = $myrow['percentconsignmentptadu'];
-					$AccountConsignmentSalesPTADU = $myrow['accountconsignmentsalesptadu'];
-					$AccountConsignmentCOGSPartner = $myrow['accountconsignmentcogspartner'];
+					$PartnerCode = $MyRow['partnercode'];
+					$PercentConsignmentPTADU = $MyRow['percentconsignmentptadu'];
+					$AccountConsignmentSalesPTADU = $MyRow['accountconsignmentsalesptadu'];
+					$AccountConsignmentCOGSPartner = $MyRow['accountconsignmentcogspartner'];
 					$RetailPrice = round($OrderLine->Price * (1 - $OrderLine->DiscountPercent) / $_SESSION['CurrencyRate'],0);
 					$ConsignmentPrice = round($PercentConsignmentPTADU / 100 * $RetailPrice,0);
 					$Tag = "0";
@@ -1721,8 +1721,8 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 								WHERE stockid = '" . $OrderLine->StockID . "'",
 								 _('Cannot retrieve the categoryid'));
 
-			$myrow = DB_fetch_row($Result);
-			$CategoryID = $myrow[0];
+			$MyRow = DB_fetch_row($Result);
+			$CategoryID = $MyRow[0];
 			if (ItemInList($CategoryID, LIST_STOCK_CATEGORIES_SHOP_PACKAGING)){
 				/* Insert movement at packaging used . Strictly not needed as it can be calculated from Stockmoves type 17 but there can be small differences */
 				$SQL = "INSERT INTO packagingused (
@@ -1933,16 +1933,16 @@ function MarkWebErpOrderInOpenCartAs($OrderNo, $Status, $AWB){
 			INNER JOIN debtorsmaster ON salesorders.debtorno = debtorsmaster.debtorno
 			INNER JOIN shippers ON salesorders.shipvia = shippers.shipper_id
 			WHERE salesorders.orderno = '" . $OrderNo ."'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result)!=0) {
-		$myrow = DB_fetch_array($result);
-		if ($myrow['typeid'] == CUSTOMER_TYPE_WEBSITE){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)!=0) {
+		$MyRow = DB_fetch_array($Result);
+		if ($MyRow['typeid'] == CUSTOMER_TYPE_WEBSITE){
 			if ($Status == OPENCART_ORDER_STATUS_SHIPPED){
-				$ReasonChangeStatusId = "webERP --> Order shipped via " . $myrow['shippername'] . " AWB# = " . $AWB;  
-				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 1, $myrow['shipvia'], $AWB, $ReasonChangeStatusId);
+				$ReasonChangeStatusId = "webERP --> Order shipped via " . $MyRow['shippername'] . " AWB# = " . $AWB;  
+				UpdateOpenCartOrderStatus($MyRow['customerref'], $Status, 1, $MyRow['shipvia'], $AWB, $ReasonChangeStatusId);
 			}else{
 				$ReasonChangeStatusId = "webERP --> Change of status";  
-				UpdateOpenCartOrderStatus($myrow['customerref'], $Status, 1, "", "", $ReasonChangeStatusId);
+				UpdateOpenCartOrderStatus($MyRow['customerref'], $Status, 1, "", "", $ReasonChangeStatusId);
 			}
 		}
 	}

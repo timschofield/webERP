@@ -15,7 +15,7 @@ include ('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
 include('includes/wcpESCPOSCommands.php');
 
-$today = date('Y-m-d');
+$Today = date('Y-m-d');
 
 $TextToPrint = $InitPrinter . $CenteredJustified;
 // name of shop
@@ -42,7 +42,7 @@ $SQL = "SELECT salesorders.orderno,
 				salesorders.klreturnedgoods,
 				salesorders.klvouchers
 		FROM salesorders
-		WHERE salesorders.orddate >= '". $today ."'
+		WHERE salesorders.orddate >= '". $Today ."'
 			AND salesorders.salesperson = '" . $_SESSION['SalesmanLogin'] . "'
 		ORDER BY salesorders.orderno ASC";
 		
@@ -174,8 +174,8 @@ $TextToPrint .= $CutPaper;
 
 //################## PRINTING STUFF ##################### 
 $identifier=GetPOSIdentifier();
-$filename = GetFilenameFromPOSIdentifier($identifier);   
-file_put_contents($filename, $TextToPrint);
+$FileName = GetFilenameFromPOSIdentifier($identifier);   
+file_put_contents($FileName, $TextToPrint);
 $textActionToPrint = 'Print the Daily SPG End Of Shift';
 include ('includes/SilentPrinting.php');
 //################## PRINTING STUFF ##################### 

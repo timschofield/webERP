@@ -191,18 +191,18 @@ function KL_DailyEmailsToStaff($EmailText){
 	return $EmailText;
 }
 
-function KL_DailyOptimizationDatabase($tablesPerDay, $ShowMessages, $EmailText = ''){
+function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText = ''){
 //	$NumberDay = substr(Date('Y-m-d'),-2); // Get the date number
 	$ErrMsg ='Could not OPTIMIZE tables because';
 
 	$SQL = "SHOW TABLES";
  	$Result = DB_query($SQL,$ErrMsg);
-	$totalTables = DB_num_rows($Result);
- 	if ($totalTables != 0){
+	$TotalTables = DB_num_rows($Result);
+ 	if ($TotalTables != 0){
 		$Text = 'DB optimization' . "\n";
-		$Text .= '# Tables to optimize: ' . $tablesPerDay . "\n";
-		$currentDay = date('z'); // Day of the year (0-365)
-		$startIndex = ($currentDay * $tablesPerDay) % $totalTables;
+		$Text .= '# Tables to optimize: ' . $TablesPerDay . "\n";
+		$CurrentDay = date('z'); // Day of the year (0-365)
+		$startIndex = ($CurrentDay * $TablesPerDay) % $TotalTables;
 
 		// Move the result pointer to the starting index
 		$skip = 0;
@@ -211,17 +211,17 @@ function KL_DailyOptimizationDatabase($tablesPerDay, $ShowMessages, $EmailText =
 			if ($skip < $startIndex){
 				$skip++;
 			}else{
-				$tableName = $MyRow[0];
-				$optimizeSql = "OPTIMIZE TABLE " . $tableName . "";
+				$TableName = $MyRow[0];
+				$optimizeSql = "OPTIMIZE TABLE " . $TableName . "";
 				$optimizeResult = DB_query($optimizeSql,$ErrMsg);
 				if (!$optimizeResult) {
-					$Text .= 'ERROR Optimizing ' . $tableName . "\n";
+					$Text .= 'ERROR Optimizing ' . $TableName . "\n";
 				} else {
-					$Text .= 'Optimized ' . $tableName . "\n";
+					$Text .= 'Optimized ' . $TableName . "\n";
 				}
 
 				$count++;
-				if ($count >= $tablesPerDay) {
+				if ($count >= $TablesPerDay) {
 					break; // Stop after optimizing the desired number of tables
 				}
 			}
@@ -279,17 +279,17 @@ function CleanDiscountForObsoleteItems($ShowMessages, $EmailText){
 	return $EmailText;
 }
 
-function SetObsoleteForCategoryWithoutStock($category, $ShowMessages, $EmailText){
+function SetObsoleteForCategoryWithoutStock($Category, $ShowMessages, $EmailText){
 	$SQL = "UPDATE stockmaster
 			SET discontinued = 1
-			WHERE categoryid = '" . $category . "'
+			WHERE categoryid = '" . $Category . "'
 				AND discontinued = 0
 				AND (SELECT SUM(quantity)
 					FROM locstock
 					WHERE stockmaster.stockid = locstock.stockid) = 0";
 	$ErrMsg =_('Could not update items without stock because');
 	$Result = DB_query($SQL,$ErrMsg);
-	$Text = "Items " . $category . " with QOH = 0 flagged as obsolete.";
+	$Text = "Items " . $Category . " with QOH = 0 flagged as obsolete.";
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }

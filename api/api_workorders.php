@@ -43,10 +43,10 @@
 	}
 
 	function VerifyRequiredByDate($RequiredByDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
 		} elseif (mb_strstr('.',$PeriodEnd)) {
@@ -76,10 +76,10 @@
 	}
 
 	function VerifyStartDate($StartDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
 		} elseif (mb_strstr('.',$PeriodEnd)) {
@@ -144,27 +144,27 @@
 	}
 
 	function VerifyBatch($batch, $stockid, $location, $i, $Errors) {
-		$sql="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_row($result);
-		if ($myrow[0]!=1) {
+		$SQL="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_row($Result);
+		if ($MyRow[0]!=1) {
 			$Errors[$i] = ItemNotControlled;
 			return $Errors;
-		} else if ($myrow[1]==1) {
+		} else if ($MyRow[1]==1) {
 			$Errors[$i] = ItemSerialised;
 			return $Errors;
 		}
-		$sql="SELECT quantity FROM stockserialitems
+		$SQL="SELECT quantity FROM stockserialitems
               WHERE stockid='".$stockid. "'
               AND loccode='".$location."'
               AND serialno='".$batch."'";
-		$result=DB_query($sql);
-		if (DB_num_rows($result)==0) {
+		$Result=DB_query($SQL);
+		if (DB_num_rows($Result)==0) {
 			$Errors[$i] = BatchNumberDoesntExist;
 			return $Errors;
 		}
-		$myrow=DB_fetch_row($result);
-		if ($myrow<=0) {
+		$MyRow=DB_fetch_row($Result);
+		if ($MyRow<=0) {
 			$Errors[$i]=BatchIsEmpty;
 			return $Errors;
 		}
@@ -392,8 +392,8 @@
 			$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact');
 			$costsql="SELECT costissued FROM workorders WHERE wo='".$WONumber . "'";
 			$costresult=DB_query($costsql);
-			$myrow=DB_fetch_row($costresult);
-			$cost=$myrow[0];
+			$MyRow=DB_fetch_row($costresult);
+			$cost=$MyRow[0];
 			$TransactionNo=GetNextTransNo(26);
 			$stockmovesql="INSERT INTO stockmoves (stockid,
                                                    type,
@@ -471,14 +471,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql="SELECT wo
+		$SQL="SELECT wo
 			  FROM woitems
 			  WHERE " . $Field ." " . LIKE  . " '%".$Criteria."%'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		$i=0;
 		$WOList = array();
-		while ($myrow=DB_fetch_array($result)) {
-			$WOList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$WOList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $WOList;

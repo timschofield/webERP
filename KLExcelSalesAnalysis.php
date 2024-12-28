@@ -30,7 +30,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 	//first off validate inputs sensible
 
 	if ($InputError == 0){
-		$today = date('Y-m-d');
+		$Today = date('Y-m-d');
 		$FromDate = FormatDateForSQL($_POST['FromDate']);
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		
@@ -264,8 +264,8 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			$objPHPExcel->getActiveSheet()->setAutoFilter('A5:AL' . $i);
 			
 			// Auto Size columns
-			foreach(range('A','AL') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			foreach(range('A','AL') as $ColumnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 			

@@ -193,8 +193,8 @@ if(isset($_POST['Submit']) AND $InputError==False){
 
 	//################## PRINTING STUFF ##################### 
 	$identifier=GetPOSIdentifier();
-	$filename = GetFilenameFromPOSIdentifier($identifier);   
-	file_put_contents($filename, $TextToPrint);
+	$FileName = GetFilenameFromPOSIdentifier($identifier);   
+	file_put_contents($FileName, $TextToPrint);
 	$textActionToPrint = 'Print Return Transfer number: '. $_POST['Trf_ID'];
 	include ('includes/SilentPrinting.php');
 	//################## PRINTING STUFF ##################### 

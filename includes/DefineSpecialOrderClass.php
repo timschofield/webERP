@@ -22,7 +22,7 @@ Class SpecialOrder {
 	var $CustRef;
 	var $BranchName;
 	var $LinesOnOrder;
-	var $total;
+	var $Total;
 	var $PurchOrderNo;
 	var $Status;
 	var $AllowPrintPO;

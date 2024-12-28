@@ -34,59 +34,59 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				<td><input type="text" name="RequestNo" maxlength="8" size="9" /></td>
 				<td>' . _('From Stock Location') . ':</td>
 				<td><select name="StockLocation">';
-		$sql = "SELECT locations.loccode, locationname, canview FROM locations
+		$SQL = "SELECT locations.loccode, locationname, canview FROM locations
 			INNER JOIN locationusers 
 				ON locationusers.loccode=locations.loccode 
 				AND locationusers.userid='" . $_SESSION['UserID'] . "'
 				AND locationusers.canview=1 
 				AND locations.internalrequest=1";
-		$LocResult = DB_query($sql);
+		$LocResult = DB_query($SQL);
 		$LocationCounter = DB_num_rows($LocResult);
-		$locallctr = 0;//location all counter
+		$LocalAllCtr = 0;//location all counter
 		$Locations = array();
 		if ($LocationCounter>0) {
-			while ($myrow = DB_fetch_array($LocResult)) {
-				$Locations[] = $myrow['loccode'];
+			while ($MyRow = DB_fetch_array($LocResult)) {
+				$Locations[] = $MyRow['loccode'];
 				if (isset($_POST['StockLocation'])){
-					if ($_POST['StockLocation'] == 'All' AND $locallctr == 0) {
-						$locallctr = 1;
+					if ($_POST['StockLocation'] == 'All' AND $LocalAllCtr == 0) {
+						$LocalAllCtr = 1;
 						echo '<option value="All" selected="selected">' . _('All') . '</option>';
-					} elseif ($myrow['loccode'] == $_POST['StockLocation']) {
-						echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					} elseif ($MyRow['loccode'] == $_POST['StockLocation']) {
+						echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 					}
 				} else {
-					if ($LocationCounter>1 AND $locallctr == 0) {//we show All only when it is necessary	
+					if ($LocationCounter>1 AND $LocalAllCtr == 0) {//we show All only when it is necessary	
 						echo '<option value="All">' . _('All') . '</option>';
-						$locallctr = 1;
+						$LocalAllCtr = 1;
 					}
-					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				}
 			}
 			echo '<select></td>';
 		} else {//there are possiblity that the user is the authorization person,lets figure things out
 
-			$sql = "SELECT stockrequest.loccode,locations.locationname FROM stockrequest INNER JOIN locations ON stockrequest.loccode=locations.loccode
+			$SQL = "SELECT stockrequest.loccode,locations.locationname FROM stockrequest INNER JOIN locations ON stockrequest.loccode=locations.loccode
 				INNER JOIN department ON stockrequest.departmentid=department.departmentid WHERE department.authoriser='" . $_SESSION['UserID'] . "'";
-			$authresult = DB_query($sql);
-			$LocationCounter = DB_num_rows($authresult);
+			$AuthResult = DB_query($SQL);
+			$LocationCounter = DB_num_rows($AuthResult);
 			if ($LocationCounter>0) {
 				$Authorizer = true;
 			
-				while ($myrow = DB_fetch_array($authresult)) {
-					$Locations[] = $myrow['loccode'];
+				while ($MyRow = DB_fetch_array($AuthResult)) {
+					$Locations[] = $MyRow['loccode'];
 					if (isset($_POST['StockLocation'])) {
-						if ($_POST['StockLocation'] == 'All' AND $locallctr==0) {
+						if ($_POST['StockLocation'] == 'All' AND $LocalAllCtr==0) {
 							echo '<option value="All" selected="selected">' . _('All') . '</option>';
-							$locallctr = 1;
-						} elseif ($myrow['loccode'] == $_POST['StockLocation']) {
-							echo '<option value="' . $myrow['loccode'] . '" selected="selected">' . $myrow['locationname'] . '</option>';
+							$LocalAllCtr = 1;
+						} elseif ($MyRow['loccode'] == $_POST['StockLocation']) {
+							echo '<option value="' . $MyRow['loccode'] . '" selected="selected">' . $MyRow['locationname'] . '</option>';
 						}
 					} else {
-						if ($LocationCounter>1 AND $locallctr == 0) {
-							$locallctr = 1;
+						if ($LocationCounter>1 AND $LocalAllCtr == 0) {
+							$LocalAllCtr = 1;
 							echo '<option value="All">' . _('All') . '</option>';
 						}
-						echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] .'</option>';
+						echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] .'</option>';
 					}
 				}
 				echo '</select></td>';
@@ -105,11 +105,11 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		echo '<td>' . _('Authorisation status') . '</td>
 			<td><select name="Authorized">';
 		$Auth = array('All'=>_('All'),0=>_('Unauthorized'),1=>_('Authorized'));
-		foreach ($Auth as $key=>$value) {
-			if ($_POST['Authorized'] == $value) {
-				echo '<option selected="selected" value="' . $key . '">' . $value . '</option>';
+		foreach ($Auth as $key=>$Value) {
+			if ($_POST['Authorized'] == $Value) {
+				echo '<option selected="selected" value="' . $key . '">' . $Value . '</option>';
 			} else {
-				echo '<option value="' . $key . '">' . $value . '</option>';
+				echo '<option value="' . $key . '">' . $Value . '</option>';
 			}
 		}
 		echo '</select></td></tr>';
@@ -122,27 +122,27 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 	echo '<td>' . _('Department') . '</td>
 		<td><select name="Department">';
 	//now lets retrieve those deparment available for this user;
-	$sql = "SELECT departments.departmentid, 
+	$SQL = "SELECT departments.departmentid, 
 			departments.description
 			FROM departments LEFT JOIN stockrequest 
 				ON departments.departmentid = stockrequest.departmentid
 				AND (departments.authoriser = '" . $_SESSION['UserID'] . "' OR stockrequest.initiator = '" . $_SESSION['UserID'] . "') 
 			WHERE stockrequest.dispatchid IS NOT NULL 
 			GROUP BY stockrequest.departmentid";//if a full request is need, the users must have all of those departments' authority 
-	$depresult = DB_query($sql);
-	if (DB_num_rows($depresult)>0) {
+	$DepResult = DB_query($SQL);
+	if (DB_num_rows($DepResult)>0) {
 		$Departments = array(); 
 		if (isset($_POST['Department']) AND $_POST['Department'] == 'All') {
 			echo '<option selected="selected" value="All">' . _('All') . '</option>';
 		} else {
 			echo '<option value="All">' . _('All') . '</option>';
 		}
-		while ($myrow = DB_fetch_array($depresult)) {
-			$Departments[] = $myrow['departmentid'];
-			if (isset($_POST['Department']) AND ($_POST['Department'] == $myrow['departmentid'])) {
-				echo '<option selected="selected" value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+		while ($MyRow = DB_fetch_array($DepResult)) {
+			$Departments[] = $MyRow['departmentid'];
+			if (isset($_POST['Department']) AND ($_POST['Department'] == $MyRow['departmentid'])) {
+				echo '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['departmentid'] . '">' . $myrow['description'] . '</option>';
+				echo '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
 			}
 		}
 		echo '</select></td>';
@@ -185,9 +185,9 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 			WHERE stockcategory.categoryid = internalstockcatrole.categoryid
 				" . $WhereAuthorizer . "
 			ORDER BY stockcategory.categorydescription";
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 	//first lets check that the category id is not zero
-	$Cats = DB_num_rows($result1);
+	$Cats = DB_num_rows($Result1);
 
 
 	if ($Cats >0) {
@@ -208,11 +208,11 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 		} else {
 			echo '<option value="All">' . _('All Authorized') . '</option>';
 		}
-		while ($myrow1 = DB_fetch_array($result1)) {
-			if ($myrow1['categoryid'] == $_POST['StockCat']) {
-				echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		while ($MyRow1 = DB_fetch_array($Result1)) {
+			if ($MyRow1['categoryid'] == $_POST['StockCat']) {
+				echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+				echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 			}
 		}
 		echo '</selected></td>
@@ -270,7 +270,7 @@ if(isset($StockItemsResult)){
 		</thead>
 		<tbody>';
 
-	while ($myrow=DB_fetch_array($StockItemsResult)) {
+	while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
 		printf('<tr class="striped_row">
 				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
@@ -278,10 +278,10 @@ if(isset($StockItemsResult)){
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>',
-				$myrow['stockid'],
-				$myrow['description'],
-				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
-				$myrow['units']);
+				$MyRow['stockid'],
+				$MyRow['description'],
+				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
+				$MyRow['units']);
 //end of page full new headings if
 	}
 //end of while loop
@@ -383,8 +383,8 @@ if(isset($StockItemsResult)){
 		if (!in_array(19,$_SESSION['AllowedPageSecurityTokens'])) {
 			$SQL .= " AND (authoriser='" . $_SESSION['UserID'] . "' OR initiator='" . $_SESSION['UserID'] . "')";
 		}
-	$result = DB_query($SQL);
-	if (DB_num_rows($result)>0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)>0) {
 		$Html = '';
 		if (isset($_POST['ShowDetails']) OR isset($StockID)) {
 			$Html .= '<table>
@@ -416,55 +416,55 @@ if(isset($StockItemsResult)){
 		}
 		$i = 0;
 		//There are items without details AND with it
-		while ($myrow = DB_fetch_array($result)) {
-			if ($myrow['authorised'] == 0) {
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['authorised'] == 0) {
 				$Auth = _('No');
 			} else {
 				$Auth = _('Yes');
 			}
-			if ($myrow['despatchdate'] == '0000-00-00') {
+			if ($MyRow['despatchdate'] == '0000-00-00') {
 				$Disp = _('Not yet');
 			} else {
-				$Disp = ConvertSQLDate($myrow['despatchdate']);
+				$Disp = ConvertSQLDate($MyRow['despatchdate']);
 			}
 			if (isset($ID)) {
-				if ($myrow['completed'] == 0) { 
+				if ($MyRow['completed'] == 0) { 
 					$Comp = _('No');
 				} else {
 					$Comp = _('Yes');
 				}
 			}
-			if (isset($ID) AND ($ID != $myrow['dispatchid'])) {
-				$ID = $myrow['dispatchid'];
+			if (isset($ID) AND ($ID != $MyRow['dispatchid'])) {
+				$ID = $MyRow['dispatchid'];
 				$Html .= '<tr class="striped_row">
-						<td>' . $myrow['dispatchid'] . '</td>
-						<td>' . $myrow['locationname'] . '</td>
-						<td>' . $myrow['description'] . '</td>
+						<td>' . $MyRow['dispatchid'] . '</td>
+						<td>' . $MyRow['locationname'] . '</td>
+						<td>' . $MyRow['description'] . '</td>
 						<td>' . $Auth . '</td>
 						<td>' . $Disp . '</td>
-						<td>' . $myrow['stockid'] . '</td>
-						<td>' . $myrow['stkdescription'] . '</td>
-						<td>' . locale_number_format($myrow['quantity'],$myrow['decimalplaces']) . '</td>
-						<td>' . $myrow['uom'] . '</td>
+						<td>' . $MyRow['stockid'] . '</td>
+						<td>' . $MyRow['stkdescription'] . '</td>
+						<td>' . locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']) . '</td>
+						<td>' . $MyRow['uom'] . '</td>
 						<td>' . $Comp . '</td>';
 
-			} elseif (isset($ID) AND ($ID == $myrow['dispatchid'])) {
+			} elseif (isset($ID) AND ($ID == $MyRow['dispatchid'])) {
 				$Html .= '<tr class="striped_row">
 						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
-						<td>' . $myrow['stockid'] . '</td>
-						<td>' . $myrow['stkdescription'] . '</td>
-						<td>' . locale_number_format($myrow['quantity'],$myrow['decimalplaces']) . '</td>
-						<td>' . $myrow['uom'] . '</td>
+						<td>' . $MyRow['stockid'] . '</td>
+						<td>' . $MyRow['stkdescription'] . '</td>
+						<td>' . locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']) . '</td>
+						<td>' . $MyRow['uom'] . '</td>
 						<td>' . $Comp . '</td>';
 			} elseif(!isset($ID)) {
 					$Html .= '<tr class="striped_row">
-						<td>' . $myrow['dispatchid'] . '</td>
-						<td>' . $myrow['locationname'] . '</td>
-						<td>' . $myrow['description'] . '</td>
+						<td>' . $MyRow['dispatchid'] . '</td>
+						<td>' . $MyRow['locationname'] . '</td>
+						<td>' . $MyRow['description'] . '</td>
 						<td>' . $Auth . '</td>
 						<td>' . $Disp . '</td>';
 			}

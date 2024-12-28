@@ -27,8 +27,8 @@ if (isset($_POST['ProcessStockChange'])){
 	$_POST['NewStockID'] = mb_strtoupper($_POST['NewStockID']);
 
 /*First check the stock code exists */
-	$result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'");
-	if (DB_num_rows($result)==0){
+	$Result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'");
+	if (DB_num_rows($Result)==0){
 		prnMsg(_('The stock code') . ': ' . $_POST['OldStockID'] . ' ' . _('does not currently exist as a stock code in the system'),'error');
 		$InputError =1;
 	}
@@ -45,8 +45,8 @@ if (isset($_POST['ProcessStockChange'])){
 
 
 /*Now check that the new code doesn't already exist */
-	$result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'");
-	if (DB_num_rows($result)!=0){
+	$Result=DB_query("SELECT stockid FROM stockmaster WHERE stockid='" . $_POST['NewStockID'] . "'");
+	if (DB_num_rows($Result)!=0){
 		echo '<br /><br />';
 		prnMsg(_('The replacement stock code') . ': ' . $_POST['NewStockID'] . ' ' . _('already exists as a stock code in the system') . ' - ' . _('a unique stock code must be entered for the new code'),'error');
 		$InputError =1;
@@ -56,10 +56,10 @@ if (isset($_POST['ProcessStockChange'])){
 	if ($InputError ==0){ // no input errors
 
 		DB_IgnoreForeignKeys();
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 /* RICARD KL: Added lastcategoryupdate and kl*** fields, and dimension fields */	
 		echo '<br />' . _('Adding the new stock master record');
-		$sql = "INSERT INTO stockmaster (stockid,
+		$SQL = "INSERT INTO stockmaster (stockid,
 										categoryid,
 										description,
 										longdescription,
@@ -142,7 +142,7 @@ if (isset($_POST['ProcessStockChange'])){
 
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the new stock master record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
 		ChangeFieldInTable("locstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -151,20 +151,20 @@ if (isset($_POST['ProcessStockChange'])){
 		ChangeFieldInTable("mrpdemands", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
 
 		//check if MRP tables exist before assuming
-		$sql = "SELECT * FROM mrpparameters";
-		$result = DB_query($sql, '', '', false, false);
+		$SQL = "SELECT * FROM mrpparameters";
+		$Result = DB_query($SQL, '', '', false, false);
 		if (DB_error_no() == 0) {
-			$result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",'','',false,false);
+			$Result = DB_query("SELECT COUNT(*) FROM mrpplannedorders",'','',false,false);
 			if (DB_error_no()==0) {
 				ChangeFieldInTable("mrpplannedorders", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
 
-			$result = DB_query("SELECT * FROM mrprequirements" ,'','',false,false);
+			$Result = DB_query("SELECT * FROM mrprequirements" ,'','',false,false);
 			if (DB_error_no()==0){
 				ChangeFieldInTable("mrprequirements", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
 
-			$result = DB_query("SELECT * FROM mrpsupplies" ,'','',false,false);
+			$Result = DB_query("SELECT * FROM mrpsupplies" ,'','',false,false);
 			if (DB_error_no()==0){
 				ChangeFieldInTable("mrpsupplies", "part", $_POST['OldStockID'], $_POST['NewStockID']);
 			}
@@ -193,11 +193,11 @@ if (isset($_POST['ProcessStockChange'])){
 
 		echo '<br />' . _('Changing any image files');
 		$SupportedImgExt = array('png','jpg','jpeg');
-		foreach ($SupportedImgExt as $ext) {
-			$file = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $ext;
-			if (file_exists ($file) ) {
-				if (rename($file,
-					$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'] . '.' . $ext)) {
+		foreach ($SupportedImgExt as $Ext) {
+			$File = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $Ext;
+			if (file_exists ($File) ) {
+				if (rename($File,
+					$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'] . '.' . $Ext)) {
 					echo ' ... ' . _('completed');
 				} else {
 					echo ' ... ' . _('failed');
@@ -239,12 +239,12 @@ if (isset($_POST['ProcessStockChange'])){
 		/* END OF KL TABLES */
 		DB_ReinstateForeignKeys();
 
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 
 		echo '<br />' . _('Deleting the old stock master record');
-		$sql = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
+		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $_POST['OldStockID'] . "'";
 		$ErrMsg = _('The SQL to delete the old stock master record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockID'];
 
@@ -283,10 +283,10 @@ function ChangeFieldInOpenCartTable($TableName, $FieldName, $OldValue, $NewValue
 	/* Used in Z_ scripts to change one field across the table.
 	*/
 	echo '<br />' . _('Changing OPENCART') . ' ' . $TableName . ' ' . _('records');
-	$sql = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
+	$SQL = "UPDATE " . $TableName . " SET " . $FieldName . " ='" . $NewValue . "' WHERE " . $FieldName . "='" . $OldValue . "'";
 	$DbgMsg = _('The SQL statement that failed was');
 	$ErrMsg = _('The SQL to update' . ' ' . $TableName . ' ' . _('records failed'));
-	$result = DB_query_oc($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query_oc($SQL,$ErrMsg,$DbgMsg,true);
 	echo ' ... ' . _('completed');
 }
 // KL RICARD END

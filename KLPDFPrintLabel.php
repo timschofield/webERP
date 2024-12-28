@@ -36,7 +36,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
 		else {
 			//
 			$label = $AllLabels->getLabel($_POST['LabelID']);
-			list($dimensions, $lines) = resizeLabel($label);
+			list($dimensions, $Lines) = resizeLabel($label);
 			$formatPage = getPageDimensions($dimensions);
 			list($Page_Width,
 				   $Page_Height,
@@ -52,7 +52,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['PDFTest']) ) {
 
 			$ok = printLabels(
 					$dimensions,
-					$lines,
+					$Lines,
 					intval($_POST['QtyByItem']),
 					$_POST['Currency'],
 					$_POST['SalesType'],
@@ -189,46 +189,46 @@ function showLabelOptions() {
 	</form>';
 }
 
-function selLabels($type) {
+function selLabels($Type) {
 	global $AllLabels;
 	$list=array();
 
 	foreach ($AllLabels->label as $label)
 		$list[(string)$label->id] = (string)$label->description;
 
-	return selectOptions($list, $type);
+	return selectOptions($list, $Type);
 }
 
-function selSalesType($type) {
-	return selectTable('SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type', $type);
+function selSalesType($Type) {
+	return selectTable('SELECT typeabbrev, sales_type FROM salestypes ORDER BY sales_type', $Type);
 }
 
-function selCurrency($curr) {
-	return selectTable('SELECT currabrev, currency FROM currencies', $curr);
+function selCurrency($Curr) {
+	return selectTable('SELECT currabrev, currency FROM currencies', $Curr);
 }
 
 function selCategory(&$categ) {
 	return selectTable('SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription', $categ);
 }
 
-function selectTable($SQL, &$currentKey) {
+function selectTable($SQL, &$CurrentKey) {
 	global $db;
 	$Result = DB_query($SQL);
 	while ($MyRow=DB_fetch_row($Result)) {
-		if (empty($currentKey))
-			$currentKey=$MyRow[0];
+		if (empty($CurrentKey))
+			$CurrentKey=$MyRow[0];
 		$list[$MyRow[0]] = $MyRow[1];
 	}
 	DB_free_result($Result);
-	return selectOptions($list, $currentKey);
+	return selectOptions($list, $CurrentKey);
 }
 
-function selectOptions($list, $currentKey) {
+function selectOptions($list, $CurrentKey) {
 	$html='';
-	foreach ($list as $key=>$value) {
-		$xs = ($currentKey==$key) ? ' selected="selected"':'';
+	foreach ($list as $key=>$Value) {
+		$xs = ($CurrentKey==$key) ? ' selected="selected"':'';
 		$html .= '
-			<option value="'. $key .'"'. $xs .'>'. $value. '</option>';
+			<option value="'. $key .'"'. $xs .'>'. $Value. '</option>';
 	}
 	return $html;
 }
@@ -290,10 +290,10 @@ ZZZ;
 		</table>';
 }
 
-function noneButton($msg) {
+function noneButton($Msg) {
 	return '
 		<div class="centre">
-			<input type="button" disabled name="None" value="'. $msg . '" />
+			<input type="button" disabled name="None" value="'. $Msg . '" />
 		</div>';
 }
 
@@ -354,27 +354,27 @@ function resizeLabel($label) {
 	}
 	
 	$dims = array();
-	foreach ($DimensionTags as $iTag=>$tag) {
-		if ($tag['type']=='n')   // it is a data numeric
+	foreach ($DimensionTags as $iTag=>$Tag) {
+		if ($Tag['type']=='n')   // it is a data numeric
 			$dims[$iTag] = round(((float)$obj->$iTag)*$factor, 3);
-		elseif ($tag['type']=='i')
+		elseif ($Tag['type']=='i')
 			$dims[$iTag] = (int)$obj->$iTag;
 	}
 
 	$obj = $label->data;
-	$line = array();
+	$Line = array();
 	$i=0;
 	foreach ($obj->line as $labelLine) {
-		$line[$i] = array();
-		foreach ($DataTags as $iTag=>$tag) {
-			if ($tag['type']=='n')   // it is a data numeric
-				$line[$i][$iTag]= round(((float)$labelLine->$iTag)*$factor, 3);
+		$Line[$i] = array();
+		foreach ($DataTags as $iTag=>$Tag) {
+			if ($Tag['type']=='n')   // it is a data numeric
+				$Line[$i][$iTag]= round(((float)$labelLine->$iTag)*$factor, 3);
 			else
-				$line[$i][$iTag]=(string)$labelLine->$iTag;  // field to use in printing data
+				$Line[$i][$iTag]=(string)$labelLine->$iTag;  // field to use in printing data
 		}
 		$i++;
 	}
-	return array($dims, $line);
+	return array($dims, $Line);
 }
 
 /**
@@ -401,9 +401,9 @@ function getPageDimensions($dimensions) {
 	);
 }
 
-function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $StockIDList, $EffectiveDate) {
+function printLabels($dimensions, $Lines, $qtyByItem, $Currency, $salesType, $StockIDList, $EffectiveDate) {
 	global $pdf, $DecimalPlaces, $Version;
-	$row = $col = 0;
+	$Row = $col = 0;
 
 	$DecimalPlaces=getDecimalPlaces($Currency);
 
@@ -411,17 +411,17 @@ function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $St
 		$itemData = getStockData($StockID, $Currency, $salesType, $EffectiveDate);
 		$num=$qtyByItem;
 		while ($num-- > 0) {	// Print $num labels per item
-			printStockid($itemData, $dimensions, $lines, $Currency, $row, $col);
+			printStockid($itemData, $dimensions, $Lines, $Currency, $Row, $col);
 			if (++$col>=$dimensions['Cols']) {
 				$col=0;
-				if (++$row>=$dimensions['Rows']) {
-					$row=0;
+				if (++$Row>=$dimensions['Rows']) {
+					$Row=0;
 					$pdf->newpage();
 				}
 			}
 		}
 	}
- /*   if ($row OR $col) // it seems to be unnecesary.
+ /*   if ($Row OR $col) // it seems to be unnecesary.
 		$pdf->newpage();  */
 
 	// now, emit the PDF file (if not errors!)
@@ -455,12 +455,12 @@ function printLabels($dimensions, $lines, $qtyByItem, $Currency, $salesType, $St
  *  possible that the combination $data valid and $readonly false occurs when
  *  invalid data needs to be recaptured because an error in a new label capture.
  */
-function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) {
+function printStockid($itemData, $labelDim, $dataParams, $Currency, $Row, $col) {
 	global $pdf, $DecimalPlaces;
-//echo $row.':'.$col.'<br />';
+//echo $Row.':'.$col.'<br />';
 	// Calculate the bottom left corner position
 	$iX = $labelDim['Lm'] + $col * $labelDim['Cw'];
-	$iY = $labelDim['Sh'] - ($labelDim['Tm'] + ($row+1) * $labelDim['Rh']);
+	$iY = $labelDim['Sh'] - ($labelDim['Tm'] + ($Row+1) * $labelDim['Rh']);
 
 	if (isset($_POST['PDFTest'])) {
 		$pdf->line($iX, $iY+$labelDim['He'], $iX+$labelDim['Wi'], $iY+$labelDim['He']); // top
@@ -470,11 +470,11 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) 
 	}
 	// Now, for every data, write down the correspondig text
 	$descrip= $ldescrip='';
-	foreach ($dataParams as $line) {
+	foreach ($dataParams as $Line) {
 		unset($resid);  // unlink the previous residue
 		unset($txt);
 		$adj='left';
-		switch ($line['dat']) {
+		switch ($Line['dat']) {
 		case 'code':
 			$txt = $itemData['stockid'];
 			break;
@@ -500,10 +500,10 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $row, $col) 
 			break;
 		case 'bcode': break;
 		}
-		$ix = $iX + $line['pos'];
-		$iy = $iY + $line['row'];
+		$ix = $iX + $Line['pos'];
+		$iy = $iY + $Line['row'];
 		if (isset($txt)) {
-			$resid = $pdf->addTextWrap($ix,$iy,$line['max'],$line['font'],$txt, $adj);
+			$resid = $pdf->addTextWrap($ix,$iy,$Line['max'],$Line['font'],$txt, $adj);
 		}
 	}
 }

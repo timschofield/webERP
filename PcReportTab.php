@@ -85,7 +85,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$FontSize = 10;
 	$pdf->addInfo('Title', _('Petty Cash Report Of Tab') );
 	$pdf->addInfo('Subject', _('Petty Cash Report Of Tab') );
-	$line_height = 12;
+	$LineHeight = 12;
 
 	$SQLFromDate = FormatDateForSQL($_POST['FromDate']);
 	$SQLToDate = FormatDateForSQL($_POST['ToDate']);
@@ -118,7 +118,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	if (DB_error_no() != 0){
 		include('includes/header.php');
 		prnMsg(_('An error occurred getting the orders details'),'',_('Database Error'));
-		if ($debug == 1){
+		if ($Debug == 1){
 			prnMsg( _('The SQL used to get the orders that failed was') . '<br />' . $SQL, '',_('Database Error'));
 		}
 		include ('includes/footer.php');
@@ -126,7 +126,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	} elseif (DB_num_rows($TabDetail) == 0){
 	  	include('includes/header.php');
 		prnMsg(_('There were no expenses found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'),'warn');
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			prnMsg(_('The SQL that returned no rows was') . '<br />' . $SQL,'',_('Database Error'));
 		}
 		include('includes/footer.php');
@@ -166,7 +166,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Balance['0'] = 0;
 	}
 
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Tab Code :'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$SelectedTabs);
@@ -174,7 +174,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['FromDate']);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('User '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['usercode']);
@@ -182,37 +182,37 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+340,$YPos,70,$FontSize,$_POST['ToDate']);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Currency') . ' ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['currency']);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Cash Assigner'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['assigner']);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Authoriser - Cash'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['authorizer']);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,80,$FontSize,_('Authoriser - Expenses'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$Tabs['authorizer']);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Balance before '));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+55,$YPos,70,$FontSize,$_POST['FromDate']);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,locale_number_format($Balance['0'], $CurrDecimalPlaces));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,70,$FontSize,$Tabs['currency']);
 
-	$YPos -= (2 * $line_height);
-	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
+	$YPos -= (2 * $LineHeight);
+	$pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Left_Margin, $YPos+$LineHeight);
 
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 	$FontSize = 8;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,70,$FontSize,_('Date of Expense'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,100,$FontSize,_('Expense Code'));
@@ -222,7 +222,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,100,$FontSize,_('Tag'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,100,$FontSize,_('Notes'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+465,$YPos,100,$FontSize,_('Date Authorised'));
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 
 	while ($MyRow = DB_fetch_array($TabDetail)) {
 
@@ -280,7 +280,7 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+320,$YPos,50,$FontSize,$TagDescription);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+380,$YPos,60,$FontSize,$MyRow['notes']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+465,$YPos,70,$FontSize,$AuthorisedDate);
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 
 	}  //end of while loop
 
@@ -296,14 +296,14 @@ if ((! isset($_POST['FromDate']) AND ! isset($_POST['ToDate'])) OR isset($_POST[
 		$Amount[0] = 0;
 	}
 
-	$YPos -= (2 * $line_height);
-	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+	$YPos -= (2 * $LineHeight);
+	$pdf->line($Left_Margin+250, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+70,$YPos,100,$FontSize,_('Balance at'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+110,$YPos,70,$FontSize,$_POST['ToDate']);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+160,$YPos,20,$FontSize,': ');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+160,$YPos,70,$FontSize,locale_number_format($Amount[0], $CurrDecimalPlaces),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+240,$YPos,70,$FontSize,$Tabs['currency']);
-	$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
+	$pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Left_Margin, $YPos+$LineHeight);
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PettyCash_Tab_Report_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();

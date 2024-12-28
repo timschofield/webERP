@@ -197,9 +197,9 @@ if (!isset($AllowCronJobToBeRun)){
 
 
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
-	$debug = 1; //allow debug messages
+	$Debug = 1; //allow debug messages
 } else {
-	$debug = 0; //don't allow debug messages
+	$Debug = 0; //don't allow debug messages
 }
 function CryptPass( $Password ) {
 		global $CryptFunction;

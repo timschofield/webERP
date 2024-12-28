@@ -289,25 +289,25 @@ class Mail_mimePart {
      * Encodes data to quoted-printable standard.
      *
      * @param $input    The data to encode
-     * @param $line_max Optional max line length. Should
+     * @param $Line_max Optional max line length. Should
      *                  not be more than 76 chars
      *
      * @access private
      */
-    function _quotedPrintableEncode($input , $line_max = 76)
+    function _quotedPrintableEncode($input , $Line_max = 76)
     {
-        $lines  = preg_split("/\r?\n/", $input);
+        $Lines  = preg_split("/\r?\n/", $input);
         $eol    = MAIL_MIMEPART_CRLF;
         $escape = '=';
         $output = '';
 
-        while(list(, $line) = each($lines)){
+        while(list(, $Line) = each($Lines)){
 
-            $linlen     = mb_strlen($line);
+            $linlen     = mb_strlen($Line);
             $newline = '';
 
             for ($i = 0; $i < $linlen; $i++) {
-                $char = mb_substr($line, $i, 1);
+                $char = mb_substr($Line, $i, 1);
                 $dec  = ord($char);
 
                 if (($dec == 32) AND ($i == ($linlen - 1))){    // convert space at eol only
@@ -319,7 +319,7 @@ class Mail_mimePart {
                     $char = $escape . mb_strtoupper(sprintf('%02s', dechex($dec)));
                 }
 
-                if ((mb_strlen($newline) + mb_strlen($char)) >= $line_max) {        // MAIL_MIMEPART_CRLF is not counted
+                if ((mb_strlen($newline) + mb_strlen($char)) >= $Line_max) {        // MAIL_MIMEPART_CRLF is not counted
                     $output  .= $newline . $escape . $eol;                    // soft line break; " =\r\n" is okay
                     $newline  = '';
                 }

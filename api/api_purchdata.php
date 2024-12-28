@@ -82,10 +82,10 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = "INSERT INTO purchdata (".mb_substr($FieldNames,0,-2).")
+			$SQL = "INSERT INTO purchdata (".mb_substr($FieldNames,0,-2).")
 					VALUES ('" . mb_substr($FieldValues,0,-2). "') ";
 			DB_Txn_Begin();
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -127,14 +127,14 @@
 		if (isset($StockItemDetails['preferred'])){
 			$Errors=VerifyPreferredFlag($PurchDataDetails['preferred'], sizeof($Errors), $Errors);
 		}
-		$sql="UPDATE purchdata SET ";
+		$SQL="UPDATE purchdata SET ";
 		foreach ($PurchDataDetails as $key => $value) {
-			$sql .= $key."='" . $value."', ";
+			$SQL .= $key."='" . $value."', ";
 		}
-		$sql = mb_substr($sql,0,-2) . " WHERE stockid='" . $PurchDataDetails['stockid'] ."'
+		$SQL = mb_substr($SQL,0,-2) . " WHERE stockid='" . $PurchDataDetails['stockid'] ."'
 								AND supplierno='" . $PurchDataDetails['supplierno'] ."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;

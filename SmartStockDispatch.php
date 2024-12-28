@@ -20,7 +20,7 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addInfo('Subject',_('Parts to dispatch to another location to cover reorder level'));
 	$FontSize=9;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 	$Xpos = $Left_Margin+1;
 
 	//template
@@ -36,15 +36,15 @@ if (isset($_POST['PrintPDF'])) {
 
 	// from location
 	$ErrMsg = _('Could not retrieve location name from the database');
-	$sqlfrom="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['FromLocation'] . "'";
-	$result = DB_query($sqlfrom,$ErrMsg);
-	$Row = DB_fetch_row($result);
+	$SQLfrom="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['FromLocation'] . "'";
+	$Result = DB_query($SQLfrom,$ErrMsg);
+	$Row = DB_fetch_row($Result);
 	$FromLocation=$Row['0'];
 
 	// to location
-	$sqlto="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['ToLocation'] .  "'";
-	$resultto = DB_query($sqlto,$ErrMsg);
-	$RowTo = DB_fetch_row($resultto);
+	$SQLto="SELECT locationname FROM `locations` WHERE loccode='" . $_POST['ToLocation'] .  "'";
+	$Resultto = DB_query($SQLto,$ErrMsg);
+	$RowTo = DB_fetch_row($Resultto);
 	$ToLocation=$RowTo['0'];
 
 	// Creates WHERE clause for stock categories. StockCat is defined as an array so can choose
@@ -61,7 +61,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 
 
-	$sql = "SELECT locstock.stockid,
+	$SQL = "SELECT locstock.stockid,
 				stockmaster.description,
 				locstock.loccode,
 				locstock.quantity,
@@ -90,27 +90,27 @@ if (isset($_POST['PrintPDF'])) {
 			AND (stockmaster.mbflag='B' OR stockmaster.mbflag='M') " .
 			$WhereCategory . " ORDER BY locstock.loccode,locstock.stockid";
 
-	$result = DB_query($sql,'','',false,true);
+	$Result = DB_query($SQL,'','',false,true);
 
 	if (DB_error_no() !=0) {
-		$title = _('Stock Dispatch - Problem Report');
+		$Title = _('Stock Dispatch - Problem Report');
 		include('includes/header.php');
 		prnMsg( _('The Stock Dispatch report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<br />
-			<a href="' .$rootpath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
-			echo '<br />' . $sql;
+			<a href="' .$RootPath . '/index.php">' . _('Back to the menu') . '</a>';
+		if ($Debug==1){
+			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
 		exit;
 	}
-	if (DB_num_rows($result) ==0) {
-		$title = _('Stock Dispatch - Problem Report');
+	if (DB_num_rows($Result) ==0) {
+		$Title = _('Stock Dispatch - Problem Report');
 		include('includes/header.php');
 		echo '<br />';
 		prnMsg( _('The stock dispatch did not have any items to list'),'warn');
 		echo '<br />
-			 <a href="' .$rootpath .'/index.php">' . _('Back to the menu') . '</a>';
+			 <a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit;
 	}
@@ -120,13 +120,13 @@ if (isset($_POST['PrintPDF'])) {
 
 	$FontSize=8;
 
-	while ($myrow = DB_fetch_array($result)){
+	while ($MyRow = DB_fetch_array($Result)){
 		// Check if there is any stock in transit already sent from FROM LOCATION
 		$InTransitQuantityAtFrom = 0;
 		if ($_SESSION['ProhibitNegativeStock']==1){
 			$InTransitSQL="SELECT SUM(pendingqty) as intransit
 							FROM loctransfers
-							WHERE stockid='" . $myrow['stockid'] . "'
+							WHERE stockid='" . $MyRow['stockid'] . "'
 								AND shiploc='".$_POST['FromLocation']."'
 								AND pendingqty > 0";
 			$InTransitResult=DB_query($InTransitSQL);
@@ -134,13 +134,13 @@ if (isset($_POST['PrintPDF'])) {
 			$InTransitQuantityAtFrom=$InTransitRow['intransit'];
 		}
 		// The real available stock to ship is the (qty - reorder level - in transit).
-		$AvailableShipQtyAtFrom = $myrow['available'] - $InTransitQuantityAtFrom;
+		$AvailableShipQtyAtFrom = $MyRow['available'] - $InTransitQuantityAtFrom;
 		
 		// Check if TO location is already waiting to receive some stock of this item
 		$InTransitQuantityAtTo=0;
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
-						WHERE stockid='" . $myrow['stockid'] . "'
+						WHERE stockid='" . $MyRow['stockid'] . "'
 							AND recloc='".$_POST['ToLocation']."'
 							AND pendingqty > 0";
 		$InTransitResult=DB_query($InTransitSQL);
@@ -148,7 +148,7 @@ if (isset($_POST['PrintPDF'])) {
 		$InTransitQuantityAtTo=$InTransitRow['intransit'];
 		
 		// The real needed stock is reorder level - qty - in transit).
-		$NeededQtyAtTo = $myrow['neededqty'] - $InTransitQuantityAtTo;
+		$NeededQtyAtTo = $MyRow['neededqty'] - $InTransitQuantityAtTo;
 		
 		// Decide how many are sent 
 		$ShipQty = 0;
@@ -163,90 +163,90 @@ if (isset($_POST['PrintPDF'])) {
 		}
 
 		if ($ShipQty>0) {
-			$YPos -=(2 * $line_height);
+			$YPos -=(2 * $LineHeight);
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
-			$fill=False;
+			$Fill=False;
 		
 			if($template=='simple'){
 				//for simple template
-				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-				$pdf->addTextWrap(135,$YPos,250,$FontSize,$myrow['description'],'',0,$fill);
-				$pdf->addTextWrap(380,$YPos,45,$FontSize,locale_number_format($myrow['fromquantity'],
-													$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(425,$YPos,40,$FontSize,locale_number_format($myrow['quantity'],
-													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(50,$YPos,70,$FontSize,$MyRow['stockid'],'',0,$Fill);
+				$pdf->addTextWrap(135,$YPos,250,$FontSize,$MyRow['description'],'',0,$Fill);
+				$pdf->addTextWrap(380,$YPos,45,$FontSize,locale_number_format($MyRow['fromquantity'],
+													$MyRow['decimalplaces']),'right',0,$Fill);
+				$pdf->addTextWrap(425,$YPos,40,$FontSize,locale_number_format($MyRow['quantity'],
+													$MyRow['decimalplaces']),'right',0,$Fill);
 				$pdf->addTextWrap(465,$YPos,40,11,locale_number_format($ShipQty,
-													$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
+													$MyRow['decimalplaces']),'right',0,$Fill);
+				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$Fill);
 			}else{
 				//for standard template
-				$pdf->addTextWrap(50,$YPos,70,$FontSize,$myrow['stockid'],'',0,$fill);
-				$pdf->addTextWrap(135,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
-				$pdf->addTextWrap(305,$YPos,40,$FontSize,locale_number_format($myrow['fromquantity'] - $InTransitQuantityAtFrom,
-													$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(345,$YPos,40,$FontSize,locale_number_format($myrow['fromreorderlevel'],
-													$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(380,$YPos,40,$FontSize,locale_number_format($myrow['quantity'] + $InTransitQuantityAtTo,
-													$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(420,$YPos,40,$FontSize,locale_number_format($myrow['reorderlevel'],
-													$myrow['decimalplaces']),'right',0,$fill);
+				$pdf->addTextWrap(50,$YPos,70,$FontSize,$MyRow['stockid'],'',0,$Fill);
+				$pdf->addTextWrap(135,$YPos,200,$FontSize,$MyRow['description'],'',0,$Fill);
+				$pdf->addTextWrap(305,$YPos,40,$FontSize,locale_number_format($MyRow['fromquantity'] - $InTransitQuantityAtFrom,
+													$MyRow['decimalplaces']),'right',0,$Fill);
+				$pdf->addTextWrap(345,$YPos,40,$FontSize,locale_number_format($MyRow['fromreorderlevel'],
+													$MyRow['decimalplaces']),'right',0,$Fill);
+				$pdf->addTextWrap(380,$YPos,40,$FontSize,locale_number_format($MyRow['quantity'] + $InTransitQuantityAtTo,
+													$MyRow['decimalplaces']),'right',0,$Fill);
+				$pdf->addTextWrap(420,$YPos,40,$FontSize,locale_number_format($MyRow['reorderlevel'],
+													$MyRow['decimalplaces']),'right',0,$Fill);
 				$pdf->addTextWrap(460,$YPos,40,11,locale_number_format($ShipQty,
-													$myrow['decimalplaces']),'right',0,$fill);
-				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$fill);
+													$MyRow['decimalplaces']),'right',0,$Fill);
+				$pdf->addTextWrap(510,$YPos,40,$FontSize,'_________','right',0,$Fill);
 			}
 
-			if ($YPos < $Bottom_Margin + $line_height + 200){
+			if ($YPos < $Bottom_Margin + $LineHeight + 200){
 
 				PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 							$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
 			}
 
 			// Create loctransfers records for each record
-			$sql2 = "INSERT INTO loctransfers (reference,
+			$SQL2 = "INSERT INTO loctransfers (reference,
 												stockid,
 												shipqty,
 												shipdate,
 												shiploc,
 												recloc)
 											VALUES ('" . $Trf_ID . "',
-												'" . $myrow['stockid'] . "',
+												'" . $MyRow['stockid'] . "',
 												'" . $ShipQty . "',
 												CURRENT_DATE,
 												'" . $_POST['FromLocation']  ."',
 												'" . $_POST['ToLocation'] . "')";
-			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$myrow['stockid'];
+			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('Unable to enter Location Transfer record for'). ' '.$MyRow['stockid'];
 			if ($_POST['ReportType'] == 'Batch') {
-				$resultLocShip = DB_query($sql2, $ErrMsg);
+				$ResultLocShip = DB_query($SQL2, $ErrMsg);
 			}
 		}
 	} /*end while loop  */
 	//add prepared by
 	$pdf->addTextWrap(50,$YPos-50,100,9,_('Prepared By :'), 'left');
 	$pdf->addTextWrap(50,$YPos-70,100,$FontSize,_('Name'), 'left');
-	$pdf->addTextWrap(90,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(90,$YPos-70,200,$FontSize,':__________________','left',0,$Fill);
 	$pdf->addTextWrap(50,$YPos-90,100,$FontSize,_('Date'), 'left');
-	$pdf->addTextWrap(90,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(90,$YPos-90,200,$FontSize,':__________________','left',0,$Fill);
 	$pdf->addTextWrap(50,$YPos-110,100,$FontSize,_('Hour'), 'left');
-	$pdf->addTextWrap(90,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(90,$YPos-110,200,$FontSize,':__________________','left',0,$Fill);
 	$pdf->addTextWrap(50,$YPos-150,100,$FontSize,_('Signature'), 'left');
-	$pdf->addTextWrap(90,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(90,$YPos-150,200,$FontSize,':__________________','left',0,$Fill);
 
 
 	//add received by
 	$pdf->addTextWrap(390,$YPos-50,100,9,_('Received By :'), 'left');
 	$pdf->addTextWrap(390,$YPos-70,100,$FontSize,_('Name'), 'left');
-	$pdf->addTextWrap(430,$YPos-70,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(430,$YPos-70,200,$FontSize,':__________________','left',0,$Fill);
 	$pdf->addTextWrap(390,$YPos-90,100,$FontSize,_('Date'), 'left');
-	$pdf->addTextWrap(430,$YPos-90,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(430,$YPos-90,200,$FontSize,':__________________','left',0,$Fill);
 	$pdf->addTextWrap(390,$YPos-110,100,$FontSize,_('Hour'), 'left');
-	$pdf->addTextWrap(430,$YPos-110,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(430,$YPos-110,200,$FontSize,':__________________','left',0,$Fill);
 	$pdf->addTextWrap(390,$YPos-150,100,$FontSize,_('Signature'), 'left');
-	$pdf->addTextWrap(430,$YPos-150,200,$FontSize,':__________________','left',0,$fill);
+	$pdf->addTextWrap(430,$YPos-150,200,$FontSize,':__________________','left',0,$Fill);
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 					   $Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
 	}
@@ -257,9 +257,9 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
-	$title=_('Stock Dispatch Report');
+	$Title=_('Stock Dispatch Report');
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$rootpath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Create batch of overstock from one location to transfer to another location that is below reorder level.<br/>
 										 Quantity to ship is based on reorder level minus the quantity on hand at the To Location; if there is a<br/>
 										 dispatch percentage entered, that needed quantity is inflated by the percentage entered.<br/>
@@ -270,10 +270,10 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<div>
 		  <br />';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$sql = "SELECT loccode,
+	$SQL = "SELECT loccode,
 			locationname
 		FROM locations";
-	$resultStkLocs = DB_query($sql);
+	$ResultStkLocs = DB_query($SQL);
 	if (!isset($_POST['FromLocation'])) {
 		$_POST['FromLocation']=$DefaultLocation;
 	}
@@ -285,38 +285,38 @@ if (isset($_POST['PrintPDF'])) {
 	echo '<tr>
 			  <td>' . _('From Stock Location') . ':</td>
 			  <td><select name="FromLocation"> ';
-	while ($myrow=DB_fetch_array($resultStkLocs)){
-		if ($myrow['loccode'] == $_POST['FromLocation']){
-			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($ResultStkLocs)){
+		if ($MyRow['loccode'] == $_POST['FromLocation']){
+			 echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
-			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td>
 		 </tr>';
-	DB_data_seek($resultStkLocs,0);
+	DB_data_seek($ResultStkLocs,0);
 	if (!isset($_POST['ToLocation'])) {
 		$_POST['ToLocation']=$DefaultLocation;
 	}
 	echo '<tr>
 			  <td>' . _('To Stock Location') . ':</td>
 			  <td><select name="ToLocation"> ';
-	while ($myrow=DB_fetch_array($resultStkLocs)){
-		if ($myrow['loccode'] == $_POST['ToLocation']){
-			 echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($ResultStkLocs)){
+		if ($MyRow['loccode'] == $_POST['ToLocation']){
+			 echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
-			 echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td>
 		 </tr>';
 
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory  ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
-	if (DB_num_rows($result1)==0){
+	$Result1 = DB_query($SQL);
+	if (DB_num_rows($Result1)==0){
 		echo '</table>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
-		echo '<br /><a href="' . $rootpath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+		echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
 		echo '</div>
 			  </form>';
 		include ('includes/footer.php');
@@ -337,11 +337,11 @@ if (isset($_POST['PrintPDF'])) {
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['categoryid']==$_POST['StockCat']){
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -380,13 +380,13 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-	$line_height=12;
+	$LineHeight=12;
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
-	$YPos -=(3*$line_height);
+	$YPos -=(3*$LineHeight);
 
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 
 	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Stock Dispatch ') . $_POST['ReportType']);
 	$pdf->addTextWrap(200,$YPos,50,$FontSize,_('From :'));
@@ -394,19 +394,19 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 
 	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Transfer No.'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$Trf_ID);
 	$pdf->addTextWrap(200,$YPos,20,$FontSize,_('To :'));
 	$pdf->addTextWrap(250,$YPos,200,$FontSize,$ToLocation);
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['StockCat']);
 	$pdf->addTextWrap(160,$YPos,150,$FontSize,$CategoryDescription,'left');
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Percent'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['Percent']);
-	$YPos -=(2*$line_height);
+	$YPos -=(2*$LineHeight);
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
 
@@ -424,7 +424,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 		$pdf->addTextWrap(390,$YPos,40,$FontSize,_('To'), 'right');
 		$pdf->addTextWrap(460,$YPos,40,$FontSize,_('Shipped'), 'right');
 		$pdf->addTextWrap(510,$YPos,40,$FontSize,_('Received'), 'right');
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		$pdf->addTextWrap(305,$YPos,40,$FontSize,_('Avail'), 'right');
 		$pdf->addTextWrap(345,$YPos,40,$FontSize,_('Reord'), 'right');
 		$pdf->addTextWrap(380,$YPos,40,$FontSize,_('Avail'), 'right');

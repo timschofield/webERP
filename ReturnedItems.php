@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedReturnedItemsId) AND $InputError !=1) {
 
-		$sql = "UPDATE returneditems
+		$SQL = "UPDATE returneditems
 				SET orderno = '" . $_POST['orderno'] . "',
 					returndate = '" . $_POST['returndate'] . "',
 					reasonid = '" . $_POST['reasonid'] . "',
@@ -46,16 +46,16 @@ if (isset($_POST['submit'])) {
 					oldinvoicedate = '" . $_POST['oldinvoicedate'] . "'
 				WHERE returneditemsid = '".$SelectedReturnedItemsId."'";
 
-		$msg = _('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' .  _('has been updated');
+		$Msg = _('The Returned Item') . ' ' . $SelectedReturnedItemsId . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM returneditems
 			     WHERE returneditemsid = '" . $SelectedReturnedItemsId . "'";
 
-		$CheckResult = DB_query($checkSql);
+		$CheckResult = DB_query($CheckSQL);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
@@ -65,7 +65,7 @@ if (isset($_POST['submit'])) {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO returneditems (orderno,
+			$SQL = "INSERT INTO returneditems (orderno,
 											returndate,
 											reasonid,
 											itemcodes,
@@ -78,15 +78,15 @@ if (isset($_POST['submit'])) {
 							'" . $_POST['oldinvoice'] . "',
 							'" . FormatDateForSQL($_POST['oldinvoicedate']) . "')";
 
-			$msg = _('Returned Item') . ' ' . $_POST['orderno'] .  ' ' . _('has been created');
+			$Msg = _('Returned Item') . ' ' . $_POST['orderno'] .  ' ' . _('has been created');
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 
 		unset($SelectedReturnedItemsId);
 		unset($_POST['orderno']);
@@ -99,9 +99,9 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-	$sql="DELETE FROM returneditems WHERE code='" . $SelectedReturnedItemsId . "'";
+	$SQL="DELETE FROM returneditems WHERE code='" . $SelectedReturnedItemsId . "'";
 	$ErrMsg = _('The Returned Item record could not be deleted because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg(_('The returned item') . ' ' . $SelectedReturnedItemsId  . ' ' . _('has been deleted') ,'success');
 
 	unset ($SelectedReturnedItemsId);
@@ -126,7 +126,7 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 
-	$sql = "SELECT  returneditemsid,
+	$SQL = "SELECT  returneditemsid,
 					orderno,
 					returneditems.reasonid,
 					reasonname,
@@ -140,7 +140,7 @@ or deletion of the records*/
 			ORDER BY returndate DESC, 
 					orderno DESC, 
 					returneditemsid DESC";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
@@ -155,7 +155,7 @@ or deletion of the records*/
 
 $k=0; //row colour counter
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
 		$k=0;
@@ -174,15 +174,15 @@ while ($myrow = DB_fetch_array($result)) {
 		<td><a href="%sSelectedReturnedItemsId=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedReturnedItemsId=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this return?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
-		$myrow['returneditemsid'],
-		$myrow['itemcodes'],
-		$myrow['reasonname'],
-		$myrow['orderno'],
-		ConvertSQLDate($myrow['returndate']),
-		$myrow['oldinvoice'],
-		ConvertSQLDate($myrow['oldinvoicedate']),
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['returneditemsid'],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['returneditemsid']);
+		$MyRow['returneditemsid'],
+		$MyRow['itemcodes'],
+		$MyRow['reasonname'],
+		$MyRow['orderno'],
+		ConvertSQLDate($MyRow['returndate']),
+		$MyRow['oldinvoice'],
+		ConvertSQLDate($MyRow['oldinvoicedate']),
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['returneditemsid'],
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['returneditemsid']);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -207,7 +207,7 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedReturnedItemsId) AND $SelectedReturnedItemsId!='' ) {
 
-		$sql = "SELECT returneditemsid,
+		$SQL = "SELECT returneditemsid,
 						orderno,
 						returndate,
 						reasonid,
@@ -217,16 +217,16 @@ if (! isset($_GET['delete'])) {
 		        FROM returneditems
 		        WHERE returneditemsid='" . $SelectedReturnedItemsId . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['SelectedReturnedItemsId'] = $myrow['returneditemsid'];
-		$_POST['orderno']  = $myrow['orderno'];
-		$_POST['returndate']  = $myrow['returndate'];
-		$_POST['reasonid']  = $myrow['reasonid'];
-		$_POST['itemcodes']  = $myrow['itemcodes'];
-		$_POST['oldinvoice']  = $myrow['oldinvoice'];
-		$_POST['oldinvoicedate']  = $myrow['oldinvoicedate'];
+		$_POST['SelectedReturnedItemsId'] = $MyRow['returneditemsid'];
+		$_POST['orderno']  = $MyRow['orderno'];
+		$_POST['returndate']  = $MyRow['returndate'];
+		$_POST['reasonid']  = $MyRow['reasonid'];
+		$_POST['itemcodes']  = $MyRow['itemcodes'];
+		$_POST['oldinvoice']  = $MyRow['oldinvoice'];
+		$_POST['oldinvoicedate']  = $MyRow['oldinvoicedate'];
 
 		echo '<input type="hidden" name="SelectedReturnedItemsId" value="' . $_POST['SelectedReturnedItemsId'] . '" />
 			<table class="selection">
@@ -264,11 +264,11 @@ if (! isset($_GET['delete'])) {
 		<td><select name="reasonid">';
 
 	$ReasonResult = DB_query("SELECT reasonname, reasonid FROM returnitemreasons ORDER BY reasonname");
-	while ($myrow=DB_fetch_array($ReasonResult)) {
-		if($_POST['reasonid']==$myrow['reasonid']) {
-			echo '<option selected="selected" value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+	while ($MyRow=DB_fetch_array($ReasonResult)) {
+		if($_POST['reasonid']==$MyRow['reasonid']) {
+			echo '<option selected="selected" value="' . $MyRow['reasonid'] . '">' . $MyRow['reasonname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['reasonid'] . '">' . $myrow['reasonname'] . '</option>';
+			echo '<option value="' . $MyRow['reasonid'] . '">' . $MyRow['reasonname'] . '</option>';
 		}
 	}
 

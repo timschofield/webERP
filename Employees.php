@@ -40,7 +40,7 @@ if(isset($_POST['submit'])) {
 	if(isset($SelectedEmployee) AND $InputError !=1) {
 
 
-		$sql = "UPDATE employees SET surname='" . $_POST['Surname'] . "',
+		$SQL = "UPDATE employees SET surname='" . $_POST['Surname'] . "',
 									firstname='" . $_POST['FirstName'] . "',
 									stockid='" . $_POST['StockID'] . "',
 									manager='" . $_POST['Manager'] . "',
@@ -52,7 +52,7 @@ if(isset($_POST['submit'])) {
 		$ErrMsg = _('An error occurred updating the') . ' ' . $SelectedEmployee . ' ' . _('employee record because');
 		$DbgMsg = _('The SQL used to update the employee record was');
 
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The employee record has been updated'),'success');
 	
@@ -60,7 +60,7 @@ if(isset($_POST['submit'])) {
 
 		/*SelectedEmployee is null cos no employee selected on first time round so must be adding a	record must be submitting a new employee form */
 
-		$sql = "INSERT INTO employees (	surname, 
+		$SQL = "INSERT INTO employees (	surname, 
 										firstname,
 										stockid,
 										manager,
@@ -77,7 +77,7 @@ if(isset($_POST['submit'])) {
 
 		$ErrMsg = _('An error occurred inserting the new employee record because');
 		$DbgMsg = _('The SQL used to insert the employee record was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The new employee record has been added'),'success');
 
@@ -99,17 +99,17 @@ if(isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS
 /* once timesheets are defined
-	$sql= "SELECT COUNT(*) FROM timesheets WHERE employeeid='". $SelectedEmployee . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if($myrow[0]>0) {
+	$SQL= "SELECT COUNT(*) FROM timesheets WHERE employeeid='". $SelectedEmployee . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if($MyRow[0]>0) {
 		$CancelDelete = 1;
 		prnMsg(_('Cannot delete this employee because timesheets have been created for this person'),'warn');
-		echo _('There are') . ' ' . $myrow[0] . ' ' . _('timesheet records for this person');
+		echo _('There are') . ' ' . $MyRow[0] . ' ' . _('timesheet records for this person');
 	}
 */
 	if(! $CancelDelete) {
-		$result = DB_query("DELETE FROM employees WHERE id='" . $SelectedEmployee . "'");
+		$Result = DB_query("DELETE FROM employees WHERE id='" . $SelectedEmployee . "'");
 
 		prnMsg(_('Employee') . ' ' . $SelectedEmployee . ' ' . _('has been deleted') . '!', 'success');
 		unset ($SelectedEmployee);
@@ -132,7 +132,7 @@ then none of the above are true and the list of employees will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT employees.id,
+	$SQL = "SELECT employees.id,
 					employees.surname,
 					employees.firstname,
 					employees.stockid,
@@ -145,8 +145,8 @@ or deletion of the records*/
 			FROM employees LEFT JOIN employees AS employees2
 			ON employees.manager=employees2.id";
 
-	$result = DB_query($sql);
-	if (DB_num_rows($result) > 0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
 		echo '<table class="selection">
 			<thead>
 			<tr>
@@ -161,7 +161,7 @@ or deletion of the records*/
 			</thead>
 			<tbody>';
 	
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 	
 		printf('<tr class="striped_row">
 					<td>%s</td>
@@ -173,17 +173,17 @@ or deletion of the records*/
 					<td class="noprint"><a href="%sSelectedEmployee=%s">' . _('Edit') . '</a></td>
 					<td class="noprint"><a href="%sSelectedEmployee=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this employee?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
-				$myrow['id'],
-				$myrow['firstname'],
-				$myrow['surname'],
-				$myrow['stockid'],
-				$myrow['managerfirstname'] . ' ' . $myrow['managersurname'],
-				$myrow['email'],
-				$myrow['email'],
+				$MyRow['id'],
+				$MyRow['firstname'],
+				$MyRow['surname'],
+				$MyRow['stockid'],
+				$MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'],
+				$MyRow['email'],
+				$MyRow['email'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['id'],
+				$MyRow['id'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['id']);
+				$MyRow['id']);
 		}
 		//END WHILE LIST LOOP
 		echo '</tbody></table>';
@@ -211,7 +211,7 @@ if(!isset($_GET['delete'])) {
 	if(isset($SelectedEmployee)) {
 		//editing an existing Location
 
-		$sql = "SELECT id,
+		$SQL = "SELECT id,
 						surname,
 						firstname,
 						stockid,
@@ -222,16 +222,16 @@ if(!isset($_GET['delete'])) {
 				FROM employees
 				WHERE employees.id='" . $SelectedEmployee . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['Surname'] = $myrow['surname'];
-		$_POST['FirstName'] = $myrow['firstname'];
-		$_POST['StockID'] = $myrow['stockid'];
-		$_POST['NormalHours'] = $myrow['normalhours'];
-		$_POST['Manager'] = $myrow['manager'];
-		$_POST['UserID'] = $myrow['userid'];
-		$_POST['Email'] = $myrow['email'];
+		$_POST['Surname'] = $MyRow['surname'];
+		$_POST['FirstName'] = $MyRow['firstname'];
+		$_POST['StockID'] = $MyRow['stockid'];
+		$_POST['NormalHours'] = $MyRow['normalhours'];
+		$_POST['Manager'] = $MyRow['manager'];
+		$_POST['UserID'] = $MyRow['userid'];
+		$_POST['Email'] = $MyRow['email'];
 		
 		echo '<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
 		
@@ -292,11 +292,11 @@ if(!isset($_GET['delete'])) {
 											ON stockmaster.categoryid = stockcategory.categoryid
 										WHERE stockcategory.stocktype='L'
 										ORDER BY stockid");
-	while ($myrow=DB_fetch_array($LabourTypeItemsResult)) {
-		if($_POST['StockID']==$myrow['stockid']) {
-			echo '<option selected="selected" value="' , $myrow['stockid'] , '">' , $myrow['description'] , '</option>';
+	while ($MyRow=DB_fetch_array($LabourTypeItemsResult)) {
+		if($_POST['StockID']==$MyRow['stockid']) {
+			echo '<option selected="selected" value="' , $MyRow['stockid'] , '">' , $MyRow['description'] , '</option>';
 		} else {
-			echo '<option value="' , $myrow['stockid'] . '">' , $myrow['description'] , '</option>';
+			echo '<option value="' , $MyRow['stockid'] . '">' , $MyRow['description'] , '</option>';
 		}
 	}
 
@@ -323,11 +323,11 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' , _('Not Managed') , '</option>';
 	}
-	while ($myrow=DB_fetch_array($ManagersResult)) {
-		if($_POST['Manager']==$myrow['id']) {
-			echo '<option selected="selected" value="' , $myrow['id'] , '">' , $myrow['managername'] , '</option>';
+	while ($MyRow=DB_fetch_array($ManagersResult)) {
+		if($_POST['Manager']==$MyRow['id']) {
+			echo '<option selected="selected" value="' , $MyRow['id'] , '">' , $MyRow['managername'] , '</option>';
 		} else {
-			echo '<option value="' , $myrow['id'] , '">' , $myrow['managername'] , '</option>';
+			echo '<option value="' , $MyRow['id'] , '">' , $MyRow['managername'] , '</option>';
 		}
 	}
 
@@ -342,11 +342,11 @@ if(!isset($_GET['delete'])) {
 		echo '<option value="">' , _('Not a webERP User') , '</option>';
 	}
 	$UsersResult = DB_query("SELECT userid, realname FROM www_users");
-	while ($myrow=DB_fetch_array($UsersResult)) {
-		if($_POST['UserID']==$myrow['userid']) {
-			echo '<option selected="selected" value="' . $myrow['userid'] . '">' . $myrow['realname'] . '</option>';
+	while ($MyRow=DB_fetch_array($UsersResult)) {
+		if($_POST['UserID']==$MyRow['userid']) {
+			echo '<option selected="selected" value="' . $MyRow['userid'] . '">' . $MyRow['realname'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['userid'] . '">' . $myrow['realname'] . '</option>';
+			echo '<option value="' . $MyRow['userid'] . '">' . $MyRow['realname'] . '</option>';
 		}
 	}
 

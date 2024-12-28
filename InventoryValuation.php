@@ -64,7 +64,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 	  include('includes/header.php');
 	   prnMsg( _('The inventory valuation could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
+	   if ($Debug==1){
 		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
@@ -80,7 +80,7 @@ if (isset($_POST['PrintPDF'])){
 	$pdf->addInfo('Subject',_('Inventory Valuation'));
 	$FontSize=9;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
 
 
@@ -108,8 +108,8 @@ if (isset($_POST['PrintPDF'])){
 
 				/* need to print the total of previous category */
 				if ($_POST['DetailedReport']=='Yes'){
-					$YPos -= (2*$line_height);
-					if ($YPos < $Bottom_Margin + (3*$line_height)){
+					$YPos -= (2*$LineHeight);
+					if ($YPos < $Bottom_Margin + (3*$LineHeight)){
 		 				  include('includes/PDFInventoryValnPageHeader.inc');
 					}
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . ' - ' . $CategoryName);
@@ -119,12 +119,12 @@ if (isset($_POST['PrintPDF'])){
 				$DisplayCatTotQty = locale_number_format($CatTot_Qty,2);
 				$LeftOvers = $pdf->addTextWrap(480,$YPos,80,$FontSize,$DisplayCatTotVal, 'right');
 				$LeftOvers = $pdf->addTextWrap(360,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 
 				If ($_POST['DetailedReport']=='Yes'){
 				/*draw a line under the CATEGORY TOTAL*/
-					$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-					$YPos -=(2*$line_height);
+					$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+					$YPos -=(2*$LineHeight);
 				}
 				$CatTot_Val=0;
 				$CatTot_Qty=0;
@@ -135,7 +135,7 @@ if (isset($_POST['PrintPDF'])){
 		}
 
 		if ($_POST['DetailedReport']=='Yes'){
-			$YPos -=$line_height;
+			$YPos -=$LineHeight;
 			$FontSize=8;
 
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$InventoryValn['stockid']);
@@ -154,7 +154,7 @@ if (isset($_POST['PrintPDF'])){
 		$CatTot_Val += $InventoryValn['itemtotal'];
 		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   include('includes/PDFInventoryValnPageHeader.inc');
 		}
 
@@ -163,7 +163,7 @@ if (isset($_POST['PrintPDF'])){
 	$FontSize =10;
 /*Print out the category totals */
 	if ($_POST['DetailedReport']=='Yes'){
-		$YPos -= (2*$line_height);
+		$YPos -= (2*$LineHeight);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 	}
 	$DisplayCatTotVal = locale_number_format($CatTot_Val,$_SESSION['CompanyRecord']['decimalplaces']);
@@ -174,13 +174,13 @@ if (isset($_POST['PrintPDF'])){
 
 	if ($_POST['DetailedReport']=='Yes'){
 		/*draw a line under the CATEGORY TOTAL*/
-		$YPos -= ($line_height);
-		$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
+		$YPos -= ($LineHeight);
+		$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
 	}
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 		   include('includes/PDFInventoryValnPageHeader.inc');
 	}
 /*Print out the grand totals */
@@ -243,18 +243,18 @@ if (isset($_POST['PrintPDF'])){
 			<td>' . _('For Inventory in Location') . ':</td>
 			<td><select name="Location">';
 
-	$sql = "SELECT locations.loccode,
+	$SQL = "SELECT locations.loccode,
 					locationname
 			FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
 
-	$LocnResult=DB_query($sql);
+	$LocnResult=DB_query($SQL);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';
 
-	while ($myrow=DB_fetch_array($LocnResult)){
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($LocnResult)){
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>';

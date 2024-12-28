@@ -21,10 +21,10 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 			FROM chartmaster
 			WHERE accountcode LIKE '%" . $_POST['OldSuffix'] . "'";
 	
-	$result = DB_query($SQL);		
-	if (DB_num_rows($result) != 0){
-		while ($myrow = DB_fetch_array($result)) {
-			$OldGL = $myrow['accountcode'];
+	$Result = DB_query($SQL);		
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
+			$OldGL = $MyRow['accountcode'];
 			$NewGL = substr($OldGL, 0, strlen($OldGL) - $LenghtOldSuffix) . $_POST['NewSuffix'];
 			prnMsg("Old GL: " . $OldGL . " New GL: " . $NewGL);
 			ChangeGLAcoountCode ($NewGL, $OldGL);

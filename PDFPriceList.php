@@ -27,7 +27,7 @@ function PageHeader() {
 	global $PageNumber;
 	global $YPos;
 	global $FontSize;
-	global $line_height;
+	global $LineHeight;
 	global $SalesTypeName;
 	global $CustomerName;
 
@@ -59,15 +59,15 @@ function PageHeader() {
 	$pdf->addTextWrap($Page_Width-$Right_Margin-140, $YPos-$FontSize, 140, $FontSize,
 		date('H:i:s'), 'right');// Time printed.
 
-	$YPos -=(2*$line_height);
+	$YPos -=(2*$LineHeight);
 	// Draws a rectangle to put the headings in:
 	$pdf->Rectangle(
 		$Left_Margin,// Rectangle $XPos.
 		$YPos,// Rectangle $YPos.
 		$Page_Width-$Left_Margin-$Right_Margin,// Rectangle $Width.
-		$line_height*2);// Rectangle $Height.
+		$LineHeight*2);// Rectangle $Height.
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 
 	/*set up the headings */
 	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 80, $FontSize, _('Item Code'));// 20chr @ 8dpi.
@@ -130,7 +130,7 @@ If (isset($_POST['PrintPDF'])) {
 	$pdf->addInfo('Subject', _('Price List') );
 
 	$FontSize=10;
-	$line_height=12;
+	$LineHeight=12;
 	// Option to select currency:
 	$WhereCurrency = '';
 	if ($_POST['Currency'] != "All") {
@@ -257,7 +257,7 @@ If (isset($_POST['PrintPDF'])) {
 		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu'). '</a>';
-		if ($debug==1) {
+		if ($Debug==1) {
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
 		include('includes/footer.php');
@@ -280,7 +280,7 @@ If (isset($_POST['PrintPDF'])) {
 
 	require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
 	$pdf->SetFillColor(238, 238, 238);
-	$fill = false;
+	$Fill = false;
 
 	While ($PriceList = DB_fetch_array($PricesResult)) {
 
@@ -309,9 +309,9 @@ If (isset($_POST['PrintPDF'])) {
 		}
 
 		$FontSize = 8;
-		$pdf->addTextWrap($Left_Margin, $YPos-$FontSize, 80, $FontSize, $PriceList['stockid'], 'left', 0, $fill);
-		$pdf->addTextWrap($Left_Margin+80, $YPos-$FontSize, 200, $FontSize, $PriceList['description'], 'left', 0, $fill);
-		$pdf->addTextWrap($Left_Margin+280, $YPos-$FontSize, 60, $FontSize, ConvertSQLDate($PriceList['startdate']), 'left', 0, $fill);
+		$pdf->addTextWrap($Left_Margin, $YPos-$FontSize, 80, $FontSize, $PriceList['stockid'], 'left', 0, $Fill);
+		$pdf->addTextWrap($Left_Margin+80, $YPos-$FontSize, 200, $FontSize, $PriceList['description'], 'left', 0, $Fill);
+		$pdf->addTextWrap($Left_Margin+280, $YPos-$FontSize, 60, $FontSize, ConvertSQLDate($PriceList['startdate']), 'left', 0, $Fill);
 
 		if ($PriceList['enddate']!='9999-12-31') {
 			$DisplayEndDate = ConvertSQLDate($PriceList['enddate']);
@@ -319,7 +319,7 @@ If (isset($_POST['PrintPDF'])) {
 			$DisplayEndDate = _('No End Date');
 		}
 
-		$pdf->addTextWrap($Left_Margin+320, $YPos-$FontSize, 80, $FontSize, $DisplayEndDate, 'left', 0, $fill);
+		$pdf->addTextWrap($Left_Margin+320, $YPos-$FontSize, 80, $FontSize, $DisplayEndDate, 'left', 0, $Fill);
 
 		// Shows gross profit percentage:
 		if ($_POST['ShowGPPercentages']=='Yes') {
@@ -328,21 +328,21 @@ If (isset($_POST['PrintPDF'])) {
 				$DisplayGPPercent = locale_number_format((($PriceList['price']-$PriceList['standardcost'])*100/$PriceList['price']), 2) . '%';
 			}
 			$pdf->addTextWrap($Page_Width-$Right_Margin-128, $YPos-$FontSize, 32, $FontSize,
-				$DisplayGPPercent, 'right', 0, $fill);
+				$DisplayGPPercent, 'right', 0, $Fill);
 		} else {
-			$pdf->addTextWrap($Page_Width-$Right_Margin-128, $YPos-$FontSize, 32, $FontSize, '', 'right', 0, $fill);
+			$pdf->addTextWrap($Page_Width-$Right_Margin-128, $YPos-$FontSize, 32, $FontSize, '', 'right', 0, $Fill);
 		}
 
 		// Displays unit price:
 		$pdf->addTextWrap($Page_Width-$Right_Margin-50, $YPos-$FontSize, 50, $FontSize,
-			locale_number_format($PriceList['price'],$PriceList['decimalplaces']), 'right', 0, $fill);
+			locale_number_format($PriceList['price'],$PriceList['decimalplaces']), 'right', 0, $Fill);
 
 		if ($_POST['CustomerSpecials']=='Customer Special Prices Only') {
 			/*Need to show to which branch the price relates */
 			if ($PriceList['branchcode']!='') {
-				$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, $PriceList['brname'], 'left', 0, $fill);
+				$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, $PriceList['brname'], 'left', 0, $Fill);
 			} else {
-				$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, _('All'), 'left', 0, $fill);
+				$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, _('All'), 'left', 0, $Fill);
 			}
 			$YPos -= $FontSize;// End-of-line line-feed.
 
@@ -351,34 +351,34 @@ If (isset($_POST['PrintPDF'])) {
 
 			// Prints item image:
 			$SupportedImgExt = array('png','jpg','jpeg');
-			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+			$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 			$YPosImage = $YPos;// Initializes the image bottom $YPos.
-			if (file_exists($imagefile) ) {
+			if (file_exists($ImageFile) ) {
 				if ($YPos-36 < $Bottom_Margin) {// If the image bottom reaches the bottom margin, do PageHeader().
 					PageHeader();
 				}
-				$LeftOvers = $pdf->Image($imagefile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
+				$LeftOvers = $pdf->Image($ImageFile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
 				$YPosImage = $YPos-36;// Stores the $YPos of the image bottom (see bottom).
 			}
 			// Prints stockmaster.longdescription:
 			$XPos = $Left_Margin+80;// Takes out this calculation from the loop.
 			$Width = $Page_Width-$Left_Margin-$Right_Margin-$XPos;// Takes out this calculation from the loop.
 			$FontSize2 = $FontSize*0.80;// Font size and line height of Full Description section.
-			PrintDetail($pdf,$PriceList['longdescription'],$Bottom_Margin,'PageHeader',null,$XPos,$YPos,$Width,$FontSize2, 'j', 0, $fill);
+			PrintDetail($pdf,$PriceList['longdescription'],$Bottom_Margin,'PageHeader',null,$XPos,$YPos,$Width,$FontSize2, 'j', 0, $Fill);
 
 			// Assigns to $YPos the lowest $YPos value between the image and the description:
 			$YPos = min($YPosImage, $YPos);
 			$YPos -= $FontSize;// Jumps additional line after the image and the description.
 		} else {
-			$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, '', 'left', 0, $fill);
+			$pdf->addTextWrap($Left_Margin+425, $YPos-$FontSize, 50, $FontSize, '', 'left', 0, $Fill);
 			$YPos -= $FontSize;// End-of-line line-feed.
 
 		}/* Endif full descriptions*/
 
-		if ($YPos < $Bottom_Margin + $line_height) {
+		if ($YPos < $Bottom_Margin + $LineHeight) {
 			PageHeader();
 		}
-		$fill = !$fill;
+		$Fill = !$Fill;
 	} /*end inventory valn while loop */
 
 	// Warns if obsolete items are included:
@@ -433,21 +433,21 @@ If (isset($_POST['PrintPDF'])) {
 		</tr>
 		<tr><td>', _('For Sales Type/Price List'), ':</td>
 			 <td><select name="SalesType">';
-	$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-	$SalesTypesResult=DB_query($sql);
+	$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
+	$SalesTypesResult=DB_query($SQL);
 
-	while ($myrow=DB_fetch_array($SalesTypesResult)) {
-		echo '<option value="', $myrow['typeabbrev'], '">', $myrow['sales_type'], '</option>';
+	while ($MyRow=DB_fetch_array($SalesTypesResult)) {
+		echo '<option value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	}
 	echo '</select></td>
 		</tr>
 		<tr><td>', _('For Currency'), ':</td>
 			 <td><select name="Currency">';
-	$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
-	$CurrencyResult=DB_query($sql);
+	$SQL = "SELECT currabrev, currency FROM currencies ORDER BY currency";
+	$CurrencyResult=DB_query($SQL);
 	echo '<option selected="selected" value="All">', _('All'), '</option>';
-	while ($myrow=DB_fetch_array($CurrencyResult)) {
-		echo '<option value="', $myrow['currabrev'], '">', $myrow['currency'], '</option>';
+	while ($MyRow=DB_fetch_array($CurrencyResult)) {
+		echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 	}
 	echo '</select>
 			</td>

@@ -104,7 +104,7 @@ if (isset($_POST['View'])) {
 	SCRIPT USAGE
 	***************************************************************/
 	
-	$sql="SELECT scripttitle, 
+	$SQL="SELECT scripttitle, 
 			COUNT(scripttitle) AS numscripts, 
 			SUM(secondsrunning) AS sumseconds
 		FROM auditscripts
@@ -113,7 +113,7 @@ if (isset($_POST['View'])) {
 		. $ContainingText
 		.' GROUP BY scripttitle';
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'General Script Usage' .'</strong></p>';
 	echo '<div>';
@@ -130,20 +130,20 @@ if (isset($_POST['View'])) {
 	$TotalScripts = 0;
 	$TotalSeconds = 0;
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		$k = StartEvenOrOddRow($k);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				$myrow['scripttitle'], 
-				locale_number_format($myrow['numscripts'],0),
-				locale_number_format($myrow['sumseconds'],5),
-				locale_number_format($myrow['sumseconds']/$myrow['numscripts'],5)
+				$MyRow['scripttitle'], 
+				locale_number_format($MyRow['numscripts'],0),
+				locale_number_format($MyRow['sumseconds'],5),
+				locale_number_format($MyRow['sumseconds']/$MyRow['numscripts'],5)
 				);
-		$TotalScripts += $myrow['numscripts'];
-		$TotalSeconds += $myrow['sumseconds'];
+		$TotalScripts += $MyRow['numscripts'];
+		$TotalSeconds += $MyRow['sumseconds'];
 	}
 	printf('<td>%s</td>
 		<td class="number">%s</td>
@@ -161,7 +161,7 @@ if (isset($_POST['View'])) {
 	USERS USAGE
 	***************************************************************/
 	
-	$sql="SELECT userid, 
+	$SQL="SELECT userid, 
 			COUNT(scripttitle) AS numscripts, 
 			SUM(secondsrunning) AS sumseconds
 		FROM auditscripts
@@ -170,7 +170,7 @@ if (isset($_POST['View'])) {
 		. $ContainingText
 		.' GROUP BY userid';
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<p class="page_title_text" align="center"><strong>' . 'General Users Usage' .'</strong></p>';
 	echo '<div>';
@@ -187,20 +187,20 @@ if (isset($_POST['View'])) {
 	$TotalScripts = 0;
 	$TotalSeconds = 0;
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		$k = StartEvenOrOddRow($k);
 		printf('<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>', 
-				$myrow['userid'], 
-				locale_number_format($myrow['numscripts'],0),
-				locale_number_format($myrow['sumseconds'],5),
-				locale_number_format($myrow['sumseconds']/$myrow['numscripts'],5)
+				$MyRow['userid'], 
+				locale_number_format($MyRow['numscripts'],0),
+				locale_number_format($MyRow['sumseconds'],5),
+				locale_number_format($MyRow['sumseconds']/$MyRow['numscripts'],5)
 				);
-		$TotalScripts += $myrow['numscripts'];
-		$TotalSeconds += $myrow['sumseconds'];
+		$TotalScripts += $MyRow['numscripts'];
+		$TotalSeconds += $MyRow['sumseconds'];
 	}
 	printf('<td>%s</td>
 		<td class="number">%s</td>
@@ -218,7 +218,7 @@ if (isset($_POST['View'])) {
 	QUERY DETAILED
 	***************************************************************/
 	if ($_POST['DetailedReport'] == "Yes"){
-		$sql="SELECT executiondate,
+		$SQL="SELECT executiondate,
 				userid,
 				secondsrunning,
 				scripttitle
@@ -227,7 +227,7 @@ if (isset($_POST['View'])) {
 			. $UserSql
 			. $ContainingText;
 
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 		echo '<p class="page_title_text" align="center"><strong>' . 'Detailed Script usage' .'</strong></p>';
 		echo '<div>';
@@ -242,17 +242,17 @@ if (isset($_POST['View'])) {
 		$k = 0; //row colour counter
 		$i = 1;
 
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
 			printf('<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>
 					<td>%s</td>
 					</tr>', 
-					$myrow['executiondate'], 
-					$myrow['userid'], 
-					locale_number_format($myrow['secondsrunning'],5),
-					$myrow['scripttitle']
+					$MyRow['executiondate'], 
+					$MyRow['userid'], 
+					locale_number_format($MyRow['secondsrunning'],5),
+					$MyRow['scripttitle']
 					);
 		}
 		echo '</table></div>';

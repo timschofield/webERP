@@ -37,7 +37,7 @@ include('includes/KLPrices.php');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
+$PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 $yesterday_year = date('Y', strtotime("-1 days"));
 
 
@@ -227,51 +227,51 @@ if ($ProcessSection02){
 	}
 /*
 	if ($KL_SystemAdmin){
-		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath);
+		POStatusControl("PACKAGING","ON PRODUCTION", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath);
+		POStatusControl("FORSALE","ON PRODUCTION", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath);
+		POStatusControl("OTHERS","ON PRODUCTION", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath);
+		POStatusControl("","FINISHED BUT NOT PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
+		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
+		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
+		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath);
+		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $periodnow, $RootPath);
+		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $periodnow, $RootPath);
+		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0, $periodnow, $RootPath);
+		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $periodnow, $RootPath);
+		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
+		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
+		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath);
+		POStatusControl("","SHIPPED IN TRANSIT", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath);
+		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","RECEIVED IN KANTOR", 0, $periodnow, $RootPath);
+		POStatusControl("","RECEIVED IN KANTOR", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 */	
 	if ($KL_SystemAdmin OR
 		$KL_OperationalManager){
-		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
+		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
+		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
+		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 }
@@ -357,7 +357,7 @@ if ($ProcessSection03){
 					125000,
 					 10000,
 					 50000,
-					$periodnow, $KL_SystemAdmin);
+					$PeriodNow, $KL_SystemAdmin);
 		$NumberOfTestExecuted++;
 	}
 	if ($KL_SystemAdmin){
@@ -381,12 +381,12 @@ include ('includes/footer.php');
 /******************************************************************************************************/
 /*      FUNCTIONS ASSOCIATED
 /******************************************************************************************************/
-function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
+function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 /* EXPLAIN SQL 2014-05-21	*/
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 
-	if ($typereport == "Shop"){
+	if ($Typereport == "Shop"){
 		$BrandText= BrandTextFromCode($Brand);
 		$SQL = "SELECT debtorsmaster.debtorno,
 					debtorsmaster.name,
@@ -501,13 +501,13 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $BrandText . " " . $typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
 					<tr>
 						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . $typereport . '</th>
+						<th class="SortedColumn">' . $Typereport . '</th>
 						<th class="SortedColumn">' . _('Name') . '</th>
 						<th class="SortedColumn">' . 'IDR/Invoice.'. '</th>
 						<th class="SortedColumn">' . '# Invoice/Day'. '</th>
@@ -526,7 +526,7 @@ function AverageCustomerBehaviourByValueInvoice($typereport, $Brand, $NumDaysA){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			if ($typereport == "Shop"){
+			if ($Typereport == "Shop"){
 				$Code = $MyRow['debtorno'];
 				$Name = $MyRow['name'];
 			}else{
@@ -2704,26 +2704,26 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 	$ShowHeader = TRUE;
 	$i = 1;
 	
-	$totalqty_box_l   = 0;
-	$totalsales_box_l = 0;
-	$totalqty_box_m   = 0;
-	$totalsales_box_m = 0;
-	$totalqty_box_s   = 0;
-	$totalsales_box_s = 0;
+	$Totalqty_box_l   = 0;
+	$Totalsales_box_l = 0;
+	$Totalqty_box_m   = 0;
+	$Totalsales_box_m = 0;
+	$Totalqty_box_s   = 0;
+	$Totalsales_box_s = 0;
 
-	$totalqty_bag_l   = 0;
-	$totalsales_bag_l = 0;
-	$totalqty_bag_m   = 0;
-	$totalsales_bag_m = 0;
-	$totalqty_bag_s   = 0;
-	$totalsales_bag_s = 0;
+	$Totalqty_bag_l   = 0;
+	$Totalsales_bag_l = 0;
+	$Totalqty_bag_m   = 0;
+	$Totalsales_bag_m = 0;
+	$Totalqty_bag_s   = 0;
+	$Totalsales_bag_s = 0;
 	
-	$totalqty_shopping_l   = 0;
-	$totalsales_shopping_l = 0;
-	$totalqty_shopping_m    = 0;
-	$totalsales_shopping_m  = 0;
-	$totalqty_shopping_s    = 0;
-	$totalsales_shopping_s  = 0;
+	$Totalqty_shopping_l   = 0;
+	$Totalsales_shopping_l = 0;
+	$Totalqty_shopping_m    = 0;
+	$Totalsales_shopping_m  = 0;
+	$Totalqty_shopping_s    = 0;
+	$Totalsales_shopping_s  = 0;
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -2838,26 +2838,26 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 					locale_number_format_zero_blank($MyRow['sales_shopping_s'],0),
 					locale_number_format_zero_blank($MyRow['qty_shopping_s']/($MyRow['sales_shopping_s']/$NumDays),0)
 					);
-			$totalqty_box_l   = $totalqty_box_l + $MyRow['qty_box_l'];
-			$totalsales_box_l = $totalsales_box_l + $MyRow['sales_box_l'];
-			$totalqty_box_m   = $totalqty_box_m + $MyRow['qty_box_m'];
-			$totalsales_box_m = $totalsales_box_m + $MyRow['sales_box_m'];
-			$totalqty_box_s   = $totalqty_box_s + $MyRow['qty_box_s'];
-			$totalsales_box_s = $totalsales_box_s + $MyRow['sales_box_s'];
+			$Totalqty_box_l   = $Totalqty_box_l + $MyRow['qty_box_l'];
+			$Totalsales_box_l = $Totalsales_box_l + $MyRow['sales_box_l'];
+			$Totalqty_box_m   = $Totalqty_box_m + $MyRow['qty_box_m'];
+			$Totalsales_box_m = $Totalsales_box_m + $MyRow['sales_box_m'];
+			$Totalqty_box_s   = $Totalqty_box_s + $MyRow['qty_box_s'];
+			$Totalsales_box_s = $Totalsales_box_s + $MyRow['sales_box_s'];
 
-			$totalqty_bag_l   = $totalqty_bag_l + $MyRow['qty_bag_l'];
-			$totalsales_bag_l = $totalsales_bag_l + $MyRow['sales_bag_l'];
-			$totalqty_bag_m   = $totalqty_bag_m + $MyRow['qty_bag_m'];
-			$totalsales_bag_m = $totalsales_bag_m + $MyRow['sales_bag_m'];
-			$totalqty_bag_s   = $totalqty_bag_s + $MyRow['qty_bag_s'];
-			$totalsales_bag_s = $totalsales_bag_s + $MyRow['sales_bag_s'];
+			$Totalqty_bag_l   = $Totalqty_bag_l + $MyRow['qty_bag_l'];
+			$Totalsales_bag_l = $Totalsales_bag_l + $MyRow['sales_bag_l'];
+			$Totalqty_bag_m   = $Totalqty_bag_m + $MyRow['qty_bag_m'];
+			$Totalsales_bag_m = $Totalsales_bag_m + $MyRow['sales_bag_m'];
+			$Totalqty_bag_s   = $Totalqty_bag_s + $MyRow['qty_bag_s'];
+			$Totalsales_bag_s = $Totalsales_bag_s + $MyRow['sales_bag_s'];
 
-			$totalqty_shopping_l    = $totalqty_shopping_l + $MyRow['qty_shopping_l'];
-			$totalsales_shopping_l  = $totalsales_shopping_l + $MyRow['sales_shopping_l'];
-			$totalqty_shopping_m    = $totalqty_shopping_m + $MyRow['qty_shopping_m'];
-			$totalsales_shopping_m  = $totalsales_shopping_m + $MyRow['sales_shopping_m'];
-			$totalqty_shopping_s    = $totalqty_shopping_s + $MyRow['qty_shopping_s'];
-			$totalsales_shopping_s  = $totalsales_shopping_s + $MyRow['sales_shopping_s'];
+			$Totalqty_shopping_l    = $Totalqty_shopping_l + $MyRow['qty_shopping_l'];
+			$Totalsales_shopping_l  = $Totalsales_shopping_l + $MyRow['sales_shopping_l'];
+			$Totalqty_shopping_m    = $Totalqty_shopping_m + $MyRow['qty_shopping_m'];
+			$Totalsales_shopping_m  = $Totalsales_shopping_m + $MyRow['sales_shopping_m'];
+			$Totalqty_shopping_s    = $Totalqty_shopping_s + $MyRow['qty_shopping_s'];
+			$Totalsales_shopping_s  = $Totalsales_shopping_s + $MyRow['sales_shopping_s'];
 
 			$i++;
 		}
@@ -2893,33 +2893,33 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 					<td class="number">%s</td>
 					</tr>', 
 					'TOTAL', 
-					locale_number_format_zero_blank($totalqty_box_l,0), 
-					locale_number_format_zero_blank($totalsales_box_l,0),
-					locale_number_format_zero_blank($totalqty_box_l/($totalsales_box_l/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_box_m,0), 
-					locale_number_format_zero_blank($totalsales_box_m,0),
-					locale_number_format_zero_blank($totalqty_box_m/($totalsales_box_m/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_box_s,0), 
-					locale_number_format_zero_blank($totalsales_box_s,0),
-					locale_number_format_zero_blank($totalqty_box_s/($totalsales_box_s/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_l,0), 
-					locale_number_format_zero_blank($totalsales_bag_l,0),
-					locale_number_format_zero_blank($totalqty_bag_l/($totalsales_bag_l/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_m,0), 
-					locale_number_format_zero_blank($totalsales_bag_m,0),
-					locale_number_format_zero_blank($totalqty_bag_m/($totalsales_bag_m/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_s,0), 
-					locale_number_format_zero_blank($totalsales_bag_s,0),
-					locale_number_format_zero_blank($totalqty_bag_s/($totalsales_bag_s/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_l,0), 
-					locale_number_format_zero_blank($totalsales_shopping_l,0),
-					locale_number_format_zero_blank($totalqty_shopping_l/($totalsales_shopping_l/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_m,0), 
-					locale_number_format_zero_blank($totalsales_shopping_m,0),
-					locale_number_format_zero_blank($totalqty_shopping_m/($totalsales_shopping_m/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_s,0), 
-					locale_number_format_zero_blank($totalsales_shopping_s,0),
-					locale_number_format_zero_blank($totalqty_shopping_s/($totalsales_shopping_s/$NumDays),0)
+					locale_number_format_zero_blank($Totalqty_box_l,0), 
+					locale_number_format_zero_blank($Totalsales_box_l,0),
+					locale_number_format_zero_blank($Totalqty_box_l/($Totalsales_box_l/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_box_m,0), 
+					locale_number_format_zero_blank($Totalsales_box_m,0),
+					locale_number_format_zero_blank($Totalqty_box_m/($Totalsales_box_m/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_box_s,0), 
+					locale_number_format_zero_blank($Totalsales_box_s,0),
+					locale_number_format_zero_blank($Totalqty_box_s/($Totalsales_box_s/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_l,0), 
+					locale_number_format_zero_blank($Totalsales_bag_l,0),
+					locale_number_format_zero_blank($Totalqty_bag_l/($Totalsales_bag_l/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_m,0), 
+					locale_number_format_zero_blank($Totalsales_bag_m,0),
+					locale_number_format_zero_blank($Totalqty_bag_m/($Totalsales_bag_m/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_s,0), 
+					locale_number_format_zero_blank($Totalsales_bag_s,0),
+					locale_number_format_zero_blank($Totalqty_bag_s/($Totalsales_bag_s/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_shopping_l,0), 
+					locale_number_format_zero_blank($Totalsales_shopping_l,0),
+					locale_number_format_zero_blank($Totalqty_shopping_l/($Totalsales_shopping_l/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_shopping_m,0), 
+					locale_number_format_zero_blank($Totalsales_shopping_m,0),
+					locale_number_format_zero_blank($Totalqty_shopping_m/($Totalsales_shopping_m/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_shopping_s,0), 
+					locale_number_format_zero_blank($Totalsales_shopping_s,0),
+					locale_number_format_zero_blank($Totalqty_shopping_s/($Totalsales_shopping_s/$NumDays),0)
 					);
 			echo '</tbody></table>
 				</div>';
@@ -3025,26 +3025,26 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 	$ShowHeader = TRUE;
 	$i = 1;
 	
-	$totalqty_box_l   = 0;
-	$totalsales_box_l = 0;
-	$totalqty_box_m   = 0;
-	$totalsales_box_m = 0;
-	$totalqty_box_s   = 0;
-	$totalsales_box_s = 0;
+	$Totalqty_box_l   = 0;
+	$Totalsales_box_l = 0;
+	$Totalqty_box_m   = 0;
+	$Totalsales_box_m = 0;
+	$Totalqty_box_s   = 0;
+	$Totalsales_box_s = 0;
 
-	$totalqty_bag_l   = 0;
-	$totalsales_bag_l = 0;
-	$totalqty_bag_m   = 0;
-	$totalsales_bag_m = 0;
-	$totalqty_bag_s   = 0;
-	$totalsales_bag_s = 0;
+	$Totalqty_bag_l   = 0;
+	$Totalsales_bag_l = 0;
+	$Totalqty_bag_m   = 0;
+	$Totalsales_bag_m = 0;
+	$Totalqty_bag_s   = 0;
+	$Totalsales_bag_s = 0;
 	
-	$totalqty_shopping_l    = 0;
-	$totalsales_shopping_l  = 0;
-	$totalqty_shopping_m    = 0;
-	$totalsales_shopping_m  = 0;
-	$totalqty_shopping_s    = 0;
-	$totalsales_shopping_s  = 0;
+	$Totalqty_shopping_l    = 0;
+	$Totalsales_shopping_l  = 0;
+	$Totalqty_shopping_m    = 0;
+	$Totalsales_shopping_m  = 0;
+	$Totalqty_shopping_s    = 0;
+	$Totalsales_shopping_s  = 0;
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -3159,26 +3159,26 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 					locale_number_format_zero_blank($MyRow['sales_shopping_s'],0),
 					locale_number_format_zero_blank($MyRow['qty_shopping_s']/($MyRow['sales_shopping_s']/$NumDays),0)
 					);
-			$totalqty_box_l   = $totalqty_box_l + $MyRow['qty_box_l'];
-			$totalsales_box_l = $totalsales_box_l + $MyRow['sales_box_l'];
-			$totalqty_box_m   = $totalqty_box_m + $MyRow['qty_box_m'];
-			$totalsales_box_m = $totalsales_box_m + $MyRow['sales_box_m'];
-			$totalqty_box_s   = $totalqty_box_s + $MyRow['qty_box_s'];
-			$totalsales_box_s = $totalsales_box_s + $MyRow['sales_box_s'];
+			$Totalqty_box_l   = $Totalqty_box_l + $MyRow['qty_box_l'];
+			$Totalsales_box_l = $Totalsales_box_l + $MyRow['sales_box_l'];
+			$Totalqty_box_m   = $Totalqty_box_m + $MyRow['qty_box_m'];
+			$Totalsales_box_m = $Totalsales_box_m + $MyRow['sales_box_m'];
+			$Totalqty_box_s   = $Totalqty_box_s + $MyRow['qty_box_s'];
+			$Totalsales_box_s = $Totalsales_box_s + $MyRow['sales_box_s'];
 
-			$totalqty_bag_l   = $totalqty_bag_l + $MyRow['qty_bag_l'];
-			$totalsales_bag_l = $totalsales_bag_l + $MyRow['sales_bag_l'];
-			$totalqty_bag_m   = $totalqty_bag_m + $MyRow['qty_bag_m'];
-			$totalsales_bag_m = $totalsales_bag_m + $MyRow['sales_bag_m'];
-			$totalqty_bag_s   = $totalqty_bag_s + $MyRow['qty_bag_s'];
-			$totalsales_bag_s = $totalsales_bag_s + $MyRow['sales_bag_s'];
+			$Totalqty_bag_l   = $Totalqty_bag_l + $MyRow['qty_bag_l'];
+			$Totalsales_bag_l = $Totalsales_bag_l + $MyRow['sales_bag_l'];
+			$Totalqty_bag_m   = $Totalqty_bag_m + $MyRow['qty_bag_m'];
+			$Totalsales_bag_m = $Totalsales_bag_m + $MyRow['sales_bag_m'];
+			$Totalqty_bag_s   = $Totalqty_bag_s + $MyRow['qty_bag_s'];
+			$Totalsales_bag_s = $Totalsales_bag_s + $MyRow['sales_bag_s'];
 
-			$totalqty_shopping_l    = $totalqty_shopping_l + $MyRow['qty_shopping_l'];
-			$totalsales_shopping_l  = $totalsales_shopping_l + $MyRow['sales_shopping_l'];
-			$totalqty_shopping_m    = $totalqty_shopping_m + $MyRow['qty_shopping_m'];
-			$totalsales_shopping_m  = $totalsales_shopping_m + $MyRow['sales_shopping_m'];
-			$totalqty_shopping_s    = $totalqty_shopping_s + $MyRow['qty_shopping_s'];
-			$totalsales_shopping_s  = $totalsales_shopping_s + $MyRow['sales_shopping_s'];
+			$Totalqty_shopping_l    = $Totalqty_shopping_l + $MyRow['qty_shopping_l'];
+			$Totalsales_shopping_l  = $Totalsales_shopping_l + $MyRow['sales_shopping_l'];
+			$Totalqty_shopping_m    = $Totalqty_shopping_m + $MyRow['qty_shopping_m'];
+			$Totalsales_shopping_m  = $Totalsales_shopping_m + $MyRow['sales_shopping_m'];
+			$Totalqty_shopping_s    = $Totalqty_shopping_s + $MyRow['qty_shopping_s'];
+			$Totalsales_shopping_s  = $Totalsales_shopping_s + $MyRow['sales_shopping_s'];
 
 			$i++;
 		}
@@ -3214,33 +3214,33 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 					<td class="number">%s</td>
 					</tr>', 
 					'TOTAL', 
-					locale_number_format_zero_blank($totalqty_box_l,0), 
-					locale_number_format_zero_blank($totalsales_box_l,0),
-					locale_number_format_zero_blank($totalqty_box_l/($totalsales_box_l/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_box_m,0), 
-					locale_number_format_zero_blank($totalsales_box_m,0),
-					locale_number_format_zero_blank($totalqty_box_m/($totalsales_box_m/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_box_s,0), 
-					locale_number_format_zero_blank($totalsales_box_s,0),
-					locale_number_format_zero_blank($totalqty_box_s/($totalsales_box_s/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_l,0), 
-					locale_number_format_zero_blank($totalsales_bag_l,0),
-					locale_number_format_zero_blank($totalqty_bag_l/($totalsales_bag_l/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_m,0), 
-					locale_number_format_zero_blank($totalsales_bag_m,0),
-					locale_number_format_zero_blank($totalqty_bag_m/($totalsales_bag_m/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_s,0), 
-					locale_number_format_zero_blank($totalsales_bag_s,0),
-					locale_number_format_zero_blank($totalqty_bag_s/($totalsales_bag_s/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_l,0), 
-					locale_number_format_zero_blank($totalsales_shopping_l,0),
-					locale_number_format_zero_blank($totalqty_shopping_l/($totalsales_shopping_l/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_m,0), 
-					locale_number_format_zero_blank($totalsales_shopping_m,0),
-					locale_number_format_zero_blank($totalqty_shopping_m/($totalsales_shopping_m/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_s,0), 
-					locale_number_format_zero_blank($totalsales_shopping_s,0),
-					locale_number_format_zero_blank($totalqty_shopping_s/($totalsales_shopping_s/$NumDays),0)
+					locale_number_format_zero_blank($Totalqty_box_l,0), 
+					locale_number_format_zero_blank($Totalsales_box_l,0),
+					locale_number_format_zero_blank($Totalqty_box_l/($Totalsales_box_l/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_box_m,0), 
+					locale_number_format_zero_blank($Totalsales_box_m,0),
+					locale_number_format_zero_blank($Totalqty_box_m/($Totalsales_box_m/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_box_s,0), 
+					locale_number_format_zero_blank($Totalsales_box_s,0),
+					locale_number_format_zero_blank($Totalqty_box_s/($Totalsales_box_s/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_l,0), 
+					locale_number_format_zero_blank($Totalsales_bag_l,0),
+					locale_number_format_zero_blank($Totalqty_bag_l/($Totalsales_bag_l/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_m,0), 
+					locale_number_format_zero_blank($Totalsales_bag_m,0),
+					locale_number_format_zero_blank($Totalqty_bag_m/($Totalsales_bag_m/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_s,0), 
+					locale_number_format_zero_blank($Totalsales_bag_s,0),
+					locale_number_format_zero_blank($Totalqty_bag_s/($Totalsales_bag_s/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_shopping_l,0), 
+					locale_number_format_zero_blank($Totalsales_shopping_l,0),
+					locale_number_format_zero_blank($Totalqty_shopping_l/($Totalsales_shopping_l/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_shopping_m,0), 
+					locale_number_format_zero_blank($Totalsales_shopping_m,0),
+					locale_number_format_zero_blank($Totalqty_shopping_m/($Totalsales_shopping_m/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_shopping_s,0), 
+					locale_number_format_zero_blank($Totalsales_shopping_s,0),
+					locale_number_format_zero_blank($Totalqty_shopping_s/($Totalsales_shopping_s/$NumDays),0)
 					);
 			echo '</tbody></table>
 				</div>';
@@ -3429,15 +3429,15 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 	$ShowHeader = TRUE;
 	$i = 1;
 	
-	$totalqty_bag_l   = 0;
-	$totalsales_bag_l = 0;
-	$totalqty_bag_m   = 0;
-	$totalsales_bag_m = 0;
-	$totalqty_bag_s   = 0;
-	$totalsales_bag_s = 0;
+	$Totalqty_bag_l   = 0;
+	$Totalsales_bag_l = 0;
+	$Totalqty_bag_m   = 0;
+	$Totalsales_bag_m = 0;
+	$Totalqty_bag_s   = 0;
+	$Totalsales_bag_s = 0;
 	
-	$totalqty_shopping_m    = 0;
-	$totalsales_shopping_m  = 0;
+	$Totalqty_shopping_m    = 0;
+	$Totalsales_shopping_m  = 0;
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -3503,15 +3503,15 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 					locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0)
 					);
 
-			$totalqty_bag_l   = $totalqty_bag_l + $MyRow['qty_bag_l'];
-			$totalsales_bag_l = $totalsales_bag_l + $MyRow['sales_bag_l'];
-			$totalqty_bag_m   = $totalqty_bag_m + $MyRow['qty_bag_m'];
-			$totalsales_bag_m = $totalsales_bag_m + $MyRow['sales_bag_m'];
-			$totalqty_bag_s   = $totalqty_bag_s + $MyRow['qty_bag_s'];
-			$totalsales_bag_s = $totalsales_bag_s + $MyRow['sales_bag_s'];
+			$Totalqty_bag_l   = $Totalqty_bag_l + $MyRow['qty_bag_l'];
+			$Totalsales_bag_l = $Totalsales_bag_l + $MyRow['sales_bag_l'];
+			$Totalqty_bag_m   = $Totalqty_bag_m + $MyRow['qty_bag_m'];
+			$Totalsales_bag_m = $Totalsales_bag_m + $MyRow['sales_bag_m'];
+			$Totalqty_bag_s   = $Totalqty_bag_s + $MyRow['qty_bag_s'];
+			$Totalsales_bag_s = $Totalsales_bag_s + $MyRow['sales_bag_s'];
 
-			$totalqty_shopping_m    = $totalqty_shopping_m + $MyRow['qty_shopping_m'];
-			$totalsales_shopping_m  = $totalsales_shopping_m + $MyRow['sales_shopping_m'];
+			$Totalqty_shopping_m    = $Totalqty_shopping_m + $MyRow['qty_shopping_m'];
+			$Totalsales_shopping_m  = $Totalsales_shopping_m + $MyRow['sales_shopping_m'];
 
 			$i++;
 		}
@@ -3532,18 +3532,18 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 					<td class="number">%s</td>
 					</tr>', 
 					'TOTAL', 
-					locale_number_format_zero_blank($totalqty_bag_l,0), 
-					locale_number_format_zero_blank($totalsales_bag_l,0),
-					locale_number_format_zero_blank($totalqty_bag_l/($totalsales_bag_l/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_m,0), 
-					locale_number_format_zero_blank($totalsales_bag_m,0),
-					locale_number_format_zero_blank($totalqty_bag_m/($totalsales_bag_m/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_bag_s,0), 
-					locale_number_format_zero_blank($totalsales_bag_s,0),
-					locale_number_format_zero_blank($totalqty_bag_s/($totalsales_bag_s/$NumDays),0),
-					locale_number_format_zero_blank($totalqty_shopping_m,0), 
-					locale_number_format_zero_blank($totalsales_shopping_m,0),
-					locale_number_format_zero_blank($totalqty_shopping_m/($totalsales_shopping_m/$NumDays),0)
+					locale_number_format_zero_blank($Totalqty_bag_l,0), 
+					locale_number_format_zero_blank($Totalsales_bag_l,0),
+					locale_number_format_zero_blank($Totalqty_bag_l/($Totalsales_bag_l/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_m,0), 
+					locale_number_format_zero_blank($Totalsales_bag_m,0),
+					locale_number_format_zero_blank($Totalqty_bag_m/($Totalsales_bag_m/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_bag_s,0), 
+					locale_number_format_zero_blank($Totalsales_bag_s,0),
+					locale_number_format_zero_blank($Totalqty_bag_s/($Totalsales_bag_s/$NumDays),0),
+					locale_number_format_zero_blank($Totalqty_shopping_m,0), 
+					locale_number_format_zero_blank($Totalsales_shopping_m,0),
+					locale_number_format_zero_blank($Totalqty_shopping_m/($Totalsales_shopping_m/$NumDays),0)
 					);
 			echo '</tbody></table>
 				</div>';
@@ -3551,13 +3551,13 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 	}
 }
 
-function PettyCashStatus($currency){
+function PettyCashStatus($Currency){
 
 	$SQL = "SELECT pcashdetails.tabcode, 	
 				SUM(pcashdetails.amount) as amount
 			FROM pcashdetails,pctabs	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
-				AND pctabs.currency = '". $currency ."'
+				AND pctabs.currency = '". $Currency ."'
 				AND pcashdetails.authorized != '0000-00-00'
 			GROUP BY pcashdetails.tabcode
 			HAVING ( SUM(pcashdetails.amount) <= -0.01
@@ -3565,7 +3565,7 @@ function PettyCashStatus($currency){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $currency . ' accounts'  . '</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $Currency . ' accounts'  . '</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3577,7 +3577,7 @@ function PettyCashStatus($currency){
 				</thead>
 				<tbody>';
 		$i = 1;
-		$total = 0;
+		$Total = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
@@ -3589,7 +3589,7 @@ function PettyCashStatus($currency){
 					locale_number_format($MyRow['amount'],0)
 					);
 			$i++;
-			$total = $total + $MyRow['amount'];
+			$Total = $Total + $MyRow['amount'];
 		}
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
@@ -3598,7 +3598,7 @@ function PettyCashStatus($currency){
 				</tr>', 
 				'', 
 				'Total', 
-				locale_number_format($total,0)
+				locale_number_format($Total,0)
 				);
 		
 		echo '</tbody></table>
@@ -3606,52 +3606,52 @@ function PettyCashStatus($currency){
 	}
 }
 
-function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
+function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 	
 	if ($NumDaysA == "YTD"){
 		// we need to translate YTD to a number of days
 		// As suggested by OpenAI ChatGPT ;-)
 		// Get the current timestamp
-		$current_timestamp = time();
+		$Current_timestamp = time();
 		// Extract the year of yesterday
-		$current_year = date('Y', strtotime("-1 days"));
+		$Current_year = date('Y', strtotime("-1 days"));
 		// Create a timestamp for the first day of the year
-		$first_day_timestamp = mktime(0, 0, 0, 1, 1, $current_year);
+		$first_day_timestamp = mktime(0, 0, 0, 1, 1, $Current_year);
 		// Calculate the number of seconds between the two timestamps
-		$seconds_diff = $current_timestamp - $first_day_timestamp;
+		$seconds_diff = $Current_timestamp - $first_day_timestamp;
 		// Calculate the number of days between the first day of the year and the current day
 		$NumDaysA = floor($seconds_diff / 86400);		
 
 		$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
-		$StartDateA = $current_year . '-01-01';
-		$YesterdayB = $typeperiod . substr($YesterdayA, 4, 6);
-		$StartDateB = $typeperiod . '-01-01';
-		$Title = _('Difference sales for ') . $typereport . " YTD (Year To Date) and same period in " . $typeperiod;
+		$StartDateA = $Current_year . '-01-01';
+		$YesterdayB = $Typeperiod . substr($YesterdayA, 4, 6);
+		$StartDateB = $Typeperiod . '-01-01';
+		$Title = _('Difference sales for ') . $Typereport . " YTD (Year To Date) and same period in " . $Typeperiod;
 		$TitleCurrent = $NumDaysA . ' Days This Year';
-		$TitlePrevious = $NumDaysA . ' Days '. $typeperiod;
+		$TitlePrevious = $NumDaysA . ' Days '. $Typeperiod;
 	}
 	else{
 		$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA));
-		if ($typeperiod == "YEAR"){
+		if ($Typeperiod == "YEAR"){
 			$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-365));
 			$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-365));
-			$Title = _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period last year";
+			$Title = _('Difference sales for ') . $Typereport . " during the last " . $NumDaysA . " days and same period last year";
 			$TitleCurrent = $NumDaysA . ' Days This Year';
 			$TitlePrevious = $NumDaysA . ' Days Last Year';
-		}elseif ($typeperiod == "IMMEDIATE"){
+		}elseif ($Typeperiod == "IMMEDIATE"){
 			$YesterdayB  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1-$NumDaysA));
 			$StartDateB = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-$NumDaysA));
-			$Title = _('Difference sales for ') . $typereport .  " during the last " . $NumDaysA . " days and previous immediate same period";
+			$Title = _('Difference sales for ') . $Typereport .  " during the last " . $NumDaysA . " days and previous immediate same period";
 			$TitleCurrent = $NumDaysA . ' Last Days';
 			$TitlePrevious = $NumDaysA . ' Previous Days';
 		}else{
 			// comparing with a fixed year
-			$YesterdayB  = $typeperiod . substr($YesterdayA, 4, 6);
+			$YesterdayB  = $Typeperiod . substr($YesterdayA, 4, 6);
 			$StartDateB = FormatDateForSQL(DateAdd(ConvertSQLDate($YesterdayB),'d',-$NumDaysA));
-			$Title = _('Difference sales for ') . $typereport . " during the last " . $NumDaysA . " days and same period in " . $typeperiod;
+			$Title = _('Difference sales for ') . $Typereport . " during the last " . $NumDaysA . " days and same period in " . $Typeperiod;
 			$TitleCurrent = $NumDaysA . ' Days This Year';
-			$TitlePrevious = $NumDaysA . ' Days '. $typeperiod;
+			$TitlePrevious = $NumDaysA . ' Days '. $Typeperiod;
 		}
 	}
 
@@ -3666,10 +3666,10 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 	$TotalNewRent = 0;
 	$TotalOldRent = 0;
 
-	if (($typereport == "Shop") OR ($typereport == "Online")){
+	if (($Typereport == "Shop") OR ($Typereport == "Online")){
 		$SQL = "SELECT debtorno,
 					name, ";
-		if ($typereport == "Shop"){
+		if ($Typereport == "Shop"){
 			$SQL = $SQL . "(SELECT locations.klyearlyrent 
 						FROM locations
 						WHERE locations.cashsalecustomer = debtorsmaster.debtorno
@@ -3694,7 +3694,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 							AND salesorders.orddate <= '". $YesterdayB . "'
 							AND salesorders.debtorno = debtorsmaster.debtorno) AS salesB
 				FROM debtorsmaster ";
-		if ($typereport == "Shop"){
+		if ($Typereport == "Shop"){
 			// retail shops or old retail shops
 			$SQL = $SQL .  "WHERE (debtorsmaster.typeid = 2 OR debtorsmaster.typeid = 11)  
 							ORDER BY (SELECT SUM(linenetprice)
@@ -3748,7 +3748,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 				<thead>
 					<tr>
 						<th class="SortedColumn">' . _('#') . '</th>
-						<th class="SortedColumn">' . $typereport . '</th>
+						<th class="SortedColumn">' . $Typereport . '</th>
 						<th class="SortedColumn">' . _('Name') . '</th>
 						<th class="SortedColumn">' . $TitleCurrent . '</th>
 						<th class="SortedColumn">' . $TitlePrevious . '</th>
@@ -3760,7 +3760,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			if (($typereport == "Shop") OR ($typereport == "Online")){
+			if (($Typereport == "Shop") OR ($Typereport == "Online")){
 				$Code = $MyRow['debtorno'];
 				$Name = $MyRow['name'];
 				if (($MyRow['salesA'] > 0) AND ($MyRow['yearlyrent'] > 0)){
@@ -3824,7 +3824,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 			$TotalRent = $TotalRent +($MyRow['yearlyrent']);
 			$TotalDateB = $TotalDateB +($MyRow['salesB']);
 		}
-		if ($typereport == "Shop"){
+		if ($Typereport == "Shop"){
 			$Percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
 			$Trend = " ";
 			if ($Percent > 0){
@@ -3892,7 +3892,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 						);
 			}
 		}
-		if (($typereport == "Shop") OR ($typereport == "Online")){
+		if (($Typereport == "Shop") OR ($Typereport == "Online")){
 			$Percent = (($TotalDateA)-($TotalDateB))/($TotalDateB) * 100;
 			$Trend = " ";
 			if ($Percent > 0){
@@ -3922,7 +3922,7 @@ function PeriodDifferenceSales($typeperiod, $typereport, $NumDaysA){
 		}
 		echo '</tbody></table>
 				</div>';
-		if (($typereport == "Shop") AND ($typeperiod == "YEAR")){
+		if (($Typereport == "Shop") AND ($Typeperiod == "YEAR")){
 			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $Percent);
 		}
 	}
@@ -4164,98 +4164,98 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 		$TotalIssuesWALLPAPER = 0;
 		$TotalIssuesDLL = 0;
 		$TotalIssues = 0;
-		foreach ($TableResult as $row) {
+		foreach ($TableResult as $Row) {
 			$TotalIssuesLocation = 0;
-			if (isset($row['AC'])){
-				$IssuesAC = $row['AC'];
+			if (isset($Row['AC'])){
+				$IssuesAC = $Row['AC'];
 				$TotalIssuesAC += $IssuesAC;
 				$TotalIssuesLocation += $IssuesAC;
 				$TotalIssues += $IssuesAC;
 			}else{
 				$IssuesAC = '';
 			}
-			if (isset($row['BOCOR'])){
-				$IssuesBOCOR = $row['BOCOR'];
+			if (isset($Row['BOCOR'])){
+				$IssuesBOCOR = $Row['BOCOR'];
 				$TotalIssuesBOCOR += $IssuesBOCOR;
 				$TotalIssuesLocation += $IssuesBOCOR;
 				$TotalIssues += $IssuesBOCOR;
 			}else{
 				$IssuesBOCOR = '';
 			}
-			if (isset($row['FURNITURE'])){
-				$IssuesFURNITURE = $row['FURNITURE'];
+			if (isset($Row['FURNITURE'])){
+				$IssuesFURNITURE = $Row['FURNITURE'];
 				$TotalIssuesFURNITURE += $IssuesFURNITURE;
 				$TotalIssuesLocation += $IssuesFURNITURE;
 				$TotalIssues += $IssuesFURNITURE;
 			}else{
 				$IssuesFURNITURE = '';
 			}
-			if (isset($row['IT'])){
-				$IssuesIT = $row['IT'];
+			if (isset($Row['IT'])){
+				$IssuesIT = $Row['IT'];
 				$TotalIssuesIT += $IssuesIT;
 				$TotalIssuesLocation += $IssuesIT;
 				$TotalIssues += $IssuesIT;
 			}else{
 				$IssuesIT = '';
 			}
-			if (isset($row['KANOPI'])){
-				$IssuesKANOPI = $row['KANOPI'];
+			if (isset($Row['KANOPI'])){
+				$IssuesKANOPI = $Row['KANOPI'];
 				$TotalIssuesKANOPI += $IssuesKANOPI;
 				$TotalIssuesLocation += $IssuesKANOPI;
 				$TotalIssues += $IssuesKANOPI;
 			}else{
 				$IssuesKANOPI = '';
 			}
-			if (isset($row['LAMPU'])){
-				$IssuesLAMPU = $row['LAMPU'];
+			if (isset($Row['LAMPU'])){
+				$IssuesLAMPU = $Row['LAMPU'];
 				$TotalIssuesLAMPU += $IssuesLAMPU;
 				$TotalIssuesLocation += $IssuesLAMPU;
 				$TotalIssues += $IssuesLAMPU;
 			}else{
 				$IssuesLAMPU = '';
 			}
-			if (isset($row['LISTRIK'])){
-				$IssuesLISTRIK = $row['LISTRIK'];
+			if (isset($Row['LISTRIK'])){
+				$IssuesLISTRIK = $Row['LISTRIK'];
 				$TotalIssuesLISTRIK += $IssuesLISTRIK;
 				$TotalIssuesLocation += $IssuesLISTRIK;
 				$TotalIssues += $IssuesLISTRIK;
 			}else{
 				$IssuesLISTRIK = '';
 			}
-			if (isset($row['PAINT'])){
-				$IssuesPAINT = $row['PAINT'];
+			if (isset($Row['PAINT'])){
+				$IssuesPAINT = $Row['PAINT'];
 				$TotalIssuesPAINT += $IssuesPAINT;
 				$TotalIssuesLocation += $IssuesPAINT;
 				$TotalIssues += $IssuesPAINT;
 			}else{
 				$IssuesPAINT = '';
 			}
-			if (isset($row['PINTUKACA'])){
-				$IssuesPINTUKACA = $row['PINTUKACA'];
+			if (isset($Row['PINTUKACA'])){
+				$IssuesPINTUKACA = $Row['PINTUKACA'];
 				$TotalIssuesPINTUKACA += $IssuesPINTUKACA;
 				$TotalIssuesLocation += $IssuesPINTUKACA;
 				$TotalIssues += $IssuesPINTUKACA;
 			}else{
 				$IssuesPINTUKACA = '';
 			}
-			if (isset($row['TOILET'])){
-				$IssuesTOILET = $row['TOILET'];
+			if (isset($Row['TOILET'])){
+				$IssuesTOILET = $Row['TOILET'];
 				$TotalIssuesTOILET += $IssuesTOILET;
 				$TotalIssuesLocation += $IssuesTOILET;
 				$TotalIssues += $IssuesTOILET;
 			}else{
 				$IssuesTOILET = '';
 			}
-			if (isset($row['WALLPAPER'])){
-				$IssuesWALLPAPER = $row['WALLPAPER'];
+			if (isset($Row['WALLPAPER'])){
+				$IssuesWALLPAPER = $Row['WALLPAPER'];
 				$TotalIssuesWALLPAPER += $IssuesWALLPAPER;
 				$TotalIssuesLocation += $IssuesWALLPAPER;
 				$TotalIssues += $IssuesWALLPAPER;
 			}else{
 				$IssuesWALLPAPER = '';
 			}
-			if (isset($row['_DLL'])){
-				$IssuesDLL = $row['_DLL'];
+			if (isset($Row['_DLL'])){
+				$IssuesDLL = $Row['_DLL'];
 				$TotalIssuesDLL += $IssuesDLL;
 				$TotalIssuesLocation += $IssuesDLL;
 				$TotalIssues += $IssuesDLL;
@@ -4278,7 +4278,7 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 					<td class="number">%s</td>
 					<td class="number">%s</td>
 					</tr>', 
-					$row['locationname'], 
+					$Row['locationname'], 
 					$IssuesAC, 
 					$IssuesBOCOR, 
 					$IssuesFURNITURE, 

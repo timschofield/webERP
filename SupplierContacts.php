@@ -60,7 +60,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedContact could also exist if submit had not been clicked this code would not run in this case 'cos submit is false of course see the delete code below*/
 
-		$sql = "UPDATE suppliercontacts SET position='" . $_POST['Position'] . "',
+		$SQL = "UPDATE suppliercontacts SET position='" . $_POST['Position'] . "',
 											tel='" . $_POST['Tel'] . "',
 											fax='" . $_POST['Fax'] . "',
 											email='" . $_POST['Email'] . "',
@@ -68,13 +68,13 @@ if (isset($_POST['submit'])) {
 				WHERE contact='".$SelectedContact."'
 				AND supplierid='".$SupplierID."'";
 
-		$msg = _('The supplier contact information has been updated');
+		$Msg = _('The supplier contact information has been updated');
 
 	} elseif ($InputError != 1) {
 
 	/*Selected contact is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new supplier  contacts form */
 
-		$sql = "INSERT INTO suppliercontacts (supplierid,
+		$SQL = "INSERT INTO suppliercontacts (supplierid,
 											contact,
 											position,
 											tel,
@@ -89,16 +89,16 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Email'] . "',
 					'" . $_POST['Mobile'] . "')";
 
-		$msg = _('The new supplier contact has been added to the database');
+		$Msg = _('The new supplier contact has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 	if ($InputError != 1) {
 		$ErrMsg = _('The supplier contact could not be inserted or updated because');
 		$DbgMsg = _('The SQL that was used but failed was');
 
-		$result = DB_query($sql, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 
 		unset($SelectedContact);
 		unset($_POST['Contact']);
@@ -110,14 +110,14 @@ if (isset($_POST['submit'])) {
 	}
 } elseif (isset($_GET['delete'])) {
 
-	$sql = "DELETE FROM suppliercontacts
+	$SQL = "DELETE FROM suppliercontacts
 			WHERE contact='".$SelectedContact."'
 			AND supplierid = '".$SupplierID."'";
 
 	$ErrMsg = _('The supplier contact could not be deleted because');
 	$DbgMsg = _('The SQL that was used but failed was');
 
-	$result = DB_query($sql, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 	echo '<br />' . _('Supplier contact has been deleted') . '<p />';
 
@@ -125,7 +125,7 @@ if (isset($_POST['submit'])) {
 
 
 if (!isset($SelectedContact)){
-	$sql = "SELECT suppliers.suppname,
+	$SQL = "SELECT suppliers.suppname,
 					contact,
 					position,
 					tel,
@@ -136,16 +136,16 @@ if (!isset($SelectedContact)){
 				WHERE suppliercontacts.supplierid=suppliers.supplierid
 				AND suppliercontacts.supplierid = '".$SupplierID."'";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
-	if (DB_num_rows($result)>0){
+	if (DB_num_rows($Result)>0){
 
-		$myrow = DB_fetch_array($result);
+		$MyRow = DB_fetch_array($Result);
 
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $myrow['suppname'] . '</h3></th>
+					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $MyRow['suppname'] . '</h3></th>
 				</tr>
 				<tr>
 				<th class="ascending">' . _('Name') . '</th>
@@ -165,19 +165,19 @@ if (!isset($SelectedContact)){
 					<td><a href="mailto:%s">%s</a></td>
 					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s">' . _('Edit') . '</a></td>
 					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s&amp;delete=yes" onclick="return confirm(\''  . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete') . '</a></td></tr>',
-					$myrow['contact'],
-					$myrow['position'],
-					$myrow['tel'],
-					$myrow['fax'],
-					$myrow['email'],
-					$myrow['email'],
+					$MyRow['contact'],
+					$MyRow['position'],
+					$MyRow['tel'],
+					$MyRow['fax'],
+					$MyRow['email'],
+					$MyRow['email'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
 					$SupplierID,
-					$myrow['contact'],
+					$MyRow['contact'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?',
 					$SupplierID,
-					$myrow['contact']);
-		} while ($myrow = DB_fetch_array($result));
+					$MyRow['contact']);
+		} while ($MyRow = DB_fetch_array($Result));
         echo '</tbody></table><br />';
 	} else {
 		prnMsg(_('There are no contacts defined for this supplier'),'info');
@@ -204,7 +204,7 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedContact)) {
 		//editing an existing contact
 
-		$sql = "SELECT contact,
+		$SQL = "SELECT contact,
 						position,
 						tel,
 						fax,
@@ -214,15 +214,15 @@ if (! isset($_GET['delete'])) {
 					WHERE contact='" . $SelectedContact . "'
 					AND supplierid='" . $SupplierID . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['Contact']  = $myrow['contact'];
-		$_POST['Position']  = $myrow['position'];
-		$_POST['Tel']  = $myrow['tel'];
-		$_POST['Fax']  = $myrow['fax'];
-		$_POST['Email']  = $myrow['email'];
-		$_POST['Mobile']  = $myrow['mobile'];
+		$_POST['Contact']  = $MyRow['contact'];
+		$_POST['Position']  = $MyRow['position'];
+		$_POST['Tel']  = $MyRow['tel'];
+		$_POST['Fax']  = $MyRow['fax'];
+		$_POST['Email']  = $MyRow['email'];
+		$_POST['Mobile']  = $MyRow['mobile'];
 		echo '<input type="hidden" name="SelectedContact" value="' . $_POST['Contact'] . '" />';
 		echo '<input type="hidden" name="Contact" value="' . $_POST['Contact'] . '" />';
 		echo '<table>

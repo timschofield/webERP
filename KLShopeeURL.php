@@ -34,13 +34,13 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
 
-	$target_dir =  $_SESSION['reports_dir'] . '/';
-	$target_file = $target_dir . basename($_FILES["SelectedFile"]["name"]);
-	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $target_file);
-	$inputFileType = PHPExcel_IOFactory::identify($target_file);
+	$Target_dir =  $_SESSION['reports_dir'] . '/';
+	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
+	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
+	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
+	$inputFileType = PHPExcel_IOFactory::identify($Target_file);
 	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-	$objPHPExcel = $objReader->load($target_file);
+	$objPHPExcel = $objReader->load($Target_file);
 	
 	//initialise no input errors
 	$InputError = FALSE;
@@ -75,12 +75,12 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				<tbody>';
 		$i = 1;
 
-		for ($row = 4; $row <= $highestRow; ++ $row) {
+		for ($Row = 4; $Row <= $highestRow; ++ $Row) {
 			// get the data for a product
 			$Error = "";
-			$ShopeeProductId = $worksheet->getCell('A'.$row)->getCalculatedValue();
-			$StockId = $worksheet->getCell('B'.$row)->getCalculatedValue();
-			$ShopeeProductName = $worksheet->getCell('C'.$row)->getCalculatedValue();
+			$ShopeeProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
+			$StockId = $worksheet->getCell('B'.$Row)->getCalculatedValue();
+			$ShopeeProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
 			
 			$SQL = "SELECT stockmaster.stockid,
 						salescatprod.manufacturers_id

@@ -113,7 +113,7 @@ if (isset($_POST['submit'])) {
 			$CheckSQL = "SELECT count(codeexpense)
 						FROM pcexpenses";
 			$Result = DB_query($CheckSQL);
-			$row = DB_fetch_row($Result);
+			$Row = DB_fetch_row($Result);
 		}
 	}
 	if ($InputError != 1) {

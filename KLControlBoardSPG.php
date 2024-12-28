@@ -10,7 +10,7 @@ include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include ('includes/KLRetailCustomer.php');
 
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
+$PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 /***************************************************************************************
 * SPG identification         
@@ -162,11 +162,11 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 
 function SPGTypePayments($SPG, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$totalcash = 0;
-	$totalcredit = 0;
-	$totalreturned = 0;
-	$totalvouchers = 0;
-	$total = 0;
+	$Totalcash = 0;
+	$Totalcredit = 0;
+	$Totalreturned = 0;
+	$Totalvouchers = 0;
+	$Total = 0;
 
 	$SQL = "SELECT salesorders.salesperson AS reportunit, 
 				salesman.salesmanname AS reportname,
@@ -206,11 +206,11 @@ function SPGTypePayments($SPG, $maxdays){
 				$Percentreturns = locale_number_format(($MyRow['returnedgoodsshop']/$MyRow['totalshop'])*100,1);
 				$Percentvouchers = locale_number_format(($MyRow['vouchersshop']/$MyRow['totalshop'])*100,1);
 				
-				$totalcash = $totalcash + $MyRow['cashshop'];
-				$totalcredit = $totalcredit + $MyRow['creditshop'];
-				$totalreturned = $totalreturned + $MyRow['returnedgoodsshop'];
-				$totalvouchers = $totalvouchers + $MyRow['vouchersshop'];
-				$total = $total + $MyRow['totalshop'];
+				$Totalcash = $Totalcash + $MyRow['cashshop'];
+				$Totalcredit = $Totalcredit + $MyRow['creditshop'];
+				$Totalreturned = $Totalreturned + $MyRow['returnedgoodsshop'];
+				$Totalvouchers = $Totalvouchers + $MyRow['vouchersshop'];
+				$Total = $Total + $MyRow['totalshop'];
 				
 				printf('<tr class="striped_row">
 						<td>%s</td>
@@ -273,7 +273,7 @@ function lastSalesSPG($spg, $NumDaysA){
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$total = $MyRow['klpaidcash'] + 
+			$Total = $MyRow['klpaidcash'] + 
 					$MyRow['klpaidcreditcard'];
 					
 			printf('<tr class="striped_row">
@@ -293,7 +293,7 @@ function lastSalesSPG($spg, $NumDaysA){
 					locale_number_format($MyRow['klpaidcreditcard'],0),
 					locale_number_format($MyRow['klreturnedgoods'],0),
 					locale_number_format($MyRow['klvouchers'],0),
-					locale_number_format($total,0)
+					locale_number_format($Total,0)
 					);
 			$i++;
 		}

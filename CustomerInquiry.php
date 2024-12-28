@@ -23,12 +23,12 @@ if (!isset($_GET['CustomerID']) and !isset($_SESSION['CustomerID'])) {
 //Check if the users have proper authority
 if ($_SESSION['SalesmanLogin'] != '') {
 	$ViewAllowed = false;
-	$sql = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
+	$SQL = "SELECT salesman FROM custbranch WHERE debtorno = '" . $CustomerID . "'";
 	$ErrMsg = _('Failed to retrieve sales data');
-	$result = DB_query($sql,$ErrMsg);
-	if(DB_num_rows($result)>0) {
-		while($myrow = DB_fetch_array($result)) {
-			if ($_SESSION['SalesmanLogin'] == $myrow['salesman']){
+	$Result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($Result)>0) {
+		while($MyRow = DB_fetch_array($Result)) {
+			if ($_SESSION['SalesmanLogin'] == $MyRow['salesman']){
 				$ViewAllowed = true;
 			}
 		}

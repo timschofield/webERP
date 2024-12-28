@@ -9,13 +9,13 @@ if (!file_exists('config_OpenCart.php')){
 	include ('config_OpenCart.php');
 }
 
-if (!isset($mysqlport)){
-	$mysqlport = 3306;
+if (!isset($MySQLPort)){
+	$MySQLPort = 3306;
 }
 
 global $db_oc;	// Make sure it IS global, regardless of our context
 
-$db_oc = mysqli_connect($opencart_db_host , $opencart_db_user, $opencart_db_pwd, $opencart_db_name, $mysqlport);
+$db_oc = mysqli_connect($opencart_db_host , $opencart_db_user, $opencart_db_pwd, $opencart_db_name, $MySQLPort);
 mysqli_set_charset($db_oc, 'utf8');
 
 if ( !$db_oc ) {

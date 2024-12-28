@@ -14,7 +14,7 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 
 
 if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are already data setup, Update the table
-	$sql="UPDATE emailsettings SET
+	$SQL="UPDATE emailsettings SET
 				host='".$_POST['Host']."',
 				port='".$_POST['Port']."',
 				heloaddress='".$_POST['HeloAddress']."',
@@ -24,13 +24,13 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 
 	$ErrMsg = _('The email setting information failed to update');
 	$DbgMsg = _('The SQL failed to update is ');
-	$result1=DB_query($sql, $ErrMsg, $DbgMsg);
+	$Result1=DB_query($SQL, $ErrMsg, $DbgMsg);
 	unset($_POST['MailServerSetting']);
 	prnMsg(_('The settings for the SMTP server have been successfully updated'), 'success');
 	echo '<br />';
 
 }elseif(isset($_POST['submit']) and $_POST['MailServerSetting']==0){//There is no data setup yet
-	$sql = "INSERT INTO emailsettings(host,
+	$SQL = "INSERT INTO emailsettings(host,
 		 				port,
 						heloaddress,
 						username,
@@ -44,7 +44,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 						'".$_POST['Auth']."')";
 	$ErrMsg = _('The email settings failed to be inserted');
 	$DbgMsg = _('The SQL failed to insert the email information is');
-	$result2 = DB_query($sql);
+	$Result2 = DB_query($SQL);
 	unset($_POST['MailServerSetting']);
 	prnMsg(_('The settings for the SMTP server have been sucessfully inserted'),'success');
 	echo '<br/>';
@@ -52,7 +52,7 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 
   // Check the mail server setting status
 
-		$sql="SELECT id,
+		$SQL="SELECT id,
 				host,
 				port,
 				heloaddress,
@@ -64,19 +64,19 @@ if (isset($_POST['submit']) AND $_POST['MailServerSetting']==1) {//If there are 
 		$ErrMsg = _('The email settings information cannot be retrieved');
 		$DbgMsg = _('The SQL that failed was');
 
-		$result=DB_query($sql,$ErrMsg,$DbgMsg);
-		if(DB_num_rows($result)!=0){
+		$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
+		if(DB_num_rows($Result)!=0){
 			$MailServerSetting = 1;
-			$myrow=DB_fetch_array($result);
+			$MyRow=DB_fetch_array($Result);
 		}else{
-			DB_free_result($result);
+			DB_free_result($Result);
 			$MailServerSetting = 0;
-			$myrow['host']='';
-			$myrow['port']='';
-			$myrow['heloaddress']='';
-			$myrow['username']='';
-			$myrow['password']='';
-			$myrow['timeout']=5;
+			$MyRow['host']='';
+			$MyRow['port']='';
+			$MyRow['heloaddress']='';
+			$MyRow['username']='';
+			$MyRow['password']='';
+			$MyRow['timeout']=5;
 		}
 
 
@@ -87,20 +87,20 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 	<table class="selection">
 	<tr>
 		<td>' . _('Server Host Name') . '</td>
-		<td><input type="text" name="Host" required="required" value="' . $myrow['host'] . '" /></td>
+		<td><input type="text" name="Host" required="required" value="' . $MyRow['host'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('SMTP port') . '</td>
-		<td><input type="text" name="Port" required="required" size="4" class="number" value="' . $myrow['port'].'" /></td>
+		<td><input type="text" name="Port" required="required" size="4" class="number" value="' . $MyRow['port'].'" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Helo Command') . '</td>
-		<td><input type="text" name="HeloAddress" value="' . $myrow['heloaddress'] . '" /></td>
+		<td><input type="text" name="HeloAddress" value="' . $MyRow['heloaddress'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Authorisation Required') . '</td>
 		<td><select name="Auth">';
-if ($myrow['auth']==1) {
+if ($MyRow['auth']==1) {
 	echo '<option selected="selected" value="1">' . _('True') . '</option>';
 	echo '<option value="0">' . _('False') . '</option>';
 } else {
@@ -111,15 +111,15 @@ echo '</select></td>
 	</tr>
 	<tr>
 		<td>' . _('User Name') . '</td>
-		<td><input type="text" required="required" name="UserName" size="50" maxlength="50" value="' . $myrow['username']  .'" /></td>
+		<td><input type="text" required="required" name="UserName" size="50" maxlength="50" value="' . $MyRow['username']  .'" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Password') . '</td>
-		<td><input type="password" required="required" name="Password" value="' . $myrow['password'] . '" /></td>
+		<td><input type="password" required="required" name="Password" value="' . $MyRow['password'] . '" /></td>
 	</tr>
 	<tr>
 		<td>' . _('Timeout (seconds)') . '</td>
-		<td><input type="text" size="5" name="Timeout" class="number" value="' . $myrow['timeout'] . '" /></td>
+		<td><input type="text" size="5" name="Timeout" class="number" value="' . $MyRow['timeout'] . '" /></td>
 	</tr>
 	<tr>
 		<td colspan="2"><div class="centre"><input type="submit" name="submit" value="' . _('Update') . '" /></div></td>

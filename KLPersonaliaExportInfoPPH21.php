@@ -154,8 +154,8 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 			$ActiveSheet->freezePane('A2');
 
 			// Auto Size columns
-			foreach(range('A','B') as $columnID) {
-				$ActiveSheet->getColumnDimension($columnID)->setAutoSize(true);
+			foreach(range('A','B') as $ColumnID) {
+				$ActiveSheet->getColumnDimension($ColumnID)->setAutoSize(true);
 			}
 			
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet

@@ -25,7 +25,7 @@ $pdf->addText($XPos, $YPos+10,$FontSize, _('Page') . ': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
-$YPos -= $line_height;
+$YPos -= $Line_height;
 
 /*draw a square grid for entering line items */
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
@@ -39,7 +39,7 @@ $pdf->line($Left_Margin+310, $YPos,$Left_Margin+310, $Bottom_Margin);
 $pdf->line($Left_Margin+384, $YPos,$Left_Margin+384, $Bottom_Margin);
 $pdf->line($Left_Margin+454, $YPos,$Left_Margin+454, $Bottom_Margin);
 
-$YPos -= $line_height;
+$YPos -= $Line_height;
 /*Set up headings */
 $FontSize=8;
 
@@ -49,10 +49,10 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,_('Trans Date
 $LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,_('Quantity'), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,_('Location'), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,_('Reference'), 'right');
-$YPos-=$line_height;
+$YPos-=$Line_height;
 
 /*draw a line */
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
 
-$YPos -= ($line_height);
+$YPos -= ($Line_height);
 ?>

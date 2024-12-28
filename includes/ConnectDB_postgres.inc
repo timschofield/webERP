@@ -2,11 +2,11 @@
 /* Database abstraction for postgres */
 
 define ('LIKE','ILIKE');
-/* $PgConnStr = $PgConnStr = "host=".$host." dbname=".$_SESSION['DatabaseName']; */
+/* $PgConnStr = $PgConnStr = "host=".$Host." dbname=".$_SESSION['DatabaseName']; */
 $PgConnStr = 'dbname='.$_SESSION['DatabaseName'];
 
-if( isset($host) && ($host != "")) {
-	$PgConnStr = 'host='.$host.' '.$PgConnStr;
+if( isset($Host) && ($Host != "")) {
+	$PgConnStr = 'host='.$Host.' '.$PgConnStr;
 }
 
 if( isset( $DBUser ) && ($DBUser != "") ) {
@@ -21,7 +21,7 @@ global $db;		// Make sure it IS global, regardless of our context
 $db = pg_connect( $PgConnStr );
 
 if( !$db ) {
-	if($debug==1) {
+	if($Debug==1) {
 		echo '<br>' . $PgConnStr . '<br>';
 	}
 	echo '<br>' . _('The company name entered together with the configuration in the file config.php for the database user name and password do not provide the information required to connect to the database.') . '<br><br>' . _(' Try logging in with an alternative company name.');
@@ -40,20 +40,20 @@ function DB_query ($SQL,
 				$Transaction=false,
 				$TrapErrors=true) {
 
-	global $debug;
+	global $Debug;
 	global $PathPrefix;
 
-	$result = pg_query($db, $SQL);
+	$Result = pg_query($db, $SQL);
 	if($DebugMessage == '') {
 		$DebugMessage = _('The SQL that failed was:');
 	}
 
-	if( !$result AND $TrapErrors) {
+	if( !$Result AND $TrapErrors) {
 		if($TrapErrors) {
 			require_once($PathPrefix . 'includes/header.php');
 		}
 		prnMsg($ErrorMessage . '<BR>' . DB_error_msg(),'error', _('DB ERROR:'));
-		if($debug==1) {
+		if($Debug==1) {
 			echo '<BR>' . $DebugMessage. "<BR>$SQL<BR>";
 		}
 		if($Transaction) {
@@ -68,7 +68,7 @@ function DB_query ($SQL,
 			exit;
 		}
 	}
-	return $result;
+	return $Result;
 
 }
 
@@ -112,8 +112,8 @@ function DB_error_msg() {
 	return pg_last_error($db);
 }
 
-function DB_Last_Insert_ID($table, $fieldname) {
-	$tempres = DB_query ("SELECT currval('".$table."_".$fieldname."_seq') FROM ".$table);
+function DB_Last_Insert_ID($Table, $FieldName) {
+	$tempres = DB_query ("SELECT currval('".$Table."_".$FieldName."_seq') FROM ".$Table);
 	$Res = pg_fetch_result( $tempres, 0, 0 );
 	DB_free_result($tempres);
 	return $Res;

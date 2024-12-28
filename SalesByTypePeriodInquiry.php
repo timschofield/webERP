@@ -184,7 +184,7 @@ if (isset($_POST['ShowSales'])){
 	}
 	switch ($_POST['DisplayData']) {
 		case 'Daily':
-			$sql = "SELECT debtortrans.trandate,
+			$SQL = "SELECT debtortrans.trandate,
 							debtortrans.tpe,
 						SUM(CASE WHEN stockmoves.type=10 THEN
 							price*(1-discountpercent)* -qty
@@ -211,17 +211,17 @@ if (isset($_POST['ShowSales'])){
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY debtortrans.trandate,
+			$SQL .= " GROUP BY debtortrans.trandate,
 							tpe
 					ORDER BY debtortrans.trandate,
 							tpe";
 
 			break;
 		case 'Weekly':
-			$sql = "SELECT WEEKOFYEAR(debtortrans.trandate) as week_no,
+			$SQL = "SELECT WEEKOFYEAR(debtortrans.trandate) as week_no,
 							YEAR(debtortrans.trandate) as transyear,
 							debtortrans.tpe,
 						SUM(CASE WHEN stockmoves.type=10 THEN
@@ -249,10 +249,10 @@ if (isset($_POST['ShowSales'])){
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY week_no,
+			$SQL .= " GROUP BY week_no,
 							transyear,
 							tpe
 					ORDER BY transyear,
@@ -261,7 +261,7 @@ if (isset($_POST['ShowSales'])){
 
 			break;
 		case 'Monthly':
-			$sql = "SELECT MONTH(debtortrans.trandate) as month_no,
+			$SQL = "SELECT MONTH(debtortrans.trandate) as month_no,
 							MONTHNAME(debtortrans.trandate) as month_name,
 							YEAR(debtortrans.trandate) as transyear,
 							debtortrans.tpe,
@@ -290,10 +290,10 @@ if (isset($_POST['ShowSales'])){
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY month_no,
+			$SQL .= " GROUP BY month_no,
 							month_name,
 							transyear,
 							debtortrans.tpe
@@ -303,7 +303,7 @@ if (isset($_POST['ShowSales'])){
 
 			break;
 		case 'Quarterly':
-			$sql = "SELECT QUARTER(debtortrans.trandate) as quarter_no,
+			$SQL = "SELECT QUARTER(debtortrans.trandate) as quarter_no,
 							YEAR(debtortrans.trandate) as transyear,
 							debtortrans.tpe,
 						SUM(CASE WHEN stockmoves.type=10 THEN
@@ -331,10 +331,10 @@ if (isset($_POST['ShowSales'])){
 					AND debtortrans.trandate<='" . $ToDate . "'";
 
 			if ($_SESSION['SalesmanLogin'] != '') {
-				$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+				$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 			}
 
-			$sql .= " GROUP BY quarter_no,
+			$SQL .= " GROUP BY quarter_no,
 							transyear,
 							tpe
 					ORDER BY transyear,
@@ -345,7 +345,7 @@ if (isset($_POST['ShowSales'])){
 		}
 
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($sql,$ErrMsg);
+	$SalesResult = DB_query($SQL,$ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">';

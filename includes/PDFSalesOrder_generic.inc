@@ -39,24 +39,24 @@ $YPos = 566;
 
 $FontSize=14;
 $pdf->addText($XPos, $YPos,$FontSize, _('Delivered To').':' );
-$pdf->addText($XPos, $YPos-15,$FontSize, $myrow['deliverto']);
-$pdf->addText($XPos, $YPos-30,$FontSize, $myrow['deladd1']);
-$pdf->addText($XPos, $YPos-45,$FontSize, $myrow['deladd2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['deladd3'] . ' ' . $myrow['deladd4'] . ' ' . $myrow['deladd5']);
+$pdf->addText($XPos, $YPos-15,$FontSize, $MyRow['deliverto']);
+$pdf->addText($XPos, $YPos-30,$FontSize, $MyRow['deladd1']);
+$pdf->addText($XPos, $YPos-45,$FontSize, $MyRow['deladd2']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $MyRow['deladd3'] . ' ' . $MyRow['deladd4'] . ' ' . $MyRow['deladd5']);
 
 $YPos -= 80;
 
 $pdf->addText($XPos, $YPos,$FontSize, _('Customer').':');
-$pdf->addText($XPos, $YPos-15,$FontSize, $myrow['name']);
-$pdf->addText($XPos, $YPos-30,$FontSize, $myrow['address1']);
-$pdf->addText($XPos, $YPos-45,$FontSize, $myrow['address2']);
-$pdf->addText($XPos, $YPos-60,$FontSize, $myrow['address3'] . ' ' . $myrow['address4'] . ' ' . $myrow['address5']);
+$pdf->addText($XPos, $YPos-15,$FontSize, $MyRow['name']);
+$pdf->addText($XPos, $YPos-30,$FontSize, $MyRow['address1']);
+$pdf->addText($XPos, $YPos-45,$FontSize, $MyRow['address2']);
+$pdf->addText($XPos, $YPos-60,$FontSize, $MyRow['address3'] . ' ' . $MyRow['address4'] . ' ' . $MyRow['address5']);
 
 
-$pdf->addText($XPos, $YPos-82,$FontSize, _('Customer No.'). ' : ' . $myrow['debtorno']);
-$pdf->addText($XPos, $YPos-100,$FontSize, _('Shipped by'). ' : ' . $myrow['shippername']);
+$pdf->addText($XPos, $YPos-82,$FontSize, _('Customer No.'). ' : ' . $MyRow['debtorno']);
+$pdf->addText($XPos, $YPos-100,$FontSize, _('Shipped by'). ' : ' . $MyRow['shippername']);
 
-$LeftOvers = $pdf->addTextWrap($XPos,$YPos-115,170,$FontSize,stripcslashes($myrow['comments']));
+$LeftOvers = $pdf->addTextWrap($XPos,$YPos-115,170,$FontSize,stripcslashes($MyRow['comments']));
 
 if (mb_strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-130,170,$FontSize,$LeftOvers);
@@ -74,20 +74,20 @@ if (mb_strlen($LeftOvers)>1){
 $pdf->addText(620, 560,$FontSize, _('Order No'). ':');
 $pdf->addText(700, 560,$FontSize, $_GET['TransNo']);
 $pdf->addText(620, 560-15,$FontSize, _('Your Ref'). ':');
-$pdf->addText(700, 560-15,$FontSize, $myrow['customerref']);
+$pdf->addText(700, 560-15,$FontSize, $MyRow['customerref']);
 $pdf->addText(620, 560-45,$FontSize,  _('Order Date'). ':');
-$pdf->addText(700, 560-45,$FontSize,  ConvertSQLDate($myrow['orddate']));
+$pdf->addText(700, 560-45,$FontSize,  ConvertSQLDate($MyRow['orddate']));
 $pdf->addText(620, 560-60,$FontSize,  _('Printed') . ': ');
 $pdf->addText(700, 560-60,$FontSize,  Date($_SESSION['DefaultDateFormat']));
 $pdf->addText(620, 560-75,$FontSize,  _('From').': ');
-$pdf->addText(700, 560-75,$FontSize,  $myrow['locationname']);
+$pdf->addText(700, 560-75,$FontSize,  $MyRow['locationname']);
 $pdf->addText(620, 560-90,$FontSize,  _('Page'). ':');
 $pdf->addText(700, 560-90,$FontSize,  $PageNumber);
 
 $YPos -= 170;
 $XPos = 15;
 
-$header_line_height = $line_height+25;
+$header_line_height = $Line_height+25;
 
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize, _('Item Code'),'left');
 $LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize, _('Item Description'),'left');
@@ -95,7 +95,7 @@ $LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize, _('Quantity'),'right');
 $LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,_('This Del'),'right');
 $LeftOvers = $pdf->addTextWrap(602,$YPos,85,$FontSize, _('Prev Dels'),'right');
 
-$YPos -= $line_height;
+$YPos -= $Line_height;
 
 $FontSize =12;
 

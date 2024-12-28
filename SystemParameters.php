@@ -400,8 +400,8 @@ if (isset($_POST['submit'])) {
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($SQL) > 1 ) {
 			DB_Txn_Begin();
-			foreach ($SQL as $line) {
-				$Result = DB_query($line,$ErrMsg);
+			foreach ($SQL as $Line) {
+				$Result = DB_query($Line,$ErrMsg);
 			}
 			DB_Txn_Commit();
 		} elseif(sizeof($SQL)==1) {
@@ -740,8 +740,8 @@ echo '<field>
 if( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . _('Unavailable');
 } else {
-	while( $row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['DefaultPriceList'] == $row['typeabbrev']?'selected="selected" ':'').'value="'.$row['typeabbrev'].'">' . $row['sales_type'] . '</option>';
+	while( $Row = DB_fetch_array($Result) ) {
+		echo '<option '.($_SESSION['DefaultPriceList'] == $Row['typeabbrev']?'selected="selected" ':'').'value="'.$Row['typeabbrev'].'">' . $Row['sales_type'] . '</option>';
 	}
 }
 echo '</select>
@@ -758,8 +758,8 @@ echo '<field>
 if( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . _('Unavailable') . '</option>';
 } else {
-	while( $row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['Default_Shipper'] == $row['shipper_id']?'selected="selected" ':'').'value="'.$row['shipper_id'].'">' . $row['shippername'] . '</option>';
+	while( $Row = DB_fetch_array($Result) ) {
+		echo '<option '.($_SESSION['Default_Shipper'] == $Row['shipper_id']?'selected="selected" ':'').'value="'.$Row['shipper_id'].'">' . $Row['shippername'] . '</option>';
 	}
 }
 echo '</select>
@@ -825,8 +825,8 @@ echo '<field>
 if( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . _('Unavailable') . '</option>';
 } else {
-	while( $row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['DefaultTaxCategory'] == $row['taxcatid']?'selected="selected" ':'').'value="'.$row['taxcatid'].'">' . $row['taxcatname'] . '</option>';
+	while( $Row = DB_fetch_array($Result) ) {
+		echo '<option '.($_SESSION['DefaultTaxCategory'] == $Row['taxcatid']?'selected="selected" ':'').'value="'.$Row['taxcatid'].'">' . $Row['taxcatname'] . '</option>';
 	}
 }
 echo '</select>
@@ -1012,7 +1012,7 @@ echo '<field>
 			<fieldhelp>' . _('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ')  . '</fieldhelp>
 	</field>';
 
-//$part_pics_dir
+//$Part_pics_dir
 echo '<field>
 		<label for="X_part_pics_dir">' . _('The directory where images are stored') . ':</label>
 		<select name="X_part_pics_dir">';
@@ -1234,8 +1234,8 @@ $severityOptions = [
 echo '<field>
 		<label for="X_LogSeverity">' . _('Log Severity Level') . ':</label>
 		<select name="X_LogSeverity" >';
-foreach ($severityOptions as $key => $value) {
-	echo '<option value="' . $key . '"' . ($_SESSION['LogSeverity'] == $key ? ' selected' : '') . '>' . $value . '</option>';
+foreach ($severityOptions as $key => $Value) {
+	echo '<option value="' . $key . '"' . ($_SESSION['LogSeverity'] == $key ? ' selected' : '') . '>' . $Value . '</option>';
 }
 echo '</select>
 	<fieldhelp>' . _('Choose which Status messages to keep in your log file.') . '</fieldhelp>

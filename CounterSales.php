@@ -80,13 +80,13 @@ if (!isset($_SESSION['Items'.$identifier])) {
 				taxprovinceid
 			FROM locations
 			WHERE loccode='" . $_SESSION['UserStockLocation'] ."'";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result)==0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)==0) {
 		prnMsg(_('Your user account does not have a valid default inventory location set up. Please see the system administrator to modify your user account.'),'error');
 		include('includes/footer.php');
 		exit;
 	} else {
-		$MyRow = DB_fetch_array($result); //get the only row returned
+		$MyRow = DB_fetch_array($Result); //get the only row returned
 
 		if ($MyRow['cashsalecustomer']=='' OR $MyRow['cashsalebranch']=='') {
 			prnMsg(_('To use this script it is first necessary to define a cash sales customer for the location that is your default location. The default cash sale customer is defined under set up ->Inventory Locations Maintenance. The customer should be entered using the customer code and a valid branch code of the customer entered.'),'error');
@@ -126,9 +126,9 @@ if (!isset($_SESSION['Items'.$identifier])) {
 
 		$ErrMsg = _('The details of the customer selected') . ': ' .  $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('cannot be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the customer details and failed was') . ':';
-		$result =DB_query($SQL,$ErrMsg,$DbgMsg);
+		$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
 
-		$MyRow = DB_fetch_array($result);
+		$MyRow = DB_fetch_array($Result);
 		if ($MyRow['dissallowinvoices'] != 1) {
 			if ($MyRow['dissallowinvoices']==2) {
 				prnMsg($MyRow['name'] . ' ' . _('Although this account is defined as the cash sale account for the location.  The account is currently flagged as an account that needs to be watched. Please contact the credit control personnel to discuss'),'warn');
@@ -159,13 +159,13 @@ if (!isset($_SESSION['Items'.$identifier])) {
 				AND custbranch.debtorno = '" . $_SESSION['Items'.$identifier]->DebtorNo . "'";
             $ErrMsg = _('The customer branch record of the customer selected') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('cannot be retrieved because');
 			$DbgMsg = _('SQL used to retrieve the branch details was') . ':';
-			$result =DB_query($SQL,$ErrMsg,$DbgMsg);
+			$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
 
-			if (DB_num_rows($result)==0) {
+			if (DB_num_rows($Result)==0) {
 
 				prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
-				if ($debug==1) {
+				if ($Debug==1) {
 					echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $SQL;
 				}
 				include('includes/footer.php');
@@ -173,7 +173,7 @@ if (!isset($_SESSION['Items'.$identifier])) {
 			}
 			// add echo
 			echo '<br />';
-			$MyRow = DB_fetch_array($result);
+			$MyRow = DB_fetch_array($Result);
 
 			$_SESSION['Items'.$identifier]->DeliverTo = '';
 			$_SESSION['Items'.$identifier]->DelAdd1 = $MyRow['braddress1'];
@@ -233,11 +233,11 @@ if (isset($_POST['CancelOrder'])) {
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous'])) {
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
-		$msg = _('Item description has been used in search');
+		$Msg = _('Item description has been used in search');
 	} else if ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
-		$msg = _('Item Code has been used in search');
+		$Msg = _('Item Code has been used in search');
 	} else if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-		$msg = _('Stock Category has been used in search');
+		$Msg = _('Stock Category has been used in search');
 	}
 	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
@@ -709,12 +709,12 @@ foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 				$QuantityOfDiscCat += $OrderLine_2->Quantity;
 			}
 		}
-		$result = DB_query("SELECT MAX(discountrate) AS discount
+		$Result = DB_query("SELECT MAX(discountrate) AS discount
 							FROM discountmatrix
 							WHERE salestype='" .  $_SESSION['Items'.$identifier]->DefaultSalesType . "'
 							AND discountcategory ='" . $OrderLine->DiscCat . "'
 							AND quantitybreak <= '" . $QuantityOfDiscCat ."'");
-		$MyRow = DB_fetch_row($result);
+		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]==NULL) {
 			$DiscountMatrixRate = 0;
 		} else {
@@ -1084,7 +1084,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 	// *************************************************************************
 	//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 	/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30);
 		$InvoiceNo = GetNextTransNo(10);
@@ -1251,7 +1251,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 											 '" . $WOQuantity . "',
 											 '" . $Cost . "')";
 					$ErrMsg = _('The work order item could not be added');
-					$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+					$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 					//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 					WoRealRequirements($WONo, $_SESSION['DefaultFactoryLocation'], $StockItem->StockID);
@@ -1266,10 +1266,10 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 
 						for ($i=0;$i<$WOQuantity;$i++) {
 
-							$result = DB_query("SELECT serialno FROM stockserialitems
+							$Result = DB_query("SELECT serialno FROM stockserialitems
 													WHERE serialno='" . ($StockItem->NextSerialNo + $i) . "'
 													AND stockid='" . $StockItem->StockID ."'");
-							if (DB_num_rows($result)!=0) {
+							if (DB_num_rows($Result)!=0) {
 								$WOQuantity++;
 								prnMsg(($StockItem->NextSerialNo + $i) . ': ' . _('This automatically generated serial number already exists - it cannot be added to the work order'),'error');
 							} else {
@@ -1280,7 +1280,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 																'" . $StockItem->StockID . "',
 																'" . ($StockItem->NextSerialNo + $i)	 . "')";
 								$ErrMsg = _('The serial number for the work order item could not be added');
-								$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+								$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 								$FactoryManagerEmail .= "\n" . ($StockItem->NextSerialNo + $i);
 							}
 						} //end loop around creation of woserialnos
@@ -1299,7 +1299,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 							include('includes/htmlMimeMail.php');
 							$mail = new htmlMimeMail();
 							$mail->setSubject($EmailSubject);
-							$result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
+							$Result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
 					}
 
 				} //end if with this sales order there is a shortfall of stock - need to create the WO
@@ -1920,7 +1920,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 							'" . (filter_number_format($_POST['AmountPaid'])/$ExRate) . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the bank account debit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account debit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				/* Now Credit Debtors account with receipt */
 				$SQL="INSERT INTO gltrans ( type,
@@ -1939,7 +1939,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 					'" . -(filter_number_format($_POST['AmountPaid'])/$ExRate) . "')";
 				$DbgMsg = _('The SQL that failed to insert the GL transaction for the debtors account credit was');
 				$ErrMsg = _('Cannot insert a GL transaction for the debtors account credit');
-				$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 			}//amount paid we not zero
 
 			EnsureGLEntriesBalance(12,$ReceiptNumber);
@@ -1951,11 +1951,11 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 			}
 			//Now need to add the receipt banktrans record
 			//First get the account currency that it has been banked into
-			$result = DB_query("SELECT rate FROM currencies
+			$Result = DB_query("SELECT rate FROM currencies
 								INNER JOIN bankaccounts
 								ON currencies.currabrev=bankaccounts.currcode
 								WHERE bankaccounts.accountcode='" . $_POST['BankAccount'] . "'");
-			$MyRow = DB_fetch_row($result);
+			$MyRow = DB_fetch_row($Result);
 			$BankAccountExRate = $MyRow[0];
 
 			/*
@@ -1995,7 +1995,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 
 			$DbgMsg = _('The SQL that failed to insert the bank account transaction was');
 			$ErrMsg = _('Cannot insert a bank transaction');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//insert a new debtortrans for the receipt
 
@@ -2028,7 +2028,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 
 			$DbgMsg = _('The SQL that failed to insert the customer receipt transaction was');
 			$ErrMsg = _('Cannot insert a receipt transaction against the customer because') ;
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			$ReceiptDebtorTransID = DB_Last_Insert_ID('debtortrans','id');
 
@@ -2038,7 +2038,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 
 			$DbgMsg = _('The SQL that failed to update the date of the last payment received was');
 			$ErrMsg = _('Cannot update the customer record for the date of the last payment received because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 			//and finally add the allocation record between receipt and invoice
 
@@ -2052,7 +2052,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 											 '" . $DebtorTransID . "')";
 			$DbgMsg = _('The SQL that failed to insert the allocation of the receipt to the invoice was');
 			$ErrMsg = _('Cannot insert the customer allocation of the receipt to the invoice because');
-			$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		} //end if $_POST['AmountPaid']!= 0
 
 		DB_Txn_Commit();
@@ -2112,7 +2112,7 @@ if (!isset($_POST['ProcessSale'])) {
 				  GROUP BY stkcode
 				  ORDER BY sales DESC
 				  LIMIT " . $_SESSION['FrequentlyOrderedItems'];
-			$result2 = DB_query($SQL);
+			$Result2 = DB_query($SQL);
 			echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 			echo _('Frequently Ordered Items') . '</p><br />';
 			echo '<div class="page_help_text">' . _('Frequently Ordered Items') . _(', shows the most frequently ordered items in the last 6 months.  You can choose from this list, or search further for other items') . '.</div><br />';
@@ -2129,7 +2129,7 @@ if (!isset($_POST['ProcessSale'])) {
 			$i = 0;
 			$j = 1;
 
-			while ($MyRow=DB_fetch_array($result2)) {
+			while ($MyRow=DB_fetch_array($Result2)) {
 	// This code needs sorting out, but until then :
 				$ImageSource = _('No Image');
 	// Find the quantity in stock at location
@@ -2198,8 +2198,8 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<td class="centre" colspan="8"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
-		if (isset($msg)) {
-			echo '<div class="page_help_text"><p><b>' . $msg . '</b></p></div>';
+		if (isset($Msg)) {
+			echo '<div class="page_help_text"><p><b>' . $Msg . '</b></p></div>';
 		}
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Items') . '</p>
 			<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div>
@@ -2219,8 +2219,8 @@ if (!isset($_POST['ProcessSale'])) {
 				FROM stockcategory
 				WHERE stocktype='F' OR stocktype='D'
 				ORDER BY categorydescription";
-		$result1 = DB_query($SQL);
-		while ($MyRow1 = DB_fetch_array($result1)) {
+		$Result1 = DB_query($SQL);
+		while ($MyRow1 = DB_fetch_array($Result1)) {
 			if ($_POST['StockCat']==$MyRow1['categoryid']) {
 				echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 			} else {
@@ -2380,9 +2380,9 @@ if (!isset($_POST['ProcessSale'])) {
 			unset($_SESSION['ItemList']);
 
 			$_SESSION['ItemList'] = array();
-			while($myrow=DB_fetch_array($ItemsResult))
+			while($MyRow=DB_fetch_array($ItemsResult))
 			{
-				$_SESSION['ItemList'][] = $myrow['stockid'];
+				$_SESSION['ItemList'][] = $MyRow['stockid'];
 			}
 		}
 

@@ -74,10 +74,10 @@ if (isset($_POST['submit'])) {
 												'1',
 												'1')";
 
-			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedLocation'] . ' ' . _('location has been changed');
+			$Msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedLocation'] . ' ' . _('location has been changed');
 			$Result = DB_query($SQL);
 			KLSendEmail("LocationUserCreated", "Silent",$_SESSION['UserID'], $_POST['SelectedUser'],$_POST['SelectedLocation']);
-			prnMsg($msg, 'success');
+			prnMsg($Msg, 'success');
 			unset($_POST['SelectedUser']);
 		}
 	}

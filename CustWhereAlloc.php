@@ -62,7 +62,7 @@ if(isset($_POST['ShowResults']) AND  $_POST['TransNo']=='') {
 if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 
 /*First off get the DebtorTransID of the transaction (invoice normally) selected */
-	$sql = "SELECT debtortrans.id,
+	$SQL = "SELECT debtortrans.id,
 				ovamount+ovgst AS totamt,
 				currencies.decimalplaces AS currdecimalplaces,
 				debtorsmaster.currcode,
@@ -75,19 +75,19 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			AND transno = '" . $_POST['TransNo']."'";
 
 	if($_SESSION['SalesmanLogin'] != '') {
-			$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+			$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 	}
-	$result = DB_query($sql );
+	$Result = DB_query($SQL );
 	$GrandTotal = 0;
-	$Rows = DB_num_rows($result);
+	$Rows = DB_num_rows($Result);
 	if($Rows>=1) {
-		while($myrow = DB_fetch_array($result)) {
-		$GrandTotal +=$myrow['totamt'];
-		$Rate = $myrow['rate'];
-		$AllocToID = $myrow['id'];
-		$CurrCode = $myrow['currcode'];
-		$CurrDecimalPlaces = $myrow['currdecimalplaces'];
-		$sql = "SELECT type,
+		while($MyRow = DB_fetch_array($Result)) {
+		$GrandTotal +=$MyRow['totamt'];
+		$Rate = $MyRow['rate'];
+		$AllocToID = $MyRow['id'];
+		$CurrCode = $MyRow['currcode'];
+		$CurrDecimalPlaces = $MyRow['currdecimalplaces'];
+		$SQL = "SELECT type,
 					transno,
 					trandate,
 					debtortrans.debtorno,
@@ -100,28 +100,28 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 		if($_POST['TransType']==12 OR $_POST['TransType'] == 11) {
 
 			$TitleInfo = ($_POST['TransType'] == 12)?_('Receipt'):_('Credit Note');
-			if($myrow['totamt']<0) {
-				$sql .= "ON debtortrans.id = custallocns.transid_allocto
+			if($MyRow['totamt']<0) {
+				$SQL .= "ON debtortrans.id = custallocns.transid_allocto
 					WHERE custallocns.transid_allocfrom = '" . $AllocToID . "'";
 			} else {
-				$sql .= "ON debtortrans.id = custallocns.transid_allocfrom
+				$SQL .= "ON debtortrans.id = custallocns.transid_allocfrom
 					WHERE custallocns.transid_allocto = '" . $AllocToID . "'";
 		
 			}
 
 		} else {
 			$TitleInfo = _('invoice');
-			$sql .= "ON debtortrans.id = custallocns.transid_allocfrom
+			$SQL .= "ON debtortrans.id = custallocns.transid_allocfrom
 				WHERE custallocns.transid_allocto = '" . $AllocToID . "'";
 		}
-		$sql .= " ORDER BY transno ";
+		$SQL .= " ORDER BY transno ";
 
 		$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
-		$TransResult = DB_query($sql, $ErrMsg);
+		$TransResult = DB_query($SQL, $ErrMsg);
 
 		if(DB_num_rows($TransResult)==0) {
 
-			if($myrow['totamt']<0 AND ($_POST['TransType']==12 OR $_POST['TransType'] == 11)) {
+			if($MyRow['totamt']<0 AND ($_POST['TransType']==12 OR $_POST['TransType'] == 11)) {
 					prnMsg(_('This transaction was a receipt of funds and there can be no allocations of receipts or credits to a receipt. This inquiry is meant to be used to see how a payment which is entered as a negative receipt is settled against credit notes or receipts'),'info');
 			} else {
 				prnMsg(_('There are no allocations made against this transaction'),'info');
@@ -135,7 +135,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 				<tr>
 					<th class="centre" colspan="7">
 						<b>' . _('Allocations made against') . ' ' . $TitleInfo . ' ' . _('number') . ' ' . $_POST['TransNo'] . '<br />' .
-						_('Transaction Total').': '. locale_number_format($myrow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
+						_('Transaction Total').': '. locale_number_format($MyRow['totamt'],$CurrDecimalPlaces) . ' ' . $CurrCode . '</b>
 					</th>
 				</tr>';
 
@@ -155,23 +155,23 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			$RowCounter = 1;
 			$AllocsTotal = 0;
 
-			while($myrow=DB_fetch_array($TransResult)) {
+			while($MyRow=DB_fetch_array($TransResult)) {
 
-				if($myrow['type']==11) {
+				if($MyRow['type']==11) {
 					$TransType = _('Credit Note');
-				} elseif($myrow['type'] == 10) {
+				} elseif($MyRow['type'] == 10) {
 					$TransType = _('Invoice');
 				} else {
 					$TransType = _('Receipt');
 				}
 				echo '<tr class="striped_row">
-						<td class="centre">', ConvertSQLDate($myrow['trandate']), '</td>
+						<td class="centre">', ConvertSQLDate($MyRow['trandate']), '</td>
 						<td class="text">' . $TransType . '</td>
-						<td class="number">' . $myrow['transno'] . '</td>
-						<td class="text">' . $myrow['reference'] . '</td>
-						<td class="number">' . $myrow['rate'] . '</td>
-						<td class="number">' . locale_number_format($myrow['totalamt'], $CurrDecimalPlaces) . '</td>
-						<td class="number">' . locale_number_format($myrow['amt'], $CurrDecimalPlaces) . '</td>
+						<td class="number">' . $MyRow['transno'] . '</td>
+						<td class="text">' . $MyRow['reference'] . '</td>
+						<td class="number">' . $MyRow['rate'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['totalamt'], $CurrDecimalPlaces) . '</td>
+						<td class="number">' . locale_number_format($MyRow['amt'], $CurrDecimalPlaces) . '</td>
 					</tr>';
 
 				$RowCounter++;
@@ -180,7 +180,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 					echo $TableHeader;
 				}
 				//end of page full new headings if
-				$AllocsTotal += $myrow['amt'];
+				$AllocsTotal += $MyRow['amt'];
 			}
 			//end of while loop
 			echo '<tr>
@@ -198,19 +198,19 @@ if ($Rows>1) {
 }
 if ($_POST['TransType']== 12) {
 	//retrieve transaction to see if there are any transaction fee,
-	$sql = "SELECT account,
+	$SQL = "SELECT account,
 						amount
 					FROM gltrans LEFT JOIN bankaccounts ON account=accountcode
 					WHERE type=12 AND typeno='".$_POST['TransNo']."' AND account !='". $_SESSION['CompanyRecord']['debtorsact'] ."' AND accountcode IS NULL";
 	$ErrMsg = _('Failed to retrieve charge data');
-	$result = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($result)>0) {
-		while ($myrow = DB_fetch_array($result)){
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result)>0) {
+		while ($MyRow = DB_fetch_array($Result)){
 			echo '<div class="centre">
-							<strong>'._('GL Account') .' ' . $myrow['account'] . '</strong> '. _('Amount') . locale_number_format($myrow['amount'],$CurrDecimalPlaces).'<br/> '. _('To local currency'). ' ' . locale_number_format($myrow['amount']*$Rate,$CurrDecimalPlaces).' ' . _('at rate') . ' ' . $Rate .
+							<strong>'._('GL Account') .' ' . $MyRow['account'] . '</strong> '. _('Amount') . locale_number_format($MyRow['amount'],$CurrDecimalPlaces).'<br/> '. _('To local currency'). ' ' . locale_number_format($MyRow['amount']*$Rate,$CurrDecimalPlaces).' ' . _('at rate') . ' ' . $Rate .
 				
 					'</div>';
-					$GrandTotal += $myrow['amount'] * $Rate;
+					$GrandTotal += $MyRow['amount'] * $Rate;
 		}
 		echo '<div class="centre">
 					<strong>' . _('Grand Total') . '</strong>' . ' ' . locale_number_format($GrandTotal,$CurrDecimalPlaces).'

@@ -103,11 +103,11 @@ if (isset($_POST['submit'])) {
 					'" . $_SESSION['UserID'] . "',
 					'" . $_POST['InvoiceNumber'] . "')";
 		
-		$msg = _('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . _('has been created');
+		$Msg = _('KL Tali Exchange') . ' ' . $_POST['ItemFrom'] . ' --> ' . $_POST['ItemTo'] . ' ' . _('has been created');
 		$ErrMsg = _('The insert of the KL tali exchange failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 
 		$AdjustmentNumber = GetNextTransNo(17);
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));

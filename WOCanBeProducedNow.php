@@ -21,7 +21,7 @@ function submit($RootPath, $Location) {
 
 	$WhereLocation 	= " AND workorders.loccode = '". $Location ."' ";
 	
-	$sql = "SELECT woitems.wo,
+	$SQL = "SELECT woitems.wo,
 				workorders.startdate,
 				woitems.stockid,
 				woitems.qtyreqd,
@@ -38,8 +38,8 @@ function submit($RootPath, $Location) {
 			;
 	
 	$ErrMsg = _('The SQL to find the WO items to produce ');
-	$resultItems = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($resultItems) != 0){
+	$ResultItems = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($ResultItems) != 0){
 	
 		echo '<p class="page_title_text" align="center"><strong>' . "Items in WO to be produced now in " . $Location . " with available stock" . '</strong></p>';
 		echo '<div>';
@@ -62,7 +62,7 @@ function submit($RootPath, $Location) {
 							<th>' . _('Result') . '</th>
 						</tr>';
 
-		while ($myItem = DB_fetch_array($resultItems)) {
+		while ($myItem = DB_fetch_array($ResultItems)) {
 			echo $TableHeader;
 			
 			$QtyPending = $myItem['qtyreqd'] - $myItem['qtyrecd'];
@@ -103,7 +103,7 @@ function submit($RootPath, $Location) {
 					);
 
 			// Get the BOM for this item
-			$sqlBOM = "SELECT bom.parent,
+			$SQLBOM = "SELECT bom.parent,
 						bom.component,
 						bom.quantity AS bomqty,
 						stockmaster.decimalplaces,
@@ -119,7 +119,7 @@ function submit($RootPath, $Location) {
                         AND bom.effectiveto > CURRENT_DATE";
 					 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$BOMResult = DB_query ($sqlBOM,$ErrMsg);
+			$BOMResult = DB_query ($SQLBOM,$ErrMsg);
 			$ItemCanBeproduced = TRUE;
 			
 			while ($myComponent = DB_fetch_array($BOMResult)) {
@@ -233,7 +233,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 				<td>' . _('For Factory Location') . ':</td>
 				<td><select name="Location">';
 
-		$sql = "SELECT locations.loccode,
+		$SQL = "SELECT locations.loccode,
 					locationname
 				FROM locations
 				INNER JOIN locationusers
@@ -242,10 +242,10 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 					AND locationusers.canview=1
 				WHERE locations.usedforwo = 1";
 
-		$LocnResult=DB_query($sql);
+		$LocnResult=DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		while ($MyRow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';

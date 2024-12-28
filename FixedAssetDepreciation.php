@@ -11,7 +11,7 @@ include('includes/SQL_CommonFunctions.inc');
 
 
 /*Get the last period depreciation (depn is transtype =44) was posted for */
-$result = DB_query("SELECT periods.lastdate_in_period,
+$Result = DB_query("SELECT periods.lastdate_in_period,
 							max(fixedassettrans.periodno)
 					FROM fixedassettrans INNER JOIN periods
 					ON fixedassettrans.periodno=periods.periodno
@@ -19,11 +19,11 @@ $result = DB_query("SELECT periods.lastdate_in_period,
 					GROUP BY periods.lastdate_in_period
 					ORDER BY periods.lastdate_in_period DESC");
 
-$LastDepnRun = DB_fetch_row($result);
+$LastDepnRun = DB_fetch_row($Result);
 
 $AllowUserEnteredProcessDate = true;
 
-if (DB_num_rows($result)==0) { //then depn has never been run yet?
+if (DB_num_rows($Result)==0) { //then depn has never been run yet?
 	/*in this case default depreciation calc to the last day of last month - and allow user to select a period */
 	if (!isset($_POST['ProcessDate'])) {
 		$_POST['ProcessDate'] = Date($_SESSION['DefaultDateFormat'],mktime(0,0,0,date('m'),0,date('Y')));
@@ -43,7 +43,7 @@ if (DB_num_rows($result)==0) { //then depn has never been run yet?
 
 
 /* Get list of assets for journal */
-$sql="SELECT fixedassets.assetid,
+$SQL="SELECT fixedassets.assetid,
 			fixedassets.description,
 			fixedassets.depntype,
 			fixedassets.depnrate,
@@ -71,7 +71,7 @@ $sql="SELECT fixedassets.assetid,
 			fixedassetcategories.categorydescription
 		ORDER BY assetcategoryid, assetid";
 
-$AssetsResult=DB_query($sql);
+$AssetsResult=DB_query($SQL);
 
 $InputError = false; //always hope for the best
 if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateFormat']))){
@@ -79,7 +79,7 @@ if (Date1GreaterThanDate2($_POST['ProcessDate'],Date($_SESSION['DefaultDateForma
 	$InputError =true;
 }
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
-	$result = DB_Txn_Begin();
+	$Result = DB_Txn_Begin();
 	$TransNo = GetNextTransNo(44);
 	$PeriodNo = GetPeriod($_POST['ProcessDate']);
 }
@@ -190,7 +190,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 
 		$ErrMsg = _('Cannot insert a depreciation GL entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -206,7 +206,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 								'" . $AssetRow['accumdepnact'] . "',
 								'" . _('Monthly depreciation for asset') . ' ' . $AssetRow['assetid'] . "',
 								'" . -$NewDepreciation ."')";
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		//insert the fixedassettrans record
 		$SQL = "INSERT INTO fixedassettrans (assetid,
@@ -227,7 +227,7 @@ while ($AssetRow=DB_fetch_array($AssetsResult)) {
 											'" . $NewDepreciation . "')";
 		$ErrMsg = _('Cannot insert a fixed asset transaction entry for the depreciation because');
 		$DbgMsg = _('The SQL that failed to insert the fixed asset transaction record was');
-		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		/*now update the accum depn in fixedassets */
 		$SQL = "UPDATE fixedassets SET accumdepn = accumdepn + " . $NewDepreciation  . "
@@ -259,7 +259,7 @@ echo '</table>
 		<br />';
 
 if (isset($_POST['CommitDepreciation']) AND $InputError==false){
-	$result = DB_Txn_Commit();
+	$Result = DB_Txn_Commit();
 	prnMsg(_('Depreciation') . ' ' . $TransNo . ' ' . _('has been successfully entered'),'success');
 	unset($_POST['ProcessDate']);
 	echo '<br /><a href="index.php">' ._('Return to main menu') . '</a>';

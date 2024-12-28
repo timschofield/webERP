@@ -160,10 +160,10 @@ class htmlMimeMail
 * argument of the the functions
 * add_html_image() or add_attachment().
 */
-	function getFile($filename)
+	function getFile($FileName)
 	{
 		$return = '';
-		if ($fp = fopen($filename, 'rb')) {
+		if ($fp = fopen($FileName, 'rb')) {
 			while (!feof($fp)) {
 				$return .= fread($fp, 1024);
 			}
@@ -192,9 +192,9 @@ class htmlMimeMail
 /**
 * Accessor to set the SMTP parameters
 */
-	function setSMTPParams($host = null, $port = null, $helo = null, $auth = null, $user = null, $pass = null)
+	function setSMTPParams($Host = null, $port = null, $helo = null, $auth = null, $user = null, $pass = null)
 	{
-		if (!is_null($host)) $this->smtp_params['host'] = $host;
+		if (!is_null($Host)) $this->smtp_params['host'] = $Host;
 		if (!is_null($port)) $this->smtp_params['port'] = $port;
 		if (!is_null($helo)) $this->smtp_params['helo'] = $helo;
 		if (!is_null($auth)) $this->smtp_params['auth'] = $auth;
@@ -671,9 +671,9 @@ class htmlMimeMail
 				$to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
 				if (!empty($this->return_path)) {
-					$result = mail($to, $subject, $this->output, implode(CRLF, $headers), '-f' . $this->return_path);
+					$Result = mail($to, $subject, $this->output, implode(CRLF, $headers), '-f' . $this->return_path);
 				} else {
-					$result = mail($to, $subject, $this->output, implode(CRLF, $headers));
+					$Result = mail($to, $subject, $this->output, implode(CRLF, $headers));
 				}
 
 				// Reset the subject in case mail is resent
@@ -682,7 +682,7 @@ class htmlMimeMail
 				}
 
 				// Return
-				return $result;
+				return $Result;
 				break;
 
 			case 'smtp':

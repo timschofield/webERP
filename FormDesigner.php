@@ -130,10 +130,10 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 	/*Iterate through the object filling in the values from
 	 * the POST variables */
 	foreach ($FormDesign as $key) {
-		foreach ($key as $subkey=>$value) {
+		foreach ($key as $subkey=>$Value) {
 			if ($key['type']=='ElementArray') {
-				foreach ($value as $subsubkey=>$subvalue) {
-					$value->$subsubkey = $_POST[$value['id'].$subsubkey];
+				foreach ($Value as $subsubkey=>$subvalue) {
+					$Value->$subsubkey = $_POST[$Value['id'].$subsubkey];
 				}
 			} else {
 				$key->$subkey = $_POST[$key['id'].$subkey];
@@ -190,15 +190,15 @@ if (empty($_POST['FormName'])) {
 	echo '<td>' .  _('Select the form to edit')  . '</td><td><select name="FormName">';
 	/* Iterate throght the appropriate companies FormDesigns/ directory
 	 * and extract the form name from each of the xml files found */
-	if ($handle = opendir($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/')) {
-		while (false !== ($file = readdir($handle))) {
-			if ($file[0]!='.') {
-				$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$file);
+	if ($Handle = opendir($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/')) {
+		while (false !== ($File = readdir($Handle))) {
+			if ($File[0]!='.') {
+				$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$File);
 				//echo "name is". $FormDesign['name'];
-				echo '<option value="'.$file.'">' . /*_(*/ $FormDesign['name'] /*)*/ . '</option>';
+				echo '<option value="'.$File.'">' . /*_(*/ $FormDesign['name'] /*)*/ . '</option>';
 			}
 		}
-		closedir($handle);
+		closedir($Handle);
 	}
 	echo '</select></td></tr></table>';
 	echo '<br /><div class="centre"><input tabindex="6" type="submit" name="submit" value="' . _('Edit Form Layout') . '" /></div>';
@@ -242,7 +242,7 @@ foreach ($Papers as $Paper) {
 echo '</select></th>';
 /* and the standard line height for the form */
 echo '<th style="width:33%">' . _('Line Height') . '<input type="text" class="number" name="LineHeight" size="3" maxlength="3" value="'.$FormDesign->LineHeight.'" /></th></tr><tr>';
-$counter=1; // Count how many sub tables are in the row
+$Counter=1; // Count how many sub tables are in the row
 foreach ($FormDesign as $key) {
 	switch ($key['type']) {
 		case 'image':
@@ -256,7 +256,7 @@ foreach ($FormDesign as $key) {
 				InputHeight($key['id'], $key->height);// Requires to standardize xml files from "height" to "Height"
             echo '</tr>';
 			echo '</table></td>';
-			$counter=$counter+1;
+			$Counter=$Counter+1;
 			break;
 		case 'SimpleText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1">';
@@ -267,7 +267,7 @@ foreach ($FormDesign as $key) {
 					SelectFontSize($key['id'], $key->FontSize);
 		        echo '</tr>';
 			echo '</table></td>';
-			$counter=$counter+1;
+			$Counter=$Counter+1;
 			break;
 		case 'MultiLineText':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1">';
@@ -279,7 +279,7 @@ foreach ($FormDesign as $key) {
 					SelectFontSize($key['id'], $key->FontSize);
 		        echo '</tr>';
 			echo '</table></td>';
-			$counter=$counter+1;
+			$Counter=$Counter+1;
 			break;
 		case 'ElementArray':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="7">' . _((string)$key['name']) . '</th></tr>';
@@ -308,7 +308,7 @@ foreach ($FormDesign as $key) {
 				echo '</tr>';
 			}
 			echo '</table></td>';
-			$counter=$counter+1;
+			$Counter=$Counter+1;
 			break;
 		case 'CurvedRectangle':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _((string)$key['name']) . '</th>';
@@ -330,7 +330,7 @@ foreach ($FormDesign as $key) {
 */
             echo '</tr>';
 			echo '</table></td>';
-			$counter=$counter+1;
+			$Counter=$Counter+1;
 			break;
 		case 'Rectangle': // This case is probably included in CurvedRectangle.
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="8">' . _((string)$key['name']) . '</th>';
@@ -343,7 +343,7 @@ foreach ($FormDesign as $key) {
 				InputHeight($key['id'], $key->height);// Requires to standardize xml files from "height" to "Height"
             echo '</tr>';
 			echo '</table></td>';
-			$counter=$counter+1;
+			$Counter=$Counter+1;
 			break;
 		case 'Line':
 			echo '<td colspan="1" valign="top"><table width="100%" border="1"><tr><th colspan="6">' . _((string)$key['name']) . '</th></tr>';
@@ -354,11 +354,11 @@ foreach ($FormDesign as $key) {
 			echo '<td class="number">' . _('End y co-ordinate').' = ' . '</td><td><input type="text" class="number" name="'.$key['id'].'endy" size="4" maxlength="4" value="'.$key->endy.'" /></td>';
             echo '</tr>';
 			echo '</table></td>';
-			$counter=$counter+1;
+			$Counter=$Counter+1;
 			break;
 	}
-	if ($counter==4) { // If the row is full start a new one
-		$counter=1;
+	if ($Counter==4) { // If the row is full start a new one
+		$Counter=1;
 		echo '</tr><tr>';
 	}
 }

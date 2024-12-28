@@ -6,7 +6,7 @@ include('includes/session.php');
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$Title=_('Low Gross Profit Sales');
 }
-$debug=0;
+$Debug=0;
 if (isset($_POST['PrintPDF'])) {
 
 	include('includes/PDFStarter.php');
@@ -14,7 +14,7 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addInfo('Subject', _('Low Gross Profit Sales'));
 	$FontSize=10;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
 	$Title = _('Low GP sales') . ' - ' . _('Problem Report');
 
@@ -56,7 +56,7 @@ if (isset($_POST['PrintPDF'])) {
 	  include('includes/header.php');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -68,7 +68,7 @@ if (isset($_POST['PrintPDF'])) {
 		include('includes/header.php');
 		prnMsg(_('No low GP items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -81,7 +81,7 @@ if (isset($_POST['PrintPDF'])) {
 	$CatTot_Val=0;
 	while ($LowGPItems = DB_fetch_array($LowGPSalesResult)){
 
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 		$FontSize=8;
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+2,$YPos,30,$FontSize,$LowGPItems['typename']);
@@ -98,7 +98,7 @@ if (isset($_POST['PrintPDF'])) {
 		$LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,$DisplayGP, 'right');
 		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayGPPercent . '%', 'right');
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 			include('includes/PDFLowGPPageHeader.inc');
 		}
 
@@ -106,7 +106,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$FontSize =10;
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_LowGPSales_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 

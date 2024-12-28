@@ -97,7 +97,7 @@ $pdf->addInfo('Title', _('Customer Acknowledgement'));
 $pdf->addInfo('Subject', _('Acknowledgement') . ' ' . $_GET['AcknowledgementNo']);
 $FontSize = 12;
 $PageNumber = 1;
-$line_height = $FontSize * 1.25;
+$LineHeight = $FontSize * 1.25;
 
 /* Now ... Has the order got any line items still outstanding to be invoiced */
 
@@ -140,7 +140,7 @@ if (DB_num_rows($Result) > 0) {
 
 		$ListCount++;
 
-		if ((mb_strlen($MyRow2['narrative']) > 200 AND $YPos - $line_height <= 75) OR (mb_strlen($MyRow2['narrative']) > 1 AND $YPos - $line_height <= 62) OR $YPos - $line_height <= 50) {
+		if ((mb_strlen($MyRow2['narrative']) > 200 AND $YPos - $LineHeight <= 75) OR (mb_strlen($MyRow2['narrative']) > 1 AND $YPos - $LineHeight <= 62) OR $YPos - $LineHeight <= 50) {
 			/* We reached the end of the page so finsih off the page and start a newy */
 			$PageNumber++;
 			include('includes/PDFAckPageHeader.php');
@@ -194,7 +194,7 @@ if (DB_num_rows($Result) > 0) {
 		$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, $DisplayTotal, 'right');
 
 		if ($MyRow2['cust_part'] > '') {
-			$YPos -= $line_height;
+			$YPos -= $LineHeight;
 			$LeftOvers = $pdf->addTextWrap($XPos + 10, $YPos, 300, $FontSize, _('Customer Part') . ': ' . $MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']);
 			//$LeftOvers = $pdf->addTextWrap(190,$YPos,186,$FontSize,$MyRow2['cust_description']);
 		}
@@ -202,24 +202,24 @@ if (DB_num_rows($Result) > 0) {
 		// Prints salesorderdetails.narrative
 		$Split = explode("\r\n", wordwrap($MyRow2['narrative'], 130, "\r\n"));
 		foreach ($Split as $TextLine) {
-			$YPos -= $line_height; // rchacon's suggestion: $YPos -= $FontSize;
-			if ($YPos < ($Bottom_Margin + $line_height)) { // Begins new page
+			$YPos -= $LineHeight; // rchacon's suggestion: $YPos -= $FontSize;
+			if ($YPos < ($Bottom_Margin + $LineHeight)) { // Begins new page
 				$PageNumber++;
 				include('includes/PDFAckPageHeader.php');
 			}
 			$LeftOvers = $pdf->addTextWrap($XPos + 1, $YPos, 750, 10, $TextLine);
 		}
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 
 		$AcknowledgementTotal += $LineTotal;
 		$AcknowledgementTotalEx += $SubTot;
 		$TaxTotal += $TaxAmount;
 
 		/*increment a line down for the next line item */
-		$YPos -= ($line_height);
+		$YPos -= ($LineHeight);
 
 	} //end while there are line items to print out
-	if ((mb_strlen($MyRow['comments']) > 200 AND $YPos - $line_height <= 75) OR (mb_strlen($MyRow['comments']) > 1 AND $YPos - $line_height <= 62) OR $YPos - $line_height <= 50) {
+	if ((mb_strlen($MyRow['comments']) > 200 AND $YPos - $LineHeight <= 75) OR (mb_strlen($MyRow['comments']) > 1 AND $YPos - $LineHeight <= 62) OR $YPos - $LineHeight <= 50) {
 		/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;
 		include('includes/PDFAckPageHeader.php');
@@ -244,7 +244,7 @@ if (DB_num_rows($Result) > 0) {
 			}
 		}
 	}
-	$YPos -= ($line_height);
+	$YPos -= ($LineHeight);
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 70 - 655, $YPos, 655, $FontSize, _('Total Excluding Tax'), 'right');
 	$LeftOvers = $pdf->addTextWrap($Page_Width - $Right_Margin - 90, $YPos, 90, $FontSize, locale_number_format($AcknowledgementTotalEx, $MyRow['currdecimalplaces']), 'right');
 	$YPos -= 12;
@@ -263,7 +263,7 @@ if (DB_num_rows($Result) > 0) {
 	//$LeftOvers = $pdf->addTextWrap($XPos, $YPos,700,$FontSize, $Terms, 'left');
 
 	//while (mb_strlen($LeftOvers) > 1) {
-	//$YPos -= $line_height;
+	//$YPos -= $LineHeight;
 	//check page break here
 	//$LeftOvers = $pdf->addTextWrap($XPos, $YPos,700,$FontSize, $LeftOvers, 'left');
 	//}

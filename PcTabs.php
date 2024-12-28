@@ -71,25 +71,25 @@ if (isset($_POST['Submit'])) {
 	if ($InputError == 0) {
 		$AuthorisersExpenses = '';
 		$i = 0;
-		foreach ($_POST['SelectAuthoriserExpenses'] as $value) {
+		foreach ($_POST['SelectAuthoriserExpenses'] as $Value) {
 			if ($i) $AuthorisersExpenses .= ',';
-			$AuthorisersExpenses .= $value;
+			$AuthorisersExpenses .= $Value;
 			$i++;
 		}
 
 		$AuthorisersCash = '';
 		$i = 0;
-		foreach ($_POST['SelectAuthoriserCash'] as $value) {
+		foreach ($_POST['SelectAuthoriserCash'] as $Value) {
 			if ($i) $AuthorisersCash .= ',';
-			$AuthorisersCash .= $value;
+			$AuthorisersCash .= $Value;
 			$i++;
 		}
 
 		$Assigners = '';
 		$i = 0;
-		foreach ($_POST['SelectAssigner'] as $value) {
+		foreach ($_POST['SelectAssigner'] as $Value) {
 			if ($i) $Assigners .= ',';
-			$Assigners .= $value;
+			$Assigners .= $Value;
 			$i++;
 		}
 	}	

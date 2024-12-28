@@ -60,13 +60,13 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
- 	$checksql = "SELECT count(*)
+ 	$CheckSQL = "SELECT count(*)
 		     FROM stocktags
 		     WHERE tagname = '" . $_POST['TagName'] . "'
 				OR tagnamebahasa = '" . $_POST['TagNameBahasa'] . "'";
-	$checkresult=DB_query($checksql);
-	$checkrow=DB_fetch_row($checkresult);
-	if ($checkrow[0]>0 and !isset($SelectedTag)) {
+	$Checkresult=DB_query($CheckSQL);
+	$CheckRow=DB_fetch_row($Checkresult);
+	if ($CheckRow[0]>0 and !isset($SelectedTag)) {
 		$InputError = 1;
 		echo '<br />';
 		prnMsg(_('You already have a tag called').' '.$_POST['TagName'].' or '.$_POST['TagNameBahasa'],'error');
@@ -81,20 +81,20 @@ if (isset($_POST['submit'])) {
 				tagnamebahasa = LOWER('" . $_POST['TagNameBahasa'] . "')
 			WHERE tagid = '" .$SelectedTag."'";
 
-		$msg = _('The tag') . ' ' . $SelectedTag . ' ' .  _('has been updated');
+		$Msg = _('The tag') . ' ' . $SelectedTag . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM stocktags
 			     WHERE tagname = '" . $_POST['TagName'] . "'
 					OR tagnamebahasa = '" . $_POST['TagNameBahasa'] . "'";
 
-		$checkresult = DB_query($checkSql);
-		$checkrow = DB_fetch_row($checkresult);
+		$Checkresult = DB_query($CheckSQL);
+		$CheckRow = DB_fetch_row($Checkresult);
 
-		if ( $checkrow[0] > 0 ) {
+		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( _('The tag') . ' ' . $_POST['tagid'] . _(' already exist.'),'error');
 		} else {
@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 							LOWER('" . $_POST['TagNameBahasa'] . "')
 						   )";
 
-			$msg = _('Item tag') . ' ' . $_POST["tagname"] .  ' - ' . $_POST["tagnamebahasa"] .  ' ' . _('has been created');
+			$Msg = _('Item tag') . ' ' . $_POST["tagname"] .  ' - ' . $_POST["tagnamebahasa"] .  ' ' . _('has been created');
 
 		}
 	}
@@ -116,7 +116,7 @@ if (isset($_POST['submit'])) {
 	if ( $InputError !=1) {
 		$Result = DB_query($SQL);
 		echo '<br />';
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset($SelectedTag);
 		unset($_POST['tagid']);
 		unset($_POST['TagName']);

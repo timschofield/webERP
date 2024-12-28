@@ -19,11 +19,11 @@ If (!isset($_GET['EmailType']) OR $_GET['EmailType']==''){
 
 if ($_GET['EmailType']!='NoSendThankYou'){
 	// if we send an email different than "no send thank you email", we have to prepare the mail text
-	$headers = "From: " . $_SESSION['ShopName'] . " <" . strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
-	$headers .= "Reply-To: " . $_SESSION['ShopName'] . " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
-	$headers .= "Cc: " . $_SESSION['ShopName'] . " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
-	$headers .= "MIME-Version: 1.0\r\n";
-	$headers .= "Content-Type: text/html; charset=utf-8\r\n";
+	$Headers = "From: " . $_SESSION['ShopName'] . " <" . strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
+	$Headers .= "Reply-To: " . $_SESSION['ShopName'] . " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
+	$Headers .= "Cc: " . $_SESSION['ShopName'] . " <". strip_tags($_SESSION['ShopManagerEmail']) . ">\r\n";
+	$Headers .= "MIME-Version: 1.0\r\n";
+	$Headers .= "Content-Type: text/html; charset=utf-8\r\n";
 
 	if ($_GET['EmailType']=='NoOrderPlaced'){
 		$MailSubject = $_SESSION['ShopName'] . ' ' . _('Customer Registration');
@@ -267,11 +267,11 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 	// but we still want to  inform the team some lines below these
 	if ($SendEmail){
 		if($_SESSION['SmtpSetting']==0){
-			$Result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
+			$Result = mail( $MailTo, $MailSubject, $MailMessage, $Headers );
 		}else{
 			include('includes/htmlMimeMail.php');
 			$mail = new htmlMimeMail();
-			$mail->setSubject($mailSubject);
+			$mail->setSubject($MailSubject);
 			$mail->setHTML($MailMessage);
 			$Result = SendmailBySmtp($mail,array($MailTo));
 		}
@@ -309,11 +309,11 @@ if ($_GET['EmailType']=='PaymentConfirmation'){
 		$MailTo = "kl-onlinesupport@kapal-laut.com";
 		$MailSubject = "New order online. Process ASAP.";
 		if($_SESSION['SmtpSetting']==0){
-			$Result = mail( $MailTo, $MailSubject, $MailMessage, $headers );
+			$Result = mail( $MailTo, $MailSubject, $MailMessage, $Headers );
 		}else{
 			include('includes/htmlMimeMail.php');
 			$mail = new htmlMimeMail();
-			$mail->setSubject($mailSubject);
+			$mail->setSubject($MailSubject);
 			$mail->setHTML($MailMessage);
 			$Result = SendmailBySmtp($mail,array($MailTo));
 		}
