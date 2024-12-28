@@ -17,7 +17,7 @@ $TextToPrint = "x1B@0x1Ba0x010x1B!0x38Blink by Kapal-Laut0x0A0x1B!0x01     0x0A0
 $identifier=GetPOSIdentifier();
 $FileName = GetFilenameFromPOSIdentifier($identifier);  
 file_put_contents($FileName, $TextToPrint);
-$textActionToPrint = 'Print the Daily SPG End Of Shift Test';
+$TextActionToPrint = 'Print the Daily SPG End Of Shift Test';
 
 include ('includes/SilentPrinting.php');
 

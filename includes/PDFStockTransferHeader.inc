@@ -11,22 +11,22 @@ $pdf->addJpegFromFile($_SESSION['LogoFile'],$XPos+20,$YPos-50,0,60);
 
 
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($Line_height*1.5),550,$FontSize, _('Stock transfer number ').' ' . $_GET['TransferNo'] );
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($Line_height*3),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($LineHeight*1.5),550,$FontSize, _('Stock transfer number ').' ' . $_GET['TransferNo'] );
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($LineHeight*3),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 
 $YPos -= 60;
 
-$YPos -=$Line_height;
+$YPos -=$LineHeight;
 //Note, this is ok for multilang as this is the value of a Select, text in option is different
 
-$YPos -=(2*$Line_height);
+$YPos -=(2*$LineHeight);
 
 /*Draw a rectangle to put the headings in     */
 
-$pdf->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
-$pdf->line($Left_Margin, $YPos+$Line_height,$Left_Margin, $YPos- $Line_height);
-$pdf->line($Left_Margin, $YPos- $Line_height,$Page_Width-$Right_Margin, $YPos- $Line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos- $Line_height);
+$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
+$pdf->line($Left_Margin, $YPos+$LineHeight,$Left_Margin, $YPos- $LineHeight);
+$pdf->line($Left_Margin, $YPos- $LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
@@ -39,7 +39,7 @@ $LeftOvers = $pdf->addTextWrap($Xpos+450,$YPos,300-$Left_Margin,$FontSize,  _('Q
 
 
 $FontSize=8;
-$YPos -= (1.5 * $Line_height);
+$YPos -= (1.5 * $LineHeight);
 
 $PageNumber++;
 

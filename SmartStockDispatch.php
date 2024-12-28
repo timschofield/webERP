@@ -25,9 +25,9 @@ if (isset($_POST['PrintPDF'])) {
 
 	//template
 	if($_POST['template']=='simple'){
-		$template='simple';
+		$Template='simple';
 	}else{
-		$template='standard';
+		$Template='standard';
 	}
 	// Create Transfer Number
 	if(!isset($Trf_ID) && $_POST['ReportType'] == 'Batch'){
@@ -116,7 +116,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-				$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template,$CategoryDescription);
+				$Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$Template,$CategoryDescription);
 
 	$FontSize=8;
 
@@ -170,7 +170,7 @@ if (isset($_POST['PrintPDF'])) {
 			// and False to set to transparent
 			$Fill=False;
 		
-			if($template=='simple'){
+			if($Template=='simple'){
 				//for simple template
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$MyRow['stockid'],'',0,$Fill);
 				$pdf->addTextWrap(135,$YPos,250,$FontSize,$MyRow['description'],'',0,$Fill);
@@ -201,7 +201,7 @@ if (isset($_POST['PrintPDF'])) {
 			if ($YPos < $Bottom_Margin + $LineHeight + 200){
 
 				PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-							$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
+							$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$Template);
 			}
 
 			// Create loctransfers records for each record
@@ -248,7 +248,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	if ($YPos < $Bottom_Margin + $LineHeight){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-					   $Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template);
+					   $Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$Template);
 	}
 /*Print out the grand totals */
 
@@ -373,7 +373,7 @@ if (isset($_POST['PrintPDF'])) {
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$template,$CategoryDescription) {
+					 $Page_Width,$Right_Margin,$Trf_ID,$FromLocation,$ToLocation,$Template,$CategoryDescription) {
 
 
 	/*PDF page header for Stock Dispatch report */
@@ -410,7 +410,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
 
-	if($template=='simple'){
+	if($Template=='simple'){
 		$pdf->addTextWrap(50,$YPos,100,$FontSize,_('Part Number'), 'left');
 		$pdf->addTextWrap(135,$YPos,220,$FontSize,_('Description'), 'left');
 		$pdf->addTextWrap(380,$YPos,45,$FontSize,_('QOH-From'), 'right');

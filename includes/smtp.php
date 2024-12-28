@@ -15,7 +15,7 @@
 		var $authenticated;
 		var $connection;
 		var $recipients;
-		var $headers;
+		var $Headers;
 		var $timeout;
 		var $errors;
 		var $status;
@@ -151,11 +151,11 @@
 					return FALSE;
 
 				// Transparency
-				$headers = str_replace(CRLF.'.', CRLF.'..', trim(implode(CRLF, $this->headers)));
+				$Headers = str_replace(CRLF.'.', CRLF.'..', trim(implode(CRLF, $this->headers)));
 				$body    = str_replace(CRLF.'.', CRLF.'..', $this->body);
 				$body    = $body[0] == '.' ? '.'.$body : $body;
 
-				$this->send_data($headers);
+				$this->send_data($Headers);
 				$this->send_data('');
 				$this->send_data($body);
 				$this->send_data('.');
@@ -342,17 +342,17 @@
 
 		function &get_data(){
 
-			$return = '';
+			$Return = '';
 			$Line   = '';
 			$loops  = 0;
 
 			if(is_resource($this->connection)){
-				while((strpos($return, CRLF) === FALSE OR substr($Line,3,1) !== ' ') AND $loops < 100){
+				while((strpos($Return, CRLF) === FALSE OR substr($Line,3,1) !== ' ') AND $loops < 100){
 					$Line    = fgets($this->connection, 512);
-					$return .= $Line;
+					$Return .= $Line;
 					$loops++;
 				}
-				return $return;
+				return $Return;
 
 			}else
 				return FALSE;

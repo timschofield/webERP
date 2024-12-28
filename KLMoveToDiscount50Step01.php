@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('Move Item To 50% Discount Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
 
 	unset($SelectedMovement);
-	unset($delete);
+	unset($Delete);
 
 }
 

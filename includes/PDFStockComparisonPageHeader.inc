@@ -36,5 +36,5 @@ $LeftOvers = $pdf->addTextWrap(330+41+61,$YPos,60,$FontSize, _('Reference'), 'ce
 $LeftOvers = $pdf->addTextWrap(330+41+61+60,$YPos,70,$FontSize, _('Adjustment'), 'centre');
 
 $FontSize=10;
-$YPos -=(2*$Line_height);
+$YPos -=(2*$LineHeight);
 ?>

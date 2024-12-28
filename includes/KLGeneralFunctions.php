@@ -279,11 +279,11 @@ function ItemCodeQOH($Stockid, $CodeDetail, $Where){
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$qty = $MyRow['total'];
+		$Qty = $MyRow['total'];
 	}else{
-		$qty = 0;
+		$Qty = 0;
 	}
-	return $qty;
+	return $Qty;
 }
 
 function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDetail){

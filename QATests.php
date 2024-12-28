@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
 
 		prnMsg(_('QA Test') . ' ' . $SelectedQATest . ' ' . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
-		unset($delete);
+		unset($Delete);
 		unset ($_GET['delete']);
 	}
 }

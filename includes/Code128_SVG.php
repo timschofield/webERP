@@ -25,12 +25,12 @@
         return chr($sum);
     }
     
-    function draw($text,$type='B',$check=false){
+    function draw($Text,$type='B',$check=false){
         global $unit,$x,$code128,$height,$bw,$fs,$dx,$yt;
         $type=preg_replace('/\W/','',$type);
         $type=substr($type,0,1);
         $type=strtoupper($type);
-        $clong=(strlen($text)+4)*11;
+        $clong=(strlen($Text)+4)*11;
         $width=$bw*$clong;
         switch($type){
             case'A':
@@ -47,11 +47,11 @@
             break;
             
         }
-        $ctext=$start.$text;
+        $ctext=$start.$Text;
         if ($check) {
-        $text.=checksum($ctext);
+        $Text.=checksum($ctext);
         }
-        $text=str_split($text);
+        $Text=str_split($Text);
         $img='@';
         $img.= "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n<!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\" \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">\n";
         $img.= "<svg width='$width$unit' height='$height$unit' version='1.1' xmlns='http://www.w3.org/2000/svg'>\n";
@@ -61,7 +61,7 @@
         $img.=drawchar($start);
         
         //Begin Content
-        foreach($text as $char){
+        foreach($Text as $char){
             $index=ord($char)-32;
             $xt=$x+$dx;
             $img.= "<desc>$char</desc>\n";

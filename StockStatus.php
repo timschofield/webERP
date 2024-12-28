@@ -308,12 +308,12 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	while ($MyRow=DB_fetch_array($MovtsResult)) {
 	  if ($LastPrice != $MyRow['price']
 			OR $LastDiscount != $MyRow['discount']) { /* consolidate price history for records with same price/discount */
-	    if (isset($qty)) {
+	    if (isset($Qty)) {
 	    	$DateRange=ConvertSQLDate($FromDate);
 	    	if ($FromDate != $ToDate) {
 	        	$DateRange .= ' - ' . ConvertSQLDate($ToDate);
 	     	}
-	    	$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
+	    	$PriceHistory[] = array($DateRange, $Qty, $LastPrice, $LastDiscount);
 	    	$k++;
 	    	if ($k > 9) {
                   break; /* 10 price records is enough to display */
@@ -325,18 +325,18 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	    $LastPrice = $MyRow['price'];
 	    $LastDiscount = $MyRow['discountpercent'];
 	    $ToDate = $MyRow['trandate'];
-	    $qty = 0;
+	    $Qty = 0;
 	  }
-	  $qty += $MyRow['qty'];
+	  $Qty += $MyRow['qty'];
 	  $FromDate = $MyRow['trandate'];
 	} //end of while loop
 
-	if (isset($qty)) {
+	if (isset($Qty)) {
 		$DateRange = ConvertSQLDate($FromDate);
 		if ($FromDate != $ToDate) {
 	   		$DateRange .= ' - '.ConvertSQLDate($ToDate);
 		}
-		$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
+		$PriceHistory[] = array($DateRange, $Qty, $LastPrice, $LastDiscount);
 	}
 
 	if (isset($PriceHistory)) {

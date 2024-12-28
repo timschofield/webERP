@@ -1752,7 +1752,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		//################## PRINTING STUFF ##################### 
 		$FileName = GetFilenameFromPOSIdentifier($identifier);   
 		file_put_contents($FileName, $Receipt);
-		$textActionToPrint = 'Print the customer receipt';
+		$TextActionToPrint = 'Print the customer receipt';
 		include ('includes/SilentPrinting.php');
 	   //################## PRINTING STUFF ##################### 
 

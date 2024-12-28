@@ -309,67 +309,67 @@ if(!extension_loaded('mbstring')){
 			    $CompanyList[] = array('database' => 'weberpdemo', 'company' => _('WebERP Demo Company'));
 			}
 
-			//$msg holds the text of the new config.php file
-			$msg = "<?php\n\n";
-			$msg .= "// User configurable variables\n";
-			$msg .= "//---------------------------------------------------\n\n";
-			$msg .= "// Default language to use for the login screen and the setup of new users.\n";
-			$msg .= "\$DefaultLanguage = '" . $UserLanguage . "';\n\n";
-			$msg .= "// Default theme to use for the login screen and the setup of new users.\n";
-			$msg .= "\$DefaultTheme = '" . $DefaultTheme . "';\n\n";
-			$msg .= "// Whether to display the demo login and password or not on the login screen\n";
-			$msg .= "\$AllowDemoMode = FALSE;\n\n";
-			$msg .= "// Connection information for the database\n";
-			$msg .= "// \$Host is the computer ip address or name where the database is located\n";
-			$msg .= "// assuming that the webserver is also the sql server\n";
-			$msg .= "\$Host = '" . $HostName . "';\n\n";
-			$msg .= "// assuming that the web server is also the sql server\n";
-			$msg .= "\$DBType = '".$DBConnectType."';\n";
-		        $msg .= "//assuming that the web server is also the sql server\n";
-			$msg .= "\$DBUser = '".$UserName."';\n";
-			$msg .= "\$DBPassword = '".$Password."';\n";
-			$msg .= "// The timezone of the business - this allows the possibility of having;\n";
-			$msg .= "date_default_timezone_set('".$TimeZone."');\n";
-			$msg .= "putenv('TZ=" . $TimeZone ."');\n";
-			$msg .= "\$AllowCompanySelectionBox = 'ShowSelectionBox';\n";
-			$msg .= "//The system administrator name use the user input mail;\n";
+			//$Msg holds the text of the new config.php file
+			$Msg = "<?php\n\n";
+			$Msg .= "// User configurable variables\n";
+			$Msg .= "//---------------------------------------------------\n\n";
+			$Msg .= "// Default language to use for the login screen and the setup of new users.\n";
+			$Msg .= "\$DefaultLanguage = '" . $UserLanguage . "';\n\n";
+			$Msg .= "// Default theme to use for the login screen and the setup of new users.\n";
+			$Msg .= "\$DefaultTheme = '" . $DefaultTheme . "';\n\n";
+			$Msg .= "// Whether to display the demo login and password or not on the login screen\n";
+			$Msg .= "\$AllowDemoMode = FALSE;\n\n";
+			$Msg .= "// Connection information for the database\n";
+			$Msg .= "// \$Host is the computer ip address or name where the database is located\n";
+			$Msg .= "// assuming that the webserver is also the sql server\n";
+			$Msg .= "\$Host = '" . $HostName . "';\n\n";
+			$Msg .= "// assuming that the web server is also the sql server\n";
+			$Msg .= "\$DBType = '".$DBConnectType."';\n";
+		        $Msg .= "//assuming that the web server is also the sql server\n";
+			$Msg .= "\$DBUser = '".$UserName."';\n";
+			$Msg .= "\$DBPassword = '".$Password."';\n";
+			$Msg .= "// The timezone of the business - this allows the possibility of having;\n";
+			$Msg .= "date_default_timezone_set('".$TimeZone."');\n";
+			$Msg .= "putenv('TZ=" . $TimeZone ."');\n";
+			$Msg .= "\$AllowCompanySelectionBox = 'ShowSelectionBox';\n";
+			$Msg .= "//The system administrator name use the user input mail;\n";
 			if(strtolower($AdminEmail) != 'admin@weberp.org'){
-			$msg .= "\$SysAdminEmail = '".$AdminEmail."';\n";
+			$Msg .= "\$SysAdminEmail = '".$AdminEmail."';\n";
 			}
 			if(isset($NewCompany)){
-				$msg .= "\$DefaultDatabase = '".$DatabaseName."';\n";
+				$Msg .= "\$DefaultDatabase = '".$DatabaseName."';\n";
 			}else{
-				$msg .= "\$DefaultDatabase = 'weberpdemo';\n";
+				$Msg .= "\$DefaultDatabase = 'weberpdemo';\n";
 			}
-			$msg .= "\$SessionLifeTime = 3600;\n";
-			$msg .= "\$MaximumExecutionTime = 120;\n";
-			$msg .= "\$DefaultClock = 12;\n";
-			$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));\n";
-			$msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
-			$msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-			$msg .= "		\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
-			$msg .= "	}\n";
-			$msg .= "}\n";
+			$Msg .= "\$SessionLifeTime = 3600;\n";
+			$Msg .= "\$MaximumExecutionTime = 120;\n";
+			$Msg .= "\$DefaultClock = 12;\n";
+			$Msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));\n";
+			$Msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
+			$Msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
+			$Msg .= "		\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
+			$Msg .= "	}\n";
+			$Msg .= "}\n";
 
-			$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
-			$msg .= "	\$RootPath = '';\n";
-			$msg .= "}\n";
-			$msg .= "error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);\n";
-			$msg .=  "//Installed companies \n";
+			$Msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
+			$Msg .= "	\$RootPath = '';\n";
+			$Msg .= "}\n";
+			$Msg .= "error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);\n";
+			$Msg .=  "//Installed companies \n";
 			foreach ($CompanyList as $k=>$compinfo)
 			{
-		        $msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".addslashes($compinfo['company'])."' );\n"; //simpler to manipulate this way
+		        $Msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".addslashes($compinfo['company'])."' );\n"; //simpler to manipulate this way
             }
-            $msg .=  "//End Installed companies-do not change this line\n";
-            $msg .= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
-			$msg .= "?>";
+            $Msg .=  "//End Installed companies-do not change this line\n";
+            $Msg .= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
+			$Msg .= "?>";
 
 			//write the config.php file since we have test the writability of the root path and companies,
 			//there is little possibility that it will fail here. So just an warn if it is failed.
 			if(!$zp = fopen($Path_To_Root . '/config.php','w')){
 				echo _("Cannot open the configuration file").$Config_File;
 			} else {
-				if (!fwrite($zp, $msg)){
+				if (!fwrite($zp, $Msg)){
 					fclose($zp);
 					echo _("Cannot write to the configuration file").$Config_File;
 				}

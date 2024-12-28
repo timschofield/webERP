@@ -16,13 +16,13 @@
 	$pdf->addText($Left_Margin,$YPos,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 	$pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])  . '   ' . _('Page'). ' ' . $PageNumber);
 
-	$YPos -= $Line_height;
+	$YPos -= $LineHeight;
 	$FontSize =10;
 	$pdf->setFont('','B');
 	$Heading = _('Trial Balance for the month of ') . $PeriodToDate . _(' and for the ') . $NumberOfMonths . _(' months to ') . $PeriodToDate;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
 
-	$YPos -= (2 * $Line_height);
+	$YPos -= (2 * $LineHeight);
 	$FontSize = 8;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Account'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,100,$FontSize,_('Account Name'));
@@ -31,5 +31,5 @@
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,_('Period Actual'),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,_('Period Budget'),'right');
 	$pdf->setFont('','');
-	$YPos -= (2 * $Line_height);
+	$YPos -= (2 * $LineHeight);
 ?>

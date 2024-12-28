@@ -438,11 +438,11 @@ function QtyAvailable($stockid, $location){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$qty = $MyRow['total'];
+		$Qty = $MyRow['total'];
 	}else{
-		$qty = 0;
+		$Qty = 0;
 	}
-	return $qty;
+	return $Qty;
 }
 
 function ActiveLocationsForItem($stockid){
@@ -453,11 +453,11 @@ function ActiveLocationsForItem($stockid){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$qty = $MyRow['total'];
+		$Qty = $MyRow['total'];
 	}else{
-		$qty = 0;
+		$Qty = 0;
 	}
-	return $qty;
+	return $Qty;
 }
 
 function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $EmailText){
@@ -990,19 +990,19 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 		$MyRow = DB_fetch_array($Result);
 		$RLFactorGudang = round($MyRow['rlfactor']*$FactorGudangPackaging, 2);
 		$RLDaysGudang = round($MyRow['rldays']*$FactorGudangPackaging, 0);
-		$text = $GudangCode . ' RL Factor for Packaging = ' . $RLFactorGudang;
+		$Text = $GudangCode . ' RL Factor for Packaging = ' . $RLFactorGudang;
 		if ($ShowMessages){
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . $text . "\n";
+			$EmailText = $EmailText . $Text . "\n";
 		}
-		$text = $GudangCode . ' RL Days for Packaging = ' . $RLDaysGudang;
+		$Text = $GudangCode . ' RL Days for Packaging = ' . $RLDaysGudang;
 		if ($ShowMessages){
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		if ($EmailText!=''){
-			$EmailText = $EmailText . $text . "\n";
+			$EmailText = $EmailText . $Text . "\n";
 		}
 		$SQL = "UPDATE locations
 				SET rlfactorforpackaging = '" . $RLFactorGudang ."',
@@ -1028,12 +1028,12 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
-			$text = $GudangCode . ' ' . $MyRow['stockid'] . ' New RL = ' . $MyRow['rl'];
+			$Text = $GudangCode . ' ' . $MyRow['stockid'] . ' New RL = ' . $MyRow['rl'];
 			if ($ShowMessages){
-				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+				echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 			}
 			if ($EmailText!=''){
-				$EmailText = $EmailText . $text . "\n";
+				$EmailText = $EmailText . $Text . "\n";
 			}
 			SetReorderLevel("PackagingGudangOptimization", $MyRow['stockid'], $GudangCode, 0, $MyRow['rl'], $updateDB);
 		}
@@ -1104,18 +1104,18 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 		$OldRL = $MyRow['rl'];
 		if ($NewRL != $OldRL){
 			if ($ShowMessages){
-				$text = $Shop . ' ' . $Item .  
+				$Text = $Shop . ' ' . $Item .  
 					' Old RL = ' . $OldRL . 
 					' Used ' . $DaysSales . ' days = ' . $MyRow['sales'] . 
 					' New RL = ' . $NewRL;
-				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+				echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 			}
 			if ($EmailText!=''){
-				$text = $Shop . ' ' . $Item .  
+				$Text = $Shop . ' ' . $Item .  
 					' Old RL = ' . $OldRL .  
 					' Used ' . $DaysSales . ' days = ' . $MyRow['sales'] .  
 					' New RL = ' . $NewRL . "\n";
-				$EmailText = $EmailText . $text;
+				$EmailText = $EmailText . $Text;
 			}
 			SetReorderLevel("PackagingOptimization", $Item, $Shop, $OldRL, $NewRL, $updateDB);
 		}

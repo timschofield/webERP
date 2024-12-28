@@ -401,7 +401,7 @@ function getPageDimensions($dimensions) {
 	);
 }
 
-function printLabels($dimensions, $Lines, $qtyByItem, $Currency, $salesType, $StockIDList, $EffectiveDate) {
+function printLabels($dimensions, $Lines, $QtyByItem, $Currency, $salesType, $StockIDList, $EffectiveDate) {
 	global $pdf, $DecimalPlaces, $Version;
 	$Row = $col = 0;
 
@@ -409,7 +409,7 @@ function printLabels($dimensions, $Lines, $qtyByItem, $Currency, $salesType, $St
 
 	foreach ($StockIDList as $StockID=>$on) {  // At least there is one item
 		$itemData = getStockData($StockID, $Currency, $salesType, $EffectiveDate);
-		$num=$qtyByItem;
+		$num=$QtyByItem;
 		while ($num-- > 0) {	// Print $num labels per item
 			printStockid($itemData, $dimensions, $Lines, $Currency, $Row, $col);
 			if (++$col>=$dimensions['Cols']) {

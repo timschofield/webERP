@@ -193,7 +193,7 @@ $BookMark = 'SalespeopleDelete';
 				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
 				KLSendEmail("SpgCodeDeleted", "Silent", $SelectedSalesPerson, $_SESSION['UserID']);
 				unset ($SelectedSalesPerson);
-				unset($delete);
+				unset($Delete);
 			}
 		}
 	} //end if Sales-person used in GL accounts

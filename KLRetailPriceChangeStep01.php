@@ -177,7 +177,7 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('KL Retail Price Change Step 01') . ' ' . $SelectedPriceChange . ' ' . _('has been deleted from the database'),'success');
 
 	unset ($SelectedPriceChange);
-	unset($delete);
+	unset($Delete);
 
 }
 

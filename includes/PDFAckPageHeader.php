@@ -125,7 +125,7 @@ $pdf->partEllipse($Page_Width - $Right_Margin - 0, $Bottom_Margin + 10, 270, 360
 /*Finally join up to the top right corner where started */
 $pdf->line($Page_Width - $Right_Margin + 10, $Bottom_Margin + 10, $Page_Width - $Right_Margin + 10, $Bottom_Margin + 540);
 
-$YPos -= $Line_height * 2;
+$YPos -= $LineHeight * 2;
 
 $FontSize = 12;
 

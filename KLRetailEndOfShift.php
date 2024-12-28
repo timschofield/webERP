@@ -176,7 +176,7 @@ $TextToPrint .= $CutPaper;
 $identifier=GetPOSIdentifier();
 $FileName = GetFilenameFromPOSIdentifier($identifier);   
 file_put_contents($FileName, $TextToPrint);
-$textActionToPrint = 'Print the Daily SPG End Of Shift';
+$TextActionToPrint = 'Print the Daily SPG End Of Shift';
 include ('includes/SilentPrinting.php');
 //################## PRINTING STUFF ##################### 
 

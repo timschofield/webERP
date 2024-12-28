@@ -22,7 +22,7 @@ class htmlMimeMail
 	* The text part of the message(only used in TEXT only messages)
 	* @var string
 	*/
-	var $text;
+	var $Text;
 
 	/**
 	* The main body of the message after building
@@ -64,7 +64,7 @@ class htmlMimeMail
 	* The main message headers
 	* @var array
 	*/
-	var $headers;
+	var $Headers;
 
 	/**
 	* Whether the message has been built or not
@@ -77,7 +77,7 @@ class htmlMimeMail
 	* address is used instead
 	* @var string
     */
-	var $return_path;
+	var $Return_path;
 
 	/**
     * Array of information needed for smtp sending
@@ -162,13 +162,13 @@ class htmlMimeMail
 */
 	function getFile($FileName)
 	{
-		$return = '';
+		$Return = '';
 		if ($fp = fopen($FileName, 'rb')) {
 			while (!feof($fp)) {
-				$return .= fread($fp, 1024);
+				$Return .= fread($fp, 1024);
 			}
 			fclose($fp);
-			return $return;
+			return $Return;
 
 		} else {
 			return false;
@@ -277,9 +277,9 @@ class htmlMimeMail
 /**
 * Accessor to set the return path
 */
-	function setReturnPath($return_path)
+	function setReturnPath($Return_path)
 	{
-		$this->return_path = $return_path;
+		$this->return_path = $Return_path;
 	}
 
 /**
@@ -302,9 +302,9 @@ class htmlMimeMail
 * Adds plain text. Use this function
 * when NOT sending html email
 */
-	function setText($text = '')
+	function setText($Text = '')
 	{
-		$this->text = $text;
+		$this->text = $Text;
 	}
 
 /**
@@ -312,10 +312,10 @@ class htmlMimeMail
 * Also replaces image names with
 * content-id's.
 */
-	function setHtml($html, $text = null, $images_dir = null)
+	function setHtml($html, $Text = null, $images_dir = null)
 	{
 		$this->html      = $html;
-		$this->html_text = $text;
+		$this->html_text = $Text;
 
 		if (isset($images_dir)) {
 			$this->_findHtmlImages($images_dir);
@@ -396,15 +396,15 @@ class htmlMimeMail
 /**
 * Adds a text subpart to a mime_part object
 */
-	function _addTextPart($obj, $text) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
+	function _addTextPart($obj, $Text) // // FIXED PHP & PEAR LIBRARY ERROR - ONLY VARIABLE REFERENCES SHOULD BE RETURNED BY REFERENCE
 	{
 		$params['content_type'] = 'text/plain';
 		$params['encoding']     = $this->build_params['text_encoding'];
 		$params['charset']      = $this->build_params['text_charset'];
 		if (is_object($obj)) {
-			return $obj->addSubpart($text, $params);
+			return $obj->addSubpart($Text, $params);
 		} else {
-			return new Mail_mimePart($text, $params);
+			return new Mail_mimePart($Text, $params);
 		}
 	}
 
@@ -522,14 +522,14 @@ class htmlMimeMail
 		$attachments = !empty($this->attachments) ? true : false;
 		$html_images = !empty($this->html_images) ? true : false;
 		$html        = !empty($this->html)        ? true : false;
-		$text        = isset($this->text)         ? true : false;
+		$Text        = isset($this->text)         ? true : false;
 
 		switch (true) {
-			case $text AND !$attachments:
+			case $Text AND !$attachments:
 				$message = $this->_addTextPart($null, $this->text);
 				break;
 
-			case !$text AND $attachments AND !$html:
+			case !$Text AND $attachments AND !$html:
 				$message = $this->_addMixedPart();
 
 				for ($i=0; $i<count($this->attachments); $i++) {
@@ -537,7 +537,7 @@ class htmlMimeMail
 				}
 				break;
 
-			case $text AND $attachments:
+			case $Text AND $attachments:
 				$message = $this->_addMixedPart();
 				$this->_addTextPart($message, $this->text);
 
@@ -631,8 +631,8 @@ class htmlMimeMail
 	{
 		preg_match_all('/(\w*[\x80-\xFF]+\w*)/', $input, $matches);
 		foreach ($matches[1] as $value) {
-			$replacement = preg_replace('/([\x80-\xFF])/e', '"=" . mb_strtoupper(dechex(ord("\1")))', $value);
-			$input = str_replace($value, '=?' . $charset . '?Q?' . $replacement . '?=', $input);
+			$Replacement = preg_replace('/([\x80-\xFF])/e', '"=" . mb_strtoupper(dechex(ord("\1")))', $value);
+			$input = str_replace($value, '=?' . $charset . '?Q?' . $Replacement . '?=', $input);
 		}
 
 		return $input;
@@ -665,15 +665,15 @@ class htmlMimeMail
 
 				// Get flat representation of headers
 				foreach ($this->headers as $name => $value) {
-					$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
+					$Headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
 				}
 
 				$to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
 				if (!empty($this->return_path)) {
-					$Result = mail($to, $subject, $this->output, implode(CRLF, $headers), '-f' . $this->return_path);
+					$Result = mail($to, $subject, $this->output, implode(CRLF, $Headers), '-f' . $this->return_path);
 				} else {
-					$Result = mail($to, $subject, $this->output, implode(CRLF, $headers));
+					$Result = mail($to, $subject, $this->output, implode(CRLF, $Headers));
 				}
 
 				// Reset the subject in case mail is resent
@@ -712,13 +712,13 @@ class htmlMimeMail
 					if ($name == 'Bcc') {
 						continue;
 					}
-					$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
+					$Headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
 				}
 				// Add To header based on $recipients argument
-				$headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
+				$Headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
 				// Add headers to send_params
-				$send_params['headers']    = $headers;
+				$send_params['headers']    = $Headers;
 				$send_params['recipients'] = array_values(array_unique($smtp_recipients));
 				$send_params['body']       = $this->output;
 
@@ -764,16 +764,16 @@ class htmlMimeMail
 
 		// Return path ?
 		if (isset($this->return_path)) {
-			$headers[] = 'Return-Path: ' . $this->return_path;
+			$Headers[] = 'Return-Path: ' . $this->return_path;
 		}
 
 		// Get flat representation of headers
 		foreach ($this->headers as $name => $value) {
-			$headers[] = $name . ': ' . $value;
+			$Headers[] = $name . ': ' . $value;
 		}
-		$headers[] = 'To: ' . implode(', ', $recipients);
+		$Headers[] = 'To: ' . implode(', ', $recipients);
 
-		return implode(CRLF, $headers) . CRLF . CRLF . $this->output;
+		return implode(CRLF, $Headers) . CRLF . CRLF . $this->output;
 	}
 } // End of class.
 ?>

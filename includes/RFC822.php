@@ -161,15 +161,15 @@ class Mail_RFC822
         // Loop through all the addresses
         for ($i = 0; $i < count($this->addresses); $i++){
 
-            if (($return = $this->_validateAddress($this->addresses[$i])) === false
+            if (($Return = $this->_validateAddress($this->addresses[$i])) === false
                 || isset($this->error)) {
                 return false;
             }
 
             if (!$this->nestGroups) {
-                $this->structure = array_merge($this->structure, $return);
+                $this->structure = array_merge($this->structure, $Return);
             } else {
-                $this->structure[] = $return;
+                $this->structure[] = $Return;
             }
         }
 
@@ -676,13 +676,13 @@ class Mail_RFC822
         }
 
         if (isset($route)) {
-            $return['adl'] = $route;
+            $Return['adl'] = $route;
         } else {
-            $return['adl'] = '';
+            $Return['adl'] = '';
         }
 
-        $return = array_merge($return, $addr_spec);
-        return $return;
+        $Return = array_merge($Return, $addr_spec);
+        return $Return;
     }
 
     /**

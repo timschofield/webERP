@@ -1255,12 +1255,12 @@ function BalanceAccountControl($account, $min, $max, $Period){
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['saldo'] < $min){
-		$text = "Account " . $account . " - " . $MyRow['accountname'] . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Account " . $account . " - " . $MyRow['accountname'] . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 	if ($MyRow['saldo'] > $max){
-		$text = "Account " . $account . " - " . $MyRow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Account " . $account . " - " . $MyRow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -1275,12 +1275,12 @@ function BalanceListAccountControl($accountlist, $Description, $min, $max, $Peri
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['saldo'] < $min){
-		$text = $Description . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = $Description . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 	if ($MyRow['saldo'] > $max){
-		$text = $Description . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = $Description . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -1693,10 +1693,10 @@ function CustomersDebtControl($AcceptedDifference, $Period){
 	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
 	
 	if (abs($ValueAtBalance - $DebtValue) > $AcceptedDifference){
-		$text = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$Text = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Customer's Debt = " . locale_number_format($DebtValue,0) . 
 				" Difference = ". locale_number_format($ValueAtBalance - $DebtValue,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -2114,10 +2114,10 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
 	$GoodsValue = $MyRow[0];
 
 	if (abs($ValueAtBalance - $GoodsValue) > $AcceptedDifference){
-		$text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$Text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Real Goods Received Value at Std Cost = " . locale_number_format($GoodsValue,0) .
 				" Difference = ". locale_number_format($ValueAtBalance - $GoodsValue,0);;
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -2142,10 +2142,10 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 	$ValueAtBalance = $MyRow['saldo'];
 
 	if (abs($ValueAtBalance - $PettyCashValue) > $AcceptedDifference){
-		$text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$Text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Real Petty Cash (" . $Currency . ") = " . locale_number_format($PettyCashValue,0) . 
 				" Difference = ". locale_number_format($ValueAtBalance - $PettyCashValue,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -4568,14 +4568,14 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath){
 	
 	if ($Sign == "OVER"){
 		if ($MyRow[0] > $Limit){
-			$text = $Request . " is OVER the maximum. Current value = " . locale_number_format($MyRow[0],0) . " Maximum = " . locale_number_format($Limit,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = $Request . " is OVER the maximum. Current value = " . locale_number_format($MyRow[0],0) . " Maximum = " . locale_number_format($Limit,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 	}
 	if ($Sign == "BELOW"){
 		if ($MyRow[0] < $Limit){
-			$text = $Request . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($Limit,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = $Request . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($Limit,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 	}
 }
@@ -4596,8 +4596,8 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels20){
-			$text = "Discount 20% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels20,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = "Discount 20% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels20,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		$NumberOfTestExecuted++;
 
@@ -4610,8 +4610,8 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels50){
-			$text = "Discount 50% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels50,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = "Discount 50% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels50,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		$NumberOfTestExecuted++;
 
@@ -4624,8 +4624,8 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels80){
-			$text = "Discount 80% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels80,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = "Discount 80% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels80,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		$NumberOfTestExecuted++;
 	}
@@ -5239,12 +5239,12 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['qtyonhand'] < $minpcs){
-		$text = "Number of items at " . $MyRow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Number of items at " . $MyRow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 	if ($MyRow['qtyonhand'] > $maxpcs){
-		$text = "Number of items at " . $MyRow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Number of items at " . $MyRow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -5548,9 +5548,9 @@ function CalculateTransferFromBankToDanamon($Company,
 			$Transfer = min($AvailableForTransfer, $TransferNeededDanamon);
 			$Transfer = round_down_multiple_of($Transfer, $TransferBlock);
 			if ($Transfer > 0){
-				$text = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . 
+				$Text = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . 
 						" to Danamon ". $Company;
-				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+				echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 				$TransferNeededDanamon = $TransferNeededDanamon - $Transfer;
 			}
 		} 

@@ -105,7 +105,7 @@ if ($MyRow['invaddrbranch']==0){
 
 
 $XPos -=80;
-$YPos -=($Line_height*4);
+$YPos -=($LineHeight*4);
 
 if ($InvOrCredit=='Invoice') {
 
@@ -153,7 +153,7 @@ $pdf->line($XPos, $YPos,$Right_Margin, $YPos); */
 $XPos = $Page_Width/2;
 
 $XPos = $Left_Margin;
-$YPos -= ($Line_height*2);
+$YPos -= ($LineHeight*2);
 
 include($PathPrefix . 'includes/CurrenciesArray.php'); // To get the currency name from the currency code.
 $pdf->addText($Left_Margin, $YPos-8, $FontSize, _('All amounts stated in') . ': ' . $MyRow['currcode'] . ' ' . $CurrencyName[$MyRow['currcode']]);
@@ -181,7 +181,7 @@ $pdf->partEllipse($Page_Width-$Right_Margin-10, $Bottom_Margin+10,270,360,10,10)
 $pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $Bottom_Margin+390);
 
 
-$YPos -= ($Line_height*2);
+$YPos -= ($LineHeight*2);
 /*Set up headings */
 $FontSize=10;
 $pdf->addText($Left_Margin + 2, $YPos, $FontSize, _('Customer Tax Ref') . ':');
@@ -189,13 +189,13 @@ $pdf->addText($Left_Margin+100, $YPos, $FontSize, $MyRow['taxref']);
 
 
 /*Print a vertical line */
-$pdf->line($Left_Margin+248, $YPos-10+$Line_height+3,$Left_Margin+248, $YPos - 18);
+$pdf->line($Left_Margin+248, $YPos-10+$LineHeight+3,$Left_Margin+248, $YPos - 18);
 if ($InvOrCredit=='Invoice'){
 	$pdf->addText($Left_Margin + 252, $YPos, $FontSize, _('Customer Order Ref.') . ':');
 	$pdf->addText($Left_Margin+370, $YPos, $FontSize, $MyRow['customerref']);
 }
 /*Print a vertical line */
-$pdf->line($Left_Margin+450, $YPos+$Line_height-7,$Left_Margin+450,$YPos-18);
+$pdf->line($Left_Margin+450, $YPos+$LineHeight-7,$Left_Margin+450,$YPos-18);
 
 $pdf->addText($Left_Margin+453, $YPos, $FontSize, _('Sales Person') . ':');
 $pdf->addText($Left_Margin+510, $YPos, $FontSize, $MyRow['salesmanname']);
@@ -221,6 +221,6 @@ $YPos-=8;
 /*draw a line */
 $pdf->line($XPos, $YPos-5,$Page_Width-$Right_Margin, $YPos-5);
 
-$YPos -= ($Line_height);
+$YPos -= ($LineHeight);
 
 ?>

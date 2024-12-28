@@ -43,7 +43,7 @@
 /* ******************************************************************** */
 $bar_color=Array(0,0,0);
 $bg_color=Array(255,255,255);
-$text_color=Array(0,0,0);
+$Text_color=Array(0,0,0);
 
 
 /* ******************************************************************** */
@@ -88,9 +88,9 @@ $text_color=Array(0,0,0);
  */
 
 
-function barcode_outimage($text, $bars, $scale = 1, $mode = "png",
+function barcode_outimage($Text, $bars, $scale = 1, $mode = "png",
 	    $Total_y = 0, $space = ''){
-    global $bar_color, $bg_color, $text_color;    /* set defaults */
+    global $bar_color, $bg_color, $Text_color;    /* set defaults */
     if ($scale<1) $scale=2;
     $Total_y=(int)($Total_y);
     if ($Total_y<1) $Total_y=(int)$scale * 60;
@@ -143,7 +143,7 @@ function barcode_outimage($text, $bars, $scale = 1, $mode = "png",
     /* create two images */
     $col_bg=ImageColorAllocate($im,$bg_color[0],$bg_color[1],$bg_color[2]);
     $col_bar=ImageColorAllocate($im,$bar_color[0],$bar_color[1],$bar_color[2]);
-    $col_text=ImageColorAllocate($im,$text_color[0],$text_color[1],$text_color[2]);
+    $col_text=ImageColorAllocate($im,$Text_color[0],$Text_color[1],$Text_color[2]);
     $height=round($Total_y-($scale*10));
     $height2=round($Total_y-$space['bottom']);
 
@@ -306,14 +306,14 @@ function barcode_encode_genbarcode($code,$encoding){
     $fp=popen($cmd, "r");
     if ($fp){
 	$bars=fgets($fp, 1024);
-	$text=fgets($fp, 1024);
+	$Text=fgets($fp, 1024);
 	$encoding=fgets($fp, 1024);
 	pclose($fp);
     } else return false;
     $ret=array(
 		"encoding" => trim($encoding),
 		"bars" => trim($bars),
-		"text" => trim($text)
+		"text" => trim($Text)
 	      );
     if (!$ret['encoding']) return false;
     if (!$ret['bars']) return false;
@@ -475,10 +475,10 @@ function barcode_encode_ean($ean, $encoding = "EAN-13"){
 
     /* create text */
     $pos=0;
-    $text="";
+    $Text="";
     for ($a=0;$a<13;$a++){
-	if ($a>0) $text.=" ";
-	$text.="$pos:12:{$ean[$a]}";
+	if ($a>0) $Text.=" ";
+	$Text.="$pos:12:{$ean[$a]}";
 	if ($a==0) $pos+=12;
 	else if ($a==6) $pos+=12;
 	else $pos+=7;
@@ -487,7 +487,7 @@ function barcode_encode_ean($ean, $encoding = "EAN-13"){
     return array(
 		"encoding" => $encoding,
 		"bars" => $Line,
-		"text" => $text
+		"text" => $Text
 		);
 }
 ?>

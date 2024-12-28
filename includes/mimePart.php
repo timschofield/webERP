@@ -44,7 +44,7 @@
 *
 * $params['content_type'] = 'text/plain';
 * $params['encoding']     = '7bit';
-* $text = $email->addSubPart($body, $params);
+* $Text = $email->addSubPart($body, $params);
 *
 * // Now add an attachment. Assume $attach is
 * the contents of the attachment
@@ -133,37 +133,37 @@ class Mail_mimePart {
         foreach ($params as $key => $value) {
             switch ($key) {
                 case 'content_type':
-                    $headers['Content-Type'] = $value . (isset($charset) ? '; charset="' . $charset . '"' : '');
+                    $Headers['Content-Type'] = $value . (isset($charset) ? '; charset="' . $charset . '"' : '');
                     break;
 
                 case 'encoding':
                     $this->_encoding = $value;
-                    $headers['Content-Transfer-Encoding'] = $value;
+                    $Headers['Content-Transfer-Encoding'] = $value;
                     break;
 
                 case 'cid':
-                    $headers['Content-ID'] = '<' . $value . '>';
+                    $Headers['Content-ID'] = '<' . $value . '>';
                     break;
 
                 case 'disposition':
-                    $headers['Content-Disposition'] = $value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
+                    $Headers['Content-Disposition'] = $value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
                     break;
 
                 case 'dfilename':
-                    if (isset($headers['Content-Disposition'])) {
-                        $headers['Content-Disposition'] .= '; filename="' . $value . '"';
+                    if (isset($Headers['Content-Disposition'])) {
+                        $Headers['Content-Disposition'] .= '; filename="' . $value . '"';
                     } else {
                         $dfilename = $value;
                     }
                     break;
 
                 case 'description':
-                    $headers['Content-Description'] = $value;
+                    $Headers['Content-Description'] = $value;
                     break;
 
                 case 'charset':
-                    if (isset($headers['Content-Type'])) {
-                        $headers['Content-Type'] .= '; charset="' . $value . '"';
+                    if (isset($Headers['Content-Type'])) {
+                        $Headers['Content-Type'] .= '; charset="' . $value . '"';
                     } else {
                         $charset = $value;
                     }
@@ -172,8 +172,8 @@ class Mail_mimePart {
         }
 
         // Default content-type
-        if (!isset($headers['Content-Type'])) {
-            $headers['Content-Type'] = 'text/plain';
+        if (!isset($Headers['Content-Type'])) {
+            $Headers['Content-Type'] = 'text/plain';
         }
 
         //Default encoding
@@ -183,7 +183,7 @@ class Mail_mimePart {
 
         // Assign stuff to member variables
         $this->_encoded  = array();
-        $this->_headers  = $headers;
+        $this->_headers  = $Headers;
         $this->_body     = $body;
     }
 
@@ -209,12 +209,12 @@ class Mail_mimePart {
 
             // Add body parts to $subparts
             for ($i = 0; $i < count($this->_subparts); $i++) {
-                $headers = array();
+                $Headers = array();
                 $tmp = $this->_subparts[$i]->encode();
                 foreach ($tmp['headers'] as $key => $value) {
-                    $headers[] = $key . ': ' . $value;
+                    $Headers[] = $key . ': ' . $value;
                 }
-                $subparts[] = implode(MAIL_MIMEPART_CRLF, $headers) . MAIL_MIMEPART_CRLF . MAIL_MIMEPART_CRLF . $tmp['body'];
+                $subparts[] = implode(MAIL_MIMEPART_CRLF, $Headers) . MAIL_MIMEPART_CRLF . MAIL_MIMEPART_CRLF . $tmp['body'];
             }
 
             $encoded['body'] = '--' . $boundary . MAIL_MIMEPART_CRLF .

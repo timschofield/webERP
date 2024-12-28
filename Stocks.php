@@ -24,8 +24,8 @@ if (isset($_GET['StockID'])) {
 }
 
 $ItemDescriptionLanguagesArray = explode(',', $_SESSION['ItemDescriptionLanguages']); //WARNING: if the last character is a ",", there are n+1 languages.
-$hasNext = true;
-$hasPrev = true;
+$HasNext = true;
+$HasPrev = true;
 
 if (isset($_POST['NextItem'])) {
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1");
@@ -36,7 +36,7 @@ if (isset($_POST['NextItem'])) {
 		$NextItemRow = DB_fetch_row($Result);
 		$StockID = $NextItemRow[0];
 	} else {
-		$hasNext = false;
+		$HasNext = false;
 	}
 
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -52,7 +52,7 @@ if (isset($_POST['PreviousItem'])) {
 		$PreviousItemRow = DB_fetch_row($Result);
 		$StockID = $PreviousItemRow[0];
 	} else {
-		$hasPrev = false;
+		$HasPrev = false;
 	}
 
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -984,10 +984,10 @@ echo '<div>
 if (isset($StockID) && $StockID != '' && $InputError == 0) {
 	echo '<table width="100%">
 			<tr>
-				<td>', '<button ', ($hasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
+				<td>', '<button ', ($HasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
 	/*_('Previous Item'),*/
 	'</button>', // "Previous" button.
-	'</td>', '<td width="90%">&nbsp;</td>', '<td>', '<button ', ($hasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
+	'</td>', '<td width="90%">&nbsp;</td>', '<td>', '<button ', ($HasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
 	/*_('Next Item'),*/
 	'<img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" />', '</button>', // "Next" button.
 	'</td>

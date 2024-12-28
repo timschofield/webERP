@@ -687,7 +687,7 @@ if (isset($_GET['Delete'])) {
 
 		prnMsg(_('Result QA Sample') . ' ' . $_GET['ResultID'] . _('has been deleted from the database'),'success');
 		unset($_GET['ResultID']);
-		unset($delete);
+		unset($Delete);
 		unset ($_GET['delete']);
 	}
 }

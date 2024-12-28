@@ -58,19 +58,19 @@ if ($AlreadyOnThisOrder!=1){
     if (DB_num_rows($Result1)==0){
 		prnMsg(_('The item code') . ' ' . $NewItem  . ' '  . _('could not be found in the database') . ' - ' . _('it has not been added to the order'),'warn',_('Item Does Not Exist'));
 
-    } elseif ($myItemRow = DB_fetch_array($Result1)){
+    } elseif ($MyItemRow = DB_fetch_array($Result1)){
 
-    	if ($myItemRow['discontinued']==1){
+    	if ($MyItemRow['discontinued']==1){
 			prnMsg(_('The item') . ' ' . $NewItem . ' ' . _('could not be added to the order because it has been flagged as obsolete'),'error',_('Obsolete Item'));
 
 		} elseif (($_SESSION['AllowSalesOfZeroCostItems'] == false
-						AND $myItemRow['standardcost']>0
-						AND ($myItemRow['mbflag']=='B'
-						OR $myItemRow['mbflag']=='M'))
+						AND $MyItemRow['standardcost']>0
+						AND ($MyItemRow['mbflag']=='B'
+						OR $MyItemRow['mbflag']=='M'))
 					OR ($_SESSION['AllowSalesOfZeroCostItems'] == false
-						AND ($myItemRow['mbflag']=='A'
-						OR $myItemRow['mbflag']=='D'
-						OR $myItemRow['mbflag']=='K'))
+						AND ($MyItemRow['mbflag']=='A'
+						OR $MyItemRow['mbflag']=='D'
+						OR $MyItemRow['mbflag']=='K'))
 					OR $_SESSION['AllowSalesOfZeroCostItems']==true) {
 
 		/*these checks above ensure that the item has a cost if the
@@ -90,7 +90,7 @@ if ($AlreadyOnThisOrder!=1){
 				$NewLineNo = -1; /* this is ok b/c CartClass will change to the correct line no */
 			}
 
-			if (isset($StockItem) AND $myItemRow['discountcategory'] != '' ){
+			if (isset($StockItem) AND $MyItemRow['discountcategory'] != '' ){
 				$DiscCatsDone[$Counter]=$StockItem->DiscCat;
 				$QuantityOfDiscCat =0;
 				$Result = DB_query("SELECT MAX(discountrate) AS discount
@@ -204,31 +204,31 @@ if ($AlreadyOnThisOrder!=1){
 			if ($WithinCreditLimit == true){
 				$_SESSION['Items'.$identifier]->add_to_cart ($NewItem,
 															$NewItemQty,
-															$myItemRow['description'],
-															$myItemRow['longdescription'],
+															$MyItemRow['description'],
+															$MyItemRow['longdescription'],
 															$Price,
 															$Discount,
-															$myItemRow['units'],
-															$myItemRow['volume'],
-															$myItemRow['grossweight'],
-															$myItemRow['quantity'],
-															$myItemRow['mbflag'],
+															$MyItemRow['units'],
+															$MyItemRow['volume'],
+															$MyItemRow['grossweight'],
+															$MyItemRow['quantity'],
+															$MyItemRow['mbflag'],
 															NULL, /*Actual Dispatch Date */
 															0, /*Qty Invoiced */
-															$myItemRow['discountcategory'],
+															$MyItemRow['discountcategory'],
 															0, /*Controlled - dont care */
-															$myItemRow['serialised'], /* need to know for autocreation wos */
-															$myItemRow['decimalplaces'],
+															$MyItemRow['serialised'], /* need to know for autocreation wos */
+															$MyItemRow['decimalplaces'],
 															'', /*Narrative - none yet */
 															$UpdateDB,
 															$NewLineNo,
-															$myItemRow['taxcatid'],
+															$MyItemRow['taxcatid'],
 															'',
 															$NewItemDue,
 															$NewPOLine,
-															$myItemRow['standardcost'],
-															$myItemRow['eoq'],
-															$myItemRow['nextserialno'],
+															$MyItemRow['standardcost'],
+															$MyItemRow['eoq'],
+															$MyItemRow['nextserialno'],
 															$ExRate,
 															$identifier);
 

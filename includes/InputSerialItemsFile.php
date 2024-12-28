@@ -73,8 +73,8 @@ if (!isset($_SESSION['CurImportFile']) ){
 		$LineItem->SerialItemsValid=false;
 }
 if ((isset($_FILES['ImportFile']) AND $_FILES['ImportFile']['name'] == '') AND $_SESSION['CurImportFile'] == ''){
-	$msg = _('Please Choose a file and then click Set Entry Type to upload a file for import');
-	prnMsg($msg);
+	$Msg = _('Please Choose a file and then click Set Entry Type to upload a file for import');
+	prnMsg($Msg);
 	$LineItem->SerialItemsValid=false;
 	echo '</td></tr></table>';
 	include('includes/footer.php');

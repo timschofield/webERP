@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 
 	prnMsg(_('Customer Info Card for order') . ' ' . $SelectedOrder . ' ' . _('has been deleted'),'success');
 	unset ($SelectedOrder);
-	unset($delete);
+	unset($Delete);
 }
 
 if (!isset($SelectedOrder)) {

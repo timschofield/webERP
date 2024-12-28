@@ -1,11 +1,11 @@
 <?php 
 $imageSrc = $RootPath . '/css/' . $Theme . '/images/printer.png';
-$imageTitle = $textActionToPrint;
+$imageTitle = $TextActionToPrint;
 ?>
 
 <img src="<?php echo $imageSrc; ?>" title="<?php echo $imageTitle; ?>" alt="" />
 <a href="#" onclick="javascript:jsWebClientPrint.print('useDefaultPrinter=1' + '&printerName=' + encodeURIComponent($('#installedPrinterName').val()) + '&identifier=<?php echo urlencode($identifier); ?>');">
-<?= $textActionToPrint; ?>
+<?= $TextActionToPrint; ?>
 </a>
 
 <?php 
