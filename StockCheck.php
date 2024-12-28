@@ -10,13 +10,13 @@ if (isset($_POST['PrintPDF'])){
 	$pdf->addInfo('Subject',_('Stock Count Sheets'));
 	$FontSize=10;
 	$PageNumber=1;
-	$line_height=30;
+	$LineHeight=30;
 
 /*First off do the stock check file stuff */
 	if ($_POST['MakeStkChkData']=='New'){
-		$sql = "TRUNCATE TABLE stockcheckfreeze";
-		$result = DB_query($sql);
-		$sql = "INSERT INTO stockcheckfreeze (stockid,
+		$SQL = "TRUNCATE TABLE stockcheckfreeze";
+		$Result = DB_query($SQL);
+		$SQL = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
 										  qoh,
 										  stockcheckdate)
@@ -33,14 +33,14 @@ if (isset($_POST['PrintPDF'])){
 					   AND stockmaster.mbflag!='K'
 					   AND stockmaster.mbflag!='D'";
 
-		$result = DB_query($sql,'','',false,false);
+		$Result = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Count Sheets - Problem Report');
 			include('includes/header.php');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
-		  			echo '<br />' . $sql;
+			if ($Debug==1){
+		  			echo '<br />' . $SQL;
 			}
 			include('includes/footer.php');
 			exit;
@@ -48,26 +48,26 @@ if (isset($_POST['PrintPDF'])){
 	}
 
 	if ($_POST['MakeStkChkData']=='AddUpdate'){
-		$sql = "DELETE stockcheckfreeze
+		$SQL = "DELETE stockcheckfreeze
 				FROM stockcheckfreeze
 				INNER JOIN stockmaster ON stockcheckfreeze.stockid=stockmaster.stockid
 				WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 				AND stockcheckfreeze.loccode='" . $_POST['Location'] . "'";
 
-		$result = DB_query($sql,'','',false,false);
+		$Result = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze') . ' - ' . _('Problem Report') . '.... ';
 			include('includes/header.php');
 			prnMsg(_('The old quantities could not be deleted from the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
-		  			echo '<br />' . $sql;
+			if ($Debug==1){
+		  			echo '<br />' . $SQL;
 			}
 			include('includes/footer.php');
 			exit;
 		}
 
-		$sql = "INSERT INTO stockcheckfreeze (stockid,
+		$SQL = "INSERT INTO stockcheckfreeze (stockid,
 										  loccode,
 										  qoh,
 										  stockcheckdate)
@@ -84,14 +84,14 @@ if (isset($_POST['PrintPDF'])){
 				AND stockmaster.mbflag!='G'
 				AND stockmaster.mbflag!='D'";
 
-		$result = DB_query($sql,'','',false,false);
+		$Result = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Stock Freeze - Problem Report');
 			include('includes/header.php');
 			prnMsg(_('The inventory quantities could not be added to the freeze file because') . ' ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
-		  			echo '<br />' . $sql;
+			if ($Debug==1){
+		  			echo '<br />' . $SQL;
 			}
 			include('includes/footer.php');
 			exit;
@@ -132,7 +132,7 @@ if (isset($_POST['PrintPDF'])){
 		include('includes/header.php');
 		prnMsg( _('The inventory quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  	echo '<br />' . $SQL;
 		}
 		include ('includes/footer.php');
@@ -158,7 +158,7 @@ if (isset($_POST['PrintPDF'])){
 			if ($Category!=''){ /*Then it's NOT the first time round */
 				/*draw a line under the CATEGORY TOTAL*/
 				$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
-				$YPos -=(2*$line_height);
+				$YPos -=(2*$LineHeight);
 			}
 
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$InventoryCheckRow['categoryid'] . ' - ' . $InventoryCheckRow['categorydescription'], 'left');
@@ -166,7 +166,7 @@ if (isset($_POST['PrintPDF'])){
 		}
 
 		$FontSize=10;
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 
 		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
 
@@ -185,7 +185,7 @@ if (isset($_POST['PrintPDF'])){
 		  		include('includes/header.php');
 		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 	   			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-	   			if ($debug==1){
+	   			if ($Debug==1){
 		  				echo '<br />' . $SQL;
 		   		}
 		   		include('includes/footer.php');
@@ -196,7 +196,7 @@ if (isset($_POST['PrintPDF'])){
 			$DemandQty = $DemandRow['qtydemand'];
 
 			//Also need to add in the demand for components of assembly items
-			$sql = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
+			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
 						   FROM salesorderdetails INNER JOIN salesorders
 						   ON salesorders.orderno = salesorderdetails.orderno
 						   INNER JOIN bom
@@ -209,11 +209,11 @@ if (isset($_POST['PrintPDF'])){
 						   AND stockmaster.mbflag='A'
 						   AND salesorders.quotation=0";
 
-			$DemandResult = DB_query($sql,'','',false,false);
+			$DemandResult = DB_query($SQL,'','',false,false);
 			if (DB_error_no() !=0) {
-				prnMsg(_('The demand for this product from') . ' ' . $myrow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg(),'error');
-				if ($debug==1){
-		   			echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
+				prnMsg(_('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg(),'error');
+				if ($Debug==1){
+		   			echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
 				}
 				exit;
 			}
@@ -236,7 +236,7 @@ if (isset($_POST['PrintPDF'])){
 
 		$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 			$PageNumber++;
 			include('includes/PDFStockCheckPageHeader.inc');
 		}
@@ -278,13 +278,13 @@ if (isset($_POST['PrintPDF'])){
 	echo '<field>
 			<label for="Location">' . _('For Inventory in Location') . ':</label>
 			<select name="Location">';
-	$sql = "SELECT locations.loccode, locationname FROM locations
+	$SQL = "SELECT locations.loccode, locationname FROM locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
 			ORDER BY locationname";
-	$LocnResult=DB_query($sql);
+	$LocnResult=DB_query($SQL);
 
-	while ($myrow=DB_fetch_array($LocnResult)){
-			  echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($LocnResult)){
+			  echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	echo '</select>
 		</field>';

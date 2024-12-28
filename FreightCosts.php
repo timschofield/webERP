@@ -30,8 +30,8 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$sql = "SELECT shippername, shipper_id FROM shippers";
-	$ShipperResults = DB_query($sql);
+	$SQL = "SELECT shippername, shipper_id FROM shippers";
+	$ShipperResults = DB_query($SQL);
 
 	echo '<fieldset>
 			<legend>', _('Select Details'), '</legend>';
@@ -40,8 +40,8 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 			<label for="ShipperID">' . _('Select A Freight Company to set up costs for') . '</label>
 			<select name="ShipperID">';
 
-	while ($myrow = DB_fetch_array($ShipperResults)){
-		echo '<option value="' . $myrow['shipper_id'] . '">' . $myrow['shippername'] . '</option>';
+	while ($MyRow = DB_fetch_array($ShipperResults)){
+		echo '<option value="' . $MyRow['shipper_id'] . '">' . $MyRow['shippername'] . '</option>';
 	}
 	echo '</select>
 		</field>';
@@ -50,13 +50,13 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 			<label for="LocationFrom">' . _('Select the warehouse') . ' (' . _('ship from location') . ')</label>
 			<select name="LocationFrom">';
 
-	$sql = "SELECT locations.loccode,
+	$SQL = "SELECT locations.loccode,
 					locationname
 			FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-	$LocationResults = DB_query($sql);
+	$LocationResults = DB_query($SQL);
 
-	while ($myrow = DB_fetch_array($LocationResults)){
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow = DB_fetch_array($LocationResults)){
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 
 	echo '</select>
@@ -70,14 +70,14 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
 } else {
 
-	$sql = "SELECT shippername FROM shippers WHERE shipper_id = '".$ShipperID."'";
-	$ShipperResults = DB_query($sql);
-	$myrow = DB_fetch_row($ShipperResults);
-	$ShipperName = $myrow[0];
-	$sql = "SELECT locationname FROM locations WHERE loccode = '".$LocationFrom."'";
-	$LocationResults = DB_query($sql);
-	$myrow = DB_fetch_row($LocationResults);
-	$LocationName = $myrow[0];
+	$SQL = "SELECT shippername FROM shippers WHERE shipper_id = '".$ShipperID."'";
+	$ShipperResults = DB_query($SQL);
+	$MyRow = DB_fetch_row($ShipperResults);
+	$ShipperName = $MyRow[0];
+	$SQL = "SELECT locationname FROM locations WHERE loccode = '".$LocationFrom."'";
+	$LocationResults = DB_query($SQL);
+	$MyRow = DB_fetch_row($LocationResults);
+	$LocationName = $MyRow[0];
 
 	if (isset($ShipperID)){
 		$Title .= ' ' . _('For') . ' ' . $ShipperName;
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedFreightCost) AND $InputError !=1) {
 
-		$sql = "UPDATE freightcosts
+		$SQL = "UPDATE freightcosts
 				SET	locationfrom='".$LocationFrom."',
 					destinationcountry='" . $_POST['DestinationCountry'] . "',
 					destination='" . $_POST['Destination'] . "',
@@ -140,13 +140,13 @@ if (isset($_POST['submit'])) {
 					minimumchg= '" . $_POST['MinimumChg'] . "'
 			WHERE shipcostfromid='" . $SelectedFreightCost . "'";
 
-		$msg = _('Freight cost record updated');
+		$Msg = _('Freight cost record updated');
 
 	} elseif ($InputError !=1) {
 
 	/*Selected freight cost is null cos no item selected on first time round so must be adding a record must be submitting new entries */
 
-		$sql = "INSERT INTO freightcosts (locationfrom,
+		$SQL = "INSERT INTO freightcosts (locationfrom,
 											destinationcountry,
 											destination,
 											shipperid,
@@ -169,15 +169,15 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['MinimumChg'] . "'
 										)";
 
-		$msg = _('Freight cost record inserted');
+		$Msg = _('Freight cost record inserted');
 
 	}
 	//run the SQL from either of the above possibilites
 
 	$ErrMsg = _('The freight cost record could not be updated because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	prnMsg($msg,'success');
+	prnMsg($Msg,'success');
 
 	unset($SelectedFreightCost);
 	unset($_POST['CubRate']);
@@ -189,8 +189,8 @@ if (isset($_POST['submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 
-	$sql = "DELETE FROM freightcosts WHERE shipcostfromid='" . $SelectedFreightCost . "'";
-	$result = DB_query($sql);
+	$SQL = "DELETE FROM freightcosts WHERE shipcostfromid='" . $SelectedFreightCost . "'";
+	$Result = DB_query($SQL);
 	prnMsg( _('Freight cost record deleted'),'success');
 	unset ($SelectedFreightCost);
 	unset($_GET['delete']);
@@ -198,7 +198,7 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID)){
 
-	$sql = "SELECT shipcostfromid,
+	$SQL = "SELECT shipcostfromid,
 					destinationcountry,
 					destination,
 					cubrate,
@@ -215,7 +215,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 						maxkgs,
 						maxcub";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<br /><table class="selection">';
 	$TableHeader = '<tr>
@@ -233,7 +233,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 
 	$PageFullCounter=0;
 
-	while ($myrow = DB_fetch_row($result)) {
+	while ($MyRow = DB_fetch_row($Result)) {
 		$PageFullCounter++;
 		if ($PageFullCounter==15){
 				$PageFullCounter=0;
@@ -252,20 +252,20 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 			<td class="number">%s</td>
 			<td><a href="%s&amp;SelectedFreightCost=%s&amp;LocationFrom=%s&amp;ShipperID=%s">' . _('Edit') . '</a></td>
 			<td><a href="%s&amp;SelectedFreightCost=%s&amp;LocationFrom=%s&amp;ShipperID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this freight cost') . '\');">' . _('Delete') . '</a></td></tr>',
-			$myrow[1],
-			$myrow[2],
-			locale_number_format($myrow[3],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow[4],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow[5],2),
-			locale_number_format($myrow[6],3),
-			locale_number_format($myrow[7],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($myrow[8],$_SESSION['CompanyRecord']['decimalplaces']),
+			$MyRow[1],
+			$MyRow[2],
+			locale_number_format($MyRow[3],$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($MyRow[4],$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($MyRow[5],2),
+			locale_number_format($MyRow[6],3),
+			locale_number_format($MyRow[7],$_SESSION['CompanyRecord']['decimalplaces']),
+			locale_number_format($MyRow[8],$_SESSION['CompanyRecord']['decimalplaces']),
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow[0],
+			$MyRow[0],
 			$LocationFrom,
 			$ShipperID,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow[0],
+			$MyRow[0],
 			$LocationFrom,
 			$ShipperID);
 
@@ -289,7 +289,7 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 	if (isset($SelectedFreightCost)) {
 		//editing an existing freight cost item
 
-		$sql = "SELECT locationfrom,
+		$SQL = "SELECT locationfrom,
 					destinationcountry,
 					destination,
 					shipperid,
@@ -302,19 +302,19 @@ if (isset($LocationFrom) AND isset($ShipperID)) {
 				FROM freightcosts
 				WHERE shipcostfromid='" . $SelectedFreightCost ."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$LocationFrom  = $myrow['locationfrom'];
-		$_POST['DestinationCountry']	= $myrow['destinationcountry'];
-		$_POST['Destination']	= $myrow['destination'];
-		$ShipperID  = $myrow['shipperid'];
-		$_POST['CubRate']  = $myrow['cubrate'];
-		$_POST['KGRate'] = $myrow['kgrate'];
-		$_POST['MAXKGs'] = $myrow['maxkgs'];
-		$_POST['MAXCub'] = $myrow['maxcub'];
-		$_POST['FixedPrice'] = $myrow['fixedprice'];
-		$_POST['MinimumChg'] = $myrow['minimumchg'];
+		$LocationFrom  = $MyRow['locationfrom'];
+		$_POST['DestinationCountry']	= $MyRow['destinationcountry'];
+		$_POST['Destination']	= $MyRow['destination'];
+		$ShipperID  = $MyRow['shipperid'];
+		$_POST['CubRate']  = $MyRow['cubrate'];
+		$_POST['KGRate'] = $MyRow['kgrate'];
+		$_POST['MAXKGs'] = $MyRow['maxkgs'];
+		$_POST['MAXCub'] = $MyRow['maxcub'];
+		$_POST['FixedPrice'] = $MyRow['fixedprice'];
+		$_POST['MinimumChg'] = $MyRow['minimumchg'];
 
 		echo '<input type="hidden" name="SelectedFreightCost" value="' . $SelectedFreightCost . '" />';
 

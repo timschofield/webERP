@@ -11,11 +11,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT shipper_id FROM shippers';
-		$result = DB_query($sql);
+		$SQL = 'SELECT shipper_id FROM shippers';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$ShipperList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$ShipperList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $ShipperList;
@@ -33,8 +33,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM shippers WHERE shipper_id='" . $Shipper."'";
-		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		$SQL = "SELECT * FROM shippers WHERE shipper_id='" . $Shipper."'";
+		$Result = DB_query($SQL);
+		return DB_fetch_array($Result);
 	}
 ?>

@@ -14,7 +14,7 @@ if (!isset($_SESSION['DatabaseName'])){
 	die;
 }
 
-global $tableheader;
+global $Tableheader;
 
 if (isset($_GET['LineNo'])){
 	$LineNo = $_GET['LineNo'];

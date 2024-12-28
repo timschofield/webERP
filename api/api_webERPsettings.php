@@ -10,9 +10,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT currencydefault FROM companies WHERE coycode=1";
-		$result = DB_query($sql);
-		$answer=DB_fetch_array($result);
+		$SQL = "SELECT currencydefault FROM companies WHERE coycode=1";
+		$Result = DB_query($SQL);
+		$answer=DB_fetch_array($Result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
@@ -28,9 +28,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT confvalue FROM config WHERE confname='DefaultPriceList'";
-		$result = DB_query($sql);
-		$answer=DB_fetch_array($result);
+		$SQL = "SELECT confvalue FROM config WHERE confname='DefaultPriceList'";
+		$Result = DB_query($SQL);
+		$answer=DB_fetch_array($Result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
@@ -46,9 +46,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result = DB_query($sql);
-		$answer=DB_fetch_array($result);
+		$SQL = "SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result = DB_query($SQL);
+		$answer=DB_fetch_array($Result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
@@ -63,9 +63,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT confvalue FROM config WHERE confname='reports_dir'";
-		$result = DB_query($sql);
-		$answer=DB_fetch_array($result);
+		$SQL = "SELECT confvalue FROM config WHERE confname='reports_dir'";
+		$Result = DB_query($SQL);
+		$answer=DB_fetch_array($Result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
@@ -80,9 +80,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "select defaultlocation from www_users where userid='".$user."'";
-		$result = DB_query($sql);
-		$answer=DB_fetch_array($result);
+		$SQL = "select defaultlocation from www_users where userid='".$user."'";
+		$Result = DB_query($SQL);
+		$answer=DB_fetch_array($Result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;
@@ -98,9 +98,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT confvalue from config WHERE confname='Default_Shipper'";
-		$result = DB_query($sql);
-		$answer=DB_fetch_array($result);
+		$SQL = "SELECT confvalue from config WHERE confname='Default_Shipper'";
+		$Result = DB_query($SQL);
+		$answer=DB_fetch_array($Result);
 		$ReturnValue[0]=0;
 		$ReturnValue[1]=$answer;
 		return $ReturnValue;

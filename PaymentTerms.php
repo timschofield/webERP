@@ -91,7 +91,7 @@ if (isset($_POST['submit'])) {
 						WHERE termsindicator = '" . $SelectedTerms . "'";
 		}
 
-		$msg = _('The payment terms definition record has been updated') . '.';
+		$Msg = _('The payment terms definition record has been updated') . '.';
 	} else if ($InputError !=1) {
 
 	/*Selected terms is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new payment terms form */
@@ -120,12 +120,12 @@ if (isset($_POST['submit'])) {
 							)";
 		}
 
-		$msg = _('The payment terms definition record has been added') . '.';
+		$Msg = _('The payment terms definition record has been added') . '.';
 	}
 	if ($InputError !=1){
 		//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset($SelectedTerms);
 		unset($_POST['DaysOrFoll']);
 		unset($_POST['TermsIndicator']);

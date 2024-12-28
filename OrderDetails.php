@@ -59,20 +59,20 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 		<a href="' . $RootPath . '/SelectCompletedOrder.php">' . _('Return to Sales Order Inquiry') . '</a><br/>
 		<a href="' . $RootPath . '/SelectCustomer.php">' . _('Return to Customer Inquiry Interface') . '</a>';
 
-	$myrow = DB_fetch_array($GetOrdHdrResult);
-	$CurrDecimalPlaces = $myrow['decimalplaces'];
+	$MyRow = DB_fetch_array($GetOrdHdrResult);
+	$CurrDecimalPlaces = $MyRow['decimalplaces'];
 
-	if ($CustomerLogin ==1 AND $myrow['debtorno']!= $_SESSION['CustomerID']) {
+	if ($CustomerLogin ==1 AND $MyRow['debtorno']!= $_SESSION['CustomerID']) {
 		prnMsg (_('Your customer login will only allow you to view your own purchase orders'),'error');
 		include('includes/footer.php');
 		exit;
 	}
 	//retrieve invoice number
-	$Invs = explode(' Inv ',$myrow['comments']);
+	$Invs = explode(' Inv ',$MyRow['comments']);
 	$Inv = '';
-	foreach ($Invs as $value) {
-		if (is_numeric($value)) {
-			$Inv .= '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $value . '&InvOrCredit=Invoice">'.$value.'</a>  ';
+	foreach ($Invs as $Value) {
+		if (is_numeric($Value)) {
+			$Inv .= '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $Value . '&InvOrCredit=Invoice">'.$Value.'</a>  ';
 		}
 	}
 
@@ -84,59 +84,59 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 			</tr>
 			<tr>
 				<th class="text">' . _('Customer Code') . ':</th>
-				<td><a href="' . $RootPath . '/SelectCustomer.php?Select=' . $myrow['debtorno'] . '">' . $myrow['debtorno'] . '</a></td>
+				<td><a href="' . $RootPath . '/SelectCustomer.php?Select=' . $MyRow['debtorno'] . '">' . $MyRow['debtorno'] . '</a></td>
 				<th class="text">' . _('Customer Name') . ':</th>
-				<th>' . $myrow['name'] . '</th>
+				<th>' . $MyRow['name'] . '</th>
 			</tr>
 			<tr>
 				<th class="text">' . _('Customer Reference') . ':</th>
-				<td>' . $myrow['customerref'] . '</td>
+				<td>' . $MyRow['customerref'] . '</td>
 				<th class="text">' . _('Deliver To') . ':</th>
-				<th>' . $myrow['deliverto'] . '</th>
+				<th>' . $MyRow['deliverto'] . '</th>
 			</tr>
 			<tr>
 				<th class="text">' . _('Ordered On') . ':</th>
-				<td>' . ConvertSQLDate($myrow['orddate']) . '</td>
+				<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
 				<th class="text">' . _('Delivery Address 1') . ':</th>
-				<td>' . $myrow['deladd1'] . '</td>
+				<td>' . $MyRow['deladd1'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Requested Delivery') . ':</th>
-				<td>' . ConvertSQLDate($myrow['deliverydate']) . '</td>
+				<td>' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
 				<th class="text">' . _('Delivery Address 2') . ':</th>
-				<td>' . $myrow['deladd2'] . '</td>
+				<td>' . $MyRow['deladd2'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Order Currency') . ':</th>
-				<td>' . $myrow['currcode'] . '</td>
+				<td>' . $MyRow['currcode'] . '</td>
 				<th class="text">' . _('Delivery Address 3') . ':</th>
-				<td>' . $myrow['deladd3'] . '</td>
+				<td>' . $MyRow['deladd3'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Deliver From Location') . ':</th>
-				<td>' . $myrow['fromstkloc'] . '</td>
+				<td>' . $MyRow['fromstkloc'] . '</td>
 				<th class="text">' . _('Delivery Address 4') . ':</th>
-				<td>' . $myrow['deladd4'] . '</td>
+				<td>' . $MyRow['deladd4'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Telephone') . ':</th>
-				<td>' . $myrow['contactphone'] . '</td>
+				<td>' . $MyRow['contactphone'] . '</td>
 				<th class="text">' . _('Delivery Address 5') . ':</th>
-				<td>' . $myrow['deladd5'] . '</td>
+				<td>' . $MyRow['deladd5'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Email') . ':</th>
-				<td><a href="mailto:' . $myrow['contactemail'] . '">' . $myrow['contactemail'] . '</a></td>
+				<td><a href="mailto:' . $MyRow['contactemail'] . '">' . $MyRow['contactemail'] . '</a></td>
 				<th class="text">' . _('Delivery Address 6') . ':</th>
-				<td>' . $myrow['deladd6'] . '</td>
+				<td>' . $MyRow['deladd6'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Freight Cost') . ':</th>
-				<td>' . $myrow['freightcost'] . '</td>
+				<td>' . $MyRow['freightcost'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Comments'). ': </th>
-				<td colspan="3">' . $myrow['comments'] . '</td>
+				<td colspan="3">' . $MyRow['comments'] . '</td>
 			</tr>
 			<tr>
 				<th class="text">' . _('Invoices') . ': </th>
@@ -198,31 +198,31 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 				<th>' . _('Narrative') . '</th>
 			</tr>';
 
-		while ($myrow=DB_fetch_array($LineItemsResult)) {
+		while ($MyRow=DB_fetch_array($LineItemsResult)) {
 
-			if ($myrow['qtyinvoiced']>0){
-				$DisplayActualDeliveryDate = ConvertSQLDate($myrow['actualdispatchdate']);
+			if ($MyRow['qtyinvoiced']>0){
+				$DisplayActualDeliveryDate = ConvertSQLDate($MyRow['actualdispatchdate']);
 			} else {
-		  		$DisplayActualDeliveryDate = '<span style="color:red;">' . ConvertSQLDate($myrow['itemdue']) . '</span>';
+		  		$DisplayActualDeliveryDate = '<span style="color:red;">' . ConvertSQLDate($MyRow['itemdue']) . '</span>';
 			}
 
 			echo '<tr class="striped_row">
-				<td>' . $myrow['poline'] . '</td>
-				<td>' . $myrow['stkcode'] . '</td>
-				<td>' . $myrow['description'] . '</td>
-				<td class="number">' . $myrow['quantity'] . '</td>
-				<td>' . $myrow['units'] . '</td>
-				<td class="number">' . locale_number_format($myrow['unitprice'],$CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format(($myrow['discountpercent'] * 100),2) . '%' . '</td>
-				<td class="number">' . locale_number_format($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']),$CurrDecimalPlaces) . '</td>
-				<td class="number">' . locale_number_format($myrow['qtyinvoiced'],$myrow['decimalplaces']) . '</td>
+				<td>' . $MyRow['poline'] . '</td>
+				<td>' . $MyRow['stkcode'] . '</td>
+				<td>' . $MyRow['description'] . '</td>
+				<td class="number">' . $MyRow['quantity'] . '</td>
+				<td>' . $MyRow['units'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['unitprice'],$CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format(($MyRow['discountpercent'] * 100),2) . '%' . '</td>
+				<td class="number">' . locale_number_format($MyRow['quantity'] * $MyRow['unitprice'] * (1 - $MyRow['discountpercent']),$CurrDecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format($MyRow['qtyinvoiced'],$MyRow['decimalplaces']) . '</td>
 				<td>' . $DisplayActualDeliveryDate . '</td>
-				<td>' . $myrow['narrative'] . '</td>
+				<td>' . $MyRow['narrative'] . '</td>
 			</tr>';
 
-			$OrderTotal += ($myrow['quantity'] * $myrow['unitprice'] * (1 - $myrow['discountpercent']));
-			$OrderTotalVolume += ($myrow['quantity'] * $myrow['volume']);
-			$OrderTotalWeight += ($myrow['quantity'] * $myrow['grossweight']);
+			$OrderTotal += ($MyRow['quantity'] * $MyRow['unitprice'] * (1 - $MyRow['discountpercent']));
+			$OrderTotalVolume += ($MyRow['quantity'] * $MyRow['volume']);
+			$OrderTotalWeight += ($MyRow['quantity'] * $MyRow['grossweight']);
 
 		}
 		$DisplayTotal = locale_number_format($OrderTotal,$CurrDecimalPlaces);

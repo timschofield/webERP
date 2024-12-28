@@ -31,7 +31,7 @@ if (isset($_POST['RunReport'])) {
 
 	$PDF->addInfo('Title', _('GL Account Report'));
 	$PDF->addInfo('Subject', _('GL Account Report'));
-	$line_height = 12;
+	$LineHeight = 12;
 	$PageNumber = 1;
 	$FontSize = 10;
 	NewPageHeader();
@@ -105,12 +105,12 @@ if (isset($_POST['RunReport'])) {
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
 		$TransResult = DB_query($SQL, $ErrMsg);
 
-		if ($YPos < ($Bottom_Margin + (5 * $line_height))) { //need 5 lines grace otherwise start new page
+		if ($YPos < ($Bottom_Margin + (5 * $LineHeight))) { //need 5 lines grace otherwise start new page
 			$PageNumber++;
 			NewPageHeader();
 		}
 
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $SelectedAccount . ' - ' . $AccountName . ' ' . ': ' . _('Listing for Period') . ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected);
 
 		if ($PandLAccount == True) {
@@ -129,7 +129,7 @@ if (isset($_POST['RunReport'])) {
 			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 			$RunningTotal = $ChartDetailRow['bfwd'];
-			$YPos -= $line_height;
+			$YPos -= $LineHeight;
 			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Brought Forward Balance'));
 
 			if ($RunningTotal < 0) { //its a credit balance b/fwd
@@ -146,7 +146,7 @@ if (isset($_POST['RunReport'])) {
 
 			if ($MyRow['periodno'] != $PeriodNo) {
 				if ($PeriodNo != - 9999) { //ie its not the first time around
-					$YPos -= $line_height;
+					$YPos -= $LineHeight;
 					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Period Total'));
 					if ($PeriodTotal < 0) { //its a credit balance b/fwd
 						$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, locale_number_format(-$PeriodTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
@@ -173,12 +173,12 @@ if (isset($_POST['RunReport'])) {
 
 			$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-			$tagsql = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
-			$tagresult = DB_query($tagsql);
-			$tagrow = DB_fetch_array($tagresult);
+			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+			$TagResult = DB_query($TagSQL);
+			$TagRow = DB_fetch_array($TagResult);
 
 			// to edit this block
-			$YPos -= $line_height;
+			$YPos -= $LineHeight;
 			$FontSize = 8;
 
 			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 30, $FontSize, $MyRow['typename']);
@@ -187,16 +187,16 @@ if (isset($_POST['RunReport'])) {
 			$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, $DebitAmount, 'right');
 			$LeftOvers = $PDF->addTextWrap(210, $YPos, 50, $FontSize, $CreditAmount, 'right');
 			$LeftOvers = $PDF->addTextWrap(320, $YPos, 150, $FontSize, $MyRow['narrative']);
-			$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, $tagrow['tagdescription']);
+			$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, $TagRow['tagdescription']);
 
-			if ($YPos < ($Bottom_Margin + (5 * $line_height))) {
+			if ($YPos < ($Bottom_Margin + (5 * $LineHeight))) {
 				$PageNumber++;
 				NewPageHeader();
 				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 150, $FontSize, $SelectedAccount . ' - ' . $AccountName);
 			}
 
 		}
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		if ($PandLAccount == True) {
 			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Total Period Movement'));
 		}
@@ -209,10 +209,10 @@ if (isset($_POST['RunReport'])) {
 		else { //its a debit balance b/fwd
 			$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 		}
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		//draw a line under each account printed
 		$PDF->line($Left_Margin, $YPos, $Page_Width - $Right_Margin, $YPos);
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 	} /*end for each SelectedAccount */
 	/*Now check that there is some output and print the report out */
 	if (count($_POST['Account']) == 0) {
@@ -319,7 +319,7 @@ else {
 }
 
 function NewPageHeader() {
-	global $PageNumber, $PDF, $YPos, $Page_Height, $Page_Width, $Top_Margin, $FontSize, $Left_Margin, $Right_Margin, $line_height;
+	global $PageNumber, $PDF, $YPos, $Page_Height, $Page_Width, $Top_Margin, $FontSize, $Left_Margin, $Right_Margin, $LineHeight;
 	/*$SelectedAccount,
 	$AccountName;*/
 
@@ -332,19 +332,19 @@ function NewPageHeader() {
 	$FontSize = 10;
 	$YPos = $Page_Height - $Top_Margin;
 	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('GL Account Report'));
 	$FontSize = 8;
 	$LeftOvers = $PDF->addTextWrap($Page_Width - $Right_Margin - 120, $YPos, 120, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 
 	/*Draw a rectangle to put the headings in     */
 
-	$PDF->line($Left_Margin, $YPos + $line_height, $Page_Width - $Right_Margin, $YPos + $line_height);
-	$PDF->line($Left_Margin, $YPos + $line_height, $Left_Margin, $YPos - $line_height);
-	$PDF->line($Left_Margin, $YPos - $line_height, $Page_Width - $Right_Margin, $YPos - $line_height);
-	$PDF->line($Page_Width - $Right_Margin, $YPos + $line_height, $Page_Width - $Right_Margin, $YPos - $line_height);
+	$PDF->line($Left_Margin, $YPos + $LineHeight, $Page_Width - $Right_Margin, $YPos + $LineHeight);
+	$PDF->line($Left_Margin, $YPos + $LineHeight, $Left_Margin, $YPos - $LineHeight);
+	$PDF->line($Left_Margin, $YPos - $LineHeight, $Page_Width - $Right_Margin, $YPos - $LineHeight);
+	$PDF->line($Page_Width - $Right_Margin, $YPos + $LineHeight, $Page_Width - $Right_Margin, $YPos - $LineHeight);
 
 	/*set up the headings */
 	$XPos = $Left_Margin + 1;
@@ -357,6 +357,6 @@ function NewPageHeader() {
 	$LeftOvers = $PDF->addTextWrap(320, $YPos, 150, $FontSize, _('Narrative') , 'centre');
 	$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, _('Tag') , 'centre');
 
-	$YPos = $YPos - (2 * $line_height);
+	$YPos = $YPos - (2 * $LineHeight);
 }
 ?>

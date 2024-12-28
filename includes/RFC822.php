@@ -44,9 +44,9 @@ class Mail_RFC822
 
     /**
      * Whether or not to validate atoms for non-ascii characters.
-     * @var boolean $validate
+     * @var boolean $Validate
      */
-    var $validate = true;
+    var $Validate = true;
 
     /**
      * The array of raw addresses built up as we parse.
@@ -101,16 +101,16 @@ class Mail_RFC822
      * @param string  $address         The address(es) to validate.
      * @param string  $default_domain  Default domain/host etc. If not supplied, will be set to localhost.
      * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
-     * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
+     * @param boolean $Validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
      *
      * @return object Mail_RFC822 A new Mail_RFC822 object.
      */
-    function __construct($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
+    function __construct($address = null, $default_domain = null, $nest_groups = null, $Validate = null, $limit = null)
     {
         if (isset($address))        $this->address        = $address;
         if (isset($default_domain)) $this->default_domain = $default_domain;
         if (isset($nest_groups))    $this->nestGroups     = $nest_groups;
-        if (isset($validate))       $this->validate       = $validate;
+        if (isset($Validate))       $this->validate       = $Validate;
         if (isset($limit))          $this->limit          = $limit;
     }
 
@@ -123,22 +123,22 @@ class Mail_RFC822
      * @param string  $address         The address(es) to validate.
      * @param string  $default_domain  Default domain/host etc.
      * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
-     * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
+     * @param boolean $Validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
      *
      * @return array A structured array of addresses.
      */
-    function parseAddressList($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
+    function parseAddressList($address = null, $default_domain = null, $nest_groups = null, $Validate = null, $limit = null)
     {
 
         if (!isset($this->mailRFC822)) {
-            $obj = new Mail_RFC822($address, $default_domain, $nest_groups, $validate, $limit);
+            $obj = new Mail_RFC822($address, $default_domain, $nest_groups, $Validate, $limit);
             return $obj->parseAddressList();
         }
 
         if (isset($address))        $this->address        = $address;
         if (isset($default_domain)) $this->default_domain = $default_domain;
         if (isset($nest_groups))    $this->nestGroups     = $nest_groups;
-        if (isset($validate))       $this->validate       = $validate;
+        if (isset($Validate))       $this->validate       = $Validate;
         if (isset($limit))          $this->limit          = $limit;
 
         $this->structure  = array();

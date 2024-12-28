@@ -12,7 +12,7 @@ include ('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
-	foreach ($_POST as $key => $value) {
+	foreach ($_POST as $key => $Value) {
 		if (mb_strpos($key, 'Qty')) {
 			$RequestID = mb_substr($key, 0, mb_strpos($key, 'Qty'));
 			$LineID = mb_substr($key, mb_strpos($key, 'Qty') + 3);

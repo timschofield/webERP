@@ -333,7 +333,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					INNER JOIN qasamples ON qasamples.sampleid=sampleresults.sampleid
 					INNER JOIN qatests ON qatests.testid=sampleresults.testid
 					WHERE sampleresults.sampleid='" .$SelectedSampleID. "'";
-		$msg = _('Test Results have been copied to sample') . ' ' . $_POST['CopyToSampleID']  . ' from sample' . ' ' . $SelectedSampleID ;
+		$Msg = _('Test Results have been copied to sample') . ' ' . $_POST['CopyToSampleID']  . ' from sample' . ' ' . $SelectedSampleID ;
 		$ErrMsg = _('The insert of the test results failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
@@ -412,14 +412,14 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 									isinspec='" .$IsInSpec. "'
 								WHERE sampleid='" . $_POST['CopyToSampleID'] ."'
 								AND resultid='".$MyRow2[0]."'";
-					$msg = _('Test Results have been overwritten to sample') . ' ' . $_POST['CopyToSampleID']  . _(' from sample') . ' ' . $SelectedSampleID  . _(' for test ') . $MyRow['testid'];
+					$Msg = _('Test Results have been overwritten to sample') . ' ' . $_POST['CopyToSampleID']  . _(' from sample') . ' ' . $SelectedSampleID  . _(' for test ') . $MyRow['testid'];
 					$ErrMsg = _('The insert of the test results failed because');
 					$DbgMsg = _('The SQL that was used and failed was');
 					$updresult = DB_query($updsql,$ErrMsg, $DbgMsg);
-					prnMsg($msg , 'success');
+					prnMsg($Msg , 'success');
 				} else {
-					$msg = _('Test Results have NOT BEEN overwritten for Result ID ') . $MyRow2[0];
-					prnMsg($msg , 'warning');
+					$Msg = _('Test Results have NOT BEEN overwritten for Result ID ') . $MyRow2[0];
+					prnMsg($Msg , 'warning');
 				}
 			} else {
 				//Need to insert the test and results
@@ -453,11 +453,11 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 								'"  . $MyRow['testdate'] . "',
 								'"  . $IsInSpec . "'
 								)";
-				$msg = _('Test Results have been copied to') . ' ' . $_POST['CopyToSampleID'] . ' ' . _('from') . ' ' . $SelectedSampleID . ' ' . _('for') . ' ' . $MyRow['testid'];
+				$Msg = _('Test Results have been copied to') . ' ' . $_POST['CopyToSampleID'] . ' ' . _('from') . ' ' . $SelectedSampleID . ' ' . _('for') . ' ' . $MyRow['testid'];
 				$ErrMsg = _('The insert of the test results failed because');
 				$DbgMsg = _('The SQL that was used and failed was');
 				$insresult = DB_query($inssql,$ErrMsg, $DbgMsg);
-				prnMsg($msg , 'success');
+				prnMsg($Msg , 'success');
 			}
 		} //while loop on myrow
 		$SelectedSampleID=$_POST['CopyToSampleID'];
@@ -598,11 +598,11 @@ if (isset($_POST['AddTests'])) {
 								'1',
 								'1'
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
-			$msg = _('A Sample Result record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
+			$Msg = _('A Sample Result record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Sample Result failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
 			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-			prnMsg($msg , 'success');
+			prnMsg($Msg , 'success');
 		} //if on
 	} //for
 } //AddTests
@@ -651,11 +651,11 @@ if (isset($_POST['submit'])) {
 										isinspec='".  $IsInSpec . "'
 						WHERE resultid='".  $_POST['ResultID' .$i] . "'";
 
-		$msg = _('Sample Results were updated for Result ID') . ' ' . $_POST['ResultID' .$i] ;
+		$Msg = _('Sample Results were updated for Result ID') . ' ' . $_POST['ResultID' .$i] ;
 		$ErrMsg = _('The updated of the sampleresults failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 	} //for
 	//check to see all values are in spec or at least entered
 	$Result = DB_query("SELECT count(sampleid) FROM sampleresults
@@ -668,11 +668,11 @@ if (isset($_POST['submit'])) {
 									comments='" . $_POST['Comments'] . "',
 									cert='0'
 				WHERE sampleid = '".$SelectedSampleID."'";
-		$msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
+		$Msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
 		$ErrMsg = _('The update of the QA Sample failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-		prnMsg($msg , 'error');
+		prnMsg($Msg , 'error');
 	}
 }
 if (isset($_GET['Delete'])) {

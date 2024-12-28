@@ -181,10 +181,10 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		//Now Display LineItem
 		$SupportedImgExt = array('png','jpg','jpeg');
-		 $glob = (glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-		$imagefile = reset($glob);
-		if ($imagefile) {
-			$ImageLink = '<a href="' . $imagefile . '" target="_blank">' .  $LnItm->StockID . '</a>';
+		 $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($Glob);
+		if ($ImageFile) {
+			$ImageLink = '<a href="' . $ImageFile . '" target="_blank">' .  $LnItm->StockID . '</a>';
 		} else {
 			$ImageLink = $LnItm->StockID;
 		}
@@ -368,7 +368,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 			prnMsg(_('This order has been changed or invoiced since this delivery was started to be actioned') . '. ' . _('Processing halted') . '. ' . _('To enter a delivery against this purchase order') . ', ' . _('it must be re-selected and re-read again to update the changes made by the other user'),'warn');
 
-			if ($debug==1) {
+			if ($Debug==1) {
 				echo '<table class="selection">
 					<tr>
 						<td>' . _('GL Code of the Line Item') . ':</td>

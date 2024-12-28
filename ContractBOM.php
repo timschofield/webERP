@@ -55,7 +55,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
 		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -67,7 +67,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.description " . LIKE . " '$SearchString'
 					ORDER BY stockmaster.stockid";
 		} else {
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -86,7 +86,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		$_POST['StockCode'] = '%' . $_POST['StockCode'] . '%';
 
 		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -98,7 +98,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.stockid " . LIKE . " '" . $_POST['StockCode'] . "'
 					ORDER BY stockmaster.stockid";
 		} else {
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -114,7 +114,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	} else {
 		if ($_POST['StockCat']=='All'){
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -125,7 +125,7 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 					AND stockmaster.discontinued!=1
 					ORDER BY stockmaster.stockid";
 		} else {
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.units
 					FROM stockmaster INNER JOIN stockcategory
@@ -141,14 +141,14 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 
 	$ErrMsg = _('There is a problem selecting the part records to display because');
 	$DbgMsg = _('The SQL statement that failed was');
-	$SearchResult = DB_query($sql,$ErrMsg,$DbgMsg);
+	$SearchResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($SearchResult)==0 AND $debug==1){
+	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
-		$myrow=DB_fetch_array($SearchResult);
-		$_GET['NewItem'] = $myrow['stockid'];
+		$MyRow=DB_fetch_array($SearchResult);
+		$_GET['NewItem'] = $MyRow['stockid'];
 		DB_data_seek($SearchResult,0);
 	}
 
@@ -182,7 +182,7 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 
 			if ($AlreadyOnThisBOM!=1){
 
-				$sql = "SELECT stockmaster.description,
+				$SQL = "SELECT stockmaster.description,
 								stockmaster.stockid,
 								stockmaster.units,
 								stockmaster.decimalplaces,
@@ -192,21 +192,21 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 
 				$ErrMsg = _('The item details could not be retrieved');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-				$result1 = DB_query($sql,$ErrMsg,$DbgMsg);
+				$Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-				if ($myrow = DB_fetch_array($result1)){
+				if ($MyRow = DB_fetch_array($Result1)){
 
 					$_SESSION['Contract'.$identifier]->Add_To_ContractBOM (trim($_POST['StockID'.$i]),
-																			$myrow['description'],
+																			$MyRow['description'],
 																			'',
 																			filter_number_format($_POST['Qty'.$i]), /* Qty */
-																			$myrow['unitcost'],
-																			$myrow['units'],
-																			$myrow['decimalplaces']);
+																			$MyRow['unitcost'],
+																			$MyRow['units'],
+																			$MyRow['decimalplaces']);
 				} else {
 					prnMsg (_('The item code') . ' ' . trim($_POST['StockID'.$i]) . ' ' . _('does not exist in the database and therefore cannot be added to the contract BOM'),'error');
-					if ($debug==1){
-						echo '<br />' . $sql;
+					if ($Debug==1){
+						echo '<br />' . $SQL;
 					}
 					include('includes/footer.php');
 					exit;
@@ -281,7 +281,7 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 } /*Only display the contract BOM lines if there are any !! */
 
 if (!isset($_GET['Edit'])) {
-	$sql="SELECT categoryid,
+	$SQL="SELECT categoryid,
 				categorydescription
 			FROM stockcategory
 			WHERE stocktype<>'L'
@@ -289,7 +289,7 @@ if (!isset($_GET['Edit'])) {
 			ORDER BY categorydescription";
 	$ErrMsg = _('The supplier category details could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
-	$result1 = DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Print') . '" alt="" />' . ' ' . _('Search For Stock Items') .
 		'</p>';
@@ -299,11 +299,11 @@ if (!isset($_GET['Edit'])) {
 				<td><select name="StockCat">';
 
 	echo '<option selected="selected" value="All">' . _('All') . '</option>';
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-			echo '<option selected="selected" value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if (isset($_POST['StockCat']) and $_POST['StockCat']==$MyRow1['categoryid']){
+			echo '<option selected="selected" value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -354,31 +354,31 @@ if (isset($SearchResult)) {
 	echo $TableHeader;
 
 	$i=0;
-	while ($myrow=DB_fetch_array($SearchResult)) {
+	while ($MyRow=DB_fetch_array($SearchResult)) {
 
 		$SupportedImgExt = array('png','jpg','jpeg');
-        $glob = (glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-		$imagefile = reset($glob);
-		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+        $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($Glob);
+		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
 			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-				'&amp;StockID='.urlencode($myrow['stockid']).
+				'&amp;StockID='.urlencode($MyRow['stockid']).
 				'&amp;text='.
 				'&amp;width=64'.
 				'&amp;height=64'.
 				'" alt="" />';
-		} else if (file_exists ($imagefile)) {
-			$ImageSource = '<img src="' . $imagefile . '" height="100" width="100" />';
+		} else if (file_exists ($ImageFile)) {
+			$ImageSource = '<img src="' . $ImageFile . '" height="100" width="100" />';
 		} else {
 			$ImageSource = _('No Image');
 		}
 
 		echo '<tr class="striped_row">
-				<td>' . $myrow['stockid'] . '</td>
-				<td>' . $myrow['description'] . '</td>
-				<td>' . $myrow['units'] . '</td>
+				<td>' . $MyRow['stockid'] . '</td>
+				<td>' . $MyRow['description'] . '</td>
+				<td>' . $MyRow['units'] . '</td>
 				<td>' . $ImageSource . '</td>
 				<td><input class="number" type="text" title="' . _('Enter the quantity required of this item to complete the contract') . '" required="required" size="6" value="0" name="Qty'.$i.'" />
-				<input type="hidden" name="StockID' . $i . '" value="' . $myrow['stockid'] . '" />
+				<input type="hidden" name="StockID' . $i . '" value="' . $MyRow['stockid'] . '" />
 				</td>
 			</tr>';
 		$i++;

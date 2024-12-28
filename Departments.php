@@ -72,7 +72,7 @@ if (isset($_POST['Submit'])) {
 				prnMsg( _('The department does not exist.'),'error');
 			}
 		}
-		$msg = _('The department has been modified');
+		$Msg = _('The department has been modified');
 	} elseif ($InputError !=1) {
 		/*SelectedDepartmentID is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM departments
@@ -88,7 +88,7 @@ if (isset($_POST['Submit'])) {
 					VALUES ('" . $_POST['DepartmentName'] . "',
 							'" . $_POST['Authoriser'] . "')";
 		}
-		$msg = _('The new department has been created');
+		$Msg = _('The new department has been created');
 	}
 
 	if ($InputError!=1){
@@ -112,7 +112,7 @@ if (isset($_POST['Submit'])) {
 		} else {
 			$Result = DB_query($SQL);
 		}
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
         echo '<br />';
 	}
 	unset ($SelectedDepartmentID);
@@ -237,9 +237,9 @@ if (! isset($_GET['delete'])) {
 		<field>
 			<label for="Authoriser">' . _('Authoriser') . '</label>
 			<select name="Authoriser">';
-	$usersql="SELECT userid FROM www_users";
-	$userresult=DB_query($usersql);
-	while ($MyRow=DB_fetch_array($userresult)) {
+	$UserSQL="SELECT userid FROM www_users";
+	$Userresult=DB_query($UserSQL);
+	while ($MyRow=DB_fetch_array($Userresult)) {
 		if ($MyRow['userid']==$AuthoriserID) {
 			echo '<option selected="True" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {

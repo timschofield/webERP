@@ -25,8 +25,8 @@ $SQL = "SELECT stockmaster.stockid,
 				FROM bom
 				WHERE bom.component = stockmaster.stockid )
 		ORDER BY stockmaster.stockid";
-$result = DB_query($SQL);
-if (DB_num_rows($result) != 0){
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) != 0){
 	$TotalValue = 0;
 	echo '<p class="page_title_text"><strong>' . _('Raw Materials Not Used in any BOM') . '</strong></p>';
 	echo '<div>';
@@ -42,9 +42,9 @@ if (DB_num_rows($result) != 0){
 	echo $TableHeader;
 	$i = 1;
 
-	while ($myrow = DB_fetch_array($result)) {
-		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
-		$LineValue = $myrow['qoh'] * $myrow['stdcost'];
+	while ($MyRow = DB_fetch_array($Result)) {
+		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
+		$LineValue = $MyRow['qoh'] * $MyRow['stdcost'];
 		$TotalValue = $TotalValue + $LineValue;
 
 		printf('<tr class="striped_row">
@@ -57,9 +57,9 @@ if (DB_num_rows($result) != 0){
 				</tr>',
 				$i,
 				$CodeLink,
-				$myrow['description'],
-				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
-				locale_number_format($myrow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']),
+				$MyRow['description'],
+				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
+				locale_number_format($MyRow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($LineValue,$_SESSION['CompanyRecord']['decimalplaces'])
 				);
 		$i++;

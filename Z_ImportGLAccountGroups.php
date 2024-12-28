@@ -38,12 +38,12 @@ if (isset($_POST['update'])) {
 			$user = new xmlrpcval($weberpuser);
 			$password = new xmlrpcval($weberppassword);
 
-			$msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountGroup", array($accountgroup, $user, $password));
+			$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountGroup", array($accountgroup, $user, $password));
 
 			$client = new xmlrpc_client($ServerURL);
 			$client->setDebug($DebugLevel);
 
-			$response = $client->send($msg);
+			$response = $client->send($Msg);
 			$answer = php_xmlrpc_decode($response->value());
 			if ($answer[0]==0) {
 				echo '<tr '.$SuccessStyle.'><td>' . $AccountGroupDetails['groupname'] . '</td><td>' . 'Success' . '</td></tr>';

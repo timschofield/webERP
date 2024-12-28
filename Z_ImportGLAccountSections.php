@@ -42,12 +42,12 @@ if (isset($_POST['update'])) {
 			$user = new xmlrpcval($webERPUser);
 			$password = new xmlrpcval($weberppassword);
 
-			$msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountSection", array($accountsection, $user, $password));
+			$Msg = new xmlrpcmsg("weberp.xmlrpc_InsertGLAccountSection", array($accountsection, $user, $password));
 
 			$client = new xmlrpc_client($ServerURL);
 			$client->setDebug($DebugLevel);
 
-			$response = $client->send($msg);
+			$response = $client->send($Msg);
 			$answer = php_xmlrpc_decode($response->value());
 			if ($answer[0]==0) {
 				echo '<tr '.$SuccessStyle.'><td>' . $AccountSectionDetails['sectionname'] . '</td><td>' . 'Success' . '</td></tr>';

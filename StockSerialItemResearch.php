@@ -68,9 +68,9 @@ if ($SerialNo!='') {
 			WHERE ssi.serialno " . LIKE . " '" . $SerialNo . "'
 			ORDER BY stkmoveno";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 
-	if (DB_num_rows($result) == 0){
+	if (DB_num_rows($Result) == 0){
 		prnMsg( _('No History found for Serial Number'). ': <b>' . $SerialNo . '</b>' , 'warn');
 	} else {
 		echo '<h4>' .  _('Details for Serial Item').': <b>' . $SerialNo . '</b><br />' .  _('Length').'='.mb_strlen($SerialNo) . '</h4>';
@@ -88,7 +88,7 @@ if ($SerialNo!='') {
 				<th>' . _('Move Ref') . '</th>
 				<th>' . _('Total Move Qty') . '</th>
 			</tr>';
-		while ($myrow=DB_fetch_row($result)) {
+		while ($MyRow=DB_fetch_row($Result)) {
 			printf('<tr>
 					<td>%s<br />%s</td>
 					<td class="number">%s</td>
@@ -102,18 +102,18 @@ if ($SerialNo!='') {
 					<td>%s &nbsp;</td>
 					<td class="number">%s</td>
 					</tr>',
-					$myrow[1],
-					$myrow[0],
-					$myrow[2],
-					$myrow[3],
-					$myrow[5], $myrow[4],
-					$myrow[6],
-					$myrow[7], $myrow[8],
-					$myrow[9],
-					$myrow[10],
-					$myrow[11],
-					$myrow[12],
-					$myrow[13]
+					$MyRow[1],
+					$MyRow[0],
+					$MyRow[2],
+					$MyRow[3],
+					$MyRow[5], $MyRow[4],
+					$MyRow[6],
+					$MyRow[7], $MyRow[8],
+					$MyRow[9],
+					$MyRow[10],
+					$MyRow[11],
+					$MyRow[12],
+					$MyRow[13]
 				);
 		} //END WHILE LIST LOOP
 		echo '</table>';

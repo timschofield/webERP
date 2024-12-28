@@ -69,15 +69,15 @@
 			$FieldValues.='"'.$value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = 'INSERT INTO chartmaster ('.mb_substr($FieldNames,0,-2).') '.
+			$SQL = 'INSERT INTO chartmaster ('.mb_substr($FieldNames,0,-2).') '.
 		  		"VALUES ('".mb_substr($FieldValues,0,-2)."') ";
-			$result = DB_query($sql);
-			$sql='INSERT INTO chartdetails (accountcode,
+			$Result = DB_query($SQL);
+			$SQL='INSERT INTO chartdetails (accountcode,
 							period)
 				SELECT ' . $AccountDetails['accountcode'] . ',
 					periodno
 				FROM periods';
-			$result = DB_query($sql,'','','',false);
+			$Result = DB_query($SQL,'','','',false);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -98,18 +98,18 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT chartmaster.accountcode,
+		$SQL = 'SELECT chartmaster.accountcode,
 					chartmaster.accountname,
 					accountgroups.pandl
 				FROM chartmaster INNER JOIN accountgroups
 				ON chartmaster.group_=accountgroups.groupname
 				ORDER BY accountcode';
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$GLAccountList[$i]['accountcode']=$myrow[0];
-			$GLAccountList[$i]['accountname']=$myrow[1];
-			$GLAccountList[$i]['pandl']=$myrow[2];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$GLAccountList[$i]['accountcode']=$MyRow[0];
+			$GLAccountList[$i]['accountname']=$MyRow[1];
+			$GLAccountList[$i]['pandl']=$MyRow[2];
 			$i++;
 		}
 		return $GLAccountList;
@@ -127,9 +127,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM chartmaster WHERE accountcode='".$AccountCode."'";
-		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		$SQL = "SELECT * FROM chartmaster WHERE accountcode='".$AccountCode."'";
+		$Result = DB_query($SQL);
+		return DB_fetch_array($Result);
 	}
 
 ?>

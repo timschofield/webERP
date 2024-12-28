@@ -18,10 +18,10 @@ Parameters:
 */
 
 // BEGIN: Functions division ===================================================
-function RelativeChange($selected_period, $previous_period) {
+function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
-	if($previous_period<>0) {
-		return locale_number_format(($selected_period-$previous_period)*100/$previous_period, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
+	if($PreviousPeriod<>0) {
+		return locale_number_format(($SelectedPeriod-$PreviousPeriod)*100/$PreviousPeriod, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
 		return _('N/A');
 	}

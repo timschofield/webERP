@@ -13,7 +13,7 @@ $YPos= $Page_Height-$Top_Margin;
 
 $pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
-$YPos -=$line_height;
+$YPos -=$Line_height;
 
 $FontSize =10;
 
@@ -24,13 +24,13 @@ $pdf->addText($Left_Margin, $YPos, $FontSize, _('Bill Of Material Listing for Pa
 $FontSize = 8;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
-$YPos -=(2*$line_height);
+$YPos -=(2*$Line_height);
 
 /*Draw a rectangle to put the headings in     */
 $pdf->line($Page_Width-$Right_Margin, $YPos-5,$Left_Margin, $YPos-5);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos-5);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Left_Margin, $YPos+$Line_height);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos-5);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Left_Margin, $YPos-5);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
@@ -42,7 +42,7 @@ $LeftOvers = $pdf->addTextWrap(440,$YPos,30,$FontSize,_('Locn'),'left');
 $LeftOvers = $pdf->addTextWrap(480,$YPos,30,$FontSize,_('Wrk Cntr'),'left');
 $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('Quantity'),'right');
 
-$YPos =$YPos - (2*$line_height);
+$YPos =$YPos - (2*$Line_height);
 
 $FontSize=10;
 ?>

@@ -227,8 +227,8 @@ if (isset($_POST['submit'])) {
 			$objPHPExcel->getActiveSheet()->freezePane('A11');
 
 			// Auto Size columns
-			foreach(range('A','K') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			foreach(range('A','K') as $ColumnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 

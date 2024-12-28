@@ -199,10 +199,10 @@ if (isset($_POST['SelectedSupplier'])) {
 }
 
 if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
-	foreach ($_POST as $key => $value) {
+	foreach ($_POST as $key => $Value) {
 		if (mb_substr($key, 0, 7) == 'StockID') {
 			$Index = mb_substr($key, 7, mb_strlen($key) - 7);
-			$StockID = $value;
+			$StockID = $Value;
 			$Quantity = filter_number_format($_POST['Qty' . $Index]);
 			$UOM = $_POST['UOM' . $Index];
 			$SQL = "SELECT description,
@@ -808,7 +808,7 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 	$DbgMsg = _('The SQL statement that failed was');
 	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	if (DB_num_rows($SearchResult) == 0 and $debug == 1) {
+	if (DB_num_rows($SearchResult) == 0 and $Debug == 1) {
 		prnMsg(_('There are no products to display matching the criteria provided'), 'warn');
 	}
 	if (DB_num_rows($SearchResult) == 1) {
@@ -834,12 +834,12 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 		while ($MyRow = DB_fetch_array($SearchResult)) {
 
 			$SupportedImgExt = array('png', 'jpg', 'jpeg');
-			$glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-			$imagefile = reset($glob);
-			if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)) {
+			$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+			$ImageFile = reset($Glob);
+			if (extension_loaded('gd') && function_exists('gd_info') && file_exists($ImageFile)) {
 				$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($MyRow['stockid']) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-			} else if (file_exists($imagefile)) {
-				$ImageSource = '<img src="' . $imagefile . '" height="64" width="64" />';
+			} else if (file_exists($ImageFile)) {
+				$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
 			} else {
 				$ImageSource = _('No Image');
 			}

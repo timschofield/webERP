@@ -21,7 +21,7 @@
 		var $status;
 		var $body;
 		var $from;
-		var $host;
+		var $Host;
 		var $port;
 		var $helo;
 		var $auth;
@@ -160,9 +160,9 @@
 				$this->send_data($body);
 				$this->send_data('.');
 
-				$result = (substr(trim($this->get_data()), 0, 3) === '250');
+				$Result = (substr(trim($this->get_data()), 0, 3) === '250');
 				//$this->rset();
-				return $result;
+				return $Result;
 			}else{
 				$this->errors[] = 'Not connected!';
 				return FALSE;
@@ -343,13 +343,13 @@
 		function &get_data(){
 
 			$return = '';
-			$line   = '';
+			$Line   = '';
 			$loops  = 0;
 
 			if(is_resource($this->connection)){
-				while((strpos($return, CRLF) === FALSE OR substr($line,3,1) !== ' ') AND $loops < 100){
-					$line    = fgets($this->connection, 512);
-					$return .= $line;
+				while((strpos($return, CRLF) === FALSE OR substr($Line,3,1) !== ' ') AND $loops < 100){
+					$Line    = fgets($this->connection, 512);
+					$return .= $Line;
 					$loops++;
 				}
 				return $return;

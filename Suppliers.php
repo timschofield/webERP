@@ -405,9 +405,9 @@ if (isset($_POST['submit'])) {
 			$SQL = "SELECT * FROM geocode_param WHERE 1";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$Resultgeo = DB_query($SQL, $ErrMsg);
-			$row = DB_fetch_array($Resultgeo);
-			$api_key = $row['geocode_key'];
-			$map_host = $row['map_host'];
+			$Row = DB_fetch_array($Resultgeo);
+			$api_key = $Row['geocode_key'];
+			$map_host = $Row['map_host'];
 			define('MAPS_HOST', $map_host);
 			define('KEY', $api_key);
 			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
@@ -448,8 +448,8 @@ if (isset($_POST['submit'])) {
 			$suppcurrssql = "SELECT currcode
 							FROM suppliers
 							WHERE supplierid='" . $SupplierID . "'";
-			$currresult = DB_query($suppcurrssql);
-			$suppcurr = DB_fetch_row($currresult);
+			$Currresult = DB_query($suppcurrssql);
+			$suppcurr = DB_fetch_row($Currresult);
 
 			if ($supptrans == 0) {
 				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',

@@ -15,7 +15,7 @@ if (DB_num_rows($TestAlreadyDoneResult)>0){
 }
 
 
-$lineno = 1;
+$Lineno = 1;
 $orderno = 0;
 
 $SalesOrdersResult = DB_query('SELECT orderno, stkcode FROM salesorderdetails ORDER BY orderno');

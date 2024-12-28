@@ -84,17 +84,17 @@ function newLabel($data=null) {
     $label0 = '<?xml version="1.0"  standalone="yes"?><label><id>""</id><description>""</description><dimensions></dimensions><data></data></label>';
     $label = new LabelList($label0);
     if ($data!=null) {
-        foreach ($GlobalTags as $iTag=>$tag)
+        foreach ($GlobalTags as $iTag=>$Tag)
             $label->$iTag = $data[$iTag];
-        foreach ($DimensionTags as $iTag=>$tag)
+        foreach ($DimensionTags as $iTag=>$Tag)
             $label->dimensions->addChild($iTag, $data[$iTag]);
     // we suppose that this data comes from the input, then there are:
-    // $data[$tag][$i] begining with $data['row'][$i]
+    // $data[$Tag][$i] begining with $data['row'][$i]
         foreach ($data['row'] as $i=>$val) {
             if (empty($val)) continue;
-            $line=$label->data->addChild('line');
-            foreach ($DataTags as $iTag=>$tag)
-                $line->addChild($iTag, $data[$iTag][$i]);
+            $Line=$label->data->addChild('line');
+            foreach ($DataTags as $iTag=>$Tag)
+                $Line->addChild($iTag, $data[$iTag][$i]);
         }
     }
     return $label;
@@ -138,17 +138,17 @@ class LabelList extends SimpleXMLElement {
     function addLabel($label) {
         global $GlobalTags, $DimensionTags, $DataTags;
         $new=$this->addChild('label');
-        foreach ($GlobalTags as $iTag=>$tag)
+        foreach ($GlobalTags as $iTag=>$Tag)
             $new->addChild($iTag, (string)$label->$iTag);
         $dimensions=$new->addChild('dimensions');
-        foreach ($DimensionTags as $iTag=>$tag)
+        foreach ($DimensionTags as $iTag=>$Tag)
             $dimensions->addChild($iTag, (string)$label->dimensions->$iTag);
-    // $data[$tag][$i] begining with $data['row'][$i]
+    // $data[$Tag][$i] begining with $data['row'][$i]
         $data=$new->addChild('data');
-        foreach ($label->data->line as $line) {
+        foreach ($label->data->line as $Line) {
             $newLine=$data->addChild('line');
-            foreach ($DataTags as $iTag=>$tag)
-                $newLine->addChild($iTag, (string)$line->$iTag);
+            foreach ($DataTags as $iTag=>$Tag)
+                $newLine->addChild($iTag, (string)$Line->$iTag);
         }
         return true;
     }

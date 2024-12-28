@@ -75,10 +75,10 @@
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyLastCurCostDate($CurCostDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
 		} elseif (mb_strstr('.',$PeriodEnd)) {
@@ -249,10 +249,10 @@
 	}
 
 	function GetCategoryGLCode($CategoryID, $field) {
-		$sql='SELECT '.$field." FROM stockcategory WHERE categoryid='".$CategoryID."'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		return $myrow[0];
+		$SQL='SELECT '.$field." FROM stockcategory WHERE categoryid='".$CategoryID."'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		return $MyRow[0];
 	}
 
 /* Insert a new stock item in the webERP database. This function takes an
@@ -463,13 +463,13 @@
 		if (isset($StockItemDetails['decimalplaces'])){
 			$Errors=VerifyDecimalPlaces($StockItemDetails['decimalplaces'], sizeof($Errors), $Errors);
 		}
-		$sql='UPDATE stockmaster SET ';
+		$SQL='UPDATE stockmaster SET ';
 		foreach ($StockItemDetails as $key => $value) {
-			$sql .= $key.'="'.$value.'", ';
+			$SQL .= $key.'="'.$value.'", ';
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
+		$SQL = mb_substr($SQL,0,-2)." WHERE stockid='".$StockItemDetails['stockid']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -495,11 +495,11 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM stockmaster WHERE stockid='".$StockID."'";
-		$result = DB_query($sql);
+		$SQL="SELECT * FROM stockmaster WHERE stockid='".$StockID."'";
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
 			$Errors[0]=0;
-			$Errors[1]=DB_fetch_array($result);
+			$Errors[1]=DB_fetch_array($Result);
 			return $Errors;
 		} else {
 			return $Errors;
@@ -516,14 +516,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql="SELECT stockid
+		$SQL="SELECT stockid
 			  FROM stockmaster
 			  WHERE " . $Field ." LIKE '%".$Criteria."%'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		$i=0;
 		$StockItemList = array();
-		while ($myrow=DB_fetch_array($result)) {
-			$StockItemList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$StockItemList[$i]=$MyRow[0];
 			$i++;
 		}
 		if (sizeof($Errors)==0) {
@@ -546,15 +546,15 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT quantity,
+		$SQL="SELECT quantity,
                      loccode
                FROM locstock WHERE stockid='" . $StockID."'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
 			$i=0;
-			while ($myrow=DB_fetch_array($result)) {
-				$answer[$i]['quantity']=$myrow['quantity'];
-				$answer[$i]['loccode']=$myrow['loccode'];
+			while ($MyRow=DB_fetch_array($Result)) {
+				$answer[$i]['quantity']=$MyRow['quantity'];
+				$answer[$i]['loccode']=$MyRow['loccode'];
 				$i++;
 			}
 			$Errors[0]=0;
@@ -576,13 +576,13 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT reorderlevel, loccode FROM locstock WHERE stockid='".$StockID."'";
-		$result = DB_query($sql);
+		$SQL="SELECT reorderlevel, loccode FROM locstock WHERE stockid='".$StockID."'";
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
 			$i=0;
-			while ($myrow=DB_fetch_array($result)) {
-				$answer[$i]['reorderlevel']=$myrow['reorderlevel'];
-				$answer[$i]['loccode']=$myrow['loccode'];
+			while ($MyRow=DB_fetch_array($Result)) {
+				$answer[$i]['reorderlevel']=$MyRow['reorderlevel'];
+				$answer[$i]['loccode']=$MyRow['loccode'];
 				$i++;
 			}
 			$Errors[0]=0;
@@ -604,10 +604,10 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="UPDATE locstock SET reorderlevel='".$ReorderLevel."'
+		$SQL="UPDATE locstock SET reorderlevel='".$ReorderLevel."'
                      WHERE stockid='".$StockID."'
                      AND loccode='".$Location."'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
 			return 0;
 		} else {
@@ -626,14 +626,14 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT sum(quantity)
+		$SQL="SELECT sum(quantity)
              FROM salesorderdetails
              WHERE stkcode='".$StockID."'
              AND completed=0";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
 			$Errors[0]=0;
-			$Errors[1]=DB_fetch_array($result);
+			$Errors[1]=DB_fetch_array($Result);
 			return $Errors;
 		} else {
 			return $Errors;
@@ -651,14 +651,14 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT sum(quantityord-quantityrecd)
+		$SQL="SELECT sum(quantityord-quantityrecd)
               FROM purchorderdetails
               WHERE itemcode='".$StockID."'
               AND completed=0";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
 			$Errors[0]=0;
-			$Errors[1]=DB_fetch_array($result);
+			$Errors[1]=DB_fetch_array($Result);
 			return $Errors;
 		} else {
 			return $Errors;
@@ -678,26 +678,26 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql = "SELECT COUNT(*) FROM prices
+		$SQL = "SELECT COUNT(*) FROM prices
 				 WHERE stockid='".$StockID."'
 				 and typeabbrev='".$SalesType."'
 				 and currabrev='".$Currency."'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]==0) {
-			$sql="INSERT INTO prices VALUES('". $StockID."',
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0]==0) {
+			$SQL="INSERT INTO prices VALUES('". $StockID."',
                                             '". $SalesType ."',
                                             '". $Currency."',
                                             '',
                                             '". $Price ."',
                                             '')";
 		} else {
-			$sql='UPDATE prices SET price='. $Price .
+			$SQL='UPDATE prices SET price='. $Price .
         			" WHERE  stockid='" .$StockID."'
 				    AND typeabbrev='".$SalesType."'
 				    AND currabrev='".$Currency."'";
 		}
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		$Errors[0] = 0;
 		return $Errors;
 	}
@@ -715,29 +715,29 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql = "SELECT COUNT(*) FROM prices
+		$SQL = "SELECT COUNT(*) FROM prices
 				 WHERE stockid='" .$StockID. "'
 				 AND typeabbrev='" .$SalesType. "'
 				 AND currabrev='".$Currency. "'
 				 AND startdate<=CURRENT_DATE
 				 AND enddate>CURRENT_DATE";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]==0) {
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0]==0) {
 			$Errors[0] = NoPricesSetup;
 			return $Errors;
 		} else {
-			$sql="SELECT price FROM prices
+			$SQL="SELECT price FROM prices
 							WHERE stockid='" .$StockID. "'
 							 AND typeabbrev='" .$SalesType. "'
 							 AND currabrev='".$Currency. "'
 							 AND startdate<=CURRENT_DATE
 							 AND enddate>CURRENT_DATE";
 		}
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
 		$Errors[0]=0;
-		$Errors[1]=$myrow;
+		$Errors[1]=$MyRow;
 		return $Errors;
 	}
 
@@ -752,14 +752,14 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT taxrate FROM taxauthrates LEFT JOIN stockmaster
+		$SQL="SELECT taxrate FROM taxauthrates LEFT JOIN stockmaster
 				ON taxauthrates.taxcatid=stockmaster.taxcatid
 				WHERE stockid='". $StockID . "'
                 AND taxauthority='". $TaxAuth . "'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
 		$Errors[0]=0;
-		$Errors[1]=$myrow;
+		$Errors[1]=$MyRow;
 		return $Errors;
 	}
 
@@ -859,7 +859,7 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT stockserialitems.stockid,
+		$SQL="SELECT stockserialitems.stockid,
 				loccode,
 				stockserialitems.serialno as batchno,
 				quantity,
@@ -872,11 +872,11 @@
 										WHERE stockmoves.type=25) as t
 				ON stockserialitems.stockid=t.stockid and stockserialitems.serialno=t.serialno
 			WHERE stockid='".$StockID."' AND loccode='".$Location."'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
 			$i=0;
-			while ($myrow=DB_fetch_array($result)) {
-				$answer[$i]=$myrow;
+			while ($MyRow=DB_fetch_array($Result)) {
+				$answer[$i]=$MyRow;
 				$i++;
 			}
 			return $answer;

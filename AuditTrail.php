@@ -114,8 +114,8 @@ if (isset($_POST['View'])) {
 		$SQLString = str_replace('(','',$SQLString);
 		$SQLString = str_replace($_SESSION['SQLString']['table'],'',$SQLString);
 		$SQLArray = explode('VALUES', $SQLString);
-		$fieldnamearray = explode(',', $SQLArray[0]);
-		$_SESSION['SQLString']['fields'] = $fieldnamearray;
+		$FieldNameArray = explode(',', $SQLArray[0]);
+		$_SESSION['SQLString']['fields'] = $FieldNameArray;
 		if (isset($SQLArray[1])) {
 			$FieldValueArray = preg_split("/[[:space:]]*('[^']*'|[[:digit:].]+),/", $SQLArray[1], 0, PREG_SPLIT_DELIM_CAPTURE|PREG_SPLIT_NO_EMPTY);
 			$_SESSION['SQLString']['values'] = $FieldValueArray;
@@ -158,20 +158,20 @@ if (isset($_POST['View'])) {
 	}
 
 	if ($_POST['SelectedUser'] == 'ALL') {
-		$sql="SELECT transactiondate,
+		$SQL="SELECT transactiondate,
 				userid,
 				querystring
 			FROM audittrail
 			WHERE transactiondate BETWEEN '". $FromDate."' AND '".$ToDate."'" . $ContainingText;
 	} else {
-		$sql="SELECT transactiondate,
+		$SQL="SELECT transactiondate,
 				userid,
 				querystring
 			FROM audittrail
 			WHERE userid='".$_POST['SelectedUser']."'
 			AND transactiondate BETWEEN '".$FromDate."' AND '".$ToDate."'" . $ContainingText;
 	}
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table border="0" width="98%" class="selection">
 		<tr>
@@ -181,17 +181,17 @@ if (isset($_POST['View'])) {
 			<th>' . _('Table') . '</th>
 			<th>' . _('Field Name') . '</th>
 			<th>' . _('Value') . '</th></tr>';
-	while ($myrow = DB_fetch_row($result)) {
-		if (Query_Type($myrow[2]) == "INSERT") {
-			InsertQueryInfo(str_replace("INSERT INTO",'',$myrow[2]));
+	while ($MyRow = DB_fetch_row($Result)) {
+		if (Query_Type($MyRow[2]) == "INSERT") {
+			InsertQueryInfo(str_replace("INSERT INTO",'',$MyRow[2]));
 			$RowColour = '#a8ff90';
 		}
-		if (Query_Type($myrow[2]) == "UPDATE") {
-			UpdateQueryInfo(str_replace("UPDATE",'',$myrow[2]));
+		if (Query_Type($MyRow[2]) == "UPDATE") {
+			UpdateQueryInfo(str_replace("UPDATE",'',$MyRow[2]));
 			$RowColour = '#feff90';
 		}
-		if (Query_Type($myrow[2]) == "DELETE") {
-			DeleteQueryInfo(str_replace("DELETE FROM",'',$myrow[2]));
+		if (Query_Type($MyRow[2]) == "DELETE") {
+			DeleteQueryInfo(str_replace("DELETE FROM",'',$MyRow[2]));
 			$RowColour = '#fe90bf';
 		}
 
@@ -201,9 +201,9 @@ if (isset($_POST['View'])) {
 				$_SESSION['SQLString']['values'][0]='';
 			}
 			echo '<tr style="background-color: '.$RowColour.'">
-				<td>' . $myrow[0] . '</td>
-				<td>' . $myrow[1] . '</td>
-				<td>' . Query_Type($myrow[2]) . '</td>
+				<td>' . $MyRow[0] . '</td>
+				<td>' . $MyRow[1] . '</td>
+				<td>' . Query_Type($MyRow[2]) . '</td>
 				<td>' . $_SESSION['SQLString']['table'] . '</td>
 				<td>' . $_SESSION['SQLString']['fields'][0] . '</td>
 				<td>' . trim(str_replace("'","",$_SESSION['SQLString']['values'][0])) . '</td></tr>';

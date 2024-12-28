@@ -38,7 +38,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
-$sql = "SELECT salesorders.customerref,
+$SQL = "SELECT salesorders.customerref,
 			salesorders.comments,
 			salesorders.orddate,
 			salesorders.deliverto,
@@ -72,13 +72,13 @@ $sql = "SELECT salesorders.customerref,
 		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$result=DB_query($sql, $ErrMsg);
+$Result=DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
-if (DB_num_rows($result)==0){
+if (DB_num_rows($Result)==0){
 
 	$ListCount = 0;
 
@@ -103,17 +103,17 @@ if (DB_num_rows($result)==0){
 			<br />';
         include('includes/footer.php');
         exit();
-} elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
+} elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 
 /* Javier */	$ListCount = 1;
 
-	$myrow = DB_fetch_array($result);
-	if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
+	$MyRow = DB_fetch_array($Result);
+	if ($MyRow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
 		$Title = _('Print Packing Slip Error');
 	      	include('includes/header.php');
 		echo '<p>';
 		prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
+			_('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) .
 			'<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
 	      echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . $_GET['TransNo'] . '&Reprint=OK">'
 		. _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
@@ -146,7 +146,7 @@ LETS GO */
 
 $PageNumber = 1;
 $ErrMsg = _('There was a problem retrieving the details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
-$sql = "SELECT salesorderdetails.stkcode,
+$SQL = "SELECT salesorderdetails.stkcode,
 			stockmaster.description,
 			salesorderdetails.quantity,
 			salesorderdetails.qtyinvoiced,
@@ -156,9 +156,9 @@ $sql = "SELECT salesorderdetails.stkcode,
 		FROM salesorderdetails INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid
 		 WHERE salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
-$result=DB_query($sql, $ErrMsg);
+$Result=DB_query($SQL, $ErrMsg);
 
-if (DB_num_rows($result)>0){
+if (DB_num_rows($Result)>0){
 /*Yes there are line items to start the ball rolling with a page header */
 
 	/*Set specifically for the stationery being used -needs to be modified for clients own
@@ -207,24 +207,24 @@ if (DB_num_rows($result)>0){
 /* END Brought from class.pdf.php constructor */
 	$pdf->setPrintFooter(true);
 	$FontSize=12;
-	$line_height=16;
+	$LineHeight=16;
 
 	include('includes/PDFOrderPageHeader.inc');
 
-	while ($myrow2=DB_fetch_array($result)){
+	while ($MyRow2=DB_fetch_array($Result)){
 
-		$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
-		$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
-		$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+		$DisplayQty = locale_number_format($MyRow2['quantity'],$MyRow2['decimalplaces']);
+		$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
+		$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
 
-		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$myrow2['stkcode'],'left');
-		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$myrow2['description'],'left');
+		$LeftOvers = $pdf->addTextWrap(13,$YPos,135,$FontSize,$MyRow2['stkcode'],'left');
+		$LeftOvers = $pdf->addTextWrap(148,$YPos,239,$FontSize,$MyRow2['description'],'left');
 		$LeftOvers = $pdf->addTextWrap(387,$YPos,90,$FontSize,$DisplayQty,'right');
-		$LeftOvers = $pdf->addTextWrap(475,$YPos,20,$FontSize,$myrow2['units'],'left');
+		$LeftOvers = $pdf->addTextWrap(475,$YPos,20,$FontSize,$MyRow2['units'],'left');
 		$LeftOvers = $pdf->addTextWrap(505,$YPos,90,$FontSize,$DisplayQtySupplied,'right');
 		$LeftOvers = $pdf->addTextWrap(604,$YPos,90,$FontSize,$DisplayPrevDel,'right');
 
-		if ($YPos-$line_height <= 136){
+		if ($YPos-$LineHeight <= 136){
 	   /* We reached the end of the page so finsih off the page and start a newy */
 
 	      $PageNumber++;
@@ -233,17 +233,17 @@ if (DB_num_rows($result)>0){
 	   } //end if need a new page headed up
 
 	   /*increment a line down for the next line item */
-	   $YPos -= ($line_height);
+	   $YPos -= ($LineHeight);
 
       } //end while there are line items to print out
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . '_' . Date('Y-m-d') .'.pdf');
 	$pdf-> __destruct();
 
-	$sql = "UPDATE salesorders SET printedpackingslip=1,
+	$SQL = "UPDATE salesorders SET printedpackingslip=1,
 									datepackingslipprinted='" . Date('Y-m-d') . "'
 			WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 } else {
 	$Title = _('Print Packing Slip Error');
 	include('includes/header.php');

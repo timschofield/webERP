@@ -10,7 +10,7 @@ $YPos= $Page_Height-$Top_Margin;
 
 $pdf->addText($Left_Margin, $YPos,$FontSize, $_SESSION['CompanyRecord']['coyname']);
 
-$YPos -=$line_height;
+$YPos -=$Line_height;
 
 $FontSize =10;
 $numHeads=2;
@@ -19,27 +19,27 @@ $HeadingLine2 = _('And Trading in') . ' ' . $_POST['Currency'];
 if (trim($_POST['Salesman'])!=''){
 	$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='".$_POST['Salesman']."'";
 	$rs = DB_query($SQL,'','',False,False);
-	$row = DB_fetch_array($rs);
-	$HeadingLine3 = _('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $row['salesmanname'];
+	$Row = DB_fetch_array($rs);
+	$HeadingLine3 = _('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $Row['salesmanname'];
 	$numHeads++;
 }
 $pdf->addText($Left_Margin, $YPos,$FontSize, $HeadingLine1);
-$pdf->addText($Left_Margin, $YPos-$line_height,$FontSize, $HeadingLine2);
+$pdf->addText($Left_Margin, $YPos-$Line_height,$FontSize, $HeadingLine2);
 if (isset($HeadingLine3) and $HeadingLine3 != ''){
-	$pdf->addText($Left_Margin, $YPos-$line_height*2,$FontSize, $HeadingLine3);
+	$pdf->addText($Left_Margin, $YPos-$Line_height*2,$FontSize, $HeadingLine3);
 }
 $FontSize = 8;
 
 $DatePrintedString = _('Printed') . ': ' . Date("d M Y") . '   ' . _('Page') . ' ' . $PageNumber;
 $pdf->addText($Page_Width-$Right_Margin-120,$YPos,$FontSize, $DatePrintedString);
 
-$YPos -=(($numHeads+1)*$line_height);
+$YPos -=(($numHeads+1)*$Line_height);
 
 /*Draw a rectangle to put the headings in     */
 $pdf->line($Page_Width-$Right_Margin, $YPos-5,$Left_Margin, $YPos-5);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Left_Margin, $YPos+$line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos-5);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos-5);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Left_Margin, $YPos+$Line_height);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos-5);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Left_Margin, $YPos-5);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
@@ -51,6 +51,6 @@ $LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,_('Due Now'),'centre');
 $LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,'> ' . $_SESSION['PastDueDays1'] . ' ' . _('Days Over'),'centre');
 $LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,'> ' . $_SESSION['PastDueDays2'] . ' ' . _('Days Over'),'centre');
 
-$YPos =$YPos - (2*$line_height);
+$YPos =$YPos - (2*$Line_height);
 
 ?>

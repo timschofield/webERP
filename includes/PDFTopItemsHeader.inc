@@ -14,9 +14,9 @@ if ($_GET['Customers']!='All'){
 		  FROM `debtortype`
 		  WHERE typeid='".$_GET['Customers']."'";
 
-	$result = DB_query($SQL);
-	$myrow=DB_fetch_array($result);
-	$Customers=$myrow["0"];
+	$Result = DB_query($SQL);
+	$MyRow=DB_fetch_array($Result);
+	$Customers=$MyRow["0"];
 }else{
 	$Customers='All';
 }
@@ -29,18 +29,18 @@ $pdf->addTextWrap($XPos+240,$YPos-90,500,9,_('Number Of Items')." : ".$_GET['Num
 $pdf->addTextWrap($XPos+40,$YPos-110,500,9,_('Order By')." : ".$_GET['Sequence']);
 
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*1.5),550,$FontSize, _('Top Items Sales Search Result') );
-$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($line_height*3),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($Line_height*1.5),550,$FontSize, _('Top Items Sales Search Result') );
+$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-140,$YPos-($Line_height*3),140,$FontSize, _('Printed').': ' . Date($_SESSION['DefaultDateFormat']) . '   '. _('Page'). ' ' . $PageNumber);
 
 $YPos -= 100;
 
-$YPos -=$line_height;
+$YPos -=$Line_height;
 //Note, this is ok for multilang as this is the value of a Select, text in option is different
 
-$YPos -=(2*$line_height);
+$YPos -=(2*$Line_height);
 
 /*Draw a rectangle to put the headings in     */
-$pdf->Rectangle($Left_Margin, $YPos+$line_height,$Page_Width-$Left_Margin-$Right_Margin,$line_height*2);
+$pdf->Rectangle($Left_Margin, $YPos+$Line_height,$Page_Width-$Left_Margin-$Right_Margin,$Line_height*2);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
@@ -54,7 +54,7 @@ $LeftOvers = $pdf->addTextWrap($Xpos+480,$YPos,300-$Left_Margin,$FontSize,  _('O
 
 
 $FontSize=8;
-$pdf->Rectangle($Left_Margin, $YPos-$line_height,$Page_Width-$Left_Margin-$Right_Margin,$YPos-$Bottom_Margin);
-$YPos -= (1.5 * $line_height);
+$pdf->Rectangle($Left_Margin, $YPos-$Line_height,$Page_Width-$Left_Margin-$Right_Margin,$YPos-$Bottom_Margin);
+$YPos -= (1.5 * $Line_height);
 
 ?>

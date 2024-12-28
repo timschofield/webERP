@@ -473,7 +473,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		$Narrative = str_replace('\r\n', '<br />', $LnItm->Narrative);
 		echo $RowStarter . '<td colspan="12">' . stripslashes($Narrative) . '</td></tr>';
 	}
-} //end foreach ($line)
+} //end foreach ($Line)
 /*Don't re-calculate freight if some of the order has already been delivered -
 depending on the business logic required this condition may not be required.
 It seems unfair to charge the customer twice for freight if the order
@@ -726,7 +726,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 		/*there should be the same number of items returned from this query as there are lines on the invoice - if not 	then someone has already invoiced or credited some lines */
 
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 			echo '<br />' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
 			echo '<br />' . _('Count of items in the session') . ' ' . count($_SESSION['Items' . $identifier]->LineItems);

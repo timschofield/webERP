@@ -47,12 +47,12 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	$checksql = "SELECT count(*)
+	$CheckSQL = "SELECT count(*)
 		     FROM debtortype
 		     WHERE typename = '" . $_POST['TypeName'] . "'";
-	$checkresult=DB_query($checksql);
-	$checkrow=DB_fetch_row($checkresult);
-	if ($checkrow[0]>0 and !isset($SelectedType)) {
+	$Checkresult=DB_query($CheckSQL);
+	$CheckRow=DB_fetch_row($Checkresult);
+	if ($CheckRow[0]>0 and !isset($SelectedType)) {
 		$InputError = 1;
 		echo '<br />';
 		prnMsg(_('You already have a customer type called').' '.$_POST['TypeName'],'error');
@@ -66,19 +66,19 @@ if (isset($_POST['submit'])) {
 			SET typename = '" . $_POST['TypeName'] . "'
 			WHERE typeid = '" .$SelectedType."'";
 
-		$msg = _('The customer type') . ' ' . $SelectedType . ' ' .  _('has been updated');
+		$Msg = _('The customer type') . ' ' . $SelectedType . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM debtortype
 			     WHERE typename = '" . $_POST['TypeName'] . "'";
 
-		$checkresult = DB_query($checkSql);
-		$checkrow = DB_fetch_row($checkresult);
+		$Checkresult = DB_query($CheckSQL);
+		$CheckRow = DB_fetch_row($Checkresult);
 
-		if ( $checkrow[0] > 0 ) {
+		if ( $CheckRow[0] > 0 ) {
 			$InputError = 1;
 			prnMsg( _('The customer type') . ' ' . $_POST['typeid'] . _(' already exist.'),'error');
 		} else {
@@ -90,11 +90,11 @@ if (isset($_POST['submit'])) {
 					VALUES ('" . $_POST['TypeName'] . "')";
 
 
-			$msg = _('Customer type') . ' ' . $_POST["typename"] .  ' ' . _('has been created');
-			$checkSql = "SELECT count(typeid)
+			$Msg = _('Customer type') . ' ' . $_POST["typename"] .  ' ' . _('has been created');
+			$CheckSQL = "SELECT count(typeid)
 			     FROM debtortype";
-			$Result = DB_query($checkSql);
-			$row = DB_fetch_row($Result);
+			$Result = DB_query($CheckSQL);
+			$Row = DB_fetch_row($Result);
 
 		}
 	}
@@ -108,14 +108,14 @@ if (isset($_POST['submit'])) {
 		$DefaultCustomerType = $_SESSION['DefaultCustomerType'];
 
 	// Does it exist
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM debtortype
 			     WHERE typeid = '" . $DefaultCustomerType . "'";
-		$checkresult = DB_query($checkSql);
-		$checkrow = DB_fetch_row($checkresult);
+		$Checkresult = DB_query($CheckSQL);
+		$CheckRow = DB_fetch_row($Checkresult);
 
 	// If it doesnt then update config with newly created one.
-		if ($checkrow[0] == 0) {
+		if ($CheckRow[0] == 0) {
 			$SQL = "UPDATE config
 					SET confvalue='" . $_POST['typeid'] . "'
 					WHERE confname='DefaultCustomerType'";
@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
 			$_SESSION['DefaultCustomerType'] = $_POST['typeid'];
 		}
 		echo '<br />';
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 
 		unset($SelectedType);
 		unset($_POST['typeid']);

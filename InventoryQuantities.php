@@ -12,24 +12,24 @@ If (isset($_POST['PrintPDF'])) {
 	$pdf->addInfo('Subject',_('Parts With Quantities'));
 	$FontSize=9;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
 	$Xpos = $Left_Margin+1;
 	$WhereCategory = ' ';
 	$CatDescription = ' ';
 	if ($_POST['StockCat'] != 'All') {
 	    $WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
-		$sql= "SELECT categoryid,
+		$SQL= "SELECT categoryid,
 					categorydescription
 				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "' ";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		$CatDescription = $myrow[1];
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		$CatDescription = $MyRow[1];
 	}
 
     if ($_POST['Selection'] == 'All') {
-		$sql = "SELECT locstock.stockid,
+		$SQL = "SELECT locstock.stockid,
 					stockmaster.description,
 					locstock.loccode,
 					locations.locationname,
@@ -51,7 +51,7 @@ If (isset($_POST['PrintPDF'])) {
 		// sql to only select parts in more than one location
 		// The SELECT statement at the beginning of the WHERE clause limits the selection to
 		// parts with quantity in more than one location
-		$sql = "SELECT locstock.stockid,
+		$SQL = "SELECT locstock.stockid,
 					stockmaster.description,
 					locstock.loccode,
 					locations.locationname,
@@ -77,20 +77,20 @@ If (isset($_POST['PrintPDF'])) {
 	}
 
 
-	$result = DB_query($sql,'','',false,true);
+	$Result = DB_query($SQL,'','',false,true);
 
 	if (DB_error_no() !=0) {
 	  $Title = _('Inventory Quantities') . ' - ' . _('Problem Report');
 	  include('includes/header.php');
 	   prnMsg( _('The Inventory Quantity report could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
-	      echo '<br />' . $sql;
+	   if ($Debug==1){
+	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
 	   exit;
 	}
-	if (DB_num_rows($result)==0){
+	if (DB_num_rows($Result)==0){
 			$Title = _('Print Inventory Quantities Report');
 			include('includes/header.php');
 			prnMsg(_('There were no items with inventory quantities'),'error');
@@ -111,13 +111,13 @@ If (isset($_POST['PrintPDF'])) {
 
     $FontSize=8;
 
-    $holdpart = " ";
-	While ($myrow = DB_fetch_array($result)){
-	      if ($myrow['stockid'] != $holdpart) {
-			  $YPos -=(2 * $line_height);
-			  $holdpart = $myrow['stockid'];
+    $HoldPart = " ";
+	While ($MyRow = DB_fetch_array($Result)){
+	      if ($MyRow['stockid'] != $HoldPart) {
+			  $YPos -=(2 * $LineHeight);
+			  $HoldPart = $MyRow['stockid'];
 		  } else {
-	          $YPos -=($line_height);
+	          $YPos -=($LineHeight);
 		  }
 
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
@@ -125,21 +125,21 @@ If (isset($_POST['PrintPDF'])) {
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
 
-				$pdf->addTextWrap(50,$YPos,100,$FontSize,$myrow['stockid'],'',0);
-				$pdf->addTextWrap(150,$YPos,150,$FontSize,$myrow['description'],'',0);
-				$pdf->addTextWrap(310,$YPos,60,$FontSize,$myrow['loccode'],'left',0);
-				$pdf->addTextWrap(370,$YPos,50,$FontSize,locale_number_format($myrow['quantity'],
-				                                    $myrow['decimalplaces']),'right',0);
-				$pdf->addTextWrap(420,$YPos,50,$FontSize,locale_number_format($myrow['reorderlevel'],
-				                                    $myrow['decimalplaces']),'right',0);
+				$pdf->addTextWrap(50,$YPos,100,$FontSize,$MyRow['stockid'],'',0);
+				$pdf->addTextWrap(150,$YPos,150,$FontSize,$MyRow['description'],'',0);
+				$pdf->addTextWrap(310,$YPos,60,$FontSize,$MyRow['loccode'],'left',0);
+				$pdf->addTextWrap(370,$YPos,50,$FontSize,locale_number_format($MyRow['quantity'],
+				                                    $MyRow['decimalplaces']),'right',0);
+				$pdf->addTextWrap(420,$YPos,50,$FontSize,locale_number_format($MyRow['reorderlevel'],
+				                                    $MyRow['decimalplaces']),'right',0);
 
-			if ($YPos < $Bottom_Margin + $line_height){
+			if ($YPos < $Bottom_Margin + $LineHeight){
 			   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 			               $Right_Margin,$CatDescription);
 			}
 	} /*end while loop */
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 	       PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin,$CatDescription);
 	}
@@ -173,8 +173,8 @@ If (isset($_POST['PrintPDF'])) {
 				categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
-	if (DB_num_rows($result1)==0){
+	$Result1 = DB_query($SQL);
+	if (DB_num_rows($Result1)==0){
 		echo '</table>
 			<p />';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up'),'warn');
@@ -194,11 +194,11 @@ If (isset($_POST['PrintPDF'])) {
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['categoryid']==$_POST['StockCat']){
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -219,22 +219,22 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-	$line_height=12;
+	$LineHeight=12;
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
 
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 
 	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Inventory Quantities Report'));
 	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category'));
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,$_POST['StockCat']);
 	$pdf->addTextWrap(160,$YPos,150,$FontSize,$CatDescription,'left');
-	$YPos -=(2*$line_height);
+	$YPos -=(2*$LineHeight);
 
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
@@ -244,7 +244,7 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$pdf->addTextWrap(310,$YPos,60,$FontSize,_('Location'), 'left');
 	$pdf->addTextWrap(370,$YPos,50,$FontSize,_('Quantity'), 'right');
 	$pdf->addTextWrap(420,$YPos,50,$FontSize,_('Reorder'), 'right');
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 	$pdf->addTextWrap(415,$YPos,50,$FontSize,_('Level'), 'right');
 
 

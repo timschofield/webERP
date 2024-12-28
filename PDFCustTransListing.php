@@ -7,7 +7,7 @@ if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
 
 $InputError=0;
 if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
-	$msg = _('The date must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = _('The date must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['Date']);
 }
@@ -26,7 +26,7 @@ if (!isset($_POST['Date'])){
 		'</p>';
 
 	if ($InputError==1){
-		prnMsg($msg,'error');
+		prnMsg($Msg,'error');
 	}
 
 	 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -59,7 +59,7 @@ if (!isset($_POST['Date'])){
 	include('includes/ConnectDB.inc');
 }
 
-$sql= "SELECT type,
+$SQL= "SELECT type,
 			debtortrans.debtorno,
 			transno,
 			trandate,
@@ -75,18 +75,18 @@ $sql= "SELECT type,
 		WHERE type='" . $_POST['TransType'] . "'
 		AND date_format(inputdate, '%Y-%m-%d')='".FormatDateForSQL($_POST['Date'])."'";
 
-$result=DB_query($sql,'','',false,false);
+$Result=DB_query($SQL,'','',false,false);
 
 if (DB_error_no()!=0){
 	$Title = _('Payment Listing');
 	include('includes/header.php');
 	prnMsg(_('An error occurred getting the transactions'),'error');
-	if ($debug==1){
-		prnMsg(_('The SQL used to get the transaction information that failed was') . ':<br />' . $sql,'error');
+	if ($Debug==1){
+		prnMsg(_('The SQL used to get the transaction information that failed was') . ':<br />' . $SQL,'error');
 	}
 	include('includes/footer.php');
 	exit;
-} elseif (DB_num_rows($result) == 0){
+} elseif (DB_num_rows($Result) == 0){
 	$Title = _('Payment Listing');
 	include('includes/header.php');
 	echo '<br />';
@@ -101,29 +101,29 @@ include('includes/PDFStarter.php');
 
 $pdf->addInfo('Title',_('Customer Transaction Listing'));
 $pdf->addInfo('Subject',_('Customer transaction listing from') . '  ' . $_POST['Date'] );
-$line_height=12;
+$LineHeight=12;
 $PageNumber = 1;
 $TotalAmount = 0;
 
 include ('includes/PDFCustTransListingPageHeader.inc');
 
-while ($myrow=DB_fetch_array($result)){
+while ($MyRow=DB_fetch_array($Result)){
 
-	$sql="SELECT name FROM debtorsmaster WHERE debtorno='" . $myrow['debtorno'] . "'";
-	$CustomerResult=DB_query($sql);
+	$SQL="SELECT name FROM debtorsmaster WHERE debtorno='" . $MyRow['debtorno'] . "'";
+	$CustomerResult=DB_query($SQL);
 	$CustomerRow=DB_fetch_array($CustomerResult);
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,160,$FontSize,$CustomerRow['name'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$myrow['transno'], 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($myrow['ovamount'],$myrow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,locale_number_format($myrow['ovgst'],$myrow['decimalplaces']), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format($myrow['ovamount']+$myrow['ovgst'],$myrow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+162,$YPos,80,$FontSize,$MyRow['transno'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+242,$YPos,70,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+312,$YPos,70,$FontSize,locale_number_format($MyRow['ovamount'],$MyRow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+382,$YPos,70,$FontSize,locale_number_format($MyRow['ovgst'],$MyRow['decimalplaces']), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format($MyRow['ovamount']+$MyRow['ovgst'],$MyRow['decimalplaces']), 'right');
 
-	  $YPos -= ($line_height);
-	  $TotalAmount = $TotalAmount + ($myrow['ovamount']/$myrow['rate']);
+	  $YPos -= ($LineHeight);
+	  $TotalAmount = $TotalAmount + ($MyRow['ovamount']/$MyRow['rate']);
 
-	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
+	  if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
 		  include ('includes/PDFCustTransListingPageHeader.inc');
@@ -131,7 +131,7 @@ while ($myrow=DB_fetch_array($result)){
 } /* end of while there are customer receipts in the batch to print */
 
 
-$YPos-=$line_height;
+$YPos-=$LineHeight;
 $LeftOvers = $pdf->addTextWrap($Left_Margin+452,$YPos,70,$FontSize,locale_number_format($TotalAmount,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+265,$YPos,300,$FontSize,_('Total') . '  ' . _('Transactions') . ' ' . $_SESSION['CompanyRecord']['currencydefault'], 'left');
 

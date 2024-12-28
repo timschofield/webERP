@@ -109,15 +109,15 @@ if (isset($_POST['SearchCust']) AND $_SESSION['RequireCustomerSelection']==1){
 
 		  $ErrMsg = _('Customer branch records requested cannot be retrieved because');
 		  $DbgMsg = _('SQL used to retrieve the customer details was');
-		  $result_CustSelect = DB_query($SQL,$ErrMsg,$DbgMsg);
+		  $Result_CustSelect = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 
-		  if (DB_num_rows($result_CustSelect)==1){
-			    $myrow=DB_fetch_array($result_CustSelect);
-			    $SelectedCustomer = trim($myrow['debtorno']);
-			    $SelectedBranch = trim($myrow['branchcode']);
+		  if (DB_num_rows($Result_CustSelect)==1){
+			    $MyRow=DB_fetch_array($Result_CustSelect);
+			    $SelectedCustomer = trim($MyRow['debtorno']);
+			    $SelectedBranch = trim($MyRow['branchcode']);
 			    $_POST['JustSelectedACustomer'] = true;
-		  } elseif (DB_num_rows($result_CustSelect)==0){
+		  } elseif (DB_num_rows($Result_CustSelect)==0){
 			    prnMsg(_('Sorry') . ' ... ' . _('there are no customer branch records contain the selected text') . ' - ' . _('please alter your search criteria and try again'),'info');
 		  }
 
@@ -154,7 +154,7 @@ if (isset($SelectedCustomer) AND isset($_POST['JustSelectedACustomer'])) {
 /*  default the branch information from the customer branches table CustBranch -particularly where the stock
 will be booked back into. */
 
-	 $sql = "SELECT debtorsmaster.name,
+	 $SQL = "SELECT debtorsmaster.name,
 					debtorsmaster.salestype,
 					debtorsmaster.currcode,
 					currencies.rate,
@@ -181,30 +181,30 @@ will be booked back into. */
 
 	$ErrMsg = _('The customer branch record of the customer selected') . ': ' . $SelectedCustomer . ' ' . _('cannot be retrieved because');
 	$DbgMsg =  _('SQL used to retrieve the branch details was');
-	$result =DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	$myrow = DB_fetch_array($result);
+	$MyRow = DB_fetch_array($Result);
 
 /* the sales type determines the price list to be used by default the customer of the user is
 defaulted from the entry of the userid and password.  */
-	$_SESSION['CreditItems'.$identifier]->CustomerName = $myrow['name'];
-	$_SESSION['CreditItems'.$identifier]->DefaultSalesType = $myrow['salestype'];
-	$_SESSION['CreditItems'.$identifier]->DefaultCurrency = $myrow['currcode'];
-	$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
-	$_SESSION['CurrencyRate'] = $myrow['rate'];
-	$_SESSION['CreditItems'.$identifier]->DeliverTo = $myrow['brname'];
-	$_SESSION['CreditItems'.$identifier]->BrAdd1 = $myrow['braddress1'];
-	$_SESSION['CreditItems'.$identifier]->BrAdd2 = $myrow['braddress2'];
-	$_SESSION['CreditItems'.$identifier]->BrAdd3 = $myrow['braddress3'];
-	$_SESSION['CreditItems'.$identifier]->BrAdd4 = $myrow['braddress4'];
-	$_SESSION['CreditItems'.$identifier]->BrAdd5 = $myrow['braddress5'];
-	$_SESSION['CreditItems'.$identifier]->BrAdd6 = $myrow['braddress6'];
-	$_SESSION['CreditItems'.$identifier]->PhoneNo = $myrow['phoneno'];
-	$_SESSION['CreditItems'.$identifier]->Email = $myrow['email'];
-	$_SESSION['CreditItems'.$identifier]->SalesPerson = $myrow['salesman'];
-	$_SESSION['CreditItems'.$identifier]->Location = $myrow['defaultlocation'];
-	$_SESSION['CreditItems'.$identifier]->TaxGroup = $myrow['taxgroupid'];
-	$_SESSION['CreditItems'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
+	$_SESSION['CreditItems'.$identifier]->CustomerName = $MyRow['name'];
+	$_SESSION['CreditItems'.$identifier]->DefaultSalesType = $MyRow['salestype'];
+	$_SESSION['CreditItems'.$identifier]->DefaultCurrency = $MyRow['currcode'];
+	$_SESSION['CreditItems'.$identifier]->CurrDecimalPlaces = $MyRow['decimalplaces'];
+	$_SESSION['CurrencyRate'] = $MyRow['rate'];
+	$_SESSION['CreditItems'.$identifier]->DeliverTo = $MyRow['brname'];
+	$_SESSION['CreditItems'.$identifier]->BrAdd1 = $MyRow['braddress1'];
+	$_SESSION['CreditItems'.$identifier]->BrAdd2 = $MyRow['braddress2'];
+	$_SESSION['CreditItems'.$identifier]->BrAdd3 = $MyRow['braddress3'];
+	$_SESSION['CreditItems'.$identifier]->BrAdd4 = $MyRow['braddress4'];
+	$_SESSION['CreditItems'.$identifier]->BrAdd5 = $MyRow['braddress5'];
+	$_SESSION['CreditItems'.$identifier]->BrAdd6 = $MyRow['braddress6'];
+	$_SESSION['CreditItems'.$identifier]->PhoneNo = $MyRow['phoneno'];
+	$_SESSION['CreditItems'.$identifier]->Email = $MyRow['email'];
+	$_SESSION['CreditItems'.$identifier]->SalesPerson = $MyRow['salesman'];
+	$_SESSION['CreditItems'.$identifier]->Location = $MyRow['defaultlocation'];
+	$_SESSION['CreditItems'.$identifier]->TaxGroup = $MyRow['taxgroupid'];
+	$_SESSION['CreditItems'.$identifier]->DispatchTaxProvince = $MyRow['taxprovinceid'];
 	$_SESSION['CreditItems'.$identifier]->GetFreightTaxes();
 }
 
@@ -234,7 +234,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<input type="submit" name="SearchCust" value="' . _('Search Now') . '" />
 		</div>';
 
-	if (isset($result_CustSelect)) {
+	if (isset($Result_CustSelect)) {
 
 		echo '<br /><table cellpadding="2">';
 
@@ -249,22 +249,22 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		$j = 1;
 		$LastCustomer='';
-		while ($myrow=DB_fetch_array($result_CustSelect)) {
+		while ($MyRow=DB_fetch_array($Result_CustSelect)) {
 
-			if (isset($myrow['name']) and $LastCustomer != $myrow['name']) {
-				echo '<td>' . $myrow['name'] . '</td>';
+			if (isset($MyRow['name']) and $LastCustomer != $MyRow['name']) {
+				echo '<td>' . $MyRow['name'] . '</td>';
 			} else {
 				echo '<td></td>';
 			}
 			echo '<tr class="striped_row">
-				<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($myrow['brname'], ENT_QUOTES,'UTF-8'). '" />
-				<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$myrow['debtorno'].'" />
-				<input type="hidden" name="SelectedBranch' . $j .'" value="'. $myrow['branchcode'].'" /></td>
-				<td>' . $myrow['contactname'] . '</td>
-				<td>' . $myrow['phoneno'] . '</td>
-				<td>' . $myrow['faxno'] . '</td>
+				<td><input tabindex="'.($j+5).'" type="submit" name="SubmitCustomerSelection' . $j .'" value="' . htmlspecialchars($MyRow['brname'], ENT_QUOTES,'UTF-8'). '" />
+				<input type="hidden" name="SelectedCustomer' . $j .'" value="'.$MyRow['debtorno'].'" />
+				<input type="hidden" name="SelectedBranch' . $j .'" value="'. $MyRow['branchcode'].'" /></td>
+				<td>' . $MyRow['contactname'] . '</td>
+				<td>' . $MyRow['phoneno'] . '</td>
+				<td>' . $MyRow['faxno'] . '</td>
 				</tr>';
-			$LastCustomer=$myrow['name'];
+			$LastCustomer=$MyRow['name'];
 			$j++;
 		//end of page full new headings if
 		} //end of while loop
@@ -384,13 +384,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		if (DB_num_rows($SearchResult)==0){
 			   prnMsg(_('There are no products available that match the criteria specified'),'info');
-			   if ($debug==1){
+			   if ($Debug==1){
 				    prnMsg(_('The SQL statement used was') . ':<br />' . $SQL,'info');
 			   }
 		}
 		if (DB_num_rows($SearchResult)==1){
-			   $myrow=DB_fetch_array($SearchResult);
-			   $_POST['NewItem'] = $myrow['stockid'];
+			   $MyRow=DB_fetch_array($SearchResult);
+			   $_POST['NewItem'] = $MyRow['stockid'];
 			   DB_data_seek($SearchResult,0);
 		}
 
@@ -441,7 +441,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 		   if ($AlreadyOnThisCredit!=1){
 
-			    $sql = "SELECT stockmaster.description,
+			    $SQL = "SELECT stockmaster.description,
 								stockmaster.longdescription,
 					    		stockmaster.stockid,
 								stockmaster.units,
@@ -458,43 +458,43 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							WHERE  stockmaster.stockid = '". $_POST['NewItem'] . "'";
 
 				$ErrMsg =  _('There is a problem selecting the part because');
-				$result1 = DB_query($sql,$ErrMsg);
+				$Result1 = DB_query($SQL,$ErrMsg);
 
-		   		if ($myrow = DB_fetch_array($result1)){
+		   		if ($MyRow = DB_fetch_array($Result1)){
 
 					$LineNumber = $_SESSION['CreditItems'.$identifier]->LineCounter;
 
-					if ($_SESSION['CreditItems'.$identifier]->add_to_cart ($myrow['stockid'],
+					if ($_SESSION['CreditItems'.$identifier]->add_to_cart ($MyRow['stockid'],
 																			$NewItemQty,
-																			$myrow['description'],
-																			$myrow['longdescription'],
+																			$MyRow['description'],
+																			$MyRow['longdescription'],
 																			GetPrice ($_POST['NewItem'],
 																			$_SESSION['CreditItems'.$identifier]->DebtorNo,
 																			$_SESSION['CreditItems'.$identifier]->Branch),
 																			0,
-																			$myrow['units'],
-																			$myrow['volume'],
-																			$myrow['grossweight'],
+																			$MyRow['units'],
+																			$MyRow['volume'],
+																			$MyRow['grossweight'],
 																			0,
-																			$myrow['mbflag'],
+																			$MyRow['mbflag'],
 																			Date($_SESSION['DefaultDateFormat']),
 																			0,
-																			$myrow['discountcategory'],
-																			$myrow['controlled'],
-																			$myrow['serialised'],
-																			$myrow['decimalplaces'],
+																			$MyRow['discountcategory'],
+																			$MyRow['controlled'],
+																			$MyRow['serialised'],
+																			$MyRow['decimalplaces'],
 																			'',
 																			'No',
 																			-1,
-																			$myrow['taxcatid'],
+																			$MyRow['taxcatid'],
 																			'',
 																			'',
 																			'',
-																			$myrow['standardcost']) ==1){
+																			$MyRow['standardcost']) ==1){
 
 						$_SESSION['CreditItems'.$identifier]->GetTaxes($LineNumber);
 
-						if ($myrow['controlled']==1){
+						if ($MyRow['controlled']==1){
 							/*Qty must be built up from serial item entries */
 				   			$_SESSION['CreditItems'.$identifier]->LineItems[$LineNumber]->Quantity = 0;
 						}
@@ -528,9 +528,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$_SESSION['CreditItems'.$identifier]->Location = $_POST['Location'];
 
 			$NewDispatchTaxProvResult = DB_query("SELECT taxprovinceid FROM locations WHERE loccode='" . $_POST['Location'] . "'");
-			$myrow = DB_fetch_array($NewDispatchTaxProvResult);
+			$MyRow = DB_fetch_array($NewDispatchTaxProvResult);
 
-			$_SESSION['CreditItems'.$identifier]->DispatchTaxProvince = $myrow['taxprovinceid'];
+			$_SESSION['CreditItems'.$identifier]->DispatchTaxProvince = $MyRow['taxprovinceid'];
 
 			foreach ($_SESSION['CreditItems'.$identifier]->LineItems as $LineItem) {
 				$_SESSION['CreditItems'.$identifier]->GetTaxes($LineItem->LineNumber);
@@ -609,7 +609,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			   if ($AlreadyOnThisCredit!=1){
 
-				$sql = "SELECT stockmaster.description,
+				$SQL = "SELECT stockmaster.description,
 								stockmaster.longdescription,
 								stockmaster.stockid,
 								stockmaster.units,
@@ -627,42 +627,42 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$ErrMsg = _('The item details could not be retrieved because');
 				$DbgMsg = _('The SQL used to retrieve the item details but failed was');
-				$result1 = DB_query($sql,$ErrMsg,$DbgMsg);
-				$myrow = DB_fetch_array($result1);
+				$Result1 = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$MyRow = DB_fetch_array($Result1);
 
 				$LineNumber = $_SESSION['CreditItems'.$identifier]->LineCounter;
 /*validate the data returned before adding to the items to credit */
-				if ($_SESSION['CreditItems'.$identifier]->add_to_cart ($myrow['stockid'],
+				if ($_SESSION['CreditItems'.$identifier]->add_to_cart ($MyRow['stockid'],
 														1,
-														$myrow['description'],
-														$myrow['longdescription'],
+														$MyRow['description'],
+														$MyRow['longdescription'],
 														GetPrice($_POST['NewItem'],
 														$_SESSION['CreditItems'.$identifier]->DebtorNo,
 														$_SESSION['CreditItems'.$identifier]->Branch),
 														0,
-														$myrow['units'],
-														$myrow['volume'],
-														$myrow['grossweight'],
+														$MyRow['units'],
+														$MyRow['volume'],
+														$MyRow['grossweight'],
 														0,
-														$myrow['mbflag'],
+														$MyRow['mbflag'],
 														Date($_SESSION['DefaultDateFormat']),
 														0,
-														$myrow['discountcategory'],
-														$myrow['controlled'],
-														$myrow['serialised'],
-														$myrow['decimalplaces'],
+														$MyRow['discountcategory'],
+														$MyRow['controlled'],
+														$MyRow['serialised'],
+														$MyRow['decimalplaces'],
 														'',
 														'No',
 														-1,
-														$myrow['taxcatid'],
+														$MyRow['taxcatid'],
 														'',
 														'',
 														'',
-														$myrow['standardcost']) ==1){
+														$MyRow['standardcost']) ==1){
 
 					$_SESSION['CreditItems'.$identifier]->GetTaxes($LineNumber);
 
-					if ($myrow['controlled']==1){
+					if ($MyRow['controlled']==1){
 						/*Qty must be built up from serial item entries */
 						$_SESSION['CreditItems'.$identifier]->LineItems[$LineNumber]->Quantity = 0;
 					}
@@ -869,12 +869,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			if (!isset($_POST['Location'])){
 				$_POST['Location'] = $_SESSION['CreditItems'.$identifier]->Location;
 			}
-			while ($myrow = DB_fetch_array($Result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
-				if ($_POST['Location']==$myrow['loccode']){
-					echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				if ($_POST['Location']==$MyRow['loccode']){
+					echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				} else {
-					echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+					echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				}
 			}
 			echo '</select>
@@ -894,12 +894,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					ORDER BY accountcode";
 			$Result = DB_query($SQL);
 
-			while ($myrow = DB_fetch_array($Result)) {
+			while ($MyRow = DB_fetch_array($Result)) {
 
-				if ($_POST['WriteOffGLCode']==$myrow['accountcode']){
-					echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+				if ($_POST['WriteOffGLCode']==$MyRow['accountcode']){
+					echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['accountname'] . '</option>';
 				} else {
-					echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['accountcode'] . ' - ' . $myrow['accountname'] . '</option>';
+					echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' - ' . $MyRow['accountname'] . '</option>';
 				}
 			}
 			   echo '</select>
@@ -960,7 +960,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				WHERE stocktype='F'
 				ORDER BY categorydescription";
 
-		 $result1 = DB_query($SQL);
+		 $Result1 = DB_query($SQL);
 
 		 echo '<fieldset>
 				<legend class="search">', _('Stock Item Search'), '</legend>
@@ -969,11 +969,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<select name="StockCat">';
 
 		 echo '<option selected="selected" value="All">' . _('All') . '</option>';
-		 while ($myrow1 = DB_fetch_array($result1)) {
-			  if (isset($_POST['StockCat']) and $_POST['StockCat']==$myrow1['categoryid']){
-				   echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		 while ($MyRow1 = DB_fetch_array($Result1)) {
+			  if (isset($_POST['StockCat']) and $_POST['StockCat']==$MyRow1['categoryid']){
+				   echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 			  } else {
-				   echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+				   echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 			  }
 		 }
 
@@ -1016,14 +1016,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			  $j = 1;
 
-			  while ($myrow=DB_fetch_array($SearchResult)) {
+			  while ($MyRow=DB_fetch_array($SearchResult)) {
 
 				$SupportedImgExt = array('png','jpg','jpeg');
-				$glob = (glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-				$imagefile = reset($glob);
-				if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+				$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+				$ImageFile = reset($Glob);
+				if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
 						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-							'&amp;StockID='.urlencode($myrow['stockid']).
+							'&amp;StockID='.urlencode($MyRow['stockid']).
 							'&amp;text='.
 							'&amp;width=64'.
 							'&amp;height=64'.
@@ -1034,10 +1034,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 							<td>%s</td>
 							<td>' . $ImageSource . '</td>
 							</tr>',
-							$myrow['stockid'],
-							$myrow['description'],
-							$myrow['units'],
-							$myrow['stockid']);
+							$MyRow['stockid'],
+							$MyRow['description'],
+							$MyRow['units'],
+							$MyRow['stockid']);
 				} else { //don't try to show the image
 					printf('<tr class="striped_row">
 						<td><input type="submit" name="NewItem" value="%s" /></td>
@@ -1045,9 +1045,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						<td>%s</td>
 						<td>' . _('No Image') . '</td>
 						</tr>',
-						$myrow['stockid'],
-						$myrow['description'],
-						$myrow['units']);
+						$MyRow['stockid'],
+						$MyRow['description'],
+						$MyRow['units']);
 				}
 	#end of page full new headings if
 			  }
@@ -1098,8 +1098,8 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 	$DbgMsg = _('The following SQL to insert the customer credit note was used');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	 if ($myrow = DB_fetch_row($Result)){
-	     $Area = $myrow[0];
+	 if ($MyRow = DB_fetch_row($Result)){
+	     $Area = $MyRow[0];
 	 }
 
 	 DB_free_result($Result);
@@ -1358,9 +1358,9 @@ if (isset($_POST['ProcessCredit']) AND $OKToProcess==true){
 						$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The existence of the serial stock item record could not be determined because');
 						$DbgMsg = _('The following SQL to find out if the serial stock item record existed already was used');
 						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-						$myrow = DB_fetch_row($Result);
+						$MyRow = DB_fetch_row($Result);
 
-						if ($myrow[0]==0) {
+						if ($MyRow[0]==0) {
 						/*The StockSerialItem record didnt exist
 						so insert a new record */
 							$SQL = "INSERT INTO stockserialitems ( stockid,
@@ -1675,9 +1675,9 @@ sales analysis needs to reflect the sales made before and after the changes*/
 			$DbgMsg = _('SQL to count the no of sales analysis records');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-			$myrow = DB_fetch_array($Result);
+			$MyRow = DB_fetch_array($Result);
 
-			if ($myrow[0]>0){  /*Update the existing record that already exists */
+			if ($MyRow[0]>0){  /*Update the existing record that already exists */
 
 				if ($_POST['CreditType']=='ReverseOverCharge'){
 
@@ -1685,14 +1685,14 @@ sales analysis needs to reflect the sales made before and after the changes*/
 
 					$SQL = "UPDATE salesanalysis SET amt=amt-" . $SalesValue . ",
 													disc=disc-" . $CreditLine->DiscountPercent * $SalesValue . "
-							WHERE salesanalysis.area='" . $myrow['area'] . "'
+							WHERE salesanalysis.area='" . $MyRow['area'] . "'
 							AND salesanalysis.salesperson='" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "'
 							AND salesanalysis.typeabbrev ='" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "'
 							AND salesanalysis.periodno = '" . $PeriodNo . "'
 							AND salesanalysis.cust = '" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "'
 							AND salesanalysis.custbranch = '" . $_SESSION['CreditItems'.$identifier]->Branch . "'
 							AND salesanalysis.stockid = '" . $CreditLine->StockID . "'
-							AND salesanalysis.stkcategory ='" . $myrow['stkcategory'] . "'
+							AND salesanalysis.stkcategory ='" . $MyRow['stkcategory'] . "'
 							AND salesanalysis.budgetoractual=1";
 
 				} else {
@@ -1701,14 +1701,14 @@ sales analysis needs to reflect the sales made before and after the changes*/
 													Cost=Cost-" . $CreditLine->StandardCost * $CreditLine->Quantity . ",
 													Qty=Qty-" . $CreditLine->Quantity . ",
 													Disc=Disc-" . $CreditLine->DiscountPercent * $SalesValue . "
-							WHERE salesanalysis.area='" . $myrow['area'] . "'
+							WHERE salesanalysis.area='" . $MyRow['area'] . "'
 							AND salesanalysis.salesperson='" . $_SESSION['CreditItems'.$identifier]->SalesPerson . "'
 							AND salesanalysis.typeabbrev ='" . $_SESSION['CreditItems'.$identifier]->DefaultSalesType . "'
 							AND salesanalysis.periodno = '" . $PeriodNo . "'
 							AND salesanalysis.cust = '" . $_SESSION['CreditItems'.$identifier]->DebtorNo . "'
 							AND salesanalysis.custbranch = '" . $_SESSION['CreditItems'.$identifier]->Branch . "'
 							AND salesanalysis.stockid = '" . $CreditLine->StockID . "'
-							AND salesanalysis.stkcategory ='" . $myrow['stkcategory'] . "'
+							AND salesanalysis.stkcategory ='" . $MyRow['stkcategory'] . "'
 							AND salesanalysis.budgetoractual=1";
 				}
 

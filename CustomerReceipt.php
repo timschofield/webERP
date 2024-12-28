@@ -25,7 +25,7 @@ if (empty($_GET['identifier'])) {
 	$identifier = $_GET['identifier'];
 }
 
-$msg='';
+$Msg='';
 
 if (isset($_GET['NewReceipt'])){
 	unset($_SESSION['ReceiptBatch' . $identifier]->Items);
@@ -614,7 +614,7 @@ if (isset($_POST['Search'])){
 /*Will only be true if clicked to search for a customer code */
 
 	if ($_POST['Keywords'] AND $_POST['CustCode']) {
-		$msg=_('Customer name keywords have been used in preference to the customer code extract entered');
+		$Msg=_('Customer name keywords have been used in preference to the customer code extract entered');
 	}
 	if ($_POST['Keywords']==''
 		AND $_POST['CustCode']==''
@@ -660,7 +660,7 @@ if (isset($_POST['Search'])){
 		$CustomerSearchResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
 			prnMsg(_('The searched customer records requested cannot be retrieved because') . ' - ' . DB_error_msg(),'error');
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg(_('SQL used to retrieve the customer details was') . '<br />' . $SQL,'error');
 			}
 		} elseif (DB_num_rows($CustomerSearchResult)==1){

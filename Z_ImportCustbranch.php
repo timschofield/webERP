@@ -72,39 +72,39 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		exit;
 	}
 	$Salesmen=array();
-	$sql = "SELECT salesmancode
+	$SQL = "SELECT salesmancode
 				     FROM salesman";
-	$result=DB_query($sql);
-	while ($myrow = DB_fetch_array($result)) {
-		$Salesmen[]=$myrow['salesmancode'];
+	$Result=DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$Salesmen[]=$MyRow['salesmancode'];
 	}
 	$Areas=array();
-	$sql = "SELECT areacode
+	$SQL = "SELECT areacode
 				     FROM areas";
-	$result=DB_query($sql);
-	while ($myrow = DB_fetch_array($result)) {
-		$Areas[]=$myrow['areacode'];
+	$Result=DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$Areas[]=$MyRow['areacode'];
 	}
 	$Locations=array();
-	$sql = "SELECT loccode
+	$SQL = "SELECT loccode
 				     FROM locations";
-	$result=DB_query($sql);
-	while ($myrow = DB_fetch_array($result)) {
-		$Locations[]=$myrow['loccode'];
+	$Result=DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$Locations[]=$MyRow['loccode'];
 	}
 	$Shippers=array();
-	$sql = "SELECT shipper_id
+	$SQL = "SELECT shipper_id
 				     FROM shippers";
-	$result=DB_query($sql);
-	while ($myrow = DB_fetch_array($result)) {
-		$Shippers[]=$myrow['shipper_id'];
+	$Result=DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$Shippers[]=$MyRow['shipper_id'];
 	}
 	$Taxgroups=array();
-	$sql = "SELECT taxgroupid
+	$SQL = "SELECT taxgroupid
 				     FROM taxgroups";
-	$result=DB_query($sql);
-	while ($myrow = DB_fetch_array($result)) {
-		$Taxgroups[]=$myrow['taxgroupid'];
+	$Result=DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
+		$Taxgroups[]=$MyRow['taxgroupid'];
 	}
 
 	//test header row field name and sequence
@@ -123,16 +123,16 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	DB_Txn_Begin();
 
 	//loop through file rows
-	$row = 1;
+	$Row = 1;
 	$UpdatedNum=0;
 	$InsertNum=0;
 	$ExistDebtorNos=array();
 	$NotExistDebtorNos=array();
 	$ExistedBranches = array();
-	while ( ($filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while ( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
 
 		//check for correct number of fields
-		$fieldCount = count($filerow);
+		$fieldCount = count($Filerow);
 		if ($fieldCount != $FieldTarget) {
 			prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
 			fclose($FileHandle);
@@ -141,40 +141,40 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach ($filerow as &$value) {
-			$value = trim($value);
+		foreach ($Filerow as &$Value) {
+			$Value = trim($Value);
 		}
-		$_POST['BranchCode']=$filerow[0];
-		$_POST['DebtorNo']=$filerow[1];
-		$_POST['BrName']=$filerow[2];
-		$_POST['BrAddress1']=$filerow[3];
-		$_POST['BrAddress2']=$filerow[4];
-		$_POST['BrAddress3']=$filerow[5];
-		$_POST['BrAddress4']=$filerow[6];
-		$_POST['BrAddress5']=$filerow[7];
-		$_POST['BrAddress6']=$filerow[8];
-		$Latitude=$filerow[9];
-		$Longitude=$filerow[10];
-		$_POST['SpecialInstructions']=$filerow[29];
-		$_POST['EstDeliveryDays']=$filerow[11];
-		$_POST['FwdDate']=$filerow[14];
-		$_POST['Salesman']=$filerow[13];
-		$_POST['PhoneNo']=$filerow[15];
-		$_POST['FaxNo']=$filerow[16];
-		$_POST['ContactName']=$filerow[17];
-		$_POST['Area']=$filerow[12];
-		$_POST['Email']=$filerow[18];
-		$_POST['TaxGroup']=$filerow[20];
-		$_POST['DefaultLocation']=$filerow[19];
-		$_POST['BrPostAddr1']=$filerow[24];
-		$_POST['BrPostAddr2']=$filerow[25];
-		$_POST['BrPostAddr3']=$filerow[26];
-		$_POST['BrPostAddr4']=$filerow[27];
-		$_POST['BrPostAddr5']=$filerow[28];
-		$_POST['DisableTrans']=$filerow[23];
-		$_POST['DefaultShipVia']=$filerow[21];
-		$_POST['CustBranchCode']=$filerow[30];
-		$_POST['DeliverBlind']=$filerow[22];
+		$_POST['BranchCode']=$Filerow[0];
+		$_POST['DebtorNo']=$Filerow[1];
+		$_POST['BrName']=$Filerow[2];
+		$_POST['BrAddress1']=$Filerow[3];
+		$_POST['BrAddress2']=$Filerow[4];
+		$_POST['BrAddress3']=$Filerow[5];
+		$_POST['BrAddress4']=$Filerow[6];
+		$_POST['BrAddress5']=$Filerow[7];
+		$_POST['BrAddress6']=$Filerow[8];
+		$Latitude=$Filerow[9];
+		$Longitude=$Filerow[10];
+		$_POST['SpecialInstructions']=$Filerow[29];
+		$_POST['EstDeliveryDays']=$Filerow[11];
+		$_POST['FwdDate']=$Filerow[14];
+		$_POST['Salesman']=$Filerow[13];
+		$_POST['PhoneNo']=$Filerow[15];
+		$_POST['FaxNo']=$Filerow[16];
+		$_POST['ContactName']=$Filerow[17];
+		$_POST['Area']=$Filerow[12];
+		$_POST['Email']=$Filerow[18];
+		$_POST['TaxGroup']=$Filerow[20];
+		$_POST['DefaultLocation']=$Filerow[19];
+		$_POST['BrPostAddr1']=$Filerow[24];
+		$_POST['BrPostAddr2']=$Filerow[25];
+		$_POST['BrPostAddr3']=$Filerow[26];
+		$_POST['BrPostAddr4']=$Filerow[27];
+		$_POST['BrPostAddr5']=$Filerow[28];
+		$_POST['DisableTrans']=$Filerow[23];
+		$_POST['DefaultShipVia']=$Filerow[21];
+		$_POST['CustBranchCode']=$Filerow[30];
+		$_POST['DeliverBlind']=$Filerow[22];
 
 		$i=0;
 
@@ -348,11 +348,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				if(in_array($_POST['DebtorNo'],$NotExistDebtorNos,true)) {
 					continue;
 				}else{
-					$sql = "SELECT 1
+					$SQL = "SELECT 1
 						 FROM debtorsmaster
 						 WHERE debtorno='".$_POST['DebtorNo']."' LIMIT 1";
-					$result=DB_query($sql);
-					$DebtorExists=(DB_num_rows($result)>0);
+					$Result=DB_query($SQL);
+					$DebtorExists=(DB_num_rows($Result)>0);
 					if ($DebtorExists) {
 						$ExistDebtorNos[]=$_POST['DebtorNo'];
 					}else{
@@ -362,12 +362,12 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 						exit;
 					}
 				}
-				$sql = "SELECT 1
+				$SQL = "SELECT 1
 				     FROM custbranch
            			 WHERE debtorno='".$_POST['DebtorNo']."' AND
 				           branchcode='".$_POST['BranchCode']."' LIMIT 1";
-				$result=DB_query($sql);
-				$BranchExists=(DB_num_rows($result)>0);
+				$Result=DB_query($SQL);
+				$BranchExists=(DB_num_rows($Result)>0);
 				if ($BranchExists AND $_POST['UpdateIfExists']!=1) {
 					$ExistedBranches[] = array('debtor'=>$_POST['DebtorNo'],
 								'branch'=>$_POST['BranchCode']);
@@ -383,7 +383,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 					}
 					if ($BranchExists) {
 						$UpdatedNum++;
-						$sql = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
+						$SQL = "UPDATE custbranch SET brname = '" . $_POST['BrName'] . "',
 									braddress1 = '" . $_POST['BrAddress1'] . "',
 									braddress2 = '" . $_POST['BrAddress2'] . "',
 									braddress3 = '" . $_POST['BrAddress3'] . "',
@@ -416,7 +416,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 					} else {
 						$InsertNum++;
-						$sql = "INSERT INTO custbranch (branchcode,
+						$SQL = "INSERT INTO custbranch (branchcode,
 										debtorno,
 										brname,
 										braddress1,
@@ -482,18 +482,18 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 					//run the SQL from either of the above possibilites
 					$ErrMsg = _('The branch record could not be inserted or updated because');
-					$result = DB_query($sql, $ErrMsg);
+					$Result = DB_query($SQL, $ErrMsg);
 
 					if (DB_error_no() ==0) {
 						prnMsg( _('New branch of debtor') .' ' .$_POST['DebtorNo'] . ' ' ._('with branch code') .' ' . $_POST['BranchCode'] . ' ' . $_POST['BrName']  . ' '. _('has been passed validation'),'info');
 					} else { //location insert failed so set some useful error info
 						$InputError = 1;
-						prnMsg(_($result),'error');
+						prnMsg(_($Result),'error');
 					}
 				}
 			} else { //item insert failed so set some useful error info
 				$InputError = 1;
-				prnMsg(_($result),'error');
+				prnMsg(_($Result),'error');
 			}
 
 		}
@@ -502,11 +502,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			break;
 		}
 
-		$row++;
+		$Row++;
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
+		prnMsg(_('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();
@@ -518,8 +518,8 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 				echo '	<p>' . _('Branches not updated').'</p>
 					<table class="selection">
 					<tr><th>'._('Debtor No').'</th><th>' . _('Branch Code').'</th></tr>';
-				foreach($ExistedBranches as $key=>$value){
-					echo '<tr><td>'.$value['debtor'].'</td><td>'.$value['branch'].'</td></tr>';
+				foreach($ExistedBranches as $key=>$Value){
+					echo '<tr><td>'.$Value['debtor'].'</td><td>'.$Value['branch'].'</td></tr>';
 				}
 				echo '</table>';
 			}

@@ -30,9 +30,9 @@ $SQL = "SELECT stockmaster.stockid,
 				OR longdescriptiontranslation = '')
 		ORDER BY stockmaster.stockid,
 				language_id";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
-if(DB_num_rows($result) != 0) {
+if(DB_num_rows($Result) != 0) {
 	echo '<p class="page_title_text"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
@@ -45,17 +45,17 @@ if(DB_num_rows($result) != 0) {
 					</tr>';
 	echo $TableHeader;
 	$i = 0;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 
-		if ($myrow['descriptiontranslation'] == ''){
-			$TargetLanguage=mb_substr($myrow['language_id'],0,2);
-			$TranslatedText = translate_via_google_translator($myrow['description'],$TargetLanguage,$SourceLanguage);
+		if ($MyRow['descriptiontranslation'] == ''){
+			$TargetLanguage=mb_substr($MyRow['language_id'],0,2);
+			$TranslatedText = translate_via_google_translator($MyRow['description'],$TargetLanguage,$SourceLanguage);
 
-			$sql = "UPDATE stockdescriptiontranslations " .
+			$SQL = "UPDATE stockdescriptiontranslations " .
 					"SET descriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
-					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
-			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
+					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
+			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 			$i++;
 			printf('<tr class="striped_row">
@@ -66,21 +66,21 @@ if(DB_num_rows($result) != 0) {
 					<td>%s</td>
 					</tr>',
 					$i,
-					$myrow['stockid'],
-					$myrow['description'],
-					$myrow['language_id'],
+					$MyRow['stockid'],
+					$MyRow['description'],
+					$MyRow['language_id'],
 					$TranslatedText
 					);
 		}
-		if ($myrow['longdescriptiontranslation'] == ''){
-			$TargetLanguage=mb_substr($myrow['language_id'],0,2);
-			$TranslatedText = translate_via_google_translator($myrow['longdescription'],$TargetLanguage,$SourceLanguage);
+		if ($MyRow['longdescriptiontranslation'] == ''){
+			$TargetLanguage=mb_substr($MyRow['language_id'],0,2);
+			$TranslatedText = translate_via_google_translator($MyRow['longdescription'],$TargetLanguage,$SourceLanguage);
 
-			$sql = "UPDATE stockdescriptiontranslations " .
+			$SQL = "UPDATE stockdescriptiontranslations " .
 					"SET longdescriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
-					"WHERE stockid='" . $myrow['stockid'] . "' AND (language_id='" . $myrow['language_id'] . "')";
-			$update = DB_query($sql, $ErrMsg, $DbgMsg, true);
+					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
+			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 			$i++;
 			printf('<tr class="striped_row">
@@ -91,9 +91,9 @@ if(DB_num_rows($result) != 0) {
 					<td>%s</td>
 					</tr>',
 					$i,
-					$myrow['stockid'],
-					$myrow['longdescription'],
-					$myrow['language_id'],
+					$MyRow['stockid'],
+					$MyRow['longdescription'],
+					$MyRow['language_id'],
 					$TranslatedText
 					);
 		}

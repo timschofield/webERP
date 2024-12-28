@@ -11,11 +11,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT salesmancode FROM salesman';
-		$result = DB_query($sql);
+		$SQL = 'SELECT salesmancode FROM salesman';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$SalesmanList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$SalesmanList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $SalesmanList;
@@ -33,14 +33,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM salesman WHERE salesmancode='".$salesman."'";
-		$result = DB_query($sql);
-		if (DB_num_rows($result)==0) {
+		$SQL = "SELECT * FROM salesman WHERE salesmancode='".$salesman."'";
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result)==0) {
 			$Errors[0]=NoSuchSalesMan;
 			return $Errors;
 		} else {
 			$Errors[0]=0;
-			$Errors[1]=DB_fetch_array($result);
+			$Errors[1]=DB_fetch_array($Result);
 			return $Errors;
 		}
 	}
@@ -63,10 +63,10 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO salesman ('.mb_substr($FieldNames,0,-2).') '.
+		$SQL = 'INSERT INTO salesman ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -88,14 +88,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM salesman WHERE salesmanname='".$SalesmanName."'";
-		$result = DB_query($sql);
-		if (DB_num_rows($result)==0) {
+		$SQL = "SELECT * FROM salesman WHERE salesmanname='".$SalesmanName."'";
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result)==0) {
 			$Errors[0]=NoSuchSalesMan;
 			return $Errors;
 		} else {
 			$Errors[0]=0;
-			$Errors[1]=DB_fetch_array($result);
+			$Errors[1]=DB_fetch_array($Result);
 			return $Errors;
 		}
 	}

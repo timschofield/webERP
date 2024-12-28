@@ -19,13 +19,13 @@ if(isset($_POST['Submit'])) {
 	for ($i=1;$i<count($_POST);$i++) { //loop through the returned translations
 
 		if(isset($_POST['Revised' . $i]) AND ($_POST['Revised' . $i] == '1')) {
-			$sqlUpdate="UPDATE stockdescriptiontranslations
+			$SQLUpdate="UPDATE stockdescriptiontranslations
 						SET needsrevision = '0',
 							descriptiontranslation = '". $_POST['DescriptionTranslation' .$i] ."',
 							longdescriptiontranslation = '". $_POST['LongDescriptionTranslation' .$i] ."'
 						WHERE stockid = '". $_POST['StockID' .$i] ."'
 							AND language_id = '". $_POST['LanguageID' .$i] ."'";
-			$ResultUpdate = DB_Query($sqlUpdate,'', '', true);
+			$ResultUpdate = DB_Query($SQLUpdate,'', '', true);
 			prnMsg($_POST['StockID' .$i] . ' ' . _('descriptions') . ' ' .  _('in') . ' ' . $_POST['LanguageID' .$i] . ' ' . _('have been updated'),'success');
 		}
 	}
@@ -40,7 +40,7 @@ echo '<table class="selection">
 			<th colspan="7">' . _('Translations to revise') .'</th>
 		</tr>';
 
-$sql = "SELECT stockdescriptiontranslations.stockid,
+$SQL = "SELECT stockdescriptiontranslations.stockid,
 				stockmaster.description,
 				stockmaster.longdescription,
 				stockdescriptiontranslations.language_id,
@@ -52,7 +52,7 @@ $sql = "SELECT stockdescriptiontranslations.stockid,
 		ORDER BY stockdescriptiontranslations.stockid,
 				stockdescriptiontranslations.language_id";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 echo '<tr>
 	<th>' . _('Code') . '</th>
@@ -63,27 +63,27 @@ echo '<tr>
 </tr>';
 
 $i=1;
-while($myrow=DB_fetch_array($result)) {
+while($MyRow=DB_fetch_array($Result)) {
 
 	echo '<tr class="striped_row">
-		<td>' . $myrow['stockid'] . '</td>
+		<td>' . $MyRow['stockid'] . '</td>
 		<td>' . $_SESSION['Language']. '</td>
-		<td>' . $myrow['description'] . '</td>
-		<td>' . nl2br($myrow['longdescription']) . '</td>
+		<td>' . $MyRow['description'] . '</td>
+		<td>' . nl2br($MyRow['longdescription']) . '</td>
 		<td>&nbsp;</td>
 		</tr>';// nl2br: Inserts HTML line breaks before all newlines in a string.
 
 	echo '<tr class="striped_row">
 		<td>&nbsp;</td>
-		<td>' . $myrow['language_id'] . '</td>';
+		<td>' . $MyRow['language_id'] . '</td>';
 
-	echo '<td><input class="text" maxlength="50" name="DescriptionTranslation' . $i .'" size="52" type="text" value="'. $myrow['descriptiontranslation'] .'" /></td>
-		<td><textarea name="LongDescriptionTranslation' . $i .'" cols="70" rows="5">'. $myrow['longdescriptiontranslation'] .'" </textarea></td>';
+	echo '<td><input class="text" maxlength="50" name="DescriptionTranslation' . $i .'" size="52" type="text" value="'. $MyRow['descriptiontranslation'] .'" /></td>
+		<td><textarea name="LongDescriptionTranslation' . $i .'" cols="70" rows="5">'. $MyRow['longdescriptiontranslation'] .'" </textarea></td>';
 
 	echo '<td>
 			<input name="Revised' . $i . '" type="checkbox" value="1" />
-			<input name="StockID' . $i . '" type="hidden" value="' . $myrow['stockid'] . '" />
-			<input name="LanguageID' . $i . '" type="hidden" value="' . $myrow['language_id'] . '" />
+			<input name="StockID' . $i . '" type="hidden" value="' . $MyRow['stockid'] . '" />
+			<input name="LanguageID' . $i . '" type="hidden" value="' . $MyRow['language_id'] . '" />
 		</td>
 		</tr>';
 	$i++;

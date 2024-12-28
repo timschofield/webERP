@@ -10,12 +10,12 @@ $BookMark = 'ChequePaymentListing';
 
 $InputError=0;
 if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
-	$msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['FromDate']);
 }
 if (isset($_POST['ToDate']) and !Is_Date($_POST['ToDate'])){
-	$msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 	unset($_POST['ToDate']);
 }
@@ -30,7 +30,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if ($InputError==1){
-		prnMsg($msg,'error');
+		prnMsg($Msg,'error');
 	}
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -49,13 +49,13 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	 echo '<field>
 			<label for="BankAccount">' . _('Bank Account') . '</label>';
 
-	 $sql = "SELECT bankaccountname, accountcode FROM bankaccounts";
-	 $result = DB_query($sql);
+	 $SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";
+	 $Result = DB_query($SQL);
 
 	 echo '<select name="BankAccount">';
 
-	 while ($myrow=DB_fetch_array($result)){
-		echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+	 while ($MyRow=DB_fetch_array($Result)){
+		echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 	 }
 
 	 echo '</select>
@@ -81,17 +81,17 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate'])){
 	include('includes/ConnectDB.inc');
 }
 
-$sql = "SELECT bankaccountname,
+$SQL = "SELECT bankaccountname,
 				decimalplaces AS bankcurrdecimalplaces
 		FROM bankaccounts INNER JOIN currencies
 		ON bankaccounts.currcode=currencies.currabrev
 		WHERE accountcode = '" .$_POST['BankAccount'] . "'";
-$BankActResult = DB_query($sql);
-$myrow = DB_fetch_array($BankActResult);
-$BankAccountName = $myrow['bankaccountname'];
-$BankCurrDecimalPlaces = $myrow['bankcurrdecimalplaces'];
+$BankActResult = DB_query($SQL);
+$MyRow = DB_fetch_array($BankActResult);
+$BankAccountName = $MyRow['bankaccountname'];
+$BankCurrDecimalPlaces = $MyRow['bankcurrdecimalplaces'];
 
-$sql= "SELECT amount,
+$SQL= "SELECT amount,
 			ref,
 			transdate,
 			banktranstype,
@@ -103,13 +103,13 @@ $sql= "SELECT amount,
 		AND transdate >='" . FormatDateForSQL($_POST['FromDate']) . "'
 		AND transdate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
-$Result=DB_query($sql,'','',false,false);
+$Result=DB_query($SQL,'','',false,false);
 if (DB_error_no()!=0){
 	$Title = _('Payment Listing');
 	include('includes/header.php');
 	prnMsg(_('An error occurred getting the payments'),'error');
-	if ($debug==1){
-		prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $sql,'error');
+	if ($Debug==1){
+		prnMsg(_('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL,'error');
 	}
 	include('includes/footer.php');
   	exit;
@@ -127,33 +127,33 @@ include('includes/PDFStarter.php');
 
 $pdf->addInfo('Title',_('Cheque Listing'));
 $pdf->addInfo('Subject',_('Cheque listing from') . '  ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-$line_height=12;
+$LineHeight=12;
 $PageNumber = 1;
 $TotalCheques = 0;
 
 include ('includes/PDFChequeListingPageHeader.inc');
 
-while ($myrow=DB_fetch_array($Result)){
+while ($MyRow=DB_fetch_array($Result)){
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format(-$myrow['amount'],$BankCurrDecimalPlaces), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$myrow['ref'], 'left');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format(-$MyRow['amount'],$BankCurrDecimalPlaces), 'right');
+	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,90,$FontSize,$MyRow['ref'], 'left');
 
-	$sql = "SELECT accountname,
+	$SQL = "SELECT accountname,
 					accountcode,
 					amount,
 					narrative
 			FROM gltrans INNER JOIN chartmaster
 			ON gltrans.account=chartmaster.accountcode
-			WHERE gltrans.typeno ='" . $myrow['transno'] . "'
-			AND gltrans.type='" . $myrow['type'] . "'";
+			WHERE gltrans.typeno ='" . $MyRow['transno'] . "'
+			AND gltrans.type='" . $MyRow['type'] . "'";
 
-	$GLTransResult = DB_query($sql,'','',false,false);
+	$GLTransResult = DB_query($SQL,'','',false,false);
 	if (DB_error_no()!=0){
 		$Title = _('Payment Listing');
 		include('includes/header.php');
    		prnMsg(_('An error occurred getting the GL transactions'),'error');
-		if ($debug==1){
-				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br />' . $sql, 'error');
+		if ($Debug==1){
+				prnMsg( _('The SQL used to get the receipt header information that failed was') . ':<br />' . $SQL, 'error');
 		}
 		include('includes/footer.php');
   		exit;
@@ -176,8 +176,8 @@ while ($myrow=DB_fetch_array($Result)){
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+150,$YPos,90,$FontSize,$AccountName, 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+245,$YPos,60,$FontSize,locale_number_format($GLRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,120,$FontSize,$GLRow['narrative'], 'left');
-		$YPos -= ($line_height);
-		if ($YPos - (2 *$line_height) < $Bottom_Margin){
+		$YPos -= ($LineHeight);
+		if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		  		/*Then set up a new page */
 			  		$PageNumber++;
 		  		include ('includes/PDFChequeListingPageHeader.inc');
@@ -185,10 +185,10 @@ while ($myrow=DB_fetch_array($Result)){
 	}
 	DB_free_result($GLTransResult);
 
-	$YPos -= ($line_height);
-	$TotalCheques = $TotalCheques - $myrow['amount'];
+	$YPos -= ($LineHeight);
+	$TotalCheques = $TotalCheques - $MyRow['amount'];
 
-	if ($YPos - (2 *$line_height) < $Bottom_Margin){
+	if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		  /*Then set up a new page */
 		  $PageNumber++;
 		  include ('includes/PDFChequeListingPageHeader.inc');
@@ -196,7 +196,7 @@ while ($myrow=DB_fetch_array($Result)){
 } /* end of while there are customer receipts in the batch to print */
 
 
-$YPos-=$line_height;
+$YPos-=$LineHeight;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format($TotalCheques,2), 'right');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('CHEQUES'), 'left');
 
@@ -208,10 +208,10 @@ if ($_POST['Email']=='Yes'){
 
 	include('includes/htmlMimeMail.php');
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
+	$Attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	$mail->setSubject(_('Payments check list'));
 	$mail->setText(_('Please find herewith payments listing from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-	$mail->addAttachment($attachment, 'PaymentListing.pdf', 'application/pdf');
+	$mail->addAttachment($Attachment, 'PaymentListing.pdf', 'application/pdf');
 	$ChkListingRecipients = GetMailList('ChkListingRecipients');
 	if(sizeOf($ChkListingRecipients) == 0){
 		prnMsg(_('There are no member in Check Listing Recipients email group,  no mail will be sent'),'error');
@@ -221,9 +221,9 @@ if ($_POST['Email']=='Yes'){
 
 	if($_SESSION['SmtpSetting']==0){
 		$mail->setFrom(array('"' . $_SESSION['CompanyRecord']['coyname'] . '" <' . $_SESSION['CompanyRecord']['email'] . '>'));
-		$result = $mail->send($ChkListingRecipients);
+		$Result = $mail->send($ChkListingRecipients);
 	}else{
-		$result = SendmailBySmtp($mail,$ChkListingRecipients);
+		$Result = SendmailBySmtp($mail,$ChkListingRecipients);
 	}
 }
 ?>

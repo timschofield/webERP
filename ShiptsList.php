@@ -42,12 +42,12 @@ echo '<tr>
 
 $j = 1;
 
-while ($myrow=DB_fetch_array($ShiptsResult)) {
+while ($MyRow=DB_fetch_array($ShiptsResult)) {
 
        echo '<tr class="striped_row">
-			<td><a href="'.$RootPath.'/Shipments.php?SelectedShipment='.$myrow['shiptref'].'">' . $myrow['shiptref'] . '</a></td>
-       		<td>' . $myrow['vessel'] . '</td>
-		<td>' . ConvertSQLDate($myrow['eta']) . '</td>
+			<td><a href="'.$RootPath.'/Shipments.php?SelectedShipment='.$MyRow['shiptref'].'">' . $MyRow['shiptref'] . '</a></td>
+       		<td>' . $MyRow['vessel'] . '</td>
+		<td>' . ConvertSQLDate($MyRow['eta']) . '</td>
 		</tr>';
 
 }

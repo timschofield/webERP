@@ -10,7 +10,7 @@ for controlled items - used in:
 */
 
 //we start with a batch or serial no header and need to display something for verification...
-global $tableheader;
+global $Tableheader;
 global $LineItem;
 //$LineNo = initPvar('LineNo', $LineNo);
 if (isset($_GET['LineNo'])){
@@ -21,7 +21,7 @@ if (isset($_GET['LineNo'])){
 
 echo '<div class="centre">';
 echo '<table class="selection">';
-echo $tableheader;
+echo $Tableheader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
@@ -151,13 +151,13 @@ if ($ShowFileInfo){
 		</tr>
 		<tr>
 			<td>' .  _('Status') .':</td>
-			<td>' . ($invalid_imports==0 ? getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td>
+			<td>' . ($InvalidImports==0 ? getMsg(_('Valid'),'success'):getMsg(_('Invalid'),'error')) . '</td>
 		</tr>
 	</table><br />';
-	$filename = $_SESSION['CurImportFile']['tmp_name'];
+	$FileName = $_SESSION['CurImportFile']['tmp_name'];
 }
 
-if ($invalid_imports>0 AND !$_SESSION['CurImportFile']['Processed']){
+if ($InvalidImports>0 AND !$_SESSION['CurImportFile']['Processed']){
 		// IF all items are not valid, show the raw first 10 lines of the file. maybe it will help.
 
 	echo '<br /><form method="post">';
@@ -171,7 +171,7 @@ if ($invalid_imports>0 AND !$_SESSION['CurImportFile']['Processed']){
 			<hr width="15%">
 		<pre>';
 
-	echo $contents;
+	echo $Contents;
 
 	echo '</pre>';
 
@@ -180,7 +180,7 @@ if ($invalid_imports>0 AND !$_SESSION['CurImportFile']['Processed']){
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<button type="submit" name="ValidateFile">' . _('Update Batches') . '</button>
 			<input type="hidden" name="LineNo" value="' . $LineNo . '" />
-			<input type="hidden" name="InvalidImports" value="' . $invalid_imports . '" />
+			<input type="hidden" name="InvalidImports" value="' . $InvalidImports . '" />
 			<input type="hidden" name="StockID" value="' . $StockID . '" />
 			<input type="hidden" name="EntryType" value="FILE" /><br />';
 		//Otherwise we have all valid records. show the first (100)  for visual verification.

@@ -220,7 +220,7 @@ $FontSize = 12;
 $ListCount = 0;
 $Copy = '';
 
-$line_height = $FormDesign->LineHeight;
+$LineHeight = $FormDesign->LineHeight;
 $TotalOrderCount = sizeof($OrdersToPick);
 
 for ( $i = 0; $i < $TotalOrderCount; $i++ ){
@@ -408,40 +408,40 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $DisplayQtyAvail, 'right');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $DisplayPicked, 'right');
 
-			if ($Page_Height - $YPos - $line_height <= 60) {
+			if ($Page_Height - $YPos - $LineHeight <= 60) {
 				/* We reached the end of the page so finish off the page and start a new */
 				$PageNumber++;
 				include ('includes/GenPickingListHeader.inc');
 			} //end if need a new page headed up
 			else {
 				/*increment a line down for the next line item */
-				$YPos += ($line_height);
+				$YPos += ($LineHeight);
 			}
 
 			if ($MyRow2['cust_part'] > '') {
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['cust_part'] . ' ' . $MyRow2['cust_description']);
 
-				if ($Page_Height - $YPos - $line_height <= 60) {
+				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
 					$PageNumber++;
 					include ('includes/GenPickingListHeader.inc');
 				} //end if need a new page headed up
 				else {
 					/*increment a line down for the next line item */
-					$YPos += ($line_height);
+					$YPos += ($LineHeight);
 				}
 			}
 
 			if ($MyRow2['narrative'] > '') {
 				$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column2->x, $Page_Height - $YPos, $FormDesign->Headings->Column2->Length, $FormDesign->Headings->Column2->FontSize, $MyRow2['narrative']);
-				if ($Page_Height - $YPos - $line_height <= 60) {
+				if ($Page_Height - $YPos - $LineHeight <= 60) {
 					/* We reached the end of the page so finish off the page and start a new */
 					$PageNumber++;
 					include ('includes/GenPickingListHeader.inc');
 				} //end if need a new page headed up
 				else {
 					/*increment a line down for the next line item */
-					$YPos += ($line_height);
+					$YPos += ($LineHeight);
 				}
 			}
 
@@ -480,32 +480,32 @@ for ( $i = 0; $i < $TotalOrderCount; $i++ ){
 
 				$ErrMsg = '<br />' . _('Could not retrieve the items for') . ' ' . $MyRow2['stkcode'];
 				$Bundles = DB_query($SQL, $ErrMsg);
-				$YPos += ($line_height);
+				$YPos += ($LineHeight);
 
-				while ($mybundles = DB_fetch_array($Bundles)) {
-					if ($mybundles['qtypickedthisorder'] == 0 or is_null($mybundles['qtypickedthisorder'])) {
-						$mybundles['qtypickedthisorder'] = '____________';
+				while ($MyBundles = DB_fetch_array($Bundles)) {
+					if ($MyBundles['qtypickedthisorder'] == 0 or is_null($MyBundles['qtypickedthisorder'])) {
+						$MyBundles['qtypickedthisorder'] = '____________';
 					}
 
 					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column3->x, $Page_Height - $YPos, $FormDesign->Headings->Column3->Length, $FormDesign->Headings->Column3->FontSize, $BundleLabel, 'right');
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $mybundles['serialno'], 'left');
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $mybundles['quantity'] - $mybundles['qtypickedtotal'], 'right');
-					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $mybundles['qtypickedthisorder'], 'right');
+					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column4->x, $Page_Height - $YPos, $FormDesign->Headings->Column4->Length, $FormDesign->Headings->Column4->FontSize, $MyBundles['serialno'], 'left');
+					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column5->x, $Page_Height - $YPos, $FormDesign->Headings->Column5->Length, $FormDesign->Headings->Column5->FontSize, $MyBundles['quantity'] - $MyBundles['qtypickedtotal'], 'right');
+					$LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column6->x, $Page_Height - $YPos, $FormDesign->Headings->Column6->Length, $FormDesign->Headings->Column6->FontSize, $MyBundles['qtypickedthisorder'], 'right');
 
-					if ($Page_Height - $YPos - $line_height <= 60) {
+					if ($Page_Height - $YPos - $LineHeight <= 60) {
 						/* We reached the end of the page so finish off the page and start a new */
 						$PageNumber++;
 						include ('includes/GenPickingListHeader.inc');
 					} //end if need a new page headed up
 					else {
 						/*increment a line down for the next line item */
-						$YPos += ($line_height);
+						$YPos += ($LineHeight);
 					}
 				} //while
 			} //controlled
 
 			++$Lines;
-			$YPos += ($line_height);
+			$YPos += ($LineHeight);
 		} //end while there are line items to print out
 
 		$YPos = $Page_Height - 45;

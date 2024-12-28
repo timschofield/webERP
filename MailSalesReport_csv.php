@@ -39,14 +39,14 @@ include('includes/CSVSalesAnalysis.inc');
 include('includes/htmlMimeMail.php');
 
 $mail = new htmlMimeMail();
-$attachment = $mail->getFile( $_SESSION['reports_dir'] . '/SalesAnalysis.csv');
+$Attachment = $mail->getFile( $_SESSION['reports_dir'] . '/SalesAnalysis.csv');
 $mail->setText(_('Please find herewith the comma separated values sales report'));
-$mail->addAttachment($attachment, 'SalesAnalysis.csv', 'application/csv');
+$mail->addAttachment($Attachment, 'SalesAnalysis.csv', 'application/csv');
 $mail->setSubject(_('Sales Analysis') . ' - ' . _('CSV Format'));
 if($_SESSION['SmtpSetting']==0){
 	$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-	$result = $mail->send($Recipients);
+	$Result = $mail->send($Recipients);
 }else{
-	$result = SendmailBySmtp($mail,$Recipients);
+	$Result = SendmailBySmtp($mail,$Recipients);
 }
 ?>

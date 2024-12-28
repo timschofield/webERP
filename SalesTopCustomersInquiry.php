@@ -160,7 +160,7 @@ if (isset($_POST['ShowSales'])){
 			$FromDate = FormatDateForSQL($_POST['FromDate']);
 			$ToDate = FormatDateForSQL($_POST['ToDate']);
 	}
-	$sql = "SELECT stockmoves.debtorno,
+	$SQL = "SELECT stockmoves.debtorno,
 					debtorsmaster.name,
 					SUM(CASE WHEN stockmoves.type=10
 							OR stockmoves.type=11 THEN
@@ -187,18 +187,18 @@ if (isset($_POST['ShowSales'])){
 			GROUP BY stockmoves.debtorno";
 
 	if ($_POST['OrderBy']=='NetSales'){
-		$sql .= " ORDER BY netsalesvalue DESC ";
+		$SQL .= " ORDER BY netsalesvalue DESC ";
 	} else {
-		$sql .= " ORDER BY salesquantity DESC ";
+		$SQL .= " ORDER BY salesquantity DESC ";
 	}
 	if (is_numeric($_POST['NoToDisplay'])){
 		if ($_POST['NoToDisplay'] > 0){
-			$sql .= " LIMIT " . $_POST['NoToDisplay'];
+			$SQL .= " LIMIT " . $_POST['NoToDisplay'];
 		}
 	}
 
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($sql,$ErrMsg);
+	$SalesResult = DB_query($SQL,$ErrMsg);
 
 
 	echo '<table cellpadding="2" class="selection">

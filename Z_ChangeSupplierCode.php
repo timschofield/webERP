@@ -38,7 +38,7 @@ exit();
 
 
 function ProcessSupplier($oldCode, $newCode) {
-	$table_key= array (
+	$Table_key= array (
 		'grns' => 'supplierid',
 		'offers'=>'supplierid',
 		'purchdata'=>'supplierno',
@@ -89,10 +89,10 @@ function ProcessSupplier($oldCode, $newCode) {
 	$ErrMsg = _('The SQL to insert the new suppliers master record failed') . ', ' . _('the SQL statement was');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	foreach ($table_key as $table=>$key) {
-		prnMsg(_('Changing').' '. $table.' ' . _('records'),'info');
-		$SQL = "UPDATE " . $table . " SET $key='" . $newCode . "' WHERE $key='" . $oldCode . "'";
-		$ErrMsg = _('The SQL to update') . ' ' . $table . ' ' . _('records failed');
+	foreach ($Table_key as $Table=>$key) {
+		prnMsg(_('Changing').' '. $Table.' ' . _('records'),'info');
+		$SQL = "UPDATE " . $Table . " SET $key='" . $newCode . "' WHERE $key='" . $oldCode . "'";
+		$ErrMsg = _('The SQL to update') . ' ' . $Table . ' ' . _('records failed');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	}
 

@@ -20,31 +20,31 @@ echo '<br /><br />' . _('Check every Invoice has a GL Entry') . '<br />';
 $SQL = 'SELECT id, transno, order_, trandate FROM debtortrans WHERE type = 10';
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = "SELECT orderno, orddate FROM salesorders WHERE orderno = '" . $myrow['order_'] . "'";
+while ($MyRow = DB_fetch_array($Result)) {
+	$SQL2 = "SELECT orderno, orddate FROM salesorders WHERE orderno = '" . $MyRow['order_'] . "'";
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
-		echo '<br />' . _('Invoice '). ' '. $myrow['transno'] . ' : ';
+		echo '<br />' . _('Invoice '). ' '. $MyRow['transno'] . ' : ';
 		echo '<div style="color:red">' . _('No Sales Order') . '</div>';
 	}
 
-	$SQL3 = "SELECT debtortransid FROM debtortranstaxes WHERE debtortransid = '" . $myrow['id'] . "'";
+	$SQL3 = "SELECT debtortransid FROM debtortranstaxes WHERE debtortransid = '" . $MyRow['id'] . "'";
 	$Result3 = DB_query($SQL3);
 
 	if ( DB_num_rows($Result3) == 0) {
-		echo '<br />' .  _('Invoice '). ' ' . $myrow['transno'] . ' : ';
+		echo '<br />' .  _('Invoice '). ' ' . $MyRow['transno'] . ' : ';
 		echo '<div style="color:red">' . _('Has no Tax Entry') . '</div>';
 	}
 
 	$SQL4 = "SELECT typeno
 				FROM gltrans
 				WHERE type = 10
-				AND typeno = '" . $myrow['transno'] . "'";
+				AND typeno = '" . $MyRow['transno'] . "'";
 	$Result4 = DB_query($SQL4);
 
 	if ( DB_num_rows($Result4) == 0) {
-		echo '<br />' . _('Invoice') . ' ' . $myrow['transno'] . ' : ';
+		echo '<br />' . _('Invoice') . ' ' . $MyRow['transno'] . ' : ';
 		echo '<div style="color:red">' . _('has no GL Entry') . '</div>';
 	}
 }
@@ -54,18 +54,18 @@ echo '<br /><br />' . _('Check for orphan GL Entries') . '<br />';
 $SQL = "SELECT DISTINCT typeno, counterindex FROM gltrans WHERE type = 10";
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	$SQL2 = "SELECT id,
 					transno,
 					trandate
 				FROM debtortrans
 				WHERE type = 10
-				AND transno = '" . $myrow['typeno'] . "'";
+				AND transno = '" . $MyRow['typeno'] . "'";
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
-			echo "<br />"._('GL Entry ') . $myrow['counterindex'] . " : ";
-			echo ', <div style="color:red">' . _('Invoice ') . $myrow['typeno'] . _(' could not be found') . '</div>';
+			echo "<br />"._('GL Entry ') . $MyRow['counterindex'] . " : ";
+			echo ', <div style="color:red">' . _('Invoice ') . $MyRow['typeno'] . _(' could not be found') . '</div>';
 	}
 }
 
@@ -78,18 +78,18 @@ $SQL = "SELECT typeno,
 
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	$SQL2 = "SELECT SUM((ovamount+ovgst)/rate)
 			FROM debtortrans
 			WHERE type = 12
-			AND transno = '" . $myrow['typeno'] . "'";
+			AND transno = '" . $MyRow['typeno'] . "'";
 
 	$Result2 = DB_query($SQL2);
-	$myrow2 = DB_fetch_row($Result2);
+	$MyRow2 = DB_fetch_row($Result2);
 
-	if ( $myrow2[0] + $myrow['amount'] == 0 ) {
-			echo '<br />' . _('Receipt') . ' ' . $myrow['typeno'] . " : ";
-			echo '<div style="color:red">' . $myrow['amount']. ' ' . _('in GL but found'). ' ' . $myrow2[0] . ' ' . _('in debtorstrans') . '</div>';
+	if ( $MyRow2[0] + $MyRow['amount'] == 0 ) {
+			echo '<br />' . _('Receipt') . ' ' . $MyRow['typeno'] . " : ";
+			echo '<div style="color:red">' . $MyRow['amount']. ' ' . _('in GL but found'). ' ' . $MyRow2[0] . ' ' . _('in debtorstrans') . '</div>';
 	}
 }
 
@@ -97,14 +97,14 @@ echo '<br /><br />' . _('Check for orphan Receipts') . '<br />';
 $SQL = "SELECT transno FROM debtortrans WHERE type = 12";
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = "SELECT amount FROM gltrans WHERE type = 12 AND typeno = '" . $myrow['transno'] . "'";
+while ($MyRow = DB_fetch_array($Result)) {
+	$SQL2 = "SELECT amount FROM gltrans WHERE type = 12 AND typeno = '" . $MyRow['transno'] . "'";
 	$Result2 = DB_query($SQL2);
-	$myrow2 = DB_fetch_row($Result2);
+	$MyRow2 = DB_fetch_row($Result2);
 
-	if ( !$myrow2[0] ) {
-		echo '<br />' . _('Receipt') . ' ' . $myrow['transno'] . " : ";
-		echo '<div style="color:red">' . $myrow['transno'] . ' ' ._('not found in GL')."</div>";
+	if ( !$MyRow2[0] ) {
+		echo '<br />' . _('Receipt') . ' ' . $MyRow['transno'] . " : ";
+		echo '<div style="color:red">' . $MyRow['transno'] . ' ' ._('not found in GL')."</div>";
 	}
 }
 
@@ -113,18 +113,18 @@ echo '<br /><br />' . _('Check for orphan Sales Orders') . '<br />';
 $SQL = "SELECT orderno, orddate FROM salesorders";
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	$SQL2 = "SELECT transno,
 					order_,
 					trandate
 				FROM debtortrans
 				WHERE type = 10
-				AND order_ = '" . $myrow['orderno'] . "'";
+				AND order_ = '" . $MyRow['orderno'] . "'";
 
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
-		echo '<br />' . _('Sales Order') . ' ' . $myrow['orderno'] . ' : ';
+		echo '<br />' . _('Sales Order') . ' ' . $MyRow['orderno'] . ' : ';
 		echo '<div style="color:red">' . _('Has no Invoice') . '</div>';
 	}
 }
@@ -134,18 +134,18 @@ echo '<br /><br />' . _('Check Order Item Amounts') . '<br />';
 $SQL = "SELECT orderno FROM salesorderdetails";
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = "SELECT orderno, orddate FROM salesorders WHERE orderno = '" . $myrow['orderno'] . "'";
+while ($MyRow = DB_fetch_array($Result)) {
+	$SQL2 = "SELECT orderno, orddate FROM salesorders WHERE orderno = '" . $MyRow['orderno'] . "'";
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
-			echo '<br />' . _('Order Item') . ' ' . $myrow['orderno'] . ' : ';
+			echo '<br />' . _('Order Item') . ' ' . $MyRow['orderno'] . ' : ';
 			echo ', <div style="color:red">' . _('Has no Sales Order') . '</div>';
 	}
 
 	$sumsql = "SELECT ROUND(SUM(qtyinvoiced * unitprice * (1 - discountpercent)), 3) AS InvoiceTotal
 				FROM salesorderdetails
-				WHERE orderno = '" . $myrow['orderno'] . "'";
+				WHERE orderno = '" . $MyRow['orderno'] . "'";
 	$sumresult = DB_query($sumsql);
 
 	if ($sumrow = DB_fetch_array($sumresult)) {
@@ -156,7 +156,7 @@ while ($myrow = DB_fetch_array($Result)) {
 							rate,
 							SUM(ovamount) AS ovamount,
 							ovgst
-				 	FROM debtortrans WHERE order_ = '" . $myrow['orderno'] . "'";
+				 	FROM debtortrans WHERE order_ = '" . $MyRow['orderno'] . "'";
 		$invResult = DB_query($invSQL);
 
 		while( $invrow = DB_fetch_array($invResult) ) {
@@ -176,18 +176,18 @@ echo '<br /><br />' . _('Check for orphan Stock Moves') . '<br />';
 $SQL = "SELECT stkmoveno, transno FROM stockmoves";
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	$SQL2 = "SELECT transno,
 					order_,
 					trandate
 				FROM debtortrans
 				WHERE type BETWEEN 10 AND 11
-				AND transno = '" . $myrow['transno'] . "'";
+				AND transno = '" . $MyRow['transno'] . "'";
 
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
-			echo '<br />' . _('Stock Move') . ' ' . $myrow['stkmoveno'] . ' : ';
+			echo '<br />' . _('Stock Move') . ' ' . $MyRow['stkmoveno'] . ' : ';
 			echo ', <div style="color:red">' . _('Has no Invoice') . '</div>';
 	}
 }
@@ -197,12 +197,12 @@ echo '<br /><br />' . _('Check for orphan Tax Entries') . '<br />';
 $SQL = "SELECT debtortransid FROM debtortranstaxes";
 $Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($Result)) {
-	$SQL2 = "SELECT id, transno, trandate FROM debtortrans WHERE type BETWEEN 10 AND 11 AND id = '" . $myrow['debtortransid'] . "'";
+while ($MyRow = DB_fetch_array($Result)) {
+	$SQL2 = "SELECT id, transno, trandate FROM debtortrans WHERE type BETWEEN 10 AND 11 AND id = '" . $MyRow['debtortransid'] . "'";
 	$Result2 = DB_query($SQL2);
 
 	if ( DB_num_rows($Result2) == 0) {
-			echo '<br />' . _('Tax Entry') . ' ' . $myrow['debtortransid'] . ' : ';
+			echo '<br />' . _('Tax Entry') . ' ' . $MyRow['debtortransid'] . ' : ';
 			echo ', <div style="color:red">' . _('Has no Invoice') . '</div>';
 	}
 }

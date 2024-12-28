@@ -39,12 +39,12 @@ if (isset($_POST['submit'])) {
 		$Msg = _('The Tabs type') . ' ' . $SelectedTab . ' ' . _('has been updated');
 	} elseif ($InputError != 1) {
 		// First check the type is not being duplicated
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 				 FROM pctypetabs
 				 WHERE typetabcode = '" . $_POST['TypeTabCode'] . "'";
-		$checkresult = DB_query($checkSql);
-		$checkrow = DB_fetch_row($checkresult);
-		if ($checkrow[0] > 0) {
+		$Checkresult = DB_query($CheckSQL);
+		$CheckRow = DB_fetch_row($Checkresult);
+		if ($CheckRow[0] > 0) {
 			$InputError = 1;
 			prnMsg(_('The Tab type ') . $_POST['TypeAbbrev'] . _(' already exist.'), 'error');
 		} else {

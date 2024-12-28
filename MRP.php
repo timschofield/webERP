@@ -395,8 +395,8 @@ if (isset($_POST['submit'])) {
 	} else {
 		$WhereLocation = " AND loccode IN(";
 		$commactr = 0;
-		foreach ($_POST['location'] as $key => $value) {
-			$WhereLocation .= "'" . $value . "'";
+		foreach ($_POST['location'] as $key => $Value) {
+			$WhereLocation .= "'" . $Value . "'";
 			$commactr++;
 			if ($commactr < sizeof($_POST['location'])) {
 				$WhereLocation .= ",";
@@ -513,8 +513,8 @@ if (isset($_POST['submit'])) {
 	// since multiple locations can be selected
 	$commactr = 0;
 	$locparm='';
-	foreach ($_POST['location'] as $key => $value) {
-		$locparm .=  $value ;
+	foreach ($_POST['location'] as $key => $Value) {
+		$locparm .=  $Value ;
 		$commactr++;
 		if ($commactr < sizeof($_POST['location'])) {
 			$locparm .= " - ";
@@ -780,8 +780,8 @@ function LevelNetting($Part,$eoq,$PanSize,$ShrinkFactor,$LeadTime) {
 	// would be an excess of 3; if there was another requirement for 3 or less, the excess
 	// would cover it, so no planned order would have to be created for the second requirement.
 	$ExcessQty = 0;
-	foreach ($Requirements as $key => $row) {
-		 $DateRequired[$key] = $row['daterequired'];
+	foreach ($Requirements as $key => $Row) {
+		 $DateRequired[$key] = $Row['daterequired'];
 	}
 	if (count($Requirements)) {
 		array_multisort($DateRequired, SORT_ASC, $Requirements);

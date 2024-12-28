@@ -391,7 +391,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 			// Select some more data about the supplier
 			$SQL = "SELECT SUM(ovamount) AS total FROM supptrans WHERE supplierno = '" . $_SESSION['SupplierID'] . "' AND (type = '20' OR type='21')";
 			$Total1Result = DB_query($SQL);
-			$row = DB_fetch_array($Total1Result);
+			$Row = DB_fetch_array($Total1Result);
 			echo '<br />';
 			echo '<table width="45%" cellpadding="4">';
 			echo '<tr><th style="width:33%" colspan="2">' . _('Supplier Data') . '</th></tr>';
@@ -415,7 +415,7 @@ if (isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') {
 					</tr>';
 			echo '<tr>
 					<td valign="top" class="select">' . _('Total Spend with this Supplier:') . '</td>
-					<td valign="top" class="select"> <b>' . locale_number_format($row['total'], $MyRow['currdecimalplaces']) . '</b></td>
+					<td valign="top" class="select"> <b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
 					</tr>';
 			echo '</table>';
 		}

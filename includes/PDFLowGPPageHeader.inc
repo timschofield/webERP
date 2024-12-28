@@ -9,32 +9,32 @@ $YPos= $Page_Height-$Top_Margin;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-$YPos -=$line_height;
+$YPos -=$Line_height;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Low GP Sales Between') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' ' . $_POST['ToDate'] . ' ' . _('less than') . ' ' . $_POST['GPMin'] . '%');
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '    ' . _('Page') . ' ' . $PageNumber);
 
-$YPos -=(2*$line_height);
+$YPos -=(2*$Line_height);
 
 /*Draw a rectangle to put the headings in     */
 
-$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
-$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Left_Margin, $YPos- $Line_height);
+$pdf->line($Left_Margin, $YPos- $Line_height,$Page_Width-$Right_Margin, $YPos- $Line_height);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos- $Line_height);
 
-$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $Bottom_Margin);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Left_Margin, $Bottom_Margin);
 $pdf->line($Left_Margin, $Bottom_Margin, $Page_Width-$Right_Margin, $Bottom_Margin);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $Bottom_Margin);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $Bottom_Margin);
 
-$pdf->line(98, $YPos+$line_height, 98, $Bottom_Margin);
-$pdf->line(128, $YPos+$line_height, 128, $Bottom_Margin);
-$pdf->line(218, $YPos+$line_height, 218, $Bottom_Margin);
-$pdf->line(338, $YPos+$line_height, 338, $Bottom_Margin);
-$pdf->line(398, $YPos+$line_height, 398, $Bottom_Margin);
-$pdf->line(448, $YPos+$line_height, 448, $Bottom_Margin);
-$pdf->line(503, $YPos+$line_height, 503, $Bottom_Margin);
+$pdf->line(98, $YPos+$Line_height, 98, $Bottom_Margin);
+$pdf->line(128, $YPos+$Line_height, 128, $Bottom_Margin);
+$pdf->line(218, $YPos+$Line_height, 218, $Bottom_Margin);
+$pdf->line(338, $YPos+$Line_height, 338, $Bottom_Margin);
+$pdf->line(398, $YPos+$Line_height, 398, $Bottom_Margin);
+$pdf->line(448, $YPos+$Line_height, 448, $Bottom_Margin);
+$pdf->line(503, $YPos+$Line_height, 503, $Bottom_Margin);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
@@ -49,7 +49,7 @@ $LeftOvers = $pdf->addTextWrap(440,$YPos,60,$FontSize,_('GP'), 'right');
 $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,_('GP') . ' %', 'right');
 
 $FontSize=8;
-$YPos =$YPos - (2*$line_height);
+$YPos =$YPos - (2*$Line_height);
 
 $PageNumber++;
 

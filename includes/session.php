@@ -312,10 +312,10 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 	$CustomerLogin = 0;
 }
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
-	$debug = 1; //allow debug messages
+	$Debug = 1; //allow debug messages
 
 } else {
-	$debug = 0; //don't allow debug messages
+	$Debug = 0; //don't allow debug messages
 
 }
 

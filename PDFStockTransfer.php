@@ -59,13 +59,13 @@ if (!isset($_GET['TransferNo'])){
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Stock Transfer Form') );
 $PageNumber=1;
-$line_height=12;
+$LineHeight=12;
 
 include('includes/PDFStockTransferHeader.inc');
 
 /*Print out the category totals */
 
-$sql="SELECT stockmoves.stockid,
+$SQL="SELECT stockmoves.stockid,
 			description,
 			transno,
 			stockmoves.loccode,
@@ -83,8 +83,8 @@ $sql="SELECT stockmoves.stockid,
 		AND qty < 0
 		AND type=16";
 
-$result=DB_query($sql);
-if (DB_num_rows($result) == 0){
+$Result=DB_query($SQL);
+if (DB_num_rows($Result) == 0){
 	$Title = _('Print Stock Transfer - Error');
 	include ('includes/header.php');
 	prnMsg(_('There was no transfer found with number') . ': ' . $_GET['TransferNo'], 'error');
@@ -93,13 +93,13 @@ if (DB_num_rows($result) == 0){
 	exit;
 }
 //get the first stock movement which will be the quantity taken from the initiating location
-while ($myrow=DB_fetch_array($result)) {
-	$StockID=$myrow['stockid'];
-	$From = $myrow['locationname'];
-	$Date=$myrow['trandate'];
-	$To = $myrow['reference'];
-	$Quantity=-$myrow['qty'];
-	$Description=$myrow['description'];
+while ($MyRow=DB_fetch_array($Result)) {
+	$StockID=$MyRow['stockid'];
+	$From = $MyRow['locationname'];
+	$Date=$MyRow['trandate'];
+	$To = $MyRow['reference'];
+	$Quantity=-$MyRow['qty'];
+	$Description=$MyRow['description'];
 
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+1,$YPos-10,300-$Left_Margin,$FontSize, $StockID);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $Description);
@@ -107,9 +107,9 @@ while ($myrow=DB_fetch_array($result)) {
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos-10,300-$Left_Margin,$FontSize, $To);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+475,$YPos-10,300-$Left_Margin,$FontSize, $Quantity);
 
-	$YPos=$YPos-$line_height;
+	$YPos=$YPos-$LineHeight;
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 	   include('includes/PDFStockTransferHeader.inc');
 	}
 
@@ -132,15 +132,15 @@ while ($myrow=DB_fetch_array($result)) {
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, _('Lot/Serial:'));
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+75,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['serialno']);
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos-10,300-$Left_Margin,$FontSize, $SerialStockMoves['moveqty']);
-			$YPos=$YPos-$line_height;
+			$YPos=$YPos-$LineHeight;
 
-			if ($YPos < $Bottom_Margin + $line_height){
+			if ($YPos < $Bottom_Margin + $LineHeight){
 				include('includes/PDFStockTransferHeader.inc');
 			} //while SerialStockMoves
 		}
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos-10,300-$Left_Margin,$FontSize, ' ');
-		$YPos=$YPos-$line_height;
-		if ($YPos < $Bottom_Margin + $line_height){
+		$YPos=$YPos-$LineHeight;
+		if ($YPos < $Bottom_Margin + $LineHeight){
 			include('includes/PDFStockTransferHeader.inc');
 		} //controlled item*/
 	}

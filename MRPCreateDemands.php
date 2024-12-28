@@ -17,38 +17,38 @@ if (isset($_POST['submit'])) {
 	$InputError=0;
 
 	if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
-		$msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		$Msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		$InputError=1;
 		unset($_POST['FromDate']);
 	}
 	if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
-		$msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+		$Msg = _('The date to must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 		$InputError=1;
 		unset($_POST['ToDate']);
 	}
 	if (isset($_POST['FromDate']) and isset($_POST['ToDate']) and
 		 Date1GreaterThanDate2($_POST['FromDate'], $_POST['ToDate'])){
-			$msg = _('The date to must be after the date from');
+			$Msg = _('The date to must be after the date from');
 			$InputError=1;
 			unset($_POST['ToDate']);
 			unset($_POST['FromoDate']);
 	}
 	if (isset($_POST['DistDate']) AND !Is_Date($_POST['DistDate'])){
-		$msg = _('The distribution start date must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
+		$Msg = _('The distribution start date must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
 		$InputError=1;
 		unset($_POST['DistDate']);
 	}
 	if (!is_numeric(filter_number_format($_POST['ExcludeQuantity']))){
-		$msg = _('The quantity below which no demand will be created must be numeric');
+		$Msg = _('The quantity below which no demand will be created must be numeric');
 		$InputError=1;
 	}
 	if (!is_numeric(filter_number_format($_POST['Multiplier']))){
-		$msg = _('The multiplier is expected to be a positive number');
+		$Msg = _('The multiplier is expected to be a positive number');
 		$InputError=1;
 	}
 
 	if ($InputError==1){
-		prnMsg($msg,'error');
+		prnMsg($Msg,'error');
 	}
 
 	$WhereLocation = " ";
@@ -108,48 +108,48 @@ if (isset($_POST['submit'])) {
 		list($yyyy,$mm,$dd) = explode(".",$FormatedDistdate);
 	}
 
-	$datearray[0] = $FormatedDistdate;
+	$DateArray[0] = $FormatedDistdate;
 	// Set first date to valid manufacturing date
-	$calendarsql = "SELECT COUNT(*),cal2.calendardate
+	$CalendarSQL = "SELECT COUNT(*),cal2.calendardate
 					  FROM mrpcalendar
 						LEFT JOIN mrpcalendar as cal2
 						  ON mrpcalendar.daynumber = cal2.daynumber
-					  WHERE mrpcalendar.calendardate = '".$datearray[0]."'
+					  WHERE mrpcalendar.calendardate = '".$DateArray[0]."'
 						AND cal2.manufacturingflag='1'
 						GROUP BY cal2.calendardate";
-	$Resultdate = DB_query($calendarsql);
+	$Resultdate = DB_query($CalendarSQL);
 	$MyRowdate=DB_fetch_array($Resultdate);
 	// If find date based on manufacturing calendar, change date in array
 	if ($MyRowdate[0] != 0){
-		$datearray[0] = $MyRowdate[1];
+		$DateArray[0] = $MyRowdate[1];
 	}
 
-	$date = date('Y-m-d',mktime(0,0,0,$mm,$dd,$yyyy));
+	$Date = date('Y-m-d',mktime(0,0,0,$mm,$dd,$yyyy));
 	for ($i = 1; $i <= ( $_POST['PeriodNumber'] - 1); $i++) {
 		if ($_POST['Period'] == 'weekly') {
-			$date = strtotime(date('Y-m-d', strtotime($date)) . ' + 1 week');
+			$Date = strtotime(date('Y-m-d', strtotime($Date)) . ' + 1 week');
 		} else {
-			$date = strtotime(date('Y-m-d', strtotime($date)) . ' + 1 month');
+			$Date = strtotime(date('Y-m-d', strtotime($Date)) . ' + 1 month');
 		}
-		$datearray[$i] = date('Y-m-d',$date);
+		$DateArray[$i] = date('Y-m-d',$Date);
 		// Following sql finds daynumber for the calculated date and finds
 		// a valid manufacturing date for the daynumber. There is only one valid manufacturing date
 		// for each daynumber, but there could be several non-manufacturing dates for the
 		// same daynumber. MRPCalendar.php maintains the manufacturing calendar.
-		$calendarsql = "SELECT COUNT(*),cal2.calendardate
+		$CalendarSQL = "SELECT COUNT(*),cal2.calendardate
 						  FROM mrpcalendar
 							LEFT JOIN mrpcalendar as cal2
 							  ON mrpcalendar.daynumber = cal2.daynumber
-						  WHERE mrpcalendar.calendardate = '".$datearray[$i]."'
+						  WHERE mrpcalendar.calendardate = '".$DateArray[$i]."'
 							AND cal2.manufacturingflag='1'
 							GROUP BY cal2.calendardate";
-		$Resultdate = DB_query($calendarsql);
+		$Resultdate = DB_query($CalendarSQL);
 		$MyRowdate=DB_fetch_array($Resultdate);
 		// If find date based on manufacturing calendar, change date in array
 		if ($MyRowdate[0] != 0){
-			$datearray[$i] = $MyRowdate[1];
+			$DateArray[$i] = $MyRowdate[1];
 		}
-		$date = date('Y-m-d',$date);
+		$Date = date('Y-m-d',$Date);
 	}
 
 	$TotalRecords = 0;
@@ -171,9 +171,9 @@ if (isset($_POST['submit'])) {
 				}
 			}
 			$i = 0;
-			foreach ($PeriodQty as $demandqty) {
-				if (!isset($demandqty) or $demandqty == ' ') {
-					$demandqty = 0;
+			foreach ($PeriodQty as $DemandQty) {
+				if (!isset($DemandQty) or $DemandQty == ' ') {
+					$DemandQty = 0;
 				}
 					$SQL = "INSERT INTO mrpdemands (stockid,
 									mrpdemandtype,
@@ -181,9 +181,9 @@ if (isset($_POST['submit'])) {
 									duedate)
 								VALUES ('" . $MyRow['stkcode'] . "',
 									'" . $_POST['MRPDemandtype'] . "',
-									'" . $demandqty . "',
-									'" . $datearray[$i] . "')";
-					$insertresult = DB_query($SQL);
+									'" . $DemandQty . "',
+									'" . $DateArray[$i] . "')";
+					$InsertResult = DB_query($SQL);
 					$i++;
 					$TotalRecords++;
 

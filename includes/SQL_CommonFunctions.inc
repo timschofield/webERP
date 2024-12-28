@@ -24,8 +24,8 @@ etc
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
 	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
 	$GetTransNoResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-	$myrow = DB_fetch_row($GetTransNoResult);
-	return $myrow[0];
+	$MyRow = DB_fetch_row($GetTransNoResult);
+	return $MyRow[0];
 
 }
 
@@ -46,8 +46,8 @@ Function GetStockGLCode ($StockID){
 	$ErrMsg =  _('The stock GL codes could not be retrieved because');
 	$GetStkGLResult = DB_query($QuerySQL, $ErrMsg);
 
-	$myrow = DB_fetch_array($GetStkGLResult);
-	return $myrow;
+	$MyRow = DB_fetch_array($GetStkGLResult);
+	return $MyRow;
 }
 
 Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory){
@@ -64,8 +64,8 @@ Function GetTaxRate ($TaxAuthority, $DispatchTaxProvince, $TaxCategory){
 	$GetTaxRateResult = DB_query($QuerySQL,$ErrMsg);
 
 	if (DB_num_rows($GetTaxRateResult)==1){
-		$myrow = DB_fetch_row($GetTaxRateResult);
-		return $myrow[0];
+		$MyRow = DB_fetch_row($GetTaxRateResult);
+		return $MyRow[0];
 	} else {
 		/*The tax rate is not defined for this Tax Authority and Dispatch Tax Authority */
 		return 0;
@@ -106,7 +106,7 @@ Function GetTaxes ($TaxGroup, $DispatchTaxProvince, $TaxCategory) {
 
 Function GetCreditAvailable($DebtorNo) {
 
-	$sql = "SELECT debtorsmaster.debtorno,
+	$SQL = "SELECT debtorsmaster.debtorno,
 			debtorsmaster.creditlimit,
 			SUM(debtortrans.balance) as balance
 		FROM debtorsmaster INNER JOIN debtortrans
@@ -116,22 +116,22 @@ Function GetCreditAvailable($DebtorNo) {
 			debtorsmaster.creditlimit";
 
 	$ErrMsg =  _('The current account balance of the customer could not be retrieved because');
-	$GetAccountBalanceResult = DB_query($sql, $ErrMsg);
+	$GetAccountBalanceResult = DB_query($SQL, $ErrMsg);
 
 	if (DB_num_rows($GetAccountBalanceResult)==1){
 
-		$myrow = DB_fetch_array($GetAccountBalanceResult);
-		$CreditAvailable = $myrow['creditlimit'] - $myrow['balance'];
+		$MyRow = DB_fetch_array($GetAccountBalanceResult);
+		$CreditAvailable = $MyRow['creditlimit'] - $MyRow['balance'];
 	} else {
-		$sql = "SELECT creditlimit
+		$SQL = "SELECT creditlimit
 				FROM debtorsmaster
 				WHERE debtorno='" . $DebtorNo . "'";
-		$GetAccountBalanceResult = DB_query($sql, $ErrMsg);
-		$myrow = DB_fetch_array($GetAccountBalanceResult);
-		$CreditAvailable = $myrow['creditlimit'];
+		$GetAccountBalanceResult = DB_query($SQL, $ErrMsg);
+		$MyRow = DB_fetch_array($GetAccountBalanceResult);
+		$CreditAvailable = $MyRow['creditlimit'];
 	}
 	/*Take into account the value of outstanding sales orders too */
-	$sql = "SELECT SUM(salesorderdetails.unitprice *
+	$SQL = "SELECT SUM(salesorderdetails.unitprice *
 				(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) *
 				(1 - salesorderdetails.discountpercent)) AS ordervalue
 				FROM salesorders INNER JOIN salesorderdetails
@@ -141,10 +141,10 @@ Function GetCreditAvailable($DebtorNo) {
 				AND salesorders.quotation = 0";
 
 	$ErrMsg =  _('The value of outstanding orders for the customer could not be retrieved because');
-	$GetOSOrdersResult = DB_query($sql, $ErrMsg);
+	$GetOSOrdersResult = DB_query($SQL, $ErrMsg);
 
-	$myrow = DB_fetch_array($GetOSOrdersResult);
-	$CreditAvailable -= $myrow['ordervalue'];
+	$MyRow = DB_fetch_array($GetOSOrdersResult);
+	$CreditAvailable -= $MyRow['ordervalue'];
 
 	return $CreditAvailable;
 }
@@ -204,12 +204,12 @@ function ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH) {
 /* Calculates the material cost of a bill of materials, given parent code*/
 function BomMaterialCost($Parent) {
 	$SQL = "SELECT materialcost FROM stockmaster WHERE stockid='" . $Parent . "'";
-	$result1 = DB_query($SQL);
-	$MyRow1 = DB_fetch_row($result1);
+	$Result1 = DB_query($SQL);
+	$MyRow1 = DB_fetch_row($Result1);
 	$OldCost = $MyRow1[0];
 	$SQL = "SELECT sum(quantity) as qoh from locstock where stockid='" . $Parent . "'";
-	$result1 = DB_query($SQL);
-	$MyRow1 = DB_fetch_row($result1);
+	$Result1 = DB_query($SQL);
+	$MyRow1 = DB_fetch_row($Result1);
 	$QOH = $MyRow1[0];
 	$SQL = "SELECT SUM(actualcost) AS SumOfmaterialcost
 			FROM bom LEFT JOIN stockmaster
@@ -217,8 +217,8 @@ function BomMaterialCost($Parent) {
 			WHERE bom.parent='". $Parent . "'
 				AND bom.effectiveafter <= '" . date('Y-m-d') . "'
 				AND bom.effectiveto > '" . date('Y-m-d') . "'";
-	$result = DB_query($SQL);
-	$MyRow = DB_fetch_row($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 	$MaterialCost = $MyRow[0];
 	if (abs($QOH*($MaterialCost-$OldCost))>0) {
 		ItemCostUpdateGL($Parent, $MaterialCost, $OldCost, $QOH);
@@ -236,7 +236,7 @@ function UpdateCost($Item) {
 		$NewParent = $MyRow['parent'];
 		$MaterialCost = BomMaterialCost($NewParent);
 		$SQL = "UPDATE stockmaster SET materialcost=" . $MaterialCost . " WHERE stockid='" . $NewParent . "'";
-		$result1 = DB_query($SQL);
+		$Result1 = DB_query($SQL);
 		if (DB_error_no()!=0) {
 			return 1;
 		}
@@ -256,7 +256,7 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 	}
 
 	// insert new real immediate components of this item
-	$sql = "INSERT INTO worequirements (wo,
+	$SQL = "INSERT INTO worequirements (wo,
 				parentstockid,
 				stockid,
 				qtypu,
@@ -281,14 +281,14 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 				WHERE wo = '" . $WO . "'
 				AND parentstockid = '" . $ParentID . "'
 			)";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	// combine real immediate components of this item with other occurrences in this work order
 	// otherwise, we could encounter a uniqueness violation:
 	//     - the same component could occur in multiple dissolved phantom assemblies
 	//     - need to sum quantities of multiple component occurrences
 	if ($ParentID != $StockID) {
-		$sql = "UPDATE worequirements
+		$SQL = "UPDATE worequirements
 					INNER JOIN (
 						SELECT CAST('" . $WO . "' AS SIGNED) as wo,
 							CAST('NODE-1' AS CHAR) as parentstockid,
@@ -313,11 +313,11 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 						AND g.parentstockid=worequirements.parentstockid
 						AND g.stockid=worequirements.stockid
 					SET worequirements.qtypu=worequirements.qtypu+g.qtypu";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 	}
 
 	// dissolve phantom assemblies
-	$sql = "SELECT
+	$SQL = "SELECT
 				bom.component,
 				bom.quantity
 			FROM bom INNER JOIN stockmaster
@@ -327,8 +327,8 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
             AND bom.effectiveafter <= '" . date('Y-m-d') . "'
             AND bom.effectiveto > '" . date('Y-m-d') . "'
 			AND stockmaster.mbflag='G'";
-	$result = DB_query($sql);
-	while ($MyRow=DB_fetch_array($result)) {
+	$Result = DB_query($SQL);
+	while ($MyRow=DB_fetch_array($Result)) {
 		WoRealRequirements($WO, $LocCode, $MyRow['component'], $MyRow['quantity'], $ParentID);
 	}
 
@@ -337,26 +337,26 @@ function WoRealRequirements($WO, $LocCode, $StockID, $Qty=1, $ParentID='') {
 /*Ensures general ledger entries balance for a given transaction */
 function EnsureGLEntriesBalance ($TransType, $TransTypeNo) {
 
-	$result = DB_query("SELECT SUM(amount)
+	$Result = DB_query("SELECT SUM(amount)
 						FROM gltrans
 						WHERE type = '" . $TransType . "'
 						AND typeno = '" . $TransTypeNo . "'");
-	$myrow = DB_fetch_row($result);
-	$Difference = $myrow[0];
+	$MyRow = DB_fetch_row($Result);
+	$Difference = $MyRow[0];
 	if (abs($Difference)!=0){
 		if (abs($Difference)>0.1){
 			prnMsg(_('The general ledger entries created do not balance. See your system administrator'),'error');
 			DB_Txn_Rollback();
 		} else {
-			$result = DB_query("SELECT counterindex,
+			$Result = DB_query("SELECT counterindex,
 										MAX(amount)
 								FROM gltrans
 								WHERE type = '" . $TransType . "'
 								AND typeno = '" . $TransTypeNo . "'
 								GROUP BY counterindex");
-			$myrow = DB_fetch_array($result);
-			$TransToAmend = $myrow['counterindex'];
-			$result = DB_query("UPDATE gltrans SET amount = amount - " . $Difference . "
+			$MyRow = DB_fetch_array($Result);
+			$TransToAmend = $MyRow['counterindex'];
+			$Result = DB_query("UPDATE gltrans SET amount = amount - " . $Difference . "
 								WHERE counterindex = '" . $TransToAmend . "'");
 
 		}
@@ -479,20 +479,20 @@ function GetItemDemandAsAComponentOfWorkOrders($StockID, $Location){
 
 /*Creates sample and testresults */
 function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK) {
-	$result = DB_query("SELECT COUNT(testid) FROM prodspecs
+	$Result = DB_query("SELECT COUNT(testid) FROM prodspecs
 							WHERE keyval='" . $ProdSpecKey . "'
 							AND active='1'");
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
 		if ($DuplicateOK==0) {
-			$result = DB_query("SELECT COUNT(sampleid) FROM qasamples
+			$Result = DB_query("SELECT COUNT(sampleid) FROM qasamples
 								WHERE prodspeckey='" . $ProdSpecKey . "'
 								AND lotkey='" . $LotKey ."'");
-			$myrow2 = DB_fetch_row($result);
+			$MyRow2 = DB_fetch_row($Result);
 		} else {
-			$myrow2[0]=0;
+			$MyRow2[0]=0;
 		}
-		if ($myrow2[0]==0 OR $DuplicateOK==1) {
+		if ($MyRow2[0]==0 OR $DuplicateOK==1) {
 			$SQL = "INSERT INTO qasamples (prodspeckey,
 											lotkey,
 											identifier,
@@ -533,8 +533,8 @@ function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $
 			$DbgMsg = _('The following SQL to create the sampleresults was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-		} //$myrow2[0]=0
-	} //$myrow[0]>0
+		} //$MyRow2[0]=0
+	} //$MyRow[0]>0
 }
 
 function PettyCashTabCurrentBalance($Tab){

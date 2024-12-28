@@ -33,10 +33,10 @@ $PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE
 
 $DBExistsResult = @mysqli_query($DB, $DBExistsSql);
 $PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
-$rows = @mysqli_num_rows($DBExistsResult);
+$Rows = @mysqli_num_rows($DBExistsResult);
 $Privileges = @mysqli_num_rows($PrivilegesResult);
 
-if ($rows == 0) { /* Then the database does not exist */
+if ($Rows == 0) { /* Then the database does not exist */
 	if ($Privileges == 0) {
 		$Errors[] = _('The database does not exist, and this database user does not have privileges to create it');
 	} else { /* Then we can create the database */
@@ -158,29 +158,29 @@ $sampleHandle = fopen($sampleConfigFile, 'r');
 $newLines = [];
 
 if ($sampleHandle) {
-    while (($line = fgets($sampleHandle)) !== false) {
+    while (($Line = fgets($sampleHandle)) !== false) {
         // Check if the line is commented (starting with //, #, or within /* */)
-        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $line);
+        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
 
         // Skip replacements on comment lines, otherwise process a config line.
         if (!$isComment) {
             // Loop Installer Data
             foreach ($configArray as $key => $value) {
-                // if (strpos($line, $key) !== false) {
-				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $line)) {
+                // if (strpos($Line, $key) !== false) {
+				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $Line)) {
                     $newValue = addslashes($value);
-                    $line = "\$$key = '$newValue';\n";
+                    $Line = "\$$key = '$newValue';\n";
                     unset($configArray[$key]);
                 }
             }
 			// Replace date_default_timezone_set            
-			if (strpos($line, 'date_default_timezone_set') !== false) {
+			if (strpos($Line, 'date_default_timezone_set') !== false) {
                 $newValue = addslashes($_SESSION['Installer']['TimeZone']);                
-				$line = "date_default_timezone_set('".$newValue."');\n";
+				$Line = "date_default_timezone_set('".$newValue."');\n";
             }
         }
         // Append the line to the new content
-        $newLines[] = $line;
+        $newLines[] = $Line;
     }
 
     fclose($sampleHandle);
@@ -197,8 +197,8 @@ if (file_put_contents($newConfigFile, $newConfigContent)) {
 }
 
 $DBErrors = 0;
-foreach (glob($Path_To_Root . "/install/tables/*.sql") as $filename) {
-	$SQLScriptFile = file_get_contents($filename);
+foreach (glob($Path_To_Root . "/install/tables/*.sql") as $FileName) {
+	$SQLScriptFile = file_get_contents($FileName);
 	DB_IgnoreForeignKeys();
 	$Result = DB_query($SQLScriptFile);
 	$DBErrors += DB_error_no($Result);
@@ -325,8 +325,8 @@ if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 
 	}
 
 	$DBErrors = 0;
-	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $filename) {
-		$SQLScriptFile = file_get_contents($filename);
+	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $FileName) {
+		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
 		$Result = DB_query($SQLScriptFile);
 		$DBErrors += DB_error_no($Result);

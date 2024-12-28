@@ -117,13 +117,13 @@ $AllResultsArray=array();
 $TotResults=0;
 while ($MyTestRow=DB_fetch_array($TestResult)) {
 	$FormattedSampleID=str_pad($MyTestRow['sampleid'],10,'0',STR_PAD_LEFT);
-	$testkey=array_search ($MyTestRow['name'] , $TestsArray);
-	if ($testkey===false) {
+	$TestKey=array_search ($MyTestRow['name'] , $TestsArray);
+	if ($TestKey===false) {
 		$TestsArray[$MyTestRow['name']]=$MyTestRow['name'];
 	}
 
-	$testkey=array_search ($MyTestRow['sampleid'] , $SamplesArray);
-	if ($testkey===false) {
+	$TestKey=array_search ($MyTestRow['sampleid'] , $SamplesArray);
+	if ($TestKey===false) {
 		$SamplesArray[$FormattedSampleID]=$MyTestRow;
 		$TotResults++;
 	}
@@ -138,18 +138,18 @@ if ($TotResults>0) {
 			<table width="90%" style="overflow: scroll;">
 			<tr>
 				<th style="white-space:nowrap;" class="number">' . _('Sample ID:') . '<br>' . _('Lot/Serial:') . '<br>' . _('Identifier:') . '<br>' . _('Sample Date:') .'</th>';
-	foreach ($SamplesArray as $samplekey => $samplevalue) {
-		echo '<th>'. $samplekey . '<br>' . $samplevalue['lotkey'] . '<br>' . $samplevalue['identifier'] . '<br>' . ConvertSQLDate($samplevalue['sampledate']).'</th>';
+	foreach ($SamplesArray as $SampleKey => $SampleValue) {
+		echo '<th>'. $SampleKey . '<br>' . $SampleValue['lotkey'] . '<br>' . $SampleValue['identifier'] . '<br>' . ConvertSQLDate($SampleValue['sampledate']).'</th>';
 	}
 	echo '</tr>';
-	foreach ($TestsArray as $testkey => $testvalue) {
+	foreach ($TestsArray as $TestKey => $TestValue) {
 		echo '<tr class="striped_row">
-				<td class="select" style="white-space:nowrap;">'.$testvalue.'</td>';
-		foreach ($SamplesArray as $samplekey => $samplevalue) {
-			if ($AllResultsArray[$testkey][$samplekey]['testvalue']=='' OR !isset($AllResultsArray[$testkey][$samplekey]['testvalue'])) {
-				$AllResultsArray[$testkey][$samplekey]['testvalue']='&nbsp;';
+				<td class="select" style="white-space:nowrap;">'.$TestValue.'</td>';
+		foreach ($SamplesArray as $SampleKey => $SampleValue) {
+			if ($AllResultsArray[$TestKey][$SampleKey]['testvalue']=='' OR !isset($AllResultsArray[$TestKey][$SampleKey]['testvalue'])) {
+				$AllResultsArray[$TestKey][$SampleKey]['testvalue']='&nbsp;';
 			}
-			echo '<td>'.$AllResultsArray[$testkey][$samplekey]['testvalue'].'</td>';
+			echo '<td>'.$AllResultsArray[$TestKey][$SampleKey]['testvalue'].'</td>';
 		}
 		echo '</tr>';
 	}

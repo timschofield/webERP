@@ -51,27 +51,27 @@ $SQL = "SELECT accountgroups.groupname,
 
 $AccountsResult = DB_query($SQL);
 
-while ($myrow=DB_fetch_array($AccountsResult)) {
+while ($MyRow=DB_fetch_array($AccountsResult)) {
 
-	if ($myrow['pandl']==1) {
-			$AccountPeriodActual = $myrow['lastprdcfwd'] - $myrow['firstprdbfwd'];
-			$AccountPeriodBudget = $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
+	if ($MyRow['pandl']==1) {
+			$AccountPeriodActual = $MyRow['lastprdcfwd'] - $MyRow['firstprdbfwd'];
+			$AccountPeriodBudget = $MyRow['lastprdbudgetcfwd'] - $MyRow['firstprdbudgetbfwd'];
 			$PeriodProfitLoss += $AccountPeriodActual;
 			$PeriodBudgetProfitLoss += $AccountPeriodBudget;
-			$MonthProfitLoss += $myrow['monthactual'];
-			$MonthBudgetProfitLoss += $myrow['monthbudget'];
-			$BFwdProfitLoss += $myrow['firstprdbfwd'];
+			$MonthProfitLoss += $MyRow['monthactual'];
+			$MonthBudgetProfitLoss += $MyRow['monthbudget'];
+			$BFwdProfitLoss += $MyRow['firstprdbfwd'];
 	} else { /*PandL ==0 its a balance sheet account */
-			if ($myrow['accountcode']==$RetainedEarningsAct) {
-				$AccountPeriodActual = $BFwdProfitLoss + $myrow['lastprdcfwd'];
-				$AccountPeriodBudget = $BFwdProfitLoss + $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
+			if ($MyRow['accountcode']==$RetainedEarningsAct) {
+				$AccountPeriodActual = $BFwdProfitLoss + $MyRow['lastprdcfwd'];
+				$AccountPeriodBudget = $BFwdProfitLoss + $MyRow['lastprdbudgetcfwd'] - $MyRow['firstprdbudgetbfwd'];
 			} else {
-				$AccountPeriodActual = $myrow['lastprdcfwd'];
-				$AccountPeriodBudget = $myrow['firstprdbfwd'] + $myrow['lastprdbudgetcfwd'] - $myrow['firstprdbudgetbfwd'];
+				$AccountPeriodActual = $MyRow['lastprdcfwd'];
+				$AccountPeriodBudget = $MyRow['firstprdbfwd'] + $MyRow['lastprdbudgetcfwd'] - $MyRow['firstprdbudgetbfwd'];
 			}
 	}
 
-	$CSV_File .= $myrow['accountcode'] . ', ' . stripcomma($myrow['accountname']) . ', ' . $AccountPeriodActual . ', ' . $AccountPeriodBudget  . "\n";
+	$CSV_File .= $MyRow['accountcode'] . ', ' . stripcomma($MyRow['accountname']) . ', ' . $AccountPeriodActual . ', ' . $AccountPeriodBudget  . "\n";
 } //loop through the accounts
 
 function stripcomma($str) { //because we're using comma as a delimiter

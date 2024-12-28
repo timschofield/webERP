@@ -55,11 +55,11 @@ echo '<div class="page_help_text">' . _('Cloning will create a new item with the
 $SupportedImgExt = array('png','jpg','jpeg');
 
 // Check extention for existing old file
-foreach ($SupportedImgExt as $ext) {
-	$oldfile = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $ext;
+foreach ($SupportedImgExt as $Ext) {
+	$oldfile = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $Ext;
 	if (file_exists ($oldfile) ) {
 			break;
-			$ext = pathinfo($oldfile, PATHINFO_EXTENSION);
+			$Ext = pathinfo($oldfile, PATHINFO_EXTENSION);
 	}
 }
 
@@ -68,14 +68,14 @@ if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to
 		$newfilename = ($_POST['OldStockID'] == $_POST['StockID']) || $_POST['StockID'] == ''? $_POST['OldStockID'].'-TEMP': $_POST['StockID'] ; //so we can add a new file but not remove an existing item file
 		$Result	= $_FILES['ItemPicture']['error'];
 		$UploadTheFile = 'Yes'; //Assume all is well to start off with
-		if (pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION) != $ext) {
-			$ext = pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION);
+		if (pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION) != $Ext) {
+			$Ext = pathinfo($_FILES['ItemPicture']['name'], PATHINFO_EXTENSION);
 		}
 
-		$filename = $_SESSION['part_pics_dir'] . '/' . $newfilename . '.' . $ext;
+		$FileName = $_SESSION['part_pics_dir'] . '/' . $newfilename . '.' . $Ext;
 
 		 //But check for the worst
-		if (!in_array ($ext, $SupportedImgExt)) {
+		if (!in_array ($Ext, $SupportedImgExt)) {
 			prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'),'warn');
 			$UploadTheFile ='No';
 		} elseif ( $_FILES['ItemPicture']['size'] > ($_SESSION['MaxImageSize']*1024)) { //File Size Check
@@ -87,35 +87,35 @@ if (!empty($_POST['OldStockID'])) { //only show this if there is a valid call to
 		} elseif ( $_FILES['ItemPicture']['error'] == 6 ) {  //upload temp directory check
 			prnMsg( _('No tmp directory set. You must have a tmp directory set in your PHP for upload of files. '),'warn');
 				$UploadTheFile ='No';
-		} elseif (file_exists($filename)){
+		} elseif (file_exists($FileName)){
 			prnMsg(_('Attempting to overwrite an existing item image'),'warn');
-			$Result = unlink($filename);
+			$Result = unlink($FileName);
 			if (!$Result){
 				prnMsg(_('The existing image could not be removed'),'error');
 				$UploadTheFile ='No';
 			}
 		}
 		//first remove any temp file that ight be there
-		  @unlink($filename);
+		  @unlink($FileName);
 		if ($UploadTheFile=='Yes'){
-			$Result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-			$message = ($Result)?_('File url')  . '<a href="' . $filename .'">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
+			$Result  =  move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $FileName);
+			$Message = ($Result)?_('File url')  . '<a href="' . $FileName .'">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
 		}
-	} elseif (!empty($_POST['StockID']) AND ($_POST['StockID'] != $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '-TEMP' . '.' . $ext) )  {
+	} elseif (!empty($_POST['StockID']) AND ($_POST['StockID'] != $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '-TEMP' . '.' . $Ext) )  {
 		//rename the temp one to the new name
-		$oldfile = $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext;
-		if (!copy($oldfile, $_SESSION['part_pics_dir'] . '/' .$_POST['StockID'] . '.' . $ext)) {
+		$oldfile = $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext;
+		if (!copy($oldfile, $_SESSION['part_pics_dir'] . '/' .$_POST['StockID'] . '.' . $Ext)) {
 			 prnMsg(_('There was an image file to clone but there was an error copying. Please upload a new image if required.'),'warn');
 		}
-		 @unlink($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext);
-		if (is_file($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext)) {
+		 @unlink($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext);
+		if (is_file($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext)) {
 			 prnMsg(_('Unable to delete the temporary image file for cloned item.'),'error');
 		} else {
 			$StockImgLink = _('No Image');
 		}
-	} elseif (isset( $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $ext)  AND !file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'].'-TEMP' . '.' . $ext) ) {
+	} elseif (isset( $_POST['OldStockID']) AND file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $Ext)  AND !file_exists($_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'].'-TEMP' . '.' . $Ext) ) {
 		//we should copy
-		if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'] . '.' . $ext, $_SESSION['part_pics_dir'] . '/' . $_POST['StockID'] . '.' . $ext)) {
+		if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'] . '.' . $Ext, $_SESSION['part_pics_dir'] . '/' . $_POST['StockID'] . '.' . $Ext)) {
 			prnMsg(_('There was an image file to clone but there was an error copying. Please upload a new image if required.'),'warn');
 		}
 	}
@@ -731,22 +731,22 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 			'&amp;height=100'.
 			'" alt="" />';
 	} else {
-		if( !empty($tempid) AND file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext) ) {
-			$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $tempid . '.' . $ext . '" height="100" width="100" />';
+		if( !empty($tempid) AND file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $Ext) ) {
+			$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' . $tempid . '.' . $Ext . '" height="100" width="100" />';
 			if (isset($_POST['ClearImage']) ) {
 				//workaround for many variations of permission issues that could cause unlink fail
-				@unlink($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext);
-				if (is_file($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext)) {
+				@unlink($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $Ext);
+				if (is_file($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $Ext)) {
 					 prnMsg(_('You do not have access to delete this item image file.'),'error');
 				} else {
 					$StockImgLink = _('No Image');
 				}
 			}
-		} elseif ( !empty($tempid) AND !file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $ext) AND file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.' . $ext)) {
-			if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.' . $ext, $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext)) {
+		} elseif ( !empty($tempid) AND !file_exists($_SESSION['part_pics_dir'] . '/' .$tempid.'.' . $Ext) AND file_exists($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.' . $Ext)) {
+			if (!copy($_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'.' . $Ext, $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext)) {
 				$StockImgLink = _('No Image');
 			} else {
-				$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $ext . '" height="100" width="100" />';
+				$StockImgLink = '<img src="' . $_SESSION['part_pics_dir'] . '/' .$_POST['OldStockID'].'-TEMP' . '.' . $Ext . '" height="100" width="100" />';
 			}
 		} else {
 			$StockImgLink = _('No Image');

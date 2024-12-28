@@ -59,7 +59,7 @@ if (isset($_POST['submit'])) {
 	if(Is_Date($_POST['StartDate'])){
 		$SQLStartDate = FormatDateForSQL($_POST['StartDate']);
 	}
-	$sql = "SELECT COUNT(salestype)
+	$SQL = "SELECT COUNT(salestype)
 				FROM pricematrix
 			WHERE stockid='".$StockID."'
 			AND startdate='".$SQLStartDate."'
@@ -67,9 +67,9 @@ if (isset($_POST['submit'])) {
 		        AND salestype='".$_POST['SalesType']."'
 			AND currabrev='".$_POST['CurrAbrev']."'
 			AND quantitybreak='".$_POST['QuantityBreak']."'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]!=0 AND !isset($_POST['OldTypeAbbrev']) AND !isset($_POST['OldCurrAbrev'])){
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]!=0 AND !isset($_POST['OldTypeAbbrev']) AND !isset($_POST['OldCurrAbrev'])){
 		prnMsg(_('This price has already been entered. To change it you should edit it'),'warn');
 		$InputError = 1;
 	}
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 	if (isset($_POST['OldTypeAbbrev']) AND isset($_POST['OldCurrAbrev']) AND mb_strlen($StockID)>1 AND $InputError !=1){
 
 		/* Update existing prices */
-		$sql = "UPDATE pricematrix SET
+		$SQL = "UPDATE pricematrix SET
 					salestype='" . $_POST['SalesType'] . "',
 					currabrev='" . $_POST['CurrAbrev'] . "',
 					price='" . filter_number_format($_POST['Price']) . "',
@@ -92,7 +92,7 @@ if (isset($_POST['submit'])) {
 				AND quantitybreak='" . filter_number_format($_POST['OldQuantityBreak']) . "'";
 
 		$ErrMsg = _('Could not be update the existing prices');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		ReSequenceEffectiveDates ($StockID, $_POST['SalesType'],$_POST['CurrAbrev'],$_POST['QuantityBreak']);
 
@@ -102,7 +102,7 @@ if (isset($_POST['submit'])) {
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
 
-		$sql = "INSERT INTO pricematrix (salestype,
+		$SQL = "INSERT INTO pricematrix (salestype,
 							stockid,
 							quantitybreak,
 							price,
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 						'" . $SQLStartDate . "',
 						'" . $SQLEndDate . "')";
 		$ErrMsg = _('Failed to insert price data');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg( _('The price matrix record has been added'),'success');
 		echo '<br />';
 		unset($_POST['StockID']);
@@ -133,7 +133,7 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['Delete']) and $_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
-	$sql="DELETE FROM pricematrix
+	$SQL="DELETE FROM pricematrix
 		WHERE stockid='" .$_GET['StockID'] . "'
 		AND salestype='" . $_GET['SalesType'] . "'
 		AND quantitybreak='" . $_GET['QuantityBreak']."'
@@ -141,7 +141,7 @@ if (isset($_POST['submit'])) {
 		AND startdate='" . $_GET['StartDate'] . "'
 		AND enddate='" . $_GET['EndDate'] . "'";
 	$ErrMsg = _('Failed to delete price data');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	prnMsg( _('The price matrix record has been deleted'),'success');
 }
 
@@ -162,38 +162,38 @@ if (isset($_GET['Edit'])){
        	$_POST['QuantityBreak'] = $_GET['QuantityBreak'];
 }
 $SQL = "SELECT currabrev FROM currencies";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 require_once('includes/CurrenciesArray.php');
 echo '<fieldset>
 		<legend>', _('Price Matrix For'), ' ', $_POST['StockID'], '</legend>';
 echo '<field>
 		<label for="CurrAbrev">' . _('Currency') . ':</label>
 		<select name="CurrAbrev">';
-while ($myrow = DB_fetch_array($result)){
+while ($MyRow = DB_fetch_array($Result)){
 	echo '<option';
-	if (isset($_POST['CurrAbrev']) AND $myrow['currabrev']==$_POST['CurrAbrev']){
+	if (isset($_POST['CurrAbrev']) AND $MyRow['currabrev']==$_POST['CurrAbrev']){
 		echo ' selected="selected"';
 	}
-	echo ' value="' . $myrow['currabrev'] . '">' . $CurrencyName[$myrow['currabrev']] . '</option>';
+	echo ' value="' . $MyRow['currabrev'] . '">' . $CurrencyName[$MyRow['currabrev']] . '</option>';
 } // End while loop
-DB_free_result($result);
+DB_free_result($Result);
 echo '</select>';
 
-$sql = "SELECT typeabbrev,
+$SQL = "SELECT typeabbrev,
 		sales_type
 		FROM salestypes";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 echo '<field>
 		<label for="SalesType">' . _('Customer Price List') . ' (' . _('Sales Type') . '):</label>';
 echo '<select tabindex="1" name="SalesType">';
 
-while ($myrow = DB_fetch_array($result)){
-	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
-		echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)){
+	if (isset($_POST['SalesType']) and $MyRow['typeabbrev']==$_POST['SalesType']){
+		echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 	}
 }
 
@@ -246,7 +246,7 @@ echo '<field>
 		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>';
 
-$sql = "SELECT sales_type,
+$SQL = "SELECT sales_type,
 			salestype,
 			stockid,
 			startdate,
@@ -266,9 +266,9 @@ $sql = "SELECT sales_type,
 			stockid,
 			quantitybreak";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
-if (DB_num_rows($result) > 0) {
+if (DB_num_rows($Result) > 0) {
 	echo '<table class="selection">';
 	echo '<tr>
 			<th>' . _('Currency') . '</th>
@@ -279,9 +279,9 @@ if (DB_num_rows($result) > 0) {
 			<th>' . _('Sell Price') . '</th>
 		</tr>';
 
-	while ($myrow = DB_fetch_array($result)) {
-		$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;StockID=' . $myrow['stockid'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'].'&amp;Price=' . $myrow['price'] . '&amp;currabrev=' . $myrow['currabrev'].'&amp;StartDate='.$myrow['startdate'].'&amp;EndDate='.$myrow['enddate'];
-		$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=yes&amp;StockID=' . $myrow['stockid'] . '&amp;TypeAbbrev=' . $myrow['salestype'] . '&amp;CurrAbrev=' . $myrow['currabrev'] . '&amp;Price=' . locale_number_format($myrow['price'], $myrow['currdecimalplaces']) . '&amp;StartDate=' . $myrow['startdate'] . '&amp;EndDate=' . $myrow['enddate'].'&amp;QuantityBreak=' . $myrow['quantitybreak'];
+	while ($MyRow = DB_fetch_array($Result)) {
+		$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $MyRow['salestype'] . '&amp;StockID=' . $MyRow['stockid'] . '&amp;QuantityBreak=' . $MyRow['quantitybreak'].'&amp;Price=' . $MyRow['price'] . '&amp;currabrev=' . $MyRow['currabrev'].'&amp;StartDate='.$MyRow['startdate'].'&amp;EndDate='.$MyRow['enddate'];
+		$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=yes&amp;StockID=' . $MyRow['stockid'] . '&amp;TypeAbbrev=' . $MyRow['salestype'] . '&amp;CurrAbrev=' . $MyRow['currabrev'] . '&amp;Price=' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '&amp;StartDate=' . $MyRow['startdate'] . '&amp;EndDate=' . $MyRow['enddate'].'&amp;QuantityBreak=' . $MyRow['quantitybreak'];
 
 		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])){
 			printf('<tr class="striped_row">
@@ -294,12 +294,12 @@ if (DB_num_rows($result) > 0) {
 				<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
 				<td><a href="%s">'._('Edit').'</a></td>
 			</tr>',
-			$myrow['currency'],
-			$myrow['sales_type'],
-			ConvertSQLDate($myrow['startdate']),
-			ConvertSQLDate($myrow['enddate']),
-			$myrow['quantitybreak'],
-			$myrow['price'] ,
+			$MyRow['currency'],
+			$MyRow['sales_type'],
+			ConvertSQLDate($MyRow['startdate']),
+			ConvertSQLDate($MyRow['enddate']),
+			$MyRow['quantitybreak'],
+			$MyRow['price'] ,
 			$DeleteURL,
 			$EditURL);
 		} else {
@@ -311,12 +311,12 @@ if (DB_num_rows($result) > 0) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
-				$myrow['currency'],
-				$myrow['sales_type'],
-				ConvertSQLDate($myrow['startdate']),
-				ConvertSQLDate($myrow['enddate']),
-				$myrow['quantitybreak'],
-				$myrow['price']);
+				$MyRow['currency'],
+				$MyRow['sales_type'],
+				ConvertSQLDate($MyRow['startdate']),
+				ConvertSQLDate($MyRow['enddate']),
+				$MyRow['quantitybreak'],
+				$MyRow['price']);
 
 		}
 
@@ -360,14 +360,14 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $QuantityBrea
 				AND salestype='" . $PriceList . "'
 				AND quantitybreak='".$QuantityBreak."'
 				ORDER BY startdate, enddate";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 
-		while ($myrow = DB_fetch_array($result)){
+		while ($MyRow = DB_fetch_array($Result)){
 			if (isset($NextStartDate)){
-				if (Date1GreaterThanDate2(ConvertSQLDate($myrow['startdate']),$NextStartDate)){
-					$NextStartDate = ConvertSQLDate($myrow['startdate']);
+				if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['startdate']),$NextStartDate)){
+					$NextStartDate = ConvertSQLDate($MyRow['startdate']);
 					//Only if the previous enddate is after the new start date do we need to look at updates
-					if (Date1GreaterThanDate2(ConvertSQLDate($EndDate),ConvertSQLDate($myrow['startdate']))) {
+					if (Date1GreaterThanDate2(ConvertSQLDate($EndDate),ConvertSQLDate($MyRow['startdate']))) {
 						/*Need to make the end date the new start date less 1 day */
 						$SQL = "UPDATE pricematrix SET enddate = '" . FormatDateForSQL(DateAdd($NextStartDate,'d',-1))  . "'
 										WHERE stockid ='" .$Item . "'
@@ -381,11 +381,11 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $QuantityBrea
 				} //end of if startdate  after NextStartDate - we have a new NextStartDate
 			} //end of if set NextStartDate
 				else {
-					$NextStartDate = ConvertSQLDate($myrow['startdate']);
+					$NextStartDate = ConvertSQLDate($MyRow['startdate']);
 			}
-			$StartDate = $myrow['startdate'];
-			$EndDate = $myrow['enddate'];
-			$Price = $myrow['price'];
+			$StartDate = $MyRow['startdate'];
+			$EndDate = $MyRow['enddate'];
+			$Price = $MyRow['price'];
 		} // end of loop around all prices
 
 

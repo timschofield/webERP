@@ -585,7 +585,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 
-	$period = GetPeriod($FromDate);
+	$Period = GetPeriod($FromDate);
 
 	while ($MyRow=DB_fetch_array($Periods)) {
 		if(isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {

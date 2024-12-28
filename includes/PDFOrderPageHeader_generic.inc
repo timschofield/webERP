@@ -27,18 +27,18 @@ if ($DeliverBlind < 2) {
 
 $XPos = 46;
 $YPos = 566;
-PrintDeliverTo($pdf,$myrow,_('Delivered To'),$XPos,$YPos);
+PrintDeliverTo($pdf,$MyRow,_('Delivered To'),$XPos,$YPos);
 
 $YPos -= 82;
-PrintCompanyTo($pdf,$myrow,_('Customer'),$XPos,$YPos);
+PrintCompanyTo($pdf,$MyRow,_('Customer'),$XPos,$YPos);
 
 
 $FontSize = 14;
-$pdf->addText($XPos, $YPos-82,$FontSize, _('Customer No.'). ': ' . $myrow['debtorno']);
-$pdf->addText($XPos, $YPos-100,$FontSize, _('Shipped by'). ': ' . $myrow['shippername']);
+$pdf->addText($XPos, $YPos-82,$FontSize, _('Customer No.'). ': ' . $MyRow['debtorno']);
+$pdf->addText($XPos, $YPos-100,$FontSize, _('Shipped by'). ': ' . $MyRow['shippername']);
 
 $FontSize=12;
-$LeftOvers = $pdf->addTextWrap($XPos,$YPos-130,250,$FontSize,_('Comments').': '.stripcslashes($myrow['comments']));
+$LeftOvers = $pdf->addTextWrap($XPos,$YPos-130,250,$FontSize,_('Comments').': '.stripcslashes($MyRow['comments']));
 
 if (mb_strlen($LeftOvers)>1){
 	$LeftOvers = $pdf->addTextWrap($XPos,$YPos-145,250,$FontSize,$LeftOvers);
@@ -57,20 +57,20 @@ $FontSize=14;
 $pdf->addText(620, 560,$FontSize, _('Order No'). ':');
 $pdf->addText(700, 560,$FontSize, $_GET['TransNo']);
 $pdf->addText(620, 560-15,$FontSize, _('Your Ref'). ':');
-$pdf->addText(700, 560-15,$FontSize, $myrow['customerref']);
+$pdf->addText(700, 560-15,$FontSize, $MyRow['customerref']);
 $pdf->addText(620, 560-45,$FontSize,  _('Order Date'). ':');
-$pdf->addText(700, 560-45,$FontSize,  ConvertSQLDate($myrow['orddate']));
+$pdf->addText(700, 560-45,$FontSize,  ConvertSQLDate($MyRow['orddate']));
 $pdf->addText(620, 560-60,$FontSize,  _('Printed') . ': ');
 $pdf->addText(700, 560-60,$FontSize,  Date($_SESSION['DefaultDateFormat']));
 $pdf->addText(620, 560-75,$FontSize,  _('From').': ');
-$pdf->addText(700, 560-75,$FontSize,  $myrow['locationname']);
+$pdf->addText(700, 560-75,$FontSize,  $MyRow['locationname']);
 $pdf->addText(620, 560-90,$FontSize,  _('Page'). ':');
 $pdf->addText(700, 560-90,$FontSize,  $PageNumber);
 
 $YPos -= 170;
 $XPos = 15;
 
-$header_line_height = $line_height+25;
+$header_line_height = $Line_height+25;
 
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize, _('Item Code'),'left');
 $LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize, _('Item Description'),'left');
@@ -80,7 +80,7 @@ $LeftOvers = $pdf->addTextWrap(527,$YPos,70,$FontSize, _('Bin Locn'),'left');
 $LeftOvers = $pdf->addTextWrap(593,$YPos,85,$FontSize,_('This Del'),'right');
 $LeftOvers = $pdf->addTextWrap(692,$YPos,85,$FontSize, _('Prev Dels'),'right');
 
-$YPos -= $line_height;
+$YPos -= $Line_height;
 
 $FontSize =12;
 

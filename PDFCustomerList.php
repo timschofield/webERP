@@ -11,7 +11,7 @@ if(isset($_POST['PrintPDF'])) {
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title', _('Customer Listing') );
 	$pdf->addInfo('Subject', _('Customer Listing') );
-	$line_height=12;
+	$LineHeight=12;
 	$PageNumber = 0;
 	$FontSize=10;
 
@@ -233,7 +233,7 @@ if(isset($_POST['PrintPDF'])) {
 	  include('includes/header.php');
 	   prnMsg( _('The customer List could not be retrieved by the SQL because') . ' - ' . DB_error_msg() );
 	   echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
-	   if($debug==1) {
+	   if($Debug==1) {
 	      echo '<br />' .  $SQL;
 	   }
 	   include('includes/footer.php');
@@ -293,7 +293,7 @@ if(isset($_POST['PrintPDF'])) {
 		if($PrintThisCustomer) {
 			if($Area!=$Customers['area']) {
 				$FontSize=10;
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 				if($YPos < ($Bottom_Margin + 80)) {
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
@@ -302,12 +302,12 @@ if(isset($_POST['PrintPDF'])) {
 				$Area = $Customers['area'];
 				$pdf->setFont('','');
 				$FontSize=8;
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 			}
 
 			if($SalesPerson!=$Customers['salesman']) {
 				$FontSize=10;
-				$YPos -=($line_height);
+				$YPos -=($LineHeight);
 				if($YPos < ($Bottom_Margin + 80)) {
 					include('includes/PDFCustomerListPageHeader.inc');
 				}
@@ -316,10 +316,10 @@ if(isset($_POST['PrintPDF'])) {
 				$pdf->setFont('','');
 				$SalesPerson = $Customers['salesman'];
 				$FontSize=8;
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 			}
 
-			$YPos -=$line_height;
+			$YPos -=$LineHeight;
 
 			$LeftOvers = $pdf->addTextWrap(20,$YPos,60,$FontSize,$Customers['debtorno']);
 			$LeftOvers = $pdf->addTextWrap(80,$YPos,150,$FontSize,$Customers['name']);
@@ -378,13 +378,13 @@ if(isset($_POST['PrintPDF'])) {
 			<label for="Areas">' . _('For Sales Areas') . ':</label>
 			<select name="Areas[]" multiple="multiple">';
 
-	$sql="SELECT areacode, areadescription FROM areas";
-	$AreasResult= DB_query($sql);
+	$SQL="SELECT areacode, areadescription FROM areas";
+	$AreasResult= DB_query($SQL);
 
 	echo '<option selected="selected" value="All">' . _('All Areas') . '</option>';
 
-	while($myrow = DB_fetch_array($AreasResult)) {
-		echo '<option value="' . $myrow['areacode'] . '">' . $myrow['areadescription'] . '</option>';
+	while($MyRow = DB_fetch_array($AreasResult)) {
+		echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 	}
 	echo '</select>
 		</field>';
@@ -394,11 +394,11 @@ if(isset($_POST['PrintPDF'])) {
 			<select name="SalesPeople[]" multiple="multiple">
 				<option selected="selected" value="All">' .  _('All Salespeople') . '</option>';
 
-	$sql = "SELECT salesmancode, salesmanname FROM salesman";
-	$SalesFolkResult = DB_query($sql);
+	$SQL = "SELECT salesmancode, salesmanname FROM salesman";
+	$SalesFolkResult = DB_query($SQL);
 
-	while($myrow = DB_fetch_array($SalesFolkResult)) {
-		echo '<option value="' . $myrow['salesmancode'] . '">' . $myrow['salesmanname'] . '</option>';
+	while($MyRow = DB_fetch_array($SalesFolkResult)) {
+		echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmanname'] . '</option>';
 	}
 	echo '</select>
 		</field>';

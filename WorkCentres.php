@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 						overheadrecoveryact ='" . $_POST['OverheadRecoveryAct'] . "',
 						overheadperhour = '" . $_POST['OverheadPerHour'] . "'
 				WHERE code = '" . $SelectedWC . "'";
-		$msg = _('The work centre record has been updated');
+		$Msg = _('The work centre record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected work centre is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new work centre form */
@@ -63,13 +63,13 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['OverheadRecoveryAct'] . "',
 						'" . $_POST['OverheadPerHour'] . "'
 						)";
-		$msg = _('The new work centre has been added to the database');
+		$Msg = _('The new work centre has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 
 	if ($InputError !=1){
 		$Result = DB_query($SQL,_('The update/addition of the work centre failed because'));
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset ($_POST['Location']);
 		unset ($_POST['Description']);
 		unset ($_POST['Code']);

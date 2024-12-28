@@ -28,8 +28,8 @@ echo '<div class="centre">' . _('Making a comma separated values file of the sto
 
 $ErrMsg = _('The SQL to get the stock items failed with the message');
 
-$sql = "SELECT stockid, categoryid, description FROM stockmaster";
-$result = DB_query($sql, $ErrMsg);
+$SQL = "SELECT stockid, categoryid, description FROM stockmaster";
+$Result = DB_query($SQL, $ErrMsg);
 
 if (!file_exists($_SESSION['reports_dir'])){
 	$Result = mkdir('./' . $_SESSION['reports_dir']);
@@ -48,10 +48,10 @@ if ($fp==FALSE){
 	exit;
 }
 fputs($fp, '"Item Code", "Category ID", "Item Description"'  . "\n");
-While ($myrow = DB_fetch_row($result)){
-	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]) . ', ' . stripcomma($myrow[2]);
-	//fputs($fp,"\xEF\xBB\xBF" . $line . "\n");
-	fputs($fp, $line . "\n");
+While ($MyRow = DB_fetch_row($Result)){
+	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]) . ', ' . stripcomma($MyRow[2]);
+	//fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
+	fputs($fp, $Line . "\n");
 }
 
 fclose($fp);
@@ -61,8 +61,8 @@ echo '<div class="centre">' . _('Making a comma separated values file of the cus
 
 $ErrMsg = _('The SQL to get the customers failed with the message');
 
-$sql = "SELECT debtorsmaster.debtorno, debtorsmaster.name, custbranch.branchcode, brname, salestype, area, salesman FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno=custbranch.debtorno";
-$result = DB_query($sql, $ErrMsg);
+$SQL = "SELECT debtorsmaster.debtorno, debtorsmaster.name, custbranch.branchcode, brname, salestype, area, salesman FROM debtorsmaster INNER JOIN custbranch ON debtorsmaster.debtorno=custbranch.debtorno";
+$Result = DB_query($SQL, $ErrMsg);
 
 $CustomersFileName = $_SESSION['reports_dir'] . '/Customers.csv';
 
@@ -77,10 +77,10 @@ if ($fp==FALSE){
 	exit;
 }
 fputs($fp, '"Customer Code", "Customer Name", "Branch Code", "Branch Name", "Price List", "Sales Area", "Salesman"'  . "\n");
-While ($myrow = DB_fetch_row($result)){
-	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]). ', ' . stripcomma($myrow[2]) . ', ' . stripcomma($myrow[3]) . ', ' . stripcomma($myrow[4])  . ', ' . stripcomma($myrow[5]) . ', ' . stripcomma($myrow[6]);
-	//fputs($fp,"\xEF\xBB\xBF" . $line . "\n");
-	fputs($fp, $line . "\n");
+While ($MyRow = DB_fetch_row($Result)){
+	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]). ', ' . stripcomma($MyRow[2]) . ', ' . stripcomma($MyRow[3]) . ', ' . stripcomma($MyRow[4])  . ', ' . stripcomma($MyRow[5]) . ', ' . stripcomma($MyRow[6]);
+	//fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
+	fputs($fp, $Line . "\n");
 }
 
 fclose($fp);
@@ -91,7 +91,7 @@ echo '<div class="centre">' . _('Making a comma separated values file of the sal
 
 $ErrMsg = _('The SQL to get the sales data failed with the message');
 
-$sql = "SELECT 	stockmoves.debtorno,
+$SQL = "SELECT 	stockmoves.debtorno,
 				stockmoves.branchcode,
 				stockid,
 				trandate,
@@ -106,7 +106,7 @@ $sql = "SELECT 	stockmoves.debtorno,
 			WHERE (stockmoves.type=10 OR stockmoves.type=11)
 			AND show_on_inv_crds=1";
 
-$result = DB_query($sql, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 $SalesFileName = $_SESSION['reports_dir'] . '/SalesAnalysis.csv';
 
@@ -121,10 +121,10 @@ if ($fp==FALSE){
 	exit;
 }
 fputs($fp,'"Customer Code", "Branch Code", "Item Code", "Date", "Quantity", "Line Value", "Line Cost", "Inv/Credit Number"'  . "\n");
-While ($myrow = DB_fetch_row($result)){
-	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]) . ', ' . stripcomma($myrow[2]) . ', ' . stripcomma($myrow[3]) . ', ' . stripcomma($myrow[4]) . ', ' . stripcomma($myrow[5]) . ', ' . stripcomma($myrow[6]) . ', ' . stripcomma($myrow[7]);
-	//fputs($fp,"\xEF\xBB\xBF" . $line . "\n");
-	fputs($fp, $line . "\n");
+While ($MyRow = DB_fetch_row($Result)){
+	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]) . ', ' . stripcomma($MyRow[2]) . ', ' . stripcomma($MyRow[3]) . ', ' . stripcomma($MyRow[4]) . ', ' . stripcomma($MyRow[5]) . ', ' . stripcomma($MyRow[6]) . ', ' . stripcomma($MyRow[7]);
+	//fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
+	fputs($fp, $Line . "\n");
 }
 
 fclose($fp);
@@ -153,7 +153,7 @@ $upload = ftp_put($conn_id, '/' . Date('Y-m-d') .'_Customers.csv', $CustomersFil
 if (!$upload) {
     echo "FTP upload has failed!";
 } else {
-    echo "Uploaded $source_file to $ftp_server as $destination_file";
+    echo "Uploaded $Source_file to $ftp_server as $destination_file";
 }
 
 // close the FTP stream

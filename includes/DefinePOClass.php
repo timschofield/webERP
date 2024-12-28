@@ -48,7 +48,7 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
-	var $total;
+	var $Total;
 	var $DefaultReceivedDate;
 
 	function __construct(){

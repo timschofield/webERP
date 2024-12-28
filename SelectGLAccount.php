@@ -7,13 +7,13 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
 include('includes/header.php');
 
-$msg='';
+$Msg='';
 unset($Result);
 
 if (isset($_POST['Search'])){
 
 	if (mb_strlen($_POST['Keywords']>0) AND mb_strlen($_POST['GLCode'])>0) {
-		$msg=_('Account name keywords have been used in preference to the account code extract entered');
+		$Msg=_('Account name keywords have been used in preference to the account code extract entered');
 	}
 	if ($_POST['Keywords']=='' AND $_POST['GLCode']=='') {
             $SQL = "SELECT chartmaster.accountcode,
@@ -88,8 +88,8 @@ if (!isset($AccountID)) {
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	if(mb_strlen($msg)>1){
-		prnMsg($msg,'info');
+	if(mb_strlen($Msg)>1){
+		prnMsg($Msg,'info');
 	}
 
 	echo '<fieldset>

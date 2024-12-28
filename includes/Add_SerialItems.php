@@ -151,17 +151,17 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
 	if ($BeginNo > $EndNo){
 		prnMsg( _('To Add Items Sequentially, the Begin Number must be less than the End Number'), 'error');
 	} else {
-		$sql = "SELECT serialno FROM stockserialitems
+		$SQL = "SELECT serialno FROM stockserialitems
 			WHERE serialno BETWEEN '". $BeginNo . "' AND '". $EndNo . "'
 			AND stockid = '". $StockID."' AND loccode='". $LocationOut . "'";
 		$Qty = ($InOutModifier>0?1:0);
 		if ($LineItem->Serialised == 1){
-			$sql .= " AND quantity = ".$Qty;
+			$SQL .= " AND quantity = ".$Qty;
 		}
-		$SeqItems = DB_query($sql);
+		$SeqItems = DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($SeqItems)) {
-			$LineItem->SerialItems[$myrow['serialno']] = new SerialItem ($myrow['serialno'], ($InOutModifier>0?1:-1) );
+		while ($MyRow=DB_fetch_array($SeqItems)) {
+			$LineItem->SerialItems[$MyRow['serialno']] = new SerialItem ($MyRow['serialno'], ($InOutModifier>0?1:-1) );
 			//force it to Keyed entry for cleanup & manual verification
 			$_POST['EntryType'] = 'KEYED';
 		}
@@ -171,49 +171,49 @@ if ( isset($_POST['AddSequence']) AND $_POST['AddSequence']!='') {
 /********************************************
   Validate an uploaded FILE and save entries
 ********************************************/
-$valid = true;
-$invalid_imports = 0;
+$Valid = true;
+$InvalidImports = 0;
 if (isset($_POST['EntryType'])
 	AND $_POST['EntryType']=='FILE'
 	AND isset($_POST['ValidateFile'])){
 
-	$filename = $_SESSION['CurImportFile']['tmp_name'];
+	$FileName = $_SESSION['CurImportFile']['tmp_name'];
 
-	$handle = fopen($filename, 'r');
+	$Handle = fopen($FileName, 'r');
 	$TotalLines=0;
 	$LineItem->SerialItemsValid=false;
-	while (!feof($handle)) {
-		$contents = trim(fgets($handle, 4096));
-		//$valid = $LineItem->SerialItems[$i]->importFileLineItem($contents);
-		$pieces  = explode(',',$contents);
+	while (!feof($Handle)) {
+		$Contents = trim(fgets($Handle, 4096));
+		//$Valid = $LineItem->SerialItems[$i]->importFileLineItem($Contents);
+		$Pieces  = explode(',',$Contents);
 		if ($LineItem->Serialised == 1){
 		//for Serialised items, we are expecting the line to contain either just the serial no
 		//OR a comma delimited file w/ the serial no FIRST
-			if(trim($pieces[0]) != ""){
-				$valid=false;
-				if (mb_strlen($pieces[0]) <= 0 ){
-					$valid=false;
+			if(trim($Pieces[0]) != ""){
+				$Valid=false;
+				if (mb_strlen($Pieces[0]) <= 0 ){
+					$Valid=false;
 				} else {
-					$valid=true;
+					$Valid=true;
 				}
-				if ($valid){
+				if ($Valid){
 					/*If the user enters a duplicate serial number the later one over-writes the first entered one - no warning given though ? */
-					$NewSerialNo = $pieces[0];
+					$NewSerialNo = $Pieces[0];
 					$NewQty = ($InOutModifier>0?1:-1);
 				}
 			} else {
-				$valid = false;
+				$Valid = false;
 			}
 		} else {
 		//for controlled only items, we must receive: BatchID, Qty in a comma delimited  file
-			if($pieces[0] != '' AND $pieces[1] != '' AND is_numeric(filter_number_format($pieces[1])) AND filter_number_format($pieces[1]) > 0 ){
+			if($Pieces[0] != '' AND $Pieces[1] != '' AND is_numeric(filter_number_format($Pieces[1])) AND filter_number_format($Pieces[1]) > 0 ){
 			/*If the user enters a duplicate batch number the later one over-writes
 			the first entered one - no warning given though ? */
-					//$LineItem->SerialItems[$pieces[0]] = new SerialItem ($pieces[0],  $pieces[1] );
-					$NewSerialNo = $pieces[0];
-					$NewQty = ($InOutModifier>0?1:-1) * filter_number_format($pieces[1]);
+					//$LineItem->SerialItems[$Pieces[0]] = new SerialItem ($Pieces[0],  $Pieces[1] );
+					$NewSerialNo = $Pieces[0];
+					$NewQty = ($InOutModifier>0?1:-1) * filter_number_format($Pieces[1]);
 			} else {
-					$valid = false;
+					$Valid = false;
 			}
 		}
 		$TotalLines++;
@@ -245,7 +245,7 @@ if (isset($_POST['EntryType'])
 				echo '<br />';
 				prnMsg( '<a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a>  ' . _('not available') ,'', 'Notice' );
 			}
-			if (!$valid) $invalid_imports++;
+			if (!$Valid) $InvalidImports++;
 			// of MustExist
 		} else {
 			//Serialised items can not exist w/ Qty > 0 if we have an $NewQty of 1
@@ -267,11 +267,11 @@ if (isset($_POST['EntryType'])
 			//$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($NewSerialNo, $NewQty);
 		}
 	}//while (file)
-	if ($invalid_imports==0){
+	if ($InvalidImports==0){
 		$LineItem->SerialItemsValid=true;
 		$_SESSION['CurImportFile']['Processed']=true;
 	}
-	fclose($handle);
+	fclose($Handle);
 	//we've saved the info we need from the file, so get rid of it
 }
 /********************************************
@@ -281,36 +281,36 @@ if (isset($_POST['EntryType'])
 
 ********************************************/
 if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
-	$invalid_imports = 0;
+	$InvalidImports = 0;
 	$OrigLineItem = $LineItem; //grab a copy of the old one...
 	$LineItem->SerialItems = array(); // and then reset it so we can add back to it.
 	foreach ($OrigLineItem->SerialItems as $Item){
 		if ($OrigLineItem->Serialised == 1){
 			if(trim($Item->BundleRef) != ""){
-				$valid=false;
+				$Valid=false;
 				if (mb_strlen($Item->BundleRef) <= 0 ){
-					$valid=false;
+					$Valid=false;
 				} else {
-					$valid=true;
+					$Valid=true;
 				}
-				if ($valid){
+				if ($Valid){
 					/*If the user enters a duplicate serial number the later one over-writes the first entered one - no warning given though ? */
 					$NewSerialNo = $Item->BundleRef;
 					$NewQty = ($InOutModifier>0?1:-1) * $Item->BundleQty;
 				}
 			} else {
-				$valid = false;
+				$Valid = false;
 			}
 		} else {
 		//for controlled only items, we must receive: BatchID, Qty in a comma delimited  file
 			if($Item->BundleRef != "" AND $Item->BundleQty != "" AND is_numeric($Item->BundleQty) AND $Item->BundleQty > 0 ){
 			/*If the user enters a duplicate batch number the later one over-writes
 			the first entered one - no warning given though ? */
-					//$LineItem->SerialItems[$pieces[0]] = new SerialItem ($pieces[0],  $pieces[1] );
+					//$LineItem->SerialItems[$Pieces[0]] = new SerialItem ($Pieces[0],  $Pieces[1] );
 					$NewSerialNo = $Item->BundleRef;
 					$NewQty = ($InOutModifier>0?1:-1) * $Item->BundleQty;
 			} else {
-					$valid = false;
+					$Valid = false;
 			}
 		}
 		$TotalLines++;
@@ -342,7 +342,7 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 				echo '<br />';
 				prnMsg( '<a href="'.$RootPath.'/StockSerialItemResearch.php?serialno='. urlencode($NewSerialNo) . '" target=_blank>' . $NewSerialNo. '</a> ' . _('not available') . '...' ,'', 'Notice' );
 			}
-			if (!$valid) $invalid_imports++;
+			if (!$Valid) $InvalidImports++;
 			// of MustExist
 		} else {
 			//Serialised items can not exist w/ Qty > 0 if we have an $NewQty of 1
@@ -361,13 +361,13 @@ if (isset($_GET['REVALIDATE']) || isset($_POST['REVALIDATE'])) {
 			if (!$SerialError){
 				$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($NewSerialNo, $NewQty);
 			} else {
-				$invalid_imports++;
+				$InvalidImports++;
 			}
 		}
 	}//foreach OrigItems
 	$LineItem->Quantity = sizeof($LineItem->SerialItems);
-	if ($invalid_imports > 0){
-		prnMsg( _('Finished Validating Items') . ' : ' . $invalid_imports . ' ' . _('problems found. Please research and correct them') . '.', 'warn' );
+	if ($InvalidImports > 0){
+		prnMsg( _('Finished Validating Items') . ' : ' . $InvalidImports . ' ' . _('problems found. Please research and correct them') . '.', 'warn' );
 	} else {
 		prnMsg( _('Finished Validating Items').' with NO errors', 'success' );
 	}

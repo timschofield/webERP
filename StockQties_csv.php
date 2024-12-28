@@ -16,18 +16,18 @@ echo '<div class="centre">' . _('Making a comma separated values file of the cur
 
 $ErrMsg = _('The SQL to get the stock quantities failed with the message');
 
-$sql = "SELECT stockid, SUM(quantity) FROM locstock
+$SQL = "SELECT stockid, SUM(quantity) FROM locstock
 			INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			GROUP BY stockid HAVING SUM(quantity)<>0";
-$result = DB_query($sql, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 if (!file_exists($_SESSION['reports_dir'])){
 	$Result = mkdir('./' . $_SESSION['reports_dir']);
 }
 
-$filename = $_SESSION['reports_dir'] . '/StockQties.csv';
+$FileName = $_SESSION['reports_dir'] . '/StockQties.csv';
 
-$fp = fopen($filename,'w');
+$fp = fopen($FileName,'w');
 
 if ($fp==FALSE){
 
@@ -36,9 +36,9 @@ if ($fp==FALSE){
 	exit;
 }
 
-While ($myrow = DB_fetch_row($result)){
-	$line = stripcomma($myrow[0]) . ', ' . stripcomma($myrow[1]);
-	fputs($fp,"\xEF\xBB\xBF" . $line . "\n");
+While ($MyRow = DB_fetch_row($Result)){
+	$Line = stripcomma($MyRow[0]) . ', ' . stripcomma($MyRow[1]);
+	fputs($fp,"\xEF\xBB\xBF" . $Line . "\n");
 }
 
 fclose($fp);

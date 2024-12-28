@@ -853,9 +853,9 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		}
 		while (($MyRow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($MyRow['mbflag'] == 'D') {
-				$qoh = _('N/A');
+				$QOH = _('N/A');
 			} else {
-				$qoh = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
+				$QOH = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
 			}
 			if ($MyRow['discontinued']==1){
 				$ItemStatus = '<p class="bad">' . _('Obsolete') . '</p>';
@@ -887,7 +887,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			<td><input type="submit" name="Select" value="' . $MyRow['stockid'] . '" /></td>
 			<td>'.$StockImgLink.'</td>
 			<td title="'. $MyRow['longdescription'] . '">' . $MyRow['description'] . '</td>
-			<td class="number">' . $qoh . '</td>
+			<td class="number">' . $QOH . '</td>
 			<td>' . $MyRow['units'] . '</td>
 			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . _('View') . '</a></td>
 			</tr>';

@@ -63,45 +63,45 @@
 
 	if (DB_num_rows($GetOrdHdrResult)==1 and !isset($_SESSION['PO'.$identifier]->OrderNo )) {
 
-			$myrow = DB_fetch_array($GetOrdHdrResult);
+			$MyRow = DB_fetch_array($GetOrdHdrResult);
 			$_SESSION['PO'.$identifier]->OrderNo = $_GET['ModifyOrderNumber'];
-			$_SESSION['PO'.$identifier]->SupplierID = $myrow['supplierno'];
-			$_SESSION['PO'.$identifier]->SupplierName = $myrow['suppname'];
-			$_SESSION['PO'.$identifier]->CurrCode = $myrow['currcode'];
-			$_SESSION['PO'.$identifier]->CurrDecimalPlaces = $myrow['decimalplaces'];
-			$_SESSION['PO'.$identifier]->Orig_OrderDate = $myrow['orddate'];
-			$_SESSION['PO'.$identifier]->AllowPrintPO = $myrow['allowprint'];
-			$_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted = $myrow['dateprinted'];
-			$_SESSION['PO'.$identifier]->Comments = $myrow['comments'];
-			$_SESSION['PO'.$identifier]->ExRate = $myrow['rate'];
-			$_SESSION['PO'.$identifier]->Location = $myrow['intostocklocation'];
-			$_SESSION['PO'.$identifier]->Initiator = $myrow['initiator'];
-			$_SESSION['PO'.$identifier]->RequisitionNo = $myrow['requisitionno'];
-			$_SESSION['PO'.$identifier]->DelAdd1 = $myrow['deladd1'];
-			$_SESSION['PO'.$identifier]->DelAdd2 = $myrow['deladd2'];
-			$_SESSION['PO'.$identifier]->DelAdd3 = $myrow['deladd3'];
-			$_SESSION['PO'.$identifier]->DelAdd4 = $myrow['deladd4'];
-			$_SESSION['PO'.$identifier]->DelAdd5 = $myrow['deladd5'];
-			$_SESSION['PO'.$identifier]->DelAdd6 = $myrow['deladd6'];
-			$_SESSION['PO'.$identifier]->Tel = $myrow['tel'];
-			$_SESSION['PO'.$identifier]->SuppDelAdd1 = $myrow['suppdeladdress1'];
-			$_SESSION['PO'.$identifier]->SuppDelAdd2 = $myrow['suppdeladdress2'];
-			$_SESSION['PO'.$identifier]->SuppDelAdd3 = $myrow['suppdeladdress3'];
-			$_SESSION['PO'.$identifier]->SuppDelAdd4 = $myrow['suppdeladdress4'];
-			$_SESSION['PO'.$identifier]->SuppDelAdd5 = $myrow['suppdeladdress5'];
-			$_SESSION['PO'.$identifier]->SuppDelAdd6 = $myrow['suppdeladdress6'];
-			$_SESSION['PO'.$identifier]->SupplierContact = $myrow['suppliercontact'];
-			$_SESSION['PO'.$identifier]->SuppTel= $myrow['supptel'];
-			$_SESSION['PO'.$identifier]->Contact = $myrow['contact'];
-			$_SESSION['PO'.$identifier]->Managed = $myrow['managed'];
-			$_SESSION['PO'.$identifier]->Version = $myrow['version'];
-			$_SESSION['PO'.$identifier]->Port = $myrow['port'];
-			$_SESSION['PO'.$identifier]->DeliveryBy = $myrow['deliveryby'];
-			$_SESSION['PO'.$identifier]->Status = $myrow['status'];
-			$_SESSION['PO'.$identifier]->StatusComments = html_entity_decode($myrow['stat_comment'],ENT_QUOTES,'UTF-8');
-			$_SESSION['PO'.$identifier]->DeliveryDate = ConvertSQLDate($myrow['deliverydate']);
+			$_SESSION['PO'.$identifier]->SupplierID = $MyRow['supplierno'];
+			$_SESSION['PO'.$identifier]->SupplierName = $MyRow['suppname'];
+			$_SESSION['PO'.$identifier]->CurrCode = $MyRow['currcode'];
+			$_SESSION['PO'.$identifier]->CurrDecimalPlaces = $MyRow['decimalplaces'];
+			$_SESSION['PO'.$identifier]->Orig_OrderDate = $MyRow['orddate'];
+			$_SESSION['PO'.$identifier]->AllowPrintPO = $MyRow['allowprint'];
+			$_SESSION['PO'.$identifier]->DatePurchaseOrderPrinted = $MyRow['dateprinted'];
+			$_SESSION['PO'.$identifier]->Comments = $MyRow['comments'];
+			$_SESSION['PO'.$identifier]->ExRate = $MyRow['rate'];
+			$_SESSION['PO'.$identifier]->Location = $MyRow['intostocklocation'];
+			$_SESSION['PO'.$identifier]->Initiator = $MyRow['initiator'];
+			$_SESSION['PO'.$identifier]->RequisitionNo = $MyRow['requisitionno'];
+			$_SESSION['PO'.$identifier]->DelAdd1 = $MyRow['deladd1'];
+			$_SESSION['PO'.$identifier]->DelAdd2 = $MyRow['deladd2'];
+			$_SESSION['PO'.$identifier]->DelAdd3 = $MyRow['deladd3'];
+			$_SESSION['PO'.$identifier]->DelAdd4 = $MyRow['deladd4'];
+			$_SESSION['PO'.$identifier]->DelAdd5 = $MyRow['deladd5'];
+			$_SESSION['PO'.$identifier]->DelAdd6 = $MyRow['deladd6'];
+			$_SESSION['PO'.$identifier]->Tel = $MyRow['tel'];
+			$_SESSION['PO'.$identifier]->SuppDelAdd1 = $MyRow['suppdeladdress1'];
+			$_SESSION['PO'.$identifier]->SuppDelAdd2 = $MyRow['suppdeladdress2'];
+			$_SESSION['PO'.$identifier]->SuppDelAdd3 = $MyRow['suppdeladdress3'];
+			$_SESSION['PO'.$identifier]->SuppDelAdd4 = $MyRow['suppdeladdress4'];
+			$_SESSION['PO'.$identifier]->SuppDelAdd5 = $MyRow['suppdeladdress5'];
+			$_SESSION['PO'.$identifier]->SuppDelAdd6 = $MyRow['suppdeladdress6'];
+			$_SESSION['PO'.$identifier]->SupplierContact = $MyRow['suppliercontact'];
+			$_SESSION['PO'.$identifier]->SuppTel= $MyRow['supptel'];
+			$_SESSION['PO'.$identifier]->Contact = $MyRow['contact'];
+			$_SESSION['PO'.$identifier]->Managed = $MyRow['managed'];
+			$_SESSION['PO'.$identifier]->Version = $MyRow['version'];
+			$_SESSION['PO'.$identifier]->Port = $MyRow['port'];
+			$_SESSION['PO'.$identifier]->DeliveryBy = $MyRow['deliveryby'];
+			$_SESSION['PO'.$identifier]->Status = $MyRow['status'];
+			$_SESSION['PO'.$identifier]->StatusComments = html_entity_decode($MyRow['stat_comment'],ENT_QUOTES,'UTF-8');
+			$_SESSION['PO'.$identifier]->DeliveryDate = ConvertSQLDate($MyRow['deliverydate']);
 			$_SESSION['ExistingOrder'] = $_SESSION['PO'.$identifier]->OrderNo;
-			$_SESSION['PO'.$identifier]->PaymentTerms= $myrow['paymentterms'];
+			$_SESSION['PO'.$identifier]->PaymentTerms= $MyRow['paymentterms'];
 
 			$SupplierSQL = "SELECT suppliers.supplierid,
 									suppliers.suppname,
@@ -117,11 +117,11 @@
 							ORDER BY suppliers.supplierid";
 
 			$ErrMsg = _('The searched supplier records requested cannot be retrieved because');
-			$result_SuppSelect = DB_query($SupplierSQL,$ErrMsg);
+			$Result_SuppSelect = DB_query($SupplierSQL,$ErrMsg);
 
-			if (DB_num_rows($result_SuppSelect)==1){
-				$myrow=DB_fetch_array($result_SuppSelect);
-			} elseif (DB_num_rows($result_SuppSelect)==0){
+			if (DB_num_rows($Result_SuppSelect)==1){
+				$MyRow=DB_fetch_array($Result_SuppSelect);
+			} elseif (DB_num_rows($Result_SuppSelect)==0){
 				prnMsg( _('No supplier records contain the selected text') . ' - ' .
 					_('please alter your search criteria and try again'),'info');
 			}
@@ -168,49 +168,49 @@
 
 		  if (DB_num_rows($LineItemsResult) > 0) {
 
-				while ($myrow=DB_fetch_array($LineItemsResult)) {
+				while ($MyRow=DB_fetch_array($LineItemsResult)) {
 
-					 if (is_null($myrow['glcode'])){
+					 if (is_null($MyRow['glcode'])){
 						$GLCode = '';
 					 } else {
-						$GLCode = $myrow['glcode'];
+						$GLCode = $MyRow['glcode'];
 					 }
-					if (is_null($myrow['units'])){
+					if (is_null($MyRow['units'])){
 						$Units = _('each');
 					} else {
-						$Units = $myrow['units'];
+						$Units = $MyRow['units'];
 					}
-					if (is_null($myrow['itemcode'])){
+					if (is_null($MyRow['itemcode'])){
 						$StockID = '';
 					} else {
-						$StockID = $myrow['itemcode'];
+						$StockID = $MyRow['itemcode'];
 					}
 
 					$_SESSION['PO'.$identifier]->add_to_order($_SESSION['PO'.$identifier]->LinesOnOrder+1,
 															$StockID,
-															$myrow['serialised'],
-															$myrow['controlled'],
-															$myrow['quantityord'],
-															stripslashes($myrow['itemdescription']),
-															$myrow['unitprice'],
+															$MyRow['serialised'],
+															$MyRow['controlled'],
+															$MyRow['quantityord'],
+															stripslashes($MyRow['itemdescription']),
+															$MyRow['unitprice'],
 															$Units,
 															$GLCode,
-															ConvertSQLDate($myrow['deliverydate']),
-															$myrow['shiptref'],
-															$myrow['completed'],
-															$myrow['jobref'],
-															$myrow['qtyinvoiced'],
-															$myrow['quantityrecd'],
-															$myrow['accountname'],
-															$myrow['decimalplaces'],
-															$myrow['suppliersunit'],
-															$myrow['conversionfactor'],
+															ConvertSQLDate($MyRow['deliverydate']),
+															$MyRow['shiptref'],
+															$MyRow['completed'],
+															$MyRow['jobref'],
+															$MyRow['qtyinvoiced'],
+															$MyRow['quantityrecd'],
+															$MyRow['accountname'],
+															$MyRow['decimalplaces'],
+															$MyRow['suppliersunit'],
+															$MyRow['conversionfactor'],
 															1,
-															$myrow['suppliers_partno'],
-															$myrow['assetid'] );
+															$MyRow['suppliers_partno'],
+															$MyRow['assetid'] );
 
-					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->PODetailRec = $myrow['podetailitem'];
-					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->StandardCost = $myrow['stdcostunit'];  /*Needed for receiving goods and GL interface */
+					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->PODetailRec = $MyRow['podetailitem'];
+					$_SESSION['PO'.$identifier]->LineItems[$_SESSION['PO'.$identifier]->LinesOnOrder]->StandardCost = $MyRow['stdcostunit'];  /*Needed for receiving goods and GL interface */
 			 } /* line PO from purchase order details */
 	  } //end is there were lines on the order
    } // end if there was a header for the order

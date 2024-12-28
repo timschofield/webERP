@@ -41,7 +41,7 @@ if(isset($_POST['JustSelectedACustomer'])) {
 	}
 }
 
-$msg = '';
+$Msg = '';
 
 if(isset($_POST['Go1']) OR isset($_POST['Go2'])) {
 	$_POST['PageOffset'] = (isset($_POST['Go1']) ? $_POST['PageOffset1'] : $_POST['PageOffset2']);
@@ -249,8 +249,8 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 // Search for customers:
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-if(mb_strlen($msg) > 1) {
-	prnMsg($msg, 'info');
+if(mb_strlen($Msg) > 1) {
+	prnMsg($Msg, 'info');
 }
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/magnifier.png" title="',// Icon image.
@@ -560,9 +560,9 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 							($Lng),
 							($id),
 							($debtorno));
-					$update_result = DB_query($query);
+					$Update_result = DB_query($query);
 
-					if($update_result == 1) {
+					if($Update_result == 1) {
 						prnMsg( _('GeoCode has been updated for CustomerID') . ': ' . $id . ' - ' . _('Latitude') . ': ' . $Lat . ' ' . _('Longitude') . ': ' . $Lng ,'info');
 					}
 				} else {
@@ -671,7 +671,7 @@ function initMap() {
 					WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
 					AND type !=12";
 			$Total1Result = DB_query($SQL);
-			$row = DB_fetch_array($Total1Result);
+			$Row = DB_fetch_array($Total1Result);
 			echo '<table cellpadding="4" style="width: 45%;">
 				<tr>
 					<th colspan="3" style="width:auto">', _('Customer Data'), '</th>
@@ -700,7 +700,7 @@ function initMap() {
 					<td class="select"><b>', ConvertSQLDate($MyRow['clientsince']), '</b></td>
 					<td class="select">', $MyRow['customersincedays'], ' ', _('days'), '</td>
 				</tr>';
-			if($row['total'] == 0) {
+			if($Row['total'] == 0) {
 				echo '<tr>
 						<td class="select"><b>', _('No Spend from this Customer.'), '</b></td>
 						<td class="select">&nbsp;</td>
@@ -709,7 +709,7 @@ function initMap() {
 			} else {
 				echo '<tr>
 						<td class="select">' . _('Total Spend from this Customer (inc tax)') . ':</td>
-						<td class="select"><b>' . locale_number_format($row['total'], $MyRow['currdecimalplaces']) . '</b></td>
+						<td class="select"><b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
 						<td class="select"></td>
 						</tr>';
 			}

@@ -9,12 +9,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	if ($_POST['StockCat'] != 'All') {
 		$WhereCategory = " AND stockmaster.categoryid='" . $_POST['StockCat'] . "'";
-		$sql = "SELECT categoryid,
+		$SQL = "SELECT categoryid,
 					categorydescription
 				FROM stockcategory
 				WHERE categoryid='" . $_POST['StockCat'] . "'";
-		$result = DB_query($sql);
-		$MyRow = DB_fetch_row($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
 		$CategoryDescription = $MyRow[1];
 	} else {
 		$WhereCategory = "";
@@ -159,10 +159,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$sql = "SELECT locations.loccode,
+	$SQL = "SELECT locations.loccode,
 			locationname
 		FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$resultStkLocs = DB_query($sql);
+	$ResultStkLocs = DB_query($SQL);
 	echo '<fieldset>
 			<legend>', _('Report Criteria') , '</legend>
 			<field>
@@ -176,7 +176,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
-	while ($MyRow = DB_fetch_array($resultStkLocs)) {
+	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if ($MyRow['loccode'] == $_POST['StockLocation']) {
 			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		} else {
@@ -187,8 +187,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</field>';
 
 	$SQL = "SELECT categoryid, categorydescription FROM stockcategory WHERE stocktype<>'A' ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
-	if (DB_num_rows($result1) == 0) {
+	$Result1 = DB_query($SQL);
+	if (DB_num_rows($Result1) == 0) {
 		echo '</td></field>
 			</table>';
 		prnMsg(_('There are no stock categories currently defined please use the link below to set them up') , 'warn');
@@ -208,7 +208,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
-	while ($MyRow1 = DB_fetch_array($result1)) {
+	while ($MyRow1 = DB_fetch_array($Result1)) {
 		if ($MyRow1['categoryid'] == $_POST['StockCat']) {
 			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {

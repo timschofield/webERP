@@ -23,7 +23,7 @@ if (isset($_POST['PrintPDF'])) {
 	}
 	$FontSize = 9;
 	$PageNumber = 1;
-	$line_height = 12;
+	$LineHeight = 12;
 
 	// Create temporary tables for supply and demand, with one record per part with the
 	// total for either supply or demand. Did this to simplify main sql where used
@@ -137,7 +137,7 @@ if (isset($_POST['PrintPDF'])) {
 		include ('includes/header.php');
 		prnMsg(_('The MRP shortages and excesses could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 		echo '<br/><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br/>' . $SQL;
 		}
 		include ('includes/footer.php');
@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDF'])) {
 		include ('includes/header.php');
 		prnMsg(_('No MRP shortages - Excess retrieved'), 'warn');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 		}
 		include ('includes/footer.php');
@@ -160,7 +160,7 @@ if (isset($_POST['PrintPDF'])) {
 
 	$Total_Shortage = 0;
 	$Partctr = 0;
-	$fill = false;
+	$Fill = false;
 	$pdf->SetFillColor(224, 235, 255); // Defines color to make alternating lines highlighted
 	while ($MyRow = DB_fetch_array($Result)) {
 
@@ -171,33 +171,33 @@ if (isset($_POST['PrintPDF'])) {
 		}
 
 		if ($LineToPrint) {
-			$YPos-= $line_height;
+			$YPos-= $LineHeight;
 			$FontSize = 8;
 
 			// Use to alternate between lines with transparent and painted background
 			if ($_POST['Fill'] == 'yes') {
-				$fill = !$fill;
+				$Fill = !$Fill;
 			}
 
 			// Parameters for addTextWrap are defined in /includes/class.pdf.php
 			// 1) X position 2) Y position 3) Width
 			// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 			// and False to set to transparent
-			$shortage = ($MyRow['demand'] - $MyRow['supply']) * -1;
-			$extcost = $shortage * $MyRow['computedcost'];
-			$pdf->addTextWrap($Left_Margin, $YPos, 90, $FontSize, $MyRow['stockid'], '', 0, $fill);
-			$pdf->addTextWrap(130, $YPos, 150, $FontSize, $MyRow['description'], '', 0, $fill);
-			$pdf->addTextWrap(280, $YPos, 25, $FontSize, $MyRow['mbflag'], 'right', 0, $fill);
-			$pdf->addTextWrap(305, $YPos, 55, $FontSize, locale_number_format($MyRow['computedcost'], 2), 'right', 0, $fill);
-			$pdf->addTextWrap(360, $YPos, 50, $FontSize, locale_number_format($MyRow['supply'], $MyRow['decimalplaces']), 'right', 0, $fill);
-			$pdf->addTextWrap(410, $YPos, 50, $FontSize, locale_number_format($MyRow['demand'], $MyRow['decimalplaces']), 'right', 0, $fill);
-			$pdf->addTextWrap(460, $YPos, 50, $FontSize, locale_number_format($shortage, $MyRow['decimalplaces']), 'right', 0, $fill);
-			$pdf->addTextWrap(510, $YPos, 60, $FontSize, locale_number_format($MyRow['extcost'], 2), 'right', 0, $fill);
+			$Shortage = ($MyRow['demand'] - $MyRow['supply']) * -1;
+			$Extcost = $Shortage * $MyRow['computedcost'];
+			$pdf->addTextWrap($Left_Margin, $YPos, 90, $FontSize, $MyRow['stockid'], '', 0, $Fill);
+			$pdf->addTextWrap(130, $YPos, 150, $FontSize, $MyRow['description'], '', 0, $Fill);
+			$pdf->addTextWrap(280, $YPos, 25, $FontSize, $MyRow['mbflag'], 'right', 0, $Fill);
+			$pdf->addTextWrap(305, $YPos, 55, $FontSize, locale_number_format($MyRow['computedcost'], 2), 'right', 0, $Fill);
+			$pdf->addTextWrap(360, $YPos, 50, $FontSize, locale_number_format($MyRow['supply'], $MyRow['decimalplaces']), 'right', 0, $Fill);
+			$pdf->addTextWrap(410, $YPos, 50, $FontSize, locale_number_format($MyRow['demand'], $MyRow['decimalplaces']), 'right', 0, $Fill);
+			$pdf->addTextWrap(460, $YPos, 50, $FontSize, locale_number_format($Shortage, $MyRow['decimalplaces']), 'right', 0, $Fill);
+			$pdf->addTextWrap(510, $YPos, 60, $FontSize, locale_number_format($MyRow['extcost'], 2), 'right', 0, $Fill);
 
 			$Total_Shortage+= $MyRow['extcost'];
 			$Partctr++;
 
-			if ($YPos < $Bottom_Margin + $line_height) {
+			if ($YPos < $Bottom_Margin + $LineHeight) {
 				PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
 			}
 		}
@@ -205,9 +205,9 @@ if (isset($_POST['PrintPDF'])) {
 	} /*end while loop */
 
 	$FontSize = 8;
-	$YPos-= (2 * $line_height);
+	$YPos-= (2 * $LineHeight);
 
-	if ($YPos < $Bottom_Margin + $line_height) {
+	if ($YPos < $Bottom_Margin + $LineHeight) {
 		PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin);
 	}
 	/*Print out the grand totals */
@@ -291,7 +291,7 @@ if (isset($_POST['PrintPDF'])) {
 
 function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin) {
 
-	$line_height = 12;
+	$LineHeight = 12;
 	/*PDF page header for MRP Shortages report */
 	if ($PageNumber > 1) {
 		$pdf->newPage();
@@ -302,7 +302,7 @@ function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Le
 
 	$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, $_SESSION['CompanyRecord']['coyname']);
 
-	$YPos-= $line_height;
+	$YPos-= $LineHeight;
 	if ($_POST['ReportType'] == 'Shortage') {
 		$pdf->addTextWrap($Left_Margin, $YPos, 300, $FontSize, _('MRP Shortages Report'));
 	} else {
@@ -311,14 +311,14 @@ function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Le
 
 	$pdf->addTextWrap($Page_Width - $Right_Margin - 110, $YPos, 160, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber, 'left');
 
-	$YPos-= (2 * $line_height);
+	$YPos-= (2 * $LineHeight);
 
 	/*Draw a rectangle to put the headings in	 */
 
-	//$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-	//$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
-	//$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-	//$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
+	//$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
+	//$pdf->line($Left_Margin, $YPos+$LineHeight,$Left_Margin, $YPos- $LineHeight);
+	//$pdf->line($Left_Margin, $YPos- $LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
+	//$pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
 	/*set up the headings */
 	$Xpos = $Left_Margin + 1;
 
@@ -336,7 +336,7 @@ function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Le
 		$pdf->addTextWrap(510, $YPos, 60, $FontSize, _('Ext. Excess'), 'right');
 	}
 	$FontSize = 8;
-	$YPos = $YPos - (2 * $line_height);
+	$YPos = $YPos - (2 * $LineHeight);
 	$PageNumber++;
 } // End of PrintHeader function
 

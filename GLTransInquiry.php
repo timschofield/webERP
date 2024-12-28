@@ -11,12 +11,12 @@ if (!isset($_GET['TypeID']) or !isset($_GET['TransNo'])) {
 	prnMsg(_('This page requires a valid transaction type and number'), 'warn');
 	echo $MenuURL;
 } else {
-	$typeSQL = "SELECT typename,
+	$TypeSQL = "SELECT typename,
 						typeno
 				FROM systypes
 				WHERE typeid = '" . $_GET['TypeID'] . "'";
 
-	$TypeResult = DB_query($typeSQL);
+	$TypeResult = DB_query($TypeSQL);
 
 	if (DB_num_rows($TypeResult) == 0) {
 		prnMsg(_('No transaction of this type with id') . ' ' . $_GET['TypeID'], 'error');

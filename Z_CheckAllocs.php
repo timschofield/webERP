@@ -8,7 +8,7 @@ $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 /*First off get the DebtorTransID of all invoices where allocations dont agree to the recorded allocation */
-$sql = "SELECT debtortrans.id,
+$SQL = "SELECT debtortrans.id,
 		debtortrans.debtorno,
 		debtortrans.transno,
 		ovamount+ovgst AS totamt,
@@ -23,21 +23,21 @@ $sql = "SELECT debtortrans.id,
 		debtortrans.alloc
 	HAVING SUM(custallocns.amt) < debtortrans.alloc - 1";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
-if (DB_num_rows($result)==0){
+if (DB_num_rows($Result)==0){
 	prnMsg(_('There are no inconsistencies with allocations') . ' - ' . _('all is well'),'info');
 }
 
-while ($myrow = DB_fetch_array($result)){
-	$AllocToID = $myrow['id'];
+while ($MyRow = DB_fetch_array($Result)){
+	$AllocToID = $MyRow['id'];
 
-	echo '<br />' . _('Allocations made against') . ' ' . $myrow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $myrow['transno'];
-	echo '<br />' . _('Original Invoice Total') . ': '. $myrow['totamt'];
-	echo '<br />' . _('Total amount recorded as allocated against it') . ': ' . $myrow['alloc'];
-	echo '<br />' . _('Total of allocation records') . ': ' . $myrow['totalalloc'];
+	echo '<br />' . _('Allocations made against') . ' ' . $MyRow['debtorno'] . ' ' . _('Invoice Number') . ': ' . $MyRow['transno'];
+	echo '<br />' . _('Original Invoice Total') . ': '. $MyRow['totamt'];
+	echo '<br />' . _('Total amount recorded as allocated against it') . ': ' . $MyRow['alloc'];
+	echo '<br />' . _('Total of allocation records') . ': ' . $MyRow['totalalloc'];
 
-	$sql = "SELECT type,
+	$SQL = "SELECT type,
 				transno,
 				trandate,
 				debtortrans.debtorno,
@@ -55,30 +55,30 @@ while ($myrow = DB_fetch_array($result)){
 			WHERE custallocns.transid_allocto='" . $AllocToID . "'";
 
 	$ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because');
-	$TransResult = DB_query($sql,$ErrMsg);
+	$TransResult = DB_query($SQL,$ErrMsg);
 
 	echo '<table class="selection">';
 
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 				<th>' . _('Type') . '</th>
 				<th>' . _('Number') . '</th>
 				<th>' . _('Reference') . '</th>
 				<th>' . _('Ex Rate') . '</th>
 				<th>' . _('Amount') . '</th>
 				<th>' . _('Alloc') . '</th></tr>';
-	echo $tableheader;
+	echo $Tableheader;
 
 	$RowCounter = 1;
 	$AllocsTotal = 0;
 
-	while ($myrow1=DB_fetch_array($TransResult)) {
+	while ($MyRow1=DB_fetch_array($TransResult)) {
 
-		if ($myrow1['type']==11){
+		if ($MyRow1['type']==11){
 			$TransType = _('Credit Note');
 		} else {
 			$TransType = _('Receipt');
 		}
-		$CurrDecimalPlaces = $myrow1['currdecimalplaces'];
+		$CurrDecimalPlaces = $MyRow1['currdecimalplaces'];
 
 		printf( '<tr class="striped_row">
 				<td>%s</td>
@@ -89,19 +89,19 @@ while ($myrow = DB_fetch_array($result)){
 				<td class="number">%s</td>
 				</tr>',
 				$TransType,
-				$myrow1['transno'],
-				$myrow1['reference'],
-				locale_number_format($myrow1['exrate'],4),
-				locale_number_format($myrow1['totalamt'],$CurrDecimalPlaces),
-				locale_number_format($myrow1['amt'],$CurrDecimalPlaces));
+				$MyRow1['transno'],
+				$MyRow1['reference'],
+				locale_number_format($MyRow1['exrate'],4),
+				locale_number_format($MyRow1['totalamt'],$CurrDecimalPlaces),
+				locale_number_format($MyRow1['amt'],$CurrDecimalPlaces));
 
 		$RowCounter++;
 		If ($RowCounter == 12){
 			$RowCounter=1;
-			echo $tableheader;
+			echo $Tableheader;
 		}
 		//end of page full new headings if
-		$AllocsTotal +=$myrow1['amt'];
+		$AllocsTotal +=$MyRow1['amt'];
 	}
 	//end of while loop
 	echo '<tr><td colspan="6" class="number">' . locale_number_format($AllocsTotal,$CurrDecimalPlaces) . '</td></tr>';

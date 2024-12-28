@@ -75,7 +75,7 @@ if (isset($_POST['DoIt']) AND ($_POST['PrintOrEmail'] == 'Print' OR $ViewingOnly
 if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview') {
 	/*retrieve the order details from the database to print */
 	$ErrMsg = _('There was a problem retrieving the purchase order header details for Order Number') . ' ' . $OrderNo . ' ' . _('from the database');
-	$sql = "SELECT	purchorders.supplierno,
+	$SQL = "SELECT	purchorders.supplierno,
 					suppliers.suppname,
 					suppliers.address1,
 					suppliers.address2,
@@ -109,8 +109,8 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 					ON purchorders.initiator=www_users.userid
 				INNER JOIN locationusers ON locationusers.loccode=purchorders.intostocklocation AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE purchorders.orderno='" . $OrderNo . "'";
-	$result = DB_query($sql, $ErrMsg);
-	if (DB_num_rows($result) == 0) {
+	$Result = DB_query($SQL, $ErrMsg);
+	if (DB_num_rows($Result) == 0) {
 		/*There is no order header returned */
 		$Title = _('Print Purchase Order Error');
 		include('includes/header.php');
@@ -129,10 +129,10 @@ if (isset($OrderNo) AND $OrderNo != '' AND $OrderNo > 0 AND $OrderNo != 'Preview
 			</div><br /><br /><br />';
 		include('includes/footer.php');
 		exit();
-	} elseif (DB_num_rows($result) == 1) {
+	} elseif (DB_num_rows($Result) == 1) {
 		/*There is only one order header returned  (as it should be!)*/
 
-		$POHeader = DB_fetch_array($result);
+		$POHeader = DB_fetch_array($Result);
 
 		if ($POHeader['status'] != 'Authorised' AND $POHeader['status'] != 'Printed') {
 			include('includes/header.php');
@@ -200,13 +200,13 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	include('includes/PDFStarter.php');
 	$pdf->addInfo('Title', _('Purchase Order'));
 	$pdf->addInfo('Subject', _('Purchase Order Number') . ' ' . $OrderNo);
-	$line_height = $FormDesign->LineHeight;
+	$LineHeight = $FormDesign->LineHeight;
 	$PageNumber = 1;
 	/* Then there's an order to print and its not been printed already (or its been flagged for reprinting)
 	Now ... Has it got any line items */
 	if ($OrderNo != 'Preview') { // It is a real order
 		$ErrMsg = _('There was a problem retrieving the line details for order number') . ' ' . $OrderNo . ' ' . _('from the database');
-		$sql = "SELECT itemcode,
+		$SQL = "SELECT itemcode,
 						deliverydate,
 						itemdescription,
 						unitprice,
@@ -219,14 +219,14 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 					ON purchorderdetails.itemcode=stockmaster.stockid
 				WHERE orderno ='" . $OrderNo . "'
 				ORDER BY itemcode";	/*- ADDED: Sort by our item code -*/
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 	}
-	if ($OrderNo == 'Preview' or DB_num_rows($result) > 0) {
+	if ($OrderNo == 'Preview' or DB_num_rows($Result) > 0) {
 		/*Yes there are line items to start the ball rolling with a page header */
 		include('includes/PO_PDFOrderPageHeader.inc');
 		$YPos = $Page_Height - $FormDesign->Data->y;
 		$OrderTotal = 0;
-		while ((isset($OrderNo) AND $OrderNo == 'Preview') OR (isset($result) AND !is_bool($result) AND $POLine = DB_fetch_array($result))) {
+		while ((isset($OrderNo) AND $OrderNo == 'Preview') OR (isset($Result) AND !is_bool($Result) AND $POLine = DB_fetch_array($Result))) {
 			/* If we are previewing the order then fill the
 			 * order line with dummy data */
 			if ($OrderNo == 'Preview') {
@@ -269,8 +269,8 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x, $YPos, $FormDesign->Data->Column1->Length, $FormDesign->Data->Column1->FontSize, $ItemCode, 'left');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x, $YPos, $FormDesign->Data->Column2->Length, $FormDesign->Data->Column2->FontSize, $POLine['itemdescription'], 'left');
 			while (mb_strlen($LeftOvers) > 1) {
-				$YPos -= $line_height;
-				if ($YPos - $line_height <= $Bottom_Margin) {
+				$YPos -= $LineHeight;
+				if ($YPos - $LineHeight <= $Bottom_Margin) {
 					/* We reached the end of the page so finsih off the page and start a newy */
 					$PageNumber++;
 					$YPos = $Page_Height - $FormDesign->Data->y;
@@ -284,10 +284,10 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x, $YPos, $FormDesign->Data->Column6->Length, $FormDesign->Data->Column6->FontSize, $DisplayPrice, 'right');
 			$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column7->x, $YPos, $FormDesign->Data->Column7->Length, $FormDesign->Data->Column7->FontSize, $DisplayLineTotal, 'right');
 			if (mb_strlen($LeftOvers) > 1) {
-				$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $line_height, 270, $FontSize, $LeftOvers, 'left');
-				$YPos -= $line_height;
+				$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $LineHeight, 270, $FontSize, $LeftOvers, 'left');
+				$YPos -= $LineHeight;
 			}
-			if ($YPos - $line_height <= $Bottom_Margin) {
+			if ($YPos - $LineHeight <= $Bottom_Margin) {
 				/* We reached the end of the page so finsih off the page and start a newy */
 				$PageNumber++;
 				$YPos = $Page_Height - $FormDesign->Data->y;
@@ -295,14 +295,14 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 			} //end if need a new page headed up
 
 			/*increment a line down for the next line item */
-			$YPos -= $line_height;
+			$YPos -= $LineHeight;
 			/* If we are previewing we want to stop showing order
 			 * lines after the first one */
 			if ($OrderNo == 'Preview') {
 				$OrderNo = 'Preview_PurchaseOrder';
 			} //$OrderNo == 'Preview'
 		} //end while there are line items to print out
-		if ($YPos - $line_height <= $Bottom_Margin) { // need to ensure space for totals
+		if ($YPos - $LineHeight <= $Bottom_Margin) { // need to ensure space for totals
 			$PageNumber++;
 			include('includes/PO_PDFOrderPageHeader.inc');
 		} //end if need a new page headed up
@@ -327,10 +327,10 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 		$pdf->__destruct();
 		include('includes/htmlMimeMail.php');
 		$mail = new htmlMimeMail();
-		$attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $PdfFileName);
+		$Attachment = $mail->getFile($_SESSION['reports_dir'] . '/' . $PdfFileName);
 		$mail->setText(_('Please find herewith our purchase order number') . ' ' . $OrderNo);
 		$mail->setSubject(_('Purchase Order Number') . ' ' . $OrderNo);
-		$mail->addAttachment($attachment, $PdfFileName, 'application/pdf');
+		$mail->addAttachment($Attachment, $PdfFileName, 'application/pdf');
 		//since sometime the mail server required to verify the users, so must set this information.
 		if($_SESSION['SmtpSetting'] == 0){//use the mail service provice by the server.
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
@@ -360,12 +360,12 @@ if (isset($MakePDFThenDisplayIt) or isset($MakePDFThenEmailIt)) {
 	if ($ViewingOnly == 0 AND $Success == 1) {
 		$StatusComment = date($_SESSION['DefaultDateFormat']) . ' - ' . _('Printed by') . ' <a href="mailto:' . $_SESSION['UserEmail'] . '">' . $_SESSION['UsersRealName'] . '</a><br />' . html_entity_decode($POHeader['stat_comment'], ENT_QUOTES, 'UTF-8');
 
-		$sql = "UPDATE purchorders	SET	allowprint =  0,
+		$SQL = "UPDATE purchorders	SET	allowprint =  0,
 										dateprinted  = '" . Date('Y-m-d') . "',
 										status = 'Printed',
 										stat_comment = '" . htmlspecialchars($StatusComment, ENT_QUOTES, 'UTF-8') . "'
 				WHERE purchorders.orderno = '" . $OrderNo . "'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 	}
 	include('includes/footer.php');
 } //isset($MakePDFThenDisplayIt) OR isset($MakePDFThenEmailIt)

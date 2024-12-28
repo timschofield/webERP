@@ -118,7 +118,7 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 	$ImgExt = pathinfo($_FILES['Drawing']['name'], PATHINFO_EXTENSION);
 
  	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-	$filename = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $ImgExt;
+	$FileName = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $ImgExt;
 
 	//But check for the worst
 	if (!in_array ($ImgExt, $SupportedImgExt)) {
@@ -131,10 +131,10 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 		prnMsg( _('Only graphics files can be uploaded'),'warn');
 		 	$UploadTheFile ='No';
 	}
-	foreach ($SupportedImgExt as $ext) {
-		$file = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $ext;
-		if (file_exists ($file) ) {
-			$Result = unlink($file);
+	foreach ($SupportedImgExt as $Ext) {
+		$File = $_SESSION['part_pics_dir'] . '/' . $_SESSION['Contract'.$identifier]->ContractRef . '.' . $Ext;
+		if (file_exists ($File) ) {
+			$Result = unlink($File);
 			if (!$Result){
 				prnMsg(_('The existing image could not be removed'),'error');
 				$UploadTheFile ='No';
@@ -143,8 +143,8 @@ if (isset($_FILES['Drawing']) AND $_FILES['Drawing']['name'] !='' AND $_SESSION[
 	}
 
 	if ($UploadTheFile=='Yes'){
-		$Result  =  move_uploaded_file($_FILES['Drawing']['tmp_name'], $filename);
-		$message = ($Result)?_('File url') . '<a href="' . $filename . '">' .  $filename . '</a>' : _('Something is wrong with uploading the file');
+		$Result  =  move_uploaded_file($_FILES['Drawing']['tmp_name'], $FileName);
+		$Message = ($Result)?_('File url') . '<a href="' . $FileName . '">' .  $FileName . '</a>' : _('Something is wrong with uploading the file');
 	}
 }
 
@@ -727,7 +727,7 @@ if (isset($_POST['SelectedCustomer'])) {
 	$MyRow = DB_fetch_array($Result);
 	if (DB_num_rows($Result)==0){
 		prnMsg(_('The customer details were unable to be retrieved'),'error');
-		if ($debug==1){
+		if ($Debug==1){
 			prnMsg(_('The SQL used that failed to get the customer details was:') . '<br />' . $SQL,'error');
 		}
 	} else {
@@ -838,9 +838,9 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	echo '</p>';
 
 	$SQL = "SELECT code, description FROM workcentres INNER JOIN locationusers ON locationusers.loccode=workcentres.location AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-	$wcresults = DB_query($SQL);
+	$WCResults = DB_query($SQL);
 
-	if (DB_num_rows($wcresults)==0){
+	if (DB_num_rows($WCResults)==0){
 		prnMsg( _('There are no work centres set up yet') . '. ' . _('Please use the link below to set up work centres'),'warn');
 		echo '<br /><a href="'.$RootPath.'/WorkCentres.php">' . _('Work Centre Maintenance') . '</a>';
 		include('includes/footer.php');

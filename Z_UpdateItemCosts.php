@@ -52,13 +52,13 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 
 	//loop through file rows
 	$LineNumber = 1;
-	while ( ($myrow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
 
-		$StockID = mb_strtoupper($myrow[0]);
+		$StockID = mb_strtoupper($MyRow[0]);
 
-		$NewCost = (double)$myrow[1]+(double)$myrow[2]+(double)$myrow[3];
+		$NewCost = (double)$MyRow[1]+(double)$MyRow[2]+(double)$MyRow[3];
 
-		$sql = "SELECT mbflag,
+		$SQL = "SELECT mbflag,
 						materialcost,
 						labourcost,
 						overheadcost,
@@ -71,7 +71,7 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 						overheadcost";
 
 		$ErrMsg = _('The selected item code does not exist');
-	    $OldResult = DB_query($sql,$ErrMsg);
+	    $OldResult = DB_query($SQL,$ErrMsg);
 	    $OldRow = DB_fetch_array($OldResult);
 	    $QOH = $OldRow['totalqoh'];
 
@@ -84,9 +84,9 @@ if (isset($_FILES['CostUpdateFile']) and $_FILES['CostUpdateFile']['name']) { //
 
 			ItemCostUpdateGL($StockID, $NewCost, $OldCost, $QOH);
 
-			$SQL = "UPDATE stockmaster SET	materialcost='" . (double) $myrow[1] . "',
-											labourcost='" . (double) $myrow[2] . "',
-											overheadcost='" . (double) $myrow[3] . "',
+			$SQL = "UPDATE stockmaster SET	materialcost='" . (double) $MyRow[1] . "',
+											labourcost='" . (double) $MyRow[2] . "',
+											overheadcost='" . (double) $MyRow[3] . "',
 											lastcost='" . $OldCost . "',
 											lastcostupdate ='" . Date('Y-m-d')."'
 									WHERE stockid='" . $StockID . "'";

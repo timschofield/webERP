@@ -106,15 +106,15 @@ if($StockID == '') {
 
 $i = strrpos($StockID,'.');
 if( $i === false )
-  	$type = 'png';
+  	$Type = 'png';
 else {
-	$type   = strtolower(mb_substr($StockID,$i+1,mb_strlen($StockID)));
+	$Type   = strtolower(mb_substr($StockID,$i+1,mb_strlen($StockID)));
 	$StockID = mb_substr($StockID,0,$i);
 	if($blanktext && !isset($text))
 		$text = '';
 }
-$style = $type;
-$functype = $type;
+$style = $Type;
+$functype = $Type;
 if ( $style == 'jpg' ) {
 	$style = 'jpeg';
 	$functype = 'jpeg';
@@ -333,7 +333,7 @@ if( $bevel ) {
 	imageline($im, imagesx($im)-1,0,imagesx($im)-1, imagesy($im)-1, $silver); // right
 }
 // Set up headers
-header('Content-Disposition: filename='.$StockID.'.'.$type);
+header('Content-Disposition: filename='.$StockID.'.'.$Type);
 header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 header('Pragma: public');
 header('Content-type: image/'.$style);

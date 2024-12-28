@@ -650,7 +650,7 @@ if (!isset($_POST['PostInvoice'])) {
 			<tr>
 				<th colspan="6">' . _('Purchase Order Charges') . '</th>
 			</tr>';
-		$tableheader = '<tr style="tableheader">
+		$Tableheader = '<tr style="tableheader">
 							<th>' . _('Seq') . ' #</th>
 							<th>' . _('GRN Batch') . '</th>
 							<th>' . _('Supplier Ref') . '</th>
@@ -660,7 +660,7 @@ if (!isset($_POST['PostInvoice'])) {
 							<th>' . _('Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 							<th>' . _('Line Total') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 						</tr>';
-		echo $tableheader;
+		echo $Tableheader;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN) {
 
@@ -1441,7 +1441,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 				$LocalTotal += ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate;
 			} /* end of GRN postings */
 
-			if ($debug == 1 AND (abs($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate) - $LocalTotal) > 0.009999) {
+			if ($Debug == 1 AND (abs($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate) - $LocalTotal) > 0.009999) {
 
 				echo '<p>' . _('The total posted to the debit accounts is') . ' ' . $LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' . ($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate);
 			}

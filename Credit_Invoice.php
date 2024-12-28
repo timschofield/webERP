@@ -298,7 +298,7 @@ $TaxTotal = 0;
 /*show the line items on the invoice with the quantity to credit and price being available for modification */
 
 $j = 0; //row counter
-$tabindex = 1; // Tab order of an element when the "tab" button is used for navigating.
+$TabIndex = 1; // Tab order of an element when the "tab" button is used for navigating.
 foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 	$LineTotal = $LnItm->QtyDispatched * $LnItm->Price * (1 - $LnItm->DiscountPercent);
@@ -318,19 +318,19 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 		if ($LnItm->Controlled == 1) {
 
-			echo '<td><input class="number" type="hidden" name="Quantity_' . $LnItm->LineNumber . '" value="' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /><a ' . ($j == 1 ? 'autofocus="autofocus" ' : '') . ' href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&amp;CreditInvoice=Yes&amp;identifier=' . $identifier . '" tabindex="' . $tabindex++ . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
+			echo '<td><input class="number" type="hidden" name="Quantity_' . $LnItm->LineNumber . '" value="' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /><a ' . ($j == 1 ? 'autofocus="autofocus" ' : '') . ' href="' . $RootPath . '/CreditItemsControlled.php?LineNo=' . $LnItm->LineNumber . '&amp;CreditInvoice=Yes&amp;identifier=' . $identifier . '" tabindex="' . $TabIndex++ . '">' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '</a></td>';
 
 		} else {
 
-			echo '<td><input class="number" ' . ($j == 1 ? 'autofocus="autofocus" ' : '') . ' maxlength="6" name="Quantity_' . $LnItm->LineNumber . '" required="required" size="6" tabindex="' . $tabindex++ . '" title="' . _('Enter the quantity of this item to credit') . '" type="text" value="' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /></td>';
+			echo '<td><input class="number" ' . ($j == 1 ? 'autofocus="autofocus" ' : '') . ' maxlength="6" name="Quantity_' . $LnItm->LineNumber . '" required="required" size="6" tabindex="' . $TabIndex++ . '" title="' . _('Enter the quantity of this item to credit') . '" type="text" value="' . locale_number_format($LnItm->QtyDispatched, $LnItm->DecimalPlaces) . '" /></td>';
 
 		}
 
 		$DisplayLineTotal = locale_number_format($LineTotal, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces);
 
 		$j++;
-		echo '<td><input class="number" maxlength="12" name="Price_' . $LnItm->LineNumber . '" required="required" size="6" tabindex="' . $tabindex++ . '" title="' . _('Enter the price at which to credit this item') . '" type="text" value="' . locale_number_format($LnItm->Price, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
-			<td><input class="number" maxlength="3" name="Discount_' . $LnItm->LineNumber . '" required="required" size="3" tabindex="' . $tabindex++ . '" type="text" value="' . locale_number_format(($LnItm->DiscountPercent * 100), 2) . '" />%</td>
+		echo '<td><input class="number" maxlength="12" name="Price_' . $LnItm->LineNumber . '" required="required" size="6" tabindex="' . $TabIndex++ . '" title="' . _('Enter the price at which to credit this item') . '" type="text" value="' . locale_number_format($LnItm->Price, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
+			<td><input class="number" maxlength="3" name="Discount_' . $LnItm->LineNumber . '" required="required" size="3" tabindex="' . $TabIndex++ . '" type="text" value="' . locale_number_format(($LnItm->DiscountPercent * 100), 2) . '" />%</td>
 			<td class="number">' . $DisplayLineTotal . '</td>';
 
 		/*Need to list the taxes applicable to this line */
@@ -357,7 +357,7 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 				echo '<br />';
 			}
 			if (!isset($_POST['ProcessCredit'])) {
-				echo '<input class="number" maxlength="4" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" required="required" size="4" tabindex="' . $tabindex++ . '" type="text" value="' . locale_number_format($Tax->TaxRate * 100, 2) . '" />%';
+				echo '<input class="number" maxlength="4" name="' . $LnItm->LineNumber . $Tax->TaxCalculationOrder . '_TaxRate" required="required" size="4" tabindex="' . $TabIndex++ . '" type="text" value="' . locale_number_format($Tax->TaxRate * 100, 2) . '" />%';
 			}
 			$i++;
 			if ($Tax->TaxOnTax == 1) {
@@ -390,11 +390,11 @@ foreach ($_SESSION['CreditItems' . $identifier]->LineItems as $LnItm) {
 
 		echo '<td class="number">' . $DisplayTaxAmount . '</td>
 				<td class="number">' . $DisplayGrossLineTotal . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&Delete=' . $LnItm->LineNumber . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the credit?') . '\');" tabindex="' . $tabindex++ . '">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . $identifier . '&Delete=' . $LnItm->LineNumber . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this item from the credit?') . '\');" tabindex="' . $TabIndex++ . '">' . _('Delete') . '</a></td>
 			</tr>';
 
 		echo '<tr class="' . $RowClass . '">
-	<td colspan="13"><textarea name="Narrative_' . $LnItm->LineNumber . '" cols="100%" rows="1" tabindex="' . $tabindex++ . '">' . $LnItm->Narrative . '</textarea>
+	<td colspan="13"><textarea name="Narrative_' . $LnItm->LineNumber . '" cols="100%" rows="1" tabindex="' . $TabIndex++ . '">' . $LnItm->Narrative . '</textarea>
 				<br />
 				<hr /></td>
 			</tr>';
@@ -412,7 +412,7 @@ if (!isset($_POST['ProcessCredit'])) {
 		<td class="number">' . locale_number_format($_SESSION['Old_FreightCost'], $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '</td>
 		<td></td>
 		<td class="number" colspan="2">' . _('Credit Freight Cost') . '</td>
-		<td><input class="number" maxlength="6" name="ChargeFreightCost" required="required" size="6" tabindex="' . $tabindex++ . '" type="text" value="' . locale_number_format($_SESSION['CreditItems' . $identifier]->FreightCost, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
+		<td><input class="number" maxlength="6" name="ChargeFreightCost" required="required" size="6" tabindex="' . $TabIndex++ . '" type="text" value="' . locale_number_format($_SESSION['CreditItems' . $identifier]->FreightCost, $_SESSION['CreditItems' . $identifier]->CurrDecimalPlaces) . '" /></td>
 		<td>&nbsp;</td>
 		<td>';
 
@@ -433,7 +433,7 @@ foreach ($_SESSION['CreditItems' . $identifier]->FreightTaxes as $FreightTaxLine
 	}
 
 	if (!isset($_POST['ProcessCredit'])) {
-		echo '<input class="number" maxlength="4" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" required="required" size="4" type="text" value="' . locale_number_format(($FreightTaxLine->TaxRate * 100), 2) . '" tabindex="' . $tabindex++ . '" />';
+		echo '<input class="number" maxlength="4" name="FreightTaxRate' . $FreightTaxLine->TaxCalculationOrder . '" required="required" size="4" type="text" value="' . locale_number_format(($FreightTaxLine->TaxRate * 100), 2) . '" tabindex="' . $TabIndex++ . '" />';
 	}
 	if ($FreightTaxLine->TaxOnTax == 1) {
 		$TaxTotals[$FreightTaxLine->TaxAuthID]+= ($FreightTaxLine->TaxRate * ($_SESSION['CreditItems' . $identifier]->FreightCost + $FreightTaxTotal));
@@ -1562,7 +1562,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 		<table class="selection">
 		<tr>
 			<td>' . _('Credit Note Type') . '</td>
-			<td><select name="CreditType" tabindex="' . $tabindex++ . '" onchange="ReloadForm(Update)">';
+			<td><select name="CreditType" tabindex="' . $TabIndex++ . '" onchange="ReloadForm(Update)">';
 
 	if (!isset($_POST['CreditType']) or $_POST['CreditType'] == 'Return') {
 		echo '<option selected="selected" value="Return">' . _('Goods returned to store') . '</option>';
@@ -1587,7 +1587,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 		echo '<tr>
 				<td>' . _('Goods returned to location') . '</td>
-				<td><select name="Location" tabindex="' . $tabindex++ . '">';
+				<td><select name="Location" tabindex="' . $TabIndex++ . '">';
 
 		$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 		$Result = DB_query($SQL);
@@ -1610,7 +1610,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 		echo '<tr>
 			<td>' . _('Write off the cost of the goods to') . '</td>
-			<td><select name="WriteOffGLCode" tabindex="' . $tabindex++ . '">';
+			<td><select name="WriteOffGLCode" tabindex="' . $TabIndex++ . '">';
 
 		$SQL = "SELECT accountcode,
 					accountname
@@ -1642,7 +1642,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 		echo $_SESSION['UsersRealName'];
 		echo '</td>';
 	} else {
-		echo '<td><select name="SalesPerson" tabindex="' . $tabindex++ . '">';
+		echo '<td><select name="SalesPerson" tabindex="' . $TabIndex++ . '">';
 		$SalesPeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current=1");
 		/* SalesPerson will be set because it is an invoice being credited and the order salesperson would/should have been retrieved */
 		while ($SalesPersonRow = DB_fetch_array($SalesPeopleResult)) {
@@ -1660,18 +1660,18 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 	}
 	echo '<tr>
 			<td>' . _('Credit note text') . '</td>
-			<td><textarea name="CreditText" cols="31" rows="5" tabindex="' . $tabindex++ . '">' . $_POST['CreditText'] . '</textarea></td>
+			<td><textarea name="CreditText" cols="31" rows="5" tabindex="' . $TabIndex++ . '">' . $_POST['CreditText'] . '</textarea></td>
 		</tr>
 		</table>
 		<br />
 		<div class="centre">
-			<input name="Update" tabindex="' . $tabindex++ . '" type="submit" value="' . _('Update') . '" />
+			<input name="Update" tabindex="' . $TabIndex++ . '" type="submit" value="' . _('Update') . '" />
 			<br />';
 	$j++;
 	if (!isset($_POST['CreditText'])) {
 		$_POST['CreditText'] = '';
 	}
-	echo '<input name="ProcessCredit" type="submit" tabindex="' . $tabindex++ . '" value="' . _('Process Credit') . '" />
+	echo '<input name="ProcessCredit" type="submit" tabindex="' . $TabIndex++ . '" value="' . _('Process Credit') . '" />
 		</div>';
 }
 echo '</div>';

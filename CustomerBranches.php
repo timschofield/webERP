@@ -99,9 +99,9 @@ if (isset($_POST['submit'])) {
 		$SQL = "SELECT * FROM geocode_param WHERE 1";
 		$ErrMsg = _('An error occurred in retrieving the information');
 		$Resultgeo = DB_query($SQL, $ErrMsg);
-		$row = DB_fetch_array($Resultgeo);
-		$api_key = $row['geocode_key'];
-		$map_host = $row['map_host'];
+		$Row = DB_fetch_array($Resultgeo);
+		$api_key = $Row['geocode_key'];
+		$map_host = $Row['map_host'];
 		define('MAPS_HOST', $map_host);
 		define('KEY', $api_key);
 		if ($map_host=="") {
@@ -167,7 +167,7 @@ if (isset($_POST['submit'])) {
 			$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 		}
 
-		$msg = $_POST['BrName'] . ' '._('branch has been updated.');
+		$Msg = $_POST['BrName'] . ' '._('branch has been updated.');
 
 	} else if ($InputError !=1) {
 
@@ -237,7 +237,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['DeliverBlind'] . "')";
 	}
 	echo '<br />';
-	$msg = _('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . _('has been added, add another branch, or return to the') . ' <a href="index.php">' . _('Main Menu') . '</a>';
+	$Msg = _('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . _('has been added, add another branch, or return to the') . ' <a href="index.php">' . _('Main Menu') . '</a>';
 
 	//run the SQL from either of the above possibilites
 
@@ -247,7 +247,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (DB_error_no() ==0 AND $InputError==0) {
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset($_POST['BranchCode']);
 		unset($_POST['BrName']);
 		unset($_POST['BrAddress1']);

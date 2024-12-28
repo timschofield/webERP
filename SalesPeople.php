@@ -80,7 +80,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
+		$SQL = "UPDATE salesman SET salesmanname='" . $_POST['SalesmanName'] . "',
 									smantel='" . $_POST['SManTel'] . "',
 									smanfax='" . $_POST['SManFax'] . "',
 									current='" . $_POST['Current'] . "',
@@ -89,12 +89,12 @@ if (isset($_POST['submit'])) {
 									glaccount='" . $_POST['GLAccount'] . "'
 								WHERE salesmancode = '" . stripslashes($SelectedSalesPerson) . "'";
 
-		$msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
+		$Msg = _('Salesperson record for') . ' ' . $_POST['SalesmanName'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new Sales-person form */
 
-		$sql = "INSERT INTO salesman (salesmancode,
+		$SQL = "INSERT INTO salesman (salesmancode,
 						salesmanname,
 						smantel,
 						smanfax,
@@ -112,15 +112,15 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['GLAccount'] . "'
 					)";
 
-		$msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
+		$Msg = _('A new salesperson record has been added for') . ' ' . $_POST['SalesmanName'];
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
 		$ErrMsg = _('The insert or update of the salesperson failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 
 		unset($SelectedSalesPerson);
 		unset($_POST['SalesmanCode']);
@@ -139,29 +139,29 @@ $BookMark = 'SalespeopleDelete';
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorsMaster'
 
-	$sql= "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='".$SelectedSalesPerson."'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('branches that refer to this salesperson'),'error');
+	$SQL= "SELECT COUNT(*) FROM custbranch WHERE  custbranch.salesman='".$SelectedSalesPerson."'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
+		prnMsg(_('Cannot delete this salesperson because branches are set up referring to them') . ' - ' . _('first alter the branches concerned') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('branches that refer to this salesperson'),'error');
 
 	} else {
-		$sql= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='".$SelectedSalesPerson."'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
-			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
+		$SQL= "SELECT COUNT(*) FROM salesanalysis WHERE salesanalysis.salesperson='".$SelectedSalesPerson."'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0]>0) {
+			prnMsg(_('Cannot delete this salesperson because sales analysis records refer to them') , '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('sales analysis records that refer to this salesperson'),'error');
 		} else {
-			$sql= "SELECT COUNT(*) FROM www_users WHERE salesman='".$SelectedSalesPerson."'";
-			$result = DB_query($sql);
-			$myrow = DB_fetch_row($result);
-			if ($myrow[0]>0) {
-				prnMsg(_('Cannot delete this salesperson because') , '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('user records that refer to this salesperson') . '.' ._('First delete any users that refer to this sales person'),'error');
+			$SQL= "SELECT COUNT(*) FROM www_users WHERE salesman='".$SelectedSalesPerson."'";
+			$Result = DB_query($SQL);
+			$MyRow = DB_fetch_row($Result);
+			if ($MyRow[0]>0) {
+				prnMsg(_('Cannot delete this salesperson because') , '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('user records that refer to this salesperson') . '.' ._('First delete any users that refer to this sales person'),'error');
 			} else {
 
-				$sql="DELETE FROM salesman WHERE salesmancode='". $SelectedSalesPerson."'";
+				$SQL="DELETE FROM salesman WHERE salesmancode='". $SelectedSalesPerson."'";
 				$ErrMsg = _('The salesperson could not be deleted because');
-				$result = DB_query($sql,$ErrMsg);
+				$Result = DB_query($SQL,$ErrMsg);
 
 				prnMsg(_('Salesperson') . ' ' . $SelectedSalesPerson . ' ' . _('has been deleted from the database'),'success');
 				unset ($SelectedSalesPerson);
@@ -178,7 +178,7 @@ then none of the above are true and the list of Sales-persons will be displayed 
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT salesmancode,
+	$SQL = "SELECT salesmancode,
 				salesmanname,
 				smantel,
 				smanfax,
@@ -187,7 +187,7 @@ or deletion of the records*/
 				commissiontypeid,
 				glaccount
 			FROM salesman";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -202,40 +202,40 @@ or deletion of the records*/
 			<th colspan="3"></th>
 		</tr>';
 
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
-		if ($myrow['current'] == 1) {
+		if ($MyRow['current'] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');
 		}
 
-		if ($myrow['commissiontypeid'] == 0) {
+		if ($MyRow['commissiontypeid'] == 0) {
 			$TypeRow['commissiontypename'] = _('No Commission');
 		} else {
-			$SQL = "SELECT commissiontypename FROM salescommissiontypes WHERE commissiontypeid='" . $myrow['commissiontypeid'] . "'";
+			$SQL = "SELECT commissiontypename FROM salescommissiontypes WHERE commissiontypeid='" . $MyRow['commissiontypeid'] . "'";
 			$TypeResult = DB_query($SQL);
 			$TypeRow = DB_fetch_array($TypeResult);
 		}
 
 		$SQL = "SELECT accountname
 					FROM chartmaster
-					WHERE accountcode='" . $myrow['glaccount'] . "'";
+					WHERE accountcode='" . $MyRow['glaccount'] . "'";
 		$GLResult = DB_query($SQL);
 		$GLRow = DB_fetch_array($GLResult);
 
 		echo'<tr class="striped_row">
-				<td>', $myrow['salesmancode'], '</td>
-				<td>', $myrow['salesmanname'], '</td>
-				<td>', $myrow['smantel'], '</td>
-				<td>', $myrow['smanfax'], '</td>
+				<td>', $MyRow['salesmancode'], '</td>
+				<td>', $MyRow['salesmanname'], '</td>
+				<td>', $MyRow['smantel'], '</td>
+				<td>', $MyRow['smanfax'], '</td>
 				<td>', $ActiveText, '</td>
-				<td>', $CommissionPeriods[$myrow['commissionperiod']], '</td>
-				<td>', $myrow['commissiontypeid'], ' - ', $TypeRow['commissiontypename'], '</td>
-				<td>', $myrow['glaccount'], ' - ', $GLRow['accountname'], '</td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($myrow['salesmancode']), '">', _('Edit'), '</a></td>
-				<td><a href="', $RootPath, '/SalesCommissionRates.php?SelectedSalesPerson=', urlencode($myrow['salesmancode']), '">', _('Edit Commission Rates'), '</a></td>
-				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($myrow['salesmancode']), '&amp;delete=1" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
+				<td>', $CommissionPeriods[$MyRow['commissionperiod']], '</td>
+				<td>', $MyRow['commissiontypeid'], ' - ', $TypeRow['commissiontypename'], '</td>
+				<td>', $MyRow['glaccount'], ' - ', $GLRow['accountname'], '</td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', _('Edit'), '</a></td>
+				<td><a href="', $RootPath, '/SalesCommissionRates.php?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '">', _('Edit Commission Rates'), '</a></td>
+				<td><a href="', htmlspecialchars(basename(__FILE__), ENT_QUOTES, 'UTF-8'), '?SelectedSalesPerson=', urlencode($MyRow['salesmancode']), '&amp;delete=1" onclick="return MakeConfirm(\'', _('Are you sure you wish to delete this sales person?'), '\', \'Confirm Delete\', this);">', _('Delete'), '</a></td>
 			</tr>';
 
 	} //END WHILE LIST LOOP
@@ -254,7 +254,7 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedSalesPerson)) {
 		//editing an existing Sales-person
 
-		$sql = "SELECT salesmancode,
+		$SQL = "SELECT salesmancode,
 					salesmanname,
 					smantel,
 					smanfax,
@@ -265,17 +265,17 @@ if (! isset($_GET['delete'])) {
 				FROM salesman
 				WHERE salesmancode='".$SelectedSalesPerson."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['SalesmanCode'] = $myrow['salesmancode'];
-		$_POST['SalesmanName'] = $myrow['salesmanname'];
-		$_POST['SManTel'] = $myrow['smantel'];
-		$_POST['SManFax'] = $myrow['smanfax'];
-		$_POST['Current'] = $myrow['current'];
-		$_POST['CommissionPeriod'] = $myrow['commissionperiod'];
-		$_POST['CommissionTypeID'] = $myrow['commissiontypeid'];
-		$_POST['GLAccount'] = $myrow['glaccount'];
+		$_POST['SalesmanCode'] = $MyRow['salesmancode'];
+		$_POST['SalesmanName'] = $MyRow['salesmanname'];
+		$_POST['SManTel'] = $MyRow['smantel'];
+		$_POST['SManFax'] = $MyRow['smanfax'];
+		$_POST['Current'] = $MyRow['current'];
+		$_POST['CommissionPeriod'] = $MyRow['commissionperiod'];
+		$_POST['CommissionTypeID'] = $MyRow['commissiontypeid'];
+		$_POST['GLAccount'] = $MyRow['glaccount'];
 
 
 		echo '<input type="hidden" name="SelectedSalesPerson" value="' . $SelectedSalesPerson . '" />';

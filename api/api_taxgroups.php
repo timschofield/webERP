@@ -11,11 +11,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT taxgroupid FROM taxgroups';
-		$result = DB_query($sql);
+		$SQL = 'SELECT taxgroupid FROM taxgroups';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$TaxgroupList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$TaxgroupList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $TaxgroupList;
@@ -33,9 +33,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM taxgroups WHERE taxgroupid='".$taxgroup."'";
-		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		$SQL = "SELECT * FROM taxgroups WHERE taxgroupid='".$taxgroup."'";
+		$Result = DB_query($SQL);
+		return DB_fetch_array($Result);
 	}
 
 	/* This function takes as a parameter a tax group id
@@ -50,15 +50,15 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT taxgroupid, taxauthid, calculationorder, taxontax FROM taxgrouptaxes WHERE taxgroupid='".$TaxGroup."'";
-		$result = DB_query($sql);
+		$SQL = "SELECT taxgroupid, taxauthid, calculationorder, taxontax FROM taxgrouptaxes WHERE taxgroupid='".$TaxGroup."'";
+		$Result = DB_query($SQL);
 		$i=0;
 		$Answer = array();
-		while ($myrow=DB_fetch_array($result)){
-			$Answer[$i]['taxgroupid'] = $myrow['taxgroupid'];
-			$Answer[$i]['taxauthid'] = $myrow['taxauthid'];
-			$Answer[$i]['calculationorder'] = $myrow['calculationorder'];
-			$Answer[$i]['taxontax'] = $myrow['taxontax'];
+		while ($MyRow=DB_fetch_array($Result)){
+			$Answer[$i]['taxgroupid'] = $MyRow['taxgroupid'];
+			$Answer[$i]['taxauthid'] = $MyRow['taxauthid'];
+			$Answer[$i]['calculationorder'] = $MyRow['calculationorder'];
+			$Answer[$i]['taxontax'] = $MyRow['taxontax'];
 			$i++;
 		}
 		$Errors[0]=0;
@@ -76,11 +76,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT taxid FROM taxauthorities';
-		$result = DB_query($sql);
+		$SQL = 'SELECT taxid FROM taxauthorities';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$TaxAuthList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$TaxAuthList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $TaxAuthList;
@@ -98,9 +98,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM taxauthorities WHERE taxid='".$TaxAuthority."'";
-		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		$SQL = "SELECT * FROM taxauthorities WHERE taxid='".$TaxAuthority."'";
+		$Result = DB_query($SQL);
+		return DB_fetch_array($Result);
 	}
 
 /* This function takes as a parameter a tax authority id and a tax category id
@@ -115,14 +115,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT taxcatid, dispatchtaxprovince, taxrate FROM taxauthrates WHERE taxauthority='".$TaxAuthority."'";
-		$result = DB_query($sql);
+		$SQL = "SELECT taxcatid, dispatchtaxprovince, taxrate FROM taxauthrates WHERE taxauthority='".$TaxAuthority."'";
+		$Result = DB_query($SQL);
 		$i=0;
 		$Answer = array();
-		while ($myrow=DB_fetch_array($result)){
-			$Answer[$i]['taxcatid'] = $myrow['taxcatid'];
-			$Answer[$i]['dispatchtaxprovince'] = $myrow['dispatchtaxprovince'];
-			$Answer[$i]['taxrate'] = $myrow['taxrate'];
+		while ($MyRow=DB_fetch_array($Result)){
+			$Answer[$i]['taxcatid'] = $MyRow['taxcatid'];
+			$Answer[$i]['dispatchtaxprovince'] = $MyRow['dispatchtaxprovince'];
+			$Answer[$i]['taxrate'] = $MyRow['taxrate'];
 			$i++;
 		}
 		$Errors[0]=0;

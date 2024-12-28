@@ -18,7 +18,7 @@ if (isset($_GET['Run'])){
 if (isset($Run)) { //start bom processing
 
 	// Get all bottom level components
-	$sql = "SELECT DISTINCT b1.component
+	$SQL = "SELECT DISTINCT b1.component
 			FROM bom as b1
 			left join bom as b2 on b2.parent=b1.component
 			WHERE b2.parent is null;" ;
@@ -26,9 +26,9 @@ if (isset($Run)) { //start bom processing
 	$ErrMsg =  _('An error occurred selecting all bottom level components');
 	$DbgMsg =  _('The SQL that was used to select bottom level components and failed in the process was');
 
-	$result = DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	while ($item = DB_fetch_array($result)) {
+	while ($item = DB_fetch_array($Result)) {
 		$inputerror=UpdateCost($item['component']);
 		if ($inputerror==0) {
 			prnMsg( _('Component') .' ' . $item['component']  . ' '. _('has been processed'),'success');

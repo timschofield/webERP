@@ -22,9 +22,9 @@ if(isset($_POST['Enter'])){ //user has input a new value
 		include('includes/footer.php');
 	}
 	if($InputError == 0){
-		$sql = "INSERT INTO mailgroups (groupname) VALUES ('".$MailGroup."')";
+		$SQL = "INSERT INTO mailgroups (groupname) VALUES ('".$MailGroup."')";
 		$ErrMsg = _('Failed to add new mail group');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		GetMailGroup();
 
 	}
@@ -54,10 +54,10 @@ if(isset($_GET['Add']) and isset($_GET['UserId'])){
 		include('includes/footer.php');
 		exit;
 	}
-	$sql = "INSERT INTO mailgroupdetails (groupname, userid) VALUES ('".$GroupName."',
+	$SQL = "INSERT INTO mailgroupdetails (groupname, userid) VALUES ('".$GroupName."',
 									'".$UserId."')";
 	$ErrMsg = _('Failed to add users to mail group');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	GetUsers($GroupId, $GroupName);
 }
 
@@ -65,9 +65,9 @@ if(isset($_GET['Add']) and isset($_GET['UserId'])){
 if(isset($_GET['Delete'])){
 	if(is_numeric($_GET['Id'])){
 		$id = (int)$_GET['Id'];
-		$sql = "DELETE FROM mailgroups WHERE id = '".$id."'";
+		$SQL = "DELETE FROM mailgroups WHERE id = '".$id."'";
 		$ErrMsg = _('Failed to delete the mail group which id is '.$id);
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		GetMailGroup();
 	}else{
 		prnMsg(_('The group id must be numeric'),'error');
@@ -130,9 +130,9 @@ if(isset($_GET['Remove'])){
 		}
 
 	}
-	$sql = "DELETE FROM mailgroupdetails WHERE userid = '".$UserId."' AND groupname = '".$GroupName."'";
+	$SQL = "DELETE FROM mailgroupdetails WHERE userid = '".$UserId."' AND groupname = '".$GroupName."'";
 	$ErrMsg = 'Failed to delete the userid '.$UserId.' from group '.$GroupName;
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	GetUsers($GroupId,$GroupName);
 
 
@@ -163,20 +163,20 @@ if(!isset($_GET['Edit'])){//display the input form
 <?php
 function GetMailGroup () {
 //GET the mailing group data if there are any
-$sql = "SELECT groupname, id FROM mailgroups ORDER BY groupname";
+$SQL = "SELECT groupname, id FROM mailgroups ORDER BY groupname";
 $ErrMsg = _('Failed to retrieve mail groups information');
-$result = DB_query($sql,$ErrMsg);
-if(DB_num_rows($result) != 0){
+$Result = DB_query($SQL,$ErrMsg);
+if(DB_num_rows($Result) != 0){
 ?>
 	<table class="selection">
 		<tr><th><?php echo _('Mail Group'); ?></th></tr>
 <?php
-		while($myrow = DB_fetch_array($result)){
+		while($MyRow = DB_fetch_array($Result)){
 ?>
-			<tr><td><?php echo $myrow['groupname']; ?></td>
+			<tr><td><?php echo $MyRow['groupname']; ?></td>
 
-				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?GroupId='.$myrow['id'].'&amp;Edit=1&amp;GroupName='.$myrow['groupname'].'" >' .  _('Edit') . '</a>'; ?></td>
-				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$myrow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');">' . _('Delete') . '</a>'; ?></td>
+				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?GroupId='.$MyRow['id'].'&amp;Edit=1&amp;GroupName='.$MyRow['groupname'].'" >' .  _('Edit') . '</a>'; ?></td>
+				<td><?php echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Id='.$MyRow['id'].'&amp;Delete=1" onclick="return confirm(\'' ._('Are you sure you wish to delete this group?').'\');">' . _('Delete') . '</a>'; ?></td>
 			</tr>
 
 <?php
@@ -188,23 +188,23 @@ if(DB_num_rows($result) != 0){
 }
 
 function GetUsers ($GroupId,$GroupName) {
-	$sql = "SELECT userid FROM mailgroups INNER JOIN mailgroupdetails ON mailgroups.groupname=mailgroupdetails.groupname WHERE mailgroups.id = '".$GroupId."'";
+	$SQL = "SELECT userid FROM mailgroups INNER JOIN mailgroupdetails ON mailgroups.groupname=mailgroupdetails.groupname WHERE mailgroups.id = '".$GroupId."'";
 	$ErrMsg = _('Failed to retrieve userid');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
 		$UsersAssigned = array();
-	if(DB_num_rows($result) != 0){
+	if(DB_num_rows($Result) != 0){
 		$i = 0;
-		while($myrow = DB_fetch_array($result)){
-			$UsersAssigned[$i] = $myrow['userid'];
+		while($MyRow = DB_fetch_array($Result)){
+			$UsersAssigned[$i] = $MyRow['userid'];
 			$i++;
 		}
 	}
 
-	$sql = "SELECT userid, realname, email FROM www_users ORDER BY realname";
+	$SQL = "SELECT userid, realname, email FROM www_users ORDER BY realname";
 	$ErrMsg = _('Failed to retrieve user information');
-	$result = DB_query($sql,$ErrMsg);
-	if(DB_num_rows($result) != 0){
+	$Result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($Result) != 0){
 
 ?>
 	<div class="centre"><?php echo _('Current Mail Group').' : '.$GroupName; ?></div>
@@ -216,15 +216,15 @@ function GetUsers ($GroupId,$GroupName) {
 		<th colspan="3"><?php echo _('Available Users'); ?></th>
 	</tr>
 <?php
-	while($myrow=DB_fetch_array($result)){
+	while($MyRow=DB_fetch_array($Result)){
 ?>
 		<tr class="striped_row">
 <?php
-		if(in_array($myrow['userid'],$UsersAssigned)){
+		if(in_array($MyRow['userid'],$UsersAssigned)){
 ?>
-			<td><?php echo $myrow['userid']; ?></td>
-			<td><?php echo $myrow['realname']; ?></td>
-			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$myrow['userid'].'&amp;GroupName='.$GroupName.'&amp;Remove=1&amp;GroupId='.$GroupId . '" onclick="return confirm(\'' . _('Are you sure you wish to remove this user from this mail group?') . '\');'; ?>"><?php echo _('Remove'); ?></a></td>
+			<td><?php echo $MyRow['userid']; ?></td>
+			<td><?php echo $MyRow['realname']; ?></td>
+			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$MyRow['userid'].'&amp;GroupName='.$GroupName.'&amp;Remove=1&amp;GroupId='.$GroupId . '" onclick="return confirm(\'' . _('Are you sure you wish to remove this user from this mail group?') . '\');'; ?>"><?php echo _('Remove'); ?></a></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
@@ -234,9 +234,9 @@ function GetUsers ($GroupId,$GroupName) {
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
-			<td><?php echo $myrow['userid']; ?></td>
-			<td><?php echo $myrow['realname']; ?></td>
-			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$myrow['userid'].'&amp;Add=1&amp;GroupName='.$GroupName.'&amp;GroupId='.$GroupId; ?>"><?php echo _('Add'); ?></a></td>
+			<td><?php echo $MyRow['userid']; ?></td>
+			<td><?php echo $MyRow['realname']; ?></td>
+			<td><a href="<?php echo htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?UserId='.$MyRow['userid'].'&amp;Add=1&amp;GroupName='.$GroupName.'&amp;GroupId='.$GroupId; ?>"><?php echo _('Add'); ?></a></td>
 <?php
 		}
 

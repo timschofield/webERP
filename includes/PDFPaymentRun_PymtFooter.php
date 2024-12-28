@@ -1,8 +1,8 @@
 <?php
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
-$YPos -= (0.5*$line_height);
-$PDF->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+$YPos -= (0.5*$Line_height);
+$PDF->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
 
 $LeftOvers = $PDF->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,_('Total Due For') . ' ' . $SupplierName, 'left');
 
@@ -56,7 +56,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		prnMsg(_('None of the payments will be processed because the payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg(),'error');
 		echo '<br>
 				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
 		DB_Txn_Rollback();
@@ -86,7 +86,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			include('header.php');
 			prnMsg(_('None of the payments will be processed since an allocation record for') . $SupplierName . _('could not be inserted because') . ' - ' . DB_error_msg(),'error');
 			echo '<br><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg(_('The SQL that failed was') . $SQL,'error');
 			}
 			DB_Txn_Rollback();
@@ -116,7 +116,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 		prnMsg(_('None of the payments will be processed because the bank account payment record for') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg(),'error');
 		echo '<br />
 				<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			prnMsg(_('The SQL that failed was') . ' ' . $SQL,'error');
 		}
 		DB_Txn_Rollback();
@@ -153,7 +153,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg(),'error');
 			echo '<br />
 					<a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg(_('The SQL that failed was') . ':<br />' . $SQL, 'error');
 			}
 			DB_Txn_Rollback();
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 			include('header.php');
 			prnMsg(_('None of the payments will be processed since the general ledger posting for the payment to') . ' ' . $SupplierName . ' ' . _('could not be inserted because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg(_('The SQL that failed was') . ':<BR>' . $SQL,'error');
 			}
 			DB_Txn_Rollback();
@@ -215,7 +215,7 @@ if (isset($_POST['PrintPDFAndProcess'])){
 				include('header.php');
 				prnMsg(_('None of the payments will be processed since the general ledger posting for the exchange difference on') . ' ' . $SupplierName . ' ' . _('could not be inserted because') .' - ' . DB_error_msg(),'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug==1){
+				if ($Debug==1){
 					prnMsg(_('The SQL that failed was: ') . '<br />' . $SQL,'error');
 				}
 				DB_Txn_Rollback();
@@ -229,13 +229,13 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 }
 
-$YPos -= (1.5*$line_height);
+$YPos -= (1.5*$Line_height);
 
-$PDF->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+$PDF->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
 
-$YPos -= $line_height;
+$YPos -= $Line_height;
 
-if ($YPos < $Bottom_Margin + $line_height){
+if ($YPos < $Bottom_Margin + $Line_height){
 	$PageNumber++;
 	include('PDFPaymentRunPageHeader.inc');
 }

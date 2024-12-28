@@ -71,7 +71,7 @@ if (isset($_POST['Submit'])) {
 				prnMsg( _('The unit of measure no longer exist.'),'error');
 			}
 		}
-		$msg = _('Unit of measure changed');
+		$Msg = _('Unit of measure changed');
 	} elseif ($InputError !=1) {
 		/*SelectedMeasureID is null cos no item selected on first time round so must be adding a record*/
 		$SQL = "SELECT count(*) FROM unitsofmeasure
@@ -85,7 +85,7 @@ if (isset($_POST['Submit'])) {
 			$SQL = "INSERT INTO unitsofmeasure (unitname )
 					VALUES ('" . $_POST['MeasureName'] ."')";
 		}
-		$msg = _('New unit of measure added');
+		$Msg = _('New unit of measure added');
 	}
 
 	if ($InputError!=1){
@@ -109,7 +109,7 @@ if (isset($_POST['Submit'])) {
 		} else {
 			$Result = DB_query($SQL);
 		}
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 	}
 	unset ($SelectedMeasureID);
 	unset ($_POST['SelectedMeasureID']);

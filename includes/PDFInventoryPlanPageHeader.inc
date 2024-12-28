@@ -11,7 +11,7 @@ $YPos= $Page_Height-$Top_Margin;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-$YPos -=$line_height;
+$YPos -=$Line_height;
 
 $FontSize=10;
 
@@ -33,14 +33,14 @@ if ($_POST['Location']=='All'){
 $FontSize=8;
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
-$YPos -=(2*$line_height);
+$YPos -=(2*$Line_height);
 
 /*Draw a rectangle to put the headings in     */
 
-$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-$pdf->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
-$pdf->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-$pdf->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
+$pdf->line($Left_Margin, $YPos+$Line_height,$Left_Margin, $YPos- $Line_height);
+$pdf->line($Left_Margin, $YPos- $Line_height,$Page_Width-$Right_Margin, $YPos- $Line_height);
+$pdf->line($Page_Width-$Right_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos- $Line_height);
 
 /*set up the headings */
 $XPos = $Left_Margin+1;
@@ -68,6 +68,6 @@ $LeftOvers = $pdf->addTextWrap(648,$YPos,40,$FontSize,_('Cust Ords'),'centre');
 $LeftOvers = $pdf->addTextWrap(694,$YPos,40,$FontSize,_('Splr Ords'),'centre');
 $LeftOvers = $pdf->addTextWrap(735,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
 
-$YPos =$YPos - (2*$line_height);
+$YPos =$YPos - (2*$Line_height);
 $FontSize=8;
 ?>

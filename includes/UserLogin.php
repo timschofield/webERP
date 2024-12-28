@@ -18,7 +18,7 @@ define('UL_MAINTENANCE', 5);
 
 function userLogin($Name, $Password, $SysAdminEmail = '') {
 
-	global $debug;
+	global $Debug;
 	global $PathPrefix;
 
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
@@ -45,7 +45,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 				WHERE www_users.userid='" . $Name . "'";
 
 		$ErrMsg = _('Could not retrieve user details on login because');
-		$debug =1;
+		$Debug =1;
         $PasswordVerified = false;
 		$Auth_Result = DB_query($SQL,$ErrMsg);
 

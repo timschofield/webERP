@@ -355,8 +355,8 @@ elseif (isset($_GET['Delete'])) {
 }
 elseif (isset($_POST['Process']) and $_POST['Process'] == _('Accept')) { //user hit submit a new GL Analysis line into the journal
 	if ($_POST['GLCode'] != '') {
-		$extract = explode(' - ', $_POST['GLCode']);
-		$_POST['GLCode'] = $extract[0];
+		$Extract = explode(' - ', $_POST['GLCode']);
+		$_POST['GLCode'] = $Extract[0];
 	}
 	if ($_POST['Debit'] > 0) {
 		$_POST['GLAmount'] = filter_number_format($_POST['Debit']);

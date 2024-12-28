@@ -28,22 +28,22 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 
 	//first off validate inputs sensible
 
-	$result = DB_query("SELECT stockid
+	$Result = DB_query("SELECT stockid
 						FROM stockmaster
 						WHERE mbflag <>'K'
 						AND mbflag<>'D'
 						AND stockid='" . mb_strtoupper($_POST['StockID']) . "'");
-	if (DB_num_rows($result)==0){
+	if (DB_num_rows($Result)==0){
 		$InputError = 1;
 		prnMsg(_('The stock item entered must be set up as either a manufactured or purchased or assembly item'),'warn');
 	}
 
 	if ($InputError !=1) {
 
-		$sql = "UPDATE stockmaster SET discountcategory='" . $_POST['DiscountCategory'] . "'
+		$SQL = "UPDATE stockmaster SET discountcategory='" . $_POST['DiscountCategory'] . "'
 				WHERE stockid='" . mb_strtoupper($_POST['StockID']) . "'";
 
-		$result = DB_query($sql, _('The discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('record for') . ' ' . mb_strtoupper($_POST['StockID']) . ' ' . _('could not be updated because'));
+		$Result = DB_query($SQL, _('The discount category') . ' ' . $_POST['DiscountCategory'] . ' ' . _('record for') . ' ' . mb_strtoupper($_POST['StockID']) . ' ' . _('could not be updated because'));
 
 		prnMsg(_('The stock master has been updated with this discount category'),'success');
 		unset($_POST['DiscountCategory']);
@@ -54,19 +54,19 @@ if (isset($_POST['submit']) and !isset($_POST['SubmitCategory'])) {
 } elseif (isset($_GET['Delete']) and $_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
-	$sql="UPDATE stockmaster SET discountcategory='' WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) ."'";
-	$result = DB_query($sql);
+	$SQL="UPDATE stockmaster SET discountcategory='' WHERE stockid='" . trim(mb_strtoupper($_GET['StockID'])) ."'";
+	$Result = DB_query($SQL);
 	prnMsg( _('The stock master record has been updated to no discount category'),'success');
 	echo '<br />';
 } elseif (isset($_POST['SubmitCategory'])) {
-	$sql = "SELECT stockid FROM stockmaster WHERE categoryid='".$_POST['stockcategory']."'";
+	$SQL = "SELECT stockid FROM stockmaster WHERE categoryid='".$_POST['stockcategory']."'";
 	$ErrMsg = _('Failed to retrieve stock category data');
-	$result = DB_query($sql,$ErrMsg);
-	if(DB_num_rows($result)>0){
-		$sql="UPDATE stockmaster
+	$Result = DB_query($SQL,$ErrMsg);
+	if(DB_num_rows($Result)>0){
+		$SQL="UPDATE stockmaster
 				SET discountcategory='".$_POST['DiscountCategory']."'
 				WHERE categoryid='".$_POST['stockcategory']."'";
-		$result=DB_query($sql);
+		$Result=DB_query($SQL);
 	}else{
 		prnMsg(_('There are no stock defined for this stock category, you must define stock for it first'),'error');
 		include('includes/footer.php');
@@ -79,18 +79,18 @@ if (isset($_POST['SelectChoice'])) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
-	$result = DB_query($sql);
-	if (DB_num_rows($result) > 0) {
+	$SQL = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
 		echo '<table class="selection"><tr><td>' .  _('Discount Category Code') .': </td>';
 
 		echo '<td><select name="DiscCat" onchange="ReloadForm(update.select)">';
 
-		while ($myrow = DB_fetch_array($result)){
-			if ($myrow['discountcategory']==$_POST['DiscCat']){
-				echo '<option selected="selected" value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory']  . '</option>';
+		while ($MyRow = DB_fetch_array($Result)){
+			if ($MyRow['discountcategory']==$_POST['DiscCat']){
+				echo '<option selected="selected" value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory']  . '</option>';
 			} else {
-				echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
+				echo '<option value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory'] . '</option>';
 			}
 		}
 
@@ -154,20 +154,20 @@ if (isset($_POST['SelectChoice'])) {
 
 		if (isset($_POST['search'])) {
 			if ($_POST['PartID']!='' and $_POST['PartDesc']=='')
-				$sql="SELECT stockid, description FROM stockmaster
+				$SQL="SELECT stockid, description FROM stockmaster
 						WHERE stockid " . LIKE  . " '%".$_POST['PartID']."%'";
 			if ($_POST['PartID']=='' and $_POST['PartDesc']!='')
-				$sql="SELECT stockid, description FROM stockmaster
+				$SQL="SELECT stockid, description FROM stockmaster
 						WHERE description " . LIKE  . " '%".$_POST['PartDesc']."%'";
 			if ($_POST['PartID']!='' and $_POST['PartDesc']!='')
-				$sql="SELECT stockid, description FROM stockmaster
+				$SQL="SELECT stockid, description FROM stockmaster
 						WHERE stockid " . LIKE  . " '%".$_POST['PartID']."%'
 						AND description " . LIKE . " '%".$_POST['PartDesc']."%'";
-			$result=DB_query($sql);
+			$Result=DB_query($SQL);
 			if (!isset($_POST['stockID'])) {
 				echo _('Select a part code').':<br />';
-				while ($myrow=DB_fetch_array($result)) {
-					echo '<input type="submit" name="stockID" value="'.$myrow['stockid'].'" /><br />';
+				while ($MyRow=DB_fetch_array($Result)) {
+					echo '<input type="submit" name="stockID" value="'.$MyRow['stockid'].'" /><br />';
 				}
 			}
 		}
@@ -181,13 +181,13 @@ if (isset($_POST['SelectChoice'])) {
 				</field>';
 		echo '<field>
 				<label for="stockcategory">' . _('to all items in stock category') . '</label>';
-		$sql = "SELECT categoryid,
+		$SQL = "SELECT categoryid,
 				categorydescription
 				FROM stockcategory";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		echo '<select name="stockcategory">';
-		while ($myrow=DB_fetch_array($result)) {
-			echo '<option value="'.$myrow['categoryid'].'">' . $myrow['categorydescription'] . '</option>';
+		while ($MyRow=DB_fetch_array($Result)) {
+			echo '<option value="'.$MyRow['categoryid'].'">' . $MyRow['categorydescription'] . '</option>';
 		}
 		echo '</select>
 			</field>
@@ -201,12 +201,12 @@ if (isset($_POST['SelectChoice'])) {
 
 	if (! isset($_POST['DiscCat'])){ /*set DiscCat to something to show results for first cat defined */
 
-		$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
-		$result = DB_query($sql);
-		if (DB_num_rows($result)>0){
-			DB_data_seek($result,0);
-			$myrow = DB_fetch_array($result);
-			$_POST['DiscCat'] = $myrow['discountcategory'];
+		$SQL = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result)>0){
+			DB_data_seek($Result,0);
+			$MyRow = DB_fetch_array($Result);
+			$_POST['DiscCat'] = $MyRow['discountcategory'];
 		} else {
 			$_POST['DiscCat']='0';
 		}
@@ -214,31 +214,31 @@ if (isset($_POST['SelectChoice'])) {
 
 	if ($_POST['DiscCat']!='0'){
 
-		$sql = "SELECT stockmaster.stockid,
+		$SQL = "SELECT stockmaster.stockid,
 			stockmaster.description,
 			discountcategory
 		FROM stockmaster
 		WHERE discountcategory='" . $_POST['DiscCat'] . "'
 		ORDER BY stockmaster.stockid";
 
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 		echo '<table class="selection">';
 		echo '<tr>
 			<th>' .  _('Discount Category')  . '</th>
 			<th>' .  _('Item')  . '</th></tr>';
 
-		while ($myrow = DB_fetch_array($result)) {
-			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;StockID=' . $myrow['stockid'] . '&amp;DiscountCategory=' . $myrow['discountcategory'];
+		while ($MyRow = DB_fetch_array($Result)) {
+			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;StockID=' . $MyRow['stockid'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'];
 
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s - %s</td>
 					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">' .  _('Delete')  . '</a></td>
 					</tr>',
-					$myrow['discountcategory'],
-					$myrow['stockid'],
-					$myrow['description'],
+					$MyRow['discountcategory'],
+					$MyRow['stockid'],
+					$MyRow['description'],
 					$DeleteURL);
 
 		}

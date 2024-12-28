@@ -46,16 +46,16 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 			<th>', _('Quantity Outstanding'), '</th>
 		</tr>';
 
-	while ($row = DB_fetch_array($WorkOrdersResult)) {
-		$StockId = $row['stockid'];
-		$FormatedRequiredByDate = ConvertSQLDate($row['requiredby']);
-		$FormatedStartDate = ConvertSQLDate($row['startdate']);
-		$qreq = locale_number_format($row['qtyreqd'], $row['decimalplaces']);
-		$qout = locale_number_format($row['qtyreqd'] - $row['qtyrecd'], $row['decimalplaces']);
+	while ($Row = DB_fetch_array($WorkOrdersResult)) {
+		$StockId = $Row['stockid'];
+		$FormatedRequiredByDate = ConvertSQLDate($Row['requiredby']);
+		$FormatedStartDate = ConvertSQLDate($Row['startdate']);
+		$qreq = locale_number_format($Row['qtyreqd'], $Row['decimalplaces']);
+		$qout = locale_number_format($Row['qtyreqd'] - $Row['qtyrecd'], $Row['decimalplaces']);
 
 		echo '<tr class="striped_row">
-			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '" target="_blank">', $row['stockid'], ' -', $row['description'], '</td>
-			<td class="number">', ConvertSQLDate($row['requiredby']), '</td>
+			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '" target="_blank">', $Row['stockid'], ' -', $Row['description'], '</td>
+			<td class="number">', ConvertSQLDate($Row['requiredby']), '</td>
 			<td class="number">', $qreq, '</td>
 			<td class="number">', $qout, '</td>
 		</tr>';

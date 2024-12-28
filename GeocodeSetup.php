@@ -42,7 +42,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	$msg='';
+	$Msg='';
 
 	if (isset($SelectedParam) AND $InputError !=1) {
 
@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 					map_host='" . $_POST['Map_Host'] . "'
 					WHERE geocodeid = '" . $SelectedParam . "'";
 		}
-		$msg = _('The geocode status record has been updated');
+		$Msg = _('The geocode status record has been updated');
 
 	} else if ($InputError !=1) {
 
@@ -97,14 +97,14 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['Map_Host'] . "')";
 		}
 
-		$msg = _('A new geocode status record has been inserted');
+		$Msg = _('A new geocode status record has been inserted');
 		unset ($SelectedParam);
 		unset ($_POST['GeoCode_Key']);
 	}
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
-	if ($msg != '') {
-		prnMsg($msg,'success');
+	if ($Msg != '') {
+		prnMsg($Msg,'success');
 	}
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button

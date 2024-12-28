@@ -465,7 +465,7 @@ if (isset($SelectedCustomer)) {
 
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg( _('The SQL that failed to get the branch details was') . ':<br />' . $SQL . 'warning');
 			}
 			include('includes/footer.php');
@@ -732,7 +732,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</b><br />' . _('Terms') . ':<b> ' . $_SESSION['Items'.$identifier]->PaymentTerms;
 		echo '</b></div>';
 	}
-	$msg ='';
+	$Msg ='';
 	if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
 		if(!empty($_POST['RawMaterialFlag'])){
 			$RawMaterialSellable = " OR stockcategory.stocktype='M'";
@@ -748,11 +748,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
-			$msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
+			$Msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
 		} elseif ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
-			$msg='<div class="page_help_text">' . _('Stock Code has been used in search') . '.</div>';
+			$Msg='<div class="page_help_text">' . _('Stock Code has been used in search') . '.</div>';
 		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-			$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
+			$Msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 		}
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -1298,11 +1298,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
-	$counter =0;
+	$Counter =0;
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 		if ($OrderLine->DiscCat !="" AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
-			$DiscCatsDone[$counter]=$OrderLine->DiscCat;
+			$DiscCatsDone[$Counter]=$OrderLine->DiscCat;
 			$QuantityOfDiscCat =0;
 
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -1612,7 +1612,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				</tr>
 				</table>';
 		} //end of if Frequently Ordered Items > 0
-		echo '<div class="centre">' . $msg;
+		echo '<div class="centre">' . $Msg;
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 		echo _('Search for Order Items') . '</p></div>';
 		echo '<div class="page_help_text">' . _('Search for Order Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';

@@ -456,7 +456,7 @@ if (isset($_POST['EnterLine'])){ /*Inputs from the form directly without selecti
 		if (DB_error_no() !=0) {
 			$AllowUpdate = false;
 			prnMsg( _('The validation process for the GL Code entered could not be executed because') . ' ' . DB_error_msg(), 'error');
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg (_('The SQL used to validate the code entered was') . ' ' . $SQL,'error');
 			}
 			include('includes/footer.php');
@@ -684,7 +684,7 @@ if (isset($_POST['NewItem'])
 															$SuppliersPartNo);
 				} else { //no rows returned by the SQL to get the item
 					prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
-					if ($debug==1){
+					if ($Debug==1){
 						echo '<br />' . $SQL;
 					}
 					include('includes/footer.php');
@@ -848,7 +848,7 @@ if (isset($_POST['UploadFile'])) {
 						++$InsertNum;
 					} else { //no rows returned by the SQL to get the item
 						prnMsg (_('The item code') . ' ' . $ItemCode . ' ' . _('does not exist in the database and therefore cannot be added to the order'),'error');
-						if ($debug==1){
+						if ($Debug==1){
 							echo '<br />' . $SQL;
 						}
 					}
@@ -1266,7 +1266,7 @@ if (isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])){ 
 	$DbgMsg = _('The SQL statement that failed was');
 	$SearchResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($SearchResult)==0 AND $debug==1){
+	if (DB_num_rows($SearchResult)==0 AND $Debug==1){
 		prnMsg( _('There are no products to display matching the criteria provided'),'warn');
 	}
 	if (DB_num_rows($SearchResult)==1){
@@ -1391,18 +1391,18 @@ if (isset($SearchResult)) {
 
 		$SupportedImgExt = array('png','jpg','jpeg');
 
-		$imagefilearray = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-		$imagefile = reset($imagefilearray);
+		$ImageFilearray = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($ImageFilearray);
 
-		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
+		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
 			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
 			'&amp;StockID='.urlencode($MyRow['stockid']).
 			'&amp;text='.
 			'&amp;width=64'.
 			'&amp;height=64'.
 			'" alt="" />';
-		} else if (file_exists ($imagefile)) {
-			$ImageSource = '<img src="' . $imagefile . '" height="100" width="100" />';
+		} else if (file_exists ($ImageFile)) {
+			$ImageSource = '<img src="' . $ImageFile . '" height="100" width="100" />';
 		} else {
 			$ImageSource = _('No Image');
 		}

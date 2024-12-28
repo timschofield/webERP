@@ -185,9 +185,9 @@ if (isset($_GET['Edit'])) {
 	echo '<field>
 			<label for="UserID">' . _('User ID') . '</label>
 			<select name="UserID">';
-	$usersql="SELECT userid FROM www_users";
-	$userresult=DB_query($usersql);
-	while ($MyRow=DB_fetch_array($userresult)) {
+	$UserSQL="SELECT userid FROM www_users";
+	$Userresult=DB_query($UserSQL);
+	while ($MyRow=DB_fetch_array($Userresult)) {
 		if ($MyRow['userid']==$UserID) {
 			echo '<option selected="selected" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {
@@ -227,9 +227,9 @@ if (isset($_GET['Edit'])) {
 	echo '<field>
 			<label for="CurrCode">' . _('Currency') . '</label>
 			<select name="CurrCode">';
-	$currencysql="SELECT currabrev,currency,decimalplaces FROM currencies";
-	$currencyresult=DB_query($currencysql);
-	while ($MyRow=DB_fetch_array($currencyresult)) {
+	$Currencysql="SELECT currabrev,currency,decimalplaces FROM currencies";
+	$Currencyresult=DB_query($Currencysql);
+	while ($MyRow=DB_fetch_array($Currencyresult)) {
 		if ($MyRow['currabrev']==$Currency) {
 			echo '<option selected="selected" value="'.$MyRow['currabrev'].'">' . $MyRow['currency'] . '</option>';
 		} else {

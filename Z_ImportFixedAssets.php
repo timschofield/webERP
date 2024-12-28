@@ -73,10 +73,10 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 	//loop through file rows
 	$Row = 1;
-	while ( ($myrow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
 
 		//check for correct number of fields
-		$FieldCount = count($myrow);
+		$FieldCount = count($MyRow);
 		if ($FieldCount != count($FieldNames)){
 			prnMsg (count($FieldNames) . ' ' . _('fields are required, but') . ' '. $FieldCount . ' ' . _('fields were received'),'error');
 			fclose($FileHandle);
@@ -85,41 +85,41 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		for ($i=0; $i<count($myrow);$i++) {
-			$myrow[$i] = trim($myrow[$i]);
+		for ($i=0; $i<count($MyRow);$i++) {
+			$MyRow[$i] = trim($MyRow[$i]);
 			switch ($i) {
 				case 0:
-					$Description = $myrow[$i];
+					$Description = $MyRow[$i];
 					break;
 				case 1:
-					$LongDescription = $myrow[$i];
+					$LongDescription = $MyRow[$i];
 					break;
 				case 2:
-					$AssetCategoryID = $myrow[$i];
+					$AssetCategoryID = $MyRow[$i];
 					break;
 				case 3:
-					$SerialNo = $myrow[$i];
+					$SerialNo = $MyRow[$i];
 					break;
 				case 4:
-					$BarCode = $myrow[$i];
+					$BarCode = $MyRow[$i];
 					break;
 				case 5:
-					$AssetLocationCode = $myrow[$i];
+					$AssetLocationCode = $MyRow[$i];
 					break;
 				case 6:
-					$Cost = $myrow[$i];
+					$Cost = $MyRow[$i];
 					break;
 				case 7:
-					$AccumDepn = $myrow[$i];
+					$AccumDepn = $MyRow[$i];
 					break;
 				case 8:
-					$DepnType = mb_strtoupper($myrow[$i]);
+					$DepnType = mb_strtoupper($MyRow[$i]);
 					break;
 				case 9:
-					$DepnRate= $myrow[$i];
+					$DepnRate= $MyRow[$i];
 					break;
 				case 10:
-					$DatePurchased= $myrow[$i];
+					$DatePurchased= $MyRow[$i];
 					break;
 			} //end switch
 		} //end loop around fields from import
@@ -161,14 +161,14 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 			echo '<br />' . _('Row:') . $Row . ' - ' . _('Invalid depreciation type:') . ' ' . $DepnType;
 			$InputError = true;
 		}
-		$result = DB_query("SELECT categoryid FROM fixedassetcategories WHERE categoryid='" . $AssetCategoryID . "'");
-		if (DB_num_rows($result)==0){
+		$Result = DB_query("SELECT categoryid FROM fixedassetcategories WHERE categoryid='" . $AssetCategoryID . "'");
+		if (DB_num_rows($Result)==0){
 			$InputError = true;
 			prnMsg(_('The asset category code entered must be exist in the assetcategories table'),'error');
 			echo '<br />' . _('Row:') . $Row . ' - ' . _('Invalid asset category:') . ' ' . $AssetCategoryID;
 		}
-		$result = DB_query("SELECT locationid FROM fixedassetlocations WHERE locationid='" . $AssetLocationCode . "'");
-		if (DB_num_rows($result)==0){
+		$Result = DB_query("SELECT locationid FROM fixedassetlocations WHERE locationid='" . $AssetLocationCode . "'");
+		if (DB_num_rows($Result)==0){
 			$InputError = true;
 			prnMsg(_('The asset location code entered must be exist in the asset locations table'),'error');
 			echo '<br />' . _('Row:') . $Row . ' - ' . _('Invalid asset location code:') . ' ' . $AssetLocationCode;
@@ -190,7 +190,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 			$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DateToEnter']));
 
 			//attempt to insert the stock item
-			$sql = "INSERT INTO fixedassets (description,
+			$SQL = "INSERT INTO fixedassets (description,
 											longdescription,
 											assetcategoryid,
 											serialno,
@@ -215,13 +215,13 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 			$ErrMsg =  _('The asset could not be added because');
 			$DbgMsg = _('The SQL that was used to add the asset and failed was');
-			$result = DB_query($sql, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
 
 
 				$AssetID = DB_Last_Insert_ID('fixedassets','assetid');
-				$sql = "INSERT INTO fixedassettrans ( assetid,
+				$SQL = "INSERT INTO fixedassettrans ( assetid,
 												transtype,
 												transno,
 												transdate,
@@ -240,9 +240,9 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
 				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
-				$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-				$sql = "INSERT INTO fixedassettrans ( assetid,
+				$SQL = "INSERT INTO fixedassettrans ( assetid,
 													transtype,
 													transno,
 													transdate,
@@ -261,7 +261,7 @@ if (isset($_FILES['SelectedAssetFile']['name'])) { //start file processing
 
 				$ErrMsg =  _('The transaction for the cost of the asset could not be added because');
 				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
-				$InsResult = DB_query($sql,$ErrMsg,$DbgMsg);
+				$InsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 				if (DB_error_no() ==0) {
 					prnMsg( _('Inserted the new asset:') . ' ' . $Description,'info');

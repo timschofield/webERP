@@ -40,9 +40,9 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		if (!file_exists('./companies/' . $_POST['NewDatabase'])
 				AND (isset($_FILES['LogoFile']) AND $_FILES['LogoFile']['name'] !='')) {
 
-			$result    = $_FILES['LogoFile']['error'];
+			$Result    = $_FILES['LogoFile']['error'];
 			$UploadTheLogo = 'Yes'; //Assume all is well to start off with
-			$filename = './companies/' . $_POST['NewDatabase'] . '/logo.jpg';
+			$FileName = './companies/' . $_POST['NewDatabase'] . '/logo.jpg';
 
 			//But check for the worst
 			if (mb_strtoupper(mb_substr(trim($_FILES['LogoFile']['name']),mb_strlen($_FILES['LogoFile']['name'])-3))!='JPG'){
@@ -54,10 +54,10 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			} elseif ( $_FILES['LogoFile']['type'] == "text/plain" ) {  //File Type Check
 				prnMsg( _('Only graphics files can be uploaded'),'warn');
 				$UploadTheLogo ='No';
-			} elseif (file_exists($filename)){
+			} elseif (file_exists($FileName)){
 				prnMsg(_('Attempting to overwrite an existing item image'),'warn');
-				$result = unlink($filename);
-				if (!$result){
+				$Result = unlink($FileName);
+				if (!$Result){
 					prnMsg(_('The existing image could not be removed'),'error');
 					$UploadTheLogo ='No';
 				}
@@ -66,13 +66,13 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 			if ($_POST['CreateDB']==TRUE){
 				/* Need to read in the sql script and process the queries to initate a new DB */
 
-				$result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
+				$Result = DB_query('CREATE DATABASE ' . $_POST['NewDatabase']);
 
 				if ($DBType=='postgres'){
 
 					$PgConnStr = 'dbname=' . $_POST['NewDatabase'];
-					if ( isset($host) && ($host != "")) {
-						$PgConnStr = 'host=' . $host . ' ' . $PgConnStr;
+					if ( isset($Host) && ($Host != "")) {
+						$PgConnStr = 'host=' . $Host . ' ' . $PgConnStr;
 					}
 
 					if (isset( $DBUser ) && ($DBUser != "")) {
@@ -119,7 +119,7 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 						}
 						if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 							$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
-							$result = DB_query($SQL, $ErrMsg);
+							$Result = DB_query($SQL, $ErrMsg);
 							$SQL='';
 						}
 
@@ -151,8 +151,8 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 
 			/*OK Now upload the logo */
 			if ($UploadTheLogo=='Yes'){
-				$result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $filename);
-				$message = ($result) ? _('File url') . '<a href="' . $filename . '">' .  $filename . '</a>' : _('Something is wrong with uploading a file');
+				$Result  =  move_uploaded_file($_FILES['LogoFile']['tmp_name'], $FileName);
+				$Message = ($Result) ? _('File url') . '<a href="' . $FileName . '">' .  $FileName . '</a>' : _('Something is wrong with uploading a file');
 			}
 
 		} else {
@@ -201,19 +201,19 @@ if (isset($_POST['submit']) AND isset($_POST['NewDatabase'])) {
 		unset ($_SESSION['CreditItems']);
 
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI_Incoming_Orders' WHERE confname='EDI_Incoming_Orders'";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI_Pending' WHERE confname='EDI_MsgPending'";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/EDI_Sent' WHERE confname='EDI_MsgSent'";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/part_pics' WHERE confname='part_pics_dir'";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 		$SQL ="UPDATE config SET confvalue='companies/" . $_POST['NewDatabase'] . "/reports' WHERE confname='reports_dir'";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 
 		//add new company
 		$SQL = "UPDATE companies SET coyname='" . $_POST['NewCompany'] . "' WHERE coycode = 1";
-		$result = DB_query($SQL);
+		$Result = DB_query($SQL);
 
 		$ForceConfigReload=true;
 		include('includes/GetConfig.php');

@@ -232,8 +232,8 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 		$StockItemsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		if (DB_num_rows($StockItemsResult)==1){
-		  	$myrow = DB_fetch_row($StockItemsResult);
-		  	$SelectedStockItem = $myrow[0];
+		  	$MyRow = DB_fetch_row($StockItemsResult);
+		  	$SelectedStockItem = $MyRow[0];
 			$_POST['SearchOrders']='True';
 		  	unset($StockItemsResult);
 		  	echo '<br />' . _('For the part') . ': ' . $SelectedStockItem . ' ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
@@ -471,7 +471,7 @@ echo '<field>
 echo '</fieldset>';
 
 if (!isset($SelectedStockItem)) {
-	$result1 = DB_query("SELECT categoryid,
+	$Result1 = DB_query("SELECT categoryid,
 							categorydescription
 						FROM stockcategory
 						ORDER BY categorydescription");
@@ -486,11 +486,11 @@ if (!isset($SelectedStockItem)) {
 			<label for="StockCat">' . _('Select a stock category') . ':</label>
 			<select name="StockCat">';
 
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if (isset($_POST['StockCat']) AND $myrow1['categoryid'] == $_POST['StockCat']){
-			echo '<option selected="selected" value="' .  $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if (isset($_POST['StockCat']) AND $MyRow1['categoryid'] == $_POST['StockCat']){
+			echo '<option selected="selected" value="' .  $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -537,7 +537,7 @@ if (isset($StockItemsResult)) {
 
 	$j = 1;
 
-	while ($myrow=DB_fetch_array($StockItemsResult)) {
+	while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
 		printf('<tr class="striped_row">
 				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
@@ -546,12 +546,12 @@ if (isset($StockItemsResult)) {
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td>%s</td></tr>',
-				$myrow['stockid'],
-				$myrow['description'],
-				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
-				locale_number_format($myrow['qoo'],$myrow['decimalplaces']),
-				locale_number_format($myrow['qdem'],$myrow['decimalplaces']),
-				$myrow['units']);
+				$MyRow['stockid'],
+				$MyRow['description'],
+				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
+				locale_number_format($MyRow['qoo'],$MyRow['decimalplaces']),
+				locale_number_format($MyRow['qdem'],$MyRow['decimalplaces']),
+				$MyRow['units']);
 
 //end of page full new headings if
 	}
@@ -576,7 +576,7 @@ If (isset($SalesOrdersResult)) {
 
 	echo '<br /><table cellpadding="2" width="90%" class="selection">';
 
-	$tableheader = '<tr><th>' . _('Order') . ' #</th>
+	$Tableheader = '<tr><th>' . _('Order') . ' #</th>
 						<th>' . _('Customer') . '</th>
 						<th>' . _('Branch') . '</th>
 						<th>' . _('Cust Order') . ' #</th>
@@ -586,16 +586,16 @@ If (isset($SalesOrdersResult)) {
 						<th>' . _('Order Total') . '</th>
 					</tr>';
 
-	echo $tableheader;
+	echo $Tableheader;
 
 	$j = 1;
 
-	while ($myrow=DB_fetch_array($SalesOrdersResult)) {
+	while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
 
-		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber=' . $myrow['orderno'];
-		$FormatedDelDate = ConvertSQLDate($myrow['deliverydate']);
-		$FormatedOrderDate = ConvertSQLDate($myrow['orddate']);
-		$FormatedOrderValue = locale_number_format($myrow['ordervalue'],$myrow['currdecimalplaces']);
+		$ViewPage = $RootPath . '/OrderDetails.php?OrderNumber=' . $MyRow['orderno'];
+		$FormatedDelDate = ConvertSQLDate($MyRow['deliverydate']);
+		$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
+		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$MyRow['currdecimalplaces']);
 
 		printf('<tr class="striped_row">
 				<td><a href="%s">%s</a></td>
@@ -608,13 +608,13 @@ If (isset($SalesOrdersResult)) {
 				<td class="number">%s</td>
 				</tr>',
 				$ViewPage,
-				$myrow['orderno'],
-				$myrow['name'],
-				$myrow['brname'],
-				$myrow['customerref'],
+				$MyRow['orderno'],
+				$MyRow['name'],
+				$MyRow['brname'],
+				$MyRow['customerref'],
 				$FormatedOrderDate,
 				$FormatedDelDate,
-				$myrow['deliverto'],
+				$MyRow['deliverto'],
 				$FormatedOrderValue);
 
 //end of page full new headings if

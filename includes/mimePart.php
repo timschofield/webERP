@@ -365,7 +365,7 @@ class Mail_mimePart
      * Encodes and saves the email into file or stream.
      * Data will be appended to the file/stream.
      *
-     * @param mixed  $filename  Existing file location
+     * @param mixed  $FileName  Existing file location
      *                          or file pointer resource
      * @param string $boundary  Pre-defined boundary string
      * @param bool   $skip_head True if you don't want to save headers
@@ -374,20 +374,20 @@ class Mail_mimePart
      *                          or PEAR error object
      * @since  1.6.0
      */
-    public function encodeToFile($filename, $boundary = null, $skip_head = false)
+    public function encodeToFile($FileName, $boundary = null, $skip_head = false)
     {
-        if (!is_resource($filename)) {
-            if (file_exists($filename) && !is_writable($filename)) {
-                $err = self::raiseError('File is not writeable: ' . $filename);
+        if (!is_resource($FileName)) {
+            if (file_exists($FileName) && !is_writable($FileName)) {
+                $err = self::raiseError('File is not writeable: ' . $FileName);
                 return $err;
             }
 
-            if (!($fh = fopen($filename, 'ab'))) {
-                $err = self::raiseError('Unable to open file: ' . $filename);
+            if (!($fh = fopen($FileName, 'ab'))) {
+                $err = self::raiseError('Unable to open file: ' . $FileName);
                 return $err;
             }
         } else {
-            $fh = $filename;
+            $fh = $FileName;
         }
 
         // Temporarily reset magic_quotes_runtime for file reads and writes
@@ -397,7 +397,7 @@ class Mail_mimePart
 
         $res = $this->encodePartToFile($fh, $boundary, $skip_head);
 
-        if (!is_resource($filename)) {
+        if (!is_resource($FileName)) {
             fclose($fh);
         }
 
@@ -520,7 +520,7 @@ class Mail_mimePart
     /**
      * Returns encoded data based upon encoding passed to it
      *
-     * @param string   $filename Data file location
+     * @param string   $FileName Data file location
      * @param string   $encoding The encoding type to use, 7bit, base64,
      *                           or quoted-printable.
      * @param resource $fh       Output file handle. If set, data will be
@@ -528,15 +528,15 @@ class Mail_mimePart
      *
      * @return PEAR_Error|string|null Encoded data or PEAR error object
      */
-    protected function getEncodedDataFromFile($filename, $encoding, $fh = null)
+    protected function getEncodedDataFromFile($FileName, $encoding, $fh = null)
     {
-        if (!is_readable($filename)) {
-            $err = self::raiseError('Unable to read file: ' . $filename);
+        if (!is_readable($FileName)) {
+            $err = self::raiseError('Unable to read file: ' . $FileName);
             return $err;
         }
 
-        if (!($fd = fopen($filename, 'rb'))) {
-            $err = self::raiseError('Could not open file: ' . $filename);
+        if (!($fd = fopen($FileName, 'rb'))) {
+            $err = self::raiseError('Could not open file: ' . $FileName);
             return $err;
         }
 
@@ -600,40 +600,40 @@ class Mail_mimePart
      * Encodes data to quoted-printable standard.
      *
      * @param string $input    The data to encode
-     * @param int    $line_max Optional max line length. Should
+     * @param int    $Line_max Optional max line length. Should
      *                         not be more than 76 chars
      * @param string $eol      End-of-line sequence. Default: "\r\n"
      *
      * @return string Encoded data
      */
-    public static function quotedPrintableEncode($input , $line_max = 76, $eol = "\r\n")
+    public static function quotedPrintableEncode($input , $Line_max = 76, $eol = "\r\n")
     {
         // Note: imap_8bit() is fast, but doesn't handle properly some characters
 
-        $lines  = preg_split("/\r?\n/", $input);
+        $Lines  = preg_split("/\r?\n/", $input);
         $escape = '=';
         $output = '';
 
-        foreach ($lines as $idx => $line) {
+        foreach ($Lines as $idx => $Line) {
             $newline = '';
             $i = 0;
 
-            while (isset($line[$i])) {
-                $char = $line[$i];
+            while (isset($Line[$i])) {
+                $char = $Line[$i];
                 $dec  = ord($char);
                 $i++;
 
-                if (($dec == 32) && (!isset($line[$i]))) {
+                if (($dec == 32) && (!isset($Line[$i]))) {
                     // convert space at eol only
                     $char = '=20';
-                } elseif ($dec == 9 && isset($line[$i])) {
+                } elseif ($dec == 9 && isset($Line[$i])) {
                     ; // Do nothing if a TAB is not on eol
                 } elseif (($dec == 61) || ($dec < 32) || ($dec > 126)) {
                     // Escape unprintable chars
                     $char = $escape . sprintf('%02X', $dec);
                 } elseif (($dec == 46) && (($newline == '')
-                    || ((strlen($newline) + strlen(".=")) > $line_max
-                    && isset($line[$i])))
+                    || ((strlen($newline) + strlen(".=")) > $Line_max
+                    && isset($Line[$i])))
                 ) {
                     // Bug #9722: convert full-stop at bol,
                     // some Windows servers need this, won't break anything (cipri)
@@ -643,11 +643,11 @@ class Mail_mimePart
                 }
 
                 // EOL is not counted
-                if ((strlen($newline) + strlen($char) == $line_max)
-                    && !isset($line[$i])
+                if ((strlen($newline) + strlen($char) == $Line_max)
+                    && !isset($Line[$i])
                 ) {
                     ; // no soft break is needed if we're the last char
-                } elseif ((strlen($newline) + strlen($char)) >= $line_max) {
+                } elseif ((strlen($newline) + strlen($char)) >= $Line_max) {
                     // soft line break; " =\r\n" is okay
                     $output  .= $newline . $escape . $eol;
                     $newline  = '';
@@ -657,7 +657,7 @@ class Mail_mimePart
             } // end of for
 
             $output .= $newline . $eol;
-            unset($lines[$idx]);
+            unset($Lines[$idx]);
         }
 
         // Don't want last crlf
@@ -1003,7 +1003,7 @@ class Mail_mimePart
      */
     protected static function explodeQuotedString($delimiter, $string)
     {
-        $result = array();
+        $Result = array();
         $strlen = strlen($string);
         $quoted_string = '"(?:[^"\\\\]|\\\\.)*"';
 
@@ -1015,14 +1015,14 @@ class Mail_mimePart
                 }
                 $i += strlen($matches[0]) - 1;
             } else if (preg_match("/$delimiter/", $string[$i])) {
-                $result[] = substr($string, $p, $i - $p);
+                $Result[] = substr($string, $p, $i - $p);
                 $p = $i + 1;
             }
         }
 
-        $result[] = substr($string, $p);
+        $Result[] = substr($string, $p);
 
-        return $result;
+        return $Result;
     }
 
     /**
@@ -1040,8 +1040,8 @@ class Mail_mimePart
     public static function encodeHeaderValue($value, $charset, $encoding, $prefix_len = 0, $eol = "\r\n")
     {
         // #17311: Use multibyte aware method (requires mbstring extension)
-        if ($result = Mail_mimePart::encodeMB($value, $charset, $encoding, $prefix_len, $eol)) {
-            return $result;
+        if ($Result = Mail_mimePart::encodeMB($value, $charset, $encoding, $prefix_len, $eol)) {
+            return $Result;
         }
 
         // Generate the header using the specified params and dynamicly
@@ -1182,8 +1182,8 @@ class Mail_mimePart
         // So, we'll loop over each character
         // mb_stlen() with wrong charset will generate a warning here and return null
         $length      = mb_strlen($str, $mb_charset);
-        $result      = '';
-        $line_length = $prefix_len;
+        $Result      = '';
+        $Line_length = $prefix_len;
 
         if ($encoding == 'B') {
             // base64
@@ -1196,21 +1196,21 @@ class Mail_mimePart
                 $chunk = base64_encode($chunk);
                 $chunk_len = strlen($chunk);
 
-                if ($line_length + $chunk_len == $maxLength || $i == $length) {
-                    if ($result) {
-                        $result .= "\n";
+                if ($Line_length + $chunk_len == $maxLength || $i == $length) {
+                    if ($Result) {
+                        $Result .= "\n";
                     }
-                    $result .= $chunk;
-                    $line_length = 0;
+                    $Result .= $chunk;
+                    $Line_length = 0;
                     $start = $i;
-                } else if ($line_length + $chunk_len > $maxLength) {
-                    if ($result) {
-                        $result .= "\n";
+                } else if ($Line_length + $chunk_len > $maxLength) {
+                    if ($Result) {
+                        $Result .= "\n";
                     }
                     if ($prev) {
-                        $result .= $prev;
+                        $Result .= $prev;
                     }
-                    $line_length = 0;
+                    $Line_length = 0;
                     $start = $i - 1;
                 } else {
                     $prev = $chunk;
@@ -1235,24 +1235,24 @@ class Mail_mimePart
                     $char_len = strlen($char);
                 }
 
-                if ($line_length + $char_len > $maxLength) {
-                    if ($result) {
-                        $result .= "\n";
+                if ($Line_length + $char_len > $maxLength) {
+                    if ($Result) {
+                        $Result .= "\n";
                     }
-                    $line_length = 0;
+                    $Line_length = 0;
                 }
 
-                $result      .= $char;
-                $line_length += $char_len;
+                $Result      .= $char;
+                $Line_length += $char_len;
             }
         }
 
-        if ($result) {
-            $result = $prefix
-                .str_replace("\n", $suffix.$eol.' '.$prefix, $result).$suffix;
+        if ($Result) {
+            $Result = $prefix
+                .str_replace("\n", $suffix.$eol.' '.$prefix, $Result).$suffix;
         }
 
-        return $result;
+        return $Result;
     }
 
     /**

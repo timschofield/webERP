@@ -68,7 +68,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -164,7 +164,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Customer List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -255,7 +255,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Salesman List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -304,7 +304,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Image List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -343,7 +343,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Security Token List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -379,7 +379,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Security Role List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -415,7 +415,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Security Group List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -467,7 +467,7 @@ if ( isset($_POST['pricelist']) ) {
 		include('includes/header.php');
 		prnMsg( _('The Security User List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');

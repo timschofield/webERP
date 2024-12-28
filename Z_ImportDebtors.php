@@ -124,13 +124,13 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	DB_Txn_Begin();
 
 	//loop through file rows
-	$row = 1;
+	$Row = 1;
 	$UpdatedNum = 0;
 	$InsertNum = 0;
-	while (($filerow = fgetcsv($FileHandle, 10000, ",")) !== false) {
+	while (($Filerow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 
 		//check for correct number of fields
-		$fieldCount = count($filerow);
+		$fieldCount = count($Filerow);
 		if ($fieldCount != $FieldTarget) {
 			prnMsg(_($FieldTarget . ' fields required, ' . $fieldCount . ' fields received'), 'error');
 			fclose($FileHandle);
@@ -139,41 +139,41 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach ($filerow as & $value) {
-			$value = trim($value);
+		foreach ($Filerow as & $Value) {
+			$Value = trim($Value);
 		}
 
-		$_POST['DebtorNo'] = $filerow[0];
-		$_POST['CustName'] = $filerow[1];
-		$_POST['Address1'] = $filerow[2];
-		$_POST['Address2'] = $filerow[3];
-		$_POST['Address3'] = $filerow[4];
-		$_POST['Address4'] = $filerow[5];
-		$_POST['Address5'] = $filerow[6];
-		$_POST['Address6'] = $filerow[7];
-		$_POST['CurrCode'] = $filerow[8];
-		$_POST['SalesType'] = $filerow[9];
-		$_POST['ClientSince'] = $filerow[10];
-		$_POST['HoldReason'] = $filerow[11];
-		$_POST['PaymentTerms'] = $filerow[12];
-		$_POST['Discount'] = $filerow[13];
-		$_POST['PymtDiscount'] = $filerow[14];
-		$_POST['lastpaid'] = $filerow[15];
-		$_POST['lastpaiddate'] = $filerow[16];
-		$_POST['CreditLimit'] = $filerow[17];
-		$_POST['InvAddrBranch'] = $filerow[18];
-		$_POST['DiscountCode'] = $filerow[19];
-		$_POST['LanguageID'] = $filerow[20];
-		$_POST['EDIInvoices'] = $filerow[21];
-		$_POST['EDIOrders'] = $filerow[22];
-		$_POST['EDIReference'] = $filerow[23];
-		$_POST['EDITransport'] = $filerow[24];
-		$_POST['EDIAddress'] = $filerow[25];
-		$_POST['EDIServerUser'] = $filerow[26];
-		$_POST['EDIServerPwd'] = $filerow[27];
-		$_POST['TaxRef'] = $filerow[28];
-		$_POST['CustomerPOLine'] = $filerow[29];
-		$_POST['typeid'] = $filerow[30];
+		$_POST['DebtorNo'] = $Filerow[0];
+		$_POST['CustName'] = $Filerow[1];
+		$_POST['Address1'] = $Filerow[2];
+		$_POST['Address2'] = $Filerow[3];
+		$_POST['Address3'] = $Filerow[4];
+		$_POST['Address4'] = $Filerow[5];
+		$_POST['Address5'] = $Filerow[6];
+		$_POST['Address6'] = $Filerow[7];
+		$_POST['CurrCode'] = $Filerow[8];
+		$_POST['SalesType'] = $Filerow[9];
+		$_POST['ClientSince'] = $Filerow[10];
+		$_POST['HoldReason'] = $Filerow[11];
+		$_POST['PaymentTerms'] = $Filerow[12];
+		$_POST['Discount'] = $Filerow[13];
+		$_POST['PymtDiscount'] = $Filerow[14];
+		$_POST['lastpaid'] = $Filerow[15];
+		$_POST['lastpaiddate'] = $Filerow[16];
+		$_POST['CreditLimit'] = $Filerow[17];
+		$_POST['InvAddrBranch'] = $Filerow[18];
+		$_POST['DiscountCode'] = $Filerow[19];
+		$_POST['LanguageID'] = $Filerow[20];
+		$_POST['EDIInvoices'] = $Filerow[21];
+		$_POST['EDIOrders'] = $Filerow[22];
+		$_POST['EDIReference'] = $Filerow[23];
+		$_POST['EDITransport'] = $Filerow[24];
+		$_POST['EDIAddress'] = $Filerow[25];
+		$_POST['EDIServerUser'] = $Filerow[26];
+		$_POST['EDIServerPwd'] = $Filerow[27];
+		$_POST['TaxRef'] = $Filerow[28];
+		$_POST['CustomerPOLine'] = $Filerow[29];
+		$_POST['typeid'] = $Filerow[30];
 
 		if ($_POST['AutoDebtorNo'] == 1) {
 			$_POST['DebtorNo'] = GetNextTransNo(500);
@@ -190,28 +190,28 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$_POST['BrAddress4'] = $_POST['Address4'];
 		$_POST['BrAddress5'] = $_POST['Address5'];
 		$_POST['BrAddress6'] = $_POST['Address6'];
-		$Latitude = $filerow[31];
-		$Longitude = $filerow[32];
-		$_POST['EstDeliveryDays'] = $filerow[33];
-		$_POST['Area'] = $filerow[34];
-		$_POST['Salesman'] = $filerow[35];
-		$_POST['FwdDate'] = $filerow[36];
-		$_POST['PhoneNo'] = $filerow[37];
-		$_POST['FaxNo'] = $filerow[38];
-		$_POST['ContactName'] = $filerow[39];
-		$_POST['Email'] = $filerow[40];
-		$_POST['DefaultLocation'] = $filerow[41];
-		$_POST['TaxGroup'] = $filerow[42];
-		$_POST['DefaultShipVia'] = $filerow[43];
-		$_POST['DeliverBlind'] = $filerow[44];
-		$_POST['DisableTrans'] = $filerow[45];
-		$_POST['BrPostAddr1'] = $filerow[46];
-		$_POST['BrPostAddr2'] = $filerow[47];
-		$_POST['BrPostAddr3'] = $filerow[48];
-		$_POST['BrPostAddr4'] = $filerow[49];
-		$_POST['BrPostAddr5'] = $filerow[50];
-		$_POST['CustBranchCode'] = $filerow[51];
-		$_POST['SpecialInstructions'] = $filerow[52];
+		$Latitude = $Filerow[31];
+		$Longitude = $Filerow[32];
+		$_POST['EstDeliveryDays'] = $Filerow[33];
+		$_POST['Area'] = $Filerow[34];
+		$_POST['Salesman'] = $Filerow[35];
+		$_POST['FwdDate'] = $Filerow[36];
+		$_POST['PhoneNo'] = $Filerow[37];
+		$_POST['FaxNo'] = $Filerow[38];
+		$_POST['ContactName'] = $Filerow[39];
+		$_POST['Email'] = $Filerow[40];
+		$_POST['DefaultLocation'] = $Filerow[41];
+		$_POST['TaxGroup'] = $Filerow[42];
+		$_POST['DefaultShipVia'] = $Filerow[43];
+		$_POST['DeliverBlind'] = $Filerow[44];
+		$_POST['DisableTrans'] = $Filerow[45];
+		$_POST['BrPostAddr1'] = $Filerow[46];
+		$_POST['BrPostAddr2'] = $Filerow[47];
+		$_POST['BrPostAddr3'] = $Filerow[48];
+		$_POST['BrPostAddr4'] = $Filerow[49];
+		$_POST['BrPostAddr5'] = $Filerow[50];
+		$_POST['CustBranchCode'] = $Filerow[51];
+		$_POST['SpecialInstructions'] = $Filerow[52];
 
 		$i = 0;
 		if ($_POST['AutoDebtorNo'] == 0 and mb_strlen($_POST['DebtorNo']) == 0) {
@@ -326,9 +326,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							where debtorno = '" . $_POST['DebtorNo'] . "' LIMIT 1";
 					$Result = DB_query($SQL);
 
-					$curr = false;
+					$Curr = false;
 					if (DB_num_rows($Result) == 0) {
-						$curr = true;
+						$Curr = true;
 					} else {
 						$CurrSQL = "SELECT currcode
 							FROM debtorsmaster
@@ -350,7 +350,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 							address5='" . $_POST['Address5'] . "',
 							address6='" . $_POST['Address6'] . "',";
 
-					if ($curr) $SQL.= "currcode='" . $_POST['CurrCode'] . "',";
+					if ($Curr) $SQL.= "currcode='" . $_POST['CurrCode'] . "',";
 
 					$SQL.= "clientsince='" . $SQL_ClientSince . "',
 							holdreason='" . $_POST['HoldReason'] . "',
@@ -602,11 +602,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			break;
 		}
 
-		$row++;
+		$Row++;
 	}
 
 	if ($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row ' . $row . '. Batch import has been rolled back.'), 'error');
+		prnMsg(_('Failed on row ' . $Row . '. Batch import has been rolled back.'), 'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();

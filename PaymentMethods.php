@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
 				prnMsg( _('The payment method no longer exists.'),'error');
 			}
 		}
-		$msg = _('Record Updated');
+		$Msg = _('Record Updated');
 		$ErrMsg = _('Could not update payment method');
 	} elseif ($InputError !=1) {
 		/*SelectedPaymentID is null cos no item selected on first time round so must be adding a record*/
@@ -122,13 +122,13 @@ if (isset($_POST['submit'])) {
 										'" . $_POST['OpenCashDrawer']  . "',
 										'" . filter_number_format($_POST['DiscountPercent']) . "')";
 		}
-		$msg = _('New payment method added');
+		$Msg = _('New payment method added');
 		$ErrMsg = _('Could not insert the new payment method');
 	}
 
 	if ($InputError!=1){
 		$Result = DB_query($SQL, $ErrMsg);
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		echo '<br />';
 	}
 	unset ($SelectedPaymentID);

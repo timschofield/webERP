@@ -158,11 +158,11 @@ $SOH_DateFields = array ('orddate',
 
 /* Fetch the next line number */
 	function GetOrderLineNumber($OrderNo, $i, $Errors) {
-		$linesql = "SELECT MAX(orderlineno)
+		$Linesql = "SELECT MAX(orderlineno)
 					FROM salesorderdetails
 					 WHERE orderno='" . $OrderNo . "'";
-		$lineresult = api_DB_query($linesql);
-		if ($MyRow=DB_fetch_row($lineresult)) {
+		$Lineresult = api_DB_query($Linesql);
+		if ($MyRow=DB_fetch_row($Lineresult)) {
 			return $MyRow[0] + 1;
 		} else {
 			return 1;

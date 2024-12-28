@@ -33,8 +33,8 @@ $SQL = "SELECT categoryid,
 				categorydescription
 			FROM fixedassetcategories
 			ORDER BY categorydescription";
-$result = DB_query($SQL);
-if (DB_num_rows($result) == 0) {
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) == 0) {
 	echo '<p><font size="4" color="red">' . _('Problem Report') . ':</font><br />' . _('There are no asset categories currently defined please use the link below to set them up');
 	echo '<br /><a href="' . $RootPath . '/FixedAssetCategories.php">' . _('Define Asset Categories') . '</a>';
 	exit;
@@ -59,11 +59,11 @@ if ($_POST['AssetCategory']=='ALL'){
 	echo '<option value="ALL">' . _('Any asset category') . '</option>';
 }
 
-while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['categoryid'] == $_POST['AssetCategory']) {
-		echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if ($MyRow['categoryid'] == $_POST['AssetCategory']) {
+		echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 	}
 }
 echo '</select>
@@ -90,13 +90,13 @@ if ($_POST['AssetLocation']=='ALL'){
 } else {
 	echo '<option value="ALL">' . _('Any asset location') . '</option>';
 }
-$result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations");
+$Result = DB_query("SELECT locationid, locationdescription FROM fixedassetlocations");
 
-while ($myrow = DB_fetch_array($result)) {
-	if ($myrow['locationid'] == $_POST['AssetLocation']) {
-		echo '<option selected="selected" value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)) {
+	if ($MyRow['locationid'] == $_POST['AssetLocation']) {
+		echo '<option selected="selected" value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['locationid'] . '">' . $myrow['locationdescription'] . '</option>';
+		echo '<option value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
 	}
 }
 echo '</select>
@@ -258,29 +258,29 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<table class="selection">';
-		$tableheader = '<tr>
+		$Tableheader = '<tr>
 					<th>' . _('Asset Code') . '</th>
 					<th>' . _('Description') . '</th>
 					<th>' . _('Asset Location') . '</th>
 					<th>' . _('Date Purchased') . '</th>
 				</tr>';
-		echo $tableheader;
+		echo $Tableheader;
 		$j = 1;
 		$RowIndex = 0;
 		if (DB_num_rows($SearchResult) <> 0) {
 			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
-		while (($myrow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+		while (($MyRow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			echo '<tr class="striped_row">
-				<td><input type="submit" name="Select" value="' . $myrow['assetid'] .'" /></td>
-				<td>' . $myrow['description'] . '</td>
-				<td>' . $myrow['locationdescription'] . '</td>
-				<td>' . ConvertSQLDate($myrow['datepurchased']) . '</td>
+				<td><input type="submit" name="Select" value="' . $MyRow['assetid'] .'" /></td>
+				<td>' . $MyRow['description'] . '</td>
+				<td>' . $MyRow['locationdescription'] . '</td>
+				<td>' . ConvertSQLDate($MyRow['datepurchased']) . '</td>
 				</tr>';
 			$j++;
 			if ($j == 20 AND ($RowIndex + 1 != $_SESSION['DisplayRecordsMax'])) {
 				$j = 1;
-				echo $tableheader;
+				echo $Tableheader;
 			}
 			$RowIndex = $RowIndex + 1;
 			//end of page full new headings if

@@ -542,7 +542,7 @@ if(isset($_SESSION['Transfer'])) {
 			<th colspan="7"><h3>' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID . ' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . '</h3></th>
 		</tr>';
 
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 						<th>' .  _('Item Code') . '</th>
 						<th>' .  _('Item Description'). '</th>
 						<th>' .  _('Quantity Dispatched'). '</th>
@@ -552,7 +552,7 @@ if(isset($_SESSION['Transfer'])) {
 						<th>' .  _('Cancel Balance') . '</th>
 					</tr>';
 
-	echo $tableheader;
+	echo $Tableheader;
 
 	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 

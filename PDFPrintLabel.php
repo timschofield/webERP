@@ -40,7 +40,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	if (DB_error_no() !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
 		include('includes/footer.php');
@@ -125,7 +125,7 @@ if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoO
 }
 if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 
-	$result = DB_query("SELECT 	description,
+	$Result = DB_query("SELECT 	description,
 								pagewidth*" . $PtsPerMM . " as page_width,
 								pageheight*" . $PtsPerMM . " as page_height,
 								width*" . $PtsPerMM . " as label_width,
@@ -136,9 +136,9 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 								leftmargin*" . $PtsPerMM . " as label_leftmargin
 						FROM labels
 						WHERE labelid='" . $_POST['LabelID'] . "'");
-	$LabelDimensions = DB_fetch_array($result);
+	$LabelDimensions = DB_fetch_array($Result);
 
-	$result = DB_query("SELECT fieldvalue,
+	$Result = DB_query("SELECT fieldvalue,
 								vpos,
 								hpos,
 								fontsize,
@@ -147,7 +147,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 						WHERE labelid = '" . $_POST['LabelID'] . "'");
 	$LabelFields = array();
 	$i=0;
-	while ($LabelFieldRow = DB_fetch_array($result)){
+	while ($LabelFieldRow = DB_fetch_array($Result)){
 		if ($LabelFieldRow['fieldvalue'] == 'itemcode'){
 			$LabelFields[$i]['FieldValue'] = 'stockid';
 		} elseif ($LabelFieldRow['fieldvalue'] == 'itemdescription'){
@@ -300,8 +300,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 				<select name="StockCategory">';
 
 		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
-		while ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		while ($MyRow = DB_fetch_array($CatResult)){
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
 		echo '</select>
 			</field>';
@@ -309,14 +309,14 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '<field>
 				<label for="SalesType">' . _('For Sales Type/Price List').':</label>
 				<select name="SalesType">';
-		$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-		$SalesTypesResult=DB_query($sql);
+		$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
+		$SalesTypesResult=DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($SalesTypesResult)){
-			if ($_SESSION['DefaultPriceList']==$myrow['typeabbrev']){
-				echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		while ($MyRow=DB_fetch_array($SalesTypesResult)){
+			if ($_SESSION['DefaultPriceList']==$MyRow['typeabbrev']){
+				echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+				echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 			}
 		}
 		echo '</select>
@@ -325,14 +325,14 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 		echo '<field>
 				<label for="Currency">' . _('For Currency').':</label>
 				<select name="Currency">';
-		$sql = "SELECT currabrev, country, currency FROM currencies";
-		$CurrenciesResult=DB_query($sql);
+		$SQL = "SELECT currabrev, country, currency FROM currencies";
+		$CurrenciesResult=DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($CurrenciesResult)){
-			if ($_SESSION['CompanyRecord']['currencydefault']==$myrow['currabrev']){
-				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' - ' .$myrow['currency'] . '</option>';
+		while ($MyRow=DB_fetch_array($CurrenciesResult)){
+			if ($_SESSION['CompanyRecord']['currencydefault']==$MyRow['currabrev']){
+				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' .$MyRow['currency'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['country'] . ' - ' .$myrow['currency'] . '</option>';
+				echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['country'] . ' - ' .$MyRow['currency'] . '</option>';
 			}
 		}
 		echo '</select>

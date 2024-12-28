@@ -357,10 +357,10 @@
 			$FieldNames.=$key.', ';
 			$FieldValues.='"'.$value.'", ';
 		}
-		$sql = 'INSERT INTO debtorsmaster ('.mb_substr($FieldNames,0,-2).') '.
+		$SQL = 'INSERT INTO debtorsmaster ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -480,13 +480,13 @@
 		if (isset($CustomerDetails['typeid'])){
 			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors);
 		}
-		$sql='UPDATE debtorsmaster SET ';
+		$SQL='UPDATE debtorsmaster SET ';
 		foreach ($CustomerDetails as $key => $value) {
-			$sql .= $key.'="'.$value.'", ';
+			$SQL .= $key.'="'.$value.'", ';
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$CustomerDetails['debtorno']."'";
+		$SQL = mb_substr($SQL,0,-2)." WHERE debtorno='".$CustomerDetails['debtorno']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -511,10 +511,10 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM debtorsmaster WHERE debtorno='".$DebtorNumber."'";
-		$result = DB_query($sql);
+		$SQL="SELECT * FROM debtorsmaster WHERE debtorno='".$DebtorNumber."'";
+		$Result = DB_query($SQL);
 		$Errors[0] = 0; // None found.
-		$Errors[1] = DB_fetch_array($result);
+		$Errors[1] = DB_fetch_array($Result);
 
 		return $Errors;
 	}
@@ -529,13 +529,13 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT debtorno
+		$SQL='SELECT debtorno
 			FROM debtorsmaster
 			WHERE '.$Field." LIKE '%".$Criteria."%'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		$DebtorList = array(0);	    // First element: no errors
-		while ($myrow=DB_fetch_array($result)) {
-			$DebtorList[]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$DebtorList[]=$MyRow[0];
 		}
 		return $DebtorList;
 	}

@@ -8,17 +8,17 @@ include ('includes/session.php');
 include ('includes/header.php');
 //include ('includes/SQL_CommonFunctions.inc');
 
-$sql = "SELECT * FROM geocode_param WHERE 1";
+$SQL = "SELECT * FROM geocode_param WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');
-$resultgeo = DB_query($sql, $ErrMsg);
-$row = DB_fetch_array($resultgeo);
+$Resultgeo = DB_query($SQL, $ErrMsg);
+$Row = DB_fetch_array($Resultgeo);
 
-$api_key = $row['geocode_key'];
-$center_long = $row['center_long'];
-$center_lat = $row['center_lat'];
-$map_height = $row['map_height'];
-$map_width = $row['map_width'];
-$map_host = $row['map_host'];
+$api_key = $Row['geocode_key'];
+$center_long = $Row['center_long'];
+$center_lat = $Row['center_lat'];
+$map_height = $Row['map_height'];
+$map_width = $Row['map_width'];
+$map_host = $Row['map_host'];
 
 define("MAPS_HOST", $map_host);
 define("KEY", $api_key);
@@ -26,14 +26,14 @@ define("KEY", $api_key);
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . ' ' . _('Geocoding of Customers and Suppliers')  . '</p>';
 
 // select all the customer branches
-$sql = "SELECT * FROM custbranch WHERE 1";
+$SQL = "SELECT * FROM custbranch WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');
-$result = DB_query($sql, $ErrMsg);
+$Result = DB_query($SQL, $ErrMsg);
 
 // select all the suppliers
-$sql = "SELECT * FROM suppliers WHERE 1";
+$SQL = "SELECT * FROM suppliers WHERE 1";
 $ErrMsg = _('An error occurred in retrieving the information');
-$result2 = DB_query($sql, $ErrMsg);
+$Result2 = DB_query($SQL, $ErrMsg);
 
 // Initialize delay in geocode speed
 $delay = 0;
@@ -42,13 +42,13 @@ $base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
 // Iterate through the customer branch rows, geocoding each address
 
 
-while ($row = DB_fetch_array($result)) {
+while ($Row = DB_fetch_array($Result)) {
   $geocode_pending = true;
 
   while ($geocode_pending) {
-    $address = urlencode($row["braddress1"] . "," . $row["braddress2"] . "," . $row["braddress3"] . "," . $row["braddress4"]);
-    $id = $row["branchcode"];
-    $debtorno =$row["debtorno"];
+    $address = urlencode($Row["braddress1"] . "," . $Row["braddress2"] . "," . $Row["braddress3"] . "," . $Row["braddress4"]);
+    $id = $Row["branchcode"];
+    $debtorno =$Row["debtorno"];
     $request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
 
     echo '<br \>', _('Customer Code'), ': ', $id;
@@ -77,9 +77,9 @@ while ($row = DB_fetch_array($result)) {
              ($id),
              ($debtorno));
 
-      $update_result = DB_query($query);
+      $Update_result = DB_query($query);
 
-      if ($update_result==1) {
+      if ($Update_result==1) {
       echo '<br />'. 'Address: ' . $address . ' updated to geocode.';
       echo '<br />'. 'Received status ' . $status . '<br />';
 	}
@@ -94,13 +94,13 @@ while ($row = DB_fetch_array($result)) {
 }
 
 // Iterate through the Supplier rows, geocoding each address
-while ($row2 = DB_fetch_array($result2)) {
+while ($Row2 = DB_fetch_array($Result2)) {
   $geocode_pending = true;
 
   while ($geocode_pending) {
-    $address = $row2["address1"] . ",+" . $row2["address2"] . ",+" . $row2["address3"] . ",+" . $row2["address4"];
-    $address = urlencode($row2["address1"] . "," . $row2["address2"] . "," . $row2["address3"] . "," . $row2["address4"]);
-    $id = $row2["supplierid"];
+    $address = $Row2["address1"] . ",+" . $Row2["address2"] . ",+" . $Row2["address3"] . ",+" . $Row2["address4"];
+    $address = urlencode($Row2["address1"] . "," . $Row2["address2"] . "," . $Row2["address3"] . "," . $Row2["address4"]);
+    $id = $Row2["supplierid"];
     $request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
 
     echo '<p>' . _('Supplier Code: ') . $id;
@@ -127,9 +127,9 @@ while ($row2 = DB_fetch_array($result2)) {
              ($lng),
              ($id));
 
-      $update_result = DB_query($query);
+      $Update_result = DB_query($query);
 
-      if ($update_result==1) {
+      if ($Update_result==1) {
       echo '<br />' . 'Address: ' . $address . ' updated to geocode.';
       echo '<br />' . 'Received status ' . $status . '<br />';
       }

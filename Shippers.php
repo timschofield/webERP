@@ -47,22 +47,22 @@ if ( isset($_POST['submit']) ) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE shippers SET shippername='" . $_POST['ShipperName'] . "'
+		$SQL = "UPDATE shippers SET shippername='" . $_POST['ShipperName'] . "'
 				WHERE shipper_id = '".$SelectedShipper."'";
-		$msg = _('The shipper record has been updated');
+		$Msg = _('The shipper record has been updated');
 	} elseif ($InputError !=1) {
 
 	/*SelectedShipper is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Shipper form */
 
-		$sql = "INSERT INTO shippers (shippername) VALUES ('" . $_POST['ShipperName'] . "')";
-		$msg = _('The shipper record has been added');
+		$SQL = "INSERT INTO shippers (shippername) VALUES ('" . $_POST['ShipperName'] . "')";
+		$Msg = _('The shipper record has been added');
 	}
 
 	//run the SQL from either of the above possibilites
 	if ($InputError !=1) {
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		echo '<br />';
-		prnMsg($msg, 'success');
+		prnMsg($Msg, 'success');
 		unset($SelectedShipper);
 		unset($_POST['ShipperName']);
 		unset($_POST['Shipper_ID']);
@@ -73,26 +73,26 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql= "SELECT COUNT(*) FROM salesorders WHERE salesorders.shipvia='".$SelectedShipper."'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
+	$SQL= "SELECT COUNT(*) FROM salesorders WHERE salesorders.shipvia='".$SelectedShipper."'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
 		$CancelDelete = 1;
 		echo '<br />';
 		prnMsg( _('Cannot delete this shipper because sales orders have been created using this shipper') . '. ' . _('There are'). ' '.
-			$myrow[0] . ' '. _('sales orders using this shipper code'), 'error');
+			$MyRow[0] . ' '. _('sales orders using this shipper code'), 'error');
 
 	} else {
 		// PREVENT DELETES IF DEPENDENT RECORDS IN 'DebtorTrans'
 
-		$sql= "SELECT COUNT(*) FROM debtortrans WHERE debtortrans.shipvia='".$SelectedShipper."'";
-		$result = DB_query($sql);
-		$myrow = DB_fetch_row($result);
-		if ($myrow[0]>0) {
+		$SQL= "SELECT COUNT(*) FROM debtortrans WHERE debtortrans.shipvia='".$SelectedShipper."'";
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_row($Result);
+		if ($MyRow[0]>0) {
 			$CancelDelete = 1;
 			echo '<br />';
 			prnMsg( _('Cannot delete this shipper because invoices have been created using this shipping company') . '. ' . _('There are').  ' ' .
-				$myrow[0] . ' ' . _('invoices created using this shipping company'), 'error');
+				$MyRow[0] . ' ' . _('invoices created using this shipping company'), 'error');
 		} else {
 			// Prevent deletion if the selected shipping company is the current default shipping company in config.php !!
 			if ($_SESSION['Default_Shipper']==$SelectedShipper) {
@@ -103,8 +103,8 @@ if ( isset($_POST['submit']) ) {
 
 			} else {
 
-				$sql="DELETE FROM shippers WHERE shipper_id='".$SelectedShipper."'";
-				$result = DB_query($sql);
+				$SQL="DELETE FROM shippers WHERE shipper_id='".$SelectedShipper."'";
+				$Result = DB_query($SQL);
 				echo '<br />';
 				prnMsg( _('The shipper record has been deleted'), 'success');;
 			}
@@ -124,25 +124,25 @@ or deletion of the records*/
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title .
 		'</p>';
 
-	$sql = "SELECT * FROM shippers ORDER BY shipper_id";
-	$result = DB_query($sql);
+	$SQL = "SELECT * FROM shippers ORDER BY shipper_id";
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr><th>' .  _('Shipper ID'). '</th><th>' .  _('Shipper Name'). '</th></tr>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		printf('<tr class="striped_row">
 			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedShipper=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedShipper=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this shipper?') . '\');">' .  _('Delete'). '</a></td>
 			</tr>',
-			$myrow[0],
-			$myrow[1],
+			$MyRow[0],
+			$MyRow[1],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' ,
-			$myrow[0],
+			$MyRow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow[0]);
+			$MyRow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -164,13 +164,13 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedShipper)) {
 		//editing an existing Shipper
 
-		$sql = "SELECT shipper_id, shippername FROM shippers WHERE shipper_id='".$SelectedShipper."'";
+		$SQL = "SELECT shipper_id, shippername FROM shippers WHERE shipper_id='".$SelectedShipper."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['Shipper_ID'] = $myrow['shipper_id'];
-		$_POST['ShipperName']	= $myrow['shippername'];
+		$_POST['Shipper_ID'] = $MyRow['shipper_id'];
+		$_POST['ShipperName']	= $MyRow['shippername'];
 
 		echo '<input type="hidden" name="SelectedShipper" value="'. $SelectedShipper .'" />';
 		echo '<input type="hidden" name="Shipper_ID" value="' . $_POST['Shipper_ID'] . '" />';

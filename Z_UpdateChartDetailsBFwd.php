@@ -24,18 +24,18 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 /*Show a form to allow input of criteria for TB to show */
 	echo '<table><tr><td>' . _('Select Period From') . ':</td><td><select name="FromPeriod">';
 
-	$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
-	$Periods = DB_query($sql);
+	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno";
+	$Periods = DB_query($SQL);
 
 
-	while ($myrow=DB_fetch_array($Periods)){
-		echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+	while ($MyRow=DB_fetch_array($Periods)){
+		echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 	}
 
 	echo '</select></td></tr>';
 
-	$sql = "SELECT MAX(periodno) FROM periods";
-	$MaxPrd = DB_query($sql);
+	$SQL = "SELECT MAX(periodno) FROM periods";
+	$MaxPrd = DB_query($SQL);
 	$MaxPrdrow = DB_fetch_row($MaxPrd);
 
 	$DefaultToPeriod = (int) ($MaxPrdrow[0]-1);
@@ -44,12 +44,12 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	$RetResult = DB_data_seek($Periods,0);
 
-	while ($myrow=DB_fetch_array($Periods)){
+	while ($MyRow=DB_fetch_array($Periods)){
 
-		if($myrow['periodno']==$DefaultToPeriod){
-			echo '<option selected="selected" value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+		if($MyRow['periodno']==$DefaultToPeriod){
+			echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		} else {
-			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 		}
 	}
 	echo '</select></td></tr></table>';
@@ -62,7 +62,7 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 
 	for ($i=$_POST['FromPeriod'];$i<=$_POST['ToPeriod'];$i++){
 
-		$sql="SELECT accountcode,
+		$SQL="SELECT accountcode,
 					period,
 					budget,
 					actual,
@@ -72,22 +72,22 @@ if (!isset($_POST['FromPeriod']) OR !isset($_POST['ToPeriod'])){
 				WHERE period ='" . $i . "'";
 
 		$ErrMsg = _('Could not retrieve the ChartDetail records because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
-		while ($myrow=DB_fetch_array($result)){
+		while ($MyRow=DB_fetch_array($Result)){
 
-			$CFwd = $myrow['bfwd'] + $myrow['actual'];
-			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
+			$CFwd = $MyRow['bfwd'] + $MyRow['actual'];
+			$CFwdBudget = $MyRow['bfwdbudget'] + $MyRow['budget'];
 
-			echo '<br />' . _('Account Code') . ': ' . $myrow['accountcode'] . ' ' . _('Period') .': ' . $myrow['period'];
+			echo '<br />' . _('Account Code') . ': ' . $MyRow['accountcode'] . ' ' . _('Period') .': ' . $MyRow['period'];
 
-			$sql = "UPDATE chartdetails SET bfwd='" . $CFwd . "',
+			$SQL = "UPDATE chartdetails SET bfwd='" . $CFwd . "',
 										bfwdbudget='" . $CFwdBudget . "'
-					WHERE period='" . ($myrow['period'] +1) . "'
-					AND  accountcode = '" . $myrow['accountcode'] . "'";
+					WHERE period='" . ($MyRow['period'] +1) . "'
+					AND  accountcode = '" . $MyRow['accountcode'] . "'";
 
 			$ErrMsg =_('Could not update the chartdetails record because');
-			$updresult = DB_query($sql,$ErrMsg);
+			$updresult = DB_query($SQL,$ErrMsg);
 		}
 	} /* end of for loop */
 }

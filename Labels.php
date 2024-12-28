@@ -132,7 +132,7 @@ if (isset($_POST['SelectedLabelID'])){
 				AND ctype_digit($_POST['HPos' . $i])
 				AND ctype_digit($_POST['FontSize' . $i])){ // if all entries are integers
 
-				$result =DB_query("UPDATE labelfields SET fieldvalue='" . $_POST['FieldName' . $i] . "',
+				$Result =DB_query("UPDATE labelfields SET fieldvalue='" . $_POST['FieldName' . $i] . "',
 														vpos='" . $_POST['VPos' . $i] . "',
 														hpos='" . $_POST['HPos' . $i] . "',
 														fontsize='" . $_POST['FontSize' . $i] . "',
@@ -149,7 +149,7 @@ if (isset($_POST['SelectedLabelID'])){
 
 		//insert the new label field entered
 
-		$result = DB_query("INSERT INTO labelfields (labelid,
+		$Result = DB_query("INSERT INTO labelfields (labelid,
 													fieldvalue,
 													vpos,
 													hpos,
@@ -165,7 +165,7 @@ if (isset($_POST['SelectedLabelID'])){
 } elseif(isset($_GET['SelectedLabelID'])){
 	$SelectedLabelID =$_GET['SelectedLabelID'];
 	if (isset($_GET['DeleteField'])){ //then process any deleted fields
-		$result = DB_query("DELETE FROM labelfields WHERE labelfieldid='" . $_GET['DeleteField'] . "'");
+		$Result = DB_query("DELETE FROM labelfields WHERE labelfieldid='" . $_GET['DeleteField'] . "'");
 	}
 }
 
@@ -196,7 +196,7 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE labels SET 	description = '" . $_POST['Description'] . "',
+		$SQL = "UPDATE labels SET 	description = '" . $_POST['Description'] . "',
 									height = '" . $_POST['Height'] . "',
 									topmargin = '". $_POST['TopMargin'] . "',
 									width = '". $_POST['Width'] . "',
@@ -208,7 +208,7 @@ if (isset($_POST['submit'])) {
 				WHERE labelid = '" . $SelectedLabelID . "'";
 
 		$ErrMsg = _('The update of this label template failed because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		$Message = _('The label template has been updated');
 
@@ -216,7 +216,7 @@ if (isset($_POST['submit'])) {
 
 	/*Selected label is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new label form */
 
-		$sql = "INSERT INTO labels (description,
+		$SQL = "INSERT INTO labels (description,
 									height,
 									topmargin,
 									width,
@@ -236,7 +236,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['PageHeight'] . "')";
 
 		$ErrMsg = _('The addition of this label failed because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		$Message = _('The new label template has been added to the database');
 	}
 
@@ -259,8 +259,8 @@ if (isset($_POST['submit'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
 	/*Cascade deletes in labelfields */
-	$result = DB_query("DELETE FROM labelfields WHERE labelid= '" . $SelectedLabelID . "'");
-	$result = DB_query("DELETE FROM labels WHERE labelid= '" . $SelectedLabelID . "'");
+	$Result = DB_query("DELETE FROM labelfields WHERE labelid= '" . $SelectedLabelID . "'");
+	$Result = DB_query("DELETE FROM labels WHERE labelid= '" . $SelectedLabelID . "'");
 	prnMsg(_('The selected label template has been deleted'),'success');
 	unset ($SelectedLabelID);
 }
@@ -269,7 +269,7 @@ if (!isset($SelectedLabelID)) {
 
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedLabelID will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of label templates will be displayed with links to delete or edit each. These will call the same page again and allow update/input or deletion of the records*/
 
-	$sql = "SELECT labelid,
+	$SQL = "SELECT labelid,
 				description,
 				pagewidth,
 				pageheight,
@@ -283,9 +283,9 @@ if (!isset($SelectedLabelID)) {
 
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The defined label templates could not be retrieved because');
 	$DbgMsg = _('The following SQL to retrieve the label templates was used');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($result)>0){
+	if (DB_num_rows($Result)>0){
 		echo '<table class="selection">
 				<tr>
 					<th>' . _('Description') . '</th>
@@ -298,21 +298,21 @@ if (!isset($SelectedLabelID)) {
 					<th>' . _('Column Width') . '</th>
 				</tr>';
 
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
-			if ($myrow['rowheight']>0) {
-				$NoOfRows = floor(($myrow['pageheight']-$myrow['topmargin'])/$myrow['rowheight']);
+			if ($MyRow['rowheight']>0) {
+				$NoOfRows = floor(($MyRow['pageheight']-$MyRow['topmargin'])/$MyRow['rowheight']);
 			} else {
 				$NoOfRows = 0;
 			}
-			if ($myrow['columnwidth']>0) {
-				$NoOfCols = floor(($myrow['pagewidth']-$myrow['leftmargin'])/$myrow['columnwidth']);
+			if ($MyRow['columnwidth']>0) {
+				$NoOfCols = floor(($MyRow['pagewidth']-$MyRow['leftmargin'])/$MyRow['columnwidth']);
 			} else {
 				$NoOfCols = 0;
 			}
 
 			foreach ($PaperSize as $PaperName=>$PaperType) {
-				if ($PaperType['PageWidth'] == $myrow['pagewidth'] AND $PaperType['PageHeight'] == $myrow['pageheight']) {
+				if ($PaperType['PageWidth'] == $MyRow['pagewidth'] AND $PaperType['PageHeight'] == $MyRow['pageheight']) {
 					$Paper = $PaperName;
 				}
 			}
@@ -328,19 +328,19 @@ if (!isset($SelectedLabelID)) {
 						<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
 						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
 						</tr>',
-						$myrow['description'],
+						$MyRow['description'],
 						$NoOfRows . ' x ' . $NoOfCols,
 						$Paper,
-						$myrow['height'],
-						$myrow['width'],
-						$myrow['rowheight'],
-						$myrow['columnwidth'],
+						$MyRow['height'],
+						$MyRow['width'],
+						$MyRow['rowheight'],
+						$MyRow['columnwidth'],
 						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$myrow['labelid'],
+						$MyRow['labelid'],
 						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$myrow['labelid'],
+						$MyRow['labelid'],
 						$RootPath . '/LabelFields.php?',
-						$myrow['labelid']);
+						$MyRow['labelid']);
 			} else {
 				printf('<tr class="striped_row">
 						<td>%s</td>
@@ -354,20 +354,20 @@ if (!isset($SelectedLabelID)) {
 						<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
 						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
 						</tr>',
-						$myrow['description'],
+						$MyRow['description'],
 						$NoOfRows . ' x ' . $NoOfCols,
-						$myrow['pagewidth'],
-						$myrow['pageheight'],
-						$myrow['height'],
-						$myrow['width'],
-						$myrow['rowheight'],
-						$myrow['columnwidth'],
+						$MyRow['pagewidth'],
+						$MyRow['pageheight'],
+						$MyRow['height'],
+						$MyRow['width'],
+						$MyRow['rowheight'],
+						$MyRow['columnwidth'],
 						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$myrow['labelid'],
+						$MyRow['labelid'],
 						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$myrow['labelid'],
+						$MyRow['labelid'],
 						$RootPath . '/LabelFields.php?',
-						$myrow['labelid']);
+						$MyRow['labelid']);
 			}
 		}
 		//END WHILE LIST LOOP
@@ -390,7 +390,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedLabelID)) {
 	//editing an existing label
 
-	$sql = "SELECT pagewidth,
+	$SQL = "SELECT pagewidth,
 					pageheight,
 					description,
 					height,
@@ -402,21 +402,21 @@ if (isset($SelectedLabelID)) {
 			FROM labels
 			WHERE labelid='" . $SelectedLabelID . "'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['PageWidth']	= $myrow['pagewidth'];
-	$_POST['PageHeight']	= $myrow['pageheight'];
-	$_POST['Description']	= $myrow['description'];
-	$_POST['Height']		= $myrow['height'];
-	$_POST['TopMargin']	= $myrow['topmargin'];
-	$_POST['Width'] 	= $myrow['width'];
-	$_POST['LeftMargin']	= $myrow['leftmargin'];
-	$_POST['RowHeight']	= $myrow['rowheight'];
-	$_POST['ColumnWidth']	= $myrow['columnwidth'];
+	$_POST['PageWidth']	= $MyRow['pagewidth'];
+	$_POST['PageHeight']	= $MyRow['pageheight'];
+	$_POST['Description']	= $MyRow['description'];
+	$_POST['Height']		= $MyRow['height'];
+	$_POST['TopMargin']	= $MyRow['topmargin'];
+	$_POST['Width'] 	= $MyRow['width'];
+	$_POST['LeftMargin']	= $MyRow['leftmargin'];
+	$_POST['RowHeight']	= $MyRow['rowheight'];
+	$_POST['ColumnWidth']	= $MyRow['columnwidth'];
 
 	foreach ($PaperSize as $PaperName=>$PaperType) {
-		if ($PaperType['PageWidth'] == $myrow['pagewidth'] AND $PaperType['PageHeight'] == $myrow['pageheight']) {
+		if ($PaperType['PageWidth'] == $MyRow['pagewidth'] AND $PaperType['PageHeight'] == $MyRow['pageheight']) {
 			$_POST['PaperSize'] = $PaperName;
 		}
 	}
@@ -542,7 +542,7 @@ if (isset($SelectedLabelID)) {
 			WHERE labelid = '" . $SelectedLabelID . "'
 			ORDER BY vpos DESC";
 	$ErrMsg = _('Could not get the label fields because');
-	$result = DB_query($SQL,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 	$i=0;
 	echo '<table class="selection">
 				<tr>
@@ -555,42 +555,42 @@ if (isset($SelectedLabelID)) {
 						<th>' . _('Font Size') . '</th>
 						<th>' . _('Bar-code') . '</th>
 					</tr>';
-	if (DB_num_rows($result)>0){
-		while ($myrow = DB_fetch_array($result)) {
+	if (DB_num_rows($Result)>0){
+		while ($MyRow = DB_fetch_array($Result)) {
 
-			echo '<input type="hidden" name="LabelFieldID' . $i . '" value="' . $myrow['labelfieldid'] . '" />
+			echo '<input type="hidden" name="LabelFieldID' . $i . '" value="' . $MyRow['labelfieldid'] . '" />
 			<tr class="striped_row"><td><select name="FieldName' . $i . '" onchange="ReloadForm(submit)">';
-			if ($myrow['fieldvalue']=='itemcode'){
+			if ($MyRow['fieldvalue']=='itemcode'){
 				echo '<option selected="selected" value="itemcode">' . _('Item Code') . '</option>';
 			} else {
 				echo '<option value="itemcode">' . _('Item Code') . '</option>';
 			}
-			if ($myrow['fieldvalue']=='itemdescription'){
+			if ($MyRow['fieldvalue']=='itemdescription'){
 				echo '<option selected="selected" value="itemdescription">' . _('Item Description') . '</option>';
 			} else {
 				echo '<option value="itemdescription">' . _('Item Descrption') . '</option>';
 			}
-			if ($myrow['fieldvalue']=='barcode'){
+			if ($MyRow['fieldvalue']=='barcode'){
 				echo '<option selected="selected" value="barcode">' . _('Item Barcode') . '</option>';
 			} else {
 				echo '<option value="barcode">' . _('Item Barcode') . '</option>';
 			}
-			if ($myrow['fieldvalue']=='price'){
+			if ($MyRow['fieldvalue']=='price'){
 				echo '<option selected="selected" value="price">' . _('Price') . '</option>';
 			} else {
 				echo '<option value="price">' . _('Price') . '</option>';
 			}
-			if ($myrow['fieldvalue']=='logo'){
+			if ($MyRow['fieldvalue']=='logo'){
 				echo '<option selected="selected" value="logo">' . _('Company Logo') . '</option>';
 			} else {
 				echo '<option value="logo">' . _('Company Logo') . '</option>';
 			}
 			echo '</select></td>
-				<td><input type="text" name="VPos' . $i . '" size="4" maxlength="4" value="' . $myrow['vpos'] . '" /></td>
-				<td><input type="text" name="HPos' . $i . '" size="4" maxlength="4" value="' . $myrow['hpos'] . '" /></td>
-				<td><input type="text" name="FontSize' . $i . '" size="4" maxlength="4" value="' . $myrow['fontsize'] . '" /></td>
+				<td><input type="text" name="VPos' . $i . '" size="4" maxlength="4" value="' . $MyRow['vpos'] . '" /></td>
+				<td><input type="text" name="HPos' . $i . '" size="4" maxlength="4" value="' . $MyRow['hpos'] . '" /></td>
+				<td><input type="text" name="FontSize' . $i . '" size="4" maxlength="4" value="' . $MyRow['fontsize'] . '" /></td>
 				<td><select name="Barcode' . $i . '" onchange="ReloadForm(submit)">';
-			if ($myrow['barcode']==0){
+			if ($MyRow['barcode']==0){
 				echo '<option selected="selected" value="0">' . _('No') . '</option>
 						<option value="1">' . _('Yes') . '</option>';
 			} else {
@@ -598,7 +598,7 @@ if (isset($SelectedLabelID)) {
 						<option value="0">' . _('No') . '</option>';
 			}
 			echo '</select></td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=' . $SelectedLabelID . '&amp;DeleteField=' . $myrow['labelfieldid'] .' onclick="return confirm(\'' . _('Are you sure you wish to delete this label field?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=' . $SelectedLabelID . '&amp;DeleteField=' . $MyRow['labelfieldid'] .' onclick="return confirm(\'' . _('Are you sure you wish to delete this label field?') . '\');">' . _('Delete') . '</a></td>
 				</tr>';
 			$i++;
 		}

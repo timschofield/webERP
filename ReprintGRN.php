@@ -33,18 +33,18 @@ if (isset($_POST['Show'])) {
 		include('includes/footer.php');
 		exit;
 	}
-	$sql="SELECT count(orderno)
+	$SQL="SELECT count(orderno)
 				FROM purchorders
 				WHERE orderno='" . $_POST['PONumber'] ."'";
-	$result=DB_query($sql);
-	$myrow=DB_fetch_row($result);
-	if ($myrow[0]==0) {
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_row($Result);
+	if ($MyRow[0]==0) {
 		echo '<br />';
 		prnMsg( _('This purchase order does not exist on the system. Please try again.'), 'warn');
 		include('includes/footer.php');
 		exit;
 	}
-	$sql="SELECT grnbatch,
+	$SQL="SELECT grnbatch,
 				grns.grnno,
 				grns.podetailitem,
 				grns.itemcode,
@@ -64,8 +64,8 @@ if (isset($_POST['Show'])) {
 			LEFT JOIN stockmaster
 			ON grns.itemcode=stockmaster.stockid
 			WHERE purchorderdetails.orderno='" . $_POST['PONumber'] ."'";
-	$result=DB_query($sql);
-	if (DB_num_rows($result)==0) {
+	$Result=DB_query($SQL);
+	if (DB_num_rows($Result)==0) {
 		echo '<br />';
 		prnMsg( _('There are no GRNs for this purchase order that can be reprinted.'), 'warn');
 		include('includes/footer.php');
@@ -89,18 +89,18 @@ if (isset($_POST['Show'])) {
 				<th>' . _('Action') . '</th>
 			</tr>';
 
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">
-			<td>' . $myrow['suppname'] . '</td>
-			<td class="number">' . $myrow['podetailitem'] . '</td>
-			<td class="number">' . $myrow['grnbatch'] . '</td>
-			<td>' . $myrow['itemcode'] . '</td>
-			<td>' . $myrow['itemdescription'] . '</td>
-			<td>' . $myrow['deliverydate'] . '</td>
-			<td class="number">' . locale_number_format($myrow['qtyrecd'], $myrow['decimalplaces']) . '</td>
-			<td>' . $myrow['suppinv'] . '</td>
-			<td><a href="PDFGrn.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint GRN ') . '</a>
-			&nbsp;<a href="PDFQALabel.php?GRNNo=' . $myrow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint Labels') . '</a></td>
+			<td>' . $MyRow['suppname'] . '</td>
+			<td class="number">' . $MyRow['podetailitem'] . '</td>
+			<td class="number">' . $MyRow['grnbatch'] . '</td>
+			<td>' . $MyRow['itemcode'] . '</td>
+			<td>' . $MyRow['itemdescription'] . '</td>
+			<td>' . $MyRow['deliverydate'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['qtyrecd'], $MyRow['decimalplaces']) . '</td>
+			<td>' . $MyRow['suppinv'] . '</td>
+			<td><a href="PDFGrn.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint GRN ') . '</a>
+			&nbsp;<a href="PDFQALabel.php?GRNNo=' . $MyRow['grnbatch'] .'&PONo=' . $_POST['PONumber'] . '">' . _('Reprint Labels') . '</a></td>
 		</tr>';
 	}
 	echo '</table>';

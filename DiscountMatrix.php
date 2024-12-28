@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1) {
 
-		$sql = "INSERT INTO discountmatrix (salestype,
+		$SQL = "INSERT INTO discountmatrix (salestype,
 							discountcategory,
 							quantitybreak,
 							discountrate)
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 						'" . filter_number_format($_POST['QuantityBreak']) . "',
 						'" . (filter_number_format($_POST['DiscountRate'])/100) . "')";
 
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		prnMsg( _('The discount matrix record has been added'),'success');
 		echo '<br />';
 		unset($_POST['DiscountCategory']);
@@ -72,12 +72,12 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['Delete']) and $_GET['Delete']=='yes') {
 /*the link to delete a selected record was clicked instead of the submit button */
 
-	$sql="DELETE FROM discountmatrix
+	$SQL="DELETE FROM discountmatrix
 		WHERE discountcategory='" .$_GET['DiscountCategory'] . "'
 		AND salestype='" . $_GET['SalesType'] . "'
 		AND quantitybreak='" . $_GET['QuantityBreak']."'";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	prnMsg( _('The discount matrix record has been deleted'),'success');
 	echo '<br />';
 }
@@ -88,40 +88,40 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<fieldset>
 		<legend>', _('Matrix Parameters'), '</legend>';
 
-$sql = "SELECT typeabbrev,
+$SQL = "SELECT typeabbrev,
 		sales_type
 		FROM salestypes";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 echo '<field>
 		<label for="SalesType">' . _('Customer Price List') . ' (' . _('Sales Type') . '):</label>';
 
 echo '<select tabindex="1" name="SalesType">';
 
-while ($myrow = DB_fetch_array($result)){
-	if (isset($_POST['SalesType']) and $myrow['typeabbrev']==$_POST['SalesType']){
-		echo '<option selected="selected" value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+while ($MyRow = DB_fetch_array($Result)){
+	if (isset($_POST['SalesType']) and $MyRow['typeabbrev']==$_POST['SalesType']){
+		echo '<option selected="selected" value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['typeabbrev'] . '">' . $myrow['sales_type'] . '</option>';
+		echo '<option value="' . $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 	}
 }
 
 echo '</select>
 	</field>';
 
-$sql = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
-$result = DB_query($sql);
-if (DB_num_rows($result) > 0) {
+$SQL = "SELECT DISTINCT discountcategory FROM stockmaster WHERE discountcategory <>''";
+$Result = DB_query($SQL);
+if (DB_num_rows($Result) > 0) {
 	echo '<field>
 			<label for="DiscountCategory">' .  _('Discount Category Code') .': </label>
 			<select name="DiscountCategory">';
 
-	while ($myrow = DB_fetch_array($result)){
-		if ($myrow['discountcategory']==$_POST['DiscCat']){
-			echo '<option selected="selected" value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)){
+		if ($MyRow['discountcategory']==$_POST['DiscCat']){
+			echo '<option selected="selected" value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow['discountcategory'] . '">' . $myrow['discountcategory'] . '</option>';
+			echo '<option value="' . $MyRow['discountcategory'] . '">' . $MyRow['discountcategory'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -144,7 +144,7 @@ echo '<field>
 		<input tabindex="5" type="submit" name="submit" value="' . _('Enter Information') . '" />
 	</div>';
 
-$sql = "SELECT sales_type,
+$SQL = "SELECT sales_type,
 			salestype,
 			discountcategory,
 			quantitybreak,
@@ -155,7 +155,7 @@ $sql = "SELECT sales_type,
 			discountcategory,
 			quantitybreak";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 echo '<table class="selection">';
 echo '<tr>
@@ -165,8 +165,8 @@ echo '<tr>
 		<th>' . _('Discount Rate') . ' %' . '</th>
 	</tr>';
 
-while ($myrow = DB_fetch_array($result)) {
-	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $myrow['salestype'] . '&amp;DiscountCategory=' . $myrow['discountcategory'] . '&amp;QuantityBreak=' . $myrow['quantitybreak'];
+while ($MyRow = DB_fetch_array($Result)) {
+	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $MyRow['salestype'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'] . '&amp;QuantityBreak=' . $MyRow['quantitybreak'];
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
@@ -175,10 +175,10 @@ while ($myrow = DB_fetch_array($result)) {
 			<td class="number">%s</td>
 			<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['sales_type'],
-			$myrow['discountcategory'],
-			$myrow['quantitybreak'],
-			$myrow['discountrate']*100 ,
+			$MyRow['sales_type'],
+			$MyRow['discountcategory'],
+			$MyRow['quantitybreak'],
+			$MyRow['discountrate']*100 ,
 			$DeleteURL);
 
 }

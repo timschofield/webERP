@@ -162,9 +162,9 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 		/* We need the items to order to be in supplier order so that only a single order is created for a supplier - so need to sort the multi-dimensional array to ensure it is listed by supplier sequence. To use array_multisort we need to get arrays of supplier with the same keys as the main array of rows
 		 */
 		$SupplierArray =array();
-		foreach ($ItemArray as $key => $row) {
+		foreach ($ItemArray as $key => $Row) {
 			//to make the Supplier array with the keys of the $ItemArray
-			$SupplierArray[$key]  = $row['supplierno'];
+			$SupplierArray[$key]  = $Row['supplierno'];
 		}
 
 		/* Use array_multisort to Sort the ItemArray with supplierno SortedColumn

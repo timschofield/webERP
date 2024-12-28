@@ -32,26 +32,26 @@ echo '<table cellpadding="2">
 $j = 1;
 $ActGrp ='';
 
-while ($myrow=DB_fetch_array($AccountsResult)) {
+while ($MyRow=DB_fetch_array($AccountsResult)) {
 
-       if ($myrow['group_']== $ActGrp) {
+       if ($MyRow['group_']== $ActGrp) {
               printf('<tr class="striped_row">
 					<td></td>
 	      		      <td>%s</td>
 			          <td>%s</td>
 			          </tr>',
-			  $myrow['accountcode'],
-			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false));
+			  $MyRow['accountcode'],
+			  htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false));
        } else {
-              $ActGrp = $myrow['group_'];
+              $ActGrp = $MyRow['group_'];
               printf('<tr class="striped_row">
 					<td><b>%s</b></td>
 	      		      <td>%s</td>
 			          <td>%s</td>
 			          </tr>',
-			  $myrow['group_'],
-			  $myrow['accountcode'],
-			  htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false));
+			  $MyRow['group_'],
+			  $MyRow['accountcode'],
+			  htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false));
        }
 }
 //end of while loop

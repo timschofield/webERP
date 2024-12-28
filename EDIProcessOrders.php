@@ -38,8 +38,8 @@ If the order processed ok then move the file to processed and go on to next file
 /*Read in the EANCOM Order Segments for the current seg group from the segments table */
 
 
-$sql = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
-$OrderSeg = DB_query($sql);
+$SQL = "SELECT id, segtag, maxoccur, seggroup FROM edi_orders_segs";
+$OrderSeg = DB_query($SQL);
 $i=0;
 $Seg = array();
 
@@ -51,9 +51,9 @@ while ($SegRow=DB_fetch_array($OrderSeg)){
 $TotalNoOfSegments = $i-1;
 
 /*get the list of files in the incoming orders directory - from config.php */
-$dirhandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders']);
+$DirHandle = opendir($_SERVER['DOCUMENT_ROOT'] . '/' . $RootPath . '/' . $_SESSION['EDI_Incoming_Orders']);
 
- while (false !== ($OrderFile=readdir($dirhandle))){ /*there are files in the incoming orders dir */
+ while (false !== ($OrderFile=readdir($DirHandle))){ /*there are files in the incoming orders dir */
 
 	$TryNextFile = False;
 	echo '<br />' . $OrderFile;

@@ -3,7 +3,7 @@
 $PaytTypes    = array();
 $ReceiptTypes = array();
 
-$sql = 'SELECT paymentid,
+$SQL = 'SELECT paymentid,
 			paymentname,
 			paymenttype,
 			receipttype,
@@ -11,7 +11,7 @@ $sql = 'SELECT paymentid,
 			FROM paymentmethods
 			ORDER by paymentname';
 
-$PMResult = DB_query($sql);
+$PMResult = DB_query($SQL);
 while( $PMrow = DB_fetch_array($PMResult) ) {
 	if ($PMrow['paymenttype']==1) {
 		$PaytTypes[] = $PMrow['paymentname'];

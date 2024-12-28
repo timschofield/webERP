@@ -154,7 +154,7 @@ if (!isset($_SESSION['Items' . $identifier])) {
 
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items' . $identifier]->Branch . ' ' . _('against customer code') . ': ' . $_SESSION['Items' . $identifier]->DebtorNo . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
-			if ($debug==1) {
+			if ($Debug==1) {
 				echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $SQL;
 			}
 			include('includes/footer.php');
@@ -202,11 +202,11 @@ if (isset($_POST['CancelReturn'])) {
 if (isset($_POST['search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
-		$msg='<div class="page_help_text">' . _('Item description has been used in search') . '.</div>';
+		$Msg='<div class="page_help_text">' . _('Item description has been used in search') . '.</div>';
 	} else if ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
-		$msg='<div class="page_help_text">' . _('Item Code has been used in search') . '.</div>';
+		$Msg='<div class="page_help_text">' . _('Item Code has been used in search') . '.</div>';
 	} else if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-		$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
+		$Msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 	}
 	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces

@@ -80,7 +80,7 @@ If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASa
 
 $ErrMsg = _('There was a problem retrieving the Lot Information') . ' ' .$SelectedCOA . ' ' . _('from the database');
 if (isset($SelectedCOA)) {
-	$sql = "SELECT lotkey,
+	$SQL = "SELECT lotkey,
 					description,
 					name,
 					method,
@@ -101,7 +101,7 @@ if (isset($SelectedCOA)) {
 				AND sampleresults.showoncert='1'
 				ORDER by groupby, sampleresults.testid";
 } else {
-	$sql = "SELECT lotkey,
+	$SQL = "SELECT lotkey,
 					description,
 					name,
 					method,
@@ -121,10 +121,10 @@ if (isset($SelectedCOA)) {
 				AND sampleresults.showoncert='1'
 				ORDER by groupby, sampleresults.testid";
 }
-$result=DB_query($sql,$ErrMsg);
+$Result=DB_query($SQL,$ErrMsg);
 
 //If there are no rows, there's a problem.
-if (DB_num_rows($result)==0){
+if (DB_num_rows($Result)==0){
 	$Title = _('Print Certificate of Analysis Error');
 	include('includes/header.php');
 	 echo '<div class="centre">
@@ -151,9 +151,9 @@ if (DB_num_rows($result)==0){
 }
 $PaperSize = 'Letter';
 if ($QASampleID>'') {
-	$myrow=DB_fetch_array($result);
-	$SelectedCOA=$myrow['lotkey'];
-	DB_data_seek($result,0);
+	$MyRow=DB_fetch_array($Result);
+	$SelectedCOA=$MyRow['lotkey'];
+	DB_data_seek($Result,0);
 }
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Certificate of Analysis') );
@@ -161,7 +161,7 @@ $pdf->addInfo('Subject', _('Certificate of Analysis') . ' ' . $SelectedCOA);
 $FontSize=12;
 $PageNumber = 1;
 $HeaderPrinted=0;
-$line_height=$FontSize*1.25;
+$LineHeight=$FontSize*1.25;
 $RectHeight=12;
 $SectionHeading=0;
 $CurSection='NULL';
@@ -173,18 +173,18 @@ $SectionsArray=array(array('PhysicalProperty',3, _('Physical Properties'), '', a
 					 array('Processing',2, _('Injection Molding Processing Guidelines'), _('* Desicant type dryer required.'), array(240,265),array(_('Setting'),_('Value')),array('left','center')),
 					 array('RegulatoryCompliance',2, _('Regulatory Compliance'), '', array(240,265),array(_('Regulatory Compliance'),_('Value')),array('left','center')));
 
-while ($myrow=DB_fetch_array($result)){
-	if ($myrow['description']=='') {
-		$myrow['description']=$myrow['prodspeckey'];
+while ($MyRow=DB_fetch_array($Result)){
+	if ($MyRow['description']=='') {
+		$MyRow['description']=$MyRow['prodspeckey'];
 	}
-	$Spec=$myrow['description'];
-	$SampleDate=ConvertSQLDate($myrow['sampledate']);
+	$Spec=$MyRow['description'];
+	$SampleDate=ConvertSQLDate($MyRow['sampledate']);
 
-	foreach($SectionsArray as $row) {
-		if ($myrow['groupby']==$row[0]) {
-			$SectionColSizes=$row[4];
-			$SectionColLabs=$row[5];
-			$SectionAlign=$row[6];
+	foreach($SectionsArray as $Row) {
+		if ($MyRow['groupby']==$Row[0]) {
+			$SectionColSizes=$Row[4];
+			$SectionColLabs=$Row[5];
+			$SectionAlign=$Row[6];
 		}
 	}
 	$TrailerPrinted=1;
@@ -193,17 +193,17 @@ while ($myrow=DB_fetch_array($result)){
 		$HeaderPrinted=1;
 	}
 
-	if ($CurSection!=$myrow['groupby']) {
+	if ($CurSection!=$MyRow['groupby']) {
 		$SectionHeading=0;
 		if ($CurSection!='NULL' AND $PrintTrailer==1) {
 			$pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 		}
 		$PrevTrailer=$SectionTrailer;
-		$CurSection=$myrow['groupby'];
-		foreach($SectionsArray as $row) {
-			if ($myrow['groupby']==$row[0]) {
-				$SectionTitle=$row[2];
-				$SectionTrailer=$row[3];
+		$CurSection=$MyRow['groupby'];
+		foreach($SectionsArray as $Row) {
+			if ($MyRow['groupby']==$Row[0]) {
+				$SectionTitle=$Row[2];
+				$SectionTrailer=$Row[3];
 			}
 		}
 	}
@@ -213,12 +213,12 @@ while ($myrow=DB_fetch_array($result)){
 		if ($PrevTrailer>'' AND $PrintTrailer==1) {
 			$PrevFontSize=$FontSize;
 			$FontSize=8;
-			$line_height=$FontSize*1.25;
+			$LineHeight=$FontSize*1.25;
 			$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$PrevTrailer,'left');
 			$FontSize=$PrevFontSize;
-			$line_height=$FontSize*1.25;
-			$YPos -= $line_height;
-			$YPos -= $line_height;
+			$LineHeight=$FontSize*1.25;
+			$YPos -= $LineHeight;
+			$YPos -= $LineHeight;
 		}
 		if ($YPos < ($Bottom_Margin + 90)){ // Begins new page
 			$PrintTrailer=0;
@@ -226,7 +226,7 @@ while ($myrow=DB_fetch_array($result)){
 			include ('includes/PDFCOAHeader.inc');
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$SectionTitle,'center');
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		$pdf->setFont('','B');
 		$pdf->SetFillColor(200,200,200);
 		$x=0;
@@ -238,18 +238,18 @@ while ($myrow=DB_fetch_array($result)){
 			$XPos+=$ColWidth;
 		}
 		$SectionHeading=1;
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		$pdf->setFont('','');
 	} //$SectionHeading==0
 	$XPos=65;
 	$Value='';
-	if ($myrow['testvalue'] > '') {
-		$Value=$myrow['testvalue'];
-	} //elseif ($myrow['rangemin'] > '') {
-	//	$Value=$myrow['rangemin'] . ' - ' . $myrow['rangemax'];
+	if ($MyRow['testvalue'] > '') {
+		$Value=$MyRow['testvalue'];
+	} //elseif ($MyRow['rangemin'] > '') {
+	//	$Value=$MyRow['rangemin'] . ' - ' . $MyRow['rangemax'];
 	//}
 	if (strtoupper($Value) <> 'NB' AND strtoupper($Value) <> 'NO BREAK') {
-		$Value.= ' ' . $myrow['units'];
+		$Value.= ' ' . $MyRow['units'];
 	}
 	$x=0;
 	foreach($SectionColLabs as $CurColLab) {
@@ -258,13 +258,13 @@ while ($myrow=DB_fetch_array($result)){
 		$ColAlign=$SectionAlign[$x];
 		switch ($x) {
 			case 0;
-				$DispValue=$myrow['name'];
+				$DispValue=$MyRow['name'];
 				break;
 			case 1;
 				$DispValue=$Value;
 				break;
 			case 2;
-				$DispValue=$myrow['method'];
+				$DispValue=$MyRow['method'];
 				break;
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,$ColWidth,$FontSize,$DispValue,$ColAlign,1);
@@ -272,7 +272,7 @@ while ($myrow=DB_fetch_array($result)){
 		$x++;
 	}
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$XPos=65;
 	$PrintTrailer=1;
 	if ($YPos < ($Bottom_Margin + 80)){ // Begins new page
@@ -288,12 +288,12 @@ $pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 if ($SectionTrailer>'') {
 	$PrevFontSize=$FontSize;
 	$FontSize=8;
-	$line_height=$FontSize*1.25;
+	$LineHeight=$FontSize*1.25;
 	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$SectionTrailer,'left');
 	$FontSize=$PrevFontSize;
-	$line_height=$FontSize*1.25;
-	$YPos -= $line_height;
-	$YPos -= $line_height;
+	$LineHeight=$FontSize*1.25;
+	$YPos -= $LineHeight;
+	$YPos -= $LineHeight;
 }
 if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 	$PageNumber++;
@@ -301,19 +301,19 @@ if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 }
 
 $FontSize=8;
-$line_height=$FontSize*1.25;
-$YPos -= $line_height;
-$YPos -= $line_height;
-$sql = "SELECT confvalue
+$LineHeight=$FontSize*1.25;
+$YPos -= $LineHeight;
+$YPos -= $LineHeight;
+$SQL = "SELECT confvalue
 			FROM config
 			WHERE confname='QualityCOAText'";
 
-$result=DB_query($sql, $ErrMsg);
-$myrow=DB_fetch_array($result);
-$Disclaimer=$myrow[0];
+$Result=DB_query($SQL, $ErrMsg);
+$MyRow=DB_fetch_array($Result);
+$Disclaimer=$MyRow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
 while (mb_strlen($LeftOvers) > 1) {
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize, $LeftOvers, 'left');
 }
 

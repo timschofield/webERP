@@ -64,16 +64,16 @@ if (isset($_POST['submit'])) {
 			SET sales_type = '" . $_POST['Sales_Type'] . "'
 			WHERE typeabbrev = '".$SelectedType."'";
 
-		$msg = _('The customer/sales/pricelist type') . ' ' . $SelectedType . ' ' .  _('has been updated');
+		$Msg = _('The customer/sales/pricelist type') . ' ' . $SelectedType . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM salestypes
 			     WHERE typeabbrev = '" . $_POST['TypeAbbrev'] . "'";
 
-		$CheckResult = DB_query($checkSql);
+		$CheckResult = DB_query($CheckSQL);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
@@ -88,11 +88,11 @@ if (isset($_POST['submit'])) {
 							VALUES ('" . str_replace(' ', '', $_POST['TypeAbbrev']) . "',
 									'" . $_POST['Sales_Type'] . "')";
 
-			$msg = _('Customer/sales/pricelist type') . ' ' . $_POST['Sales_Type'] .  ' ' . _('has been created');
-			$checkSql = "SELECT count(typeabbrev)
+			$Msg = _('Customer/sales/pricelist type') . ' ' . $_POST['Sales_Type'] .  ' ' . _('has been created');
+			$CheckSQL = "SELECT count(typeabbrev)
 						FROM salestypes";
-			$Result = DB_query($checkSql);
-			$row = DB_fetch_row($Result);
+			$Result = DB_query($CheckSQL);
+			$Row = DB_fetch_row($Result);
 
 		}
 	}
@@ -102,10 +102,10 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL);
 
 	// Check the default price list exists
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM salestypes
 			     WHERE typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'";
-		$CheckResult = DB_query($checkSql);
+		$CheckResult = DB_query($CheckSQL);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 	// If it doesnt then update config with newly created one.
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 			$_SESSION['DefaultPriceList'] = $_POST['TypeAbbrev'];
 		}
 
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 
 		unset($SelectedType);
 		unset($_POST['TypeAbbrev']);
