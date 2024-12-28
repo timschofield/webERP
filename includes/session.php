@@ -323,6 +323,17 @@ if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashb
 	header('Location: ' . $PathPrefix . 'Dashboard.php');
 }
 
+if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
+	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
+	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
+		$Title = _('Error in form verification');
+		include ('includes/header.php');
+		prnMsg(_('This form was not submitted with a correct ID'), 'error');
+		include ('includes/footer.php');
+		exit;
+	}
+}
+
 function CryptPass($Password) {
 	if (PHP_VERSION_ID < 50500) {
 		$Salt = base64_encode(mcrypt_create_iv(22, MCRYPT_DEV_URANDOM));
@@ -346,17 +357,6 @@ function HighestFileName($PathPrefix) {
 	$files = glob($PathPrefix.'sql/updates/*.php');
 	natsort($files);
 	return basename(array_pop($files), ".php");
-}
-
-if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
-	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
-	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$Title = _('Error in form verification');
-		include ('includes/header.php');
-		prnMsg(_('This form was not submitted with a correct ID'), 'error');
-		include ('includes/footer.php');
-		exit;
-	}
 }
 
 function quote_smart($Value) {
