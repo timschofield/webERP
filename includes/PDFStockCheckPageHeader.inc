@@ -37,5 +37,5 @@ if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
 	$LeftOvers = $pdf->addTextWrap(341+61+61,$YPos,80,$FontSize,_('Remarks'), 'centre');
 }
 $FontSize=10;
-$YPos -=($line_height);
+$YPos -=($LineHeight);
 ?>

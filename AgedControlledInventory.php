@@ -13,7 +13,7 @@ echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $Theme, '/images/inventory.png" title="', _('Inventory'), '" alt="" /><b>', $Title, '</b>
 	</p>';
 
-$sql = "SELECT stockserialitems.stockid,
+$SQL = "SELECT stockserialitems.stockid,
 				stockmaster.description,
 				stockserialitems.serialno,
 				stockserialitems.quantity,
@@ -37,7 +37,7 @@ $sql = "SELECT stockserialitems.stockid,
 			ORDER BY createdate, quantity";
 
 $ErrMsg =  _('The stock held could not be retrieved because');
-$LocStockResult = DB_query($sql, $ErrMsg);
+$LocStockResult = DB_query($SQL, $ErrMsg);
 $NumRows = DB_num_rows($LocStockResult);
 
 $TotalQty=0;

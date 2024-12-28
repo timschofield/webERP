@@ -13,7 +13,7 @@ if (isset($_POST['PrintPDF'])){
 	$pdf->addInfo('Subject',_('KL Inventory At Shops Report'));
 	$FontSize=9;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-RE_CHECK_PRICETAGS_CHANGED_DURING_LAST_X_DAYS));
 
@@ -75,7 +75,7 @@ if (isset($_POST['PrintPDF'])){
 
 	while ($InventoryValn = DB_fetch_array($InventoryResult)){
 
-		$YPos -=(1*$line_height);
+		$YPos -=(1*$LineHeight);
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,100,$FontSize,$InventoryValn['stockid']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+100,$YPos,200,$FontSize,$InventoryValn['description']);
@@ -87,26 +87,26 @@ if (isset($_POST['PrintPDF'])){
 		$RetailPrice = locale_number_format_zero_blank($InventoryValn['retailprice'],0);
 		$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$RetailPrice,'right');
 
-		$pdf->line($Left_Margin, $YPos-$line_height+6,$Page_Width-$Right_Margin, $YPos-$line_height+6);
-		$YPos -=(0.5*$line_height);
+		$pdf->line($Left_Margin, $YPos-$LineHeight+6,$Page_Width-$Right_Margin, $YPos-$LineHeight+6);
+		$YPos -=(0.5*$LineHeight);
 
 		$CatTot_Qty += $InventoryValn['qtyonhand'];
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   include('includes/KLPDFInventoryAtShopPageHeader.inc');
 		}
 
 	} /*end inventory valn while loop */
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200-$Left_Margin,$FontSize, _('Total in location: ')  , 'left');
 
 	$DisplayCatTotQty = locale_number_format($CatTot_Qty,0);
 	$LeftOvers = $pdf->addTextWrap(300,$YPos,60,$FontSize,$DisplayCatTotQty, 'right');
-	$YPos -= ($line_height);
-	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
+	$YPos -= ($LineHeight);
+	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_At_' . $_POST['Location'] . '_' . Date('Y-m-d') . '.pdf');
 	$pdf->__destruct();

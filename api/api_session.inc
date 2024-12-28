@@ -65,19 +65,19 @@ function CryptPass( $Password ) {
  }
 
 // API wrapper for DB issues - no HTML output, AND remember any error message
-function api_DB_query( $sql, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=false )
+function api_DB_query( $SQL, $EMsg= '', $DMsg= '', $Transaction='', $TrapErrors=false )
 {
     //  Basically we have disabled the error reporting from the standard
     //  query function,  and will remember any error message in the session
     //  data.
 
-    $result = DB_query($sql, $EMsg, $DMsg, $Transaction, $TrapErrors);
+    $Result = DB_query($SQL, $EMsg, $DMsg, $Transaction, $TrapErrors);
     if (DB_error_no() != 0) {
-		$_SESSION['db_err_msg'] = "SQL: " . $sql . "\nDB error message: " . DB_error_msg() . "\n";
+		$_SESSION['db_err_msg'] = "SQL: " . $SQL . "\nDB error message: " . DB_error_msg() . "\n";
     } else {
 		$_SESSION['db_err_msg'] = '';
 	}
 
-    return  $result;
+    return  $Result;
 }
 ?>

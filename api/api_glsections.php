@@ -6,8 +6,8 @@
 				FROM accountsection
 				WHERE sectionid='".$AccountSection."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]>0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]>0) {
 			$Errors[$i] = GLAccountSectionAlreadyExists;
 		}
 		return $Errors;
@@ -28,8 +28,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($AccountSectionDetails as $key => $value) {
-			$AccountSectionDetails[$key] = DB_escape_string($value);
+		foreach ($AccountSectionDetails as $key => $Value) {
+			$AccountSectionDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyAccountSection($AccountSectionDetails['sectionname'], sizeof($Errors), $Errors);
 		if (isset($AccountSectionDetails['accountname'])){
@@ -37,14 +37,14 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($AccountSectionDetails as $key => $value) {
+		foreach ($AccountSectionDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = "INSERT INTO accountsection ('" . mb_substr($FieldNames,0,-2) . "')
+			$SQL = "INSERT INTO accountsection ('" . mb_substr($FieldNames,0,-2) . "')
 					VALUES ('" . mb_substr($FieldValues,0,-2) . "')";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

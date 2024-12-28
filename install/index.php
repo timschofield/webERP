@@ -309,67 +309,67 @@ if(!extension_loaded('mbstring')){
 			    $CompanyList[] = array('database' => 'weberpdemo', 'company' => _('WebERP Demo Company'));
 			}
 
-			//$msg holds the text of the new config.php file
-			$msg = "<?php\n\n";
-			$msg .= "// User configurable variables\n";
-			$msg .= "//---------------------------------------------------\n\n";
-			$msg .= "// Default language to use for the login screen and the setup of new users.\n";
-			$msg .= "\$DefaultLanguage = '" . $UserLanguage . "';\n\n";
-			$msg .= "// Default theme to use for the login screen and the setup of new users.\n";
-			$msg .= "\$DefaultTheme = '" . $DefaultTheme . "';\n\n";
-			$msg .= "// Whether to display the demo login and password or not on the login screen\n";
-			$msg .= "\$AllowDemoMode = FALSE;\n\n";
-			$msg .= "// Connection information for the database\n";
-			$msg .= "// \$host is the computer ip address or name where the database is located\n";
-			$msg .= "// assuming that the webserver is also the sql server\n";
-			$msg .= "\$host = '" . $HostName . "';\n\n";
-			$msg .= "// assuming that the web server is also the sql server\n";
-			$msg .= "\$DBType = '".$DBConnectType."';\n";
-		        $msg .= "//assuming that the web server is also the sql server\n";
-			$msg .= "\$DBUser = '".$UserName."';\n";
-			$msg .= "\$DBPassword = '".$Password."';\n";
-			$msg .= "// The timezone of the business - this allows the possibility of having;\n";
-			$msg .= "date_default_timezone_set('".$TimeZone."');\n";
-			$msg .= "putenv('TZ=" . $TimeZone ."');\n";
-			$msg .= "\$AllowCompanySelectionBox = 'ShowSelectionBox';\n";
-			$msg .= "//The system administrator name use the user input mail;\n";
+			//$Msg holds the text of the new config.php file
+			$Msg = "<?php\n\n";
+			$Msg .= "// User configurable variables\n";
+			$Msg .= "//---------------------------------------------------\n\n";
+			$Msg .= "// Default language to use for the login screen and the setup of new users.\n";
+			$Msg .= "\$DefaultLanguage = '" . $UserLanguage . "';\n\n";
+			$Msg .= "// Default theme to use for the login screen and the setup of new users.\n";
+			$Msg .= "\$DefaultTheme = '" . $DefaultTheme . "';\n\n";
+			$Msg .= "// Whether to display the demo login and password or not on the login screen\n";
+			$Msg .= "\$AllowDemoMode = FALSE;\n\n";
+			$Msg .= "// Connection information for the database\n";
+			$Msg .= "// \$Host is the computer ip address or name where the database is located\n";
+			$Msg .= "// assuming that the webserver is also the sql server\n";
+			$Msg .= "\$Host = '" . $HostName . "';\n\n";
+			$Msg .= "// assuming that the web server is also the sql server\n";
+			$Msg .= "\$DBType = '".$DBConnectType."';\n";
+		        $Msg .= "//assuming that the web server is also the sql server\n";
+			$Msg .= "\$DBUser = '".$UserName."';\n";
+			$Msg .= "\$DBPassword = '".$Password."';\n";
+			$Msg .= "// The timezone of the business - this allows the possibility of having;\n";
+			$Msg .= "date_default_timezone_set('".$TimeZone."');\n";
+			$Msg .= "putenv('TZ=" . $TimeZone ."');\n";
+			$Msg .= "\$AllowCompanySelectionBox = 'ShowSelectionBox';\n";
+			$Msg .= "//The system administrator name use the user input mail;\n";
 			if(strtolower($AdminEmail) != 'admin@weberp.org'){
-			$msg .= "\$SysAdminEmail = '".$AdminEmail."';\n";
+			$Msg .= "\$SysAdminEmail = '".$AdminEmail."';\n";
 			}
 			if(isset($NewCompany)){
-				$msg .= "\$DefaultDatabase = '".$DatabaseName."';\n";
+				$Msg .= "\$DefaultDatabase = '".$DatabaseName."';\n";
 			}else{
-				$msg .= "\$DefaultDatabase = 'weberpdemo';\n";
+				$Msg .= "\$DefaultDatabase = 'weberpdemo';\n";
 			}
-			$msg .= "\$SessionLifeTime = 3600;\n";
-			$msg .= "\$MaximumExecutionTime = 120;\n";
-			$msg .= "\$DefaultClock = 12;\n";
-			$msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));\n";
-			$msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
-			$msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-			$msg .= "		\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
-			$msg .= "	}\n";
-			$msg .= "}\n";
+			$Msg .= "\$SessionLifeTime = 3600;\n";
+			$Msg .= "\$MaximumExecutionTime = 120;\n";
+			$Msg .= "\$DefaultClock = 12;\n";
+			$Msg .= "\$RootPath = dirname(htmlspecialchars(\$_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));\n";
+			$Msg .= "if (isset(\$DirectoryLevelsDeep)){\n";
+			$Msg .= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
+			$Msg .= "		\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
+			$Msg .= "	}\n";
+			$Msg .= "}\n";
 
-			$msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
-			$msg .= "	\$RootPath = '';\n";
-			$msg .= "}\n";
-			$msg .= "error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);\n";
-			$msg .=  "//Installed companies \n";
+			$Msg .= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
+			$Msg .= "	\$RootPath = '';\n";
+			$Msg .= "}\n";
+			$Msg .= "error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);\n";
+			$Msg .=  "//Installed companies \n";
 			foreach ($CompanyList as $k=>$compinfo)
 			{
-		        $msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".addslashes($compinfo['company'])."' );\n"; //simpler to manipulate this way
+		        $Msg .= "\$CompanyList[".$k."] = array('database'=>'".$compinfo['database']."' ,'company'=>'".addslashes($compinfo['company'])."' );\n"; //simpler to manipulate this way
             }
-            $msg .=  "//End Installed companies-do not change this line\n";
-            $msg .= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
-			$msg .= "?>";
+            $Msg .=  "//End Installed companies-do not change this line\n";
+            $Msg .= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
+			$Msg .= "?>";
 
 			//write the config.php file since we have test the writability of the root path and companies,
 			//there is little possibility that it will fail here. So just an warn if it is failed.
 			if(!$zp = fopen($Path_To_Root . '/config.php','w')){
 				echo _("Cannot open the configuration file").$Config_File;
 			} else {
-				if (!fwrite($zp, $msg)){
+				if (!fwrite($zp, $Msg)){
 					fclose($zp);
 					echo _("Cannot write to the configuration file").$Config_File;
 				}
@@ -394,9 +394,9 @@ if(!extension_loaded('mbstring')){
 			$DemoSQLFile = $Path_To_Root.'/sql/mysql/country_sql/demo.sql';
 			if(!empty($DualCompany) and $DualCompany == 1){
 				//we should install the production data and demo data
-				$sql = 'CREATE DATABASE IF NOT EXISTS `'.$DatabaseName.'`';
-				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
-				if(!$result){
+				$SQL = 'CREATE DATABASE IF NOT EXISTS `'.$DatabaseName.'`';
+				$Result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$SQL) : mysql_query($SQL,$Db);
+				if(!$Result){
 					if($DBConnectType == 'mysqli'){
 						echo _('Failed to create database '.$DatabaseName.' and the error is '.' '.mysqli_error($Db));
 					}else{
@@ -404,9 +404,9 @@ if(!extension_loaded('mbstring')){
 
 					}
 				}
-				$sql = 'CREATE DATABASE IF NOT EXISTS `weberpdemo`';
-				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
-				if(!$result){
+				$SQL = 'CREATE DATABASE IF NOT EXISTS `weberpdemo`';
+				$Result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$SQL) : mysql_query($SQL,$Db);
+				if(!$Result){
 					if($DBConnectType == 'mysqli'){
 						echo _('Failed to create database weberpdemo and the error is '.' '.mysqli_error($Db));
 					}else{
@@ -423,9 +423,9 @@ if(!extension_loaded('mbstring')){
 
 			}elseif(!empty($NewCompany) and $NewCompany == 1){//only install the production data
 
-				$sql = 'CREATE DATABASE IF NOT EXISTS `'.$DatabaseName.'`';
-				$result = ($DBConnectType == 'mysqli')? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
-				if(!$result){
+				$SQL = 'CREATE DATABASE IF NOT EXISTS `'.$DatabaseName.'`';
+				$Result = ($DBConnectType == 'mysqli')? mysqli_query($Db,$SQL) : mysql_query($SQL,$Db);
+				if(!$Result){
 					if($DBConnectType == 'mysqli'){
 						echo _('Failed to create database '.$DatabaseName.'  and the error is '.' '.mysqli_error($Db));
 					}else{
@@ -437,9 +437,9 @@ if(!extension_loaded('mbstring')){
 				DBUpdate($Db,$DatabaseName,$DBConnectType,$AdminPassword,$Email,$UserLanguage,$CompanyName);
 
 			}else { //if(!empty($OnlyDemo) and $OnlyDemo == 1){//only install the demo data
-				$sql = 'CREATE DATABASE IF NOT EXISTS `weberpdemo`';
-				$result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$sql) : mysql_query($sql,$Db);
-				if(!$result){
+				$SQL = 'CREATE DATABASE IF NOT EXISTS `weberpdemo`';
+				$Result = ($DBConnectType == 'mysqli') ? mysqli_query($Db,$SQL) : mysql_query($SQL,$Db);
+				if(!$Result){
 					if($DBConnectType == 'mysqli'){
 						echo _('Failed to create database weberpdemo and the error is '.' '.mysqli_error($Db));
 					}else{
@@ -1102,14 +1102,14 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 				if($DBType == 'mysqli'){//if the mysql db type is mysqli
 						mysqli_select_db($db,$NewDB);
 						//currently there is no 'USE' statements in sql file, no bother to remove them
-						$sql = 'SET names UTF8;';
-						$sql .= file_get_contents($NewSQL);
-						if(!$sql){
+						$SQL = 'SET names UTF8;';
+						$SQL .= file_get_contents($NewSQL);
+						if(!$SQL){
 							die(_('Failed to open the new sql file'));
 						}
 
-						$result = mysqli_multi_query($db,$sql);
-						if(!$result){
+						$Result = mysqli_multi_query($db,$SQL);
+						if(!$Result){
 							echo 'Failed to populate the database'.' '.$NewDB.' and the error is'.' '.mysqli_error($db);
 						}
 						//now clear the result otherwise the next operation will failed with commands out of sync
@@ -1118,8 +1118,8 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 						//mysqli_store_result return an buffered object or false if failed or no such object such as result of INSERT
 						//so if it's false no bother to free them
 						do {
-							if($result = mysqli_store_result($db)){
-								mysqli_free_result($result);
+							if($Result = mysqli_store_result($db)){
+								mysqli_free_result($Result);
 							}
 						} while (mysqli_more_results($db)?mysqli_next_result($db):false);
 						//} while (mysqli_next_result($db));
@@ -1141,20 +1141,20 @@ function PopulateSQLData($NewSQL=false,$Demo=false,$db,$DBType,$NewDB = false){
 
 						$SQLFile = fopen($Demo);
 
-						$sql = file_get_contents($Demo);
-						if(!$sql){
+						$SQL = file_get_contents($Demo);
+						if(!$SQL){
 							die(_('Failed to open the demo sql file'));
 						}
 
-						$result = mysqli_multi_query($db,$sql);
+						$Result = mysqli_multi_query($db,$SQL);
 
-						if(!$result){
+						if(!$Result){
 							echo _('Failed to populate the database'.' '.$NewDB.' and the error is').' '.mysqli_error($db);
 						}
 						//clear the bufferred result
 						do {
-							if($result = mysqli_store_result($db)){
-								mysqli_free_result($result);
+							if($Result = mysqli_store_result($db)){
+								mysqli_free_result($Result);
 							}
 						} while (mysqli_more_results($db)?mysqli_next_result($db):false);
 
@@ -1221,7 +1221,7 @@ function PopulateSQLDataBySQL($File,$db,$DBType,$NewDB=false,$DemoDB='weberpdemo
 					AND strncasecmp($SQL, ' USE ', 5)){
 					$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
 
-					$result = ($DBType=='mysqli')?mysqli_query($db,$SQL):mysql_query($SQL,$db);
+					$Result = ($DBType=='mysqli')?mysqli_query($db,$SQL):mysql_query($SQL,$db);
 				}
 				$SQL = '';
 			}
@@ -1255,21 +1255,21 @@ function DBUpdate($db,$DatabaseName,$DBConnectType,$AdminPasswd,$AdminEmail,$Adm
 	//select the database to connect
 	$Result = (!$MysqlExt) ? mysqli_select_db($db,$DatabaseName):mysql_select_db($DatabaseName,$db);
 
-	$sql = "UPDATE www_users
+	$SQL = "UPDATE www_users
 				SET password = '".CryptPass($AdminPasswd)."',
 					email = '".$AdminEmail."',
 				        language = '".$AdminLanguage."'
 				WHERE userid = 'admin'";
-	$Result = (!$MysqlExt) ? mysqli_query($db,$sql):mysql_query($sql,$db);
+	$Result = (!$MysqlExt) ? mysqli_query($db,$SQL):mysql_query($SQL,$db);
 	if(!$Result){
 
 		echo _('Failed to update the email address and password of the administrator and the error is').((!$MysqlExt)?mysqli_error($db):mysql_error($db));
 	}
 
-	$sql = "UPDATE companies
+	$SQL = "UPDATE companies
 			SET coyname = '". ((!$MysqlExt)?mysqli_real_escape_string($db, $CompanyName):mysql_real_escape_string($CompanyName,$db)) . "'
 			WHERE coycode = 1";
-	$Result = (!$MysqlExt)?mysqli_query($db,$sql):mysql_query($sql,$db);
+	$Result = (!$MysqlExt)?mysqli_query($db,$SQL):mysql_query($SQL,$db);
 	if(!$Result){
 		echo _('Failed to update the company name and the erroris').((!$MysqlExt)?mysqli_error($db):mysql_error($db));
 	}

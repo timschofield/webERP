@@ -8,13 +8,13 @@ $pdf->addInfo('Title', _('Inventory Negatives Listing') );
 $pdf->addInfo('Subject', _('Inventory Negatives Listing'));
 $FontSize=9;
 $PageNumber=1;
-$line_height=15;
+$LineHeight=15;
 
 $Title = _('Negative Stock Listing Error');
 $ErrMsg = _('An error occurred retrieving the negative quantities.');
 $DbgMsg = _('The sql that failed to retrieve the negative quantities was');
 
-$sql = "SELECT stockmaster.stockid,
+$SQL = "SELECT stockmaster.stockid,
                stockmaster.description,
                stockmaster.categoryid,
                stockmaster.decimalplaces,
@@ -32,19 +32,19 @@ $sql = "SELECT stockmaster.stockid,
 			stockmaster.stockid,
 			stockmaster.decimalplaces";
 
-$result = DB_query($sql, $ErrMsg, $DbgMsg);
+$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-If (DB_num_rows($result)==0){
+If (DB_num_rows($Result)==0){
 	include ('includes/header.php');
 	prnMsg(_('There are no negative stocks to list'),'error');
 	include ('includes/footer.php');
 	exit;
 }
 
-$NegativesRow = DB_fetch_array($result);
+$NegativesRow = DB_fetch_array($Result);
 
 include ('includes/PDFStockNegativesHeader.inc');
-$line_height=15;
+$LineHeight=15;
 $FontSize=10;
 
 do {
@@ -55,16 +55,16 @@ do {
 
 	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 
-	if ($YPos < $Bottom_Margin + $line_height) {
+	if ($YPos < $Bottom_Margin + $LineHeight) {
 		$PageNumber++;
 		include('includes/PDFStockNegativesHeader.inc');
 	}
 
-} while ($NegativesRow = DB_fetch_array($result));
+} while ($NegativesRow = DB_fetch_array($Result));
 
-if (DB_num_rows($result)>0){
+if (DB_num_rows($Result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_NegativeStocks_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
 } else {

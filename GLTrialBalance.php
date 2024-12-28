@@ -137,7 +137,7 @@ if ((! isset($_POST['PeriodFrom'])
 	$pdf->addInfo('Subject', _('Trial Balance') );
 	$PageNumber = 0;
 	$FontSize = 10;
-	$line_height = 12;
+	$LineHeight = 12;
 
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
 
@@ -182,7 +182,7 @@ if ((! isset($_POST['PeriodFrom'])
 		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath, '/index.php">' .  _('Back to the menu'). '</a>';
-		if ($debug==1) {
+		if ($Debug==1) {
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -225,15 +225,15 @@ if ((! isset($_POST['PeriodFrom'])
 			if ($ActGrp !='') {
 
 				// Print heading if at end of page
-				if ($YPos < ($Bottom_Margin+ (2 * $line_height))) {
+				if ($YPos < ($Bottom_Margin+ (2 * $LineHeight))) {
 					include('includes/PDFTrialBalancePageHeader.inc');
 				}
 				if ($MyRow['parentgroupname']==$ActGrp) {
 					$Level++;
 					$ParentGroups[$Level]=$MyRow['groupname'];
 				}elseif ($MyRow['parentgroupname']==$ParentGroups[$Level]) {
-					$YPos -= (.5 * $line_height);
-					$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+					$YPos -= (.5 * $LineHeight);
+					$pdf->line($Left_Margin+250, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 					$pdf->setFont('','B');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
@@ -242,7 +242,7 @@ if ((! isset($_POST['PeriodFrom'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
-					$YPos -= (2 * $line_height);
+					$YPos -= (2 * $LineHeight);
 					$pdf->setFont('','');
 					$ParentGroups[$Level] = $MyRow['groupname'];
 					$GrpActual[$Level] = 0;
@@ -252,8 +252,8 @@ if ((! isset($_POST['PeriodFrom'])
 
 				} else {
 					do {
-						$YPos -= $line_height;
-						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+						$YPos -= $LineHeight;
+						$pdf->line($Left_Margin+250, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
@@ -262,7 +262,7 @@ if ((! isset($_POST['PeriodFrom'])
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
-						$YPos -= (2 * $line_height);
+						$YPos -= (2 * $LineHeight);
 						$pdf->setFont('','');
 						$ParentGroups[$Level]='';
 						$GrpActual[$Level] = 0;
@@ -273,8 +273,8 @@ if ((! isset($_POST['PeriodFrom'])
 					} while ($Level>0 AND $MyRow['parentgroupname']!=$ParentGroups[$Level]);
 
 					if ($Level>0) {
-						$YPos -= $line_height;
-						$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+						$YPos -= $LineHeight;
+						$pdf->line($Left_Margin+250, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 						$pdf->setFont('','B');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+60, $YPos, 190, $FontSize, $ParentGroups[$Level]);
@@ -283,7 +283,7 @@ if ((! isset($_POST['PeriodFrom'])
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
-						$YPos -= (2 * $line_height);
+						$YPos -= (2 * $LineHeight);
 						$pdf->setFont('','');
 						$GrpActual[$Level] = 0;
 						$GrpBudget[$Level] = 0;
@@ -294,7 +294,7 @@ if ((! isset($_POST['PeriodFrom'])
 					}
 				}
 			}
-			$YPos -= (2 * $line_height);
+			$YPos -= (2 * $LineHeight);
 				// Print account group name
 			$pdf->setFont('','B');
 			$ActGrp = $MyRow['groupname'];
@@ -303,7 +303,7 @@ if ((! isset($_POST['PeriodFrom'])
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$MyRow['groupname']);
 			$FontSize = 8;
 			$pdf->setFont('','');
-			$YPos -= (2 * $line_height);
+			$YPos -= (2 * $LineHeight);
 		}
 
 		if ($MyRow['pandl']==1) {
@@ -362,15 +362,15 @@ if ((! isset($_POST['PeriodFrom'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($MyRow['monthbudget'], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($AccountPeriodBudget, $_SESSION['CompanyRecord']['decimalplaces']),'right');
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 
 	}  //end of while loop
 
 
 	while ($Level>0 AND $MyRow['parentgroupname']!=$ParentGroups[$Level]) {
 
-		$YPos -= (.5 * $line_height);
-		$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+		$YPos -= (.5 * $LineHeight);
+		$pdf->line($Left_Margin+250, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 		$pdf->setFont('','B');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Total'));
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,190,$FontSize,$ParentGroups[$Level]);
@@ -379,7 +379,7 @@ if ((! isset($_POST['PeriodFrom'])
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level], $_SESSION['CompanyRecord']['decimalplaces']),'right');
 		$pdf->line($Left_Margin+250, $YPos,$Left_Margin+500, $YPos);  /*Draw the bottom line */
-		$YPos -= (2 * $line_height);
+		$YPos -= (2 * $LineHeight);
 		$ParentGroups[$Level]='';
 		$GrpActual[$Level] = 0;
 		$GrpBudget[$Level] = 0;
@@ -389,8 +389,8 @@ if ((! isset($_POST['PeriodFrom'])
 	}
 
 
-	$YPos -= (2 * $line_height);
-	$pdf->line($Left_Margin+250, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+	$YPos -= (2 * $LineHeight);
+	$pdf->line($Left_Margin+250, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Check Totals'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,70,$FontSize,locale_number_format($CheckMonth, $_SESSION['CompanyRecord']['decimalplaces']),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($CheckBudgetMonth, $_SESSION['CompanyRecord']['decimalplaces']),'right');

@@ -21,28 +21,28 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 	}
 	
 	if($InputError ==0) {// no input errors
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 
 		echo '<br />' . _('Deleting the current authority to view / update the Locations of user') . ' ' .  $_POST['ToUserID'];
-		$sql = "DELETE FROM locationusers WHERE UPPER(userid) = UPPER('" . $_POST['ToUserID'] . "')";
+		$SQL = "DELETE FROM locationusers WHERE UPPER(userid) = UPPER('" . $_POST['ToUserID'] . "')";
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to delete the auhority in locationusers record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 
 		echo '<br />' . _('Copying the authority to view / update the Locations from user') . ' ' . $_POST['FromUserID'] . ' ' . _('to') . ' ' . $_POST['ToUserID'];
-		$sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
+		$SQL = "INSERT INTO locationusers (userid, loccode, canview, canupd)
 						SELECT '" . $_POST['ToUserID'] . "', loccode, canview, canupd
 						FROM locationusers
 						WHERE UPPER(userid) = UPPER('" . $_POST['FromUserID'] . "')";
 
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the auhority in locationusers record failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
 		KLSendEmail("LocationUserRightsCopied", "Silent",$_SESSION['UserID'], $_POST['FromUserID'],$_POST['ToUserID']);
-		$result = DB_Txn_Commit();
+		$Result = DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0
 }

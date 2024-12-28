@@ -182,8 +182,8 @@ function submit($TypeOfShop, $TypeOfFile) {
 			}
 
 			// Auto Size columns
-			foreach(range('A','N') as $columnID) {
-				$ActiveSheet->getColumnDimension($columnID)->setAutoSize(true);
+			foreach(range('A','N') as $ColumnID) {
+				$ActiveSheet->getColumnDimension($ColumnID)->setAutoSize(true);
 			}
 	
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet

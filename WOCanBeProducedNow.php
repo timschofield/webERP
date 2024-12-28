@@ -21,7 +21,7 @@ function submit($RootPath, $Location) {
 
 	$WhereLocation 	= " AND workorders.loccode = '". $Location ."' ";
 	
-	$sql = "SELECT woitems.wo,
+	$SQL = "SELECT woitems.wo,
 				workorders.startdate,
 				woitems.stockid,
 				woitems.qtyreqd,
@@ -38,8 +38,8 @@ function submit($RootPath, $Location) {
 			;
 	
 	$ErrMsg = _('The SQL to find the WO items to produce ');
-	$resultItems = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($resultItems) != 0){
+	$ResultItems = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($ResultItems) != 0){
 	
 		echo '<p class="page_title_text" align="center"><strong>' . "Items in WO to be produced now in " . $Location . " with available stock" . '</strong></p>';
 		echo '<div>';
@@ -62,14 +62,14 @@ function submit($RootPath, $Location) {
 							<th>' . _('Result') . '</th>
 						</tr>';
 
-		while ($myItem = DB_fetch_array($resultItems)) {
+		while ($MyItem = DB_fetch_array($ResultItems)) {
 			echo $TableHeader;
 			
-			$QtyPending = $myItem['qtyreqd'] - $myItem['qtyrecd'];
+			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
 			$QtyCanBeProduced = $QtyPending;
 
-			$WOLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $myItem['wo'] . '">' . $myItem['wo'] . '</a>';
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myItem['stockid'] . '">' . $myItem['stockid'] . '</a>';
+			$WOLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $MyItem['wo'] . '">' . $MyItem['wo'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyItem['stockid'] . '">' . $MyItem['stockid'] . '</a>';
 			
 			printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -87,12 +87,12 @@ function submit($RootPath, $Location) {
 					<td>%s</td>
 					</tr>', 
 					$WOLink,
-					ConvertSQLDate($myItem['startdate']), 
+					ConvertSQLDate($MyItem['startdate']), 
 					$CodeLink, 
-					locale_number_format($myItem['qtyreqd'],$myItem['decimalplaces']),
-					locale_number_format($myItem['qtyrecd'],$myItem['decimalplaces']),
-					locale_number_format($QtyPending,$myItem['decimalplaces']),
-					$myItem['units'], 
+					locale_number_format($MyItem['qtyreqd'],$MyItem['decimalplaces']),
+					locale_number_format($MyItem['qtyrecd'],$MyItem['decimalplaces']),
+					locale_number_format($QtyPending,$MyItem['decimalplaces']),
+					$MyItem['units'], 
 					'',
 					'',
 					'',
@@ -103,7 +103,7 @@ function submit($RootPath, $Location) {
 					);
 
 			// Get the BOM for this item
-			$sqlBOM = "SELECT bom.parent,
+			$SQLBOM = "SELECT bom.parent,
 						bom.component,
 						bom.quantity AS bomqty,
 						stockmaster.decimalplaces,
@@ -114,27 +114,27 @@ function submit($RootPath, $Location) {
 					WHERE bom.component = stockmaster.stockid
 						AND bom.component = locstock.stockid
 						AND locstock.loccode = '". $Location ."'
-						AND bom.parent = '" . $myItem['stockid'] . "'
+						AND bom.parent = '" . $MyItem['stockid'] . "'
                         AND bom.effectiveafter <= CURRENT_DATE
                         AND bom.effectiveto > CURRENT_DATE";
 					 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$BOMResult = DB_query ($sqlBOM,$ErrMsg);
+			$BOMResult = DB_query ($SQLBOM,$ErrMsg);
 			$ItemCanBeproduced = TRUE;
 			
-			while ($myComponent = DB_fetch_array($BOMResult)) {
+			while ($MyComponent = DB_fetch_array($BOMResult)) {
 
-				$ComponentNeeded = $myComponent['bomqty'] * $QtyPending;
-				$PrevisionShrinkage = $ComponentNeeded * ($myComponent['shrinkfactor'] / 100);
+				$ComponentNeeded = $MyComponent['bomqty'] * $QtyPending;
+				$PrevisionShrinkage = $ComponentNeeded * ($MyComponent['shrinkfactor'] / 100);
 
-				if ($myComponent['qoh'] >= $ComponentNeeded){
+				if ($MyComponent['qoh'] >= $ComponentNeeded){
 					$Available = "OK";
 				}else{
 					$Available = "";
 					$ItemCanBeproduced = FALSE;
 				}
 
-				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myComponent['component'] . '">' . $myComponent['component'] . '</a>';
+				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyComponent['component'] . '">' . $MyComponent['component'] . '</a>';
 				
 				printf('<td class="number">%s</td>
 					<td>%s</td>
@@ -159,17 +159,17 @@ function submit($RootPath, $Location) {
 					'',
 					'',
 					$ComponentLink, 
-					locale_number_format($myComponent['qoh'],$myComponent['decimalplaces']),
-					locale_number_format($ComponentNeeded,$myComponent['decimalplaces']),
-					locale_number_format($PrevisionShrinkage,$myComponent['decimalplaces']),
-					$myComponent['units'], 
+					locale_number_format($MyComponent['qoh'],$MyComponent['decimalplaces']),
+					locale_number_format($ComponentNeeded,$MyComponent['decimalplaces']),
+					locale_number_format($PrevisionShrinkage,$MyComponent['decimalplaces']),
+					$MyComponent['units'], 
 					$Available,
 					''
 					);
 			}
 			if ($ItemCanBeproduced){
-				$Action = 'Produce ' . locale_number_format($QtyPending,0) . ' x ' . $myItem['stockid'] . ' for WO ' . locale_number_format($myItem['wo'],0);
-				$ComponentLink = '<a href="' . $RootPath . '/PrintWOItemSlip.php?StockId=' . $myItem['stockid'] . '&WO='. $myItem['wo'] . '&Location=' . $Location . '">' . $Action . '</a>';
+				$Action = 'Produce ' . locale_number_format($QtyPending,0) . ' x ' . $MyItem['stockid'] . ' for WO ' . locale_number_format($MyItem['wo'],0);
+				$ComponentLink = '<a href="' . $RootPath . '/PrintWOItemSlip.php?StockId=' . $MyItem['stockid'] . '&WO='. $MyItem['wo'] . '&Location=' . $Location . '">' . $Action . '</a>';
 			}else{
 				$ComponentLink = "";
 			}
@@ -233,7 +233,7 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 				<td>' . _('For Factory Location') . ':</td>
 				<td><select name="Location">';
 
-		$sql = "SELECT locations.loccode,
+		$SQL = "SELECT locations.loccode,
 					locationname
 				FROM locations
 				INNER JOIN locationusers
@@ -242,10 +242,10 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 					AND locationusers.canview=1
 				WHERE locations.usedforwo = 1";
 
-		$LocnResult=DB_query($sql);
+		$LocnResult=DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		while ($MyRow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';

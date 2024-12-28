@@ -14,7 +14,7 @@ If (isset($_POST['PrintPDF'])
 	$pdf->addInfo('Subject',_('Bill Of Material Listing'));
 	$FontSize=12;
 	$PageNumber=0;
-	$line_height=12;
+	$LineHeight=12;
 
       /*Now figure out the bills to report for the part range under review */
 	$SQL = "SELECT bom.parent,
@@ -43,7 +43,7 @@ If (isset($_POST['PrintPDF'])
 	   include('includes/header.php');
 	   prnMsg(_('The Bill of Material listing could not be retrieved by the SQL because'),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
+	   if ($Debug==1){
 	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
@@ -68,9 +68,9 @@ If (isset($_POST['PrintPDF'])
 			$FontSize=10;
 			if ($ParentPart!=''){ /*Then it's NOT the first time round */
 				/* need to rule off from the previous parent listed */
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 				$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 			}
 			$SQL = "SELECT description FROM stockmaster WHERE stockmaster.stockid = '" . $BOMList['parent'] . "'";
 			$ParentResult = DB_query($SQL);
@@ -79,7 +79,7 @@ If (isset($_POST['PrintPDF'])
 			$ParentPart = $BOMList['parent'];
 		}
 
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 		$FontSize=8;
 		$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,80,$FontSize,$BOMList['component'],'left');
 		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$BOMList['compdescription'],'left');
@@ -92,13 +92,13 @@ If (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap(480,$YPos,60,$FontSize,$DisplayQuantity,'right');
 		$LeftOvers = $pdf->addTextWrap(540,$YPos,20,$FontSize,$BOMList['units'],'left');
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   include('includes/PDFBOMListingPageHeader.inc');
 		}
 
 	} /*end BOM Listing while loop */
 
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 	$pdf->line($Page_Width-$Right_Margin, $YPos,$Left_Margin, $YPos);
 
     $pdf->OutputD($_SESSION['DatabaseName'] . '_BOMListing_' . date('Y-m-d').'.pdf');

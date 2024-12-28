@@ -45,11 +45,11 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>' . $MyRow['script'] . '</td>
 			<td><select name="' . $MyRow['script'] . '">';
 
-	while ($myTokenRow = DB_fetch_array($TokenResult)) {
-		if ($myTokenRow['tokenid'] == $MyRow['pagesecurity']) {
-			echo '<option selected="selected" value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
+	while ($MyTokenRow = DB_fetch_array($TokenResult)) {
+		if ($MyTokenRow['tokenid'] == $MyRow['pagesecurity']) {
+			echo '<option selected="selected" value="' . $MyTokenRow['tokenid'] . '">' . $MyTokenRow['tokenname'] . '</option>';
 		} else {
-			echo '<option value="' . $myTokenRow['tokenid'] . '">' . $myTokenRow['tokenname'] . '</option>';
+			echo '<option value="' . $MyTokenRow['tokenid'] . '">' . $MyTokenRow['tokenname'] . '</option>';
 		}
 	}
 	echo '</select></td>

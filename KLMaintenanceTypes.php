@@ -57,16 +57,16 @@ if (isset($_POST['submit'])) {
 			SET description = '" . $_POST['Description'] . "'
 			WHERE maintenancetype = '".$SelectedType."'";
 
-		$msg = _('The maintenance type') . ' ' . $SelectedType . ' ' .  _('has been updated');
+		$Msg = _('The maintenance type') . ' ' . $SelectedType . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM klmaintenancetypes
 			     WHERE maintenancetype = '" . $_POST['MaintenanceType'] . "'";
 
-		$CheckResult = DB_query($checkSql);
+		$CheckResult = DB_query($CheckSQL);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
@@ -81,18 +81,18 @@ if (isset($_POST['submit'])) {
 							VALUES ('" . str_replace(' ', '', $_POST['MaintenanceType']) . "',
 									'" . $_POST['Description'] . "')";
 
-			$msg = _('Maintenance type') . ' ' . $_POST['Description'] .  ' ' . _('has been created');
-			$checkSql = "SELECT COUNT(maintenancetype)
+			$Msg = _('Maintenance type') . ' ' . $_POST['Description'] .  ' ' . _('has been created');
+			$CheckSQL = "SELECT COUNT(maintenancetype)
 						FROM klmaintenancetypes";
-			$Result = DB_query($checkSql);
-			$row = DB_fetch_row($Result);
+			$Result = DB_query($CheckSQL);
+			$Row = DB_fetch_row($Result);
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset($SelectedType);
 		unset($_POST['MaintenanceType']);
 		unset($_POST['Description']);

@@ -6,8 +6,8 @@
 				FROM debtorsmaster
 				WHERE debtorno='".$DebtorNumber."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = DebtorDoesntExist;
 		}
 		return $Errors;
@@ -24,8 +24,8 @@
            			 WHERE debtorno='".$DebtorNumber."' AND
 				           branchcode='".$BranchNumber."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] != 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] != 0) {
 			$Errors[$i] = BranchNoAlreadyExists;
 		}
 		return $Errors;
@@ -41,8 +41,8 @@
 				     WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchNumber."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = BranchNoDoesntExist;
 		}
 		return $Errors;
@@ -58,8 +58,8 @@
 	}
 
 /* Check that the address lines are correct length*/
-	function VerifyBranchAddressLine($AddressLine, $length, $i, $Errors) {
-		if (mb_strlen($AddressLine)>$length) {
+	function VerifyBranchAddressLine($AddressLine, $Length, $i, $Errors) {
+		if (mb_strlen($AddressLine)>$Length) {
 			$Errors[$i] = InvalidAddressLine;
 		}
 		return $Errors;
@@ -95,8 +95,8 @@
 					  FROM areas
 					  WHERE areacode='".$AreaCode."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = AreaCodeNotSetup;
 		}
 		return $Errors;
@@ -108,8 +108,8 @@
 					  FROM salesman
 					  WHERE salesmancode='".$SalesmanCode."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = SalesmanCodeNotSetup;
 		}
 		return $Errors;
@@ -169,8 +169,8 @@
 					  FROM locations
 					  WHERE loccode='".$DefaultLocation."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
 		}
 		return $Errors;
@@ -182,8 +182,8 @@
 					  FROM taxgroups
 					  WHERE taxgroupid='".$TaxGroupId."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = TaxGroupIdNotSetup;
 		}
 		return $Errors;
@@ -195,8 +195,8 @@
 					 FROM shippers
 					  WHERE shipper_id='".$DefaultShipVia."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = ShipperNotSetup;
 		}
 		return $Errors;
@@ -241,8 +241,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($BranchDetails as $key => $value) {
-			$BranchDetails[$key] = DB_escape_string($value);
+		foreach ($BranchDetails as $key => $Value) {
+			$BranchDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyBranchDebtorExists($BranchDetails['debtorno'], sizeof($Errors), $Errors);
 		$Errors=VerifyBranchNo($BranchDetails['debtorno'], $BranchDetails['branchcode'], sizeof($Errors), $Errors);
@@ -340,14 +340,14 @@
 		$BranchDetails['lng']=0;
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($BranchDetails as $key => $value) {
+		foreach ($BranchDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
-		$sql = 'INSERT INTO custbranch ('.mb_substr($FieldNames,0,-2).') '.
+		$SQL = 'INSERT INTO custbranch ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -365,8 +365,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($BranchDetails as $key => $value) {
-			$BranchDetails[$key] = DB_escape_string($value);
+		foreach ($BranchDetails as $key => $Value) {
+			$BranchDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyBranchNoExists($BranchDetails['debtorno'], $BranchDetails['branchcode'], sizeof($Errors), $Errors);
 		$Errors=VerifyBranchName($BranchDetails['brname'], sizeof($Errors), $Errors);
@@ -459,18 +459,18 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($BranchDetails as $key => $value) {
+		foreach ($BranchDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
-		$sql='UPDATE custbranch SET ';
-		foreach ($BranchDetails as $key => $value) {
-			$sql .= $key.'="'.$value.'", ';
+		$SQL='UPDATE custbranch SET ';
+		foreach ($BranchDetails as $key => $Value) {
+			$SQL .= $key.'="'.$Value.'", ';
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."'
+		$SQL = mb_substr($SQL,0,-2)." WHERE debtorno='".$BranchDetails['debtorno']."'
                                    AND branchcode='".$BranchDetails['branchcode']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -494,15 +494,15 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT branchcode FROM custbranch
+		$SQL = "SELECT branchcode FROM custbranch
                 WHERE debtorno = '" . $DebtorNumber . "'";
-		$result = api_DB_query($sql);
+		$Result = api_DB_query($SQL);
 		if (DB_error_no() != 0)
 			$Errors[0] = DatabaseUpdateFailed;
 		else {
 			$Errors[0] = 0;	    // Signal data may follow.
-			while ($myrow = DB_fetch_row($result)) {
-				$Errors[] = $myrow[0];
+			while ($MyRow = DB_fetch_row($Result)) {
+				$Errors[] = $MyRow[0];
 			}
 		}
 
@@ -523,16 +523,16 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM custbranch
+		$SQL="SELECT * FROM custbranch
                      WHERE debtorno='".$DebtorNumber."'
                      AND branchcode='".$BranchCode."'";
-		$result = api_DB_query($sql);
+		$Result = api_DB_query($SQL);
 		if (DB_error_no() != 0 ) {
 			$Errors[0] = DatabaseUpdateFailed;
 		} else {
 			$Errors[0] = 0;
-			if (DB_num_rows($result) > 0)
-			    $Errors += DB_fetch_array($result);
+			if (DB_num_rows($Result) > 0)
+			    $Errors += DB_fetch_array($Result);
 		}
 		return  $Errors;
 	}

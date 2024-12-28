@@ -81,7 +81,7 @@ if ($StockID != ''){
 	echo '<p class="page_title_text" align="center"><strong>' . _('Movements of ') . $StockID . " at " . $LocationName . " for the last " . STOCK_MOVEMENT_DAYS_FOR_SPG . " days" .'</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 						<th>' . _('Date') . '</th>
 						<th>' . _('User') . '</th>
 						<th>' . _('Type') . '</th>
@@ -91,7 +91,7 @@ if ($StockID != ''){
 						<th>' . _('Stock after movement') . '</th>
 					</tr>';
 
-	echo $tableheader;
+	echo $Tableheader;
 
 	$j = 1;
 	$k=0; //row colour counter

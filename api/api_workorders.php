@@ -6,21 +6,21 @@
 				FROM workorders
 				WHERE wo='".$WorkOrder."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = WorkOrderDoesntExist;
 		}
 		return $Errors;
 	}
 
 /* Check that the stock location is set up in the weberp database */
-	function VerifyStockLocation($location, $i, $Errors) {
+	function VerifyStockLocation($Location, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(loccode)
 					 FROM locations
-					  WHERE loccode='" . $location . "'";
+					  WHERE loccode='" . $Location . "'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
 		}
 		return $Errors;
@@ -43,10 +43,10 @@
 	}
 
 	function VerifyRequiredByDate($RequiredByDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
 		} elseif (mb_strstr('.',$PeriodEnd)) {
@@ -76,10 +76,10 @@
 	}
 
 	function VerifyStartDate($StartDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
 		} elseif (mb_strstr('.',$PeriodEnd)) {
@@ -143,28 +143,28 @@
 		return $Errors;
 	}
 
-	function VerifyBatch($batch, $stockid, $location, $i, $Errors) {
-		$sql="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_row($result);
-		if ($myrow[0]!=1) {
+	function VerifyBatch($batch, $stockid, $Location, $i, $Errors) {
+		$SQL="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_row($Result);
+		if ($MyRow[0]!=1) {
 			$Errors[$i] = ItemNotControlled;
 			return $Errors;
-		} else if ($myrow[1]==1) {
+		} else if ($MyRow[1]==1) {
 			$Errors[$i] = ItemSerialised;
 			return $Errors;
 		}
-		$sql="SELECT quantity FROM stockserialitems
+		$SQL="SELECT quantity FROM stockserialitems
               WHERE stockid='".$stockid. "'
-              AND loccode='".$location."'
+              AND loccode='".$Location."'
               AND serialno='".$batch."'";
-		$result=DB_query($sql);
-		if (DB_num_rows($result)==0) {
+		$Result=DB_query($SQL);
+		if (DB_num_rows($Result)==0) {
 			$Errors[$i] = BatchNumberDoesntExist;
 			return $Errors;
 		}
-		$myrow=DB_fetch_row($result);
-		if ($myrow<=0) {
+		$MyRow=DB_fetch_row($Result);
+		if ($MyRow<=0) {
 			$Errors[$i]=BatchIsEmpty;
 			return $Errors;
 		}
@@ -178,8 +178,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($WorkOrderDetails as $key => $value) {
-			$WorkOrderDetails[$key] = DB_escape_string($value);
+		foreach ($WorkOrderDetails as $key => $Value) {
+			$WorkOrderDetails[$key] = DB_escape_string($Value);
 		}
 		$WorkOrder['wo']=GetNextTransNo(40);
 		$WorkOrderItem['wo']=$WorkOrder['wo'];
@@ -226,25 +226,25 @@
 
 		$WOFieldNames='';
 		$WOFieldValues='';
-		foreach ($WorkOrder as $key => $value) {
+		foreach ($WorkOrder as $key => $Value) {
 			$WOFieldNames.=$key.', ';
-			$WOFieldValues.='"'.$value.'", ';
+			$WOFieldValues.='"'.$Value.'", ';
 		}
 		$ItemFieldNames='';
 		$ItemFieldValues='';
-		foreach ($WorkOrderItem as $key => $value) {
+		foreach ($WorkOrderItem as $key => $Value) {
 			$ItemFieldNames.=$key.', ';
-			$ItemFieldValues.='"'.$value.'", ';
+			$ItemFieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
 			$wosql = 'INSERT INTO workorders ('.mb_substr($WOFieldNames,0,-2).') '.
 				'VALUES ('.mb_substr($WOFieldValues,0,-2).') ';
-			$itemsql = 'INSERT INTO woitems ('.mb_substr($ItemFieldNames,0,-2).') '.
+			$Itemsql = 'INSERT INTO woitems ('.mb_substr($ItemFieldNames,0,-2).') '.
 				'VALUES ('.mb_substr($ItemFieldValues,0,-2).') ';
 			$systypessql = 'UPDATE systypes set typeno='.GetNextTransNo(40).' where typeid=40';
 			DB_Txn_Begin();
 			$woresult = DB_query($wosql);
-			$itemresult = DB_query($itemsql);
+			$Itemresult = DB_query($Itemsql);
 			$systyperesult = DB_query($systypessql);
 			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
@@ -280,11 +280,11 @@
 			for ($i=0; $i<sizeof($balances); $i++) {
 				$balance=$balance+$balances[$i]['quantity'];
 			}
-			$newqoh = $Quantity + $balance;
-			$itemdetails = GetStockItem($StockID, $user, $password);
-			$wipglact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'wipact');
-			$stockact=GetCategoryGLCode($itemdetails[1]['categoryid'], 'stockact');
-			$cost=$itemdetails[1]['materialcost']+$itemdetails[1]['labourcost']+$itemdetails[1]['overheadcost'];
+			$Newqoh = $Quantity + $balance;
+			$Itemdetails = GetStockItem($StockID, $user, $password);
+			$wipglact=GetCategoryGLCode($Itemdetails[1]['categoryid'], 'wipact');
+			$stockact=GetCategoryGLCode($Itemdetails[1]['categoryid'], 'stockact');
+			$cost=$Itemdetails[1]['materialcost']+$Itemdetails[1]['labourcost']+$Itemdetails[1]['overheadcost'];
 			$TransactionNo=GetNextTransNo(28);
 
 			$stockmovesql="INSERT INTO stockmoves (stockid,
@@ -306,7 +306,7 @@
                                                 '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors). "',
                                                 '".$WONumber."',
                                                 '".$Quantity."',
-                                                '".$newqoh."',
+                                                '".$Newqoh."',
                                                 '".$cost."',
                                                 '".$cost."')";
 			$locstocksql="UPDATE locstock SET quantity = quantity + " . $Quantity ."
@@ -381,19 +381,19 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-			$itemdetails = GetStockItem($StockID, $user, $password);
+			$Itemdetails = GetStockItem($StockID, $user, $password);
 			$balances=GetStockBalance($StockID, $user, $password);
 			$balance=0;
 			for ($i=0; $i<sizeof($balances); $i++) {
 				$balance=$balance+$balances[$i]['quantity'];
 			}
-			$newqoh = $Quantity + $balance;
-			$wipglact=GetCategoryGLCode($itemdetails['categoryid'], 'wipact');
-			$stockact=GetCategoryGLCode($itemdetails['categoryid'], 'stockact');
+			$Newqoh = $Quantity + $balance;
+			$wipglact=GetCategoryGLCode($Itemdetails['categoryid'], 'wipact');
+			$stockact=GetCategoryGLCode($Itemdetails['categoryid'], 'stockact');
 			$costsql="SELECT costissued FROM workorders WHERE wo='".$WONumber . "'";
 			$costresult=DB_query($costsql);
-			$myrow=DB_fetch_row($costresult);
-			$cost=$myrow[0];
+			$MyRow=DB_fetch_row($costresult);
+			$cost=$MyRow[0];
 			$TransactionNo=GetNextTransNo(26);
 			$stockmovesql="INSERT INTO stockmoves (stockid,
                                                    type,
@@ -414,7 +414,7 @@
                                                 '".GetPeriodFromTransactionDate($TranDate, sizeof($Errors), $Errors)."',
                                                 '".$WONumber."',
                                                 '".$Quantity."',
-                                                '".$newqoh."',
+                                                '".$Newqoh."',
                                                 '".$cost."',
                                                 '".$cost."')";
 			$locstocksql="UPDATE locstock SET quantity = quantity + ".$Quantity."
@@ -471,14 +471,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql="SELECT wo
+		$SQL="SELECT wo
 			  FROM woitems
 			  WHERE " . $Field ." " . LIKE  . " '%".$Criteria."%'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		$i=0;
 		$WOList = array();
-		while ($myrow=DB_fetch_array($result)) {
-			$WOList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$WOList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $WOList;

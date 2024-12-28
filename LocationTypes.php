@@ -53,20 +53,20 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedCode) AND $InputError !=1) {
 
-		$sql = "UPDATE locationtypes
+		$SQL = "UPDATE locationtypes
 			SET description = '" . $_POST['description'] . "'
 			WHERE code = '".$SelectedCode."'";
 
-		$msg = _('The Location Type') . ' ' . $SelectedCode . ' ' .  _('has been updated');
+		$Msg = _('The Location Type') . ' ' . $SelectedCode . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM locationtypes
 			     WHERE code = '" . $_POST['code'] . "'";
 
-		$CheckResult = DB_query($checkSql);
+		$CheckResult = DB_query($CheckSQL);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
@@ -76,25 +76,25 @@ if (isset($_POST['submit'])) {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO locationtypes (code,
+			$SQL = "INSERT INTO locationtypes (code,
 											description)
 							VALUES ('" . str_replace(' ', '', $_POST['code']) . "',
 									'" . $_POST['description'] . "')";
 
-			$msg = _('Location Type') . ' ' . $_POST['description'] .  ' ' . _('has been created');
-			$checkSql = "SELECT count(code)
+			$Msg = _('Location Type') . ' ' . $_POST['description'] .  ' ' . _('has been created');
+			$CheckSQL = "SELECT count(code)
 						FROM locationtypes";
-			$result = DB_query($checkSql);
-			$row = DB_fetch_row($result);
+			$Result = DB_query($CheckSQL);
+			$Row = DB_fetch_row($Result);
 
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 
 		unset($SelectedCode);
 		unset($_POST['code']);
@@ -106,22 +106,22 @@ if (isset($_POST['submit'])) {
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'Locations'
 	// Prevent delete if Location Type exist in customer transactions
 
-	$sql= "SELECT COUNT(*)
+	$SQL= "SELECT COUNT(*)
 	       FROM locations
 	       WHERE locations.zone='".$SelectedCode."'";
 
 	$ErrMsg = _('The number of locations using this type could not be retrieved');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this type because locations have been created using this zone') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('locations using this type code'),'error');
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
+		prnMsg(_('Cannot delete this type because locations have been created using this zone') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('locations using this type code'),'error');
 
 	} else {
 
-		$sql="DELETE FROM locationtypes WHERE code='" . $SelectedCode . "'";
+		$SQL="DELETE FROM locationtypes WHERE code='" . $SelectedCode . "'";
 		$ErrMsg = _('The Location Type record could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg(_('Location Type') . ' ' . $SelectedCode  . ' ' . _('has been deleted') ,'success');
 
 		unset ($SelectedCode);
@@ -144,8 +144,8 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT code,description FROM locationtypes ORDER BY code";
-	$result = DB_query($sql);
+	$SQL = "SELECT code,description FROM locationtypes ORDER BY code";
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
@@ -155,7 +155,7 @@ or deletion of the records*/
 
 $k=0; //row colour counter
 
-while ($myrow = DB_fetch_row($result)) {
+while ($MyRow = DB_fetch_row($Result)) {
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
 		$k=0;
@@ -169,10 +169,10 @@ while ($myrow = DB_fetch_row($result)) {
 		<td><a href="%sSelectedCode=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedCode=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this type?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
-		$myrow[0],
-		$myrow[1],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow[0]);
+		$MyRow[0],
+		$MyRow[1],
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow[0],
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -197,16 +197,16 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedCode) AND $SelectedCode!='' ) {
 
-		$sql = "SELECT code,
+		$SQL = "SELECT code,
 			       description
 		        FROM locationtypes
 		        WHERE code='" . $SelectedCode . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['code'] = $myrow['code'];
-		$_POST['description']  = $myrow['description'];
+		$_POST['code'] = $MyRow['code'];
+		$_POST['description']  = $MyRow['description'];
 
 		echo '<input type="hidden" name="SelectedCode" value="' . $SelectedCode . '" />
 			<input type="hidden" name="code" value="' . $_POST['code'] . '" />

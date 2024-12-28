@@ -16,7 +16,7 @@ define('FACEMASKS_ON_SPECIAL',92);
 
 /* This file contains obsolete functions that can be useful someday for some reason */
 
-function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopItemsDays, $ShowMessages, $updateDB, $RootPath){
+function AdjustNoSales($Location, $maxdays, $maxmanualchanges, $topitems, $TopItemsDays, $ShowMessages, $updateDB, $RootPath){
 	/* No Sales during last maxdays, 
 		with stock at the shop
 		with RL > at the shop
@@ -37,7 +37,7 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 			WHERE 	stockmaster.stockid = locstock.stockid
 					AND stockmaster.categoryid != 'SHDISP'
 					AND (locstock.loccode = locations.loccode)
-					AND locstock.loccode = '" . $location . "'
+					AND locstock.loccode = '" . $Location . "'
 					AND (locstock.quantity > 0)
 					AND (locstock.reorderlevel > 0)
 					AND NOT EXISTS (SELECT * 
@@ -63,7 +63,7 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 	
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $location . ' </strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $Location . ' </strong></p>';
 			echo '<div>';
 			echo '<table class="selection">
 					<thead>
@@ -82,12 +82,12 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 		}
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$newRL = 0;
+			$NewRL = 0;
 			$notes = "";
 			// Check if belongs to a special category
 			// comented on change of category structure 2014-05-06
 /*			if ($MyRow['categoryid'] == "KLPRGE"){
-				$newRL = $MyRow['reorderlevel'];
+				$NewRL = $MyRow['reorderlevel'];
 				$notes = "KLPRGE - Tali. RL Not changed";
 			}
 */			// check if RING and we have sold on the same location same model, other sizes, then should be RL = 1.
@@ -95,22 +95,22 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 				// get the model code and see if the location has sold of different sizes, so we need to keep all sizes at the shop
 				// even if no sales.
 				$RingModel = CodeModelRing($MyRow['stockid']);
-				$SalesModel = SalesOfItemByLocation($RingModel, $location, $maxdays);
+				$SalesModel = SalesOfItemByLocation($RingModel, $Location, $maxdays);
 				if ($SalesModel != 0){
 					// sales for some size, so we want to keep it in stock (just 1, in case there were 2 or more)...
-					$newRL = 1;
+					$NewRL = 1;
 					$notes = $SalesModel . " sold other sizes.";
 				}
 			}
 			if (isTopSalesItem($MyRow['stockid'], $topitems, $TopItemsDays)){
-				$newRL = $MyRow['reorderlevel'];
+				$NewRL = $MyRow['reorderlevel'];
 				$notes = "Top ". $topitems . " sales.";
 			}
 /* KL RICARD COMMENTED ON 2014-06-10
 			// if manually reseted, not change it
-			$lastManualModification = isReorderLevelManuallyChanged($MyRow['stockid'], $location, $maxmanualchanges);
+			$lastManualModification = isReorderLevelManuallyChanged($MyRow['stockid'], $Location, $maxmanualchanges);
 			if ($lastManualModification != '0000-00-00'){
-				$newRL = $MyRow['reorderlevel'];
+				$NewRL = $MyRow['reorderlevel'];
 				$notes = "Manually changed on ". ConvertSQLDate($lastManualModification);
 			}
 */			if ($ShowMessages){
@@ -130,12 +130,12 @@ function AdjustNoSales($location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 						$MyRow['categoryid'], 
 						locale_number_format($MyRow['quantity'],0),
 						locale_number_format($MyRow['reorderlevel'],0),
-						locale_number_format($newRL,0),
+						locale_number_format($NewRL,0),
 						$notes
 						);
 				$i++;
 			}
-			SetReorderLevel("AdjustNoSales", $MyRow['stockid'],$location, $MyRow['reorderlevel'], $newRL, $updateDB);
+			SetReorderLevel("AdjustNoSales", $MyRow['stockid'],$Location, $MyRow['reorderlevel'], $NewRL, $updateDB);
 		}
 		if ($ShowMessages){
 			echo '</tbody>
@@ -664,8 +664,8 @@ function ItemsNeedingAutomaticTranslation($RootPath){
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow[0] > 0){
-		$text = locale_number_format($MyRow[0],0) . " items need Automatic Description Translation";
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = locale_number_format($MyRow[0],0) . " items need Automatic Description Translation";
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -678,12 +678,12 @@ function ItemsNeedingTranslationRevision($RootPath){
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow[0] > 0){
-		$text = locale_number_format($MyRow[0],0) . " items need Translation Revision";
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = locale_number_format($MyRow[0],0) . " items need Translation Revision";
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
-function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
+function ItemsNoSalesInLocation($Location, $maxdays, $QOHAvailable, $RootPath){
 /* EXPLAIN SQL 2014-05-20	*/
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
 	
@@ -707,7 +707,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 			WHERE 	stockmaster.stockid = locstock.stockid
 					AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 					AND (locstock.loccode = locations.loccode)
-					AND locstock.loccode = '" . $location . "'
+					AND locstock.loccode = '" . $Location . "'
 					AND (locstock.quantity > 0)
 					AND (locstock.reorderlevel > 0)
 					AND  (SELECT SUM(loc2.quantity)
@@ -740,7 +740,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 	$Result = DB_query($SQL);		
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $location . ' with stock <= ' . $QOHAvailable . ' at shops or kantor</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $Location . ' with stock <= ' . $QOHAvailable . ' at shops or kantor</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -749,7 +749,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 						<th class="SortedColumn">' . _('Code') . '</th>
 						<th class="SortedColumn">' . _('Description') . '</th>
 						<th class="SortedColumn">' . _('Category') . '</th>
-						<th class="SortedColumn">' . _('QOH ') . $location . '</th>
+						<th class="SortedColumn">' . _('QOH ') . $Location . '</th>
 						<th class="SortedColumn">' . _('QOH Shops+Kantor') . '</th>
 					</tr>
 				</thead>
@@ -782,7 +782,7 @@ function ItemsNoSalesInLocation($location, $maxdays, $QOHAvailable, $RootPath){
 	}
 }
 
-function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codeshop, $RootPath){
+function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $Codeshop, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	if (ItemInList($Location, LIST_SHOPS_KAPAL_LAUT)){
 		$FilterCategory = " AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . " ";
@@ -799,14 +799,14 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = salesorderdetails.stkcode
-						AND locstock.loccode = '". $codeshop ."') AS qoh,
+						AND locstock.loccode = '". $Codeshop ."') AS qoh,
 				(SELECT sum(quantity)
 					FROM locstock
 					WHERE locstock.stockid = salesorderdetails.stkcode) AS qohtotal,
 				(SELECT sum(reorderlevel)
 					FROM locstock
 					WHERE locstock.stockid = salesorderdetails.stkcode
-						AND locstock.loccode = '". $codeshop ."') AS rl
+						AND locstock.loccode = '". $Codeshop ."') AS rl
 			FROM salesorderdetails, salesorders, stockmaster
 			WHERE salesorderdetails.orderno = salesorders.orderno " . 
 			$FilterCategory . 
@@ -823,7 +823,7 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $codesho
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['rl'] > 0){
 				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $codeshop . ' shop. ' . '</strong></p>';
+					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $Codeshop . ' shop. ' . '</strong></p>';
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -1290,14 +1290,14 @@ function PricesNotUpdatedinXDays($numDays, $PercentageIncrease, $RootPath){
 	}
 }
 
-function SalesOfItemByLocation($stockid, $location, $maxdays){
+function SalesOfItemByLocation($stockid, $Location, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT COUNT(qtyinvoiced) AS sales
 			FROM salesorderdetails, salesorders
 			WHERE salesorderdetails.orderno = salesorders.orderno
 				AND salesorderdetails.completed = 1
 				AND salesorders.orddate >= '". $StartDate . "'
-				AND salesorders.fromstkloc = '". $location . "'
+				AND salesorders.fromstkloc = '". $Location . "'
 				AND salesorderdetails.stkcode LIKE '". $stockid . "%'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -1482,10 +1482,10 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales){
 
 function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
-	$totalcash = 0;
-	$totalcredit = 0;
-	$totalreturned = 0;
-	$total = 0;
+	$Totalcash = 0;
+	$Totalcredit = 0;
+	$Totalreturned = 0;
+	$Total = 0;
 
 	$SQL = "SELECT salesorders.salesperson, 
 				COUNT(salesorders.klpaidcash + salesorders.klpaidcreditcard) AS splitted, 

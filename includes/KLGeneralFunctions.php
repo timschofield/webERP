@@ -22,8 +22,8 @@ function time_finish($begintime){
 	$time = explode(" ", $time);
 	$time = $time[1] + $time[0];
 	$endtime = $time;
-	$totaltime = ($endtime - $begintime);
-	prnMsg('Script execution time: ' . locale_number_format($totaltime,2) . ' seconds.','success');
+	$Totaltime = ($endtime - $begintime);
+	prnMsg('Script execution time: ' . locale_number_format($Totaltime,2) . ' seconds.','success');
 }
 
 function function_finish($begintime){
@@ -31,8 +31,8 @@ function function_finish($begintime){
 	$time = explode(" ", $time);
 	$time = $time[1] + $time[0];
 	$endtime = $time;
-	$totaltime = ($endtime - $begintime);
-	prnMsg('Function execution time: ' . locale_number_format($totaltime,3) . ' seconds.','info');
+	$Totaltime = ($endtime - $begintime);
+	prnMsg('Function execution time: ' . locale_number_format($Totaltime,3) . ' seconds.','info');
 }
 
 function CodeModel($stockid){
@@ -279,11 +279,11 @@ function ItemCodeQOH($Stockid, $CodeDetail, $Where){
 	$Result = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$qty = $MyRow['total'];
+		$Qty = $MyRow['total'];
 	}else{
-		$qty = 0;
+		$Qty = 0;
 	}
-	return $qty;
+	return $Qty;
 }
 
 function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDetail){
@@ -481,7 +481,7 @@ function CapitalizeName($string){
 	foreach ($word_splitters as $delimiter)
 	{ 
 		$words = explode($delimiter, $string); 
-		$newwords = array(); 
+		$Newwords = array(); 
 		foreach ($words as $word)
 		{ 
 			if (in_array(strtoupper($word), $uppercase_exceptions))
@@ -490,13 +490,13 @@ function CapitalizeName($string){
 			if (!in_array($word, $lowercase_exceptions))
 				$word = ucfirst($word); 
  
-			$newwords[] = $word;
+			$Newwords[] = $word;
 		}
  
 		if (in_array(strtolower($delimiter), $lowercase_exceptions))
 			$delimiter = strtolower($delimiter);
  
-		$string = join($delimiter, $newwords); 
+		$string = join($delimiter, $Newwords); 
 	} 
 	return $string; 
 }
@@ -1082,16 +1082,16 @@ function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 	return array($URL,$PackagingImage);
 }
 
-function DataExistsInWebERP($table, $f1, $v1, $f2 = '', $v2 = ''){
+function DataExistsInWebERP($Table, $f1, $v1, $f2 = '', $v2 = ''){
 	if ($f2 == ''){
 		/* Primary key is 1 field only */
 		$SQL = "SELECT COUNT(*)
-				FROM " . $table . "
+				FROM " . $Table . "
 				WHERE " . $f1 . " = '" . $v1 . "'";
 	}else{
 		/* Primary key is 2 fields */
 		$SQL = "SELECT COUNT(*)
-				FROM " . $table . "
+				FROM " . $Table . "
 				WHERE " . $f1 . " = '" . $v1 . "'
 					AND " . $f2 . " = '" . $v2 . "'";
 	}

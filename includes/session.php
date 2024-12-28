@@ -91,7 +91,7 @@ if (isset($_SESSION['DatabaseName'])) {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				/*
 				 if(get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
+					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
 					}
 				*/
 				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
@@ -220,11 +220,11 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit;
 	
 		case UL_NOTVALID:
-			$demo_text = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
 	
 		case UL_MAINTENANCE:
-			$demo_text = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
 	
 	}
@@ -280,7 +280,7 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 
-if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
+if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowCronJobToBeRun)) {
 	$Title = _('Account Error Report');
 	include ($PathPrefix . 'includes/header.php');
 	echo '<br /><br /><br />';
@@ -331,14 +331,25 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 	$CustomerLogin = 0;
 }
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
-	$debug = 1; //allow debug messages
+	$Debug = 1; //allow debug messages
 
 } else {
-	$debug = 0; //don't allow debug messages
+	$Debug = 0; //don't allow debug messages
 
 }
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
 	header('Location: ' . $PathPrefix . 'Dashboard.php');
+}
+
+if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
+	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
+	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
+		$Title = _('Session verification error');
+		include ('includes/header.php');
+		prnMsg(_('This page was not submitted with a correct FormID'), 'error');
+		include ('includes/footer.php');
+		exit;
+	}
 }
 
 function CryptPass($Password) {
@@ -366,29 +377,18 @@ function HighestFileName($PathPrefix) {
 	return basename(array_pop($files), ".php");
 }
 
-if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
-	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
-	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$Title = _('Session verification error');
-		include ('includes/header.php');
-		prnMsg(_('This page was not submitted with a correct FormID'), 'error');
-		include ('includes/footer.php');
-		exit;
-	}
-}
-
-function quote_smart($value) {
+function quote_smart($Value) {
 	// Stripslashes
 	if (phpversion() < "5.3") {
 		if (get_magic_quotes_gpc()) {
-			$value = stripslashes($value);
+			$Value = stripslashes($Value);
 		}
 	}
 	// Quote if not integer
-	if (!is_numeric($value)) {
-		$value = "'" . DB_escape_string($value) . "'";
+	if (!is_numeric($Value)) {
+		$Value = "'" . DB_escape_string($Value) . "'";
 	} 
-	return $value;
+	return $Value;
 }
 
 ?>

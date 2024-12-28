@@ -6,11 +6,11 @@ function SetChangePriceFlag($Flag, $StockId){
 			SET klchangingprice = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing Price Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
+	$Msg = _('Changing Price Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 function SetMoveDiscount20Flag($Flag, $StockId){
@@ -19,11 +19,11 @@ function SetMoveDiscount20Flag($Flag, $StockId){
 			SET klmovingdiscount20 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing Move To 20% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
+	$Msg = _('Changing Move To 20% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 function SetMoveDiscount50Flag($Flag, $StockId){
@@ -32,11 +32,11 @@ function SetMoveDiscount50Flag($Flag, $StockId){
 			SET klmovingdiscount50 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing Move To 50% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
+	$Msg = _('Changing Move To 50% Discount Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 function SetMoveDiscount80Flag($Flag, $StockId){
@@ -45,23 +45,23 @@ function SetMoveDiscount80Flag($Flag, $StockId){
 			SET klmovingdiscount80 = '" . $Flag . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing Move To Outlet Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
+	$Msg = _('Changing Move To Outlet Flag set to') . ' ' . $Flag . ' ' . _('for item code') . ' ' . $StockId;
 	$ErrMsg = _('The flag update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
-function SetFlagPriceChangedInChangePrice($StockId, $value){
+function SetFlagPriceChangedInChangePrice($StockId, $Value){
 	$SQL = "UPDATE klchangeprice 
-			SET pricechanged = '" . $value . "'
+			SET pricechanged = '" . $Value . "'
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing flag PriceChanged for item') . ' ' . $StockId . ' ' . _('to') . ' ' . $value;
+	$Msg = _('Changing flag PriceChanged for item') . ' ' . $StockId . ' ' . _('to') . ' ' . $Value;
 	$ErrMsg = _('SetFlagPriceChangedInChangePrice failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 
@@ -70,11 +70,11 @@ function SetEndDateChangePrice($StockId){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing End Date of Price change set to today for item code') . ' ' . $StockId;
+	$Msg = _('Changing End Date of Price change set to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 function SetEndDateMoveDiscount20($StockId){
@@ -82,11 +82,11 @@ function SetEndDateMoveDiscount20($StockId){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockId;
+	$Msg = _('Changing End Date of Move To 20% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 function SetEndDateMoveDiscount50($StockId){
@@ -94,11 +94,11 @@ function SetEndDateMoveDiscount50($StockId){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockId;
+	$Msg = _('Changing End Date of Move To 50% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 function SetEndDateMoveDiscount80($StockId){
@@ -106,11 +106,11 @@ function SetEndDateMoveDiscount80($StockId){
 			SET endprocessdate = CURRENT_DATE
 			WHERE stockid = '".$StockId."'";
 
-	$msg = _('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockId;
+	$Msg = _('Changing End Date of Move To 80% Discount to today for item code') . ' ' . $StockId;
 	$ErrMsg = _('The End Date update failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 
@@ -122,11 +122,11 @@ function SetRLZeroAtPointOfSales($StockId){
 			WHERE stockid = '".$StockId."'
 				AND loccode NOT IN " . LIST_KANTOR_LOCATIONS  ;
 
-	$msg = _('Reorder Level set to 0 for') . ' ' . $StockId . ' ' . _('at all Point Of Sale locations');
+	$Msg = _('Reorder Level set to 0 for') . ' ' . $StockId . ' ' . _('at all Point Of Sale locations');
 	$ErrMsg = _('The update of the Reorder Levels = 0 failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-	prnMsg($msg , 'success');
+	prnMsg($Msg , 'success');
 }
 
 function round_multiple_of($n,$x=1) {

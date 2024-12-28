@@ -43,9 +43,9 @@ if (isset($_GET['DebtorNo'])) {
 			AND debtortrans.settled=0
 			ORDER BY debtortrans.id";
 
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 
-	if (DB_num_rows($result)==0) {
+	if (DB_num_rows($Result)==0) {
 		prnMsg(_('No outstanding receipts or credits to be allocated for this customer'),'info');
 		include('includes/footer.php');
 		exit;
@@ -53,21 +53,21 @@ if (isset($_GET['DebtorNo'])) {
 	 echo '<table class="selection">';
 	echo $TableHeader;
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		unset($_SESSION['Alloc']->Allocs);
 		unset($_SESSION['Alloc']);
 		$_SESSION['Alloc'] = new Allocation;
-		$_SESSION['Alloc']->AllocTrans 		= $myrow['id'];
-		$_SESSION['Alloc']->DebtorNo		= $myrow['debtorno'];
-		$_SESSION['Alloc']->CustomerName	= $myrow['name'];
-		$_SESSION['Alloc']->TransType		= $myrow['type'];
-		$_SESSION['Alloc']->TransTypeName	= $myrow['typename'];
-		$_SESSION['Alloc']->TransNo		= $myrow['transno'];
-		$_SESSION['Alloc']->TransExRate	= $myrow['rate'];
-		$_SESSION['Alloc']->TransAmt		= $myrow['total'];
-		$_SESSION['Alloc']->PrevDiffOnExch = $myrow['diffonexch'];
-		$_SESSION['Alloc']->TransDate		= ConvertSQLDate($myrow['trandate']);
-		$_SESSION['Alloc']->CurrDecimalPlaces = $myrow['decimalplaces'];
+		$_SESSION['Alloc']->AllocTrans 		= $MyRow['id'];
+		$_SESSION['Alloc']->DebtorNo		= $MyRow['debtorno'];
+		$_SESSION['Alloc']->CustomerName	= $MyRow['name'];
+		$_SESSION['Alloc']->TransType		= $MyRow['type'];
+		$_SESSION['Alloc']->TransTypeName	= $MyRow['typename'];
+		$_SESSION['Alloc']->TransNo		= $MyRow['transno'];
+		$_SESSION['Alloc']->TransExRate	= $MyRow['rate'];
+		$_SESSION['Alloc']->TransAmt		= $MyRow['total'];
+		$_SESSION['Alloc']->PrevDiffOnExch = $MyRow['diffonexch'];
+		$_SESSION['Alloc']->TransDate		= ConvertSQLDate($MyRow['trandate']);
+		$_SESSION['Alloc']->CurrDecimalPlaces = $MyRow['decimalplaces'];
 
 		// Now get invoices or neg receipts that have outstanding balances
 		$SQL = "SELECT debtortrans.id,
@@ -85,23 +85,23 @@ if (isset($_GET['DebtorNo'])) {
 				AND debtorno='" . $_SESSION['Alloc']->DebtorNo . "'
 				ORDER BY debtortrans.id DESC";
 		$TransResult = DB_query($SQL);
-		$BalToAllocate = $_SESSION['Alloc']->TransAmt - $myrow['alloc'];
-		while ($myalloc=DB_fetch_array($TransResult) AND $BalToAllocate < 0) {
-			if ($myalloc['total']-$myalloc['alloc']< abs($BalToAllocate)) {
-				$ThisAllocation = $myalloc['total']-$myalloc['alloc'];
+		$BalToAllocate = $_SESSION['Alloc']->TransAmt - $MyRow['alloc'];
+		while ($MyAlloc=DB_fetch_array($TransResult) AND $BalToAllocate < 0) {
+			if ($MyAlloc['total']-$MyAlloc['alloc']< abs($BalToAllocate)) {
+				$ThisAllocation = $MyAlloc['total']-$MyAlloc['alloc'];
 			} else {
 				$ThisAllocation = abs($BalToAllocate);
 			}
-			$_SESSION['Alloc']->add_to_AllocsAllocn ($myalloc['id'],
-													$myalloc['typename'],
-													$myalloc['transno'],
-													ConvertSQLDate($myalloc['trandate']),
+			$_SESSION['Alloc']->add_to_AllocsAllocn ($MyAlloc['id'],
+													$MyAlloc['typename'],
+													$MyAlloc['transno'],
+													ConvertSQLDate($MyAlloc['trandate']),
 													$ThisAllocation,
-													$myalloc['total'],
-													$myalloc['rate'],
-													$myalloc['diffonexch'],
-													$myalloc['diffonexch'],
-													$myalloc['alloc'],
+													$MyAlloc['total'],
+													$MyAlloc['rate'],
+													$MyAlloc['diffonexch'],
+													$MyAlloc['diffonexch'],
+													$MyAlloc['alloc'],
 													'NA');
 			$BalToAllocate += $ThisAllocation;//since $BalToAllocate is negative
 		}

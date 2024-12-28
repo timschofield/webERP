@@ -11,7 +11,7 @@ include('includes/KLGeneralFunctions.php');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
+$PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
 prnMsg("Performing Control Panel Section 02",'info');
 
@@ -33,10 +33,10 @@ if ($KL_SystemAdmin){
 
 include ('includes/footer.php');
 
-function QualityIssuesByItem($typereport, $numdays, $RootPath){
+function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
 
-	if ($typereport == "QualityIssuesByItem"){
+	if ($Typereport == "QualityIssuesByItem"){
 		$SQL = "SELECT itemcodes AS item, 
 					COUNT(*) AS incidences,
 					(SELECT SUM(salesorderdetails.qtyinvoiced)
@@ -58,7 +58,7 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 								<th class="SortedColumn">' . _('%Incidences') . '</th>
 							</tr>
 						</thead>';
-	}elseif ($typereport == "QualityIssuesByFamily"){
+	}elseif ($Typereport == "QualityIssuesByFamily"){
 		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
 						COUNT(*) AS incidences,
 						(SELECT SUM(salesorderdetails.qtyinvoiced)
@@ -80,7 +80,7 @@ function QualityIssuesByItem($typereport, $numdays, $RootPath){
 								<th class="SortedColumn">' . _('%Incidences') . '</th>
 							</tr>
 						</thead>';
-	}elseif ($typereport == "ChangeOfMindByFamily"){
+	}elseif ($Typereport == "ChangeOfMindByFamily"){
 		$SQL = "SELECT SUBSTRING(returneditems.itemcodes,1,2) AS item, 
 						COUNT(*) AS incidences,
 						(SELECT SUM(salesorderdetails.qtyinvoiced)

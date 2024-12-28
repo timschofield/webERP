@@ -10,8 +10,8 @@ function ValidBundleRef ($StockID, $LocCode, $BundleRef){
 	if (DB_num_rows($Result)==0){
 		return 0;
 	} else {
-		$myrow = DB_fetch_row($Result);
-		return $myrow[0]; /*The quantity in the bundle */
+		$MyRow = DB_fetch_row($Result);
+		return $MyRow[0]; /*The quantity in the bundle */
 	}
 }
 function GetExpiryDate ($StockID, $LocCode, $BundleRef){
@@ -24,8 +24,8 @@ function GetExpiryDate ($StockID, $LocCode, $BundleRef){
 	if (DB_num_rows($Result)==0){
 		return '0000-00-00';
 	} else {
-		$myrow = DB_fetch_row($Result);
-		return ConvertSQLDate($myrow[0]);
+		$MyRow = DB_fetch_row($Result);
+		return ConvertSQLDate($MyRow[0]);
 	}
 }
 class SerialItem {

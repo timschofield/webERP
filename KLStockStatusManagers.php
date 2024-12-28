@@ -51,7 +51,7 @@ if ($StockID != ''){
 	$DbgMsg = _('The SQL that was used to update the stock item and failed was');
 	$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	$total = 0;
+	$Total = 0;
 	
 	while ($MyRow=DB_fetch_array($LocStockResult)) {
 
@@ -87,7 +87,7 @@ if ($StockID != ''){
 			$Available = $MyRow['quantity'];
 		}
 		
-		$total += $Available;
+		$Total += $Available;
 		
 		echo '<td>' . $MyRow['locationname'] . '</td>';
 
@@ -102,7 +102,7 @@ if ($StockID != ''){
 	echo '<tr class="striped_row"><td>Total available:</td>';
 
 	printf('<td class="number">%s</td></tr>',
-			locale_number_format_zero_blank($total, 0)
+			locale_number_format_zero_blank($Total, 0)
 			);
 }
 

@@ -24,8 +24,8 @@ if (isset($_GET['StockID'])) {
 }
 
 $ItemDescriptionLanguagesArray = explode(',', $_SESSION['ItemDescriptionLanguages']); //WARNING: if the last character is a ",", there are n+1 languages.
-$hasNext = true;
-$hasPrev = true;
+$HasNext = true;
+$HasPrev = true;
 
 if (isset($_POST['NextItem'])) {
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1");
@@ -36,7 +36,7 @@ if (isset($_POST['NextItem'])) {
 		$NextItemRow = DB_fetch_row($Result);
 		$StockID = $NextItemRow[0];
 	} else {
-		$hasNext = false;
+		$HasNext = false;
 	}
 
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -52,7 +52,7 @@ if (isset($_POST['PreviousItem'])) {
 		$PreviousItemRow = DB_fetch_row($Result);
 		$StockID = $PreviousItemRow[0];
 	} else {
-		$hasPrev = false;
+		$HasPrev = false;
 	}
 
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -90,7 +90,7 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 
 	$Result = $_FILES['ItemPicture']['error'];
 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-	$filename = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ImgExt;
+	$FileName = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ImgExt;
 	//But check for the worst
 	if (!in_array($ImgExt, $SupportedImgExt)) {
 		prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'), 'warn');
@@ -108,10 +108,10 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 		prnMsg(_('The web server user does not have permission to upload files. Please speak to your system administrator'), 'warn');
 		$UploadTheFile = 'No';
 	}
-	foreach ($SupportedImgExt as $ext) {
-		$file = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ext;
-		if (file_exists($file)) {
-			$Result = unlink($file);
+	foreach ($SupportedImgExt as $Ext) {
+		$File = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $Ext;
+		if (file_exists($File)) {
+			$Result = unlink($File);
 			if (!$Result) {
 				prnMsg(_('The existing image could not be removed'), 'error');
 				$UploadTheFile = 'No';
@@ -120,8 +120,8 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 	}
 
 	if ($UploadTheFile == 'Yes') {
-		$Result = move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($Result) ? _('File url') . '<a href="' . $filename . '">' . $filename . '</a>' : _('Something is wrong with uploading a file');
+		$Result = move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $FileName);
+		$Message = ($Result) ? _('File url') . '<a href="' . $FileName . '">' . $FileName . '</a>' : _('Something is wrong with uploading a file');
 	}
 }
 
@@ -984,10 +984,10 @@ echo '<div>
 if (isset($StockID) && $StockID != '' && $InputError == 0) {
 	echo '<table width="100%">
 			<tr>
-				<td>', '<button ', ($hasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
+				<td>', '<button ', ($HasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
 	/*_('Previous Item'),*/
 	'</button>', // "Previous" button.
-	'</td>', '<td width="90%">&nbsp;</td>', '<td>', '<button ', ($hasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
+	'</td>', '<td width="90%">&nbsp;</td>', '<td>', '<button ', ($HasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
 	/*_('Next Item'),*/
 	'<img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" />', '</button>', // "Next" button.
 	'</td>
@@ -1159,11 +1159,11 @@ echo '<tr>
 		<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ' . _('Clear Image') . '
 		</td>';
 
-$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 if (extension_loaded('gd') && function_exists('gd_info') && isset($StockID) && !empty($StockID)) {
 	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockID) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-} else if (file_exists($imagefile)) {
-	$StockImgLink = '<img src="' . $imagefile . '" height="64" width="64" />';
+} else if (file_exists($ImageFile)) {
+	$StockImgLink = '<img src="' . $ImageFile . '" height="64" width="64" />';
 } else {
 	$StockImgLink = _('No Image');
 }
@@ -1173,12 +1173,12 @@ if ($StockImgLink != _('No Image')) {
 }
 
 if (isset($_POST['ClearImage'])) {
-	foreach ($SupportedImgExt as $ext) {
-		$file = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ext;
-		if (file_exists($file)) {
+	foreach ($SupportedImgExt as $Ext) {
+		$File = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $Ext;
+		if (file_exists($File)) {
 			//workaround for many variations of permission issues that could cause unlink fail
-			@unlink($file);
-			if (is_file($imagefile)) {
+			@unlink($File);
+			if (is_file($ImageFile)) {
 				prnMsg(_('You do not have access to delete this item image file.'), 'error');
 			} else {
 				$StockImgLink = _('No Image');

@@ -44,7 +44,7 @@ if (isset($_GET['WeekEnding'])) {
 }
 
 if (isset($SelectedEmployee)) { //Get the employee's details
-	$sql = "SELECT id,
+	$SQL = "SELECT id,
 					surname,
 					firstname,
 					employees.stockid,
@@ -58,7 +58,7 @@ if (isset($SelectedEmployee)) { //Get the employee's details
 			ON employees.stockid=stockmaster.stockid
 			WHERE employees.id='" . $SelectedEmployee . "'";
 	
-	$EmployeeResult = DB_query($sql);
+	$EmployeeResult = DB_query($SQL);
 	$EmployeeRow = DB_fetch_array($EmployeeResult);
 	
 	if ($EmployeeRow['userid']!='') { //get the employee's location if they are a user set up in webERP
@@ -315,9 +315,9 @@ if(isset($_POST['SubmitForApproval'])) {
 	
 		if($_SESSION['SmtpSetting']==0){
 			$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-			$result = $mail->send($Recipients);
+			$Result = $mail->send($Recipients);
 		}else{
-			$result = SendmailBySmtp($mail,$Recipients);
+			$Result = SendmailBySmtp($mail,$Recipients);
 		}
 		prnMsg(_('This timesheet has been submitted to your manager for approval'),'success', _('Timesheet submitted'));
 	}
@@ -508,7 +508,7 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedEmployee will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters then none of the above are true and the list of employees will be displayed with links to select one. These will call the same page again and allow input of the timesheet or deletion of the records*/
 
 	
-	$sql = "SELECT employees.id,
+	$SQL = "SELECT employees.id,
 					employees.surname,
 					employees.firstname,
 					employees.stockid,
@@ -521,8 +521,8 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 			FROM employees LEFT JOIN employees AS employees2
 			ON employees.manager=employees2.id";
 
-	$result = DB_query($sql);
-	if (DB_num_rows($result) > 0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) > 0) {
 		echo '<table class="selection">
 			<thead>
 			<tr class="striped_row">
@@ -537,7 +537,7 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 			</thead>
 			<tbody>';
 	
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 	
 		printf('<tr class="striped_row">
 					<td>%s</td>
@@ -549,16 +549,16 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 					<td class="noprint"><a href="%sSelectedEmployee=%s">' . _('Select') . '</a></td>
 					<td class="noprint"><a href="Employees.php?SelectedEmployee=%s">' . _('Edit') . '</a></td>
 				</tr>',
-				$myrow['id'],
-				$myrow['firstname'],
-				$myrow['surname'],
-				$myrow['stockid'],
-				$myrow['managerfirstname'] . ' ' . $myrow['managersurname'],
-				$myrow['email'],
-				$myrow['email'],
+				$MyRow['id'],
+				$MyRow['firstname'],
+				$MyRow['surname'],
+				$MyRow['stockid'],
+				$MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'],
+				$MyRow['email'],
+				$MyRow['email'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['id'],
-				$myrow['id']);
+				$MyRow['id'],
+				$MyRow['id']);
 		}
 		//END WHILE LIST LOOP
 		echo '</tbody></table>';

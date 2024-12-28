@@ -51,7 +51,7 @@ if (isset($_POST['submit'])) {
 		if (!isset($_POST['EDIServerPwd'])){
 			$_POST['EDIServerPwd']='';
 		}
-		$sql = "UPDATE debtorsmaster SET ediinvoices ='" . $_POST['EDIInvoices'] . "',
+		$SQL = "UPDATE debtorsmaster SET ediinvoices ='" . $_POST['EDIInvoices'] . "',
 					ediorders ='" . $_POST['EDIOrders'] . "',
 					edireference='" . $_POST['EDIReference'] . "',
 					editransport='" . $_POST['EDITransport'] . "',
@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 			WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
 		$ErrMsg = _('The customer EDI setup data could not be updated because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg(_('Customer EDI configuration updated'),'success');
 	} else {
 		prnMsg(_('Customer EDI configuration failed'),'error');
@@ -73,7 +73,7 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<br /><table class="selection">';
 
-$sql = "SELECT debtorno,
+$SQL = "SELECT debtorno,
 		name,
 		ediinvoices,
 		ediorders,
@@ -86,20 +86,20 @@ $sql = "SELECT debtorno,
 	WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
 
 $ErrMsg = _('The customer EDI configuration details could not be retrieved because');
-$result = DB_query($sql,$ErrMsg);
+$Result = DB_query($SQL,$ErrMsg);
 
-$myrow = DB_fetch_array($result);
+$MyRow = DB_fetch_array($Result);
 
 echo '<tr><td>' . _('Customer Code').':</td>
 		<td>' . $_SESSION['CustomerID'] . '</td>
 		</tr>';
 echo '<tr><td>' . _('Customer Name').':</td>
-		<td>' . $myrow['name'] . '</td>
+		<td>' . $MyRow['name'] . '</td>
 		</tr>';
 echo '<tr><td>' . _('Enable Sending of EDI Invoices').':</td>
 		<td><select tabindex="1" name="EDIInvoices">';
 
-if ($myrow['ediinvoices']==0){
+if ($MyRow['ediinvoices']==0){
 
 	echo '<option selected="selected" value="0">' . _('Disabled') . '</option>';
 	echo '<option value="1">' . _('Enabled'). '</option>';
@@ -114,7 +114,7 @@ echo '</select><a href="' . $RootPath . '/EDIMessageFormat.php?MessageType=INVOI
 echo '<tr><td>' . _('Enable Receiving of EDI Orders') . ':</td>
 	<td><select tabindex="2" name="EDIOrders">';
 
-if ($myrow['ediorders']==0){
+if ($MyRow['ediorders']==0){
 
 	echo '<option selected="selected" value="0">' . _('Disabled') . '</option>';
 	echo '<option value="1">' . _('Enabled') . '</option>';
@@ -128,12 +128,12 @@ echo '</select></td>
 
 echo '<tr><td>' . _('Customer EDI Reference') . ':</td>
 	<td><input ' . (in_array('EDIReference',$Errors) ?  'class="inputerror"' : '' ) .
-        ' tabindex="3" type="text" name="EDIReference" size="20" maxlength="20" value="' . $myrow['edireference'] . '" /></td></tr>';
+        ' tabindex="3" type="text" name="EDIReference" size="20" maxlength="20" value="' . $MyRow['edireference'] . '" /></td></tr>';
 
 echo '<tr><td>' . _('EDI Communication Method') . ':</td>
 	<td><select tabindex="4" name="EDITransport" >';
 
-if ($myrow['editransport']=='email'){
+if ($MyRow['editransport']=='email'){
 	echo '<option selected="selected" value="email">' . _('Email Attachments') . '</option>';
 	echo '<option value="ftp">' . _('File Transfer Protocol (FTP)') . '</option>';
 } else {
@@ -145,14 +145,14 @@ echo '</select></td></tr>';
 
 echo '<tr><td>' . _('FTP Server or Email Address') . ':</td>
 	<td><input ' . (in_array('EDIAddress',$Errors) ?  'class="inputerror"' : '' ) .
-        ' tabindex="5" type="text" name="EDIAddress" required="required" size="42" maxlength="40" value="' . $myrow['ediaddress'] . '" /></td></tr>';
+        ' tabindex="5" type="text" name="EDIAddress" required="required" size="42" maxlength="40" value="' . $MyRow['ediaddress'] . '" /></td></tr>';
 
-if ($myrow['editransport']=='ftp'){
+if ($MyRow['editransport']=='ftp'){
 
 	echo '<tr><td>' . _('FTP Server User Name') . ':</td>
-			<td><input tabindex="6" type="text" name="EDIServerUser" required="required" size="20" maxlength="20" value="' . $myrow['ediserveruser'] . '" /></td></tr>';
+			<td><input tabindex="6" type="text" name="EDIServerUser" required="required" size="20" maxlength="20" value="' . $MyRow['ediserveruser'] . '" /></td></tr>';
 	echo '<tr><td>' . _('FTP Server Password') . ':</td>
-			<td><input tabindex="7" type="text" name="EDIServerPwd" required="required" size="20" maxlength="20" value="' . $myrow['ediserverpwd'] . '" /></td></tr>';
+			<td><input tabindex="7" type="text" name="EDIServerPwd" required="required" size="20" maxlength="20" value="' . $MyRow['ediserverpwd'] . '" /></td></tr>';
 }
 
 echo '</table>

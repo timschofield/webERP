@@ -154,7 +154,7 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset(
 	if (DB_error_no() != 0) {
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />', $Sql;
 		}
 		include ('includes/footer.php');
@@ -242,7 +242,7 @@ if (in_array($DebtorSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset(
 			if (DB_error_no() != 0) {
 				prnMsg(_('The details of outstanding transactions for customer') . ' - ' . $AgedAnalysis['debtorno'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
 				echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-				if ($debug == 1) {
+				if ($Debug == 1) {
 					echo '<br />' . _('The SQL that failed was') . '<br />' . $Sql;
 				}
 				include ('includes/footer.php');
@@ -360,7 +360,7 @@ if (in_array($PayeeSecurity, $_SESSION['AllowedPageSecurityTokens']) or !isset($
 		if (DB_error_no() != 0) {
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(), 'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug == 1) {
+			if ($Debug == 1) {
 				echo '<br />' . _('The SQL that failed was') . ' ' . $Sql;
 			}
 			include ('includes/footer.php');

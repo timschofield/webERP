@@ -11,11 +11,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT currabrev FROM currencies';
-		$result = DB_query($sql);
+		$SQL = 'SELECT currabrev FROM currencies';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$CurrencyList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$CurrencyList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $CurrencyList;
@@ -26,16 +26,16 @@
  * currency.
  */
 
-	function GetCurrencyDetails($currency, $user, $password) {
+	function GetCurrencyDetails($Currency, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM currencies WHERE currabrev='".$currency."'";
-		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		$SQL = "SELECT * FROM currencies WHERE currabrev='".$Currency."'";
+		$Result = DB_query($SQL);
+		return DB_fetch_array($Result);
 	}
 
 ?>

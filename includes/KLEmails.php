@@ -485,11 +485,11 @@ $Param1 to $Param20: 20 parameters to be included in Subject and/or text of emai
 
 function RepeatText($char, $long){
 	$i = 0;
-	$text = "";
+	$Text = "";
 	while ($i < $long){
-		$text .= $char;
+		$Text .= $char;
 		$i++;
 	}
-	return $text;
+	return $Text;
 }
 ?>

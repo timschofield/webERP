@@ -24,9 +24,9 @@ Class Journal {
 		self::__construct();
 	}
 
-	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName, $tag, $assetid=1){
+	function Add_To_GLAnalysis($Amount, $Narrative, $GLCode, $GLActName, $Tag, $AssetID=1){
 		if (isset($GLCode) AND $Amount!=0){
-			$this->GLEntries[$this->GLItemID] = new JournalGLAnalysis($Amount, $Narrative, $this->GLItemID, $GLCode, $GLActName, $tag, $assetid);
+			$this->GLEntries[$this->GLItemID] = new JournalGLAnalysis($Amount, $Narrative, $this->GLItemID, $GLCode, $GLActName, $Tag, $AssetID);
 			$this->GLItemCounter++;
 			$this->GLItemID++;
 			$this->JournalTotal += $Amount;
@@ -51,10 +51,10 @@ Class JournalGLAnalysis {
 	Var $GLCode;
 	var $GLActName;
 	Var $ID;
-	var $tag;
-	var $assetid;
+	var $Tag;
+	var $AssetID;
 
-	function __construct ($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $assetid){
+	function __construct ($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $AssetID){
 
 /* Constructor function to add a new JournalGLAnalysis object with passed params */
 		$this->Amount =$Amt;
@@ -62,11 +62,11 @@ Class JournalGLAnalysis {
 		$this->GLCode = $GLCode;
 		$this->GLActName = $GLActName;
 		$this->ID = $id;
-		$this->tag = $tag;
-		$this->assetid = $assetid;
+		$this->tag = $Tag;
+		$this->assetid = $AssetID;
 	}
-	function JournalGLAnalysis($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $assetid){
-		self::__construct($Amt, $Narr, $id, $GLCode, $GLActName, $tag, $assetid);
+	function JournalGLAnalysis($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $AssetID){
+		self::__construct($Amt, $Narr, $id, $GLCode, $GLActName, $Tag, $AssetID);
 
 	}
 }

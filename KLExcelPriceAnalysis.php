@@ -25,7 +25,7 @@ function submit($ListCategories, $DaysTopSales) {
 	//first off validate inputs sensible
 
 	if ($InputError == 0){
-		$today = date('Y-m-d');
+		$Today = date('Y-m-d');
 		$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
 				stockmaster.categoryid,
@@ -96,8 +96,8 @@ function submit($ListCategories, $DaysTopSales) {
 			$objPHPExcel->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
-			foreach(range('A','J') as $columnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+			foreach(range('A','J') as $ColumnID) {
+				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 			

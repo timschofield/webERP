@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1) {
 
-		$sql = "INSERT INTO www_users (userid,
+		$SQL = "INSERT INTO www_users (userid,
 										realname,
 										supplierid,
 										password,
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
 							'". $_POST['UserLanguage'] ."')";
 		$ErrMsg = _('The user could not be added because');
 		$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 		prnMsg( _('A new supplier login has been created'), 'success' );
 		include('includes/footer.php');
 		exit;
@@ -157,15 +157,15 @@ echo '<tr>
 //First get all available security role ID's'
 $RolesResult = DB_query("SELECT secroleid FROM securityroles");
 $FoundTheSupplierRole = false;
-while ($myroles = DB_fetch_array($RolesResult)){
+while ($MyRoles = DB_fetch_array($RolesResult)){
 	//Now look to find the tokens for the role - we just wnat the role that has just one token i.e. token 9
 	$TokensResult = DB_query("SELECT tokenid
 								FROM securitygroups
-								WHERE secroleid = '" . $myroles['secroleid'] ."'");
+								WHERE secroleid = '" . $MyRoles['secroleid'] ."'");
 
-	while ($mytoken = DB_fetch_row($TokensResult)) {
-		if ($mytoken[0]==9){
-			echo'<input type="hidden" name="Access" value ="' . $myroles['secroleid'] . '" />';
+	while ($MyToken = DB_fetch_row($TokensResult)) {
+		if ($MyToken[0]==9){
+			echo'<input type="hidden" name="Access" value ="' . $MyRoles['secroleid'] . '" />';
 			$FoundTheSupplierRole = true;
 			break;
 		}
@@ -185,17 +185,17 @@ if (!$FoundTheSupplierRole){
 echo '<tr><td>' . _('Default Location') . ':</td>
 	<td><select name="DefaultLocation">';
 
-$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-$result = DB_query($sql);
+$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
+$Result = DB_query($SQL);
 
-while ($myrow=DB_fetch_array($result)){
+while ($MyRow=DB_fetch_array($Result)){
 
 	if (isset($_POST['DefaultLocation'])
-		AND $myrow['loccode'] == $_POST['DefaultLocation']){
+		AND $MyRow['loccode'] == $_POST['DefaultLocation']){
 
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
 

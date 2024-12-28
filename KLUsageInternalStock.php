@@ -112,7 +112,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo $TableHeader;
 	}
 //	$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-	$totalused = $MyRow['usageKANTOR'] +
+	$Totalused = $MyRow['usageKANTOR'] +
 				$MyRow['usage66'] +
 				$MyRow['usageSA'] +
 				$MyRow['usageKS'] +
@@ -121,8 +121,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 				$MyRow['usageBW'] +
 				$MyRow['usageUB'] +
 				$MyRow['usageMF'];
-	if ($totalused != 0){
-		$daysstock = $MyRow['qtyKANTOR'] / $totalused * 30;
+	if ($Totalused != 0){
+		$daysstock = $MyRow['qtyKANTOR'] / $Totalused * 30;
 	}else{
 		$daysstock = 0;
 	}			
@@ -157,7 +157,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			locale_number_format($MyRow['usageBW'],0),
 			locale_number_format($MyRow['usageUB'],0),
 			locale_number_format($MyRow['usageMF'],0),
-			locale_number_format($totalused,0),
+			locale_number_format($Totalused,0),
 			locale_number_format($daysstock,0)
 			);
 	$i++;

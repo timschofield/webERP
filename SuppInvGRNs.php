@@ -207,39 +207,39 @@ echo '<div>
 
 if (!isset( $_SESSION['SuppTransTmp'])){
 	$_SESSION['SuppTransTmp'] = new SuppTrans;
-	while ($myrow=DB_fetch_array($GRNResults)){
+	while ($MyRow=DB_fetch_array($GRNResults)){
 
 		$GRNAlreadyOnInvoice = False;
 
 		foreach ($_SESSION['SuppTrans']->GRNs as $EnteredGRN){
-			if ($EnteredGRN->GRNNo == $myrow['grnno']) {
+			if ($EnteredGRN->GRNNo == $MyRow['grnno']) {
 				$GRNAlreadyOnInvoice = True;
 			}
 		}
-		if ($myrow['decimalplaces']==''){
-			$myrow['decimalplaces']=2;
+		if ($MyRow['decimalplaces']==''){
+			$MyRow['decimalplaces']=2;
 		}
 		if ($GRNAlreadyOnInvoice == False){
-			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($myrow['grnno'],
-														$myrow['podetailitem'],
-														$myrow['itemcode'],
-														$myrow['itemdescription'],
-														$myrow['qtyrecd'],
-														$myrow['quantityinv'],
-														$myrow['qtyrecd'] - $myrow['quantityinv'],
-														$myrow['unitprice'],
-														$myrow['unitprice'],
+			$_SESSION['SuppTransTmp']->Add_GRN_To_Trans($MyRow['grnno'],
+														$MyRow['podetailitem'],
+														$MyRow['itemcode'],
+														$MyRow['itemdescription'],
+														$MyRow['qtyrecd'],
+														$MyRow['quantityinv'],
+														$MyRow['qtyrecd'] - $MyRow['quantityinv'],
+														$MyRow['unitprice'],
+														$MyRow['unitprice'],
 														$Complete,
-														$myrow['stdcostunit'],
-														$myrow['shiptref'],
-														$myrow['jobref'],
-														$myrow['glcode'],
-														$myrow['orderno'],
-														$myrow['assetid'],
+														$MyRow['stdcostunit'],
+														$MyRow['shiptref'],
+														$MyRow['jobref'],
+														$MyRow['glcode'],
+														$MyRow['orderno'],
+														$MyRow['assetid'],
 														0,
-														$myrow['decimalplaces'],
-														$myrow['grnbatch'],
-														$myrow['supplierref']);
+														$MyRow['decimalplaces'],
+														$MyRow['grnbatch'],
+														$MyRow['supplierref']);
 		}
 	}
 }

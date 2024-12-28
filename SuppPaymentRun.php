@@ -30,13 +30,13 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$pdf->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
   /*Now figure out the invoice less credits due for the Supplier range under review */
 
 	include ('includes/PDFPaymentRunPageHeader.inc');
 
-	$sql = "SELECT suppliers.supplierid,
+	$SQL = "SELECT suppliers.supplierid,
 					currencies.decimalplaces AS currdecimalplaces,
 					SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) AS balance
 			FROM suppliers INNER JOIN paymentterms
@@ -58,7 +58,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			HAVING SUM(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) > 0
 			ORDER BY suppliers.supplierid";
 
-	$SuppliersResult = DB_query($sql);
+	$SuppliersResult = DB_query($SQL);
 
 	$SupplierID ='';
 	$TotalPayments = 0;
@@ -73,7 +73,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 		$CurrDecimalPlaces = $SuppliersToPay['currdecimalplaces'];
 
-		$sql = "SELECT suppliers.supplierid,
+		$SQL = "SELECT suppliers.supplierid,
 						suppliers.suppname,
 						systypes.typename,
 						paymentterms.terms,
@@ -103,14 +103,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					supptrans.type,
 					supptrans.transno";
 
-		$TransResult = DB_query($sql,'','',false,false);
+		$TransResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Payment Run - Problem Report');
 			include('includes/header.php');
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
-				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
+			if ($Debug==1){
+				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
 			}
 			include('includes/footer.php');
 			exit;
@@ -148,7 +148,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 												$DetailTrans['supplierid'] . ' - ' . $DetailTrans['suppname'] . ' - ' . $DetailTrans['terms'],
 												'left');
 
-				$YPos -= $line_height;
+				$YPos -= $LineHeight;
 			}
 
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
@@ -183,7 +183,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					include('includes/header.php');
 					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg(),'error');
 					echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-					if ($debug==1){
+					if ($Debug==1){
 						echo '<br />' . _('The SQL that failed was') . $SQL;
 					}
 					$ProcessResult = DB_Txn_Rollback();
@@ -195,8 +195,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
 			$LeftOvers = $pdf->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
-			$YPos -=$line_height;
-			if ($YPos < $Bottom_Margin + $line_height){
+			$YPos -=$LineHeight;
+			if ($YPos < $Bottom_Margin + $LineHeight){
 				$PageNumber++;
 				include('includes/PDFPaymentRunPageHeader.inc');
 			}
@@ -214,7 +214,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			include('includes/header.php');
 			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
 			$ProcessResult = DB_Txn_Rollback();
@@ -274,14 +274,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			<td>' . _('For Suppliers Trading in') . ':</td>
 			<td><select name="Currency">';
 
-	$sql = "SELECT currency, currabrev FROM currencies";
-	$result=DB_query($sql);
+	$SQL = "SELECT currency, currabrev FROM currencies";
+	$Result=DB_query($SQL);
 
-	while ($myrow=DB_fetch_array($result)){
-	if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-			echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+	while ($MyRow=DB_fetch_array($Result)){
+	if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
+			echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+		echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 	}
 	}
 	echo '</select></td>
@@ -314,7 +314,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	if (DB_error_no() !=0) {
 		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
-		 if ($debug==1){
+		 if ($Debug==1){
 			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
 		 }
 		 exit;
@@ -333,13 +333,13 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		 include('includes/footer.php');
 		 exit;
 	} else {
-		while ($myrow=DB_fetch_array($AccountsResults)){
+		while ($MyRow=DB_fetch_array($AccountsResults)){
 		      /*list the bank account names */
 
-			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$myrow['accountcode']){
-				echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+			if (isset($_POST['BankAccount']) and $_POST['BankAccount']==$MyRow['accountcode']){
+				echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['accountcode'] . '">' . $myrow['bankaccountname'] . '</option>';
+				echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
 			}
 		}
 		echo '</select></td>

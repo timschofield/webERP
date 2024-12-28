@@ -112,7 +112,7 @@ if (isset($_POST['submit'])) {
 					endprocessdate='0000-00-00'
 				WHERE counterpricechange = '".$SelectedPriceChange."'";
 
-		$msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
+		$Msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
 		$SQL = "INSERT INTO klchangeprice 
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
 					'" . filter_number_format($_POST['NewRetailPrice']) . "',
 					0,
 					'0000-00-00')";
-		$msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
+		$Msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
@@ -135,7 +135,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('The insert or update of the KL Retail Price Change Step 01 failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid']);
 		SetChangePriceFlag(1,$_POST['Stockid']);
@@ -177,7 +177,7 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('KL Retail Price Change Step 01') . ' ' . $SelectedPriceChange . ' ' . _('has been deleted from the database'),'success');
 
 	unset ($SelectedPriceChange);
-	unset($delete);
+	unset($Delete);
 
 }
 

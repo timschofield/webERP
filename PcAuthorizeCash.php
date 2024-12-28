@@ -113,12 +113,12 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$Amount = $MyRow['amount'] / $MyRow['rate'];
 			}
 			// it can only be ASSIGNCASH, not expenses
-			$type = 2;
+			$Type = 2;
 			$AccountFrom = $MyRow['glaccountassignment'];
 			$AccountTo = $MyRow['glaccountpcash'];
 			$TagTo = 0;
 			//get typeno
-			$typeno = GetNextTransNo($type);
+			$TypeNo = GetNextTransNo($Type);
 			//build narrative
 			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
@@ -136,8 +136,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`jobref`,
 											`tag`)
 									VALUES (NULL,
-											'" . $type . "',
-											'" . $typeno . "',
+											'" . $Type . "',
+											'" . $TypeNo . "',
 											0,
 											'" . $MyRow['date'] . "',
 											'" . $PeriodNo . "',
@@ -161,8 +161,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`jobref`,
 										`tag`
 									) VALUES (NULL,
-										'" . $type . "',
-										'" . $typeno . "',
+										'" . $Type . "',
+										'" . $TypeNo . "',
 										0,
 										'" . $MyRow['date'] . "',
 										'" . $PeriodNo . "',

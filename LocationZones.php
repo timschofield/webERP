@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedCode) AND $InputError !=1) {
 
-		$sql = "UPDATE locationzones
+		$SQL = "UPDATE locationzones
 			SET description = '" . $_POST['description'] . "',
 				smarttransferonweekday0 = '" . $_POST['smarttransferonweekday0'] . "',
 				smarttransferonweekday1 = '" . $_POST['smarttransferonweekday1'] . "',
@@ -65,16 +65,16 @@ if (isset($_POST['submit'])) {
 				smarttransferonweekday6 = '" . $_POST['smarttransferonweekday6'] . "'
 			WHERE code = '".$SelectedCode."'";
 
-		$msg = _('The location zone') . ' ' . $SelectedCode . ' ' .  _('has been updated');
+		$Msg = _('The location zone') . ' ' . $SelectedCode . ' ' .  _('has been updated');
 	} elseif ( $InputError !=1 ) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM locationzones
 			     WHERE code = '" . $_POST['code'] . "'";
 
-		$CheckResult = DB_query($checkSql);
+		$CheckResult = DB_query($CheckSQL);
 		$CheckRow = DB_fetch_row($CheckResult);
 
 		if ( $CheckRow[0] > 0 ) {
@@ -84,7 +84,7 @@ if (isset($_POST['submit'])) {
 
 			// Add new record on submit
 
-			$sql = "INSERT INTO locationzones (code,
+			$SQL = "INSERT INTO locationzones (code,
 											description,
 											smarttransferonweekday0,
 											smarttransferonweekday1,
@@ -104,20 +104,20 @@ if (isset($_POST['submit'])) {
 									'" . $_POST['smarttransferonweekday5'] . "', 
 									'" . $_POST['smarttransferonweekday6'] . "')";
 
-			$msg = _('Location zone') . ' ' . $_POST['description'] .  ' ' . _('has been created');
-			$checkSql = "SELECT count(code)
+			$Msg = _('Location zone') . ' ' . $_POST['description'] .  ' ' . _('has been created');
+			$CheckSQL = "SELECT count(code)
 						FROM locationzones";
-			$result = DB_query($checkSql);
-			$row = DB_fetch_row($result);
+			$Result = DB_query($CheckSQL);
+			$Row = DB_fetch_row($Result);
 
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 
 		unset($SelectedCode);
 		unset($_POST['code']);
@@ -136,22 +136,22 @@ if (isset($_POST['submit'])) {
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'Locations'
 	// Prevent delete if location zone exist in customer transactions
 
-	$sql= "SELECT COUNT(*)
+	$SQL= "SELECT COUNT(*)
 	       FROM locations
 	       WHERE locations.zone='".$SelectedCode."'";
 
 	$ErrMsg = _('The number of locations using this zone could not be retrieved');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
-		prnMsg(_('Cannot delete this zone because locations have been created using this zone') . '<br />' . _('There are') . ' ' . $myrow[0] . ' ' . _('locations using this zone code'),'error');
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
+		prnMsg(_('Cannot delete this zone because locations have been created using this zone') . '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('locations using this zone code'),'error');
 
 	} else {
 
-		$sql="DELETE FROM locationzones WHERE code='" . $SelectedCode . "'";
+		$SQL="DELETE FROM locationzones WHERE code='" . $SelectedCode . "'";
 		$ErrMsg = _('The Location Zone record could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg(_('Location zone') . ' ' . $SelectedCode  . ' ' . _('has been deleted') ,'success');
 
 		unset ($SelectedCode);
@@ -181,7 +181,7 @@ then none of the above are true and the list of sales types will be displayed wi
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT code,
+	$SQL = "SELECT code,
 				description,
 				smarttransferonweekday0,
 				smarttransferonweekday1,
@@ -192,7 +192,7 @@ or deletion of the records*/
 				smarttransferonweekday6
 			FROM locationzones 
 			ORDER BY code";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
@@ -214,7 +214,7 @@ or deletion of the records*/
 
 $k=0; //row colour counter
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
 		$k=0;
@@ -222,37 +222,37 @@ while ($myrow = DB_fetch_array($result)) {
 		echo '<tr class="OddTableRows">';
 		$k=1;
 	}
-	if($myrow['smarttransferonweekday0'] == 1) {
+	if($MyRow['smarttransferonweekday0'] == 1) {
 		$TransferOn0 = 'Yes';
 	} else {
 		$TransferOn0 = '';
 	}
-	if($myrow['smarttransferonweekday1'] == 1) {
+	if($MyRow['smarttransferonweekday1'] == 1) {
 		$TransferOn1 = 'Yes';
 	} else {
 		$TransferOn1 = '';
 	}
-	if($myrow['smarttransferonweekday2'] == 1) {
+	if($MyRow['smarttransferonweekday2'] == 1) {
 		$TransferOn2 = 'Yes';
 	} else {
 		$TransferOn2 = '';
 	}
-	if($myrow['smarttransferonweekday3'] == 1) {
+	if($MyRow['smarttransferonweekday3'] == 1) {
 		$TransferOn3 = 'Yes';
 	} else {
 		$TransferOn3 = '';
 	}
-	if($myrow['smarttransferonweekday4'] == 1) {
+	if($MyRow['smarttransferonweekday4'] == 1) {
 		$TransferOn4 = 'Yes';
 	} else {
 		$TransferOn4 = '';
 	}
-	if($myrow['smarttransferonweekday5'] == 1) {
+	if($MyRow['smarttransferonweekday5'] == 1) {
 		$TransferOn5 = 'Yes';
 	} else {
 		$TransferOn5 = '';
 	}
-	if($myrow['smarttransferonweekday6'] == 1) {
+	if($MyRow['smarttransferonweekday6'] == 1) {
 		$TransferOn6 = 'Yes';
 	} else {
 		$TransferOn6 = '';
@@ -270,8 +270,8 @@ while ($myrow = DB_fetch_array($result)) {
 		<td><a href="%sSelectedCode=%s">' . _('Edit') . '</a></td>
 		<td><a href="%sSelectedCode=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this zone?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
-		$myrow['code'],
-		$myrow['description'],
+		$MyRow['code'],
+		$MyRow['description'],
 		$TransferOn0,
 		$TransferOn1,
 		$TransferOn2,
@@ -279,8 +279,8 @@ while ($myrow = DB_fetch_array($result)) {
 		$TransferOn4,
 		$TransferOn5,
 		$TransferOn6,
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['code'],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $myrow['code']);
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['code'],
+		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['code']);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -305,7 +305,7 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedCode) AND $SelectedCode!='' ) {
 
-		$sql = "SELECT code,
+		$SQL = "SELECT code,
 					description,
 					smarttransferonweekday0,
 					smarttransferonweekday1,
@@ -317,18 +317,18 @@ if (! isset($_GET['delete'])) {
 		        FROM locationzones
 		        WHERE code='" . $SelectedCode . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['code'] = $myrow['code'];
-		$_POST['description']  = $myrow['description'];
-		$_POST['smarttransferonweekday0']  = $myrow['smarttransferonweekday0'];
-		$_POST['smarttransferonweekday1']  = $myrow['smarttransferonweekday1'];
-		$_POST['smarttransferonweekday2']  = $myrow['smarttransferonweekday2'];
-		$_POST['smarttransferonweekday3']  = $myrow['smarttransferonweekday3'];
-		$_POST['smarttransferonweekday4']  = $myrow['smarttransferonweekday4'];
-		$_POST['smarttransferonweekday5']  = $myrow['smarttransferonweekday5'];
-		$_POST['smarttransferonweekday6']  = $myrow['smarttransferonweekday6'];
+		$_POST['code'] = $MyRow['code'];
+		$_POST['description']  = $MyRow['description'];
+		$_POST['smarttransferonweekday0']  = $MyRow['smarttransferonweekday0'];
+		$_POST['smarttransferonweekday1']  = $MyRow['smarttransferonweekday1'];
+		$_POST['smarttransferonweekday2']  = $MyRow['smarttransferonweekday2'];
+		$_POST['smarttransferonweekday3']  = $MyRow['smarttransferonweekday3'];
+		$_POST['smarttransferonweekday4']  = $MyRow['smarttransferonweekday4'];
+		$_POST['smarttransferonweekday5']  = $MyRow['smarttransferonweekday5'];
+		$_POST['smarttransferonweekday6']  = $MyRow['smarttransferonweekday6'];
 
 		echo '<input type="hidden" name="SelectedCode" value="' . $SelectedCode . '" />
 			<input type="hidden" name="code" value="' . $_POST['code'] . '" />

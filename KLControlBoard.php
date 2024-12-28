@@ -42,7 +42,7 @@ include('includes/GLPostings.inc');
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
 
-$periodnow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
+$PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 $NumberOfOpenShopsKL = NumberOfShops("SHOPKL");
 $NumberOfOpenShopsBL = NumberOfShops("SHOPBL");
 $NumberOfOpenShopsOU = NumberOfShops("SHOPOU");
@@ -259,27 +259,27 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin){
 		GLTransDateControl();
 		$NumberOfTestExecuted++;
-		GoodsReceivedNotInvoicedControl(1000000, $periodnow);
+		GoodsReceivedNotInvoicedControl(1000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		CustomersDebtControl(10000, $periodnow);
+		CustomersDebtControl(10000, $PeriodNow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("IDR", "('111111209',
-												'111111309')", 1, $periodnow);
+												'111111309')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("USD", "('111205010')", 1, $periodnow);
+		PettyCashBalanceControlControl("USD", "('111205010')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $periodnow);
+		PettyCashBalanceControlControl("EUR", "('111205020')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 		PettyCashBalanceControlControl("THB", "('111205030',
-												'111204030')", 1, $periodnow);
+												'111204030')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $periodnow);
+		PettyCashBalanceControlControl("HKD", "('111205040')", 1, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_AdministrationTeam){
 		// cash at retail shops
-		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $periodnow);
+		$NumberOfTestExecuted = CashAtShops(0, 10000000, 0, $NumberOfOpenShopsTotal * 4000000, $NumberOfTestExecuted, $PeriodNow);
 	}
 	
 	if ($KL_SystemAdmin
@@ -295,7 +295,7 @@ if ($ProcessSection01){
 					"111121125AD",     100000,    1000000,
 					25000000,
 					 1000000,
-					$periodnow);	
+					$PeriodNow);	
 		$NumberOfTestExecuted++;
 
 		InternalBankTransfers("PTSMH", 
@@ -306,7 +306,7 @@ if ($ProcessSection01){
 					"", 0, 0, "", 0, 0,	"", 0, 0,
 					25000000,
 					0,
-					$periodnow);	
+					$PeriodNow);	
 		$NumberOfTestExecuted++;
 
 		InternalBankTransfers("PTBB", 
@@ -317,18 +317,18 @@ if ($ProcessSection01){
 					"", 0, 0, "", 0, 0,	"", 0, 0,
 					25000000,
 					0,
-					$periodnow);	
+					$PeriodNow);	
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_SystemAdmin 
 		OR $KL_PurchasingTeam
 		OR $KL_AdministrationLeader){
-		BalanceAccountControl("111111100",          -1,          1, $periodnow);
+		BalanceAccountControl("111111100",          -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111202030",          -1,          1, $periodnow);
+		BalanceAccountControl("111202030",          -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111204030",           0,  500000000, $periodnow);
+		BalanceAccountControl("111204030",           0,  500000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -346,18 +346,18 @@ if ($ProcessSection01){
 									'111203020AD',
 									'111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total Banks PT ADU", 2000000000, 10000000000, $periodnow);
+									'111259050AD')", "Total Banks PT ADU", 2000000000, 10000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111259010AD', 
 									'111259020AD', 
-									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $periodnow);
+									'111259050AD')", "Total PayPal PT ADU", -1, 75000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100SM',
 									'111121105SM',
 									'111121110SM',
-									'111121115SM')", "Total Banks PT SMH", 2000000000, 5000000000, $periodnow);
+									'111121115SM')", "Total Banks PT SMH", 2000000000, 5000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111121100BB', 
@@ -377,7 +377,7 @@ if ($ProcessSection01){
 									'111203020BB',
 									'111259010BB', 
 									'111259020BB', 
-									'111259050BB')", "Total Banks PT BB", 1000000000, 3000000000, $periodnow);
+									'111259050BB')", "Total Banks PT BB", 1000000000, 3000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 	
@@ -386,50 +386,50 @@ if ($ProcessSection01){
 									'111208010', 
 									'111208020', 
 									'111208030', 
-									'111208040')", "Total Brankas Shareholders",      0,2000000000, $periodnow);
+									'111208040')", "Total Brankas Shareholders",      0,2000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111513000', 
-									'111513000AD')", "Total WIP",  -5000000,   5000000, $periodnow);
+									'111513000AD')", "Total WIP",  -5000000,   5000000, $PeriodNow);
 		$NumberOfTestExecuted++;
 
-		BalanceAccountControl("111111200",   50000000,  400000000, $periodnow);
+		BalanceAccountControl("111111200",   50000000,  400000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111202010",         -1,          1, $periodnow);
+		BalanceAccountControl("111202010",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111111209",          0,   25000000, $periodnow);
+		BalanceAccountControl("111111209",          0,   25000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111131100",         -1, 2000000000, $periodnow);
+		BalanceAccountControl("111131100",         -1, 2000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208010",         -1, 1000000000, $periodnow);
+		BalanceAccountControl("111208010",         -1, 1000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208020",         -1, 1000000000, $periodnow);
+		BalanceAccountControl("111208020",         -1, 1000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208030",         -1, 1000000000, $periodnow);
+		BalanceAccountControl("111208030",         -1, 1000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111208040",         -1, 1000000000, $periodnow);
+		BalanceAccountControl("111208040",         -1, 1000000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111520000",         -1,          1, $periodnow);
+		BalanceAccountControl("111520000",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
 
 		BalanceListAccountControl("('111512000', 
-									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $periodnow);
+									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $PeriodNow);
 
-		BalanceAccountControl("111800000",  12000000 * $NumberOfOpenShopsTotal,  17500000 * $NumberOfOpenShopsTotal, $periodnow);
+		BalanceAccountControl("111800000",  12000000 * $NumberOfOpenShopsTotal,  17500000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111900000",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $periodnow);
+		BalanceAccountControl("111900000",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111311100",  -50000000,   10000000, $periodnow);
+		BalanceAccountControl("111311100",  -50000000,   10000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("111499000",         -1,          1, $periodnow);
+		BalanceAccountControl("111499000",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021400", -200000000,          1, $periodnow);
+		BalanceAccountControl("211021400", -200000000,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("211021500",  500000000, 1500000000, $periodnow);
+		BalanceAccountControl("211021500",  500000000, 1500000000, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("612012015",         -1,          1, $periodnow);
+		BalanceAccountControl("612012015",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
-		BalanceAccountControl("612012016",         -1,          1, $periodnow);
+		BalanceAccountControl("612012016",         -1,          1, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 
@@ -652,11 +652,11 @@ if ($ProcessSection02){
 		prnMsg("Packaging Information",'info');
 		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, false, $RootPath); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $periodnow, $RootPath);
+		POStatusControl("PACKAGING","ON PRODUCTION", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
+		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
+		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -770,54 +770,54 @@ if ($ProcessSection02){
 		OR $KL_PurchasingTeam){
 		PurchaseOrdersWrongPlannedDates($RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $periodnow, $RootPath);
+		POStatusControl("","IN NEGOTIATION WITH SUPPLIER", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ON PRODUCTION", 0, $periodnow, $RootPath);
+		POStatusControl("FORSALE","ON PRODUCTION", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ON PRODUCTION", 0, $periodnow, $RootPath);
+		POStatusControl("OTHERS","ON PRODUCTION", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","FINISHED BUT NOT PAID", 0, $periodnow, $RootPath);
+		POStatusControl("","FINISHED BUT NOT PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
+		POStatusControl("FORSALE","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $periodnow, $RootPath);
+		POStatusControl("OTHERS","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 	
 	if ($KL_BusinessDevelopmentManager 
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
-		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $periodnow, $RootPath);
+		POStatusControl("","BALI PAID BUT NOT RECEIVED IN KANTOR", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0,$periodnow,  $RootPath);
+		POStatusControl("","BALI RECEIVED IN KANTOR BUT NOT PAID", 0,$PeriodNow,  $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $periodnow, $RootPath);
+		POStatusControl("","PAID NOT SHIPPED BY SUPPLIER", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0,$periodnow,  $RootPath);
+		POStatusControl("","PAID NOT RECEIVED IN AYE CARGO", 0,$PeriodNow,  $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $periodnow, $RootPath);
+		POStatusControl("","PAID NOT RECEIVED IN WANGFOONG CARGO", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
+		POStatusControl("","IN AYE CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $periodnow, $RootPath);
+		POStatusControl("","IN WANGFOONG CARGO BUT NOT SHIPPED", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","SHIPPED IN TRANSIT", 0, $periodnow, $RootPath);
+		POStatusControl("","SHIPPED IN TRANSIT", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("","CUSTOMS CLEARANCE", 0, $periodnow, $RootPath);
+		POStatusControl("","CUSTOMS CLEARANCE", 0, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
+		POStatusControl("FORSALE","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
-		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
+		POStatusControl("OTHERS","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector){
-		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $periodnow, $RootPath);
+		POStatusControl("","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
@@ -1244,47 +1244,47 @@ function ActiveItemsWithoutPicture($RootPath){
 	}
 }
 
-function BalanceAccountControl($account, $min, $max, $period){
+function BalanceAccountControl($account, $min, $max, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo, accountname
 			FROM chartdetails, chartmaster
 			WHERE chartdetails.accountcode = chartmaster.accountcode
 				AND chartdetails.accountcode = '" . $account . "'
-				AND chartdetails.period = ". $period . "";
+				AND chartdetails.period = ". $Period . "";
 				
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['saldo'] < $min){
-		$text = "Account " . $account . " - " . $MyRow['accountname'] . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Account " . $account . " - " . $MyRow['accountname'] . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 	if ($MyRow['saldo'] > $max){
-		$text = "Account " . $account . " - " . $MyRow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Account " . $account . " - " . $MyRow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
-function BalanceListAccountControl($accountlist, $description, $min, $max, $period){
+function BalanceListAccountControl($accountlist, $Description, $min, $max, $Period){
 	$SQL = "SELECT SUM(bfwd + actual) as saldo
 			FROM chartdetails, chartmaster
 			WHERE chartdetails.accountcode = chartmaster.accountcode
 				AND chartdetails.accountcode IN " . $accountlist . "
-				AND chartdetails.period = ". $period . "";
+				AND chartdetails.period = ". $Period . "";
 				
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['saldo'] < $min){
-		$text = $description . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = $Description . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 	if ($MyRow['saldo'] > $max){
-		$text = $description . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = $Description . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
-function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCashAllShops, $NumberOfTestExecuted, $periodnow){
+function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCashAllShops, $NumberOfTestExecuted, $PeriodNow){
 	// while builing the list of KL POS accounts for all shops, we check one by one
 	$ListAccounts = "('";
 	$SQL="SELECT klposcashaccount
@@ -1294,12 +1294,12 @@ function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCas
 	$Result = DB_query($SQL);
 	while ($MyRow = DB_fetch_array($Result)){
 		$ListAccounts = $ListAccounts . $MyRow['klposcashaccount'] . "','";
-		BalanceAccountControl($MyRow['klposcashaccount'], $MinCashPerShop,$MaxCashPerShop, $periodnow);
+		BalanceAccountControl($MyRow['klposcashaccount'], $MinCashPerShop,$MaxCashPerShop, $PeriodNow);
 		$NumberOfTestExecuted++;
 	}
 	$ListAccounts = substr($ListAccounts, 0, -2) . ")";
 	// Once we have the list of all KL POS accounts for all shops, we check the total in the system
-	BalanceListAccountControl($ListAccounts, "Total Cash @ shops", $MinCashAllShops, $MaxCashAllShops, $periodnow);
+	BalanceListAccountControl($ListAccounts, "Total Cash @ shops", $MinCashAllShops, $MaxCashAllShops, $PeriodNow);
 	$NumberOfTestExecuted++;
 	return $NumberOfTestExecuted;
 }
@@ -1511,7 +1511,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 function CheckNegativeStock($RootPath){
 	/* Check if there is any negative stock */
 
-	$total = 0;
+	$Total = 0;
 	$SQL = "SELECT stockmaster.stockid,			
 				   stockmaster.description,			
 				   stockmaster.decimalplaces,			
@@ -1541,7 +1541,7 @@ function CheckNegativeStock($RootPath){
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$total += $MyRow['quantity'];
+			$Total += $MyRow['quantity'];
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
@@ -1569,13 +1569,13 @@ function CheckNegativeStock($RootPath){
 				"TOTAL", 
 				"", 
 				"", 
-				locale_number_format($total,0)
+				locale_number_format($Total,0)
 				);
 		echo '</tbody>
 			</table>
 			</div>';
 	}
-	InsertKPI("Stock", "Negative Stock items (PCS)", abs($total));
+	InsertKPI("Stock", "Negative Stock items (PCS)", abs($Total));
 }
 
 function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPurchase, $RootPath){
@@ -1675,11 +1675,11 @@ function CustomerDebtByCurrency($Currency){
 	return $MyRow[0];
 }
 
-function CustomersDebtControl($AcceptedDifference, $period){
+function CustomersDebtControl($AcceptedDifference, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
 			WHERE chartdetails.accountcode = '111311100'
-				AND chartdetails.period = ". $period . "";
+				AND chartdetails.period = ". $Period . "";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	
@@ -1693,10 +1693,10 @@ function CustomersDebtControl($AcceptedDifference, $period){
 	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
 	
 	if (abs($ValueAtBalance - $DebtValue) > $AcceptedDifference){
-		$text = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$Text = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Customer's Debt = " . locale_number_format($DebtValue,0) . 
 				" Difference = ". locale_number_format($ValueAtBalance - $DebtValue,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -1831,15 +1831,15 @@ function GLTransDateControl(){
 	}
 }
 
-function GoodsJustArrived($Kind, $location, $numdays, $RootPath){
+function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays));
 	$ShopsKL = NumberOfShops("SHOPKL");
 	$ShopsBL = NumberOfShops("SHOPBL");
 	$ShopsOU = NumberOfShops("SHOPOU");
 	if ($Kind == "PO"){
-		$type = 25;
+		$Type = 25;
 	}elseif ($Kind == "WO"){
-		$type = 26;
+		$Type = 26;
 	}
 	$SQL = "SELECT stockmoves.stockid, 
 					stockmaster.description,
@@ -1859,17 +1859,17 @@ function GoodsJustArrived($Kind, $location, $numdays, $RootPath){
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
 				AND stockcategory.stocktype = 'F'
-				AND stockmoves.loccode ='" . $location . "'
-				AND stockmoves.type ='" . $type . "'
+				AND stockmoves.loccode ='" . $Location . "'
+				AND stockmoves.type ='" . $Type . "'
 				AND stockmoves.trandate >'" . $StartDate . "'
 				ORDER BY stockmoves.trandate DESC, 
 						stockmoves.stockid";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Kind == "PO"){
-			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Finished Goods just arrived at ') . $location . ' during the last '. $numdays . ' days'. '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Finished Goods just arrived at ') . $Location . ' during the last '. $numdays . ' days'. '</strong></p>';
 		}elseif ($Kind == "WO"){
-			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Goods just produced at ') . $location . ' during the last '. $numdays . ' days'. '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Goods just produced at ') . $Location . ' during the last '. $numdays . ' days'. '</strong></p>';
 		}
 		echo '<div>';
 		echo '<table class="selection">';
@@ -2020,7 +2020,7 @@ function GoodsJustArrived($Kind, $location, $numdays, $RootPath){
 	}
 }
 
-function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $RootPath){
+function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
 
 	$SQL = "SELECT loctransfers.stockid,
@@ -2035,18 +2035,18 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 			WHERE loctransfers.stockid = stockmaster.stockid
 				AND stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype = 'F'
-				AND loctransfers.shiploc ='" . $locationfrom . "'
-				AND loctransfers.recloc ='" . $locationto . "'
+				AND loctransfers.shiploc ='" . $Locationfrom . "'
+				AND loctransfers.recloc ='" . $Locationto . "'
 				AND loctransfers.recdate >'" . $StartDate . "'
 				AND (SELECT SUM(locstock.quantity)
 						FROM locstock
-						WHERE locstock.stockid = loctransfers.stockid) <= " . $qohmax . "
+						WHERE locstock.stockid = loctransfers.stockid) <= " . $QOHmax . "
 				ORDER BY loctransfers.recdate DESC, 
 						loctransfers.stockid";
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _(' Finished Goods just transferred from ') . $locationfrom  . ' to '. $locationto . ' during the last '. $numdays . ' days and QOH <= '. $qohmax . '.</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _(' Finished Goods just transferred from ') . $Locationfrom  . ' to '. $Locationto . ' during the last '. $numdays . ' days and QOH <= '. $QOHmax . '.</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2089,11 +2089,11 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $qohmax, $Ro
 	}
 }
 
-function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period){
+function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 			FROM chartdetails
 			WHERE chartdetails.accountcode = '211021400'
-				AND chartdetails.period = ". $period . "";
+				AND chartdetails.period = ". $Period . "";
 // EXPLAIN SQL 2014-05-31 OK!
 //prnMsg($SQL);
 	$Result = DB_query($SQL);
@@ -2114,14 +2114,14 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $period){
 	$GoodsValue = $MyRow[0];
 
 	if (abs($ValueAtBalance - $GoodsValue) > $AcceptedDifference){
-		$text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$Text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Real Goods Received Value at Std Cost = " . locale_number_format($GoodsValue,0) .
 				" Difference = ". locale_number_format($ValueAtBalance - $GoodsValue,0);;
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
-function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDifference, $period){
+function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDifference, $Period){
 	$SQL = "SELECT SUM(pcashdetails.amount)/currencies.rate as amount_idr
 			FROM pcashdetails,pctabs,currencies	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
@@ -2136,16 +2136,16 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 	$SQL = "SELECT SUM((bfwd + actual)) as saldo
 			FROM chartdetails
 			WHERE chartdetails.accountcode IN ".$PCGLAccounts."
-				AND chartdetails.period = ". $period . "";
+				AND chartdetails.period = ". $Period . "";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	$ValueAtBalance = $MyRow['saldo'];
 
 	if (abs($ValueAtBalance - $PettyCashValue) > $AcceptedDifference){
-		$text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$Text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Real Petty Cash (" . $Currency . ") = " . locale_number_format($PettyCashValue,0) . 
 				" Difference = ". locale_number_format($ValueAtBalance - $PettyCashValue,0);
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -2155,38 +2155,38 @@ function ImagesWithoutProduct($RootPath){
 	$i= 0;
 	// get all images in part_pics folder
 	$suffix = ".jpg";
-	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir']);
-	foreach ($imagefiles as $file) {
-		if ($file != '.ftpquota' AND
-			$file != 'Obsolete' AND
-			$file != 'part_pics'){
-			$StockId = substr($file, 0, strpos($file, $suffix));
+	$ImageFiles = getDirectoryTree($_SESSION['part_pics_dir']);
+	foreach ($ImageFiles as $File) {
+		if ($File != '.ftpquota' AND
+			$File != 'Obsolete' AND
+			$File != 'part_pics'){
+			$StockId = substr($File, 0, strpos($File, $suffix));
 			if (strpos($StockId, '.1') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.1'));
+				$StockId = substr($File, 0, strpos($StockId, '.1'));
 			}
 			if (strpos($StockId, '.2') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.2'));
+				$StockId = substr($File, 0, strpos($StockId, '.2'));
 			}
 			if (strpos($StockId, '.3') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.3'));
+				$StockId = substr($File, 0, strpos($StockId, '.3'));
 			}
 			if (strpos($StockId, '.4') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.4'));
+				$StockId = substr($File, 0, strpos($StockId, '.4'));
 			}
 			if (strpos($StockId, '.5') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.5'));
+				$StockId = substr($File, 0, strpos($StockId, '.5'));
 			}
 			if (strpos($StockId, '.6') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.6'));
+				$StockId = substr($File, 0, strpos($StockId, '.6'));
 			}
 			if (strpos($StockId, '.7') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.7'));
+				$StockId = substr($File, 0, strpos($StockId, '.7'));
 			}
 			if (strpos($StockId, '.8') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.8'));
+				$StockId = substr($File, 0, strpos($StockId, '.8'));
 			}
 			if (strpos($StockId, '.9') !== false){
-				$StockId = substr($file, 0, strpos($StockId, '.9'));
+				$StockId = substr($File, 0, strpos($StockId, '.9'));
 			}
 			$SQL = "SELECT stockid
 				FROM stockmaster
@@ -2208,7 +2208,7 @@ function ImagesWithoutProduct($RootPath){
 				printf('<tr class="striped_row">
 						<td>%s</td>
 						</tr>', 
-						$_SESSION['part_pics_dir'].'/'.$file
+						$_SESSION['part_pics_dir'].'/'.$File
 						);
 			}
 		}
@@ -2748,7 +2748,7 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath){
 }
 
 function ItemsInSetup($Check, $Category, $RootPath){
-	$today = date('Y-m-d');
+	$Today = date('Y-m-d');
 	
 	if ($Check == "ReadyToTest"){
 		$Title = GetCategoryNameFromCode($Category) . " Items ready to change to TEST";
@@ -4403,46 +4403,46 @@ function OpenCartItemsWithoutPicture($RootPath ){
 	}
 }
 
-function OutstandingOrders($customertype, $ordertype, $RootPath){
+function OutstandingOrders($customertype, $Ordertype, $RootPath){
 	/* Check if there are outstanding orders for retail customers */
 
 	if ($customertype == "Retail"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")";
-		$namefield = " debtorsmaster.name ";
+		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")";
+		$Namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Retail";
 		$WebsiteIDName = "";
 	}elseif ($customertype == "Consignment"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_CONSIGNMENT . ")";
-		$namefield = " debtorsmaster.name ";
+		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_CONSIGNMENT . ")";
+		$Namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Consignment";
 		$WebsiteIDName = "";
 	}elseif ($customertype == "Wholesale"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WHOLESALE . ")";
-		$namefield = " debtorsmaster.name ";
+		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WHOLESALE . ")";
+		$Namefield = " debtorsmaster.name ";
 		$Titletext = "Outstanding Wholesale";
 		$WebsiteIDName = "";
 	}elseif ($customertype == "Online"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")";
-		$namefield = " salesorders.deliverto AS name ";
+		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")";
+		$Namefield = " salesorders.deliverto AS name ";
 		$Titletext = "Outstanding Online";
 		$WebsiteIDName = "#KL-Website";
 	}elseif ($customertype == "MarketPlace"){
-		$whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ")";
-		$namefield = " salesorders.deliverto AS name ";
+		$Whereclause = " AND debtorsmaster.typeid IN (". CUSTOMER_TYPE_MARKETPLACE . ")";
+		$Namefield = " salesorders.deliverto AS name ";
 		$Titletext = "Outstanding MarketPlace";
 		$WebsiteIDName = "#KL-Website";
 	}else{
-		$namefield = " debtorsmaster.name ";
-		$whereclause = " ";
+		$Namefield = " debtorsmaster.name ";
+		$Whereclause = " ";
 		$Titletext = _('Outstanding');
 		$WebsiteIDName = "";
 	}
 	
-	if ($ordertype == "Quotation"){
-		$whereclause = $whereclause . " AND salesorders.quotation = 1 ";
+	if ($Ordertype == "Quotation"){
+		$Whereclause = $Whereclause . " AND salesorders.quotation = 1 ";
 		$Titletext = $Titletext . " Quotations";
-	}elseif  ($ordertype == "Order"){
-		$whereclause = $whereclause . " AND salesorders.quotation = 0 ";
+	}elseif  ($Ordertype == "Order"){
+		$Whereclause = $Whereclause . " AND salesorders.quotation = 0 ";
 		$Titletext = $Titletext . " Orders";
 	}else{
 		$Titletext = _(' Orders and Quotations');
@@ -4451,7 +4451,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath){
 	$SQL = "SELECT salesorders.orderno,	
 				salesorders.customerref,
 				debtorsmaster.debtorno, "
-			   . $namefield . ",
+			   . $Namefield . ",
 				salesorders.orddate,
                 SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent)/currencies.rate) AS ordervalue
 			FROM salesorders INNER JOIN salesorderdetails 	
@@ -4461,7 +4461,7 @@ function OutstandingOrders($customertype, $ordertype, $RootPath){
 				INNER JOIN currencies
 				ON debtorsmaster.currcode = currencies.currabrev
 			WHERE salesorderdetails.completed= 0 "
-			. $whereclause .
+			. $Whereclause .
 			" GROUP BY salesorders.orderno,	
 				debtorsmaster.name,
 				salesorders.orddate
@@ -4568,14 +4568,14 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath){
 	
 	if ($Sign == "OVER"){
 		if ($MyRow[0] > $Limit){
-			$text = $Request . " is OVER the maximum. Current value = " . locale_number_format($MyRow[0],0) . " Maximum = " . locale_number_format($Limit,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = $Request . " is OVER the maximum. Current value = " . locale_number_format($MyRow[0],0) . " Maximum = " . locale_number_format($Limit,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 	}
 	if ($Sign == "BELOW"){
 		if ($MyRow[0] < $Limit){
-			$text = $Request . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($Limit,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = $Request . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($Limit,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 	}
 }
@@ -4596,8 +4596,8 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels20){
-			$text = "Discount 20% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels20,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = "Discount 20% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels20,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		$NumberOfTestExecuted++;
 
@@ -4610,8 +4610,8 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels50){
-			$text = "Discount 50% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels50,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = "Discount 50% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels50,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		$NumberOfTestExecuted++;
 
@@ -4624,8 +4624,8 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels80){
-			$text = "Discount 80% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels80,0);
-			echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+			$Text = "Discount 80% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels80,0);
+			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 		}
 		$NumberOfTestExecuted++;
 	}
@@ -5154,10 +5154,10 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 	}
 }
 
-function UsersNotLoggingIn($maxdays, $type, $RootPath){
+function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays-1)) ;
 	
-	if ($type=='SPGSUPPORT'){
+	if ($Type=='SPGSUPPORT'){
 		$WhereType = " AND fullaccess = 22";
 	}else{
 		$WhereType = " AND fullaccess != 22";
@@ -5174,7 +5174,7 @@ function UsersNotLoggingIn($maxdays, $type, $RootPath){
 			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		if ($type=='SPGSUPPORT'){
+		if ($Type=='SPGSUPPORT'){
 			echo '<p class="page_title_text" align="center"><strong>' . _('SPG Support webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
 		}else{
 			echo '<p class="page_title_text" align="center"><strong>' . _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
@@ -5213,7 +5213,7 @@ function UsersNotLoggingIn($maxdays, $type, $RootPath){
 	}
 }
 
-function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue){
+function ValueStockLocation($Location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 /*	$minpcs = $optimalpcs * (1 - $varpcs);
 	$maxpcs = $optimalpcs * (1 + $varpcs);
 	$minvalue = $optimalvalue * (1 - $varvalue);
@@ -5228,23 +5228,23 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 				locations,
 				locstock
 			WHERE stockmaster.stockid=locstock.stockid
-				AND locations.loccode = '" . $location . "'
+				AND locations.loccode = '" . $Location . "'
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
 				AND locstock.quantity!=0
-				AND locstock.loccode = '" . $location . "'";
+				AND locstock.loccode = '" . $Location . "'";
 				
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['qtyonhand'] < $minpcs){
-		$text = "Number of items at " . $MyRow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Number of items at " . $MyRow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 	if ($MyRow['qtyonhand'] > $maxpcs){
-		$text = "Number of items at " . $MyRow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
-		echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+		$Text = "Number of items at " . $MyRow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
+		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 	}
 }
 
@@ -5441,12 +5441,12 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 	}
 }
 
-function GetBalanceAccount($account, $period){
+function GetBalanceAccount($account, $Period){
 	$SQL = "SELECT (bfwd + actual) as saldo
 		FROM chartdetails, chartmaster
 		WHERE chartdetails.accountcode = chartmaster.accountcode
 			AND chartdetails.accountcode = '" . $account . "'
-			AND chartdetails.period = ". $period . "";
+			AND chartdetails.period = ". $Period . "";
 				
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
@@ -5463,9 +5463,9 @@ function InternalBankTransfers($Company,
 							$MidtransAccount, $MidtransMin, $MidtransMax, 
 							$TransferBlockFromBank,
 							$TransferBlockFromOnline,
-							$period){
+							$Period){
 
-	$SaldoDanamon = GetBalanceAccount($DanamonAccount, $period);
+	$SaldoDanamon = GetBalanceAccount($DanamonAccount, $Period);
 	if ($SaldoDanamon <= $DanamonMin){
 		// Danamon is below minimum balance... transfer from other banks until the Max Danamon
 		$TransferNeededDanamon = $DanamonMax - $SaldoDanamon;
@@ -5478,7 +5478,7 @@ function InternalBankTransfers($Company,
 															$TokopediaMin, 
 															$TokopediaMax,
 															$TransferBlockFromOnline,
-															$period
+															$Period
 															);
 		
 		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
@@ -5488,7 +5488,7 @@ function InternalBankTransfers($Company,
 															$ShopeeMin, 
 															$ShopeeMax,
 															$TransferBlockFromOnline,
-															$period
+															$Period
 															);
 
 		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
@@ -5498,7 +5498,7 @@ function InternalBankTransfers($Company,
 															$MidtransMin, 
 															$MidtransMax,
 															$TransferBlockFromOnline,
-															$period
+															$Period
 															);
 		
 		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
@@ -5508,7 +5508,7 @@ function InternalBankTransfers($Company,
 															$MandiriMin, 
 															$MandiriMax,
 															$TransferBlockFromBank,
-															$period
+															$Period
 															);
 
 		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
@@ -5518,7 +5518,7 @@ function InternalBankTransfers($Company,
 															$BCAMin, 
 															$BCAMax,
 															$TransferBlockFromBank,
-															$period
+															$Period
 															);
 
 		$TransferNeededDanamon = CalculateTransferFromBankToDanamon($Company, 
@@ -5528,7 +5528,7 @@ function InternalBankTransfers($Company,
 															$BNIMin, 
 															$BNIMax,
 															$TransferBlockFromBank,
-															$period
+															$Period
 															);
 	}
 }
@@ -5540,17 +5540,17 @@ function CalculateTransferFromBankToDanamon($Company,
 											$SaldoMin, 
 											$SaldoMax,
 											$TransferBlock,
-											$period){
+											$Period){
 	if($TransferNeededDanamon > 0){
-		$Saldo = GetBalanceAccount($Account, $period);
+		$Saldo = GetBalanceAccount($Account, $Period);
 		if ($Saldo >= $SaldoMax){
 			$AvailableForTransfer = $Saldo - $SaldoMin;
 			$Transfer = min($AvailableForTransfer, $TransferNeededDanamon);
 			$Transfer = round_down_multiple_of($Transfer, $TransferBlock);
 			if ($Transfer > 0){
-				$text = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . 
+				$Text = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . 
 						" to Danamon ". $Company;
-				echo '<p class="bad" align="center"><strong>' . $text . '</strong></p>';
+				echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
 				$TransferNeededDanamon = $TransferNeededDanamon - $Transfer;
 			}
 		} 

@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 
 	if (isset($SelectedType) AND $InputError !=1) {
 
-		$sql = "UPDATE returnitemreasons
+		$SQL = "UPDATE returnitemreasons
 			SET reasonname = '" . $_POST['reasonname'] . "'
 			WHERE reasonid = '" . $SelectedType . "'";
 
@@ -69,20 +69,20 @@ if (isset($_POST['submit'])) {
 	} elseif ($InputError !=1){
 		// Add new record on submit
 
-		$sql = "INSERT INTO returnitemreasons
+		$SQL = "INSERT INTO returnitemreasons
 					(reasonname)
 				VALUES ('" . $_POST['reasonname'] . "')";
 
 
-		$msg = _('Item Return Reason') . ' ' . $_POST['reasonname'] .  ' ' . _('has been created');
+		$Msg = _('Item Return Reason') . ' ' . $_POST['reasonname'] .  ' ' . _('has been created');
 		$CheckSQL = "SELECT count(reasonid) FROM returnitemreasons";
-		$result = DB_query($CheckSQL);
-		$row = DB_fetch_row($result);
+		$Result = DB_query($CheckSQL);
+		$Row = DB_fetch_row($Result);
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 		unset($SelectedType);
 		unset($_POST['reasonid']);
@@ -91,19 +91,19 @@ if (isset($_POST['submit'])) {
 
 } elseif ( isset($_GET['delete']) ) {
 
-	$sql = "SELECT COUNT(*) FROM returnitems WHERE reasonid='" . $SelectedType . "'";
+	$SQL = "SELECT COUNT(*) FROM returnitems WHERE reasonid='" . $SelectedType . "'";
 
 	$ErrMsg = _('The number of returned items using this code could not be retrieved because');
-	$result = DB_query($sql,$ErrMsg);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
+	$Result = DB_query($SQL,$ErrMsg);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
 		prnMsg (_('Cannot delete this Return Item Reason because sit has been used.') . '<br />' .
-			_('There are') . ' ' . $myrow[0] . ' ' . _('returns using this reason'));
+			_('There are') . ' ' . $MyRow[0] . ' ' . _('returns using this reason'));
 	} else {
 
-		$sql="DELETE FROM returnitemreasons WHERE reasonid='" . $SelectedType . "'";
+		$SQL="DELETE FROM returnitemreasons WHERE reasonid='" . $SelectedType . "'";
 		$ErrMsg = _('The Reason could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 		prnMsg(_('Item Return Reason ') . $SelectedType  . ' ' . _('has been deleted') ,'success');
 
 		unset ($SelectedType);
@@ -120,8 +120,8 @@ if (!isset($SelectedType)){
  * the same page again and allow update/input or deletion of the records
  */
 
-	$sql = "SELECT reasonid, reasonname FROM returnitemreasons";
-	$result = DB_query($sql);
+	$SQL = "SELECT reasonid, reasonname FROM returnitemreasons";
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -131,7 +131,7 @@ if (!isset($SelectedType)){
 
 $k=0; //row colour counter
 
-while ($myrow = DB_fetch_row($result)) {
+while ($MyRow = DB_fetch_row($Result)) {
 	if ($k==1){
 		echo '<tr class="EvenTableRows">';
 		$k=0;
@@ -146,12 +146,12 @@ while ($myrow = DB_fetch_row($result)) {
 			<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' .
 				_('Are you sure you wish to delete this Item Return?') . '\');">' . _('Delete') . '</a></td>
 		</tr>',
-		$myrow[0],
-		$myrow[1],
+		$MyRow[0],
+		$MyRow[1],
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-		$myrow[0],
+		$MyRow[0],
 		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-		$myrow[0]);
+		$MyRow[0]);
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -175,16 +175,16 @@ if (! isset($_GET['delete'])) {
 	// The user wish to EDIT an existing type
 	if ( isset($SelectedType) AND $SelectedType!='' ) {
 
-		$sql = "SELECT reasonid,
+		$SQL = "SELECT reasonid,
 			       reasonname
 		        FROM returnitemreasons
 		        WHERE reasonid='" . $SelectedType . "'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['reasonid'] = $myrow['reasonid'];
-		$_POST['reasonname']  = $myrow['reasonname'];
+		$_POST['reasonid'] = $MyRow['reasonid'];
+		$_POST['reasonname']  = $MyRow['reasonname'];
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="reasonid" value="' . $_POST['reasonid'] . '" />';

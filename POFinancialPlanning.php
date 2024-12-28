@@ -26,7 +26,7 @@ function submit($RootPath, $Country, $Currency) {
 	}
 
 	/* look for suppliers with active PO's */ 
-	$sql = "SELECT suppliers.supplierid,
+	$SQL = "SELECT suppliers.supplierid,
 				suppliers.suppname,
 				suppliers.currcode,
 				currencies.decimalplaces,
@@ -50,8 +50,8 @@ function submit($RootPath, $Country, $Currency) {
 			ORDER BY suppliers.supplierid ASC";
 
 	$ErrMsg = _('The SQL to find the suppliers with active Purchase Orders');
-	$resultSuppliers = DB_query($sql,$ErrMsg);
-	if (DB_num_rows($resultSuppliers) != 0){
+	$ResultSuppliers = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($ResultSuppliers) != 0){
 
 		echo '<p class="page_title_text" align="center"><strong>' . "Financial planning for active (Authorised, Printed, Pending) Purchase Orders by Supplier" . '</strong></p>';
 		echo '<div>';
@@ -72,7 +72,7 @@ function submit($RootPath, $Country, $Currency) {
 		$TotalValueOrders = 0;
 		$TotalValuePending = 0;
 		
-		while ($mySupplier = DB_fetch_array($resultSuppliers)) {
+		while ($mySupplier = DB_fetch_array($ResultSuppliers)) {
 			echo $TableHeader;
 			
 			printf('<td>%s</td>
@@ -99,7 +99,7 @@ function submit($RootPath, $Country, $Currency) {
 					);
 
 			// Get the PO's for this supplier
-			$sqlSupplier = "SELECT purchorders.orderno,
+			$SQLSupplier = "SELECT purchorders.orderno,
 								purchorders.orddate,
 								purchorders.deliverydate,
 								purchorders.status,
@@ -113,7 +113,7 @@ function submit($RootPath, $Country, $Currency) {
 							ORDER BY purchorders.orderno ASC";
 					 
 			$ErrMsg = _('The bill of material could not be retrieved because');
-			$SupplierResult = DB_query ($sqlSupplier,$ErrMsg);
+			$SupplierResult = DB_query ($SQLSupplier,$ErrMsg);
 			
 			$TotalSupplierOwnCurrency = 0;
 			$TotalSupplierFunctionalCurrency = 0;
@@ -237,13 +237,13 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		echo '<tr>
 				<td>' . _('For Suppliers in Country') . ':</td>
 				<td><select name="Country">';
-		$sql = "SELECT DISTINCT(address6) AS country
+		$SQL = "SELECT DISTINCT(address6) AS country
 				FROM suppliers
 				ORDER BY address6";
-		$CountryResult=DB_query($sql);
+		$CountryResult=DB_query($SQL);
 		echo '<option value="All">' . _('All Countries') . '</option>';
-		while ($myrow=DB_fetch_array($CountryResult)){
-			echo '<option value="' . $myrow['country'] . '">' . $myrow['country'] . '</option>';
+		while ($MyRow=DB_fetch_array($CountryResult)){
+			echo '<option value="' . $MyRow['country'] . '">' . $MyRow['country'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';
@@ -251,14 +251,14 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		echo '<tr>
 				<td>' . _('Using Currency') . ':</td>
 				<td><select name="Currency">';
-		$sql = "SELECT currabrev,
+		$SQL = "SELECT currabrev,
 					currency
 				FROM currencies
 				ORDER BY currency";
-		$CurrencyResult=DB_query($sql);
+		$CurrencyResult=DB_query($SQL);
 		echo '<option value="All">' . _('All Currencies') . '</option>';
-		while ($myrow=DB_fetch_array($CurrencyResult)){
-			echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+		while ($MyRow=DB_fetch_array($CurrencyResult)){
+			echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 		}
 		echo '</select></td>
 			</tr>';

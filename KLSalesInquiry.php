@@ -269,13 +269,13 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		    }
 		} else {
 		  // sql for Summary report
-		  $orderby = $_POST['SummaryType'];
+		  $OrderBy = $_POST['SummaryType'];
 		  // The following is because the 'extprice' summary is a special case - with the other
 		  // summaries, you group and order on the same field; with 'extprice', you are actually
 		  // grouping on the stkcode and ordering by extprice descending
 		  if ($_POST['SummaryType'] == 'extprice') {
 		      $_POST['SummaryType'] = 'stkcode';
-		      $orderby = 'extprice DESC';
+		      $OrderBy = 'extprice DESC';
 		  }
 		  if ($_POST['DateType'] == 'Order') {
 		      if ($_POST['SummaryType'] == 'extprice' OR $_POST['SummaryType'] == 'stkcode') {
@@ -310,7 +310,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							",salesorderdetails.stkcode,
 								   stockmaster.description,
 								   stockmaster.decimalplaces
-								   ORDER BY " . $orderby;
+								   ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'orderno') {
 					$SQL = "SELECT salesorderdetails.orderno,
 					               salesorders.debtorno,
@@ -342,10 +342,10 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							"GROUP BY " . $_POST['SummaryType'] .
 							",salesorders.debtorno,
 								   debtorsmaster.name
-								   ORDER BY " . $orderby;
+								   ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'debtorno' OR $_POST['SummaryType'] == 'name') {
 				    if ($_POST['SummaryType'] == 'name') {
-				        $orderby = 'name';
+				        $OrderBy = 'name';
 				    }
 					$SQL = "SELECT debtorsmaster.debtorno,
 					               debtorsmaster.name,
@@ -375,7 +375,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY debtorsmaster.debtorno
 							,debtorsmaster.name
-							ORDER BY " . $orderby;
+							ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'month') {
 					$SQL = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
@@ -405,7 +405,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",monthname
-							ORDER BY " . $orderby;
+							ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'categoryid') {
 					$SQL = "SELECT stockmaster.categoryid,
 								   stockcategory.categorydescription,
@@ -435,7 +435,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",categorydescription
-							ORDER BY " . $orderby;
+							ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'salesman') {
 					$SQL = "SELECT salesorders.salesperson AS salesman,
 								   salesman.salesmanname,
@@ -495,7 +495,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",areas.areadescription
-							ORDER BY " . $orderby;
+							ORDER BY " . $OrderBy;
 				}
 		   } else {
 		        // Selects by tempstockmoves.trandate not order date
@@ -533,7 +533,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",stockmaster.description
-							ORDER BY " . $orderby;
+							ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'orderno') {
 					$SQL = "SELECT salesorderdetails.orderno,
 					               salesorders.debtorno,
@@ -570,10 +570,10 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							"GROUP BY " . $_POST['SummaryType'] .
 							",salesorders.debtorno,
 							  debtorsmaster.name
-							ORDER BY " . $orderby;
+							ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'debtorno' OR $_POST['SummaryType'] == 'name') {
 				    if ($_POST['SummaryType'] == 'name') {
-				        $orderby = 'name';
+				        $OrderBy = 'name';
 				    }
 					$SQL = "SELECT debtorsmaster.debtorno,
 					               debtorsmaster.name,
@@ -608,7 +608,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY debtorsmaster.debtorno" . ' ' .
 							",debtorsmaster.name
-							ORDER BY " . $orderby;
+							ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'month') {
 					$SQL = "SELECT EXTRACT(YEAR_MONTH from salesorders.orddate) as month,
 								   CONCAT(MONTHNAME(salesorders.orddate),' ',YEAR(salesorders.orddate)) as monthname,
@@ -643,7 +643,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",monthname
-						    ORDER BY " . $orderby;
+						    ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'categoryid') {
 					$SQL = "SELECT stockmaster.categoryid,
 								   stockcategory.categorydescription,
@@ -678,7 +678,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",categorydescription
-						    ORDER BY " . $orderby;
+						    ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'salesman') {
 					$SQL = "SELECT salesorders.salesperson,
 								   salesman.salesmanname,
@@ -713,7 +713,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",salesmanname
-						    ORDER BY " . $orderby;
+						    ORDER BY " . $OrderBy;
 				} elseif ($_POST['SummaryType'] == 'area') {
 					$SQL = "SELECT custbranch.area,
 								   areas.areadescription,
@@ -748,7 +748,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 							$WhereCategory .
 							"GROUP BY " . $_POST['SummaryType'] .
 							",areas.areadescription
-						    ORDER BY " . $orderby;
+						    ORDER BY " . $OrderBy;
 				}
 		   }
 		} // End of if ($_POST['ReportType']
@@ -808,13 +808,13 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		echo '  ' . _('Salesman') . '  - ' . $_POST['Salesman'] . '<br/>';
 		echo '  ' . _('Sales Area') . '  - ' . $_POST['Area'] . '<br/>';
 		If ($_POST['DateType'] != 'Order') {
-		    $itype = 'All';
+		    $IType = 'All';
 		    if ($_POST['InvoiceType'] == '10') {
-		        $itype = 'Sales Invoice';
+		        $IType = 'Sales Invoice';
 		    } elseif ($_POST['InvoiceType'] == '11') {
-		        $itype = 'Credit Notes';
+		        $IType = 'Credit Notes';
 		    }
-		    echo '  ' . _('Invoice Type') . '  - ' . $itype . '<br/>';
+		    echo '  ' . _('Invoice Type') . '  - ' . $IType . '<br/>';
         }
 		echo '<br/><br/>';
 		if ($_POST['ReportType'] == 'Detail') {
@@ -855,9 +855,9 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 					 _('Item Description'));
 			}
 				print '<br/><br/>';
-				$linectr = 0;
+				$Linectr = 0;
 			while ($MyRow = DB_fetch_array($Result)) {
-			    $linectr++;
+			    $Linectr++;
 				// KL MOD: Hide costs
 				if ($KL_SystemAdmin){
 					$Cost = $MyRow['extcost'];
@@ -904,7 +904,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 					print '<br/>';
 					$TotalQty += $MyRow['qty'];
 				}
-				$lastdecimalplaces = $MyRow['decimalplaces'];
+				$LastDecimalPlaces = $MyRow['decimalplaces'];
 				$TotalExtCost += $Cost;
 				$TotalExtPrice += $MyRow['extprice'];
 				$TotalInvQty += $MyRow['qtyinvoiced'];
@@ -913,7 +913,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 			if ($_POST['DateType'] == 'Order') {
 					printf('%10s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %14s | %12s | %-10s | %-40s ',
 					_('Totals'),
-					_('Lines - ') . $linectr,
+					_('Lines - ') . $Linectr,
 					' ',
 					' ',
 					' ',
@@ -929,7 +929,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 			  // Print totals for Invoiced Date Type - Don't print invoice quantity
 					printf('%10s | %14s | %-20s | %10s | %-10s | %-30s | %-30s | %12s | %14s | %14s | %12s | %10s | %-40s ',
 					_('Totals'),
-					_('Lines - ') . $linectr,
+					_('Lines - ') . $Linectr,
 					' ',
 					' ',
 					' ',
@@ -946,75 +946,75 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		} else {
 		  // Print summary stuff
 			$SummaryType = $_POST['SummaryType'];
-			$columnheader7 = ' ';
+			$ColumnHeader7 = ' ';
 			// Set up description based on the Summary Type
 			if ($SummaryType == 'name') {
 				$SummaryType = 'name';
 				$Description = 'debtorno';
 				$SummaryHeader = _('Customer Name');
-				$Descriptionheader =  _('Customer Code');
+				$DescriptionHeader =  _('Customer Code');
 			}
 			if ($SummaryType == 'stkcode' OR $SummaryType == 'extprice') {
 				$Description = 'Description';
 				$SummaryHeader =  _('Stock Code');
-				$Descriptionheader =  _('Item Description');
+				$DescriptionHeader =  _('Item Description');
 			}
 			if ($SummaryType == 'transno') {
 				$Description = 'name';
 				$SummaryHeader =  _('Transaction Number');
-				$Descriptionheader =  _('Customer Name');
-				$columnheader7 =  _('Order Number');
+				$DescriptionHeader =  _('Customer Name');
+				$ColumnHeader7 =  _('Order Number');
 			}
 			if ($SummaryType == 'debtorno') {
 				$Description = 'name';
 				$SummaryHeader =  _('Customer Code');
-				$Descriptionheader =  _('Customer Name');
+				$DescriptionHeader =  _('Customer Name');
 			}
 			if ($SummaryType == 'orderno') {
 				$Description = 'debtorno';
 				$SummaryHeader =  _('Order Number');
-				$Descriptionheader =  _('Customer Code');
-				$columnheader7 =  _('Customer Name');
+				$DescriptionHeader =  _('Customer Code');
+				$ColumnHeader7 =  _('Customer Name');
 			}
 			if ($SummaryType == 'categoryid') {
 				$Description = 'categorydescription';
 				$SummaryHeader =  _('Stock Category');
-				$Descriptionheader =  _('Category Description');
+				$DescriptionHeader =  _('Category Description');
 			}
 			if ($SummaryType == 'salesman') {
 				$Description = 'salesmanname';
 				$SummaryHeader =  _('Salesman Code');
-				$Descriptionheader =  _('Salesman Name');
+				$DescriptionHeader =  _('Salesman Name');
 			}
 			if ($SummaryType == 'area') {
 				$Description = 'areadescription';
 				$SummaryHeader =  _('Sales Area');
-				$Descriptionheader =  _('Area Description');
+				$DescriptionHeader =  _('Area Description');
 			}
 			if ($SummaryType == 'month') {
 				$Description = 'monthname';
 				$SummaryHeader =  _('Month');
-				$Descriptionheader =  _('Month');
+				$DescriptionHeader =  _('Month');
 			}
 			printf('    %-30s | %-40s | %12s | %14s | %14s | %14s | %-15s',
 				 _($SummaryHeader),
-				 _($Descriptionheader),
+				 _($DescriptionHeader),
 				 _('Quantity'),
 				 _('Extended Cost'),
 				 _('Extended Price'),
 				 _('Invoiced Qty'),
-				 _($columnheader7));
+				 _($ColumnHeader7));
 				print '<br/><br/>';
 
-				$column7 = ' ';
-				$linectr = 0;
+				$Column7 = ' ';
+				$Linectr = 0;
 			while ($MyRow = DB_fetch_array($Result)) {
-			    $linectr++;
+			    $Linectr++;
 				if ($SummaryType == 'orderno') {
-				    $column7 = $MyRow['name'];
+				    $Column7 = $MyRow['name'];
 				}
 				if ($SummaryType == 'transno') {
-				    $column7 =  $MyRow['orderno'];
+				    $Column7 =  $MyRow['orderno'];
 				}
 				if ($_POST['DateType'] == 'Order') {
 				    // quantity is from salesorderdetails
@@ -1036,7 +1036,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				locale_number_format($Cost,$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($MyRow['extprice'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($MyRow['qtyinvoiced'],2),
-				$column7);
+				$Column7);
 
 				print '<br/>';
 				$TotalQty += $DisplayQty;
@@ -1047,7 +1047,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 			// Print totals
 				printf('    %-30s | %-40s | %12s | %14s | %14s | %14s',
 				_('Totals'),
-				_('Lines - ') . $linectr,
+				_('Lines - ') . $Linectr,
 				locale_number_format($TotalQty,2),
 				locale_number_format($TotalExtCost,$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($TotalExtPrice,$_SESSION['CompanyRecord']['decimalplaces']),

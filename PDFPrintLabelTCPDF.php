@@ -102,7 +102,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	if (DB_error_no() !=0) {
 		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
 		include('includes/footer.php');
@@ -328,10 +328,10 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 								WHERE salestype='" . RETAIL_PRICE_LIST . "'
 								AND discountcategory ='" . $_POST['DiscountCategory'. $i] . "'
 								AND quantitybreak <='1'");
-					$myrow = DB_fetch_row($ResultDiscount);
-					if ($myrow[0]!=0){ 
+					$MyRow = DB_fetch_row($ResultDiscount);
+					if ($MyRow[0]!=0){ 
 						// there's a discount!
-						$PercentageDiscount = $myrow[0];
+						$PercentageDiscount = $MyRow[0];
 						$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1-($PercentageDiscount)),0) . ' '. CURRENCY_CODE;
 						$Price = "WAS: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
 					}else{
@@ -440,8 +440,8 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 					<option selected="selected" value="All">' . _('All Categories') . '</option>';
 
 		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
-		while ($myrow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		while ($MyRow = DB_fetch_array($CatResult)){
+			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 		}
 		echo '</select></td></tr>';
 
@@ -456,15 +456,15 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		echo'<tr><td>' . _('or QOH at') . ':</td>
 			<td>';
 
-		$sql = "SELECT locations.loccode,
+		$SQL = "SELECT locations.loccode,
 						locationname
 				FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				ORDER BY locationname";
-		$LocnResult=DB_query($sql);
+		$LocnResult=DB_query($SQL);
 		echo '<select name="Location"><option value="None">' . _('') . '</option>';
-		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		while ($MyRow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 		echo '</select></td>
 				</tr>';
@@ -472,15 +472,15 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		echo'<tr><td>' . _('or STOCK (QOH-1) at') . ':</td>
 			<td>';
 
-		$sql = "SELECT locations.loccode,
+		$SQL = "SELECT locations.loccode,
 						locationname
 				FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				ORDER BY locationname";
-		$LocnResult=DB_query($sql);
+		$LocnResult=DB_query($SQL);
 		echo '<select name="LocationStock"><option value="None">' . _('') . '</option>';
-		while ($myrow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+		while ($MyRow=DB_fetch_array($LocnResult)){
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 		echo '</select></td>
 				</tr>';

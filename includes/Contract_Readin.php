@@ -33,25 +33,25 @@ $ContractHdrResult = DB_query($ContractHeaderSQL,$ErrMsg,$DbgMsg);
 
 if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifier]->ContractRef )) {
 
-	$myrow = DB_fetch_array($ContractHdrResult);
+	$MyRow = DB_fetch_array($ContractHdrResult);
 	$_SESSION['Contract'.$identifier]->ContractRef = $ContractRef;
-	$_SESSION['Contract'.$identifier]->ContractDescription = $myrow['contractdescription'];
-	$_SESSION['Contract'.$identifier]->DebtorNo = $myrow['debtorno'];
-	$_SESSION['Contract'.$identifier]->BranchCode = $myrow['branchcode'];
-	$_SESSION['Contract'.$identifier]->LocCode = $myrow['loccode'];
-	$_SESSION['Contract'.$identifier]->CustomerRef = $myrow['customerref'];
-	$_SESSION['Contract'.$identifier]->Status = $myrow['status'];
-	$_SESSION['Contract'.$identifier]->CategoryID = $myrow['categoryid'];
-	$_SESSION['Contract'.$identifier]->OrderNo = $myrow['orderno'];
-	$_SESSION['Contract'.$identifier]->Margin = $myrow['margin'];
-	$_SESSION['Contract'.$identifier]->WO = $myrow['wo'];
-	$_SESSION['Contract'.$identifier]->RequiredDate = ConvertSQLDate($myrow['requireddate']);
-	$_SESSION['Contract'.$identifier]->Drawing = $myrow['drawing'];
-	$_SESSION['Contract'.$identifier]->ExRate = $myrow['exrate'];
-	$_SESSION['Contract'.$identifier]->BranchName = $myrow['brname'];
+	$_SESSION['Contract'.$identifier]->ContractDescription = $MyRow['contractdescription'];
+	$_SESSION['Contract'.$identifier]->DebtorNo = $MyRow['debtorno'];
+	$_SESSION['Contract'.$identifier]->BranchCode = $MyRow['branchcode'];
+	$_SESSION['Contract'.$identifier]->LocCode = $MyRow['loccode'];
+	$_SESSION['Contract'.$identifier]->CustomerRef = $MyRow['customerref'];
+	$_SESSION['Contract'.$identifier]->Status = $MyRow['status'];
+	$_SESSION['Contract'.$identifier]->CategoryID = $MyRow['categoryid'];
+	$_SESSION['Contract'.$identifier]->OrderNo = $MyRow['orderno'];
+	$_SESSION['Contract'.$identifier]->Margin = $MyRow['margin'];
+	$_SESSION['Contract'.$identifier]->WO = $MyRow['wo'];
+	$_SESSION['Contract'.$identifier]->RequiredDate = ConvertSQLDate($MyRow['requireddate']);
+	$_SESSION['Contract'.$identifier]->Drawing = $MyRow['drawing'];
+	$_SESSION['Contract'.$identifier]->ExRate = $MyRow['exrate'];
+	$_SESSION['Contract'.$identifier]->BranchName = $MyRow['brname'];
 	$_SESSION['RequireCustomerSelection'] = 0;
-	$_SESSION['Contract'.$identifier]->CustomerName = $myrow['name'];
-	$_SESSION['Contract'.$identifier]->CurrCode = $myrow['currcode'];
+	$_SESSION['Contract'.$identifier]->CustomerName = $MyRow['name'];
+	$_SESSION['Contract'.$identifier]->CurrCode = $MyRow['currcode'];
 
 
 /*now populate the contract BOM array with the items required for the contract */
@@ -72,14 +72,14 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 	$ContractBOMResult = DB_query($ContractBOMsql,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($ContractBOMResult) > 0) {
-		while ($myrow=DB_fetch_array($ContractBOMResult)) {
-			$_SESSION['Contract'.$identifier]->Add_To_ContractBOM($myrow['stockid'],
-																	$myrow['description'],
-																	$myrow['workcentreadded'],
-																	$myrow['quantity'],
-																	$myrow['cost'],
-																	$myrow['units'],
-																	$myrow['decimalplaces']);
+		while ($MyRow=DB_fetch_array($ContractBOMResult)) {
+			$_SESSION['Contract'.$identifier]->Add_To_ContractBOM($MyRow['stockid'],
+																	$MyRow['description'],
+																	$MyRow['workcentreadded'],
+																	$MyRow['quantity'],
+																	$MyRow['cost'],
+																	$MyRow['units'],
+																	$MyRow['decimalplaces']);
 		} /* add contract bill of materials BOM lines*/
 	} //end is there was a contract BOM to add
 	//Now add the contract requirments
@@ -96,11 +96,11 @@ if (DB_num_rows($ContractHdrResult)==1 and !isset($_SESSION['Contract'.$identifi
 	$ContractReqtsResult = DB_query($ContractReqtsSQL,$ErrMsg,$DbgMsg);
 
 	if (DB_num_rows($ContractReqtsResult) > 0) {
-		while ($myrow=DB_fetch_array($ContractReqtsResult)) {
-			$_SESSION['Contract'.$identifier]->Add_To_ContractRequirements($myrow['requirement'],
-																		   $myrow['quantity'],
-																		   $myrow['costperunit'],
-																		   $myrow['contractreqid']);
+		while ($MyRow=DB_fetch_array($ContractReqtsResult)) {
+			$_SESSION['Contract'.$identifier]->Add_To_ContractRequirements($MyRow['requirement'],
+																		   $MyRow['quantity'],
+																		   $MyRow['costperunit'],
+																		   $MyRow['contractreqid']);
 		} /* add other contract requirments lines*/
 	} //end is there are contract other contract requirments to add
 } // end if there was a header for the contract

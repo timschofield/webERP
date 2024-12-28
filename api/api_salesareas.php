@@ -6,8 +6,8 @@
 					 FROM areas
 					  WHERE areacode='".$AreaCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] > 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] > 0) {
 			$Errors[$i] = AreaCodeNotSetup;
 		}
 		return $Errors;
@@ -24,11 +24,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT areacode FROM areas';
-		$result = DB_query($sql);
+		$SQL = 'SELECT areacode FROM areas';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$SalesAreaList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$SalesAreaList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $SalesAreaList;
@@ -46,14 +46,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT * FROM areas WHERE areacode="'.$area.'"';
-		$result = DB_query($sql);
-		if (DB_num_rows($result)==0) {
+		$SQL = 'SELECT * FROM areas WHERE areacode="'.$area.'"';
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result)==0) {
 			$Errors[0]=NoSuchArea;
 			return $Errors;
 		} else {
 			$Errors[0]=0;
-			$Errors[1]=DB_fetch_array($result);
+			$Errors[1]=DB_fetch_array($Result);
 			return $Errors;
 		}
 	}
@@ -75,14 +75,14 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($AreaDetails as $key => $value) {
+		foreach ($AreaDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
-		$sql = 'INSERT INTO areas ('.mb_substr($FieldNames,0,-2) . ")
+		$SQL = 'INSERT INTO areas ('.mb_substr($FieldNames,0,-2) . ")
 				VALUES ('" .mb_substr($FieldValues,0,-2) . "') ";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -104,14 +104,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM areas WHERE areadescription='" . $AreaName . "'";
-		$result = DB_query($sql);
-		if (DB_num_rows($result)==0) {
+		$SQL = "SELECT * FROM areas WHERE areadescription='" . $AreaName . "'";
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result)==0) {
 			$Errors[0]=NoSuchArea;
 			return $Errors;
 		} else {
 			$Errors[0]=0;
-			$Errors[1]=DB_fetch_array($result);
+			$Errors[1]=DB_fetch_array($Result);
 			return $Errors;
 		}
 	}

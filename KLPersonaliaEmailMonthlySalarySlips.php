@@ -79,8 +79,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				$PathFileName = $_SESSION['reports_dir'] . '/' . $FileName;
 
 				// KL RICARD for any weird reason it fails in TCPDF 6.2 and 6.7.5. 
-				// as calls to $f = TCPDF_STATIC::fopenLocal($name, 'wb');
-				// but if changed into $f = fopen($name, 'wb'); then it works
+				// as calls to $f = TCPDF_STATIC::fopenLocal($Name, 'wb');
+				// but if changed into $f = fopen($Name, 'wb'); then it works
 
 				$pdf->Output($PathFileName, 'F');
 				$pdf-> __destruct();
@@ -95,8 +95,8 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				$mail->setText($Text);
 				$mail->setSubject($Subject);
 
-				$attachment = $mail->getFile($PathFileName);
-				$mail->addAttachment($attachment, $FileName, 'application/pdf');
+				$Attachment = $mail->getFile($PathFileName);
+				$mail->addAttachment($Attachment, $FileName, 'application/pdf');
 				
 				// set the from address depending on the company
 				if ($Company == 'PTBB'){

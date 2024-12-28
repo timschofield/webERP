@@ -56,15 +56,15 @@ if (isset($_POST['submit'])) {
 
 		// First check the user is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM bankaccountusers
 			     WHERE accountcode= '" .  $_POST['SelectedBankAccount'] . "'
 				 AND userid = '" .  $_POST['SelectedUser'] . "'";
 
-		$checkresult = DB_query($checkSql);
-		$checkrow = DB_fetch_row($checkresult);
+		$Checkresult = DB_query($CheckSQL);
+		$CheckRow = DB_fetch_row($Checkresult);
 
-		if ( $checkrow[0] >0) {
+		if ( $CheckRow[0] >0) {
 			$InputError = 1;
 			prnMsg( _('The user') . ' ' . $_POST['SelectedUser'] . ' ' ._('already authorised to use this bank account'),'error');
 		} else {
@@ -74,9 +74,9 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedBankAccount'] . "',
 												'" . $_POST['SelectedUser'] . "')";
 
-			$msg = _('User') . ': ' . $_POST['SelectedUser'].' '._('has been authorised to use') .' '. $_POST['SelectedBankAccount'] .  ' ' . _('bank account');
+			$Msg = _('User') . ': ' . $_POST['SelectedUser'].' '._('has been authorised to use') .' '. $_POST['SelectedBankAccount'] .  ' ' . _('bank account');
 			$Result = DB_query($SQL);
-			prnMsg($msg,'success');
+			prnMsg($Msg,'success');
 			unset($_POST['SelectedUser']);
 		}
 	}

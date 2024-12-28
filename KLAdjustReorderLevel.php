@@ -17,18 +17,18 @@ $begintime = time_start();
 LocationInformationReview($RootPath);
 
 // if testing only and do not want update the DB, set the flag to FALSE. For regular operations set to TRUE.
-//$updateDB = false;
-$updateDB = true;
+//$UpdateDB = false;
+$UpdateDB = true;
 $ShowMessages = true;
 $EmailText = '';
 
-KL_DailyRLAdjustmentsForOnline($ShowMessages, $updateDB, $RootPath, $EmailText);
-KL_DailyRLAdjustmentsForKL($ShowMessages, $updateDB, $RootPath, $EmailText);
-KL_DailyRLAdjustmentsForBlink($ShowMessages, $updateDB, $RootPath, $EmailText);
-KL_DailyRLAdjustmentsForOutlet($ShowMessages, $updateDB, $RootPath, $EmailText);
-KL_DailyRLRebalancing($ShowMessages, $updateDB, $RootPath, $EmailText);
-KL_DailyRLZeroNotAvailable($ShowMessages, $updateDB, $RootPath, $EmailText);
-KL_DailyRLAdjustmentsForPackaging($ShowMessages, $updateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForOnline($ShowMessages, $UpdateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForKL($ShowMessages, $UpdateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForBlink($ShowMessages, $UpdateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForOutlet($ShowMessages, $UpdateDB, $RootPath, $EmailText);
+KL_DailyRLRebalancing($ShowMessages, $UpdateDB, $RootPath, $EmailText);
+KL_DailyRLZeroNotAvailable($ShowMessages, $UpdateDB, $RootPath, $EmailText);
+KL_DailyRLAdjustmentsForPackaging($ShowMessages, $UpdateDB, $RootPath, $EmailText);
 
 prnMsg("Performed ". NUMBER_OF_TESTS . " RL adjustement strategies",'success');
 time_finish($begintime);

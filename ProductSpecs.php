@@ -50,7 +50,7 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 		include('includes/footer.php');
 		exit;
 	} else {
-		$sql = "INSERT IGNORE INTO prodspecs
+		$SQL = "INSERT IGNORE INTO prodspecs
 							(keyval,
 							testid,
 							defaultvalue,
@@ -72,11 +72,11 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 								showontestplan,
 								active
 					FROM prodspecs WHERE keyval='" .$KeyValue. "'";
-			$msg = _('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
+			$Msg = _('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
-			$result = DB_query($sql,$ErrMsg, $DbgMsg);
-			prnMsg($msg , 'success');
+			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+			prnMsg($Msg , 'success');
 		$KeyValue=$_POST['CopyTo'];
 		unset($_GET['CopySpec']);
 		unset($_POST['CopySpec']);
@@ -139,7 +139,7 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 	echo '<br/>' . _('Product Specification for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/><br/>';
 }
 if (isset($_GET['ListTests'])) {
-	$sql = "SELECT qatests.testid,
+	$SQL = "SELECT qatests.testid,
 				name,
 				method,
 				units,
@@ -153,7 +153,7 @@ if (isset($_GET['ListTests'])) {
 			WHERE qatests.active='1'
 			AND prodspecs.keyval IS NULL
 			ORDER BY name";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
@@ -173,20 +173,20 @@ if (isset($_GET['ListTests'])) {
 		<tbody>';
 
 	$x=0;
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
 	$x++;
 	$Class='';
 	$RangeMin='';
 	$RangeMax='';
-	if ($myrow['numericvalue'] == 1) {
+	if ($MyRow['numericvalue'] == 1) {
 		$IsNumeric = _('Yes');
 		$Class="number";
 	} else {
 		$IsNumeric = _('No');
 	}
 
-	switch ($myrow['type']) {
+	switch ($MyRow['type']) {
 	 	case 0; //textbox
 	 		$TypeDisp=_('Text Box');
 	 		break;
@@ -216,11 +216,11 @@ if (isset($_GET['ListTests'])) {
 			<td>%s</td>
 			<td>%s</td>
 			</tr>',
-			'<input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$myrow['testid']. '">',
-			$myrow['name'],
-			$myrow['method'],
-			$myrow['units'],
-			$myrow['defaultvalue'],
+			'<input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$MyRow['testid']. '">',
+			$MyRow['name'],
+			$MyRow['method'],
+			$MyRow['units'],
+			$MyRow['defaultvalue'],
 			'<input  class="' .$Class. '" type="text" name="AddTargetValue' .$x.'" />',
 			$RangeMin,
 			$RangeMax);
@@ -253,7 +253,7 @@ if (isset($_POST['AddTests'])) {
 				$AddRangeMax="'" . $_POST['AddRangeMax' .$i] . "'";
 			}
 
-			$sql = "INSERT INTO prodspecs
+			$SQL = "INSERT INTO prodspecs
 							(keyval,
 							testid,
 							defaultvalue,
@@ -275,12 +275,12 @@ if (isset($_POST['AddTests'])) {
 								showontestplan,
 								active
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
-			//echo $sql;
-			$msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
+			//echo $SQL;
+			$Msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
-			$result = DB_query($sql,$ErrMsg, $DbgMsg);
-			prnMsg($msg , 'success');
+			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
+			prnMsg($Msg , 'success');
 		} //if on
 	} //for
 } //AddTests
@@ -300,7 +300,7 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedQATest could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 
-		$sql = "UPDATE prodspecs SET defaultvalue='" . $_POST['DefaultValue'] . "',
+		$SQL = "UPDATE prodspecs SET defaultvalue='" . $_POST['DefaultValue'] . "',
 									targetvalue='" . $_POST['TargetValue'] . "',
 									rangemin=" . $RangeMin . ",
 									rangemax=" . $RangeMax . ",
@@ -311,12 +311,12 @@ if (isset($_POST['submit'])) {
 				WHERE prodspecs.keyval = '".$KeyValue."'
 				AND prodspecs.testid = '".$SelectedQATest."'";
 
-		$msg = _('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  _('has been updated');
+		$Msg = _('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  _('has been updated');
 		$ErrMsg = _('The update of the Product Specification failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
-		$result = DB_query($sql,$ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 
 		unset($SelectedQATest);
 		unset($_POST['DefaultValue']);
@@ -332,22 +332,22 @@ if (isset($_POST['submit'])) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS
 
-	$sql= "SELECT COUNT(*) FROM qasamples
+	$SQL= "SELECT COUNT(*) FROM qasamples
 			INNER JOIN sampleresults on sampleresults.sampleid=qasamples.sampleid AND sampleresults.testid='". $SelectedQATest."'
 			WHERE qasamples.prodspeckey='".$KeyValue."'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	if ($myrow[0]>0) {
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	if ($MyRow[0]>0) {
 		prnMsg(_('Cannot delete this Product Specification because there are test results tied to it'),'error');
 	} else {
-		$sql="DELETE FROM prodspecs WHERE keyval='". $KeyValue."'
+		$SQL="DELETE FROM prodspecs WHERE keyval='". $KeyValue."'
 									AND testid='". $SelectedQATest."'";
 		$ErrMsg = _('The Product Specification could not be deleted because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 		prnMsg(_('Product Specification') . ' ' . $SelectedQATest . ' for ' . ' ' . $KeyValue . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
-		unset($delete);
+		unset($Delete);
 		unset ($_GET['delete']);
 	}
 }
@@ -359,7 +359,7 @@ then none of the above are true and the list of QA Test will be displayed with
 links to delete or edit each. These will call the same page again and allow update/input
 or deletion of the records*/
 
-	$sql = "SELECT prodspecs.testid,
+	$SQL = "SELECT prodspecs.testid,
 				name,
 				method,
 				units,
@@ -377,7 +377,7 @@ or deletion of the records*/
 			ON qatests.testid=prodspecs.testid
 			WHERE prodspecs.keyval='" .$KeyValue."'
 			ORDER BY name";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<thead>
@@ -398,35 +398,35 @@ or deletion of the records*/
 		</thead>
 		<tbody>';
 
-	while ($myrow=DB_fetch_array($result)) {
+	while ($MyRow=DB_fetch_array($Result)) {
 
-	if ($myrow['active'] == 1) {
+	if ($MyRow['active'] == 1) {
 		$ActiveText = _('Yes');
 	} else {
 		$ActiveText = _('No');
 	}
-	if ($myrow['numericvalue'] == 1) {
+	if ($MyRow['numericvalue'] == 1) {
 		$IsNumeric = _('Yes');
 		$Class="number";
 	} else {
 		$IsNumeric = _('No');
 	}
-	if ($myrow['showoncert'] == 1) {
+	if ($MyRow['showoncert'] == 1) {
 		$ShowOnCertText = _('Yes');
 	} else {
 		$ShowOnCertText = _('No');
 	}
-	if ($myrow['showonspec'] == 1) {
+	if ($MyRow['showonspec'] == 1) {
 		$ShowOnSpecText = _('Yes');
 	} else {
 		$ShowOnSpecText = _('No');
 	}
-	if ($myrow['showontestplan'] == 1) {
+	if ($MyRow['showontestplan'] == 1) {
 		$ShowOnTestPlanText = _('Yes');
 	} else {
 		$ShowOnTestPlanText = _('No');
 	}
-	switch ($myrow['type']) {
+	switch ($MyRow['type']) {
 	 	case 0; //textbox
 	 		$TypeDisp='Text Box';
 	 		break;
@@ -461,23 +461,23 @@ or deletion of the records*/
 			<td><a href="%sSelectedQATest=%s&amp;KeyValue=%s">' .  _('Edit') . '</a></td>
 			<td><a href="%sSelectedQATest=%s&amp;KeyValue=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this Product Specification ?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow['name'],
-			$myrow['method'],
-			$myrow['units'],
+			$MyRow['name'],
+			$MyRow['method'],
+			$MyRow['units'],
 			$TypeDisp,
-			$myrow['defaultvalue'],
-			$myrow['targetvalue'],
-			$myrow['rangemin'],
-			$myrow['rangemax'],
+			$MyRow['defaultvalue'],
+			$MyRow['targetvalue'],
+			$MyRow['rangemin'],
+			$MyRow['rangemax'],
 			$ShowOnCertText,
 			$ShowOnSpecText,
 			$ShowOnTestPlanText,
 			$ActiveText,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['testid'],
+			$MyRow['testid'],
 			$KeyValue,
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow['testid'],
+			$MyRow['testid'],
 			$KeyValue);
 
 	} //END WHILE LIST LOOP
@@ -497,7 +497,7 @@ if (! isset($_GET['delete'])) {
 	if (isset($SelectedQATest)) {
 		//editing an existing Prod Spec
 
-		$sql = "SELECT prodspecs.testid,
+		$SQL = "SELECT prodspecs.testid,
 						name,
 						method,
 						units,
@@ -516,24 +516,24 @@ if (! isset($_GET['delete'])) {
 				WHERE prodspecs.keyval='".$KeyValue."'
 				AND prodspecs.testid='".$SelectedQATest."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['SelectedQATest'] = $myrow['testid'];
-		$_POST['QATestName'] = $myrow['name'];
-		$_POST['Method'] = $myrow['method'];
-		$_POST['GroupBy'] = $myrow['groupby'];
-		$_POST['Type'] = $myrow['type'];
-		$_POST['Units'] = $myrow['units'];
-		$_POST['DefaultValue'] = $myrow['defaultvalue'];
-		$_POST['NumericValue'] = $myrow['numericvalue'];
-		$_POST['TargetValue'] = $myrow['targetvalue'];
-		$_POST['RangeMin'] = $myrow['rangemin'];
-		$_POST['RangeMax'] = $myrow['rangemax'];
-		$_POST['ShowOnCert'] = $myrow['showoncert'];
-		$_POST['ShowOnSpec'] = $myrow['showonspec'];
-		$_POST['ShowOnTestPlan'] = $myrow['showontestplan'];
-		$_POST['Active'] = $myrow['active'];
+		$_POST['SelectedQATest'] = $MyRow['testid'];
+		$_POST['QATestName'] = $MyRow['name'];
+		$_POST['Method'] = $MyRow['method'];
+		$_POST['GroupBy'] = $MyRow['groupby'];
+		$_POST['Type'] = $MyRow['type'];
+		$_POST['Units'] = $MyRow['units'];
+		$_POST['DefaultValue'] = $MyRow['defaultvalue'];
+		$_POST['NumericValue'] = $MyRow['numericvalue'];
+		$_POST['TargetValue'] = $MyRow['targetvalue'];
+		$_POST['RangeMin'] = $MyRow['rangemin'];
+		$_POST['RangeMax'] = $MyRow['rangemax'];
+		$_POST['ShowOnCert'] = $MyRow['showoncert'];
+		$_POST['ShowOnSpec'] = $MyRow['showonspec'];
+		$_POST['ShowOnTestPlan'] = $MyRow['showontestplan'];
+		$_POST['Active'] = $MyRow['active'];
 
 
 		echo '<input type="hidden" name="SelectedQATest" value="' . $SelectedQATest . '" />';
@@ -554,11 +554,11 @@ if (! isset($_GET['delete'])) {
 		if (!isset($_POST['ShowOnSpec'])) {
 			$_POST['ShowOnSpec']=1;
 		}
-		if ($myrow['numericvalue'] == 1) {
+		if ($MyRow['numericvalue'] == 1) {
 			$IsNumeric = _('Yes');
 			$Class="number";
 		}
-		switch ($myrow['type']) {
+		switch ($MyRow['type']) {
 			case 0; //textbox
 				$TypeDisp='Text Box';
 				break;

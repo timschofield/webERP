@@ -31,10 +31,10 @@ if (isset($_POST['AddContractChgToInvoice'])){
 	if ($_POST['ContractRef'] == ''){
 		$_POST['ContractRef'] = $_POST['ContractSelection'];
 	} else{
-		$result = DB_query("SELECT contractref FROM contracts
+		$Result = DB_query("SELECT contractref FROM contracts
 							WHERE status=2
 							AND contractref='" . $_POST['ContractRef'] . "'");
-		if (DB_num_rows($result)==0){
+		if (DB_num_rows($Result)==0){
 			prnMsg(_('The contract reference entered does not exist as a customer ordered contract. This contract cannot be charged to'),'error');
 			$InputError =true;
 		} //end if the contract ref entered is not a valid contract
@@ -139,20 +139,20 @@ echo '<tr>
 		<td>' . _('Contract Selection') . ':<br />' . _('If you know the code enter it above') . '<br />' . _('otherwise select the contract from the list') . '</td>
 		<td><select name="ContractSelection">';
 
-$sql = "SELECT contractref, name
+$SQL = "SELECT contractref, name
 		FROM contracts INNER JOIN debtorsmaster
 		ON contracts.debtorno=debtorsmaster.debtorno
 		WHERE status=2"; //only show customer ordered contracts not quotes or contracts that are finished with
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['ContractSelection']) and $myrow['contractref']==$_POST['ContractSelection']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['ContractSelection']) and $MyRow['contractref']==$_POST['ContractSelection']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['contractref'] . '">' . $myrow['contractref'] . ' - ' . $myrow['name'] ;
+	echo $MyRow['contractref'] . '">' . $MyRow['contractref'] . ' - ' . $MyRow['name'] ;
 }
 
 echo '</select></td></tr>';

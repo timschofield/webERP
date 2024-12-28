@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 //		$i++;
 //	}
 
-	$msg='';
+	$Msg='';
 
 	if (!$InputError){
 		if (isset($SelectedIndex)) {
@@ -62,9 +62,9 @@ if (isset($_POST['submit'])) {
 							'".$_SESSION['UserID'] . "',
 							NOW())";
 
-				$msg = 'The maintenance task '. $SelectedIndex .' has been updated';
+				$Msg = 'The maintenance task '. $SelectedIndex .' has been updated';
 				$Result = DB_query($SQL);
-				prnMsg($msg,'success');
+				prnMsg($Msg,'success');
 			}else{
 				prnMsg("Trask description update was empty, so no update was recroded",'warn');
 			}
@@ -84,9 +84,9 @@ if (isset($_POST['submit'])) {
 						'".$_SESSION['UserID'] . "',
 						NOW())";
 
-			$msg = _('A new maintenance task has been created');
+			$Msg = _('A new maintenance task has been created');
 			$Result = DB_query($SQL);
-			prnMsg($msg,'success');
+			prnMsg($Msg,'success');
 			unset ($SelectedIndex);
 			unset ($_POST['LocCode']);
 		}
@@ -99,9 +99,9 @@ if (isset($_POST['submit'])) {
 					closeuser = '" . $_SESSION['UserID'] . "',
 					closedate = NOW() 
 			WHERE counterindex = '".$SelectedIndex."'";
-	$msg = 'The maintenance task '. $SelectedIndex .' has been closed';
+	$Msg = 'The maintenance task '. $SelectedIndex .' has been closed';
 	$Result = DB_query($SQL);
-	prnMsg($msg,'success');
+	prnMsg($Msg,'success');
 	
 	//end if status code used in customer or supplier accounts
 	unset ($_GET['close']);

@@ -32,13 +32,13 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
 
-	$target_dir =  $_SESSION['reports_dir'] . '/';
-	$target_file = $target_dir . basename($_FILES["SelectedFile"]["name"]);
-	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $target_file);
-	$inputFileType = PHPExcel_IOFactory::identify($target_file);
+	$Target_dir =  $_SESSION['reports_dir'] . '/';
+	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
+	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
+	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
+	$inputFileType = PHPExcel_IOFactory::identify($Target_file);
 	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-	$objPHPExcel = $objReader->load($target_file);
+	$objPHPExcel = $objReader->load($Target_file);
 	
 	//initialise no input errors
 	$InputError = FALSE;
@@ -117,57 +117,57 @@ function submit($DateOfFile, $SelectedFile, $SalaryType) {
 			<tbody>';
 		$i = 1;
 
-		for ($row = 2; $row <= $highestRow; ++ $row) {
+		for ($Row = 2; $Row <= $highestRow; ++ $Row) {
 			// first check if the row belongs to an active employee or not (old one so don't need to process)
-			$Active = $worksheet->getCell('A'.$row)->getCalculatedValue();
+			$Active = $worksheet->getCell('A'.$Row)->getCalculatedValue();
 			if ($Active === 'YES'){
 				// dump the employee info into variables
-				$CodeName = $worksheet->getCell('B'.$row)->getCalculatedValue();
-				$FullName = $worksheet->getCell('C'.$row)->getCalculatedValue();
-				$CompanyCode = $worksheet->getCell('D'.$row)->getCalculatedValue();
-				$JoiningDate = ConvertExcelDate($worksheet->getCell('BF'.$row));
-				$Position = $worksheet->getCell('E'.$row)->getCalculatedValue();
-				$Email = $worksheet->getCell('BH'.$row)->getCalculatedValue();
-				$PaymentMethod = strtoupper($worksheet->getCell('F'.$row)->getCalculatedValue());
+				$CodeName = $worksheet->getCell('B'.$Row)->getCalculatedValue();
+				$FullName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
+				$CompanyCode = $worksheet->getCell('D'.$Row)->getCalculatedValue();
+				$JoiningDate = ConvertExcelDate($worksheet->getCell('BF'.$Row));
+				$Position = $worksheet->getCell('E'.$Row)->getCalculatedValue();
+				$Email = $worksheet->getCell('BH'.$Row)->getCalculatedValue();
+				$PaymentMethod = strtoupper($worksheet->getCell('F'.$Row)->getCalculatedValue());
 				if ($PaymentMethod == "BANK"){
-					$BankCode = $worksheet->getCell('G'.$row)->getCalculatedValue();
-					$BankAccount = $worksheet->getCell('H'.$row)->getCalculatedValue();
-					$BankAccountHolder = $worksheet->getCell('I'.$row)->getCalculatedValue();
+					$BankCode = $worksheet->getCell('G'.$Row)->getCalculatedValue();
+					$BankAccount = $worksheet->getCell('H'.$Row)->getCalculatedValue();
+					$BankAccountHolder = $worksheet->getCell('I'.$Row)->getCalculatedValue();
 				}else{
 					$BankCode = "";
 					$BankAccount = "";
 					$BankAccountHolder = "";
 				}
-				$ZonePPH21 = $worksheet->getCell('J'.$row)->getCalculatedValue();
-				$SalaryFrom = ConvertExcelDate($worksheet->getCell('K'.$row));
-				$SalaryTo = ConvertExcelDate($worksheet->getCell('O'.$row));
-				$PaymentDate = $worksheet->getCell('BE'.$row)->getCalculatedValue();
+				$ZonePPH21 = $worksheet->getCell('J'.$Row)->getCalculatedValue();
+				$SalaryFrom = ConvertExcelDate($worksheet->getCell('K'.$Row));
+				$SalaryTo = ConvertExcelDate($worksheet->getCell('O'.$Row));
+				$PaymentDate = $worksheet->getCell('BE'.$Row)->getCalculatedValue();
 
-				$EmployeeWithTHR = $worksheet->getCell('BG'.$row)->getCalculatedValue();
-				$THR = $worksheet->getCell('AK'.$row)->getCalculatedValue();
-				$Bulatan = $worksheet->getCell('AW'.$row)->getCalculatedValue();
+				$EmployeeWithTHR = $worksheet->getCell('BG'.$Row)->getCalculatedValue();
+				$THR = $worksheet->getCell('AK'.$Row)->getCalculatedValue();
+				$Bulatan = $worksheet->getCell('AW'.$Row)->getCalculatedValue();
 
 				if ($SalaryType == "MONTHLY"){
-					$UpahPokok = $worksheet->getCell('S'.$row)->getCalculatedValue();
-					$TunjanganMakan = $worksheet->getCell('T'.$row)->getCalculatedValue();
-					$TunjanganTransport = $worksheet->getCell('U'.$row)->getCalculatedValue();
-					$TunjanganJabatan = $worksheet->getCell('V'.$row)->getCalculatedValue();
-					$TunjanganMasaKerja = $worksheet->getCell('Y'.$row)->getCalculatedValue();
-					$TunjanganKendaraan = $worksheet->getCell('Z'.$row)->getCalculatedValue();
-					$KomisiTetap = $worksheet->getCell('W'.$row)->getCalculatedValue();
-					$KomisiRetail = $worksheet->getCell('AA'.$row)->getCalculatedValue();
-					$KomisiSupport = $worksheet->getCell('AB'.$row)->getCalculatedValue();
-					$BonusPenjualan = $worksheet->getCell('AC'.$row)->getCalculatedValue();
-					$FixedLembur = $worksheet->getCell('AD'.$row)->getCalculatedValue();
-					$Lembur = $worksheet->getCell('AJ'.$row)->getCalculatedValue();
-					$PenerimaanLain2 = $worksheet->getCell('AL'.$row)->getCalculatedValue();
-					$PenerimaanLain2Notes = $worksheet->getCell('AM'.$row)->getCalculatedValue();
-					$PotonganJHT = NegativeNumber($worksheet->getCell('AO'.$row)->getCalculatedValue());
-					$PotonganASKES = NegativeNumber($worksheet->getCell('AP'.$row)->getCalculatedValue());
-					$PotonganPPH21 = NegativeNumber($worksheet->getCell('AQ'.$row)->getCalculatedValue());
-					$PotonganAbsen = NegativeNumber($worksheet->getCell('AR'.$row)->getCalculatedValue());
-					$PotonganLain2 = NegativeNumber($worksheet->getCell('AS'.$row)->getCalculatedValue());
-					$PotonganLain2Notes = $worksheet->getCell('AT'.$row)->getCalculatedValue();
+					$UpahPokok = $worksheet->getCell('S'.$Row)->getCalculatedValue();
+					$TunjanganMakan = $worksheet->getCell('T'.$Row)->getCalculatedValue();
+					$TunjanganTransport = $worksheet->getCell('U'.$Row)->getCalculatedValue();
+					$TunjanganJabatan = $worksheet->getCell('V'.$Row)->getCalculatedValue();
+					$TunjanganMasaKerja = $worksheet->getCell('Y'.$Row)->getCalculatedValue();
+					$TunjanganKendaraan = $worksheet->getCell('Z'.$Row)->getCalculatedValue();
+					$KomisiTetap = $worksheet->getCell('W'.$Row)->getCalculatedValue();
+					$KomisiRetail = $worksheet->getCell('AA'.$Row)->getCalculatedValue();
+					$KomisiSupport = $worksheet->getCell('AB'.$Row)->getCalculatedValue();
+					$BonusPenjualan = $worksheet->getCell('AC'.$Row)->getCalculatedValue();
+					$FixedLembur = $worksheet->getCell('AD'.$Row)->getCalculatedValue();
+					$Lembur = $worksheet->getCell('AJ'.$Row)->getCalculatedValue();
+					$PenerimaanLain2 = $worksheet->getCell('AL'.$Row)->getCalculatedValue();
+					$PenerimaanLain2Notes = $worksheet->getCell('AM'.$Row)->getCalculatedValue();
+					$PotonganJHT = NegativeNumber($worksheet->getCell('AO'.$Row)->getCalculatedValue());
+					$PotonganASKES = NegativeNumber($worksheet->getCell('AP'.$Row)->getCalculatedValue());
+					$PotonganPPH21 = NegativeNumber($worksheet->getCell('AQ'.$Row)->getCalculatedValue());
+					$PotonganAbsen = NegativeNumber($worksheet->getCell('AR'.$Row)->getCalculatedValue());
+					$PotonganLain2 = NegativeNumber($worksheet->getCell('AS'.$Row)->getCalculatedValue());
+					$PotonganLain2Notes = $worksheet->getCell('AT'.$Row)->getCalculatedValue();
 				}else{
 					$UpahPokok = 0;
 					$TunjanganMakan = 0;

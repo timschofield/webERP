@@ -2,7 +2,7 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
 
 require_once ('Classes/PHPExcel.php');
 
@@ -38,7 +38,7 @@ function submit($FromDate, $ToDate) {
 
 	$SQLSettings =  "SELECT klretailpartners.accountcomissioncreditcard
 					 FROM klretailpartners
-					 WHERE klretailpartners.partnercode = 'PTBB'";
+					 WHERE klretailpartners.partnercode = 'PTADU'";
 	$ResultSettings = DB_query($SQLSettings);
 	if (DB_num_rows($ResultSettings)==0) {
 		$InputError = 1;
@@ -47,8 +47,9 @@ function submit($FromDate, $ToDate) {
 		$MyRowSettings = DB_fetch_array($ResultSettings); //get the only row returned
 	}
 
-	if ($InputError == 0){
 
+
+	if ($InputError == 0){
 		// Create new PHPExcel object
 		$objPHPExcel = new PHPExcel();
 
@@ -71,36 +72,35 @@ function submit($FromDate, $ToDate) {
 		$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Description');
 
 
+		// Regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
 		$WhereFrom 	= " AND trandate >= '". FormatDateForSQL($FromDate) ."'";
 		$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
-
-		$i = 2;
-		$ErrMsg = _('The SQL to find the KL GL Transactions ');
+		$OrderBy		= " ORDER BY accountgroups.groupname ASC, gltrans.account ASC, gltrans.trandate ASC";
 		
-		// Regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
 		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
-					chartmasterBB.accountname AS 'AccountName', 
+					chartmasterADU.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
 					ROUND(gltrans.amount,0) AS 'Amount', 
 					gltrans.narrative AS 'Description'
 				FROM gltrans, 
-					chartmasterBB, 
+					chartmasterADU, 
 					accountgroups
-				WHERE gltrans.account = chartmasterBB.accountcode
-					AND chartmasterBB.group_ = accountgroups.groupname
-					AND (accountgroups.pandl = 1)
+				WHERE gltrans.account = chartmasterADU.accountcode
+					AND chartmasterADU.group_ = accountgroups.groupname
 					AND accountgroups.groupname NOT IN ('Penjualan', 'HPP (COGS)') 
-					AND gltrans.account != '" . $MyRowSettings['accountcomissioncreditcard'] . "' ".
+					AND (accountgroups.pandl = 1)".
 					$WhereFrom .
-					$WhereTo . " 
-				ORDER BY accountgroups.groupname ASC, 
-					gltrans.account ASC, 
-					gltrans.trandate ASC ";
-					
+					$WhereTo .
+					$OrderBy
+				;
+		
+		$ErrMsg = _('The SQL to find the PTADU GL Transactions ');
 		$Result = DB_query($SQL,$ErrMsg);
 		if (DB_num_rows($Result) != 0){
-			// Add data
+
+				// Add data
+			$i = 2;
 			while ($MyRow = DB_fetch_array($Result)) {
 				$objPHPExcel->setActiveSheetIndex(0);
 				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
@@ -113,21 +113,73 @@ function submit($FromDate, $ToDate) {
 			}
 		}
 
+		// NOW it is time for HPP (COGS) and PENJUALAN)
+		$GroupPenjualan = 'Penjualan';
+		$AccountCodePenjualan = '410010000AD';
+		$AccountNamePenjualan = 'Penjualan';
+		$GroupCOGS = 'HPP (COGS)';
+		$AccountCodeCOGS = '510010000AD';
+		$AccountNameCOGS = 'HPP (COGS)';
+	
+		
+		$SQL = "SELECT klconsignment.partnercode,
+					klconsignment.invoicedtopartner AS 'Date', 
+					SUM(klconsignment.qty * klconsignment.consignmentprice) AS 'Penjualan', 
+					SUM(klconsignment.qty * klconsignment.standardcost) AS 'COGS'
+				FROM klconsignment
+				WHERE klconsignment.companycode = 'PTADU' 
+					AND invoicedtopartner >= '". FormatDateForSQL($FromDate) ."'
+					AND invoicedtopartner <= '". FormatDateForSQL($ToDate) ."'
+				GROUP BY klconsignment.partnercode, klconsignment.invoicedtopartner
+				ORDER BY klconsignment.partnercode, klconsignment.invoicedtopartner";
+		
+		$ErrMsg = _('The SQL to find the PTADU GL Penjualan and COGS ');
+		$Result = DB_query($SQL,$ErrMsg);
+		if (DB_num_rows($Result) != 0){
+			
+
+				// Add data
+			while ($MyRow = DB_fetch_array($Result)) {
+
+				$InvoiceNumber = CreateConsignmentInvoiceNumber('PTADU', $MyRow['partnercode'], $MyRow['Date']);
+
+				$objPHPExcel->setActiveSheetIndex(0);
+				// write the penjualan
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $GroupPenjualan);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $AccountCodePenjualan);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $AccountNamePenjualan);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Penjualan'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $InvoiceNumber);
+				$i++;
+				// write the COGS
+				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $GroupCOGS);
+				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $AccountCodeCOGS);
+				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $AccountNameCOGS);
+				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($MyRow['COGS'],0));
+				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $InvoiceNumber);
+				$i++;
+			}
+		}
+
 		// Exception GL accounts grouped (HPP (COGS) OR PENJUALAN))
 		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
-					chartmasterBB.accountname AS 'AccountName', 
+					chartmasterADU.accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
 					SUM(ROUND(gltrans.amount,0)) AS 'Amount', 
 					gltrans.narrative AS 'Description'
 				FROM gltrans, 
-					chartmasterBB, 
+					chartmasterADU, 
 					accountgroups
-				WHERE gltrans.account = chartmasterBB.accountcode
-					AND chartmasterBB.group_ = accountgroups.groupname
+				WHERE gltrans.account = chartmasterADU.accountcode
+					AND chartmasterADU.group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
 					AND ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
-						OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "') ".
+						OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "') 
+					AND gltrans.account != '".$AccountCodePenjualan."'
+					AND gltrans.account != '".$AccountCodeCOGS."'".
 					$WhereFrom .
 					$WhereTo . " 
 				GROUP BY accountgroups.groupname,
@@ -152,12 +204,20 @@ function submit($FromDate, $ToDate) {
 			}
 		}
 
+
+
+
+
+
+
+
+
 		// Freeze panes
 		$objPHPExcel->getActiveSheet()->freezePane('A2');
 	
 		// Auto Size columns
-		foreach(range('A','F') as $columnID) {
-			$objPHPExcel->getActiveSheet()->getColumnDimension($columnID)
+		foreach(range('A','F') as $ColumnID) {
+			$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
 				->setAutoSize(true);
 		}
 		
@@ -169,7 +229,7 @@ function submit($FromDate, $ToDate) {
 
 		// Redirect output to a client’s web browser (Excel2007)
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		$File = 'PTBumiBiru-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+		$File = 'PT ADU-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');
 		// If you're serving to IE 9, then the following may be needed
@@ -200,7 +260,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('GL Transactions for PT. Bumi Biru (Excel File)') . '" alt="" />' . ' ' . _('GL Transactions for PT. Bumi Biru (Excel File)') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('GL Transactions for PT. Angin Dingin Utara (Excel File)') . '" alt="" />' . ' ' . _('GL Transactions for PT. Angin Dingin Utara (Excel File)') . '
 		</p>';
 
 	echo '<table>';

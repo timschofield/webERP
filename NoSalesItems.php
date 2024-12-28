@@ -19,18 +19,18 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			 <td>:</td>
 			 <td><select name="Location[]" multiple="multiple">
 				<option value="All" selected="selected">' . _('All') . '</option>';;
-	$sql = "SELECT 	locations.loccode,locationname
+	$SQL = "SELECT 	locations.loccode,locationname
 			FROM 	locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
-	$locationresult = DB_query($sql);
+	$LocationResult = DB_query($SQL);
 	$i=0;
-	while ($myrow = DB_fetch_array($locationresult)) {
-		if(isset($_POST['Location'][$i]) AND $myrow['loccode'] == $_POST['Location'][$i]){
-		echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow = DB_fetch_array($LocationResult)) {
+		if(isset($_POST['Location'][$i]) AND $MyRow['loccode'] == $_POST['Location'][$i]){
+		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		$i++;
 		} else {
-			echo '<option value="' . $myrow['loccode'] . '">'  . $myrow['locationname']  . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">'  . $MyRow['locationname']  . '</option>';
 		}
 	}
 	echo '</select></td>
@@ -42,13 +42,13 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			<td>:</td>
 			<td><select name="Customers">';
 
-	$sql = "SELECT typename,
+	$SQL = "SELECT typename,
 					typeid
 				FROM debtortype";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 	echo '<option value="All">' . _('All') . '</option>';
-	while ($myrow = DB_fetch_array($result)) {
-		echo '<option value="' . $myrow['typeid'] . '">' . $myrow['typename'] . '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
 	}
 	echo '</select></td>
 		</tr>';
@@ -57,7 +57,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	$SQL="SELECT categoryid,categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 	echo '<tr>
 			<td width="150">' . _('In Stock Category') . ' </td>
 			<td>:</td>
@@ -70,11 +70,11 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 	} else {
 		echo '<option value="All">' . _('All') . '</option>';
 	}
-	while ($myrow1 = DB_fetch_array($result1)) {
-		if ($myrow1['categoryid']==$_POST['StockCat']){
-			echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if ($MyRow1['categoryid']==$_POST['StockCat']){
+			echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		} else {
-			echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
 
@@ -138,8 +138,8 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 		} else {
 			$WhereLocation = " AND locstock.loccode IN(";
 			$commactr = 0;
-			foreach ($_POST['Location'] as $key => $value) {
-				$WhereLocation .= "'" . $value . "'";
+			foreach ($_POST['Location'] as $key => $Value) {
+				$WhereLocation .= "'" . $Value . "'";
 				$commactr++;
 				if ($commactr < sizeof($_POST['Location'])) {
 					$WhereLocation .= ",";
@@ -181,7 +181,7 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 										AND stockmoves.qty >0)
 				ORDER BY stockmaster.stockid";
 	}
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	echo '<p class="page_title_text"><strong>' . _('No Sales Items') . '</strong></p>';
 	echo '<form action="PDFNoSalesItems.php"  method="GET">
 		<table class="selection">';
@@ -201,16 +201,16 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 			<input type="hidden" value="' . $_POST['Customers'] . '" name="Customers" />';
 
 	$i = 1;
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		$QOHResult = DB_query("SELECT sum(quantity)
 				FROM locstock
 				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE stockid = '" . $myrow['stockid'] . "'" .
+				WHERE stockid = '" . $MyRow['stockid'] . "'" .
 				$WhereLocation);
 		$QOHRow = DB_fetch_row($QOHResult);
 		$QOH = $QOHRow[0];
 
-		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '">' . $myrow['stockid'] . '</a>';
+		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 		if ($_POST['Location'][0] == 'All') {
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
@@ -224,10 +224,10 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 					$i,
 					'All',
 					$CodeLink,
-					$myrow['description'],
+					$MyRow['description'],
 					$QOH, //on hand on ALL locations
 					$QOH, // total on hand
-					$myrow['units'] //unit
+					$MyRow['units'] //unit
 					);
 		}else{
 			printf('<tr class="striped_row">
@@ -240,12 +240,12 @@ echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '
 					<td>%s</td>
 					</tr>',
 					$i,
-					$myrow['locationname'],
+					$MyRow['locationname'],
 					$CodeLink,
-					$myrow['description'],
-					$myrow['quantity'], //on hand on location selected only
+					$MyRow['description'],
+					$MyRow['quantity'], //on hand on location selected only
 					$QOH, // total on hand
-					$myrow['units'] //unit
+					$MyRow['units'] //unit
 					);
 		}
 		$i++;

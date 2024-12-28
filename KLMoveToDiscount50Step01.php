@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 					endprocessdate='0000-00-00'
 				WHERE countermovediscount = '".$SelectedMovement."'";
 
-		$msg = _('Move Item To 50% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
+		$Msg = _('Move Item To 50% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
 		$SQL = "INSERT INTO klmovetodiscount50 
@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 					CURRENT_DATE,
 					'50',
 					'0000-00-00')";
-		$msg = _('Move Item To 50% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
+		$Msg = _('Move Item To 50% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
@@ -126,7 +126,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('The insert or update of the Move Item To 50% Discount Step 01 failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 
 		SetRLZeroAtPointOfSales($_POST['Stockid']);
 		SetMoveDiscount50Flag(1,$_POST['Stockid']);
@@ -168,7 +168,7 @@ if (isset($_POST['submit'])) {
 	prnMsg(_('Move Item To 50% Discount Step 01') . ' ' . $SelectedMovement . ' ' . _('has been deleted from the database'),'success');
 
 	unset($SelectedMovement);
-	unset($delete);
+	unset($Delete);
 
 }
 

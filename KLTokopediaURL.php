@@ -33,13 +33,13 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
 
-	$target_dir =  $_SESSION['reports_dir'] . '/';
-	$target_file = $target_dir . basename($_FILES["SelectedFile"]["name"]);
-	$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $target_file);
-	$inputFileType = PHPExcel_IOFactory::identify($target_file);
+	$Target_dir =  $_SESSION['reports_dir'] . '/';
+	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
+	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
+	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
+	$inputFileType = PHPExcel_IOFactory::identify($Target_file);
 	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
-	$objPHPExcel = $objReader->load($target_file);
+	$objPHPExcel = $objReader->load($Target_file);
 	
 	//initialise no input errors
 	$InputError = FALSE;
@@ -72,13 +72,13 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				<tbody>';
 		$i = 1;
 
-		for ($row = 4; $row <= $highestRow; ++ $row) {
+		for ($Row = 4; $Row <= $highestRow; ++ $Row) {
 			// get the data for a product
 			$Error = "";
-			$TokopediaProductId = $worksheet->getCell('B'.$row)->getCalculatedValue();
-			$StockId = $worksheet->getCell('K'.$row)->getCalculatedValue();
-			$TokopediaProductName = $worksheet->getCell('C'.$row)->getCalculatedValue();
-			$URLTokopedia = $worksheet->getCell('D'.$row)->getCalculatedValue();
+			$TokopediaProductId = $worksheet->getCell('B'.$Row)->getCalculatedValue();
+			$StockId = $worksheet->getCell('K'.$Row)->getCalculatedValue();
+			$TokopediaProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
+			$URLTokopedia = $worksheet->getCell('D'.$Row)->getCalculatedValue();
 			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . _('Tokopedia') . '</a></li>';
 				
 			// Check if we have enough QOH to set it as enabled in Tokopedia

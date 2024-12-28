@@ -43,7 +43,7 @@
 /* ******************************************************************** */
 $bar_color=Array(0,0,0);
 $bg_color=Array(255,255,255);
-$text_color=Array(0,0,0);
+$Text_color=Array(0,0,0);
 
 
 /* ******************************************************************** */
@@ -88,12 +88,12 @@ $text_color=Array(0,0,0);
  */
 
 
-function barcode_outimage($text, $bars, $scale = 1, $mode = "png",
-	    $total_y = 0, $space = ''){
-    global $bar_color, $bg_color, $text_color;    /* set defaults */
+function barcode_outimage($Text, $bars, $scale = 1, $mode = "png",
+	    $Total_y = 0, $space = ''){
+    global $bar_color, $bg_color, $Text_color;    /* set defaults */
     if ($scale<1) $scale=2;
-    $total_y=(int)($total_y);
-    if ($total_y<1) $total_y=(int)$scale * 60;
+    $Total_y=(int)($Total_y);
+    if ($Total_y<1) $Total_y=(int)$scale * 60;
     if (!$space)
       $space=array('top'=>2*$scale,'bottom'=>2*$scale,'left'=>2*$scale,'right'=>2*$scale);
     
@@ -116,7 +116,7 @@ function barcode_outimage($text, $bars, $scale = 1, $mode = "png",
     }
 
     /* allocate the image */
-    $total_x=( $xpos )+$space['right']+$space['right'];
+    $Total_x=( $xpos )+$space['right']+$space['right'];
     $xpos=$space['left'];
     if (!function_exists("imagecreate")){
 	print "You don't have the gd2 extension enabled<BR>\n";
@@ -139,13 +139,13 @@ function barcode_outimage($text, $bars, $scale = 1, $mode = "png",
 	print "<A HREF=\"http://www.ashberg.de/php-barcode/\">Folke Ashberg's OpenSource PHP-Barcode</A><BR>\n";
 	return "";
     }
-    $im=imagecreate($total_x, $total_y);
+    $im=imagecreate($Total_x, $Total_y);
     /* create two images */
     $col_bg=ImageColorAllocate($im,$bg_color[0],$bg_color[1],$bg_color[2]);
     $col_bar=ImageColorAllocate($im,$bar_color[0],$bar_color[1],$bar_color[2]);
-    $col_text=ImageColorAllocate($im,$text_color[0],$text_color[1],$text_color[2]);
-    $height=round($total_y-($scale*10));
-    $height2=round($total_y-$space['bottom']);
+    $col_text=ImageColorAllocate($im,$Text_color[0],$Text_color[1],$Text_color[2]);
+    $height=round($Total_y-($scale*10));
+    $height2=round($Total_y-$space['bottom']);
 
 
     /* paint the bars */
@@ -194,7 +194,7 @@ function barcode_outimage($text, $bars, $scale = 1, $mode = "png",
  *    bars   : where to place the bars  (<space-width><bar-width><space-width><bar-width>...)
  */
 
-function barcode_outtext($code,$bars){
+function barcode_outtext($Code,$bars){
     $width=true;
     $xpos=$heigh2=0;
     $bar_line="";
@@ -238,18 +238,18 @@ function barcode_outtext($code,$bars){
 
 
 
-function barcode_outhtml($code, $bars, $scale = 1, $total_y = 0, $space = ''){
+function barcode_outhtml($Code, $bars, $scale = 1, $Total_y = 0, $space = ''){
     /* set defaults */
-    $total_y=(int)($total_y);
+    $Total_y=(int)($Total_y);
     if ($scale<1) $scale=2;
-    if ($total_y<1) $total_y=(int)$scale * 60;
+    if ($Total_y<1) $Total_y=(int)$scale * 60;
     if (!$space)
       $space=array('top'=>2*$scale,'bottom'=>2*$scale,'left'=>2*$scale,'right'=>2*$scale);
 
 
     /* generate html-code */
-    $height=round($total_y-($scale*10));
-    $height2=round($total_y)-$space['bottom'];
+    $height=round($Total_y-($scale*10));
+    $height2=round($Total_y)-$space['bottom'];
     $out=
       '<table border=0 cellspacing=0 cellpadding=0 bgcolor="white">'."\n".
       '<tr><td><img src="white.png" height="'.$space['top'].'" width="1" alt=" "></td></tr>'."\n".
@@ -261,7 +261,7 @@ function barcode_outhtml($code, $bars, $scale = 1, $total_y = 0, $space = ''){
 	$val=strtolower($bars[$i]);
 	if ($width){
 	    $w=$val*$scale;
-	    if ($w>0) $out.='<img src="white.png" height="'.$total_y.'" width="'.$w.'" align="top" alt="" />';
+	    if ($w>0) $out.='<img src="white.png" height="'.$Total_y.'" width="'.$w.'" align="top" alt="" />';
 	    $width=false;
 	    continue;
 	}
@@ -279,41 +279,41 @@ function barcode_outhtml($code, $bars, $scale = 1, $total_y = 0, $space = ''){
       '</td></tr>'."\n".
       '<tr><td><img src="white.png" height="'.$space['bottom'].'" width="1"></td></tr>'."\n".
       '</table>'."\n";
-    //for ($i=0;$i<strlen($bars);$i+=2) print $line[$i]."<B>".$line[$i+1]."</B>&nbsp;";
+    //for ($i=0;$i<strlen($bars);$i+=2) print $Line[$i]."<B>".$Line[$i+1]."</B>&nbsp;";
     return $out;
 }
 
 
 /* barcode_encode_genbarcode(code, encoding)
- *   encodes $code with $encoding using genbarcode
+ *   encodes $Code with $encoding using genbarcode
  *
  *   return:
  *    array[encoding] : the encoding which has been used
  *    array[bars]     : the bars
  *    array[text]     : text-positioning info
  */
-function barcode_encode_genbarcode($code,$encoding){
+function barcode_encode_genbarcode($Code,$encoding){
     global $genbarcode_loc;
     /* delete EAN-13 checksum */
-    if (preg_match("#^ean$#i", $encoding) && strlen($code)==13) $code=substr($code,0,12);
+    if (preg_match("#^ean$#i", $encoding) && strlen($Code)==13) $Code=substr($Code,0,12);
     if (!$encoding) $encoding="ANY";
     $encoding=preg_replace("#[|\\\\]#", "_", $encoding);
-    $code=preg_replace("#[|\\\\]#", "_", $code);
+    $Code=preg_replace("#[|\\\\]#", "_", $Code);
     $cmd=$genbarcode_loc." "
-	.escapeshellarg($code)." "
+	.escapeshellarg($Code)." "
 	.escapeshellarg(strtoupper($encoding))."";
     //print "'$cmd'<BR>\n";
     $fp=popen($cmd, "r");
     if ($fp){
 	$bars=fgets($fp, 1024);
-	$text=fgets($fp, 1024);
+	$Text=fgets($fp, 1024);
 	$encoding=fgets($fp, 1024);
 	pclose($fp);
     } else return false;
     $ret=array(
 		"encoding" => trim($encoding),
 		"bars" => trim($bars),
-		"text" => trim($text)
+		"text" => trim($Text)
 	      );
     if (!$ret['encoding']) return false;
     if (!$ret['bars']) return false;
@@ -322,7 +322,7 @@ function barcode_encode_genbarcode($code,$encoding){
 }
 
 /* barcode_encode(code, encoding)
- *   encodes $code with $encoding using genbarcode OR built-in encoder
+ *   encodes $Code with $encoding using genbarcode OR built-in encoder
  *   if you don't have genbarcode only EAN-13/ISBN is possible
  *
  * You can use the following encodings (when you have genbarcode):
@@ -345,26 +345,26 @@ function barcode_encode_genbarcode($code,$encoding){
  *    array[bars]     : the bars
  *    array[text]     : text-positioning info
  */
-function barcode_encode($code,$encoding){
+function barcode_encode($Code,$encoding){
     global $genbarcode_loc;
     if (
 		((preg_match("#^ean$#i", $encoding)
-		 && ( strlen($code)==12 || strlen($code)==13)))
+		 && ( strlen($Code)==12 || strlen($Code)==13)))
 		 
 		|| (($encoding) && (preg_match("#^isbn$#i", $encoding))
-		 && (( strlen($code)==9 || strlen($code)==10) ||
-		 (((preg_match("#^978#", $code) && strlen($code)==12) ||
-		  (strlen($code)==13)))))
+		 && (( strlen($Code)==9 || strlen($Code)==10) ||
+		 (((preg_match("#^978#", $Code) && strlen($Code)==12) ||
+		  (strlen($Code)==13)))))
 
 		|| (( !isset($encoding) || !$encoding || (preg_match("#^ANY$#i", $encoding) ))
-		 && (preg_match("#^[0-9]{12,13}$#", $code)))
+		 && (preg_match("#^[0-9]{12,13}$#", $Code)))
 	      
 		){
 	/* use built-in EAN-Encoder */
-	$bars=barcode_encode_ean($code, $encoding);
+	$bars=barcode_encode_ean($Code, $encoding);
     } else if (file_exists($genbarcode_loc)){
 	/* use genbarcode */
-	$bars=barcode_encode_genbarcode($code, $encoding);
+	$bars=barcode_encode_genbarcode($Code, $encoding);
     } else {
 	print "php-barcode needs an external programm for encodings other then EAN/ISBN<BR>\n";
 	print "<ul>\n";
@@ -392,8 +392,8 @@ function barcode_encode($code,$encoding){
  */
 
 
-function barcode_print($code, $encoding="ANY", $scale = 2 ,$mode = "png" ){
-    $bars=barcode_encode($code,$encoding);
+function barcode_print($Code, $encoding="ANY", $scale = 2 ,$mode = "png" ){
+    $bars=barcode_encode($Code,$encoding);
     if (!$bars) return;
     if (!$mode) $mode="png";
     if (preg_match("#^(text|txt|plain)$#i", $mode)) print barcode_outtext($bars['text'],$bars['bars']);
@@ -465,20 +465,20 @@ function barcode_encode_ean($ean, $encoding = "EAN-13"){
     $ean=substr($ean,0,12);
     $eansum=barcode_gen_ean_sum($ean);
     $ean.=$eansum;
-    $line=$guards[0];
+    $Line=$guards[0];
     for ($i=1;$i<13;$i++){
 	$str=$digits[$ean[$i]];
-	if ($i<7 && $mirror[$ean[0]][$i-1]==1) $line.=strrev($str); else $line.=$str;
-	if ($i==6) $line.=$guards[1];
+	if ($i<7 && $mirror[$ean[0]][$i-1]==1) $Line.=strrev($str); else $Line.=$str;
+	if ($i==6) $Line.=$guards[1];
     }
-    $line.=$guards[2];
+    $Line.=$guards[2];
 
     /* create text */
     $pos=0;
-    $text="";
+    $Text="";
     for ($a=0;$a<13;$a++){
-	if ($a>0) $text.=" ";
-	$text.="$pos:12:{$ean[$a]}";
+	if ($a>0) $Text.=" ";
+	$Text.="$pos:12:{$ean[$a]}";
 	if ($a==0) $pos+=12;
 	else if ($a==6) $pos+=12;
 	else $pos+=7;
@@ -486,8 +486,8 @@ function barcode_encode_ean($ean, $encoding = "EAN-13"){
 
     return array(
 		"encoding" => $encoding,
-		"bars" => $line,
-		"text" => $text
+		"bars" => $Line,
+		"text" => $Text
 		);
 }
 ?>

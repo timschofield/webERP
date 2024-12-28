@@ -240,7 +240,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				}else{
 					$AccountPPH21 = ACCOUNT_HUTANG_PPH21_PTBB;
 				}
-				$sqlHutangPPH21="INSERT INTO `gltrans` (`counterindex`,
+				$SQLHutangPPH21="INSERT INTO `gltrans` (`counterindex`,
 												`type`,
 												`typeno`,
 												`chequeno`,
@@ -264,7 +264,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												0,
 												'',
 												'" . $TagTo ."')";
-				$ResultHutangPPH21 = DB_Query($sqlHutangPPH21,'', '', true);
+				$ResultHutangPPH21 = DB_Query($SQLHutangPPH21,'', '', true);
 			}
 			
 			// if there's a PPH23 retention, we account for it
@@ -277,7 +277,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				}else{
 					$AccountPPH23 = ACCOUNT_HUTANG_PPH23_PTBB;
 				}
-				$sqlHutangPPH23="INSERT INTO `gltrans` (`counterindex`,
+				$SQLHutangPPH23="INSERT INTO `gltrans` (`counterindex`,
 												`type`,
 												`typeno`,
 												`chequeno`,
@@ -301,7 +301,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												0,
 												'',
 												'" . $TagTo ."')";
-				$ResultHutangPPH23 = DB_Query($sqlHutangPPH23,'', '', true);
+				$ResultHutangPPH23 = DB_Query($SQLHutangPPH23,'', '', true);
 			}
 			// KL RICARD END
 

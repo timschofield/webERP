@@ -145,9 +145,9 @@ echo '<table cellpadding="2" class="selection">
 				FROM stockmaster WHERE stockid IN ('".$AdditionalStocks."')";
 		$RequirementsResult = DB_query($RequirementsSQL);
 			$AdditionalStocks = array();
-			while($myrow = DB_fetch_array($RequirementsResult)){
-				$AdditionalStocks[$myrow['stockid']]['description'] = $myrow['description'];
-				$AdditionalStocks[$myrow['stockid']]['decimalplaces'] = $myrow['decimalplaces'];
+			while($MyRow = DB_fetch_array($RequirementsResult)){
+				$AdditionalStocks[$MyRow['stockid']]['description'] = $MyRow['description'];
+				$AdditionalStocks[$MyRow['stockid']]['decimalplaces'] = $MyRow['decimalplaces'];
 			}
 			foreach ($IssuedAlreadyRow as $StockID=>$Issued) {
 			echo '<tr>

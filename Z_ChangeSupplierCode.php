@@ -35,8 +35,8 @@ include('includes/footer.php');
 exit();
 
 
-function ProcessSupplier($oldCode, $newCode) {
-	$table_key= array (
+function ProcessSupplier($OldCode, $NewCode) {
+	$Table_key= array (
 		'grns' => 'supplierid',
 		'offers'=>'supplierid',
 		'purchdata'=>'supplierno',
@@ -47,72 +47,72 @@ function ProcessSupplier($oldCode, $newCode) {
 		'www_users'=>'supplierid');
 
 	// First check the Supplier code exists
-	if (!checkSupplierExist($oldCode)) {
-		prnMsg ('<br /><br />' . _('The Supplier code') . ': ' . $oldCode . ' ' .
+	if (!checkSupplierExist($OldCode)) {
+		prnMsg ('<br /><br />' . _('The Supplier code') . ': ' . $OldCode . ' ' .
 				_('does not currently exist as a supplier code in the system'),'error');
 		return;
 	}
-	$newCode = trim($newCode);
-	if (checkNewCode($newCode)) {
+	$NewCode = trim($NewCode);
+	if (checkNewCode($NewCode)) {
 		// Now check that the new code doesn't already exist
-		if (checkSupplierExist($newCode)) {
+		if (checkSupplierExist($NewCode)) {
 				prnMsg(_('The replacement supplier code') .': ' .
-						$newCode . ' ' . _('already exists as a supplier code in the system') . ' - ' . _('a unique supplier code must be entered for the new code'),'error');
+						$NewCode . ' ' . _('already exists as a supplier code in the system') . ' - ' . _('a unique supplier code must be entered for the new code'),'error');
 				return;
 		}
 	} else {
 		return;
 	}
 
-	$result = DB_Txn_Begin();
+	$Result = DB_Txn_Begin();
 
 	prnMsg(_('Inserting the new supplier record'),'info');
-	$sql = "INSERT INTO suppliers (`supplierid`,
+	$SQL = "INSERT INTO suppliers (`supplierid`,
 		`suppname`,  `address1`, `address2`, `address3`,
 		`address4`,  `address5`,  `address6`, `supptype`, `lat`, `lng`,
 		`currcode`,  `suppliersince`, `paymentterms`, `lastpaid`,
 		`lastpaiddate`, `bankact`, `bankref`, `bankpartics`,
 		`remittance`, `taxgroupid`, `factorcompanyid`, `taxref`,
 		`phn`, `port`, `email`, `fax`, `telephone`)
-	SELECT '" . $newCode . "',
+	SELECT '" . $NewCode . "',
 		`suppname`,  `address1`, `address2`, `address3`,
 		`address4`,  `address5`,  `address6`, `supptype`, `lat`, `lng`,
 		`currcode`,  `suppliersince`, `paymentterms`, `lastpaid`,
 		`lastpaiddate`, `bankact`, `bankref`, `bankpartics`,
 		`remittance`, `taxgroupid`, `factorcompanyid`, `taxref`,
 		`phn`, `port`, `email`, `fax`, `telephone`
-		FROM suppliers WHERE supplierid='" . $oldCode . "'";
+		FROM suppliers WHERE supplierid='" . $OldCode . "'";
 
 	$DbgMsg =_('The SQL that failed was');
 	$ErrMsg = _('The SQL to insert the new suppliers master record failed') . ', ' . _('the SQL statement was');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	foreach ($table_key as $table=>$key) {
-		prnMsg(_('Changing').' '. $table.' ' . _('records'),'info');
-		$sql = "UPDATE " . $table . " SET $key='" . $newCode . "' WHERE $key='" . $oldCode . "'";
-		$ErrMsg = _('The SQL to update') . ' ' . $table . ' ' . _('records failed');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	foreach ($Table_key as $Table=>$key) {
+		prnMsg(_('Changing').' '. $Table.' ' . _('records'),'info');
+		$SQL = "UPDATE " . $Table . " SET $key='" . $NewCode . "' WHERE $key='" . $OldCode . "'";
+		$ErrMsg = _('The SQL to update') . ' ' . $Table . ' ' . _('records failed');
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 	}
 
 	prnMsg(_('Deleting the supplier code from the suppliers master table'),'info');
-	$sql = "DELETE FROM suppliers WHERE supplierid='" . $oldCode . "'";
+	$SQL = "DELETE FROM suppliers WHERE supplierid='" . $OldCode . "'";
 
 	$ErrMsg = _('The SQL to delete the old supplier record failed');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg,true);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$result = DB_Txn_Commit();
+	$Result = DB_Txn_Commit();
 }
 
-function checkSupplierExist($codeSupplier) {
-	$result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $codeSupplier . "'");
-	if (DB_num_rows($result)==0) return false;
+function checkSupplierExist($CodeSupplier) {
+	$Result=DB_query("SELECT supplierid FROM suppliers WHERE supplierid='" . $CodeSupplier . "'");
+	if (DB_num_rows($Result)==0) return false;
 	return true;
 }
 
-function checkNewCode($code) {
-	$tmp = str_replace(' ','',$code);
-	if ($tmp != $code) {
-		prnMsg ('<br /><br />' . _('The New supplier code') . ': ' . $code . ' ' .
+function checkNewCode($Code) {
+	$tmp = str_replace(' ','',$Code);
+	if ($tmp != $Code) {
+		prnMsg ('<br /><br />' . _('The New supplier code') . ': ' . $Code . ' ' .
 				_('must be not empty nor with spaces'),'error');
 		return false;
 	}

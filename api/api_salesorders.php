@@ -38,10 +38,10 @@ $SOH_DateFields = array ('orddate',
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyOrderDate($orddate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=api_DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=api_DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr($orddate,"/")) {
 			$DateArray = explode('/',$orddate);
 		} elseif (mb_strstr($orddate,".")) {
@@ -71,13 +71,13 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the order type is set up in the weberp database */
-	function VerifyOrderType($ordertype, $i, $Errors) {
+	function VerifyOrderType($Ordertype, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
-					 WHERE typeabbrev='" . $ordertype."'";
+					 WHERE typeabbrev='" . $Ordertype."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = SalesTypeNotSetup;
 		}
 		return $Errors;
@@ -105,8 +105,8 @@ $SOH_DateFields = array ('orddate',
 					 FROM locations
 					  WHERE loccode='". $FromStockLocn."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
 		}
 		return $Errors;
@@ -116,10 +116,10 @@ $SOH_DateFields = array ('orddate',
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyDeliveryDate($DeliveryDate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=api_DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=api_DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr($DeliveryDate,'/')) {
 			$DateArray = explode('/',$DeliveryDate);
 		} elseif (mb_strstr($PeriodEnd,'.')) {
@@ -158,12 +158,12 @@ $SOH_DateFields = array ('orddate',
 
 /* Fetch the next line number */
 	function GetOrderLineNumber($OrderNo, $i, $Errors) {
-		$linesql = "SELECT MAX(orderlineno)
+		$Linesql = "SELECT MAX(orderlineno)
 					FROM salesorderdetails
 					 WHERE orderno='" . $OrderNo . "'";
-		$lineresult = api_DB_query($linesql);
-		if ($myrow=DB_fetch_row($lineresult)) {
-			return $myrow[0] + 1;
+		$Lineresult = api_DB_query($Linesql);
+		if ($MyRow=DB_fetch_row($Lineresult)) {
+			return $MyRow[0] + 1;
 		} else {
 			return 1;
 		}
@@ -175,8 +175,8 @@ $SOH_DateFields = array ('orddate',
 					 FROM salesorders
 					  WHERE orderno='".$OrderNo."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = OrderHeaderNotSetup;
 		}
 		return $Errors;
@@ -207,8 +207,8 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the narrative field is 256 characters or less long */
-	function VerifyNarrative($narrative, $i, $Errors) {
-		if (mb_strlen($narrative)>256) {
+	function VerifyNarrative($Narrative, $i, $Errors) {
+		if (mb_strlen($Narrative)>256) {
 			$Errors[$i] = InvalidNarrative;
 		}
 		return $Errors;
@@ -226,10 +226,10 @@ $SOH_DateFields = array ('orddate',
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifyItemDueDate($ItemDue, $i, $Errors) {
-		$sql="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
-		$result=api_DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config WHERE confname='DefaultDateFormat'";
+		$Result=api_DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr($ItemDue,'/')) {
 			$DateArray = explode('/',$ItemDue);
 		} elseif (mb_strstr($PeriodEnd,'.')) {
@@ -268,8 +268,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderHeader as $key => $value) {
-			$OrderHeader[$key] = DB_escape_string($value);
+		foreach ($OrderHeader as $key => $Value) {
+			$OrderHeader[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors);
 		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors);
@@ -337,22 +337,22 @@ $SOH_DateFields = array ('orddate',
 		$FieldValues='';
 		global  $SOH_DateFields;
 		$OrderHeader['orderno'] = GetNextTransNo(30);
-		foreach ($OrderHeader as $key => $value) {
+		foreach ($OrderHeader as $key => $Value) {
 			$FieldNames.=$key.', ';
 			if (in_array($key, $SOH_DateFields) ) {
-			    $value = FormatDateforSQL($value);	// Fix dates
+			    $Value = FormatDateforSQL($Value);	// Fix dates
 			}
-			$FieldValues.="'".$value."', ";
+			$FieldValues.="'".$Value."', ";
 		}
-		$sql = "INSERT INTO salesorders (" . mb_substr($FieldNames,0,-2) . ")
+		$SQL = "INSERT INTO salesorders (" . mb_substr($FieldNames,0,-2) . ")
 					VALUES (" . mb_substr($FieldValues,0,-2). ")";
 		if (sizeof($Errors)==0) {
 
-			$result = api_DB_Query($sql);
+			$Result = api_DB_Query($SQL);
 
 			if (DB_error_no() != 0) {
 				//$Errors[0] = DatabaseUpdateFailed;
-				$Errors[0] = $sql;
+				$Errors[0] = $SQL;
 			} else {
 				$Errors[0]=0;
 				$Errors[1]=$OrderHeader['orderno'];
@@ -370,8 +370,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderHeader as $key => $value) {
-			$OrderHeader[$key] = DB_escape_string($value);
+		foreach ($OrderHeader as $key => $Value) {
+			$OrderHeader[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyOrderHeaderExists($OrderHeader['orderno'], sizeof($Errors), $Errors);
 		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors);
@@ -437,16 +437,16 @@ $SOH_DateFields = array ('orddate',
 			$Errors=VerifyQuotation($OrderHeader['quotation'], sizeof($Errors), $Errors);
 		}
 		global  $SOH_DateFields;
-		$sql='UPDATE salesorders SET ';
-		foreach ($OrderHeader as $key => $value) {
+		$SQL='UPDATE salesorders SET ';
+		foreach ($OrderHeader as $key => $Value) {
 			if (in_array($key, $SOH_DateFields) ) {
-			    $value = FormatDateforSQL($value);	// Fix dates
+			    $Value = FormatDateforSQL($Value);	// Fix dates
 			}
-			$sql .= $key.'="'.$value.'", ';
+			$SQL .= $key.'="'.$Value.'", ';
 		}
-		$sql = mb_substr($sql,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
+		$SQL = mb_substr($SQL,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
 		if (sizeof($Errors)==0) {
-			$result = api_DB_Query($sql);
+			$Result = api_DB_Query($SQL);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -468,8 +468,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderLine as $key => $value) {
-			$OrderLine[$key] = DB_escape_string($value);
+		foreach ($OrderLine as $key => $Value) {
+			$OrderLine[$key] = DB_escape_string($Value);
 		}
 		$OrderLine['orderlineno'] = GetOrderLineNumber($OrderLine['orderno'], sizeof($Errors), $Errors);
 		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors);
@@ -499,21 +499,21 @@ $SOH_DateFields = array ('orddate',
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($OrderLine as $key => $value) {
+		foreach ($OrderLine as $key => $Value) {
 			$FieldNames.=$key.', ';
 			if ($key == 'actualdispatchdate') {
-			    $value = FormatDateWithTimeForSQL($value);
+			    $Value = FormatDateWithTimeForSQL($Value);
 			} elseif ($key == 'itemdue') {
-			    $value = FormatDateForSQL($value);
+			    $Value = FormatDateForSQL($Value);
 			}
-			$FieldValues.= "'" . $value . "', ";
+			$FieldValues.= "'" . $Value . "', ";
 		}
 
-		$sql = "INSERT INTO salesorderdetails (" . mb_substr($FieldNames,0,-2) . ")
+		$SQL = "INSERT INTO salesorderdetails (" . mb_substr($FieldNames,0,-2) . ")
 			VALUES (" . mb_substr($FieldValues,0,-2) . ")";
 
 		if (sizeof($Errors)==0) {
-			$result = api_DB_Query($sql);
+			$Result = api_DB_Query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -533,8 +533,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderLine as $key => $value) {
-			$OrderLine[$key] = DB_escape_string($value);
+		foreach ($OrderLine as $key => $Value) {
+			$OrderLine[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors);
@@ -558,22 +558,22 @@ $SOH_DateFields = array ('orddate',
 		if (isset($OrderLine['poline'])){
 			$Errors=VerifyPOLine($OrderLine['poline'], sizeof($Errors), $Errors);
 		}
-		$sql='UPDATE salesorderdetails SET ';
-		foreach ($OrderLine as $key => $value) {
+		$SQL='UPDATE salesorderdetails SET ';
+		foreach ($OrderLine as $key => $Value) {
 			if ($key == 'actualdispatchdate') {
-			    $value = FormatDateWithTimeForSQL($value);
+			    $Value = FormatDateWithTimeForSQL($Value);
 			}
 			elseif ($key == 'itemdue')
-			    $value = FormatDateForSQL($value);
-			$sql .= $key.'="'.$value.'", ';
+			    $Value = FormatDateForSQL($Value);
+			$SQL .= $key.'="'.$Value.'", ';
 		}
-		//$sql = mb_substr($sql,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
+		//$SQL = mb_substr($SQL,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
 			//	" orderlineno='.$OrderLine['orderlineno'];
-		$sql = mb_substr($sql,0,-2)." WHERE orderno='" . $OrderLine['orderno']."' AND stkcode='" . $OrderLine['stkcode']."'";
-				//echo $sql;
+		$SQL = mb_substr($SQL,0,-2)." WHERE orderno='" . $OrderLine['orderno']."' AND stkcode='" . $OrderLine['stkcode']."'";
+				//echo $SQL;
 				//exit;
 		if (sizeof($Errors)==0) {
-			$result = api_DB_Query($sql);
+			$Result = api_DB_Query($SQL);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -599,10 +599,10 @@ $SOH_DateFields = array ('orddate',
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
-		$result = api_DB_Query($sql);
+		$SQL="SELECT * FROM salesorders WHERE orderno='".$OrderNo."'";
+		$Result = api_DB_Query($SQL);
 		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
+			return DB_fetch_array($Result);
 		} else {
 			return $Errors;
 		}
@@ -624,10 +624,10 @@ $SOH_DateFields = array ('orddate',
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM salesorderdetails WHERE orderno='" . $OrderNo . "'";
-		$result = api_DB_query($sql);
+		$SQL="SELECT * FROM salesorderdetails WHERE orderno='" . $OrderNo . "'";
+		$Result = api_DB_query($SQL);
 		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
+			return DB_fetch_array($Result);
 		} else {
 			return $Errors;
 		}
@@ -696,8 +696,8 @@ $SOH_DateFields = array ('orddate',
 		if (DB_error_no() != 0) {
 			$Errors[] = NoTaxProvince;
 		}
-		$myrow = DB_fetch_row($TaxProvResult);
-		$DispTaxProvinceID = $myrow[0];
+		$MyRow = DB_fetch_row($TaxProvResult);
+		$DispTaxProvinceID = $MyRow[0];
 
 		$LineItemsSQL = "SELECT stkcode,
 								unitprice,
@@ -718,7 +718,7 @@ $SOH_DateFields = array ('orddate',
 		}
 
 	/*Start an SQL transaction */
-		$result = DB_Txn_Begin();
+		$Result = DB_Txn_Begin();
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10);
 		$PeriodNo = GetCurrentPeriod();
@@ -759,30 +759,30 @@ $SOH_DateFields = array ('orddate',
 				$Errors[] = TaxRatesFailed;
 			}
 			$LineTaxAmount = 0;
-			while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+			while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 
-				if (!isset($TaxTotals[$myrow['taxauthid']]['FXAmount'])) {
-					$TaxTotals[$myrow['taxauthid']]['FXAmount']=0;
+				if (!isset($TaxTotals[$MyRow['taxauthid']]['FXAmount'])) {
+					$TaxTotals[$MyRow['taxauthid']]['FXAmount']=0;
 				}
-				$TaxAuthID=$myrow['taxauthid'];
-				$TaxTotals[$myrow['taxauthid']]['GLCode'] = $myrow['taxglcode'];
-				$TaxTotals[$myrow['taxauthid']]['TaxRate'] = $myrow['taxrate'];
-				$TaxTotals[$myrow['taxauthid']]['TaxAuthDescription'] = $myrow['description'];
+				$TaxAuthID=$MyRow['taxauthid'];
+				$TaxTotals[$MyRow['taxauthid']]['GLCode'] = $MyRow['taxglcode'];
+				$TaxTotals[$MyRow['taxauthid']]['TaxRate'] = $MyRow['taxrate'];
+				$TaxTotals[$MyRow['taxauthid']]['TaxAuthDescription'] = $MyRow['description'];
 
-				if ($myrow['taxontax'] ==1){
-					$TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $myrow['taxrate'];
+				if ($MyRow['taxontax'] ==1){
+					$TaxAuthAmount = ($LineNetAmount+$LineTaxAmount) * $MyRow['taxrate'];
 				} else {
-					$TaxAuthAmount =  $LineNetAmount * $myrow['taxrate'];
+					$TaxAuthAmount =  $LineNetAmount * $MyRow['taxrate'];
 				}
-				$TaxTotals[$myrow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
+				$TaxTotals[$MyRow['taxauthid']]['FXAmount'] += $TaxAuthAmount;
 
 				/*Make an array of the taxes and amounts including GLcodes for later posting - need debtortransid
 				so can only post once the debtor trans is posted - can only post debtor trans when all tax is calculated */
-				$LineTaxes[$LineCounter][$myrow['calculationorder']] = array('TaxCalculationOrder' =>$myrow['calculationorder'],
-												'TaxAuthID' =>$myrow['taxauthid'],
-												'TaxAuthDescription'=>$myrow['description'],
-												'TaxRate'=>$myrow['taxrate'],
-												'TaxOnTax'=>$myrow['taxontax'],
+				$LineTaxes[$LineCounter][$MyRow['calculationorder']] = array('TaxCalculationOrder' =>$MyRow['calculationorder'],
+												'TaxAuthID' =>$MyRow['taxauthid'],
+												'TaxAuthDescription'=>$MyRow['description'],
+												'TaxRate'=>$MyRow['taxrate'],
+												'TaxOnTax'=>$MyRow['taxontax'],
 												'TaxAuthAmount'=>$TaxAuthAmount);
 				$LineTaxAmount += $TaxAuthAmount;
 
@@ -1026,22 +1026,22 @@ $SOH_DateFields = array ('orddate',
 			$DbgMsg = _('SQL to count the no of sales analysis records');
 			$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-			$myrow = DB_fetch_row($Result);
+			$MyRow = DB_fetch_row($Result);
 
-			if ($myrow[0]>0){  /*Update the existing record that already exists */
+			if ($MyRow[0]>0){  /*Update the existing record that already exists */
 
 				$SQL = "UPDATE salesanalysis
 						SET amt=amt+" . filter_number_format($OrderLineRow['unitprice'] * $OrderLineRow['quantity'] / $OrderHeader['rate']) . ",
 						qty=qty +" . $OrderLineRow['quantity'] . ",
 						disc=disc+" . filter_number_format($OrderLineRow['discountpercent'] * $OrderLineRow['unitprice'] * $OrderLineRow['quantity'] / $OrderHeader['rate']) . "
-						WHERE salesanalysis.area='" . $myrow[2] . "'
-						AND salesanalysis.salesperson='" . $myrow[3] . "'
+						WHERE salesanalysis.area='" . $MyRow[2] . "'
+						AND salesanalysis.salesperson='" . $MyRow[3] . "'
 						AND typeabbrev ='" . $OrderHeader['ordertype'] . "'
 						AND periodno = '" . $PeriodNo . "'
 						AND cust  " . LIKE . " '" . $OrderHeader['debtorno'] . "'
 						AND custbranch  " . LIKE . "  '" . $OrderHeader['branchcode'] . "'
 						AND stockid  " . LIKE . " '" . $OrderLineRow['stkcode'] . "'
-						AND salesanalysis.stkcategory ='" . $myrow[1] . "'
+						AND salesanalysis.stkcategory ='" . $MyRow[1] . "'
 						AND budgetoractual='1'";
 
 			} else { /* insert a new sales analysis record */
@@ -1292,27 +1292,27 @@ $SOH_DateFields = array ('orddate',
 
 		$TransDate = time(); //The current date to find the period for
 		/* Find the unix timestamp of the last period end date in periods table */
-		$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-		$result = DB_query($sql);
-		$myrow=DB_fetch_row($result);
+		$SQL = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
+		$Result = DB_query($SQL);
+		$MyRow=DB_fetch_row($Result);
 
-		if (is_null($myrow[0])){
+		if (is_null($MyRow[0])){
 			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (0,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+1,0,Date('Y'))) . "')");
 			$InsertFirstPeriodResult = api_DB_query("INSERT INTO periods VALUES (1,'" . Date('Y-m-d',mktime(0,0,0,Date('m')+2,0,Date('Y'))) . "')");
 			$LastPeriod=1;
 			$LastPeriodEnd = mktime(0,0,0,Date('m')+2,0,Date('Y'));
 		} else {
-			$Date_Array = explode('-', $myrow[0]);
+			$Date_Array = explode('-', $MyRow[0]);
 			$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+1,0,(int)$Date_Array[0]);
-			$LastPeriod = $myrow[1];
+			$LastPeriod = $MyRow[1];
 		}
 		/* Find the unix timestamp of the first period end date in periods table */
-		$sql = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
-		$result = api_DB_query($sql);
-		$myrow=DB_fetch_row($result);
-		$Date_Array = explode('-', $myrow[0]);
+		$SQL = "SELECT MIN(lastdate_in_period), MIN(periodno) from periods";
+		$Result = api_DB_query($SQL);
+		$MyRow=DB_fetch_row($Result);
+		$Date_Array = explode('-', $MyRow[0]);
 		$FirstPeriodEnd = mktime(0,0,0,$Date_Array[1],0,(int)$Date_Array[0]);
-		$FirstPeriod = $myrow[1];
+		$FirstPeriod = $MyRow[1];
 
 		/* If the period number doesn't exist */
 		if (!PeriodExists($TransDate)) {
@@ -1346,12 +1346,12 @@ $SOH_DateFields = array ('orddate',
 			}
 		} else if (!PeriodExists(mktime(0,0,0,Date('m',$TransDate)+1,Date('d',$TransDate),Date('Y',$TransDate)))) {
 			/* Make sure the following months period exists */
-			$sql = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
-			$result = DB_query($sql);
-			$myrow=DB_fetch_row($result);
-			$Date_Array = explode('-', $myrow[0]);
+			$SQL = "SELECT MAX(lastdate_in_period), MAX(periodno) from periods";
+			$Result = DB_query($SQL);
+			$MyRow=DB_fetch_row($Result);
+			$Date_Array = explode('-', $MyRow[0]);
 			$LastPeriodEnd = mktime(0,0,0,$Date_Array[1]+2,0,(int)$Date_Array[0]);
-			$LastPeriod = $myrow[1];
+			$LastPeriod = $MyRow[1];
 			CreatePeriod($LastPeriod+1, $LastPeriodEnd);
 		}
 
@@ -1365,9 +1365,9 @@ $SOH_DateFields = array ('orddate',
 
 		$ErrMsg = _('An error occurred in retrieving the period number');
 		$GetPrdResult = DB_query($GetPrdSQL,$ErrMsg);
-		$myrow = DB_fetch_row($GetPrdResult);
+		$MyRow = DB_fetch_row($GetPrdResult);
 
-		return $myrow[0];
+		return $MyRow[0];
 	}
 
 ?>

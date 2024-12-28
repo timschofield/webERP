@@ -130,7 +130,7 @@ if (isset($_POST['ShowSales'])){
 			$FromDate = FormatDateForSQL($_POST['FromDate']);
 			$ToDate = FormatDateForSQL($_POST['ToDate']);
 	}
-	$sql = "SELECT stockmaster.categoryid,
+	$SQL = "SELECT stockmaster.categoryid,
 					stockcategory.categorydescription,
 					SUM(CASE WHEN stockmoves.type=10 THEN
 							price*(1-discountpercent)* -qty
@@ -155,7 +155,7 @@ if (isset($_POST['ShowSales'])){
 			ORDER BY netsalesvalue DESC";
 
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($sql,$ErrMsg);
+	$SalesResult = DB_query($SQL,$ErrMsg);
 
 	echo '<table cellpadding="2" class="selection">';
 

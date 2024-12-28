@@ -134,14 +134,14 @@ if (isset($_GET['SupplierID'])) {
 							WHERE id='" . $MyRow['factorcompanyid'] . "'";
 
 			$FactorResult = DB_query($FactorSQL);
-			$myfactorrow = DB_fetch_array($FactorResult);
-			$_SESSION['PaymentDetail' . $identifier]->SuppName = $MyRow['suppname'] . ' ' . _('care of') . ' ' . $myfactorrow['coyname'];
-			$_SESSION['PaymentDetail' . $identifier]->Address1 = $myfactorrow['address1'];
-			$_SESSION['PaymentDetail' . $identifier]->Address2 = $myfactorrow['address2'];
-			$_SESSION['PaymentDetail' . $identifier]->Address3 = $myfactorrow['address3'];
-			$_SESSION['PaymentDetail' . $identifier]->Address4 = $myfactorrow['address4'];
-			$_SESSION['PaymentDetail' . $identifier]->Address5 = $myfactorrow['address5'];
-			$_SESSION['PaymentDetail' . $identifier]->Address6 = $myfactorrow['address6'];
+			$MyFactorRow = DB_fetch_array($FactorResult);
+			$_SESSION['PaymentDetail' . $identifier]->SuppName = $MyRow['suppname'] . ' ' . _('care of') . ' ' . $MyFactorRow['coyname'];
+			$_SESSION['PaymentDetail' . $identifier]->Address1 = $MyFactorRow['address1'];
+			$_SESSION['PaymentDetail' . $identifier]->Address2 = $MyFactorRow['address2'];
+			$_SESSION['PaymentDetail' . $identifier]->Address3 = $MyFactorRow['address3'];
+			$_SESSION['PaymentDetail' . $identifier]->Address4 = $MyFactorRow['address4'];
+			$_SESSION['PaymentDetail' . $identifier]->Address5 = $MyFactorRow['address5'];
+			$_SESSION['PaymentDetail' . $identifier]->Address6 = $MyFactorRow['address6'];
 			$_SESSION['PaymentDetail' . $identifier]->SupplierID = $_GET['SupplierID'];
 			$_SESSION['PaymentDetail' . $identifier]->Currency = $MyRow['currcode'];
 			$_POST['Currency'] = $_SESSION['PaymentDetail' . $identifier]->Currency;
@@ -209,11 +209,11 @@ if (isset($_POST['Paymenttype']) AND $_POST['Paymenttype'] != '') {
 			$Errors[] = 'ChequeNum';
 		}
 		else {
-			$cheqsql = "SELECT count(chequeno) FROM supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
+			$ChequeSQL = "SELECT count(chequeno) FROM supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
 			$ErrMsg = _('Failed to retrieve cheque number data');
-			$cheqresult = DB_query($cheqsql, $ErrMsg);
-			$cheqrow = DB_fetch_row($cheqresult);
-			if ($cheqrow[0] > 0) {
+			$ChequeResult = DB_query($ChequeSQL, $ErrMsg);
+			$ChequeRow = DB_fetch_row($ChequeResult);
+			if ($ChequeRow[0] > 0) {
 				prnMsg(_('The cheque has already been used') , 'warn');
 				$Errors[] = 'ChequeNum';
 			}
@@ -392,11 +392,11 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			exit;
 		}
 		else {
-			$cheqsql = "SELECT count(chequeno) FROM  supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
+			$ChequeSQL = "SELECT count(chequeno) FROM  supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
 			$ErrMsg = _('Failed to retrieve cheque number data');
-			$cheqresult = DB_query($cheqsql, $ErrMsg);
-			$cheqrow = DB_fetch_row($cheqresult);
-			if ($cheqrow[0] > 0) {
+			$ChequeResult = DB_query($ChequeSQL, $ErrMsg);
+			$ChequeRow = DB_fetch_row($ChequeResult);
+			if ($ChequeRow[0] > 0) {
 				prnMsg(_('The cheque has already been used') , 'error');
 				include ('includes/footer.inc');
 				exit;
@@ -404,9 +404,9 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		}
 		//store the paid array here;
 		$PaidArray = array();
-		foreach ($_POST as $name => $Value) {
-			if (substr($name, 0, 4) == 'paid' AND $Value > 0) {
-				$PaidArray[substr($name, 4) ] = $Value;
+		foreach ($_POST as $Name => $Value) {
+			if (substr($Name, 0, 4) == 'paid' AND $Value > 0) {
+				$PaidArray[substr($Name, 4) ] = $Value;
 			}
 		}
 		if (!empty($PaidArray)) {
@@ -583,9 +583,9 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			/* Get an array of supptans id fields that were paid */
 			if (!isset($_POST['PaidArray'])) {
 				$PaidArray = array();
-				foreach ($_POST as $name => $Value) {
-					if (substr($name, 0, 4) == 'paid' AND $Value > 0) {
-						$PaidArray[substr($name, 4) ] = $Value;
+				foreach ($_POST as $Name => $Value) {
+					if (substr($Name, 0, 4) == 'paid' AND $Value > 0) {
+						$PaidArray[substr($Name, 4) ] = $Value;
 					}
 				}
 			}
@@ -827,7 +827,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 				$mail = new htmlMimeMail();
 				$mail->setSubject($EmailSubject);
 				$mail->setHTML($EmailText);
-				$result = SendmailBySmtp($mail,array($GLAccountEmail));
+				$Result = SendmailBySmtp($mail,array($GLAccountEmail));
 			}
 		}
 		// KL RICARD End

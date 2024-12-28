@@ -4,7 +4,7 @@ include ('includes/session.php');
 $Title = _('Identify Allocation Stuff Ups');
 include ('includes/header.php');
 
-$sql = "SELECT debtortrans.type,
+$SQL = "SELECT debtortrans.type,
 		debtortrans.transno,
 		debtortrans.ovamount,
 		debtortrans.alloc,
@@ -23,9 +23,9 @@ $sql = "SELECT debtortrans.type,
 		currencies.decimalplaces
 	HAVING SUM(custallocns.amt) < -alloc";
 
-$result =DB_query($sql);
+$Result =DB_query($SQL);
 
-if (DB_num_rows($result)>0){
+if (DB_num_rows($Result)>0){
 	echo '<table>
 		<tr>
 			<td>' . _('Type') . '</td>
@@ -36,7 +36,7 @@ if (DB_num_rows($result)>0){
 		</tr>';
 
 	$RowCounter =0;
-	while ($myrow=DB_fetch_array($result)){
+	while ($MyRow=DB_fetch_array($Result)){
 
 
 		printf ('<tr>
@@ -45,11 +45,11 @@ if (DB_num_rows($result)>0){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				</tr>',
-				$myrow['type'],
-				$myrow['transno'],
-				locale_number_format($myrow['ovamount'],$myrow['currdecimalplaces']),
-				locale_number_format($myrow['alloc'],$myrow['currdecimalplaces']),
-				locale_number_format($myrow['totallocfrom'],$myrow['currdecimalplaces']));
+				$MyRow['type'],
+				$MyRow['transno'],
+				locale_number_format($MyRow['ovamount'],$MyRow['currdecimalplaces']),
+				locale_number_format($MyRow['alloc'],$MyRow['currdecimalplaces']),
+				locale_number_format($MyRow['totallocfrom'],$MyRow['currdecimalplaces']));
 
 		$RowCounter++;
 		if ($RowCounter==20){

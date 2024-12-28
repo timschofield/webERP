@@ -44,24 +44,24 @@ $SQL = "SELECT accountcode,
 			FROM chartmaster
 			ORDER BY accountcode";
 
-$result=DB_query($SQL);
-if (DB_num_rows($result)==0) {
+$Result=DB_query($SQL);
+if (DB_num_rows($Result)==0) {
 	echo '</select></td>
 		</tr>';
 	prnMsg(_('No General ledger accounts have been set up yet') . ' - ' . _('budgets cannot be allocated until the GL accounts are set up'),'warn');
 } else {
-	while ($myrow=DB_fetch_array($result)) {
-		$Account = $myrow['accountcode'] . ' - ' . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false);
-		if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount==$myrow['accountcode']) {
-			echo '<option selected="selected" value="' . $myrow['accountcode'] . '">' . $Account . '</option>';
+	while ($MyRow=DB_fetch_array($Result)) {
+		$Account = $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false);
+		if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount==$MyRow['accountcode']) {
+			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $Account . '</option>';
 			$PrevCode=$LastCode;
 		} else {
-			echo '<option value="' . $myrow['accountcode'] . '">' . $Account . '</option>';
+			echo '<option value="' . $MyRow['accountcode'] . '">' . $Account . '</option>';
 			if (isset($SelectedAccount) AND isset($LastCode) AND $SelectedAccount == $LastCode) {
-				$NextCode=$myrow['accountcode'];
+				$NextCode=$MyRow['accountcode'];
 			}
 		}
-		$LastCode=$myrow['accountcode'];
+		$LastCode=$MyRow['accountcode'];
 	}
 	echo '</select></td>
 		</tr>';
@@ -101,15 +101,15 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 			$SQL="UPDATE chartdetails SET budget='" . round(filter_number_format($_POST[$i.'last']),$_SESSION['CompanyRecord']['decimalplaces']). "'
 					WHERE period='" . ($CurrentYearEndPeriod-(24-$i)) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
-			$result=DB_query($SQL,$ErrMsg,$DbgMsg);
+			$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
 			$SQL="UPDATE chartdetails SET budget='" . round(filter_number_format($_POST[$i.'this']),$_SESSION['CompanyRecord']['decimalplaces']). "'
 					WHERE period='" . ($CurrentYearEndPeriod-(12-$i)) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
-			$result=DB_query($SQL,$ErrMsg,$DbgMsg);
+			$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
 			$SQL="UPDATE chartdetails SET budget='". round(filter_number_format($_POST[$i.'next']),$_SESSION['CompanyRecord']['decimalplaces'])."'
 					WHERE period='" .  ($CurrentYearEndPeriod+$i) ."'
 					AND  accountcode = '" . $SelectedAccount."'";
-			$result=DB_query($SQL,$ErrMsg,$DbgMsg);
+			$Result=DB_query($SQL,$ErrMsg,$DbgMsg);
 		}
 	}
 // End of update
@@ -119,8 +119,8 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 /* If the periods dont exist then create them */
 	for ($i=1; $i <=36; $i++) {
 		$MonthEnd=mktime(0,0,0,$_SESSION['YearEnd']+1+$i,0,$YearEndYear-2);
-		$period=GetPeriod(Date($_SESSION['DefaultDateFormat'],$MonthEnd), false);
-		$PeriodEnd[$period]=Date('M Y',$MonthEnd);
+		$Period=GetPeriod(Date($_SESSION['DefaultDateFormat'],$MonthEnd), false);
+		$PeriodEnd[$Period]=Date('M Y',$MonthEnd);
 	}
 	include('includes/GLPostings.inc'); //creates chartdetails with correct values
 // End of create periods
@@ -131,10 +131,10 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 				FROM chartdetails
 				WHERE accountcode='" . $SelectedAccount . "'";
 
-	$result=DB_query($SQL);
-	while ($myrow=DB_fetch_array($result)) {
-		$Budget[$myrow['period']]=$myrow['budget'];
-		$Actual[$myrow['period']]=$myrow['actual'];
+	$Result=DB_query($SQL);
+	while ($MyRow=DB_fetch_array($Result)) {
+		$Budget[$MyRow['period']]=$MyRow['budget'];
+		$Actual[$MyRow['period']]=$MyRow['actual'];
 	}
 
 
@@ -242,17 +242,17 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 		</form>';
 
 	$SQL="SELECT MIN(periodno) FROM periods";
-	$result=DB_query($SQL);
-	$MyRow=DB_fetch_array($result);
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_array($Result);
 	$FirstPeriod=$MyRow[0];
 
 	$SQL="SELECT MAX(periodno) FROM periods";
-	$result=DB_query($SQL);
-	$MyRow=DB_fetch_array($result);
+	$Result=DB_query($SQL);
+	$MyRow=DB_fetch_array($Result);
 	$LastPeriod=$MyRow[0];
 
 	for ($i=$FirstPeriod;$i<=$LastPeriod;$i++) {
-		$sql="SELECT accountcode,
+		$SQL="SELECT accountcode,
 					period,
 					budget,
 					actual,
@@ -263,18 +263,18 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 				AND  accountcode = '" . $SelectedAccount . "'";
 
 		$ErrMsg = _('Could not retrieve the ChartDetail records because');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
-		while ($myrow=DB_fetch_array($result)) {
+		while ($MyRow=DB_fetch_array($Result)) {
 
-			$CFwdBudget = $myrow['bfwdbudget'] + $myrow['budget'];
-			$sql = "UPDATE chartdetails
+			$CFwdBudget = $MyRow['bfwdbudget'] + $MyRow['budget'];
+			$SQL = "UPDATE chartdetails
 					SET bfwdbudget='" . $CFwdBudget . "'
-					WHERE period='" . ($myrow['period'] +1) . "'
+					WHERE period='" . ($MyRow['period'] +1) . "'
 					AND  accountcode = '" . $SelectedAccount . "'";
 
 			$ErrMsg =_('Could not update the chartdetails record because');
-			$updresult = DB_query($sql,$ErrMsg);
+			$UpdResult = DB_query($SQL,$ErrMsg);
 		}
 	} /* end of for loop */
 }

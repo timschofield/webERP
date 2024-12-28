@@ -15,8 +15,8 @@
 						FROM locations
 						WHERE loccode='".$LocationCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] != 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] != 0) {
 			$Errors[$i] = LocationCodeAlreadyExists;
 		}
 		return $Errors;
@@ -28,8 +28,8 @@
 						FROM locations
 						WHERE loccode='".$LocationCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = LocationCodeDoesntExist;
 		}
 		return $Errors;
@@ -49,8 +49,8 @@
 						FROM taxprovinces
 						WHERE taxprovinceid='".$TaxProvinceId."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = TaxProvinceIdNotSetup;
 		}
 		return $Errors;
@@ -68,11 +68,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT loccode FROM locations";
-		$result = DB_query($sql);
+		$SQL = "SELECT loccode FROM locations";
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$LocationList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$LocationList[$i]=$MyRow[0];
 			$i++;
 		}
 		return array(0, $LocationList);
@@ -83,16 +83,16 @@
  * location.
  */
 
-	function GetLocationDetails($location, $user, $password) {
+	function GetLocationDetails($Location, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM locations WHERE loccode='".$location."'";
-		$result = DB_query($sql);
-		return array(0, DB_fetch_array($result));
+		$SQL = "SELECT * FROM locations WHERE loccode='".$Location."'";
+		$Result = DB_query($SQL);
+		return array(0, DB_fetch_array($Result));
 	}
 
 /* Inserts a Location in webERP.
@@ -105,8 +105,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($Location as $key => $value) {
-			$Location[$key] = DB_escape_string($value);
+		foreach ($Location as $key => $Value) {
+			$Location[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyLocationCode($Location['loccode'], sizeof($Errors), $Errors);
 		$Errors=VerifyLocationName($Location['locationname'], sizeof($Errors), $Errors);
@@ -143,15 +143,15 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($Location as $key => $value) {
+		foreach ($Location as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$sql = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ")
+			$SQL = "INSERT INTO locations (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
 
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -171,8 +171,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($Location as $key => $value) {
-			$Location[$key] = DB_escape_string($value);
+		foreach ($Location as $key => $Value) {
+			$Location[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyLocationExists($Location['loccode'], sizeof($Errors), $Errors);
 		$Errors=VerifyLocationName($Location['locationname'], sizeof($Errors), $Errors);
@@ -207,13 +207,13 @@
 		if (isset($Location['contact'])){
 			$Errors=VerifyContactName($Location['contact'], sizeof($Errors), $Errors);
 		}
-		$sql="UPDATE locations SET ";
-		foreach ($Location as $key => $value) {
-			$sql .= $key."='" . $value."', ";
+		$SQL="UPDATE locations SET ";
+		foreach ($Location as $key => $Value) {
+			$SQL .= $key."='" . $Value."', ";
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE loccode='".$Location['loccode']."'";
+		$SQL = mb_substr($SQL,0,-2)." WHERE loccode='".$Location['loccode']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

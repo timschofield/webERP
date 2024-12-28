@@ -3,7 +3,7 @@
 /* Shows the profit and loss of the company for the range of periods entered. */
 
 include ('includes/session.php');
-$Title = _('Profit and Loss for PT. Angin Dingin Utara');// Screen identification.
+$Title = _('Profit and Loss for PT. Bumi Biru');// Screen identification.
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'ProfitAndLoss';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
@@ -44,7 +44,7 @@ if ((!isset($_POST['FromPeriod'])
 		$DefaultFromDate = Date ('Y-m-d', Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,$_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
-	$period=GetPeriod($FromDate);
+	$Period=GetPeriod($FromDate);
 
 	/*Show a form to allow input of criteria for profit and loss to show */
 	echo '<br /><table class="selection">
@@ -137,7 +137,7 @@ if ((!isset($_POST['FromPeriod'])
 
 	$PageNumber = 0;
 	$FontSize = 10;
-	$line_height = 12;
+	$LineHeight = 12;
 
 	$NumberOfMonths = $_POST['ToPeriod'] - $_POST['FromPeriod'] + 1;
 
@@ -159,23 +159,23 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode ,
-					chartmasterADU.accountname,
+					chartmasterBB.accountname,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-				FROM chartmasterADU
-					INNER JOIN accountgroups ON chartmasterADU.group_ = accountgroups.groupname
-					INNER JOIN chartdetails ON chartmasterADU.accountcode= chartdetails.accountcode
-					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterADU.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+				FROM chartmasterBB
+					INNER JOIN accountgroups ON chartmasterBB.group_ = accountgroups.groupname
+					INNER JOIN chartdetails ON chartmasterBB.accountcode= chartdetails.accountcode
+					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterBB.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 				WHERE accountgroups.pandl=1
 				GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode,
-					chartmasterADU.accountname,
+					chartmasterBB.accountname,
 					accountgroups.sequenceintb
 				ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
@@ -189,7 +189,7 @@ if ((!isset($_POST['FromPeriod'])
 		include('includes/header.php');
 		prnMsg( _('No general ledger accounts were returned by the SQL because') . ' - ' . DB_error_msg() );
 		echo '<br /><a href="' .$RootPath .'/index.php">' .  _('Back to the menu'). '</a>';
-		if ($debug == 1){
+		if ($Debug == 1){
 			echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');
@@ -247,13 +247,13 @@ if ((!isset($_POST['FromPeriod'])
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-							$YPos -= (2 * $line_height);
+							$YPos -= (2 * $LineHeight);
 						} else { /*Costs */
 							$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 							$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-							$YPos -= (2 * $line_height);
+							$YPos -= (2 * $LineHeight);
 						}
 						$GrpPrdLY[$Level] = 0;
 						$GrpPrdActual[$Level] = 0;
@@ -261,7 +261,7 @@ if ((!isset($_POST['FromPeriod'])
 						$ParentGroups[$Level] ='';
 						$Level--;
 // Print heading if at end of page
-						if ($YPos < ($Bottom_Margin + (2*$line_height))){
+						if ($YPos < ($Bottom_Margin + (2*$LineHeight))){
 							include('includes/PDFProfitAndLossPageHeader.inc');
 						}
 					} //end of loop
@@ -275,13 +275,13 @@ if ((!isset($_POST['FromPeriod'])
 						$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel); $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$YPos -= (2 * $line_height);
+						$YPos -= (2 * $LineHeight);
 					} else { /*Costs */
 						$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 						$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-						$YPos -= (2 * $line_height);
+						$YPos -= (2 * $LineHeight);
 					}
 					$GrpPrdLY[$Level] = 0;
 					$GrpPrdActual[$Level] = 0;
@@ -292,7 +292,7 @@ if ((!isset($_POST['FromPeriod'])
 		}
 
 		// Print heading if at end of page
-		if ($YPos < ($Bottom_Margin +(2 * $line_height))){
+		if ($YPos < ($Bottom_Margin +(2 * $LineHeight))){
 			include('includes/PDFProfitAndLossPageHeader.inc');
 		}
 
@@ -300,7 +300,7 @@ if ((!isset($_POST['FromPeriod'])
 			$pdf->setFont('','B');
 			$FontSize =10;
 			if ($Section != ''){
-				$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+				$pdf->line($Left_Margin+310, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 				$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
 				if ($Section == 1) { /*Income*/
 
@@ -308,7 +308,7 @@ if ((!isset($_POST['FromPeriod'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$YPos -= (2 * $line_height);
+					$YPos -= (2 * $LineHeight);
 
 					$TotalIncome = -$SectionPrdActual;
 					$TotalBudgetIncome = -$SectionPrdBudget;
@@ -318,16 +318,16 @@ if ((!isset($_POST['FromPeriod'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$YPos -= (2 * $line_height);
+					$YPos -= (2 * $LineHeight);
 				}
 				if ($Section == 2){ /*Cost of Sales - need sub total for Gross Profit*/
 					$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Gross Profit'));
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($TotalLYIncome - $SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+					$pdf->line($Left_Margin+310, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 					$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
-					$YPos -= (2 * $line_height);
+					$YPos -= (2 * $LineHeight);
 
 					if ($TotalIncome != 0){
 						$PrdGPPercent = 100 *($TotalIncome - $SectionPrdActual) / $TotalIncome;
@@ -348,7 +348,7 @@ if ((!isset($_POST['FromPeriod'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($PrdGPPercent,1) . '%','right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($BudgetGPPercent,1) . '%','right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($LYGPPercent,1). '%','right');
-					$YPos -= (2 * $line_height);
+					$YPos -= (2 * $LineHeight);
 				}
 			}
 			$SectionPrdLY = 0;
@@ -359,7 +359,7 @@ if ((!isset($_POST['FromPeriod'])
 
 			if ($_POST['Detail'] == 'Detailed'){
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$Sections[$MyRow['sectioninaccounts']]);
-				$YPos -= (2 * $line_height);
+				$YPos -= (2 * $LineHeight);
 			}
 			$FontSize =8;
 			$pdf->setFont('',''); //sets to normal type in the default font
@@ -375,7 +375,7 @@ if ((!isset($_POST['FromPeriod'])
 				$FontSize =10;
 				$pdf->setFont('','B');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,$MyRow['groupname']);
-				$YPos -= (2 * $line_height);
+				$YPos -= (2 * $LineHeight);
 				$FontSize =8;
 				$pdf->setFont('','');
 			}
@@ -423,7 +423,7 @@ if ((!isset($_POST['FromPeriod'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($AccountPeriodBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($AccountPeriodLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				}
-				$YPos -= $line_height;
+				$YPos -= $LineHeight;
 			}
 		}
 	}
@@ -444,13 +444,13 @@ if ((!isset($_POST['FromPeriod'])
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$YPos -= (2 * $line_height);
+					$YPos -= (2 * $LineHeight);
 				} else { /*Costs */
 					$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 					$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-					$YPos -= (2 * $line_height);
+					$YPos -= (2 * $LineHeight);
 				}
 				$GrpPrdLY[$Level] = 0;
 				$GrpPrdActual[$Level] = 0;
@@ -458,7 +458,7 @@ if ((!isset($_POST['FromPeriod'])
 				$ParentGroups[$Level] ='';
 				$Level--;
 				// Print heading if at end of page
-				if ($YPos < ($Bottom_Margin + (2*$line_height))){
+				if ($YPos < ($Bottom_Margin + (2*$LineHeight))){
 					include('includes/PDFProfitAndLossPageHeader.inc');
 				}
 			}
@@ -472,13 +472,13 @@ if ((!isset($_POST['FromPeriod'])
 				$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel); $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-				$YPos -= (2 * $line_height);
+				$YPos -= (2 * $LineHeight);
 			} else { /*Costs */
 				$LeftOvers = $pdf->addTextWrap($Left_Margin +($Level*10),$YPos,200 -($Level*10),$FontSize,$ActGrpLabel);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
 				$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']),'right');
-				$YPos -= (2 * $line_height);
+				$YPos -= (2 * $LineHeight);
 			}
 			$GrpPrdLY[$Level] = 0;
 			$GrpPrdActual[$Level] = 0;
@@ -487,7 +487,7 @@ if ((!isset($_POST['FromPeriod'])
 		}
 	}
 	// Print heading if at end of page
-	if ($YPos < ($Bottom_Margin + (2*$line_height))){
+	if ($YPos < ($Bottom_Margin + (2*$LineHeight))){
 		include('includes/PDFProfitAndLossPageHeader.inc');
 	}
 	if ($Section != ''){
@@ -501,7 +501,7 @@ if ((!isset($_POST['FromPeriod'])
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-			$YPos -= (2 * $line_height);
+			$YPos -= (2 * $LineHeight);
 
 			$TotalIncome = -$SectionPrdActual;
 			$TotalBudgetIncome = -$SectionPrdBudget;
@@ -511,19 +511,19 @@ if ((!isset($_POST['FromPeriod'])
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-			$YPos -= (2 * $line_height);
+			$YPos -= (2 * $LineHeight);
 		}
 		if ($Section == 2){ /*Cost of Sales - need sub total for Gross Profit*/
 			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Gross Profit'));
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($TotalIncome - $SectionPrdActual,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($TotalBudgetIncome - $SectionPrdBudget,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($TotalLYIncome - $SectionPrdLY,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-			$YPos -= (2 * $line_height);
+			$YPos -= (2 * $LineHeight);
 
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(100*($TotalIncome - $SectionPrdActual)/$TotalIncome,1) . '%','right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(100*($TotalBudgetIncome - $SectionPrdBudget)/$TotalBudgetIncome,1) . '%','right');
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(100*($TotalLYIncome - $SectionPrdLY)/$TotalLYIncome,1). '%','right');
-			$YPos -= (2 * $line_height);
+			$YPos -= (2 * $LineHeight);
 		}
 	}
 
@@ -531,7 +531,7 @@ if ((!isset($_POST['FromPeriod'])
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format(-$PeriodProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format(-$PeriodBudgetProfitLoss),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format(-$PeriodLYProfitLoss,$_SESSION['CompanyRecord']['decimalplaces']),'right');
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 
 	if ($TotalIncome != 0){
 		$PrdPLPercent = 100 *(-$PeriodProfitLoss) / $TotalIncome;
@@ -552,9 +552,9 @@ if ((!isset($_POST['FromPeriod'])
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,locale_number_format($PrdPLPercent,1) . '%','right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,locale_number_format($BudgetPLPercent,1) . '%','right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,locale_number_format($LYPLPercent,1). '%','right');
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 
-	$pdf->line($Left_Margin+310, $YPos+$line_height,$Left_Margin+500, $YPos+$line_height);
+	$pdf->line($Left_Margin+310, $YPos+$LineHeight,$Left_Margin+500, $YPos+$LineHeight);
 	$pdf->line($Left_Margin+310, $YPos,$Left_Margin+500, $YPos);
 
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_' .'Income_Statement_' . date('Y-m-d').'.pdf');
@@ -588,23 +588,23 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterADU.accountname,
+					chartmasterBB.accountname,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-			FROM chartmasterADU
-				INNER JOIN accountgroups ON chartmasterADU.group_ = accountgroups.groupname
-				INNER JOIN chartdetails	ON chartmasterADU.accountcode= chartdetails.accountcode
-				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterADU.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+			FROM chartmasterBB
+				INNER JOIN accountgroups ON chartmasterBB.group_ = accountgroups.groupname
+				INNER JOIN chartdetails	ON chartmasterBB.accountcode= chartdetails.accountcode
+				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterBB.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1
 			GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterADU.accountname
+					chartmasterBB.accountname
 			ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
@@ -621,7 +621,7 @@ if ((!isset($_POST['FromPeriod'])
 		_('Profit and Loss Statement') . '<br />' .// Page title, reporting statement.
 //		_('Statement of Comprehensive Income') . '<br />' .// Page title, reporting statement.
 //		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
-		_('PT. Angin Dingin Utara') . '<br />' .// Page title, reporting statement.
+		_('PT. Bumi Biru') . '<br />' .// Page title, reporting statement.
 		_('For') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period.
 //		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ???
 		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
@@ -939,7 +939,6 @@ if ((!isset($_POST['FromPeriod'])
 			}
 // RICARD 
 			include('includes/KLGLPajakRatioCalculationsBySection.php');
-
 			$SectionPrdLY =0;
 			$SectionPrdActual =0;
 			$SectionPrdBudget =0;
@@ -1004,7 +1003,7 @@ if ((!isset($_POST['FromPeriod'])
 					echo '<tr class="OddTableRows">';
 					$k++;
 				}
-				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryPMA.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $MyRow['accountcode'] . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryBB.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $MyRow['accountcode'] . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';
 				if ($Section ==1){
 					 printf('<td>%s</td>
 							<td>%s</td>
@@ -1039,7 +1038,7 @@ if ((!isset($_POST['FromPeriod'])
 				$j++;
 			}
 		}
-		
+
 // RICARD 
 	include('includes/KLGLPajakRatioCalculationsByAccount.php');
 
@@ -1050,7 +1049,6 @@ if ((!isset($_POST['FromPeriod'])
 	if ($MyRow['groupname']!= $ActGrp){
 		if ($MyRow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
 			while ($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-
 				if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
 						<td colspan="2"></td>
@@ -1073,7 +1071,7 @@ if ((!isset($_POST['FromPeriod'])
 							$ActGrpLabel,
 							locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-							locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+							locale_number_format(-$GrpPrdLY[$Level]),$_SESSION['CompanyRecord']['decimalplaces']);
 				} else { /*Costs */
 					printf('<tr>
 								<td colspan="2"><h4><i>%s </i></h4></td>
@@ -1089,7 +1087,6 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				}
-
 				$GrpPrdLY[$Level] = 0;
 				$GrpPrdActual[$Level] = 0;
 				$GrpPrdBudget[$Level] = 0;
@@ -1142,10 +1139,10 @@ if ((!isset($_POST['FromPeriod'])
 			$ParentGroups[$Level] ='';
 		}
 		$j++;
-
 	}
 
 	if ($MyRow['sectioninaccounts']!= $Section){
+
 		if ($Section==1) { /*Income*/
 
 			echo '<tr>
@@ -1262,8 +1259,6 @@ if ((!isset($_POST['FromPeriod'])
 		}
 
 		$j++;
-
-
 
 	}
 

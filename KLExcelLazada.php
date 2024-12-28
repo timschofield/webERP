@@ -276,8 +276,8 @@ function submit($TypeOfShop) {
 			}
 
 			// Auto Size columns
-			foreach(range('A','AW') as $columnID) {
-				$ActiveSheet->getColumnDimension($columnID)->setAutoSize(true);
+			foreach(range('A','AW') as $ColumnID) {
+				$ActiveSheet->getColumnDimension($ColumnID)->setAutoSize(true);
 			}
 	
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet

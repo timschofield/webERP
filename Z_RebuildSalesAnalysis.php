@@ -8,9 +8,9 @@ include('includes/header.php');
 
 echo '<br /><br />' . _('This script rebuilds sales analysis records. NB: all sales budget figures will be lost!');
 
-$result = DB_query("TRUNCATE TABLE salesanalysis");
+$Result = DB_query("TRUNCATE TABLE salesanalysis");
 
-$sql = "INSERT INTO salesanalysis (typeabbrev,
+$SQL = "INSERT INTO salesanalysis (typeabbrev,
 									periodno,
 									amt,
 									cost,
@@ -56,7 +56,7 @@ $sql = "INSERT INTO salesanalysis (typeabbrev,
 		ORDER BY prd";
 
 $ErrMsg = _('The sales analysis data could not be recreated because');
-$Result = DB_query($sql,$ErrMsg);
+$Result = DB_query($SQL,$ErrMsg);
 
 echo '<p />';
 prnMsg(_('The sales analsysis data has been recreated based on current stock master and customer master information'),'info');
