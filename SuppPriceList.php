@@ -159,21 +159,21 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	            $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 
 	$FontSize=8;
-	$code='';
+	$Code='';
 	while ($MyRow = DB_fetch_array($Result)){
 		$YPos -=$LineHeight;
 
 		$PriceDated=ConvertSQLDate($MyRow[4]);
 
 		//if item has more than 1 price, write only price, date and supplier code for the old ones
-		if ($code==$MyRow['stockid']){
+		if ($Code==$MyRow['stockid']){
 
 			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($MyRow['price'],$CurrDecimalPlaces),'right');
 			$pdf->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
 			$pdf->addTextWrap(470,$YPos,90,$FontSize,$MyRow['suppliers_partno'],'left');
-			$code=$MyRow['stockid'];
+			$Code=$MyRow['stockid'];
 		} else {
-			$code=$MyRow['stockid'];
+			$Code=$MyRow['stockid'];
 			$pdf->addTextWrap(30,$YPos,100,$FontSize,$MyRow['stockid'],'left');
 			$pdf->addTextWrap(135,$YPos,160,$FontSize,$MyRow['description'],'left');
 			$pdf->addTextWrap(300,$YPos,50,$FontSize,locale_number_format($MyRow['conversionfactor'],'Variable'),'right');

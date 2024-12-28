@@ -408,10 +408,10 @@ function printLabels($dimensions, $Lines, $QtyByItem, $Currency, $salesType, $St
 	$DecimalPlaces=getDecimalPlaces($Currency);
 
 	foreach ($StockIDList as $StockID=>$on) {  // At least there is one item
-		$itemData = getStockData($StockID, $Currency, $salesType, $EffectiveDate);
+		$ItemData = getStockData($StockID, $Currency, $salesType, $EffectiveDate);
 		$num=$QtyByItem;
 		while ($num-- > 0) {	// Print $num labels per item
-			printStockid($itemData, $dimensions, $Lines, $Currency, $Row, $col);
+			printStockid($ItemData, $dimensions, $Lines, $Currency, $Row, $col);
 			if (++$col>=$dimensions['Cols']) {
 				$col=0;
 				if (++$Row>=$dimensions['Rows']) {
@@ -455,7 +455,7 @@ function printLabels($dimensions, $Lines, $QtyByItem, $Currency, $salesType, $St
  *  possible that the combination $data valid and $readonly false occurs when
  *  invalid data needs to be recaptured because an error in a new label capture.
  */
-function printStockid($itemData, $labelDim, $dataParams, $Currency, $Row, $col) {
+function printStockid($ItemData, $labelDim, $dataParams, $Currency, $Row, $col) {
 	global $pdf, $DecimalPlaces;
 //echo $Row.':'.$col.'<br />';
 	// Calculate the bottom left corner position
@@ -476,10 +476,10 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $Row, $col) 
 		$adj='left';
 		switch ($Line['dat']) {
 		case 'code':
-			$txt = $itemData['stockid'];
+			$txt = $ItemData['stockid'];
 			break;
 		case 'name1':
-			$txt = $itemData['description'];
+			$txt = $ItemData['description'];
 			$resid = &$descrip;
 			break;
 		case 'name2':
@@ -487,7 +487,7 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $Row, $col) 
 			unset($descrip);
 			break;
 		case 'lname1':
-			$txt = $itemData['longdescription'];
+			$txt = $ItemData['longdescription'];
 			$resid = &$ldescrip;
 			break;
 		case 'lname2':
@@ -495,7 +495,7 @@ function printStockid($itemData, $labelDim, $dataParams, $Currency, $Row, $col) 
 			unset($ldescrip);
 			break;
 		case 'price':
-			$txt = locale_number_format($itemData['price'], $DecimalPlaces). ' '. $Currency;
+			$txt = locale_number_format($ItemData['price'], $DecimalPlaces). ' '. $Currency;
 //			$adj='left';
 			break;
 		case 'bcode': break;

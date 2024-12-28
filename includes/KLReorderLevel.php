@@ -210,12 +210,12 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 			$PrintLine = TRUE;
 
 			//Look for the WORST location with overstock.
-			$locationoverstock  = WorstLocationForItem($MyRow['stockid'], "OVERSTOCK", $maxdays);
-			if ($locationoverstock == ""){
+			$Locationoverstock  = WorstLocationForItem($MyRow['stockid'], "OVERSTOCK", $maxdays);
+			if ($Locationoverstock == ""){
 				// NO location with overstock
 				// We need to reduce RL at the worst selling location with some stock available (qty > 0)
-				$locationworst  = WorstLocationForItem($MyRow['stockid'], "AVAILABLE", $maxdays);
-				if ($locationworst == ""){
+				$Locationworst  = WorstLocationForItem($MyRow['stockid'], "AVAILABLE", $maxdays);
+				if ($Locationworst == ""){
 					// Does not exist any shop with available stock. This was the last one!
 					// No need to do anything!!!
 					$rebalancinglocationfrom = "";
@@ -311,7 +311,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 						}
 						$ItemsRebalanced++;
 					}else{
-						$location = "";
+						$Location = "";
 						$strategy = "No shop to distribute";
 					}
 				}
@@ -319,7 +319,7 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 				// We have some overstock location. When transferrng from TOKO to kantor will be rebalanced.
 				// No need to do anything, as the overstock item in that location will return to kantor 
 				// and from kantor will be sent to the location needing it.
-				$rebalancinglocationfrom = $locationoverstock;
+				$rebalancinglocationfrom = $Locationoverstock;
 				$strategy = "Overstock available in some shop. No RL changed";
 			}
 			if ($ShowMessages){
@@ -389,14 +389,14 @@ function WorstLocationForItem($stockid, $Kind, $maxdays){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$location = $MyRow['loccode'];
+		$Location = $MyRow['loccode'];
 	}else{
-		$location = "";
+		$Location = "";
 	}
-	return $location;
+	return $Location;
 }
 
-function LocationOrderForItem($stockid, $order, $maxdays){
+function LocationOrderForItem($stockid, $Order, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT locstock.loccode
 			FROM locstock,locations
@@ -410,30 +410,30 @@ function LocationOrderForItem($stockid, $order, $maxdays){
 							AND salesorders.orddate >= '". $StartDate . "'
 							AND salesorders.fromstkloc = locstock.loccode
 							AND salesorderdetails.stkcode = '". $stockid . "') DESC
-			LIMIT ". $order . ", 1";
+			LIMIT ". $Order . ", 1";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
-		$location = $MyRow['loccode'];
+		$Location = $MyRow['loccode'];
 	}else{
-		$location = "";
+		$Location = "";
 	}
-	return $location;
+	return $Location;
 }
 
-function QtyAvailable($stockid, $location){
+function QtyAvailable($stockid, $Location){
 	$SQL = "SELECT SUM(locstock.quantity) AS total
 			FROM locstock,locations
 			WHERE locstock.stockid = '" . $stockid . "'
 				AND locstock.loccode = locations.loccode";
-	if ($location == "ALLSHOPS"){
+	if ($Location == "ALLSHOPS"){
 		$SQL = $SQL . " AND locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " "; 
-	}elseif ($location == "ALLSHOPSANDONLINE"){
+	}elseif ($Location == "ALLSHOPSANDONLINE"){
 		$SQL = $SQL . " AND locations.typeloc IN " . LIST_ALL_SHOPS_BY_TYPE . " "; 
-	}elseif ($location == "ALL"){
+	}elseif ($Location == "ALL"){
 		$SQL = $SQL . " "; 
 	}else{
-		$SQL = $SQL . " AND locstock.loccode = '". $location . "'"; 
+		$SQL = $SQL . " AND locstock.loccode = '". $Location . "'"; 
 	}
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -713,7 +713,7 @@ function MaxTopSalesForTypeOfShop($ShopType, $NumDays){
 	return $MyRow['maxtopsales'];
 }
 
-function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxRL, $minavailablestock, $ShowMessages, $updateDB, $RootPath, $EmailText){
+function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxRL, $minavailablestock, $ShowMessages, $updateDB, $RootPath, $EmailText){
 	/*  items bottom% in percent, 
 		with stock at the shop
 		with RL >= oldRL at the shop
@@ -751,7 +751,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 					AND klsalesperformance.topsales60 >= " . $MinTopSales . 
 					$WhereCat . "
 					AND (locstock.quantity > 0)
-					AND (locstock.reorderlevel >= ". $oldRL .")
+					AND (locstock.reorderlevel >= ". $OldRL .")
 					AND (SELECT SUM(locstock.quantity)
 						FROM locstock, locations loc2
 						WHERE stockmaster.stockid = locstock.stockid
@@ -763,7 +763,7 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $oldRL, $maxR
 	
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . 'Items in ' . $ShopType . ' with Top Sales Rank in the bottom ' . $BottomPercentTopSales . '% with RL >= ' . $oldRL . ' and stock available <= ' . $minavailablestock . ' </strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . 'Items in ' . $ShopType . ' with Top Sales Rank in the bottom ' . $BottomPercentTopSales . '% with RL >= ' . $OldRL . ' and stock available <= ' . $minavailablestock . ' </strong></p>';
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -826,23 +826,23 @@ function MaxRLCorrectionSomeModels($stockid, $loccode, $NewRL){
 	return $CurrentNewRL;
 }
 
-function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB){
+function SetReorderLevel($reason, $stockid, $loccode, $OldRL, $NewRL, $updateDB){
 	if ($updateDB){
-		if ($oldRL != $newRL){
+		if ($OldRL != $NewRL){
 			if ($loccode == "ALL"){
 				$SQL = "UPDATE locstock
-						SET reorderlevel = '" . $newRL ."'
+						SET reorderlevel = '" . $NewRL ."'
 						WHERE stockid = '". $stockid ."'";
 			}elseif ($loccode == "SHOPS"){
 				$SQL = "UPDATE locstock
-						SET reorderlevel = '" . $newRL ."'
+						SET reorderlevel = '" . $NewRL ."'
 						WHERE stockid = '". $stockid ."'
 							AND loccode IN (SELECT locations.loccode
 											FROM locations
 											WHERE locations.typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . ")";
 			}else{
 				$SQL = "UPDATE locstock
-						SET reorderlevel = '" . $newRL ."'
+						SET reorderlevel = '" . $NewRL ."'
 						WHERE stockid = '". $stockid ."'
 							AND loccode = '". $loccode ."'";
 			}
@@ -861,8 +861,8 @@ function SetReorderLevel($reason, $stockid, $loccode, $oldRL, $newRL, $updateDB)
 						'". $reason ."',
 						'". $loccode ."',
 						'". $stockid ."',
-						'". $oldRL ."',
-						'". $newRL ."')";		
+						'". $OldRL ."',
+						'". $NewRL ."')";		
 		$ErrMsg =_('Could not insert the KLAdjustRL Log');
 		$DbgMsg = _('The following SQL to insert the request header record was used');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);

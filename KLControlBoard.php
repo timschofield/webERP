@@ -1831,7 +1831,7 @@ function GLTransDateControl(){
 	}
 }
 
-function GoodsJustArrived($Kind, $location, $numdays, $RootPath){
+function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays));
 	$ShopsKL = NumberOfShops("SHOPKL");
 	$ShopsBL = NumberOfShops("SHOPBL");
@@ -1859,7 +1859,7 @@ function GoodsJustArrived($Kind, $location, $numdays, $RootPath){
 				AND stockmaster.klmovingdiscount50 = 0
 				AND stockmaster.klmovingdiscount80 = 0
 				AND stockcategory.stocktype = 'F'
-				AND stockmoves.loccode ='" . $location . "'
+				AND stockmoves.loccode ='" . $Location . "'
 				AND stockmoves.type ='" . $Type . "'
 				AND stockmoves.trandate >'" . $StartDate . "'
 				ORDER BY stockmoves.trandate DESC, 
@@ -1867,9 +1867,9 @@ function GoodsJustArrived($Kind, $location, $numdays, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Kind == "PO"){
-			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Finished Goods just arrived at ') . $location . ' during the last '. $numdays . ' days'. '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Finished Goods just arrived at ') . $Location . ' during the last '. $numdays . ' days'. '</strong></p>';
 		}elseif ($Kind == "WO"){
-			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Goods just produced at ') . $location . ' during the last '. $numdays . ' days'. '</strong></p>';
+			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Goods just produced at ') . $Location . ' during the last '. $numdays . ' days'. '</strong></p>';
 		}
 		echo '<div>';
 		echo '<table class="selection">';
@@ -2020,7 +2020,7 @@ function GoodsJustArrived($Kind, $location, $numdays, $RootPath){
 	}
 }
 
-function GoodsJustTransferred($locationfrom, $locationto, $numdays, $QOHmax, $RootPath){
+function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numdays+1));
 
 	$SQL = "SELECT loctransfers.stockid,
@@ -2035,8 +2035,8 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $QOHmax, $Ro
 			WHERE loctransfers.stockid = stockmaster.stockid
 				AND stockmaster.categoryid = stockcategory.categoryid
 				AND stockcategory.stocktype = 'F'
-				AND loctransfers.shiploc ='" . $locationfrom . "'
-				AND loctransfers.recloc ='" . $locationto . "'
+				AND loctransfers.shiploc ='" . $Locationfrom . "'
+				AND loctransfers.recloc ='" . $Locationto . "'
 				AND loctransfers.recdate >'" . $StartDate . "'
 				AND (SELECT SUM(locstock.quantity)
 						FROM locstock
@@ -2046,7 +2046,7 @@ function GoodsJustTransferred($locationfrom, $locationto, $numdays, $QOHmax, $Ro
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _(' Finished Goods just transferred from ') . $locationfrom  . ' to '. $locationto . ' during the last '. $numdays . ' days and QOH <= '. $QOHmax . '.</strong></p>';
+		echo '<p class="page_title_text" align="center"><strong>' . _(' Finished Goods just transferred from ') . $Locationfrom  . ' to '. $Locationto . ' during the last '. $numdays . ' days and QOH <= '. $QOHmax . '.</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4403,7 +4403,7 @@ function OpenCartItemsWithoutPicture($RootPath ){
 	}
 }
 
-function OutstandingOrders($customertype, $ordertype, $RootPath){
+function OutstandingOrders($customertype, $Ordertype, $RootPath){
 	/* Check if there are outstanding orders for retail customers */
 
 	if ($customertype == "Retail"){
@@ -4438,10 +4438,10 @@ function OutstandingOrders($customertype, $ordertype, $RootPath){
 		$WebsiteIDName = "";
 	}
 	
-	if ($ordertype == "Quotation"){
+	if ($Ordertype == "Quotation"){
 		$Whereclause = $Whereclause . " AND salesorders.quotation = 1 ";
 		$Titletext = $Titletext . " Quotations";
-	}elseif  ($ordertype == "Order"){
+	}elseif  ($Ordertype == "Order"){
 		$Whereclause = $Whereclause . " AND salesorders.quotation = 0 ";
 		$Titletext = $Titletext . " Orders";
 	}else{
@@ -5213,7 +5213,7 @@ function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 	}
 }
 
-function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue){
+function ValueStockLocation($Location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 /*	$minpcs = $optimalpcs * (1 - $varpcs);
 	$maxpcs = $optimalpcs * (1 + $varpcs);
 	$minvalue = $optimalvalue * (1 - $varvalue);
@@ -5228,12 +5228,12 @@ function ValueStockLocation($location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 				locations,
 				locstock
 			WHERE stockmaster.stockid=locstock.stockid
-				AND locations.loccode = '" . $location . "'
+				AND locations.loccode = '" . $Location . "'
 				AND stockmaster.categoryid=stockcategory.categoryid
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_DISPLAYS . "
 				AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_SHOP_CONSUMABLES . "
 				AND locstock.quantity!=0
-				AND locstock.loccode = '" . $location . "'";
+				AND locstock.loccode = '" . $Location . "'";
 				
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);

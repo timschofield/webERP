@@ -126,18 +126,18 @@ if (isset($_POST['submit'])) {
 		}
 		if($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
 			// BEGIN: Update the config.php file:
-			$fhandle = fopen('config.php', 'r');
-			if($fhandle) {
-				$content = fread($fhandle, filesize('config.php'));
-				$content = str_replace(' ;\n', ';\n', $content);// Clean space before the end-of-php-line.
-				$content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $content);
-				$fhandle = fopen('config.php','w');
-				if(!fwrite($fhandle,$content)) {
+			$FileHandle = fopen('config.php', 'r');
+			if($FileHandle) {
+				$Content = fread($FileHandle, filesize('config.php'));
+				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
+				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
+				$FileHandle = fopen('config.php','w');
+				if(!fwrite($FileHandle,$Content)) {
 					prnMsg(_('Cannot write to the configuration file.'), 'error');
 				} else {
 					prnMsg(_('The configuration file was updated.'), 'info');
 				}
-				fclose($fhandle);
+				fclose($FileHandle);
 			} else {
 				prnMsg(_('Cannot open the configuration file.'), 'error');
 			}
@@ -1224,7 +1224,7 @@ echo '<field>
 	</field>';
 
 //Which messages to log
-$severityOptions = [
+$SeverityOptions = [
 	_('None'),
 	_('Errors Only'),
 	_('Errors and Warnings'),
@@ -1234,7 +1234,7 @@ $severityOptions = [
 echo '<field>
 		<label for="X_LogSeverity">' . _('Log Severity Level') . ':</label>
 		<select name="X_LogSeverity" >';
-foreach ($severityOptions as $key => $Value) {
+foreach ($SeverityOptions as $key => $Value) {
 	echo '<option value="' . $key . '"' . ($_SESSION['LogSeverity'] == $key ? ' selected' : '') . '>' . $Value . '</option>';
 }
 echo '</select>

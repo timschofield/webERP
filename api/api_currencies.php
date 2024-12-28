@@ -26,14 +26,14 @@
  * currency.
  */
 
-	function GetCurrencyDetails($currency, $user, $password) {
+	function GetCurrencyDetails($Currency, $user, $password) {
 		$Errors = array();
 		$db = db($user, $password);
 		if (gettype($db)=='integer') {
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$SQL = "SELECT * FROM currencies WHERE currabrev='".$currency."'";
+		$SQL = "SELECT * FROM currencies WHERE currabrev='".$Currency."'";
 		$Result = DB_query($SQL);
 		return DB_fetch_array($Result);
 	}

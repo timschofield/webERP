@@ -39,13 +39,13 @@ if ($_SESSION['geocode_integration'] == 1 AND isset($_SESSION['SupplierID'])) {
 	$MyRow2 = DB_fetch_array($Result2);
 	$lat = $MyRow2['lat'];
 	$lng = $MyRow2['lng'];
-	$api_key = $MyRow['geocode_key'];
+	$APIKey = $MyRow['geocode_key'];
 	$center_long = $MyRow['center_long'];
 	$center_lat = $MyRow['center_lat'];
 	$map_height = $MyRow['map_height'];
 	$map_width = $MyRow['map_width'];
-	$map_host = $MyRow['map_host'];
-	echo '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $api_key . '"';
+	$MapHost = $MyRow['map_host'];
+	echo '<script src="https://maps.google.com/maps?file=api&amp;v=2&amp;key=' . $APIKey . '"';
 	echo ' type="text/javascript"></script>';
 	echo ' <script type="text/javascript">';
 	echo 'function load() {

@@ -403,7 +403,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			if($MyRow2[0]>'') {
 				//test already exists on CopyToSample
 				if ($_POST['OverRide']=='on') {
-					$updsql = "UPDATE sampleresults
+					$UpdSQLl = "UPDATE sampleresults
 								SET	testvalue='" .$MyRow['testvalue']. "',
 									testdate='" .$MyRow['testdate']. "',
 									testedby='" .$MyRow['testedby']. "',
@@ -413,7 +413,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 					$Msg = _('Test Results have been overwritten to sample') . ' ' . $_POST['CopyToSampleID']  . _(' from sample') . ' ' . $SelectedSampleID  . _(' for test ') . $MyRow['testid'];
 					$ErrMsg = _('The insert of the test results failed because');
 					$DbgMsg = _('The SQL that was used and failed was');
-					$updresult = DB_query($updsql,$ErrMsg, $DbgMsg);
+					$UpdResult = DB_query($UpdSQLl,$ErrMsg, $DbgMsg);
 					prnMsg($Msg , 'success');
 				} else {
 					$Msg = _('Test Results have NOT BEEN overwritten for Result ID ') . $MyRow2[0];
@@ -421,7 +421,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				}
 			} else {
 				//Need to insert the test and results
-				$inssql = "INSERT INTO sampleresults
+				$InsSQL = "INSERT INTO sampleresults
 							(sampleid,
 							testid,
 							defaultvalue,
@@ -454,7 +454,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				$Msg = _('Test Results have been copied to') . ' ' . $_POST['CopyToSampleID'] . ' ' . _('from') . ' ' . $SelectedSampleID . ' ' . _('for') . ' ' . $MyRow['testid'];
 				$ErrMsg = _('The insert of the test results failed because');
 				$DbgMsg = _('The SQL that was used and failed was');
-				$insresult = DB_query($inssql,$ErrMsg, $DbgMsg);
+				$insresult = DB_query($InsSQL,$ErrMsg, $DbgMsg);
 				prnMsg($Msg , 'success');
 			}
 		} //while loop on myrow
@@ -794,7 +794,7 @@ echo '<table cellpadding="2" width="90%" class="selection">
 
 $x = 0;
 
-$techsql = "SELECT userid,
+$TechSQL = "SELECT userid,
 						realname
 					FROM www_users
 					INNER JOIN securityroles ON securityroles.secroleid=www_users.fullaccess
@@ -802,7 +802,7 @@ $techsql = "SELECT userid,
 					WHERE blocked='0'
 					AND tokenid='16'";
 
-$techresult = DB_query($techsql);
+$TechResult = DB_query($TechSQL);
 
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -923,15 +923,15 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>' . $MyRow['targetvalue'] . ' ' . $MyRow['units'] . '</td>
 			<td><input type="text" class="date" name="TestDate' .$x. '" size="10" maxlength="10" value="' . $TestDate . '" /> </td>
 			<td><select name="TestedBy' .$x .'"/>';
-	while ($techrow = DB_fetch_array($techresult)) {
-		if ($techrow['userid'] == $MyRow['testedby']){
-			echo '<option selected="selected" value="' . $techrow['userid'] . '">' .$techrow['realname'] . '</option>';
+	while ($TechRow = DB_fetch_array($TechResult)) {
+		if ($TechRow['userid'] == $MyRow['testedby']){
+			echo '<option selected="selected" value="' . $TechRow['userid'] . '">' .$TechRow['realname'] . '</option>';
 		} else {
-			echo '<option value="' .$techrow['userid'] . '">' . $techrow['realname'] . '</option>';
+			echo '<option value="' .$TechRow['userid'] . '">' . $TechRow['realname'] . '</option>';
 		}
 	}
 	echo '</select>';
-	DB_data_seek($techresult,0);
+	DB_data_seek($TechResult,0);
 	echo '<td>' . $TestResult . '</td>
 			<td>' . $ShowOnCert . '</td>
 			<td>' . $Delete . '</td>

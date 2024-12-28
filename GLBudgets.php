@@ -274,7 +274,7 @@ if (isset($SelectedAccount) and $SelectedAccount != '') {
 					AND  accountcode = '" . $SelectedAccount . "'";
 
 			$ErrMsg =_('Could not update the chartdetails record because');
-			$updresult = DB_query($SQL,$ErrMsg);
+			$UpdResult = DB_query($SQL,$ErrMsg);
 		}
 	} /* end of for loop */
 }

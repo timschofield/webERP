@@ -481,7 +481,7 @@ function CapitalizeName($string){
 	foreach ($word_splitters as $delimiter)
 	{ 
 		$words = explode($delimiter, $string); 
-		$newwords = array(); 
+		$Newwords = array(); 
 		foreach ($words as $word)
 		{ 
 			if (in_array(strtoupper($word), $uppercase_exceptions))
@@ -490,13 +490,13 @@ function CapitalizeName($string){
 			if (!in_array($word, $lowercase_exceptions))
 				$word = ucfirst($word); 
  
-			$newwords[] = $word;
+			$Newwords[] = $word;
 		}
  
 		if (in_array(strtolower($delimiter), $lowercase_exceptions))
 			$delimiter = strtolower($delimiter);
  
-		$string = join($delimiter, $newwords); 
+		$string = join($delimiter, $Newwords); 
 	} 
 	return $string; 
 }

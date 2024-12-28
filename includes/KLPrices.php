@@ -52,12 +52,12 @@ function SetMoveDiscount80Flag($Flag, $StockId){
 	prnMsg($Msg , 'success');
 }
 
-function SetFlagPriceChangedInChangePrice($StockId, $value){
+function SetFlagPriceChangedInChangePrice($StockId, $Value){
 	$SQL = "UPDATE klchangeprice 
-			SET pricechanged = '" . $value . "'
+			SET pricechanged = '" . $Value . "'
 			WHERE stockid = '".$StockId."'";
 
-	$Msg = _('Changing flag PriceChanged for item') . ' ' . $StockId . ' ' . _('to') . ' ' . $value;
+	$Msg = _('Changing flag PriceChanged for item') . ' ' . $StockId . ' ' . _('to') . ' ' . $Value;
 	$ErrMsg = _('SetFlagPriceChangedInChangePrice failed because');
 	$DbgMsg = _('The SQL that was used and failed was');
 	$Result = DB_query($SQL,$ErrMsg, $DbgMsg);

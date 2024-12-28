@@ -194,7 +194,7 @@ function barcode_outimage($Text, $bars, $scale = 1, $mode = "png",
  *    bars   : where to place the bars  (<space-width><bar-width><space-width><bar-width>...)
  */
 
-function barcode_outtext($code,$bars){
+function barcode_outtext($Code,$bars){
     $width=true;
     $xpos=$heigh2=0;
     $bar_line="";
@@ -238,7 +238,7 @@ function barcode_outtext($code,$bars){
 
 
 
-function barcode_outhtml($code, $bars, $scale = 1, $Total_y = 0, $space = ''){
+function barcode_outhtml($Code, $bars, $scale = 1, $Total_y = 0, $space = ''){
     /* set defaults */
     $Total_y=(int)($Total_y);
     if ($scale<1) $scale=2;
@@ -285,22 +285,22 @@ function barcode_outhtml($code, $bars, $scale = 1, $Total_y = 0, $space = ''){
 
 
 /* barcode_encode_genbarcode(code, encoding)
- *   encodes $code with $encoding using genbarcode
+ *   encodes $Code with $encoding using genbarcode
  *
  *   return:
  *    array[encoding] : the encoding which has been used
  *    array[bars]     : the bars
  *    array[text]     : text-positioning info
  */
-function barcode_encode_genbarcode($code,$encoding){
+function barcode_encode_genbarcode($Code,$encoding){
     global $genbarcode_loc;
     /* delete EAN-13 checksum */
-    if (preg_match("#^ean$#i", $encoding) && strlen($code)==13) $code=substr($code,0,12);
+    if (preg_match("#^ean$#i", $encoding) && strlen($Code)==13) $Code=substr($Code,0,12);
     if (!$encoding) $encoding="ANY";
     $encoding=preg_replace("#[|\\\\]#", "_", $encoding);
-    $code=preg_replace("#[|\\\\]#", "_", $code);
+    $Code=preg_replace("#[|\\\\]#", "_", $Code);
     $cmd=$genbarcode_loc." "
-	.escapeshellarg($code)." "
+	.escapeshellarg($Code)." "
 	.escapeshellarg(strtoupper($encoding))."";
     //print "'$cmd'<BR>\n";
     $fp=popen($cmd, "r");
@@ -322,7 +322,7 @@ function barcode_encode_genbarcode($code,$encoding){
 }
 
 /* barcode_encode(code, encoding)
- *   encodes $code with $encoding using genbarcode OR built-in encoder
+ *   encodes $Code with $encoding using genbarcode OR built-in encoder
  *   if you don't have genbarcode only EAN-13/ISBN is possible
  *
  * You can use the following encodings (when you have genbarcode):
@@ -345,26 +345,26 @@ function barcode_encode_genbarcode($code,$encoding){
  *    array[bars]     : the bars
  *    array[text]     : text-positioning info
  */
-function barcode_encode($code,$encoding){
+function barcode_encode($Code,$encoding){
     global $genbarcode_loc;
     if (
 		((preg_match("#^ean$#i", $encoding)
-		 && ( strlen($code)==12 || strlen($code)==13)))
+		 && ( strlen($Code)==12 || strlen($Code)==13)))
 		 
 		|| (($encoding) && (preg_match("#^isbn$#i", $encoding))
-		 && (( strlen($code)==9 || strlen($code)==10) ||
-		 (((preg_match("#^978#", $code) && strlen($code)==12) ||
-		  (strlen($code)==13)))))
+		 && (( strlen($Code)==9 || strlen($Code)==10) ||
+		 (((preg_match("#^978#", $Code) && strlen($Code)==12) ||
+		  (strlen($Code)==13)))))
 
 		|| (( !isset($encoding) || !$encoding || (preg_match("#^ANY$#i", $encoding) ))
-		 && (preg_match("#^[0-9]{12,13}$#", $code)))
+		 && (preg_match("#^[0-9]{12,13}$#", $Code)))
 	      
 		){
 	/* use built-in EAN-Encoder */
-	$bars=barcode_encode_ean($code, $encoding);
+	$bars=barcode_encode_ean($Code, $encoding);
     } else if (file_exists($genbarcode_loc)){
 	/* use genbarcode */
-	$bars=barcode_encode_genbarcode($code, $encoding);
+	$bars=barcode_encode_genbarcode($Code, $encoding);
     } else {
 	print "php-barcode needs an external programm for encodings other then EAN/ISBN<BR>\n";
 	print "<ul>\n";
@@ -392,8 +392,8 @@ function barcode_encode($code,$encoding){
  */
 
 
-function barcode_print($code, $encoding="ANY", $scale = 2 ,$mode = "png" ){
-    $bars=barcode_encode($code,$encoding);
+function barcode_print($Code, $encoding="ANY", $scale = 2 ,$mode = "png" ){
+    $bars=barcode_encode($Code,$encoding);
     if (!$bars) return;
     if (!$mode) $mode="png";
     if (preg_match("#^(text|txt|plain)$#i", $mode)) print barcode_outtext($bars['text'],$bars['bars']);

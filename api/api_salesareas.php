@@ -6,8 +6,8 @@
 					 FROM areas
 					  WHERE areacode='".$AreaCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] > 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] > 0) {
 			$Errors[$i] = AreaCodeNotSetup;
 		}
 		return $Errors;
@@ -75,9 +75,9 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($AreaDetails as $key => $value) {
+		foreach ($AreaDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		$SQL = 'INSERT INTO areas ('.mb_substr($FieldNames,0,-2) . ")
 				VALUES ('" .mb_substr($FieldValues,0,-2) . "') ";

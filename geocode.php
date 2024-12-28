@@ -13,15 +13,15 @@ $ErrMsg = _('An error occurred in retrieving the information');
 $Resultgeo = DB_query($SQL, $ErrMsg);
 $Row = DB_fetch_array($Resultgeo);
 
-$api_key = $Row['geocode_key'];
+$APIKey = $Row['geocode_key'];
 $center_long = $Row['center_long'];
 $center_lat = $Row['center_lat'];
 $map_height = $Row['map_height'];
 $map_width = $Row['map_width'];
-$map_host = $Row['map_host'];
+$MapHost = $Row['map_host'];
 
-define("MAPS_HOST", $map_host);
-define("KEY", $api_key);
+define("MAPS_HOST", $MapHost);
+define("KEY", $APIKey);
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' . ' ' . _('Geocoding of Customers and Suppliers')  . '</p>';
 
@@ -37,7 +37,7 @@ $Result2 = DB_query($SQL, $ErrMsg);
 
 // Initialize delay in geocode speed
 $delay = 0;
-$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
 
 // Iterate through the customer branch rows, geocoding each address
 
@@ -46,16 +46,16 @@ while ($Row = DB_fetch_array($Result)) {
   $geocode_pending = true;
 
   while ($geocode_pending) {
-    $address = urlencode($Row["braddress1"] . "," . $Row["braddress2"] . "," . $Row["braddress3"] . "," . $Row["braddress4"]);
+    $Address = urlencode($Row["braddress1"] . "," . $Row["braddress2"] . "," . $Row["braddress3"] . "," . $Row["braddress4"]);
     $id = $Row["branchcode"];
     $DebtorNo =$Row["debtorno"];
-    $request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
+    $RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
     echo '<br \>', _('Customer Code'), ': ', $id;
 
 
-    $xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
-//    $xml = simplexml_load_file($request_url) or die("url not loading");
+    $xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
+//    $xml = simplexml_load_file($RequestURL) or die("url not loading");
 
     $status = $xml->status;
 
@@ -80,13 +80,13 @@ while ($Row = DB_fetch_array($Result)) {
       $Update_result = DB_query($Query);
 
       if ($Update_result==1) {
-      echo '<br />'. 'Address: ' . $address . ' updated to geocode.';
+      echo '<br />'. 'Address: ' . $Address . ' updated to geocode.';
       echo '<br />'. 'Received status ' . $status . '<br />';
 	}
     } else {
       // failure to geocode
       $geocode_pending = false;
-      echo '<br />' . 'Address: ' . $address . _('failed to geocode.');
+      echo '<br />' . 'Address: ' . $Address . _('failed to geocode.');
       echo 'Received status ' . $status . '<br />';
     }
     usleep($delay);
@@ -98,15 +98,15 @@ while ($Row2 = DB_fetch_array($Result2)) {
   $geocode_pending = true;
 
   while ($geocode_pending) {
-    $address = $Row2["address1"] . ",+" . $Row2["address2"] . ",+" . $Row2["address3"] . ",+" . $Row2["address4"];
-    $address = urlencode($Row2["address1"] . "," . $Row2["address2"] . "," . $Row2["address3"] . "," . $Row2["address4"]);
+    $Address = $Row2["address1"] . ",+" . $Row2["address2"] . ",+" . $Row2["address3"] . ",+" . $Row2["address4"];
+    $Address = urlencode($Row2["address1"] . "," . $Row2["address2"] . "," . $Row2["address3"] . "," . $Row2["address4"]);
     $id = $Row2["supplierid"];
-    $request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
+    $RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
     echo '<p>' . _('Supplier Code: ') . $id;
 
-    $xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
-//    $xml = simplexml_load_file($request_url) or die("url not loading");
+    $xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
+//    $xml = simplexml_load_file($RequestURL) or die("url not loading");
 
     $status = $xml->status;
 
@@ -130,13 +130,13 @@ while ($Row2 = DB_fetch_array($Result2)) {
       $Update_result = DB_query($Query);
 
       if ($Update_result==1) {
-      echo '<br />' . 'Address: ' . $address . ' updated to geocode.';
+      echo '<br />' . 'Address: ' . $Address . ' updated to geocode.';
       echo '<br />' . 'Received status ' . $status . '<br />';
       }
     } else {
       // failure to geocode
       $geocode_pending = false;
-      echo '<br />' . 'Address: ' . $address . ' failed to geocode.';
+      echo '<br />' . 'Address: ' . $Address . ' failed to geocode.';
       echo '<br />' . 'Received status ' . $status . '<br />';
     }
     usleep($delay);

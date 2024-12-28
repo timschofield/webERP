@@ -6,8 +6,8 @@
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]>0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]>0) {
 			$Errors[$i] = GLAccountCodeAlreadyExists;
 		}
 		return $Errors;
@@ -19,8 +19,8 @@
 				FROM chartmaster
 				WHERE accountcode='".$AccountCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = GLAccountCodeDoesntExists;
 		}
 		return $Errors;
@@ -40,8 +40,8 @@
 				FROM accountgroups
 				WHERE groupname='".$AccountGroup."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = AccountGroupDoesntExist;
 		}
 		return $Errors;
@@ -54,8 +54,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($AccountDetails as $key => $value) {
-			$AccountDetails[$key] = DB_escape_string($value);
+		foreach ($AccountDetails as $key => $Value) {
+			$AccountDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyAccountCode($AccountDetails['accountcode'], sizeof($Errors), $Errors);
 		if (isset($AccountDetails['accountname'])){
@@ -64,9 +64,9 @@
 		$Errors=VerifyAccountGroupExists($AccountDetails['group_'], sizeof($Errors), $Errors);
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($AccountDetails as $key => $value) {
+		foreach ($AccountDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
 			$SQL = 'INSERT INTO chartmaster ('.mb_substr($FieldNames,0,-2).') '.

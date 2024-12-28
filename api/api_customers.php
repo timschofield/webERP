@@ -10,8 +10,8 @@
   				     FROM debtorsmaster
 				     WHERE debtorno='".$DebtorNumber."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] != 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] != 0) {
 			$Errors[$i] = DebtorNoAlreadyExists;
 		}
 		return $Errors;
@@ -23,8 +23,8 @@
 				     FROM debtorsmaster
 				     WHERE debtorno='".$DebtorNumber."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]==0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]==0) {
 			$Errors[$i] = DebtorDoesntExist;
 		}
 		return $Errors;
@@ -39,8 +39,8 @@
 	}
 
 /* Check that the address lines are correct length*/
-	function VerifyAddressLine($AddressLine, $length, $i, $Errors) {
-		if (mb_strlen($AddressLine)>$length) {
+	function VerifyAddressLine($AddressLine, $Length, $i, $Errors) {
+		if (mb_strlen($AddressLine)>$Length) {
 			$Errors[$i] = InvalidAddressLine;
 		}
 		return $Errors;
@@ -52,8 +52,8 @@
 					  FROM currencies
 					  WHERE currabrev='".$CurrCode."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = CurrencyCodeNotSetup;
 		}
 		return $Errors;
@@ -65,8 +65,8 @@
 					 FROM salestypes
 					  WHERE typeabbrev='".$SalesType."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = SalesTypeNotSetup;
 		}
 		return $Errors;
@@ -86,8 +86,8 @@
 					 FROM holdreasons
 					  WHERE reasoncode='".$HoldReason."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = HoldReasonNotSetup;
 		}
 		return $Errors;
@@ -99,8 +99,8 @@
 					 FROM paymentterms
 					  WHERE termsindicator='".$PaymentTerms."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = PaymentTermsNotSetup;
 		}
 		return $Errors;
@@ -228,13 +228,13 @@
 	}
 
 /* Check that the customer type is set up in the weberp database */
-	function VerifyCustomerType($debtortype , $i, $Errors) {
+	function VerifyCustomerType($DebtorType , $i, $Errors) {
 		$Searchsql = "SELECT COUNT(typeid)
 					 FROM debtortype
-					  WHERE typeid='".$debtortype."'";
+					  WHERE typeid='".$DebtorType."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = CustomerTypeNotSetup;
 		}
 		return $Errors;
@@ -257,8 +257,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($CustomerDetails as $key => $value) {
-			$CustomerDetails[$key] = DB_escape_string($value);
+		foreach ($CustomerDetails as $key => $Value) {
+			$CustomerDetails[$key] = DB_escape_string($Value);
 		}
 		$autonumbersql="SELECT confvalue FROM config
 						 WHERE confname='AutoDebtorNo'";
@@ -353,9 +353,9 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($CustomerDetails as $key => $value) {
+		foreach ($CustomerDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		$SQL = 'INSERT INTO debtorsmaster ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
@@ -385,8 +385,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($CustomerDetails as $key => $value) {
-			$CustomerDetails[$key] = DB_escape_string($value);
+		foreach ($CustomerDetails as $key => $Value) {
+			$CustomerDetails[$key] = DB_escape_string($Value);
 		}
 		if (!isset($CustomerDetails['debtorno'])) {
 			$Errors[sizeof($Errors)] = NoDebtorNumber;
@@ -481,8 +481,8 @@
 			$Errors=VerifyCustomerType($CustomerDetails['typeid'], sizeof($Errors), $Errors);
 		}
 		$SQL='UPDATE debtorsmaster SET ';
-		foreach ($CustomerDetails as $key => $value) {
-			$SQL .= $key.'="'.$value.'", ';
+		foreach ($CustomerDetails as $key => $Value) {
+			$SQL .= $key.'="'.$Value.'", ';
 		}
 		$SQL = mb_substr($SQL,0,-2)." WHERE debtorno='".$CustomerDetails['debtorno']."'";
 		if (sizeof($Errors)==0) {

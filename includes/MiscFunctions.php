@@ -103,7 +103,7 @@ function pre_var_dump(&$var) {
 class XmlElement {
 	var $name;
 	var $attributes;
-	var $content;
+	var $Content;
 	var $children;
 }
 

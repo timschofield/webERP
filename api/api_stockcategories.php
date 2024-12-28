@@ -13,8 +13,8 @@
 				      FROM stockcategory
 				      WHERE categoryid='".$StockCategory."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_array($SearchResult);
-		if ($answer[0]>0) {
+		$Answer = DB_fetch_array($SearchResult);
+		if ($Answer[0]>0) {
 			$Errors[$i] = StockCategoryAlreadyExists;
 		}
 		return $Errors;
@@ -44,8 +44,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($CategoryDetails as $key => $value) {
-			$CategoryDetails[$key] = DB_escape_string($value);
+		foreach ($CategoryDetails as $key => $Value) {
+			$CategoryDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyStockCategoryAlreadyExists($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
 		$Errors=VerifyCategoryID($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
@@ -58,9 +58,9 @@
 		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors);
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($CategoryDetails as $key => $value) {
+		foreach ($CategoryDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		$SQL = "INSERT INTO stockcategory ('" . mb_substr($FieldNames,0,-2) . "')
 				VALUES ('" . mb_substr($FieldValues,0,-2) . "') ";
@@ -82,8 +82,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($CategoryDetails as $key => $value) {
-			$CategoryDetails[$key] = DB_escape_string($value);
+		foreach ($CategoryDetails as $key => $Value) {
+			$CategoryDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyStockCategoryExists($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
 		$Errors=VerifyCategoryID($CategoryDetails['categoryid'], sizeof($Errors), $Errors);
@@ -96,13 +96,13 @@
 		$Errors=VerifyAccountCodeExists($CategoryDetails['wipact'], sizeof($Errors), $Errors);
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($CategoryDetails as $key => $value) {
+		foreach ($CategoryDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
 		$SQL="UPDATE stockcategory SET ";
-		foreach ($CategoryDetails as $key => $value) {
-			$SQL .= $key . "='" .$value. "', ";
+		foreach ($CategoryDetails as $key => $Value) {
+			$SQL .= $key . "='" .$Value. "', ";
 		}
 		$SQL = mb_substr($SQL,0,-2)." WHERE categoryid='" . $CategoryDetails['categoryid'] . "'";
 		if (sizeof($Errors)==0) {

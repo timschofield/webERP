@@ -130,42 +130,42 @@ class Mail_mimePart {
             define('MAIL_MIMEPART_CRLF', defined('MAIL_MIME_CRLF') ? MAIL_MIME_CRLF : "\r\n", TRUE);
         }
 
-        foreach ($params as $key => $value) {
+        foreach ($params as $key => $Value) {
             switch ($key) {
                 case 'content_type':
-                    $Headers['Content-Type'] = $value . (isset($charset) ? '; charset="' . $charset . '"' : '');
+                    $Headers['Content-Type'] = $Value . (isset($charset) ? '; charset="' . $charset . '"' : '');
                     break;
 
                 case 'encoding':
-                    $this->_encoding = $value;
-                    $Headers['Content-Transfer-Encoding'] = $value;
+                    $this->_encoding = $Value;
+                    $Headers['Content-Transfer-Encoding'] = $Value;
                     break;
 
                 case 'cid':
-                    $Headers['Content-ID'] = '<' . $value . '>';
+                    $Headers['Content-ID'] = '<' . $Value . '>';
                     break;
 
                 case 'disposition':
-                    $Headers['Content-Disposition'] = $value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
+                    $Headers['Content-Disposition'] = $Value . (isset($dfilename) ? '; filename="' . $dfilename . '"' : '');
                     break;
 
                 case 'dfilename':
                     if (isset($Headers['Content-Disposition'])) {
-                        $Headers['Content-Disposition'] .= '; filename="' . $value . '"';
+                        $Headers['Content-Disposition'] .= '; filename="' . $Value . '"';
                     } else {
-                        $dfilename = $value;
+                        $dfilename = $Value;
                     }
                     break;
 
                 case 'description':
-                    $Headers['Content-Description'] = $value;
+                    $Headers['Content-Description'] = $Value;
                     break;
 
                 case 'charset':
                     if (isset($Headers['Content-Type'])) {
-                        $Headers['Content-Type'] .= '; charset="' . $value . '"';
+                        $Headers['Content-Type'] .= '; charset="' . $Value . '"';
                     } else {
-                        $charset = $value;
+                        $charset = $Value;
                     }
                     break;
             }
@@ -211,8 +211,8 @@ class Mail_mimePart {
             for ($i = 0; $i < count($this->_subparts); $i++) {
                 $Headers = array();
                 $tmp = $this->_subparts[$i]->encode();
-                foreach ($tmp['headers'] as $key => $value) {
-                    $Headers[] = $key . ': ' . $value;
+                foreach ($tmp['headers'] as $key => $Value) {
+                    $Headers[] = $key . ': ' . $Value;
                 }
                 $subparts[] = implode(MAIL_MIMEPART_CRLF, $Headers) . MAIL_MIMEPART_CRLF . MAIL_MIMEPART_CRLF . $tmp['body'];
             }
@@ -304,7 +304,7 @@ class Mail_mimePart {
         while(list(, $Line) = each($Lines)){
 
             $linlen     = mb_strlen($Line);
-            $newline = '';
+            $Newline = '';
 
             for ($i = 0; $i < $linlen; $i++) {
                 $char = mb_substr($Line, $i, 1);
@@ -319,13 +319,13 @@ class Mail_mimePart {
                     $char = $escape . mb_strtoupper(sprintf('%02s', dechex($dec)));
                 }
 
-                if ((mb_strlen($newline) + mb_strlen($char)) >= $Line_max) {        // MAIL_MIMEPART_CRLF is not counted
-                    $output  .= $newline . $escape . $eol;                    // soft line break; " =\r\n" is okay
-                    $newline  = '';
+                if ((mb_strlen($Newline) + mb_strlen($char)) >= $Line_max) {        // MAIL_MIMEPART_CRLF is not counted
+                    $output  .= $Newline . $escape . $eol;                    // soft line break; " =\r\n" is okay
+                    $Newline  = '';
                 }
-                $newline .= $char;
+                $Newline .= $char;
             } // end of for
-            $output .= $newline . $eol;
+            $output .= $Newline . $eol;
         }
         $output = mb_substr($output, 0, -1 * mb_strlen($eol)); // Don't want last crlf
         return $output;

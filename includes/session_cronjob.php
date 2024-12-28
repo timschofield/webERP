@@ -56,7 +56,7 @@ if (isset($_SESSION['DatabaseName'])){
 		} else {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				if(get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
+					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
 				}
 				$PostVariableValue[$PostArrayKey] = DB_escape_string($PostArrayValue);
 			}

@@ -123,21 +123,21 @@ exit();
  *  This code constructs a new objet Label from the form's data
  *  provided by the user. It validates the data too.
  *  @param $data	The array of strings gived by the user
- *  @param $new	 This flag indicates that the labels is new, so check no repeated id
+ *  @param $New	 This flag indicates that the labels is new, so check no repeated id
  *  @param $ok	  The variable where the routine gives the validation result.
  *  @return		 The Label object constructed qith the data, included errors.
  */
-function getData($data, $new, &$ok) {
-	$ok = validData($data, $new);
+function getData($data, $New, &$ok) {
+	$ok = validData($data, $New);
 	return newLabel($data);
 }
 
-function validData($data, $new) {
+function validData($data, $New) {
 	global $allLabels, $DimensionTags, $DataTags;
 
 // Check the heading data
 	$Errors=array();
-	if ($new) {
+	if ($New) {
 		if (empty($data['id']))
 			$Errors[]=_('Id required');
 		elseif ($allLabels!=null AND $allLabels->findLabel($data['id'])!==false)
@@ -472,20 +472,20 @@ function showLabelsList($list) {
 */
 function createLabel($Label) {
 	global $allLabels;
-	$new = emptyList();
+	$New = emptyList();
 	$done=false;
 	if ($allLabels!=null) {
-		foreach ($allLabels as $oldLabel) {
-			if (!$done AND (string)$oldLabel->id >= (string)$Label->id) {
-				$new->addLabel($Label);
+		foreach ($allLabels as $OldLabel) {
+			if (!$done AND (string)$OldLabel->id >= (string)$Label->id) {
+				$New->addLabel($Label);
 				$done=true;
 			}
-			$new->addLabel($oldLabel);  // inser data in the list, replacing the old one
+			$New->addLabel($OldLabel);  // inser data in the list, replacing the old one
 		}
 	}
 	if (!$done)
-		$new->addLabel($Label);
-	$allLabels = $new;
+		$New->addLabel($Label);
+	$allLabels = $New;
 	rewrite($allLabels);	 // rewrite it to the XML file
 	return true;
 }
@@ -502,14 +502,14 @@ function createLabel($Label) {
 */
 function updateLabel($Label) {
 	global $allLabels;
-	$new = emptyList();
-	foreach ($allLabels as $oldLabel) {
-		if ((string)$oldLabel->id == (string)$Label->id)
-			$new->addLabel($Label);
+	$New = emptyList();
+	foreach ($allLabels as $OldLabel) {
+		if ((string)$OldLabel->id == (string)$Label->id)
+			$New->addLabel($Label);
 		else
-			$new->addLabel($oldLabel);  // inser data in the list, replacing the old one
+			$New->addLabel($OldLabel);  // inser data in the list, replacing the old one
 	}
-	$allLabels = $new;
+	$allLabels = $New;
 	rewrite($allLabels);	 // rewrite it to the XML file
 	return true;
 }
@@ -527,13 +527,13 @@ function updateLabel($Label) {
  *  @return true in case of success
  */
 function deleteLabel($list, $LabelID) {
-	$new = emptyList();
+	$New = emptyList();
 	foreach ($list as $Label) {
 		if ((string)$Label->id!=$LabelID)
-			$new->addLabel($Label);
+			$New->addLabel($Label);
 	}
-	rewrite($new);
-	return $new;
+	rewrite($New);
+	return $New;
 }
 
 function rewrite($list) {

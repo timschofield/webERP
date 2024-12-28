@@ -930,8 +930,8 @@ function ChangeOrderQuotationFlag($OrderNo, $Flag){
 function GetPaypalReturnDataInArray($RawData){
 	$ResponseArray = Array();
 	$MainArray = explode(',', str_replace(array('{', '}', '"'), "", $RawData));
-	foreach ($MainArray as $i => $value) {
-		$TmpArray = explode(':', $value);
+	foreach ($MainArray as $i => $Value) {
+		$TmpArray = explode(':', $Value);
 		if(sizeof($TmpArray) > 1) {
 			$ResponseArray[$TmpArray[0]] = $TmpArray[1];
 		}
@@ -1057,8 +1057,8 @@ function UpdateOpenCartOrderPayment($OrderId){
 	$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
 }
 
-function RoundPriceFromCart($value, $currency){
-	switch ($currency){
+function RoundPriceFromCart($Value, $Currency){
+	switch ($Currency){
 	case 'AUD':
 		$round = 0.01;
 		$step = 0;
@@ -1082,14 +1082,14 @@ function RoundPriceFromCart($value, $currency){
 	}
 
 	if ($round) {
-		$value = round($value / $round) * $round;
+		$Value = round($Value / $round) * $round;
 	}
 
 	if ($step) {
-		$value -= $step;
+		$Value -= $step;
 	}
 
-	return $value;
+	return $Value;
 }
 
 function GetWeberpShippingMethod($OpenCartShippingMethod){
