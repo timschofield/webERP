@@ -53,19 +53,19 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 		$_POST['Status']=4;
 	}
 
-	$statuses[] = _('Not Yet Quoted');
-	$statuses[] = _('Quoted - No Order Placed');
-	$statuses[] = _('Order Placed');
-	$statuses[] = _('Completed');
-	$statuses[] = _('All Contracts');
+	$Statuses[] = _('Not Yet Quoted');
+	$Statuses[] = _('Quoted - No Order Placed');
+	$Statuses[] = _('Order Placed');
+	$Statuses[] = _('Completed');
+	$Statuses[] = _('All Contracts');
 
-	$status_count = count($statuses);
+	$StatusCount = count($Statuses);
 
-	for ( $i = 0; $i < $status_count; $i++ ) {
+	for ( $i = 0; $i < $StatusCount; $i++ ) {
 		if ( $i == $_POST['Status'] ) {
-			echo '<option selected="selected" value="' . $i . '">' . $statuses[$i] . '</option>';
+			echo '<option selected="selected" value="' . $i . '">' . $Statuses[$i] . '</option>';
 		} else {
-			echo '<option value="' . $i . '">' . $statuses[$i] . '</option>';
+			echo '<option value="' . $i . '">' . $Statuses[$i] . '</option>';
 		}
 	}
 

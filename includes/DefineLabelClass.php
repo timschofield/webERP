@@ -160,15 +160,15 @@ class LabelList extends SimpleXMLElement {
  *  finishes the program execution. It shows the footer part of
  *  the general screen.
  *
- *  @param  $msg is the error message
+ *  @param  $Msg is the error message
  *  @return nothing
  */
-function abortMsg($msg) {
+function abortMsg($Msg) {
     global $RootPath, $DefaultClock, $Version, $Theme;
     $Title=_('No label templates exist');
     include ('includes/header.php');
     echo '<br />';
-    prnMsg( $msg, 'error');
+    prnMsg( $Msg, 'error');
     include ('includes/footer.php');
     exit;
 }

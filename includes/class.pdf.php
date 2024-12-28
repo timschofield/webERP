@@ -70,13 +70,13 @@ if (!class_exists('Cpdf', false)) {
 			TCPDF::Line($x1,$this->h-$y1,$x2,$this->h-$y2,$style);
 		}
 
-		function addText($XPos,$YPos,$fontsize,$text/*,$angle=0,$wordSpaceAdjust=0*/) {
+		function addText($XPos,$YPos,$fontsize,$Text/*,$angle=0,$wordSpaceAdjust=0*/) {
 			// $XPos = cell horizontal coordinate from page left side to cell left side in dpi (72dpi = 25.4mm).
 			// $YPos = cell vertical coordinate from page bottom side to cell top side in dpi (72dpi = 25.4mm).
 			// $fontsize = font size in dpi (72dpi = 25.4mm).
-	// Javier	$text = html_entity_decode($text);
+	// Javier	$Text = html_entity_decode($Text);
 			$this->SetFontSize($fontsize);// Public function SetFontSize() in ~/includes/tcpdf/tcpdf.php.
-			$this->Text($XPos, $this->h-$YPos, $text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
+			$this->Text($XPos, $this->h-$YPos, $Text);// Public function Text() in ~/includes/tcpdf/tcpdf.php.
 		}
 
 		function addTextWrap($XPos, $YPos, $Width, $Height, $Text, $Align='J', $border=0, $fill=0) {

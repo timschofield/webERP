@@ -677,8 +677,8 @@ if (isset($StockItemsResult)
 //end if stock search results to show
   else {
 	 if (isset($StockItemsResult) AND DB_num_rows($StockItemsResult) == 1) {
-		 $mystkrow = DB_fetch_array($StockItemsResult);
-		 $SelectedStockItem = $mystkrow['stockid'];
+		 $MyStkRow = DB_fetch_array($StockItemsResult);
+		 $SelectedStockItem = $MyStkRow['stockid'];
 	 }
 
 	//figure out the SQL required from the inputs available

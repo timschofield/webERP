@@ -207,8 +207,8 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the narrative field is 256 characters or less long */
-	function VerifyNarrative($narrative, $i, $Errors) {
-		if (mb_strlen($narrative)>256) {
+	function VerifyNarrative($Narrative, $i, $Errors) {
+		if (mb_strlen($Narrative)>256) {
 			$Errors[$i] = InvalidNarrative;
 		}
 		return $Errors;

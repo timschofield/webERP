@@ -29,7 +29,7 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Page') . ': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
-$YPos -= $Line_height*2;
+$YPos -= $LineHeight*2;
 $FontSize=8;
 
 $NewPage=true;

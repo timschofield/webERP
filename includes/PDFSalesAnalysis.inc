@@ -28,7 +28,7 @@ $pdf->addInfo('Title',$ReportSpec['reportheading']);
 $pdf->addInfo('Subject',_('Sales Analysis Report') . ' ' . $ReportSpec['reportheading']);
 
 $PageNumber = 0;
-$Line_height=12;
+$LineHeight=12;
 
 include ('includes/PDFSalesAnalPageHeader.inc');
 
@@ -110,7 +110,7 @@ While ($MyRow = DB_fetch_array($Result)){
 						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 					}
 				}
-				$Ypos -=(2*$Line_height);
+				$Ypos -=(2*$LineHeight);
 				/*reset the accumulators to 0 */
 				for ($i=0;$i<=10;$i++){
 					$AccumLvl3[$i]=0;
@@ -163,7 +163,7 @@ While ($MyRow = DB_fetch_array($Result)){
 						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 					}/*end if not a calculation column*/
 				}/*end while loop through column definitions */
-				$Ypos -=(2*$Line_height);
+				$Ypos -=(2*$LineHeight);
 				/*reset the accumulators to 0 */
 				for ($i=0;$i<=10;$i++){
 					$AccumLvl2[$i]=0;
@@ -216,7 +216,7 @@ While ($MyRow = DB_fetch_array($Result)){
 						$LeftOvers = $pdf->addTextWrap($Xpos,$Ypos,60,$FontSize, $TotalCalculation,'right');
 					}/*end if its not a calculation */
 				} /* end loop around column defintions */
-				$Ypos -=(2*$Line_height);
+				$Ypos -=(2*$LineHeight);
 
 				/*reset the accumulators to 0 */
 				for ($i=0;$i<=10;$i++){
@@ -236,7 +236,7 @@ While ($MyRow = DB_fetch_array($Result)){
 			$LeftOvers = $pdf->addTextWrap(15,$Ypos,205,$FontSize,$GroupHeadingText);
 
 			if ($MyRow['col3']!='0'){
-				$Ypos-=$Line_height;
+				$Ypos-=$LineHeight;
 			}
 		}
 
@@ -250,7 +250,7 @@ While ($MyRow = DB_fetch_array($Result)){
 			$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$GroupHeadingText);
 
 			if ($MyRow['col5']!='0'){
-				$Ypos-=$Line_height;
+				$Ypos-=$LineHeight;
 			}
 		}
 		if (($MyRow['col5']!=$GrpData3  OR $NewHeading ==1) AND $MyRow['col5']!='0'){
@@ -263,7 +263,7 @@ While ($MyRow = DB_fetch_array($Result)){
 			$LeftOvers = $pdf->addTextWrap(30,$Ypos,190,$FontSize,$GroupHeadingText);
 
 			if ($MyRow['col7']!='0'){
-				$Ypos-=$Line_height;
+				$Ypos-=$LineHeight;
 			}
 		}
 
@@ -292,9 +292,9 @@ While ($MyRow = DB_fetch_array($Result)){
 			$AccumLvl4[$Cols['colno']] += $MyRow[$ColumnNo];
 		}
 
-		$Ypos -=$Line_height;
+		$Ypos -=$LineHeight;
 
-		if ($Ypos - (2*$Line_height) < $Bottom_Margin){
+		if ($Ypos - (2*$LineHeight) < $Bottom_Margin){
 			include ('includes/PDFSalesAnalPageHeader.inc');
 		}//end if need a new page headed up
 		$GrpData1 = $MyRow['col1'];
@@ -353,7 +353,7 @@ if ($LastLine['col5']!='0' && $LastLine['col7']!='0'){
 			}
 
 		}
-		$Ypos -=$Line_height;
+		$Ypos -=$LineHeight;
 	}
 }
 
@@ -404,7 +404,7 @@ if ($LastLine['col3']!='0' AND $LastLine['col5']!='0'){
 			}
 
 		}
-		$Ypos -=$Line_height;
+		$Ypos -=$LineHeight;
 	}
 }
 if ($LastLine['col3']!='0'){
@@ -453,7 +453,7 @@ if ($LastLine['col3']!='0'){
 			}
 
 		}
-		$Ypos -=(2*$Line_height);
+		$Ypos -=(2*$LineHeight);
 	}
 }
 if ($Counter>0){
@@ -500,7 +500,7 @@ if ($Counter>0){
 		}
 
 	}
-	$Ypos -=$Line_height;
+	$Ypos -=$LineHeight;
 }
 
 

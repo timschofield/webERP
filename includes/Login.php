@@ -4,10 +4,10 @@ include ($PathPrefix . 'includes/LanguageSetup.php');
 include ('LanguagesArray.php');
 
 // Display demo user name and password within login form if $AllowDemoMode is true
-if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text))) {
-	$demo_text = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('weberp') . '</i>';
-} elseif (!isset($demo_text)) {
-	$demo_text = _('Please login here');
+if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($DemoText))) {
+	$DemoText = _('Login as user') . ': <i>' . _('admin') . '</i><br />' . _('with password') . ': <i>' . _('weberp') . '</i>';
+} elseif (!isset($DemoText)) {
+	$DemoText = _('Please login here');
 }
 
 echo '<!DOCTYPE html>';
@@ -106,8 +106,8 @@ echo '<label>', _('User name'), ':</label>
 	<input type="text" id="eye" readonly title="', _('Show Password'), '" />
 	<div id="demo_text">';
 
-if (isset($demo_text)) {
-	echo $demo_text;
+if (isset($DemoText)) {
+	echo $DemoText;
 }
 
 echo '</div>';

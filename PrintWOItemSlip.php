@@ -42,7 +42,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 		$pdf->addInfo('Title', _('WO Production Slip'));
 		$pdf->addInfo('Subject', _('WO Production Slip'));
 
-		while ($myItem = DB_fetch_array($ResultItems)) {
+		while ($MyItem = DB_fetch_array($ResultItems)) {
 			// print the info of the parent product
 			$FontSize = 10;
 			$PageNumber = 1;
@@ -50,9 +50,9 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 			$Xpos = $Left_Margin + 1;
 			$Fill = false;
 
-			$QtyPending = $myItem['qtyreqd'] - $myItem['qtyrecd'];
+			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
 
-			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockId, $myItem['description'], $QtyPending, $myItem['units'], $myItem['decimalplaces'], $ReportDate);
+			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockId, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
 
 			$PartCounter = 0;
 
@@ -74,25 +74,25 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 
 			$ErrMsg = _('The bill of material could not be retrieved because');
 			$BOMResult = DB_query($SQLBOM, $ErrMsg);
-			while ($myComponent = DB_fetch_array($BOMResult)) {
+			while ($MyComponent = DB_fetch_array($BOMResult)) {
 
-				$ComponentNeeded = $myComponent['bomqty'] * $QtyPending;
-				$PrevisionShrinkage = $ComponentNeeded * ($myComponent['shrinkfactor'] / 100);
+				$ComponentNeeded = $MyComponent['bomqty'] * $QtyPending;
+				$PrevisionShrinkage = $ComponentNeeded * ($MyComponent['shrinkfactor'] / 100);
 
 				$Xpos = $Left_Margin + 1;
 
-				$pdf->addTextWrap($Xpos, $YPos, 150, $FontSize, $myComponent['component'], 'left');
-				$pdf->addTextWrap(150, $YPos, 50, $FontSize, locale_number_format($myComponent['bomqty'], 'Variable'), 'right');
-				$pdf->addTextWrap(200, $YPos, 30, $FontSize, $myComponent['units'], 'left');
-				$pdf->addTextWrap(230, $YPos, 50, $FontSize, locale_number_format($ComponentNeeded, $myComponent['decimalplaces']), 'right');
-				$pdf->addTextWrap(280, $YPos, 30, $FontSize, $myComponent['units'], 'left');
-				$pdf->addTextWrap(310, $YPos, 50, $FontSize, locale_number_format($PrevisionShrinkage, $myComponent['decimalplaces']), 'right');
-				$pdf->addTextWrap(360, $YPos, 30, $FontSize, $myComponent['units'], 'left');
+				$pdf->addTextWrap($Xpos, $YPos, 150, $FontSize, $MyComponent['component'], 'left');
+				$pdf->addTextWrap(150, $YPos, 50, $FontSize, locale_number_format($MyComponent['bomqty'], 'Variable'), 'right');
+				$pdf->addTextWrap(200, $YPos, 30, $FontSize, $MyComponent['units'], 'left');
+				$pdf->addTextWrap(230, $YPos, 50, $FontSize, locale_number_format($ComponentNeeded, $MyComponent['decimalplaces']), 'right');
+				$pdf->addTextWrap(280, $YPos, 30, $FontSize, $MyComponent['units'], 'left');
+				$pdf->addTextWrap(310, $YPos, 50, $FontSize, locale_number_format($PrevisionShrinkage, $MyComponent['decimalplaces']), 'right');
+				$pdf->addTextWrap(360, $YPos, 30, $FontSize, $MyComponent['units'], 'left');
 
 				$YPos-= $LineHeight;
 
 				if ($YPos < $Bottom_Margin + $LineHeight) {
-					PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $myItem['description'], $QtyPending, $myItem['units'], $myItem['decimalplaces'], $ReportDate);
+					PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
 				}
 			}
 		}
@@ -104,7 +104,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 		PrintFooterSlip($pdf, _('Components Ready By'), _('Item Produced By'), _('Quality Control By'), $YPos, $FontSize, false);
 
 		if ($YPos < $Bottom_Margin + $LineHeight) {
-			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $myItem['description'], $QtyPending, $myItem['units'], $myItem['decimalplaces'], $ReportDate);
+			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
 		}
 
 		$pdf->OutputD('WO-' . $WO . '-' . $StockId . '-' . Date('Y-m-d') . '.pdf');

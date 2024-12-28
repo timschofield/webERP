@@ -1441,9 +1441,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td rowspan="2"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
-				$varColSpan=8+$ShowPOLine+$ShowDiscountGP;
+				$VarColSpan=8+$ShowPOLine+$ShowDiscountGP;
 				echo $RowStarter .
-						'<td colspan="' . $varColSpan . '">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
+						'<td colspan="' . $VarColSpan . '">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
 					</tr>';
 			} else {
 				echo '<tr>
@@ -1463,10 +1463,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} else {
 			$ColSpanNumber = 1;
 		}*/
-		$varColSpan=1+$ShowPOLine+$ShowDiscountGP;
+		$VarColSpan=1+$ShowPOLine+$ShowDiscountGP;
 		echo '<tr class="striped_row">
 				<td class="number" colspan="6"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-				<td colspan="' . $varColSpan . '" class="number"><b>' . $DisplayTotal . '</b></td>
+				<td colspan="' . $VarColSpan . '" class="number"><b>' . $DisplayTotal . '</b></td>
 			</tr>
 			</table>';
 

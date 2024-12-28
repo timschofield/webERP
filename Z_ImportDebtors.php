@@ -99,25 +99,25 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	//get file handle
 	$FileHandle = fopen($TempName, 'r');
 	//get the header row
-	$headRow = fgetcsv($FileHandle, 10000, ",");
+	$HeadRow = fgetcsv($FileHandle, 10000, ",");
 	//check for correct number of fields
-	if (count($headRow) != count($FieldHeadings)) {
-		prnMsg(_('File contains ' . count($headRow) . ' columns, expected ' . count($FieldHeadings) . '. Try downloading a new template.'), 'error');
+	if (count($HeadRow) != count($FieldHeadings)) {
+		prnMsg(_('File contains ' . count($HeadRow) . ' columns, expected ' . count($FieldHeadings) . '. Try downloading a new template.'), 'error');
 		fclose($FileHandle);
 		include ('includes/footer.php');
 		exit;
 	}
 
 	//test header row field name and sequence
-	$head = 0;
-	foreach ($headRow as $headField) {
-		if (mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head])) {
-			prnMsg(_('File contains incorrect headers (' . mb_strtoupper($headField) . ' != ' . mb_strtoupper($header[$head]) . '. Try downloading a new template.'), 'error');
+	$Head = 0;
+	foreach ($HeadRow as $HeadField) {
+		if (mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head])) {
+			prnMsg(_('File contains incorrect headers (' . mb_strtoupper($HeadField) . ' != ' . mb_strtoupper($Header[$Head]) . '. Try downloading a new template.'), 'error');
 			fclose($FileHandle);
 			include ('includes/footer.php');
 			exit;
 		}
-		$head++;
+		$Head++;
 	}
 
 	//start database transaction
@@ -130,9 +130,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	while (($Filerow = fgetcsv($FileHandle, 10000, ",")) !== false) {
 
 		//check for correct number of fields
-		$fieldCount = count($Filerow);
-		if ($fieldCount != $FieldTarget) {
-			prnMsg(_($FieldTarget . ' fields required, ' . $fieldCount . ' fields received'), 'error');
+		$FieldCount = count($Filerow);
+		if ($FieldCount != $FieldTarget) {
+			prnMsg(_($FieldTarget . ' fields required, ' . $FieldCount . ' fields received'), 'error');
 			fclose($FileHandle);
 			include ('includes/footer.php');
 			exit;

@@ -9,12 +9,12 @@ $YPos= $Page_Height-$Top_Margin;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-$YPos -=$Line_height;
+$YPos -=$LineHeight;
 
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Sell Through Support Claims Between') . ' ' . $_POST['FromDate'] . ' ' . _('and') . ' ' . $_POST['ToDate']);
 $LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '    ' . _('Page') . ' ' . $PageNumber);
 
-$YPos -=(2*$Line_height);
+$YPos -=(2*$LineHeight);
 
 /*set up the headings */
 $Xpos = $Left_Margin;

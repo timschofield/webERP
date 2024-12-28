@@ -301,15 +301,15 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				if ($MyRow2['serialised'] == 1) {
 					$ControlLabel = _('Serial') . ':';
 				}
-				$sersql = "SELECT serialno,
+				$SerSQL = "SELECT serialno,
 									moveqty
 							FROM pickserialdetails
 							WHERE pickserialdetails.detailno='" . $MyRow2['detailno'] . "'";
-				$serresult = DB_query($sersql, $ErrMsg);
-				while ($myser = DB_fetch_array($serresult)) {
+				$SerResult = DB_query($SerSQL, $ErrMsg);
+				while ($MySer = DB_fetch_array($SerResult)) {
 					$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $ControlLabel, 'right');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myser['serialno'], 'left');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myser['moveqty'], 'right');
+					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['serialno'], 'left');
+					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['moveqty'], 'right');
 					if ($YPos - $LineHeight <= 50) {
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;

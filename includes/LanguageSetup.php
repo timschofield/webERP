@@ -66,14 +66,14 @@ if (!function_exists('gettext')) {
 		$PhpGettext = new gettext_reader($input);
 
 		if (!function_exists('_')){
-			function _($text) {
+			function _($Text) {
 				global $PhpGettext;
-				return $PhpGettext->translate($text);
+				return $PhpGettext->translate($Text);
 			}
 		}
 	} elseif (!function_exists('_')) {
-		function _($text){
-			return $text;
+		function _($Text){
+			return $Text;
 		}
 	}
 	include($PathPrefix . 'includes/LanguagesArray.php');

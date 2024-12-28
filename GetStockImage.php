@@ -69,7 +69,7 @@ if( isset($_GET['transparent'])) {
 	$doTrans = true;
 }
 if( isset($_GET['text']) ) {
-	$text = $_GET['text'];
+	$Text = $_GET['text'];
 }
 if( isset($_GET['transcolor'])) {
 	$doTrans = true;
@@ -110,8 +110,8 @@ if( $i === false )
 else {
 	$Type   = strtolower(mb_substr($StockID,$i+1,mb_strlen($StockID)));
 	$StockID = mb_substr($StockID,0,$i);
-	if($blanktext && !isset($text))
-		$text = '';
+	if($blanktext && !isset($Text))
+		$Text = '';
 }
 $style = $Type;
 $functype = $Type;
@@ -197,18 +197,18 @@ if( $automake AND !isset($FileName) ) {
 		imagecolortransparent($im, $ixtranscolor);
 	}
 
-	if(!isset($text))
-		$text = $StockID;
-	if(mb_strlen($text) > 0 ) {
+	if(!isset($Text))
+		$Text = $StockID;
+	if(mb_strlen($Text) > 0 ) {
 		$fw = imagefontwidth($fontsize);
 		$fh = imagefontheight($fontsize);
 		$fy = (imagesy($im) - ($fh)) / 2;
 		$fyh = $fy + $fh - 1;
-		$textwidth = $fw * mb_strlen($text);
-		$px = (imagesx($im) - $textwidth) / 2;
+		$Textwidth = $fw * mb_strlen($Text);
+		$px = (imagesx($im) - $Textwidth) / 2;
 		if (!$notextbg)
 			imagefilledrectangle($im,$px,$fy,imagesx($im)-($px+1),$fyh, $ixtextbgcolor );
-		imagestring($im, $fontsize, $px, $fy, $text, $ixtextcolor);
+		imagestring($im, $fontsize, $px, $fy, $Text, $ixtextcolor);
 	}
 
 } else {
@@ -306,18 +306,18 @@ if( $automake AND !isset($FileName) ) {
 	    $ixtextbgcolor = $ixbgcolor;
 //	$ixtextbgcolor = imagecolorallocatealpha($im,
 //		0,0,0,0);
-	if(!isset($text))
-		$text = $StockID;
-	if(mb_strlen($text) > 0 ) {
+	if(!isset($Text))
+		$Text = $StockID;
+	if(mb_strlen($Text) > 0 ) {
 		$fw = imagefontwidth($fontsize);
 		$fh = imagefontheight($fontsize);
 		$fy = imagesy($im) - ($fh);
 		$fyh = imagesy($im) - 1;
-		$textwidth = $fw * mb_strlen($text);
-		$px = (imagesx($im) - $textwidth) / 2;
+		$Textwidth = $fw * mb_strlen($Text);
+		$px = (imagesx($im) - $Textwidth) / 2;
 		if (!$notextbg)
 			imagefilledrectangle($im,$px,$fy,imagesx($im)-($px+1),$fyh, $ixtextbgcolor );
-		imagestring($im, $fontsize, $px, $fy, $text, $ixtextcolor);
+		imagestring($im, $fontsize, $px, $fy, $Text, $ixtextcolor);
 	}
 }
 // Do we need to bevel

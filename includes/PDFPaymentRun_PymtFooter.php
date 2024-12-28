@@ -1,8 +1,8 @@
 <?php
 /*Code to print footer details for each supplier being paid and process payment total for each supplier
 as necessary an include file used since the same code is used twice */
-$YPos -= (0.5*$Line_height);
-$PDF->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
+$YPos -= (0.5*$LineHeight);
+$PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
 $LeftOvers = $PDF->addTextWrap($Left_Margin+10,$YPos,340-$Left_Margin,$FontSize,_('Total Due For') . ' ' . $SupplierName, 'left');
 
@@ -229,13 +229,13 @@ if (isset($_POST['PrintPDFAndProcess'])){
 
 }
 
-$YPos -= (1.5*$Line_height);
+$YPos -= (1.5*$LineHeight);
 
-$PDF->line($Left_Margin, $YPos+$Line_height,$Page_Width-$Right_Margin, $YPos+$Line_height);
+$PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
-$YPos -= $Line_height;
+$YPos -= $LineHeight;
 
-if ($YPos < $Bottom_Margin + $Line_height){
+if ($YPos < $Bottom_Margin + $LineHeight){
 	$PageNumber++;
 	include('PDFPaymentRunPageHeader.inc');
 }

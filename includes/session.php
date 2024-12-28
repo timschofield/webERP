@@ -215,11 +215,11 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit;
 
 		case UL_NOTVALID:
-			$demo_text = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
 
 		case UL_MAINTENANCE:
-			$demo_text = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
 
 	}

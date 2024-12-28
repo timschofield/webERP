@@ -70,7 +70,7 @@ $pdf->addText(700, 560-90,$FontSize,  $PageNumber);
 $YPos -= 170;
 $XPos = 15;
 
-$header_line_height = $Line_height+25;
+$HeaderLineHeight = $LineHeight+25;
 
 $LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize, _('Item Code'),'left');
 $LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize, _('Item Description'),'left');
@@ -80,7 +80,7 @@ $LeftOvers = $pdf->addTextWrap(527,$YPos,70,$FontSize, _('Bin Locn'),'left');
 $LeftOvers = $pdf->addTextWrap(593,$YPos,85,$FontSize,_('This Del'),'right');
 $LeftOvers = $pdf->addTextWrap(692,$YPos,85,$FontSize, _('Prev Dels'),'right');
 
-$YPos -= $Line_height;
+$YPos -= $LineHeight;
 
 $FontSize =12;
 

@@ -826,13 +826,13 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		echo '  ' . _('Salesman') . '  - ' . $_POST['Salesman'] . '<br/>';
 		echo '  ' . _('Sales Area') . '  - ' . $_POST['Area'] . '<br/>';
 		If ($_POST['DateType'] != 'Order') {
-		    $itype = 'All';
+		    $IType = 'All';
 		    if($_POST['InvoiceType'] == '10') {
-		        $itype = 'Sales Invoice';
+		        $IType = 'Sales Invoice';
 		    } elseif($_POST['InvoiceType'] == '11') {
-		        $itype = 'Credit Notes';
+		        $IType = 'Credit Notes';
 		    }
-		    echo '  ' . _('Invoice Type') . '  - ' . $itype . '<br/>';
+		    echo '  ' . _('Invoice Type') . '  - ' . $IType . '<br/>';
         }
 		echo '<br/><br/>';
 		if($_POST['ReportType'] == 'Detail') {
@@ -916,7 +916,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 					print '<br/>';
 					$TotalQty += $MyRow['qty'];
 				}
-				$lastdecimalplaces = $MyRow['decimalplaces'];
+				$LastDecimalPlaces = $MyRow['decimalplaces'];
 				$TotalExtCost += $MyRow['extcost'];
 				$TotalExtPrice += $MyRow['extprice'];
 				$TotalInvQty += $MyRow['qtyinvoiced'];
@@ -958,7 +958,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 		} else {
 		  // Print summary stuff
 			$SummaryType = $_POST['SummaryType'];
-			$columnheader7 = ' ';
+			$ColumnHeader7 = ' ';
 			// Set up description based on the Summary Type
 			if($SummaryType == 'name') {
 				$SummaryType = 'name';
@@ -975,7 +975,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				$Description = 'name';
 				$SummaryHeader =  _('Transaction Number');
 				$DescriptionHeader =  _('Customer Name');
-				$columnheader7 =  _('Order Number');
+				$ColumnHeader7 =  _('Order Number');
 			}
 			if($SummaryType == 'debtorno') {
 				$Description = 'name';
@@ -986,7 +986,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				$Description = 'debtorno';
 				$SummaryHeader =  _('Order Number');
 				$DescriptionHeader =  _('Customer Code');
-				$columnheader7 =  _('Customer Name');
+				$ColumnHeader7 =  _('Customer Name');
 			}
 			if($SummaryType == 'categoryid') {
 				$Description = 'categorydescription';
@@ -1015,18 +1015,18 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				 _('Extended Cost'),
 				 _('Extended Price'),
 				 _('Invoiced Qty'),
-				 _($columnheader7));
+				 _($ColumnHeader7));
 				print '<br/><br/>';
 
-				$column7 = ' ';
+				$Column7 = ' ';
 				$Linectr = 0;
 			while ($MyRow = DB_fetch_array($Result)) {
 			    $Linectr++;
 				if($SummaryType == 'orderno') {
-				    $column7 = $MyRow['name'];
+				    $Column7 = $MyRow['name'];
 				}
 				if($SummaryType == 'transno') {
-				    $column7 =  $MyRow['orderno'];
+				    $Column7 =  $MyRow['orderno'];
 				}
 				if($_POST['DateType'] == 'Order') {
 				    // quantity is from salesorderdetails
@@ -1042,7 +1042,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				locale_number_format($MyRow['extcost'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($MyRow['extprice'],$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($MyRow['qtyinvoiced'],2),
-				$column7);
+				$Column7);
 
 				print '<br/>';
 				$TotalQty += $DisplayQty;

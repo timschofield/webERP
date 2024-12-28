@@ -46,7 +46,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				AND prices.currabrev ='" . $_POST['CurrCode'] . "'
 				AND prices.enddate>= CURRENT_DATE";
 	$Result = DB_query($SQL);
-	$numrow = DB_num_rows($Result);
+	$NumRow = DB_num_rows($Result);
 
 	if ($_POST['submit'] == 'Update') {
 			//Update Prices
@@ -124,7 +124,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		}//end while loop
 		DB_free_result($Result); //clear the old result
 		$Result = DB_query($SQL); //re-run the query with the updated prices
-		$numrow = DB_num_rows($Result); // get the new number - should be the same!!
+		$NumRow = DB_num_rows($Result); // get the new number - should be the same!!
 	}
 
 	$SQLcat = "SELECT categorydescription
@@ -147,7 +147,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 
 	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
 
-	if ($numrow > 0) { //the number of prices returned from the main prices query is
+	if ($NumRow > 0) { //the number of prices returned from the main prices query is
 		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />

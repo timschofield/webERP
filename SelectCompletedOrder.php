@@ -565,8 +565,8 @@ if (isset($StockItemsResult)) {
 If (isset($SalesOrdersResult)) {
 	if (DB_num_rows($SalesOrdersResult) == 1) {
 		if (!isset($OrderNumber)) {
-			$ordrow = DB_fetch_array($SalesOrdersResult);
-			$OrderNumber = $ordrow['orderno'];
+			$OrdRow = DB_fetch_array($SalesOrdersResult);
+			$OrderNumber = $OrdRow['orderno'];
 		}
 		echo '<meta http-equiv="refresh" content="0; url=' . $RootPath . '/OrderDetails.php?OrderNumber=' . $OrderNumber. '">';
 		exit;

@@ -288,7 +288,7 @@ if (isset($_POST['submit'])) {
 		echo $SQL;
 		prnMsg(_('QA Sample') . ' ' . $SelectedSampleID . _('has been deleted from the database'),'success');
 		unset ($SelectedSampleID);
-		unset($delete);
+		unset($Delete);
 		unset ($_GET['delete']);
 	}
 }

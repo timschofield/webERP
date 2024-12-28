@@ -1013,10 +1013,10 @@ if (isset($PrintPDF)
 									$DisplayNet);
 
 					      if (mb_strlen($MyRow2['narrative'])>1){
-                                $narrative = str_replace(array("\r\n", "\n", "\r", "\\r\\n"), '<br />', $MyRow2['narrative']);
+                                $Narrative = str_replace(array("\r\n", "\n", "\r", "\\r\\n"), '<br />', $MyRow2['narrative']);
 							echo '<tr class="striped_row">
 								<td></td>
-								<td colspan="6">' . $narrative . '</td>
+								<td colspan="6">' . $Narrative . '</td>
 								</tr>';
 							$LineCounter++;
 					      }

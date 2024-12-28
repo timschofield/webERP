@@ -132,26 +132,26 @@ if ($_GET['Action'] == 'Enter'){
 		$FileHandle = fopen($TempName, 'r');
 
 		//get the header row
-		$headRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
+		$HeadRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
 
 		//check for correct number of fields
-		if ( count($headRow) != count($FieldHeadings) ) {
-			prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+		if ( count($HeadRow) != count($FieldHeadings) ) {
+			prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit;
 		}
 
 		//test header row field name and sequence
-		$head = 0;
-		foreach ($headRow as $headField) {
-			if ( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
-				prnMsg (_('File contains incorrect headers '. mb_strtoupper($headField). ' != '. mb_strtoupper($FieldHeadings[$head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $headings
+		$Head = 0;
+		foreach ($HeadRow as $HeadField) {
+			if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
+				prnMsg (_('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit;
 			}
-			$head++;
+			$Head++;
 		}
 
 		//start database transaction
@@ -162,9 +162,9 @@ if ($_GET['Action'] == 'Enter'){
 		while ( ($MyRow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
 
 			//check for correct number of fields
-			$fieldCount = count($MyRow);
-			if ($fieldCount != $FieldTarget){
-				prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
+			$FieldCount = count($MyRow);
+			if ($FieldCount != $FieldTarget){
+				prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit;

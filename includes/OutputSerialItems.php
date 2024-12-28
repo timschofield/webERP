@@ -29,7 +29,7 @@ if ($LineItem->Serialised==1){
 	$Tableheader .= '<tr>
 						<th>' .  _('Serial No') . '</th>
 					</tr>';
-	$listtableheader=$Tableheader;
+	$ListTableHeader=$Tableheader;
 } else if ($LineItem->Serialised==0 and $Perishable==1){
 	$Tableheader = '<tr>
 						<th>' .  _('Batch/Roll/Bundle'). ' #</th>
@@ -37,7 +37,7 @@ if ($LineItem->Serialised==1){
 						<th>' .  _('Quantity'). '</th>
 						<th>' .  _('Expiry Date'). '</th>
 					</tr>';
-	$listtableheader = '<tr>
+	$ListTableHeader = '<tr>
 							<th>' .  _('Batch/Roll/Bundle'). ' #</th>
 							<th>' .  _('Quantity'). '</th>
 							<th>' .  _('Expiry Date'). '</th>
@@ -47,7 +47,7 @@ if ($LineItem->Serialised==1){
 				<th>' .  _('Batch/Roll/Bundle'). ' #</th>
 				<th>' .  _('Quantity'). '</th>
 				</tr>';
-	$listtableheader=$Tableheader;
+	$ListTableHeader=$Tableheader;
 }
 
 echo $EditLink . $RemoveLink;
@@ -63,7 +63,7 @@ if (isset($_GET['LineNo'])){
 echo '<table class="selection">
 		<tr>
 			<td valign="top"><table class="selection">';
-echo $listtableheader;
+echo $ListTableHeader;
 
 $TotalQuantity = 0; /*Variable to accumulate total quantity received */
 $RowCounter =0;
@@ -71,7 +71,7 @@ $RowCounter =0;
 foreach ($LineItem->SerialItems as $Bundle){
 
 	if ($RowCounter == 10){
-		echo $listtableheader;
+		echo $ListTableHeader;
 		$RowCounter =0;
 	} else {
 		$RowCounter++;

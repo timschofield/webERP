@@ -538,7 +538,7 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 			while ($geocode_pending) {
 				$address = urlencode($MyRow2["braddress1"] . "," . $MyRow2["braddress2"] . "," . $MyRow2["braddress3"] . "," . $MyRow2["braddress4"]);
 				$id = $MyRow2["branchcode"];
-				$debtorno =$MyRow2["debtorno"];
+				$DebtorNo =$MyRow2["debtorno"];
 				$request_url = $base_url . $address . '&key=' . $API_key . '&sensor=true';
 
 				$buffer = file_get_contents($request_url)/* or die("url not loading")*/;
@@ -552,15 +552,15 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 					$Lat = $xml->result->geometry->location->lat;
 					$Lng = $xml->result->geometry->location->lng;
 
-					$query = sprintf("UPDATE custbranch " .
+					$Query = sprintf("UPDATE custbranch " .
 							" SET lat = '%s', lng = '%s' " .
 							" WHERE branchcode = '%s' " .
 						" AND debtorno = '%s' LIMIT 1;",
 							($Lat),
 							($Lng),
 							($id),
-							($debtorno));
-					$Update_result = DB_query($query);
+							($DebtorNo));
+					$Update_result = DB_query($Query);
 
 					if($Update_result == 1) {
 						prnMsg( _('GeoCode has been updated for CustomerID') . ': ' . $id . ' - ' . _('Latitude') . ': ' . $Lat . ' ' . _('Longitude') . ': ' . $Lng ,'info');

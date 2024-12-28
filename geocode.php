@@ -48,7 +48,7 @@ while ($Row = DB_fetch_array($Result)) {
   while ($geocode_pending) {
     $address = urlencode($Row["braddress1"] . "," . $Row["braddress2"] . "," . $Row["braddress3"] . "," . $Row["braddress4"]);
     $id = $Row["branchcode"];
-    $debtorno =$Row["debtorno"];
+    $DebtorNo =$Row["debtorno"];
     $request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
 
     echo '<br \>', _('Customer Code'), ': ', $id;
@@ -68,16 +68,16 @@ while ($Row = DB_fetch_array($Result)) {
       $lat = $xml->result->geometry->location->lat;
       $lng = $xml->result->geometry->location->lng;
 
-      $query = sprintf("UPDATE custbranch " .
+      $Query = sprintf("UPDATE custbranch " .
              " SET lat = '%s', lng = '%s' " .
              " WHERE branchcode = '%s' " .
  	     " AND debtorno = '%s' LIMIT 1;",
              ($lat),
              ($lng),
              ($id),
-             ($debtorno));
+             ($DebtorNo));
 
-      $Update_result = DB_query($query);
+      $Update_result = DB_query($Query);
 
       if ($Update_result==1) {
       echo '<br />'. 'Address: ' . $address . ' updated to geocode.';
@@ -120,14 +120,14 @@ while ($Row2 = DB_fetch_array($Result2)) {
       $lng = $xml->result->geometry->location->lng;
 
 
-      $query = sprintf("UPDATE suppliers " .
+      $Query = sprintf("UPDATE suppliers " .
              " SET lat = '%s', lng = '%s' " .
              " WHERE supplierid = '%s' LIMIT 1;",
              ($lat),
              ($lng),
              ($id));
 
-      $Update_result = DB_query($query);
+      $Update_result = DB_query($Query);
 
       if ($Update_result==1) {
       echo '<br />' . 'Address: ' . $address . ' updated to geocode.';

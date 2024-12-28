@@ -14,7 +14,7 @@
 	$YPos = $Page_Height - $Top_Margin;
 	$pdf->addText($Left_Margin,$YPos,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-	$YPos -= $Line_height;
+	$YPos -= $LineHeight;
 	$FontSize =10;
 	$Heading = _('Balance Sheet as at').' ' . $BalanceDate;
 	$pdf->addText($Left_Margin, $YPos, $FontSize, $Heading);
@@ -24,8 +24,8 @@
 		_('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])
 		. '   '. _('Page'). ' ' . $PageNumber);
 
-	$YPos -= (2 * $Line_height);
+	$YPos -= (2 * $LineHeight);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+250,$YPos,100,$FontSize,$BalanceDate,'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+350,$YPos,100,$FontSize,_('Last Year'),'right');
-	$YPos -= (2 * $Line_height);
+	$YPos -= (2 * $LineHeight);
 ?>

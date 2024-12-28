@@ -60,7 +60,7 @@ class htmlMimeMail
 	* The text part of the message(only used in TEXT only messages)
 	* @var string
 	*/
-	private $text;
+	private $Text;
 	/**
 	* The main body of the message after building
 	* @var string
@@ -95,7 +95,7 @@ class htmlMimeMail
 	* The main message headers
 	* @var array
 	*/
-	private $headers;
+	private $Headers;
 	/**
 	* Whether the message has been built or not
 	* @var boolean
@@ -106,7 +106,7 @@ class htmlMimeMail
 	* address is used instead
 	* @var string
 	*/
-	private $return_path;
+	private $Return_path;
 	/**
 	* Array of information needed for smtp sending
 	* @var array
@@ -188,18 +188,18 @@ class htmlMimeMail
 	*/
 	public function getFile($FileName)
 	{
-		$return = '';
+		$Return = '';
 		if ($fp = fopen($FileName, 'rb')) {
 			while (!feof($fp)) {
-				$return .= fread($fp, 1024);
+				$Return .= fread($fp, 1024);
 			}
 			fclose($fp);
-			return $return;
+			return $Return;
 		}
 		else {
 			## adjust
-			$return = false;
-			return $return;
+			$Return = false;
+			return $Return;
 		}
 	}
 	/**
@@ -304,9 +304,9 @@ class htmlMimeMail
 	/**
 	* Accessor to set the return path
 	*/
-	public function setReturnPath($return_path)
+	public function setReturnPath($Return_path)
 	{
-		$this->return_path = $return_path;
+		$this->return_path = $Return_path;
 	}
 	/**
 	* Accessor to add a Cc: header
@@ -326,19 +326,19 @@ class htmlMimeMail
 	* Adds plain text. Use this function
 	* when NOT sending html email
 	*/
-	public function setText($text = '')
+	public function setText($Text = '')
 	{
-		$this->text = $text;
+		$this->text = $Text;
 	}
 	/**
 	* Adds a html part to the mail.
 	* Also replaces image names with
 	* content-id's.
 	*/
-	public function setHtml($html, $text = null, $images_dir = null)
+	public function setHtml($html, $Text = null, $images_dir = null)
 	{
 		$this->html      = $html;
-		$this->html_text = $text;
+		$this->html_text = $Text;
 		if (isset($images_dir)) {
 			$this->_findHtmlImages($images_dir);
 		}
@@ -409,22 +409,22 @@ class htmlMimeMail
 	/**
 	* Adds a text subpart to a mime_part object
 	*/
-	private function &_addTextPart(&$obj, $text)
+	private function &_addTextPart(&$obj, $Text)
 	{
 		$params['content_type'] = 'text/plain';
 		$params['encoding']     = $this->build_params['text_encoding'];
 		$params['charset']      = $this->build_params['text_charset'];
 		if (is_object($obj)) {
 			## adjust
-			// return $obj->addSubpart($text, $params);
-			$return = $obj->addSubpart($text, $params);
-			return $return;
+			// return $obj->addSubpart($Text, $params);
+			$Return = $obj->addSubpart($Text, $params);
+			return $Return;
 		}
 		else {
 			## adjust
-			// return new Mail_mimePart($text, $params);
-			$return = new Mail_mimePart($text, $params);
-			return $return;
+			// return new Mail_mimePart($Text, $params);
+			$Return = new Mail_mimePart($Text, $params);
+			return $Return;
 		}
 	}
 	/**
@@ -438,13 +438,13 @@ class htmlMimeMail
 		## adjust
 		if (is_object($obj)) {
 			// return $obj->addSubpart($this->html, $params);
-			$return = $obj->addSubpart($this->html, $params);
-			return $return;
+			$Return = $obj->addSubpart($this->html, $params);
+			return $Return;
 		}
 		else {
 			// return new Mail_mimePart($this->html, $params);
-			$return = new Mail_mimePart($this->html, $params);
-			return $return;
+			$Return = new Mail_mimePart($this->html, $params);
+			return $Return;
 		}
 	}
 	/**
@@ -455,8 +455,8 @@ class htmlMimeMail
 		$params['content_type'] = 'multipart/mixed';
 		## adjust
 		// return new Mail_mimePart('', $params);
-		$return = new Mail_mimePart('', $params);
-		return $return;
+		$Return = new Mail_mimePart('', $params);
+		return $Return;
 	}
 	/**
 	* Adds an alternative part to a mime_part object
@@ -467,14 +467,14 @@ class htmlMimeMail
 		if (is_object($obj)) {
 			## adjust
 			// return $obj->addSubpart('', $params);
-			$return = $obj->addSubpart('', $params);
-			return $return;
+			$Return = $obj->addSubpart('', $params);
+			return $Return;
 		}
 		else {
 			## adjust
 			// return new Mail_mimePart('', $params);
-			$return = new Mail_mimePart('', $params);
-			return $return;
+			$Return = new Mail_mimePart('', $params);
+			return $Return;
 		}
 	}
 	/**
@@ -486,14 +486,14 @@ class htmlMimeMail
 		if (is_object($obj)) {
 			## adjust
 			// return $obj->addSubpart('', $params);
-			$return = $obj->addSubpart('', $params);
-			return $return;
+			$Return = $obj->addSubpart('', $params);
+			return $Return;
 		}
 		else {
 			## adjust
 			//return new Mail_mimePart('', $params);
-			$return = new Mail_mimePart('', $params);
-			return $return;
+			$Return = new Mail_mimePart('', $params);
+			return $Return;
 		}
 	}
 	/**
@@ -557,18 +557,18 @@ class htmlMimeMail
 		$attachments = !empty($this->attachments) ? true : false;
 		$html_images = !empty($this->html_images) ? true : false;
 		$html        = !empty($this->html)        ? true : false;
-		$text        = isset($this->text)         ? true : false;
+		$Text        = isset($this->text)         ? true : false;
 		switch (true) {
-			case $text AND !$attachments:
+			case $Text AND !$attachments:
 				$message = &$this->_addTextPart($null, $this->text);
 				break;
-			case !$text AND $attachments AND !$html:
+			case !$Text AND $attachments AND !$html:
 				$message = &$this->_addMixedPart();
 				for ($i=0; $i<count($this->attachments); $i++) {
 					$this->_addAttachmentPart($message, $this->attachments[$i]);
 				}
 				break;
-			case $text AND $attachments:
+			case $Text AND $attachments:
 				$message = &$this->_addMixedPart();
 				$this->_addTextPart($message, $this->text);
 				for ($i=0; $i<count($this->attachments); $i++) {
@@ -672,8 +672,8 @@ class htmlMimeMail
 	{
 		preg_match_all('/(\w*[\x80-\xFF]+\w*)/', $input, $matches);
 		foreach ($matches[1] as $value) {
-			$replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $value);
-			$input = str_replace($value, '=?' . $charset . '?Q?' . $replacement . '?=', $input);
+			$Replacement = preg_replace('/([\x80-\xFF])/e', '"=" . strtoupper(dechex(ord("\1")))', $value);
+			$input = str_replace($value, '=?' . $charset . '?Q?' . $Replacement . '?=', $input);
 		}
 
 		return $input;
@@ -703,14 +703,14 @@ class htmlMimeMail
 				}
 				// Get flat representation of headers
 				foreach ($this->headers as $name => $value) {
-					$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
+					$Headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
 				}
 				$to = $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 				if (!empty($this->return_path)) {
-					$Result = mail($to, $subject, $this->output, implode(CRLF, $headers), '-f' . $this->return_path);
+					$Result = mail($to, $subject, $this->output, implode(CRLF, $Headers), '-f' . $this->return_path);
 				}
 				else {
-					$Result = mail($to, $subject, $this->output, implode(CRLF, $headers));
+					$Result = mail($to, $subject, $this->output, implode(CRLF, $Headers));
 				}
 				// Reset the subject in case mail is resent
 				if ($subject !== '') {
@@ -755,13 +755,13 @@ class htmlMimeMail
 					if ($name == 'Bcc') {
 						continue;
 					}
-					$headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
+					$Headers[] = $name . ': ' . $this->_encodeHeader($value, $this->build_params['head_charset']);
 				}
 				// Add To header based on $recipients argument
-				$headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
+				$Headers[] = 'To: ' . $this->_encodeHeader(implode(', ', $recipients), $this->build_params['head_charset']);
 
 				// Add headers to send_params
-				$send_params['headers']    = $headers;
+				$send_params['headers']    = $Headers;
 				$send_params['recipients'] = array_values(array_unique($smtp_recipients));
 				$send_params['body']       = $this->output;
 
@@ -815,16 +815,16 @@ class htmlMimeMail
 		}
 		// Return path ?
 		if (isset($this->return_path)) {
-			$headers[] = 'Return-Path: ' . $this->return_path;
+			$Headers[] = 'Return-Path: ' . $this->return_path;
 		}
 		// Get flat representation of headers
 		foreach ($this->headers as $name => $value) {
-			$headers[] = $name . ': ' . $value;
+			$Headers[] = $name . ': ' . $value;
 		}
-		$headers[] = 'To: ' . implode(', ', $recipients);
+		$Headers[] = 'To: ' . implode(', ', $recipients);
 		## adjust
-		$return = implode(CRLF, $headers) . CRLF . CRLF . $this->output;
-		return $return;
+		$Return = implode(CRLF, $Headers) . CRLF . CRLF . $this->output;
+		return $Return;
 	}
 } // End of class.
 ?>

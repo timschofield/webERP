@@ -258,6 +258,6 @@ $YPos -= 12;
 /*draw a line */
 $pdf->line($XPos, $YPos-1,$Page_Width-$Right_Margin, $YPos-1);
 
-$YPos -= ($Line_height);
+$YPos -= ($LineHeight);
 
 ?>

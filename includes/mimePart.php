@@ -107,7 +107,7 @@ class Mail_mimePart
      *
      * @var array
      */
-    protected $headers = array();
+    protected $Headers = array();
 
     /**
      * The body of this part (not encoded)
@@ -176,22 +176,22 @@ class Mail_mimePart
 
         // Additional part headers
         if (!empty($params['headers']) && is_array($params['headers'])) {
-            $headers = $params['headers'];
+            $Headers = $params['headers'];
         }
 
         foreach ($params as $key => $value) {
             switch ($key) {
             case 'encoding':
                 $this->encoding = $value;
-                $headers['Content-Transfer-Encoding'] = $value;
+                $Headers['Content-Transfer-Encoding'] = $value;
                 break;
 
             case 'cid':
-                $headers['Content-ID'] = '<' . $value . '>';
+                $Headers['Content-ID'] = '<' . $value . '>';
                 break;
 
             case 'location':
-                $headers['Content-Location'] = $value;
+                $Headers['Content-Location'] = $value;
                 break;
 
             case 'body_file':
@@ -215,16 +215,16 @@ class Mail_mimePart
         }
 
         // Content-Type
-        $headers['Content-Type'] = $params['content_type'];
+        $Headers['Content-Type'] = $params['content_type'];
         if (!empty($params['charset'])) {
             $charset = "charset={$params['charset']}";
             // place charset parameter in the same line, if possible
-            if ((strlen($headers['Content-Type']) + strlen($charset) + 16) <= 76) {
-                $headers['Content-Type'] .= '; ';
+            if ((strlen($Headers['Content-Type']) + strlen($charset) + 16) <= 76) {
+                $Headers['Content-Type'] .= '; ';
             } else {
-                $headers['Content-Type'] .= ';' . $this->eol . ' ';
+                $Headers['Content-Type'] .= ';' . $this->eol . ' ';
             }
-            $headers['Content-Type'] .= $charset;
+            $Headers['Content-Type'] .= $charset;
 
             // Default headers charset
             if (!isset($params['headers_charset'])) {
@@ -238,18 +238,18 @@ class Mail_mimePart
         $h_encoding = !empty($params['name_encoding']) ? $params['name_encoding'] : null;
 
         if (!empty($params['filename'])) {
-            $headers['Content-Type'] .= ';' . $this->eol;
-            $headers['Content-Type'] .= $this->buildHeaderParam(
+            $Headers['Content-Type'] .= ';' . $this->eol;
+            $Headers['Content-Type'] .= $this->buildHeaderParam(
                 'name', $params['filename'], $h_charset, $h_language, $h_encoding
             );
         }
 
         // Content-Disposition
         if (!empty($params['disposition'])) {
-            $headers['Content-Disposition'] = $params['disposition'];
+            $Headers['Content-Disposition'] = $params['disposition'];
             if (!empty($params['filename'])) {
-                $headers['Content-Disposition'] .= ';' . $this->eol;
-                $headers['Content-Disposition'] .= $this->buildHeaderParam(
+                $Headers['Content-Disposition'] .= ';' . $this->eol;
+                $Headers['Content-Disposition'] .= $this->buildHeaderParam(
                     'filename', $params['filename'], $h_charset, $h_language,
                     !empty($params['filename_encoding']) ? $params['filename_encoding'] : null
                 );
@@ -258,30 +258,30 @@ class Mail_mimePart
             // add attachment size
             $size = $this->body_file ? filesize($this->body_file) : strlen($body);
             if ($size) {
-                $headers['Content-Disposition'] .= ';' . $this->eol . ' size=' . $size;
+                $Headers['Content-Disposition'] .= ';' . $this->eol . ' size=' . $size;
             }
         }
 
         if (!empty($params['description'])) {
-            $headers['Content-Description'] = $this->encodeHeader(
+            $Headers['Content-Description'] = $this->encodeHeader(
                 'Content-Description', $params['description'], $h_charset, $h_encoding,
                 $this->eol
             );
         }
 
         // Search and add existing headers' parameters
-        foreach ($headers as $key => $value) {
+        foreach ($Headers as $key => $value) {
             $items = explode(':', $key);
             if (count($items) == 2) {
-                $header = $items[0];
+                $Header = $items[0];
                 $param  = $items[1];
-                if (isset($headers[$header])) {
-                    $headers[$header] .= ';' . $this->eol;
+                if (isset($Headers[$Header])) {
+                    $Headers[$Header] .= ';' . $this->eol;
                 }
-                $headers[$header] .= $this->buildHeaderParam(
+                $Headers[$Header] .= $this->buildHeaderParam(
                     $param, $value, $h_charset, $h_language, $h_encoding
                 );
-                unset($headers[$key]);
+                unset($Headers[$key]);
             }
         }
 
@@ -292,7 +292,7 @@ class Mail_mimePart
 
         // Assign stuff to member variables
         $this->encoded  = array();
-        $this->headers  = $headers;
+        $this->headers  = $Headers;
         $this->body     = $body;
     }
 
@@ -713,31 +713,31 @@ class Mail_mimePart
         );
         $value = "$charset'$language'$encValue";
 
-        $header = " {$name}*={$value}";
-        if (strlen($header) <= $maxLength) {
-            return $header;
+        $Header = " {$name}*={$value}";
+        if (strlen($Header) <= $maxLength) {
+            return $Header;
         }
 
         $preLength = strlen(" {$name}*0*=");
         $maxLength = max(16, $maxLength - $preLength - 3);
         $maxLengthReg = "|(.{0,$maxLength}[^\%][^\%])|";
 
-        $headers = array();
-        $headCount = 0;
+        $Headers = array();
+        $HeadCount = 0;
         while ($value) {
             $matches = array();
             $found = preg_match($maxLengthReg, $value, $matches);
             if ($found) {
-                $headers[] = " {$name}*{$headCount}*={$matches[0]}";
+                $Headers[] = " {$name}*{$HeadCount}*={$matches[0]}";
                 $value = substr($value, strlen($matches[0]));
             } else {
-                $headers[] = " {$name}*{$headCount}*={$value}";
+                $Headers[] = " {$name}*{$HeadCount}*={$value}";
                 $value = '';
             }
-            $headCount++;
+            $HeadCount++;
         }
 
-        return implode(';' . $this->eol, $headers);
+        return implode(';' . $this->eol, $Headers);
     }
 
     /**
