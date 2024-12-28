@@ -324,6 +324,15 @@ if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 
 		echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 	}
 
+	$SQL = "INSERT INTO tags VALUES(0, 'None')";
+	$Result = DB_query($SQL);
+	if (DB_error_no() == 0) {
+		echo '<div class="success">' . _('The default GL tag has been inserted.') . '</div>';
+	} else {
+		echo '<div class="error">' . _('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
+	}
+	ob_flush();
+
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $FileName) {
 		$SQLScriptFile = file_get_contents($FileName);
