@@ -3,7 +3,7 @@
 /* Shows the profit and loss of the company for the range of periods entered. */
 
 include ('includes/session.php');
-$Title = _('Profit and Loss for PT. Angin Dingin Utara');// Screen identification.
+$Title = _('Profit and Loss for PT. Bumi Biru');// Screen identification.
 $ViewTopic= 'GeneralLedger';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'ProfitAndLoss';// Anchor's id in the manual's html document.
 include('includes/SQL_CommonFunctions.inc');
@@ -159,23 +159,23 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode ,
-					chartmasterADU.accountname,
+					chartmasterBB.accountname,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					Sum(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					Sum(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-				FROM chartmasterADU
-					INNER JOIN accountgroups ON chartmasterADU.group_ = accountgroups.groupname
-					INNER JOIN chartdetails ON chartmasterADU.accountcode= chartdetails.accountcode
-					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterADU.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+				FROM chartmasterBB
+					INNER JOIN accountgroups ON chartmasterBB.group_ = accountgroups.groupname
+					INNER JOIN chartdetails ON chartmasterBB.accountcode= chartdetails.accountcode
+					INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterBB.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 				WHERE accountgroups.pandl=1
 				GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.groupname,
 					accountgroups.parentgroupname,
 					chartdetails.accountcode,
-					chartmasterADU.accountname,
+					chartmasterBB.accountname,
 					accountgroups.sequenceintb
 				ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
@@ -588,23 +588,23 @@ if ((!isset($_POST['FromPeriod'])
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterADU.accountname,
+					chartmasterBB.accountname,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['FromPeriod'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['FromPeriod'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 					SUM(CASE WHEN chartdetails.period='" . ($_POST['ToPeriod']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 					SUM(CASE WHEN chartdetails.period='" . $_POST['ToPeriod'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-			FROM chartmasterADU
-				INNER JOIN accountgroups ON chartmasterADU.group_ = accountgroups.groupname
-				INNER JOIN chartdetails	ON chartmasterADU.accountcode= chartdetails.accountcode
-				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterADU.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+			FROM chartmasterBB
+				INNER JOIN accountgroups ON chartmasterBB.group_ = accountgroups.groupname
+				INNER JOIN chartdetails	ON chartmasterBB.accountcode= chartdetails.accountcode
+				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterBB.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1
 			GROUP BY accountgroups.sectioninaccounts,
 					accountgroups.parentgroupname,
 					accountgroups.groupname,
 					chartdetails.accountcode,
-					chartmasterADU.accountname
+					chartmasterBB.accountname
 			ORDER BY accountgroups.sectioninaccounts,
 					accountgroups.sequenceintb,
 					accountgroups.groupname,
@@ -621,7 +621,7 @@ if ((!isset($_POST['FromPeriod'])
 		_('Profit and Loss Statement') . '<br />' .// Page title, reporting statement.
 //		_('Statement of Comprehensive Income') . '<br />' .// Page title, reporting statement.
 //		stripslashes($_SESSION['CompanyRecord']['coyname']) . '<br />' .// Page title, reporting entity.
-		_('PT. Angin Dingin Utara') . '<br />' .// Page title, reporting statement.
+		_('PT. Bumi Biru') . '<br />' .// Page title, reporting statement.
 		_('For') . ' ' . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period.
 //		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />' .// Page title, reporting period. ???
 		_('All amounts stated in').': '. _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]).'</p>';// Page title, reporting presentation currency and level of rounding used.
@@ -939,7 +939,6 @@ if ((!isset($_POST['FromPeriod'])
 			}
 // RICARD 
 			include('includes/KLGLPajakRatioCalculationsBySection.php');
-
 			$SectionPrdLY =0;
 			$SectionPrdActual =0;
 			$SectionPrdBudget =0;
@@ -1004,7 +1003,7 @@ if ((!isset($_POST['FromPeriod'])
 					echo '<tr class="OddTableRows">';
 					$k++;
 				}
-				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryPMA.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $MyRow['accountcode'] . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';
+				$ActEnquiryURL = '<a href="' . $RootPath . '/KLGLAccountInquiryBB.php?Period=' . $_POST['ToPeriod'] . '&amp;Account=' . $MyRow['accountcode'] . '&amp;Show=Yes">' . $MyRow['accountcode'] . '</a>';
 				if ($Section ==1){
 					 printf('<td>%s</td>
 							<td>%s</td>
@@ -1039,7 +1038,7 @@ if ((!isset($_POST['FromPeriod'])
 				$j++;
 			}
 		}
-		
+
 // RICARD 
 	include('includes/KLGLPajakRatioCalculationsByAccount.php');
 
@@ -1050,7 +1049,6 @@ if ((!isset($_POST['FromPeriod'])
 	if ($MyRow['groupname']!= $ActGrp){
 		if ($MyRow['parentgroupname']!=$ActGrp AND $ActGrp!=''){
 			while ($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-
 				if ($_POST['Detail']=='Detailed'){
 					echo '<tr>
 						<td colspan="2"></td>
@@ -1073,7 +1071,7 @@ if ((!isset($_POST['FromPeriod'])
 							$ActGrpLabel,
 							locale_number_format(-$GrpPrdActual[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format(-$GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
-							locale_number_format(-$GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
+							locale_number_format(-$GrpPrdLY[$Level]),$_SESSION['CompanyRecord']['decimalplaces']);
 				} else { /*Costs */
 					printf('<tr>
 								<td colspan="2"><h4><i>%s </i></h4></td>
@@ -1089,7 +1087,6 @@ if ((!isset($_POST['FromPeriod'])
 							locale_number_format($GrpPrdBudget[$Level],$_SESSION['CompanyRecord']['decimalplaces']),
 							locale_number_format($GrpPrdLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']));
 				}
-
 				$GrpPrdLY[$Level] = 0;
 				$GrpPrdActual[$Level] = 0;
 				$GrpPrdBudget[$Level] = 0;
@@ -1142,10 +1139,10 @@ if ((!isset($_POST['FromPeriod'])
 			$ParentGroups[$Level] ='';
 		}
 		$j++;
-
 	}
 
 	if ($MyRow['sectioninaccounts']!= $Section){
+
 		if ($Section==1) { /*Income*/
 
 			echo '<tr>
@@ -1262,8 +1259,6 @@ if ((!isset($_POST['FromPeriod'])
 		}
 
 		$j++;
-
-
 
 	}
 
