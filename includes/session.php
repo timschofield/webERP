@@ -280,7 +280,7 @@ if ($_SESSION['HTTPS_Only'] == 1) {
 // arrays defining access for each group of users. These definitions can be modified by a system admin under setup
 
 
-if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowAnyone)) {
+if (!is_array($_SESSION['AllowedPageSecurityTokens']) and !isset($AllowCronJobToBeRun)) {
 	$Title = _('Account Error Report');
 	include ($PathPrefix . 'includes/header.php');
 	echo '<br /><br /><br />';
@@ -341,7 +341,7 @@ if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashb
 	header('Location: ' . $PathPrefix . 'Dashboard.php');
 }
 
-if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
+if (sizeof($_POST) > 0 and !isset($AllowCronJobToBeRun)) {
 	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
 	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
 		$Title = _('Session verification error');

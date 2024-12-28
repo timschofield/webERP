@@ -1,7 +1,5 @@
 <?php
 
-include('CronJobStart.php');
-include('config.php');
 include('includes/session_cronjob.php');
 
 include('KLDailyChecks.php');

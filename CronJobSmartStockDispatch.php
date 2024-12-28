@@ -1,7 +1,5 @@
 <?php
 
-include('CronJobStart.php');
-include('config.php');
 include('includes/session_cronjob.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/htmlMimeMail.php');
