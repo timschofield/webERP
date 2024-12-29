@@ -8,10 +8,6 @@
 /* KL RICARD Configuration file for specific KL code */
 $KLCodeVersion = "007";
 
-/*
-// KL RICARD: Include the specific KL session functions
-// include ($PathPrefix . 'includes/KLsession.php');
-
 // let's setup all the variables depending on the environment
 if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
 	// the current script filename resides in the WAMPP localhost, we are on TEST code
@@ -103,10 +99,8 @@ if ($webERPType == 'PRODUCTION'){
 	// report everything, or almost
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
-	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
-	// error_reporting (-1);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+	error_reporting (-1);
 }
 
-$DatabaseName = $DefaultDatabase;
-*/
 ?>
