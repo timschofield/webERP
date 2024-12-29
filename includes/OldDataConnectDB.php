@@ -1,12 +1,10 @@
 <?php
 
-/* $Revision: 0.01 $ */
-
-if (!file_exists('config_OldData.php')){
-	echo '<P>' . _("webERP - OldData connector can't access the config_OldData.php file");
+if (!file_exists('KLConfig.php')){
+	echo '<P>' . _("webERP - OldData connector can't access the KLConfig.php file");
 	include ('includes/footer.php');
 } else {
-	include ('config_OldData.php');
+	include ('KLConfig.php');
 }
 
 if (!isset($MySQLPort)){

@@ -1,12 +1,10 @@
 <?php
 
-/* $Revision: 0.01 $ */
-
-if (!file_exists('config_OpenCart.php')){
-	echo '<P>' . _("webERP - Opencart connector can't access the config_OpenCart.php file");
+if (!file_exists('KLConfig.php')){
+	echo '<P>' . _("webERP - Opencart connector can't access the KLConfig.php file");
 	include ('includes/footer.php');
 } else {
-	include ('config_OpenCart.php');
+	include ('KLConfig.php');
 }
 
 if (!isset($MySQLPort)){
