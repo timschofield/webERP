@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session_cronjob.php');
+include('includes/KLSessionCronJob.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/htmlMimeMail.php');
 include('includes/GetPrice.inc');

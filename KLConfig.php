@@ -15,14 +15,14 @@ if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
 	$webERPType = 'TEST';
 	$Theme = 'silverwolf';
 	$Host = '202.157.184.151';
-	$opencart_db_host = '202.157.184.151';
-	$OldData_db_host = '202.157.184.151';
+	$OpenCartDBHost = '202.157.184.151';
+	$OldDataDBHost = '202.157.184.151';
 	$SessionSavePath = '';
 } else {
 	// we are in the hosted environment in Exabytes, the DB is local to the code
 	$Host = 'localhost';
-	$opencart_db_host = 'localhost';
-	$OldData_db_host = 'localhost';
+	$OpenCartDBHost = 'localhost';
+	$OldDataDBHost = 'localhost';
 	if (strpos(strtoupper($_SERVER['HTTP_HOST']),"DEVELOPMENT")!== false){
 		// we are on ptadu-development.com (development code)
 		if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
@@ -63,15 +63,14 @@ if ($webERPType == 'PRODUCTION'){
 	$CompanyList[0] = array('database'=>'kurakura_kl_erp' ,'company'=>'Kapal-Laut' );
 	
 	// use the production Opencart DB
-	$opencart_db_user = 'DBU_kl_shop';
-	$opencart_db_pwd = '2e549bf390a028a9fRR55.2afd';
-	$opencart_db_name = 'kl_online_shop';
-	$opencart_db_tableprefix ='oc_';	
+	$OpenCartDBUser = 'DBU_kl_shop';
+	$OpenCartDBPassword = '2e549bf390a028a9fRR55.2afd';
+	$OpenCartDBName = 'kl_online_shop';
 	
 	//Use the production old data DB
-	$OldData_db_user = 'kurakura_kl_0002';
-	$OldData_db_pwd = '60af008cdf563c86cab75f66aa4c68ef';
-	$OldData_db_name = 'kurakura_kl_erpolddata';
+	$OldDataDBUser = 'kurakura_kl_0002';
+	$OldDataDBPassword = '60af008cdf563c86cab75f66aa4c68ef';
+	$OldDataDBName = 'kurakura_kl_erpolddata';
 
 	//only report errors
 	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
@@ -86,15 +85,14 @@ if ($webERPType == 'PRODUCTION'){
 	$CompanyList[0] = array('database'=>'test_erp' ,'company'=>'Kapal-Laut TEST' );
 	
 	// use the TEST Opencart DB
-	$opencart_db_user = 'DBU_kl_shop';
-	$opencart_db_pwd = '2e549bf390a028a9fRR55.2afd';
-	$opencart_db_name = 'test_online_shop';
-	$opencart_db_tableprefix ='oc_';
+	$OpenCartDBUser = 'DBU_kl_shop';
+	$OpenCartDBPassword = '2e549bf390a028a9fRR55.2afd';
+	$OpenCartDBName = 'test_online_shop';
 	
 	//Use the TEST old data DB
-	$OldData_db_user = 'kurakura_kl_0006';
-	$OldData_db_pwd = '7187cd531a6f94ad56b0aad';
-	$OldData_db_name = 'kurakura_kl_test_erpolddata';
+	$OldDataDBUser = 'kurakura_kl_0006';
+	$OldDataDBPassword = '7187cd531a6f94ad56b0aad';
+	$OldDataDBName = 'kurakura_kl_test_erpolddata';
 	
 	// report everything, or almost
 	// error_reporting (E_ALL);

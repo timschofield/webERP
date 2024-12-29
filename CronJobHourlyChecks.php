@@ -1,6 +1,6 @@
 <?php
 
-include('includes/session_cronjob.php');
+include('includes/KLSessionCronJob.php');
 
 include('KLDailyChecks.php');
 
