@@ -52,7 +52,7 @@ margin-left:0px;
 color:white;
 }
 header #favourites {
-background: url(images/descending.png) no-repeat right transparent;
+background: url(images/descending.png) no-repeat right #4444E0;
 background-size:contain;
 overflow: hidden;
 color:#FFFFFF;
