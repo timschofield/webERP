@@ -8,8 +8,8 @@ KL RICARD MODIFICATIONS:
 
 /* webERP menus with Captions and URLs. */
 
-$ModuleLink = array('orders', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'Personalia', 'system', 'Utilities');
-$ReportList = array('orders'=>'ord',
+$ModuleLink = array('Sales', 'AR', 'PO', 'AP', 'stock', 'manuf',  'GL', 'FA', 'PC', 'Personalia', 'system', 'Utilities');
+$ReportList = array('Sales'=>'ord',
 					'AR'=>'ar',
 					'PO'=>'prch',
 					'AP'=>'ap',
@@ -37,7 +37,7 @@ $ModuleList = array(_('Sales'),
 					_('Setup'),
 					_('Utilities'));
 
-$MenuItems['orders']['Transactions']['Caption'] = array(_('New Sales Order or Quotation'),
+$MenuItems['Sales']['Transactions']['Caption'] = array(_('New Sales Order or Quotation'),
 														_('Enter Counter Sales'),
 														_('Enter Counter Returns'),
 														_('Retail Point Of Sale'),
@@ -47,10 +47,10 @@ $MenuItems['orders']['Transactions']['Caption'] = array(_('New Sales Order or Qu
 														_('Outstanding Sales Orders/Quotations'),
 														_('Special Order'),
 														_('Recurring Order Template'),
-														_('Process Recurring Orders'));
+														_('Process Recurring Orders'),
+														_('Sales Commission Reports'));
 
-$MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOrder=Yes',
-													'/CounterSales.php',
+$MenuItems['Sales']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOrder=Yes',
 													'/CounterReturns.php',
 													'/KLRetailPOS.php',
 													'/KLRetailCustomerInfoCard.php',
@@ -59,7 +59,8 @@ $MenuItems['orders']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOr
 													'/SelectSalesOrder.php',
 													'/SpecialOrder.php',
 													'/SelectRecurringSalesOrder.php',
-													'/RecurringSalesOrdersProcess.php');
+													'/RecurringSalesOrdersProcess.php',
+													'/SalesCommissionReports.php');
 
 if ($KL_BusinessDevelopmentManager){
 	$TextControlBoard01 = _('KL Control Board Section 01');
@@ -104,7 +105,7 @@ if ($KL_SystemAdmin
 	$LinkPerformanceBoard03 = '';
 }	
 
-$MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
+$MenuItems['Sales']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('Print Price Lists'),
 													_('Order Status Report'),
 													_('Orders Invoiced Reports'),
@@ -141,7 +142,7 @@ $MenuItems['orders']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('KL Excel Sales Monthly Report'),
 													_('Sell Through Support Claims Report'));
 
-$MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
+$MenuItems['Sales']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/PDFPriceList.php',
 												'/PDFOrderStatus.php',
 												'/PDFOrdersInvoiced.php',
@@ -178,7 +179,7 @@ $MenuItems['orders']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/KLExcelSalesMonthlyReport.php',
 												'/PDFSellThroughSupportClaim.php');
 
-$MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
+$MenuItems['Sales']['Maintenance']['Caption'] = array( _('Create Contract'),
 														_('Select Contract'),
 														_('KL Set Website Sales Categories'),
 														_('KL Set Related Items'),
@@ -197,7 +198,7 @@ $MenuItems['orders']['Maintenance']['Caption'] = array( _('Create Contract'),
 														_('Zalora: Export Products to Zalora'),
 														_('Sell Through Support Deals'));
 
-$MenuItems['orders']['Maintenance']['URL'] = array( '/Contracts.php',
+$MenuItems['Sales']['Maintenance']['URL'] = array( '/Contracts.php',
 													'/SelectContract.php',
 													'/KLSetWebsiteCategories.php',
 													'/KLSetRelatedItems.php',

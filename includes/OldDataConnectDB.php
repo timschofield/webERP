@@ -1,12 +1,10 @@
 <?php
 
-/* $Revision: 0.01 $ */
-
-if (!file_exists('config_OldData.php')){
-	echo '<P>' . _("webERP - OldData connector can't access the config_OldData.php file");
+if (!file_exists('KLConfig.php')){
+	echo '<P>' . _("webERP - OldData connector can't access the KLConfig.php file");
 	include ('includes/footer.php');
 } else {
-	include ('config_OldData.php');
+	include ('KLConfig.php');
 }
 
 if (!isset($MySQLPort)){
@@ -15,11 +13,11 @@ if (!isset($MySQLPort)){
 
 global $db_od;	// Make sure it IS global, regardless of our context
 
-$db_od = mysqli_connect($OldData_db_host , $OldData_db_user, $OldData_db_pwd, $OldData_db_name, $MySQLPort);
+$db_od = mysqli_connect($OldDataDBHost , $OldDataDBUser, $OldDataDBPassword, $OldDataDBName, $MySQLPort);
 mysqli_set_charset($db_od, 'utf8');
 
 if ( !$db_od ) {
-	prnMsg(_('The configuration in the file config.php for the OldData database user name, password and host do not provide the information required to connect to the OldData database server'),'error');
+	prnMsg(_('The configuration in the file KLConfig.php for the OldData database user name, password and host do not provide the information required to connect to the OldData database server'),'error');
 	exit;
 }
 

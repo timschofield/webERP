@@ -1,10 +1,16 @@
 <?php
+/*******************************************************************************
+*
+* KL RICARD: A lot of variables moved to KLConfig. php
+*
+********************************************************************************/
 
 // User configurable variables
 //---------------------------------------------------
 
 // type of webERP (TEST or Prodution)
-$webERPType = 'PRODUCTION';
+// Moved to KLConfig.php 
+// $webERPType = 'TEST';
 
 //DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override
 $DefaultLanguage ='en_GB.utf8';
@@ -14,7 +20,7 @@ $DefaultLanguage ='en_GB.utf8';
 //$DefaultTheme = 'professional';
 //$DefaultTheme = 'wood';
 //$DefaultTheme = 'silverwolf';
-$DefaultTheme = 'default';
+$DefaultTheme = 'gel';
 //$DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
@@ -31,7 +37,8 @@ date_default_timezone_set('Asia/Singapore');
 // Connection information for the database
 // $Host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
-$Host = '202.157.184.151';
+// $Hots Moved to KLConfig.php
+// $Host = 'localhost';
 $MySQLPort=3306;
 
 //The type of db server being used
@@ -41,8 +48,9 @@ $MySQLPort=3306;
 $DBType = 'mariadb';
 
 // sql user & password
-$DBUser = 'kurakura_kl_0001';
-$DBPassword = 'KXGrwKrlKduQTSdqnLZc';
+// Moved to KLConfig.php
+//$DBUser = 'DBU_ptadu_test';
+//$DBPassword = 'LTq%w@.KkJcZ$@!^HBz';
 
 // It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
 // depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
@@ -60,7 +68,9 @@ $AllowCompanySelectionBox = 'Hide';
 //otherwise the user is expected to know the name of the company to log into.
 // KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.this seems to be obsolete
 
-$DefaultDatabase = 'kurakura_kl_erp';
+// Moved to KLConfig.php
+//$DefaultCompany  = 'test_erp';
+//$DefaultDatabase = 'test_erp';
 
 //The maximum time that a login session can be idle before automatic logout
 //time is in seconds  3600 seconds in an hour
@@ -110,12 +120,15 @@ if ($RootPath == "/" OR $RootPath == "\\") {
 This is the default value set in php.ini for most installations but just to be sure it is forced here
 turning on NOTICES destroys things */
 
+// Moved to KLConfig.php
 //error_reporting (E_ALL & ~E_NOTICE);
-error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+//error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
 /* For Development Use */
 //error_reporting (-1);
 
+// Moved to KLConfig.php
 //Installed companies
-$CompanyList[0] = array('database'=>'kurakura_kl_erp' ,'company'=>'Kapal-Laut' );
+//$CompanyList[0] = array('database'=>'test_erp' ,'company'=>'Kapal-Laut TEST' );
+
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>

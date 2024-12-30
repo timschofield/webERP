@@ -1,12 +1,10 @@
 <?php
 
-/* $Revision: 0.01 $ */
-
-if (!file_exists('config_OpenCart.php')){
-	echo '<P>' . _("webERP - Opencart connector can't access the config_OpenCart.php file");
+if (!file_exists('KLConfig.php')){
+	echo '<P>' . _("webERP - Opencart connector can't access the KLConfig.php file");
 	include ('includes/footer.php');
 } else {
-	include ('config_OpenCart.php');
+	include ('KLConfig.php');
 }
 
 if (!isset($MySQLPort)){
@@ -15,11 +13,11 @@ if (!isset($MySQLPort)){
 
 global $db_oc;	// Make sure it IS global, regardless of our context
 
-$db_oc = mysqli_connect($opencart_db_host , $opencart_db_user, $opencart_db_pwd, $opencart_db_name, $MySQLPort);
+$db_oc = mysqli_connect($OpenCartDBHost , $OpenCartDBUser, $OpenCartDBPassword, $OpenCartDBName, $MySQLPort);
 mysqli_set_charset($db_oc, 'utf8');
 
 if ( !$db_oc ) {
-	prnMsg(_('The configuration in the file config.php for the OpenCart database user name, password and host do not provide the information required to connect to the OpenCart database server'),'error');
+	prnMsg(_('The configuration in the file KLConfig.php for the OpenCart database user name, password and host do not provide the information required to connect to the OpenCart database server'),'error');
 	exit;
 }
 
