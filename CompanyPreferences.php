@@ -59,6 +59,7 @@ if (isset($_POST['submit'])) {
 									creditorsact='" . $_POST['CreditorsAct'] . "',
 									payrollact='" . $_POST['PayrollAct'] . "',
 									grnact='" . $_POST['GRNAct'] . "',
+									commissionsact='" . $_POST['CommAct'] . "',
 									exchangediffact='" . $_POST['ExchangeDiffAct'] . "',
 									purchasesexchangediffact='" . $_POST['PurchasesExchangeDiffAct'] . "',
 									retainedearnings='" . $_POST['RetainedEarnings'] . "',
@@ -124,6 +125,7 @@ if ($InputError != 1) {
 					creditorsact,
 					payrollact,
 					grnact,
+					commissionsact,
 					exchangediffact,
 					purchasesexchangediffact,
 					retainedearnings,
@@ -158,6 +160,7 @@ if ($InputError != 1) {
 	$_POST['CreditorsAct']  = $MyRow['creditorsact'];
 	$_POST['PayrollAct']  = $MyRow['payrollact'];
 	$_POST['GRNAct'] = $MyRow['grnact'];
+	$_POST['CommAct'] = $MyRow['commissionsact'];
 	$_POST['ExchangeDiffAct']  = $MyRow['exchangediffact'];
 	$_POST['PurchasesExchangeDiffAct']  = $MyRow['purchasesexchangediffact'];
 	$_POST['RetainedEarnings'] = $MyRow['retainedearnings'];
@@ -318,6 +321,21 @@ while ($MyRow = DB_fetch_row($Result)) {
 	}
 } //end while loop
 
+DB_data_seek($Result,0);
+echo '</select></td>
+	</tr>';
+
+echo '<tr>
+		<td>', _('Sales Commission Accruals Account'), ':</td>';
+echo '<td>
+		<select name="CommAct">';
+while ($WyRow = DB_fetch_row($Result)) {
+	if ($_POST['CommAct']==$MyRow[0]){
+		echo '<option selected="selected" value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
+	} else {
+		echo '<option value="'. $MyRow[0] . '">' . htmlspecialchars($MyRow[1],ENT_QUOTES,'UTF-8') . ' ('.$MyRow[0].')</option>';
+	}
+} //end while loop
 DB_data_seek($Result,0);
 echo '</select></td>
 	</tr>';
