@@ -80,6 +80,7 @@ function Is_date($DateEntry) {
 	}
 } //end of Is_Date function
 
+
 function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 
 	if (mb_strpos($DateEntry,'/')) {
@@ -231,6 +232,7 @@ function DayOfWeekFromSQLDate($DateEntry) {
 
 }
 
+
 function DayOfMonthFromSQLDate($DateEntry) {
 
 	if (mb_strpos($DateEntry,'/')) {
@@ -265,25 +267,16 @@ function YearEndDate($MonthNo, $YearIncrement) {
 
 function ConvertSQLDate($DateEntry) {
 
-/* takes a date in a the format yyyy-mm-dd 
-and converts to a format specified in $_SESSION['DefaultDateFormat']*/
-	$ErrorInFormat = false;
-	
-	if (!EnsureSQLDateFormat($DateEntry)){
-		// if is not in SQL format, there's nothing to do
-		$ErrorInFormat = true;
+//for MySQL dates are in the format YYYY-mm-dd
+
+
+	if (mb_strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
 	} else {
-		if (mb_strpos($DateEntry,'/')) {
-			$Date_Array = explode('/',$DateEntry);
-		} elseif (mb_strpos ($DateEntry,'-')) {
-			$Date_Array = explode('-',$DateEntry);
-		} elseif (mb_strpos ($DateEntry,'.')) {
-			$Date_Array = explode('.',$DateEntry);
-		} else {
-			$ErrorInFormat = true;
-		}
-	}
-	if ($ErrorInFormat){
 		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
 		switch ($_SESSION['DefaultDateFormat']) {
 			case 'd/m/Y':
@@ -302,21 +295,22 @@ and converts to a format specified in $_SESSION['DefaultDateFormat']*/
 				return '0000-0-0';
 				break;
 		}
-	} else {
-		if (mb_strlen($Date_Array[2])>4) {  /*chop off the time stuff */
-			$Date_Array[2]= mb_substr($Date_Array[2],0,2);
-		}
-		if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
-			return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
-		} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y'){
-			return $Date_Array[2].'.'.$Date_Array[1].'.'.$Date_Array[0];
-		} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
-			return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
-		} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
-			return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
-		} elseif ($_SESSION['DefaultDateFormat']=='Y-m-d'){
-			return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
-		}
+	}
+
+	if (mb_strlen($Date_Array[2])>4) {  /*chop off the time stuff */
+		$Date_Array[2]= mb_substr($Date_Array[2],0,2);
+	}
+
+	if ($_SESSION['DefaultDateFormat']=='d/m/Y'){
+		return $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0];
+	} elseif ($_SESSION['DefaultDateFormat']=='d.m.Y'){
+		return $Date_Array[2].'.'.$Date_Array[1].'.'.$Date_Array[0];
+	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y'){
+		return $Date_Array[1].'/'.$Date_Array[2].'/'.$Date_Array[0];
+	} elseif ($_SESSION['DefaultDateFormat']=='Y/m/d'){
+		return $Date_Array[0].'/'.$Date_Array[1].'/'.$Date_Array[2];
+	} elseif ($_SESSION['DefaultDateFormat']=='Y-m-d'){
+		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
 	}
 } // end function ConvertSQLDate
 
@@ -500,6 +494,8 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 }
 
+
+
 function Format_Date($DateEntry) {
 
 	$DateEntry =trim($DateEntry);
@@ -557,76 +553,60 @@ function Format_Date($DateEntry) {
 	}
 }// end of function
 
-function EnsureSQLDateFormat($Date) {
-	// All credit to GitHub Copilot
-	$Date = mb_substr($Date,0,10); //chop off the time stuff
-    $DateTime = DateTime::createFromFormat('Y-m-d', $Date);
-    if ($DateTime && $DateTime->format('Y-m-d') === $Date) {
-		return true; // The date is in the correct SQL format
-    } else {
-		return false; // The date is not in the correct SQL format
-    }
-}
-
 function FormatDateForSQL($DateEntry) {
 
 /* takes a date in a the format specified in $_SESSION['DefaultDateFormat']
-and converts to a yyyy-mm-dd format */
-	if (EnsureSQLDateFormat($DateEntry)){
-		// if is already SQL format, there's nothing to do
-		return $DateEntry;
-	} else {
-		// if is not SQL format, let's convert it into SQL format
-		$Date_Array = array();
-		$DateEntry = trim($DateEntry);
+and converts to a yyyy/mm/dd format */
+	$Date_Array = array();
+	$DateEntry = trim($DateEntry);
 
-		if (mb_strpos($DateEntry,'/')) {
-			$Date_Array = explode('/',$DateEntry);
-		} elseif (mb_strpos ($DateEntry,'-')) {
-			$Date_Array = explode('-',$DateEntry);
-		} elseif (mb_strpos ($DateEntry,'.')) {
-			$Date_Array = explode('.',$DateEntry);
-		} elseif (mb_strlen($DateEntry)==6) {
-			$Date_Array[0]= mb_substr($DateEntry,0,2);
-			$Date_Array[1]= mb_substr($DateEntry,2,2);
-			$Date_Array[2]= mb_substr($DateEntry,4,2);
-		} elseif (mb_strlen($DateEntry)==8) {
-			$Date_Array[0]= mb_substr($DateEntry,0,4);
-			$Date_Array[1]= mb_substr($DateEntry,4,2);
-			$Date_Array[2]= mb_substr($DateEntry,6,2);
+	if (mb_strpos($DateEntry,'/')) {
+		$Date_Array = explode('/',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'-')) {
+		$Date_Array = explode('-',$DateEntry);
+	} elseif (mb_strpos ($DateEntry,'.')) {
+		$Date_Array = explode('.',$DateEntry);
+	} elseif (mb_strlen($DateEntry)==6) {
+		$Date_Array[0]= mb_substr($DateEntry,0,2);
+		$Date_Array[1]= mb_substr($DateEntry,2,2);
+		$Date_Array[2]= mb_substr($DateEntry,4,2);
+	} elseif (mb_strlen($DateEntry)==8) {
+		$Date_Array[0]= mb_substr($DateEntry,0,4);
+		$Date_Array[1]= mb_substr($DateEntry,4,2);
+		$Date_Array[2]= mb_substr($DateEntry,6,2);
+	}
+
+	if ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d') {
+		if (mb_strlen($Date_Array[0])==2) {
+			if ((int)$Date_Array[0] <=60) {
+				$Date_Array[0] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[0] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[0] = '19'.$Date_Array[2];
+			}
 		}
+		return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
 
-		if ($_SESSION['DefaultDateFormat']=='Y/m/d' OR $_SESSION['DefaultDateFormat']=='Y-m-d') {
-			if (mb_strlen($Date_Array[0])==2) {
-				if ((int)$Date_Array[0] <=60) {
-					$Date_Array[0] = '20'.$Date_Array[2];
-				} elseif ((int)$Date_Array[0] >60 AND (int)$Date_Array[2] <100) {
-					$Date_Array[0] = '19'.$Date_Array[2];
-				}
+	} elseif (($_SESSION['DefaultDateFormat']=='d/m/Y')
+				OR $_SESSION['DefaultDateFormat']=='d.m.Y'){
+		if (mb_strlen($Date_Array[2])==2) {
+			if ((int)$Date_Array[2] <=60) {
+				$Date_Array[2] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[2] = '19'. $Date_Array[2];
 			}
-			return $Date_Array[0].'-'.$Date_Array[1].'-'.$Date_Array[2];
-
-		} elseif (($_SESSION['DefaultDateFormat']=='d/m/Y')
-					OR $_SESSION['DefaultDateFormat']=='d.m.Y'){
-			if (mb_strlen($Date_Array[2])==2) {
-				if ((int)$Date_Array[2] <=60) {
-					$Date_Array[2] = '20'.$Date_Array[2];
-				} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
-					$Date_Array[2] = '19'. $Date_Array[2];
-				}
-			}
-			return $Date_Array[2].'-'.$Date_Array[1].'-'.$Date_Array[0];
-
-		} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
-			if (mb_strlen($Date_Array[2])==2) {
-				if ((int)$Date_Array[2] <=60) {
-					$Date_Array[2] = '20'.$Date_Array[2];
-				} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
-					$Date_Array[2] = '19'.$Date_Array[2];
-				}
-			}
-			return $Date_Array[2].'-'.$Date_Array[0].'-'.$Date_Array[1];
 		}
+		/* echo '<BR>The date returned is ' . $Date_Array[2].'/'.$Date_Array[1].'/'.$Date_Array[0]; */
+		return $Date_Array[2].'-'.$Date_Array[1].'-'.$Date_Array[0];
+
+	} elseif ($_SESSION['DefaultDateFormat']=='m/d/Y') {
+		if (mb_strlen($Date_Array[2])==2) {
+			if ((int)$Date_Array[2] <=60) {
+				$Date_Array[2] = '20'.$Date_Array[2];
+			} elseif ((int)$Date_Array[2] >60 AND (int)$Date_Array[2] <100) {
+				$Date_Array[2] = '19'.$Date_Array[2];
+			}
+		}
+		return $Date_Array[2].'-'.$Date_Array[0].'-'.$Date_Array[1];
 	}
 
 }// end of function
@@ -699,6 +679,8 @@ function LastDayOfMonth ( $DateEntry) {
 	}
 	return Date($_SESSION['DefaultDateFormat'],$DateStamp);
 }// end of Last Day in the month function
+
+
 
 function Date1GreaterThanDate2 ($Date1, $Date2) {
 
@@ -982,6 +964,7 @@ provided that both dates are after 1970. Also only works for dates up to the yea
 	}
 
 }
+
 
 function CalcEarliestDispatchDate (){
 

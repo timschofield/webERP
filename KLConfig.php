@@ -72,8 +72,12 @@ if ($webERPType == 'PRODUCTION'){
 	$OldDataDBPassword = '60af008cdf563c86cab75f66aa4c68ef';
 	$OldDataDBName = 'kurakura_kl_erpolddata';
 
-	//only report errors
+	// report everything, or almost
+	// error_reporting (-1);
+	// error_reporting (E_ALL);
+	// error_reporting (E_ALL & ~E_NOTICE);
 	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+
 }else{
 	// use the TEST DB
 	$DBUser = 'DBU_ptadu_test';
@@ -95,10 +99,10 @@ if ($webERPType == 'PRODUCTION'){
 	$OldDataDBName = 'kurakura_kl_test_erpolddata';
 	
 	// report everything, or almost
+	error_reporting (-1);
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
-	error_reporting (-1);
 }
 
 ?>
