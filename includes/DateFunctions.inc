@@ -559,13 +559,17 @@ function Format_Date($DateEntry) {
 
 function EnsureSQLDateFormat($Date) {
 	// All credit to GitHub Copilot
-	$Date = mb_substr($Date,0,10); //chop off the time stuff
-    $DateTime = DateTime::createFromFormat('Y-m-d', $Date);
-    if ($DateTime && $DateTime->format('Y-m-d') === $Date) {
-		return true; // The date is in the correct SQL format
-    } else {
-		return false; // The date is not in the correct SQL format
-    }
+	$Date = mb_substr($Date, 0, 10); // chop off the time stuff
+	if ($Date == '0000-00-00'){
+		return true; // The date is "no date", but in the correct SQL format
+	}else{
+		$DateTime = DateTime::createFromFormat('Y-m-d', $Date);
+		if ($DateTime && $DateTime->format('Y-m-d') === $Date) {
+			return true; // The date is in the correct SQL format
+		} else {
+			return false; // The date is not in the correct SQL format
+		}
+	}
 }
 
 function FormatDateForSQL($DateEntry) {
