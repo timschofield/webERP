@@ -6,12 +6,12 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "007";
+$KLCodeVersion = "008";
 
 // let's setup all the variables depending on the environment
 if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
 	// the current script filename resides in the WAMPP localhost, we are on TEST code
-	// loalhost development environment must go with the remote test DB (safest) in Exabytes
+	// localhost development environment must go with the remote test DB (safest) in Exabytes
 	$webERPType = 'TEST';
 	$Theme = 'silverwolf';
 	$Host = '202.157.184.151';
