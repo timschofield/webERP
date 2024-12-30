@@ -67,15 +67,24 @@ if (isset($_POST['submit'])) {
 
 	}
 	if (!isset($_POST['SManTel'])){
-	  $_POST['SManTel']='';
+		$_POST['SManTel']='';
 	}
 	if (!isset($_POST['SManFax'])){
-	  $_POST['SManFax']='';
+		$_POST['SManFax']='';
 	}
 	if (!isset($_POST['Current'])){
-	  $_POST['Current']=0;
+		$_POST['Current']=0;
 	}
-
+	if (!isset($_POST['CommissionPeriod'])){
+		$_POST['CommissionPeriod']=0;
+	}
+	if (!isset($_POST['CommissionTypeID'])){
+		$_POST['CommissionTypeID']=0;
+	}
+	if (!isset($_POST['GLAccount'])){
+		$_POST['GLAccount']='';
+	}
+	
 	if (isset($SelectedSalesPerson) AND $InputError !=1) {
 
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
@@ -298,25 +307,25 @@ if (! isset($_GET['delete'])) {
 				</field>';
 	}
 	if (!isset($_POST['SalesmanName'])){
-	  $_POST['SalesmanName']='';
+		$_POST['SalesmanName']='';
 	}
 	if (!isset($_POST['SManTel'])){
-	  $_POST['SManTel']='';
+		$_POST['SManTel']='';
 	}
 	if (!isset($_POST['SManFax'])){
-	  $_POST['SManFax']='';
+		$_POST['SManFax']='';
 	}
-	if (!isset($_POST['CommissionRate1'])){
-	  $_POST['CommissionRate1']=0;
+	if (!isset($_POST['CommissionPeriod'])){
+		$_POST['CommissionPeriod']=0;
 	}
-	if (!isset($_POST['CommissionRate2'])){
-	  $_POST['CommissionRate2']=0;
+	if (!isset($_POST['CommissionTypeID'])){
+		$_POST['CommissionTypeID']=0;
 	}
-	if (!isset($_POST['Breakpoint'])){
-	  $_POST['Breakpoint']=0;
+	if (!isset($_POST['GLAccount'])){
+		$_POST['GLAccount']='';
 	}
 	if (!isset($_POST['Current'])){
-	  $_POST['Current']=1;
+		$_POST['Current']=1;
 	}
 
 	echo '<field>
