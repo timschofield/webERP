@@ -13,8 +13,11 @@ $EmailText  = "KL webERP: Smart Stock Dispatch " . "\n";
 $EmailText = $EmailText . 'Cron Job started at '.date('d/M/Y H:i:s'). "\n";
 
 /* Parameters */
-$ReportType = "Batch"; // ONLY FOR REAL ENVIRONMENT
-//$ReportType = "ReportOnly"; // ONLY FOR TESTS
+if (KLwebERPScriptCalledFromTEST()){
+	$ReportType = "ReportOnly"; // To NOT create proper transfers, just the paperwork to test it
+}else{
+	$ReportType = "Batch"; // To create proper transfers
+}
 
 $DispatchPercent = 0;
 $_SESSION['DefaultPageSize'] = 'A4';
@@ -88,28 +91,41 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 	$FromLocation=$Row['0'];
 
 	// to location
-	$SQLto="SELECT locationname,
+	if ($ToLocCode == 'KANTO'){
+		// parameters are forced for KANTO, as it does not have any specific price list
+		// and it's not a customer
+		$ToLocation = '000-Kantor KL';
+		$ToCustomer = '';
+		$ToBranch = '';
+		$ToCurrency = 'IDR';
+		$ToPriceList = 'RT';
+		$ToDecimalPlaces = 0;	
+
+	}else{
+		// if the trasnfer is going somewhere not being KANTO, we need to get the parameters 
+		$SQLto="SELECT locationname,
 					cashsalecustomer,
 					cashsalebranch
-			FROM `locations` 
-			WHERE loccode='" . $ToLocCode . "'";
-	$Resultto = DB_query($SQLto,$ErrMsg);
-	$RowTo = DB_fetch_row($Resultto);
-	$ToLocation=$RowTo['0'];
-	$ToCustomer=$RowTo['1'];
-	$ToBranch=$RowTo['2'];
+				FROM `locations` 
+				WHERE loccode='" . $ToLocCode . "'";
+		$Resultto = DB_query($SQLto,$ErrMsg);
+		$RowTo = DB_fetch_row($Resultto);
+		$ToLocation=$RowTo['0'];
+		$ToCustomer=$RowTo['1'];
+		$ToBranch=$RowTo['2'];
 
-	$SqlPrices="SELECT debtorsmaster.currcode,
-					debtorsmaster.salestype,
-					currencies.decimalplaces
-			FROM debtorsmaster, currencies
-			WHERE debtorsmaster.currcode = currencies.currabrev 
-				AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
-	$ResultPrices = DB_query($SqlPrices,$ErrMsg);
-	$RowPrices = DB_fetch_row($ResultPrices);
-	$ToCurrency=$RowPrices['0'];
-	$ToPriceList=$RowPrices['1'];
-	$ToDecimalPlaces=$RowPrices['2'];	
+		$SqlPrices="SELECT debtorsmaster.currcode,
+						debtorsmaster.salestype,
+						currencies.decimalplaces
+					FROM debtorsmaster, currencies
+					WHERE debtorsmaster.currcode = currencies.currabrev 
+						AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
+		$ResultPrices = DB_query($SqlPrices,$ErrMsg);
+		$RowPrices = DB_fetch_row($ResultPrices);
+		$ToCurrency=$RowPrices['0'];
+		$ToPriceList=$RowPrices['1'];
+		$ToDecimalPlaces=$RowPrices['2'];	
+	}
 	
 	$CategoryDescription=_('All');
 	$WhereCategory = " AND stockmaster.categoryid !='SHCONS'
@@ -229,7 +245,8 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 
 			// ONLY add to transfer if there's QTY and we have a picture for it. If no picture, no send!
 			if ($ShipQty>0){
-				if (file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg')){
+				$ImageFile = $_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'].'.jpg';
+				if (file_exists($ImageFile)){
 					$NumModelsInThisStockDispatch++;
 					$NumPcsInThisStockDispatch = $NumPcsInThisStockDispatch + $ShipQty;
 
@@ -311,8 +328,7 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 					$pdf->addTextWrap(450,$YPos,40,11,locale_number_format($TableResult[$ModelInTransfer]['shipqty'],$TableResult[$ModelInTransfer]['decimalplaces']),'right',0,$Fill);
 					$pdf->addTextWrap(510,$YPos,50,$FontSize,'___________','right',0,$Fill);
 
-					if ($TableResult[$ModelInTransfer]['discountcategory'] != "")
-					{
+					if ($TableResult[$ModelInTransfer]['discountcategory'] != ""){
 						$DiscountLine = ' -> ' . _('Discount Category') . ':' . $TableResult[$ModelInTransfer]['discountcategory'];
 					}else{
 						$DiscountLine = '';
@@ -418,11 +434,11 @@ function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $Disp
 				$mail->setSubject($Subject);
 				$mail->addAttachment($Attachment, $FileName, 'application/pdf');
 				$mail->setFrom('webmaster@kapal-laut.com', 'webERP Cron Job');
-				// if we are preparing real transfers (Batch), send to team, otherwise send to test user.
-				if ($ReportType == 'Batch'){
+				// if we are in TEST environment send to test user, if we are on real environment, send to shop support
+				if (KLwebERPScriptCalledFromTEST()){
+					$Result = $mail->send(array('webmaster@kapal-laut.com'));
+				} else {
 					$Result = $mail->send(array('kl-shopsupport@kapal-laut.com'));
-				}else{
-					$Result = $mail->send(array('sysadmin@kapal-laut.com'));
 				}
 				if($Result){
 					$EmailText = $EmailText . date('d/M/Y H:i:s') . " Email Sent " . $FileName . "\n";
