@@ -80,6 +80,7 @@ function Is_date($DateEntry) {
 	}
 } //end of Is_Date function
 
+
 function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 
 	if (mb_strpos($DateEntry,'/')) {
@@ -231,6 +232,7 @@ function DayOfWeekFromSQLDate($DateEntry) {
 
 }
 
+
 function DayOfMonthFromSQLDate($DateEntry) {
 
 	if (mb_strpos($DateEntry,'/')) {
@@ -287,19 +289,19 @@ and converts to a format specified in $_SESSION['DefaultDateFormat']*/
 		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
 		switch ($_SESSION['DefaultDateFormat']) {
 			case 'd/m/Y':
-				return '0/0/000';
+				return '00/00/0000';
 				break;
 			case 'd.m.Y':
-				return '0.0.000';
+				return '00.00.0000';
 				break;
 			case 'm/d/Y':
-				return '0/0/0000';
+				return '00/00/0000';
 				break;
 			case 'Y/m/d':
-				return '0000/0/0';
+				return '0000/00/00';
 				break;
 			case 'Y-m-d':
-				return '0000-0-0';
+				return '0000-00-00';
 				break;
 		}
 	} else {
@@ -499,6 +501,8 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 
 }
+
+
 
 function Format_Date($DateEntry) {
 
