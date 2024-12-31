@@ -1,0 +1,32 @@
+form select:focus + fieldhelp, textarea:focus + fieldhelp, input:not([type=submit]):focus + fieldhelp {
+background:transparent;
+background-image: linear-gradient(to left, #9B9BCE, #0202EE);
+color:#FFFFFF;
+padding:2px;
+padding-right:10px;
+border-top-left-radius:30px;
+border-bottom-left-radius:30px;
+margin-left:2px;
+visibility:visible;
+height:auto;
+max-width:500px;
+word-wrap:normal;
+position:absolute;
+}
+
+form select + fieldhelp, textarea + fieldhelp, input:not([type=submit]) + fieldhelp {
+padding:2px;
+border-radius:2px;
+padding-right:10px;
+margin-right:2px;
+visibility:hidden;
+height:auto;
+max-width:500px;
+word-wrap:normal;
+position:absolute;
+}
+
+@media only screen and (max-device-width:767px) {
+/* Style for new browser in a device with a rendering width less than 768px (xs - Extra small devices - Phones). */
+.field_help_text {display:none;/* Hides field help text. */}
+}

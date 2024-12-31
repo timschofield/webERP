@@ -1,0 +1,25 @@
+footer {
+clear:both;
+color:#0A0A3F;
+height:53px;
+padding:0;
+}
+footer .FooterLogo {
+background:transparent;
+float:right;
+margin-right:5px;
+padding:3px;
+}
+footer .FooterLogo img {
+width:128px;
+}
+footer .FooterVersion {
+float:right;
+margin-right:10px;
+margin-top:15px;
+}
+footer .FooterTime {
+float:left;
+margin-top:15px;
+margin-right:15px;
+}
