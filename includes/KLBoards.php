@@ -35,7 +35,8 @@ function ActiveTransfersByLocation($RootPath){
 					AND (loctransfers.shiploc = locations.loccode OR loctransfers.recloc = locations.loccode)) DESC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Pending Goods to be transferred by shop') . '</strong></p>';
+		$TableTitleText = _('Pending Goods to be transferred by shop');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -79,6 +80,8 @@ function ActiveTransfersByLocation($RootPath){
 					);
 			$i++;
 		}
+		echo'</tbody>
+			<tfooter>';
 		printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -99,10 +102,9 @@ function ActiveTransfersByLocation($RootPath){
 				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
 				);
 		InsertKPI("Transfers","Goods Pending to be transferred @ shops (pcs)", $TotalPcsOut+$TotalPcsIn);
-		echo '</tbody>
+		echo '</tfooter>
 				</table>
-				</div>
-				</form>';
+				</div>';
 	}
 }
 
@@ -122,7 +124,8 @@ function ActiveTransferStatus($RootPath){
 			ORDER BY shipdate ASC, reference ASC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('List of Active Transfers') . '</strong></p>';
+		$TableTitleText = _('List of Active Transfers');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -158,6 +161,8 @@ function ActiveTransferStatus($RootPath){
 			$i++;
 			$Total = $Total + $MyRow['pendingqty'];
 		}
+		echo'</tbody>
+			<tfooter>';
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -174,10 +179,9 @@ function ActiveTransferStatus($RootPath){
 				locale_number_format($Total, 0)
 				);
 		InsertKPI("Transfers", "Active Transfers (pcs)", $Total);
-		echo '</tbody>
+		echo '</tfooter>
 			  </table>
-			  </div>
-			  </form>';
+			  </div>';
 	}
 }
 
@@ -238,7 +242,8 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "Average Business KPI for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
+		$TableTitleText = "Average Business KPI for the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Trend by " . $NumDaysD . " days.";
+		ShowTableTitle($TableTitleText);
 		$TitleTarget = "";
 		echo '<div>';
 		echo '<table class="selection">
@@ -541,16 +546,17 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Year == "LastYear"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('LAST YEAR Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
+			$TableTitleText = _('LAST YEAR Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 			$TitleTarget = "";
 		} else {
 			if ($Shop == "All"){
-				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
+				$TableTitleText = _('Current Moving Average Daily sales by ') . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 			} else {
-				echo '<p class="page_title_text" align="center"><strong>' . _('Current Moving Average Daily sales in ') . $Shop . ' by ' . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days." . '</strong></p>';
+				$TableTitleText = _('Current Moving Average Daily sales in ') . $Shop . ' by ' . $TypeReport . " during the last " . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . ", ". $NumDaysE . ", ". $NumDaysF . " days. Sorted by " . $NumDaysSort . " days. Trend by " . $NumDaysD . " days.";
 			}
 			$TitleTarget = "";
 		}
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -641,6 +647,8 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			$TotalForecast = $TotalForecast + $Forecast;
 			$i++;
 		}
+		echo'</tbody>
+			<tfooter>';
 		if (($TypeReport == "Shop") OR ($TypeReport == "Online")){
 			$Trend = " ";
 			if ($Percent > 0){
@@ -707,7 +715,7 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 					""
 					);
 		}
-		echo '</tbody>
+		echo '</tfooter>
 			  </table>
 			  </div>';
 	}
@@ -895,7 +903,8 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 	$TotalCost = 0;
 	if (DB_num_rows($Result) != 0){
 		if (!$ShowOnlyTotal){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components NOT Used in any BOM. Use them in any product (IF QOH > 0) OR flag as obsolete (IF QOH = 0).') . '</strong></p>';
+			$TableTitleText = _('Components NOT Used in any BOM. Use them in any product (IF QOH > 0) OR flag as obsolete (IF QOH = 0).');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<thead>
@@ -935,6 +944,8 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 			$i++;
 		}
 		if (!$ShowOnlyTotal){
+			echo'</tbody>
+				<tfooter>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -950,10 +961,9 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 					'',
 					locale_number_format($TotalCost, 0)
 					);
-			echo '</tbody>
+			echo '</tfooter>
 				  </table>
-				  </div>
-				  </form>';
+				  </div>';
 		} elseif ($TotalCost >= $ShowLimit){
 			$Text = "Components NOT Used in any BOM cost over the limit. Current cost = " . locale_number_format($TotalCost, 0);
 			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
@@ -984,7 +994,8 @@ function ErrorsInTransfers($maxdays, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Errors on Closed Transfers during the last ') . $maxdays . _(' days ') . '</strong></p>';
+		$TableTitleText = _('Errors on Closed Transfers during the last ') . $maxdays . _(' days ');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -1050,6 +1061,8 @@ function ErrorsInTransfers($maxdays, $RootPath){
 			}
 			$NumTransfers++;
 		}
+		echo '</tbody>
+			  <tfooter>';
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -1075,7 +1088,7 @@ function ErrorsInTransfers($maxdays, $RootPath){
 				locale_number_format($TotalCancelledQty, 0),
 				locale_number_format($TotalCancelledQty / $TotalShippedQty * 100, 2) . '%'
 				);
-		echo '</tbody>
+		echo '</tfooter>
 			  </table>
 			  </div>';
 	}
@@ -1264,6 +1277,8 @@ function FinishedStockDistribution($Kind, $ByReport){
 			$i++;
 			$Totalpcs = $Totalpcs + $MyRow['realstock'];
 		}
+		echo'</tbody>
+			<tfooter>';
 		if ($ByReport == "STOCKCATEGORY"){
 			$SQL =	"SELECT COUNT(DISTINCT(l2.stockid)) AS realmodels
 						FROM locstock AS l2,
@@ -1309,10 +1324,9 @@ function FinishedStockDistribution($Kind, $ByReport){
 				""
 				);
 
-		echo '</tbody>
+		echo '</tfooter>
 			  </table>
-			  </div>
-			  </form>';
+			  </div>';
 	}
 
 	if ($Kind == "DISPLAYS"){
@@ -1567,8 +1581,7 @@ function FinishedStockDistributionByShopAndCategory(){
 		}
 		echo '</tbody>
 			  </table>
-			  </div>
-			  </form>';
+			  </div>';
 	}
 }
 
@@ -1666,15 +1679,16 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ParentCategory == "ONLYDISCOUNT"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used ONLY for Discount items') . '</strong></p>';
+			$TableTitleText = _('Components ready to WO in kantor used ONLY for Discount items');
 			$BusinessConcept = "Components ONLY for Discount items (IDR)";
 		}elseif ($ParentCategory == "DISCOUNT"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor used for Discount items') . '</strong></p>';
+			$TableTitleText = _('Components ready to WO in kantor used for Discount items');
 			$BusinessConcept = "Components for Discount items (IDR)";
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Components ready to WO in kantor for any items') . '</strong></p>';
+			$TableTitleText = _('Components ready to WO in kantor for any items');
 			$BusinessConcept = "Components for any items (IDR)";
 		}
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1711,7 +1725,8 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 					);
 			$i++;
 		}
-		InsertKPI("Components", $BusinessConcept, $TotalCost);
+		echo '</tbody>
+			  <tfooter>';
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -1727,10 +1742,10 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 				'',
 				locale_number_format($TotalCost, 0)
 				);
-		echo '</tbody>
+		echo '</tfooter>
 			  </table>
-			  </div>
-			  </form>';
+			  </div>';
+		InsertKPI("Components", $BusinessConcept, $TotalCost);
 	}
 }
 
@@ -1887,20 +1902,23 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				if ($ShowHeader){
 					if ($Category == 'SHPACK'){
 						if ($ShowAll){
-							echo '<p class="page_title_text" align="center"><strong>Shop packaging order status</strong></p>';
+							$TableTitleText = 'Shop packaging order status';
+							ShowTableTitle($TableTitleText);
 							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate). '</p>';
 							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . '</p>';
 							echo '<p class="page_title_text_small" align="center">Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%</p>';
 						}else{
-							echo '<p class="page_title_text" align="center"><strong>Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.</strong></p>';
+							$TableTitleText = 'Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.';
+							ShowTableTitle($TableTitleText);
 						}
 					}
 					if ($Category == 'ZAPON'){
 						if ($ShowAll){
-							echo '<p class="page_title_text" align="center"><strong>Online Promotion items order status</strong></p>';
+							$TableTitleText = 'Online Promotion items order status';
 						}else{
-							echo '<p class="page_title_text" align="center"><strong>Online Promotion items with insufficient stock for the next ' . $DaysMinimumStock . ' days.</strong></p>';
+							$TableTitleText = 'Online Promotion items with insufficient stock for the next ' . $DaysMinimumStock . ' days.';
 						}
+						ShowTableTitle($TableTitleText);
 					}
 					echo '<div>';
 					echo '<table class="selection">';
@@ -2035,6 +2053,8 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$TotalDailyUse = $UsageXDays / $DaysUsage;
 			$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
 			$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
+			echo'</tbody>
+				<tfooter>';
 			if ($ExtendedVersion){
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
@@ -2112,10 +2132,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			InsertKPI("Packaging", "Packaging Optimum QOH (PCS)", $TotalQOHOptimum);
 			InsertKPI("Packaging", "Packaging Shortage (PCS)", $MissingTotal);
 			InsertKPI("Packaging", "Packaging Shortage (%)", round($MissingTotal/$TotalQOHOptimum*100,0));
-			echo '</tbody>
+			echo '</tfooter>
 				</table>
-				</div>
-				</form>';
+				</div>';
 		}
 	}
 }
@@ -2146,7 +2165,8 @@ function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$CategoryName = GetCategoryNameFromCode($StockCat);
-		echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items without active retail price') . '</strong></p>';
+		$TableTitleText = $CategoryName . _(' Items without active retail price');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -2215,7 +2235,8 @@ function LocationInformationReview($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Shop Information Review') . '</strong></p>';
+		$TableTitleText = _('Shop Information Review');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -2319,8 +2340,8 @@ function LocationInformationReview($RootPath){
 			$i++;
 		}
 		echo '</tbody>
-				</table>
-				</div>';
+			</table>
+			</div>';
 	}
 }
 
@@ -2445,9 +2466,8 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			// IF we are SHORT of that packaging material in that location...
 			// Or we show All the the packaging items in that location
 			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' .
-					'Packaging needed at ' . $LocationName . ' from ' . $ParentGudangName .
-					'. Last transfer: ' . $LastPackagingTransferDate . '</strong></p>';
+				$TableTitleText = 'Packaging needed at ' . $LocationName . ' from ' . $ParentGudangName . '. Last transfer: ' . $LastPackagingTransferDate;
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<thead>
@@ -2514,6 +2534,8 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 			$i++;
 		}
 		if (!$ShowHeader){
+			echo'</tbody>
+				<tfooter>';
 			$EmailLink = $EmailLink . '">' . 'Send email to team' . '</a>';
 			if ($ShowLinkEmail){
 				printf('<tr class="striped_row">
@@ -2524,7 +2546,7 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 						$EmailLink
 						);
 			}
-			echo '</tbody>
+			echo '</tfooter>
 				</table>
 				</div>';
 		}
@@ -2572,7 +2594,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "orddate";
 		$FieldName2 = "";
 		$ShipmentAWB = '';
-		$TitleWarning = 'POs in Negotiations with supplier';
+		$TableTitleText = 'POs in Negotiations with supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '1000' ";
 	}else if ($TypeOfCode == "ON PRODUCTION"){
 		$DateField1 = "agreeddeliverydate";
@@ -2580,7 +2602,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "deliverydate";
 		$FieldName2 = "Planned Delivery";
 		$ShipmentAWB = '';
-		$TitleWarning = 'POs on Production by supplier';
+		$TableTitleText = 'POs on Production by supplier';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '2000' ";
 	}else if ($TypeOfCode == "FINISHED BUT NOT PAID"){
 		$DateField1 = "deliverydate";
@@ -2588,7 +2610,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "paymentdate";
 		$FieldName2 = "Planned Payment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'POs finished by supplier but not fully paid';
+		$TableTitleText = 'POs finished by supplier but not fully paid';
 		$SQLFilterKLStatus = " AND purchorders.klstatus = '3000' ";
 	}else if ($TypeOfCode == "STILL NOT FULLY PAID"){
 		$DateField1 = "deliverydate";
@@ -2596,7 +2618,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "paymentdate";
 		$FieldName2 = "Planned Payment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'POs still not fully paid';
+		$TableTitleText = 'POs still not fully paid';
 		$SQLFilterKLStatus = " AND purchorders.klstatus > '1000'
 							   AND (   (purchorders.klstatus < '4000' AND suppliers.paymentterms = 'B1')
 									OR (purchorders.klstatus < '7000' AND suppliers.paymentterms = 'B2')
@@ -2611,7 +2633,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "arrivaldate";
 		$FieldName2 = "Planned Arrival";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Bali POs paid but not delivered in kantor';
+		$TableTitleText = 'Bali POs paid but not delivered in kantor';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'B1') ";
 	}else if ($TypeOfCode == "BALI RECEIVED IN KANTOR BUT NOT PAID"){
 		$DateField1 = "arrivaldate";
@@ -2619,7 +2641,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "paymentdate";
 		$FieldName2 = "Planned Payment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Bali POs delivered in kantor but not paid yet';
+		$TableTitleText = 'Bali POs delivered in kantor but not paid yet';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'B2') ";
 	}else if ($TypeOfCode == "PAID NOT SHIPPED BY SUPPLIER"){
 		$DateField1 = "paymentdate";
@@ -2627,7 +2649,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "shipmentdate";
 		$FieldName2 = "Planned Shipment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas POs paid but not shipped directly by supplier';
+		$TableTitleText = 'Overseas POs paid but not shipped directly by supplier';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O3')) ";
 	}else if ($TypeOfCode == "PAID NOT RECEIVED IN AYE CARGO"){
@@ -2636,7 +2658,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "shipmentdate";
 		$FieldName2 = "Planned Shipment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas POs paid to supplier but not received by Aye Cargo';
+		$TableTitleText = 'Overseas POs paid to supplier but not received by Aye Cargo';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O5')) ";
 	}else if ($TypeOfCode == "PAID NOT RECEIVED IN WANGFOONG CARGO"){
@@ -2645,7 +2667,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "shipmentdate";
 		$FieldName2 = "Planned Shipment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas POs paid to supplier but not received by Wangfoong Cargo';
+		$TableTitleText = 'Overseas POs paid to supplier but not received by Wangfoong Cargo';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4000' AND suppliers.paymentterms = 'O4') ";
 	}else if ($TypeOfCode == "IN AYE CARGO BUT NOT SHIPPED"){
 		$DateField1 = "paymentdate";
@@ -2653,7 +2675,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "shipmentdate";
 		$FieldName2 = "Planned Shipment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas POs waiting to be shipped by Aye Cargo';
+		$TableTitleText = 'Overseas POs waiting to be shipped by Aye Cargo';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O5')) ";
 	}else if ($TypeOfCode == "IN WANGFOONG CARGO BUT NOT SHIPPED"){
@@ -2662,7 +2684,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "shipmentdate";
 		$FieldName2 = "Planned Shipment";
 		$ShipmentAWB = '';
-		$TitleWarning = 'Overseas POs waiting to be shipped by Wangfoong Cargo';
+		$TableTitleText = 'Overseas POs waiting to be shipped by Wangfoong Cargo';
 		$SQLFilterKLStatus = " AND (purchorders.klstatus = '4500' AND suppliers.paymentterms = 'O4') ";
 	}else if ($TypeOfCode == "SHIPPED IN TRANSIT"){
 		$DateField1 = "shipmentdate";
@@ -2670,7 +2692,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "customsdate";
 		$FieldName2 = "Planned Customs";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Overseas POs shipped and in transit to Customs';
+		$TableTitleText = 'Overseas POs shipped and in transit to Customs';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '5000' AND suppliers.paymentterms = 'O3')
@@ -2682,7 +2704,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "arrivaldate";
 		$FieldName2 = "Planned Arrival";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Overseas POs in Customs Clearance';
+		$TableTitleText = 'Overseas POs in Customs Clearance';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '5500' AND suppliers.paymentterms = 'O3')
@@ -2694,7 +2716,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "arrivaldate";
 		$FieldName2 = "";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'Overseas POs already received in kantor';
+		$TableTitleText = 'Overseas POs already received in kantor';
 		$SQLFilterKLStatus = " AND (   (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O1')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O2')
 									OR (purchorders.klstatus = '6000' AND suppliers.paymentterms = 'O3')
@@ -2707,7 +2729,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		$DateField2 = "arrivaldate";
 		$FieldName2 = "";
 		$ShipmentAWB = 'AWB';
-		$TitleWarning = 'POs arriving in the next ' . $maxdays . ' days';
+		$TableTitleText = 'POs arriving in the next ' . $maxdays . ' days';
 		$SQLFilterKLStatus = " AND purchorders.klstatus >= '1000'
 			AND purchorders.klstatus <= '6000'
 			AND purchorders." . $DateField1 ." <  '". $StartDate ."'";
@@ -2718,15 +2740,15 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 	$SQLFilterProduct = "";
 	if ($TypeOfProduct != ""){
 		if ($TypeOfProduct == "PACKAGING"){
-			$TitleWarning = "Packaging " . $TitleWarning;
+			$TableTitleText = "Packaging " . $TitleWarning;
 			$SQLFilterProduct = " AND stockmaster.categoryid = 'SHPACK' ";
 		}elseif ($TypeOfProduct == "OTHERS"){
-			$TitleWarning = "Other " . $TitleWarning;
+			$TableTitleText = "Other " . $TitleWarning;
 			$SQLFilterProduct = " AND (stockmaster.categoryid = 'SHDISP'
 									OR stockmaster.categoryid = 'SHCONS'
 									OR stockmaster.categoryid = 'SHOTHE')";
 		}elseif ($TypeOfProduct == "FORSALE"){
-			$TitleWarning = "Items FOR SALE " . $TitleWarning;
+			$TableTitleText = "Items FOR SALE " . $TitleWarning;
 			$SQLFilterProduct = " AND stockmaster.categoryid != 'SHPACK'
 								AND stockmaster.categoryid != 'SHDISP'
 								AND stockmaster.categoryid != 'SHCONS'
@@ -2774,7 +2796,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $TitleWarning . '</strong></p>';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -2945,7 +2967,8 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			}
 			$i++;
 		}
-
+		echo'</tbody>
+			<tfooter>';
 		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
 			($TypeOfCode == "ON PRODUCTION") OR
 			($TypeOfCode == "FINISHED BUT NOT PAID") OR
@@ -3369,7 +3392,7 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 					""
 					);
 */		}
-		echo '</tbody>
+		echo '</tfooter>
 				</table>
 				</div>';
 	}
@@ -3400,7 +3423,8 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Process time (in days) for POs arrived during the last ') . $NumDays . " days" . ' </strong></p>';
+		$TableTitleText = _('Process time (in days) for POs arrived during the last ') . $NumDays . " days";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -3640,7 +3664,8 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('POs with wrong planned dates OR wrong status') . ' </strong></p>';
+		$TableTitleText = _('POs with wrong planned dates OR wrong status');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -3746,10 +3771,11 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($maxdays == 1){
-			echo '<p class="page_title_text" align="center"><strong>' . _('List of Transfers Closed today ') . ' </strong></p>';
+			$TableTitleText = _('List of Transfers Closed today ');
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('List of Transfers Closed during last ') . $maxdays  . ' days</strong></p>';
+			$TableTitleText = _('List of Transfers Closed during last ') . $maxdays  . ' days';
 		}
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -3786,6 +3812,8 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 			$i++;
 			$Total = $Total + $MyRow['receivedqty'];
 		}
+		echo'</tbody>
+			<tfooter>';
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -3801,7 +3829,7 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 				'Total',
 				locale_number_format($Total,0)
 				);
-		echo '</tbody>
+		echo '</tfooter>
 				</table>
 				</div>
 				</form>';
@@ -3852,7 +3880,8 @@ function TransfersDelayed($maxdays, $RootPath){
 			ORDER BY reference";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers delayed more than ') . $maxdays . _(' days ') . '</strong></p>';
+		$TableTitleText = _('Transfers delayed more than ') . $maxdays . _(' days ');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -3937,7 +3966,8 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 // prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $StockCat . ' Items from ' . $Country . _(' with wrong Standard Cost') .  ' ---> Cost Factor = ' . locale_number_format($StdFactor, 2) . ' ---> Tolerance = '. locale_number_format($Tolerance * 100, 2) .'%</strong></p>';
+		$TableTitleText = $StockCat . ' Items from ' . $Country . _(' with wrong Standard Cost') .  ' ---> Cost Factor = ' . locale_number_format($StdFactor, 2) . ' ---> Tolerance = '. locale_number_format($Tolerance * 100, 2) .'%';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		if ($Mode == "SHOWONLY"){
@@ -4099,10 +4129,10 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$Days));
 
 	if ($Days == 0){
-		$Titletext = "All Marketplace Online Orders with Payment Pending";
+		$TableTitleText = "All Marketplace Online Orders with Payment Pending";
 		$WhereStatement = "";
 	}else{
-		$Titletext = "Delayed Marketplace Online Orders Payment Pending for more than " . $Days . " days";
+		$TableTitleText = "Delayed Marketplace Online Orders Payment Pending for more than " . $Days . " days";
 		$WhereStatement = " AND salesorders.orddate <= '" . $StartDate . "' ";
 	}
 
@@ -4134,7 +4164,7 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -4213,6 +4243,8 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 			$i++;
 			$TotalPaymentValue += $PaymentValue;
 		}
+		echo'</tbody>
+			<tfooter>';
 		// for the detailed report, show totals. If only delayed more than $Days, no need to show totals
 		if ($Days == 0){
 			printf('<tr class="striped_row">
@@ -4291,12 +4323,10 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 					""
 					);
 		}
-		echo '</tbody>
+		echo '</tfooter>
 				</table>
 				</div>';
 	}
 }
-
-
 
 ?>

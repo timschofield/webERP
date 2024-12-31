@@ -1114,7 +1114,8 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath){
 	$Result = DB_query($SQL);		
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . GetCategoryNameFromCode($group) . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO or WO. Move to next category step</strong></p>';
+		$TableTitleText = GetCategoryNameFromCode($group) . _(' Items with NO sales on last ') . $maxdays . ' days and NO current PO or WO. Move to next category step';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1203,7 +1204,8 @@ function ActiveItemsWithoutPicture($RootPath){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if(!file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
 				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Current Items without picture in webERP and QOH > 0') . '</strong></p>';
+					$TableTitleText = _('Current Items without picture in webERP and QOH > 0');
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -1344,14 +1346,14 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 	
 	$Exclusions = " (excluding items in Active Tranfers, Pending of Transfer, Change of Price, Move to Discount, Special Kantor Request, Service, Shop Online and Return to Supplier)";
 	if ($WhereisQOH == "KANTOR"){
-		$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' but with QOH >= ' . $MinQOH .' in KANTOR' . $Exclusions;
+		$TableTitleText = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' but with QOH >= ' . $MinQOH .' in KANTOR' . $Exclusions;
 		$SQLQty = "(SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
 							AND l.loccode IN " . LIST_KANTOR . ")";
 		$TitleQOH = "QOH Kantor";
 	}else{
-		$Message = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' in TOTAL' . $Exclusions;
+		$TableTitleText = GetCategoryNameFromCode($Category) . _(' items NOT in ') . $Shop . ' with QOH >= ' . $MinQOH .' in TOTAL' . $Exclusions;
 		$SQLQty = "(SELECT SUM(l.quantity)
 						FROM locstock l
 						WHERE l.stockid = stockmaster.stockid
@@ -1434,7 +1436,7 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 //prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1526,7 +1528,8 @@ function CheckNegativeStock($RootPath){
 				
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with Negative Stock') . '</strong></p>';
+		$TableTitleText = _('Items with Negative Stock');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1616,7 +1619,8 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Consumables with stock ready for less than ') . $DaysMinStock . ' days and NO active PO.' . '</strong></p>';
+		$TableTitleText = _('Consumables with stock ready for less than ') . $DaysMinStock . ' days and NO active PO.';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1709,7 +1713,8 @@ function DiscountedItemsWithWrongDiscount($Category, $DiscountCode, $RootPath){
 				
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Category . _(' items with wrong discount (Not ') . $DiscountCode. '%)</strong></p>';
+		$TableTitleText = $Category . _(' items with wrong discount (Not ') . $DiscountCode. '%)';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1750,7 +1755,8 @@ function FlaggedAsObsoleteButStockAvailable($RootPath){
 					WHERE stockmaster.stockid = locstock.stockid) > 0";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Obsolete Items with available Stock') . '</strong></p>';
+		$TableTitleText = _('Obsolete Items with available Stock');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1792,7 +1798,8 @@ function GLTransDateControl(){
 			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Wrong dated GLTrans transactions in DB') . '</strong></p>';
+		$TableTitleText = _('Wrong dated GLTrans transactions in DB');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1867,10 +1874,11 @@ function GoodsJustArrived($Kind, $Location, $numdays, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Kind == "PO"){
-			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Finished Goods just arrived at ') . $Location . ' during the last '. $numdays . ' days'. '</strong></p>';
+			$TableTitleText = $Kind . _(' Finished Goods just arrived at ') . $Location . ' during the last '. $numdays . ' days';
 		}elseif ($Kind == "WO"){
-			echo '<p class="page_title_text" align="center"><strong>' . $Kind . _(' Goods just produced at ') . $Location . ' during the last '. $numdays . ' days'. '</strong></p>';
+			$TableTitleText = $Kind . _(' Goods just produced at ') . $Location . ' during the last '. $numdays . ' days';
 		}
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -2046,7 +2054,8 @@ function GoodsJustTransferred($Locationfrom, $Locationto, $numdays, $QOHmax, $Ro
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _(' Finished Goods just transferred from ') . $Locationfrom  . ' to '. $Locationto . ' during the last '. $numdays . ' days and QOH <= '. $QOHmax . '.</strong></p>';
+		$TableTitleText = _(' Finished Goods just transferred from ') . $Locationfrom  . ' to '. $Locationto . ' during the last '. $numdays . ' days and QOH <= '. $QOHmax . '.';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2339,7 +2348,8 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath){
 				AND klchangeprice.startprocessdate <= '". $StartDate ."'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items delayed in Change Price Procedure for more than '). $NumDays . ' days. </strong></p>';
+		$TableTitleText = _('Items delayed in Change Price Procedure for more than '). $NumDays . ' days. ';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2428,7 +2438,8 @@ function ItemsInCategoryForMoreThanDays($maxdays, $group, $RootPath){
 	$Result = DB_query($SQL);		
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . GetCategoryNameFromCode($group) . ' Items for more than ' . $maxdays . ' days. Move to next step of cycle of life</strong></p>';
+		$TableTitleText = GetCategoryNameFromCode($group) . ' Items for more than ' . $maxdays . ' days. Move to next step of cycle of life';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2562,7 +2573,8 @@ function ItemsInmediateShortage($Cat, $RootPath){
 	$Result = DB_query($SQL);		
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Cat . ' Items in inmediate shortage stock</strong></p>';
+		$TableTitleText = $Cat . ' Items in inmediate shortage stock';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2631,7 +2643,8 @@ function ItemsInKLProcessAndRLNotZero($RootPath){
 					locstock.loccode";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with in KL process and RL not zero') . '</strong></p>';
+		$TableTitleText = _('Items with in KL process and RL not zero');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2716,7 +2729,8 @@ function ItemsNotNeededInOnlineOrderButRequested($RootPath){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "Items Not needed for any Online Order but with QOH > 0 in Shop Online" . '</strong></p>';
+		$TableTitleText = "Items Not needed for any Online Order but with QOH > 0 in Shop Online";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2860,25 +2874,25 @@ function ItemsInSetup($Check, $Category, $RootPath){
 function ItemsInWrongShops($ShopType, $RootPath){
 
 	if ($ShopType == "SHOPKL"){
-		$Message = 'Blink or KL 80% Discount Items on KL shops';
+		$TableTitleText = 'Blink or KL 80% Discount Items on KL shops';
 		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						AND locations.typeloc = 'SHOPKL' ";
 	}elseif ($ShopType == "SHOPBL"){
-		$Message = 'KL or Blink 80% Discount items on BLINK shops';
+		$TableTitleText = 'KL or Blink 80% Discount items on BLINK shops';
 		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_DISC_20_50 . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						AND locations.typeloc = 'SHOPBL' ";
 	}elseif ($ShopType == "SHOPOU"){
-		$Message = 'KL or Blink full priced items on OUTLET shops';
+		$TableTitleText = 'KL or Blink full priced items on OUTLET shops';
 		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT . "
 						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
 						AND locations.typeloc = 'SHOPOU' ";
 	}elseif ($ShopType == "DEFECTIVE"){
-		$Message = 'Discounted -D items on KL or Blink shops';
+		$TableTitleText = 'Discounted -D items on KL or Blink shops';
 		$Condition =  " AND UPPER(RIGHT(stockmaster.stockid,2)) = '-D'
 						AND (locations.typeloc = 'SHOPKL' 
 							OR locations.typeloc = 'SHOPBL')";
@@ -2902,7 +2916,7 @@ function ItemsInWrongShops($ShopType, $RootPath){
 //	prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2993,7 +3007,8 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
 				AND klmovetodiscount".$TypeDiscount.".startprocessdate <= '". $StartDate ."'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Items delayed Moving To ' . $TypeDiscount . '% Discount Procedure for more than '. $NumDays . ' days. </strong></p>';
+		$TableTitleText = 'Items delayed Moving To ' . $TypeDiscount . '% Discount Procedure for more than '. $NumDays . ' days. ';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3064,7 +3079,8 @@ function ItemsOnSpecialRequest($RootPath){
 			ORDER BY stockmaster.stockid";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items on Special Kantor Request') . '</strong></p>';
+		$TableTitleText = _('Items on Special Kantor Request');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3265,7 +3281,8 @@ id	select_type	table		type	possible_keys		key			key_len	ref									rows	Extra
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>Items without full purchasing data</strong></p>';
+		$TableTitleText = _('Items without full purchasing data');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3331,7 +3348,8 @@ function ItemsWithoutStandardCost($RootPath){
 //	prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items without standard cost') . '</strong></p>';
+		$TableTitleText = _('Items without standard cost');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3382,7 +3400,8 @@ function ItemsWithoutWeightOrVolume($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Online Shop items with no gross weight, no volume or Net > Gross Weight') . '</strong></p>';
+		$TableTitleText = _('Online Shop items with no gross weight, no volume or Net > Gross Weight');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3482,7 +3501,8 @@ No pending transfer regarding this item
 // prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Message . ' Items with stock available (but NO changing price or category) at Kantor but RL zero for all ' . $Message . '  SHOPS' . '</strong></p>';
+		$TableTitleText = $Message . ' Items with stock available (but NO changing price or category) at Kantor but RL zero for all ' . $Message . '  SHOPS';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3610,7 +3630,8 @@ function NotDiscountedItemsWithDiscount($RootPath){
 				AND discontinued = 0";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Not Discounted items with discount') . '</strong></p>';
+		$TableTitleText = _('Not Discounted items with discount');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3653,7 +3674,8 @@ function ObsoleteComponentsInActiveBOM($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Active BOM with obsolete components') . '</strong></p>';
+		$TableTitleText = _('Active BOM with obsolete components');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3714,7 +3736,8 @@ function OldOnlineQuotations($NumDaysBank, $RootPath){
 			ORDER BY salesorders.orderno";			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		$TableTitleText = "Old Online Quotations to be deleted. No Payment received in more than " . $NumDaysBank . " days.";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3783,7 +3806,8 @@ function OldPOStillActive($maxdays, $RootPath){
 			ORDER BY orderno";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('POs older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
+		$TableTitleText = _('POs older than ') . $maxdays . _(' days and still not closed');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3827,7 +3851,8 @@ function OldWOStillActive($maxdays, $RootPath){
 			ORDER BY wo";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('WOs older than ') . $maxdays . _(' days and still not closed') . '</strong></p>';
+		$TableTitleText = _('WOs older than ') . $maxdays . _(' days and still not closed');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3877,7 +3902,8 @@ function OnlineCustomersNoOrderPlaced($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Online Customers registered but no order placed.') . '</strong></p>';
+		$TableTitleText = _('Online Customers registered but no order placed.');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3951,7 +3977,8 @@ function OnlineItemsOnProcess($RootPath){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "Items on process for Online Orders" . '</strong></p>';
+		$TableTitleText = "Items on process for Online Orders";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4164,7 +4191,8 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 	}
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		$TableTitleText = $Titletext;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4290,7 +4318,8 @@ function OnlineQuotationsFollowUp($RootPath ){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		$TableTitleText = $Titletext;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4468,7 +4497,8 @@ function OutstandingOrders($customertype, $Ordertype, $RootPath){
 			ORDER BY salesorders.orderno";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		$TableTitleText = $Titletext;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4645,7 +4675,8 @@ function OvestockAtSamples($maxallowedsamples, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of samples') . '</strong></p>';
+		$TableTitleText = _('Overstock of samples');
+		ShowTableTitle($TableTitleText);
 		$TableHeader = '<tr>
 							<th class="SortedColumn">' . _('#') . '</th>
 							<th class="SortedColumn">' . _('Code') . '</th>
@@ -4702,7 +4733,8 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 
 			$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>Packaging items in wrong locations (must be transferred to another location)</strong></p>';
+		$TableTitleText = 'Packaging items in wrong locations (must be transferred to another location)';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4805,11 +4837,11 @@ function PettyCashBalance($TypeUser){
 function PettyCashToBeAuthorized($AuthorizationType){
 
 	if ($AuthorizationType == "Cash"){
-		$Title = "Petty Cash Assignations to be Authorized";
+		$TableTitleText = "Petty Cash Assignations to be Authorized";
 		$SQLAuthority = "AND pctabs.authorizer LIKE '%" . $_SESSION['UserID'] . "%'
 						AND pcashdetails.codeexpense = 'ASSIGNCASH'";
 	}else{
-		$Title = "Petty Cash Expenses to be Authorized";
+		$TableTitleText = "Petty Cash Expenses to be Authorized";
 		$SQLAuthority = "AND pctabs.authorizerexpenses LIKE '%" . $_SESSION['UserID'] . "%'
 						AND pcashdetails.codeexpense != 'ASSIGNCASH'";
 	}
@@ -4823,7 +4855,7 @@ function PettyCashToBeAuthorized($AuthorizationType){
 			GROUP BY pcashdetails.tabcode";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4878,8 +4910,9 @@ function RegularTransfersToShopNotReceived($PreparationTime, $LimitTime, $RootPa
 		$Result = DB_query($SQL);
 
 		if (DB_num_rows($Result) != 0){
-			echo '<p class="page_title_text" align="center"><strong>' . 'Transfers to Shops prepared before ' . Date($_SESSION['DefaultDateFormat']) . 
-																		' at ' . $PreparationTime . ' but not received by SPG before ' . $LimitTime . '</strong></p>';
+			$TableTitleText = 'Transfers to Shops prepared before ' . Date($_SESSION['DefaultDateFormat']) . 
+																		' at ' . $PreparationTime . ' but not received by SPG before ' . $LimitTime;
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">
 					<thead>
@@ -4933,7 +4966,8 @@ function SamplesNotLongerNeeded($RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Samples Not Longer Needed (No More Buy, Discount, Outlet)') . '</strong></p>';
+		$TableTitleText = _('Samples Not Longer Needed (No More Buy, Discount, Outlet)');
+		ShowTableTitle($TableTitleText);
 		$TableHeader = '<tr>
 							<th class="SortedColumn">' . _('#') . '</th>
 							<th class="SortedColumn">' . _('Code') . '</th>
@@ -5038,7 +5072,8 @@ function SuppliersWithoutBasicData($RootPath){
 			WHERE address6 = ''";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Suppliers without basic data') . '</strong></p>';
+		$TableTitleText = _('Suppliers without basic data');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -5087,7 +5122,8 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Transfers With Wrong Information during the last ') . $maxdays  . ' days</strong></p>';
+		$TableTitleText = _('Transfers With Wrong Information during the last ') . $maxdays  . ' days';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -5272,7 +5308,8 @@ function WrongItemsOnPurchaseOrders($RootPath){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (TRUE){
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' .'Wrong items (No More Purchasing, Discount or Obsolete) in Active POs' . '</strong></p>';
+					$TableTitleText = _('Wrong items (No More Purchasing, Discount or Obsolete) in Active POs');
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -5334,7 +5371,8 @@ function WrongItemsOnWorkOrders($RootPath){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (TRUE){
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' .'Wrong items (No More Purchasing, Discount or Obsolete) in Active Work Orders' . '</strong></p>';
+					$TableTitleText = _('Wrong items (No More Purchasing, Discount or Obsolete) in Active Work Orders');
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -5398,7 +5436,8 @@ function OpenCartOrdersByStatus($Status, $RootPath ){
 				}else{
 					$StatusText = "Unknown";
 				}
-				echo '<p class="page_title_text" align="center"><strong>' . $StatusText .' OpenCart Online Orders' . '</strong></p>';
+				$TableTitleText = $StatusText .' OpenCart Online Orders';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
