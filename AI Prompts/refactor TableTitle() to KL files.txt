@@ -1,4 +1,4 @@
-1) skip lines 0 to 1344 and go to line 1345
+1) skip lines 0 to 2161	and go to line 2162
 
 2) Look for sentences like:
 		echo '<p class="page_title_text" align="center"><strong>' . _('Some text and variables here') . '</strong></p>';

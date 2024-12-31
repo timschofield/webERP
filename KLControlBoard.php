@@ -2765,7 +2765,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 	$Today = date('Y-m-d');
 	
 	if ($Check == "ReadyToTest"){
-		$Title = GetCategoryNameFromCode($Category) . " Items ready to change to TEST";
+		$TableTitleText = GetCategoryNameFromCode($Category) . " Items ready to change to TEST";
 		$SQLWhere = "AND LENGTH(stockmaster.description) > 2
 					AND (SELECT SUM(locstock.quantity)
 							FROM locstock
@@ -2783,22 +2783,22 @@ function ItemsInSetup($Check, $Category, $RootPath){
 							WHERE  pendingqty > 0
 								AND loctransfers.stockid =  stockmaster.stockid)";
 	}elseif($Check == "NeedDescription"){
-		$Title = GetCategoryNameFromCode($Category) . " Items needing descriptions";
+		$TableTitleText = GetCategoryNameFromCode($Category) . " Items needing descriptions";
 		$SQLWhere ="AND LENGTH(stockmaster.description) <= 2";
 	}elseif($Check == "NeedPrice"){
-		$Title = GetCategoryNameFromCode($Category) . " Items needing price";
+		$TableTitleText = GetCategoryNameFromCode($Category) . " Items needing price";
 		$SQLWhere ="AND (SELECT price
 				FROM prices
 				WHERE stockmaster.stockid = prices.stockid
 					AND prices.typeabbrev = 'RT'
 					AND currabrev = 'IDR') IS NULL";
 	}elseif($Check == "WithReorderLevel"){
-		$Title = GetCategoryNameFromCode($Category) . " Items with RL (items in SETUP should not have RL set)";
+		$TableTitleText = GetCategoryNameFromCode($Category) . " Items with RL (items in SETUP should not have RL set)";
 		$SQLWhere ="AND (SELECT SUM(reorderlevel)
 				FROM locstock
 				WHERE stockmaster.stockid = locstock.stockid) > 0 ";
 	}else{
-		$Title = GetCategoryNameFromCode($Category) . " Items in SETUP";
+		$TableTitleText = GetCategoryNameFromCode($Category) . " Items in SETUP";
 		$SQLWhere ="";
 	}
 
@@ -2830,7 +2830,7 @@ function ItemsInSetup($Check, $Category, $RootPath){
 				OR (($Check == "ReadyToTest") 
 					AND (file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg')))) {
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
