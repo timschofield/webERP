@@ -9,8 +9,8 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 				prices.startdate
 			FROM prices,
 				debtorsmaster
-			WHERE debtorsmaster.salestype=prices.typeabbrev
-				AND debtorsmaster.debtorno='" . $DebtorNo . "'
+			WHERE debtorsmaster.salestype = prices.typeabbrev
+				AND debtorsmaster.debtorno = '" . $DebtorNo . "'
 				AND prices.stockid = '" . $StockID . "'
 				AND prices.currabrev = debtorsmaster.currcode
 				AND prices.debtorno = debtorsmaster.debtorno
@@ -29,14 +29,14 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 					   prices.startdate
 				FROM prices,
 					debtorsmaster
-				WHERE debtorsmaster.salestype=prices.typeabbrev
-					AND debtorsmaster.debtorno='" . $DebtorNo . "'
+				WHERE debtorsmaster.salestype = prices.typeabbrev
+					AND debtorsmaster.debtorno = '" . $DebtorNo . "'
 					AND prices.stockid = '" . $StockID . "'
 					AND prices.currabrev = debtorsmaster.currcode
-					AND prices.debtorno=debtorsmaster.debtorno
-					AND prices.branchcode=''
-					AND prices.startdate<=CURRENT_DATE
-					AND prices.enddate>=CURRENT_DATE
+					AND prices.debtorno = debtorsmaster.debtorno
+					AND prices.branchcode = ''
+					AND prices.startdate <= CURRENT_DATE
+					AND prices.enddate >= CURRENT_DATE
 				ORDER BY prices.startdate DESC";
 
 		$Result = DB_query($SQL, $ErrMsg);
@@ -48,13 +48,13 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 						   prices.startdate
 					FROM prices,
 						debtorsmaster
-					WHERE debtorsmaster.salestype=prices.typeabbrev
-						AND debtorsmaster.debtorno='" . $DebtorNo . "'
+					WHERE debtorsmaster.salestype = prices.typeabbrev
+						AND debtorsmaster.debtorno = '" . $DebtorNo . "'
 						AND prices.stockid = '" . $StockID . "'
-						AND prices.debtorno=''
+						AND prices.debtorno = ''
 						AND prices.currabrev = debtorsmaster.currcode
-						AND prices.startdate<=CURRENT_DATE
-						AND prices.enddate>=CURRENT_DATE
+						AND prices.startdate <= CURRENT_DATE
+						AND prices.enddate >= CURRENT_DATE
 					ORDER BY prices.startdate DESC";
 
 			$Result = DB_query($SQL, $ErrMsg);
@@ -64,15 +64,12 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 				/* Now use the default salestype/price list as there is no specific customer, customer branch or customer price list*/
 				$SQL = "SELECT prices.price,
 							 prices.startdate
-						FROM prices,
-							debtorsmaster
+						FROM prices
 						WHERE prices.stockid = '" . $StockID . "'
-							AND prices.currabrev = debtorsmaster.currcode
-							AND debtorsmaster.debtorno='" . $DebtorNo . "'
-							AND prices.typeabbrev='" . $_SESSION['DefaultPriceList'] . "'
-							AND prices.debtorno=''
-							AND prices.startdate<=CURRENT_DATE
-							AND prices.enddate>=CURRENT_DATE
+							AND prices.typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
+							AND prices.debtorno = ''
+							AND prices.startdate <= CURRENT_DATE
+							AND prices.enddate >= CURRENT_DATE
 						ORDER BY prices.startdate DESC";
 
 				$Result = DB_query($SQL, $ErrMsg);
@@ -87,8 +84,8 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 								AND pricematrix.currabrev = debtorsmaster.currcode
 								AND pricematrix.salestype = debtorsmaster.salestype
 								AND pricematrix.quantitybreak >= '" . $OrderLineQty . "'
-								AND pricematrix.startdate<= CURRENT_DATE
-								AND pricematrix.enddate>=CURRENT_DATE";
+								AND pricematrix.startdate <= CURRENT_DATE
+								AND pricematrix.enddate >= CURRENT_DATE";
 					$ErrMsg = _('There is an error to retrieve price from price matrix for stock') . ' ' . $StockID . ' ' . _('and the error message returned by SQL server is ');
 	
 					$Result = DB_query($SQL, $ErrMsg);
@@ -97,7 +94,7 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 						$SQL = "SELECT pricematrix.price 
 								FROM pricematrix,
 									debtorsmaster
-								WHERE debtorsmaster.salestype=pricematrix.salestype
+								WHERE debtorsmaster.salestype = pricematrix.salestype
 									AND debtorsmaster.debtorno = '" . $DebtorNo . "'
 									AND pricematrix.stockid = '" . $StockID . "'";
 						$ErrorMsg = _('Failed to retrieve price from price matrix');
