@@ -2,7 +2,8 @@
 
 2) Look for sentences like:
 		echo '<p class="page_title_text" align="center"><strong>' . _('Some text and variables here') . '</strong></p>';
-	2.1) Create a variable $TableTitleText and assign it the contents between <strong> and </strong>
+	2.1) Create a variable $TableTitleText and assign to it the contents between <strong> and </strong>. Something like: 
+		$TableTitleText = _('Some text and variables here');
 	2.2) Delete the original sentence
 	2.3) Replace it by a call to ShowTableTitle($TableTitleText);
 

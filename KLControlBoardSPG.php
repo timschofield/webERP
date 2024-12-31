@@ -82,7 +82,8 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Average Daily sales by SPG during the last ') . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . " days.".'</strong></p>';
+		$TableTitleText = _('Average Daily sales by SPG during the last ') . $NumDaysA . ", ". $NumDaysB . ", ". $NumDaysC . ", ". $NumDaysD . " days.";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -184,7 +185,8 @@ function SPGTypePayments($SPG, $maxdays){
 			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by SPG') .'</strong></p>';
+		$TableTitleText = _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by SPG');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -255,7 +257,8 @@ function lastSalesSPG($spg, $NumDaysA){
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>Sales of the last ' . $NumDaysA . ' days for SPG ' . $spg . '</strong></p>';
+		$TableTitleText = 'Sales of the last ' . $NumDaysA . ' days for SPG ' . $spg;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>

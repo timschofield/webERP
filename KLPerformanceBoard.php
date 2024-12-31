@@ -42,7 +42,7 @@ $yesterday_year = date('Y', strtotime("-1 days"));
 
 
 /***************************************************************************************
-* TEST AND PLAY AREA      
+* TEST AND PLAY AREA	  
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
@@ -66,12 +66,13 @@ if ($_SESSION['UserID'] == "Ricard"){
 }
 
 /***************************************************************************************
-* SECTION 1         
+* SECTION 1		 
 ***************************************************************************************/
 
 if ($ProcessSection01){
 	if($ShowSectionInfo){
-		prnMsg("Sales Performance Board Section 01.",'info');
+		$TableTitleText = "Sales Performance Board Section 01.";
+		ShowTableTitle($TableTitleText);
 	}
 
 	if ($KL_SystemAdmin
@@ -161,7 +162,8 @@ if ($ProcessSection01){
 
 if ($ProcessSection02){
 	if($ShowSectionInfo){
-		prnMsg("Transfers, Purchasing Performance Board Section 02.",'info');
+		$TableTitleText = "Transfers, Purchasing Performance Board Section 02.";
+		ShowTableTitle($TableTitleText);
 	}
 
 	if ($KL_SystemAdmin){
@@ -282,7 +284,8 @@ if ($ProcessSection02){
 
 if ($ProcessSection03){
 	if($ShowSectionInfo){
-		prnMsg("Packaging, Displays, Petty Cash, Financial Performance Board Section 03.",'info');
+		$TableTitleText = "Packaging, Displays, Petty Cash, Financial Performance Board Section 03.";
+		ShowTableTitle($TableTitleText);
 	}
 
 	if ($KL_SystemAdmin ){
@@ -379,10 +382,10 @@ if ($KL_SystemAdmin){
 include ('includes/footer.php');
 
 /******************************************************************************************************/
-/*      FUNCTIONS ASSOCIATED
+/*	  FUNCTIONS ASSOCIATED
 /******************************************************************************************************/
 function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
-/* EXPLAIN SQL 2014-05-21	*/
+	/* EXPLAIN SQL 2014-05-21	*/
 	$YesterdayA  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDaysA-1));
 
@@ -489,19 +492,20 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 	
 	$SumInvoiceSum   = 0;
 	$SumInvoiceCount = 0;
-	$SumInvoice01    = 0;
-	$SumInvoice02    = 0;
-	$SumInvoice03    = 0;
-	$SumInvoice04    = 0;
-	$SumInvoice05    = 0;
-	$SumInvoice06    = 0;
-	$SumInvoice07    = 0;
-	$SumInvoice08    = 0;
-	$SumInvoice09    = 0;
+	$SumInvoice01	= 0;
+	$SumInvoice02	= 0;
+	$SumInvoice03	= 0;
+	$SumInvoice04	= 0;
+	$SumInvoice05	= 0;
+	$SumInvoice06	= 0;
+	$SumInvoice07	= 0;
+	$SumInvoice08	= 0;
+	$SumInvoice09	= 0;
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Average value of invoice by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.".'</strong></p>';
+		$TableTitleText = _('Average value of invoice by ') . $BrandText . " " . $Typereport . " during the last " . $NumDaysA . " days.";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -569,15 +573,15 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 			$i++;
 			$SumInvoiceSum   += $MyRow['invoicesum'];
 			$SumInvoiceCount += $MyRow['invoicecount'] ;
-			$SumInvoice01    += $MyRow['invoice01'];
-			$SumInvoice02    += $MyRow['invoice02'];
-			$SumInvoice03    += $MyRow['invoice03'];
-			$SumInvoice04    += $MyRow['invoice04'];
-			$SumInvoice05    += $MyRow['invoice05'];
-			$SumInvoice06    += $MyRow['invoice06'];
-			$SumInvoice07    += $MyRow['invoice07'];
-			$SumInvoice08    += $MyRow['invoice08'];
-			$SumInvoice09    += $MyRow['invoice09'];
+			$SumInvoice01	+= $MyRow['invoice01'];
+			$SumInvoice02	+= $MyRow['invoice02'];
+			$SumInvoice03	+= $MyRow['invoice03'];
+			$SumInvoice04	+= $MyRow['invoice04'];
+			$SumInvoice05	+= $MyRow['invoice05'];
+			$SumInvoice06	+= $MyRow['invoice06'];
+			$SumInvoice07	+= $MyRow['invoice07'];
+			$SumInvoice08	+= $MyRow['invoice08'];
+			$SumInvoice09	+= $MyRow['invoice09'];
 		}
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
@@ -640,7 +644,7 @@ function CashStatus($Year,
 					$Period, 
 					$AdminRole){
 
-    // Consider all year, not until today as some tx are reported into the future
+	// Consider all year, not until today as some tx are reported into the future
 	$EndOfYear = $Year . "-12-31";
 	$StartDateYTD = $Year . "-01-01";
 	$Today = date('Y-m-d');
@@ -769,7 +773,9 @@ function CashStatus($Year,
 	// CASH STATUS ADU IDR SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Angin Dingin Utara ' . $Year . '</strong></p>';
+	$TableTitleText = _('Status Cash IDR PT. Angin Dingin Utara ' . $Year);
+	ShowTableTitle($TableTitleText);
+
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
@@ -974,7 +980,9 @@ function CashStatus($Year,
 	// CASH STATUS ADU USD SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Status USD PT. Angin Dingin Utara ' . '</strong></p>';
+	$TableTitleText = _('Status USD PT. Angin Dingin Utara ');
+	ShowTableTitle($TableTitleText);
+
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
@@ -1203,7 +1211,9 @@ function CashStatus($Year,
 	// CASH STATUS SMH IDR SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Sungai Mutiara Hitam ' . $Year . '</strong></p>';
+	$TableTitleText = _('Status Cash IDR PT. Sungai Mutiara Hitam ' . $Year);
+	ShowTableTitle($TableTitleText);
+
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
@@ -1441,7 +1451,9 @@ function CashStatus($Year,
 	// CASH STATUS BB IDR SHOW TABLE
 	////////////////////////////////////////////////////////
 
-	echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR PT. Bumi Biru ' . $Year . '</strong></p>';
+	$TableTitleText = _('Status Cash IDR PT. Bumi Biru ' . $Year);
+	ShowTableTitle($TableTitleText);
+
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
@@ -1594,7 +1606,9 @@ function CashStatus($Year,
 	////////////////////////////////////////////////////////
 		
 	if ($AdminRole){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Status Cash IDR Brankas Kantor and Shareholders ' . $Year . '</strong></p>';
+		$TableTitleText = _('Status Cash IDR Brankas Kantor and Shareholders ' . $Year);
+		ShowTableTitle($TableTitleText);
+
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1716,7 +1730,8 @@ function DailySalesRecords($Days, $NumDays, $Since){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate) .'</strong></p>';
+		$TableTitleText = _('Top ') . $Days . _(' retail sales days since '). ConvertSQLDate($FromDate);
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1809,7 +1824,8 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 						
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "General Customer Behaviour by " . $BrandText  . " shop during the last " . $NumDaysA . " days.".'</strong></p>';
+		$TableTitleText = "General Customer Behaviour by " . $BrandText  . " shop during the last " . $NumDaysA . " days.";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -2069,7 +2085,8 @@ function PackagingStatusForBlink($RootPath){
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Stock Status by Shop' . '</strong></p>';
+				$TableTitleText = 'BLINK Shop Packaging Stock Status by Shop';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
@@ -2331,7 +2348,8 @@ function PackagingStatusForKapalLaut($RootPath){
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Stock Status by Shop' . '</strong></p>';
+				$TableTitleText = 'KAPAL-LAUT Shop Packaging Stock Status by Shop';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
@@ -2528,7 +2546,8 @@ function PackagingStatusForOutlet($RootPath){
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Stock Status by Shop' . '</strong></p>';
+				$TableTitleText = 'OUTLET Shop Packaging Stock Status by Shop';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
@@ -2704,31 +2723,32 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 	$ShowHeader = TRUE;
 	$i = 1;
 	
-	$Totalqty_box_l   = 0;
-	$Totalsales_box_l = 0;
-	$Totalqty_box_m   = 0;
-	$Totalsales_box_m = 0;
-	$Totalqty_box_s   = 0;
-	$Totalsales_box_s = 0;
+	$TotalQty_box_l   = 0;
+	$TotalSales_box_l = 0;
+	$TotalQty_box_m   = 0;
+	$TotalSales_box_m = 0;
+	$TotalQty_box_s   = 0;
+	$TotalSales_box_s = 0;
 
-	$Totalqty_bag_l   = 0;
-	$Totalsales_bag_l = 0;
-	$Totalqty_bag_m   = 0;
-	$Totalsales_bag_m = 0;
-	$Totalqty_bag_s   = 0;
-	$Totalsales_bag_s = 0;
+	$TotalQty_bag_l   = 0;
+	$TotalSales_bag_l = 0;
+	$TotalQty_bag_m   = 0;
+	$TotalSales_bag_m = 0;
+	$TotalQty_bag_s   = 0;
+	$TotalSales_bag_s = 0;
 	
-	$Totalqty_shopping_l   = 0;
-	$Totalsales_shopping_l = 0;
-	$Totalqty_shopping_m    = 0;
-	$Totalsales_shopping_m  = 0;
-	$Totalqty_shopping_s    = 0;
-	$Totalsales_shopping_s  = 0;
+	$TotalQty_shopping_l   = 0;
+	$TotalSales_shopping_l = 0;
+	$TotalQty_shopping_m	= 0;
+	$TotalSales_shopping_m  = 0;
+	$TotalQty_shopping_s	= 0;
+	$TotalSales_shopping_s  = 0;
 
 	if (DB_num_rows($Result) != 0){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
+				$TableTitleText = 'BLINK Shop Packaging Usage during the last ' . $NumDays . ' days';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
@@ -2838,26 +2858,26 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 					locale_number_format_zero_blank($MyRow['sales_shopping_s'],0),
 					locale_number_format_zero_blank($MyRow['qty_shopping_s']/($MyRow['sales_shopping_s']/$NumDays),0)
 					);
-			$Totalqty_box_l   = $Totalqty_box_l + $MyRow['qty_box_l'];
-			$Totalsales_box_l = $Totalsales_box_l + $MyRow['sales_box_l'];
-			$Totalqty_box_m   = $Totalqty_box_m + $MyRow['qty_box_m'];
-			$Totalsales_box_m = $Totalsales_box_m + $MyRow['sales_box_m'];
-			$Totalqty_box_s   = $Totalqty_box_s + $MyRow['qty_box_s'];
-			$Totalsales_box_s = $Totalsales_box_s + $MyRow['sales_box_s'];
+			$TotalQty_box_l   = $TotalQty_box_l + $MyRow['qty_box_l'];
+			$TotalSales_box_l = $TotalSales_box_l + $MyRow['sales_box_l'];
+			$TotalQty_box_m   = $TotalQty_box_m + $MyRow['qty_box_m'];
+			$TotalSales_box_m = $TotalSales_box_m + $MyRow['sales_box_m'];
+			$TotalQty_box_s   = $TotalQty_box_s + $MyRow['qty_box_s'];
+			$TotalSales_box_s = $TotalSales_box_s + $MyRow['sales_box_s'];
 
-			$Totalqty_bag_l   = $Totalqty_bag_l + $MyRow['qty_bag_l'];
-			$Totalsales_bag_l = $Totalsales_bag_l + $MyRow['sales_bag_l'];
-			$Totalqty_bag_m   = $Totalqty_bag_m + $MyRow['qty_bag_m'];
-			$Totalsales_bag_m = $Totalsales_bag_m + $MyRow['sales_bag_m'];
-			$Totalqty_bag_s   = $Totalqty_bag_s + $MyRow['qty_bag_s'];
-			$Totalsales_bag_s = $Totalsales_bag_s + $MyRow['sales_bag_s'];
+			$TotalQty_bag_l   = $TotalQty_bag_l + $MyRow['qty_bag_l'];
+			$TotalSales_bag_l = $TotalSales_bag_l + $MyRow['sales_bag_l'];
+			$TotalQty_bag_m   = $TotalQty_bag_m + $MyRow['qty_bag_m'];
+			$TotalSales_bag_m = $TotalSales_bag_m + $MyRow['sales_bag_m'];
+			$TotalQty_bag_s   = $TotalQty_bag_s + $MyRow['qty_bag_s'];
+			$TotalSales_bag_s = $TotalSales_bag_s + $MyRow['sales_bag_s'];
 
-			$Totalqty_shopping_l    = $Totalqty_shopping_l + $MyRow['qty_shopping_l'];
-			$Totalsales_shopping_l  = $Totalsales_shopping_l + $MyRow['sales_shopping_l'];
-			$Totalqty_shopping_m    = $Totalqty_shopping_m + $MyRow['qty_shopping_m'];
-			$Totalsales_shopping_m  = $Totalsales_shopping_m + $MyRow['sales_shopping_m'];
-			$Totalqty_shopping_s    = $Totalqty_shopping_s + $MyRow['qty_shopping_s'];
-			$Totalsales_shopping_s  = $Totalsales_shopping_s + $MyRow['sales_shopping_s'];
+			$TotalQty_shopping_l	= $TotalQty_shopping_l + $MyRow['qty_shopping_l'];
+			$TotalSales_shopping_l  = $TotalSales_shopping_l + $MyRow['sales_shopping_l'];
+			$TotalQty_shopping_m	= $TotalQty_shopping_m + $MyRow['qty_shopping_m'];
+			$TotalSales_shopping_m  = $TotalSales_shopping_m + $MyRow['sales_shopping_m'];
+			$TotalQty_shopping_s	= $TotalQty_shopping_s + $MyRow['qty_shopping_s'];
+			$TotalSales_shopping_s  = $TotalSales_shopping_s + $MyRow['sales_shopping_s'];
 
 			$i++;
 		}
@@ -2893,33 +2913,33 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 					<td class="number">%s</td>
 					</tr>', 
 					'TOTAL', 
-					locale_number_format_zero_blank($Totalqty_box_l,0), 
-					locale_number_format_zero_blank($Totalsales_box_l,0),
-					locale_number_format_zero_blank($Totalqty_box_l/($Totalsales_box_l/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_box_m,0), 
-					locale_number_format_zero_blank($Totalsales_box_m,0),
-					locale_number_format_zero_blank($Totalqty_box_m/($Totalsales_box_m/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_box_s,0), 
-					locale_number_format_zero_blank($Totalsales_box_s,0),
-					locale_number_format_zero_blank($Totalqty_box_s/($Totalsales_box_s/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_l,0), 
-					locale_number_format_zero_blank($Totalsales_bag_l,0),
-					locale_number_format_zero_blank($Totalqty_bag_l/($Totalsales_bag_l/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_m,0), 
-					locale_number_format_zero_blank($Totalsales_bag_m,0),
-					locale_number_format_zero_blank($Totalqty_bag_m/($Totalsales_bag_m/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_s,0), 
-					locale_number_format_zero_blank($Totalsales_bag_s,0),
-					locale_number_format_zero_blank($Totalqty_bag_s/($Totalsales_bag_s/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_shopping_l,0), 
-					locale_number_format_zero_blank($Totalsales_shopping_l,0),
-					locale_number_format_zero_blank($Totalqty_shopping_l/($Totalsales_shopping_l/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_shopping_m,0), 
-					locale_number_format_zero_blank($Totalsales_shopping_m,0),
-					locale_number_format_zero_blank($Totalqty_shopping_m/($Totalsales_shopping_m/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_shopping_s,0), 
-					locale_number_format_zero_blank($Totalsales_shopping_s,0),
-					locale_number_format_zero_blank($Totalqty_shopping_s/($Totalsales_shopping_s/$NumDays),0)
+					locale_number_format_zero_blank($TotalQty_box_l,0), 
+					locale_number_format_zero_blank($TotalSales_box_l,0),
+					locale_number_format_zero_blank($TotalQty_box_l/($TotalSales_box_l/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_box_m,0), 
+					locale_number_format_zero_blank($TotalSales_box_m,0),
+					locale_number_format_zero_blank($TotalQty_box_m/($TotalSales_box_m/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_box_s,0), 
+					locale_number_format_zero_blank($TotalSales_box_s,0),
+					locale_number_format_zero_blank($TotalQty_box_s/($TotalSales_box_s/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_bag_l,0), 
+					locale_number_format_zero_blank($TotalSales_bag_l,0),
+					locale_number_format_zero_blank($TotalQty_bag_l/($TotalSales_bag_l/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_bag_m,0), 
+					locale_number_format_zero_blank($TotalSales_bag_m,0),
+					locale_number_format_zero_blank($TotalQty_bag_m/($TotalSales_bag_m/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_bag_s,0), 
+					locale_number_format_zero_blank($TotalSales_bag_s,0),
+					locale_number_format_zero_blank($TotalQty_bag_s/($TotalSales_bag_s/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_shopping_l,0), 
+					locale_number_format_zero_blank($TotalSales_shopping_l,0),
+					locale_number_format_zero_blank($TotalQty_shopping_l/($TotalSales_shopping_l/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_shopping_m,0), 
+					locale_number_format_zero_blank($TotalSales_shopping_m,0),
+					locale_number_format_zero_blank($TotalQty_shopping_m/($TotalSales_shopping_m/$NumDays),0),
+					locale_number_format_zero_blank($TotalQty_shopping_s,0), 
+					locale_number_format_zero_blank($TotalSales_shopping_s,0),
+					locale_number_format_zero_blank($TotalQty_shopping_s/($TotalSales_shopping_s/$NumDays),0)
 					);
 			echo '</tbody></table>
 				</div>';
@@ -2928,629 +2948,632 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 }
 
 function PackagingUsageForKapalLaut($NumDays, $RootPath){
-/* EXPLAIN 2014-05-20	 OK! */
-
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
-
-	$SQL = "SELECT locations.loccode,
-					locations.locationname,
-					locations.rlfactorforpackaging,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKBX01-L') AS qty_box_l,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKBX01-L'
-							AND packagingused.date >= '". $FromDate ."') AS sales_box_l,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKBX01-M') AS qty_box_m,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKBX01-M'
-							AND packagingused.date >= '". $FromDate ."') AS sales_box_m,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKBX01-S') AS qty_box_s,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKBX01-S'
-							AND packagingused.date >= '". $FromDate ."') AS sales_box_s,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB01-L') AS qty_bag_l,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKPB01-L'
-							AND packagingused.date >= '". $FromDate ."') AS sales_bag_l,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB01-M') AS qty_bag_m,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKPB01-M'
-							AND packagingused.date >= '". $FromDate ."') AS sales_bag_m,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB01-S') AS qty_bag_s,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKPB01-S'
-							AND packagingused.date >= '". $FromDate ."') AS sales_bag_s,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB02-L') AS qty_shopping_l,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKSB02-L'
-							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_l,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB02-M') AS qty_shopping_m,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKSB02-M'
-							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB02-S') AS qty_shopping_s,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKSB02-S'
-							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
-			FROM locations
-			WHERE locations.typeloc = 'SHOPKL'
-				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
-			ORDER BY locations.loccode";
-
-	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
-	$i = 1;
+	/* EXPLAIN 2014-05-20	 OK! */
 	
-	$Totalqty_box_l   = 0;
-	$Totalsales_box_l = 0;
-	$Totalqty_box_m   = 0;
-	$Totalsales_box_m = 0;
-	$Totalqty_box_s   = 0;
-	$Totalsales_box_s = 0;
-
-	$Totalqty_bag_l   = 0;
-	$Totalsales_bag_l = 0;
-	$Totalqty_bag_m   = 0;
-	$Totalsales_bag_m = 0;
-	$Totalqty_bag_s   = 0;
-	$Totalsales_bag_s = 0;
+		$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
 	
-	$Totalqty_shopping_l    = 0;
-	$Totalsales_shopping_l  = 0;
-	$Totalqty_shopping_m    = 0;
-	$Totalsales_shopping_m  = 0;
-	$Totalqty_shopping_s    = 0;
-	$Totalsales_shopping_s  = 0;
-
-	if (DB_num_rows($Result) != 0){
-		while ($MyRow = DB_fetch_array($Result)) {
-			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
-				echo '<div>';
-				echo '<table class="selection">
-						<thead>
-							<tr>
-								<th></th>
-								<th colspan="3">' . _('Box L') . '</th>
-								<th colspan="3">' . _('Box M') . '</th>
-								<th colspan="3">' . _('Box S') . '</th>
-								<th colspan="3">' . _('PouchBag L') . '</th>
-								<th colspan="3">' . _('PouchBag M') . '</th>
-								<th colspan="3">' . _('PouchBag S') . '</th>
-								<th colspan="3">' . _('ShoppingBag L') . '</th>
-								<th colspan="3">' . _('ShoppingBag M') . '</th>
-								<th colspan="3">' . _('ShoppingBag S') . '</th>
-							</tr>
-							<tr>
-								<th class="SortedColumn">' . _('KL Shop') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-							</tr>
-						</thead>
-						<tbody>';
-				$ShowHeader = FALSE;
+		$SQL = "SELECT locations.loccode,
+						locations.locationname,
+						locations.rlfactorforpackaging,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKBX01-L') AS qty_box_l,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKBX01-L'
+								AND packagingused.date >= '". $FromDate ."') AS sales_box_l,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKBX01-M') AS qty_box_m,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKBX01-M'
+								AND packagingused.date >= '". $FromDate ."') AS sales_box_m,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKBX01-S') AS qty_box_s,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKBX01-S'
+								AND packagingused.date >= '". $FromDate ."') AS sales_box_s,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKPB01-L') AS qty_bag_l,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKPB01-L'
+								AND packagingused.date >= '". $FromDate ."') AS sales_bag_l,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKPB01-M') AS qty_bag_m,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKPB01-M'
+								AND packagingused.date >= '". $FromDate ."') AS sales_bag_m,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKPB01-S') AS qty_bag_s,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKPB01-S'
+								AND packagingused.date >= '". $FromDate ."') AS sales_bag_s,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKSB02-L') AS qty_shopping_l,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKSB02-L'
+								AND packagingused.date >= '". $FromDate ."') AS sales_shopping_l,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKSB02-M') AS qty_shopping_m,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKSB02-M'
+								AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKSB02-S') AS qty_shopping_s,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKSB02-S'
+								AND packagingused.date >= '". $FromDate ."') AS sales_shopping_s
+				FROM locations
+				WHERE locations.typeloc = 'SHOPKL'
+					OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
+				ORDER BY locations.loccode";
+	
+		$Result = DB_query($SQL);
+		$ShowHeader = TRUE;
+		$i = 1;
+		
+		$TotalQty_box_l   = 0;
+		$TotalSales_box_l = 0;
+		$TotalQty_box_m   = 0;
+		$TotalSales_box_m = 0;
+		$TotalQty_box_s   = 0;
+		$TotalSales_box_s = 0;
+	
+		$TotalQty_bag_l   = 0;
+		$TotalSales_bag_l = 0;
+		$TotalQty_bag_m   = 0;
+		$TotalSales_bag_m = 0;
+		$TotalQty_bag_s   = 0;
+		$TotalSales_bag_s = 0;
+		
+		$TotalQty_shopping_l	= 0;
+		$TotalSales_shopping_l  = 0;
+		$TotalQty_shopping_m	= 0;
+		$TotalSales_shopping_m  = 0;
+		$TotalQty_shopping_s	= 0;
+		$TotalSales_shopping_s  = 0;
+	
+		if (DB_num_rows($Result) != 0){
+			while ($MyRow = DB_fetch_array($Result)) {
+				if($ShowHeader){
+					$TableTitleText = 'KAPAL-LAUT Shop Packaging Usage during the last ' . $NumDays . ' days';
+					ShowTableTitle($TableTitleText);
+					echo '<div>';
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th></th>
+									<th colspan="3">' . _('Box L') . '</th>
+									<th colspan="3">' . _('Box M') . '</th>
+									<th colspan="3">' . _('Box S') . '</th>
+									<th colspan="3">' . _('PouchBag L') . '</th>
+									<th colspan="3">' . _('PouchBag M') . '</th>
+									<th colspan="3">' . _('PouchBag S') . '</th>
+									<th colspan="3">' . _('ShoppingBag L') . '</th>
+									<th colspan="3">' . _('ShoppingBag M') . '</th>
+									<th colspan="3">' . _('ShoppingBag S') . '</th>
+								</tr>
+								<tr>
+									<th class="SortedColumn">' . _('KL Shop') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
+					$ShowHeader = FALSE;
+				}
+	
+				printf('<tr class="striped_row">
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$MyRow['locationname'], 
+						locale_number_format_zero_blank($MyRow['qty_box_l'],0), 
+						locale_number_format_zero_blank($MyRow['sales_box_l'],0),
+						locale_number_format_zero_blank($MyRow['qty_box_l']/($MyRow['sales_box_l']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_box_m'],0), 
+						locale_number_format_zero_blank($MyRow['sales_box_m'],0),
+						locale_number_format_zero_blank($MyRow['qty_box_m']/($MyRow['sales_box_m']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_box_s'],0), 
+						locale_number_format_zero_blank($MyRow['sales_box_s'],0),
+						locale_number_format_zero_blank($MyRow['qty_box_s']/($MyRow['sales_box_s']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+						locale_number_format_zero_blank($MyRow['sales_bag_l'],0),
+						locale_number_format_zero_blank($MyRow['qty_bag_l']/($MyRow['sales_bag_l']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+						locale_number_format_zero_blank($MyRow['sales_bag_m'],0),
+						locale_number_format_zero_blank($MyRow['qty_bag_m']/($MyRow['sales_bag_m']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+						locale_number_format_zero_blank($MyRow['sales_bag_s'],0),
+						locale_number_format_zero_blank($MyRow['qty_bag_s']/($MyRow['sales_bag_s']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_l'],0), 
+						locale_number_format_zero_blank($MyRow['sales_shopping_l'],0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_l']/($MyRow['sales_shopping_l']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+						locale_number_format_zero_blank($MyRow['sales_shopping_m'],0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_s'],0), 
+						locale_number_format_zero_blank($MyRow['sales_shopping_s'],0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_s']/($MyRow['sales_shopping_s']/$NumDays),0)
+						);
+				$TotalQty_box_l   = $TotalQty_box_l + $MyRow['qty_box_l'];
+				$TotalSales_box_l = $TotalSales_box_l + $MyRow['sales_box_l'];
+				$TotalQty_box_m   = $TotalQty_box_m + $MyRow['qty_box_m'];
+				$TotalSales_box_m = $TotalSales_box_m + $MyRow['sales_box_m'];
+				$TotalQty_box_s   = $TotalQty_box_s + $MyRow['qty_box_s'];
+				$TotalSales_box_s = $TotalSales_box_s + $MyRow['sales_box_s'];
+	
+				$TotalQty_bag_l   = $TotalQty_bag_l + $MyRow['qty_bag_l'];
+				$TotalSales_bag_l = $TotalSales_bag_l + $MyRow['sales_bag_l'];
+				$TotalQty_bag_m   = $TotalQty_bag_m + $MyRow['qty_bag_m'];
+				$TotalSales_bag_m = $TotalSales_bag_m + $MyRow['sales_bag_m'];
+				$TotalQty_bag_s   = $TotalQty_bag_s + $MyRow['qty_bag_s'];
+				$TotalSales_bag_s = $TotalSales_bag_s + $MyRow['sales_bag_s'];
+	
+				$TotalQty_shopping_l	= $TotalQty_shopping_l + $MyRow['qty_shopping_l'];
+				$TotalSales_shopping_l  = $TotalSales_shopping_l + $MyRow['sales_shopping_l'];
+				$TotalQty_shopping_m	= $TotalQty_shopping_m + $MyRow['qty_shopping_m'];
+				$TotalSales_shopping_m  = $TotalSales_shopping_m + $MyRow['sales_shopping_m'];
+				$TotalQty_shopping_s	= $TotalQty_shopping_s + $MyRow['qty_shopping_s'];
+				$TotalSales_shopping_s  = $TotalSales_shopping_s + $MyRow['sales_shopping_s'];
+	
+				$i++;
 			}
-
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$MyRow['locationname'], 
-					locale_number_format_zero_blank($MyRow['qty_box_l'],0), 
-					locale_number_format_zero_blank($MyRow['sales_box_l'],0),
-					locale_number_format_zero_blank($MyRow['qty_box_l']/($MyRow['sales_box_l']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_box_m'],0), 
-					locale_number_format_zero_blank($MyRow['sales_box_m'],0),
-					locale_number_format_zero_blank($MyRow['qty_box_m']/($MyRow['sales_box_m']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_box_s'],0), 
-					locale_number_format_zero_blank($MyRow['sales_box_s'],0),
-					locale_number_format_zero_blank($MyRow['qty_box_s']/($MyRow['sales_box_s']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($MyRow['sales_bag_l'],0),
-					locale_number_format_zero_blank($MyRow['qty_bag_l']/($MyRow['sales_bag_l']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($MyRow['sales_bag_m'],0),
-					locale_number_format_zero_blank($MyRow['qty_bag_m']/($MyRow['sales_bag_m']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($MyRow['sales_bag_s'],0),
-					locale_number_format_zero_blank($MyRow['qty_bag_s']/($MyRow['sales_bag_s']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_l'],0), 
-					locale_number_format_zero_blank($MyRow['sales_shopping_l'],0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_l']/($MyRow['sales_shopping_l']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($MyRow['sales_shopping_m'],0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_s'],0), 
-					locale_number_format_zero_blank($MyRow['sales_shopping_s'],0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_s']/($MyRow['sales_shopping_s']/$NumDays),0)
-					);
-			$Totalqty_box_l   = $Totalqty_box_l + $MyRow['qty_box_l'];
-			$Totalsales_box_l = $Totalsales_box_l + $MyRow['sales_box_l'];
-			$Totalqty_box_m   = $Totalqty_box_m + $MyRow['qty_box_m'];
-			$Totalsales_box_m = $Totalsales_box_m + $MyRow['sales_box_m'];
-			$Totalqty_box_s   = $Totalqty_box_s + $MyRow['qty_box_s'];
-			$Totalsales_box_s = $Totalsales_box_s + $MyRow['sales_box_s'];
-
-			$Totalqty_bag_l   = $Totalqty_bag_l + $MyRow['qty_bag_l'];
-			$Totalsales_bag_l = $Totalsales_bag_l + $MyRow['sales_bag_l'];
-			$Totalqty_bag_m   = $Totalqty_bag_m + $MyRow['qty_bag_m'];
-			$Totalsales_bag_m = $Totalsales_bag_m + $MyRow['sales_bag_m'];
-			$Totalqty_bag_s   = $Totalqty_bag_s + $MyRow['qty_bag_s'];
-			$Totalsales_bag_s = $Totalsales_bag_s + $MyRow['sales_bag_s'];
-
-			$Totalqty_shopping_l    = $Totalqty_shopping_l + $MyRow['qty_shopping_l'];
-			$Totalsales_shopping_l  = $Totalsales_shopping_l + $MyRow['sales_shopping_l'];
-			$Totalqty_shopping_m    = $Totalqty_shopping_m + $MyRow['qty_shopping_m'];
-			$Totalsales_shopping_m  = $Totalsales_shopping_m + $MyRow['sales_shopping_m'];
-			$Totalqty_shopping_s    = $Totalqty_shopping_s + $MyRow['qty_shopping_s'];
-			$Totalsales_shopping_s  = $Totalsales_shopping_s + $MyRow['sales_shopping_s'];
-
-			$i++;
-		}
-		if (!$ShowHeader){
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'TOTAL', 
-					locale_number_format_zero_blank($Totalqty_box_l,0), 
-					locale_number_format_zero_blank($Totalsales_box_l,0),
-					locale_number_format_zero_blank($Totalqty_box_l/($Totalsales_box_l/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_box_m,0), 
-					locale_number_format_zero_blank($Totalsales_box_m,0),
-					locale_number_format_zero_blank($Totalqty_box_m/($Totalsales_box_m/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_box_s,0), 
-					locale_number_format_zero_blank($Totalsales_box_s,0),
-					locale_number_format_zero_blank($Totalqty_box_s/($Totalsales_box_s/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_l,0), 
-					locale_number_format_zero_blank($Totalsales_bag_l,0),
-					locale_number_format_zero_blank($Totalqty_bag_l/($Totalsales_bag_l/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_m,0), 
-					locale_number_format_zero_blank($Totalsales_bag_m,0),
-					locale_number_format_zero_blank($Totalqty_bag_m/($Totalsales_bag_m/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_s,0), 
-					locale_number_format_zero_blank($Totalsales_bag_s,0),
-					locale_number_format_zero_blank($Totalqty_bag_s/($Totalsales_bag_s/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_shopping_l,0), 
-					locale_number_format_zero_blank($Totalsales_shopping_l,0),
-					locale_number_format_zero_blank($Totalqty_shopping_l/($Totalsales_shopping_l/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_shopping_m,0), 
-					locale_number_format_zero_blank($Totalsales_shopping_m,0),
-					locale_number_format_zero_blank($Totalqty_shopping_m/($Totalsales_shopping_m/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_shopping_s,0), 
-					locale_number_format_zero_blank($Totalsales_shopping_s,0),
-					locale_number_format_zero_blank($Totalqty_shopping_s/($Totalsales_shopping_s/$NumDays),0)
-					);
-			echo '</tbody></table>
-				</div>';
+			if (!$ShowHeader){
+				printf('<tr class="striped_row">
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'TOTAL', 
+						locale_number_format_zero_blank($TotalQty_box_l,0), 
+						locale_number_format_zero_blank($TotalSales_box_l,0),
+						locale_number_format_zero_blank($TotalQty_box_l/($TotalSales_box_l/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_box_m,0), 
+						locale_number_format_zero_blank($TotalSales_box_m,0),
+						locale_number_format_zero_blank($TotalQty_box_m/($TotalSales_box_m/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_box_s,0), 
+						locale_number_format_zero_blank($TotalSales_box_s,0),
+						locale_number_format_zero_blank($TotalQty_box_s/($TotalSales_box_s/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_bag_l,0), 
+						locale_number_format_zero_blank($TotalSales_bag_l,0),
+						locale_number_format_zero_blank($TotalQty_bag_l/($TotalSales_bag_l/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_bag_m,0), 
+						locale_number_format_zero_blank($TotalSales_bag_m,0),
+						locale_number_format_zero_blank($TotalQty_bag_m/($TotalSales_bag_m/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_bag_s,0), 
+						locale_number_format_zero_blank($TotalSales_bag_s,0),
+						locale_number_format_zero_blank($TotalQty_bag_s/($TotalSales_bag_s/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_shopping_l,0), 
+						locale_number_format_zero_blank($TotalSales_shopping_l,0),
+						locale_number_format_zero_blank($TotalQty_shopping_l/($TotalSales_shopping_l/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_shopping_m,0), 
+						locale_number_format_zero_blank($TotalSales_shopping_m,0),
+						locale_number_format_zero_blank($TotalQty_shopping_m/($TotalSales_shopping_m/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_shopping_s,0), 
+						locale_number_format_zero_blank($TotalSales_shopping_s,0),
+						locale_number_format_zero_blank($TotalQty_shopping_s/($TotalSales_shopping_s/$NumDays),0)
+						);
+				echo '</tbody></table>
+					</div>';
+			}
 		}
 	}
-}
-
+	
 function PackagingUsageByWeeks($RootPath){
-
-	$StartWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
-	$EndWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -7));
-	$StartWeek2 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -8));
-	$EndWeek2 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -14));
-	$StartWeek3 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -15));
-	$EndWeek3 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -21));
-	$StartWeek4 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -22));
-	$EndWeek4 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -28));
-	$StartWeek5 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -29));
-	$EndWeek5 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -35));
-	$StartWeek6 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -36));
-	$EndWeek6 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -42));
-	$StartWeek7 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -43));
-	$EndWeek7 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -49));
-	$StartWeek8 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -50));
-	$EndWeek8 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -56));
-
-	$SQL = "SELECT stockmaster.stockid,
-					stockmaster.description,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek1 ."'
-							AND packagingused.date >= '". $EndWeek1 ."') AS useweek1,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek2 ."'
-							AND packagingused.date >= '". $EndWeek2 ."') AS useweek2,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek3 ."'
-							AND packagingused.date >= '". $EndWeek3 ."') AS useweek3,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek4 ."'
-							AND packagingused.date >= '". $EndWeek4 ."') AS useweek4,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek5 ."'
-							AND packagingused.date >= '". $EndWeek5 ."') AS useweek5,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek6 ."'
-							AND packagingused.date >= '". $EndWeek6 ."') AS useweek6,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek7 ."'
-							AND packagingused.date >= '". $EndWeek7 ."') AS useweek7,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.stockid = stockmaster.stockid
-							AND packagingused.date <= '". $StartWeek8 ."'
-							AND packagingused.date >= '". $EndWeek8 ."') AS useweek8
-			FROM stockmaster
-			WHERE stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
-				AND stockmaster.discontinued = 0
-			ORDER BY stockmaster.stockid";
-	$Result = DB_query($SQL);
 	
-	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Shop Packaging Usage by week'. '</strong></p>';
-		echo '<div>';
-		echo '<table class="selection">
-				<thead>
-					<tr>
-						<th class="SortedColumn">' . _('Code') . '</th>
-						<th class="SortedColumn">' . _('Description') . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek1) . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek2) . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek3) . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek4) . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek5) . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek6) . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek7) . '</th>
-						<th class="SortedColumn">' . ConvertSQLDate($StartWeek8) . '</th>
-						<th class="SortedColumn">' . _('Average') . '</th>
-					</tr>
-				</thead>
-				<tbody>';
-		while ($MyRow = DB_fetch_array($Result)) {
-			$Average = ($MyRow['useweek1'] + 
-					$MyRow['useweek2'] + 
-					$MyRow['useweek3'] + 
-					$MyRow['useweek4'] + 
-					$MyRow['useweek5'] + 
-					$MyRow['useweek6'] + 
-					$MyRow['useweek7'] + 
-					$MyRow['useweek8']) / 8;
-					
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$MyRow['stockid'], 
-					$MyRow['description'], 
-					locale_number_format_zero_blank($MyRow['useweek1'],0), 
-					locale_number_format_zero_blank($MyRow['useweek2'],0), 
-					locale_number_format_zero_blank($MyRow['useweek3'],0), 
-					locale_number_format_zero_blank($MyRow['useweek4'],0), 
-					locale_number_format_zero_blank($MyRow['useweek5'],0), 
-					locale_number_format_zero_blank($MyRow['useweek6'],0), 
-					locale_number_format_zero_blank($MyRow['useweek7'],0), 
-					locale_number_format_zero_blank($MyRow['useweek8'],0), 
-					locale_number_format_zero_blank($Average,0) 
-					);
-		}
-		echo '</tbody></table>
-			</div>';
-	}
-}
-
-function PackagingUsageForOutlet($NumDays, $RootPath){
-/* EXPLAIN 2014-05-20	 OK! */
-
-	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
-
-	$SQL = "SELECT locations.loccode,
-					locations.locationname,
-					locations.rlfactorforpackaging,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB02-L') AS qty_bag_l,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKPB02-L'
-							AND packagingused.date >= '". $FromDate ."') AS sales_bag_l,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB02-M') AS qty_bag_m,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKPB02-M'
-							AND packagingused.date >= '". $FromDate ."') AS sales_bag_m,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKPB02-S') AS qty_bag_s,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKPB02-S'
-							AND packagingused.date >= '". $FromDate ."') AS sales_bag_s,
-					(SELECT locstock.quantity
-						FROM locstock
-						WHERE locstock.loccode = locations.loccode
-							AND locstock.stockid = 'PKSB03') AS qty_shopping_m,
-					(SELECT SUM(packagingused.qty)
-						FROM packagingused
-						WHERE packagingused.fromlocation = locations.loccode
-							AND packagingused.stockid = 'PKSB03'
-							AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m
-			FROM locations
-			WHERE locations.typeloc = 'SHOPOU'
-				OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
-			ORDER BY locations.loccode";
-
-	$Result = DB_query($SQL);
-	$ShowHeader = TRUE;
-	$i = 1;
+		$StartWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -1));
+		$EndWeek1 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -7));
+		$StartWeek2 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -8));
+		$EndWeek2 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -14));
+		$StartWeek3 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -15));
+		$EndWeek3 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -21));
+		$StartWeek4 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -22));
+		$EndWeek4 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -28));
+		$StartWeek5 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -29));
+		$EndWeek5 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -35));
+		$StartWeek6 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -36));
+		$EndWeek6 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -42));
+		$StartWeek7 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -43));
+		$EndWeek7 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -49));
+		$StartWeek8 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -50));
+		$EndWeek8 = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -56));
 	
-	$Totalqty_bag_l   = 0;
-	$Totalsales_bag_l = 0;
-	$Totalqty_bag_m   = 0;
-	$Totalsales_bag_m = 0;
-	$Totalqty_bag_s   = 0;
-	$Totalsales_bag_s = 0;
-	
-	$Totalqty_shopping_m    = 0;
-	$Totalsales_shopping_m  = 0;
-
-	if (DB_num_rows($Result) != 0){
-		while ($MyRow = DB_fetch_array($Result)) {
-			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shop Packaging Usage during the last ' . $NumDays . ' days'. '</strong></p>';
-				echo '<div>';
-				echo '<table class="selection">
-						<thead>
-							<tr>
-								<th></th>
-								<th colspan="3">' . _('OUTLET PouchBag L') . '</th>
-								<th colspan="3">' . _('OUTLET PouchBag M') . '</th>
-								<th colspan="3">' . _('OUTLET PouchBag S') . '</th>
-								<th colspan="3">' . _('OUTLET ShoppingBag M') . '</th>
-							</tr>
-							<tr>
-								<th class="SortedColumn">' . _('KL Shop') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
-								<th class="SortedColumn">' . _('Days Stock') . '</th>
-							</tr>
-						</thead>
-						<tbody>';
-				$ShowHeader = FALSE;
+		$SQL = "SELECT stockmaster.stockid,
+						stockmaster.description,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek1 ."'
+								AND packagingused.date >= '". $EndWeek1 ."') AS useweek1,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek2 ."'
+								AND packagingused.date >= '". $EndWeek2 ."') AS useweek2,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek3 ."'
+								AND packagingused.date >= '". $EndWeek3 ."') AS useweek3,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek4 ."'
+								AND packagingused.date >= '". $EndWeek4 ."') AS useweek4,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek5 ."'
+								AND packagingused.date >= '". $EndWeek5 ."') AS useweek5,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek6 ."'
+								AND packagingused.date >= '". $EndWeek6 ."') AS useweek6,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek7 ."'
+								AND packagingused.date >= '". $EndWeek7 ."') AS useweek7,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.stockid = stockmaster.stockid
+								AND packagingused.date <= '". $StartWeek8 ."'
+								AND packagingused.date >= '". $EndWeek8 ."') AS useweek8
+				FROM stockmaster
+				WHERE stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
+					AND stockmaster.discontinued = 0
+				ORDER BY stockmaster.stockid";
+		$Result = DB_query($SQL);
+		
+		if (DB_num_rows($Result) != 0){
+			$TableTitleText = 'Shop Packaging Usage by week';
+			ShowTableTitle($TableTitleText);
+			echo '<div>';
+			echo '<table class="selection">
+					<thead>
+						<tr>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek1) . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek2) . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek3) . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek4) . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek5) . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek6) . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek7) . '</th>
+							<th class="SortedColumn">' . ConvertSQLDate($StartWeek8) . '</th>
+							<th class="SortedColumn">' . _('Average') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
+			while ($MyRow = DB_fetch_array($Result)) {
+				$Average = ($MyRow['useweek1'] + 
+						$MyRow['useweek2'] + 
+						$MyRow['useweek3'] + 
+						$MyRow['useweek4'] + 
+						$MyRow['useweek5'] + 
+						$MyRow['useweek6'] + 
+						$MyRow['useweek7'] + 
+						$MyRow['useweek8']) / 8;
+						
+				printf('<tr class="striped_row">
+						<td>%s</td>
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$MyRow['stockid'], 
+						$MyRow['description'], 
+						locale_number_format_zero_blank($MyRow['useweek1'],0), 
+						locale_number_format_zero_blank($MyRow['useweek2'],0), 
+						locale_number_format_zero_blank($MyRow['useweek3'],0), 
+						locale_number_format_zero_blank($MyRow['useweek4'],0), 
+						locale_number_format_zero_blank($MyRow['useweek5'],0), 
+						locale_number_format_zero_blank($MyRow['useweek6'],0), 
+						locale_number_format_zero_blank($MyRow['useweek7'],0), 
+						locale_number_format_zero_blank($MyRow['useweek8'],0), 
+						locale_number_format_zero_blank($Average,0) 
+						);
 			}
-
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$MyRow['locationname'], 
-					locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
-					locale_number_format_zero_blank($MyRow['sales_bag_l'],0),
-					locale_number_format_zero_blank($MyRow['qty_bag_l']/($MyRow['sales_bag_l']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
-					locale_number_format_zero_blank($MyRow['sales_bag_m'],0),
-					locale_number_format_zero_blank($MyRow['qty_bag_m']/($MyRow['sales_bag_m']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
-					locale_number_format_zero_blank($MyRow['sales_bag_s'],0),
-					locale_number_format_zero_blank($MyRow['qty_bag_s']/($MyRow['sales_bag_s']/$NumDays),0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
-					locale_number_format_zero_blank($MyRow['sales_shopping_m'],0),
-					locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0)
-					);
-
-			$Totalqty_bag_l   = $Totalqty_bag_l + $MyRow['qty_bag_l'];
-			$Totalsales_bag_l = $Totalsales_bag_l + $MyRow['sales_bag_l'];
-			$Totalqty_bag_m   = $Totalqty_bag_m + $MyRow['qty_bag_m'];
-			$Totalsales_bag_m = $Totalsales_bag_m + $MyRow['sales_bag_m'];
-			$Totalqty_bag_s   = $Totalqty_bag_s + $MyRow['qty_bag_s'];
-			$Totalsales_bag_s = $Totalsales_bag_s + $MyRow['sales_bag_s'];
-
-			$Totalqty_shopping_m    = $Totalqty_shopping_m + $MyRow['qty_shopping_m'];
-			$Totalsales_shopping_m  = $Totalsales_shopping_m + $MyRow['sales_shopping_m'];
-
-			$i++;
-		}
-		if (!$ShowHeader){
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'TOTAL', 
-					locale_number_format_zero_blank($Totalqty_bag_l,0), 
-					locale_number_format_zero_blank($Totalsales_bag_l,0),
-					locale_number_format_zero_blank($Totalqty_bag_l/($Totalsales_bag_l/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_m,0), 
-					locale_number_format_zero_blank($Totalsales_bag_m,0),
-					locale_number_format_zero_blank($Totalqty_bag_m/($Totalsales_bag_m/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_bag_s,0), 
-					locale_number_format_zero_blank($Totalsales_bag_s,0),
-					locale_number_format_zero_blank($Totalqty_bag_s/($Totalsales_bag_s/$NumDays),0),
-					locale_number_format_zero_blank($Totalqty_shopping_m,0), 
-					locale_number_format_zero_blank($Totalsales_shopping_m,0),
-					locale_number_format_zero_blank($Totalqty_shopping_m/($Totalsales_shopping_m/$NumDays),0)
-					);
 			echo '</tbody></table>
 				</div>';
 		}
 	}
-}
-
+	
+function PackagingUsageForOutlet($NumDays, $RootPath){
+	/* EXPLAIN 2014-05-20	 OK! */
+	
+		$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$NumDays));
+	
+		$SQL = "SELECT locations.loccode,
+						locations.locationname,
+						locations.rlfactorforpackaging,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKPB02-L') AS qty_bag_l,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKPB02-L'
+								AND packagingused.date >= '". $FromDate ."') AS sales_bag_l,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKPB02-M') AS qty_bag_m,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKPB02-M'
+								AND packagingused.date >= '". $FromDate ."') AS sales_bag_m,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKPB02-S') AS qty_bag_s,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKPB02-S'
+								AND packagingused.date >= '". $FromDate ."') AS sales_bag_s,
+						(SELECT locstock.quantity
+							FROM locstock
+							WHERE locstock.loccode = locations.loccode
+								AND locstock.stockid = 'PKSB03') AS qty_shopping_m,
+						(SELECT SUM(packagingused.qty)
+							FROM packagingused
+							WHERE packagingused.fromlocation = locations.loccode
+								AND packagingused.stockid = 'PKSB03'
+								AND packagingused.date >= '". $FromDate ."') AS sales_shopping_m
+				FROM locations
+				WHERE locations.typeloc = 'SHOPOU'
+					OR locations.loccode IN " . LIST_PACAKING_LOCATIONS . "
+				ORDER BY locations.loccode";
+	
+		$Result = DB_query($SQL);
+		$ShowHeader = TRUE;
+		$i = 1;
+		
+		$TotalQty_bag_l   = 0;
+		$TotalSales_bag_l = 0;
+		$TotalQty_bag_m   = 0;
+		$TotalSales_bag_m = 0;
+		$TotalQty_bag_s   = 0;
+		$TotalSales_bag_s = 0;
+		
+		$TotalQty_shopping_m	= 0;
+		$TotalSales_shopping_m  = 0;
+	
+		if (DB_num_rows($Result) != 0){
+			while ($MyRow = DB_fetch_array($Result)) {
+				if($ShowHeader){
+					$TableTitleText = 'OUTLET Shop Packaging Usage during the last ' . $NumDays . ' days';
+					ShowTableTitle($TableTitleText);
+					echo '<div>';
+					echo '<table class="selection">
+							<thead>
+								<tr>
+									<th></th>
+									<th colspan="3">' . _('OUTLET PouchBag L') . '</th>
+									<th colspan="3">' . _('OUTLET PouchBag M') . '</th>
+									<th colspan="3">' . _('OUTLET PouchBag S') . '</th>
+									<th colspan="3">' . _('OUTLET ShoppingBag M') . '</th>
+								</tr>
+								<tr>
+									<th class="SortedColumn">' . _('KL Shop') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+									<th class="SortedColumn">' . _('QOH') . '</th>
+									<th class="SortedColumn">' . _('Use ') . $NumDays . ' d</th>
+									<th class="SortedColumn">' . _('Days Stock') . '</th>
+								</tr>
+							</thead>
+							<tbody>';
+					$ShowHeader = FALSE;
+				}
+	
+				printf('<tr class="striped_row">
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						$MyRow['locationname'], 
+						locale_number_format_zero_blank($MyRow['qty_bag_l'],0), 
+						locale_number_format_zero_blank($MyRow['sales_bag_l'],0),
+						locale_number_format_zero_blank($MyRow['qty_bag_l']/($MyRow['sales_bag_l']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_bag_m'],0), 
+						locale_number_format_zero_blank($MyRow['sales_bag_m'],0),
+						locale_number_format_zero_blank($MyRow['qty_bag_m']/($MyRow['sales_bag_m']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_bag_s'],0), 
+						locale_number_format_zero_blank($MyRow['sales_bag_s'],0),
+						locale_number_format_zero_blank($MyRow['qty_bag_s']/($MyRow['sales_bag_s']/$NumDays),0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_m'],0), 
+						locale_number_format_zero_blank($MyRow['sales_shopping_m'],0),
+						locale_number_format_zero_blank($MyRow['qty_shopping_m']/($MyRow['sales_shopping_m']/$NumDays),0)
+						);
+	
+				$TotalQty_bag_l   = $TotalQty_bag_l + $MyRow['qty_bag_l'];
+				$TotalSales_bag_l = $TotalSales_bag_l + $MyRow['sales_bag_l'];
+				$TotalQty_bag_m   = $TotalQty_bag_m + $MyRow['qty_bag_m'];
+				$TotalSales_bag_m = $TotalSales_bag_m + $MyRow['sales_bag_m'];
+				$TotalQty_bag_s   = $TotalQty_bag_s + $MyRow['qty_bag_s'];
+				$TotalSales_bag_s = $TotalSales_bag_s + $MyRow['sales_bag_s'];
+	
+				$TotalQty_shopping_m	= $TotalQty_shopping_m + $MyRow['qty_shopping_m'];
+				$TotalSales_shopping_m  = $TotalSales_shopping_m + $MyRow['sales_shopping_m'];
+	
+				$i++;
+			}
+			if (!$ShowHeader){
+				printf('<tr class="striped_row">
+						<td>%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						<td class="number">%s</td>
+						</tr>', 
+						'TOTAL', 
+						locale_number_format_zero_blank($TotalQty_bag_l,0), 
+						locale_number_format_zero_blank($TotalSales_bag_l,0),
+						locale_number_format_zero_blank($TotalQty_bag_l/($TotalSales_bag_l/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_bag_m,0), 
+						locale_number_format_zero_blank($TotalSales_bag_m,0),
+						locale_number_format_zero_blank($TotalQty_bag_m/($TotalSales_bag_m/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_bag_s,0), 
+						locale_number_format_zero_blank($TotalSales_bag_s,0),
+						locale_number_format_zero_blank($TotalQty_bag_s/($TotalSales_bag_s/$NumDays),0),
+						locale_number_format_zero_blank($TotalQty_shopping_m,0), 
+						locale_number_format_zero_blank($TotalSales_shopping_m,0),
+						locale_number_format_zero_blank($TotalQty_shopping_m/($TotalSales_shopping_m/$NumDays),0)
+						);
+				echo '</tbody></table>
+					</div>';
+			}
+		}
+	}
+	
 function PettyCashStatus($Currency){
 
 	$SQL = "SELECT pcashdetails.tabcode, 	
@@ -3565,7 +3588,8 @@ function PettyCashStatus($Currency){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Authorized Status for '). $Currency . ' accounts'  . '</strong></p>';
+		$TableTitleText = _('Petty Cash Authorized Status for '). $Currency . ' accounts';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3742,7 +3766,8 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 	}
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Title  .'</strong></p>';
+		$TableTitleText = $Title;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3944,7 +3969,8 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Unbalanced GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
+		$TableTitleText = 'Unbalanced GLTrans Transactions during the last ' . $NumDays . ' days';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3991,7 +4017,8 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Empty account code GLTrans Transactions during the last ' . $NumDays . ' days' . '</strong></p>';
+		$TableTitleText = 'Empty account code GLTrans Transactions during the last ' . $NumDays . ' days';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4041,7 +4068,6 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 	}
 }
 
-
 function ShowKPIHistory($NumDays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	$SQL = "SELECT class,
@@ -4055,7 +4081,8 @@ function ShowKPIHistory($NumDays){
 			ORDER BY class, concept";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'General KPI last ' . $NumDays . ' days' . '</strong></p>';
+		$TableTitleText = 'General KPI last ' . $NumDays . ' days';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -4087,7 +4114,6 @@ function ShowKPIHistory($NumDays){
 			</div>';
 	}
 }
-
 
 function MaintenanceTasksDistribution($Status, $NumDays){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
@@ -4144,7 +4170,8 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 						<th class="SortedColumn">' . _('DLL') . '</th>
 						<th class="SortedColumn">' . _('Total') . '</th>
 					</tr>';
-		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+		$TableTitleText = $Title;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>';
@@ -4383,9 +4410,11 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 		$ItemsToGetOptimalDaysStock = 0;
 	}
 	
-	echo '<p class="page_title_text" align="center"><strong>' . 'Stock for Brand ' . $BrandText. '</strong></p>';
+	$TableTitleText = _('Stock for Brand ' . $BrandText);
+	ShowTableTitle($TableTitleText);
+
 	echo '<div>';
-	echo '<table class="selection">
+	echo '<table>
 			<thead>
 				<tr>
 					<th>' . 'Concept' . '</th>
@@ -4506,7 +4535,7 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 				"Stock to be received by PO (PCS)", 
 				locale_number_format($ItemsPO,0)
 				);
-		printf('<<tr>
+		printf('<tr>
 				<td>%s</td>
 				<td class="number">%s</td>
 				</tr>', 

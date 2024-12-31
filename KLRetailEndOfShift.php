@@ -49,7 +49,8 @@ $SQL = "SELECT salesorders.orderno,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) != 0){
-	echo '<p class="page_title_text" align="center"><strong>' . $_SESSION['SalesmanLogin'] . ' SPG End Of Shift Report' . '</strong></p>';
+	$TableTitleText = $_SESSION['SalesmanLogin'] . _('SPG End Of Shift Report');
+	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>

@@ -33,21 +33,23 @@ $SQL = "SELECT stockmaster.stockid,
 		ORDER BY stockmaster.stockid";
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) != 0){
-	echo '<p class="page_title_text" align="center"><strong>' . _('Items To Classify for Online Shop Categories') . '</strong></p>';
+	$TableTitleText = _('Items To Classify for Online Shop Categories');
+	ShowTableTitle($TableTitleText);
 	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('#') . '</th>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('Stock Category') . '</th>
-						<th>' . _('Weight Kg') . '</th>
-						<th>' . _('Volume m3') . '</th>
-						<th>' . _('Brand') . '</th>
-						<th>' . _('Website Category') . '</th>
-					</tr>';
-	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th>' . _('#') . '</th>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Description') . '</th>
+					<th>' . _('Stock Category') . '</th>
+					<th>' . _('Weight Kg') . '</th>
+					<th>' . _('Volume m3') . '</th>
+					<th>' . _('Brand') . '</th>
+					<th>' . _('Website Category') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 	$i = 1;
 	$ItemsAdded = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -110,13 +112,13 @@ if (DB_num_rows($Result) != 0){
 		if ($WebsiteCategory < 0){
 			$WebsiteDescription = 'ITEM EXCLUDED';
 		}
-		$k = StartEvenOrOddRow($k);
 		if ($Brand == 1){
 			$BrandText = "KL";
 		}elseif ($Brand == 2){
 			$BrandText = "Blink";
 		}
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -136,8 +138,9 @@ if (DB_num_rows($Result) != 0){
 				);
 		$i++;
 	}
-	echo '</table>
-			</div>';
+	echo '</tbody>
+		</table>
+		</div>';
 	prnMsg("Number of items associated to website catalog: " . locale_number_format($ItemsAdded));
 }
 

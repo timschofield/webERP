@@ -32,7 +32,8 @@ $SQL = "SELECT grns.supplierid,
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) != 0){
-	echo '<p class="page_title_text" align="center"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
+	$TableTitleText = _('Goods Received but not invoiced Yet');
+	ShowTableTitle($TableTitleText);
 
 	echo '<div class="page_help_text">'
 	. _('Shows the list of Goods Received Not Yet Invoiced, both in supplier currency and home currency.'). '<br />'

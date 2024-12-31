@@ -20,7 +20,9 @@ $SQL = "SELECT salesorders.orddate,
 				
 $Result = DB_query($SQL);
 
-echo '<p class="page_title_text" align="center"><strong>' . 'Items sold in ' . $LocationName  . ' in the last ' . TRANSFER_LIST_DAYS_FOR_SPG .' days</strong></p>';
+$TableTitleText = 'Items sold in ' . $LocationName  . ' in the last ' . TRANSFER_LIST_DAYS_FOR_SPG .' days';
+ShowTableTitle($TableTitleText);
+
 echo '<table class="selection">
 		<thead>';
 $TableHeader = '<tr>

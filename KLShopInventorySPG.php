@@ -17,7 +17,9 @@ $SQL = "SELECT locstock.stockid,
 		ORDER BY locstock.stockid";
 $Result = DB_query($SQL);
 
-echo '<p class="page_title_text" align="center"><strong>' . _('Stock Available at ') . $LocationName  . '</strong></p>';
+$TableTitleText = _('Stock Available at ') . $LocationName;
+echo ShowTableTitle($TableTitleText);
+
 echo '<table class="selection">
 		<thead>';
 $TableHeader = '<tr>

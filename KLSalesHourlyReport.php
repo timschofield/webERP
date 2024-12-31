@@ -125,7 +125,8 @@ function HourlyPerformance($numDays, $RootPath){
 		$i = 0; // row counter
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' .'Hourly Sales Performance until '. $Now .'</strong></p>';
+				$TableTitleText = _('Hourly Sales Performance until '. $Now);
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<thead>

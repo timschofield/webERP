@@ -2203,7 +2203,8 @@ function ImagesWithoutProduct($RootPath){
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) == 0){
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Images without product in webERP') .'</strong></p>';
+					$TableTitleText = _('Images without product in webERP');
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -2248,7 +2249,8 @@ function ItemsCancelledInTransfers($maxdays, $RootPath){
 			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items cancelled in Transfers during the last ') . $maxdays . _(' days ') . '</strong></p>';
+		$TableTitleText = _('Items cancelled in Transfers during the last ') . $maxdays . _(' days ');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -3130,7 +3132,8 @@ function ItemsShouldBeInWebsite(){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if(file_exists($_SESSION['part_pics_dir'] . '/' .$MyRow['stockid'].'.jpg') ) {
 				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Items with picture but not available in Online Shop') . '</strong></p>';
+					$TableTitleText = _('Items with picture but not available in Online Shop');
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -3208,7 +3211,8 @@ function ItemsWithStockLocationButNoStockAvailable($Location, $NameLocation, $Mi
 			$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
 			if($PositionTopSales <= $MaxTopSalesItems){
 				if ($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . $MaxTopSalesItems ._(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable . '</strong></p>';
+					$TableTitleText = $MaxTopSalesItems ._(' Top Sales Items (Exclude No More Purchasing, Discount) with stock at ') . $NameLocation . ' but KL Stock Available (Toko + Kantor) <= ' . $MinAvailable;
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -4112,7 +4116,7 @@ function OnlineItemsOnProcess($RootPath){
 
 function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 
-	$Titletext = "Follow up Outstanding " . $Source. " Online Orders";
+	$TableTitleText = "Follow up Outstanding " . $Source. " Online Orders";
 	$ThankYouDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 // 2015-01-14 Prices already NET for online orders
 //                (SELECT SUM(salesorderdetails.unitprice*salesorderdetails.quantity*(1-salesorderdetails.discountpercent))
@@ -4191,7 +4195,6 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 	}
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = $Titletext;
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
@@ -4401,7 +4404,8 @@ function OpenCartItemsWithoutPicture($RootPath ){
 		while ($MyRow = DB_fetch_array($Result)) {
 			if(!file_exists(ABSOLUTE_PATH_OPENCART_IMAGES .$MyRow['stockid'].'.jpg') ) {
 				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Online Shop Items without picture') . '</strong></p>';
+					$TableTitleText = _('Online Shop Items without picture');
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -4798,10 +4802,11 @@ function PettyCashBalance($TypeUser){
 	if (DB_num_rows($Result) != 0){
 		
 		if ($TypeUser == "Authorizer"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Accounts you AUTHORIZE with balance too Low or Too High') . '</strong></p>';
+			$TableTitleText = _('Petty Cash Accounts you AUTHORIZE with balance too Low or Too High');
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Petty Cash Balance you USE with balance too Low or Too High') . '</strong></p>';
+			$TableTitleText = _('Petty Cash Balance you USE with balance too Low or Too High');
 		}
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -5025,7 +5030,8 @@ function SPGNotReportingSalesInDays($maxdays){
 //	prnMsg($SQL);			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Senior or Support SPG with more than ') . $maxdays . _(' days not reporting ANY sales.') .'</strong></p>';
+		$TableTitleText =  _('Senior or Support SPG with more than ') . $maxdays . _(' days not reporting ANY sales.');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -5211,10 +5217,11 @@ function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Type=='SPGSUPPORT'){
-			echo '<p class="page_title_text" align="center"><strong>' . _('SPG Support webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
+			$TableTitleText = _('SPG Support webERP users not logging in for more than ') . $maxdays . _(' days.');
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.') .'</strong></p>';
+			$TableTitleText = _('Regular webERP users not logging in for more than ') . $maxdays . _(' days.');
 		}
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>

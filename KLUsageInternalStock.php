@@ -77,7 +77,9 @@ $SQL = "SELECT stockmaster.stockid,
 		ORDER BY stockmaster.stockid";
 $Result = DB_query($SQL);
 
-echo '<p class="page_title_text" align="center"><strong>' . _('Usage of Internal Stock - Shop Consumables during the last ') . $NumberOfDays . ' days' . '</strong></p>';
+$TableTitleText = _('Usage of Internal Stock - Shop Consumables during the last ') . $NumberOfDays . ' days';
+ShowTableTitle($TableTitleText);
+
 echo '<table class="selection">';
 $TableHeader = '<tr>
 					<th>' . _('#') . '</th>

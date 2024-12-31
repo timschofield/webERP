@@ -134,7 +134,9 @@ if (!(isset($_POST['Search']))) {
 
 	$Result = DB_query($SQL);
 	
-	echo '<p class="page_title_text" align="center"><strong>' . _('Items with Stock Available at ') . $_POST['FromLoc'] . _(' but RL = 0 in Shop ') . $_POST['Shop'] . '</strong></p>';
+	$TableTitleText = _('Items with Stock Available at ') . $_POST['FromLoc'] . _(' but RL = 0 in Shop ') . $_POST['Shop'];
+	ShowTableTitle($TableTitleText);
+
 	echo '<table class="selection">
 			<thead>
 				<tr>

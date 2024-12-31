@@ -53,7 +53,9 @@ $SQL = "SELECT reference,
 				stockid ASC";
 $Result = DB_query($SQL);
 
-echo '<p class="page_title_text" align="center"><strong>' . 'Transfers still in transit from / to ' . $LocationName .'</strong></p>';
+$TableTitleText = 'Transfers still in transit from / to ' . $LocationName;
+ShowTableTitle($TableTitleText);
+
 echo '<table class="selection">
 		<thead>
 			<tr>
@@ -125,7 +127,9 @@ $SQL = "SELECT transno,
 				
 $Result = DB_query($SQL);
 
-echo '<p class="page_title_text" align="center"><strong>' . 'Transfers already processed from / to ' . $LocationName  . ' of last ' . TRANSFER_LIST_DAYS_FOR_SPG .' days</strong></p>';
+$TableTitleText = 'Transfers already processed from / to ' . $LocationName  . ' of last ' . TRANSFER_LIST_DAYS_FOR_SPG .' days';
+ShowTableTitle($TableTitleText);
+
 echo '<table class="selection">
 		<thead>
 			<tr>
