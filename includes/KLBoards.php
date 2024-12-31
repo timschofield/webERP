@@ -757,11 +757,11 @@ function MaintenanceTasksList($Status, $NumDays){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
 	if ($Status == "OPEN"){
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
-		$Title = 'Open Maintenance Tasks';
+		$TableTitleText = 'Open Maintenance Tasks';
 	} else {
 		$WhereStatus = "WHERE klmaintenancetasks.closed = 1
 							AND closedate >= '" . $FromDate . "'";
-		$Title = 'Closed Maintenance Tasks during the last ' . $NumDays . ' days';
+		$TableTitleText = 'Closed Maintenance Tasks during the last ' . $NumDays . ' days';
 	}
 	$SQL = "SELECT klmaintenancetasks.counterindex,
 				klmaintenancetasks.loccode,
@@ -786,7 +786,7 @@ function MaintenanceTasksList($Status, $NumDays){
 			ORDER BY klmaintenancetasks.counterindex";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -1164,24 +1164,24 @@ function FinishedStockDistribution($Kind, $ByReport){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($Kind == "FORSALE"){
-			$Titletext = "Finished Stock FOR SALE Distribution by ";
+			$TableTitleText = "Finished Stock FOR SALE Distribution by ";
 		}
 		if ($Kind == "DISPLAYS"){
-			$Titletext = "Finished Stock DISPLAYS Distribution by ";
+			$TableTitleText = "Finished Stock DISPLAYS Distribution by ";
 		}
 		if ($Kind == "PACKAGING"){
-			$Titletext = "Finished Stock SHOP PACKAGING Distribution by ";
+			$TableTitleText = "Finished Stock SHOP PACKAGING Distribution by ";
 		}
 		if ($ByReport == "LOCATION"){
-			$Titletext = $Titletext . "Location";
+			$TableTitleText = $TableTitleText . "Location";
 			$Titleheader = "Location";
 		}
 		if ($ByReport == "STOCKCATEGORY"){
-			$Titletext = $Titletext . "Stock Category";
+			$TableTitleText = $TableTitleText . "Stock Category";
 			$Titleheader = "Stock Category";
 		}
 
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext .'</strong></p>';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>
@@ -1470,9 +1470,9 @@ function FinishedStockDistributionByShopAndCategory(){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		$Titletext = "Models FOR SALE Distribution by Location and Category";
+		$TableTitleText = "Models FOR SALE Distribution by Location and Category";
+		ShowTableTitle($TableTitleText);
 
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext .'</strong></p>';
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
