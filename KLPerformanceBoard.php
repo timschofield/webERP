@@ -348,9 +348,9 @@ if ($ProcessSection03){
 	if ($KL_SystemAdmin
 		OR $KL_AdministrationLeader){
 		CashStatus($yesterday_year, 
-					226900000, 200000000, 100000000, 
-					143000000, 200000000, 100000000, 
-					 40525935, 300000000, 100000000, 
+					211402000, 200000000, 100000000, 
+					218082000, 200000000, 100000000, 
+					321879000, 200000000, 100000000, 
 					100000000, 
 					75, 1.05,
 					  5000, 
@@ -785,7 +785,7 @@ function CashStatus($Year,
 				</tr>
 			</thead>
 			<tbody>';
-
+	$i = 1;
 	printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -992,7 +992,7 @@ function CashStatus($Year,
 				</tr>
 			</thead>
 			<tbody>';
-
+	$i = 1;
 	printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -1223,7 +1223,7 @@ function CashStatus($Year,
 				</tr>
 			</thead>
 			<tbody>';
-
+	$i = 1;
 	printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -1463,7 +1463,7 @@ function CashStatus($Year,
 				</tr>
 			</thead>
 			<tbody>';
-
+	$i = 1;
 	printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -1623,6 +1623,7 @@ function CashStatus($Year,
 		$FreeSaldoBrankasShareholders = $SaldoBrankasShareholders + $FreeSaldoBrankasKantor;
 		$ToBeDistributedToShareholders = round_multiple_of($FreeSaldoBrankasShareholders, $MinMoveFree);	
 
+		$i = 1;
 		printf('<tr>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -1754,9 +1755,9 @@ function DailySalesRecords($Days, $NumDays, $Since){
 					);
 			$i++;
 		}
-		echo '</tbody>
-			</table>
-			</div>';
+		echo '</tbody></table>
+				</div>
+				</form>';
 	}
 }
 
@@ -1915,8 +1916,6 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				
 			}
 		}
-		echo '</tbody>
-			<tfooter>';
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -1946,9 +1945,8 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				locale_number_format_zero_blank($TotalItemCountLastYear/$NumDaysA,1),
 				locale_number_format_zero_blank($TotalItemCountLastYear/$TotalInvoiceCountLastYear,1)
 				);
-		echo '</tfooter>
-			</table>
-			</div>';
+		echo '</tbody></table>
+				</div>';
 		InsertKPI("Sales", "Items x Invoice Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
 	}
 }
@@ -2210,8 +2208,7 @@ function PackagingStatusForBlink($RootPath){
 			$i++;
 		}
 		if (!$ShowHeader){
-			echo '</tbody>
-				</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -2474,8 +2471,7 @@ function PackagingStatusForKapalLaut($RootPath){
 			$i++;
 		}
 		if (!$ShowHeader){
-			echo '</tbody>
-				</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -2623,8 +2619,7 @@ function PackagingStatusForOutlet($RootPath){
 			$i++;
 		}
 		if (!$ShowHeader){
-			echo '</tbody>
-				</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -2886,10 +2881,6 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 
 			$i++;
 		}
-
-		echo '</tbody>
-			<tfooter>';
-		
 		if (!$ShowHeader){
 			printf('<tr class="striped_row">
 					<td>%s</td>
@@ -2950,8 +2941,7 @@ function PackagingUsageForBlink($NumDays, $RootPath){
 					locale_number_format_zero_blank($TotalSales_shopping_s,0),
 					locale_number_format_zero_blank($TotalQty_shopping_s/($TotalSales_shopping_s/$NumDays),0)
 					);
-			echo '</tfooter>
-				</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -3213,9 +3203,6 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 	
 				$i++;
 			}
-			echo '</tbody>
-				<tfooter>';
-			
 			if (!$ShowHeader){
 				printf('<tr class="striped_row">
 						<td>%s</td>
@@ -3276,8 +3263,7 @@ function PackagingUsageForKapalLaut($NumDays, $RootPath){
 						locale_number_format_zero_blank($TotalSales_shopping_s,0),
 						locale_number_format_zero_blank($TotalQty_shopping_s/($TotalSales_shopping_s/$NumDays),0)
 						);
-				echo '</tfooter>
-					</table>
+				echo '</tbody></table>
 					</div>';
 			}
 		}
@@ -3407,8 +3393,7 @@ function PackagingUsageByWeeks($RootPath){
 						locale_number_format_zero_blank($Average,0) 
 						);
 			}
-			echo '</tbody>
-				</table>
+			echo '</tbody></table>
 				</div>';
 		}
 	}
@@ -3554,8 +3539,6 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 				$i++;
 			}
 			if (!$ShowHeader){
-				echo '</tbody>
-					<tfooter>';
 				printf('<tr class="striped_row">
 						<td>%s</td>
 						<td class="number">%s</td>
@@ -3585,8 +3568,7 @@ function PackagingUsageForOutlet($NumDays, $RootPath){
 						locale_number_format_zero_blank($TotalSales_shopping_m,0),
 						locale_number_format_zero_blank($TotalQty_shopping_m/($TotalSales_shopping_m/$NumDays),0)
 						);
-				echo '</tfooter>
-					</table>
+				echo '</tbody></table>
 					</div>';
 			}
 		}
@@ -3633,8 +3615,6 @@ function PettyCashStatus($Currency){
 			$i++;
 			$Total = $Total + $MyRow['amount'];
 		}
-		echo '</tbody>
-			<tfooter>';
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -3645,9 +3625,8 @@ function PettyCashStatus($Currency){
 				locale_number_format($Total,0)
 				);
 		
-		echo '</tfooter>
-			</table>
-			</div>';
+		echo '</tbody></table>
+				</div>';
 	}
 }
 
@@ -3870,8 +3849,6 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 			$TotalRent = $TotalRent +($MyRow['yearlyrent']);
 			$TotalDateB = $TotalDateB +($MyRow['salesB']);
 		}
-		echo '</tbody>
-			<tfooter>';
 		if ($Typereport == "Shop"){
 			$Percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
 			$Trend = " ";
@@ -3968,9 +3945,8 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 					$Rent
 					);
 		}
-		echo '</tfooter>
-			</table>
-			</div>';
+		echo '</tbody></table>
+				</div>';
 		if (($Typereport == "Shop") AND ($Typeperiod == "YEAR")){
 			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $Percent);
 		}
@@ -4022,8 +3998,7 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 					locale_number_format($MyRow['unbalance'],0)
 					);
 		}
-		echo '</tbody>
-			</table>
+		echo '</tbody></table>
 			</div>';
 	}
 }
@@ -4088,8 +4063,7 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 				"", 
 				locale_number_format($TotalAmount,0)
 				);
-		echo '</tbody>
-			</table>
+		echo '</tbody></table>
 			</div>';
 	}
 }
@@ -4136,8 +4110,7 @@ function ShowKPIHistory($NumDays){
 					locale_number_format_kpi($MyRow['maximumvalue'])
 					);
 		}
-		echo '</tbody>
-			</table>
+		echo '</tbody></table>
 			</div>';
 	}
 }
@@ -4348,8 +4321,6 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 					$TotalIssuesLocation 
 					);
 		}
-		echo '</tbody>
-			<tfooter>';
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -4382,8 +4353,7 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 				$TotalIssues
 				);
 		
-		echo '</tfooter>
-			</table>
+		echo '</tbody></table>
 			</div>';
 
 		if ($Status == "OPEN"){
