@@ -23,6 +23,7 @@ include ('includes/CurrenciesArray.php');
 include ('includes/SQL_CommonFunctions.inc');
 include ('includes/FreightCalculation.inc');
 include ('includes/GetSalesTransGLCodes.inc');
+include ('includes/CommissionFunctions.php');
 // KL RICARD
 include ('includes/KLGeneralFunctions.php');
 include ('includes/KLDefines.php');
