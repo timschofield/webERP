@@ -1,5 +1,4 @@
 <?php
-/* $Id: MainMenuLinksArray.php 6190 2013-08-12 02:12:02Z rchacon $*/
 
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
@@ -51,6 +50,7 @@ $MenuItems['Sales']['Transactions']['Caption'] = array(_('New Sales Order or Quo
 														_('Sales Commission Reports'));
 
 $MenuItems['Sales']['Transactions']['URL'] = array('/SelectOrderItems.php?NewOrder=Yes',
+													'/CounterSales.php',
 													'/CounterReturns.php',
 													'/KLRetailPOS.php',
 													'/KLRetailCustomerInfoCard.php',
