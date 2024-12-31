@@ -248,7 +248,8 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 				if ($MyRow['retailprice'] != $RecommendedPrice){
 					if ($ShowHeader){
 						$CategoryName = GetCategoryNameFromCode($Stockcat);
-						echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . ' x standard cost. QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+						$TableTitleText = $CategoryName . ' Items TOO CHEAP: ' . ' TOP '.locale_number_format($TopSales,0) . ' sales. Price BELOW ' . $FactorMax . ' x standard cost. QOH >= ' .  locale_number_format($MinQoh,0);
+						ShowTableTitle($TableTitleText);
 						echo '<div>';
 						echo '<table class="selection">
 								<thead>
@@ -371,7 +372,8 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				($RecommendedPrice < $MyRow['retailprice'])){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					echo '<p class="page_title_text" align="center"><strong>' .  $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. ') . 'QOH >= ' .  locale_number_format($MinQoh,0).  '</strong></p>';
+					$TableTitleText = $CategoryName . ' Items TOO EXPENSIVE: ' . ' NO TOP '.locale_number_format($TopSales,0) . ' sales. Retail Price OVER ' . $FactorMax . _(' x standard cost. ') . 'QOH >= ' .  locale_number_format($MinQoh,0);
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -492,7 +494,8 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 			if ($MyRow['retailprice'] != $RecommendedPrice){
 				if ($ShowHeader){
 					$CategoryName = GetCategoryNameFromCode($Stockcat);
-					echo '<p class="page_title_text" align="center"><strong>' . $CategoryName . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. ') .  'QOH >= ' .  locale_number_format($MinQoh,0). '</strong></p>';
+					$TableTitleText = $CategoryName . _(' Items with retail price below minimum. ') . $Factor . _(' x standard cost. ') .  'QOH >= ' .  locale_number_format($MinQoh,0);
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -607,7 +610,8 @@ function PriceWrongRounding($RootPath){
 			
 			if(!IsPriceRoundedOK($MyRow['retailprice'])){
 				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . _('Items with WRONG rounding retail price.') . '</strong></p>';
+					$TableTitleText = _('Items with WRONG rounding retail price.');
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -698,7 +702,8 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			$ShowHeader = TRUE;
 		while ($MyRow = DB_fetch_array($Result)) {
 			if($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . _('Items with prices older than ') . $Years . ' years' . '</strong></p>';
+				$TableTitleText = _('Items with prices older than ') . $Years . ' years';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>

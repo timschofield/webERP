@@ -63,7 +63,8 @@ function AdjustNoSales($Location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 	
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $Location . ' </strong></p>';
+			$TableTitleText = _('Items with NO sales on last ') . $maxdays . ' days in ' . $Location;
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">
 					<thead>
@@ -164,7 +165,8 @@ function DailySalesRecordsByShops($Days, $FromDate){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Top ') . $Days . _(' retail sales days by shop since '). ConvertSQLDate($FromDate) .'</strong></p>';
+		$TableTitleText = _('Top ') . $Days . _(' retail sales days by shop since '). ConvertSQLDate($FromDate);
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -235,7 +237,8 @@ function GoodSellingItemsInCategory($CategoryId, $days, $minsales, $RootPath){
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " with more than " . $minsales . " pcs sold in the last " . $days . " days.(GOOD ITEMS)" . ' </strong></p>';
+		$TableTitleText = _('Items in category ') . $CategoryId . " with more than " . $minsales . " pcs sold in the last " . $days . " days.(GOOD ITEMS)";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -300,7 +303,8 @@ function ImagesShouldNotBeInOpencartCatalog($RootPath){
 		$ProductId = GetOpenCartProductId($StockId);
 		if ($ProductId == 0){
 			if ($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . _('Opencart Images without product in OpenCart') .'</strong></p>';
+				$TableTitleText = _('Opencart Images without product in OpenCart');
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">';
 				$TableHeader = '<tr>
@@ -358,7 +362,8 @@ function InsuficientStockForItems($Category, $ItemCode, $ItemDescription, $Minim
 		$QtyNeeded = $OptimalStock - $MyRow['qoh'];
 		if ($QtyNeeded > 0){
 			if ($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . $ItemDescription . ' Items with QOH (kantor+toko) < ' . $MinimumStock . ' pcs.</strong></p>';
+				$TableTitleText = $ItemDescription . ' Items with QOH (kantor+toko) < ' . $MinimumStock . ' pcs.';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
@@ -465,7 +470,8 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 		$QtyNeeded = $Forecast - $MyRow['qoh'] - $MyRow['qoo'] - $MyRow['qow'];
 		if ($QtyNeeded > 0){
 			if ($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' . $NumberOfTopItems . ' Top Items from ' . strtoupper($StockCatDescription) . ' with insufficient stock for the next ' . $DaysMinimumStock . ' days (Excluded Samples).</strong></p>';
+				$TableTitleText = $NumberOfTopItems . ' Top Items from ' . strtoupper($StockCatDescription) . ' with insufficient stock for the next ' . $DaysMinimumStock . ' days (Excluded Samples).';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>
@@ -608,13 +614,13 @@ function ItemsInCategoryWithStockKantorButReorderLevelTokoZero($CategoryId, $Roo
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
-			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
+			$TableTitleText = $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET;
 		}elseif (ItemInList($CategoryId, LIST_STOCK_CATEGORIES_OUTLET)){
-			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET . '</strong></p>';
+			$TableTitleText = $CategoryId ._(' Items with stock available at Kantor but RL zero for ') . LIST_SHOPS_OUTLET;
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . $CategoryId ._(' Items with stock available at Kantor but RL zero for all toko KL') . '</strong></p>';
+			$TableTitleText = $CategoryId ._(' Items with stock available at Kantor but RL zero for all toko KL');
 		}
-		
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -740,7 +746,8 @@ function ItemsNoSalesInLocation($Location, $maxdays, $QOHAvailable, $RootPath){
 	$Result = DB_query($SQL);		
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items with NO sales on last ') . $maxdays . ' days in ' . $Location . ' with stock <= ' . $QOHAvailable . ' at shops or kantor</strong></p>';
+		$TableTitleText = _('Items with NO sales on last ') . $maxdays . ' days in ' . $Location . ' with stock <= ' . $QOHAvailable . ' at shops or kantor';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -823,7 +830,8 @@ function ItemsNotTopSalesInShop($starttopitems, $endtopitems, $maxdays, $Codesho
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['rl'] > 0){
 				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . 'Items NOT ' . $endtopitems . ' top sales available in ' . $Codeshop . ' shop. ' . '</strong></p>';
+					$TableTitleText = 'Items NOT ' . $endtopitems . ' top sales available in ' . $Codeshop . ' shop. ';
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -923,7 +931,8 @@ No pending transfer regarding this item
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $MessageCategory . _(' Items with stock available (but NO changing price or category) at Kantor but RL = 0 at ') . $Location . '</strong></p>';
+		$TableTitleText = $MessageCategory . _(' Items with stock available (but NO changing price or category) at Kantor but RL = 0 at ') . $Location;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -989,7 +998,8 @@ function NewCustomers($NumDays, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('New customers registered during the last ') . $NumDays . ' days.' . '</strong></p>';
+		$TableTitleText = _('New customers registered during the last ') . $NumDays . ' days.';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1067,7 +1077,8 @@ function OvestockAtShops($Kind, $RootPath){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if($Kind == "OVERSTOCK"){			
-			echo '<p class="page_title_text" align="center"><strong>' . _('Overstock of items at shops') . '</strong></p>';
+			$TableTitleText = _('Overstock of items at shops');
+			ShowTableTitle($TableTitleText);
 			$TableHeader = '<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
 								<th class="SortedColumn">' . _('Shop') . '</th>
@@ -1076,7 +1087,8 @@ function OvestockAtShops($Kind, $RootPath){
 								<th class="SortedColumn">' . _('Overstock') . '</th>
 							</tr>';
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items needed at shops. (No overstock - No transfer)') . '</strong></p>';
+			$TableTitleText = _('Items needed at shops. (No overstock - No transfer)');
+			ShowTableTitle($TableTitleText);
 			$TableHeader = '<tr>
 								<th class="SortedColumn">' . _('#') . '</th>
 								<th class="SortedColumn">' . _('Shop') . '</th>
@@ -1167,10 +1179,12 @@ function PerformanceItemsInCategory($ReportType, $CategoryId, $maxdays, $Percent
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ReportType == "GOOD"){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for less than " . $maxdays . " days with more than " . $Percentsales . "% of sold stock (" . $TextTitle . " Items)." . ' </strong></p>';
+			$TableTitleText = _('Items in category ') . $CategoryId . " for less than " . $maxdays . " days with more than " . $Percentsales . "% of sold stock (" . $TextTitle . " Items).";
 		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Items in category ') . $CategoryId . " for more than " . $maxdays . " days with less than " . $Percentsales . "% of sold stock (" . $TextTitle . " Items).". ' </strong></p>';
-		}echo '<div>';
+			$TableTitleText = _('Items in category ') . $CategoryId . " for more than " . $maxdays . " days with less than " . $Percentsales . "% of sold stock (" . $TextTitle . " Items).";
+		}
+		ShowTableTitle($TableTitleText);
+		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
 							<th class="SortedColumn">' . _('#') . '</th>
@@ -1246,7 +1260,8 @@ function PricesNotUpdatedinXDays($numDays, $PercentageIncrease, $RootPath){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $PercentageIncrease . '%</strong></p>';
+		$TableTitleText = 'Prices not updated during the last ' . $numDays . ' days. Recommended increase '. $PercentageIncrease . '%';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1353,7 +1368,8 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 						SetReorderLevel("LowSalesAdjust", $MyRow['stockid'], $MyDistribution['loccode'], $MyDistribution['oldrl'], $NewRL, $updateDB);
 						if ($ShowMessages){
 							if($ShowHeader){
-								echo '<p class="page_title_text" align="center"><strong>' . _('Set RL Max to ') . $NewRL . ' for Low Sales '. $starttopitems . '-'. $endtopitems . ' for at least ' . $daystopitems . ' days </strong></p>';
+								$TableTitleText = _('Set RL Max to ') . $NewRL . ' for Low Sales '. $starttopitems . '-'. $endtopitems . ' for at least ' . $daystopitems . ' days ';
+								ShowTableTitle($TableTitleText);
 								echo '<div>';
 								echo '<table class="selection">';
 								$TableHeader = '<tr>
@@ -1441,7 +1457,8 @@ function SPGBelowMinimumSales($Shop, $NumDaysA, $MinimumSales){
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with daily sales below minimum of ') . locale_number_format($MinimumSales,0) . "/day during the last " . $NumDaysA . " days in ". $Shop .'</strong></p>';
+		$TableTitleText = _('SPG with daily sales below minimum of ') . locale_number_format($MinimumSales,0) . "/day during the last " . $NumDaysA . " days in ". $Shop;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1502,7 +1519,8 @@ function SplittedpaymentsBySPG($maxdays, $maxsplitted){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('SPG with ') . $maxsplitted . _(' or more splitted payments during the last ') . $maxdays . _(' days.') .'</strong></p>';
+		$TableTitleText = _('SPG with ') . $maxsplitted . _(' or more splitted payments during the last ') . $maxdays . _(' days.');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1630,17 +1648,18 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 			if (($MyRow['availableshops'] < $minshops) && ($MyRow['qoh'] > $MyRow['availableshops'])){
 				if($ShowHeader){
 					if ($categories == "DISC20"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 20% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+						$TableTitleText = $endtopitems . ' Top sales items 20% Discount available in less than ' . $minshops . ' shops. ';
 					}		
 					if ($categories == "DISC50"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 50% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+						$TableTitleText = $endtopitems . ' Top sales items 50% Discount available in less than ' . $minshops . ' shops. ';
 					}		
 					if ($categories == "DISC80"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items 80% Discount available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+						$TableTitleText = $endtopitems . ' Top sales items 80% Discount available in less than ' . $minshops . ' shops. ';
 					}		
 					if ($categories == "STABLE"){
-						echo '<p class="page_title_text" align="center"><strong>' . $endtopitems . ' Top sales items NOT DISCOUNTED OR CHANGING PRICE available in less than ' . $minshops . ' shops. ' . '</strong></p>';
+						$TableTitleText = $endtopitems . ' Top sales items NOT DISCOUNTED OR CHANGING PRICE available in less than ' . $minshops . ' shops. ';
 					}		
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">
 							<thead>
@@ -1748,7 +1767,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 			" ORDER BY salesorders.orderno";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $Titletext . '</strong></p>';
+		ShowTableTitle($Titletext);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
@@ -1827,7 +1846,8 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('DOKU Payments from OpenCart') .'</strong></p>';
+			$TableTitleText = _('DOKU Payments from OpenCart');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -2272,10 +2292,11 @@ Updated 3 index in loctransfers
 				// Or we show All the shops 
 				if($ShowHeader){
 					if ($ShopType == "KAPAL-LAUT"){
-						echo '<p class="page_title_text" align="center"><strong>' . 'KAPAL-LAUT Shops needing Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
+						$TableTitleText = 'KAPAL-LAUT Shops needing Packaging Transfers (Do not forget to create transfer in webERP)';
 					}else{
-						echo '<p class="page_title_text" align="center"><strong>' . 'BLINK Shops needing Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
+						$TableTitleText = 'BLINK Shops needing Packaging Transfers (Do not forget to create transfer in webERP)';
 					}
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -2566,7 +2587,8 @@ function PackagingToBeRefilledOutlet($ShowAll, $RootPath){
 				// IF we are SHORT of any packaging material in that shop...
 				// Or we show All the shops 
 				if($ShowHeader){
-					echo '<p class="page_title_text" align="center"><strong>' . 'OUTLET Shops needing OUTLET Packaging Transfers (Do not forget to create transfer in webERP)' . '</strong></p>';
+					$TableTitleText = 'OUTLET Shops needing OUTLET Packaging Transfers (Do not forget to create transfer in webERP)';
+					ShowTableTitle($TableTitleText);
 					echo '<div>';
 					echo '<table class="selection">';
 					$TableHeader = '<tr>
@@ -2730,7 +2752,8 @@ function MaintainWeberpOutletSalesCategories($ShowMessages, $LastTimeRun, $Email
 		$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Maintain webERP Outlet Sales Categories') .'</strong></p>';
+			$TableTitleText = _('Maintain webERP Outlet Sales Categories');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -2799,7 +2822,8 @@ function SyncFeaturedList($ShowMessages, $LastTimeRun, $EmailText= ''){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Create featured list in OpenCart') .'</strong></p>';
+			$TableTitleText = _('Create featured list in OpenCart');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -2875,7 +2899,8 @@ function SyncSalesCategories($ShowMessages, $LastTimeRun, $EmailText= ''){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Sales categories') .'</strong></p>';
+			$TableTitleText = _('Sales categories');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -3049,7 +3074,8 @@ function ActivateCategoryDependingOnQOH($ShowMessages, $LastTimeRun, $EmailText=
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Activate/Inactivate Sales Categories depending on QOH') .'</strong></p>';
+			$TableTitleText = _('Activate/Inactivate Sales Categories depending on QOH');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -3133,7 +3159,8 @@ function MaintainOpenCartOutletSalesCategories($ShowMessages, $LastTimeRun, $Ema
 		$Result = DB_query_oc($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Maintain Outlet Sales Categories') .'</strong></p>';
+			$TableTitleText = _('Maintain Outlet Sales Categories');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -3203,7 +3230,8 @@ function SyncRelatedItems($ShowMessages, $LastTimeRun, $EmailText = ''){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Related Items') .'</strong></p>';
+			$TableTitleText = _('Related Items');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -3304,7 +3332,8 @@ function CleanDuplicatedUrlAlias($ShowMessages, $LastTimeRun, $EmailText = ''){
 
 				if ($ShowHeader){
 					if ($ShowMessages){
-						echo '<p class="page_title_text" align="center"><strong>' . _('Duplicated URL Alias clean up') .'</strong></p>';
+						$TableTitleText = _('Duplicated URL Alias clean up');
+						ShowTableTitle($TableTitleText);
 						echo '<div>';
 						echo '<table class="selection">';
 						$TableHeader = '<tr>

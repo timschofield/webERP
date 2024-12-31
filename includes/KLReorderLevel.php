@@ -183,7 +183,8 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Rebalancing between shops (Stock available at kantor = 0)') . '</strong></p>';
+			$TableTitleText = _('Rebalancing between shops (Stock available at kantor = 0)');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -491,7 +492,8 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $Ema
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . 'Set RL = 0 for items with NO stock available at shops or kantor. </strong></p>';
+			$TableTitleText = 'Set RL = 0 for items with NO stock available at shops or kantor.';
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -628,12 +630,12 @@ to the shops with RL > 0.
 							SetReorderLevel("TopSalesLowRL", $MyRow['stockid'], $MyDistribution['loccode'], $MyDistribution['oldrl'], $CurrentNewRL, $updateDB);
 							if ($ShowMessages){
 								if($ShowHeader){
-									echo '<p class="page_title_text" align="center"><strong>' . 'Set RL minimum to ' . $NewRL . 
-																								' for Top Sales '. $starttopitems . '-'. $endtopitems . 
-																								' with Stock Available > '. $minstockavailable .
-																								' and <= '. $maxstockavailable .
-																								' at '. $ShopType .
-																								'</strong></p>';
+									$TableTitleText = 'Set RL minimum to ' . $NewRL . 
+													' for Top Sales '. $starttopitems . '-'. $endtopitems . 
+													' with Stock Available > '. $minstockavailable .
+													' and <= '. $maxstockavailable .
+													' at '. $ShopType;
+									ShowTableTitle($TableTitleText);
 									echo '<div>';
 									echo '<table class="selection">';
 									$TableHeader = '<tr>
@@ -763,7 +765,8 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 	
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . 'Items in ' . $ShopType . ' with Top Sales Rank in the bottom ' . $BottomPercentTopSales . '% with RL >= ' . $OldRL . ' and stock available <= ' . $minavailablestock . ' </strong></p>';
+			$TableTitleText = 'Items in ' . $ShopType . ' with Top Sales Rank in the bottom ' . $BottomPercentTopSales . '% with RL >= ' . $OldRL . ' and stock available <= ' . $minavailablestock;
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>
@@ -909,7 +912,8 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $Ema
 	
 	if (DB_num_rows($Result) != 0){
 		if ($ShowMessages){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Adjustment RL for Toko Online') . ' </strong></p>';
+			$TableTitleText = _('Adjustment RL for Toko Online');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 			$TableHeader = '<tr>

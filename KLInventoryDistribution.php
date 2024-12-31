@@ -32,7 +32,8 @@ function submit($ListCategories, $ListLocations) {
 		$ResultLocation = DB_query($SQL);
 		
 		if (DB_num_rows($ResultLocation) != 0){
-			echo '<p class="page_title_text" align="center"><strong>' . "Inventory distribution of models by type " . '</strong></p>';
+			$TableTitleText = _('Inventory distribution of models by type ');
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">';
 		

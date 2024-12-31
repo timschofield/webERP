@@ -78,26 +78,29 @@ if ($StockID != ''){
 
 	$MovtsResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	echo '<p class="page_title_text" align="center"><strong>' . _('Movements of ') . $StockID . " at " . $LocationName . " for the last " . STOCK_MOVEMENT_DAYS_FOR_SPG . " days" .'</strong></p>';
+	$TableTitleText = _('Movements of ') . $StockID . " at " . $LocationName . " for the last " . STOCK_MOVEMENT_DAYS_FOR_SPG . " days";
+	ShowTableTitle($TableTitleText);
+
 	echo '<div>';
 	echo '<table class="selection">';
-	$Tableheader = '<tr>
-						<th>' . _('Date') . '</th>
-						<th>' . _('User') . '</th>
-						<th>' . _('Type') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Reference') . '</th>
-						<th>' . _('Qty Movement') . '</th>
-						<th>' . _('Stock after movement') . '</th>
-					</tr>';
+	$Tableheader = '<thead>
+						<tr>
+							<th>' . _('Date') . '</th>
+							<th>' . _('User') . '</th>
+							<th>' . _('Type') . '</th>
+							<th>' . _('Number') . '</th>
+							<th>' . _('Reference') . '</th>
+							<th>' . _('Qty Movement') . '</th>
+							<th>' . _('Stock after movement') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 
 	echo $Tableheader;
 
 	$j = 1;
-	$k=0; //row colour counter
 
 	while ($MyRow=DB_fetch_array($MovtsResult)) {
-		$k = StartEvenOrOddRow($k);
 
 		$DisplayTranDate = ConvertSQLDate($MyRow['trandate']);
 
@@ -105,7 +108,8 @@ if ($StockID != ''){
 
 			$InvoiceLink = '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $MyRow['transno'] . '&amp;InvOrCredit=Invoice">' . $MyRow['typename'] . '</a>';
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -123,7 +127,8 @@ if ($StockID != ''){
 
 		} elseif ($MyRow['type']==11){
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">%s</a></td>
 					<td>%s</td>
@@ -142,7 +147,8 @@ if ($StockID != ''){
 					locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']));
 		} else {
 
-			printf('<td>%s</td>
+			printf('<tr class="striped_row">
+					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -162,7 +168,8 @@ if ($StockID != ''){
 	}
 	//end of while loop
 
-	echo '</table>
+	echo '</tbody>
+			</table>
 			</div>
 			</form>';
 }

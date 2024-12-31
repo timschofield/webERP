@@ -55,7 +55,8 @@ include('includes/KLPrices.php');
 				AND klmovetodiscount20.endprocessdate = '0000-00-00'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Items ready to be moved to 20% Discount in Kantor') . '</strong></p>';
+		$TableTitleText = _('Items ready to be moved to 20% Discount in Kantor');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>

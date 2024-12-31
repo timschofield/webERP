@@ -59,7 +59,8 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 		$Result = DB_query($SQL);
 		
 		if (DB_num_rows($Result) != 0){
-			echo '<p class="page_title_text" align="center"><strong>' . "Consignment Invoices Issued by " . $CompanyFrom . " between " . ConvertSQLDate($StartDate) . " and " . ConvertSQLDate($EndDate) . '</strong></p>';
+			$TableTitleText = "Consignment Invoices Issued by " . $CompanyFrom . " between " . ConvertSQLDate($StartDate) . " and " . ConvertSQLDate($EndDate);
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">
 					<thead>

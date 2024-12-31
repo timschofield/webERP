@@ -161,8 +161,10 @@ if (($StockID != '') AND ($ServiceCode != '')){
 			}
 		}
 	}
-	echo '<p class="page_title_text" align="center"><strong>' . $StockID . " - " . $MyRow['description'] . '</strong></p>';
-	echo '<p class="page_title_text" align="center"><strong>' . $Message . '</strong></p>';
+	$TableTitleText = $StockID . " - " . $MyRow['description'];
+	ShowTableTitle($TableTitleText);
+	$TableTitleText = $Message;
+	ShowTableTitle($TableTitleText);
 }
 include('includes/footer.php');
 

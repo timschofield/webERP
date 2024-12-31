@@ -64,11 +64,8 @@ function GetPrice($StockID, $DebtorNo, $BranchCode, $OrderLineQty = 1, $ReportZe
 				/* Now use the default salestype/price list as there is no specific customer, customer branch or customer price list*/
 				$SQL = "SELECT prices.price,
 							 prices.startdate
-						FROM prices,
-							debtorsmaster
+						FROM prices
 						WHERE prices.stockid = '" . $StockID . "'
-							AND prices.currabrev = debtorsmaster.currcode
-							AND debtorsmaster.debtorno='" . $DebtorNo . "'
 							AND prices.typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 							AND prices.debtorno = ''
 							AND prices.startdate <= CURRENT_DATE

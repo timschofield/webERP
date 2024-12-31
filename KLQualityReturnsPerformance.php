@@ -105,7 +105,8 @@ function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 	}					
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . $TitleReport . '</strong></p>';
+		$TableTitleText = $TitleReport;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		echo $TableHeader;
@@ -165,7 +166,8 @@ function ReturnsBySPG($SPG, $NumDays){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
+		$TableTitleText = _ _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<thead>

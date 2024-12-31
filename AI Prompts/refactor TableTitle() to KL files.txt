@@ -1,0 +1,16 @@
+1) skip lines 0 to 2161	and go to line 2162
+
+2) Look for sentences like:
+		echo '<p class="page_title_text" align="center"><strong>' . _('Some text and variables here') . '</strong></p>';
+	2.1) Create a variable $TableTitleText and assign to it the contents between <strong> and </strong>. Something like: 
+		$TableTitleText = _('Some text and variables here');
+	2.2) Delete the original sentence
+	2.3) Replace it by a call to ShowTableTitle($TableTitleText);
+
+3) Do not apply changes to lines like: echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+4) Do not change any other part of the code.
+
+General propmt rules: 
+1) Do not cut long lines. 
+2) Do not delete any comment in the code
+3) Apply all changes above directly to the file in the editor.

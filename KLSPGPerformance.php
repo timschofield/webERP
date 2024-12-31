@@ -120,7 +120,8 @@ function RetailTypePayments($Typereport, $maxdays){
 	
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$Typereport .'</strong></p>';
+		$TableTitleText = _('Distribution Cash / Credit Card during the last ') . $maxdays . _(' days by ') .$Typereport;
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -284,7 +285,8 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 				
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days". '</strong></p>';
+		$TableTitleText = _('SPG Performance in ') . $Shop . " during the last " . $NumDaysA . " days and ". ($NumDaysB - $NumDaysA) . " previous days";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -542,7 +544,8 @@ function SPGPerformanceMonthy(){
 
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "SPG Monthly performance". '</strong></p>';
+		$TableTitleText = "SPG Monthly performance";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -832,7 +835,8 @@ function SPGPerformanceWeekly(){
 				salesman.salesmancode";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . "SPG Weekly performance". '</strong></p>';
+		$TableTitleText = "SPG Weekly performance";
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -1092,7 +1096,8 @@ function HourlySales($numDays, $RootPath){
 		
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($ShowHeader){
-				echo '<p class="page_title_text" align="center"><strong>' .'Hourly sales and value for the last ' . $numDays . ' days</strong></p>';
+				$TableTitleText = 'Hourly sales and value for the last ' . $numDays . ' days';
+				ShowTableTitle($TableTitleText);
 				echo '<div>';
 				echo '<table class="selection">
 						<thead>';
@@ -1482,7 +1487,8 @@ function DaysOfWeekSales($numDays, $RootPath){
 			ORDER BY WeekDaySales DESC";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Distribution of retail sales by week days for the last ') . $numDays . _(' days') .'</strong></p>';
+		$TableTitleText = _('Distribution of retail sales by week days for the last ') . $numDays . _(' days');
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>

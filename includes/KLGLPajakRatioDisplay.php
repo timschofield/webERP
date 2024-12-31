@@ -4,7 +4,8 @@
 //  Display the pajak ratios 
 /////////////////////////////////////////////////////////////////////
 
-echo '<p class="page_title_text" align="center"><strong>' . 'Pajak Ratio (for the period selected and same period last year) '. '</strong></p>';
+$TableTitleText = 'Pajak Ratio (for the period selected and same period last year)';
+ShowTableTitle($TableTitleText);
 
 echo '<div>
       <table class="selection">
@@ -88,7 +89,7 @@ printf('<tr class="striped_row">
 		locale_number_format($PajakRatio_Taxes_LY / $PajakRatio_Sales_LY * 100, 2). "%"
 		);		
 
-		
+
 // Ratio NPM
 printf('<tr class="striped_row">
 		<td>%s</td>
@@ -124,7 +125,7 @@ printf('<tr class="striped_row">
 		locale_number_format($PajakRatio_ProfitAfterTax_LY / $PajakRatio_Sales_LY * 100, 2). "%"
 		);		
 
-	
+
 // Ratio G
 printf('<tr class="striped_row">
 		<td>%s</td>
@@ -159,7 +160,7 @@ printf('<tr class="striped_row">
 		locale_number_format($PajakRatio_Salaries / $PajakRatio_Sales * 100, 2). "%",
 		locale_number_format($PajakRatio_Salaries_LY / $PajakRatio_Sales_LY * 100, 2). "%"
 		);		
-			
+
 echo '</tbody>
 	</table>
 	</div>';

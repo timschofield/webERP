@@ -27,7 +27,8 @@ $SQL = "SELECT stockmaster.stockid,
 		ORDER BY stockmaster.stockid";
 $Result = DB_query($SQL);
 if (DB_num_rows($Result) != 0){
-	echo '<p class="page_title_text" align="center"><strong>' . _('Find Related Items For Online Shop') . '</strong></p>';
+	$TableTitleText = _('Find Related Items For Online Shop');
+	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>

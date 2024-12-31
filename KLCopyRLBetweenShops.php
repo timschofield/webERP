@@ -38,7 +38,8 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) != 0){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Reorder Levels Assigned to Location ') . $_POST['ToLocationID'] . '</strong></p>';
+			$TableTitleText = _('Reorder Levels Assigned to Location ') . $_POST['ToLocationID'];
+			ShowTableTitle($TableTitleText);
 			echo '<div>';
 			echo '<table class="selection">
 					<thead>

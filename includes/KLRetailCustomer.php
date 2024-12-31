@@ -9,11 +9,11 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 		// today only
 		$Yesterday  = Date('Y-m-d');
 		$StartDate  = Date('Y-m-d');
-		$Title = _('Retail Customers By Sex during today ');
+		$TableTitleText = _('Retail Customers By Sex during today ');
 	}else{
 		$Yesterday  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1));
 		$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
-		$Title = 'Retail Customers By Sex during the last ' . locale_number_format($NumDays,0) . ' days ' ;
+		$TableTitleText = 'Retail Customers By Sex during the last ' . locale_number_format($NumDays,0) . ' days ' ;
 	}
 
 	if ($ListShops == 'ALL'){
@@ -56,11 +56,10 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 	$MyRow = DB_fetch_array($Result);
 	$NumberMales = $MyRow[0];
 
-	if ($ListShops == 'ALL'){
-		echo '<p class="page_title_text" align="center"><strong>' . $Title . '</strong></p>';
-	}else{
-		echo '<p class="page_title_text" align="center"><strong>' . $Title . ' in shop ' . $ListShops . '</strong></p>';
+	if ($ListShops != 'ALL'){
+		$TableTitleText = $TableTitleText . ' in shop ' . $ListShops;
 	}
+	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
@@ -194,10 +193,11 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 	
 	if (DB_num_rows($Result) != 0){
 		if ($NumDays == -1){
-			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during today in ') . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
-		}else{
-			echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea . '</strong></p>';
+			$TableTitleText = _('Retail Customers By Country during today in ') . $NameOfShops . ' shops  for ' . $NameOfArea;
+		} else {
+			$TableTitleText = _('Retail Customers By Country during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops  for ' . $NameOfArea;
 		}
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">
 				<thead>
@@ -311,7 +311,8 @@ function EmailHarvested($NumDays, $TypeOfShops){
 	$MyRow = DB_fetch_array($Result);
 	$NumberEmails = $MyRow[0];
 
-	echo '<p class="page_title_text" align="center"><strong>' . _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
+	$TableTitleText = _('e-mail harvested during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops';
+	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
@@ -509,10 +510,11 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 	$NumberCases08 = $MyRow[0];
 
 	if ($NumDays == -1){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during today in ') . $NameOfShops . ' shops</strong></p>';
-	}else{
-		echo '<p class="page_title_text" align="center"><strong>' . _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops</strong></p>';
+		$TableTitleText = _('Retail Customers By Age during today in ') . $NameOfShops . ' shops';
+	} else {
+		$TableTitleText = _('Retail Customers By Age during the last ') . locale_number_format($NumDays,0) . ' days in ' . $NameOfShops . ' shops';
 	}
+	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">
 			<thead>
@@ -687,7 +689,8 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		echo '<p class="page_title_text" align="center"><strong>' . _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days</strong></p>';
+		$TableTitleText = _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days';
+		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '<tr>
