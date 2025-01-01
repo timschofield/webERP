@@ -16,6 +16,7 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 	include ('includes/OpenCartToWeberpSync.php');
 	include ('includes/OpenCartConnectDB.php');
 	include ('includes/KLSmartStockTransfers.php');
+	include ('includes/htmlMimeMail.php');
 
 
 	if ($Group == "0100-CleanDB"){
@@ -40,6 +41,12 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 		$EmailText = KL_DailyRLZeroNotAvailable(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1000-RLAdjustPackaging"){
 		$EmailText = KL_DailyRLAdjustmentsForPackaging(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+	}elseif ($Group == "1050-SmartDispatchKL"){
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for KL
+	}elseif ($Group == "1060-SmartDispatchBL"){
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for BL 
+	}elseif ($Group == "1070-SmartDispatchOU"){
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for OU
 	}elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $EmailText);
 	}elseif ($Group == "1200-SyncWebERPOpenCart"){

@@ -2,7 +2,66 @@
 
 /* Functions related to Smart Stock Transfers */
 
-function KLStockDispatch($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $EmailText){
+function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
+
+	if ($Group == "1050-SmartDispatchKL"){
+		$ShopType = "SHOPKL";
+		$EmailText = $EmailText . 'Smart dispatch for Kapal-Laut Shops' . "\n";
+	}elseif ($Group == "1060-SmartDispatchBL"){
+		$ShopType = "SHOPBL";
+		$EmailText = $EmailText . 'Smart dispatch for Blink Shops' . "\n";
+	}elseif ($Group == "1070-SmartDispatchOU"){
+		$ShopType = "SHOPOU";
+		$EmailText = $EmailText . 'Smart dispatch for Outlet Shops' . "\n";
+	}else{
+		$EmailText = $EmailText . 'Type Of Shop not defined' . "\n";
+	}
+	
+	/* Parameters */
+	if (KLwebERPScriptCalledFromTEST()){
+		$ReportType = "ReportOnly"; // To NOT create proper transfers, just the paperwork to test it
+	}else{
+		$ReportType = "Batch"; // To create proper transfers
+	}
+	
+	$DispatchPercent = 0;
+	$_SESSION['DefaultPageSize'] = 'A4';
+	$DaysSalesForOrder = 2;
+	
+	/* Selection of shops with smart dispatch from / to KANTO, sorted by priority and sales of the last X days */
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$DaysSalesForOrder));
+	
+	$DayOfWeek = date('w', strtotime(Date('Y-m-d')));
+	
+	$SQL = "SELECT locations.loccode,
+					locations.smartdispatchmaxmodels,
+					locations.smartdispatchminmodels
+			FROM locations,locationzones
+			WHERE locations.zone = locationzones.code
+				AND locations.smartdispatchfrom = 'KANTO' 
+				AND locations.typeloc = '" . $ShopType . "' 
+				AND locationzones.smarttransferonweekday".$DayOfWeek . " = 1 
+			ORDER BY locations.priority ASC,
+				(SELECT COUNT(qtyinvoiced)
+				FROM salesorderdetails, salesorders
+				WHERE salesorderdetails.orderno = salesorders.orderno
+					AND salesorderdetails.completed = 1
+					AND salesorders.orddate >= '". $StartDate . "'
+					AND salesorders.fromstkloc = locations.loccode) DESC";
+	
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
+			// From KANTO to Shop, send the items needed to fill the RL
+			$EmailText  = KLCreateSmartStockTransfer('KANTO', $MyRow['loccode'], "All", $ReportType, $DispatchPercent, $MyRow['smartdispatchmaxmodels'], $MyRow['smartdispatchminmodels'], $RootPath, $EmailText);
+			// From Shop to KANTO, return the overstock
+			$EmailText  = KLCreateSmartStockTransfer($MyRow['loccode'], 'KANTO', "OverFrom", $ReportType, $DispatchPercent, $MyRow['smartdispatchmaxmodels'], $MyRow['smartdispatchminmodels'], $RootPath, $EmailText);
+		}
+	}
+	return $EmailText;
+}
+
+function KLCreateSmartStockTransfer($FromLocCode, $ToLocCode, $Strategy, $ReportType, $DispatchPercent, $MaxModelsPerDispatch, $MinModelsPerDispatch, $RootPath, $EmailText){
 
 	$TableResult = array();
 
