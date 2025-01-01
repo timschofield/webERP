@@ -1904,9 +1904,13 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						if ($ShowAll){
 							$TableTitleText = 'Shop packaging order status';
 							ShowTableTitle($TableTitleText);
-							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate). '</p>';
-							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . '</p>';
-							echo '<p class="page_title_text_small" align="center">Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%</p>';
+							$TableSubTitleText = 'Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate) . 
+												'<br>' . 
+												'Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . 
+												'<br>' .
+												'Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%';	
+												
+							ShowTableSubTitle($TableSubTitleText);
 						}else{
 							$TableTitleText = 'Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.';
 							ShowTableTitle($TableTitleText);

@@ -1402,6 +1402,13 @@ function ShowTableTitle($Text){
 		</p>';
 }
 
+function ShowTableSubTitle($Text){
+	echo '<p class="page_title_text_small" align="center">' . 
+			$Text . '
+		</p>';
+}
+
+
 function ShowWarningTitle($Text){
 	echo '<p class="bad" align="center">
 			<strong>' . 
