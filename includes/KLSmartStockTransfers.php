@@ -4,15 +4,15 @@
 
 function KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText){
 
-	if ($Group == "1050-SmartDispatchKL"){
+	if ($Group == "1050-SmartStockTransfersKL"){
 		$ShopType = "SHOPKL";
-		$EmailText = $EmailText . 'Smart dispatch for Kapal-Laut Shops' . "\n";
-	}elseif ($Group == "1060-SmartDispatchBL"){
+		$EmailText = $EmailText . 'Smart Stock Transfers for Kapal-Laut Shops' . "\n";
+	}elseif ($Group == "1060-SmartStockTransfersBL"){
 		$ShopType = "SHOPBL";
-		$EmailText = $EmailText . 'Smart dispatch for Blink Shops' . "\n";
-	}elseif ($Group == "1070-SmartDispatchOU"){
+		$EmailText = $EmailText . 'Smart Stock Transfers for Blink Shops' . "\n";
+	}elseif ($Group == "1070-SmartStockTransfersOU"){
 		$ShopType = "SHOPOU";
-		$EmailText = $EmailText . 'Smart dispatch for Outlet Shops' . "\n";
+		$EmailText = $EmailText . 'Smart Stock Transfers for Outlet Shops' . "\n";
 	}else{
 		$EmailText = $EmailText . 'Type Of Shop not defined' . "\n";
 	}
