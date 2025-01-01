@@ -1257,12 +1257,12 @@ function BalanceAccountControl($account, $min, $max, $Period){
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['saldo'] < $min){
-		$Text = "Account " . $account . " - " . $MyRow['accountname'] . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		$WarningTitleText = "Account " . $account . " - " . $MyRow['accountname'] . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+        ShowWarningTitle($WarningTitleText);
 	}
 	if ($MyRow['saldo'] > $max){
-		$Text = "Account " . $account . " - " . $MyRow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		$WarningTitleText = "Account " . $account . " - " . $MyRow['accountname'] . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+        ShowWarningTitle($WarningTitleText);
 	}
 }
 
@@ -1277,12 +1277,12 @@ function BalanceListAccountControl($accountlist, $Description, $min, $max, $Peri
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['saldo'] < $min){
-		$Text = $Description . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		$WarningTitleText = $Description . " is BELOW the minimum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Minimum = " . locale_number_format($min,0);
+        ShowWarningTitle($WarningTitleText);
 	}
 	if ($MyRow['saldo'] > $max){
-		$Text = $Description . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		$WarningTitleText = $Description . " is OVER the maximum. Balance = " . locale_number_format($MyRow['saldo'],0) . " Maximum = " . locale_number_format($max,0);
+        ShowWarningTitle($WarningTitleText);
 	}
 }
 
@@ -1697,10 +1697,10 @@ function CustomersDebtControl($AcceptedDifference, $Period){
 	$DebtValue = $DebtValueIDR + $DebtValueUSD + $DebtValueAUD + $DebtValueEUR;
 	
 	if (abs($ValueAtBalance - $DebtValue) > $AcceptedDifference){
-		$Text = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$WarningTitleText = "Customer's Debt Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Customer's Debt = " . locale_number_format($DebtValue,0) . 
 				" Difference = ". locale_number_format($ValueAtBalance - $DebtValue,0);
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+        ShowWarningTitle($WarningTitleText);
 	}
 }
 
@@ -2123,10 +2123,10 @@ function GoodsReceivedNotInvoicedControl($AcceptedDifference, $Period){
 	$GoodsValue = $MyRow[0];
 
 	if (abs($ValueAtBalance - $GoodsValue) > $AcceptedDifference){
-		$Text = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$WarningTitleText = "Goods Received Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Real Goods Received Value at Std Cost = " . locale_number_format($GoodsValue,0) .
 				" Difference = ". locale_number_format($ValueAtBalance - $GoodsValue,0);;
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+        ShowWarningTitle($WarningTitleText);
 	}
 }
 
@@ -2151,10 +2151,10 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 	$ValueAtBalance = $MyRow['saldo'];
 
 	if (abs($ValueAtBalance - $PettyCashValue) > $AcceptedDifference){
-		$Text = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . 
+		$WarningTitleText = "Petty Cash (" . $Currency . ") Balance value = " . locale_number_format($ValueAtBalance,0) . 
 				" <-> Real Petty Cash (" . $Currency . ") = " . locale_number_format($PettyCashValue,0) . 
 				" Difference = ". locale_number_format($ValueAtBalance - $PettyCashValue,0);
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+        ShowWarningTitle($WarningTitleText);
 	}
 }
 
@@ -4603,13 +4603,13 @@ function over_or_below_limit($Request, $Sign, $Limit, $RootPath){
 	if ($Sign == "OVER"){
 		if ($MyRow[0] > $Limit){
 			$Text = $Request . " is OVER the maximum. Current value = " . locale_number_format($MyRow[0],0) . " Maximum = " . locale_number_format($Limit,0);
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			ShowWarningTitle($Text);
 		}
 	}
 	if ($Sign == "BELOW"){
 		if ($MyRow[0] < $Limit){
 			$Text = $Request . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($Limit,0);
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			ShowWarningTitle($Text);
 		}
 	}
 }
@@ -4631,7 +4631,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels20){
 			$Text = "Discount 20% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels20,0);
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			ShowWarningTitle($Text);
 		}
 		$NumberOfTestExecuted++;
 
@@ -4645,7 +4645,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels50){
 			$Text = "Discount 50% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels50,0);
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			ShowWarningTitle($Text);
 		}
 		$NumberOfTestExecuted++;
 
@@ -4659,7 +4659,7 @@ function MinimumOutletStockAvailable($MinModels20, $MinModels50, $MinModels80, $
 		$MyRow = DB_fetch_array($Result);
 		if ($MyRow[0] < $MinModels80){
 			$Text = "Discount 80% avaliable at " . $MyShop['locationname'] . " is BELOW the minimum. Current value = " . locale_number_format($MyRow[0],0) . " Minimum = " . locale_number_format($MinModels80,0);
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			ShowWarningTitle($Text);
 		}
 		$NumberOfTestExecuted++;
 	}
@@ -5282,12 +5282,12 @@ function ValueStockLocation($Location, $minpcs, $maxpcs, $minvalue, $maxvalue){
 	$MyRow = DB_fetch_array($Result);
 	
 	if ($MyRow['qtyonhand'] < $minpcs){
-		$Text = "Number of items at " . $MyRow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		$WarningTitleText = "Number of items at " . $MyRow['locationname'] . " is BELOW the minimum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Minimum = " . locale_number_format($minpcs,0) . " pcs";
+        ShowWarningTitle($WarningTitleText);
 	}
 	if ($MyRow['qtyonhand'] > $maxpcs){
-		$Text = "Number of items at " . $MyRow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		$WarningTitleText = "Number of items at " . $MyRow['locationname'] . " is OVER the maximum. QOH = " . locale_number_format($MyRow['qtyonhand'],0) . " pcs. Maximum = " . locale_number_format($maxpcs,0) . " pcs";
+        ShowWarningTitle($WarningTitleText);
 	}
 }
 
@@ -5594,9 +5594,8 @@ function CalculateTransferFromBankToDanamon($Company,
 			$Transfer = min($AvailableForTransfer, $TransferNeededDanamon);
 			$Transfer = round_down_multiple_of($Transfer, $TransferBlock);
 			if ($Transfer > 0){
-				$Text = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . 
-						" to Danamon ". $Company;
-				echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+				$WarningTitleText = "Transfer ".locale_number_format($Transfer,0)." IDR from " . $AccountName.  " " . $Company . " to Danamon ". $Company;
+   				ShowWarningTitle($WarningTitleText);
 				$TransferNeededDanamon = $TransferNeededDanamon - $Transfer;
 			}
 		} 

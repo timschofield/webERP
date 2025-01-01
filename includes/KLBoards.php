@@ -965,8 +965,9 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 				  </table>
 				  </div>';
 		} elseif ($TotalCost >= $ShowLimit){
-			$Text = "Components NOT Used in any BOM cost over the limit. Current cost = " . locale_number_format($TotalCost, 0);
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			$WarningTitleText = "Components NOT Used in any BOM cost over the limit. Current cost = " . locale_number_format($TotalCost, 0);
+			ShowWarningTitle($WarningTitleText);
+
 		}
 	}
 	InsertKPI("Components", "Components not used in any BOM (IDR)", $TotalCost);
@@ -4111,19 +4112,23 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 
 function ShowTotalItemsMoving(){
 	$NumItems = GetTotalItemsChangingPrice();
-	echo '<p class="bad" align="center"><strong>' . "# Items changing price: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items changing price: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items changing price", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("20");
-	echo '<p class="bad" align="center"><strong>' . "# Items moving to 20% discount: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items moving to 20% discount: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items moving to 20% discount", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("50");
-	echo '<p class="bad" align="center"><strong>' . "# Items moving to 50% discount: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items moving to 50% discount: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items moving to 50% discount", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("80");
-	echo '<p class="bad" align="center"><strong>' . "# Items moving to 80% discount: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items moving to 80% discount: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items moving to 80% discount", $NumItems);
 }
 

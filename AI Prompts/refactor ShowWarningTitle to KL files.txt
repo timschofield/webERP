@@ -1,0 +1,16 @@
+1) skip lines 0 to 4752	and go to line 4753
+
+2) Look for sentences like:
+		echo '<p class="bad" align="center"><strong>' .	$Text . '</strong></p>';
+	where $Text can be a variable, text, or any combinations of both.
+	2.1) Create a variable $WarningTitleText and assign to it the contents between <strong> and </strong> tags. Something like: 
+		$WarningTitleText = _('Some text and variables here');
+	2.2) Delete the original sentence
+	2.3) Replace it by a call to ShowWarningTitle($WarningTitleText);
+
+
+General propmt rules: 
+1) Do not cut long lines. 
+2) Do not delete any comment in the code
+3) Do not change any other part of the code.
+4) Apply all changes above directly to the file in the editor.

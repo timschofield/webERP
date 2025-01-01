@@ -3849,6 +3849,8 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 			$TotalRent = $TotalRent +($MyRow['yearlyrent']);
 			$TotalDateB = $TotalDateB +($MyRow['salesB']);
 		}
+		echo '</tbody>
+			<tfooter>';
 		if ($Typereport == "Shop"){
 			$Percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
 			$Trend = " ";
@@ -3945,7 +3947,8 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 					$Rent
 					);
 		}
-		echo '</tbody></table>
+		echo '</tfooter>
+				</table>
 				</div>';
 		if (($Typereport == "Shop") AND ($Typeperiod == "YEAR")){
 			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $Percent);
