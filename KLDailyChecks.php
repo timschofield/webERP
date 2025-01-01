@@ -15,7 +15,8 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 	include ('includes/WeberpToOpenCartSync.php');
 	include ('includes/OpenCartToWeberpSync.php');
 	include ('includes/OpenCartConnectDB.php');
-	
+	include ('includes/KLSmartStockTransfers.php');
+
 
 	if ($Group == "0100-CleanDB"){
 		$EmailText = KL_DailyCleanDB(FALSE, $EmailText);
@@ -49,7 +50,7 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
 
-	$Result = DB_query("UPDATE config SET confvalue=CURRENT_DATE	WHERE confname='KL_DailyChecks_LastRun'");
+	$Result = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='KL_DailyChecks_LastRun'");
 	if ($EmailText ==''){
 		prnMsg(_('The system has just run the daily Kapal-Laut checks.'),'info');
 		KLSendEmail("UserLoggingIn", "Silent", $_SESSION['UserID'], date('d/M/Y H:i'), $_SERVER["REMOTE_ADDR"]);
