@@ -17,6 +17,7 @@ $BookMark = 'SelectingInventory';
 include ('includes/header.php');
 
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 // KL RICARD
 include ('includes/KLDefines.php');
 // KL RICARD END
