@@ -7,7 +7,7 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
 		and file_exists($ImageFile) 
 		and isset($Item) 
 		and !empty($Item)) {
-        if ($_SESSION['Show$ItemOnImages'] == '0'){
+        if ($_SESSION['ShowStockidOnImages'] == '0'){
             $ImageLink = '<img src="GetStockImage.php?automake=1' . 
                                                     '&textcolor=FFFFFF' .
                                                     '&bgcolor=CCCCCC' .

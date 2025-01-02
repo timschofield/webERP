@@ -420,27 +420,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 
 		//show the item image if it has been uploaded
-		if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($ImageFile) ) {
-			if ($_SESSION['ShowStockidOnImages'] == '0'){
-				$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='.
-									'&amp;width=200'.
-									'&amp;height=200'.
-									'" alt="" />';
-			} else {
-				$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='. $StockID .
-									'&amp;width=200'.
-									'&amp;height=200'.
-									'" alt="" />';
-			}
-		} else if (file_exists ($ImageFile)) {
-			$StockImgLink = '<img src="' . $ImageFile . '" height="200" width="200" />';
-		} else {
-			$StockImgLink = _('No Image');
-		}
+		$StockImgLink = GetImageLink($ImageFile, $StockID, 200, 200, "", "");
 
 		echo '<div class="centre">' . $StockImgLink . '</div>';
 
