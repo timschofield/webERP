@@ -934,17 +934,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				$ImageFile ='';
 			}
 			// KL RICARD We would like to not show the code inline. Failed so far.
-			if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
-				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-				'&amp;StockID='. urlencode($MyRow['stockid']) .
-				'&amp;width=100'.
-				'&amp;height=100'.
-				'" alt="" />';
-			} else if (file_exists ($ImageFile)) {
-				$StockImgLink = '<img src="' . $ImageFile . '" height="100" width="100" />';
-			} else {
-				$StockImgLink = '<p>'._('No Image').'</p>';
-			}
+			$StockImgLink = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 			echo '<tr class="striped_row">
 				<td>' . $ItemStatus . '</td>

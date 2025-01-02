@@ -1,7 +1,10 @@
 <?php
 include ('includes/DefineTenderClass.php');
-include ('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
+
+if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);};
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other supplier tender sessions on the same machine  */
@@ -824,15 +827,10 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 		while ($MyRow = DB_fetch_array($SearchResult)) {
 
 			$SupportedImgExt = array('png', 'jpg', 'jpeg');
-			$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-			if (extension_loaded('gd') && function_exists('gd_info') && file_exists($ImageFile)) {
-				$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($MyRow['stockid']) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-			} else if (file_exists($ImageFile)) {
-				$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
-			} else {
-				$ImageSource = _('No Image');
-			}
-
+			$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+			$ImageFile = reset($Glob);
+			$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+			
 			echo '<tr class="striped_row">
 					<td>' . $MyRow['stockid'] . '</td>
 					<td>' . $MyRow['description'] . '</td>

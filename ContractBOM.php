@@ -3,6 +3,7 @@
 include('includes/DefineContractClass.php');
 
 include('includes/session.php');
+include ('includes/ImageFunctions.php');
 
 $Title = _('Contract Bill of Materials');
 
@@ -357,20 +358,10 @@ if (isset($SearchResult)) {
 	while ($MyRow=DB_fetch_array($SearchResult)) {
 
 		$SupportedImgExt = array('png','jpg','jpeg');
-		$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
-			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-				'&amp;StockID='.urlencode($MyRow['stockid']).
-				'&amp;text='.
-				'&amp;width=64'.
-				'&amp;height=64'.
-				'" alt="" />';
-		} else if (file_exists ($ImageFile)) {
-			$ImageSource = '<img src="' . $ImageFile . '" height="100" width="100" />';
-		} else {
-			$ImageSource = _('No Image');
-		}
-
+        $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($Glob);
+		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
+		
 		echo '<tr class="striped_row">
 				<td>' . $MyRow['stockid'] . '</td>
 				<td>' . $MyRow['description'] . '</td>

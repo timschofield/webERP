@@ -3,7 +3,10 @@
 include('includes/DefineOfferClass.php');
 include('includes/session.php');
 $Title = _('Supplier Tendering');
+$ViewTopic = 'SupplierTenders';
+$BookMark = '';
 include('includes/header.php');
+include ('includes/ImageFunctions.php');
 
 $Maximum_Number_Of_Parts_To_Show=50;
 
@@ -687,19 +690,9 @@ if (isset($_POST['Search'])){  /*ie seach for stock items */
 		while ($MyRow=DB_fetch_array($SearchResult)) {
 
 			$SupportedImgExt = array('png','jpg','jpeg');
-			$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-			if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
-				$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-					'&amp;StockID='.urlencode($MyRow['stockid']).
-					'&amp;text='.
-					'&amp;width=64'.
-					'&amp;height=64'.
-					'" alt="" />';
-			} else if (file_exists ($ImageFile)) {
-				$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
-			} else {
-				$ImageSource = _('No Image');
-			}
+			$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+			$ImageFile = reset($Glob);
+			$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
 
 			$UOMsql="SELECT conversionfactor,
 						suppliersuom,

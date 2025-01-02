@@ -3,6 +3,7 @@ include ('includes/session.php');
 $Title = _('Issue Materials To Work Order');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 if (isset($_GET['WO'])) {
 	$_POST['WO'] = $_GET['WO'];
@@ -1006,14 +1007,9 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				if (!in_array($MyRow['stockid'], $ItemCodes)) {
-					$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-					if (extension_loaded('gd') && function_exists('gd_info') && file_exists($ImageFile)) {
-						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($MyRow['stockid']) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-					} else if (file_exists($ImageFile)) {
-						$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
-					} else {
-						$ImageSource = _('No Image');
-					}
+					$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+					$ImageFile = reset($Glob);
+					$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
 
 					$IssueLink = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&amp;StockID=' . urlencode($_POST['StockID']) . '&amp;IssueItem=' . urlencode($MyRow['stockid']) . '&amp;FromLocation=' . $_POST['FromLocation'];
 					printf('<tr class="striped_row">

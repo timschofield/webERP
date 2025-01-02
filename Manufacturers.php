@@ -4,7 +4,11 @@ include('includes/session.php');
 
 $Title = _('Brands Maintenance');
 
+$ViewTopic = 'Inventory';
+$BookMark = '';
+
 include('includes/header.php');
+include ('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedManufacturer'])){
 	$SelectedManufacturer = $_GET['SelectedManufacturer'];
@@ -227,20 +231,9 @@ or deletion of the records*/
 		</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
-
-	$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $MyRow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-	if (extension_loaded('gd') && function_exists('gd_info') && file_exists($ImageFile)){
-		$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-			'&amp;StockID='.urlencode('/BRAND-' . $MyRow['manufacturers_id']).
-			'&amp;text='.
-			'&amp;width=120'.
-			'&amp;height=120'.
-			'" alt="" />';
-	} else if (file_exists ($ImageFile)) {
-		$BrandImgLink = '<img src="' . $ImageFile . '" height="120" width="120" />';
-	} else {
-		$BrandImgLink = _('No Image');
-	}
+    $Glob = (glob($_SESSION['part_pics_dir'] . '/BRAND-' . $MyRow['manufacturers_id'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$ImageFile = reset($Glob);
+	$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $MyRow['manufacturers_id'], 120, 120, "", "");
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
@@ -351,6 +344,7 @@ if (!isset($_GET['delete'])) {
 					$BrandImgLink = _('No Image');
 				}
 			}
+			$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $SelectedManufacturer, 100, 100, "", "");
 			echo '<field><td colspan="2">' . $BrandImgLink . '</td></field>';
 		}
 
