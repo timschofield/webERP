@@ -1305,13 +1305,13 @@ echo '<field>
 
 echo '<field>
 		<label for="NetWeight">' . _('Net Weight (KGs)') . ':</label>
-		<td>' . _('Net Weight (KGs)') . ':</td><td><input ' . (in_array('NetWeight', $Errors) ? 'class="inputerror"' : '') . '   type="text" class="number" name="NetWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['NetWeight'], 'Variable') . '" /></td>
+		<input ' . (in_array('NetWeight', $Errors) ? 'class="inputerror"' : '') . '   type="text" class="number" name="NetWeight" size="12" maxlength="10" value="' . locale_number_format($_POST['NetWeight'], 'Variable') . '" /></td>
 		<fieldhelp>' . _('Weight of the item (only) in KG.') . '</fieldhelp>
 	</field>';
 // KL RICARD PACKAGING
-echo '<tr>
-		<td>' . _('Packaging Set') . ':</td>
-		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="KLPackaging">';
+echo '<field>
+		<label for="KLPackaging">' . _('Packaging Set') . ':</label>
+		<select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="KLPackaging">';
 
 $SQL = "SELECT packagingcode, packagingdescription FROM klpackaging ORDER BY packagingdescription";
 $KLPResult = DB_query($SQL);
@@ -1327,11 +1327,13 @@ while( $KLProw = DB_fetch_array($KLPResult) ) {
 		echo '<option value="' . $KLProw['packagingcode'] . '">' . $KLProw['packagingdescription']  . '</option>';
 	 }
 }
+echo '</select>
+	</field>';
 
 // KL RICARD DIMENSION FIELDS	
 echo '<field>
-		<td>' . _('Units of Dimension') . ':</td>
-		<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
+		<label for="UnitsDimension">' . _('Units of Dimension') . ':</label>
+		<select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
 
 $SQL = "SELECT unitname FROM unitsofdimension ORDER by unitname";
 $UODResult = DB_query($SQL);
@@ -1346,21 +1348,26 @@ while( $UODrow = DB_fetch_array($UODResult) ) {
 		echo '<option value="' . $UODrow['unitname'] . '">' . $UODrow['unitname']  . '</option>';
 	 }
 }
+echo '</select>
+	</field>';
 	
-echo '<tr>
-		<td>' . _('length') . ':</td><td><input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Width') . ':</td><td><input ' . (in_array('Width',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Width" size="12" maxlength="11" value="' . locale_number_format($_POST['Width'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Height') . ':</td><td><input ' . (in_array('Height',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Height" size="12" maxlength="11" value="' . locale_number_format($_POST['Height'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
-	</tr>';
+echo '<field>
+		<label for="Length">' . _('length') . ':</label>
+		<input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+	</field>';
+echo '<field>
+		<label for="Width">' . _('Width') . ':</label>
+		<input ' . (in_array('Width',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Width" size="12" maxlength="11" value="' . locale_number_format($_POST['Width'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+	</field>';
+echo '<field>
+		<label for="Height">' . _('Height') . ':</label>
+		<input ' . (in_array('Height',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Height" size="12" maxlength="11" value="' . locale_number_format($_POST['Height'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+	</field>';
 
 // KL RICARD DIMENSION FIELDS	END
 
-echo '<tr>
-		<td>' . _('Units of Measure') . ':</td>
+echo '<field>
+		<label for="Units">' . _('Units of Measure') . ':</label>
 		<select ' . (in_array('Description', $Errors) ? 'class="selecterror"' : '') . '  name="Units">';
 
 $SQL = "SELECT unitname FROM unitsofmeasure ORDER by unitname";
@@ -1436,9 +1443,9 @@ echo '</select>
 	</field>';
 
 // KL RICARD
-echo '<tr>
-		<td>' . _('Sync item to OpenCart website?') . ':</td>
-		<td><select name="KLSyncToOpenCart">';
+echo '<field>
+		<label for="KLSyncToOpenCart">' . _('Sync item to OpenCart website?') . ':</label>
+		<select name="KLSyncToOpenCart">';
 
 if ($_POST['KLSyncToOpenCart']==0){
 	echo '<option selected="selected" value="0">' . _('Do NOT Sync') . '</option>';
@@ -1451,12 +1458,12 @@ if ($_POST['KLSyncToOpenCart']==1){
 } else {
 	echo '<option value="1">' . _('Yes') . '</option>';
 }
-echo '</select></td>
-		</tr>';
+echo '</select>
+	</field>';
 		
-echo '<tr>
-		<td>' . _('Item can be serviced ONLY by replacement?') . ':</td>
-		<td><select name="KLServiceByReplacement">';
+echo '<field>
+		<label for="KLServiceByReplacement">' . _('Item can be serviced ONLY by replacement?') . ':</label>
+		<select name="KLServiceByReplacement">';
 
 if ($_POST['KLServiceByReplacement']==0){
 	echo '<option selected="selected" value="0">' . _('No, can be normally serviced') . '</option>';
@@ -1469,8 +1476,8 @@ if ($_POST['KLServiceByReplacement']==1){
 } else {
 	echo '<option value="1">' . _('Yes, only serviceable by replacement with a new one') . '</option>';
 }
-echo '</select></td>
-		</tr>';
+echo '</select>
+	</field>';
 // KL RICARD END
 
 echo '<field>
