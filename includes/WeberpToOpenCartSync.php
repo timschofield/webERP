@@ -1438,7 +1438,7 @@ function KL_DailyCleanOpenCartDB($ShowMessages , $EmailText=''){
 	// clean old pending orders
 	$EmailText = ChangeOldPendingOpenCartOrders($ShowMessages, 2 , $EmailText);
 	// Change from shipped to complete
-	$EmailText = ChangeOldShippedOpenCartOrders($ShowMessages, 1 , $EmailText);
+	$EmailText = ChangeOldShippedOpenCartOrders($ShowMessages, 5 , $EmailText);
 
 	DB_Txn_Commit();
 	if ($ShowMessages){
