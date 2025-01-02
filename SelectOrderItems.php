@@ -547,7 +547,7 @@ if (isset($SelectedCustomer)) {
 	$DbgMsg = _('SQL used to retrieve the customer details was') . ':<br />' . $SQL;
 	$Result =DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	if (DB_num_rows($result) > 0) {
+	if (DB_num_rows($Result) > 0) {
 		$MyRow = DB_fetch_array($Result);
 
 		if ($MyRow['dissallowinvoices'] == 0){

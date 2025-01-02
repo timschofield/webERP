@@ -61,9 +61,9 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		
 		if ($TypeCustomers == "WEB"){
-			$SqlCustomers = " AND salesorders.debtorno LIKE 'WEB%'";
+			$SQLCustomers = " AND salesorders.debtorno LIKE 'WEB%'";
 		}else{
-			$SqlCustomers = " AND salesorders.debtorno NOT LIKE 'WEB%'";
+			$SQLCustomers = " AND salesorders.debtorno NOT LIKE 'WEB%'";
 		}
 		
 		$SQL = "SELECT 	salesorders.contactemail AS email,
@@ -89,7 +89,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 					AND debtorsmaster.currcode = currencies.currabrev
 					AND salesorders.contactemail != ''
 					AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ") ".
-					$SqlCustomers . "
+					$SQLCustomers . "
 					AND salesorders.klexported = 'N'
 					AND salesorders.orddate >= '" . $FromDate . "'
 					AND salesorders.orddate <= '" . $ToDate . "'
@@ -195,7 +195,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 							AND salesorders.orddate >= '" . $FromDate . "'
 							AND salesorders.orddate <= '" . $ToDate . "'
 							AND debtorsmaster.typeid NOT IN (". CUSTOMER_TYPE_RETAIL . ")" .
-						$SqlCustomers;
+						$SQLCustomers;
 				$ResultUpdate = DB_query($SQL,'','',true);
 			}
 			DB_Txn_Commit();

@@ -62,11 +62,11 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	$Result = DB_query($SQL);
 
-	$SqlLoc="SELECT locationname
+	$SQLLoc="SELECT locationname
 		   FROM locations
 		   WHERE loccode='".$_POST['StockLocation']."'";
 
-	$ResultLocation = DB_query($SqlLoc);
+	$ResultLocation = DB_query($SQLLoc);
 	$Location=DB_fetch_array($ResultLocation);
 
 	echo'<p class="page_title_text"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
@@ -97,24 +97,24 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			<input type="hidden" value="' . locale_number_format($_POST['NumberOfDays'],0) . '" name="NumberOfDays" />';
 
 
-		$SqlInv="SELECT SUM(-qty) AS qtyinvoiced
+		$SQLInv="SELECT SUM(-qty) AS qtyinvoiced
 				FROM stockmoves
 				WHERE stockid='".$MyRow['stockid']."'
 				AND (type=10 OR type=11)
 				AND loccode='" . $_POST['StockLocation'] ."'
 				AND trandate >= '" . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-filter_number_format($_POST['NumberOfDays']))) . "'";
 
-		$ResultInvQty = DB_query($SqlInv);
+		$ResultInvQty = DB_query($SQLInv);
 		$SalesRow=DB_fetch_array($ResultInvQty);
 
 
 		//get On Hand all
 		//find the quantity onhand item
-		$SqlOH="SELECT SUM(quantity) AS qty
+		$SQLOH="SELECT SUM(quantity) AS qty
 				FROM locstock
 				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockid='" . $MyRow['stockid'] . "'";
-		$TotQtyResult = DB_query($SqlOH);
+		$TotQtyResult = DB_query($SQLOH);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
 		/*	KL RICARD Fill the $Notes variable*/

@@ -76,22 +76,22 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			// get the data for a product
 			$Error = "";
 			$TokopediaProductId = $worksheet->getCell('B'.$Row)->getCalculatedValue();
-			$StockId = $worksheet->getCell('K'.$Row)->getCalculatedValue();
+			$StockID = $worksheet->getCell('K'.$Row)->getCalculatedValue();
 			$TokopediaProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
 			$URLTokopedia = $worksheet->getCell('D'.$Row)->getCalculatedValue();
 			$LinkTokopedia = '<li><a rel="external" href="' . $URLTokopedia . '">' . _('Tokopedia') . '</a></li>';
 				
 			// Check if we have enough QOH to set it as enabled in Tokopedia
-			$QOH = ItemMarketplaceQOH($StockId);
+			$QOH = ItemMarketplaceQOH($StockID);
 			$EnabledTokopedia = ( $QOH > 0);
 			
-			if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
+			if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockID)){
 				// Already exists, so only update the info with the newest tokopedia link and tokopedia product id if needed
-				ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
+				ItemUpdateTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
 				$Action = "Update";
 			}else{
 				// does not exist, so need to insert a new row for the item
-				ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
+				ItemInsertTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia);
 				$Action = "Insert";
 			}
 
@@ -105,7 +105,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 					<td>%s</td>
 					</tr>', 
 					$i,
-					$StockId,
+					$StockID,
 					$TokopediaProductId,
 					$LinkTokopedia,
 					$QOH,

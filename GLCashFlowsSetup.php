@@ -45,9 +45,9 @@ switch($_POST['Action']) {
 		}
 		break;// END Update.
 	case 'Reset':
-		$Sql = "UPDATE `chartmaster` SET `cashflowsactivity`='-1';";
+		$SQL = "UPDATE `chartmaster` SET `cashflowsactivity`='-1';";
 		$ErrMsg = _('Can not update chartmaster.cashflowsactivity because');
-		$Result = DB_query($Sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		if($Result) {
 			prnMsg(_('The cash flow activity was reset in all accounts'), 'success');
 		}
@@ -124,12 +124,12 @@ switch($_POST['Action']) {
 		$Criterion[$i++]['CashFlowsActivity'] = 0;
 
 		foreach($Criterion as $Criteria) {
-			$Sql = "UPDATE `chartmaster`
+			$SQL = "UPDATE `chartmaster`
 				SET `cashflowsactivity`=". $Criteria['CashFlowsActivity'] . "
 				WHERE `accountname` LIKE '%". addslashes(_($Criteria['AccountLike'])) . "%'
 				AND `cashflowsactivity`=-1";// Uses cashflowsactivity=-1 to NOT overwrite.
 			$ErrMsg = _('Can not update chartmaster.cashflowsactivity. Error code:');
-			$Result = DB_query($Sql, $ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			// RChacon: Count replacements.
 		}
 		if($Result) {
@@ -159,12 +159,12 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 		'<fieldset>',
 		// Content of the header and footer of the output table:
 		'<legend>', _('Action to do'), '</legend>';
-$Sql = "SELECT accountcode, accountname
+$SQL = "SELECT accountcode, accountname
 		FROM chartmaster
 			LEFT JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
 		WHERE accountgroups.pandl=0
 		ORDER BY accountcode";
-$GLAccounts = DB_query($Sql);
+$GLAccounts = DB_query($SQL);
 // Setups the net profit for the period GL account:
 echo		'<field>
 				<label for="PeriodProfitAccount">', _('Net profit for the period GL account'), ':</label>
@@ -174,9 +174,9 @@ if(!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=
 	if($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists so creates it.
 		echo		'<option value="">', _('Select...'), '</option>';
 		// Creates a configuration parameter for the net profit for the period GL account:
-		$Sql = "INSERT INTO `config` (confname, confvalue) VALUES ('PeriodProfitAccount', '" . $Result['accountcode'] . "')";
+		$SQL = "INSERT INTO `config` (confname, confvalue) VALUES ('PeriodProfitAccount', '" . $Result['accountcode'] . "')";
 		$ErrMsg = _('Could not add the new account code');
-		$Result = DB_query($Sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$_SESSION['PeriodProfitAccount'] = '';
 	} else {// If $Result is NOT NULL, the parameter exists so gets it.
 		$_SESSION['PeriodProfitAccount'] = $Result['confvalue'];

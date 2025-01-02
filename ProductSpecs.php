@@ -153,7 +153,7 @@ if (isset($_GET['ListTests'])) {
 			ORDER BY name";
 	$Result = DB_query($SQL);
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-	if (DB_num_rows($result) > 0) {
+	if (DB_num_rows($Result) > 0) {
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<table class="selection">
 			<thead>

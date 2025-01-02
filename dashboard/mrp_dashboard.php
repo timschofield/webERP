@@ -47,11 +47,11 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		</tr>';
 	$k = 0;
 	while ($row = DB_fetch_array($searchresult)) {
-		$StockId = $row['stockid'];
+		$StockID = $row['stockid'];
 		$qoh = locale_number_format($row['qoh'], $row['decimalplaces']);
 
 		echo '<tr class="striped_row">
-			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '" target="_blank">', $row['stockid'], '</td>
+			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockID), '" target="_blank">', $row['stockid'], '</td>
 			<td>', $row['description'], '</td>
 			<td class="number">', $qoh, '</td>
 			<td>', $row['units'], '</td>

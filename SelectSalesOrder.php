@@ -1080,7 +1080,7 @@ echo '</div>
 
 include('includes/footer.php');
 
-function GetSearchItems ($SqlConstraint = '') {
+function GetSearchItems ($SQLConstraint = '') {
 
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		 echo _('Stock description keywords have been used in preference to the Stock code extract entered');
@@ -1117,7 +1117,7 @@ function GetSearchItems ($SqlConstraint = '') {
 
 	 }
 
-	$SQL .= $SqlConstraint;
+	$SQL .= $SQLConstraint;
 	$SQL .= " GROUP BY stockmaster.stockid,
 						stockmaster.description,
 						stockmaster.decimalplaces,

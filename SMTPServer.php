@@ -87,15 +87,15 @@ echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_
 	<legend>', _('SMTP Server Details'), '</legend>
 	<field>
 		<label for="Host">' . _('Server Host Name') . '</label>
-		<input type="text" name="Host" required="required" value="' . $myrow['host'] . '" />
+		<input type="text" name="Host" required="required" value="' . $MyRow['host'] . '" />
 	</field>
 	<field>
 		<label for="Port">' . _('SMTP port') . '</label>
-		<input type="text" name="Port" required="required" size="4" class="number" value="' . $myrow['port'].'" />
+		<input type="text" name="Port" required="required" size="4" class="number" value="' . $MyRow['port'].'" />
 	</field>
 	<field>
 		<label for="HeloAddress">' . _('Helo Command') . '</label>
-		<input type="text" name="HeloAddress" value="' . $myrow['heloaddress'] . '" />
+		<input type="text" name="HeloAddress" value="' . $MyRow['heloaddress'] . '" />
 	</field>
 	<field>
 		<label for="Auth">' . _('Authorisation Required') . '</label>
@@ -112,15 +112,15 @@ echo '</select>
 
 echo '<field>
 		<label for="UserName">' . _('User Name') . '</label>
-		<input type="text" required="required" name="UserName" size="50" maxlength="50" value="' . $myrow['username']  .'" />
+		<input type="text" required="required" name="UserName" size="50" maxlength="50" value="' . $MyRow['username']  .'" />
 	</field>
 	<field>
 		<label for="Password">' . _('Password') . '</label>
-		<input type="password" required="required" name="Password" value="' . $myrow['password'] . '" />
+		<input type="password" required="required" name="Password" value="' . $MyRow['password'] . '" />
 	</field>
 	<field>
 		<label for="Timeout">' . _('Timeout (seconds)') . '</label>
-		<input type="text" size="5" name="Timeout" class="number" value="' . $myrow['timeout'] . '" />
+		<input type="text" size="5" name="Timeout" class="number" value="' . $MyRow['timeout'] . '" />
 	</field>
 	</fieldset>
 	<div class="centre">

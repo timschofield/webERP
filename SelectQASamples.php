@@ -50,7 +50,7 @@ if (! isset($_GET['delete'])) {
 
 	if (isset($SelectedSampleID)) {
 
-		$sql = "SELECT prodspeckey,
+		$SQL = "SELECT prodspeckey,
 						lotkey,
 						identifier,
 						comments,
@@ -59,15 +59,15 @@ if (! isset($_GET['delete'])) {
 				FROM qasamples
 				WHERE sampleid='".$SelectedSampleID."'";
 
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['ProdSpecKey'] = $myrow['prodspeckey'];
-		$_POST['LotKey'] = $myrow['lotkey'];
-		$_POST['Identifier'] = $myrow['identifier'];
-		$_POST['Comments'] = $myrow['comments'];
-		$_POST['SampleDate'] = ConvertSQLDate($myrow['sampledate']);
-		$_POST['Cert'] = $myrow['cert'];
+		$_POST['ProdSpecKey'] = $MyRow['prodspeckey'];
+		$_POST['LotKey'] = $MyRow['lotkey'];
+		$_POST['Identifier'] = $MyRow['identifier'];
+		$_POST['Comments'] = $MyRow['comments'];
+		$_POST['SampleDate'] = ConvertSQLDate($MyRow['sampledate']);
+		$_POST['Cert'] = $MyRow['cert'];
 
 		echo '<input type="hidden" name="SelectedSampleID" value="' . $SelectedSampleID . '" />';
 		echo '<fieldset>
@@ -588,14 +588,14 @@ if (isset($SelectedSampleID)) {
 
 }
 
-		$sql = "SELECT prodspeckey,
-		$result = DB_query($sql);
-		$myrow = DB_fetch_array($result);
-		$_POST['ProdSpecKey'] = $myrow['prodspeckey'];
-		$_POST['LotKey'] = $myrow['lotkey'];
-		$_POST['Identifier'] = $myrow['identifier'];
-		$_POST['Comments'] = $myrow['comments'];
-		$_POST['SampleDate'] = ConvertSQLDate($myrow['sampledate']);
-		$_POST['Cert'] = $myrow['cert'];
+		$SQL = "SELECT prodspeckey,
+		$Result = DB_query($SQL);
+		$MyRow = DB_fetch_array($Result);
+		$_POST['ProdSpecKey'] = $MyRow['prodspeckey'];
+		$_POST['LotKey'] = $MyRow['lotkey'];
+		$_POST['Identifier'] = $MyRow['identifier'];
+		$_POST['Comments'] = $MyRow['comments'];
+		$_POST['SampleDate'] = ConvertSQLDate($MyRow['sampledate']);
+		$_POST['Cert'] = $MyRow['cert'];
 include('includes/footer.php');
 ?>

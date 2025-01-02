@@ -185,15 +185,15 @@ if (!isset($SelectedExpense)) {
 					WHERE accountcode='" . $MyRow['glaccount'] . "'";
 		$ResultDes = DB_query($SQLdesc);
 		$Description = DB_fetch_array($ResultDes);
-		$SqlDescTag = "SELECT tagdescription
+		$SQLDescTag = "SELECT tagdescription
 					FROM tags
 					WHERE tagref='" . $MyRow['tag'] . "'";
-		$ResultDesTag = DB_query($SqlDescTag);
+		$ResultDesTag = DB_query($SQLDescTag);
 		$DescriptionTag = DB_fetch_array($ResultDesTag);
-		$SqlTaxCat = "SELECT taxcatname
+		$SQLTaxCat = "SELECT taxcatname
 					FROM taxcategories
 					WHERE taxcatid='" . $MyRow['taxcatid'] . "'";
-		$ResultTaxCat = DB_query($SqlTaxCat);
+		$ResultTaxCat = DB_query($SQLTaxCat);
 		$DescriptionTaxCat = DB_fetch_array($ResultTaxCat);
 		echo '<tr class="striped_row">
 				<td>', $MyRow['codeexpense'], '</td>

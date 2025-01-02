@@ -96,7 +96,7 @@ if (isset($_GET['SupplierID']) AND $_GET['SupplierID'] != '') {
 		$_SESSION['SuppTrans']->Terms = '1' . $MyRow['dayinfollowingmonth'];
 	}
 	else {
-		 $_SESSION['SuppTrans']->Terms = '0' . $myrow['daysbeforedue'];
+		 $_SESSION['SuppTrans']->Terms = '0' . $MyRow['daysbeforedue'];
 	}
 	$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
 

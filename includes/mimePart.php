@@ -60,7 +60,7 @@
 * // elements, body and headers. You will need to add extra
 * // headers, (eg. Mime-Version) before sending.
 *
-* $email = $message->encode();
+* $email = $Message->encode();
 * $email['headers'][] = 'Mime-Version: 1.0';
 *
 *

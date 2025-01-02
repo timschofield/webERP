@@ -235,8 +235,8 @@ if (! isset($_GET['delete'])) {
 			<label for="Authoriser">' . _('Authoriser') . '</label>
 			<select name="Authoriser">';
 	$UserSQL="SELECT userid FROM www_users";
-	$Userresult=DB_query($UserSQL);
-	while ($MyRow=DB_fetch_array($Userresult)) {
+	$UserResult=DB_query($UserSQL);
+	while ($MyRow=DB_fetch_array($UserResult)) {
 		if ($MyRow['userid']==$AuthoriserID) {
 			echo '<option selected="True" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {

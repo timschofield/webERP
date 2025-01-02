@@ -47,14 +47,14 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		</tr>';
 
 	while ($row = DB_fetch_array($WorkOrdersResult)) {
-		$StockId = $row['stockid'];
+		$StockID = $row['stockid'];
 		$FormatedRequiredByDate = ConvertSQLDate($row['requiredby']);
 		$FormatedStartDate = ConvertSQLDate($row['startdate']);
 		$qreq = locale_number_format($row['qtyreqd'], $row['decimalplaces']);
 		$qout = locale_number_format($row['qtyreqd'] - $row['qtyrecd'], $row['decimalplaces']);
 
 		echo '<tr class="striped_row">
-			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '" target="_blank">', $row['stockid'], ' -', $row['description'], '</td>
+			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockID), '" target="_blank">', $row['stockid'], ' -', $row['description'], '</td>
 			<td class="number">', ConvertSQLDate($row['requiredby']), '</td>
 			<td class="number">', $qreq, '</td>
 			<td class="number">', $qout, '</td>

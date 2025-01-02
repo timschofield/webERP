@@ -218,7 +218,7 @@ or deletion of the records*/
 
 	while ($MyRow=DB_fetch_array($Result)) {
 
-		if ($myrow[7] == 1) {
+		if ($MyRow[7] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');

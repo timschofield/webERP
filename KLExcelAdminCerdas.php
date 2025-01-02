@@ -120,7 +120,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't send discounted items to marketplaces
 					
-					$StockId = $MyRow['stockid'];
+					$StockID = $MyRow['stockid'];
 
 					$TextSizeIndonesian = CreateTextSize($MyRow['stockid'], "ID", true);
 					$TextSizeEnglish = CreateTextSize($MyRow['stockid'], "EN", true);
@@ -144,16 +144,16 @@ function submit($TypeOfShop, $TypeOfFile) {
 					$QOH = ItemMarketplaceQOH($MyRow['stockid']);
 
 					$PackagingImage = FALSE;
-					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_5, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_4, $PackagingImage) = ItemImagesURL($StockID,   4, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_5, $PackagingImage) = ItemImagesURL($StockID, 999, $PackagingImage, $MyRow['klpackaging']);
 
-					$Category = FindShopeeCategory($StockId, $Name, $Description);
+					$Category = FindShopeeCategory($StockID, $Name, $Description);
 
 					if ($TypeOfFile == "FullUpdate"){
-						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('A'.$i, $StockID);
 						$ActiveSheet->setCellValue('B'.$i, $Name);
 						$ActiveSheet->setCellValue('C'.$i, $Price);
 						$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);
@@ -168,11 +168,11 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$ActiveSheet->setCellValue('M'.$i, $Url_5);
 						$ActiveSheet->setCellValue('N'.$i, $NamaVariant);
 					}elseif ($TypeOfFile == "QOHOnly"){
-						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('A'.$i, $StockID);
 						$ActiveSheet->setCellValue('B'.$i, $Name);
 						$ActiveSheet->setCellValue('C'.$i, $QOH);
 					}elseif ($TypeOfFile == "PricesOnly"){
-						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('A'.$i, $StockID);
 						$ActiveSheet->setCellValue('B'.$i, $Name);
 						$ActiveSheet->setCellValue('C'.$i, $Price);
 						$ActiveSheet->setCellValue('D'.$i, $PriceDiscount);

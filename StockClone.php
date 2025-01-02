@@ -484,7 +484,7 @@ if (isset($_POST['submit'])) {
 
 					//For both the following - assume the data taken from the tables has already been validated.
 					//check for price data
-					$sql = "SELECT currencies.currency,
+					$SQL = "SELECT currencies.currency,
 								salestypes.sales_type,
 							prices.price,
 							prices.stockid,
@@ -527,12 +527,12 @@ if (isset($_POST['submit'])) {
                                     '" . $MyRow['enddate']. "',
                                     '" . $MyRow['price'] . "')";
 								 $ErrMsg = _('The cloned pricing could not be added');
-                                 $result = DB_query($sql,$ErrMsg);
+                                 $Result = DB_query($SQL,$ErrMsg);
 						  }
 					}
 					//What about cost data?
 					//get any existing cost data
-                    $sql = "SELECT materialcost,
+                    $SQL = "SELECT materialcost,
 									labourcost,
 									overheadcost,
 									lastcost
@@ -1116,18 +1116,18 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	echo '<field>
 			<label for="TaxCat">' . _('Tax Category') . ':</label>
 			<select name="TaxCat">';
-    $sql = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
-    $result = DB_query($sql);
+    $SQL = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
+    $Result = DB_query($SQL);
 
 	if (!isset($_POST['TaxCat'])){
 		$_POST['TaxCat'] = $_SESSION['DefaultTaxCategory'];
 	}
 
-    while ($myrow = DB_fetch_array($result)) {
-        if ($_POST['TaxCat'] == $myrow['taxcatid']){
-            echo '<option selected="selected" value="' . $myrow['taxcatid'] . '">' . $myrow['taxcatname'] . '</option>';
+    while ($MyRow = DB_fetch_array($Result)) {
+        if ($_POST['TaxCat'] == $MyRow['taxcatid']){
+            echo '<option selected="selected" value="' . $MyRow['taxcatid'] . '">' . $MyRow['taxcatname'] . '</option>';
 		} else {
-            echo '<option value="' . $myrow['taxcatid'] . '">' . $myrow['taxcatname'] . '</option>';
+            echo '<option value="' . $MyRow['taxcatid'] . '">' . $MyRow['taxcatname'] . '</option>';
 		}
 	} //end while loop
 
@@ -1157,7 +1157,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
     }
 	// KL RICARD End
 	
-    $sql = "SELECT stkcatpropid,
+    $SQL = "SELECT stkcatpropid,
 					label,
 					controltype,
 					defaultvalue,
@@ -1169,7 +1169,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 			AND reqatsalesorder =0
 			ORDER BY stkcatpropid";
 
-    $PropertiesResult = DB_query($sql);
+    $PropertiesResult = DB_query($SQL);
 	$PropertyCounter = 0;
 	$PropertyWidth = array();
 

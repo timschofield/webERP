@@ -170,11 +170,11 @@ function submit($TypeOfShop) {
 				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't send discounted items to marketplaces
 					
-					$StockId = $MyRow['stockid'];
+					$StockID = $MyRow['stockid'];
 
-					$TextSizeIndonesian = CreateTextSize($StockId, "ID", true);
-					$TextSizeEnglish = CreateTextSize($StockId, "EN", true);
-					$TextSizeGrouping = CreateTextSize($StockId, "EN", false);
+					$TextSizeIndonesian = CreateTextSize($StockID, "ID", true);
+					$TextSizeEnglish = CreateTextSize($StockID, "EN", true);
+					$TextSizeGrouping = CreateTextSize($StockID, "EN", false);
 					
 					if ($TextSizeGrouping != ""){
 						$NamaVariant = "Ukuran";
@@ -182,7 +182,7 @@ function submit($TypeOfShop) {
 						$NamaVariant = "";
 					}
 
-					$Name = ItemMarketplaceName($StockId, $MyRow['description'], $MyRow['descriptiontranslation']);
+					$Name = ItemMarketplaceName($StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
 					$Price = round($MyRow['price']);
 					$PriceDiscount = '';
 					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
@@ -191,11 +191,11 @@ function submit($TypeOfShop) {
 							$TextSizeEnglish;
 					$Weight = $MyRow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
-					$QOH = ItemMarketplaceQOH($StockId);
-					$Category = FindShopeeCategory($StockId, $Name, $Description);
+					$QOH = ItemMarketplaceQOH($StockID);
+					$Category = FindShopeeCategory($StockID, $Name, $Description);
 					$Material = FindLazadaMaterial($TypeOfShop, $Name);
 					$Stone = FindLazadaStone($Name);
-					$WhatsInTheBox = WhatsInTheBox($StockId);
+					$WhatsInTheBox = WhatsInTheBox($StockID);
 					$Color = FindLazadaColor($Name);
 
 					if ($MyRow['unitsdimension'] == 'mm'){
@@ -212,16 +212,16 @@ function submit($TypeOfShop) {
 					$Weight = $MyRow['grossweight'];
 
 					$PackagingImage = FALSE;
-					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_5, $PackagingImage) = ItemImagesURL($StockId,   5, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_6, $PackagingImage) = ItemImagesURL($StockId,   6, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_7, $PackagingImage) = ItemImagesURL($StockId,   7, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_8, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_4, $PackagingImage) = ItemImagesURL($StockID,   4, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_5, $PackagingImage) = ItemImagesURL($StockID,   5, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_6, $PackagingImage) = ItemImagesURL($StockID,   6, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_7, $PackagingImage) = ItemImagesURL($StockID,   7, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_8, $PackagingImage) = ItemImagesURL($StockID, 999, $PackagingImage, $MyRow['klpackaging']);
 
-					$ActiveSheet->setCellValue('A'.$i, $StockId);
+					$ActiveSheet->setCellValue('A'.$i, $StockID);
 					$ActiveSheet->setCellValue('B'.$i, $Category);
 					$ActiveSheet->setCellValue('C'.$i, $Name);
 					$ActiveSheet->setCellValue('D'.$i, $Url_1);
@@ -269,7 +269,7 @@ function submit($TypeOfShop) {
 					$ActiveSheet->setCellValue('AT'.$i, '');
 					$ActiveSheet->setCellValue('AU'.$i, '');
 					$ActiveSheet->setCellValue('AV'.$i, '');
-					$ActiveSheet->setCellValue('AW'.$i, $StockId);
+					$ActiveSheet->setCellValue('AW'.$i, $StockID);
 
 					$i++;
 				}

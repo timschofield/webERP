@@ -353,7 +353,7 @@ if(!isset($SelectedUser)) {
 		</thead>
 		<tbody>';
 
-	$Sql = "SELECT userid,
+	$SQL = "SELECT userid,
 					realname,
 					phone,
 					email,
@@ -370,11 +370,11 @@ if(!isset($SelectedUser)) {
 				FROM www_users";
 	// KL RICARD: Only KLSystemAdmin can see system admins. To prevent rogue employees kicking out the sys admin ;-)
 	if (!$KL_SystemAdmin){
-		$Sql = $Sql . " WHERE fullaccess != '8'";
+		$SQL = $SQL . " WHERE fullaccess != '8'";
 	} 
 	// KL RICARD END
 	
-	$Result = DB_query($Sql);
+	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if($MyRow[8] == '') {

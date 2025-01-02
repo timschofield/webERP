@@ -1270,17 +1270,17 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 	$k = 0; //row colour counter
 	$i= 0;
 	// get all images in part_pics folder (ideally should be OpenCart images folder...)
-	$imagefiles = getDirectoryTree($_SESSION['part_pics_dir']);
-	foreach ($imagefiles as $file) {
+	$ImageFiles = getDirectoryTree($_SESSION['part_pics_dir']);
+	foreach ($ImageFiles as $file) {
 		$multipleimage = 1;
 		$exist_multiple = TRUE;
 		while ($multipleimage <= 9){
 			$suffix = ".". $multipleimage;
 			if (strpos($file, $suffix) !== false){
 				// GET stockid from filename
-				$StockId = substr($file, 0, strpos($file, $suffix));
+				$StockID = substr($file, 0, strpos($file, $suffix));
 				// get Opencart productid
-				$ProductId = GetOpenCartProductId($StockId);
+				$ProductId = GetOpenCartProductId($StockID);
 				if ($ProductId > 0){
 					// insert info about multiple images
 					$Image = PATH_OPENCART_IMAGES . $file;
@@ -1299,7 +1299,7 @@ function SyncMultipleImages($ShowMessages, $LastTimeRun , $EmailText = ''){
 							printf('<td>%s</td>
 									<td>%s</td>
 									</tr>',
-									$StockId,
+									$StockID,
 									$Image
 									);
 						}

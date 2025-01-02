@@ -838,7 +838,7 @@ if (!isset($DebtorNo)) {
 		$MyRow=DB_fetch_array($Result);
 		echo '<field>
 				<td>' . _('Sales Type') . ':</td>
-				<td>' . $myrow['sales_type'] . '</td></field>';
+				<td>' . $MyRow['sales_type'] . '</td></field>';
 	} else {
 		$Result=DB_query("SELECT typeabbrev, sales_type FROM salestypes");
 		echo '<field>

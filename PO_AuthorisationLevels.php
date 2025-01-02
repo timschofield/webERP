@@ -184,8 +184,8 @@ if (isset($_GET['Edit'])) {
 			<label for="UserID">' . _('User ID') . '</label>
 			<select name="UserID">';
 	$UserSQL="SELECT userid FROM www_users";
-	$Userresult=DB_query($UserSQL);
-	while ($MyRow=DB_fetch_array($Userresult)) {
+	$UserResult=DB_query($UserSQL);
+	while ($MyRow=DB_fetch_array($UserResult)) {
 		if ($MyRow['userid']==$UserID) {
 			echo '<option selected="selected" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {

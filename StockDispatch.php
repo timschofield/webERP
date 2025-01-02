@@ -67,13 +67,13 @@ if (isset($_POST['PrintPDF'])) {
 	$ToBranch=$RowTo['2'];
 
 	if($Template=='fullprices'){
-		$SqlPrices="SELECT debtorsmaster.currcode,
+		$SQLPrices="SELECT debtorsmaster.currcode,
 						debtorsmaster.salestype,
 						currencies.decimalplaces
 				FROM debtorsmaster, currencies
 				WHERE debtorsmaster.currcode = currencies.currabrev
 					AND debtorsmaster.debtorno ='" . $ToCustomer . "'";
-		$ResultPrices = DB_query($SqlPrices,$ErrMsg);
+		$ResultPrices = DB_query($SQLPrices,$ErrMsg);
 		$RowPrices = DB_fetch_row($ResultPrices);
 		$ToCurrency=$RowPrices['0'];
 		$ToPriceList=$RowPrices['1'];

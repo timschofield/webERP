@@ -210,11 +210,11 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			$Days = 30;
 		}
 		/* Retrieve decimal places to display */
-		$SqlDecimalPlaces = "SELECT decimalplaces
+		$SQLDecimalPlaces = "SELECT decimalplaces
 					FROM currencies,pctabs
 					WHERE currencies.currabrev = pctabs.currency
 						AND tabcode='" . $SelectedTabs . "'";
-		$Result = DB_query($SqlDecimalPlaces);
+		$Result = DB_query($SQLDecimalPlaces);
 		$MyRow = DB_fetch_array($Result);
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		// KL RICARD Add receipt field
@@ -351,11 +351,11 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 		if (isset($_GET['edit'])) {
 			/* Retrieve decimal places to display */
-			$SqlDecimalPlaces = "SELECT decimalplaces
+			$SQLDecimalPlaces = "SELECT decimalplaces
 						FROM currencies,pctabs
 						WHERE currencies.currabrev = pctabs.currency
 							AND tabcode='" . $SelectedTabs . "'";
-			$Result = DB_query($SqlDecimalPlaces);
+			$Result = DB_query($SQLDecimalPlaces);
 			$MyRow = DB_fetch_array($Result);
 			$CurrDecimalPlaces = $MyRow['decimalplaces'];
 			// KL RICARD add receipt text field

@@ -74,11 +74,11 @@ if (isset($_POST['submit'])) {
 	$ErrMsg = _('The number of tabs using this Tab type could not be retrieved');
 	$ResultPcTabExpenses = DB_query($SQLPcTabExpenses, $ErrMsg);
 	$MyRowPcTabExpenses = DB_fetch_row($ResultPcTabExpenses);
-	$SqlPcTabs = "SELECT COUNT(*)
+	$SQLPcTabs = "SELECT COUNT(*)
 		FROM pctabs
 		WHERE typetabcode='" . $SelectedTab . "'";
 	$ErrMsg = _('The number of tabs using this Tab type could not be retrieved');
-	$ResultPcTabs = DB_query($SqlPcTabs, $ErrMsg);
+	$ResultPcTabs = DB_query($SQLPcTabs, $ErrMsg);
 	$MyRowPcTabs = DB_fetch_row($ResultPcTabs);
 	if ($MyRowPcTabExpenses[0] > 0 or $MyRowPcTabs[0] > 0) {
 		prnMsg(_('Cannot delete this tab type because tabs have been created using this tab type'), 'error');

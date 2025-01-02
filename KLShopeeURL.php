@@ -79,14 +79,14 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 			// get the data for a product
 			$Error = "";
 			$ShopeeProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
-			$StockId = $worksheet->getCell('B'.$Row)->getCalculatedValue();
+			$StockID = $worksheet->getCell('B'.$Row)->getCalculatedValue();
 			$ShopeeProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
 			
 			$SQL = "SELECT stockmaster.stockid,
 						salescatprod.manufacturers_id
 					FROM stockmaster, salescatprod
 					WHERE stockmaster.stockid = salescatprod.stockid
-						AND stockmaster.stockid = '" . $StockId . "'";
+						AND stockmaster.stockid = '" . $StockID . "'";
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) != 0){
 				$MyRow = DB_fetch_array($Result);
@@ -103,16 +103,16 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				$LinkShopee = '<li><a rel="external" href="' . $URLShopee . '">' . _('Shopee') . '</a></li>';
 				
 				// Check if we have enough QOH to set it as enabled in Shopee
-				$QOH = ItemMarketplaceQOH($StockId);
+				$QOH = ItemMarketplaceQOH($StockID);
 				$EnabledShopee = ( $QOH > 0);
 				
-				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
+				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockID)){
 					// Already exists, so only update the info with the newest shopee link and shopee product id if needed
-					ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee);
+					ItemUpdateShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLShopee);
 					$Action = "Update";
 				}else{
 					// does not exist, so need to insert a new row for the item
-					ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee);
+					ItemInsertShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLShopee);
 					$Action = "Insert";
 				}
 
@@ -127,7 +127,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 						<td>%s</td>
 						</tr>', 
 						$i,
-						$StockId,
+						$StockID,
 						$ShopeeProductId,
 						$ShopeeStoreId,
 						$LinkShopee,

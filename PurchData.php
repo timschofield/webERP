@@ -563,7 +563,7 @@ if (!isset($SuppliersResult)) {
 				<label for="SupplierID">' . _('Supplier Name') . ':</label>
 				<input type="hidden" name="SupplierID" value="' . $SupplierID . '" />
 				<fieldtext>' . $SupplierID . ' - ' . $SuppName . '</fieldtext>
-				<input type="hidden" name="WasEffectiveFrom" value="' . $myrow['effectivefrom'] . '" />
+				<input type="hidden" name="WasEffectiveFrom" value="' . $MyRow['effectivefrom'] . '" />
 			</field>';
     } else {
         echo '<field>

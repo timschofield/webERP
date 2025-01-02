@@ -544,14 +544,14 @@ if (isset($_POST['submit'])) {
 			_('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	// Display parameters from last run
-	$sql = "SELECT * FROM mrpparameters";
-	$result = DB_query($sql,'','',false,false);
+	$SQL = "SELECT * FROM mrpparameters";
+	$Result = DB_query($SQL,'','',false,false);
 	if (DB_error_no()==0){
 
 		$MyRow = DB_fetch_array($Result);
 
-		if (isset($myrow['leeway'])) {
-			$Leeway = $myrow['leeway'];
+		if (isset($MyRow['leeway'])) {
+			$Leeway = $MyRow['leeway'];
 		} else {
 			$Leeway = 0;
 		}
@@ -587,11 +587,11 @@ if (isset($_POST['submit'])) {
 				<legend>' . _('Last Run Details') . '</legend>
 				<field>
 					<label>' . _('Last Run Time') . ':</label>
-					<fieldtext>' . $myrow['runtime'] . '</fieldtext>
+					<fieldtext>' . $MyRow['runtime'] . '</fieldtext>
 				</field>
 				<field>
 					<label>' . _('Location') . ':</label>
-					<fieldtext>' . $myrow['location'] . '</fieldtext>
+					<fieldtext>' . $MyRow['location'] . '</fieldtext>
 				</field>
 				<field>
 					<label>' . _('Days Leeway') . ':</label>

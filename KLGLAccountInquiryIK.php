@@ -214,14 +214,14 @@ if (isset($_POST['Show'])) {
 	}
 	else {
 		// added to fix bug with Brought Forward Balance always being zero
-		$Sql = "SELECT bfwd,
+		$SQL = "SELECT bfwd,
 					actual,
 					period
 				FROM chartdetails
 				WHERE chartdetails.accountcode='" . $SelectedAccount . "'
 				AND chartdetails.period='" . $FirstPeriodSelected . "'";
 		$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-		$ChartDetailsResult = DB_query($Sql, $ErrMsg);
+		$ChartDetailsResult = DB_query($SQL, $ErrMsg);
 		$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 		$RunningTotal = $ChartDetailRow['bfwd'];
 		echo '<tr>
