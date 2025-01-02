@@ -228,14 +228,12 @@ if (isset($_POST['Submit'])) {
 		<fieldhelp>', _('Select the end period for this report'), '</fieldhelp>
 	</field>';
 
-	echo '<h3>', _('OR'), '</h3>';
-
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
 	echo '<field>
-			<label for="Period">', _('Select Period'), ':</label>
+			<label for="Period">','<b>' . _('OR') . ' </b>' .  _('Select Period'), ':</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')), '
 			<fieldhelp>', _('Select a predefined period from this list. If a selection is made here it will override anything selected in the From and To options above.'), '</fieldhelp>
 		</field>';

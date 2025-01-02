@@ -126,9 +126,8 @@ echo '<field>
 		<fieldhelp>', _('The Asset ID should be positive integer'), '</fieldhelp>
 		<a href="FixedAssetItems.php" target="_blank">', _('New Fixed Asset'), '</a>
 	</field>
-	<h3>', _('OR'), ' </h3>
 	<field>
-		<label for="AssetSelection">', _('Select from list'), ':</label>
+		<label for="AssetSelection">', '<b>' . _('OR') . ' </b>' . _('Select from list'), ':</label>
 		<select name="AssetSelection">';
 
 $SQL = "SELECT assetid,

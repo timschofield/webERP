@@ -266,32 +266,24 @@ echo '<field>
 		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their name will be returned') , '</fieldhelp>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustCode">', _('Enter a partial Code'), ':</label>
+		<label for="CustCode">', '<b>' . _('OR') . ' </b>' . _('Enter a partial Code'), ':</label>
 		<input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" title="" ', (isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/>
 		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their customer code will be returned') , '</fieldhelp>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustPhone">', _('Enter a partial Phone Number'), ':</label>
+		<label for="CustPhone">', '<b>' . _('OR') . ' </b>' . _('Enter a partial Phone Number'), ':</label>
 		<input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" ',( isset($_POST['CustPhone']) ? 'value="' . $_POST['CustPhone'] . '" ' : '' ), '/>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustAdd">', _('Enter part of the Address'), ':</label>
+		<label for="CustAdd">', '<b>' . _('OR') . ' </b>' . _('Enter part of the Address'), ':</label>
 		<input maxlength="25" name="CustAdd" size="20" type="text" ',(isset($_POST['CustAdd']) ? 'value="' . $_POST['CustAdd'] . '" ' : '' ), '/>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustType">', _('Choose a Type'), ':</label>
+		<label for="CustType">', '<b>' . _('OR') . ' </b>' . _('Choose a Type'), ':</label>
 		<field>';
 if(isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
@@ -339,10 +331,8 @@ if(isset($_POST['CustType'])) {
 }
 
 /* Option to select a sales area */
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="Area">' . _('Choose an Area') . ':</label>';
+		<label for="Area">' . '<b>' . _('OR') . ' </b>' . _('Choose an Area') . ':</label>';
 $Result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
 if(DB_num_rows($Result2) == 0) {

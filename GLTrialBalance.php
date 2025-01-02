@@ -700,7 +700,18 @@ if ((! isset($_POST['PeriodFrom'])
 			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-		'</div>',
+
+	echo '<field>
+			<label for="Period">', '<b>' . _('OR') . ' </b>' . _('Select Period'), '</label>
+			', ReportPeriodList($_POST['Period'], array('l', 't')),
+			'<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'),
+		'</field>',
+	'</fieldset>';
+
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF Trial Balance').'" />
+			<input type="submit" name="ViewTB" title="View" value="' . _('Show Trial Balance') .'" />
+		</div>',
 		'</form>';
 }
 
