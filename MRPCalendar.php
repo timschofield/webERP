@@ -253,52 +253,50 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 		$_POST['FromDate']=date($_SESSION['DefaultDateFormat']);
 		$_POST['ToDate']=date($_SESSION['DefaultDateFormat']);
 	}
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br />
-			<br />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<br /><table class="selection">';
+	echo '<fieldset>
+			<legend>', _('Create MRP Calendar'), '</legend>';
 
-	echo '<tr>
-			<td>' . _('From Date') . ':</td>
-			<td><input type="text" class="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" /></td></tr>
-			<tr><td>' . _('To Date') . ':</td>
-			<td><input type="text" class="date" name="ToDate" required="required" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>
-		<tr><td></td></tr>
-		<tr><td></td></tr>
-		<tr><td>' . _('Exclude The Following Days') . '</td></tr>
-		 <tr>
-			<td>' . _('Saturday') . ':</td>
-			<td><input type="checkbox" name="Saturday" value="Saturday" /></td>
-		</tr>
-		 <tr>
-			<td>' . _('Sunday') . ':</td>
-			<td><input type="checkbox" name="Sunday" value="Sunday" /></td>
-		</tr>
-		 <tr>
-			<td>' . _('Monday') . ':</td>
-			<td><input type="checkbox" name="Monday" value="Monday" /></td>
-		</tr>
-		 <tr>
-			<td>' . _('Tuesday') . ':</td>
-			<td><input type="checkbox" name="Tuesday" value="Tuesday" /></td>
-		</tr>
-		 <tr>
-			<td>' . _('Wednesday') . ':</td>
-			<td><input type="checkbox" name="Wednesday" value="Wednesday" /></td>
-		</tr>
-		 <tr>
-			<td>' . _('Thursday') . ':</td>
-			<td><input type="checkbox" name="Thursday" value="Thursday" /></td>
-		</tr>
-		 <tr>
-			<td>' . _('Friday') . ':</td>
-			<td><input type="checkbox" name="Friday" value="Friday" /></td>
-		</tr>
-		</table><br />
+	echo '<field>
+			<label for="FromDate">' . _('From Date') . ':</label>
+			<input type="text" class="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+		</field>
+		<field>
+			<label for="ToDate">' . _('To Date') . ':</label>
+			<input type="text" class="date" name="ToDate" required="required" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+		</field>
+		<h3>' . _('Exclude The Following Days') . '</h3>
+		<field>
+			<label for="Saturday">' . _('Saturday') . ':</label>
+			<input type="checkbox" name="Saturday" value="Saturday" />
+		</field>
+		<field>
+			<label for="Sunday">' . _('Sunday') . ':</label>
+			<input type="checkbox" name="Sunday" value="Sunday" />
+		</field>
+		<field>
+			<label for="Monday">' . _('Monday') . ':</label>
+			<input type="checkbox" name="Monday" value="Monday" />
+		</field>
+		<field>
+			<label for="Tuesday">' . _('Tuesday') . ':</label>
+			<input type="checkbox" name="Tuesday" value="Tuesday" />
+		</field>
+		 <field>
+			<label for="Wednesday">' . _('Wednesday') . ':</label>
+			<input type="checkbox" name="Wednesday" value="Wednesday" />
+		</field>
+		 <field>
+			<label for="Thursday">' . _('Thursday') . ':</label>
+			<input type="checkbox" name="Thursday" value="Thursday" />
+		</field>
+		 <field>
+			<label for="Friday">' . _('Friday') . ':</label>
+			<input type="checkbox" name="Friday" value="Friday" />
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Create Calendar') . '" />
 			<input type="submit" name="ListAll" value="' . _('List Date Range') . '" />
@@ -308,17 +306,13 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 		$_POST['ChangeDate']=date($_SESSION['DefaultDateFormat']);
 	}
 
-	echo '<br />
-		<table class="selection">
-		<tr>
+	echo '<fieldset>
+		<field>
 			<td>' . _('Change Date Status') . ':</td>
 			<td><input type="text" name="ChangeDate" class="date" size="11" maxlength="10" value="' . $_POST['ChangeDate'] . '" /></td>
 			<td><input type="submit" name="update" value="' . _('Update') . '" /></td>
-		</tr>
-		</table>
-		<br />
-		<br />
-        </div>
+		</field>
+		</fieldset>
 		</form>';
 
 } // End of function ShowInputForm()

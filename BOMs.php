@@ -406,7 +406,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 						workcentreadded,
 						quantity,
 						autoissue,
-						remark
+						comment
 					FROM bom
 					INNER JOIN locationusers
 						ON locationusers.loccode=bom.loccode

@@ -13,39 +13,36 @@ if (!isset($_GET['TransferNo'])){
 
 	include ('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . _('Reprint transfer docket') . '</p><br />';
+		'" alt="" />' . ' ' . _('Reprint transfer docket') . '</p>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Transfer docket to reprint') . '</td>
-				<td><input type="text" class="number" size="10" name="TransferNo" /></td>
-			</tr>
-		</table>';
-	echo '<br />
-          <div class="centre">
+	echo '<fieldset>
+			<legend>', _('Transfer Docket Criteria'), '</legend>';
+	echo '<fieldset>
+			<field>
+				<label for="TransferNo">' . _('Transfer docket to reprint') . '</label>
+				<input type="text" class="number" size="10" name="TransferNo" />
+			</field>
+		</fieldset>';
+	echo '<div class="centre">
 			<input type="submit" name="Print" value="' . _('Print') .'" />
-          </div>';
-    echo '</div>
-          </form>';
+		</div>';
+    echo '</form>';
 
 	echo '<form method="post" action="' . $RootPath . '/PDFShipLabel.php">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="Type" value="Transfer" />';
-	echo '<table>
-			<tr>
-				<td>' . _('Transfer docket to reprint Shipping Labels') . '</td>
-				<td><input type="text" class="number" size="10" name="ORD" /></td>
-			</tr>
-		</table>';
-	echo '<br />
-          <div class="centre">
+	echo '<fieldset>
+			<field>
+				<label for="ORD">' . _('Transfer docket to reprint Shipping Labels') . '</label>
+				<input type="text" class="number" size="10" name="ORD" />
+			</field>
+		</fieldset>';
+	echo '<div class="centre">
 			<input type="submit" name="Print" value="' . _('Print Shipping Labels') .'" />
-          </div>';
-    echo '</div>
-          </form>';
+		</div>';
+	echo '</fieldset>';
+    echo '</form>';
 
 	include ('includes/footer.php');
 	exit;

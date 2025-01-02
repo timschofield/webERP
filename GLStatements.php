@@ -70,18 +70,18 @@ if(isset($_GET['NewReport'])) {
 }
 
 // Sets PeriodFrom and PeriodTo from Period:
-if($_POST['Period'] != '') {
+if(isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
 
 // Validates the data submitted in the form:
-if($_POST['PeriodFrom'] > $_POST['PeriodTo']) {
+if(isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	$_POST['NewReport'] = 'on';
 	prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
-if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
+if(isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	// The reporting period is greater than 12 months.
 	$_POST['NewReport'] = 'on';
 	prnMsg(_('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
@@ -172,29 +172,20 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:
-		'<table class="selection">', // Content of the header and footer of the input table:
-/*		'<thead>
-			<tr>
-				<th colspan="2">', _('Report Parameters'), '</th>
-			</tr>
-		</thead>',*/
-		'<tfoot>
-			<tr>
-				<td colspan="2">',
-					'<div class="centre">',
-						'<button name="Submit" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>', // "Submit" button.
-						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-					'</div>',
-				'</td>
-			</tr>
-		</tfoot><tbody>',
+		'<fieldset>
+			<legend>', _('Report Criteria'), '</legend>', // Content of the header and footer of the input table:
 	// Content of the body of the input table:
 	// Select period from:
-			'<tr>',
-				'<td><label for="PeriodFrom">', _('Select period from'), '</label></td>
-		 		<td><select id="PeriodFrom" name="PeriodFrom" required="required">';
+			'<field>',
+				'<label for="PeriodFrom">', _('Select period from'), '</label>
+		 		<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno ASC');
 	if(!isset($_POST['PeriodFrom'])) {
+		$_POST['ShowBudget'] = '';
+		$_POST['ShowZeroBalance'] = '';
+		$_POST['ShowFinancialPosition'] = '';
+		$_POST['ShowComprehensiveIncome'] = '';
+		$_POST['ShowCashFlows'] = '';
 		$BeginMonth = ($_SESSION['YearEnd']==12 ? 1 : $_SESSION['YearEnd']+1);// Sets January as the month that follows December.
 		if($BeginMonth <= date('n')) {// It is a month in the current year.
 			$BeginDate = mktime(0, 0, 0, $BeginMonth, 1, date('Y'));
@@ -206,13 +197,13 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	while($MyRow = DB_fetch_array($Periods)) {
 	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo			'</select>', fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+	echo			'</select>
+				<fieldhelp>', _('Select the beginning of the reporting period'), '</fieldhelp>
+			</field>',
 	// Select period to:
-			'<tr>',
-				'<td><label for="PeriodTo">', _('Select period to'), '</label></td>
-		 		<td><select id="PeriodTo" name="PeriodTo" required="required">';
+			'<field>',
+				'<label for="PeriodTo">', _('Select period to'), '</label>
+		 		<select id="PeriodTo" name="PeriodTo" required="required">';
 	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	}
@@ -220,81 +211,74 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	while($MyRow = DB_fetch_array($Periods)) {
 	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo			'</select>', fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+	echo			'</select>
+				<fieldhelp>', _('Select the end of the reporting period'), '</fieldhelp>
+			</field>';
 	// OR Select period:
 	if(!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
-	echo	'<tr>
-				<td>
-					<h3>', _('OR'), '</h3>
-				</td>
-			</tr>
-			<tr>
-				<td>', _('Select Period'), '</td>
-				<td>', ReportPeriodList($_POST['Period'], array('l', 't')), fShowFieldHelp(_('Select a period instead of using the beginning and end of the reporting period.')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-				'</td>
-			</tr>',
+	echo '<h3>', _('OR'), '</h3>
+			<field>
+				<label for="Period">', _('Select Period'), '</label>
+				', ReportPeriodList($_POST['Period'], array('l', 't')),' 
+				<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'), '</fieldhelp>
+			</field>',
 	// Show the budget:
-			'<tr>',
-			 	'<td><label for="ShowBudget">', _('Show the budget'), '</label></td>
-			 	<td><input', ($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the budget')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+			'<field>
+				<label for="ShowBudget">', _('Show the budget'), '</label>
+			 	<input', ($_POST['ShowBudget'] ? ' checked="checked"' : ''), ' id="ShowBudget" name="ShowBudget" type="checkbox">', // "Checked" if ShowBudget is set AND it is TRUE.
+			 	'<fieldhelp>', _('Check this box to show the budget'), '</fieldhelp>
+			</field>',
 	// Show accounts with zero balance:
-			'<tr>',
-			 	'<td><label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label></td>
-			 	<td><input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">', // "Checked" if ShowZeroBalance is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show accounts with zero balance')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+			'<field>
+				<label for="ShowZeroBalance">', _('Show accounts with zero balance'), '</label>
+			 	<input', ($_POST['ShowZeroBalance'] ? ' checked="checked"' : ''), ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
+			 	<fieldhelp>', _('Check this box to show accounts with zero balance'), '</fieldhelp>
+			</field>',
 	// Show the statement of financial position:
-			'<tr>',
-			 	'<td><label for="ShowFinancialPosition">', _('Show the statement of financial position'), '</label></td>
-			 	<td><input', ($_POST['ShowFinancialPosition'] ? ' checked="checked"' : ''), ' id="ShowFinancialPosition" name="ShowFinancialPosition" type="checkbox">', // "Checked" if ShowFinancialPosition is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of financial position')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+			'<field>
+				<label for="ShowFinancialPosition">', _('Show the statement of financial position'), '</label>
+			 	<input', ($_POST['ShowFinancialPosition'] ? ' checked="checked"' : ''), ' id="ShowFinancialPosition" name="ShowFinancialPosition" type="checkbox">
+				<fieldhelp>', _('Check this box to show the statement of financial position'), '</fieldhelp>
+			</field>',
 	// Show the statement of comprehensive income:
-			'<tr>',
-			 	'<td><label for="ShowComprehensiveIncome">', _('Show the statement of comprehensive income'), '</label></td>
-			 	<td><input', ($_POST['ShowComprehensiveIncome'] ? ' checked="checked"' : ''), ' id="ShowComprehensiveIncome" name="ShowComprehensiveIncome" type="checkbox">', // "Checked" if ShowComprehensiveIncome is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of comprehensive income')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+			'<field>
+				<label for="ShowComprehensiveIncome">', _('Show the statement of comprehensive income'), '</label>
+			 	<td><input', ($_POST['ShowComprehensiveIncome'] ? ' checked="checked"' : ''), ' id="ShowComprehensiveIncome" name="ShowComprehensiveIncome" type="checkbox">
+			 	<fieldhelp>', _('Check this box to show the statement of comprehensive income'), '</fieldhelp
+			</field>';
 	// Show the statement of changes in equity:
 	if(file_exists('GLChangesInEquity.php')) {// Provisional, to be replaced by a rights verification.
 		echo
-			'<tr>',
-			 	'<td><label for="ShowChangesInEquity">', _('Show the statement of changes in equity'), '</label></td>
-			 	<td><input', ($_POST['ShowChangesInEquity'] ? ' checked="checked"' : ''), ' id="ShowChangesInEquity" name="ShowChangesInEquity" type="checkbox">', // "Checked" if ShowChangesInEquity is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of changes in equity')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+			'<field>
+				<label for="ShowChangesInEquity">', _('Show the statement of changes in equity'), '</label>
+			 	<input', ($_POST['ShowChangesInEquity'] ? ' checked="checked"' : ''), ' id="ShowChangesInEquity" name="ShowChangesInEquity" type="checkbox">
+			 	<fieldhelp>', _('Check this box to show the statement of changes in equity'), '</fieldhelp>
+			</field>';
 	}
 	// Show the statement of cash flows:
-	echo	'<tr>',
-			 	'<td><label for="ShowCashFlows">', _('Show the statement of cash flows'), '</label></td>
-			 	<td><input', ($_POST['ShowCashFlows'] ? ' checked="checked"' : ''), ' id="ShowCashFlows" name="ShowCashFlows" type="checkbox">', // "Checked" if ShowCashFlows is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the statement of cash flows')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+	echo	'<field>
+				<label for="ShowCashFlows">', _('Show the statement of cash flows'), '</label>
+			 	<input', ($_POST['ShowCashFlows'] ? ' checked="checked"' : ''), ' id="ShowCashFlows" name="ShowCashFlows" type="checkbox">
+			 	<fieldhelp>', _('Check this box to show the statement of cash flows'), '</fieldhelp>
+			</field>';
 	// Show the notes:
 	if(file_exists('GLNotes.php')) {// Provisional, to be replaced by a rights verification.
 		echo
-			'<tr>',
-			 	'<td><label for="ShowNotes">', _('Show the notes'), '</label></td>
-			 	<td><input', ($_POST['ShowNotes'] ? ' checked="checked"' : ''), ' id="ShowNotes" name="ShowNotes" type="checkbox">', // "Checked" if ShowNotes is set AND it is TRUE.
-			 		fShowFieldHelp(_('Check this box to show the notes that summarize the significant accounting policies and other explanatory information')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+			'<field>
+				<label for="ShowNotes">', _('Show the notes'), '</label>
+			 	<input', ($_POST['ShowNotes'] ? ' checked="checked"' : ''), ' id="ShowNotes" name="ShowNotes" type="checkbox">
+			 	<fieldhelp>', _('Check this box to show the notes that summarize the significant accounting policies and other explanatory information'), '</fieldhelp>
+			</field>';
 	}
 	echo
-		'</tbody></table>';
-		'</form>';
+		'</fieldset>
+			<div class="centre">
+				<button name="Submit" type="submit" value="', _('Submit'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Submit'), '</button>
+				<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>
+			</div>
+		</form>';
 }
 
 include('includes/footer.php');

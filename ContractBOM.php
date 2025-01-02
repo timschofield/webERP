@@ -219,60 +219,63 @@ if (isset($_POST['NewItem'])){ /* NewItem is set from the part selection list as
 /* This is where the order as selected should be displayed  reflecting any deletions or insertions*/
 
 echo '<form id="ContractBOMForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?identifier=' . urlencode($identifier) . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
+	$SQL = "SELECT categoryid,
+				categorydescription
+			FROM stockcategory
+			WHERE stocktype<>'L'
+			AND stocktype<>'D'
+			ORDER BY categorydescription";
+	$ErrMsg = _('The supplier category details could not be retrieved because');
+	$DbgMsg = _('The SQL used to retrieve the category details but failed was');
+	$Result1 = DB_query($SQL, $ErrMsg, $DbgMsg);
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/contract.png" title="' . _('Contract Bill of Material') . '" alt="" />  '.$_SESSION['Contract'.$identifier]->CustomerName . '
 		</p>';
 
-	echo '<table class="selection">';
+	echo '<fieldset>
+			<legend>', _('Search For Stock Items'), '</legend>
+			<field>
+				<label for="StockCat"">', _('Select Stock Category'), '</label>
+				<select name="StockCat">';
 
-	if (isset($_SESSION['Contract'.$identifier]->ContractRef)) {
-		echo  '<tr>
-				<th colspan="7">' . _('Contract Reference') . ': '. $_SESSION['Contract'.$identifier]->ContractRef . '</th>
-			</tr>';
+	echo '<option selected="selected" value="All">', _('All'), '</option>';
+	while ($MyRow1 = DB_fetch_array($Result1)) {
+		if (isset($_POST['StockCat']) and $_POST['StockCat'] == $MyRow1['categoryid']) {
+			echo '<option selected="selected" value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
+		} else {
+			echo '<option value="', $MyRow1['categoryid'], '">', $MyRow1['categorydescription'], '</option>';
+		}
+	}
+	echo '</select>
+		</field>';
+
+	unset($_POST['Keywords']);
+	unset($_POST['StockCode']);
+
+	if (!isset($_POST['Keywords'])) {
+		$_POST['Keywords'] = '';
 	}
 
-	echo '<tr>
-			<th>' . _('Item Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Quantity') . '</th>
-			<th>' . _('UOM')  . '</th>
-			<th>' . _('Unit Cost') .  '</th>
-			<th>' . _('Sub-total') . '</th>
-		</tr>';
-
-	$_SESSION['Contract'.$identifier]->total = 0;
-
-	$TotalCost =0;
-	foreach ($_SESSION['Contract'.$identifier]->ContractBOM as $ContractComponent) {
-
-		$LineTotal = $ContractComponent->Quantity * $ContractComponent->ItemCost;
-
-		$DisplayLineTotal = locale_number_format($LineTotal,$_SESSION['CompanyRecord']['decimalplaces']);
-
-		echo '<tr class="striped_row">
-				<td>' . $ContractComponent->StockID . '</td>
-			  <td>' . $ContractComponent->ItemDescription . '</td>
-			  <td><input type="text" class="number" required="required" title="' . _('Enter the quantity of this component required to complete the contract') . '" name="Qty' . $ContractComponent->ComponentID . '" size="11" value="' . locale_number_format($ContractComponent->Quantity,$ContractComponent->DecimalPlaces)  . '" /></td>
-			  <td>' . $ContractComponent->UOM . '</td>
-			  <td class="number">' . locale_number_format($ContractComponent->ItemCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
-			  <td class="number">' . $DisplayLineTotal . '</td>
-				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier. '&amp;Delete=' . $ContractComponent->ComponentID . '" onclick=\'return confirm("' . _('Are you sure you wish to delete this item from the contract BOM?') . '");\'>' . _('Delete') . '</a></td>
-			</tr>';
-		$TotalCost += $LineTotal;
+	if (!isset($_POST['StockCode'])) {
+		$_POST['StockCode'] = '';
 	}
 
-	$DisplayTotal = locale_number_format($TotalCost,$_SESSION['CompanyRecord']['decimalplaces']);
-	echo '<tr>
-			<td colspan="5" class="number">' . _('Total Cost') . '</td>
-			<td class="number"><b>' . $DisplayTotal . '</b></td>
-		</tr>
-		</table>';
-	echo '<br />
-			<div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />';
+	echo '<field>
+			<label for="Keywords">', _('Enter text extracts in the description'), ':</label>
+			<input type="search" name="Keywords" size="20" autofocus="autofocus" maxlength="25" value="', $_POST['Keywords'], '" />
+		</field>
+		<h1>', _('OR'), '</h1>
+		<field>
+			<label for="StockCode">', _('Enter extract of the Stock Code'), ':</label>
+			<input type="search" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
+		</field>
+		<h1>', _('OR'), '</h1>
+		<a target="_blank" href="', $RootPath, '/Stocks.php">', _('Create a New Stock Item'), '</a>
+	</fieldset>';
+	echo '<div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />';
 	echo '<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';
 
 } /*Only display the contract BOM lines if there are any !! */

@@ -26,7 +26,7 @@ if(isset($_GET['Period'])) {
 }
 
 // Sets PeriodFrom and PeriodTo from Period:
-if($_POST['Period'] != '') {
+if(isset($_POST['Period']) and $_POST['Period'] != '') {
 	$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'], 'From');
 	$_POST['PeriodTo'] = ReportPeriod($_POST['Period'], 'To');
 }
@@ -38,12 +38,12 @@ if($_POST['Period'] != '') {
 	prnMsg(_('The selected period from is actually after the period to! Please re-select the reporting period'),'error');
 	$_POST['NewReport'] = 'on';
 }*/
-if($_POST['PeriodFrom'] > $_POST['PeriodTo']) {
+if(isset($_POST['PeriodFrom']) and $_POST['PeriodFrom'] > $_POST['PeriodTo']) {
 	// The beginning is after the end.
 	$_POST['NewReport'] = 'on';
 	prnMsg(_('The beginning of the period should be before or equal to the end of the period. Please reselect the reporting period.'), 'error');
 }
-if($_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
+if(isset($_POST['PeriodTo']) and $_POST['PeriodTo']-$_POST['PeriodFrom']+1 > 12) {
 	// The reporting period is greater than 12 months.
 	$_POST['NewReport'] = 'on';
 	prnMsg(_('The period should be 12 months or less in duration. Please select an alternative period range.'), 'error');
@@ -63,12 +63,14 @@ if ((! isset($_POST['PeriodFrom'])
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />',
 	// Input table:
-		'<table class="selection">',
+		'<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
 	// Content of the body of the input table:
+	
 	// Select period from:
-			'<tr>',
-				'<td><label for="PeriodFrom">', _('Select period from'), '</label></td>
-		 		<td><select id="PeriodFrom" name="PeriodFrom" required="required">';
+	echo '<field>
+			<label for="PeriodFrom">', _('Select period from'), '</label>
+			<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	if(!isset($_POST['PeriodFrom'])) {
 		$BeginMonth = ($_SESSION['YearEnd']==12 ? 1 : $_SESSION['YearEnd']+1);// Sets January as the month that follows December.
 		if($BeginMonth <= date('n')) {// It is a month in the current year.
@@ -85,40 +87,38 @@ if ((! isset($_POST['PeriodFrom'])
 			ORDER BY periodno DESC";
 	$Periods = DB_query($SQL);
 	while($MyRow = DB_fetch_array($Periods)) {
-	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	    echo '<option',($MyRow['periodno'] == $_POST['PeriodFrom'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo			'</select>', fShowFieldHelp(_('Select the beginning of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>',
+	echo '</select>
+		<fieldhelp>', _('Select the beginning of the reporting period'), '</fieldhelp>
+	</field>';
+	
 	// Select period to:
-			'<tr>',
-				'<td><label for="PeriodTo">', _('Select period to'), '</label></td>
-		 		<td><select id="PeriodTo" name="PeriodTo" required="required">';
+	echo '<field>
+			<label for="PeriodTo">', _('Select period to'), '</label>
+		 	<select id="PeriodTo" name="PeriodTo" required="required">';
 	if(!isset($_POST['PeriodTo'])) {
 		$_POST['PeriodTo'] = GetPeriod(date($_SESSION['DefaultDateFormat']));
 	}
 	DB_data_seek($Periods, 0);
 	while($MyRow = DB_fetch_array($Periods)) {
-	    echo			'<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
+	    echo '<option',($MyRow['periodno'] == $_POST['PeriodTo'] ? ' selected="selected"' : '' ), ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
-	echo			'</select>', fShowFieldHelp(_('Select the end of the reporting period')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-		 		'</td>
-			</tr>';
+	echo '</select> 
+		<fieldhelp>', _('Select the end of the reporting period'), '</fieldhelp>
+	</field>';
 	// OR Select period:
 	if(!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
-	echo	'<tr>
-				<td>
-					<h3>', _('OR'), '</h3>
-				</td>
-			</tr>
-			<tr>
-				<td>', _('Select Period'), '</td>',
-				'<td>', ReportPeriodList($_POST['Period'], array('l', 't')), fShowFieldHelp(_('Select a period instead of using the beginning and end of the reporting period.')), // Function fShowFieldHelp() in ~/includes/MiscFunctions.php
-				'</td>
-			</tr>',
-		'</table>';
+	echo '<h3>', _('OR'), '</h3>';
+	
+	echo '<field>
+			<label for="Period">', _('Select Period'), '</label>
+			', ReportPeriodList($_POST['Period'], array('l', 't')), 
+			'<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'),
+		'</field>',
+	'</fieldset>';
 
 	echo '<div class="centre">
 			<input type="submit" name="ShowTB" value="' . _('Show Trial Balance') .'" />

@@ -91,10 +91,10 @@ if (!isset($SelectedTab)) {
 	or deletion of the records*/
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<table class="selection">'; //Main table
-	echo '<tr>
-			<td>', _('Select Type of Tab'), ':</td>
-			<td><select required="required" name="SelectedTab">';
+	echo '<fieldset>'; //Main table
+	echo '<field>
+			<label for="SelectedTab">', _('Select Type of Tab'), ':</label>
+			<select required="required" name="SelectedTab">';
 	$SQL = "SELECT typetabcode,
 					typetabdescription
 			FROM pctypetabs";
@@ -108,9 +108,8 @@ if (!isset($SelectedTab)) {
 		}
 	} //end while loop
 	echo '</select>
-			</td>
-		</tr>';
-	echo '</table>'; // close main table
+		</field>';
+	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
 			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
@@ -154,10 +153,10 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 	//END WHILE LIST LOOP
 	echo '</table>';
 	if (!isset($_GET['delete'])) {
-		echo '<table  class="selection">'; //Main table
-		echo '<tr>
-				<td>', _('Select Expense Code'), ':</td>
-				<td><select required="required" name="SelectedExpense">';
+		echo '<fieldset>'; //Main table
+		echo '<field>
+				<label for="SelectedExpense">', _('Select Expense Code'), ':</td>
+				<select required="required" name="SelectedExpense">';
 		$SQL = "SELECT codeexpense,
 						description
 				FROM pcexpenses";
@@ -173,9 +172,8 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 			}
 		} //end while loop
 		echo '</select>
-				</td>
-			</tr>';
-		echo '</table>'; // close main table
+			</field>';
+		echo '</fieldset>'; // close main table
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Accept'), '" />
 				<input type="submit" name="Cancel" value="', _('Cancel'), '" />

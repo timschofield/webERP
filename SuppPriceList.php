@@ -137,8 +137,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		$Title = _('Price List') . ' - ' . _('Problem Report');
 		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
-		echo '<br />
-				<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
+		echo '<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
 		if ($Debug==1){
 			echo '<br />' . $SQL;
 		}
@@ -156,7 +155,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	}
 	if (!isset($_POST['View'])) {
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-	            $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
+				$Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 
 	$FontSize=8;
 	$Code='';
@@ -186,7 +185,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		if ($YPos < $Bottom_Margin + $LineHeight){
 
 			PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-			            $Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
+						$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 		}
 
 
@@ -194,8 +193,8 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 
 
 	if ($YPos < $Bottom_Margin + $LineHeight){
-	       PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
-	                   $Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
+		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+					   $Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 	}
 
 
@@ -241,20 +240,21 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 
 	$Title=_('Supplier Price List');
 	include('includes/header.php');
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '</p>';
-	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div><br />';
+	echo '<p class="page_title_text">
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '
+		</p>';
+	echo '<div class="page_help_text">' . _('View the Price List from supplier') . '</div>';
 
-	echo '<br/>
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-    echo '<div>';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$SQL = "SELECT supplierid,suppname FROM `suppliers`";
 	$Result = DB_query($SQL);
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Supplier') . ':</td>
-				<td><select name="supplier"> ';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="supplier">' . _('Supplier') . ':</label>
+				<select name="supplier"> ';
 	while ($MyRow=DB_fetch_array($Result)){
 		if (isset($_POST['supplierid']) and ($MyRow['supplierid'] == $_POST['supplierid'])) {
 			 echo '<option selected="selected" value="' . $MyRow['supplierid'] . '">' . $MyRow['supplierid'].' - '.$MyRow['suppname'] . '</option>';
@@ -262,14 +262,14 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 			 echo '<option value="' . $MyRow['supplierid'] . '">' . $MyRow['supplierid'].' - '.$MyRow['suppname'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 
 	$SQL="SELECT categoryid, categorydescription FROM stockcategory";
 	$Result = DB_query($SQL);
-	echo '<tr>
-			<td>' . _('Category') . ':</td>
-			<td><select name="category"> ';
+	echo '<field>
+			<label for="category">' . _('Category') . ':</label>
+			<select name="category"> ';
 		echo '<option value="all">' . _('ALL') . '</option>';
 	while ($MyRow=DB_fetch_array($Result)){
 		if (isset($_POST['categoryid']) and ($MyRow['categoryid'] == $_POST['categoryid'])) {
@@ -278,24 +278,23 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 			 echo '<option value="' . $MyRow['categoryid'] . '">' .$MyRow['categoryid'].' - '. $MyRow['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Price List') . ':</td>
-			<td><select name="price">
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="price">' . _('Price List') . ':</label>
+			<select name="price">
 				<option value="all">' ._('All Prices') . '</option>
 				<option value="current">' ._('Only Current Price') . '</option>
-				</select>
-			</td>
-		</tr>';
-	echo '</table>
-			<br/>
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			</div>';
+			</select>
+		</field>';
+	echo '</fieldset>';
 
-    echo '</div>
-          </form>';
+	echo '<div class="centre">
+			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
+		</div>';
+
+	echo '</form>';
 	include('includes/footer.php');
 
 } /*end of else not PrintPDF */
@@ -303,7 +302,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 
 
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
-                     $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices) {
+					 $Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices) {
 
 
 	/*PDF page header for Supplier price list */

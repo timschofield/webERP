@@ -13,10 +13,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $SQL = "SELECT categoryid, categorydescription FROM stockcategory";
 $ResultStkLocs = DB_query($SQL);
 
-echo '<table>
-	<tr>
-		<td>' . _('For Stock Category') . ':</td>
-		<td>
+echo '<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="StockCategory">' . _('For Stock Category') . ':</label>
 			<select required="required" name="StockCategory">
 				<option value="All">' . _('All') . '</option>';
 
@@ -31,7 +31,8 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
 $SQL = "SELECT locationname,
 				locations.loccode
@@ -43,8 +44,9 @@ $SQL = "SELECT locationname,
 
 $ResultStkLocs = DB_query($SQL);
 
-echo '<td>' . _('For Stock Location') . ':</td>
-	<td><select required="required" name="StockLocation"> ';
+echo '<field>
+		<label for="StockLocation">' . _('For Stock Location') . ':</label>
+		<select required="required" name="StockLocation"> ';
 
 while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	if (isset($_POST['StockLocation']) and $_POST['StockLocation'] != 'All') {
@@ -60,14 +62,17 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['OnHandDate'])) {
 	$_POST['OnHandDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m'), 0, Date('y')));
 }
 
-echo '<td>' . _('On-Hand On Date') . ':</td>
-	<td><input type="text" class="date" name="OnHandDate" size="12" required="required" maxlength="10" value="' . $_POST['OnHandDate'] . '" /></td>';
+echo '<field>
+		<label for="OnHandDate">' . _('On-Hand On Date') . ':</label>
+		<input type="text" class="date" name="OnHandDate" size="12" required="required" maxlength="10" value="' . $_POST['OnHandDate'] . '" />
+	</field>';
 
 if (isset($_POST['ShowZeroStocks'])) {
 	$Checked = 'checked="checked"';
@@ -75,20 +80,16 @@ if (isset($_POST['ShowZeroStocks'])) {
 	$Checked = '';
 }
 
-echo '<td>
-		<td>', ('Include zero stocks'), '</td>
-		<td><input type="checkbox" name="ShowZeroStocks" value="" ', $Checked, '  /></td>
-	</td>
-</tr>';
+echo '<field>
+		<label for="ShowZeroStocks">', ('Include zero stocks'), '</label>
+		<input type="checkbox" name="ShowZeroStocks" value="" ', $Checked, '  />
+	</field>
+</fieldset>';
 
-echo '<tr>
-		<td colspan="8">
-		<div class="centre">
+echo '<div class="centre">
 		<input type="submit" name="ShowStatus" value="' . _('Show Stock Status') . '" />
-		</div></td>
-	</tr>
-	</table>
-	</form>';
+	</div>
+</form>';
 
 $TotalQuantity = 0;
 
@@ -173,7 +174,7 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 				$TotalQuantity+= $LocQtyRow['newqoh'];
 			}
 			//end of page full new headings if
-			
+
 		}
 
 	} //end of while loop

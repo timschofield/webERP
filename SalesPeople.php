@@ -218,7 +218,7 @@ or deletion of the records*/
 
 	while ($MyRow=DB_fetch_array($Result)) {
 
-	if ($MyRow['current'] == 1) {
+		if ($myrow[7] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');
@@ -403,6 +403,23 @@ if (! isset($_GET['delete'])) {
 		<fieldhelp>', _('Select the general ledger account to post the sales commission for this sales person to.'), '</fieldhelp>
 	</field>';
  KL RICARD END We do not show these fields */
+	echo '<field>
+			<label for="Current">', _('Current?'), ':</label>
+			<select required="required" name="Current">';
+	if ($_POST['Current'] == 1) {
+		echo '<option selected="selected" value="1">', _('Yes'), '</option>';
+	} else {
+		echo '<option value="1">', _('Yes'), '</option>';
+	}
+	if ($_POST['Current'] == 0) {
+		echo '<option selected="selected" value="0">', _('No'), '</option>';
+	} else {
+		echo '<option value="0">', _('No'), '</option>';
+	}
+	echo '</select>
+		<fieldhelp>', _('If this SPG is currently employed, select Yes, otherwise select No.'), '</fieldhelp>
+	</field>';
+
 	echo '</fieldset>';
 	
 	echo '<div class="centre">

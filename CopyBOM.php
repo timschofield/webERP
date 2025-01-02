@@ -55,7 +55,6 @@ if(isset($_POST['Submit'])) {
 									taxcatid,
 									serialised,
 									perishable,
-									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -82,7 +81,6 @@ if(isset($_POST['Submit'])) {
 									taxcatid,
 									serialised,
 									perishable,
-									digitals,
 									nextserialno,
 									pansize,
 									shrinkfactor,
@@ -161,7 +159,6 @@ if(isset($_POST['Submit'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Contract') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$SQL = "SELECT stockid,
@@ -190,20 +187,23 @@ if(isset($_POST['Submit'])) {
 				WHERE stockid NOT IN (SELECT DISTINCT parent FROM bom)
 				AND mbflag IN ('M', 'A', 'K', 'G');";
 	$Result = DB_query($SQL);
-
 	if (DB_num_rows($Result) > 0) {
-		echo '<tr>
-				<td><input type="radio" name="NewOrExisting" checked="checked" value="E" />' . _('To Existing Stock ID') . '</td><td>';
+
+		echo '<h1>', _('OR'), '</h1>';
+		echo '<field>
+				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', _('To Existing Stock ID'), '</label>';
 		echo '<select name="ExStockID">';
-		while($MyRow = DB_fetch_row($Result)) {
-			echo '<option value="'.$MyRow[0].'">' . $MyRow[0].' -- '.$MyRow[1] . '</option>';
+		while ($MyRow = DB_fetch_row($Result)) {
+			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
 		}
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 	}
-	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="Submit" value="Submit" /></div>
-          </div>
-          </form>';
+	echo '</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="Submit" value="Submit" />
+		</div>
+	</form>';
 
 	include('includes/footer.php');
 }

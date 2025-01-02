@@ -13,18 +13,17 @@ if (!isset($_POST['Show'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">';
-	echo '<tr><th colspan="3">' . _('Selection Criteria') . '</th></tr>';
+	echo '<fieldset>';
+	echo '<legend>' . _('Selection Criteria') . '</legend>';
 
 	$SQL = "SELECT typeid,systypes.typeno,typename FROM
 		systypes INNER JOIN gltrans ON systypes.typeid=gltrans.type
 		GROUP BY typeid";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
-		echo '<tr>
-
-			<td>' . _('Transaction Type') . ' </td>
-			<td> <select name="TransType">';
+		echo '<field>
+				<label for="TransType">' . _('Transaction Type') . ' </label>
+				<select name="TransType">';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (!isset($MaxJournalNumberUsed)) {
 				$MaxJournalNumberUsed = $MyRow['typeno'];
@@ -33,16 +32,16 @@ if (!isset($_POST['Show'])) {
 			}
 			echo '<option value="' . $MyRow['typeid'] . '">' . _($MyRow['typename']) . '</option>';
 		}
-		echo '</select></td>
-			</tr>';
+		echo '</select>
+			</field>';
 
 	}
 
-	echo '<tr>
-			<td>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</td>
-			<td>' . _('From') . ':' . '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />' . '</td>
-			<td>' . _('To') . ':' . '<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '</td>
-		</tr>';
+	echo '<field>
+			<label>' . _('Journal Number Range') . ' (' . _('Between') . ' 1 ' . _('and') . ' ' . $MaxJournalNumberUsed . ')</label>
+			' . _('From') . ':' . '<input type="text" class="number" name="NumberFrom" size="10" maxlength="11" value="1" />' . '
+			' . _('To') . ':' . '<input type="text" class="number" name="NumberTo" size="10" maxlength="11" value="' . $MaxJournalNumberUsed . '" />' . '
+		</field>';
 
 	$SQL = "SELECT MIN(trandate) AS fromdate,
 					MAX(trandate) AS todate FROM gltrans WHERE type=0";
@@ -56,13 +55,16 @@ if (!isset($_POST['Show'])) {
 		$ToDate = date('Y-m-d');
 	}
 
-	echo '<tr><td>' . _('Journals Dated Between') . ':</td>
-		<td>' . _('From') . ':' . '<input type="text" name="FromTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" /></td>
-		<td>' . _('To') . ':' . '<input type="text" name="ToTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" /></td>
-		</tr>';
+	echo '<field>
+			<label>' . _('Journals Dated Between') . ':</label>
+			' . _('From') . ':' . '<input type="text" name="FromTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" />
+			' . _('To') . ':' . '<input type="text" name="ToTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" />
+		</field>';
 
-	echo '</table>';
-	echo '<br /><div class="centre"><input type="submit" name="Show" value="' . _('Show transactions') . '" /></div>';
+	echo '</fieldset>';
+	echo '<div class="centre">
+			<input type="submit" name="Show" value="' . _('Show transactions') . '" />
+		</div>';
 	echo '</form>';
 } else {
 

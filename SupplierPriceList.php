@@ -16,9 +16,11 @@ if(isset($_POST['StockSearch'])) {
 	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
 		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
 		<input name="SupplierID" type="hidden" value="', $_POST['SupplierID'], '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('In Stock Category') . ':<select name="StockCat">';
+		<fieldset>
+			<legend class="search">', _('Search for Item'), '</legend>
+			<field>
+				<label for="StockCat">' . _('In Stock Category') . ':</label>
+				<select name="StockCat">';
 	if(!isset($_POST['StockCat'])) {
 		$_POST['StockCat'] = '';
 	}
@@ -39,32 +41,30 @@ if(isset($_POST['StockSearch'])) {
 			echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 		}
 	}
-	echo '</select></td>';
-	echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+	echo '</select>
+		</field>';
+	echo '<field>
+			<label for="Keywords">' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
 	if(isset($_POST['Keywords'])) {
 		echo '<input type="search" name="Keywords" value="' . $_POST['Keywords'] . '" autofocus="autofocus" size="34" maxlength="25" />';
 	} else {
 		echo '<input type="search" name="Keywords" size="34" maxlength="25" autofocus="autofocus" placeholder="Enter part of the item description" />';
 	}
-	echo '</td>
-		</tr>
-		<tr>
-			<td></td>
-			<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
-			<td>';
+	echo '</field>';
+
+	echo '<h3>' . _('OR') . ' ' . '</h3>';
+
+	echo '<field>
+			<label for="StockCode">'. _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 	if(isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
 		echo '<input type="text" name="StockCode" size="15" maxlength="18" />';
 	}
-	echo '</td>
-		</tr>
-		</table>
-		<br />
+	echo '</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="Search" value="' . _('Search Now') . '" />
-		</div>
-		<br />
 		</div>
 	</form>';
 	include('includes/footer.php');
@@ -401,17 +401,24 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
 			_('Search for a supplier'), '" /> ', // Icon title.
 			_('Search for a supplier'), '</p>';// Page title.
 
-		echo '<br />
-			<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
-			<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
-		echo '<table cellpadding="3" class="selection"><tr>';
-		echo '<td>' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</td>';
-		echo '<td><input maxlength="25" name="Keywords" size="20" type="text" /></td>';
-		echo '<td><b>' . _('OR') . '</b></td>';
-		echo '<td>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</td>';
-		echo '<td><input maxlength="18" name="SupplierCode" size="15" type="text" /></td>';
-		echo '</tr></table><br />';
-		echo '<div class="centre"><input name="SearchSupplier" type="submit" value="' . _('Find Suppliers Now') . '" /></div>';
+		echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">';
+		echo '<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />';
+
+		echo '<fieldset>
+				<legend class="search">', _('Select Supplier'), '</legend>';
+		echo '<field>
+				<label for="Keywords">' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</label>
+				<input maxlength="25" name="Keywords" size="20" type="text" />
+			</field>';
+		echo '<h3>' . _('OR') . '</h3>';
+		echo '<field>
+				<label for="SupplierCode">' . _('Text in Supplier') . ' <b>' . _('CODE') . '</label>
+				<input maxlength="18" name="SupplierCode" size="15" type="text" />
+			</field>
+		</fieldset>';
+		echo '<div class="centre">
+				<input name="SearchSupplier" type="submit" value="' . _('Find Suppliers Now') . '" />
+			</div>';
         echo '</form>';
 		include ('includes/footer.php');
 		exit;

@@ -109,28 +109,31 @@ If (isset($_POST['PrintPDF'])
 	$Title=_('Bill Of Material Listing');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Search') .
-		'" alt="" />' . ' ' . $Title . '</p><br />';
+		'" alt="" />' . ' ' . $Title . '</p>';
 	if (!isset($_POST['FromCriteria']) || !isset($_POST['ToCriteria'])) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-              <div>
               <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			  <table class="selection">';
+			  <fieldset>
+				<legend>', _('Report Criteria'), '</legend>';
 
-		echo '<tr><td>' . _('From Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="1" type="text" autofocus="autofocus" required="required" data-type="no-illegal-chars" title="' . _('Enter the lowest alpha code of parent bom items to list the bill of material for') .  '" name="FromCriteria" size="20" maxlength="20" value="1" /></td>
-			</tr>';
+		echo '<field>
+				<label for="FromCriteria">' . _('From Inventory Part Code') . ':' . '</label>
+				<input tabindex="1" type="text" autofocus="autofocus" required="required" data-type="no-illegal-chars" title="" name="FromCriteria" size="20" maxlength="20" value="1" />
+				<fieldhelp>' . _('Enter the lowest alpha code of parent bom items to list the bill of material for') .  '</fieldhelp>
+			</field>';
 
-		echo '<tr><td>' . _('To Inventory Part Code') . ':' . '</td>
-				<td><input tabindex="2" type="text" required="required" data-type="no-illegal-chars" title="' . _('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" /></td>
-			</tr>';
+		echo '<field>
+				<label for="ToCriteria">' . _('To Inventory Part Code') . ':' . '</label>
+				<input tabindex="2" type="text" required="required" data-type="no-illegal-chars" title="" name="ToCriteria" size="20" maxlength="20" value="zzzzzzz" />
+				<fieldhelp>' . _('Enter the end alpha numeric code of any parent bom items to list the bill of material for') .  '</fieldhelp>
+			</field>';
 
 
-		echo '</table>
-				<br /><div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
-             </div>
+		echo '</fieldset>
+				<div class="centre"><input tabindex="3" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" /></div>
              </form>';
 	}
 	include('includes/footer.php');

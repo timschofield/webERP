@@ -17,63 +17,61 @@ if (!isset($_POST['RunReport'])){
 	$CustomersResult = DB_query("SELECT debtorno, name FROM debtorsmaster ORDER BY name");
 	$SalesFolkResult = DB_query("SELECT salesmancode, salesmanname FROM salesman ORDER BY salesmanname");
 
-	echo '<form id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form id="Form1" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		 <div>
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-
-			<table cellpadding="2" class="selection">
-				<tr>
-					<td>' . _('Customer') . '</td>
-					<td><select name="Customer">
-						<option selected="selected" value="">' . _('All') . '</option>';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="Customer">' . _('Customer') . '</label>
+				<select name="Customer">
+					<option selected="selected" value="">' . _('All') . '</option>';
 	while ($CustomerRow = DB_fetch_array($CustomersResult)) {
 		echo 			'<option value="' . $CustomerRow['debtorno'] . '">' . $CustomerRow['name'] . '</option>';
 	}
-	echo 			'</select>
-					</td>
-				</tr>
-				<tr>
-					<td>' . _('Sales Area') . '</td>
-					<td><select name="SalesArea">
-						<option selected="selected" value="">' . _('All') . '</option>';
+	echo '</select>
+		</field>';
+		
+	echo '<field>
+			<label for="SalesArea">' . _('Sales Area') . '</label>
+			<select name="SalesArea">
+				<option selected="selected" value="">' . _('All') . '</option>';
 	while ($AreaRow = DB_fetch_array($SalesAreasResult)) {
-		echo 			'<option value="' . $AreaRow['areacode'] . '">' . $AreaRow['areadescription'] . '</option>';
+		echo '<option value="' . $AreaRow['areacode'] . '">' . $AreaRow['areadescription'] . '</option>';
 	}
-	echo 			'</select>
-					</td>
-				</tr>
-				<tr>
-					<td>' . _('Sales Person') . '</td>
-					<td><select name="SalesPerson">
-						<option selected="selected" value="">' . _('All') . '</option>';
+	echo '</select>
+		</field>';
+		
+	echo '<field>
+			<label for="SalesPerson">' . _('Sales Person') . '</label>
+			<select name="SalesPerson">
+				<option selected="selected" value="">' . _('All') . '</option>';
 	while ($SalesPersonRow = DB_fetch_array($SalesFolkResult)) {
-		echo 			'<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
+		echo '<option value="' . $SalesPersonRow['salesmancode'] . '">' . $SalesPersonRow['salesmanname'] . '</option>';
 	}
-	echo 			'</select>
-					</td>
-				</tr>
-				<tr>
-					<td>' . _('Date From') . ':</td>
-					<td><input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" /></td>
-				</tr>
-				<tr>
-					<td>' . _('Date To') . ':</td>
-					<td><input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>
-				</tr>
-				<tr>
-					<td>' . _('Create CSV') . ':</td>
-					<td><input type="checkbox" name="CreateCSV" value=""></td>
-				</tr>
+	echo '</select>
+		</field>';
+		
+	echo '<field>
+			<label for="FromDate">' . _('Date From') . ':</label>
+			<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" />
+		</field>';
+		
+	echo '<field>
+			<label for="ToDate">' . _('Date To') . ':</label>
+			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+		</field>';
+		
+	echo '<field>
+			<label for="CreateCSV">' . _('Create CSV') . ':</label>
+			<input type="checkbox" name="CreateCSV" value="">
+		</field>';
 
-			</table>
-			<br />
-			<div class="centre">
-				<input tabindex="4" type="submit" name="RunReport" value="' . _('Show Customer Balance Movements') . '" />
-			</div>
-		 </div>
-	</form>
-	<br />';
+	echo '</fieldset>';
+	echo '<div class="centre">
+			<input tabindex="4" type="submit" name="RunReport" value="' . _('Show Customer Balance Movements') . '" />
+		</div>
+	</form>';
 	include('includes/footer.php');
 	exit;
 }

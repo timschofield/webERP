@@ -76,7 +76,6 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	_('Receive Purchase Order'), ' : ', $_SESSION['PO'.$identifier]->OrderNo, ' ', _('from'), ' ', $_SESSION['PO'.$identifier]->SupplierName, '</p>';// Page title.
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?identifier=', urlencode($identifier), '" id="form1" method="post">',
-	'<div>',
 	'<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($_POST['ProcessGoodsReceived'])) {
@@ -103,17 +102,20 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 	}
 	$SupplierReference = isset($_SESSION['PO' . $identifier]->SupplierReference)? $_SESSION['PO' . $identifier]->SupplierReference: $_POST['SupplierReference'];
 
-	echo '<table class="selection">
-			<tr>
-				<td>' .  _('Date Goods/Service Received'). ':</td>
-				<td><input type="text" class="date" maxlength="10" size="11" onchange="return isDate(this, this.value, '."'".
-			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_SESSION['PO' . $identifier]->DefaultReceivedDate . '" /></td>
-				<td>' . _("Supplier's Reference") . ':</td>
-				<td><input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/></td>
-			</tr>
-		</table>
-		<br />',
-		'<table cellpadding="2" class="selection">
+	echo '<fieldset>
+			<legend>', _('GRN Header'), '</legend>
+			<field>
+				<label for="DefaultReceivedDate">' .  _('Date Goods/Service Received'). ':</label>
+				<input type="text" class="date" maxlength="10" size="11" onchange="return isDate(this, this.value, '."'".
+			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_SESSION['PO' . $identifier]->DefaultReceivedDate . '" />
+			</field>
+			<field>
+				<label for="SupplierReference">' . _("Supplier's Reference") . ':</label>
+				<input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/>
+			</field>
+		</fieldset>';
+		
+	echo '<table cellpadding="2" class="selection">
 			<tr><th colspan="2">&nbsp;</th>
 				<th class="centre" colspan="4"><b>', _('Supplier Units'), '</b></th>
 				<th>&nbsp;</th>

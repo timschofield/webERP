@@ -382,7 +382,7 @@ if (isset($SelectedLabelID)) {
 		</div>';
 }
 
-echo '<p><form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
+echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (isset($SelectedLabelID)) {
@@ -427,17 +427,19 @@ if (isset($SelectedLabelID)) {
 if (!isset($_POST['Description'])) {
 	$_POST['Description']='';
 }
-echo '<table class="selection">
-		<tr>
-			<td><img src="css/paramsLabel.png"></td>
-			<td><table>
-				<tr>
-					<td>' . _('Label Description') . ':</td>
-					<td><input type="text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" /></td>
-				</tr>
-				<tr>
-					<td>' . _('Label Paper Size') . ':</td>
-					<td><select name="PaperSize" onchange="ReloadForm(submit)" >';
+echo '<fieldset class="2column">
+		<legend>', _('Label Details'), '</legend>
+		<fieldset class="column1">
+			<img class="label" src="css/paramsLabel.png">
+			</fieldset>
+			<fieldset class="Column2">
+				<field>
+					<label for="Description">' . _('Label Description') . ':</label>
+					<input type="text" name="Description" size="21" maxlength="20" value="' . $_POST['Description'] . '" />
+				</field>
+				<field>
+					<label for="PaperSize">' . _('Label Paper Size') . ':</label>
+					<select name="PaperSize" onchange="ReloadForm(submit)" >';
 
 if (!isset($_POST['PaperSize'])){
 	echo '<option selected="selected" value="custom">' . _('Custom Size') . '</option>';
@@ -454,8 +456,8 @@ foreach($PaperSize as $PaperType=>$PaperSizeElement) {
 
 } //end while loop
 
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['PageHeight'])) {
 	$_POST['PageHeight']=0;
@@ -488,42 +490,42 @@ if (!isset($_POST['PaperSize']) OR $_POST['PaperSize'] == 'Custom') {
 		$_POST['PageWidth'] = 0;
 		$_POST['PageHeight'] = 0;
 	}
-	echo '<tr>
-			<td>' . _('Page Width') . '</td>
-			<td><input type="text" size="4" maxlength="4" name="PageWidth" value="' . $_POST['PageWidth'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Page Height') . '</td>
-			<td><input type="text" size="4" maxlength="4" name="PageHeight" value="' . $_POST['PageHeight'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="PageWidth">' . _('Page Width') . '</label>
+			<input type="text" size="4" maxlength="4" name="PageWidth" value="' . $_POST['PageWidth'] . '" />
+		</field>
+		<field>
+			<label for="PageHeight">' . _('Page Height') . '</label>
+			<input type="text" size="4" maxlength="4" name="PageHeight" value="' . $_POST['PageHeight'] . '" />
+		</field>';
 }
-echo '<tr>
-		<td>' . _('Label Height') . ' - (He):</td>
-		<td><input type="text" name="Height" size="4" maxlength="4" value="' . $_POST['Height'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Label Width') . ' - (Wi):</td>
-		<td><input type="text" name="Width" size="4" maxlength="4" value="' . $_POST['Width'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Top Margin') . ' - (Tm):</td>
-		<td><input type="text" name="TopMargin" size="4" maxlength="4" value="' . $_POST['TopMargin'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Left Margin') . ' - (Lm):</td>
-		<td><input type="text" name="LeftMargin" size="4" maxlength="4" value="' . $_POST['LeftMargin'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Row Height') . ' - (Rh):</td>
-		<td><input type="text" name="RowHeight" size="4" maxlength="4" value="' . $_POST['RowHeight'] . '" /></td>
-	</tr>
-	<tr>
-		<td>' . _('Column Width') . ' - (Cw):</td>
-		<td><input type="text" name="ColumnWidth" size="4" maxlength="4" value="' . $_POST['ColumnWidth'] . '" /></td>
-	</tr>
-	</table>
-	</td></tr>
-	</table>';
+echo '<field>
+		<label for="Height">' . _('Label Height') . ' - (He):</label>
+		<input type="text" name="Height" size="4" maxlength="4" value="' . $_POST['Height'] . '" />
+	</field>
+	<field>
+		<label for="Width">' . _('Label Width') . ' - (Wi):</label>
+		<input type="text" name="Width" size="4" maxlength="4" value="' . $_POST['Width'] . '" />
+	</field>
+	<field>
+		<label for="TopMargin">' . _('Top Margin') . ' - (Tm):</label>
+		<input type="text" name="TopMargin" size="4" maxlength="4" value="' . $_POST['TopMargin'] . '" />
+	</field>
+	<field>
+		<label for="LeftMargin">' . _('Left Margin') . ' - (Lm):</label>
+		<input type="text" name="LeftMargin" size="4" maxlength="4" value="' . $_POST['LeftMargin'] . '" />
+	</field>
+	<field>
+		<label for="RowHeight">' . _('Row Height') . ' - (Rh):</label>
+		<input type="text" name="RowHeight" size="4" maxlength="4" value="' . $_POST['RowHeight'] . '" />
+	</field>
+	<field>
+		<label for="ColumnWidth">' . _('Column Width') . ' - (Cw):</label>
+		<input type="text" name="ColumnWidth" size="4" maxlength="4" value="' . $_POST['ColumnWidth'] . '" />
+	</field>
+	</fieldset>
+	</td></field>
+	</fieldset>';
 
 if (isset($SelectedLabelID)) {
 	//get the fields to show

@@ -43,11 +43,11 @@ echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/
 
 //prompt user for Key Value
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">
-	<div>
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<table class="selection">
-	<tr>
-		<td>' . _('Show Test Results For') .':</td>';
+	<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="KeyValue">' . _('Show Test Results For') .':</label>';
 $SQLSpecSelect="SELECT DISTINCT(prodspeckey),
 						description
 					FROM qasamples LEFT OUTER JOIN stockmaster
@@ -55,7 +55,7 @@ $SQLSpecSelect="SELECT DISTINCT(prodspeckey),
 
 
 $ResultSelection=DB_query($SQLSpecSelect);
-echo '<td><select name="KeyValue">';
+echo '<select name="KeyValue">';
 
 while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 	if ($MyRowSelection['prodspeckey']==$KeyValue) {
@@ -65,18 +65,18 @@ while ($MyRowSelection=DB_fetch_array($ResultSelection)){
 	}
 	echo '<option ' . $Selected . ' value="' . $MyRowSelection['prodspeckey'] . '">' . $MyRowSelection['prodspeckey'].' - ' .htmlspecialchars($MyRowSelection['description'], ENT_QUOTES,'UTF-8', false)  . '</option>';
 }
-echo '</select></td>';
-echo '</tr>
-	  <tr>
-		<td>' . _('From Sample Date') . ': </td>
-		<td><input name="FromDate" maxlength="10" size="11" class="date" value="' . $_POST['FromDate'] . '" /></td>
-	</tr>
-	<tr>
-		<td> ' . _('To Sample Date') . ':</td>
-		<td> <input name="ToDate" maxlength="10" size="11" class="date" value="' . $_POST['ToDate'] . '" /></td>
-	</tr>
-	</table>
-	</div>
+echo '</select>';
+echo '</field>';
+
+echo '<field>
+		<label for="FromDate">' . _('From Sample Date') . ': </label>
+		<input name="FromDate" maxlength="10" size="11" class="date" value="' . $_POST['FromDate'] . '" />
+	</field>
+	<field>
+		<label for="ToDate"> ' . _('To Sample Date') . ':</label>
+		<input name="ToDate" maxlength="10" size="11" class="date" value="' . $_POST['ToDate'] . '" />
+	</field>
+	</fieldset>
 	<div>
 	<input type="submit" name="PickSpec" value="' . _('Submit') . '" />
 	</div>

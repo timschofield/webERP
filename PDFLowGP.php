@@ -124,28 +124,26 @@ if (isset($_POST['PrintPDF'])) {
 		$_POST['ToDate']=Date($_SESSION['DefaultDateFormat']);
 		$_POST['GPMin']=0;
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>';
-        echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		echo '<table class="selection">';
-		echo '<tr>
-				<td>' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</td>
-				<td><input type="text" required="required" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Show sales with GP % below') . ':</td>
-				<td><input type="text" class="integer" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '" /></td>
-			</tr>
-			</table>
-			<br />
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<fieldset>
+				<legend>', _('Report Criteria'), '</legend>';
+		echo '<field>
+				<label for="FromDate">' . _('Sales Made From') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
+				<input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+			</field>
+			<field>
+				<label for="ToDate">' . _('Sales Made To') . ' (' . _('in the format') . ' ' . $_SESSION['DefaultDateFormat'] . '):</label>
+				<input type="text" required="required" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+			</field>
+			<field>
+				<label for="GPMin">' . _('Show sales with GP % below') . ':</label>
+				<input type="text" class="integer" name="GPMin" maxlength="3" size="3" value="' . $_POST['GPMin'] . '" />
+			</field>
+			</fieldset>
 			<div class="centre">
 				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			</div>
-			</div>
-        </form>';
+		</form>';
 	}
 	include('includes/footer.php');
 

@@ -169,15 +169,20 @@ if (!isset($_GET['Edit'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form1">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">';
+echo '<fieldset>
+		<legend>', _('Set Authorisation Levels'), '</legend>';
 
 if (isset($_GET['Edit'])) {
-	echo '<tr><td>' . _('User ID') . '</td><td>' . $_GET['UserID'] . '</td></tr>';
+	echo '<field>
+			<label for="UserID">' . _('User ID') . '</label>
+			<fieldtext>' . $_GET['UserID'] . '</fieldtext>
+		</field>';
 	echo '<input type="hidden" name="UserID" value="'.$_GET['UserID'].'" />';
 } else {
-	echo '<tr><td>' . _('User ID') . '</td><td><select name="UserID">';
+	echo '<field>
+			<label for="UserID">' . _('User ID') . '</label>
+			<select name="UserID">';
 	$UserSQL="SELECT userid FROM www_users";
 	$Userresult=DB_query($UserSQL);
 	while ($MyRow=DB_fetch_array($Userresult)) {
@@ -187,7 +192,8 @@ if (isset($_GET['Edit'])) {
 			echo '<option value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 }
 
 if (isset($_GET['Edit'])) {
@@ -210,16 +216,16 @@ if (isset($_GET['Edit'])) {
 	$AuthLevel=$MyRow['authlevel'];
 	$CurrDecimalPlaces=$MyRow['decimalplaces'];
 
-	echo '<tr>
-			<td>' . _('Currency') . '</td>
+	echo '<field>
+			<label for="CurrCode">' . _('Currency') . '</label>
 			<td>' . $MyRow['currency'] . '</td>
-		</tr>';
+		</field>';
 	echo '<input type="hidden" name="CurrCode" value="'.$Currency.'" />';
 } else {
-	echo '<tr>
-			<td>' . _('Currency') . '</td>
-			<td><select name="CurrCode">';
-	$Currencysql="SELECT currabrev,currency FROM currencies";
+	echo '<field>
+			<label for="CurrCode">' . _('Currency') . '</label>
+			<select name="CurrCode">';
+	$Currencysql="SELECT currabrev,currency,decimalplaces FROM currencies";
 	$Currencyresult=DB_query($Currencysql);
 	while ($MyRow=DB_fetch_array($Currencyresult)) {
 		if ($MyRow['currabrev']==$Currency) {
@@ -228,43 +234,44 @@ if (isset($_GET['Edit'])) {
 			echo '<option value="'.$MyRow['currabrev'].'">' . $MyRow['currency'] . '</option>';
 		}
 	}
-	echo '</select></td></tr>';
+	$CurrDecimalPlaces=$MyRow['decimalplaces'];
+	echo '</select>
+		</field>';
 }
 
-echo '<tr>
-		<td>' . _('User can create orders') . '</td>';
+echo '<field>
+		<label for="CanCreate">' . _('User can create orders') . '</label>';
 if ($CanCreate==1) {
-	echo '<td><input type="checkbox" name="CanCreate" /></td>
-		</tr>';
+	echo '<input type="checkbox" name="CanCreate" />
+		</field>';
 } else {
-	echo '<td><input type="checkbox" checked="checked" name="CanCreate" /></td>
-		</tr>';
+	echo '<input type="checkbox" checked="checked" name="CanCreate" />
+		</field>';
 }
 
-echo '<tr>
-		<td>' . _('User can release invoices') . '</td>';
+echo '<field>
+		<label for="OffHold">' . _('User can release invoices') . '</label>';
 if ($OffHold==1) {
-	echo '<td><input type="checkbox" name="OffHold" /></td>
-		</tr>';
+	echo '<input type="checkbox" name="OffHold" />
+		</field>';
 } else {
-	echo '<td><input type="checkbox" checked="checked" name="OffHold" /></td>
-		</tr>';
+	echo '<input type="checkbox" checked="checked" name="OffHold" />
+		</field>';
 }
 
-echo '<tr>
-		<td>' . _('User can authorise orders up to :') . '</td>';
-echo '<td><input type="text" name="AuthLevel" size="11" class="integer" title="' . _('Enter the amount that this user is premitted to authorise purchase orders up to') . '" value="'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" /></td>
-	</tr>
-	</table>';
+echo '<field>
+		<label for="AuthLevel">' . _('User can authorise orders up to :') . '</label>
+		<input type="text" name="AuthLevel" size="11" class="integer" title="" value="'  . locale_number_format($AuthLevel,$CurrDecimalPlaces) . '" />
+		<fieldhelp>' . _('Enter the amount that this user is premitted to authorise purchase orders up to') . '</fieldhelp>
+	</field>
+	</fieldset>';
 
 if (isset($_GET['Edit'])) {
-	echo '<br />
-			<div class="centre">
-				<input type="submit" name="Update" value="'._('Update Information').'" />
-			</div>';
+	echo '<div class="centre">
+			<input type="submit" name="Update" value="'._('Update Information').'" />
+		</div>';
 } else {
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="Submit" value="'._('Enter Information').'" />
 		</div>';
 }
