@@ -159,62 +159,65 @@ echo '<fieldset>
 			<fieldtext>', $_SESSION['UserID'], '</fieldtext>
 		</field>';
 
-		<tr>
 echo '<field>
 		<label for="UsersRealName">', _('User Name'), ':</label>
 		<fieldtext>', $_SESSION['UsersRealName'], '<input name="RealName" type="hidden" value="', $_SESSION['UsersRealName'], '" /></fieldtext>
 	</field>';
+
 // KL RICARD: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
 if ($KL_SystemAdmin){
-	
-echo '<field>
-		<label for="DisplayRecordsMax">', _('Maximum Number of Records to Display'), ':</label>
-		<input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_SESSION['DisplayRecordsMax'], '" />
-	</field>';
 
-// Select language:
-echo '<field>
-		<label for="Language">', _('Language'), ':</label>
-		<select name="Language">';
-if(!isset($_POST['Language'])) {
-	$_POST['Language'] = $_SESSION['Language'];
-}
-foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
-	echo '<option ';
-	if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
-		echo 'selected="selected" ';
+	echo '<field>
+			<label for="DisplayRecordsMax">', _('Maximum Number of Records to Display'), ':</label>
+			<input class="integer" maxlength="3" name="DisplayRecordsMax" required="required" size="3" title="', _('The input must be positive integer'), '" type="text" value="', $_SESSION['DisplayRecordsMax'], '" />
+		</field>';
+
+	// Select language:
+	echo '<field>
+			<label for="Language">', _('Language'), ':</label>
+			<select name="Language">';
+	if(!isset($_POST['Language'])) {
+		$_POST['Language'] = $_SESSION['Language'];
 	}
-	echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
-}
-echo '</select>
-	</field>';
+	foreach($LanguagesArray as $LanguageEntry => $LanguageName) {
+		echo '<option ';
+		if(isset($_POST['Language']) AND $_POST['Language'] == $LanguageEntry) {
+			echo 'selected="selected" ';
+		}
+		echo 'value="', $LanguageEntry, '">', $LanguageName['LanguageName'], '</option>';
+	}
+	echo '</select>
+		</field>';
 
-// Select theme:
-echo '<field>
-		<label for="Theme">' . _('Theme') . ':</label>
-		<select name="Theme">';
+	// Select theme:
+	echo '<field>
+			<label for="Theme">' . _('Theme') . ':</label>
+			<select name="Theme">';
 
-$ThemeDirectories = scandir('css/');
+	$ThemeDirectories = scandir('css/');
 
-foreach ($ThemeDirectories as $ThemeName) {
-	if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
+	foreach ($ThemeDirectories as $ThemeName) {
+		if(is_dir('css/' . $ThemeName) AND $ThemeName != '.' AND $ThemeName != '..' AND $ThemeName != '.svn') {
 
-		if($_SESSION['Theme'] == $ThemeName) {
-			echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
-		} else {
-			echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			if($_SESSION['Theme'] == $ThemeName) {
+				echo '<option selected="selected" value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			} else {
+				echo '<option value="' . $ThemeName . '">' . $ThemeName . '</option>';
+			}
 		}
 	}
+	echo '</select>
+		</field>';
 }
+// KL RICARD END: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
+
 if(!isset($_POST['PasswordCheck'])) {
 	$_POST['PasswordCheck']='';
 }
 if(!isset($_POST['Password'])) {
 	$_POST['Password']='';
 }
-echo '</select>
-	</field>';
-	
+
 echo '<field>
 		<label for="Password">', _('New Password'), ':</label>
 		<input name="Password" pattern="(?!^', $_SESSION['UserID'], '$).{5,}" placeholder="', _('More than 5 characters'), '" size="20" title="', _('Must be more than 5 characters and cannot be as same as userid'), '" type="password" value="', $_POST['Password'], '" />
@@ -231,53 +234,57 @@ echo '<field>
 		<label for="email">', _('Email'), ':</label>
 		<input name="email" size="40" type="email" value="', $_POST['email'], '" />
 	</field>';
-if ($KL_SystemAdmin){
-	// Turn off/on page help:
-echo '<field>
-		<label for="ShowPageHelp">', _('Display page help'), ':</label>
-		<select id="ShowPageHelp" name="ShowPageHelp">';
-if ($_POST['ShowPageHelp']==0) {
-	echo '<option selected="selected" value="0">', _('No'), '</option>',
-		 '<option value="1">', _('Yes'), '</option>';
-} else {
-	echo '<option value="0">', _('No'), '</option>',
- 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
-}
-echo '</select>
-	<fieldhelp>', _('Show page help when available'), '</fieldhelp>
-</field>';
 
-// Turn off/on field help:
-echo '<field>
-		<label for="ShowFieldHelp">', _('Display field help'), ':</label>
-		<select id="ShowFieldHelp" name="ShowFieldHelp">';
-if($_POST['ShowFieldHelp']==0) {
-	echo '<option selected="selected" value="0">', _('No'), '</option>',
-		 '<option value="1">', _('Yes'), '</option>';
-} else {
-	echo '<option value="0">', _('No'), '</option>',
- 		 '<option selected="selected" value="1">', _('Yes'), '</option>';
-}
-echo '</select>
-	<fieldhelp>', _('Show field help when available'), '</fieldhelp>
-</field>';
-// PDF Language Support:
-if(!isset($_POST['PDFLanguage'])) {
-	$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
-}
-echo '<field>
-		<label for="PDFLanguage">', _('PDF Language Support'), ': </label>
-		<select name="PDFLanguage">';
-for($i=0; $i<count($PDFLanguages); $i++) {
-	if($_POST['PDFLanguage'] == $i) {
-		echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
+// KL RICARD: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
+if ($KL_SystemAdmin){
+		// Turn off/on page help:
+	echo '<field>
+			<label for="ShowPageHelp">', _('Display page help'), ':</label>
+			<select id="ShowPageHelp" name="ShowPageHelp">';
+	if ($_POST['ShowPageHelp']==0) {
+		echo '<option selected="selected" value="0">', _('No'), '</option>',
+			'<option value="1">', _('Yes'), '</option>';
 	} else {
-		echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';
+		echo '<option value="0">', _('No'), '</option>',
+			'<option selected="selected" value="1">', _('Yes'), '</option>';
 	}
-}
-echo '</select>
+	echo '</select>
+		<fieldhelp>', _('Show page help when available'), '</fieldhelp>
 	</field>';
-	
+
+	// Turn off/on field help:
+	echo '<field>
+			<label for="ShowFieldHelp">', _('Display field help'), ':</label>
+			<select id="ShowFieldHelp" name="ShowFieldHelp">';
+	if($_POST['ShowFieldHelp']==0) {
+		echo '<option selected="selected" value="0">', _('No'), '</option>',
+			'<option value="1">', _('Yes'), '</option>';
+	} else {
+		echo '<option value="0">', _('No'), '</option>',
+			'<option selected="selected" value="1">', _('Yes'), '</option>';
+	}
+	echo '</select>
+		<fieldhelp>', _('Show field help when available'), '</fieldhelp>
+	</field>';
+	// PDF Language Support:
+	if(!isset($_POST['PDFLanguage'])) {
+		$_POST['PDFLanguage']=$_SESSION['PDFLanguage'];
+	}
+	echo '<field>
+			<label for="PDFLanguage">', _('PDF Language Support'), ': </label>
+			<select name="PDFLanguage">';
+	for($i=0; $i<count($PDFLanguages); $i++) {
+		if($_POST['PDFLanguage'] == $i) {
+			echo '<option selected="selected" value="', $i, '">', $PDFLanguages[$i], '</option>';
+		} else {
+			echo '<option value="', $i, '">', $PDFLanguages[$i], '</option>';
+		}
+	}
+	echo '</select>
+		</field>';
+}
+// KL RICARD END: Only KL_SystemAdmin is allowed to change his settings, other users only email and password. 
+
 echo '</fieldset>';
 
 echo '<div class="centre">
@@ -285,4 +292,5 @@ echo '<div class="centre">
 	</form>';
 
 include('includes/footer.php');
+
 ?>
