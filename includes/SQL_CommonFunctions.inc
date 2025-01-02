@@ -228,8 +228,6 @@ function BomMaterialCost($Parent) {
 
 /*Iterates through the levels of the bom, recalculating each bom it meets*/
 function UpdateCost($Item) {
-	//update the items cost itself first;
-	BomMaterialCost(strtoupper($Item));
 	$SQL = "SELECT parent FROM bom where component = '" . $Item . "'";
 	$Result = DB_query($SQL);
 	while ($MyRow=DB_fetch_array($Result)){
