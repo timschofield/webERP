@@ -170,7 +170,7 @@ if (isset($_POST['Show'])) {
 			FROM gltrans
 			INNER JOIN systypes
 				ON systypes.typeid=gltrans.type
-			INNER JOIN gltags
+			LEFT JOIN gltags
 				ON gltags.counterindex=gltrans.counterindex
 			WHERE gltrans.account = '" . $SelectedAccount . "'
 			AND posted=1
