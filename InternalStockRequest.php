@@ -342,10 +342,8 @@ if (isset($_POST['Keywords'])) {
 
 echo '</field>';
 
-echo '<h3>', _('OR'), ' ', '</h3>';
-
 echo '<field>
-		<label>', _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</label>';
+		<label>', '<b>' . _('OR') . ' </b>' . _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</label>';
 
 if (isset($_POST['StockCode'])) {
 	echo '<input type="text" autofocus="autofocus" name="StockCode" value="', $_POST['StockCode'], '" size="15" maxlength="18" />';

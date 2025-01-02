@@ -425,9 +425,8 @@ if (isset($_POST['TenderType'])
 	echo '<input type="hidden" name="SupplierID" value="'.$_POST['SupplierID'].'" />';
 	echo '</field>';
 
-	echo '<h3>' . _('OR') . ' ' . '</h3>';
 	echo '<field>
-			<label for="StockCode">'. _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+			<label for="StockCode">'. '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" autofocus="autofocus" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {

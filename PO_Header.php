@@ -543,9 +543,8 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		<label for="Keywords">' . _('Enter text in the supplier name') . ':</label>
 		<input type="text" name="Keywords" autofocus="autofocus" size="20" maxlength="25" />
 	</field>
-		<h3><b>' . _('OR') . '</b></h3>
 	<field>
-		<label for="SuppCode">' . _('Enter text extract in the supplier code') . ':</label>
+		<label for="SuppCode">' . '<b>' . _('OR') . ' </b>' . _('Enter text extract in the supplier code') . ':</label>
 		<input type="text" name="SuppCode" size="15" maxlength="18" />
 	</field>
 	</fieldset>

@@ -102,14 +102,12 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 	echo '</select>
 		</field>';
 
-	echo '<h3>', _('OR') , '</h3>';
-
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
 	echo '<field>
-			<label for="Period">', _('Select Period') , '</label>
+			<label for="Period">', '<b>' . _('OR') . ' </b>' . _('Select Period') , '</label>
 			', ReportPeriodList($_POST['Period'], array(
 		'l',
 		't'

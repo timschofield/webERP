@@ -552,10 +552,8 @@ if (isset($_POST['Keywords'])) {
 }
 echo '</field>';
 
-echo '<h3>' . _('OR') . '</h3>';
-
 echo '<field>
-		<label for="StockCode">' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+		<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 if (isset($_POST['StockCode'])) {
 	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 } else {
@@ -563,10 +561,8 @@ if (isset($_POST['StockCode'])) {
 }
 echo '<field>';
 
-echo '<h3>' . _('OR') . '</h3>';
-
 echo '<field>
-		<label>', _('Enter partial') . ' <b>' . _('Supplier Code') . '</label>';
+		<label>' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Supplier Code') . '</label>';
 if (isset($_POST['SupplierStockCode'])) {
 	echo '<input type="text" name="SupplierStockCode" value="' . $_POST['SupplierStockCode'] . '" title="" size="15" maxlength="18" />
 		<fieldhelp>' . _('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';

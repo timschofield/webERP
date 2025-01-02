@@ -438,9 +438,8 @@ if (!isset($SelectedSampleID)) {
 			<label for="Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>
-		<h3>' . _('OR') . ' </h3>
 		<field>
-			<label for="StockCode">' . _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</label>
+			<label for="StockCode">' .'<b>' . _('OR') . ' </b>' .  _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</label>
 			<input type="text" name="StockCode" size="20" maxlength="25" />
 		</field>
 		</fieldset>

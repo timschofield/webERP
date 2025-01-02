@@ -630,9 +630,8 @@ if (!isset($StockID)) {
 			<label for="Keywords">' . _('Enter text extract(s) in the description') . ':</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>
-		<h3>' . _('OR') . ' </h3>
 		<field>
-			<label for="StockCode">' . _('Enter extract of the Stock Code') . ':</label>
+			<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
 			<input type="text" name="StockCode" size="15" maxlength="18"  value="' . $_POST['StockCode'] . '" />
 		</field>
 	</fieldset>';

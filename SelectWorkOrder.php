@@ -220,10 +220,8 @@ if (!isset($StockID)) {
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>';
 
-	echo '<h3>' . _('OR') . '</h3>';
-
 	echo '<field>
-			<label for="StockCode">' . _('Enter extract of the Stock Code') . ':</label>
+			<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
 			<input type="text" name="StockCode" size="15" maxlength="18" />
 		</field>
 	</fieldset>';

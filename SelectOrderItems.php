@@ -605,15 +605,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<input type="text" autofocus="autofocus" name="CustKeywords" size="20" maxlength="25" title="" />
 				<fieldhelp>' . _('Enter a text extract of the customer\'s name, then click Search Now to find customers matching the entered name') . '</fieldhelp>
 			</field>
-			<h3>' . _('OR') . '</h3>
 			<field>
-				<label for="CustCode">' . _('Part of the Customer Branch Code') . ':</label>
+				<label for="CustCode">' . '<b>' . _('OR') . ' </b>' . _('Part of the Customer Branch Code') . ':</label>
 				<input type="text" name="CustCode" size="15" maxlength="18" title="" />
 				<fieldhelp>' . _('Enter a part of a customer code that you wish to search for then click the Search Now button to find matching customers') . '</fieldhelp>
 			</field>
-			<h3>' . _('OR') . '</h3>
 			<field>
-				<label for="CustPhone">' . _('Part of the Branch Phone Number') . ':</label>
+				<label for="CustPhone">' . '<b>' . _('OR') . ' </b>' . _('Part of the Branch Phone Number') . ':</label>
 				<input type="text" name="CustPhone" size="15" maxlength="18" title=""/>
 				<fieldhelp>' . _('Enter a part of a customer\'s phone number that you wish to search for then click the Search Now button to find matching customers') . '</fieldhelp>
 			</field>
@@ -1656,9 +1654,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '" />
 			</field>';
 
-		echo '<h3>' . _('OR') .  '</h3>';
 		echo '<field>
-				<label for="PartSearch"> ' . _('Enter extract of the Stock Code') . ':</label>
+				<label for="PartSearch"> ' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
 				<input type="text" ' . (!isset($_POST['PartSearch']) ? 'autofocus="autofocus"' :'') . ' name="StockCode" size="15" maxlength="18" value="';
 
 		if (isset($_POST['StockCode'])) {

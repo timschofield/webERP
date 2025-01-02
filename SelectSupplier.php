@@ -239,10 +239,8 @@ if (isset($_POST['Keywords'])) {
 } else {
 	echo '<input type="text" name="Keywords" size="20" maxlength="25" />';
 }
-echo '<h3>' . _('OR') . '</h3>';
-
 echo '<field>
-		<label for="SupplierCode">' . _('Enter a partial Code') . ':</label>';
+		<label for="SupplierCode">' . '<b>' . _('OR') . ' </b>' . _('Enter a partial Code') . ':</label>';
 if (isset($_POST['SupplierCode'])) {
 	echo '<input type="text" autofocus="autofocus" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 } else {

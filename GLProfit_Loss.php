@@ -654,10 +654,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		</select>
 	</field>';
 
-	echo '<h3>' . _('OR') . '</h3>';
-
 	echo '<field>
-			<label for="Period">' . _('Select Period') . '</label>
+			<label for="Period">' . '<b>' . _('OR') . ' </b>' . _('Select Period') . '</label>
 			' . ReportPeriodList($_POST['Period'], array('l', 't')),
 			'<fieldhelp>' . _('Select a period instead of using the beginning and end of the reporting period.') . '</fieldhelp>
 		</field>';

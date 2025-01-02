@@ -202,9 +202,8 @@ if (isset($_POST['SearchSupplier'])) {
 				<label for="Keywords">' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</label>
 				<input type="text" name="Keywords" size="20" maxlength="25" />
 			</field>
-			<h3>' . _('OR') . '</h3>
 			<field>
-				<label for="SupplierCode">' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</label>
+				<label for="SupplierCode">' .'<b>' . _('OR') . ' </b>' .  _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</label>
 				<input type="text" name="SupplierCode" size="20" maxlength="50" />
 			</field>
 			</fieldset>

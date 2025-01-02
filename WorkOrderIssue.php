@@ -972,10 +972,8 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	echo '" /></td>
 		</field>';
 
-	echo '<h3>' . _('OR') . ' </h3>';
-
 	echo '<field>
-			<label>', _('Enter extract of the') . ' <b>' . _('Stock Code') . '</label>
+			<label>', '<b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</label>
 			<input type="text" name="StockCode" size="15" maxlength="18" value="';
 	if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
 	echo '" />

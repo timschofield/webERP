@@ -544,10 +544,8 @@ if (isset($_POST['Suppliers'])) {
 	}
 	echo '</field>';
 
-	echo '<h3>' . _('OR') . '</h3>';
-
 	echo '<field>
-			<label for="SupplierCode">' . _('Enter a partial Code') . ':</label>';
+			<label for="SupplierCode">' . '<b>' . _('OR') . ' </b>' . _('Enter a partial Code') . ':</label>';
 	if (isset($_POST['SupplierCode'])) {
 		echo '<input type="text" placeholder="' . _('Leave it blank to show all') . '" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 	} else {
@@ -676,11 +674,10 @@ if (isset($_POST['Items'])) {
 	} else {
 		echo '<input type="text" name="Keywords" placeholder="' . _('Leave it bank to show all') . '" size="20" maxlength="25" />';
 	}
-	echo '</field>
-		<h3>' . _('OR') . ' ' . '</h3>';
+	echo '</field>';
 
 	echo '<field>
-			<label for="StockCode"' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+			<label for="StockCode"' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" placeholder="' . _('Leave it bank to show all') . '" autofocus="autofocus" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
