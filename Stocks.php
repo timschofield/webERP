@@ -8,6 +8,7 @@ $BookMark = 'InventoryAddingItems';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
@@ -1060,13 +1061,7 @@ if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(","
 } else {
 	$ImageFile = '';
 }
-if (extension_loaded('gd') && function_exists('gd_info') && isset($StockID) && !empty($StockID)) {
-	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockID) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-} else if (file_exists($ImageFile)) {
-	$StockImgLink = '<img src="' . $ImageFile . '" height="64" width="64" />';
-} else {
-	$StockImgLink = _('No Image');
-}
+$StockImgLink = GetImageLink($ImageFile, $StockID, 64, 64, "", "");
 
 if ($StockImgLink != _('No Image')) {
 	echo '<span>' . _('Image') . '<br />' . $StockImgLink . '</span>';

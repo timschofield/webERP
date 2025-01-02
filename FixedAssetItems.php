@@ -9,6 +9,7 @@ $BookMark = 'AssetItems';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 echo '<a href="' . $RootPath . '/SelectAsset.php">' . _('Back to Select') . '</a><br />' . "\n";
 
@@ -506,19 +507,7 @@ if (!isset($New) ) { //ie not new at all!
 			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ';
     $Glob = (glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 	$ImageFile = reset($Glob);
-	if (extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($ImageFile) ) {
-		$AssetImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC'.
-			'&StockID='.urlencode('ASSET_' . $AssetID).
-			'&text='.
-			'&width=64'.
-			'&height=64'.
-			'" />';
-	} else if (file_exists ($ImageFile)) {
-		$AssetImgLink = '<img src="' . $ImageFile . '" height="64" width="64" />';
-	} else {
-		$AssetImgLink = _('No Image');
-	}
-
+	$AssetImgLink = GetImageLink($ImageFile, 'ASSET_' . $AssetID, 64, 64, "", "");
 	if ($AssetImgLink!=_('No Image')) {
 		echo '<td>' . _('Image') . '<br />' . $AssetImgLink . '</td></field>';
 	} else {

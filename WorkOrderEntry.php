@@ -9,6 +9,7 @@ $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 $Title = _('Work Order Entry');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
@@ -649,13 +650,8 @@ if (isset($SearchResult)) {
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
-				if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
-					$ImageSource = '<img class="StockImage" src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '" alt="" />';
-				} else if (file_exists($ImageFile)) {
-					$ImageSource = '<img class="StockImage" src="' . $ImageFile . '" />';
-				} else {
-					$ImageSource = _('No Image');
-				}
+				
+				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 				echo '<tr class="striped_row">
 						<td>', $MyRow['stockid'], '</td>

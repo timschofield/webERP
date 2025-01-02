@@ -5,6 +5,7 @@
 
 include('includes/DefinePOClass.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 /* Session started in header.php for password checking
  * and authorisation level check
@@ -1393,20 +1394,8 @@ if (isset($SearchResult)) {
 
 		$ImageFilearray = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 		$ImageFile = reset($ImageFilearray);
-
-		if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
-			$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-			'&amp;StockID='.urlencode($MyRow['stockid']).
-			'&amp;text='.
-			'&amp;width=64'.
-			'&amp;height=64'.
-			'" alt="" />';
-		} else if (file_exists ($ImageFile)) {
-			$ImageSource = '<img src="' . $ImageFile . '" height="100" width="100" />';
-		} else {
-			$ImageSource = _('No Image');
-		}
-
+		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+		
 		/*Get conversion factor and supplier units if any */
 		$SQL =  "SELECT purchdata.conversionfactor,
 						purchdata.suppliersuom

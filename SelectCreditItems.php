@@ -15,6 +15,8 @@ $BookMark = 'CreateCreditNote';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
+
 include('includes/GetSalesTransGLCodes.inc');
 include('includes/GetPrice.inc');
 
@@ -1021,34 +1023,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$SupportedImgExt = array('png','jpg','jpeg');
 				$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
 				$ImageFile = reset($Glob);
-				if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
-						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-							'&amp;StockID='.urlencode($MyRow['stockid']).
-							'&amp;text='.
-							'&amp;width=64'.
-							'&amp;height=64'.
-							'" alt="" />';
-					printf('<tr class="striped_row">
-							<td><input type="submit" name="NewItem" value="%s" /></td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>' . $ImageSource . '</td>
-							</tr>',
-							$MyRow['stockid'],
-							$MyRow['description'],
-							$MyRow['units'],
-							$MyRow['stockid']);
-				} else { //don't try to show the image
-					printf('<tr class="striped_row">
+				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+
+				printf('<tr class="striped_row">
 						<td><input type="submit" name="NewItem" value="%s" /></td>
 						<td>%s</td>
 						<td>%s</td>
-						<td>' . _('No Image') . '</td>
+						<td>' . $ImageSource . '</td>
 						</tr>',
 						$MyRow['stockid'],
 						$MyRow['description'],
-						$MyRow['units']);
-				}
+						$MyRow['units'],
+						$MyRow['stockid']);
 	#end of page full new headings if
 			  }
 	#end of while loop

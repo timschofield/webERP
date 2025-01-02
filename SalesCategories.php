@@ -7,6 +7,7 @@ $ViewTopic = 'Setup';
 $BookMark = '';
 
 include ('includes/header.php');
+include ('includes/ImageFunctions.php');
 
 if (isset($_GET['SelectedCategory'])) {
 	$SelectedCategory = mb_strtoupper($_GET['SelectedCategory']);
@@ -181,13 +182,7 @@ if (isset($SearchResult)) {
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
-				if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
-					$ImageSource = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '&text=&width=64&height=64" alt="" />';
-				} else if (file_exists($ImageFile)) {
-					$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
-				} else {
-					$ImageSource = _('No Image');
-				}
+				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
 
 				echo '<tr class="striped_row">
 						<td>', $MyRow['stockid'], '</td>
@@ -296,13 +291,7 @@ if (!isset($_GET['Select'])) {
 
 		$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/SALESCAT_' . $MyRow['salescatid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 		$ImageFile = reset($ImageFileArray);
-		if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
-			$CatImgLink = '<img src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode('SALESCAT_' . $MyRow['salescatid']) . '&text=&width=64&height=64" alt="" />';
-		} else if (file_exists($ImageFile)) {
-			$CatImgLink = '<img src="' . $ImageFile . '" height="64" width="64" />';
-		} else {
-			$CatImgLink = _('No Image');
-		}
+		$CatImgLink = GetImageLink($ImageFile, 'SALESCAT_' . $MyRow['salescatid'], 64, 64, "", "");
 		if ($MyRow['active'] == 1) {
 			$Active = _('Yes');
 		} else {
