@@ -218,7 +218,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 // KL RICARD: Add length, Width, Height and Units_dimension
-	if (filter_number_format($_POST['length'])<0) {
+	if (filter_number_format($_POST['Length'])<0) {
 		$InputError = 1;
 		prnMsg(_('The length of the item must be a positive number'),'error');
 		$Errors[$i] = 'length';
@@ -345,7 +345,7 @@ if (isset($_POST['submit'])) {
 								'" . $_POST['lastcategoryupdate'] . "',
 								'" . $_POST['Units'] . "',
 								'" . $_POST['MBFlag'] . "',
-								'" . filter_number_format($_POST['length']) . "',
+								'" . filter_number_format($_POST['Length']) . "',
 								'" . filter_number_format($_POST['Width']) . "',
 								'" . filter_number_format($_POST['Height']) . "',
 								'" . $_POST['UnitsDimension']. "',
@@ -595,7 +595,7 @@ if (isset($_POST['submit'])) {
 						unset($_POST['GrossWeight']);
 						unset($_POST['NetWeight']);
 // KL RICARD Added lines for new fields
-						unset($_POST['length']);
+						unset($_POST['Length']);
 						unset($_POST['Width']);
 						unset($_POST['Height']);
 						unset($_POST['UnitsDimension']);
@@ -652,7 +652,7 @@ if (empty($_POST['StockID']) || ($_POST['StockID'] == $_POST['OldStockID']) || i
 }
 if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']== 1 ) { // Must be modifying an existing item and no changes made yet
 // KL RICARD Added the lastcategoryupdate field
-	$selectedStockID = $_POST['OldStockID'];
+	$SelectedStockID = $_POST['OldStockID'];
 	$SQL = "SELECT stockid,
 					description,
 					longdescription,
@@ -699,7 +699,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	$_POST['GrossWeight']  = $MyRow['grossweight'];
 	$_POST['NetWeight']  = $MyRow['netweight'];
 // KL RICARD Added lines for new fields
-	$_POST['length']  = $MyRow['length'];
+	$_POST['Length']  = $MyRow['length'];
 	$_POST['Width']  = $MyRow['width'];
 	$_POST['Height']  = $MyRow['height'];
 	$_POST['UnitsDimension']  = $MyRow['unitsdimension'];
@@ -860,8 +860,8 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 		$_POST['NetWeight']=0;
 	}
 	// KL RICARD
-	if (!isset($_POST['length']) OR $_POST['length']==''){
-		$_POST['length']=0;
+	if (!isset($_POST['Length']) OR $_POST['Length']==''){
+		$_POST['Length']=0;
 	}
 	if (!isset($_POST['Width']) OR $_POST['Width']==''){
 		$_POST['Width']=0;
@@ -898,8 +898,9 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 
   	// KL RICARD
 	echo '<field>
-            <td>' . _('Date last category') . ':</td>
-            <td><input ' . (in_array('lastcategoryupdate',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="lastcategoryupdate" size="12" maxlength="10" value="' . $_POST['lastcategoryupdate'] . '" /></td></tr>';
+			<label for="lastcategoryupdate">' . _('Date last category') . ':</label>
+			<input ' . (in_array('lastcategoryupdate',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="lastcategoryupdate" size="12" maxlength="10" value="' . $_POST['lastcategoryupdate'] . '" />
+		</field>';
 
 	// KL RICARD END
 	echo '<field>
@@ -923,10 +924,9 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 		</field>';
 
 	// KL RICARD DIMENSION FIELDS	
-	echo '<tr>
-			<td>' . _('Units of Dimension') . ':</td>
-			<td><select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
-
+	echo '<field>
+			<label for="UnitsDimension">' . _('Units of Dimension') . ':</label>
+			<select ' . (in_array('Description',$Errors) ?  'class="selecterror"' : '' ) .'  name="UnitsDimension">';
 	$SQL = "SELECT unitname FROM unitsofdimension ORDER by unitname";
 	$UODResult = DB_query($SQL);
 
@@ -940,16 +940,20 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 			echo '<option value="' . $UODrow['unitname'] . '">' . $UODrow['unitname']  . '</option>';
 		 }
 	}
+	echo '</select></field>';
 		
-	echo '<tr>
-			<td>' . _('length') . ':</td><td><input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Width') . ':</td><td><input ' . (in_array('Width',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Width" size="12" maxlength="11" value="' . locale_number_format($_POST['Width'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Height') . ':</td><td><input ' . (in_array('Height',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Height" size="12" maxlength="11" value="' . locale_number_format($_POST['Height'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '</td>
-		</tr>';
+	echo '<field>
+			<label for="length">' . _('length') . ':</label>
+			<input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+		</field>';
+	echo '<field>
+			<label for="Width">' . _('Width') . ':</label>
+			<input ' . (in_array('Width',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Width" size="12" maxlength="11" value="' . locale_number_format($_POST['Width'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+		</field>';
+	echo '<field>
+			<label for="Height">' . _('Height') . ':</label>
+			<input ' . (in_array('Height',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Height" size="12" maxlength="11" value="' . locale_number_format($_POST['Height'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+		</field>';
 
 	// KL RICARD DIMENSION FIELDS	END
 	echo '<field>
@@ -1065,10 +1069,13 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 
 	if ($_POST['Serialised']==1 AND $_POST['MBFlag']=='M'){
 		echo '<field>
-				<td>' . _('Next Serial No (>0 for auto numbering)') . ':</td>
-				<td><input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size="15" maxlength="15" value="' . $_POST['NextSerialNo'] . '" /></td></field>';
+				<label for="NextSerialNo">' . _('Next Serial No (>0 for auto numbering)') . ':</label>
+				<input ' . (in_array('NextSerialNo',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="NextSerialNo" size="15" maxlength="15" value="' . $_POST['NextSerialNo'] . '" />
+			</field>';
 	} else {
-		echo '<field><td><input type="hidden" name="NextSerialNo" value="0" /></td></field>';
+		echo '<field>
+				<input type="hidden" name="NextSerialNo" value="0" />
+			</field>';
 	}
 
 	echo '<field>
