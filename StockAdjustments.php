@@ -1,5 +1,11 @@
 <?php
 
+/*****************************************************************************************************
+ * 
+ * KL RICARD: Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
+ *			Do not show standard cost, as does not add any value to the user 
+ *
+ *******************************************************************************************************/
 
 include('includes/DefineStockAdjustment.php');
 include('includes/DefineSerialItems.php');
@@ -369,6 +375,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$ConfirmationText = _('A stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID . ' -  ' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment' . $identifier]->StockLocation .' '. _('for a quantity of') . ' ' . locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['Adjustment' . $identifier]->DecimalPlaces) . ' ' . $AdjustReason;
 		prnMsg( $ConfirmationText,'success');
 
+		// KL RICARD: Send email when stock adjustment is made except for KLSystemAdmin and KLBusinessDevelopmentManager
 		if (($_SESSION['InventoryManagerEmail']!='') 
 			OR (!$KL_SystemAdmin)
 			OR (!$KL_BusinessDevelopmentManager)){
@@ -444,9 +451,11 @@ echo '</td>
 		<td><input type="submit" name="CheckCode" value="'._('Check Part').'" /></td>
 	</tr>';
 if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjustment' . $identifier]->ItemDescription)>1){
+	// KL RICARD Remove showing standard cost
 	echo '<tr>
-			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ' ) - ' . _('Unit Cost').' = ' . locale_number_format($_SESSION['Adjustment' . $identifier]->StandardCost,4) . '</h3></td>
+			<td colspan="3"><h3>' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' ('._('In Units of').' ' . $_SESSION['Adjustment' . $identifier]->PartUnit . ') ' . '</h3></td>
 		</tr>';
+	// KL RICARD END Remove showing standard cost
 }
 
 echo '<tr><td>'. _('Adjustment to Stock At Location').':</td>
