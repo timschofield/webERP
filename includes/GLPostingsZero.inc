@@ -42,7 +42,7 @@ $CreateTo = $LastPeriodRow[0];
 
 /*First off see if there are in fact any chartdetails */
 
-$sql = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
+$SQL = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
 				FROM (chartmaster CROSS JOIN periods)
 				LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode
 				AND periods.periodno = chartdetails.period
@@ -50,12 +50,12 @@ $sql = "SELECT chartmaster.accountcode, MIN(periods.periodno) AS startperiod
 				AND chartdetails.actual IS NULL
 				GROUP BY chartmaster.accountcode";
 
-$ChartDetailsNotSetUpResult = DB_query($sql,_('Could not test to see that all chart detail records properly initiated'));
+$ChartDetailsNotSetUpResult = DB_query($SQL,_('Could not test to see that all chart detail records properly initiated'));
 
 if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 		/*Now insert the chartdetails records that do not already exist */
-		$sql = "INSERT INTO chartdetails (accountcode, period)
+		$SQL = "INSERT INTO chartdetails (accountcode, period)
 					SELECT chartmaster.accountcode, periods.periodno
 					FROM (chartmaster CROSS JOIN periods)
 					LEFT JOIN chartdetails ON chartmaster.accountcode = chartdetails.accountcode
@@ -64,7 +64,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 					AND chartdetails.accountcode IS NULL";
 
 		$ErrMsg = _('Inserting new chart details records required failed because');
-		$InsChartDetailsRecords = DB_query($sql,$ErrMsg);
+		$InsChartDetailsRecords = DB_query($SQL,$ErrMsg);
 }
 
 
@@ -73,7 +73,7 @@ if(DB_num_rows($ChartDetailsNotSetUpResult)>0){
 
 for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 	//get all the unposted transactions for the first and successive periods ordered by account
-	$sql = "SELECT counterindex,
+	$SQL = "SELECT counterindex,
 					periodno,
 					account,
 					amount
@@ -82,22 +82,22 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 				AND periodno='" . $CurrPeriod . "'
 				ORDER BY account";
 
-	$UnpostedTransResult = DB_query($sql);
+	$UnpostedTransResult = DB_query($SQL);
 
     DB_Txn_Begin();
 	$CurrentAccount='0';
 	$TotalAmount=0;
 	while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)) {
 		if($CurrentAccount != $UnpostedTrans['account'] AND $CurrentAccount!='0') {
-			$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
+			$SQL = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
 					WHERE accountcode = '" . $CurrentAccount . "'
 					AND period= '" . $CurrPeriod . "'";
-			$PostPrd = DB_query($sql);
+			$PostPrd = DB_query($SQL);
 			/*Update the BFwd for all following ChartDetail records */
-			$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
+			$SQL = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
 					WHERE accountcode = '" . $CurrentAccount . "'
 					AND period > '" . $CurrPeriod . "'";
-			$PostBFwds = DB_query($sql);
+			$PostBFwds = DB_query($SQL);
 			$TotalAmount = 0;
 		}
 		$CurrentAccount = $UnpostedTrans['account'];
@@ -105,19 +105,19 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 	}
 	// There will be one account still to post after the loop
 	if($CurrentAccount != 0) {
-		$sql = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
+		$SQL = "UPDATE chartdetails SET actual = actual + " . $TotalAmount . "
 				WHERE accountcode = '" . $CurrentAccount . "'
 				AND period= '" . $CurrPeriod . "'";
-		$PostPrd = DB_query($sql);
+		$PostPrd = DB_query($SQL);
 		/*Update the BFwd for all following ChartDetail records */
-		$sql = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
+		$SQL = "UPDATE chartdetails SET bfwd = bfwd + " . $TotalAmount . "
 				WHERE accountcode = '" . $CurrentAccount . "'
 				AND period > '" . $CurrPeriod . "'";
-		$PostBFwds = DB_query($sql);
+		$PostBFwds = DB_query($SQL);
 	}
 
-	$sql = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
-	$Posted = DB_query($sql);
+	$SQL = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
+	$Posted = DB_query($SQL);
 
 	DB_Txn_Commit();
 }

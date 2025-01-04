@@ -41,7 +41,7 @@ if(isset($_POST['JustSelectedACustomer'])) {
 	}
 }
 
-$msg = '';
+$Msg = '';
 
 if(isset($_POST['Go1']) OR isset($_POST['Go2'])) {
 	$_POST['PageOffset'] = (isset($_POST['Go1']) ? $_POST['PageOffset1'] : $_POST['PageOffset2']);
@@ -249,8 +249,8 @@ if($_SESSION['CustomerID'] != '' AND !isset($_POST['Search']) AND !isset($_POST[
 // Search for customers:
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-if(mb_strlen($msg) > 1) {
-	prnMsg($msg, 'info');
+if(mb_strlen($Msg) > 1) {
+	prnMsg($Msg, 'info');
 }
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/magnifier.png" title="',// Icon image.
@@ -266,32 +266,24 @@ echo '<field>
 		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their name will be returned') , '</fieldhelp>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustCode">', _('Enter a partial Code'), ':</label>
+		<label for="CustCode">', '<b>' . _('OR') . ' </b>' . _('Enter a partial Code'), ':</label>
 		<input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" title="" ', (isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/>
 		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their customer code will be returned') , '</fieldhelp>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustPhone">', _('Enter a partial Phone Number'), ':</label>
+		<label for="CustPhone">', '<b>' . _('OR') . ' </b>' . _('Enter a partial Phone Number'), ':</label>
 		<input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" ',( isset($_POST['CustPhone']) ? 'value="' . $_POST['CustPhone'] . '" ' : '' ), '/>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustAdd">', _('Enter part of the Address'), ':</label>
+		<label for="CustAdd">', '<b>' . _('OR') . ' </b>' . _('Enter part of the Address'), ':</label>
 		<input maxlength="25" name="CustAdd" size="20" type="text" ',(isset($_POST['CustAdd']) ? 'value="' . $_POST['CustAdd'] . '" ' : '' ), '/>
 	</field>';
 
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="CustType">', _('Choose a Type'), ':</label>
+		<label for="CustType">', '<b>' . _('OR') . ' </b>' . _('Choose a Type'), ':</label>
 		<field>';
 if(isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
@@ -339,10 +331,8 @@ if(isset($_POST['CustType'])) {
 }
 
 /* Option to select a sales area */
-echo '<h3>', _('OR'), '</h3>';
-
 echo '<field>
-		<label for="Area">' . _('Choose an Area') . ':</label>';
+		<label for="Area">' . '<b>' . _('OR') . ' </b>' . _('Choose an Area') . ':</label>';
 $Result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
 if(DB_num_rows($Result2) == 0) {
@@ -504,8 +494,8 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 		$center_lat = $MyRow['center_lat'];
 		$map_height = $MyRow['map_height'];
 		$map_width = $MyRow['map_width'];
-		$map_host = $MyRow['map_host'];
-		if($map_host == '') {$map_host = 'maps.googleapis.com';}// If $map_host is empty, use a default map host.
+		$MapHost = $MyRow['map_host'];
+		if($MapHost == '') {$MapHost = 'maps.googleapis.com';}// If $MapHost is empty, use a default map host.
 
 		$SQL = "SELECT
 					debtorsmaster.debtorno,
@@ -532,16 +522,16 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 
 		if($Lat == 0 and $MyRow2["braddress1"] != '' and $_SESSION['BranchCode'] != '') {
 			$delay = 0;
-			$base_url = "https://" . $map_host . "/maps/api/geocode/xml?address=";
+			$BaseURLl = "https://" . $MapHost . "/maps/api/geocode/xml?address=";
 
 			$geocode_pending = true;
 			while ($geocode_pending) {
-				$address = urlencode($MyRow2["braddress1"] . "," . $MyRow2["braddress2"] . "," . $MyRow2["braddress3"] . "," . $MyRow2["braddress4"]);
+				$Address = urlencode($MyRow2["braddress1"] . "," . $MyRow2["braddress2"] . "," . $MyRow2["braddress3"] . "," . $MyRow2["braddress4"]);
 				$id = $MyRow2["branchcode"];
-				$debtorno =$MyRow2["debtorno"];
-				$request_url = $base_url . $address . '&key=' . $API_key . '&sensor=true';
+				$DebtorNo =$MyRow2["debtorno"];
+				$RequestURL = $BaseURLl . $Address . '&key=' . $API_key . '&sensor=true';
 
-				$buffer = file_get_contents($request_url)/* or die("url not loading")*/;
+				$buffer = file_get_contents($RequestURL)/* or die("url not loading")*/;
 				$xml = simplexml_load_string($buffer);
 				// echo $xml->asXML();
 
@@ -552,17 +542,17 @@ if(isset($_SESSION['CustomerID']) AND $_SESSION['CustomerID'] != '') {
 					$Lat = $xml->result->geometry->location->lat;
 					$Lng = $xml->result->geometry->location->lng;
 
-					$query = sprintf("UPDATE custbranch " .
+					$Query = sprintf("UPDATE custbranch " .
 							" SET lat = '%s', lng = '%s' " .
 							" WHERE branchcode = '%s' " .
 						" AND debtorno = '%s' LIMIT 1;",
 							($Lat),
 							($Lng),
 							($id),
-							($debtorno));
-					$update_result = DB_query($query);
+							($DebtorNo));
+					$Update_result = DB_query($Query);
 
-					if($update_result == 1) {
+					if($Update_result == 1) {
 						prnMsg( _('GeoCode has been updated for CustomerID') . ': ' . $id . ' - ' . _('Latitude') . ': ' . $Lat . ' ' . _('Longitude') . ': ' . $Lng ,'info');
 					}
 				} else {
@@ -632,7 +622,7 @@ function initMap() {
 	});
 }
 </script>
-<script src="https://', $map_host , '/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
+<script src="https://', $MapHost , '/maps/api/js?key=', $API_key, '&callback=initMap"></script>';
 		}
 
 	}// end if Geocode integration is turned on
@@ -671,7 +661,7 @@ function initMap() {
 					WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
 					AND type !=12";
 			$Total1Result = DB_query($SQL);
-			$row = DB_fetch_array($Total1Result);
+			$Row = DB_fetch_array($Total1Result);
 			echo '<table cellpadding="4" style="width: 45%;">
 				<tr>
 					<th colspan="3" style="width:auto">', _('Customer Data'), '</th>
@@ -700,7 +690,7 @@ function initMap() {
 					<td class="select"><b>', ConvertSQLDate($MyRow['clientsince']), '</b></td>
 					<td class="select">', $MyRow['customersincedays'], ' ', _('days'), '</td>
 				</tr>';
-			if($row['total'] == 0) {
+			if($Row['total'] == 0) {
 				echo '<tr>
 						<td class="select"><b>', _('No Spend from this Customer.'), '</b></td>
 						<td class="select">&nbsp;</td>
@@ -709,7 +699,7 @@ function initMap() {
 			} else {
 				echo '<tr>
 						<td class="select">' . _('Total Spend from this Customer (inc tax)') . ':</td>
-						<td class="select"><b>' . locale_number_format($row['total'], $MyRow['currdecimalplaces']) . '</b></td>
+						<td class="select"><b>' . locale_number_format($Row['total'], $MyRow['currdecimalplaces']) . '</b></td>
 						<td class="select"></td>
 						</tr>';
 			}

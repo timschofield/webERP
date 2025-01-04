@@ -44,11 +44,11 @@ if (isset($_GET['Delete'])) {
 	echo '<br />';
 }
 
-foreach ($_POST as $key => $value) {
+foreach ($_POST as $key => $Value) {
 	if (mb_strstr($key, 'StockID')) {
 		$Index = mb_substr($key, 7);
 		if (filter_number_format($_POST['Quantity' . $Index]) > 0) {
-			$StockID = $value;
+			$StockID = $Value;
 			$ItemDescription = $_POST['ItemDescription' . $Index];
 			$DecimalPlaces = $_POST['DecimalPlaces' . $Index];
 			$NewItem_array[$StockID] = filter_number_format($_POST['Quantity' . $Index]);
@@ -113,17 +113,17 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 					WHERE departments.authoriser = www_users.userid
 						AND departments.departmentid = '" . $_SESSION['Request']->Department . "'";
 		$EmailResult = DB_query($EmailSQL);
-		if ($myEmail = DB_fetch_array($EmailResult)) {
+		if ($MyEmail = DB_fetch_array($EmailResult)) {
 			$ConfirmationText = _('An internal stock request has been created and is waiting for your authoritation');
 			$EmailSubject = _('Internal Stock Request needs your authoritation');
 			if ($_SESSION['SmtpSetting'] == 0) {
-				mail($myEmail['email'], $EmailSubject, $ConfirmationText);
+				mail($MyEmail['email'], $EmailSubject, $ConfirmationText);
 			} else {
 				include ('includes/htmlMimeMail.php');
 				$mail = new htmlMimeMail();
 				$mail->setSubject($EmailSubject);
 				$mail->setText($ConfirmationText);
-				$Result = SendmailBySmtp($mail, array($myEmail['email']));
+				$Result = SendmailBySmtp($mail, array($MyEmail['email']));
 			}
 		}
 	}
@@ -342,10 +342,8 @@ if (isset($_POST['Keywords'])) {
 
 echo '</field>';
 
-echo '<h3>', _('OR'), ' ', '</h3>';
-
 echo '<field>
-		<label>', _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</label>';
+		<label>', '<b>' . _('OR') . ' </b>' . _('Enter partial'), ' <b>', _('Stock Code'), '</b>:</label>';
 
 if (isset($_POST['StockCode'])) {
 	echo '<input type="text" autofocus="autofocus" name="StockCode" value="', $_POST['StockCode'], '" size="15" maxlength="18" />';

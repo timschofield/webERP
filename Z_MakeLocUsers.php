@@ -9,7 +9,7 @@ include('includes/header.php');
 
 echo '<br /><br />' . _('This script makes stock location records for parts where they do not already exist');
 
-$sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
+$SQL = "INSERT INTO locationusers (userid, loccode, canview, canupd)
 		SELECT www_users.userid,
 		locations.loccode,
 		1,
@@ -21,7 +21,7 @@ $sql = "INSERT INTO locationusers (userid, loccode, canview, canupd)
         WHERE locationusers.userid IS NULL;";
 
 $ErrMsg = _('The users/locations that need user location records created cannot be retrieved because');
-$Result = DB_query($sql,$ErrMsg);
+$Result = DB_query($SQL,$ErrMsg);
 
 echo '<p />';
 prnMsg(_('Any users that may not have had user location records have now been given new location user records'),'info');

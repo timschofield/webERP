@@ -44,16 +44,16 @@ if ( isset($_POST['submit']) ) {
 
 	if (isset($Id) and $InputError !=1) {
 
-		$sql = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
+		$SQL = "UPDATE custnotes SET note='" . $_POST['Note'] . "',
 									date='" . FormatDateForSQL($_POST['NoteDate']) . "',
 									href='" . $_POST['Href'] . "',
 									priority='" . $_POST['Priority'] . "'
 				WHERE debtorno ='".$DebtorNo."'
 				AND noteid='".$Id."'";
-		$msg = _('Customer Notes') . ' ' . $DebtorNo  . ' ' . _('has been updated');
+		$Msg = _('Customer Notes') . ' ' . $DebtorNo  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
-		$sql = "INSERT INTO custnotes (debtorno,
+		$SQL = "INSERT INTO custnotes (debtorno,
 										href,
 										note,
 										date,
@@ -63,15 +63,15 @@ if ( isset($_POST['submit']) ) {
 						'" . $_POST['Note'] . "',
 						'" . FormatDateForSQL($_POST['NoteDate']) . "',
 						'" . $_POST['Priority'] . "')";
-		$msg = _('The contact notes record has been added');
+		$Msg = _('The contact notes record has been added');
 	}
 
 	if ($InputError !=1) {
-		$result = DB_query($sql);
-				//echo '<br />' . $sql;
+		$Result = DB_query($SQL);
+				//echo '<br />' . $SQL;
 
 		echo '<br />';
-		prnMsg($msg, 'success');
+		prnMsg($Msg, 'success');
 		unset($Id);
 		unset($_POST['Note']);
 		unset($_POST['Noteid']);
@@ -84,10 +84,10 @@ if ( isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql="DELETE FROM custnotes
+	$SQL="DELETE FROM custnotes
 			WHERE noteid='".$Id."'
 			AND debtorno='".$DebtorNo."'";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<br />';
 	prnMsg( _('The contact note record has been deleted'), 'success');
@@ -99,11 +99,11 @@ if (!isset($Id)) {
 	$SQLname="SELECT * FROM debtorsmaster
 				WHERE debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQLname);
-	$row = DB_fetch_array($Result);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$row['name'] . '</b></p>
+	$Row = DB_fetch_array($Result);
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$Row['name'] . '</b></p>
 		<br />';
 
-	$sql = "SELECT noteid,
+	$SQL = "SELECT noteid,
 					debtorno,
 					href,
 					note,
@@ -112,7 +112,7 @@ if (!isset($Id)) {
 				FROM custnotes
 				WHERE debtorno='".$DebtorNo."'
 				ORDER BY date DESC";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
 		<tr>
@@ -122,7 +122,7 @@ if (!isset($Id)) {
 			<th>' . _('Priority') . '</th>
 		</tr>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
@@ -131,17 +131,17 @@ if (!isset($Id)) {
 				<td><a href="%sId=%s&DebtorNo=%s">' .  _('Edit').' </td>
 				<td><a href="%sId=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer note?') . '\');">' .  _('Delete'). '</td>
 				</tr>',
-				ConvertSQLDate($myrow['date']),
-				$myrow['note'],
-				$myrow['href'],
-				$myrow['href'],
-				$myrow['priority'],
+				ConvertSQLDate($MyRow['date']),
+				$MyRow['note'],
+				$MyRow['href'],
+				$MyRow['href'],
+				$MyRow['priority'],
 				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$myrow['noteid'],
-				$myrow['debtorno'],
+				$MyRow['noteid'],
+				$MyRow['debtorno'],
 				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$myrow['noteid'],
-				$myrow['debtorno']);
+				$MyRow['noteid'],
+				$MyRow['debtorno']);
 
 	}
 	//END WHILE LIST LOOP
@@ -162,7 +162,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($Id)) {
 		//editing an existing
 
-		$sql = "SELECT noteid,
+		$SQL = "SELECT noteid,
 						debtorno,
 						href,
 						note,
@@ -172,16 +172,16 @@ if (!isset($_GET['delete'])) {
 					WHERE noteid='".$Id."'
 						AND debtorno='".$DebtorNo."'";
 
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
-		$myrow = DB_fetch_array($result);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['Noteid'] = $myrow['noteid'];
-		$_POST['Note']	= $myrow['note'];
-		$_POST['Href']  = $myrow['href'];
-		$_POST['NoteDate']  = $myrow['date'];
-		$_POST['Priority']  = $myrow['priority'];
-		$_POST['debtorno']  = $myrow['debtorno'];
+		$_POST['Noteid'] = $MyRow['noteid'];
+		$_POST['Note']	= $MyRow['note'];
+		$_POST['Href']  = $MyRow['href'];
+		$_POST['NoteDate']  = $MyRow['date'];
+		$_POST['Priority']  = $MyRow['priority'];
+		$_POST['debtorno']  = $MyRow['debtorno'];
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
 		echo '<input type="hidden" name="Con_ID" value="' . $_POST['Noteid'] . '" />';
 		echo '<input type="hidden" name="DebtorNo" value="' . $_POST['debtorno'] . '" />';

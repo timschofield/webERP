@@ -6,6 +6,7 @@ $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 if (isset($_GET['WO'])) {
 	$_POST['WO'] = $_GET['WO'];
@@ -72,7 +73,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		$InputError = true;
 	}
 	//Need to get the current standard cost for the item being issued
-	$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+	$SQL = "SELECT actualcost AS cost,
 					controlled,
 					serialised,
 					decimalplaces,
@@ -413,8 +414,8 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 } //end of if the user hit the process button
 elseif (isset($_POST['ProcessMultiple'])) {
 	$IssueItems = array();
-	foreach ($_POST as $key => $value) {
-		if (strpos($key, 'IssueQty') !== false and abs(filter_number_format($value)) > 0) {
+	foreach ($_POST as $key => $Value) {
+		if (strpos($key, 'IssueQty') !== false and abs(filter_number_format($Value)) > 0) {
 			$No = substr($key, 8);
 			$InputError = false; //ie assume no problems for a start - ever the optomist
 			$ErrMsg = _('Could not retrieve the details of the selected work order item');
@@ -444,9 +445,9 @@ elseif (isset($_POST['ProcessMultiple'])) {
 				prnMsg(_('The work order is closed - no more materials or components can be issued to it.'), 'error');
 				$InputError = true;
 			}
-			$QuantityIssued = filter_number_format($value);;
+			$QuantityIssued = filter_number_format($Value);;
 			//Need to get the current standard cost for the item being issued
-			$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+			$SQL = "SELECT actualcost AS cost,
 									controlled,
 									serialised,
 									mbflag
@@ -711,7 +712,7 @@ if (isset($_POST['Search'])) {
 	if (DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('There are no products available meeting the criteria specified'), 'info');
 
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			prnMsg(_('The SQL statement used was') . ':<br />' . $SQL, 'info');
 		}
 	}
@@ -972,10 +973,8 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 	echo '" /></td>
 		</field>';
 
-	echo '<h3>' . _('OR') . ' </h3>';
-
 	echo '<field>
-			<label>', _('Enter extract of the') . ' <b>' . _('Stock Code') . '</label>
+			<label>', '<b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</label>
 			<input type="text" name="StockCode" size="15" maxlength="18" value="';
 	if (isset($_POST['StockCode'])) echo $_POST['StockCode'];
 	echo '" />
@@ -1011,15 +1010,9 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				if (!in_array($MyRow['stockid'], $ItemCodes)) {
-					$glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-					$imagefile = reset($glob);
-					if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)) {
-						$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($MyRow['stockid']) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-					} else if (file_exists($imagefile)) {
-						$ImageSource = '<img src="' . $imagefile . '" height="64" width="64" />';
-					} else {
-						$ImageSource = _('No Image');
-					}
+					$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+					$ImageFile = reset($Glob);
+					$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
 
 					$IssueLink = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&amp;StockID=' . urlencode($_POST['StockID']) . '&amp;IssueItem=' . urlencode($MyRow['stockid']) . '&amp;FromLocation=' . $_POST['FromLocation'];
 					printf('<tr class="striped_row">

@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 		would not run in this case cos submit is false of course  see the
 		delete code below*/
 
-		$sql = "UPDATE reportheaders SET
+		$SQL = "UPDATE reportheaders SET
 						reportheading='" . $_POST['ReportHeading'] . "',
 						groupbydata1='" . $_POST['GroupByData1'] . "',
 						groupbydata2='" . $_POST['GroupByData2'] . "',
@@ -160,7 +160,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('The report could not be updated because');
 		$DbgMsg = _('The SQL used to update the report headers was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg( _('The') .' ' . $_POST['ReportHeading'] . ' ' . _('report has been updated'),'success', 'Report Updated');
 		unset($SelectedReport);
@@ -185,7 +185,7 @@ if (isset($_POST['submit'])) {
 
 	/*SelectedReport is null cos no item selected on first time round so must be adding a new report */
 
-		$sql = "INSERT INTO reportheaders (
+		$SQL = "INSERT INTO reportheaders (
 						reportheading,
 						groupbydata1,
 						groupbydata2,
@@ -223,7 +223,7 @@ if (isset($_POST['submit'])) {
 
 		$ErrMsg = _('The report could not be added because');
 		$DbgMsg = _('The SQL used to add the report header was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The') . ' ' . $_POST['ReportHeading'] . ' ' . _('report has been added to the database'),'success','Report Added');
 
@@ -251,16 +251,16 @@ if (isset($_POST['submit'])) {
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM reportcolumns WHERE reportid='".$SelectedReport."'";
+	$SQL="DELETE FROM reportcolumns WHERE reportid='".$SelectedReport."'";
 	$ErrMsg = _('The deletion of the report column failed because');
 	$DbgMsg = _('The SQL used to delete the report column was');
 
-	$result = DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-	$sql="DELETE FROM reportheaders WHERE reportid='".$SelectedReport."'";
+	$SQL="DELETE FROM reportheaders WHERE reportid='".$SelectedReport."'";
 	$ErrMsg = _('The deletion of the report heading failed because');
 	$DbgMsg = _('The SQL used to delete the report headers was');
-	$result = DB_query($sql,$ErrMsg,$DbgMsg);
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 	prnMsg(_('Report Deleted') ,'info');
 	unset($SelectedReport);
@@ -277,7 +277,7 @@ links to delete or edit each. These will call the same page again and allow upda
 or deletion of the records*/
 
 
-	$result = DB_query("SELECT reportid, reportheading FROM reportheaders ORDER BY reportid");
+	$Result = DB_query("SELECT reportid, reportheading FROM reportheaders ORDER BY reportid");
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -285,7 +285,7 @@ or deletion of the records*/
 			<th>' . _('Report Title') . '</th>
           </tr>';
 
-while ($myrow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 
 	printf('<tr class="striped_row">
 			<td>%s</td>
@@ -296,18 +296,18 @@ while ($myrow = DB_fetch_array($result)) {
 			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&amp;ProduceCVSFile=True">' . _('Make CSV File') . '</a></td>
 			<td><a href="%s&amp;SelectedReport=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this report design?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
-			$myrow[0],
-			$myrow[1],
+			$MyRow[0],
+			$MyRow[1],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow[0],
+			$MyRow[0],
 			$RootPath,
-			$myrow[0],
+			$MyRow[0],
 			$RootPath,
-			$myrow[0],
+			$MyRow[0],
 			$RootPath,
-			$myrow[0],
+			$MyRow[0],
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$myrow[0]);
+			$MyRow[0]);
 
 	}
 	//END WHILE LIST LOOP
@@ -333,7 +333,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($SelectedReport)) {
 		//editing an existing Report
 
-		$sql = "SELECT reportid,
+		$SQL = "SELECT reportid,
 						reportheading,
 						groupbydata1,
 						newpageafter1,
@@ -355,26 +355,26 @@ if (!isset($_GET['delete'])) {
 
 		$ErrMsg = _('The reports for display could not be retrieved because');
 		$DbgMsg = _('The SQL used to retrieve the report headers was');
-		$result = DB_query($sql, $ErrMsg, $DbgMsg);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-		$myrow = DB_fetch_array($result);
+		$MyRow = DB_fetch_array($Result);
 
-		$ReportID = $myrow['reportid'];
-		$_POST['ReportHeading']  = $myrow['reportheading'];
-		$_POST['GroupByData1'] = $myrow['groupbydata1'];
-		$_POST['NewPageAfter1'] = $myrow['newpageafter1'];
-		$_POST['Upper1'] = $myrow['upper1'];
-		$_POST['Lower1'] = $myrow['lower1'];
-		$_POST['GroupByData2'] = $myrow['groupbydata2'];
-		$_POST['NewPageAfter2'] = $myrow['newpageafter2'];
-		$_POST['Upper2'] = $myrow['upper2'];
-		$_POST['Lower2'] = $myrow['lower2'];
-		$_POST['GroupByData3'] = $myrow['groupbydata3'];
-		$_POST['Upper3'] = $myrow['upper3'];
-		$_POST['Lower3'] = $myrow['lower3'];
-		$_POST['GroupByData4'] = $myrow['groupbydata4'];
-       	$_POST['Upper4'] = $myrow['upper4'];
-       	$_POST['Lower4'] = $myrow['lower4'];
+		$ReportID = $MyRow['reportid'];
+		$_POST['ReportHeading']  = $MyRow['reportheading'];
+		$_POST['GroupByData1'] = $MyRow['groupbydata1'];
+		$_POST['NewPageAfter1'] = $MyRow['newpageafter1'];
+		$_POST['Upper1'] = $MyRow['upper1'];
+		$_POST['Lower1'] = $MyRow['lower1'];
+		$_POST['GroupByData2'] = $MyRow['groupbydata2'];
+		$_POST['NewPageAfter2'] = $MyRow['newpageafter2'];
+		$_POST['Upper2'] = $MyRow['upper2'];
+		$_POST['Lower2'] = $MyRow['lower2'];
+		$_POST['GroupByData3'] = $MyRow['groupbydata3'];
+		$_POST['Upper3'] = $MyRow['upper3'];
+		$_POST['Lower3'] = $MyRow['lower3'];
+		$_POST['GroupByData4'] = $MyRow['groupbydata4'];
+       	$_POST['Upper4'] = $MyRow['upper4'];
+       	$_POST['Lower4'] = $MyRow['lower4'];
 
 		echo '<input type="hidden" name="SelectedReport" value="' . $SelectedReport . '" />';
 		echo '<input type="hidden" name="ReportID" value="' . $ReportID . '" />';

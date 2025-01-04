@@ -125,39 +125,30 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$GrossAmount = ($MyRow['amount']) / $MyRow['rate'];
 			$NetAmount = ($MyRow['amount'] - $TaxTotalRow['totaltax']) / $MyRow['rate'];
 		}
-		if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-			$Type = 2;
-			$AccountFrom = $MyRow['glaccountassignment'];
-			$AccountTo = $MyRow['glaccountpcash'];
-			$TagTo = 0;
-			$TagDescription = '0 - ' . _('None');
-		} else {
-			$Type = 1;
-			$NetAmount = -$NetAmount;
-			$AccountFrom = $MyRow['glaccountpcash'];
-			$SQLAccExp = "SELECT glaccount,
-								tag
-							FROM pcexpenses
-							WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
-			$ResultAccExp = DB_query($SQLAccExp);
-			$MyRowAccExp = DB_fetch_array($ResultAccExp);
-			$AccountTo = $MyRowAccExp['glaccount'];
 
-			$TagSQL = "SELECT tagref, tagdescription FROM tags INNER JOIN pctags ON tags.tagref=pctags.tag WHERE pctags.pccashdetail='" . $MyRow['counterindex'] . "'";
-			$TagResult = DB_query($TagSQL);
-			$TagDescription = '';
-			while ($TagRow = DB_fetch_array($TagResult)) {
-				if ($TagRow['tagref'] == 0) {
-					$TagRow['tagdescription'] = _('None');
-				}
-				$TagTo = $MyRow['tag'];
-				if ($ExpenseCodeDes == 'ASSIGNCASH') {
-					$TagDescription .= '';
-				} else {
-					$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
-				}
+		// it is not an ASSIGNCASH, as it has been moved to PCAuthorizeCash.php, it is always an expense
+		$Type = 1;
+		$NetAmount = -$NetAmount;
+		$AccountFrom = $MyRow['glaccountpcash'];
+		$SQLAccExp = "SELECT glaccount,
+							tag
+						FROM pcexpenses
+						WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
+		$ResultAccExp = DB_query($SQLAccExp);
+		$MyRowAccExp = DB_fetch_array($ResultAccExp);
+		$AccountTo = $MyRowAccExp['glaccount'];
+
+		$TagSQL = "SELECT tagref, tagdescription FROM tags INNER JOIN pctags ON tags.tagref=pctags.tag WHERE pctags.pccashdetail='" . $MyRow['counterindex'] . "'";
+		$TagResult = DB_query($TagSQL);
+		$TagDescription = '';
+		while ($TagRow = DB_fetch_array($TagResult)) {
+			if ($TagRow['tagref'] == 0) {
+				$TagRow['tagdescription'] = _('None');
 			}
+			$TagTo = $MyRow['tag'];
+			$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 		}
+
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
@@ -263,35 +254,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												'')";
 				$ResultTax = DB_Query($SQLTo, '', '', true);
 			}
-			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-				// if it's a cash assignation we need to updated banktrans table as well.
-				$ReceiptTransNo = GetNextTransNo(2);
-				$SQLBank = "INSERT INTO banktrans (transno,
-												type,
-												bankact,
-												ref,
-												exrate,
-												functionalexrate,
-												transdate,
-												banktranstype,
-												amount,
-												currcode
-											) VALUES (
-												'" . $ReceiptTransNo . "',
-												2,
-												'" . $AccountFrom . "',
-												'" . $Narrative . "',
-												1,
-												'" . $MyRow['rate'] . "',
-												'" . $MyRow['date'] . "',
-												'Cash',
-												'" . -($MyRow['amount'] / $MyRow['rate']) . "',
-												'" . $MyRow['currency'] . "'
-											)";
-				$ErrMsg = _('Cannot insert a bank transaction because');
-				$DbgMsg = _('Cannot insert a bank transaction with the SQL');
-				$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
-			}
+
 			$SQL = "UPDATE pcashdetails
 					SET authorized = CURRENT_DATE,
 					posted = 1
@@ -299,9 +262,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$Resultupdate = DB_query($SQL, '', '', true);
 			DB_Txn_Commit();
 			prnMsg(_('Expenses have been correctly authorised'), 'success');
-			unset($_POST['Submit']);
-			unset($SelectedTabs);
-			unset($_POST['SelectedTabs']);
 		}
 
 		$SQLDes = "SELECT description
@@ -309,11 +269,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 						WHERE codeexpense='" . $MyRow['codeexpense'] . "'";
 		$ResultDes = DB_query($SQLDes);
 		$Description = DB_fetch_array($ResultDes);
-		if (!isset($Description[0])) {
-				$ExpenseCodeDes = 'ASSIGNCASH';
-		} else {
-				$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
-		}
+		$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 
 		$TaxesDescription = '';
 		$TaxesTaxAmount = '';
@@ -349,8 +305,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$ReceiptFileName = $ReceiptHash . '.' . $ReceiptExt;
 				$ReceiptPath = $ReceiptDir . $ReceiptFileName;
 				$ReceiptText = '<a href="' . $ReceiptPath . '" download="ExpenseReceipt-' . mb_strtolower($SelectedTabs) . '-[' . $MyRow['date'] . ']-[' . $MyRow['counterindex'] . ']">' . _('Download attachment') . '</a>';
-			} elseif ($ExpenseCodeDes == 'ASSIGNCASH') {
-				$ReceiptText = '';
 			} else {
 				$ReceiptText = _('No attachment');
 			}
@@ -379,20 +333,12 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			</td>
 		</tr>';
 	} //end of looping
-	$SQLamount = "SELECT sum(amount)
-			FROM pcashdetails
-			WHERE tabcode='" . $SelectedTabs . "'
-				AND codeexpense<>'ASSIGNCASH'";
-	$ResultAmount = DB_query($SQLamount);
-	$Amount = DB_fetch_array($ResultAmount);
-	if (!isset($Amount['0'])) {
-		$Amount['0'] = 0;
-	}
+	$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 	echo '</tbody>
 		<tfoot>
 			<tr>
 				<td colspan="2" class="number">', _('Current balance'), ':</td>
-				<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+				<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 			</tr>
 		</tfoot>';
 	// Do the postings

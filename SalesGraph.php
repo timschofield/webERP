@@ -256,13 +256,13 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 
 	$Result = DB_query($SQL);
 
-	$fromPeriod = DB_fetch_array($Result);
-	$starting = $fromPeriod['month'] . ' ' . $fromPeriod['year'];
+	$FromPeriod = DB_fetch_array($Result);
+	$Starting = $FromPeriod['month'] . ' ' . $FromPeriod['year'];
 
-	$toPeriod = DB_fetch_array($Result);
-	$ending = $toPeriod['month'] . ' ' . $toPeriod['year'];
+	$ToPeriod = DB_fetch_array($Result);
+	$Ending = $ToPeriod['month'] . ' ' . $ToPeriod['year'];
 
-	$GraphTitle .= ' ' . _('From Period') . ' ' . $starting . ' ' . _('to') . ' ' . $ending . "\n\r";
+	$GraphTitle .= ' ' . _('From Period') . ' ' . $Starting . ' ' . _('to') . ' ' . $Ending . "\n\r";
 
 	if ($_POST['SalesArea']=='All'){
 		$GraphTitle .= ' ' . _('For All Sales Areas');

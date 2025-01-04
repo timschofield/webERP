@@ -44,15 +44,15 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 			<th>', _('Status'), '</th>
 		</tr>';
 	$k = 0;
-	while ($row = DB_fetch_array($DashboardResult)) {
+	while ($Row = DB_fetch_array($DashboardResult)) {
 		$AuthSQL = "SELECT authlevel
 					FROM purchorderauth
-					WHERE currabrev='" . $row['currcode'] . "'
+					WHERE currabrev='" . $Row['currcode'] . "'
 						AND userid='" . $_SESSION['UserID'] . "'";
 
 		$AuthResult = DB_query($AuthSQL);
-		$myauthrow = DB_fetch_array($AuthResult);
-		$AuthLevel = $myauthrow['authlevel'];
+		$MyAuthRow = DB_fetch_array($AuthResult);
+		$AuthLevel = $MyAuthRow['authlevel'];
 
 		$OrderValueSQL = "SELECT sum(unitprice*quantityord) as ordervalue,
 							sum(unitprice*quantityord) as total
@@ -62,17 +62,17 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 		$OrderValueResult = DB_query($OrderValueSQL);
 		$MyOrderValueRow = DB_fetch_array($OrderValueResult);
 		$OrderValue = $MyOrderValueRow['ordervalue'];
-		$totalOV = $MyOrderValueRow['total'];
+		$TotalOV = $MyOrderValueRow['total'];
 
-		$FormatedOrderDate2 = ConvertSQLDate($row['orddate']);
-		$FormatedDelDate2 = ConvertSQLDate($row['deliverydate']);
+		$FormatedOrderDate2 = ConvertSQLDate($Row['orddate']);
+		$FormatedDelDate2 = ConvertSQLDate($Row['deliverydate']);
 
 		echo '<tr class="striped_row">
-			<td>', $row['suppname'], '</td>
+			<td>', $Row['suppname'], '</td>
 			<td>', $FormatedOrderDate2, '</td>
 			<td>', $FormatedDelDate2, '</td>
-			<td class="number">', locale_number_format($totalOV, $row['currdecimalplaces']), '</td>
-			<td>', $row['status'], '</td>
+			<td class="number">', locale_number_format($TotalOV, $Row['currdecimalplaces']), '</td>
+			<td>', $Row['status'], '</td>
 		</tr>';
 
 	}

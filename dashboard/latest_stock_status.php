@@ -47,7 +47,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 						stockmaster.discontinued,
 						stockmaster.decimalplaces
 					ORDER BY stockmaster.discontinued, stockmaster.stockid LIMIT 5";
-	$searchresult = DB_query($SQL);
+	$SearchResult = DB_query($SQL);
 
 	echo '<tr>
 			<th class="SortedColumn">', _('Code'), '</th>
@@ -58,14 +58,14 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	</thead>';
 
 	echo '<tbody>';
-	while ($row = DB_fetch_array($searchresult)) {
-		$qoh = locale_number_format($row['qoh'], $row['decimalplaces']);
+	while ($Row = DB_fetch_array($SearchResult)) {
+		$QOH = locale_number_format($Row['qoh'], $Row['decimalplaces']);
 
 		echo '<tr class="striped_row">
-			<td>', $row['stockid'], '</td>
-			<td>', $row['description'], '</td>
-			<td class="number">', $qoh, '</td>
-			<td> ', $row['units'], '</td>
+			<td>', $Row['stockid'], '</td>
+			<td>', $Row['description'], '</td>
+			<td class="number">', $QOH, '</td>
+			<td> ', $Row['units'], '</td>
 		</tr>';
 
 	}

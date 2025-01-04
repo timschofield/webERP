@@ -113,20 +113,20 @@ if (!isset($ShiptRef) or $ShiptRef==""){
 			<field>
 				<label for="StockLocation">', _('Into Stock Location').':</label>
 				<select name="StockLocation"> ';
-	$sql = "SELECT loccode, locationname FROM locations";
-	$resultStkLocs = DB_query($sql);
-	while ($myrow=DB_fetch_array($resultStkLocs)){
+	$SQL = "SELECT loccode, locationname FROM locations";
+	$ResultStkLocs = DB_query($SQL);
+	while ($MyRow=DB_fetch_array($ResultStkLocs)){
 		if (isset($_POST['StockLocation'])){
-			if ($myrow['loccode'] == $_POST['StockLocation']){
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			if ($MyRow['loccode'] == $_POST['StockLocation']){
+			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
-		} elseif ($myrow['loccode']==$_SESSION['UserStockLocation']){
+		} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
 			$_POST['StockLocation'] = $_SESSION['UserStockLocation'];
-			echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
 		} else {
-			echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
 		}
 	}
 
@@ -157,7 +157,7 @@ $SQL="SELECT categoryid,
 	FROM stockcategory
 	WHERE stocktype<>'D'
 	ORDER BY categorydescription";
-$result1 = DB_query($SQL);
+$Result1 = DB_query($SQL);
 
 echo '<fieldset>';
 echo '<legend class="search">' . _('To search for shipments for a specific part use the part selection facilities below') . '</legend>
@@ -165,11 +165,11 @@ echo '<legend class="search">' . _('To search for shipments for a specific part 
 		<label for="StockCat">' . _('Select a stock category') . ':</label>
 		<select name="StockCat">';
 
-while ($myrow1 = DB_fetch_array($result1)) {
-	if (isset($_POST['StockCat']) and $myrow1['categoryid']==$_POST['StockCat']){
-		echo '<option selected="selected" value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
+while ($MyRow1 = DB_fetch_array($Result1)) {
+	if (isset($_POST['StockCat']) and $MyRow1['categoryid']==$_POST['StockCat']){
+		echo '<option selected="selected" value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription']  . '</option>';
 	} else {
-		echo '<option value="'. $myrow1['categoryid'] . '">' . $myrow1['categorydescription']  . '</option>';
+		echo '<option value="'. $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription']  . '</option>';
 	}
 }
 echo '</select>
@@ -178,9 +178,8 @@ echo '</select>
 		<label for="Keywords">' . _('Enter text extracts in the') . '<b> ' . _('description') . '</b>:</label>
 		<input type="text" name="Keywords" size="20" maxlength="25" />
 	</field>
-	<h3>' . _('OR') . ' </h3>
 	<field>
-		<label for="StockCode">' . _('Enter extract of the') . ' <b> ' . _('Stock Code') . '</b>:</label>
+		<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the') . ' <b> ' . _('Stock Code') . '</b>:</label>
 		<input type="text" name="StockCode" size="15" maxlength="18" />
 	</field>
 	</fieldset>';
@@ -204,7 +203,7 @@ if (isset($StockItemsResult)) {
 
 	$j = 1;
 
-	while ($myrow=DB_fetch_array($StockItemsResult)) {
+	while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
 /*
 Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand     Orders Ostdg	Units	 */
@@ -215,11 +214,11 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>',
-				$myrow['stockid'],
-				$myrow['description'],
-				locale_number_format($myrow['qoh'],$myrow['decimalplaces']),
-				locale_number_format($myrow['qord'],$myrow['decimalplaces']),
-				$myrow['units']);
+				$MyRow['stockid'],
+				$MyRow['description'],
+				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
+				locale_number_format($MyRow['qord'],$MyRow['decimalplaces']),
+				$MyRow['units']);
 
 		$j++;
 		If ($j == 15){
@@ -302,15 +301,15 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 		$j = 1;
 
-		while ($myrow=DB_fetch_array($ShipmentsResult)) {
+		while ($MyRow=DB_fetch_array($ShipmentsResult)) {
 
-			$URL_Modify_Shipment = $RootPath . '/Shipments.php?SelectedShipment=' . $myrow['shiptref'];
-			$URL_View_Shipment = $RootPath . '/ShipmentCosting.php?SelectedShipment=' . $myrow['shiptref'];
+			$URL_Modify_Shipment = $RootPath . '/Shipments.php?SelectedShipment=' . $MyRow['shiptref'];
+			$URL_View_Shipment = $RootPath . '/ShipmentCosting.php?SelectedShipment=' . $MyRow['shiptref'];
 
-			$FormatedETA = ConvertSQLDate($myrow['eta']);
+			$FormatedETA = ConvertSQLDate($MyRow['eta']);
 			/* ShiptRef   Supplier  Vessel  Voyage  ETA */
 
-			if ($myrow['closed']==0){
+			if ($MyRow['closed']==0){
 
 				$URL_Close_Shipment = $URL_View_Shipment . '&amp;Close=Yes';
 
@@ -324,10 +323,10 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 					<td><a href="%s">' . _('Modify') . '</a></td>
 					<td><a href="%s"><b>' . _('Close') . '</b></a></td>
 					</tr>',
-					$myrow['shiptref'],
-					$myrow['suppname'],
-					$myrow['vessel'],
-					$myrow['voyageref'],
+					$MyRow['shiptref'],
+					$MyRow['suppname'],
+					$MyRow['vessel'],
+					$MyRow['voyageref'],
 					$FormatedETA,
 					$URL_View_Shipment,
 					$URL_Modify_Shipment,
@@ -342,10 +341,10 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 						<td>%s</td>
 						<td><a href="%s">' . _('Costing') . '</a></td>
 						</tr>',
-						$myrow['shiptref'],
-						$myrow['suppname'],
-						$myrow['vessel'],
-						$myrow['voyage'],
+						$MyRow['shiptref'],
+						$MyRow['suppname'],
+						$MyRow['vessel'],
+						$MyRow['voyage'],
 						$FormatedETA,
 						$URL_View_Shipment);
 			}

@@ -53,22 +53,22 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				AND locations.internalrequest=1";
 		$LocResult = DB_query($SQL);
 		$LocationCounter = DB_num_rows($LocResult);
-		$locallctr = 0;//location all counter
+		$LocalAllCtr = 0;//location all counter
 		$Locations = array();
 		if ($LocationCounter>0) {
 			while ($MyRow = DB_fetch_array($LocResult)) {
 				$Locations[] = $MyRow['loccode'];
 				if (isset($_POST['StockLocation'])){
-					if ($_POST['StockLocation'] == 'All' AND $locallctr == 0) {
-						$locallctr = 1;
+					if ($_POST['StockLocation'] == 'All' AND $LocalAllCtr == 0) {
+						$LocalAllCtr = 1;
 						echo '<option value="All" selected="selected">' . _('All') . '</option>';
 					} elseif ($MyRow['loccode'] == $_POST['StockLocation']) {
 						echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 					}
 				} else {
-					if ($LocationCounter>1 AND $locallctr == 0) {//we show All only when it is necessary
+					if ($LocationCounter>1 AND $LocalAllCtr == 0) {//we show All only when it is necessary
 						echo '<option value="All">' . _('All') . '</option>';
-						$locallctr = 1;
+						$LocalAllCtr = 1;
 					}
 					echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 				}
@@ -79,23 +79,23 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 
 			$SQL = "SELECT stockrequest.loccode,locations.locationname FROM stockrequest INNER JOIN locations ON stockrequest.loccode=locations.loccode
 				INNER JOIN department ON stockrequest.departmentid=department.departmentid WHERE department.authoriser='" . $_SESSION['UserID'] . "'";
-			$authresult = DB_query($SQL);
-			$LocationCounter = DB_num_rows($authresult);
+			$AuthResult = DB_query($SQL);
+			$LocationCounter = DB_num_rows($AuthResult);
 			if ($LocationCounter>0) {
 				$Authorizer = true;
 
-				while ($MyRow = DB_fetch_array($authresult)) {
+				while ($MyRow = DB_fetch_array($AuthResult)) {
 					$Locations[] = $MyRow['loccode'];
 					if (isset($_POST['StockLocation'])) {
-						if ($_POST['StockLocation'] == 'All' AND $locallctr==0) {
+						if ($_POST['StockLocation'] == 'All' AND $LocalAllCtr==0) {
 							echo '<option value="All" selected="selected">' . _('All') . '</option>';
-							$locallctr = 1;
+							$LocalAllCtr = 1;
 						} elseif ($MyRow['loccode'] == $_POST['StockLocation']) {
 							echo '<option value="' . $MyRow['loccode'] . '" selected="selected">' . $MyRow['locationname'] . '</option>';
 						}
 					} else {
-						if ($LocationCounter>1 AND $locallctr == 0) {
-							$locallctr = 1;
+						if ($LocationCounter>1 AND $LocalAllCtr == 0) {
+							$LocalAllCtr = 1;
 							echo '<option value="All">' . _('All') . '</option>';
 						}
 						echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] .'</option>';
@@ -118,11 +118,11 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				<label for="Authorized">' . _('Authorisation status') . '</label>
 				<select name="Authorized">';
 		$Auth = array('All'=>_('All'),0=>_('Unauthorized'),1=>_('Authorized'));
-		foreach ($Auth as $key=>$value) {
-			if ($_POST['Authorized'] == $value) {
-				echo '<option selected="selected" value="' . $key . '">' . $value . '</option>';
+		foreach ($Auth as $key=>$Value) {
+			if ($_POST['Authorized'] == $Value) {
+				echo '<option selected="selected" value="' . $key . '">' . $Value . '</option>';
 			} else {
-				echo '<option value="' . $key . '">' . $value . '</option>';
+				echo '<option value="' . $key . '">' . $Value . '</option>';
 			}
 		}
 		echo '</select>
@@ -144,15 +144,15 @@ if (!isset($StockID) AND !isset($_POST['Search'])) {//The scripts is just opened
 				AND (departments.authoriser = '" . $_SESSION['UserID'] . "' OR stockrequest.initiator = '" . $_SESSION['UserID'] . "')
 			WHERE stockrequest.dispatchid IS NOT NULL
 			GROUP BY stockrequest.departmentid";//if a full request is need, the users must have all of those departments' authority
-	$depresult = DB_query($SQL);
-	if (DB_num_rows($depresult)>0) {
+	$DepResult = DB_query($SQL);
+	if (DB_num_rows($DepResult)>0) {
 		$Departments = array();
 		if (isset($_POST['Department']) AND $_POST['Department'] == 'All') {
 			echo '<option selected="selected" value="All">' . _('All') . '</option>';
 		} else {
 			echo '<option value="All">' . _('All') . '</option>';
 		}
-		while ($MyRow = DB_fetch_array($depresult)) {
+		while ($MyRow = DB_fetch_array($DepResult)) {
 			$Departments[] = $MyRow['departmentid'];
 			if (isset($_POST['Department']) AND ($_POST['Department'] == $MyRow['departmentid'])) {
 				echo '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';

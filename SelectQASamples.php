@@ -213,8 +213,8 @@ if (isset($_POST['submit'])) {
 		$MyRow = DB_fetch_row($Result);;
 		if($MyRow[0]>0 AND $_POST['Cert']=='1') {
 			 $_POST['Cert']='0';
-			 $msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
-			 prnMsg($msg , 'error');
+			 $Msg = _('Test Results have not all been entered.  This Lot is not able to be used for a a Certificate of Analysis');
+			 prnMsg($Msg , 'error');
 		}
 		$Result = DB_query("SELECT count(sampleid) FROM sampleresults
 							WHERE sampleid = '".$SelectedSampleID."'
@@ -222,8 +222,8 @@ if (isset($_POST['submit'])) {
 							AND isinspec='0'");
 		$MyRow = DB_fetch_row($Result);;
 		if($MyRow[0]>0 AND $_POST['Cert']=='1') {
-			 $msg = _('Some Results are out of Spec');
-			 prnMsg($msg , 'warning');
+			 $Msg = _('Some Results are out of Spec');
+			 prnMsg($Msg , 'warning');
 		}
 		$SQL = "UPDATE qasamples SET identifier='" . $_POST['Identifier'] . "',
 									comments='" . $_POST['Comments'] . "',
@@ -231,11 +231,11 @@ if (isset($_POST['submit'])) {
 									cert='" . $_POST['Cert'] . "'
 				WHERE sampleid = '" . $SelectedSampleID . "'";
 
-		$msg = _('QA Sample record for') . ' ' . $SelectedSampleID  . ' ' .  _('has been updated');
+		$Msg = _('QA Sample record for') . ' ' . $SelectedSampleID  . ' ' .  _('has been updated');
 		$ErrMsg = _('The update of the QA Sample failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 		if ( $_POST['Cert']==1) {
 			$Result = DB_query("SELECT prodspeckey, lotkey FROM qasamples
 							WHERE sampleid = '".$SelectedSampleID."'");
@@ -245,11 +245,11 @@ if (isset($_POST['submit'])) {
 						WHERE sampleid <> '".$SelectedSampleID . "'
 						AND prodspeckey='" . $MyRow[0] . "'
 						AND lotkey='" . $MyRow[1] . "'";
-				$msg = _('All other samples for this Specification and Lot was marked as Cert=No');
+				$Msg = _('All other samples for this Specification and Lot was marked as Cert=No');
 				$ErrMsg = _('The update of the QA Sample failed because');
 				$DbgMsg = _('The SQL that was used and failed was');
 				$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-				prnMsg($msg , 'success');
+				prnMsg($Msg , 'success');
 			}
 		}
 
@@ -257,8 +257,8 @@ if (isset($_POST['submit'])) {
 		CreateQASample($_POST['ProdSpecKey'],$_POST['LotKey'], $_POST['Identifier'], $_POST['Comments'], $_POST['Cert'], $_POST['DuplicateOK']);
 		$SelectedSampleID=DB_Last_Insert_ID('qasamples','sampleid');
 		if ($SelectedSampleID > '') {
-			$msg = _('Created New Sample');
-			prnMsg($msg , 'success');
+			$Msg = _('Created New Sample');
+			prnMsg($Msg , 'success');
 		}
 	}
 	unset($SelectedSampleID);
@@ -288,7 +288,7 @@ if (isset($_POST['submit'])) {
 		echo $SQL;
 		prnMsg(_('QA Sample') . ' ' . $SelectedSampleID . _('has been deleted from the database'),'success');
 		unset ($SelectedSampleID);
-		unset($delete);
+		unset($Delete);
 		unset ($_GET['delete']);
 	}
 }
@@ -438,9 +438,8 @@ if (!isset($SelectedSampleID)) {
 			<label for="Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>
-		<h3>' . _('OR') . ' </h3>
 		<field>
-			<label for="StockCode">' . _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</label>
+			<label for="StockCode">' .'<b>' . _('OR') . ' </b>' .  _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</label>
 			<input type="text" name="StockCode" size="20" maxlength="25" />
 		</field>
 		</fieldset>

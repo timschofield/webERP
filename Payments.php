@@ -127,14 +127,14 @@ if (isset($_GET['SupplierID'])) {
 							WHERE id='" . $MyRow['factorcompanyid'] . "'";
 
 			$FactorResult = DB_query($FactorSQL);
-			$myfactorrow = DB_fetch_array($FactorResult);
-			$_SESSION['PaymentDetail' . $identifier]->SuppName = $MyRow['suppname'] . ' ' . _('care of') . ' ' . $myfactorrow['coyname'];
-			$_SESSION['PaymentDetail' . $identifier]->Address1 = $myfactorrow['address1'];
-			$_SESSION['PaymentDetail' . $identifier]->Address2 = $myfactorrow['address2'];
-			$_SESSION['PaymentDetail' . $identifier]->Address3 = $myfactorrow['address3'];
-			$_SESSION['PaymentDetail' . $identifier]->Address4 = $myfactorrow['address4'];
-			$_SESSION['PaymentDetail' . $identifier]->Address5 = $myfactorrow['address5'];
-			$_SESSION['PaymentDetail' . $identifier]->Address6 = $myfactorrow['address6'];
+			$MyFactorRow = DB_fetch_array($FactorResult);
+			$_SESSION['PaymentDetail' . $identifier]->SuppName = $MyRow['suppname'] . ' ' . _('care of') . ' ' . $MyFactorRow['coyname'];
+			$_SESSION['PaymentDetail' . $identifier]->Address1 = $MyFactorRow['address1'];
+			$_SESSION['PaymentDetail' . $identifier]->Address2 = $MyFactorRow['address2'];
+			$_SESSION['PaymentDetail' . $identifier]->Address3 = $MyFactorRow['address3'];
+			$_SESSION['PaymentDetail' . $identifier]->Address4 = $MyFactorRow['address4'];
+			$_SESSION['PaymentDetail' . $identifier]->Address5 = $MyFactorRow['address5'];
+			$_SESSION['PaymentDetail' . $identifier]->Address6 = $MyFactorRow['address6'];
 			$_SESSION['PaymentDetail' . $identifier]->SupplierID = $_GET['SupplierID'];
 			$_SESSION['PaymentDetail' . $identifier]->Currency = $MyRow['currcode'];
 			$_POST['Currency'] = $_SESSION['PaymentDetail' . $identifier]->Currency;
@@ -202,11 +202,11 @@ if (isset($_POST['Paymenttype']) AND $_POST['Paymenttype'] != '') {
 			$Errors[] = 'ChequeNum';
 		}
 		else {
-			$cheqsql = "SELECT count(chequeno) FROM supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
+			$ChequeSQL = "SELECT count(chequeno) FROM supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
 			$ErrMsg = _('Failed to retrieve cheque number data');
-			$cheqresult = DB_query($cheqsql, $ErrMsg);
-			$cheqrow = DB_fetch_row($cheqresult);
-			if ($cheqrow[0] > 0) {
+			$ChequeResult = DB_query($ChequeSQL, $ErrMsg);
+			$ChequeRow = DB_fetch_row($ChequeResult);
+			if ($ChequeRow[0] > 0) {
 				prnMsg(_('The cheque has already been used') , 'warn');
 				$Errors[] = 'ChequeNum';
 			}
@@ -385,11 +385,11 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			exit;
 		}
 		else {
-			$cheqsql = "SELECT count(chequeno) FROM  supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
+			$ChequeSQL = "SELECT count(chequeno) FROM  supptrans WHERE chequeno='" . $_POST['ChequeNum'] . "'";
 			$ErrMsg = _('Failed to retrieve cheque number data');
-			$cheqresult = DB_query($cheqsql, $ErrMsg);
-			$cheqrow = DB_fetch_row($cheqresult);
-			if ($cheqrow[0] > 0) {
+			$ChequeResult = DB_query($ChequeSQL, $ErrMsg);
+			$ChequeRow = DB_fetch_row($ChequeResult);
+			if ($ChequeRow[0] > 0) {
 				prnMsg(_('The cheque has already been used') , 'error');
 				include ('includes/footer.inc');
 				exit;
@@ -397,9 +397,9 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 		}
 		//store the paid array here;
 		$PaidArray = array();
-		foreach ($_POST as $name => $Value) {
-			if (substr($name, 0, 4) == 'paid' AND $Value > 0) {
-				$PaidArray[substr($name, 4) ] = $Value;
+		foreach ($_POST as $Name => $Value) {
+			if (substr($Name, 0, 4) == 'paid' AND $Value > 0) {
+				$PaidArray[substr($Name, 4) ] = $Value;
 			}
 		}
 		if (!empty($PaidArray)) {
@@ -460,7 +460,15 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								amount,
 								chequeno
 							) VALUES (
-								1,'" . $TransNo . "','" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" . $PeriodNo . "','" . $PaymentItem->GLCode . "','" . $PaymentItem->Narrative . "','" . ($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" . $PaymentItem->Cheque . "')";
+								1,'" .
+								$TransNo . "','" .
+								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
+								$PeriodNo . "','" .
+								$PaymentItem->GLCode . "','" .
+								$PaymentItem->Narrative . "','" .
+								($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" .
+								$PaymentItem->Cheque . "'
+							)";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was') , true);
 					foreach ($PaymentItem->Tag as $Tag) {
@@ -545,8 +553,18 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								banktranstype,
 								amount,
 								currcode
-							) VALUES ('" . $ReceiptTransNo . "',
-								2,'" . $PaymentItem->GLCode . "','" . '@' . $TransNo . ' ' . _('Act Transfer From') . ' ' . $_SESSION['PaymentDetail' . $identifier]->Account . ' - ' . $PaymentItem->Narrative . "','" . $ExRate . "','" . $TrfToBankExRate . "','" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "','" . $PaymentItem->Amount . "','" . $_SESSION['PaymentDetail' . $identifier]->Currency . "')";
+							) VALUES ('" .
+								$ReceiptTransNo . "',
+								2,'" .
+								$PaymentItem->GLCode . "','" .
+								'@' . $TransNo . ' ' . _('Act Transfer From') . ' ' . $_SESSION['PaymentDetail' . $identifier]->Account . ' - ' . $PaymentItem->Narrative . "','" .
+								$ExRate . "','" .
+								$TrfToBankExRate . "','" .
+								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
+								$_SESSION['PaymentDetail' . $identifier]->Paymenttype . "','" .
+								$PaymentItem->Amount . "','" .
+								$_SESSION['PaymentDetail' . $identifier]->Currency . "'
+							)";
 					$ErrMsg = _('Cannot insert a bank transaction because');
 					$DbgMsg = _('Cannot insert a bank transaction with the SQL');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -558,9 +576,9 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 			/* Get an array of supptans id fields that were paid */
 			if (!isset($_POST['PaidArray'])) {
 				$PaidArray = array();
-				foreach ($_POST as $name => $Value) {
-					if (substr($name, 0, 4) == 'paid' AND $Value > 0) {
-						$PaidArray[substr($name, 4) ] = $Value;
+				foreach ($_POST as $Name => $Value) {
+					if (substr($Name, 0, 4) == 'paid' AND $Value > 0) {
+						$PaidArray[substr($Name, 4) ] = $Value;
 					}
 				}
 			}
@@ -586,9 +604,18 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							ovamount,
 							transtext,
 							chequeno
-						) VALUES ('" . $TransNo . "',
-							22,'" . $_SESSION['PaymentDetail' . $identifier]->SupplierID . "','" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" . date('Y-m-d H-i-s') . "','" . $_SESSION['PaymentDetail' . $identifier]->supptrans_suppreference . "','" . ($_SESSION['PaymentDetail' . $identifier]->FunctionalExRate * $_SESSION['PaymentDetail' . $identifier]->ExRate) . "','" . (-$_SESSION['PaymentDetail' . $identifier]->Amount - $_SESSION['PaymentDetail' . $identifier]->Discount) . "','" . $_SESSION['PaymentDetail' . $identifier]->supptrans_transtext . "',
-							'" . $_POST['ChequeNum'] . "')";
+						) VALUES ('" .
+							$TransNo . "',
+							22,'" .
+							$_SESSION['PaymentDetail' . $identifier]->SupplierID . "','" .
+							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
+							date('Y-m-d H-i-s') . "','" .
+							$_SESSION['PaymentDetail' . $identifier]->supptrans_suppreference . "','" .
+							($_SESSION['PaymentDetail' . $identifier]->FunctionalExRate * $_SESSION['PaymentDetail' . $identifier]->ExRate) . "','" .
+							(-$_SESSION['PaymentDetail' . $identifier]->Amount - $_SESSION['PaymentDetail' . $identifier]->Discount) . "','" .
+							$_SESSION['PaymentDetail' . $identifier]->supptrans_transtext . "','" .
+							$_POST['ChequeNum'] . "'
+						)";
 			$ErrMsg = _('Cannot insert a payment transaction against the supplier because');
 			$DbgMsg = _('Cannot insert a payment transaction against the supplier using the SQL');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -648,7 +675,14 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							narrative,
 							amount
 						) VALUES (
-							22,'" . $TransNo . "','" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" . $PeriodNo . "','" . $_SESSION['CompanyRecord']['creditorsact'] . "','" . $_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" . $CreditorTotal . "')";
+							22,'" .
+							$TransNo . "','" .
+							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
+							$PeriodNo . "','" .
+							$_SESSION['CompanyRecord']['creditorsact'] . "','" .
+							$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" .
+							$CreditorTotal . "'
+						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the creditors account debit because');
 				$DbgMsg = _('Cannot insert a GL transaction for the creditors account debit using the SQL');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -664,7 +698,14 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								narrative,
 								amount
 							) VALUES (
-								22,'" . $TransNo . "','" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" . $PeriodNo . "','" . $_SESSION['CompanyRecord']['pytdiscountact'] . "','" . $_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" . (-$_SESSION['PaymentDetail' . $identifier]->Discount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "')";
+								22,'" .
+								$TransNo . "','" .
+								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
+								$PeriodNo . "','" .
+								$_SESSION['CompanyRecord']['pytdiscountact'] . "','" .
+								$_SESSION['PaymentDetail' . $identifier]->gltrans_narrative . "','" .
+								(-$_SESSION['PaymentDetail' . $identifier]->Discount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
+							)";
 					$ErrMsg = _('Cannot insert a GL transaction for the payment discount credit because');
 					$DbgMsg = _('Cannot insert a GL transaction for the payment discount credit using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -685,7 +726,15 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							account,
 							narrative,
 							amount
-						) VALUES ('" . $TransType . "','" . $TransNo . "','" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" . $PeriodNo . "','" . $_SESSION['PaymentDetail' . $identifier]->Account . "','" . $_SESSION['PaymentDetail' . $identifier]->Narrative . "','" . (-$_SESSION['PaymentDetail' . $identifier]->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "')";
+						) VALUES ('" .
+							$TransType . "','" .
+							$TransNo . "','" .
+							FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
+							$PeriodNo . "','" .
+							$_SESSION['PaymentDetail' . $identifier]->Account . "','" .
+							$_SESSION['PaymentDetail' . $identifier]->Narrative . "','" .
+							(-$_SESSION['PaymentDetail' . $identifier]->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "'
+						)";
 				$ErrMsg = _('Cannot insert a GL transaction for the bank account credit because');
 				$DbgMsg = _('Cannot insert a GL transaction for the bank account credit using the SQL');
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -706,7 +755,19 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 					amount,
 					currcode,
 					chequeno
-				) VALUES ('" . $TransNo . "','" . $TransType . "','" . $_SESSION['PaymentDetail' . $identifier]->Account . "','" . $_SESSION['PaymentDetail' . $identifier]->BankTransRef . "','" . $_SESSION['PaymentDetail' . $identifier]->ExRate . "','" . $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "','" . FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" . $_SESSION['PaymentDetail' . $identifier]->Paymenttype . "','" . -$_SESSION['PaymentDetail' . $identifier]->Amount . "','" . $_SESSION['PaymentDetail' . $identifier]->Currency . "','" . $_POST['ChequeNum'] . "')";
+				) VALUES ('" .
+					$TransNo . "','" .
+					$TransType . "','" .
+					$_SESSION['PaymentDetail' . $identifier]->Account . "','" .
+					$_SESSION['PaymentDetail' . $identifier]->BankTransRef . "','" .
+					$_SESSION['PaymentDetail' . $identifier]->ExRate . "','" .
+					$_SESSION['PaymentDetail' . $identifier]->FunctionalExRate . "','" .
+					FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
+					$_SESSION['PaymentDetail' . $identifier]->Paymenttype . "','" .
+					-$_SESSION['PaymentDetail' . $identifier]->Amount . "','" .
+					$_SESSION['PaymentDetail' . $identifier]->Currency . "','" .
+					$_POST['ChequeNum'] . "'
+				)";
 		$ErrMsg = _('Cannot insert a bank transaction because');
 		$DbgMsg = _('Cannot insert a bank transaction using the SQL');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
@@ -1128,7 +1189,6 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 			ORDER BY tagref";
 
 	$Result = DB_query($SQL);
-	echo '<option value=0>0 - None</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['Tag']) and $_POST['Tag'] == $MyRow['tagref']) {
 			echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
@@ -1317,17 +1377,19 @@ else {
 			</table>';
 
 	$SQL = "SELECT systypes.typename,
-						supptrans.id,
-						supptrans.transno,
-						supptrans.suppreference,
-						supptrans.trandate,
-						supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc AS amount
-					FROM supptrans
-					INNER JOIN systypes
-						ON systypes.typeid=supptrans.type
-					WHERE settled=0 AND (systypes.typeid=20 OR systypes.typeid=21 OR (systypes.typeid=22 AND (supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc)>0))
-						AND supplierno='" . $_SESSION['PaymentDetail' . $identifier]->SupplierID . "'
-						AND (supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc)<>0";
+				supptrans.id,
+				supptrans.transno,
+				supptrans.suppreference,
+				supptrans.trandate,
+				supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc AS amount
+			FROM supptrans
+			INNER JOIN systypes
+				ON systypes.typeid=supptrans.type
+			WHERE settled=0 AND (systypes.typeid=20 OR systypes.typeid=21 OR (systypes.typeid=22 AND (supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc)>0))
+				AND supplierno='" . $_SESSION['PaymentDetail' . $identifier]->SupplierID . "'
+				AND (supptrans.ovamount+supptrans.ovgst+supptrans.diffonexch-supptrans.alloc)<>0
+			ORDER BY supptrans.trandate,
+				supptrans.transno";
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">

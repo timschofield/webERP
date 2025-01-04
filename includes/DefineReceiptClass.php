@@ -17,7 +17,7 @@ Class Receipt_Batch {
 	var $BankTransRef;
 	var $Narrative;
 	var $ReceiptType;  /*Type of receipt ie credit card/cash/cheque etc - array of types defined in config.php*/
-	var $total;	  /*Total of the batch of receipts in the currency of the company*/
+	var $Total;	  /*Total of the batch of receipts in the currency of the company*/
 	var $ItemCounter; /*Counter for the number of customer receipts in the batch */
 
 	function __construct(){
@@ -31,9 +31,9 @@ Class Receipt_Batch {
 		self::__construct();
 	}
 
-	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $tag){
+	function add_to_batch($Amount, $Customer, $Discount, $Narrative, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
 		if ((isset($Customer) OR isset($GLCode)) AND ($Amount + $Discount) !=0){
-			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $tag);
+			$this->Items[$this->ItemCounter] = new Receipt($Amount, $Customer, $Discount, $Narrative, $this->ItemCounter, $GLCode, $PayeeBankDetail, $CustomerName, $Tag);
 			$this->ItemCounter++;
 			$this->total = $this->total + ($Amount + $Discount) / $this->ExRate;
 			Return 1;
@@ -59,7 +59,7 @@ Class Receipt {
 	Var $GLCode;
 	Var $PayeeBankDetail;
 	Var $ID;
-	var $tag;
+	var $Tag;
 	var $TagName;
 
 	function __construct ($Amt, $Cust, $Disc, $Narr, $id, $GLCode, $PayeeBankDetail, $CustomerName, $Tag){
@@ -73,9 +73,9 @@ Class Receipt {
 		$this->PayeeBankDetail=$PayeeBankDetail;
 		$this->ID = $id;
 		$this->tag = $Tag;
-		$result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'");
-		if (DB_num_rows($result)==1){
-			$TagRow = DB_fetch_array($result);
+		$Result = DB_query("SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'");
+		if (DB_num_rows($Result)==1){
+			$TagRow = DB_fetch_array($Result);
 			$this->TagName = $TagRow['tagdescription'];
 		}
 	}

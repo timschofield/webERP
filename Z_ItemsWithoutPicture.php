@@ -16,19 +16,19 @@ $SQL = "SELECT stockmaster.stockid,
 			AND stockmaster.discontinued = 0
 			AND stockcategory.stocktype != 'D'
 		ORDER BY stockcategory.categorydescription, stockmaster.stockid";
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 $PrintHeader = TRUE;
 
-if (DB_num_rows($result) != 0){
+if (DB_num_rows($Result) != 0){
 	echo '<p class="page_title_text"><strong>' . _('Current Items without picture in webERP') . '</strong></p>';
 	echo '<div>';
 	echo '<table class="selection">';
 	$i = 1;
 	$SupportedImgExt = array('png','jpg','jpeg');
-	while ($myrow = DB_fetch_array($result)) {
-        $glob = (glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-		$imagefile = reset($glob);
-		if(!file_exists($imagefile) ) {
+	while ($MyRow = DB_fetch_array($Result)) {
+        $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($Glob);
+		if(!file_exists($ImageFile) ) {
 			if($PrintHeader){
 				$TableHeader = '<tr>
 								<th>' . '#' . '</th>
@@ -40,7 +40,7 @@ if (DB_num_rows($result) != 0){
 				$PrintHeader = FALSE;
 			}
 
-			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['stockid'] . '" target="_blank">' . $myrow['stockid'] . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>
@@ -48,9 +48,9 @@ if (DB_num_rows($result) != 0){
 					<td>%s</td>
 					</tr>',
 					$i,
-					$myrow['categorydescription'],
+					$MyRow['categorydescription'],
 					$CodeLink,
-					$myrow['description']
+					$MyRow['description']
 					);
 			$i++;
 		}

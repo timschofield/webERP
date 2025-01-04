@@ -61,7 +61,7 @@ echo '</select>
 				</field>
 				<field>
 					<label for="Database">' . _('Database Name') . ': </label>
-					<input type="text" name="Database" id="Database" required="required" value="' . $_SESSION['Installer']['Database'] . '" maxlength="16" placeholder="' . _('The database name') . '" />
+					<input type="text" name="Database" id="Database" required="required" value="' . $_SESSION['Installer']['Database'] . '" maxlength="32" placeholder="' . _('The database name') . '" />
 					<fieldhelp>' . _('If your user name below does not have permissions to create a database then this database must be created and empty.') . '</fieldhelp>
 				</field>
 				<field>
@@ -71,7 +71,7 @@ echo '</select>
 				</field>
 				<field>
 					<label for="UserName">' . _('Database User Name') . ':</label>
-					<input type="text" name="UserName" id="UserName" value="' . $_SESSION['Installer']['UserName'] . '" placeholder="' . _('A valid database user name') . '" maxlength="16" required="required" />&#160;
+					<input type="text" name="UserName" id="UserName" value="' . $_SESSION['Installer']['UserName'] . '" placeholder="' . _('A valid database user name') . '" maxlength="32" required="required" />&#160;
 					<fieldhelp>' . _('If this user does not have permission to create databases, then the database entered above must exist and be empty.') . '</fieldhelp>
 				</field>
 				<field>

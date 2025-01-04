@@ -33,10 +33,10 @@ $PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE
 
 $DBExistsResult = @mysqli_query($DB, $DBExistsSql);
 $PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
-$rows = @mysqli_num_rows($DBExistsResult);
+$Rows = @mysqli_num_rows($DBExistsResult);
 $Privileges = @mysqli_num_rows($PrivilegesResult);
 
-if ($rows == 0) { /* Then the database does not exist */
+if ($Rows == 0) { /* Then the database does not exist */
 	if ($Privileges == 0) {
 		$Errors[] = _('The database does not exist, and this database user does not have privileges to create it');
 	} else { /* Then we can create the database */
@@ -128,72 +128,77 @@ if (!file_exists($Path_To_Root . '/companies/' . $_SESSION['Installer']['Databas
 	}
 }
 
-//$Msg holds the text of the new config.php file
-$Msg = "<?php\n\n";
-$Msg.= "// User configurable variables\n";
-$Msg.= "//---------------------------------------------------\n\n";
-$Msg.= "//DefaultLanguage to use for the login screen and the setup of new users.\n";
-$Msg.= "\$DefaultLanguage = '" . $_SESSION['Installer']['Language'] . "';\n\n";
-$Msg.= "// Whether to display the demo login and password or not on the login screen\n";
-$Msg.= "\$AllowDemoMode = FALSE;\n\n";
-$Msg.= "// Connection information for the database\n";
-$Msg.= "// \$Host is the computer ip address or name where the database is located\n";
-$Msg.= "// assuming that the webserver is also the sql server\n";
-$Msg.= "\$Host = '" . $_SESSION['Installer']['HostName'] . "';\n\n";
-$Msg.= "// assuming that the web server is also the sql server\n";
-$Msg.= "\$DBType = '" . $_SESSION['Installer']['DBMS'] . "';\n";
-$Msg.= "//assuming that the web server is also the sql server\n";
-$Msg.= "\$DBUser = '" . $_SESSION['Installer']['UserName'] . "';\n";
-$Msg.= "\$DBPassword = '" . $_SESSION['Installer']['Password'] . "';\n";
-$Msg.= "// The timezone of the business - this allows the possibility of having;\n";
-$Msg.= "define('TIMEZONE', '" . $_SESSION['Installer']['TimeZone'] . "');\n";
-$Msg.= "date_default_timezone_set(TIMEZONE);\n";
-$Msg.= "\$AllowCompanySelectionBox = 'ShowSelectionBox';\n";
-$Msg.= "//The system administrator name use the user input mail;\n";
-if (strtolower($_SESSION['Installer']['Email']) != 'admin@kwamoja.com') {
-	$Msg.= "\$SysAdminEmail = '" . $_SESSION['Installer']['Email'] . "';\n";
-}
-if (isset($NewCompany)) {
-	$Msg.= "\$DefaultCompany = '" . $_SESSION['Installer']['Database'] . "';\n";
-} else {
-	$Msg.= "\$DefaultCompany = '" . $_SESSION['Installer']['Database'] . "';\n";
-}
-$Msg.= "\$SessionLifeTime = 3600;\n";
-$Msg.= "\$MaximumExecutionTime = 120;\n";
-$Msg.= "\$DefaultClock = 12;\n";
-$Msg.= "\$RootPath = dirname(htmlspecialchars(\basename(__FILE__),ENT_QUOTES,'UTF-8'));\n";
-$Msg.= "if (isset(\$DirectoryLevelsDeep)){\n";
-$Msg.= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-$Msg.= "		\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
-$Msg.= "	}\n";
-$Msg.= "}\n";
+// Make installer options compatible with config.distrib.php options.
+/**
+ * IMPORTANT!!
+ * Must match the variables found inside config.distrib.php.
+ *  */ 
+$configArray = $_SESSION['Installer'];
+$configArray += [
+    'Host'            => $_SESSION['Installer']['HostName'],
+    'DBUser'          => $_SESSION['Installer']['UserName'],
+    'DBPassword'      => $_SESSION['Installer']['Password'],
+    'DBType'          => $_SESSION['Installer']['DBMS'],
+    'DefaultLanguage' => $_SESSION['Installer']['Language'],
+    'DefaultDatabase' => $_SESSION['Installer']['Database'],
+    'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']
+];
 
-$Msg.= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
-$Msg.= "	\$RootPath = '';\n";
-$Msg.= "}\n";
-$Msg.= "error_reporting(E_ALL && ~E_NOTICE);\n";
-$Msg.= "\$Debug = 0;\n";
-$Msg.= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
-$Msg.= "?>";
+// Define the paths relative to the `installer` directory
+$SampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
+$NewConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
 
-//write the config.php file since we have test the writability of the root path and companies,
-//there is little possibility that it will fail here. So just an warn if it is failed.
-if (!$zp = fopen($Path_To_Root . '/config.php', 'w')) {
-	echo '<div class="error">' . _("Cannot open the configuration file") . $Config_File . '</div>';
-} else {
-	if (!fwrite($zp, $Msg)) {
-		fclose($zp);
-		echo '<div class="error">' . _("Cannot write to the configuration file") . $Config_File . '</div>';
-	}
-	//close file
-	fclose($zp);
+// Read the content of the sample config file
+if (!file_exists($SampleConfigFile)) {    
+	echo '<div class="error">' . _('The sample configuration file does not exist.') . '</div>';
 }
-echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
-ob_flush();
+
+// Open the sample file for reading and create the new config file for writing
+$SampleHandle = fopen($SampleConfigFile, 'r');
+$NewLines = [];
+
+if ($SampleHandle) {
+    while (($Line = fgets($SampleHandle)) !== false) {
+        // Check if the line is commented (starting with //, #, or within /* */)
+        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
+
+        // Skip replacements on comment lines, otherwise process a config line.
+        if (!$isComment) {
+            // Loop Installer Data
+            foreach ($configArray as $key => $Value) {
+                // if (strpos($Line, $key) !== false) {
+				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $Line)) {
+                    $NewValue = addslashes($Value);
+                    $Line = "\$$key = '$NewValue';\n";
+                    unset($configArray[$key]);
+                }
+            }
+			// Replace date_default_timezone_set            
+			if (strpos($Line, 'date_default_timezone_set') !== false) {
+                $NewValue = addslashes($_SESSION['Installer']['TimeZone']);                
+				$Line = "date_default_timezone_set('".$NewValue."');\n";
+            }
+        }
+        // Append the line to the new content
+        $NewLines[] = $Line;
+    }
+
+    fclose($SampleHandle);
+} else {    
+	echo '<div class="error">' . _('Unable to read the sample configuration file.') . '</div>';
+}
+
+// Write the updated content to the new config file
+$NewConfigContent = implode($NewLines);
+if (file_put_contents($NewConfigFile, $NewConfigContent)) {
+    echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
+} else {
+	echo '<div class="error">' . _('Cannot write to the configuration file') . $Config_File . '</div>';
+}
 
 $DBErrors = 0;
-foreach (glob($Path_To_Root . "/install/tables/*.sql") as $filename) {
-	$SQLScriptFile = file_get_contents($filename);
+foreach (glob($Path_To_Root . "/install/tables/*.sql") as $FileName) {
+	$SQLScriptFile = file_get_contents($FileName);
 	DB_IgnoreForeignKeys();
 	$Result = DB_query($SQLScriptFile);
 	$DBErrors += DB_error_no($Result);
@@ -205,7 +210,7 @@ if ($DBErrors > 0) {
 }
 ob_flush();
 
-/* Now we uploade the chosen chart of accounts */
+/* Now we upload the chosen chart of accounts */
 if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 'Yes') {
 	DB_IgnoreForeignKeys();
 	$SQL = "INSERT INTO www_users  (userid,
@@ -319,9 +324,18 @@ if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 
 		echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 	}
 
+	$SQL = "INSERT INTO tags VALUES(0, 'None')";
+	$Result = DB_query($SQL);
+	if (DB_error_no() == 0) {
+		echo '<div class="success">' . _('The default GL tag has been inserted.') . '</div>';
+	} else {
+		echo '<div class="error">' . _('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
+	}
+	ob_flush();
+
 	$DBErrors = 0;
-	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $filename) {
-		$SQLScriptFile = file_get_contents($filename);
+	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $FileName) {
+		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
 		$Result = DB_query($SQLScriptFile);
 		$DBErrors += DB_error_no($Result);

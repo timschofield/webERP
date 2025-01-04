@@ -19,6 +19,8 @@ CreateTable('regularpayments', "CREATE TABLE IF NOT EXISTS `regularpayments` (
 NewScript('RegularPaymentsSetup.php', 5);
 NewScript('RegularPaymentsProcess.php', 5);
 
-UpdateDBNo(basename(__FILE__, '.php'), _('Database changes to process regular payments'));
+if ($_SESSION['Updates']['Errors'] == 0) {
+	UpdateDBNo(basename(__FILE__, '.php'), _('Database changes to process regular payments'));
+}
 
 ?>

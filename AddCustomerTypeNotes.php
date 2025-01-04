@@ -42,16 +42,16 @@ if (isset($_POST['submit']) ) {
 
 	if (isset($Id) and $InputError !=1) {
 
-		$sql = "UPDATE debtortypenotes SET note='" . $_POST['Note'] . "',
+		$SQL = "UPDATE debtortypenotes SET note='" . $_POST['Note'] . "',
 											date='" . FormatDateForSQL($_POST['NoteDate']) . "',
 											href='" . $_POST['Href'] . "',
 											priority='" . $_POST['Priority'] . "'
 										WHERE typeid ='".$DebtorType."'
 										AND noteid='".$Id."'";
-		$msg = _('Customer Group Notes') . ' ' . $DebtorType  . ' ' . _('has been updated');
+		$Msg = _('Customer Group Notes') . ' ' . $DebtorType  . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
-		$sql = "INSERT INTO debtortypenotes (typeid,
+		$SQL = "INSERT INTO debtortypenotes (typeid,
 											href,
 											note,
 											date,
@@ -61,14 +61,14 @@ if (isset($_POST['submit']) ) {
 											'" . $_POST['Note'] . "',
 											'" . FormatDateForSQL($_POST['NoteDate']) . "',
 											'" . $_POST['Priority'] . "')";
-		$msg = _('The contact group notes record has been added');
+		$Msg = _('The contact group notes record has been added');
 	}
 
 	if ($InputError !=1) {
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 		echo '<br />';
-		prnMsg($msg, 'success');
+		prnMsg($Msg, 'success');
 		unset($Id);
 		unset($_POST['Note']);
 		unset($_POST['NoteID']);
@@ -78,10 +78,10 @@ if (isset($_POST['submit']) ) {
 
 // PREVENT DELETES IF DEPENDENT RECORDS IN 'SalesOrders'
 
-	$sql="DELETE FROM debtortypenotes
+	$SQL="DELETE FROM debtortypenotes
 			WHERE noteid='".$Id."'
 			AND typeid='".$DebtorType."'";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	echo '<br />';
 	prnMsg( _('The contact group note record has been deleted'), 'success');
@@ -92,12 +92,12 @@ if (isset($_POST['submit']) ) {
 
 if (!isset($Id)) {
 	$SQLname="SELECT typename from debtortype where typeid='".$DebtorType."'";
-	$result = DB_query($SQLname);
-	$myrow = DB_fetch_array($result);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') . '" alt="" />'  . _('Notes for Customer Type').': <b>' .$myrow['typename'] . '</b></p>
+	$Result = DB_query($SQLname);
+	$MyRow = DB_fetch_array($Result);
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Search') . '" alt="" />'  . _('Notes for Customer Type').': <b>' .$MyRow['typename'] . '</b></p>
 		<br />';
 
-	$sql = "SELECT noteid,
+	$SQL = "SELECT noteid,
 					typeid,
 					href,
 					note,
@@ -106,8 +106,8 @@ if (!isset($Id)) {
 				FROM debtortypenotes
 				WHERE typeid='".$DebtorType."'
 				ORDER BY date DESC";
-	$result = DB_query($sql);
-			//echo '<br />' . $sql;
+	$Result = DB_query($SQL);
+			//echo '<br />' . $SQL;
 
 	echo '<table class="selection">';
 	echo '<tr>
@@ -117,7 +117,7 @@ if (!isset($Id)) {
 			<th>' . _('Priority') . '</th>
 		</tr>';
 
-	while ($myrow = DB_fetch_array($result)) {
+	while ($MyRow = DB_fetch_array($Result)) {
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
@@ -126,16 +126,16 @@ if (!isset($Id)) {
 				<td><a href="%sId=%s&amp;DebtorType=%s">' .  _('Edit') . '</a></td>
 				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td>
 				</tr>',
-				ConvertSQLDate($myrow['date']),
-				$myrow['note'],
-				$myrow['href'],
-				$myrow['priority'],
+				ConvertSQLDate($MyRow['date']),
+				$MyRow['note'],
+				$MyRow['href'],
+				$MyRow['priority'],
 				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$myrow['noteid'],
-				$myrow['typeid'],
+				$MyRow['noteid'],
+				$MyRow['typeid'],
 				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$myrow['noteid'],
-				$myrow['typeid']);
+				$MyRow['noteid'],
+				$MyRow['typeid']);
 
 	}
 	//END WHILE LIST LOOP
@@ -155,7 +155,7 @@ if (!isset($_GET['delete'])) {
 	if (isset($Id)) {
 		//editing an existing
 
-		$sql = "SELECT noteid,
+		$SQL = "SELECT noteid,
 					typeid,
 					href,
 					note,
@@ -165,17 +165,17 @@ if (!isset($_GET['delete'])) {
 				WHERE noteid=".$Id."
 					AND typeid='".$DebtorType."'";
 
-		$result = DB_query($sql);
-				//echo '<br />' . $sql;
+		$Result = DB_query($SQL);
+				//echo '<br />' . $SQL;
 
-		$myrow = DB_fetch_array($result);
+		$MyRow = DB_fetch_array($Result);
 
-		$_POST['NoteID'] = $myrow['noteid'];
-		$_POST['Note']	= $myrow['note'];
-		$_POST['Href']  = $myrow['href'];
-		$_POST['NoteDate']  = ConvertSQLDate($myrow['date']);
-		$_POST['Priority']  = $myrow['priority'];
-		$_POST['typeid']  = $myrow['typeid'];
+		$_POST['NoteID'] = $MyRow['noteid'];
+		$_POST['Note']	= $MyRow['note'];
+		$_POST['Href']  = $MyRow['href'];
+		$_POST['NoteDate']  = ConvertSQLDate($MyRow['date']);
+		$_POST['Priority']  = $MyRow['priority'];
+		$_POST['typeid']  = $MyRow['typeid'];
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
 		echo '<input type="hidden" name="Con_ID" value="' . $_POST['NoteID'] . '" />';
 		echo '<input type="hidden" name="DebtorType" value="' . $_POST['typeid'] . '" />';

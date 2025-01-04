@@ -74,10 +74,10 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['TypeName'] . "')";
 
 
-		$msg = _('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . _('has been created');
+		$Msg = _('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . _('has been created');
 		$CheckSQL = "SELECT count(typeid) FROM suppliertype";
 		$Result = DB_query($CheckSQL);
-		$row = DB_fetch_row($Result);
+		$Row = DB_fetch_row($Result);
 	}
 
 	if ( $InputError !=1) {

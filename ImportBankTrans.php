@@ -34,8 +34,8 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	$ErrMsg = _('The bank accounts set up could not be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the bank accounts was') . '<br />' . $SQL;
-	$result = DB_query($SQL,$ErrMsg,$DbgMsg);
-	if (DB_num_rows($result) ==0) {
+	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
+	if (DB_num_rows($Result) ==0) {
 		prnMsg(_('There are no bank accounts defined that are set up to allow importation of bank statement transactions. First define the file format used by your bank for statement exports.'),'error');
 		echo '<br /><a href="BankAccounts.php>' . _('Setup Import Format for Bank Accounts') . '</a>';
 		include('includes/footer.php');
@@ -49,7 +49,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 				 <label for="ImportFormat">' .  _('Bank Account to Import Transaction For') . '</label>
 	             <select name="ImportFormat">';
 
-				while ($MyRow = DB_fetch_array($result)) {
+				while ($MyRow = DB_fetch_array($Result)) {
 					// Lists bank accounts order by bankaccountname
 					echo '<option value="', $MyRow['importformat'], '">', $MyRow['bankaccountname'], '</option>';
 				}
@@ -67,7 +67,7 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 } elseif (isset($_POST['Import'])) {
 
-	$result	= $_FILES['ImportFile']['error'];
+	$Result	= $_FILES['ImportFile']['error'];
  	$ReadTheFile = 'Yes'; //Assume all is well to start off with
 
 	 //But check for the worst
@@ -124,12 +124,12 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 
 	$ErrMsg = _('Could not retrieve bank accounts that match with the statement being imported');
 
-	$result = DB_query($SQL,$ErrMsg);
-	if (DB_num_rows($result)==0) { //but check for the worst!
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result)==0) { //but check for the worst!
 		//there is no bank account set up for the bank account being imported
 		prnMsg(_('The account') . ' ' . $_SESSION['Statement']->AccountNumber . ' ' . _('is not defined as a bank account of the business. No imports can be processed'), 'warn');
 	} else {
-		$BankAccountRow = DB_fetch_array($result);
+		$BankAccountRow = DB_fetch_array($Result);
 		$_SESSION['Statement']->BankGLAccount = $BankAccountRow['accountcode'];
 		$_SESSION['Statement']->BankAccountName = $BankAccountRow['bankaccountname'];
 		$_SESSION['Statement']->CurrDecimalPlaces = $BankAccountRow['decimalplaces'];
@@ -142,9 +142,9 @@ if (!isset($_FILES['ImportFile']) AND !isset($_SESSION['Statement'])) {
 					WHERE transdate='" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "'
 					AND amount='" . $_SESSION['Trans'][$i]->Amount . "'
 					AND bankact='" . $_SESSION['Statement']->BankGLAccount . "'";
-			$result = DB_query($SQL,_('There was a problem identifying a matching bank transaction'));
-			if (DB_num_rows($result)>0) {
-				$MyRow = DB_fetch_array($result);
+			$Result = DB_query($SQL,_('There was a problem identifying a matching bank transaction'));
+			if (DB_num_rows($Result)>0) {
+				$MyRow = DB_fetch_array($Result);
 				$_SESSION['Trans'][$i]->BankTransID = $MyRow['banktransid'];
 			}
 		}
@@ -183,7 +183,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 				$InsertBankTrans = true;
 			} elseif ($_SESSION['Trans'][$i]->BankTransID!=0) {
 				//Update the banktrans to show it has cleared the bank
-				$result = DB_query("UPDATE banktrans SET amountcleared=amount
+				$Result = DB_query("UPDATE banktrans SET amountcleared=amount
 									WHERE banktransid = '" . $_SESSION['Trans'][$i]->BankTransID . "'",
 									_('Could not update the bank transaction as cleared'),
 									_('The SQL that failed to update the bank transaction as cleared was'),
@@ -199,7 +199,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 					$TransType = 12;
 					$TransNo = GetNextTransNo(12); //debtors receipt
 					/* First insert the debtortrans record */
-					$result = DB_query("INSERT INTO debtortrans (transno,
+					$Result = DB_query("INSERT INTO debtortrans (transno,
 																type,
 																debtorno,
 																trandate,
@@ -223,7 +223,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 											_('The SQL used to insert the debtortrans was'),
 											true);
 					/*Now update the debtors master for the last payment date */
-					$result = DB_query("UPDATE debtorsmaster
+					$Result = DB_query("UPDATE debtorsmaster
 										SET lastpaiddate = '" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 											lastpaid='" . $_SESSION['Trans'][$i]->Amount ."'
 										WHERE debtorno='" . $_SESSION['Trans'][$i]->DebtorNo . "'",
@@ -233,7 +233,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 
 					/* Now insert the gl trans to credit debtors control and debit bank account */
 					/*First credit debtors control from CompanyRecord */
-					$result = DB_query("INSERT INTO gltrans (type,
+					$Result = DB_query("INSERT INTO gltrans (type,
 												 			typeno,
 															trandate,
 															periodno,
@@ -251,7 +251,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 										_('The SQL that failed to insert the receipt GL entry was'),
 										true);
 					/*Now debit the bank account from $_SESSION['Statement']->BankGLAccount */
-					$result = DB_query("INSERT INTO gltrans (type,
+					$Result = DB_query("INSERT INTO gltrans (type,
 												 			typeno,
 															trandate,
 															periodno,
@@ -274,7 +274,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 					$TransNo = GetNextTransNo(2);
 					foreach ($_SESSION['Trans'][$i]->GLEntries as $GLAnalysis) {
 						/*Credit each analysis account */
-						$result = DB_query("INSERT INTO gltrans (type,
+						$Result = DB_query("INSERT INTO gltrans (type,
 													 			typeno,
 																trandate,
 																periodno,
@@ -294,7 +294,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 
 					} //end loop around GLAnalysis
 					/*Now debit the bank account from $_SESSION['Statement']->BankGLAccount */
-					$result = DB_query("INSERT INTO gltrans (type,
+					$Result = DB_query("INSERT INTO gltrans (type,
 												 			typeno,
 															trandate,
 															periodno,
@@ -316,7 +316,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 				if ($_SESSION['Trans'][$i]->SupplierID!='') { //its a supplier payment
 					$TransType = 22;
 					$TransNo = GetNextTransNo(22);
-					$result = DB_query("INSERT INTO supptrans (transno,
+					$Result = DB_query("INSERT INTO supptrans (transno,
 																type,
 																supplierno,
 																trandate,
@@ -340,7 +340,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 											_('The SQL used to insert the supptrans was'),
 											true);
 					/*Now update the suppliers master for the last payment date */
-					$result = DB_query("UPDATE suppliers
+					$Result = DB_query("UPDATE suppliers
 										SET lastpaiddate = '" . FormatDateForSQL($_SESSION['Trans'][$i]->ValueDate) . "',
 											lastpaid='" . $_SESSION['Trans'][$i]->Amount ."'
 										WHERE supplierid='" . $_SESSION['Trans'][$i]->SupplierID . "'",
@@ -349,7 +349,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 										true);
 					/* Now insert the gl trans to debit creditors control and credit bank account */
 					/*First debit creditors control from CompanyRecord */
-					$result = DB_query("INSERT INTO gltrans (type,
+					$Result = DB_query("INSERT INTO gltrans (type,
 												 			typeno,
 															trandate,
 															periodno,
@@ -368,7 +368,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 										true);
 					/*Now credit the bank account from $_SESSION['Statement']->BankGLAccount
 					 * note payments are recorded as negatives in the import */
-					$result = DB_query("INSERT INTO gltrans (type,
+					$Result = DB_query("INSERT INTO gltrans (type,
 												 			typeno,
 															trandate,
 															periodno,
@@ -392,7 +392,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 					$TransNo = GetNextTransNo(1);
 					foreach ($_SESSION['Trans'][$i]->GLEntries as $GLAnalysis) {
 						/*Debit each analysis account  note payments are recorded as negative so need negative negative to make a debit (positive)*/
-						$result = DB_query("INSERT INTO gltrans (type,
+						$Result = DB_query("INSERT INTO gltrans (type,
 													 			typeno,
 																trandate,
 																periodno,
@@ -413,7 +413,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 					} //end loop around GLAnalysis
 					/*Now credit the gl account from $_SESSION['Statement']->BankGLAccount
 					 * Note payments are negatives*/
-					$result = DB_query("INSERT INTO gltrans (type,
+					$Result = DB_query("INSERT INTO gltrans (type,
 												 			typeno,
 															trandate,
 															periodno,
@@ -437,7 +437,7 @@ if (isset($_POST['ProcessBankTrans'])) {
 			/* Now insert the bank transaction if necessary */
 			/* it is not possible to import transaction that were originally in another currency converted to the currency of the bank account by the bank - these entries would need to be done through the usual method */
 
-				$result=DB_query("INSERT INTO banktrans (transno,
+				$Result=DB_query("INSERT INTO banktrans (transno,
 														type,
 														bankact,
 														ref,

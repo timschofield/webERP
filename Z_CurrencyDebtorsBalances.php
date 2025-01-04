@@ -11,7 +11,7 @@ echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.
 	_('Show Local Currency Total Debtors Balances') . '" /> ' .// Icon title.
 	_('Debtors Balances By Currency Totals') . '</p>';// Page title.
 
-$sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
+$SQL = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance,
 		currcode,
 		decimalplaces AS currdecimalplaces,
 		SUM((ovamount+ovgst+ovdiscount+ovfreight-alloc)/debtortrans.rate) AS localbalance
@@ -21,23 +21,23 @@ $sql = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance
 	ON debtorsmaster.currcode=currencies.currabrev
 	WHERE (ovamount+ovgst+ovdiscount+ovfreight-alloc)<>0 GROUP BY currcode";
 
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 
 $LocalTotal =0;
 
 echo '<table>';
 
-while ($myrow=DB_fetch_array($result)){
+while ($MyRow=DB_fetch_array($Result)){
 
 	echo '<tr>
 			<td>' . _('Total Debtor Balances in') . ' </td>
-			<td>' . $myrow['currcode'] . '</td>
-			<td class="number">' . locale_number_format($myrow['currencybalance'],$myrow['currdecimalplaces']) . '</td>
+			<td>' . $MyRow['currcode'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['currencybalance'],$MyRow['currdecimalplaces']) . '</td>
 			<td>' . _('in') . ' ' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
-			<td class="number">' . locale_number_format($myrow['localbalance'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($MyRow['localbalance'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
-	$LocalTotal += $myrow['localbalance'];
+	$LocalTotal += $MyRow['localbalance'];
 }
 
 echo '<tr>

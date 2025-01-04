@@ -155,7 +155,7 @@ class WOItem {
 
 	function __construct($StockId, $Comments, $QuantityRequired, $QuantityReceived, $NextLotSerialNumber, $LocationCode, $NumberOfItems) {
 
-		$StockResult = DB_query("SELECT stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost,
+		$StockResult = DB_query("SELECT stockmaster.actualcost AS cost,
 										stockmaster.description,
 										stockmaster.decimalplaces,
 										stockmaster.controlled,
@@ -190,16 +190,14 @@ class WOItem {
 										bom.autoissue,
 										description,
 										decimalplaces,
-										stockmaster.materialcost,
-										stockmaster.labourcost,
-										stockmaster.overheadcost
+										stockmaster.actualcost
 									FROM bom
 									INNER JOIN stockmaster
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $StockId . "'
 										AND bom.loccode='" . $LocationCode . "'");
 		while ($BOMRow = DB_fetch_array($BOMResult)) {
-			$this->AddRequirements($BOMRow['component'], $BOMRow['quantity'] * $QuantityRequired, $BOMRow['materialcost'] + $BOMRow['labourcost'] + $BOMRow['overheadcost'], $BOMRow['autoissue'], $BOMRow['description'], $BOMRow['decimalplaces']);
+			$this->AddRequirements($BOMRow['component'], $BOMRow['quantity'] * $QuantityRequired, $BOMRow['actualcost'], $BOMRow['autoissue'], $BOMRow['description'], $BOMRow['decimalplaces']);
 		}
 	}
 

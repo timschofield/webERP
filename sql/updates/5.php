@@ -351,6 +351,9 @@ NewMenuItem('Utilities', 'Maintenance', _('Re-calculate brought forward amounts 
 NewMenuItem('Utilities', 'Maintenance', _('Re-Post all GL transactions from a specified period'), '/Z_RePostGLFromPeriod.php', 11);
 NewMenuItem('Utilities', 'Maintenance', _('Purge all old prices'), '/Z_DeleteOldPrices.php', 12);
 NewMenuItem('Utilities', 'Maintenance', _('Remove all purchase back orders'), '/Z_RemovePurchaseBackOrders.php', 13);
-UpdateDBNo(basename(__FILE__, '.php'), _('Move the menu and module strings to the database'));
+
+if ($_SESSION['Updates']['Errors'] == 0) {
+	UpdateDBNo(basename(__FILE__, '.php'), _('Move the menu and module strings to the database'));
+}
 
 ?>

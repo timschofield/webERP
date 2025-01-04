@@ -206,9 +206,9 @@ if (isset($_POST['CreateTemplate'])){
 		   $Recipients = array('"Submissions" <submissions@weberp.org>');
 		   $mail = new htmlMimeMail();
 		   $Host = $_SERVER['HTTP_HOST'];
-		   $attachment = $mail->getFile( '//'.$Host.$RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql');
+		   $Attachment = $mail->getFile( '//'.$Host.$RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/reports/' . $_POST['TemplateName'] .'.sql');
 		   $mail->setText('Please find company template ' . $_POST['TemplateName']);
-		   $mail->addAttachment($attachment, 'CompanyTemplate.sql', 'application/txt');
+		   $mail->addAttachment($Attachment, 'CompanyTemplate.sql', 'application/txt');
 		   $mail->setSubject('Company Template Submission');
 		   if($_SESSION['SmtpSetting']==0){
 		 	 $mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');

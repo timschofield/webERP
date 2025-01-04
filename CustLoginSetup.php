@@ -21,13 +21,13 @@ if (!isset($_SESSION['CustomerID'])){
 
 echo '<a href="' . $RootPath . '/SelectCustomer.php">' . _('Back to Customers') . '</a><br />';
 
-$sql="SELECT name
+$SQL="SELECT name
 		FROM debtorsmaster
 		WHERE debtorno='".$_SESSION['CustomerID']."'";
 
-$result=DB_query($sql);
-$myrow=DB_fetch_array($result);
-$CustomerName=$myrow['name'];
+$Result=DB_query($SQL);
+$MyRow=DB_fetch_array($Result);
+$CustomerName=$MyRow['name'];
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Customer') . ' : ' . $_SESSION['CustomerID'] . ' - ' . $CustomerName. _(' has been selected') .
@@ -58,35 +58,36 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
-	} elseif ((mb_strlen($_POST['Cust'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {
+	} elseif ((mb_strlen($_SESSION['CustomerID'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
 
 	if ((mb_strlen($_POST['BranchCode'])>0) AND ($InputError !=1)) {
 		// check that the entered branch is valid for the customer code
-		$sql = "SELECT defaultlocation
+		$SQL = "SELECT defaultlocation
 				FROM custbranch
 				WHERE debtorno='" . $_SESSION['CustomerID'] . "'
 				AND branchcode='" . $_POST['BranchCode'] . "'";
 
 		$ErrMsg = _('The check on validity of the customer code and branch failed because');
 		$DbgMsg = _('The SQL that was used to check the customer code and branch was');
-		$result = DB_query($sql,$ErrMsg,$DbgMsg);
+		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-		if (DB_num_rows($result)==0){
+		if (DB_num_rows($Result)==0){
 			prnMsg(_('The entered Branch Code is not valid for the entered Customer Code'),'error');
 			$InputError = 1;
 		} else {
-			$myrow = DB_fetch_row($result);
-			$InventoryLocation = $myrow[0];
+			$MyRow = DB_fetch_row($Result);
+			$InventoryLocation = $MyRow[0];
 	}
 
 	if ($InputError !=1) {
 
-		$sql = "INSERT INTO www_users (userid,
+		$SQL = "INSERT INTO www_users (userid,
 										realname,
 										customerid,
+										salesman,
 										branchcode,
 										password,
 										phone,
@@ -101,6 +102,7 @@ if (isset($_POST['submit'])) {
 									VALUES ('" . $_POST['UserID'] . "',
 											'" . $_POST['RealName'] ."',
 											'" . $_SESSION['CustomerID'] ."',
+											'',
 											'" . $_POST['BranchCode'] ."',
 											'" . CryptPass($_POST['Password']) ."',
 											'" . $_POST['Phone'] . "',
@@ -108,14 +110,14 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['PageSize'] ."',
 											'7',
 											'" . $InventoryLocation ."',
-											'1,1,0,0,0,0,0,0',
+											'1,1,0,0,0,0,0,0,0,0,0,',
 											'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 											'" . $_POST['Theme'] . "',
 											'". $_POST['UserLanguage'] ."')";
 
 			$ErrMsg = _('The user could not be added because');
 			$DbgMsg = _('The SQL that was used to insert the new user and failed was');
-			$result = DB_query($sql,$ErrMsg,$DbgMsg);
+			$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 			prnMsg( _('A new customer login has been created'), 'success' );
 			include('includes/footer.php');
 			exit;
@@ -172,20 +174,20 @@ echo '<field>
 		<label for="BranchCode">' . _('Branch Code') . ':</label>
 		<select name="BranchCode">';
 
-$sql = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
-$result = DB_query($sql);
+$SQL = "SELECT branchcode FROM custbranch WHERE debtorno = '" . $_SESSION['CustomerID'] . "'";
+$Result = DB_query($SQL);
 
-while ($myrow=DB_fetch_array($result)){
+while ($MyRow=DB_fetch_array($Result)){
 
 	//Set the first available branch as default value when nothing is selected
 	if (!isset($_POST['BranchCode'])) {
-		$_POST['BranchCode']= $myrow['branchcode'];
+		$_POST['BranchCode']= $MyRow['branchcode'];
 	}
 
-	if (isset($_POST['BranchCode']) and $myrow['branchcode'] == $_POST['BranchCode']){
-		echo '<option selected="selected" value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
+	if (isset($_POST['BranchCode']) and $MyRow['branchcode'] == $_POST['BranchCode']){
+		echo '<option selected="selected" value="' . $MyRow['branchcode'] . '">' . $MyRow['branchcode'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow['branchcode'] . '">' . $myrow['branchcode'] . '</option>';
+		echo '<option value="' . $MyRow['branchcode'] . '">' . $MyRow['branchcode'] . '</option>';
 	}
 }
 echo '</select>

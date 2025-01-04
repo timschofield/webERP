@@ -18,7 +18,7 @@ $EmailResult=DB_query($EmailSQL);
 $EmailRow=DB_fetch_array($EmailResult);
 
 if (isset($_POST['UpdateAll'])) {
-	foreach ($_POST as $key => $value) {
+	foreach ($_POST as $key => $Value) {
 		if (mb_substr($key,0,6)=='Status') {
 			$OrderNo=mb_substr($key,6);
 			$Status=$_POST['Status'.$OrderNo];
@@ -74,8 +74,8 @@ while ($MyRow=DB_fetch_array($Result)) {
 				AND currabrev='".$MyRow['currcode']."'";
 
 	$AuthResult=DB_query($AuthSQL);
-	$myauthrow=DB_fetch_array($AuthResult);
-	$AuthLevel=$myauthrow['authlevel'];
+	$MyAuthRow=DB_fetch_array($AuthResult);
+	$AuthLevel=$MyAuthRow['authlevel'];
 
 	$OrderValueSQL="SELECT sum(unitprice*quantityord) as ordervalue
 		           	FROM purchorderdetails

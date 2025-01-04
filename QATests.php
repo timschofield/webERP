@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 									active='" . $_POST['Active'] . "'
 				WHERE qatests.testid = '".$SelectedQATest."'";
 
-		$msg = _('QA Test record for') . ' ' . $_POST['QATestName'] . ' ' . _('has been updated');
+		$Msg = _('QA Test record for') . ' ' . $_POST['QATestName'] . ' ' . _('has been updated');
 	} elseif ($InputError !=1) {
 
 	/*Selected group is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new QA Test form */
@@ -101,7 +101,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Active'] . "'
 					)";
 
-		$msg = _('A new QA Test record has been added for') . ' ' . $_POST['QATestName'];
+		$Msg = _('A new QA Test record has been added for') . ' ' . $_POST['QATestName'];
 	}
 	if ($InputError !=1) {
 		//run the SQL from either of the above possibilites
@@ -109,7 +109,7 @@ if (isset($_POST['submit'])) {
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 
 		unset($SelectedQATest);
 		unset($_POST['QATestName']);
@@ -142,7 +142,7 @@ if (isset($_POST['submit'])) {
 
 		prnMsg(_('QA Test') . ' ' . $SelectedQATest . ' ' . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
-		unset($delete);
+		unset($Delete);
 		unset ($_GET['delete']);
 	}
 }

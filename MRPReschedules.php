@@ -20,41 +20,41 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addInfo('Subject',_('MRP Reschedules'));
 	$FontSize=9;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
 /*Find mrpsupplies records where the duedate is not the same as the mrpdate */
-	$selecttype = " ";
+	$SelectType = " ";
 	if ($_POST['Selection'] != 'All') {
-		 $selecttype = " AND ordertype = '" . $_POST['Selection'] . "'";
+		 $SelectType = " AND ordertype = '" . $_POST['Selection'] . "'";
 	 }
-	$sql = "SELECT mrpsupplies.*,
+	$SQL = "SELECT mrpsupplies.*,
 				   stockmaster.description,
 				   stockmaster.decimalplaces
 			  FROM mrpsupplies,stockmaster
 			  WHERE mrpsupplies.part = stockmaster.stockid AND duedate <> mrpdate
-				 $selecttype
+				 $SelectType
 			  ORDER BY mrpsupplies.part";
-	$result = DB_query($sql,'','',false,true);
+	$Result = DB_query($SQL,'','',false,true);
 
 	if (DB_error_no() !=0) {
 	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.php');
 	   prnMsg( _('The MRP reschedules could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
-		  echo '<br />' . $sql;
+	   if ($Debug==1){
+		  echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
 	   exit;
 	}
 
-	if (DB_num_rows($result) == 0) {
+	if (DB_num_rows($Result) == 0) {
 	  $Title = _('MRP Reschedules') . ' - ' . _('Problem Report');
 	  include('includes/header.php');
 	   prnMsg( _('No MRP reschedule retrieved'), 'warn');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
-		echo '<br />' . $sql;
+	   if ($Debug==1){
+		echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
 	   exit;
@@ -63,37 +63,37 @@ if (isset($_POST['PrintPDF'])) {
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 					   $Right_Margin);
 	$Tot_Val=0;
-	$fill = false;
+	$Fill = false;
 	$pdf->SetFillColor(224,235,255);
-	While ($myrow = DB_fetch_array($result)){
+	While ($MyRow = DB_fetch_array($Result)){
 
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 		$FontSize=8;
 
-		$FormatedDueDate = ConvertSQLDate($myrow['duedate']);
-		$FormatedMRPDate = ConvertSQLDate($myrow['mrpdate']);
-		if ($myrow['mrpdate'] == '2050-12-31') {
+		$FormatedDueDate = ConvertSQLDate($MyRow['duedate']);
+		$FormatedMRPDate = ConvertSQLDate($MyRow['mrpdate']);
+		if ($MyRow['mrpdate'] == '2050-12-31') {
 			$FormatedMRPDate = 'Cancel';
 		}
 
 		// Use to alternate between lines with transparent and painted background
 		if ($_POST['Fill'] == 'yes'){
-			$fill=!$fill;
+			$Fill=!$Fill;
 		}
 
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width
 		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 		// and False to set to transparent
-		$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$myrow['part'],'',0,$fill);
-		$pdf->addTextWrap(130,$YPos,200,$FontSize,$myrow['description'],'',0,$fill);
-		$pdf->addTextWrap(330,$YPos,50,$FontSize,$myrow['orderno'],'right',0,$fill);
-		$pdf->addTextWrap(380,$YPos,30,$FontSize,$myrow['ordertype'],'right',0,$fill);
-		$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($myrow['supplyquantity'], $myrow['decimalplaces']),'right',0,$fill);
-		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedDueDate,'right',0,$fill);
-		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedMRPDate,'right',0,$fill);
+		$pdf->addTextWrap($Left_Margin,$YPos,90,$FontSize,$MyRow['part'],'',0,$Fill);
+		$pdf->addTextWrap(130,$YPos,200,$FontSize,$MyRow['description'],'',0,$Fill);
+		$pdf->addTextWrap(330,$YPos,50,$FontSize,$MyRow['orderno'],'right',0,$Fill);
+		$pdf->addTextWrap(380,$YPos,30,$FontSize,$MyRow['ordertype'],'right',0,$Fill);
+		$pdf->addTextWrap(410,$YPos,50,$FontSize,locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']),'right',0,$Fill);
+		$pdf->addTextWrap(460,$YPos,55,$FontSize,$FormatedDueDate,'right',0,$Fill);
+		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedMRPDate,'right',0,$Fill);
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 					   $Right_Margin);
 		}
@@ -101,9 +101,9 @@ if (isset($_POST['PrintPDF'])) {
 	} /*end while loop */
 
 	$FontSize =10;
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 					   $Right_Margin);
 	}
@@ -156,7 +156,7 @@ if (isset($_POST['PrintPDF'])) {
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin) {
 
-$line_height=12;
+$LineHeight=12;
 /*PDF page header for MRP Reschedule report */
 if ($PageNumber>1){
 	$pdf->newPage();
@@ -167,16 +167,16 @@ $YPos= $Page_Height-$Top_Margin;
 
 $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-$YPos -=$line_height;
+$YPos -=$LineHeight;
 
 $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('MRP Reschedule Report'));
 $pdf->addTextWrap($Page_Width-$Right_Margin-115,$YPos,160,$FontSize,_('Printed') . ': ' .
 	 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
-$YPos -=$line_height;
+$YPos -=$LineHeight;
 $pdf->addTextWrap($Left_Margin,$YPos,70,$FontSize,_('Selection:'));
 $pdf->addTextWrap(90,$YPos,15,$FontSize,$_POST['Selection']);
 
-$YPos -=(2*$line_height);
+$YPos -=(2*$LineHeight);
 
 /*set up the headings */
 $Xpos = $Left_Margin+1;
@@ -190,7 +190,7 @@ $pdf->addTextWrap(460,$YPos,55,$FontSize,_('Order Date'), 'right');
 $pdf->addTextWrap(515,$YPos,50,$FontSize,_('MRP Date'), 'right');
 
 $FontSize=8;
-$YPos =$YPos - (2*$line_height);
+$YPos =$YPos - (2*$LineHeight);
 $PageNumber++;
 } // End of PrintHeader function
 ?>

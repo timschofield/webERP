@@ -162,11 +162,11 @@ if (isset($_POST['ProcessStockChange'])){
 
 		echo '<br />' . _('Changing any image files');
 		$SupportedImgExt = array('png','jpg','jpeg');
-		foreach ($SupportedImgExt as $ext) {
-			$file = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $ext;
-			if (file_exists ($file) ) {
-				if (rename($file,
-					$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'] . '.' . $ext)) {
+		foreach ($SupportedImgExt as $Ext) {
+			$File = $_SESSION['part_pics_dir'] . '/' . $_POST['OldStockID'] . '.' . $Ext;
+			if (file_exists ($File) ) {
+				if (rename($File,
+					$_SESSION['part_pics_dir'] . '/' .$_POST['NewStockID'] . '.' . $Ext)) {
 					echo ' ... ' . _('completed');
 				} else {
 					echo ' ... ' . _('failed');

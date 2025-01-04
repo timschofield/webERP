@@ -3484,7 +3484,7 @@
 
 //  Generate the HTMLised description string for each API.
 
-function apiBuildDocHTML( $description, $parameter, $return )
+function apiBuildDocHTML( $description, $parameter, $Return )
 {
 	$doc = '<tr><td><b><u>' . _('Description') . '</u></b></td><td colspan=2>' .$description . '</td></tr>
 			<tr><td valign="top"><b><u>' . _('Parameters') . '</u></b></td>';
@@ -3493,8 +3493,8 @@ function apiBuildDocHTML( $description, $parameter, $return )
 			$parameter[$ii]['description'] . '</td></tr>';
 	}
 	$doc .= '<tr><td valign="top"><b><u>' . _('Return Value');
-	for ($ii=0; $ii<sizeof($return); $ii++) {
-		$doc .= '<td valign="top">' . $return[$ii] . '</td></tr>';
+	for ($ii=0; $ii<sizeof($Return); $ii++) {
+		$doc .= '<td valign="top">' . $Return[$ii] . '</td></tr>';
 	}
 	$doc .= '</table>';
 

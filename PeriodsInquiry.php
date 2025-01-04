@@ -36,10 +36,10 @@ for ($i=0;$i<3;$i++) {
 	echo $TableHeader;
 	$j=0;
 
-	while ($myrow=DB_fetch_array($PeriodsResult)){
+	while ($MyRow=DB_fetch_array($PeriodsResult)){
 		echo '<tr class="striped_row">
-				<td>' . $myrow['periodno'] . '</td>
-			  <td>' . ConvertSQLDate($myrow['lastdate_in_period']) . '</td>
+				<td>' . $MyRow['periodno'] . '</td>
+			  <td>' . ConvertSQLDate($MyRow['lastdate_in_period']) . '</td>
 			</tr>';
 		$j++;
 		if ($j==$PeriodsInTable){

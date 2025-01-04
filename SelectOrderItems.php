@@ -257,7 +257,7 @@ if (isset($_GET['ModifyOrderNumber'])
 									stockmaster.mbflag,
 									stockmaster.discountcategory,
 									stockmaster.decimalplaces,
-									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+									stockmaster.actualcost AS standardcost,
 									salesorderdetails.completed
 								FROM salesorderdetails INNER JOIN stockmaster
 								ON salesorderdetails.stkcode = stockmaster.stockid
@@ -465,7 +465,7 @@ if (isset($SelectedCustomer)) {
 
 			prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg( _('The SQL that failed to get the branch details was') . ':<br />' . $SQL . 'warning');
 			}
 			include('includes/footer.php');
@@ -605,15 +605,13 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<input type="text" autofocus="autofocus" name="CustKeywords" size="20" maxlength="25" title="" />
 				<fieldhelp>' . _('Enter a text extract of the customer\'s name, then click Search Now to find customers matching the entered name') . '</fieldhelp>
 			</field>
-			<h3>' . _('OR') . '</h3>
 			<field>
-				<label for="CustCode">' . _('Part of the Customer Branch Code') . ':</label>
+				<label for="CustCode">' . '<b>' . _('OR') . ' </b>' . _('Part of the Customer Branch Code') . ':</label>
 				<input type="text" name="CustCode" size="15" maxlength="18" title="" />
 				<fieldhelp>' . _('Enter a part of a customer code that you wish to search for then click the Search Now button to find matching customers') . '</fieldhelp>
 			</field>
-			<h3>' . _('OR') . '</h3>
 			<field>
-				<label for="CustPhone">' . _('Part of the Branch Phone Number') . ':</label>
+				<label for="CustPhone">' . '<b>' . _('OR') . ' </b>' . _('Part of the Branch Phone Number') . ':</label>
 				<input type="text" name="CustPhone" size="15" maxlength="18" title=""/>
 				<fieldhelp>' . _('Enter a part of a customer\'s phone number that you wish to search for then click the Search Now button to find matching customers') . '</fieldhelp>
 			</field>
@@ -732,7 +730,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '</b><br />' . _('Terms') . ':<b> ' . $_SESSION['Items'.$identifier]->PaymentTerms;
 		echo '</b></div>';
 	}
-	$msg ='';
+	$Msg ='';
 	if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Previous'])){
 		if(!empty($_POST['RawMaterialFlag'])){
 			$RawMaterialSellable = " OR stockcategory.stocktype='M'";
@@ -748,11 +746,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		}
 
 		if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
-			$msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
+			$Msg='<div class="page_help_text">' . _('Order Item description has been used in search') . '.</div>';
 		} elseif ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
-			$msg='<div class="page_help_text">' . _('Stock Code has been used in search') . '.</div>';
+			$Msg='<div class="page_help_text">' . _('Stock Code has been used in search') . '.</div>';
 		} elseif ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-			$msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
+			$Msg='<div class="page_help_text">' . _('Stock Category has been used in search') . '.</div>';
 		}
 		$SQL = "SELECT stockmaster.stockid,
 						stockmaster.description,
@@ -1298,11 +1296,11 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 	/* Run through each line of the order and work out the appropriate discount from the discount matrix */
 	$DiscCatsDone = array();
-	$counter =0;
+	$Counter =0;
 	foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
 
 		if ($OrderLine->DiscCat !="" AND ! in_array($OrderLine->DiscCat,$DiscCatsDone)){
-			$DiscCatsDone[$counter]=$OrderLine->DiscCat;
+			$DiscCatsDone[$Counter]=$OrderLine->DiscCat;
 			$QuantityOfDiscCat =0;
 
 			foreach ($_SESSION['Items'.$identifier]->LineItems as $StkItems_2) {
@@ -1441,9 +1439,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<td rowspan="2"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
 			if ($_SESSION['AllowOrderLineItemNarrative'] == 1){
-				$varColSpan=8+$ShowPOLine+$ShowDiscountGP;
+				$VarColSpan=8+$ShowPOLine+$ShowDiscountGP;
 				echo $RowStarter .
-						'<td colspan="' . $varColSpan . '">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
+						'<td colspan="' . $VarColSpan . '">' . _('Narrative') . ':<textarea name="Narrative_' . $OrderLine->LineNumber . '" cols="100%" rows="1" title="' . _('Enter any narrative to describe to the customer the nature of the charge for this line') . '" >' . stripslashes(AddCarriageReturns($OrderLine->Narrative)) . '</textarea><br /></td>
 					</tr>';
 			} else {
 				echo '<tr>
@@ -1463,10 +1461,10 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		} else {
 			$ColSpanNumber = 1;
 		}*/
-		$varColSpan=1+$ShowPOLine+$ShowDiscountGP;
+		$VarColSpan=1+$ShowPOLine+$ShowDiscountGP;
 		echo '<tr class="striped_row">
 				<td class="number" colspan="6"><b>' . _('TOTAL Excl Tax/Freight') . '</b></td>
-				<td colspan="' . $varColSpan . '" class="number"><b>' . $DisplayTotal . '</b></td>
+				<td colspan="' . $VarColSpan . '" class="number"><b>' . $DisplayTotal . '</b></td>
 			</tr>
 			</table>';
 
@@ -1612,7 +1610,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				</tr>
 				</table>';
 		} //end of if Frequently Ordered Items > 0
-		echo '<div class="centre">' . $msg;
+		echo '<div class="centre">' . $Msg;
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ';
 		echo _('Search for Order Items') . '</p></div>';
 		echo '<div class="page_help_text">' . _('Search for Order Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div><br />';
@@ -1656,9 +1654,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		echo '" />
 			</field>';
 
-		echo '<h3>' . _('OR') .  '</h3>';
 		echo '<field>
-				<label for="PartSearch"> ' . _('Enter extract of the Stock Code') . ':</label>
+				<label for="PartSearch"> ' . '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
 				<input type="text" ' . (!isset($_POST['PartSearch']) ? 'autofocus="autofocus"' :'') . ' name="StockCode" size="15" maxlength="18" value="';
 
 		if (isset($_POST['StockCode'])) {

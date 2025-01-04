@@ -102,7 +102,7 @@ $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-echo '<table class="selection"><tbody>';
+echo '<table class="selection">';
 	echo '<thead>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
@@ -177,7 +177,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $MyRow['loccode']);
 
-		$InTransitSQL="SELECT SUM(shipqty-recqty) as intransit
+		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND shiploc='".$MyRow['loccode']."'";
@@ -189,7 +189,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 			$InTransitQuantityOut=0;
 		}
 
-		$InTransitSQL="SELECT SUM(-shipqty+recqty) as intransit
+		$InTransitSQL="SELECT SUM(-pendingqty) as intransit
 						FROM loctransfers
 						WHERE stockid='" . $StockID . "'
 							AND recloc='".$MyRow['loccode']."'";
@@ -291,12 +291,12 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	while ($MyRow=DB_fetch_array($MovtsResult)) {
 	  if ($LastPrice != $MyRow['price']
 			OR $LastDiscount != $MyRow['discount']) { /* consolidate price history for records with same price/discount */
-	    if (isset($qty)) {
+	    if (isset($Qty)) {
 	    	$DateRange=ConvertSQLDate($FromDate);
 	    	if ($FromDate != $ToDate) {
 	        	$DateRange .= ' - ' . ConvertSQLDate($ToDate);
 	     	}
-	    	$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
+	    	$PriceHistory[] = array($DateRange, $Qty, $LastPrice, $LastDiscount);
 	    	$k++;
 	    	if ($k > 9) {
                   break; /* 10 price records is enough to display */
@@ -308,18 +308,18 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 	    $LastPrice = $MyRow['price'];
 	    $LastDiscount = $MyRow['discountpercent'];
 	    $ToDate = $MyRow['trandate'];
-	    $qty = 0;
+	    $Qty = 0;
 	  }
-	  $qty += $MyRow['qty'];
+	  $Qty += $MyRow['qty'];
 	  $FromDate = $MyRow['trandate'];
 	} //end of while loop
 
-	if (isset($qty)) {
+	if (isset($Qty)) {
 		$DateRange = ConvertSQLDate($FromDate);
 		if ($FromDate != $ToDate) {
 	   		$DateRange .= ' - '.ConvertSQLDate($ToDate);
 		}
-		$PriceHistory[] = array($DateRange, $qty, $LastPrice, $LastDiscount);
+		$PriceHistory[] = array($DateRange, $Qty, $LastPrice, $LastDiscount);
 	}
 
 	if (isset($PriceHistory)) {

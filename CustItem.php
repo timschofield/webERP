@@ -78,7 +78,7 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 		$DbgMsg = _('The SQL that failed was');
 		$AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 		prnMsg(_('This customer data has been added to the database'), 'success');
-		unset($debtorsmasterResult);
+		unset($DebtorsMasterResult);
 	}
 	if ($InputError == 0 and isset($_POST['UpdateRecord'])) {
 		$SQL = "UPDATE custitem SET customersuom='" . $_POST['customersUOM'] . "',
@@ -91,7 +91,7 @@ if ((isset($_POST['AddRecord']) or isset($_POST['UpdateRecord'])) and isset($Deb
 		$DbgMsg = _('The SQL that failed was');
 		$UpdResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 		prnMsg(_('customer data has been updated'), 'success');
-		unset($debtorsmasterResult);
+		unset($DebtorsMasterResult);
 		unset($DebtorNo);
 	}
 
@@ -138,8 +138,8 @@ if ($Edit == false) {
 				ON debtorsmaster.currcode=currencies.currabrev
 			WHERE custitem.stockid = '" . $StockId . "'";
 	$ErrMsg = _('The customer details for the selected part could not be retrieved because');
-	$custitemResult = DB_query($SQL, $ErrMsg);
-	if (DB_num_rows($custitemResult) == 0 and $StockId != '') {
+	$CustItemResult = DB_query($SQL, $ErrMsg);
+	if (DB_num_rows($CustItemResult) == 0 and $StockId != '') {
 		prnMsg(_('There is no customer data set up for the part selected'), 'info');
 		$NoCustItemData = 1;
 	} else if ($StockId != '') {
@@ -158,7 +158,7 @@ if ($Edit == false) {
 		$CountPreferreds = 0;
 
 		echo '<tbody>';
-		while ($MyRow = DB_fetch_array($custitemResult)) {
+		while ($MyRow = DB_fetch_array($CustItemResult)) {
 
 			echo '<tr class="striped_row">
 						<td>', $MyRow['name'], '</td>
@@ -274,9 +274,9 @@ if (isset($_POST['Searchcustomer'])) {
 	} //one of keywords or cust_part was more than a zero length string
 	$ErrMsg = _('The cuswtomer matching the criteria entered could not be retrieved because');
 	$DbgMsg = _('The SQL to retrieve customer details that failed was');
-	$debtorsmasterResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	$DebtorsMasterResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 } //end of if search
-if (isset($debtorsmasterResult) and DB_num_rows($debtorsmasterResult) > 0) {
+if (isset($DebtorsMasterResult) and DB_num_rows($DebtorsMasterResult) > 0) {
 	if (isset($StockId)) {
 		$Result = DB_query("SELECT stockmaster.description,
 								stockmaster.units,
@@ -309,7 +309,7 @@ if (isset($debtorsmasterResult) and DB_num_rows($debtorsmasterResult) > 0) {
 
 	$k = 0;
 	echo '<tbody>';
-	while ($MyRow = DB_fetch_array($debtorsmasterResult)) {
+	while ($MyRow = DB_fetch_array($DebtorsMasterResult)) {
 		echo '<tr class="striped_row">
 				<td><input type="submit" name="DebtorNo" value="', $MyRow['DebtorNo'], '" /></td>
 				<td>', $MyRow['name'], '</td>
@@ -330,7 +330,7 @@ if (isset($debtorsmasterResult) and DB_num_rows($debtorsmasterResult) > 0) {
 }
 //end if results to show
 /*Show the input form for new customer details */
-if (!isset($debtorsmasterResult)) {
+if (!isset($DebtorsMasterResult)) {
 	if ($Edit == true or isset($_GET['Copy'])) {
 
 		$SQL = "SELECT custitem.debtorno,

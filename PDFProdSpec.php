@@ -68,7 +68,7 @@ If (!isset($SelectedProdSpec) OR $SelectedProdSpec==''){
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the Product Specification') . ' ' . $SelectedProdSpec . ' ' . _('from the database');
 
-$sql = "SELECT keyval,
+$SQL = "SELECT keyval,
 				description,
 				longdescription,
 				prodspecs.testid,
@@ -88,10 +88,10 @@ $sql = "SELECT keyval,
 			AND prodspecs.showonspec='1'
 			ORDER by groupby, prodspecs.testid";
 
-$result=DB_query($sql,$ErrMsg);
+$Result=DB_query($SQL,$ErrMsg);
 
 //If there are no rows, there's a problem.
-if (DB_num_rows($result)==0){
+if (DB_num_rows($Result)==0){
 	$Title = _('Print Product Specification Error');
 	include('includes/header.php');
 	 echo '<div class="centre">
@@ -124,7 +124,7 @@ $pdf->addInfo('Subject', _('Product Specification') . ' ' . $SelectedProdSpec);
 $FontSize=12;
 $PageNumber = 1;
 $HeaderPrinted=0;
-$line_height=$FontSize*1.25;
+$LineHeight=$FontSize*1.25;
 $RectHeight=12;
 $SectionHeading=0;
 $CurSection='NULL';
@@ -136,17 +136,17 @@ $SectionsArray=array(array('PhysicalProperty',3, _('Technical Data Sheet Propert
 					 array('Processing',2, _('Injection Molding Processing Guidelines'), _('* Desicant type dryer required.'), array(240,265),array(_('Setting'),_('Value')),array('left','center')),
 					 array('RegulatoryCompliance',2, _('Regulatory Compliance'), '', array(240,265),array(_('Regulatory Compliance'),_('Value')),array('left','center')));
 
-while ($myrow=DB_fetch_array($result)){
-	if ($myrow['description']=='') {
-		$myrow['description']=$myrow['keyval'];
+while ($MyRow=DB_fetch_array($Result)){
+	if ($MyRow['description']=='') {
+		$MyRow['description']=$MyRow['keyval'];
 	}
-	$Spec=$myrow['description'];
-	$SpecDesc=$myrow['longdescription'];
-	foreach($SectionsArray as $row) {
-		if ($myrow['groupby']==$row[0]) {
-			$SectionColSizes=$row[4];
-			$SectionColLabs=$row[5];
-			$SectionAlign=$row[6];
+	$Spec=$MyRow['description'];
+	$SpecDesc=$MyRow['longdescription'];
+	foreach($SectionsArray as $Row) {
+		if ($MyRow['groupby']==$Row[0]) {
+			$SectionColSizes=$Row[4];
+			$SectionColLabs=$Row[5];
+			$SectionAlign=$Row[6];
 		}
 	}
 	$TrailerPrinted=1;
@@ -155,17 +155,17 @@ while ($myrow=DB_fetch_array($result)){
 		$HeaderPrinted=1;
 	}
 
-	if ($CurSection!=$myrow['groupby']) {
+	if ($CurSection!=$MyRow['groupby']) {
 		$SectionHeading=0;
 		if ($CurSection!='NULL' AND $PrintTrailer==1) {
 			$pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 		}
 		$PrevTrailer=$SectionTrailer;
-		$CurSection=$myrow['groupby'];
-		foreach($SectionsArray as $row) {
-			if ($myrow['groupby']==$row[0]) {
-				$SectionTitle=$row[2];
-				$SectionTrailer=$row[3];
+		$CurSection=$MyRow['groupby'];
+		foreach($SectionsArray as $Row) {
+			if ($MyRow['groupby']==$Row[0]) {
+				$SectionTitle=$Row[2];
+				$SectionTrailer=$Row[3];
 			}
 		}
 	}
@@ -175,12 +175,12 @@ while ($myrow=DB_fetch_array($result)){
 		if ($PrevTrailer>'' AND $PrintTrailer==1) {
 			$PrevFontSize=$FontSize;
 			$FontSize=8;
-			$line_height=$FontSize*1.25;
+			$LineHeight=$FontSize*1.25;
 			$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$PrevTrailer,'left');
 			$FontSize=$PrevFontSize;
-			$line_height=$FontSize*1.25;
-			$YPos -= $line_height;
-			$YPos -= $line_height;
+			$LineHeight=$FontSize*1.25;
+			$YPos -= $LineHeight;
+			$YPos -= $LineHeight;
 		}
 		if ($YPos < ($Bottom_Margin + 90)){ // Begins new page
 			$PrintTrailer=0;
@@ -188,7 +188,7 @@ while ($myrow=DB_fetch_array($result)){
 			include ('includes/PDFProdSpecHeader.inc');
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos,$YPos,500,$FontSize,$SectionTitle,'center');
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		$pdf->setFont('','B');
 		$pdf->SetFillColor(200,200,200);
 		$x=0;
@@ -200,24 +200,24 @@ while ($myrow=DB_fetch_array($result)){
 			$XPos+=$ColWidth;
 		}
 		$SectionHeading=1;
-		$YPos -= $line_height;
+		$YPos -= $LineHeight;
 		$pdf->setFont('','');
 	} //$SectionHeading==0
 	$XPos=65;
 	$Value='';
-	if ($myrow['targetvalue'] > '') {
-		$Value=$myrow['targetvalue'];
-	} elseif ($myrow['rangemin'] > '' OR $myrow['rangemax'] > '') {
-		if ($myrow['rangemin'] > '' AND $myrow['rangemax'] == '') {
-			$Value='> ' . $myrow['rangemin'];
-		} elseif ($myrow['rangemin']== '' AND $myrow['rangemax'] > '') {
-			$Value='< ' . $myrow['rangemax'];
+	if ($MyRow['targetvalue'] > '') {
+		$Value=$MyRow['targetvalue'];
+	} elseif ($MyRow['rangemin'] > '' OR $MyRow['rangemax'] > '') {
+		if ($MyRow['rangemin'] > '' AND $MyRow['rangemax'] == '') {
+			$Value='> ' . $MyRow['rangemin'];
+		} elseif ($MyRow['rangemin']== '' AND $MyRow['rangemax'] > '') {
+			$Value='< ' . $MyRow['rangemax'];
 		} else {
-			$Value=$myrow['rangemin'] . ' - ' . $myrow['rangemax'];
+			$Value=$MyRow['rangemin'] . ' - ' . $MyRow['rangemax'];
 		}
 	}
 	if (strtoupper($Value) <> 'NB' AND strtoupper($Value) <> 'NO BREAK') {
-		$Value.= ' ' . $myrow['units'];
+		$Value.= ' ' . $MyRow['units'];
 	}
 	$x=0;
 
@@ -227,20 +227,20 @@ while ($myrow=DB_fetch_array($result)){
 		$ColAlign=$SectionAlign[$x];
 		switch ($x) {
 			case 0;
-				$DispValue=$myrow['name'];
+				$DispValue=$MyRow['name'];
 				break;
 			case 1;
 				$DispValue=$Value;
 				break;
 			case 2;
-				$DispValue=$myrow['method'];
+				$DispValue=$MyRow['method'];
 				break;
 		}
 		$LeftOvers = $pdf->addTextWrap($XPos+1,$YPos,$ColWidth,$FontSize,$DispValue,$ColAlign,1);
 		$XPos+=$ColWidth;
 		$x++;
 	}
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$XPos=65;
 	$PrintTrailer=1;
 	if ($YPos < ($Bottom_Margin + 80)){ // Begins new page
@@ -256,12 +256,12 @@ $pdf->line($XPos+1, $YPos+$RectHeight,$XPos+506, $YPos+$RectHeight);
 if ($SectionTrailer>'') {
 	$PrevFontSize=$FontSize;
 	$FontSize=8;
-	$line_height=$FontSize*1.25;
+	$LineHeight=$FontSize*1.25;
 	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$SectionTrailer,'left');
 	$FontSize=$PrevFontSize;
-	$line_height=$FontSize*1.25;
-	$YPos -= $line_height;
-	$YPos -= $line_height;
+	$LineHeight=$FontSize*1.25;
+	$YPos -= $LineHeight;
+	$YPos -= $LineHeight;
 }
 if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 	$PageNumber++;
@@ -269,21 +269,21 @@ if ($YPos < ($Bottom_Margin + 85)){ // Begins new page
 }
 $Disclaimer= _('The information provided on this datasheet should only be used as a guideline. Actual lot to lot values will vary.');
 $FontSize=8;
-$line_height=$FontSize*1.25;
-$YPos -= $line_height;
+$LineHeight=$FontSize*1.25;
+$YPos -= $LineHeight;
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
-$YPos -= $line_height;
-$YPos -= $line_height;
-$sql = "SELECT confvalue
+$YPos -= $LineHeight;
+$YPos -= $LineHeight;
+$SQL = "SELECT confvalue
 			FROM config
 			WHERE confname='QualityProdSpecText'";
 
-$result=DB_query($sql,$ErrMsg);
-$myrow=DB_fetch_array($result);
-$Disclaimer=$myrow[0];
+$Result=DB_query($SQL,$ErrMsg);
+$MyRow=DB_fetch_array($Result);
+$Disclaimer=$MyRow[0];
 $LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize,$Disclaimer);
 while (mb_strlen($LeftOvers) > 1) {
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$LeftOvers = $pdf->addTextWrap($XPos+5,$YPos,500,$FontSize, $LeftOvers, 'left');
 }
 

@@ -87,10 +87,10 @@ if (isset($_POST['submit'])) {
 		$_POST['X_DefaultDisplayRecordsMax'] < 1 ) {
 		$InputError = 1;
 		prnMsg(_('Default maximum number of records to display must be between 1 and 500'),'error');
-	}elseif (mb_strlen($_POST['X_MaxImageSize']) > 3 OR !is_numeric($_POST['X_MaxImageSize']) OR
+	}elseif (mb_strlen($_POST['X_MaxImageSize']) > 4 OR !is_numeric($_POST['X_MaxImageSize']) OR
 		$_POST['X_MaxImageSize'] < 1 ) {
 		$InputError = 1;
-		prnMsg(_('The maximum size of item image files must be between 50 and 500 (NB this figure refers to KB)'),'error');
+		prnMsg(_('The maximum size of item image files must be between 1 KB and 9999 KB'),'error');
 	}elseif (!IsEmailAddress($_POST['X_FactoryManagerEmail'])){
 		$InputError = 1;
 		prnMsg(_('The Factory Manager Email address does not appear to be valid'),'error');
@@ -126,18 +126,18 @@ if (isset($_POST['submit'])) {
 		}
 		if($DefaultTheme != $_POST['X_DefaultTheme']) {// If not equal, update the default theme.
 			// BEGIN: Update the config.php file:
-			$fhandle = fopen('config.php', 'r');
-			if($fhandle) {
-				$content = fread($fhandle, filesize('config.php'));
-				$content = str_replace(' ;\n', ';\n', $content);// Clean space before the end-of-php-line.
-				$content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $content);
-				$fhandle = fopen('config.php','w');
-				if(!fwrite($fhandle,$content)) {
+			$FileHandle = fopen('config.php', 'r');
+			if($FileHandle) {
+				$Content = fread($FileHandle, filesize('config.php'));
+				$Content = str_replace(' ;\n', ';\n', $Content);// Clean space before the end-of-php-line.
+				$Content = str_replace('\''.$DefaultTheme .'\';', '\''.$_POST['X_DefaultTheme'].'\';', $Content);
+				$FileHandle = fopen('config.php','w');
+				if(!fwrite($FileHandle,$Content)) {
 					prnMsg(_('Cannot write to the configuration file.'), 'error');
 				} else {
 					prnMsg(_('The configuration file was updated.'), 'info');
 				}
-				fclose($fhandle);
+				fclose($FileHandle);
 			} else {
 				prnMsg(_('Cannot open the configuration file.'), 'error');
 			}
@@ -400,8 +400,8 @@ if (isset($_POST['submit'])) {
 		$ErrMsg =  _('The system configuration could not be updated because');
 		if (sizeof($SQL) > 1 ) {
 			DB_Txn_Begin();
-			foreach ($SQL as $line) {
-				$Result = DB_query($line,$ErrMsg);
+			foreach ($SQL as $Line) {
+				$Result = DB_query($Line,$ErrMsg);
 			}
 			DB_Txn_Commit();
 		} elseif(sizeof($SQL)==1) {
@@ -425,6 +425,45 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<fieldset>
 		<legend>', _('Configuration Options'), '</legend>';
 
+// ---------- New section: Db Maintenance
+echo '<fieldset>
+		<legend>', _('Db Maintenance'), '</legend>';
+/*Perform Database maintenance DB_Maintenance*/
+echo '<field>
+		<label for="X_DB_Maintenance">' . _('Perform Database Maintenance At Logon') . ':</label>
+		<select name="X_DB_Maintenance">';
+	if ($_SESSION['DB_Maintenance']=='1'){
+		echo '<option selected="selected" value="1">' . _('Daily') . '</option>';
+	} else {
+		echo '<option value="1">' . _('Daily') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='7'){
+		echo '<option selected="selected" value="7">' . _('Weekly') . '</option>';
+	} else {
+		echo '<option value="7">' . _('Weekly') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='30'){
+		echo '<option selected="selected" value="30">' . _('Monthly') . '</option>';
+	} else {
+		echo '<option value="30">' . _('Monthly') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='0'){
+		echo '<option selected="selected" value="0">' . _('Never') . '</option>';
+	} else {
+		echo '<option value="0">' . _('Never') . '</option>';
+	}
+	if ($_SESSION['DB_Maintenance']=='-1'){
+		echo '<option selected="selected" value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
+	} else {
+		echo '<option value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
+	}
+
+	echo '</select>
+		<fieldhelp>' . _('Runs DB_Maintenance function in ConnectDB_XXXX.inc at regular intervals (checked every user login). [Allow Sysadmin Access Only] allows only users with security role Administrator to login.') . '</fieldhelp>
+	</field>';
+echo '</fieldset><br />';
+
+// ---------- New section: General Settings
 echo '<fieldset>
 		<legend>', _('General Settings'), '</legend>';
 // DefaultDateFormat
@@ -462,6 +501,7 @@ if (is_writable('config.php')) {
 	echo '<input type="hidden" name="X_DefaultTheme" value="' . $DefaultTheme . '" />';
 }
 echo '</fieldset><br />';
+
 // ---------- New section:
 echo '<fieldset>
 		<legend>' . _('Accounts Receivable/Payable Settings') . '</legend>';
@@ -700,8 +740,8 @@ echo '<field>
 if( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . _('Unavailable');
 } else {
-	while( $row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['DefaultPriceList'] == $row['typeabbrev']?'selected="selected" ':'').'value="'.$row['typeabbrev'].'">' . $row['sales_type'] . '</option>';
+	while( $Row = DB_fetch_array($Result) ) {
+		echo '<option '.($_SESSION['DefaultPriceList'] == $Row['typeabbrev']?'selected="selected" ':'').'value="'.$Row['typeabbrev'].'">' . $Row['sales_type'] . '</option>';
 	}
 }
 echo '</select>
@@ -718,8 +758,8 @@ echo '<field>
 if( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . _('Unavailable') . '</option>';
 } else {
-	while( $row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['Default_Shipper'] == $row['shipper_id']?'selected="selected" ':'').'value="'.$row['shipper_id'].'">' . $row['shippername'] . '</option>';
+	while( $Row = DB_fetch_array($Result) ) {
+		echo '<option '.($_SESSION['Default_Shipper'] == $Row['shipper_id']?'selected="selected" ':'').'value="'.$Row['shipper_id'].'">' . $Row['shippername'] . '</option>';
 	}
 }
 echo '</select>
@@ -785,8 +825,8 @@ echo '<field>
 if( DB_num_rows($Result) == 0 ) {
 	echo '<option selected="selected" value="">' . _('Unavailable') . '</option>';
 } else {
-	while( $row = DB_fetch_array($Result) ) {
-		echo '<option '.($_SESSION['DefaultTaxCategory'] == $row['taxcatid']?'selected="selected" ':'').'value="'.$row['taxcatid'].'">' . $row['taxcatname'] . '</option>';
+	while( $Row = DB_fetch_array($Result) ) {
+		echo '<option '.($_SESSION['DefaultTaxCategory'] == $Row['taxcatid']?'selected="selected" ':'').'value="'.$Row['taxcatid'].'">' . $Row['taxcatname'] . '</option>';
 	}
 }
 echo '</select>
@@ -961,7 +1001,7 @@ echo '<field>
 //MaxImageSize
 echo '<field>
 		<label for="X_MaxImageSize">' . _('Maximum Size in KB of uploaded images') . ':</label>
-		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,3}" required="required" title="'._('The input should be between 1 and 999').'" placeholder="'._('1 to 999').'" name="X_MaxImageSize" size="4" maxlength="3" value="' . $_SESSION['MaxImageSize'] . '" />
+		<input type="text" class="integer" pattern="(?!^0\d*$)[\d]{1,4}" required="required" title="'._('The input should be between 1 and 2048').'" placeholder="'._('1 to 2048').'" name="X_MaxImageSize" size="5" maxlength="4" value="' . $_SESSION['MaxImageSize'] . '" />
 		<fieldhelp>' . _('Picture files of items can be uploaded to the server. The system will check that files uploaded are less than this size (in KB) before they will be allowed to be uploaded. Large pictures will make the system slow and will be difficult to view in the stock maintenance screen.')  . '</fieldhelp>
 	</field>';
 
@@ -972,7 +1012,7 @@ echo '<field>
 			<fieldhelp>' . _('Number of month must be shown on report can be changed with this parameters ex: in CustomerInquiry.php ')  . '</fieldhelp>
 	</field>';
 
-//$part_pics_dir
+//$Part_pics_dir
 echo '<field>
 		<label for="X_part_pics_dir">' . _('The directory where images are stored') . ':</label>
 		<select name="X_part_pics_dir">';
@@ -1035,40 +1075,6 @@ echo '<field>
 			<option value="0"' . (!$_SESSION['HTTPS_Only'] ? ' selected="selected" ':'') . '>' . _('No') . '</option>
 		</select>
 		<fieldhelp>' . _('Force connections to be only over secure sockets - ie encrypted data only') . '</fieldhelp>
-	</field>';
-
-/*Perform Database maintenance DB_Maintenance*/
-echo '<field>
-		<label for="X_DB_Maintenance">' . _('Perform Database Maintenance At Logon') . ':</label>
-		<select name="X_DB_Maintenance">';
-	if ($_SESSION['DB_Maintenance']=='1'){
-		echo '<option selected="selected" value="1">' . _('Daily') . '</option>';
-	} else {
-		echo '<option value="1">' . _('Daily') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='7'){
-		echo '<option selected="selected" value="7">' . _('Weekly') . '</option>';
-	} else {
-		echo '<option value="7">' . _('Weekly') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='30'){
-		echo '<option selected="selected" value="30">' . _('Monthly') . '</option>';
-	} else {
-		echo '<option value="30">' . _('Monthly') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='0'){
-		echo '<option selected="selected" value="0">' . _('Never') . '</option>';
-	} else {
-		echo '<option value="0">' . _('Never') . '</option>';
-	}
-	if ($_SESSION['DB_Maintenance']=='-1'){
-		echo '<option selected="selected" value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
-	} else {
-		echo '<option value="-1">' . _('Allow SysAdmin Access Only') . '</option>';
-	}
-
-	echo '</select>
-		<fieldhelp>' . _('Uses the function DB_Maintenance defined in ConnectDB_XXXX.inc to perform database maintenance tasks, to run at regular intervals - checked at each and every user login') . '</fieldhelp>
 	</field>';
 
 $WikiApplications = array( _('Disabled'),
@@ -1218,7 +1224,7 @@ echo '<field>
 	</field>';
 
 //Which messages to log
-$severityOptions = [
+$SeverityOptions = [
 	_('None'),
 	_('Errors Only'),
 	_('Errors and Warnings'),
@@ -1228,8 +1234,8 @@ $severityOptions = [
 echo '<field>
 		<label for="X_LogSeverity">' . _('Log Severity Level') . ':</label>
 		<select name="X_LogSeverity" >';
-foreach ($severityOptions as $key => $value) {
-	echo '<option value="' . $key . '"' . ($_SESSION['LogSeverity'] == $key ? ' selected' : '') . '>' . $value . '</option>';
+foreach ($SeverityOptions as $key => $Value) {
+	echo '<option value="' . $key . '"' . ($_SESSION['LogSeverity'] == $key ? ' selected' : '') . '>' . $Value . '</option>';
 }
 echo '</select>
 	<fieldhelp>' . _('Choose which Status messages to keep in your log file.') . '</fieldhelp>
@@ -1300,7 +1306,7 @@ echo '<field>
 echo '<field>
 		<label for="X_InventoryManagerEmail">' . _('Inventory Manager Email Address') . ':</label>
 		<input type="email" name="X_InventoryManagerEmail" size="50" maxlength="50" value="' . $_SESSION['InventoryManagerEmail'] . '" />
-		<fieldhelp>' . _('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the factory manager for manual stock adjustments')  . '</fieldhelp>
+		<fieldhelp>' . _('The email address for the inventory manager, where notifications of all manual stock adjustments created are sent by the system. Leave blank if no emails should be sent to the inventory manager for manual stock adjustments')  . '</fieldhelp>
 	</field>';
 
 echo '<field>

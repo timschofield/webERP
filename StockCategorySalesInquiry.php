@@ -24,7 +24,7 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 					categorydescription
 			FROM stockcategory
 			ORDER BY categorydescription";
-	$result1 = DB_query($SQL);
+	$Result1 = DB_query($SQL);
 
 echo '<fieldset>
 		<legend>', _('Report Criteria'), '</legend>
@@ -39,11 +39,11 @@ if ($_POST['StockCat']=='All'){
 } else {
 	echo '<option value="All">' . _('All') . '</option>';
 }
-while ($myrow1 = DB_fetch_array($result1)) {
-	if ($myrow1['categoryid']==$_POST['StockCat']){
-		echo '<option selected="selected" value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+while ($MyRow1 = DB_fetch_array($Result1)) {
+	if ($MyRow1['categoryid']==$_POST['StockCat']){
+		echo '<option selected="selected" value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	} else {
-		echo '<option value="' . $myrow1['categoryid'] . '">' . $myrow1['categorydescription'] . '</option>';
+		echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 }
 echo '</select>
@@ -88,7 +88,7 @@ if (isset($_POST['ShowSales'])){
 	$FromDate = FormatDateForSQL($_POST['FromDate']);
 	$ToDate = FormatDateForSQL($_POST['ToDate']);
 
-	$sql = "SELECT stockmaster.categoryid,
+	$SQL = "SELECT stockmaster.categoryid,
 					stockcategory.categorydescription,
 					stockmaster.stockid,
 					stockmaster.description,
@@ -111,7 +111,7 @@ if (isset($_POST['ShowSales'])){
 					salesvalue DESC";
 
 	$ErrMsg = _('The sales data could not be retrieved because') . ' - ' . DB_error_msg();
-	$SalesResult = DB_query($sql,$ErrMsg);
+	$SalesResult = DB_query($SQL,$ErrMsg);
 
 	echo '<table cellpadding="2" class="selection">';
 

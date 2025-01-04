@@ -53,19 +53,19 @@ if (!isset($_POST['ContractRef']) or $_POST['ContractRef']==''){
 		$_POST['Status']=4;
 	}
 
-	$statuses[] = _('Not Yet Quoted');
-	$statuses[] = _('Quoted - No Order Placed');
-	$statuses[] = _('Order Placed');
-	$statuses[] = _('Completed');
-	$statuses[] = _('All Contracts');
+	$Statuses[] = _('Not Yet Quoted');
+	$Statuses[] = _('Quoted - No Order Placed');
+	$Statuses[] = _('Order Placed');
+	$Statuses[] = _('Completed');
+	$Statuses[] = _('All Contracts');
 
-	$status_count = count($statuses);
+	$StatusCount = count($Statuses);
 
-	for ( $i = 0; $i < $status_count; $i++ ) {
+	for ( $i = 0; $i < $StatusCount; $i++ ) {
 		if ( $i == $_POST['Status'] ) {
-			echo '<option selected="selected" value="' . $i . '">' . $statuses[$i] . '</option>';
+			echo '<option selected="selected" value="' . $i . '">' . $Statuses[$i] . '</option>';
 		} else {
-			echo '<option value="' . $i . '">' . $statuses[$i] . '</option>';
+			echo '<option value="' . $i . '">' . $Statuses[$i] . '</option>';
 		}
 	}
 
@@ -161,38 +161,38 @@ echo $TableHeader;
 
 $j = 1;
 
-while ($myrow=DB_fetch_array($ContractsResult)) {
+while ($MyRow=DB_fetch_array($ContractsResult)) {
 	echo '<tr class="striped_row">';
 
-	$ModifyPage = $RootPath . '/Contracts.php?ModifyContractRef=' . $myrow['contractref'];
-	$OrderModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $myrow['orderno'];
-	$IssueToWOPage = $RootPath . '/WorkOrderIssue.php?WO=' . $myrow['wo'] . '&amp;StockID=' . $myrow['contractref'];
-	$CostingPage = $RootPath . '/ContractCosting.php?SelectedContract=' . $myrow['contractref'];
-	$FormatedRequiredDate = ConvertSQLDate($myrow['requireddate']);
+	$ModifyPage = $RootPath . '/Contracts.php?ModifyContractRef=' . $MyRow['contractref'];
+	$OrderModifyPage = $RootPath . '/SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'];
+	$IssueToWOPage = $RootPath . '/WorkOrderIssue.php?WO=' . $MyRow['wo'] . '&amp;StockID=' . $MyRow['contractref'];
+	$CostingPage = $RootPath . '/ContractCosting.php?SelectedContract=' . $MyRow['contractref'];
+	$FormatedRequiredDate = ConvertSQLDate($MyRow['requireddate']);
 
-	if ($myrow['status']==0 OR $myrow['status']==1){ //still setting up the contract
+	if ($MyRow['status']==0 OR $MyRow['status']==1){ //still setting up the contract
 		echo '<td><a href="' . $ModifyPage . '">' . _('Modify') . '</a></td>';
 	} else {
 		echo '<td>' . _('n/a') . '</td>';
 	}
-	if ($myrow['status']==1 OR $myrow['status']==2){ // quoted or ordered
-		echo '<td><a href="' . $OrderModifyPage . '">' . $myrow['orderno'] . '</a></td>';
+	if ($MyRow['status']==1 OR $MyRow['status']==2){ // quoted or ordered
+		echo '<td><a href="' . $OrderModifyPage . '">' . $MyRow['orderno'] . '</a></td>';
 	} else {
 		echo '<td>' . _('n/a') . '</td>';
 	}
-	if ($myrow['status']==2){ //the customer has accepted the quote but not completed contract yet
-		echo '<td><a href="' . $IssueToWOPage . '">' . $myrow['wo'] . '</a></td>';
+	if ($MyRow['status']==2){ //the customer has accepted the quote but not completed contract yet
+		echo '<td><a href="' . $IssueToWOPage . '">' . $MyRow['wo'] . '</a></td>';
 	} else {
 		echo '<td>' . _('n/a') . '</td>';
 	}
-	if ($myrow['status']==2 OR $myrow['status']==3){
+	if ($MyRow['status']==2 OR $MyRow['status']==3){
 			echo '<td><a href="' . $CostingPage . '">' . _('View') . '</a></td>';
 		} else {
 			echo '<td>' . _('n/a') . '</td>';
 	}
-	echo '<td>' . $myrow['contractref'] . '</td>
-		  <td>' . $myrow['contractdescription'] . '</td>
-		  <td>' . $myrow['customername'] . '</td>
+	echo '<td>' . $MyRow['contractref'] . '</td>
+		  <td>' . $MyRow['contractdescription'] . '</td>
+		  <td>' . $MyRow['customername'] . '</td>
 		  <td>' . $FormatedRequiredDate . '</td></tr>';
 
 	$j++;

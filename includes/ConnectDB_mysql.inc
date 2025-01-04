@@ -3,12 +3,12 @@
 
 define('LIKE', 'LIKE');
 
-if(!isset($mysqlport)) {
-	$mysqlport = 3306;
+if(!isset($MySQLPort)) {
+	$MySQLPort = 3306;
 }
 global $db;// Make sure it IS global, regardless of our context
 
-$db = mysql_connect($host . ':' . $mysqlport, $DBUser, $DBPassword);
+$db = mysql_connect($Host . ':' . $MySQLPort, $DBUser, $DBPassword);
 
 //this statement sets the charset to be used for sending data to and from the db server
 //if not set, both mysql server and mysql client/library may assume otherwise
@@ -44,11 +44,11 @@ if(isset($DatabaseName)) {
 
 function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false, $TrapErrors=true) {
 
-	global $debug;
+	global $Debug;
 	global $PathPrefix;
 	global $db;
 
-	$result = mysql_query($SQL, $db);
+	$Result = mysql_query($SQL, $db);
 	$_SESSION['LastInsertId'] = mysql_insert_id($db);
 
 	if($DebugMessage == '') {
@@ -60,7 +60,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 			require_once($PathPrefix . 'includes/header.php');
 		}
 		prnMsg($ErrorMessage . '<br />' . DB_error_msg(), 'error', _('Database Error'));
-		if($debug == 1) {
+		if($Debug == 1) {
 			prnMsg($DebugMessage . '<br />' . $SQL . '<br />', 'error', _('Database SQL Failure'));
 			}
 		if($Transaction) {
@@ -95,7 +95,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 	}
 
-	return $result;
+	return $Result;
 }
 
 function DB_fetch_row($ResultIndex) {
@@ -139,7 +139,7 @@ function DB_error_msg() {
 	return mysql_error($db);
 }
 
-function DB_Last_Insert_ID($table, $fieldname) {
+function DB_Last_Insert_ID($Table, $FieldName) {
 //	return mysql_insert_id($db);
 	if (isset($_SESSION['LastInsertId'])) {
 		$Last_Insert_ID = $_SESSION['LastInsertId'];
@@ -172,8 +172,8 @@ function DB_Maintenance() {
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 
 	$TablesResult = DB_show_tables();
-	while ($myrow = DB_fetch_row($TablesResult)) {
-		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0]);
+	while ($MyRow = DB_fetch_row($TablesResult)) {
+		$Result = DB_query('OPTIMIZE TABLE ' . $MyRow[0]);
 	}
 
 	$Result = DB_query("UPDATE config

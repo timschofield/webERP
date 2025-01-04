@@ -36,10 +36,10 @@ if (isset($_GET['New'])) {
 }
 
 if (!isset($_SESSION['SuppTrans']->SupplierName)) {
-	$sql="SELECT suppname FROM suppliers WHERE supplierid='" . $_GET['SupplierID']."'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_row($result);
-	$SupplierName=$myrow[0];
+	$SQL="SELECT suppname FROM suppliers WHERE supplierid='" . $_GET['SupplierID']."'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
+	$SupplierName=$MyRow[0];
 } else {
 	$SupplierName=$_SESSION['SuppTrans']->SupplierName;
 }
@@ -68,7 +68,7 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 
 /*Now retrieve supplier information - name, currency, default ex rate, terms, tax rate etc */
 
-	 $sql = "SELECT suppliers.suppname,
+	 $SQL = "SELECT suppliers.suppname,
 					suppliers.supplierid,
 					paymentterms.terms,
 					paymentterms.daysbeforedue,
@@ -89,23 +89,23 @@ if (isset($_GET['SupplierID']) and $_GET['SupplierID']!=''){
 	$ErrMsg = _('The supplier record selected') . ': ' . $_GET['SupplierID'] . ' ' ._('cannot be retrieved because');
 	$DbgMsg = _('The SQL used to retrieve the supplier details and failed was');
 
-	$result = DB_query($sql, $ErrMsg, $DbgMsg);
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	$myrow = DB_fetch_array($result);
+	$MyRow = DB_fetch_array($Result);
 
-	$_SESSION['SuppTrans']->SupplierName = $myrow['suppname'];
-	$_SESSION['SuppTrans']->TermsDescription = $myrow['terms'];
-	$_SESSION['SuppTrans']->CurrCode = $myrow['currcode'];
-	$_SESSION['SuppTrans']->ExRate = $myrow['exrate'];
-	$_SESSION['SuppTrans']->TaxGroup = $myrow['taxgroupid'];
-	$_SESSION['SuppTrans']->TaxGroupDescription = $myrow['taxgroupdescription'];
-	$_SESSION['SuppTrans']->SupplierID = $myrow['supplierid'];
-	$_SESSION['SuppTrans']->CurrDecimalPlaces = $myrow['currdecimalplaces'];
+	$_SESSION['SuppTrans']->SupplierName = $MyRow['suppname'];
+	$_SESSION['SuppTrans']->TermsDescription = $MyRow['terms'];
+	$_SESSION['SuppTrans']->CurrCode = $MyRow['currcode'];
+	$_SESSION['SuppTrans']->ExRate = $MyRow['exrate'];
+	$_SESSION['SuppTrans']->TaxGroup = $MyRow['taxgroupid'];
+	$_SESSION['SuppTrans']->TaxGroupDescription = $MyRow['taxgroupdescription'];
+	$_SESSION['SuppTrans']->SupplierID = $MyRow['supplierid'];
+	$_SESSION['SuppTrans']->CurrDecimalPlaces = $MyRow['currdecimalplaces'];
 
-	if ($myrow['daysbeforedue'] == 0){
-		 $_SESSION['SuppTrans']->Terms = '1' . $myrow['dayinfollowingmonth'];
+	if ($MyRow['daysbeforedue'] == 0){
+		 $_SESSION['SuppTrans']->Terms = '1' . $MyRow['dayinfollowingmonth'];
 	} else {
-		 $_SESSION['SuppTrans']->Terms = '0' . $myrow['daysbeforedue'];
+		 $_SESSION['SuppTrans']->Terms = '0' . $MyRow['daysbeforedue'];
 	}
 	$_SESSION['SuppTrans']->SupplierID = $_GET['SupplierID'];
 
@@ -803,11 +803,11 @@ then do the updates and inserts to process the credit note entered */
 			/*contract postings need to get the WIP from the contract item's stock category record
 			 *  debit postings to this WIP account
 			 * the WIP account is tidied up when the contract is closed*/
-				$result = DB_query("SELECT wipact FROM stockcategory
+				$Result = DB_query("SELECT wipact FROM stockcategory
 									INNER JOIN stockmaster
 									ON stockcategory.categoryid=stockmaster.categoryid
 									WHERE stockmaster.stockid='" . $Contract->ContractRef . "'");
-				$WIPRow = DB_fetch_row($result);
+				$WIPRow = DB_fetch_row($Result);
 				$WIPAccount = $WIPRow[0];
 
 				$SQL = "INSERT INTO gltrans (type,
@@ -890,10 +890,10 @@ then do the updates and inserts to process the credit note entered */
 								The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate
 								*/
 
-								$sql ="SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
+								$SQL ="SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
 								$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
-								$Result = DB_query($sql, $ErrMsg, $DbgMsg, True);
+								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 								$QtyRow = DB_fetch_row($Result);
 								$TotalQuantityOnHand = $QtyRow[0];
 
@@ -972,15 +972,15 @@ then do the updates and inserts to process the credit note entered */
 
 									$CostIncrement = ($PurchPriceVar - $WriteOffToVariances) / $TotalQuantityOnHand;
 
-									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+									$SQL = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
 																	materialcost=materialcost-" . $CostIncrement . "
 											WHERE stockid='" . $EnteredGRN->ItemCode . "'";
 
-									$Result = DB_query($sql, $ErrMsg, $DbgMsg, True);
+									$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 								} else {
-									$sql = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
+									$SQL = "UPDATE stockmaster SET lastcost=materialcost+overheadcost+labourcost,
 																	materialcost=" . ($EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate) . " WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-									$Result = DB_query($sql, $ErrMsg, $DbgMsg, True);
+									$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
 								}
 								/* End of Weighted Average Costing Code */
 
@@ -1017,11 +1017,11 @@ then do the updates and inserts to process the credit note entered */
 							if ($EnteredGRN->AssetID!=0) { //then it is an asset
 
 								/*Need to get the asset details  for posting */
-								$result = DB_query("SELECT costact
+								$Result = DB_query("SELECT costact
 													FROM fixedassets INNER JOIN fixedassetcategories
 													ON fixedassets.assetcategoryid= fixedassetcategories.categoryid
 													WHERE assetid='" . $EnteredGRN->AssetID . "'");
-								$AssetRow = DB_fetch_array($result);
+								$AssetRow = DB_fetch_array($Result);
 								$GLCode = $AssetRow['costact'];
 							} //the item was an asset
 
@@ -1076,7 +1076,7 @@ then do the updates and inserts to process the credit note entered */
 
 			} /* end of GRN postings */
 
-			if ($debug == 1 AND abs(($_SESSION['SuppTrans']->OvAmount/ $_SESSION['SuppTrans']->ExRate) - $LocalTotal)>0.004){
+			if ($Debug == 1 AND abs(($_SESSION['SuppTrans']->OvAmount/ $_SESSION['SuppTrans']->ExRate) - $LocalTotal)>0.004){
 				prnMsg(_('The total posted to the credit accounts is') . ' ' . $LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' . ($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate),'error');
 			}
 

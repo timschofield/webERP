@@ -122,11 +122,11 @@ $pdf->addText($Perforation+1, $YPosR-$LineCountR*$LineHeight,$FontSize, _('Custo
 $FontSize=8;
 $XPos = $Page_Width/2 - 60;
 $pdf->addText($XPos, $YPos,$FontSize, _('All amounts stated in') . ': ' . _($StmtHeader['currency']));
-$YPos -= $line_height;
+$YPos -= $LineHeight;
 $pdf->addText($XPos, $YPos,$FontSize, $StmtHeader['terms']);
 
 $YPos = $Page_Height - $Top_Margin - 180;
-//$YPos -= $line_height;
+//$YPos -= $LineHeight;
 $XPos = $Left_Margin;
 
 // Draws a rounded rectangle around the statement details:
@@ -155,7 +155,7 @@ $pdf->RoundedRect(
 	array()// Fill color. Format: array(GREY) or array(R,G,B) or array(C,M,Y,K) or array(C,M,Y,K,SpotColorName). Default value: default color (empty array).
 );// Public function RoundedRect() in ~/includes/tcpdf/tcpdf.php
 
-$YPos -= $line_height;
+$YPos -= $LineHeight;
 $FontSize =10;
 /*Set up headings */
 $pdf->addText($Left_Margin+1, $YPos,$FontSize, _('Trans Type') );
@@ -172,11 +172,11 @@ $pdf->addText($Perforation+10, $YPos,$FontSize, _('Trans') );
 $pdf->addText($Perforation+55, $YPos,$FontSize, _('Number') );
 $pdf->addText($Perforation+100, $YPos,$FontSize, _('Outstanding') );
 
-$YPos -= $line_height;
+$YPos -= $LineHeight;
 /*draw a line */
 $pdf->line($Page_Width-$Right_Margin, $YPos,$XPos, $YPos);
 
-$YPos -= $line_height;
+$YPos -= $LineHeight;
 $XPos = $Left_Margin;
 
 ?>

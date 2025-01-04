@@ -67,7 +67,7 @@ if ($_SESSION['Show_Settled_LastMonth']==1) {
 						debtortrans.trandate,
 						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst AS totalamount,
 						debtortrans.alloc,
-						debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc AS balance,
+						debtortrans.balance AS balance,
 						debtortrans.settled
 				FROM debtortrans INNER JOIN systypes
 					ON debtortrans.type=systypes.typeid
@@ -101,7 +101,7 @@ $SQL = "SELECT debtortrans.id,
 			debtortrans.trandate,
 			debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst as totalamount,
 			debtortrans.alloc,
-			debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc as balance,
+			debtortrans.balance as balance,
 			debtortrans.settled
 		FROM debtortrans INNER JOIN systypes
 			ON debtortrans.type=systypes.typeid
@@ -134,46 +134,39 @@ $SQL = "SELECT debtorsmaster.name,
 			debtorsmaster.creditlimit,
 			holdreasons.dissallowinvoices,
 			holdreasons.reasondescription,
-			SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-			debtortrans.ovdiscount - debtortrans.alloc) AS balance,
+			SUM(debtortrans.balance) AS balance,
 			SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >=
 				paymentterms.daysbeforedue
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.balance
 				ELSE 0 END
 			ELSE
 				CASE WHEN TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1', 'MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . ")) >= 0
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.balance
 				ELSE 0 END
 			END) AS due,
 			Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 				CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
 				AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >=
 				(paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ")
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.balance
 				ELSE 0 END
 			ELSE
 				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " . interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') .")) >= " . $_SESSION['PastDueDays1'] . ")
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.balance
 				ELSE 0 END
 			END) AS overdue1,
 			Sum(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 				CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue
 				AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue +
 				" . $_SESSION['PastDueDays2'] . ")
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.balance
 				ELSE 0 END
 			ELSE
 				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
 				interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
 				>= " . $_SESSION['PastDueDays2'] . ")
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.balance
 				ELSE 0 END
 			END) AS overdue2
 		FROM debtorsmaster INNER JOIN paymentterms

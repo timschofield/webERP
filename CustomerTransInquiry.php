@@ -23,23 +23,23 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<label for="TransType">' . _('Type') . ':</label>
 				<select tabindex="1" name="TransType"> ';
 
-$sql = "SELECT typeid,
+$SQL = "SELECT typeid,
 				typename
 		FROM systypes
 		WHERE typeid >= 10
 		AND typeid <= 14";
 
-$resultTypes = DB_query($sql);
+$ResultTypes = DB_query($SQL);
 
 echo '<option value="All">' . _('All') . '</option>';
-while($myrow=DB_fetch_array($resultTypes)) {
+while($MyRow=DB_fetch_array($ResultTypes)) {
 	echo '<option';
 	if(isset($_POST['TransType'])) {
-		if($myrow['typeid'] == $_POST['TransType']) {
+		if($MyRow['typeid'] == $_POST['TransType']) {
 		     echo ' selected="selected"' ;
 		}
 	}
-	echo ' value="' . $myrow['typeid'] . '">' . _($myrow['typename']) . '</option>';
+	echo ' value="' . $MyRow['typeid'] . '">' . _($MyRow['typename']) . '</option>';
 }
 echo '</select>
 	</field>';
@@ -67,7 +67,7 @@ echo '<field>
 if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $SQL_FromDate = FormatDateForSQL($_POST['FromDate']);
    $SQL_ToDate = FormatDateForSQL($_POST['ToDate']);
-   $sql = "SELECT transno,
+   $SQL = "SELECT transno,
 		   		trandate,
 				debtortrans.debtorno,
 				branchcode,
@@ -85,15 +85,15 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			INNER JOIN systypes ON debtortrans.type = systypes.typeid
 			WHERE ";
 
-   $sql = $sql . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
+   $SQL = $SQL . "trandate >='" . $SQL_FromDate . "' AND trandate <= '" . $SQL_ToDate . "'";
 	if  ($_POST['TransType']!='All')  {
-		$sql .= " AND type = '" . $_POST['TransType']."'";
+		$SQL .= " AND type = '" . $_POST['TransType']."'";
 	}
-	$sql .=  " ORDER BY id";
+	$SQL .=  " ORDER BY id";
 
    $ErrMsg = _('The customer transactions for the selected criteria could not be retrieved because') . ' - ' . DB_error_msg();
    $DbgMsg =  _('The SQL that failed was');
-   $TransResult = DB_query($sql,$ErrMsg,$DbgMsg);
+   $TransResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
    echo '<br />
 		<table class="selection">';
@@ -115,9 +115,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
 	$RowCounter = 1;
 
-	while ($myrow=DB_fetch_array($TransResult)) {
+	while ($MyRow=DB_fetch_array($TransResult)) {
 
-		$format_base = '<tr class="striped_row">
+		$FormatBase = '<tr class="striped_row">
 						<td>%s</td>
 						<td>%s</td>
 						<td>%s</td>
@@ -132,55 +132,55 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
 		if ($_POST['TransType']==10){ /* invoices */
 
-			printf($format_base .
+			printf($FormatBase .
 					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice"><img src="%s" title="' . _('Click to preview the invoice') . '" /></a></td>
 					</tr>',
-					_($myrow['typename']),
-					$myrow['transno'],
-					ConvertSQLDate($myrow['trandate']),
-					$myrow['debtorno'],
-					$myrow['branchcode'],
-					$myrow['reference'],
-					$myrow['invtext'],
-					$myrow['order_'],
-					locale_number_format($myrow['rate'],6),
-					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
-					$myrow['currcode'],
+					_($MyRow['typename']),
+					$MyRow['transno'],
+					ConvertSQLDate($MyRow['trandate']),
+					$MyRow['debtorno'],
+					$MyRow['branchcode'],
+					$MyRow['reference'],
+					$MyRow['invtext'],
+					$MyRow['order_'],
+					locale_number_format($MyRow['rate'],6),
+					locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
+					$MyRow['currcode'],
 					$RootPath,
-					$myrow['transno'],
+					$MyRow['transno'],
 					$RootPath.'/css/'.$Theme.'/images/preview.png');
 
 		} elseif($_POST['TransType']==11) { /* credit notes */
-			printf($format_base .
+			printf($FormatBase .
 					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit"><img src="%s" title="' . _('Click to preview the credit') . '" /></a></td>
 					</tr>',
-					_($myrow['typename']),
-					$myrow['transno'],
-					ConvertSQLDate($myrow['trandate']),
-					$myrow['debtorno'],
-					$myrow['branchcode'],
-					$myrow['reference'],
-					$myrow['invtext'],
-					$myrow['order_'],
-					locale_number_format($myrow['rate'],6),
-					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
-					$myrow['currcode'],
+					_($MyRow['typename']),
+					$MyRow['transno'],
+					ConvertSQLDate($MyRow['trandate']),
+					$MyRow['debtorno'],
+					$MyRow['branchcode'],
+					$MyRow['reference'],
+					$MyRow['invtext'],
+					$MyRow['order_'],
+					locale_number_format($MyRow['rate'],6),
+					locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
+					$MyRow['currcode'],
 					$RootPath,
-					$myrow['transno'],
+					$MyRow['transno'],
 					$RootPath.'/css/'.$Theme.'/images/preview.png');
 		} else {  /* otherwise */
-			printf($format_base . '</tr>',
-					_($myrow['typename']),
-					$myrow['transno'],
-					ConvertSQLDate($myrow['trandate']),
-					$myrow['debtorno'],
-					$myrow['branchcode'],
-					$myrow['reference'],
-					$myrow['invtext'],
-					$myrow['order_'],
-					locale_number_format($myrow['rate'],6),
-					locale_number_format($myrow['totalamt'],$myrow['currdecimalplaces']),
-					$myrow['currcode']);
+			printf($FormatBase . '</tr>',
+					_($MyRow['typename']),
+					$MyRow['transno'],
+					ConvertSQLDate($MyRow['trandate']),
+					$MyRow['debtorno'],
+					$MyRow['branchcode'],
+					$MyRow['reference'],
+					$MyRow['invtext'],
+					$MyRow['order_'],
+					locale_number_format($MyRow['rate'],6),
+					locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
+					$MyRow['currcode']);
 		}
 
 	}

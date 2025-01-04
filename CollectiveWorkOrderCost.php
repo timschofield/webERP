@@ -222,11 +222,10 @@ if (!isset($StockID)) {
 					</label>
 					<div class="fieldtext">', $SelectedStockItem, '</div>
 					<input type="hidden" name="SelectedStockItem" value="', $SelectedStockItem, '" />
-				</field>
-				<h3>', _('AND'), '</h3>';
+				</field>';
 		}
 		echo '<field>
-				<label for="WO">', _('Work Order number') . ':</label>
+				<label for="WO">', '<b>' . _('AND') . ' </b>' . _('Work Order number') . ':</label>
 				<input type="text" name="WO" autofocus="autofocus" maxlength="8" size="9" />&nbsp;
 			</field>';
 

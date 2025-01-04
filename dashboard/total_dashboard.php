@@ -51,9 +51,9 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 	$SalesOrdersResult = DB_query($SQL);
 
 	$TotalSalesOrders = 0;
-	while ($row = DB_fetch_array($SalesOrdersResult)) {
-		$TotalSalesOrders+= $row['ordervalue'];
-		$DecimalPlaces = $row['currdecimalplaces'];
+	while ($Row = DB_fetch_array($SalesOrdersResult)) {
+		$TotalSalesOrders+= $Row['ordervalue'];
+		$DecimalPlaces = $Row['currdecimalplaces'];
 	}
 	echo '<tr class="striped_row">
 		<th>', _('Total Sales Orders'), '</th>
@@ -90,9 +90,9 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 						currencies.decimalplaces LIMIT 5";
 	$SalesOrdersResult2 = DB_query($SQL);
 	$TotalPurchaseOrders = 0;
-	while ($row = DB_fetch_array($SalesOrdersResult2)) {
-		$DecimalPlaces = $row['currdecimalplaces'];
-		$TotalPurchaseOrders+= $row['ordervalue'];
+	while ($Row = DB_fetch_array($SalesOrdersResult2)) {
+		$DecimalPlaces = $Row['currdecimalplaces'];
+		$TotalPurchaseOrders+= $Row['ordervalue'];
 	}
 	echo '<tr class="striped_row">
 		<th>', _('Total Purchase orders'), '</th>
@@ -132,9 +132,9 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 				ORDER BY salesorders.orderno";
 	$SalesOrdersResult1 = DB_query($SQL);
 	$TotalOutstanding = 0;
-	while ($row = DB_fetch_array($SalesOrdersResult1)) {
-		$DecimalPlaces = $row['currdecimalplaces'];
-		$TotalOutstanding+= $row['ordervalue'];
+	while ($Row = DB_fetch_array($SalesOrdersResult1)) {
+		$DecimalPlaces = $Row['currdecimalplaces'];
+		$TotalOutstanding+= $Row['ordervalue'];
 	}
 
 	echo '<tr class="striped_row">

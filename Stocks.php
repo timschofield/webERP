@@ -8,6 +8,7 @@ $BookMark = 'InventoryAddingItems';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
 
@@ -20,8 +21,8 @@ if (isset($_GET['StockID'])) {
 }
 
 $ItemDescriptionLanguagesArray = explode(',', $_SESSION['ItemDescriptionLanguages']); //WARNING: if the last character is a ",", there are n+1 languages.
-$hasNext = true;
-$hasPrev = true;
+$HasNext = true;
+$HasPrev = true;
 
 if (isset($_POST['NextItem'])) {
 	$Result = DB_query("SELECT stockid FROM stockmaster WHERE stockid>'" . $StockID . "' ORDER BY stockid ASC LIMIT 1");
@@ -32,7 +33,7 @@ if (isset($_POST['NextItem'])) {
 		$NextItemRow = DB_fetch_row($Result);
 		$StockID = $NextItemRow[0];
 	} else {
-		$hasNext = false;
+		$HasNext = false;
 	}
 
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -48,7 +49,7 @@ if (isset($_POST['PreviousItem'])) {
 		$PreviousItemRow = DB_fetch_row($Result);
 		$StockID = $PreviousItemRow[0];
 	} else {
-		$hasPrev = false;
+		$HasPrev = false;
 	}
 
 	foreach ($ItemDescriptionLanguagesArray as $LanguageId) {
@@ -88,7 +89,7 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 
 	$Result = $_FILES['ItemPicture']['error'];
 	$UploadTheFile = 'Yes'; //Assume all is well to start off with
-	$filename = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ImgExt;
+	$FileName = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ImgExt;
 	//But check for the worst
 	if (!in_array($ImgExt, $SupportedImgExt)) {
 		prnMsg(_('Only ' . implode(", ", $SupportedImgExt) . ' files are supported - a file extension of ' . implode(", ", $SupportedImgExt) . ' is expected'), 'warn');
@@ -106,10 +107,10 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 		prnMsg(_('The web server user does not have permission to upload files. Please speak to your system administrator'), 'warn');
 		$UploadTheFile = 'No';
 	}
-	foreach ($SupportedImgExt as $ext) {
-		$file = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ext;
-		if (file_exists($file)) {
-			$Result = unlink($file);
+	foreach ($SupportedImgExt as $Ext) {
+		$File = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $Ext;
+		if (file_exists($File)) {
+			$Result = unlink($File);
 			if (!$Result) {
 				prnMsg(_('The existing image could not be removed'), 'error');
 				$UploadTheFile = 'No';
@@ -118,8 +119,8 @@ if (isset($_FILES['ItemPicture']) and $_FILES['ItemPicture']['name'] != '') {
 	}
 
 	if ($UploadTheFile == 'Yes') {
-		$Result = move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $filename);
-		$message = ($Result) ? _('File url') . '<a href="' . $filename . '">' . $filename . '</a>' : _('Something is wrong with uploading a file');
+		$Result = move_uploaded_file($_FILES['ItemPicture']['tmp_name'], $FileName);
+		$Message = ($Result) ? _('File url') . '<a href="' . $FileName . '">' . $FileName . '</a>' : _('Something is wrong with uploading a file');
 	}
 }
 
@@ -279,7 +280,7 @@ if (isset($_POST['submit'])) {
 			$SQL = "SELECT mbflag,
 							controlled,
 							serialised,
-							materialcost+labourcost+overheadcost AS itemcost,
+							actualcost AS itemcost,
 							stockcategory.stockact,
 							stockcategory.wipact,
 							description,
@@ -892,10 +893,10 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 if (isset($StockID) && $StockID != '' && $InputError == 0) {
 	echo '<table width="100%">
 			<tr>
-				<td>', '<button ', ($hasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
+				<td>', '<button ', ($HasPrev ? '' : 'disabled'), ' name="PreviousItem" type="submit" value="">', '<img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" />',
 	/*_('Previous Item'),*/
 	'</button>', // "Previous" button.
-	'</td>', '<td width="90%">&nbsp;</td>', '<td>', '<button ', ($hasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
+	'</td>', '<td width="90%">&nbsp;</td>', '<td>', '<button ', ($HasNext ? '' : 'disabled'), ' name="NextItem" type="submit" value="">',
 	/*_('Next Item'),*/
 	'<img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" />', '</button>', // "Next" button.
 	'</td>
@@ -1055,30 +1056,24 @@ echo '<field>
 		<input type="checkbox" name="ClearImage" id="ClearImage" value="1" >
 	</field>';
 if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}')) > 0) {
-	$glob = (glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-	$imagefile = reset($glob);
+	$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$ImageFile = reset($Glob);
 } else {
-	$imagefile = '';
+	$ImageFile = '';
 }
-if (extension_loaded('gd') && function_exists('gd_info') && isset($StockID) && !empty($StockID)) {
-	$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($StockID) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-} else if (file_exists($imagefile)) {
-	$StockImgLink = '<img src="' . $imagefile . '" height="64" width="64" />';
-} else {
-	$StockImgLink = _('No Image');
-}
+$StockImgLink = GetImageLink($ImageFile, $StockID, 64, 64, "", "");
 
 if ($StockImgLink != _('No Image')) {
 	echo '<span>' . _('Image') . '<br />' . $StockImgLink . '</span>';
 }
 
 if (isset($_POST['ClearImage'])) {
-	foreach ($SupportedImgExt as $ext) {
-		$file = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $ext;
-		if (file_exists($file)) {
+	foreach ($SupportedImgExt as $Ext) {
+		$File = $_SESSION['part_pics_dir'] . '/' . $StockID . '.' . $Ext;
+		if (file_exists($File)) {
 			//workaround for many variations of permission issues that could cause unlink fail
-			@unlink($file);
-			if (is_file($imagefile)) {
+			@unlink($File);
+			if (is_file($ImageFile)) {
 				prnMsg(_('You do not have access to delete this item image file.'), 'error');
 			} else {
 				$StockImgLink = _('No Image');
@@ -1460,7 +1455,6 @@ if ($New == 1) {
 	echo '<input type="submit" name="submit" value="' . _('Update') . '" /><br />';
 	echo '<input type="submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
-	prnMsg(_('Only click the Delete button if you are sure you wish to delete the item!') . '<br />' . _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist') . '.', 'warn', _('WARNING'));
 }
 
 echo '</div>

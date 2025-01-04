@@ -16,7 +16,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	$PDF->addInfo('Subject',_('Price List of goods from a Supplier'));
 
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
 	//get supplier
 	$SQLsup = "SELECT suppname,
@@ -138,7 +138,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -158,21 +158,21 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 				$Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 
 	$FontSize=8;
-	$code='';
+	$Code='';
 	while ($MyRow = DB_fetch_array($Result)){
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 
 		$PriceDated=ConvertSQLDate($MyRow[4]);
 
 		//if item has more than 1 price, write only price, date and supplier code for the old ones
-		if ($code==$MyRow['stockid']){
+		if ($Code==$MyRow['stockid']){
 
 			$PDF->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($MyRow['price'],$CurrDecimalPlaces),'right');
 			$PDF->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
 			$PDF->addTextWrap(470,$YPos,90,$FontSize,$MyRow['suppliers_partno'],'left');
-			$code=$MyRow['stockid'];
+			$Code=$MyRow['stockid'];
 		} else {
-			$code=$MyRow['stockid'];
+			$Code=$MyRow['stockid'];
 			$PDF->addTextWrap(30,$YPos,100,$FontSize,$MyRow['stockid'],'left');
 			$PDF->addTextWrap(135,$YPos,160,$FontSize,$MyRow['description'],'left');
 			$PDF->addTextWrap(300,$YPos,50,$FontSize,locale_number_format($MyRow['conversionfactor'],'Variable'),'right');
@@ -182,7 +182,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		}
 
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 
 			PrintHeader($PDF,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 						$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
@@ -192,7 +192,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	} /*end while loop  */
 
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 		   PrintHeader($PDF,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 					   $Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 	}
@@ -311,30 +311,30 @@ function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	if ($PageNumber>1){
 		$PDF->newPage();
 	}
-	$line_height=12;
+	$LineHeight=12;
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
-	$YPos -=(3*$line_height);
+	$YPos -=(3*$LineHeight);
 
 	$PDF->addTextWrap($Left_Margin,$YPos,300,$FontSize+2,$_SESSION['CompanyRecord']['coyname']);
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 
 	$PDF->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Supplier Price List for').' '.$CurrentOrAllPrices);
 
 	$PDF->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$PDF->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Supplier').'   ');
 	$PDF->addTextWrap(95,$YPos,150,$FontSize,': '.$SupplierName);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$PDF->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category').' ');
 
 	$PDF->addTextWrap(95,$YPos,150,$FontSize,': '.$Categoryname);
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$PDF->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Currency').'  ');
 	$PDF->addTextWrap(95,$YPos,50,$FontSize,': '.$CurrCode);
-	$YPos -=(2*$line_height);
+	$YPos -=(2*$LineHeight);
 	/*set up the headings */
 
 	$PDF->addTextWrap(30,$YPos,80,$FontSize,_('Code'), 'left');

@@ -53,10 +53,8 @@ if(isset($_POST['StockSearch'])) {
 	}
 	echo '</field>';
 
-	echo '<h3>' . _('OR') . ' ' . '</h3>';
-
 	echo '<field>
-			<label for="StockCode">'. _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+			<label for="StockCode">'.'<b>' . _('OR') . ' </b>' .  _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 	if(isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
@@ -217,21 +215,21 @@ if(isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR is
 	}
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
-	$searchresult = DB_query($SQL, $ErrMsg, $DbgMsg);
-	if(DB_num_rows($searchresult) == 0) {
+	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+	if(DB_num_rows($SearchResult) == 0) {
 		prnMsg(_('No stock items were returned by this search please re-enter alternative criteria to try again'), 'info');
 	}
 	unset($_POST['Search']);
 }
 /* end query for list of records */
 /* display list if there is more than one record */
-if(isset($searchresult) AND !isset($_POST['Select'])) {
+if(isset($SearchResult) AND !isset($_POST['Select'])) {
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 		<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" value="' . $_POST['SupplierID'] . '" name="SupplierID" />';
-	$ListCount = DB_num_rows($searchresult);
+	$ListCount = DB_num_rows($SearchResult);
 	if($ListCount > 0) {
 		// If the user hit the search button and there is more than one item to show
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
@@ -281,10 +279,10 @@ if(isset($searchresult) AND !isset($_POST['Select'])) {
 			<tbody>';
 
 		$RowIndex = 0;
-		if(DB_num_rows($searchresult) <> 0) {
-			DB_data_seek($searchresult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
+		if(DB_num_rows($SearchResult) <> 0) {
+			DB_data_seek($SearchResult, ($_POST['PageOffset'] - 1) * $_SESSION['DisplayRecordsMax']);
 		}
-		while(($MyRow = DB_fetch_array($searchresult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
+		while(($MyRow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 
 			echo '<tr class="striped_row">
 				<td><input type="submit" name="Select" value="' . $MyRow['stockid'] . '" /></td>
@@ -305,7 +303,7 @@ if(isset($searchresult) AND !isset($_POST['Select'])) {
 	}
 }
 
-foreach ($_POST as $key=>$value) {
+foreach ($_POST as $key=>$Value) {
 	if(mb_substr($key,0,6)=='Update') {
 		$Index = mb_substr($key,6,mb_strlen($key)-6);
 		$StockID = $_POST['StockID'.$Index];
@@ -411,9 +409,8 @@ if(isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier'])
 				<label for="Keywords">' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</label>
 				<input maxlength="25" name="Keywords" size="20" type="text" />
 			</field>';
-		echo '<h3>' . _('OR') . '</h3>';
 		echo '<field>
-				<label for="SupplierCode">' . _('Text in Supplier') . ' <b>' . _('CODE') . '</label>
+				<label for="SupplierCode">' . '<b>' . _('OR') . ' </b>' . _('Text in Supplier') . ' <b>' . _('CODE') . '</label>
 				<input maxlength="18" name="SupplierCode" size="15" type="text" />
 			</field>
 		</fieldset>';

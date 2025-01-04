@@ -174,7 +174,7 @@ if (!isset($_GET['OrderNumber']) and !isset($_SESSION['ProcessingOrder'])) {
 								salesorderdetails.orderlineno,
 								salesorderdetails.poline,
 								salesorderdetails.itemdue,
-								stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+								stockmaster.actualcost AS standardcost
 							FROM salesorderdetails INNER JOIN stockmaster
 							 	ON salesorderdetails.stkcode = stockmaster.stockid
 							WHERE salesorderdetails.orderno ='" . $_GET['OrderNumber'] . "'
@@ -473,7 +473,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 		$Narrative = str_replace('\r\n', '<br />', $LnItm->Narrative);
 		echo $RowStarter . '<td colspan="12">' . stripslashes($Narrative) . '</td></tr>';
 	}
-} //end foreach ($line)
+} //end foreach ($Line)
 /*Don't re-calculate freight if some of the order has already been delivered -
 depending on the business logic required this condition may not be required.
 It seems unfair to charge the customer twice for freight if the order
@@ -726,7 +726,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 
 		/*there should be the same number of items returned from this query as there are lines on the invoice - if not 	then someone has already invoiced or credited some lines */
 
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 			echo '<br />' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
 			echo '<br />' . _('Count of items in the session') . ' ' . count($_SESSION['Items' . $identifier]->LineItems);
@@ -1039,7 +1039,7 @@ if (isset($_POST['ProcessInvoice']) and $_POST['ProcessInvoice'] != '') {
 				$StandardCost = 0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+								stockmaster.actualcost AS standard
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLine->StockID . "'

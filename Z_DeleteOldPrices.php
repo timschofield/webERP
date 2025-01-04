@@ -6,13 +6,13 @@ $ViewTopic = 'SpecialUtilities';
 $BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
-$result=DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='0000-00-00'"); //convert old data to use end date of 9999-12-31 rather than SQL mode specific end date
+$Result=DB_query("UPDATE prices SET enddate='9999-12-31' WHERE enddate='0000-00-00'"); //convert old data to use end date of 9999-12-31 rather than SQL mode specific end date
 
 if (isset($_POST['DeleteOldPrices'])){
 	DB_Txn_Begin();
 
-	$result=DB_query("DELETE FROM prices WHERE enddate<'" . Date('Y-m-d') . "'",'','',true);
-	$result=DB_query("SELECT stockid,
+	$Result=DB_query("DELETE FROM prices WHERE enddate<'" . Date('Y-m-d') . "'",'','',true);
+	$Result=DB_query("SELECT stockid,
 							typeabbrev,
 							currabrev,
 							debtorno,
@@ -26,14 +26,14 @@ if (isset($_POST['DeleteOldPrices'])){
 							debtorno,
 							branchcode");
 
-	while ($myrow = DB_fetch_array($result)){
-		$DelResult = DB_query("DELETE FROM prices WHERE stockid='" . $myrow['stockid'] . "'
-													AND debtorno='" . $myrow['debtorno'] . "'
-													AND branchcode='" . $myrow['branchcode'] . "'
-													AND currabrev='" . $myrow['currabrev'] . "'
-													AND typeabbrev='" . $myrow['typeabbrev'] . "'
+	while ($MyRow = DB_fetch_array($Result)){
+		$DelResult = DB_query("DELETE FROM prices WHERE stockid='" . $MyRow['stockid'] . "'
+													AND debtorno='" . $MyRow['debtorno'] . "'
+													AND branchcode='" . $MyRow['branchcode'] . "'
+													AND currabrev='" . $MyRow['currabrev'] . "'
+													AND typeabbrev='" . $MyRow['typeabbrev'] . "'
 													AND enddate='9999-12-31'
-													AND startdate<'" . $myrow['lateststart'] . "'",'','',true);
+													AND startdate<'" . $MyRow['lateststart'] . "'",'','',true);
 	}
 	prnMsg(_('All old prices have been deleted'),'success');
 	DB_Txn_Commit();

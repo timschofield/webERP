@@ -3,12 +3,12 @@
 
 define ('LIKE', 'LIKE');
 
-if(!isset($mysqlport)) {
-	$mysqlport = 3306;
+if(!isset($MySQLPort)) {
+	$MySQLPort = 3306;
 }
 global $db;	// Make sure it IS global, regardless of our context
 
-$db = mysqli_connect($Host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $mysqlport);
+$db = mysqli_connect($Host , $DBUser, $DBPassword,$_SESSION['DatabaseName'], $MySQLPort);
 
 
 //this statement sets the charset to be used for sending data to and from the db server
@@ -50,12 +50,12 @@ if(isset($DatabaseName)) {
 
 function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false, $TrapErrors=true) {
 
-	global $debug;
+	global $Debug;
 	global $PathPrefix;
 	global $db;
 	global $Messages;
 
-	$result = mysqli_query($db, $SQL);
+	$Result = mysqli_query($db, $SQL);
 	$_SESSION['LastInsertId'] = mysqli_insert_id($db);
 
 	if($DebugMessage == '') {
@@ -65,7 +65,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 	if(DB_error_no() != 0 AND $TrapErrors==true) {
 		require_once($PathPrefix . 'includes/header.php');
 		prnMsg($ErrorMessage . '<br />' . DB_error_msg(), 'error', _('Database Error'). ' ' . DB_error_no());
-		if($debug==1) {
+		if($Debug==1) {
 			prnMsg($DebugMessage. '<br />' . $SQL . '<br />','error',_('Database SQL Failure'));
 		}
 		if($Transaction) {
@@ -79,7 +79,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 		include($PathPrefix . 'includes/footer.php');
 		exit;
-	} elseif(isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($result)>0)) {
+	} elseif(isset($_SESSION['MonthsAuditTrail']) and (DB_error_no()==0 AND $_SESSION['MonthsAuditTrail']>0) AND (DB_affected_rows($Result)>0)) {
 
 		$SQLArray = explode(' ', $SQL);
 
@@ -100,7 +100,7 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		}
 	}
 
-	return $result;
+	return $Result;
 }
 
 function DB_fetch_row($ResultIndex) {
@@ -181,8 +181,8 @@ function DB_Maintenance() {
 	prnMsg(_('The system has just run the regular database administration and optimisation routine.'),'info');
 
 	$TablesResult = DB_show_tables();
-	while ($myrow = DB_fetch_row($TablesResult)) {
-		$Result = DB_query('OPTIMIZE TABLE ' . $myrow[0]);
+	while ($MyRow = DB_fetch_row($TablesResult)) {
+		$Result = DB_query('OPTIMIZE TABLE ' . $MyRow[0]);
 	}
 
 	$Result = DB_query("UPDATE config

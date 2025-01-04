@@ -26,8 +26,8 @@ $pdf->addTextWrap(0, $Page_Height-$Top_Margin-18, $Page_Width, 18, _('Quotation'
 
 // Prints quotation info:
 $pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*1, 200, $FontSize, _('Number'). ': '.$_GET['QuotationNo'], 'right');
-$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*2, 200, $FontSize, _('Your Ref'). ': '.$myrow['customerref'], 'right');
-$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*3, 200, $FontSize, _('Date'). ': '.ConvertSQLDate($myrow['quotedate']), 'right');
+$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*2, 200, $FontSize, _('Your Ref'). ': '.$MyRow['customerref'], 'right');
+$pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*3, 200, $FontSize, _('Date'). ': '.ConvertSQLDate($MyRow['quotedate']), 'right');
 $pdf->addTextWrap($Page_Width-$Right_Margin-200, $Page_Height-$Top_Margin-$FontSize*4, 200, $FontSize, _('Page').': '.$PageNumber, 'right');
 
 // Prints company info:
@@ -39,12 +39,12 @@ PrintOurCompanyInfo($pdf,$_SESSION['CompanyRecord'],$XPos,$YPos);
 // Prints 'Delivery To' info:
 $XPos = 46;
 $YPos = 566;
-PrintDeliverTo($pdf,$myrow,_('Delivery To'),$XPos,$YPos);
+PrintDeliverTo($pdf,$MyRow,_('Delivery To'),$XPos,$YPos);
 
 
 // Prints 'Quotation For' info:
 $YPos -= 82;
-PrintCompanyTo($pdf,$myrow,_('Quotation For'),$XPos,$YPos);
+PrintCompanyTo($pdf,$MyRow,_('Quotation For'),$XPos,$YPos);
 
 
 $YPos -= 75;
@@ -53,7 +53,7 @@ $FontSize=10;
 // Prints the currency name:
 require_once('includes/CurrenciesArray.php');// To get the currency name from the currency code.
 $pdf->addText($Page_Width/2+$Left_Margin, $YPos-5, $FontSize,
-	_('All amounts stated in') . ' ' . $myrow['currcode'] . ' - ' . $CurrencyName[$myrow['currcode']]);
+	_('All amounts stated in') . ' ' . $MyRow['currcode'] . ' - ' . $CurrencyName[$MyRow['currcode']]);
 
 // Prints table header:
 $XPos = 40;

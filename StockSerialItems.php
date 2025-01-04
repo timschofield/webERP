@@ -24,7 +24,7 @@ if (isset($_GET['StockID'])){
 	exit;
 }
 
-$result = DB_query("SELECT description,
+$Result = DB_query("SELECT description,
 							units,
 							mbflag,
 							decimalplaces,
@@ -35,32 +35,32 @@ $result = DB_query("SELECT description,
 						WHERE stockid='".$StockID."'",
 						_('Could not retrieve the requested item because'));
 
-$myrow = DB_fetch_array($result);
+$MyRow = DB_fetch_array($Result);
 
-$Description = $myrow['description'];
-$UOM = $myrow['units'];
-$DecimalPlaces = $myrow['decimalplaces'];
-$Serialised = $myrow['serialised'];
-$Controlled = $myrow['controlled'];
-$Perishable = $myrow['perishable'];
+$Description = $MyRow['description'];
+$UOM = $MyRow['units'];
+$DecimalPlaces = $MyRow['decimalplaces'];
+$Serialised = $MyRow['serialised'];
+$Controlled = $MyRow['controlled'];
+$Perishable = $MyRow['perishable'];
 
-if ($myrow['mbflag']=='K' OR $myrow['mbflag']=='A' OR $myrow['mbflag']=='D'){
+if ($MyRow['mbflag']=='K' OR $MyRow['mbflag']=='A' OR $MyRow['mbflag']=='D'){
 
 	prnMsg(_('This item is either a kitset or assembly or a dummy part and cannot have a stock holding') . '. ' . _('This page cannot be displayed') . '. ' . _('Only serialised or controlled items can be displayed in this page'),'error');
 	include('includes/footer.php');
 	exit;
 }
 
-$result = DB_query("SELECT locationname
+$Result = DB_query("SELECT locationname
 						FROM locations
 						INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 						WHERE locations.loccode='" . $_GET['Location'] . "'",
 						_('Could not retrieve the stock location of the item because'),
 						_('The SQL used to lookup the location was'));
 
-$myrow = DB_fetch_row($result);
+$MyRow = DB_fetch_row($Result);
 
-$sql = "SELECT serialno,
+$SQL = "SELECT serialno,
 				quantity,
 				expirationdate
 			FROM stockserialitems
@@ -71,7 +71,7 @@ $sql = "SELECT serialno,
 
 
 $ErrMsg = _('The serial numbers/batches held cannot be retrieved because');
-$LocStockResult = DB_query($sql, $ErrMsg);
+$LocStockResult = DB_query($SQL, $ErrMsg);
 
 echo '<table class="selection">';
 
@@ -80,14 +80,14 @@ if ($Serialised==1){
 } else {
 	echo '<tr><th colspan="11"><font color="navy" size="2">' . _('Controlled items in') . ' ';
 }
-echo $myrow[0]. '</font></th></tr>';
+echo $MyRow[0]. '</font></th></tr>';
 
 echo '<tr>
 		<th colspan="11"><font color="navy" size="2">' . $StockID .'-'. $Description  . '</b>  (' . _('In units of') . ' ' . $UOM . ')</font></th>
 	</tr>';
 
 if ($Serialised == 1 and $Perishable==0){
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 						<th>' . _('Serial Number') . '</th>
 						<th></th>
 						<th>' . _('Serial Number') . '</th>
@@ -95,7 +95,7 @@ if ($Serialised == 1 and $Perishable==0){
 						<th>' . _('Serial Number') . '</th>
 					</tr>';
 } else if ($Serialised == 1 and $Perishable==1){
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 			<th>' . _('Serial Number') . '</th>
 			<th>' . _('Expiry Date') . '</th>
 			<th>' . _('Serial Number') . '</th>
@@ -104,7 +104,7 @@ if ($Serialised == 1 and $Perishable==0){
 			<th>' . _('Expiry Date') . '</th>
 			</tr>';
 } else if ($Serialised == 0 and $Perishable==0){
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 						<th>' . _('Batch/Bundle Ref') . '</th>
 						<th>' . _('Quantity On Hand') . '</th>
 						<th></th>
@@ -115,7 +115,7 @@ if ($Serialised == 1 and $Perishable==0){
 						<th>' . _('Quantity On Hand') . '</th>
 					</tr>';
 } else if ($Serialised == 0 and $Perishable==1){
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 						<th>' . _('Batch/Bundle Ref') . '</th>
 						<th>' . _('Quantity On Hand') . '</th>
 						<th>' . _('Expiry Date') . '</th>
@@ -129,37 +129,37 @@ if ($Serialised == 1 and $Perishable==0){
 						<th>' . _('Expiry Date') . '</th>
 			   		</tr>';
 }
-echo $tableheader;
+echo $Tableheader;
 $TotalQuantity =0;
 $j = 1;
 $Col =0;
 
-while ($myrow=DB_fetch_array($LocStockResult)) {
+while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	echo '<tr class="striped_row">';
 
-	$TotalQuantity += $myrow['quantity'];
+	$TotalQuantity += $MyRow['quantity'];
 
 	if ($Serialised == 1 and $Perishable==0){
-		echo '<td>' . $myrow['serialno'] . '</td>';
+		echo '<td>' . $MyRow['serialno'] . '</td>';
 		echo '<th></th>';
 	} else if ($Serialised == 1 and $Perishable==1) {
-		echo '<td>' . $myrow['serialno'] . '</td>
-				<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>';
+		echo '<td>' . $MyRow['serialno'] . '</td>
+				<td>' . ConvertSQLDate($MyRow['expirationdate']). '</td>';
 	} else if ($Serialised == 0 and $Perishable==0) {
-		echo '<td>' . $myrow['serialno'] . '</td>
-			<td class="number">' . locale_number_format($myrow['quantity'],$DecimalPlaces) . '</td>';
+		echo '<td>' . $MyRow['serialno'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['quantity'],$DecimalPlaces) . '</td>';
 		echo '<th></th>';
 	} else if ($Serialised == 0 and $Perishable==1){
-		echo '<td>' . $myrow['serialno'] . '</td>
-			<td class="number">' . locale_number_format($myrow['quantity'],$DecimalPlaces). '</td>
-			<td>' . ConvertSQLDate($myrow['expirationdate']). '</td>
+		echo '<td>' . $MyRow['serialno'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['quantity'],$DecimalPlaces). '</td>
+			<td>' . ConvertSQLDate($MyRow['expirationdate']). '</td>
 			<th></th>';
 	}
 	$j++;
 	If ($j == 36){
 		$j=1;
-		echo $tableheader;
+		echo $Tableheader;
 	}
 //end of page full new headings if
 	$Col++;

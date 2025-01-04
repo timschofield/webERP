@@ -21,7 +21,7 @@ $SQL = "SELECT stockserialitems.stockid,
 				stockserialitems.quantity,
 				stockmoves.trandate,
 				stockmaster.units,
-				stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost,
+				stockmaster.actualcost AS cost,
 				createdate,
 				decimalplaces
 			FROM stockserialitems

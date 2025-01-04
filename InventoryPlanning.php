@@ -46,7 +46,7 @@ if (isset($_POST['PrintPDF'])) {
 
 // Javier:
 	$PageNumber = 1;
-	$line_height = 12;
+	$LineHeight = 12;
 
       /*Now figure out the inventory data to report for the category range under review
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
@@ -99,7 +99,7 @@ if (isset($_POST['PrintPDF'])) {
 	  include('includes/header.php');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
+	   if ($Debug==1){
 	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
@@ -130,9 +130,9 @@ if (isset($_POST['PrintPDF'])) {
 			$FontSize=10;
 			if ($Category!=''){ /*Then it's NOT the first time round */
 				/*draw a line under the CATEGORY TOTAL*/
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 		   		$pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
-				$YPos -=(2*$line_height);
+				$YPos -=(2*$LineHeight);
 			}
 
 			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['categoryid'] . ' - ' . $InventoryPlan['categorydescription'],'left');
@@ -140,7 +140,7 @@ if (isset($_POST['PrintPDF'])) {
 			$FontSize=8;
 		}
 
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 
 
 		if ($_POST['Location']=='All'){
@@ -177,7 +177,7 @@ if (isset($_POST['PrintPDF'])) {
 	  		include('includes/header.php');
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($debug==1){
+	   		if ($Debug==1){
 	      		echo '<br />' .$SQL;
 	   		}
 
@@ -214,7 +214,7 @@ if (isset($_POST['PrintPDF'])) {
 	  		include('includes/header.php');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($debug==1){
+	   		if ($Debug==1){
 	      			echo '<br />' . $SQL;
 	   		}
 	   		include('includes/footer.php');
@@ -263,7 +263,7 @@ if (isset($_POST['PrintPDF'])) {
 	  		include('includes/header.php');
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($debug==1){
+	   		if ($Debug==1){
 	      			echo '<br />' . $SQL;
 	   		}
 	   		include('includes/footer.php');
@@ -322,16 +322,16 @@ if (isset($_POST['PrintPDF'])) {
 
 
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   $PageNumber++;
 		   include('includes/PDFInventoryPlanPageHeader.inc');
 		}
 
 	} /*end inventory valn while loop */
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 
-	$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+	$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
 	if ($ListCount == 0){
 		$Title = _('Print Inventory Planning Report Empty');
@@ -482,13 +482,13 @@ if (isset($_POST['PrintPDF'])) {
 			<label for="Location">' . _('For Inventory in Location') . ':</label>
 			<select name="Location">';
 
-	$sql = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$LocnResult=DB_query($sql);
+	$SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
+	$LocnResult=DB_query($SQL);
 
 	echo '<option value="All">' . _('All Locations') . '</option>';
 
-	while ($myrow=DB_fetch_array($LocnResult)){
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+	while ($MyRow=DB_fetch_array($LocnResult)){
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 	echo '</select>
 		</field>';

@@ -213,13 +213,13 @@ if (isset($_POST['DoUpgrade'])){
 		prnMsg(_('Only mysql upgrades are performed seamlessly at this time. Your database will need to be manually updated'),'info');
 	}
 
-	$result = DB_IgnoreForeignKeys();
+	$Result = DB_IgnoreForeignKeys();
 
 	foreach ($SQLScripts AS $SQLScriptFile) {
 
 		$SQLEntries = file($SQLScriptFile);
 		$ScriptFileEntries = sizeof($SQLEntries);
-		$sql ='';
+		$SQL ='';
 		$InAFunction = false;
 		echo '<br />
 			<table>
@@ -236,7 +236,7 @@ if (isset($_POST['DoUpgrade'])){
 				AND mb_strstr($SQLEntries[$i],'/*')==FALSE
 				AND mb_strlen($SQLEntries[$i])>1){
 
-				$sql .= ' ' . $SQLEntries[$i];
+				$SQL .= ' ' . $SQLEntries[$i];
 
 				//check if this line kicks off a function definition - pg chokes otherwise
 				if (mb_substr($SQLEntries[$i],0,15) == 'CREATE FUNCTION'){
@@ -247,9 +247,9 @@ if (isset($_POST['DoUpgrade'])){
 					$InAFunction = false;
 				}
 				if (mb_strpos($SQLEntries[$i],';')>0 AND ! $InAFunction){
-					$sql = mb_substr($sql,0,mb_strlen($sql)-1);
-					$result = DB_query($sql, '','', false, false);
-					echo '<tr><td>' . $sql . '</td>';
+					$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
+					$Result = DB_query($SQL, '','', false, false);
+					echo '<tr><td>' . $SQL . '</td>';
 					switch (DB_error_no()) {
 						case 0:
 							echo '<td style="background-color:green">' . _('Success') . '</td></tr>';
@@ -285,13 +285,13 @@ if (isset($_POST['DoUpgrade'])){
 							echo '<td style="background-color:red">' . _('Failure').' - '. 	_('Error number').' - '.DB_error_no() .' ' . DB_error_msg() . '</td></tr>';
 							break;
 					}
-					$sql='';
+					$SQL='';
 				}
 			} //end if its a valid sql line not a comment
 		} //end of for loop around the lines of the sql script
 	echo '</table>';
 	} //end of loop around SQLScripts  apply
-	$result =DB_ReinstateForeignKeys();
+	$Result =DB_ReinstateForeignKeys();
 	/*Now get the modified VersionNumber and script pagesecurities */
 	$ForceConfigReload=true;
 	include('includes/GetConfig.php');

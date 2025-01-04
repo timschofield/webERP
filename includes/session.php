@@ -76,7 +76,7 @@ if (isset($_SESSION['DatabaseName'])) {
 			foreach ($PostVariableValue as $PostArrayKey => $PostArrayValue) {
 				/*
 				 if(get_magic_quotes_gpc()) {
-					$PostVariableValue[$PostArrayKey] = stripslashes($value[$PostArrayKey]);
+					$PostVariableValue[$PostArrayKey] = stripslashes($Value[$PostArrayKey]);
 					}
 				*/
 				$PostVariableValue[$PostArrayKey] = quote_smart($PostVariableValue[$PostArrayKey]);
@@ -131,10 +131,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 				}
 			}
 			foreach ($SQL as $sq) {
-				$Result = DB_query($sq);
+//				$Result = DB_query($sq);
 			}
 			if (isset($SQLi)) {
-				$Result = DB_query($SQLi);
+//				$Result = DB_query($SQLi);
 			}
 		} else {
 
@@ -148,7 +148,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 				$k++;
 			}
 			if ($k) {
-				$Result = DB_query($SQLi);
+//				$Result = DB_query($SQLi);
 			}
 		}
 	}
@@ -180,8 +180,23 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	$Theme = (isset($_SESSION['Theme'])) ? $_SESSION['Theme'] : $DefaultTheme;
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
-		setcookie('Login', $_SESSION['DatabaseName']);
-		include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			setcookie('Login', $_SESSION['DatabaseName']);
+			include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			if ($_SESSION['DBUpdateNumber'] > 10) {
+				$CheckSQL = "SELECT sessionid FROM login_data WHERE sessionid='" . session_id() . "'";
+				$CheckResult = DB_query($CheckSQL);
+				if (DB_num_rows($CheckResult) == 0) {
+					$SQL = "INSERT INTO login_data VALUES ('" . session_id() . "',
+														'" . $_SESSION['UserID'] . "',
+														NOW(),
+														'" . basename($_SERVER['SCRIPT_NAME']) . "')";
+					$Result = DB_query($SQL);
+				} else {
+					$SQL = "UPDATE login_data SET script='" . basename($_SERVER['SCRIPT_NAME']) . "'
+									WHERE sessionid='" . session_id() . "'";
+					$Result = DB_query($SQL);
+				}
+			}
 		break;
 
 		case UL_SHOWLOGIN:
@@ -200,11 +215,11 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			exit;
 
 		case UL_NOTVALID:
-			$demo_text = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
 
 		case UL_MAINTENANCE:
-			$demo_text = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
+			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
 
 	}
@@ -297,15 +312,26 @@ if (in_array(1, $_SESSION['AllowedPageSecurityTokens']) and count($_SESSION['All
 	$CustomerLogin = 0;
 }
 if (in_array($_SESSION['PageSecurityArray']['WWW_Users.php'], $_SESSION['AllowedPageSecurityTokens'])) { /*System administrator login */
-	$debug = 1; //allow debug messages
+	$Debug = 1; //allow debug messages
 
 } else {
-	$debug = 0; //don't allow debug messages
+	$Debug = 0; //don't allow debug messages
 
 }
 
 if ($FirstLogin and !$SupplierLogin and !$CustomerLogin and $_SESSION['ShowDashboard'] == 1) {
 	header('Location: ' . $PathPrefix . 'Dashboard.php');
+}
+
+if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
+	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
+	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
+		$Title = _('Error in form verification');
+		include ('includes/header.php');
+		prnMsg(_('This form was not submitted with a correct ID'), 'error');
+		include ('includes/footer.php');
+		exit;
+	}
 }
 
 function CryptPass($Password) {
@@ -333,29 +359,18 @@ function HighestFileName($PathPrefix) {
 	return basename(array_pop($files), ".php");
 }
 
-if (!isset($_POST['CompanyNameField']) and sizeof($_POST) > 0 and !isset($AllowAnyone)) {
-	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
-	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
-		$Title = _('Error in form verification');
-		include ('includes/header.php');
-		prnMsg(_('This form was not submitted with a correct ID'), 'error');
-		include ('includes/footer.php');
-		exit;
-	}
-}
-
-function quote_smart($value) {
+function quote_smart($Value) {
 	// Stripslashes
 	if (phpversion() < "5.3") {
 		if (get_magic_quotes_gpc()) {
-			$value = stripslashes($value);
+			$Value = stripslashes($Value);
 		}
 	}
 	// Quote if not integer
-	if (!is_numeric($value)) {
-		$value = "'" . DB_escape_string($value) . "'";
+	if (!is_numeric($Value)) {
+		$Value = "'" . DB_escape_string($Value) . "'";
 	}
-	return $value;
+	return $Value;
 }
 
 ?>

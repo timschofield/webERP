@@ -37,7 +37,7 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 					stockmaster.decimalplaces
 			ORDER BY stockmaster.stockid LIMIT 5";
 
-	$searchresult = DB_query($SQL);
+	$SearchResult = DB_query($SQL);
 	echo '<tbody>
 		<tr>
 			<th>', _('Code'), '</th>
@@ -46,15 +46,15 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 			<th>', _('Units'), '</th>
 		</tr>';
 	$k = 0;
-	while ($row = DB_fetch_array($searchresult)) {
-		$StockId = $row['stockid'];
-		$qoh = locale_number_format($row['qoh'], $row['decimalplaces']);
+	while ($Row = DB_fetch_array($SearchResult)) {
+		$StockId = $Row['stockid'];
+		$QOH = locale_number_format($Row['qoh'], $Row['decimalplaces']);
 
 		echo '<tr class="striped_row">
-			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '" target="_blank">', $row['stockid'], '</td>
-			<td>', $row['description'], '</td>
-			<td class="number">', $qoh, '</td>
-			<td>', $row['units'], '</td>
+			<td><a href="', $RootPath, '/StockStatus.php?StockID=', urlencode($StockId), '" target="_blank">', $Row['stockid'], '</td>
+			<td>', $Row['description'], '</td>
+			<td class="number">', $QOH, '</td>
+			<td>', $Row['units'], '</td>
 		</tr>';
 
 	}

@@ -74,11 +74,11 @@ if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 								showontestplan,
 								active
 					FROM prodspecs WHERE keyval='" .$KeyValue. "'";
-			$msg = _('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
+			$Msg = _('A Product Specification has been copied to') . ' ' . $_POST['CopyTo']  . ' from ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
 			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-			prnMsg($msg , 'success');
+			prnMsg($Msg , 'success');
 		$KeyValue=$_POST['CopyTo'];
 		unset($_GET['CopySpec']);
 		unset($_POST['CopySpec']);
@@ -274,11 +274,11 @@ if (isset($_POST['AddTests'])) {
 								active
 						FROM qatests WHERE testid='" .$_POST['AddTestID' .$i]. "'";
 			echo $SQL;
-			$msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
+			$Msg = _('A Product Specification record has been added for Test ID') . ' ' . $_POST['AddTestID' .$i]  . ' for ' . ' ' . $KeyValue ;
 			$ErrMsg = _('The insert of the Product Specification failed because');
 			$DbgMsg = _('The SQL that was used and failed was');
 			$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
-			prnMsg($msg , 'success');
+			prnMsg($Msg , 'success');
 		} //if on
 	} //for
 } //AddTests
@@ -309,12 +309,12 @@ if (isset($_POST['submit'])) {
 				WHERE prodspecs.keyval = '".$KeyValue."'
 				AND prodspecs.testid = '".$SelectedQATest."'";
 
-		$msg = _('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  _('has been updated');
+		$Msg = _('Product Specification record for') . ' ' . $_POST['QATestName']  . ' for ' . ' ' . $KeyValue .  _('has been updated');
 		$ErrMsg = _('The update of the Product Specification failed because');
 		$DbgMsg = _('The SQL that was used and failed was');
 		$Result = DB_query($SQL,$ErrMsg, $DbgMsg);
 
-		prnMsg($msg , 'success');
+		prnMsg($Msg , 'success');
 
 		unset($SelectedQATest);
 		unset($_POST['DefaultValue']);
@@ -345,7 +345,7 @@ if (isset($_POST['submit'])) {
 
 		prnMsg(_('Product Specification') . ' ' . $SelectedQATest . ' for ' . ' ' . $KeyValue . _('has been deleted from the database'),'success');
 		unset ($SelectedQATest);
-		unset($delete);
+		unset($Delete);
 		unset ($_GET['delete']);
 	}
 }

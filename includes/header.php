@@ -61,7 +61,7 @@ echo '</head>';
 if (isset($AutoPrintPage)) {
 	echo '<body onload="window.print()">';
 } else {
-	echo '<body onload="initial(); load()" onunload="GUnload()">';
+	echo '<body onload="initial(); load()">';
 }
 
 $ScriptName = basename($_SERVER['SCRIPT_NAME']);

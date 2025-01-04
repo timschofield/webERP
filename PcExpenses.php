@@ -91,10 +91,6 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['TaxCategory'] . "'
 						)";
 			$Msg = _('Expense') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
-			$CheckSQL = "SELECT count(codeexpense)
-						FROM pcexpenses";
-			$Result = DB_query($CheckSQL);
-			$row = DB_fetch_row($Result);
 		}
 	}
 	if ($InputError != 1) {
@@ -138,7 +134,8 @@ if (!isset($SelectedExpense)) {
 					glaccount,
 					tag,
 					taxcatid
-			FROM pcexpenses";
+			FROM pcexpenses
+			ORDER BY codeexpense";
 	$Result = DB_query($SQL);
 	echo '<table class="selection">
 			<tr>

@@ -99,19 +99,19 @@ if (isset($_POST['submit'])) {
 		$SQL = "SELECT * FROM geocode_param WHERE 1";
 		$ErrMsg = _('An error occurred in retrieving the information');
 		$Resultgeo = DB_query($SQL, $ErrMsg);
-		$row = DB_fetch_array($Resultgeo);
-		$api_key = $row['geocode_key'];
-		$map_host = $row['map_host'];
-		define('MAPS_HOST', $map_host);
-		define('KEY', $api_key);
-		if ($map_host=="") {
+		$Row = DB_fetch_array($Resultgeo);
+		$APIKey = $Row['geocode_key'];
+		$MapHost = $Row['map_host'];
+		define('MAPS_HOST', $MapHost);
+		define('KEY', $APIKey);
+		if ($MapHost=="") {
 		// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
 			echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup. Go to Geocode Setup') . '</div>';
 		} else {
-			$address = urlencode($_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4']);
-			$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
-			$request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
-			$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die('url not loading');
+			$Address = urlencode($_POST['BrAddress1'] . ', ' . $_POST['BrAddress2'] . ', ' . $_POST['BrAddress3'] . ', ' . $_POST['BrAddress4']);
+			$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+			$RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
+			$xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die('url not loading');
 
 			$Status = $xml->status;
 			if (strcmp($Status, 'OK') == 0) {
@@ -123,7 +123,7 @@ if (isset($_POST['submit'])) {
 			} else {
 				// failure to geocode
 				$Geocode_Pending = false;
-				echo '<div class="page_help_text"><b>' . _('Geocode Notice') . ':</b> ' . _('Address') . ': ' . $address . ' ' . _('failed to geocode');
+				echo '<div class="page_help_text"><b>' . _('Geocode Notice') . ':</b> ' . _('Address') . ': ' . $Address . ' ' . _('failed to geocode');
 				echo _('Received status') . ' ' . $Status . '</div>';
 			}
 		}
@@ -167,7 +167,7 @@ if (isset($_POST['submit'])) {
 			$SQL .= " AND custbranch.salesman='" . $_SESSION['SalesmanLogin'] . "'";
 		}
 
-		$msg = $_POST['BrName'] . ' '._('branch has been updated.');
+		$Msg = $_POST['BrName'] . ' '._('branch has been updated.');
 
 	} else if ($InputError !=1) {
 
@@ -237,7 +237,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['DeliverBlind'] . "')";
 	}
 	echo '<br />';
-	$msg = _('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . _('has been added, add another branch, or return to the') . ' <a href="index.php">' . _('Main Menu') . '</a>';
+	$Msg = _('Customer branch') . '<b> ' . $_POST['BranchCode'] . ': ' . $_POST['BrName'] . ' </b>' . _('has been added, add another branch, or return to the') . ' <a href="index.php">' . _('Main Menu') . '</a>';
 
 	//run the SQL from either of the above possibilites
 
@@ -247,7 +247,7 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (DB_error_no() ==0 AND $InputError==0) {
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset($_POST['BranchCode']);
 		unset($_POST['BrName']);
 		unset($_POST['BrAddress1']);

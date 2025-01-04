@@ -16,7 +16,7 @@ if (isset($_POST['PrintPDF'])
 	$pdf->addInfo('Subject',_('Aged Suppliers'));
 	$FontSize=12;
 	$PageNumber=0;
-	$line_height=12;
+	$LineHeight=12;
 
 	  /*Now figure out the aged analysis for the Supplier range under review */
 
@@ -110,7 +110,7 @@ if (isset($_POST['PrintPDF'])
 		include('includes/header.php');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -150,8 +150,8 @@ if (isset($_POST['PrintPDF'])
 		$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayOverdue1,'right');
 		$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
 
-		$YPos -=$line_height;
-		if ($YPos < $Bottom_Margin + $line_height){
+		$YPos -=$LineHeight;
+		if ($YPos < $Bottom_Margin + $LineHeight){
 			  include('includes/PDFAgedSuppliersPageHeader.inc');
 		}
 
@@ -161,7 +161,7 @@ if (isset($_POST['PrintPDF'])
 		   /*draw a line under the Supplier aged analysis*/
 		   $pdf->line($Page_Width-$Right_Margin, $YPos+10,$Left_Margin, $YPos+10);
 
-		   $sql = "SELECT systypes.typename,
+		   $SQL = "SELECT systypes.typename,
 							supptrans.suppreference,
 							supptrans.trandate,
 							(supptrans.ovamount + supptrans.ovgst - supptrans.alloc) as balance,
@@ -191,14 +191,14 @@ if (isset($_POST['PrintPDF'])
 							AND supptrans.settled = 0
 							AND supptrans.supplierno = '" . $AgedAnalysis["supplierid"] . "'";
 
-			$DetailResult = DB_query($sql,'','',False,False); /*dont trap errors - trapped below*/
+			$DetailResult = DB_query($SQL,'','',False,False); /*dont trap errors - trapped below*/
 			if (DB_error_no() !=0) {
 			$Title = _('Aged Supplier Account Analysis - Problem Report');
 			include('includes/header.php');
 			prnMsg(_('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
-			   echo '<br />' . _('The SQL that failed was') . '<br />' . $sql;
+			if ($Debug==1){
+			   echo '<br />' . _('The SQL that failed was') . '<br />' . $SQL;
 			}
 			include('includes/footer.php');
 			exit;
@@ -223,8 +223,8 @@ if (isset($_POST['PrintPDF'])
 				$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayOverdue1,'right');
 				$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
 
-				$YPos -=$line_height;
-				if ($YPos < $Bottom_Margin + $line_height){
+				$YPos -=$LineHeight;
+				if ($YPos < $Bottom_Margin + $LineHeight){
 				$PageNumber++;
 				include('includes/PDFAgedSuppliersPageHeader.inc');
 				$FontSize=6;
@@ -236,8 +236,8 @@ if (isset($_POST['PrintPDF'])
 		} /*Its a detailed report */
 	} /*end Supplier aged analysis while loop */
 
-	$YPos -=$line_height;
-	if ($YPos < $Bottom_Margin + (2*$line_height)){
+	$YPos -=$LineHeight;
+	if ($YPos < $Bottom_Margin + (2*$LineHeight)){
 		$PageNumber++;
 		include('includes/PDFAgedSuppliersPageHeader.inc');
 	} elseif ($_POST['DetailedReport']=='Yes') {
@@ -257,7 +257,7 @@ if (isset($_POST['PrintPDF'])
 	$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayTotOverdue1,'right');
 	$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayTotOverdue2,'right');
 
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 	$pdf->line($Page_Width-$Right_Margin, $YPos ,220, $YPos);
 
 	if ($ListCount == 0) {
@@ -311,14 +311,14 @@ if (isset($_POST['PrintPDF'])
 				<label for="Currency">' . _('For suppliers trading in') . ':' . '</label>
 				<select tabindex="4" name="Currency">';
 
-		$sql = "SELECT currency, currabrev FROM currencies";
-		$result=DB_query($sql);
+		$SQL = "SELECT currency, currabrev FROM currencies";
+		$Result=DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($result)){
-			if ($myrow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
-				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+		while ($MyRow=DB_fetch_array($Result)){
+			if ($MyRow['currabrev'] == $_SESSION['CompanyRecord']['currencydefault']){
+				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+				echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 			}
 		}
 		echo '</select>

@@ -67,7 +67,7 @@ if (isset($_POST['submit'])) {
 				WHERE contact='".$SelectedContact."'
 				AND supplierid='".$SupplierID."'";
 
-		$msg = _('The supplier contact information has been updated');
+		$Msg = _('The supplier contact information has been updated');
 
 	} elseif ($InputError != 1) {
 
@@ -88,7 +88,7 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['Email'] . "',
 					'" . $_POST['Mobile'] . "')";
 
-		$msg = _('The new supplier contact has been added to the database');
+		$Msg = _('The new supplier contact has been added to the database');
 	}
 	//run the SQL from either of the above possibilites
 	if ($InputError != 1) {
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
 
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 
 		unset($SelectedContact);
 		unset($_POST['Contact']);

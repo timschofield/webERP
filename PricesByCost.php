@@ -27,7 +27,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 					stockmaster.description,
 					prices.debtorno,
 					prices.branchcode,
-					(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) as cost,
+					(stockmaster.actualcost) as cost,
 					prices.price as price,
 					prices.debtorno AS customer,
 					prices.branchcode AS branch,
@@ -41,12 +41,12 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				ON prices.currabrev=currencies.currabrev
 				WHERE stockmaster.discontinued = 0
 				" . $Category . "
-				AND   prices.price" . $Comparator . "(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) * '" . filter_number_format($_POST['Margin']) . "'
+				AND   prices.price" . $Comparator . "(stockmaster.actualcost) * '" . filter_number_format($_POST['Margin']) . "'
 				AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
 				AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-				AND (prices.enddate>='" . Date('Y-m-d') . "' OR prices.enddate='0000-00-00')";
+				AND prices.enddate>= CURRENT_DATE";
 	$Result = DB_query($SQL);
-	$numrow = DB_num_rows($Result);
+	$NumRow = DB_num_rows($Result);
 
 	if ($_POST['submit'] == 'Update') {
 			//Update Prices
@@ -124,7 +124,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		}//end while loop
 		DB_free_result($Result); //clear the old result
 		$Result = DB_query($SQL); //re-run the query with the updated prices
-		$numrow = DB_num_rows($Result); // get the new number - should be the same!!
+		$NumRow = DB_num_rows($Result); // get the new number - should be the same!!
 	}
 
 	$SQLcat = "SELECT categorydescription
@@ -147,7 +147,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 
 	echo '<div class="page_help_text">' . _('Items in') . ' ' . $CategoryText . ' ' . _('With Prices') . ' ' . $Comparator . '' . $_POST['Margin'] . ' ' . _('times') . ' ' . _('Cost in Price List') . ' ' . $SalesTypeRow['sales_type'] . '</div><br /><br />';
 
-	if ($numrow > 0) { //the number of prices returned from the main prices query is
+	if ($NumRow > 0) { //the number of prices returned from the main prices query is
 		echo '<form action="' .htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'" method="post" id="update">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo'<input type="hidden" value="' . $_POST['StockCat'] . '" name="StockCat" />
@@ -197,7 +197,7 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 			}
 			//variable for proposed
 			$ProposedPrice = $Cost * filter_number_format($_POST['Margin']);
-			if ($MyRow['enddate']=='0000-00-00'){
+			if ($MyRow['enddate']=='9999-12-31'){
 				$EndDateDisplay = _('No End Date');
 			} else {
 				$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);

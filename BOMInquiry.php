@@ -54,7 +54,7 @@ if (isset($_POST['Search'])){
 			//insert wildcard characters in spaces
 			$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
 
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units,
 							stockmaster.mbflag,
@@ -73,7 +73,7 @@ if (isset($_POST['Search'])){
 					ORDER BY stockmaster.stockid";
 
 		} elseif (mb_strlen($_POST['StockCode'])>0){
-			$sql = "SELECT stockmaster.stockid,
+			$SQL = "SELECT stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units,
 							stockmaster.mbflag,
@@ -94,13 +94,13 @@ if (isset($_POST['Search'])){
 		}
 
 		$ErrMsg = _('The SQL to find the parts selected failed with the message');
-		$result = DB_query($sql,$ErrMsg);
+		$Result = DB_query($SQL,$ErrMsg);
 
 	} //one of keywords or StockCode was more than a zero length string
 } //end of if search
 
 if (isset($_POST['Search'])
-	AND isset($result)
+	AND isset($Result)
 	AND !isset($SelectedParent)) {
 
 	echo '<table class="selection">';
@@ -115,23 +115,23 @@ if (isset($_POST['Search'])
 
 	$j = 1;
 
-	while ($myrow=DB_fetch_array($result)) {
-		if ($myrow['mbflag']=='A' OR $myrow['mbflag']=='K'){
+	while ($MyRow=DB_fetch_array($Result)) {
+		if ($MyRow['mbflag']=='A' OR $MyRow['mbflag']=='K'){
 			$StockOnHand = 'N/A';
 		} else {
-			$StockOnHand = locale_number_format($myrow['totalonhand'],2);
+			$StockOnHand = locale_number_format($MyRow['totalonhand'],2);
 		}
-		$tabindex=$j+4;
+		$TabIndex=$j+4;
 		printf('<tr class="striped_row">
-				<td><input tabindex="' .$tabindex . '" type="submit" name="StockID" value="%s" /></td>
+				<td><input tabindex="' .$TabIndex . '" type="submit" name="StockID" value="%s" /></td>
 		        <td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				</tr>',
-				$myrow['stockid'],
-				$myrow['description'],
+				$MyRow['stockid'],
+				$MyRow['description'],
 				$StockOnHand,
-				$myrow['units'] );
+				$MyRow['units'] );
 		$j++;
 //end of page full new headings if
 	}
@@ -146,23 +146,23 @@ if (!isset($_POST['StockID'])) {
 
 if (isset($StockID) and $StockID!=""){
 
-	$result = DB_query("SELECT description,
+	$Result = DB_query("SELECT description,
 								units,
 								labourcost,
 								overheadcost
 						FROM stockmaster
 						WHERE stockid='" . $StockID  . "'");
-	$myrow = DB_fetch_array($result);
-	$ParentLabourCost = $myrow['labourcost'];
-	$ParentOverheadCost = $myrow['overheadcost'];
+	$MyRow = DB_fetch_array($Result);
+	$ParentLabourCost = $MyRow['labourcost'];
+	$ParentOverheadCost = $MyRow['overheadcost'];
 
-	$sql = "SELECT bom.parent,
+	$SQL = "SELECT bom.parent,
 					bom.component,
 					stockmaster.description,
 					stockmaster.decimalplaces,
-					stockmaster.materialcost+ stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+					stockmaster.actualcost as standardcost,
 					bom.quantity,
-					bom.quantity * (stockmaster.materialcost+ stockmaster.labourcost+ stockmaster.overheadcost) AS componentcost
+					bom.quantity * (stockmaster.actualcost) AS componentcost
 			FROM bom INNER JOIN stockmaster
 			ON bom.component = stockmaster.stockid
 			WHERE bom.parent = '" . $StockID . "'
@@ -170,7 +170,7 @@ if (isset($StockID) and $StockID!=""){
             AND bom.effectiveto > '" . date('Y-m-d') . "'";
 
 	$ErrMsg = _('The bill of material could not be retrieved because');
-	$BOMResult = DB_query ($sql,$ErrMsg);
+	$BOMResult = DB_query ($SQL,$ErrMsg);
 
 	if (DB_num_rows($BOMResult)==0){
 		prnMsg(_('The bill of material for this part is not set up') . ' - ' . _('there are no components defined for it'),'warn');
@@ -184,7 +184,7 @@ if (isset($StockID) and $StockID!=""){
 		echo '<table class="selection">';
 		echo '<tr>
 				<th colspan="5">
-					<div class="centre"><b>' . $myrow[0] . ' : ' . _('per') . ' ' . $myrow[1] . '</b>
+					<div class="centre"><b>' . $MyRow[0] . ' : ' . _('per') . ' ' . $MyRow[1] . '</b>
 					</div></th>
 			</tr>';
 		$TableHeader = '<tr>
@@ -200,9 +200,9 @@ if (isset($StockID) and $StockID!=""){
 
 		$TotalCost = 0;
 
-		while ($myrow=DB_fetch_array($BOMResult)) {
+		while ($MyRow=DB_fetch_array($BOMResult)) {
 
-			$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $myrow['component'] . '">' . $myrow['component'] . '</a>';
+			$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['component'] . '">' . $MyRow['component'] . '</a>';
 
 			/* Component Code  Description  Quantity Std Cost  Total Cost */
 			printf('<tr class="striped_row">
@@ -213,12 +213,12 @@ if (isset($StockID) and $StockID!=""){
 					<td class="number">%s</td>
 					</tr>',
 					$ComponentLink,
-					$myrow['description'],
-					locale_number_format($myrow['quantity'],$myrow['decimalplaces']),
-					locale_number_format($myrow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2),
-					locale_number_format($myrow['componentcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2));
+					$MyRow['description'],
+					locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']),
+					locale_number_format($MyRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2),
+					locale_number_format($MyRow['componentcost'],$_SESSION['CompanyRecord']['decimalplaces'] + 2));
 
-			$TotalCost += $myrow['componentcost'];
+			$TotalCost += $MyRow['componentcost'];
 
 			$j++;
 		}

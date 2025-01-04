@@ -29,19 +29,19 @@ if (isset($_POST['submit'])) {
 
 		/*SelectedCOGSPostingID could also exist if submit had not been clicked this 		code would not run in this case cos submit is false of course	see the delete code below*/
 
-		$sql = "UPDATE cogsglpostings SET
+		$SQL = "UPDATE cogsglpostings SET
 						glcode = '" . $_POST['GLCode'] . "',
 						area = '" . $_POST['Area'] . "',
 						stkcat = '" . $_POST['StkCat'] . "',
 						salestype='" . $_POST['SalesType'] . "'
 				WHERE id ='" .$SelectedCOGSPostingID."'";
 
-		$msg = _('Cost of sales GL posting code has been updated');
+		$Msg = _('Cost of sales GL posting code has been updated');
 	} else {
 
 	/*Selected Sales GL Posting is null cos no item selected on first time round so must be	adding a record must be submitting new entries in the new SalesGLPosting form */
 
-		$sql = "INSERT INTO cogsglpostings (
+		$SQL = "INSERT INTO cogsglpostings (
 						glcode,
 						area,
 						stkcat,
@@ -52,19 +52,19 @@ if (isset($_POST['submit'])) {
 					'" . $_POST['StkCat'] . "',
 					'" . $_POST['SalesType'] . "'
 					)";
-		$msg = _('A new cost of sales posting code has been inserted') . '.';
+		$Msg = _('A new cost of sales posting code has been inserted') . '.';
 	}
 	//run the SQL from either of the above possibilites
 
-	$result = DB_query($sql);
-	prnMsg ($msg,'info');
+	$Result = DB_query($SQL);
+	prnMsg ($Msg,'info');
 	unset ($SelectedCOGSPostingID);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 
-	$sql="DELETE FROM cogsglpostings WHERE id='".$SelectedCOGSPostingID."'";
-	$result = DB_query($sql);
+	$SQL="DELETE FROM cogsglpostings WHERE id='".$SelectedCOGSPostingID."'";
+	$Result = DB_query($SQL);
 	prnMsg( _('The cost of sales posting code record has been deleted'),'info');
 	unset ($SelectedCOGSPostingID);
 }
@@ -73,7 +73,7 @@ if (!isset($SelectedCOGSPostingID)) {
 
 	$ShowLivePostingRecords = true;
 
-	$sql = "SELECT cogsglpostings.id,
+	$SQL = "SELECT cogsglpostings.id,
 				cogsglpostings.area,
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype,
@@ -85,8 +85,8 @@ if (!isset($SelectedCOGSPostingID)) {
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype";
 
-	$result = DB_query($sql);
-	if (DB_num_rows($result)>0){
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following cost of sales posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
 		echo '<table class="selection">
@@ -97,7 +97,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				<th>' . _('COGS Account') . '</th>
 			</tr>';
 
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			printf('<tr class="striped_row">
 					<td>%s</td>
@@ -106,19 +106,19 @@ if (!isset($SelectedCOGSPostingID)) {
 					<td>%s</td>
 					<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</a></td>
 					<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' .  _('Delete') . '</a></td></tr>',
-					$myrow['area'],
-					$myrow['stkcat'],
-					$myrow['salestype'],
-					$myrow['accountname'],
+					$MyRow['area'],
+					$MyRow['stkcat'],
+					$MyRow['salestype'],
+					$MyRow['accountname'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$myrow['id'],
+					$MyRow['id'],
 					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?',
-					$myrow['id']);
+					$MyRow['id']);
 		}//end while
 		echo '</table>';
 	}
 
-	$sql = "SELECT cogsglpostings.id,
+	$SQL = "SELECT cogsglpostings.id,
 				cogsglpostings.area,
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype
@@ -127,16 +127,16 @@ if (!isset($SelectedCOGSPostingID)) {
 				cogsglpostings.stkcat,
 				cogsglpostings.salestype";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
-	if (DB_num_rows($result)==0){
+	if (DB_num_rows($Result)==0){
 		/* there is no default set up so need to check that account 1 is not already used */
 		/* First Check if we have at least a group_ caled Sales */
-		$sql = "SELECT groupname FROM accountgroups WHERE groupname = 'Sales'";
-		$result = DB_query($sql);
-		if (DB_num_rows($result)==0){
+		$SQL = "SELECT groupname FROM accountgroups WHERE groupname = 'Sales'";
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result)==0){
 			/* The required group does not seem to exist so we create it */
-			$sql = "INSERT INTO accountgroups (	groupname,
+			$SQL = "INSERT INTO accountgroups (	groupname,
 												sectioninaccounts,
 												pandl,
 												sequenceintb,
@@ -148,23 +148,23 @@ if (!isset($SelectedCOGSPostingID)) {
 												'10',
 												' ')";
 
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		}
-		$sql = "SELECT accountcode FROM chartmaster WHERE accountcode ='1'";
-		$result = DB_query($sql);
-		if (DB_num_rows($result)==0){
+		$SQL = "SELECT accountcode FROM chartmaster WHERE accountcode ='1'";
+		$Result = DB_query($SQL);
+		if (DB_num_rows($Result)==0){
 		/* account number 1 is not used, so insert a new account */
-			$sql = "INSERT INTO chartmaster (accountcode,
+			$SQL = "INSERT INTO chartmaster (accountcode,
 											accountname,
 											group_)
 									VALUES ('1',
 											'Default Sales/Discounts',
 											'Sales'
 											)";
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 		}
 
-		$sql = "INSERT INTO cogsglpostings (	area,
+		$SQL = "INSERT INTO cogsglpostings (	area,
 											stkcat,
 											salestype,
 											glcode)
@@ -172,11 +172,11 @@ if (!isset($SelectedCOGSPostingID)) {
 											'ANY',
 											'AN',
 											'1')";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 	}
 
 	if ($ShowLivePostingRecords){
-		$sql = "SELECT cogsglpostings.id,
+		$SQL = "SELECT cogsglpostings.id,
 					cogsglpostings.area,
 					cogsglpostings.stkcat,
 					cogsglpostings.salestype,
@@ -188,7 +188,7 @@ if (!isset($SelectedCOGSPostingID)) {
 					cogsglpostings.stkcat,
 					cogsglpostings.salestype";
 
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 		echo '<table class="selection">
 			<tr>
@@ -198,7 +198,7 @@ if (!isset($SelectedCOGSPostingID)) {
 				<th>' . _('GL Account') . '</th>
 			</tr>';
 
-		while ($myrow = DB_fetch_array($result)) {
+		while ($MyRow = DB_fetch_array($Result)) {
 
 			printf('<tr class="striped_row">
 				<td>%s</td>
@@ -208,14 +208,14 @@ if (!isset($SelectedCOGSPostingID)) {
 				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</a></td>
 				<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
-				$myrow['area'],
-				$myrow['stkcat'],
-				$myrow['salestype'],
-				$myrow['accountname'],
+				$MyRow['area'],
+				$MyRow['stkcat'],
+				$MyRow['salestype'],
+				$MyRow['accountname'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['id'],
+				$MyRow['id'],
 				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$myrow['id']);
+				$MyRow['id']);
 
 		}//END WHILE LIST LOOP
 		echo '</table>';
@@ -233,30 +233,30 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 if (isset($SelectedCOGSPostingID)) {
 	//editing an existing cost of sales posting record
 
-	$sql = "SELECT stkcat,
+	$SQL = "SELECT stkcat,
 				glcode,
 				area,
 				salestype
 			FROM cogsglpostings
 			WHERE id='".$SelectedCOGSPostingID."'";
 
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 
-	$_POST['GLCode']  = $myrow['glcode'];
-	$_POST['Area']	= $myrow['area'];
-	$_POST['StkCat']  = $myrow['stkcat'];
-	$_POST['SalesType'] = $myrow['salestype'];
+	$_POST['GLCode']  = $MyRow['glcode'];
+	$_POST['Area']	= $MyRow['area'];
+	$_POST['StkCat']  = $MyRow['stkcat'];
+	$_POST['SalesType'] = $MyRow['salestype'];
 
 	echo '<input type="hidden" name="SelectedCOGSPostingID" value="' . $SelectedCOGSPostingID . '" />';
 
 }  //end of if $SelectedCOGSPostingID only do the else when a new record is being entered
 
 
-$sql = "SELECT areacode,
+$SQL = "SELECT areacode,
 		areadescription
 		FROM areas";
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
 echo '<fieldset>
 		<legend>', _('Select criteria for COGS posting'), '</legend>
@@ -265,7 +265,7 @@ echo '<fieldset>
 			<select name="Area" autofocus="autofocus">
 				<option value="AN">', _('Any Other'), '</option>';
 
-while ($MyRow = DB_fetch_array($result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['Area']) and $MyRow['areacode'] == $_POST['Area']) {
 		echo '<option selected="selected" value="', $MyRow['areacode'], '">', $MyRow['areadescription'], '</option>';
 	} else {
@@ -319,8 +319,8 @@ echo '<field>
 
 echo '<select tabindex="4" name="GLCode">';
 
-DB_free_result($result);
-$sql = "SELECT chartmaster.accountcode,
+DB_free_result($Result);
+$SQL = "SELECT chartmaster.accountcode,
 			chartmaster.accountname
 		FROM chartmaster,
 			accountgroups
@@ -329,19 +329,19 @@ $sql = "SELECT chartmaster.accountcode,
 		ORDER BY accountgroups.sequenceintb,
 			chartmaster.accountcode,
 			chartmaster.accountname";
-$result = DB_query($sql);
+$Result = DB_query($SQL);
 
-while ($myrow = DB_fetch_array($result)) {
-	if (isset($_POST['GLCode']) and $myrow['accountcode']==$_POST['GLCode']) {
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['GLCode']) and $MyRow['accountcode']==$_POST['GLCode']) {
 		echo '<option selected="selected" value="';
 	} else {
 		echo '<option value="';
 	}
-	echo $myrow['accountcode'] . '">' . $myrow['accountcode']  . ' - '  . htmlspecialchars($myrow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
+	echo $MyRow['accountcode'] . '">' . $MyRow['accountcode']  . ' - '  . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
 
 } //end while loop
 
-DB_free_result($result);
+DB_free_result($Result);
 
 echo '</select>';
 echo '<fieldhelp>', _('Select the general ledger code to do COGS postingst to where the above criteria have been met.'), '</fieldhelp>

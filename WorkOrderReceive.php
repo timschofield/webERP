@@ -209,7 +209,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	//Recalculate the standard for the item if there were no items previously received against the work order
 		if ($WORow['qtyrecd']==0){
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost
 									FROM stockmaster INNER JOIN bom
 									ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $_POST['StockID'] . "'
@@ -229,16 +229,14 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			WoRealRequirements($_POST['WO'], $WORow['loccode'], $_POST['StockID']);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
-			$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+			$SQL = "SELECT actualcost AS cost,
 						  sum(quantity) AS totalqoh,
 						  labourcost,
 						  overheadcost
 					FROM stockmaster INNER JOIN locstock
 						ON stockmaster.stockid=locstock.stockid
 					WHERE stockmaster.stockid='" . $_POST['StockID'] . "'
-					GROUP BY materialcost,
-							labourcost,
-							overheadcost";
+					GROUP BY actualcost";
 			$ItemResult = DB_query($SQL);
 			$ItemCostRow = DB_fetch_array($ItemResult);
 
@@ -307,7 +305,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		//Do the issues for autoissue components in the worequirements table
 		$AutoIssueCompsResult = DB_query("SELECT worequirements.stockid,
 												 qtypu,
-												 materialcost+labourcost+overheadcost AS cost,
+												 actualcost AS cost,
 												 stockcategory.stockact,
 												 stockcategory.stocktype
 										  FROM worequirements

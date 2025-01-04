@@ -38,7 +38,7 @@ If (!isset($_GET['TransNo']) OR $_GET['TransNo']==''){
 /*retrieve the order details from the database to print */
 $ErrMsg = _('There was a problem retrieving the order header details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
-$sql = "SELECT salesorders.debtorno,
+$SQL = "SELECT salesorders.debtorno,
     		salesorders.customerref,
 			salesorders.comments,
 			salesorders.orddate,
@@ -76,13 +76,13 @@ $sql = "SELECT salesorders.debtorno,
 		WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$sql .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND salesorders.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$result=DB_query($sql, $ErrMsg);
+$Result=DB_query($SQL, $ErrMsg);
 
 //If there are no rows, there's a problem.
-if (DB_num_rows($result)==0){
+if (DB_num_rows($Result)==0){
 	$Title = _('Print Packing Slip Error');
 	include('includes/header.php');
 	echo '<div class="centre"><br /><br /><br />';
@@ -104,18 +104,18 @@ if (DB_num_rows($result)==0){
 			<br />';
 	include('includes/footer.php');
 	exit();
-} elseif (DB_num_rows($result)==1){ /*There is only one order header returned - thats good! */
+} elseif (DB_num_rows($Result)==1){ /*There is only one order header returned - thats good! */
 
-        $myrow = DB_fetch_array($result);
+        $MyRow = DB_fetch_array($Result);
         /* Place the deliver blind variable into a hold variable to used when
         producing the packlist */
-        $DeliverBlind = $myrow['deliverblind'];
-        if ($myrow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
+        $DeliverBlind = $MyRow['deliverblind'];
+        if ($MyRow['printedpackingslip']==1 AND ($_GET['Reprint']!='OK' OR !isset($_GET['Reprint']))){
                 $Title = _('Print Packing Slip Error');
                 include('includes/header.php');
                 echo '<p>';
                 prnMsg( _('The packing slip for order number') . ' ' . $_GET['TransNo'] . ' ' .
-                        _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($myrow['datepackingslipprinted']) .
+                        _('has previously been printed') . '. ' . _('It was printed on'). ' ' . ConvertSQLDate($MyRow['datepackingslipprinted']) .
                         '<br />' . _('This check is there to ensure that duplicate packing slips are not produced and dispatched more than once to the customer'), 'warn' );
               echo '<p><a href="' . $RootPath . '/PrintCustOrder.php?TransNo=' . urlencode($_GET['TransNo']) . '&Reprint=OK">'
                 . _('Do a Re-Print') . ' (' . _('On Pre-Printed Stationery') . ') ' . _('Even Though Previously Printed') . '</a><p>' .
@@ -152,7 +152,7 @@ include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('Customer Laser Packing Slip') );
 $pdf->addInfo('Subject', _('Laser Packing slip for order') . ' ' . $_GET['TransNo']);
 $FontSize=12;
-$line_height=24;
+$LineHeight=24;
 $PageNumber = 1;
 $Copy = 'Office';
 
@@ -166,7 +166,7 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 	/* Now ... Has the order got any line items still outstanding to be invoiced */
 	$ErrMsg = _('There was a problem retrieving the order details for Order Number') . ' ' . $_GET['TransNo'] . ' ' . _('from the database');
 
-	$sql = "SELECT salesorderdetails.stkcode,
+	$SQL = "SELECT salesorderdetails.stkcode,
 					stockmaster.description,
 					salesorderdetails.quantity,
 					salesorderdetails.qtyinvoiced,
@@ -196,36 +196,36 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 					ON pickreqdetails.prid=pickreq.prid
 					AND pickreqdetails.orderlineno=salesorderdetails.orderlineno
 				LEFT OUTER JOIN custitem
-					ON custitem.debtorno='" . $myrow['debtorno'] . "'
+					ON custitem.debtorno='" . $MyRow['debtorno'] . "'
 					AND custitem.stockid=salesorderdetails.stkcode
-				WHERE locstock.loccode = '" . $myrow['fromstkloc'] . "'
+				WHERE locstock.loccode = '" . $MyRow['fromstkloc'] . "'
 					AND salesorderdetails.orderno='" . $_GET['TransNo'] . "'";
-	$result=DB_query($sql, $ErrMsg);
+	$Result=DB_query($SQL, $ErrMsg);
 
-	if (DB_num_rows($result)>0){
+	if (DB_num_rows($Result)>0){
 		/*Yes there are line items to start the ball rolling with a page header */
 		include('includes/PDFOrderPageHeader_generic.inc');
 
-		while ($myrow2=DB_fetch_array($result)){
+		while ($MyRow2=DB_fetch_array($Result)){
 
             $ListCount ++;
-			$Volume += $myrow2['quantity'] * $myrow2['volume'];
-			$Weight += $myrow2['quantity'] * $myrow2['grossweight'];
+			$Volume += $MyRow2['quantity'] * $MyRow2['volume'];
+			$Weight += $MyRow2['quantity'] * $MyRow2['grossweight'];
 
-			$DisplayQty = locale_number_format($myrow2['quantity'],$myrow2['decimalplaces']);
-			$DisplayPrevDel = locale_number_format($myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+			$DisplayQty = locale_number_format($MyRow2['quantity'],$MyRow2['decimalplaces']);
+			$DisplayPrevDel = locale_number_format($MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
 
-			if ($myrow2['qtypicked'] > 0) {
-				$DisplayQtySupplied = locale_number_format($myrow2['qtypicked'], $myrow2['decimalplaces']);
+			if ($MyRow2['qtypicked'] > 0) {
+				$DisplayQtySupplied = locale_number_format($MyRow2['qtypicked'], $MyRow2['decimalplaces']);
 			} else {
-				$DisplayQtySupplied = locale_number_format($myrow2['quantity'] - $myrow2['qtyinvoiced'],$myrow2['decimalplaces']);
+				$DisplayQtySupplied = locale_number_format($MyRow2['quantity'] - $MyRow2['qtyinvoiced'],$MyRow2['decimalplaces']);
 			}
 
-			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$myrow2['stkcode'],'left');
-			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$myrow2['description'],'left');
+			$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$MyRow2['stkcode'],'left');
+			$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$MyRow2['description'],'left');
 			$LeftOvers = $pdf->addTextWrap(400,$YPos,85,$FontSize,$DisplayQty,'right');
-			$LeftOvers = $pdf->addTextWrap(487,$YPos,85,$FontSize,$myrow2['units'],'left');
-			$LeftOvers = $pdf->addTextWrap(527,$YPos,70,$FontSize,$myrow2['bin'],'left');
+			$LeftOvers = $pdf->addTextWrap(487,$YPos,85,$FontSize,$MyRow2['units'],'left');
+			$LeftOvers = $pdf->addTextWrap(527,$YPos,70,$FontSize,$MyRow2['bin'],'left');
 			$LeftOvers = $pdf->addTextWrap(593,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
 			$LeftOvers = $pdf->addTextWrap(692,$YPos,85,$FontSize,$DisplayPrevDel,'right');
 
@@ -235,89 +235,89 @@ for ($i=1;$i<=2;$i++){  /*Print it out twice one copy for customer and one for o
 				$Width2 = $Page_Width-$Left_Margin-$Right_Margin-145;// Width to print salesorderdetails.narrative.
 
 				//XPos was 147, same as Description. Move it +10, slight tab in to improve readability
-				PrintDetail($pdf, $myrow2['narrative'], $Bottom_Margin, 157, $YPos, $Width2, $FontSize2, null, 'includes/PDFOrderPageHeader_generic.inc');
+				PrintDetail($pdf, $MyRow2['narrative'], $Bottom_Margin, 157, $YPos, $Width2, $FontSize2, null, 'includes/PDFOrderPageHeader_generic.inc');
 			}
 
-			if ($YPos-$line_height <= 50){
+			if ($YPos-$LineHeight <= 50){
 			/* We reached the end of the page so finish off the page and start a newy */
 				$PageNumber++;
 				include ('includes/PDFOrderPageHeader_generic.inc');
 			} //end if need a new page headed up
 			else {
 				/*increment a line down for the next line item */
-				$YPos -= ($line_height);
+				$YPos -= ($LineHeight);
 			}
 
-			if ($myrow2['cust_part'] > '') {
-				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $myrow2['cust_part'], 'right');
-				$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myrow2['cust_description']);
-				if ($YPos - $line_height <= 50) {
+			if ($MyRow2['cust_part'] > '') {
+				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $MyRow2['cust_part'], 'right');
+				$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MyRow2['cust_description']);
+				if ($YPos - $LineHeight <= 50) {
 					/* We reached the end of the page so finish off the page and start a newy */
 					$PageNumber++;
 					include('includes/PDFOrderPageHeader_generic.php');
 				} //end if need a new page headed up
 				else {
 					/*increment a line down for the next line item */
-					$YPos -= ($line_height);
+					$YPos -= ($LineHeight);
 				}
 			}
 
-			if ($myrow2['mbflag']=='A'){
+			if ($MyRow2['mbflag']=='A'){
 				/*Then its an assembly item - need to explode into it's components for packing list purposes */
-				$sql = "SELECT bom.component,
+				$SQL = "SELECT bom.component,
 								bom.quantity,
 								stockmaster.description,
 								stockmaster.decimalplaces
 						FROM bom
 						INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
-						WHERE bom.parent='" . $myrow2['stkcode'] . "'
+						WHERE bom.parent='" . $MyRow2['stkcode'] . "'
 							AND bom.effectiveafter <= CURRENT_DATE
 							AND bom.effectiveto > CURRENT_DATE";
 				$ErrMsg = _('Could not retrieve the components of the ordered assembly item');
-				$AssemblyResult = DB_query($sql,$ErrMsg);
+				$AssemblyResult = DB_query($SQL,$ErrMsg);
 				$LeftOvers = $pdf->addTextWrap($XPos,$YPos,150,$FontSize, _('Assembly Components:-'));
-				$YPos -= ($line_height);
+				$YPos -= ($LineHeight);
 				/*Loop around all the components of the assembly and list the quantity supplied */
 				while ($ComponentRow=DB_fetch_array($AssemblyResult)){
-					$DisplayQtySupplied = locale_number_format($ComponentRow['quantity']*($myrow2['quantity'] - $myrow2['qtyinvoiced']),$ComponentRow['decimalplaces']);
+					$DisplayQtySupplied = locale_number_format($ComponentRow['quantity']*($MyRow2['quantity'] - $MyRow2['qtyinvoiced']),$ComponentRow['decimalplaces']);
 					$LeftOvers = $pdf->addTextWrap($XPos,$YPos,127,$FontSize,$ComponentRow['component']);
 					$LeftOvers = $pdf->addTextWrap(147,$YPos,255,$FontSize,$ComponentRow['description']);
 					$LeftOvers = $pdf->addTextWrap(503,$YPos,85,$FontSize,$DisplayQtySupplied,'right');
-					if ($YPos-$line_height <= 50){
+					if ($YPos-$LineHeight <= 50){
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
 						include ('includes/PDFOrderPageHeader_generic.inc');
 					} //end if need a new page headed up
 					 else{
 						/*increment a line down for the next line item */
-						$YPos -= ($line_height);
+						$YPos -= ($LineHeight);
 					}
 				} //loop around all the components of the assembly
 			}
 
-			if ($myrow2['controlled'] == '1') {
+			if ($MyRow2['controlled'] == '1') {
 				$ControlLabel = _('Lot') . ':';
-				if ($myrow2['serialised'] == 1) {
+				if ($MyRow2['serialised'] == 1) {
 					$ControlLabel = _('Serial') . ':';
 				}
-				$sersql = "SELECT serialno,
+				$SerSQL = "SELECT serialno,
 									moveqty
 							FROM pickserialdetails
-							WHERE pickserialdetails.detailno='" . $myrow2['detailno'] . "'";
-				$serresult = DB_query($sersql, $ErrMsg);
-				while ($myser = DB_fetch_array($serresult)) {
+							WHERE pickserialdetails.detailno='" . $MyRow2['detailno'] . "'";
+				$SerResult = DB_query($SerSQL, $ErrMsg);
+				while ($MySer = DB_fetch_array($SerResult)) {
 					$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 127, $FontSize, $ControlLabel, 'right');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myser['serialno'], 'left');
-					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $myser['moveqty'], 'right');
-					if ($YPos - $line_height <= 50) {
+					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['serialno'], 'left');
+					$LeftOvers = $pdf->addTextWrap(147, $YPos, 255, $FontSize, $MySer['moveqty'], 'right');
+					if ($YPos - $LineHeight <= 50) {
 						/* We reached the end of the page so finsih off the page and start a newy */
 						$PageNumber++;
 						include('includes/PDFOrderPageHeader_generic.php');
 					} //end if need a new page headed up
 					else {
 						/*increment a line down for the next line item */
-						$YPos -= ($line_height);
+						$YPos -= ($LineHeight);
 					}
 				} //while loop on myser
 			} //controlled
@@ -353,11 +353,11 @@ if ($ListCount == 0) {
 } else {
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_PackingSlip_' . $_GET['TransNo'] . '_' . date('Y-m-d') . '.pdf');
 	$pdf->__destruct();
-	$sql = "UPDATE salesorders
+	$SQL = "UPDATE salesorders
 				SET printedpackingslip=1,
 					datepackingslipprinted=CURRENT_DATE
 				WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 }
 
 ?>

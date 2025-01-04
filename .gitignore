@@ -1,0 +1,10 @@
+# Only config.distrib.php is to be distributed
+config.php
+
+# Ignore NetBeans project metadata
+nbproject/
+
+# Ignore everything in the companies directory
+/companies/*
+# except for weberpdemo
+!/companies/weberpdemo

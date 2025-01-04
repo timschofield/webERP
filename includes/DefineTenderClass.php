@@ -64,9 +64,9 @@ Class Tender {
 		}
 		foreach ($this->Suppliers as $Supplier) {
 		 if($_SESSION['SmtpSetting']==0){
-			 $result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
+			 $Result = mail($Supplier->EmailAddress, $Subject, $EmailText, $Headers);
 		 }else{
-			 $result = SendmailBySmtp($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));
+			 $Result = SendmailBySmtp($mail,array($Supplier->EmailAddress,$_SESSION['PurchasingManagerEmail']));
 		 }
 		}
 	}
@@ -126,9 +126,9 @@ Class Tender {
 											requiredbydate='" . FormatDateForSQL($this->RequiredByDate)  . "'
 						WHERE tenderid = '" . $this->TenderId  . "'";
 			foreach ($this->Suppliers as $Supplier) {
-				$sql="DELETE FROM tendersuppliers
+				$SQL="DELETE FROM tendersuppliers
 					WHERE  tenderid='" . $this->TenderId . "'";
-				$result=DB_query($sql);
+				$Result=DB_query($SQL);
 				$SuppliersSQL[]="INSERT INTO tendersuppliers (
 									tenderid,
 									supplierid,
@@ -138,9 +138,9 @@ Class Tender {
 										'" . $Supplier->EmailAddress . "')";
 			}
 			foreach ($this->LineItems as $LineItem) {
-				$sql="DELETE FROM tenderitems
+				$SQL="DELETE FROM tenderitems
 						WHERE  tenderid='" . $this->TenderId . "'";
-				$result=DB_query($sql);
+				$Result=DB_query($SQL);
 				$ItemsSQL[]="INSERT INTO tenderitems (tenderid,
 														stockid,
 														quantity,
@@ -152,12 +152,12 @@ Class Tender {
 			}
 		}
 		DB_Txn_Begin();
-		$result=DB_query($HeaderSQL, '', '', True);
-		foreach ($SuppliersSQL as $sql) {
-			$result=DB_query($sql, '', '', True);
+		$Result=DB_query($HeaderSQL, '', '', True);
+		foreach ($SuppliersSQL as $SQL) {
+			$Result=DB_query($SQL, '', '', True);
 		}
-		foreach ($ItemsSQL as $sql) {
-			$result=DB_query($sql, '', '', True);
+		foreach ($ItemsSQL as $SQL) {
+			$Result=DB_query($SQL, '', '', True);
 		}
 		DB_Txn_Commit();
 	}

@@ -13,19 +13,19 @@ if (isset($_POST['PrintPDF'])) {
 	$pdf->addInfo('Subject',_('Indented BOM Listing'));
     	$FontSize=9;
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
-	$result = DB_query("DROP TABLE IF EXISTS tempbom");
-	$result = DB_query("DROP TABLE IF EXISTS passbom");
-	$result = DB_query("DROP TABLE IF EXISTS passbom2");
-	$sql = "CREATE TEMPORARY TABLE passbom (
+	$Result = DB_query("DROP TABLE IF EXISTS tempbom");
+	$Result = DB_query("DROP TABLE IF EXISTS passbom");
+	$Result = DB_query("DROP TABLE IF EXISTS passbom2");
+	$SQL = "CREATE TEMPORARY TABLE passbom (
 				part char(20),
 				sortpart text) DEFAULT CHARSET=utf8";
 
 	$ErrMsg = _('The SQL to create passbom failed with the message');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	$sql = "CREATE TEMPORARY TABLE tempbom (
+	$SQL = "CREATE TEMPORARY TABLE tempbom (
 				parent char(20),
 				component char(20),
 				sortpart text,
@@ -35,25 +35,25 @@ if (isset($_POST['PrintPDF'])) {
 				effectiveafter date,
 				effectiveto date,
 				quantity double) DEFAULT CHARSET=utf8";
-	$result = DB_query($sql,_('Create of tempbom failed because'));
+	$Result = DB_query($SQL,_('Create of tempbom failed because'));
 	// First, find first level of components below requested assembly
 	// Put those first level parts in passbom, use COMPONENT in passbom
 	// to link to PARENT in bom to find next lower level and accumulate
 	// those parts into tempbom
 
 	// This finds the top level
-	$sql = "INSERT INTO passbom (part, sortpart)
+	$SQL = "INSERT INTO passbom (part, sortpart)
 			   SELECT bom.parent AS part,
 					  CONCAT(bom.component,bom.parent) AS sortpart
 					  FROM bom
 			  WHERE bom.component ='" . $_POST['Part'] . "'
               AND bom.effectiveafter <= '" . date('Y-m-d') . "'
               AND bom.effectiveto > '" . date('Y-m-d') . "'";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	$LevelCounter = 2;
 	// $LevelCounter is the level counter
-	$sql = "INSERT INTO tempbom (
+	$SQL = "INSERT INTO tempbom (
 				parent,
 				component,
 				sortpart,
@@ -76,7 +76,7 @@ if (isset($_POST['PrintPDF'])) {
 			  WHERE bom.component ='" . $_POST['Part'] . "'
               AND bom.effectiveafter <= '" . date('Y-m-d') . "'
               AND bom.effectiveto > '" . date('Y-m-d') . "'";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 	// This while routine finds the other levels as long as $ComponentCounter - the
 	// component counter finds there are more components that are used as
@@ -85,7 +85,7 @@ if (isset($_POST['PrintPDF'])) {
 	$ComponentCounter = 1;
 	while ($ComponentCounter > 0) {
 		$LevelCounter++;
-		$sql = "INSERT INTO tempbom (parent,
+		$SQL = "INSERT INTO tempbom (parent,
 									component,
 									sortpart,
 									level,
@@ -107,31 +107,31 @@ if (isset($_POST['PrintPDF'])) {
 				WHERE bom.component = passbom.part
                 AND bom.effectiveafter <= '" . date('Y-m-d') . "'
                 AND bom.effectiveto > '" . date('Y-m-d') . "'";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
-		$result = DB_query("DROP TABLE IF EXISTS passbom2");
+		$Result = DB_query("DROP TABLE IF EXISTS passbom2");
 
-		$result = DB_query("ALTER TABLE passbom RENAME AS passbom2");
-		$result = DB_query("DROP TABLE IF EXISTS passbom");
+		$Result = DB_query("ALTER TABLE passbom RENAME AS passbom2");
+		$Result = DB_query("DROP TABLE IF EXISTS passbom");
 
-		$sql = "CREATE TEMPORARY TABLE passbom (
+		$SQL = "CREATE TEMPORARY TABLE passbom (
 						part char(20),
 						sortpart text) DEFAULT CHARSET=utf8";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
 
-		$sql = "INSERT INTO passbom (part, sortpart)
+		$SQL = "INSERT INTO passbom (part, sortpart)
 				   SELECT bom.parent AS part,
 						  CONCAT(passbom2.sortpart,bom.parent) AS sortpart
 				   FROM bom,passbom2
 				   WHERE bom.component = passbom2.part
                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
                    AND bom.effectiveto > '" . date('Y-m-d') . "'";
-		$result = DB_query($sql);
-		$result = DB_query("SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part");
+		$Result = DB_query($SQL);
+		$Result = DB_query("SELECT COUNT(*) FROM bom,passbom WHERE bom.component = passbom.part");
 
-		$myrow = DB_fetch_row($result);
-		$ComponentCounter = $myrow[0];
+		$MyRow = DB_fetch_row($Result);
+		$ComponentCounter = $MyRow[0];
 
 	} // End of while $ComponentCounter > 0
 
@@ -141,29 +141,29 @@ if (isset($_POST['PrintPDF'])) {
 	   prnMsg( _('The Indented BOM Listing could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 	   echo '<br />
 			<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
-	      echo '<br />' . $sql;
+	   if ($Debug==1){
+	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
 	   exit;
 	}
 
 
-    $sql = "SELECT stockmaster.stockid,
+    $SQL = "SELECT stockmaster.stockid,
                    stockmaster.description
               FROM stockmaster
               WHERE stockid = '" . $_POST['Part'] . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
 	$Assembly = $_POST['Part'];
-	$AssemblyDesc = $myrow['description'];
+	$AssemblyDesc = $MyRow['description'];
 
 	PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,$Right_Margin,$AssemblyDesc);
 
     $Tot_Val=0;
-    $fill = false;
+    $Fill = false;
     $pdf->SetFillColor(224,235,255);
-    $sql = "SELECT tempbom.*,
+    $SQL = "SELECT tempbom.*,
                    stockmaster.description,
                    stockmaster.mbflag,
                    stockmaster.units
@@ -171,38 +171,38 @@ if (isset($_POST['PrintPDF'])) {
               ON tempbom.parent = stockmaster.stockid
 			  INNER JOIN locationusers ON locationusers.loccode=tempbom.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
               ORDER BY sortpart";
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
-    $ListCount = DB_num_rows($result);
+    $ListCount = DB_num_rows($Result);
 
-	While ($myrow = DB_fetch_array($result)){
+	While ($MyRow = DB_fetch_array($Result)){
 
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 		$FontSize=8;
 
-		$FormatedEffectiveAfter = ConvertSQLDate($myrow['effectiveafter']);
-		$FormatedEffectiveTo = ConvertSQLDate($myrow['effectiveto']);
+		$FormatedEffectiveAfter = ConvertSQLDate($MyRow['effectiveafter']);
+		$FormatedEffectiveTo = ConvertSQLDate($MyRow['effectiveto']);
 
 		// Use to alternate between lines with transparent and painted background
 		if ($_POST['Fill'] == 'yes'){
-		    $fill=!$fill;
+		    $Fill=!$Fill;
 		}
 
 		// Parameters for addTextWrap are defined in /includes/class.pdf.php
 		// 1) X position 2) Y position 3) Width
 		// 4) Height 5) Text 6) Alignment 7) Border 8) Fill - True to use SetFillColor
 		// and False to set to transparent
-		$pdf->addTextWrap($Left_Margin+($myrow['level'] * 5),$YPos,90,$FontSize,$myrow['component'],'left',0,$fill);
-		$pdf->addTextWrap(160,$YPos,20,$FontSize,$myrow['mbflag'],'left',0,$fill);
-		$pdf->addTextWrap(180,$YPos,165,$FontSize,$myrow['description'],'left',0,$fill);
-		$pdf->addTextWrap(345,$YPos,30,$FontSize,$myrow['loccode'],'left',0,$fill);
-		$pdf->addTextWrap(375,$YPos,25,$FontSize,$myrow['workcentreadded'],'left',0,$fill);
-		$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($myrow['quantity'],'Variable'),'right',0,$fill);
-		$pdf->addTextWrap(445,$YPos,20,$FontSize,$myrow['units'],'left',0,$fill);
-		$pdf->addTextWrap(465,$YPos,50,$FontSize,$FormatedEffectiveAfter,'left',0,$fill);
-		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedEffectiveTo,'left',0,$fill);
+		$pdf->addTextWrap($Left_Margin+($MyRow['level'] * 5),$YPos,90,$FontSize,$MyRow['component'],'left',0,$Fill);
+		$pdf->addTextWrap(160,$YPos,20,$FontSize,$MyRow['mbflag'],'left',0,$Fill);
+		$pdf->addTextWrap(180,$YPos,165,$FontSize,$MyRow['description'],'left',0,$Fill);
+		$pdf->addTextWrap(345,$YPos,30,$FontSize,$MyRow['loccode'],'left',0,$Fill);
+		$pdf->addTextWrap(375,$YPos,25,$FontSize,$MyRow['workcentreadded'],'left',0,$Fill);
+		$pdf->addTextWrap(400,$YPos,45,$FontSize,locale_number_format($MyRow['quantity'],'Variable'),'right',0,$Fill);
+		$pdf->addTextWrap(445,$YPos,20,$FontSize,$MyRow['units'],'left',0,$Fill);
+		$pdf->addTextWrap(465,$YPos,50,$FontSize,$FormatedEffectiveAfter,'left',0,$Fill);
+		$pdf->addTextWrap(515,$YPos,50,$FontSize,$FormatedEffectiveTo,'left',0,$Fill);
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin,$AssemblyDesc);
 		}
@@ -210,9 +210,9 @@ if (isset($_POST['PrintPDF'])) {
 	} /*end while loop */
 
 	$FontSize =10;
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 	                   $Right_Margin,$AssemblyDesc);
 	}
@@ -269,7 +269,7 @@ if (isset($_POST['PrintPDF'])) {
 function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
                      $Page_Width,$Right_Margin,$AssemblyDesc) {
 
-	$line_height=12;
+	$LineHeight=12;
 	/*PDF page header for Reverse Indented BOM Listing report */
 	if ($PageNumber>1){
 		$pdf->newPage();
@@ -280,13 +280,13 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,_('Reverse Indented BOM Listing'));
 	$pdf->addTextWrap($Page_Width-$Right_Margin-115,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 
-	$YPos -=(2*$line_height);
+	$YPos -=(2*$LineHeight);
 
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
@@ -300,15 +300,15 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	$pdf->addTextWrap(445,$YPos,20,$FontSize,_('UOM'), 'left');
 	$pdf->addTextWrap(465,$YPos,50,$FontSize,_('From Date'), 'left');
 	$pdf->addTextWrap(515,$YPos,50,$FontSize,_('To Date'), 'left');
-	$YPos =$YPos - $line_height;
+	$YPos =$YPos - $LineHeight;
 
 	$FontSize=8;
-	$YPos =$YPos - (2*$line_height);
+	$YPos =$YPos - (2*$LineHeight);
 
 	$pdf->addTextWrap($Left_Margin+1,$YPos,60,$FontSize,_('Component:'),'',0);
 	$pdf->addTextWrap(100,$YPos,100,$FontSize,mb_strtoupper($_POST['Part']),'',0);
 	$pdf->addTextWrap(200,$YPos,150,$FontSize,$AssemblyDesc,'',0);
-	$YPos -=(2*$line_height);
+	$YPos -=(2*$LineHeight);
 	$Xpos = $Left_Margin+5;
 
 	$PageNumber++;

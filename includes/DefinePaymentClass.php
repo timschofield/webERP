@@ -28,8 +28,8 @@ Class Payment {
 	var $Paymenttype;
 	var $PaymentType;
 	var $gltrans_narrative;
-	var $supptrans_suppreference;
-	var $supptrans_transtext;
+	var $SuppTrans_suppreference;
+	var $SuppTrans_transtext;
 
 	function __construct(){
 	/*Constructor function initialises a new Payment batch */

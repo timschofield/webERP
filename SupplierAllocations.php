@@ -318,7 +318,7 @@ If (isset($_GET['AllocTrans'])){
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 1){
 		prnMsg(_('There was a problem retrieving the information relating the transaction selected') . '. ' . _('Allocations are unable to proceed'), 'error');
-		if ($debug == 1){
+		if ($Debug == 1){
 			echo '<br />' . _('The SQL that was used to retrieve the transaction information was') . ' :<br />'  . $SQL;
 		}
 		exit;

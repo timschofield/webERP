@@ -10,8 +10,8 @@
   				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] != 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] != 0) {
 			$Errors[$i] = SupplierNoAlreadyExists;
 		}
 		return $Errors;
@@ -27,8 +27,8 @@
 				      FROM suppliers
 				      WHERE supplierid='".$SupplierNumber."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = SupplierNoDoesntExists;
 		}
 		return $Errors;
@@ -46,10 +46,10 @@
  * must be in the same format as the date format specified in the
  * target webERP company */
 	function VerifySupplierSinceDate($suppliersincedate, $i, $Errors) {
-		$sql="SELECT confvalue FROM config where confname='DefaultDateFormat'";
-		$result=DB_query($sql);
-		$myrow=DB_fetch_array($result);
-		$DateFormat=$myrow[0];
+		$SQL="SELECT confvalue FROM config where confname='DefaultDateFormat'";
+		$Result=DB_query($SQL);
+		$MyRow=DB_fetch_array($Result);
+		$DateFormat=$MyRow[0];
 		if (mb_strstr('/',$PeriodEnd)) {
 			$Date_Array = explode('/',$PeriodEnd);
 		} elseif (mb_strstr('.',$PeriodEnd)) {
@@ -112,8 +112,8 @@
 					 FROM factorcompanies
 					  WHERE id='".$factorco."'";
 		$SearchResult=DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = FactorCompanyNotSetup;
 		}
 		return $Errors;
@@ -131,8 +131,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($SupplierDetails as $key => $value) {
-			$SupplierDetails[$key] = DB_escape_string($value);
+		foreach ($SupplierDetails as $key => $Value) {
+			$SupplierDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifySupplierNo($SupplierDetails['supplierid'], sizeof($Errors), $Errors);
 		$Errors=VerifySupplierName($SupplierDetails['suppname'], sizeof($Errors), $Errors);
@@ -198,14 +198,14 @@
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($SupplierDetails as $key => $value) {
+		foreach ($SupplierDetails as $key => $Value) {
 			$FieldNames.=$key.', ';
-			$FieldValues.='"'.$value.'", ';
+			$FieldValues.='"'.$Value.'", ';
 		}
-		$sql = 'INSERT INTO suppliers ('.mb_substr($FieldNames,0,-2).') '.
+		$SQL = 'INSERT INTO suppliers ('.mb_substr($FieldNames,0,-2).') '.
 		  'VALUES ('.mb_substr($FieldValues,0,-2).') ';
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -222,8 +222,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($SupplierDetails as $key => $value) {
-			$SupplierDetails[$key] = DB_escape_string($value);
+		foreach ($SupplierDetails as $key => $Value) {
+			$SupplierDetails[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifySupplierNoExists($SupplierDetails['supplierid'], sizeof($Errors), $Errors);
 		$Errors=VerifySupplierName($SupplierDetails['suppname'], sizeof($Errors), $Errors);
@@ -287,13 +287,13 @@
 		if (isset($CustomerDetails['taxref'])){
 			$Errors=VerifyTaxRef($CustomerDetails['taxref'], sizeof($Errors), $Errors);
 		}
-		$sql='UPDATE suppliers SET ';
-		foreach ($SupplierDetails as $key => $value) {
-			$sql .= $key.'="'.$value.'", ';
+		$SQL='UPDATE suppliers SET ';
+		foreach ($SupplierDetails as $key => $Value) {
+			$SQL .= $key.'="'.$Value.'", ';
 		}
-		$sql = mb_substr($sql,0,-2)." WHERE supplierid='".$SupplierDetails['supplierid']."'";
+		$SQL = mb_substr($SQL,0,-2)." WHERE supplierid='".$SupplierDetails['supplierid']."'";
 		if (sizeof($Errors)==0) {
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 			echo DB_error_no();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
@@ -319,10 +319,10 @@
 		if (sizeof($Errors)!=0) {
 			return $Errors;
 		}
-		$sql="SELECT * FROM suppliers WHERE supplierid='".$SupplierID."'";
-		$result = DB_query($sql);
+		$SQL="SELECT * FROM suppliers WHERE supplierid='".$SupplierID."'";
+		$Result = DB_query($SQL);
 		if (sizeof($Errors)==0) {
-			return DB_fetch_array($result);
+			return DB_fetch_array($Result);
 		} else {
 			return $Errors;
 		}
@@ -338,14 +338,14 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql='SELECT supplierid
+		$SQL='SELECT supplierid
 			FROM suppliers
 			WHERE '.$Field." LIKE '%".$Criteria."%' ORDER BY supplierid";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 		$i=0;
 		$SupplierList = array();
-		while ($myrow=DB_fetch_array($result)) {
-			$SupplierList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$SupplierList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $SupplierList;

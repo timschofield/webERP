@@ -6,9 +6,9 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg, $Type = 'info', $Prefix = '', $return = false) {
+function prnMsg($Msg, $Type = 'info', $Prefix = '', $Return = false) {
 	global $Messages;
-    if($return){
+    if($Return){
         $Prefix = $Type == 'info'
             ? _('INFORMATION') . ' ' . _('Message')
             : ($Type == 'warning' || $Type == 'warn'
@@ -35,9 +35,9 @@ function reverse_escape($str) {
 		$str = '';
 	}
 
-	$search = array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"');
-	$replace = array("\\", "\0", "\n", "\r", "\x1a", "'", '"');
-	return str_replace($search, $replace, $str);
+	$Search = array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"');
+	$Replace = array("\\", "\0", "\n", "\r", "\x1a", "'", '"');
+	return str_replace($Search, $Replace, $str);
 }
 
 function IsEmailAddress($Email) {
@@ -103,7 +103,7 @@ function pre_var_dump(&$var) {
 class XmlElement {
 	var $name;
 	var $attributes;
-	var $content;
+	var $Content;
 	var $children;
 }
 
@@ -115,29 +115,29 @@ function GetECBCurrencyRates() {
 		$parser = xml_parser_create();
 		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-		xml_parse_into_struct($parser, $xml, $tags);
+		xml_parse_into_struct($parser, $xml, $Tags);
 		xml_parser_free($parser);
 
 		$elements = array(); // the currently filling [child] XmlElement array
 		$stack = array();
-		foreach ($tags as $tag) {
+		foreach ($Tags as $Tag) {
 			$index = count($elements);
-			if ($tag['type'] == 'complete' or $tag['type'] == 'open') {
+			if ($Tag['type'] == 'complete' or $Tag['type'] == 'open') {
 				$elements[$index] = new XmlElement;
-				$elements[$index]->name = $tag['tag'];
-				if (isset($tag['attributes'])) {
-					$elements[$index]->attributes = $tag['attributes'];
+				$elements[$index]->name = $Tag['tag'];
+				if (isset($Tag['attributes'])) {
+					$elements[$index]->attributes = $Tag['attributes'];
 				}
-				if (isset($tag['value'])) {
-					$elements[$index]->content = $tag['value'];
+				if (isset($Tag['value'])) {
+					$elements[$index]->content = $Tag['value'];
 				}
-				if ($tag['type'] == 'open') { // push
+				if ($Tag['type'] == 'open') { // push
 					$elements[$index]->children = array();
 					$stack[count($stack)] = & $elements;
 					$elements = & $elements[$index]->children;
 				}
 			}
-			if ($tag['type'] == 'close') { // pop
+			if ($Tag['type'] == 'close') { // pop
 				$elements = & $stack[count($stack) - 1];
 				unset($stack[count($stack) - 1]);
 			}
@@ -201,21 +201,21 @@ function AddCarriageReturns($str) {
 	return str_replace('\r\n', chr(10), $str);
 }
 //Replace all text/html line breaks with PHP_EOL(default) or given line break.
-function Convert_line_breaks($string, $line_break=PHP_EOL)
+function Convert_line_breaks($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(<br>|<br \/>|<br\/>)\s*/i",
                         "/(\r\n|\r|\n)/" );
-    $replacements = array(  $line_break,
-                            $line_break );
-    $string = preg_replace($patterns, $replacements, $string);
+    $Replacements = array(  $Line_break,
+                            $Line_break );
+    $string = preg_replace($patterns, $Replacements, $string);
     return $string;
 }
 //Replace all text line breaks with PHP_EOL(default) or given line break.
-function Convert_CRLF($string, $line_break=PHP_EOL)
+function Convert_CRLF($string, $Line_break=PHP_EOL)
 {
     $patterns = array(  "/(\r\n|\r|\n)/" );
-    $replacements = array(  $line_break );
-    $string = preg_replace($patterns, $replacements, $string);
+    $Replacements = array(  $Line_break );
+    $string = preg_replace($patterns, $Replacements, $string);
     return $string;
 }
 
@@ -279,7 +279,7 @@ function PrintDeliverTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$line_height=15;
+	$LineHeight=15;
 	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
@@ -304,7 +304,7 @@ function PrintCompanyTo($PDF,$CompanyRecord,$Title,$XPos,$YPos)
 	$CompanyRecord = array_map('html_entity_decode', $CompanyRecord);
 
 	$FontSize = 14;
-	$line_height=15;
+	$LineHeight=15;
 	$PDF->addText($XPos, $YPos,$FontSize, $Title . ':' );
 
 	//webERP default:
@@ -350,52 +350,52 @@ function LogBackTrace($dest = 0) {
 	//  Leave out our frame and the topmost - huge for xmlrpc!
 	for ($ii = 1;$ii < count($stack) - 3;$ii++) {
 		$frame = $stack[$ii];
-		$msg = "FRAME " . $ii . ": ";
+		$Msg = "FRAME " . $ii . ": ";
 		if (isset($frame['file'])) {
-			$msg.= "; file=" . $frame['file'];
+			$Msg.= "; file=" . $frame['file'];
 		}
 		if (isset($frame['line'])) {
-			$msg.= "; line=" . $frame['line'];
+			$Msg.= "; line=" . $frame['line'];
 		}
 		if (isset($frame['function'])) {
-			$msg.= "; function=" . $frame['function'];
+			$Msg.= "; function=" . $frame['function'];
 		}
 		if (isset($frame['args'])) {
 			// Either function args, or included file name(s)
-			$msg.= ' (';
+			$Msg.= ' (';
 			foreach ($frame['args'] as $val) {
 				$typ = gettype($val);
 				switch ($typ) {
 					case 'array':
-						$msg.= '[ ';
+						$Msg.= '[ ';
 						foreach ($val as $v2) {
 							if (gettype($v2) == 'array') {
-								$msg.= '[ ';
-								foreach ($v2 as $v3) $msg.= $v3;
-								$msg.= ' ]';
+								$Msg.= '[ ';
+								foreach ($v2 as $v3) $Msg.= $v3;
+								$Msg.= ' ]';
 							} else {
-								$msg.= $v2 . ', ';
+								$Msg.= $v2 . ', ';
 							}
-							$msg.= ' ]';
+							$Msg.= ' ]';
 							break;
 						}
 					case 'string':
-						$msg.= $val . ', ';
+						$Msg.= $val . ', ';
 						break;
 
 					case 'integer':
-						$msg.= sprintf("%d, ", $val);
+						$Msg.= sprintf("%d, ", $val);
 						break;
 
 					default:
-						$msg.= '<' . gettype($val) . '>, ';
+						$Msg.= '<' . gettype($val) . '>, ';
 						break;
 
 					}
-					$msg.= ' )';
+					$Msg.= ' )';
 			}
 		}
-		error_log($msg, $dest);
+		error_log($Msg, $dest);
 	}
 
 	error_log('++++END STACK BACKTRACE++++', $dest);
@@ -585,8 +585,14 @@ function ReportPeriod($PeriodName, $FromOrTo) {
 	$ThisMonth = date('m');
 	$ThisYear = date('Y');
 	$LastMonth = $ThisMonth - 1;
+	if ($LastMonth == 0) {
+		$LastMonth = 12;
+	}
 	$LastYear = $ThisYear - 1;
 	$NextMonth = $ThisMonth + 1;
+	if ($NextMonth == 13) {
+		$NextMonth = 1;
+	}
 	$NextYear = $ThisYear + 1;
 	// Find total number of days in this month:
 	$TotalDays = cal_days_in_month(CAL_GREGORIAN, $ThisMonth, $ThisYear);

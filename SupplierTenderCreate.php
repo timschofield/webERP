@@ -1,7 +1,9 @@
 <?php
 include ('includes/DefineTenderClass.php');
-include ('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
+
 if (isset($_POST['RequiredByDate'])){$_POST['RequiredByDate'] = ConvertSQLDate($_POST['RequiredByDate']);};
 
 if (empty($_GET['identifier'])) {
@@ -199,10 +201,10 @@ if (isset($_POST['SelectedSupplier'])) {
 }
 
 if (isset($_POST['NewItem']) and !isset($_POST['Refresh'])) {
-	foreach ($_POST as $key => $value) {
+	foreach ($_POST as $key => $Value) {
 		if (mb_substr($key, 0, 7) == 'StockID') {
 			$Index = mb_substr($key, 7, mb_strlen($key) - 7);
-			$StockID = $value;
+			$StockID = $Value;
 			$Quantity = filter_number_format($_POST['Qty' . $Index]);
 			$UOM = $_POST['UOM' . $Index];
 			$SQL = "SELECT description,
@@ -544,10 +546,8 @@ if (isset($_POST['Suppliers'])) {
 	}
 	echo '</field>';
 
-	echo '<h3>' . _('OR') . '</h3>';
-
 	echo '<field>
-			<label for="SupplierCode">' . _('Enter a partial Code') . ':</label>';
+			<label for="SupplierCode">' . '<b>' . _('OR') . ' </b>' . _('Enter a partial Code') . ':</label>';
 	if (isset($_POST['SupplierCode'])) {
 		echo '<input type="text" placeholder="' . _('Leave it blank to show all') . '" name="SupplierCode" value="' . $_POST['SupplierCode'] . '" size="15" maxlength="18" />';
 	} else {
@@ -676,11 +676,10 @@ if (isset($_POST['Items'])) {
 	} else {
 		echo '<input type="text" name="Keywords" placeholder="' . _('Leave it bank to show all') . '" size="20" maxlength="25" />';
 	}
-	echo '</field>
-		<h3>' . _('OR') . ' ' . '</h3>';
+	echo '</field>';
 
 	echo '<field>
-			<label for="StockCode"' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+			<label for="StockCode"' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 	if (isset($_POST['StockCode'])) {
 		echo '<input type="text" name="StockCode" placeholder="' . _('Leave it bank to show all') . '" autofocus="autofocus" value="' . $_POST['StockCode'] . '" size="15" maxlength="18" />';
 	} else {
@@ -808,7 +807,7 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 	$DbgMsg = _('The SQL statement that failed was');
 	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-	if (DB_num_rows($SearchResult) == 0 and $debug == 1) {
+	if (DB_num_rows($SearchResult) == 0 and $Debug == 1) {
 		prnMsg(_('There are no products to display matching the criteria provided'), 'warn');
 	}
 	if (DB_num_rows($SearchResult) == 1) {
@@ -834,16 +833,10 @@ if (isset($_POST['Search'])) { /*ie seach for stock items */
 		while ($MyRow = DB_fetch_array($SearchResult)) {
 
 			$SupportedImgExt = array('png', 'jpg', 'jpeg');
-			$glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-			$imagefile = reset($glob);
-			if (extension_loaded('gd') && function_exists('gd_info') && file_exists($imagefile)) {
-				$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC' . '&amp;StockID=' . urlencode($MyRow['stockid']) . '&amp;text=' . '&amp;width=64' . '&amp;height=64' . '" alt="" />';
-			} else if (file_exists($imagefile)) {
-				$ImageSource = '<img src="' . $imagefile . '" height="64" width="64" />';
-			} else {
-				$ImageSource = _('No Image');
-			}
-
+			$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+			$ImageFile = reset($Glob);
+			$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
+			
 			echo '<tr class="striped_row">
 					<td>' . $MyRow['stockid'] . '</td>
 					<td>' . $MyRow['description'] . '</td>

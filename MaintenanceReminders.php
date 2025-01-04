@@ -50,7 +50,8 @@ $SQL="SELECT 	description,
 				taskdescription,
 				ADDDATE(lastcompleted,frequencydays) AS duedate,
 				realname,
-				manager
+				manager,
+				email
 		FROM fixedassettasks
 		INNER JOIN fixedassets
 		ON fixedassettasks.assetid=fixedassets.assetid
@@ -78,8 +79,11 @@ while ($MyRow = DB_fetch_array($Result)){
 	$MailText .= "\n\n";
 }
 if (DB_num_rows($Result)>0){
+	include('includes/header.php');
 	${'Mail' . $LastManager}->setText($MailText);
 	$SendResult = ${'Mail' . $LastManager}->send(array($LastManagerEmail));
+	prnMsg(_('Reminder sent to') . ' ' . $LastManagerEmail, 'success');
+	include('includes/footer.php');
 } else {
 	include('includes/header.php');
 	prnMsg(_('There are no reminders to be sent'), 'info');

@@ -18,11 +18,11 @@ $SQL = "SELECT MonthName(lastdate_in_period) AS mnth,
 		periodno
 		FROM periods";
 echo '<br /><div class="centre">' . _('Select the Period to update the costs for') . ':<select name="PeriodNo">';
-$result = DB_query($SQL);
+$Result = DB_query($SQL);
 
 echo '<option selected="selected" value="0">' . _('No Period Selected') . '</option>';
 
-while ($PeriodInfo=DB_fetch_array($result)){
+while ($PeriodInfo=DB_fetch_array($Result)){
 
 	echo '<option value="' . $PeriodInfo['periodno'] . '">' . $PeriodInfo['mnth'] . ' ' . $PeriodInfo['Yr'] . '</option>';
 
@@ -34,27 +34,25 @@ echo '<br /><input type="submit" name="UpdateSalesAnalysis" value="' . _('Update
 echo '</div></form>';
 
 if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
-	$sql = "SELECT stockmaster.stockid,
-			materialcost+overheadcost+labourcost AS standardcost,
+	$SQL = "SELECT stockmaster.stockid,
+			actualcost AS standardcost,
 			stockmaster.mbflag
 		FROM salesanalysis INNER JOIN stockmaster
 			ON salesanalysis.stockid=stockmaster.stockid
 		WHERE periodno='" . $_POST['PeriodNo']  . "'
 		AND stockmaster.mbflag<>'D'
 		GROUP BY stockmaster.stockid,
-			stockmaster.materialcost,
-			stockmaster.overheadcost,
-			stockmaster.labourcost,
+			stockmaster.actualcost,
 			stockmaster.mbflag";
 
 
 	$ErrMsg = _('Could not retrieve the sales analysis records to be updated because');
-	$result = DB_query($sql,$ErrMsg);
+	$Result = DB_query($SQL,$ErrMsg);
 
-	while ($ItemsToUpdate = DB_fetch_array($result)){
+	while ($ItemsToUpdate = DB_fetch_array($Result)){
 
 		if ($ItemsToUpdate['mbflag']=='A'){
-			$SQL = "SELECT SUM(materialcost + labourcost + overheadcost) AS standardcost
+			$SQL = "SELECT SUM(actualcost) AS standardcost
 					FROM stockmaster INNER JOIN BOM
 						ON stockmaster.stockid = bom.component
 					WHERE bom.parent = '" . $ItemsToUpdate['stockid'] . "'

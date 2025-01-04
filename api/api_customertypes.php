@@ -11,11 +11,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT typeid FROM debtortype';
-		$result = DB_query($sql);
+		$SQL = 'SELECT typeid FROM debtortype';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$TaxgroupList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$TaxgroupList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $TaxgroupList;
@@ -33,8 +33,8 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM debtortype WHERE typeid='".$typeid."'";
-		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		$SQL = "SELECT * FROM debtortype WHERE typeid='".$typeid."'";
+		$Result = DB_query($SQL);
+		return DB_fetch_array($Result);
 	}
 ?>

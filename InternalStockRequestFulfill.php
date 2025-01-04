@@ -12,7 +12,7 @@ include ('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
 
 if (isset($_POST['UpdateAll'])) {
-	foreach ($_POST as $key => $value) {
+	foreach ($_POST as $key => $Value) {
 		if (mb_strpos($key, 'Qty')) {
 			$RequestID = mb_substr($key, 0, mb_strpos($key, 'Qty'));
 			$LineID = mb_substr($key, mb_strpos($key, 'Qty') + 3);
@@ -31,10 +31,10 @@ if (isset($_POST['UpdateAll'])) {
 				$Completed = False;
 			}
 
-			$SQL = "SELECT materialcost, labourcost, overheadcost, decimalplaces FROM stockmaster WHERE stockid='" . $StockID . "'";
+			$SQL = "SELECT actualcost, decimalplaces FROM stockmaster WHERE stockid='" . $StockID . "'";
 			$Result = DB_query($SQL);
 			$MyRow = DB_fetch_array($Result);
-			$StandardCost = $MyRow['materialcost'] + $MyRow['labourcost'] + $MyRow['overheadcost'];
+			$StandardCost = $MyRow['actualcost'];
 			$DecimalPlaces = $MyRow['decimalplaces'];
 
 			$Narrative = _('Issue') . ' ' . $Quantity . ' ' . _('of') . ' ' . $StockID . ' ' . _('to department') . ' ' . $Department . ' ' . _('from') . ' ' . $Location;
@@ -383,12 +383,11 @@ if (isset($_POST['Location'])) {
 
 			//Select the tag
 			$SQL = "SELECT tagref,
-			tagdescription
-	FROM tags
-	ORDER BY tagref";
+							tagdescription
+					FROM tags
+					ORDER BY tagref";
 			$Result = DB_query($SQL);
 			echo '<td><select multiple="multiple" name="' . $LineRow['dispatchid'] . 'Tag' . $LineRow['dispatchitemsid'] . '[]">';
-			echo '<option value="0">0 - ', _('None') , '</option>';
 			while ($MyRow = DB_fetch_array($Result)) {
 				if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] and in_array($MyRow['tagref'])) {
 					echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';

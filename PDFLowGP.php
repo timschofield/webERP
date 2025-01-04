@@ -9,7 +9,7 @@ if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$Title=_('Low Gross Profit Sales');
 }
-$debug=0;
+$Debug=0;
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML = '';
@@ -46,12 +46,12 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockmoves.transno,
 					stockmoves.trandate,
 					systypes.typename,
-					stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost as unitcost,
+					stockmaster.actualcost as unitcost,
 					stockmoves.qty,
 					stockmoves.debtorno,
 					stockmoves.branchcode,
 					stockmoves.price*(1-stockmoves.discountpercent) as sellingprice,
-					(stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS gp,
+					(stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.actualcost) AS gp,
 					debtorsmaster.name
 				FROM stockmaster INNER JOIN stockmoves
 					ON stockmaster.stockid=stockmoves.stockid
@@ -61,7 +61,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					ON stockmoves.debtorno=debtorsmaster.debtorno
 				WHERE stockmoves.trandate >= '" . FormatDateForSQL($_POST['FromDate']) . "'
 				AND stockmoves.trandate <= '" . FormatDateForSQL($_POST['ToDate']) . "'
-				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
+				AND ((stockmoves.price*(1-stockmoves.discountpercent)) - (stockmaster.actualcost))/(stockmoves.price*(1-stockmoves.discountpercent)) <=" . $_POST['GPMin']/100 . "
 				ORDER BY stockmaster.stockid";
 
 	$LowGPSalesResult = DB_query($SQL,'','',false,false);
@@ -71,7 +71,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	  include('includes/header.php');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -83,7 +83,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include('includes/header.php');
 		prnMsg(_('No low GP items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');

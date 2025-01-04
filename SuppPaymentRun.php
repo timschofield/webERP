@@ -31,7 +31,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$PDF->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
-	$line_height=12;
+	$LineHeight=12;
 
   /*Now figure out the invoice less credits due for the Supplier range under review */
 
@@ -110,7 +110,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			include('includes/header.php');
 			prnMsg(_('The details of supplier invoices due could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
+			if ($Debug==1){
 				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
 			}
 			include('includes/footer.php');
@@ -149,7 +149,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 												$DetailTrans['supplierid'] . ' - ' . $DetailTrans['suppname'] . ' - ' . $DetailTrans['terms'],
 												'left');
 
-				$YPos -= $line_height;
+				$YPos -= $LineHeight;
 			}
 
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
@@ -184,7 +184,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					include('includes/header.php');
 					prnMsg(_('None of the payments will be processed since updates to the transaction records for') . ' ' .$SupplierName . ' ' . _('could not be processed because') . ' - ' . DB_error_msg(),'error');
 					echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-					if ($debug==1){
+					if ($Debug==1){
 						echo '<br />' . _('The SQL that failed was') . $SQL;
 					}
 					DB_Txn_Rollback();
@@ -196,8 +196,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			$LeftOvers = $PDF->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
 			$LeftOvers = $PDF->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
-			$YPos -=$line_height;
-			if ($YPos < $Bottom_Margin + $line_height){
+			$YPos -=$LineHeight;
+			if ($YPos < $Bottom_Margin + $LineHeight){
 				$PageNumber++;
 				include('includes/PDFPaymentRunPageHeader.inc');
 			}
@@ -215,7 +215,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			include('includes/header.php');
 			prnMsg(_('None of the payments will be processed. Unfortunately, there was a problem committing the changes to the database because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
+			if ($Debug==1){
 				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
 			DB_Txn_Rollback();
@@ -321,7 +321,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 	if (DB_error_no() !=0) {
 		 echo '<br />' . _('The bank accounts could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
-		 if ($debug==1){
+		 if ($Debug==1){
 			echo '<br />' . _('The SQL used to retrieve the bank accounts was') . ':<br />' . $SQL;
 		 }
 		 exit;

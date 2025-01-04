@@ -175,7 +175,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 								salesorderdetails.orderlineno,
 								salesorderdetails.poline,
 								salesorderdetails.itemdue,
-								stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+								stockmaster.actualcost AS standardcost
 							FROM pickreqdetails
 							INNER JOIN pickreq
 								ON pickreq.prid=pickreqdetails.prid
@@ -213,8 +213,8 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 				$SerialItemsResult = DB_query($SerialItemsSQL, $ErrMsg, $DbgMsg);
 				if (DB_num_rows($SerialItemsResult) > 0) {
 					$InOutModifier = 1;
-					while ($myserial = DB_fetch_array($SerialItemsResult)) {
-						$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$myserial['serialno']] = new SerialItem($myserial['serialno'], ($InOutModifier > 0 ? 1 : 1) * filter_number_format($myserial['moveqty']));
+					while ($MySerial = DB_fetch_array($SerialItemsResult)) {
+						$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->SerialItems[$MySerial['serialno']] = new SerialItem($MySerial['serialno'], ($InOutModifier > 0 ? 1 : 1) * filter_number_format($MySerial['moveqty']));
 					}
 				} else {
 					$_SESSION['Items' . $identifier]->LineItems[$MyRow['orderlineno']]->QtyDispatched = $MyRow['qtypicked'];
@@ -371,7 +371,7 @@ foreach ($_SESSION['Items' . $identifier]->LineItems as $LnItm) {
 				<td colspan="6">' . stripslashes($Narrative) . '</td>
 			</tr>';
 	}
-} //end foreach ($line)
+} //end foreach ($Line)
 
 if (!isset($_POST['DispatchDate']) or !is_date($_POST['DispatchDate'])) {
 	$DefaultDispatchDate = Date($_SESSION['DefaultDateFormat'], CalcEarliestDispatchDate());
@@ -486,7 +486,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 	if (DB_num_rows($Result) != count($_SESSION['Items' . $identifier]->LineItems)) {
 		/*there should be the same number of items returned from this query as there are lines on the invoice - if  not 	then someone has already invoiced or credited some lines */
 
-		if ($debug == 1) {
+		if ($Debug == 1) {
 			echo '<br />' . $SQL;
 			echo '<br />' . _('Number of rows returned by SQL') . ':' . DB_num_rows($Result);
 			echo '<br />' . _('Count of items in the session') . ' ' . count($_SESSION['Items' . $identifier]->LineItems);

@@ -29,10 +29,10 @@ $pdf->addText($XPos, $YPos,$FontSize, _('Page') . ': ' . $PageNumber);
 
 /*Now print out the company name and address */
 $XPos = $Left_Margin;
-$YPos -= $line_height;
+$YPos -= $LineHeight;
 
 
-$YPos -= $line_height;
+$YPos -= $LineHeight;
 /*Set up headings */
 $FontSize=8;
 
@@ -44,10 +44,10 @@ $LeftOvers = $pdf->addTextWrap($Left_Margin+335,$YPos,45,$FontSize,_('Customer')
 $LeftOvers = $pdf->addTextWrap($Left_Margin+385,$YPos,45,$FontSize,_('Branch'), 'left');
 $LeftOvers = $pdf->addTextWrap($Left_Margin+420,$YPos,50,$FontSize,_('Inv Date'), 'centre');
 
-$YPos-=$line_height;
+$YPos-=$LineHeight;
 
 /*draw a line */
 $pdf->line($XPos, $YPos,$Page_Width-$Right_Margin, $YPos);
 
-$YPos -= ($line_height);
+$YPos -= ($LineHeight);
 ?>

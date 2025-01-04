@@ -327,7 +327,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen(trim($_POST['SuppName'])) > 40 or mb_strlen(trim($_POST['SuppName'])) == 0 or trim($_POST['SuppName']) == '') {
 
 		$InputError = 1;
-		prnMsg(_('The supplier name must be entered and be forty characters or less long'), 'error');
+		prnMsg(_('The supplier name must be entered and has maximum 40 characters)'), 'error');
 		$Errors[$i] = 'Name';
 		$i++;
 	}
@@ -405,21 +405,21 @@ if (isset($_POST['submit'])) {
 			$SQL = "SELECT * FROM geocode_param WHERE 1";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$Resultgeo = DB_query($SQL, $ErrMsg);
-			$row = DB_fetch_array($Resultgeo);
-			$api_key = $row['geocode_key'];
-			$map_host = $row['map_host'];
-			define('MAPS_HOST', $map_host);
-			define('KEY', $api_key);
+			$Row = DB_fetch_array($Resultgeo);
+			$APIKey = $Row['geocode_key'];
+			$MapHost = $Row['map_host'];
+			define('MAPS_HOST', $MapHost);
+			define('KEY', $APIKey);
 			// check that some sane values are setup already in geocode tables, if not skip the geocoding but add the record anyway.
-			if ($map_host == "") {
+			if ($MapHost == "") {
 				echo '<div class="warn">' . _('Warning - Geocode Integration is enabled, but no hosts are setup.  Go to Geocode Setup') . '</div>';
 			} else {
-				$address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
-				$base_url = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
-				$request_url = $base_url . $address . '&key=' . KEY . '&sensor=true';
+				$Address = urlencode($_POST['Address1'] . ', ' . $_POST['Address2'] . ', ' . $_POST['Address3'] . ', ' . $_POST['Address4'] . ', ' . $_POST['Address5'] . ', ' . $_POST['Address6']);
+				$BaseURLl = "https://" . MAPS_HOST . "/maps/api/geocode/xml?address=";
+				$RequestURL = $BaseURLl . $Address . '&key=' . KEY . '&sensor=true';
 
-				$xml = simplexml_load_string(utf8_encode(file_get_contents($request_url))) or die("url not loading");
-				//			$xml = simplexml_load_file($request_url) or die("url not loading");
+				$xml = simplexml_load_string(utf8_encode(file_get_contents($RequestURL))) or die("url not loading");
+				//			$xml = simplexml_load_file($RequestURL) or die("url not loading");
 				$coordinates = $xml->Response->Placemark->Point->coordinates;
 
 				$status = $xml->status;
@@ -432,26 +432,26 @@ if (isset($_POST['submit'])) {
 				} else {
 					// failure to geocode
 					$geocode_pending = false;
-					echo '<p>' . _('Address') . ': ' . $address . ' ' . _('failed to geocode') . "\n";
+					echo '<p>' . _('Address') . ': ' . $Address . ' ' . _('failed to geocode') . "\n";
 					echo _('Received status') . ' ' . $status . "\n" . '</p>';
 				}
 			}
 		}
 		if (!isset($_POST['New'])) {
 
-			$supptranssql = "SELECT supplierno
+			$SuppTransSQL = "SELECT supplierno
 							FROM supptrans
 							WHERE supplierno='" . $SupplierID . "'";
-			$suppresult = DB_query($supptranssql);
-			$supptrans = DB_num_rows($suppresult);
+			$SuppResult = DB_query($SuppTransSQL);
+			$SuppTrans = DB_num_rows($SuppResult);
 
-			$suppcurrssql = "SELECT currcode
+			$SuppCurrsSQL = "SELECT currcode
 							FROM suppliers
 							WHERE supplierid='" . $SupplierID . "'";
-			$currresult = DB_query($suppcurrssql);
-			$suppcurr = DB_fetch_row($currresult);
+			$Currresult = DB_query($SuppCurrsSQL);
+			$SuppCurrs = DB_fetch_row($Currresult);
 
-			if ($supptrans == 0) {
+			if ($SuppTrans == 0) {
 				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
 							address1='" . $_POST['Address1'] . "',
 							address2='" . $_POST['Address2'] . "',
@@ -481,7 +481,7 @@ if (isset($_POST['submit'])) {
 							defaultgl='" . $_POST['DefaultGL'] . "'
 						WHERE supplierid = '" . $SupplierID . "'";
 			} else {
-				if ($suppcurr[0] != $_POST['CurrCode']) {
+				if ($SuppCurrs[0] != $_POST['CurrCode']) {
 					prnMsg(_('Cannot change currency code as transactions already exist'), 'info');
 				}
 				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
@@ -675,6 +675,12 @@ if (!isset($SupplierID)) {
 
 	/*If the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
+	$Result = DB_query("SELECT typeid, typename FROM suppliertype");
+	if (DB_num_rows($Result) == 0) {
+		prnMsg(_('There are no supplier types setup. These must be created first'), 'error');
+		exit;
+	}
+
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -687,37 +693,39 @@ if (!isset($SupplierID)) {
 	if ($_SESSION['AutoSupplierNo'] == 0) {
 		echo '<field>
 				<label for="SupplierID">' . _('Supplier Code') . ':</label>
-				<input type="text" data-type="no-illegal-chars" title="" required="required" name="SupplierID" placeholder="' . _('within 10 characters') . '" size="11" maxlength="10" />
-				<fieldhelp>' . _('The supplier id should not be within 10 legal characters and cannot be blank') . '</fieldhelp>
+				<input type="text" data-type="no-illegal-chars" title="" required="required" name="SupplierID" placeholder="' . _('max 10 characters') . '" size="11" maxlength="10" />
+				<fieldhelp>' . _('The supplier id cannot be blank (max 10 characters)') . '</fieldhelp>
 			</field>';
 	}
 	echo '<field>
 			<label for="SuppName">' . _('Supplier Name') . ':</label>
-			<input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="" name="SuppName" size="42" placeholder="' . _('Within 40 legal characters') . '" maxlength="40" />
-			<fieldhelp>' . _('The supplier name should not be blank and should be less than 40 legal characters') . '</fieldhelp>
+			<input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="" name="SuppName" size="42" placeholder="' . _('max 40 characters') . '" maxlength="40" />
+			<fieldhelp>' . _('The supplier name should not be blank (max 40 characters)') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address1">' . _('Address Line 1 (Street)') . ':</label>
-			<input type="text" pattern=".{1,40}" title="" placeholder="' . _('Less than 40 characters') . '" name="Address1" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" pattern=".{1,40}" title="" placeholder="' . _('Max 39 characters') . '" name="Address1" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address2">' . _('Address Line 2 (Street)') . ':</label>
-			<input type="text" name="Address2" pattern=".{1,40}" title="" placeholder="' . _('Less than 40 characters') . '" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" name="Address2" pattern=".{1,40}" title="" placeholder="' . _('Max 39 characters') . '" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address3">' . _('Address Line 3 (Suburb/City)') . ':</label>
-			<input type="text" title="" placeholder="' . _('Less than 40 characters') . '" name="Address3" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" title="" placeholder="' . _('Max 39 characters') . '" name="Address3" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address4">' . _('Address Line 4 (State/Province)') . ':</label>
-			<td><input type="text" name="Address4" placeholder="' . _('Less than 50 characters') . '" size="42" maxlength="50" /></td>
+			<td><input type="text" name="Address4" placeholder="' . _('Max 49 characters') . '" size="42" maxlength="50" /></td>
+			<fieldhelp>' . _('Max 49 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address5">' . _('Address Line 5 (Postal Code)') . ':</label>
-			<td><input type="text" name="Address5" size="42" placeholder="' . _('Less than 40 characters') . '" maxlength="40" /></td>
+			<td><input type="text" name="Address5" size="42" placeholder="' . _('Max 39 characters') . '" maxlength="20" /></td>
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address6">' . _('Country') . ':</label>
@@ -892,6 +900,7 @@ if (!isset($SupplierID)) {
 			<label for="DefaultGL">' . _('Default GL Account') . ':</label>
 			<select tabindex="19" name="DefaultGL">';
 
+	echo '<option value="0">', _('None') , ' (0)</option>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
 			echo '<option selected="selected" value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';

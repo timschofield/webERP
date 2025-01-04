@@ -9,11 +9,11 @@ include('includes/SQL_CommonFunctions.inc');
 $InputError=0;
 
 if (isset($_POST['FromDate']) AND !Is_Date($_POST['FromDate'])){
-	$msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
+	$Msg = _('The date from must be specified in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 }
 if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
-	$msg =  _('The date to must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
+	$Msg =  _('The date to must be specified in the format') . ' ' .  $_SESSION['DefaultDateFormat'];
 	$InputError=1;
 }
 
@@ -42,20 +42,20 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 	echo '<field>
 			<label for="CategoryID">' . _('Inventory Category') . '</label>';
 
-	$sql = "SELECT categorydescription,
+	$SQL = "SELECT categorydescription,
 					categoryid
 			FROM stockcategory
 			WHERE stocktype<>'D'
 			AND stocktype<>'L'";
 
-	$result = DB_query($sql);
+	$Result = DB_query($SQL);
 
 
 	 echo '<select name="CategoryID">
 			<option selected="selected" value="All">' . _('Over All Categories') . '</option>';
 
-	while ($myrow=DB_fetch_array($result)){
-		echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription']  . '</option>';
+	while ($MyRow=DB_fetch_array($Result)){
+		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription']  . '</option>';
 	}
 
 	 echo '</select>
@@ -65,9 +65,9 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<select name="Location">
 				<option selected="selected" value="All">' . _('All Locations')  . '</option>';
 
-	$result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
-	while ($myrow=DB_fetch_array($result)){
-		echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname']  . '</option>';
+	$Result= DB_query("SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1");
+	while ($MyRow=DB_fetch_array($Result)){
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
 	}
 	 echo '</select>
 		</field>';
@@ -86,7 +86,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 		</form>';
 
 	 if ($InputError==1){
-	 	prnMsg($msg,'error');
+	 	prnMsg($Msg,'error');
 	 }
 	 include('includes/footer.php');
 	 exit;
@@ -95,7 +95,7 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 }
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
-	$sql= "SELECT invoiceno,
+	$SQL= "SELECT invoiceno,
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
@@ -114,7 +114,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			AND trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
-	$sql= "SELECT invoiceno,
+	$SQL= "SELECT invoiceno,
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
@@ -134,7 +134,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			AND categoryid='" . $_POST['CategoryID'] ."'";
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All') {
-	$sql = "SELECT invoiceno,
+	$SQL = "SELECT invoiceno,
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
@@ -158,7 +158,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['location']!='All'){
 
-	$sql = "SELECT invoiceno,
+	$SQL = "SELECT invoiceno,
 			orderdeliverydifferenceslog.orderno,
 			orderdeliverydifferenceslog.stockid,
 			stockmaster.description,
@@ -183,16 +183,16 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 }
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
-$Result=DB_query($sql,'','',false,false); //dont error check - see below
+$Result=DB_query($SQL,'','',false,false); //dont error check - see below
 
 if (DB_error_no()!=0){
 	$Title = _('Delivery Differences Log Report Error');
 	include('includes/header.php');
 	prnMsg( _('An error occurred getting the variances between deliveries and orders'),'error');
-	if ($debug==1){
+	if ($Debug==1){
 		prnMsg( _('The SQL used to get the variances between deliveries and orders that failed was') . '<br />' . $SQL,'error');
 	}
 	include ('includes/footer.php');
@@ -201,8 +201,8 @@ if (DB_error_no()!=0){
 	$Title = _('Delivery Differences Log Report Error');
   	include('includes/header.php');
 	prnMsg( _('There were no variances between deliveries and orders found in the database within the period from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '. ' . _('Please try again selecting a different date range'), 'info');
-	if ($debug==1) {
-		prnMsg( _('The SQL that returned no rows was') . '<br />' . $sql,'error');
+	if ($Debug==1) {
+		prnMsg( _('The SQL that returned no rows was') . '<br />' . $SQL,'error');
 	}
 	include('includes/footer.php');
 	exit;
@@ -214,27 +214,27 @@ include('includes/PDFStarter.php');
 
 $pdf->addInfo('Title',_('Variances Between Deliveries and Orders'));
 $pdf->addInfo('Subject',_('Variances Between Deliveries and Orders from') . ' ' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate']);
-$line_height=12;
+$LineHeight=12;
 $PageNumber = 1;
 $TotalDiffs = 0;
 
 include ('includes/PDFDeliveryDifferencesPageHeader.inc');
 
-while ($myrow=DB_fetch_array($Result)){
+while ($MyRow=DB_fetch_array($Result)){
 
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$myrow['invoiceno'], 'left');
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,40,$FontSize,$myrow['orderno'], 'left');
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,200,$FontSize,$myrow['stockid'] . ' - ' . $myrow['description'], 'left');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,$MyRow['invoiceno'], 'left');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+40,$YPos,40,$FontSize,$MyRow['orderno'], 'left');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+80,$YPos,200,$FontSize,$MyRow['stockid'] . ' - ' . $MyRow['description'], 'left');
 
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,locale_number_format($myrow['quantitydiff'],$myrow['decimalplaces']), 'right');
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+335,$YPos,50,$FontSize,$myrow['debtorno'], 'left');
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+385,$YPos,50,$FontSize,$myrow['branch'], 'left');
-	  $LeftOvers = $pdf->addTextWrap($Left_Margin+435,$YPos,50,$FontSize,ConvertSQLDate($myrow['trandate']), 'left');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,50,$FontSize,locale_number_format($MyRow['quantitydiff'],$MyRow['decimalplaces']), 'right');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+335,$YPos,50,$FontSize,$MyRow['debtorno'], 'left');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+385,$YPos,50,$FontSize,$MyRow['branch'], 'left');
+	  $LeftOvers = $pdf->addTextWrap($Left_Margin+435,$YPos,50,$FontSize,ConvertSQLDate($MyRow['trandate']), 'left');
 
-	  $YPos -= ($line_height);
+	  $YPos -= ($LineHeight);
 	  $TotalDiffs++;
 
-	  if ($YPos - (2 *$line_height) < $Bottom_Margin){
+	  if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
 		  /*Then set up a new page */
 			  $PageNumber++;
 		  include ('includes/PDFDeliveryDifferencesPageHeader.inc');
@@ -242,11 +242,11 @@ while ($myrow=DB_fetch_array($Result)){
 } /* end of while there are delivery differences to print */
 
 
-$YPos-=$line_height;
+$YPos-=$LineHeight;
 $LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of differences') . ' ' . locale_number_format($TotalDiffs), 'left');
 
 if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
-	$sql = "SELECT COUNT(salesorderdetails.orderno)
+	$SQL = "SELECT COUNT(salesorderdetails.orderno)
 			FROM salesorderdetails INNER JOIN debtortrans
 				ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
 				ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
@@ -255,7 +255,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 			AND debtortrans.trandate <='" . FormatDateForSQL($_POST['ToDate']) . "'";
 
 } elseif ($_POST['CategoryID']!='All' AND $_POST['Location']=='All') {
-	$sql = "SELECT COUNT(salesorderdetails.orderno)
+	$SQL = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN stockmaster
 			ON salesorderdetails.stkcode=stockmaster.stockid INNER JOIN salesorders
@@ -267,7 +267,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 } elseif ($_POST['CategoryID']=='All' AND $_POST['Location']!='All'){
 
-	$sql = "SELECT COUNT(salesorderdetails.orderno)
+	$SQL = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans
 			ON salesorderdetails.orderno=debtortrans.order_ INNER JOIN salesorders
 			ON salesorderdetails.orderno = salesorders.orderno INNER JOIN locationusers
@@ -278,7 +278,7 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 
 } elseif ($_POST['CategoryID'] !='All' AND $_POST['Location'] !='All'){
 
-	$sql = "SELECT COUNT(salesorderdetails.orderno)
+	$SQL = "SELECT COUNT(salesorderdetails.orderno)
 		FROM salesorderdetails INNER JOIN debtortrans ON salesorderdetails.orderno=debtortrans.order_
 			INNER JOIN salesorders ON salesorderdetails.orderno = salesorders.orderno
 			INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
@@ -291,19 +291,19 @@ if ($_POST['CategoryID']=='All' AND $_POST['Location']=='All'){
 }
 
 if ($_SESSION['SalesmanLogin'] != '') {
-	$sql .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
+	$SQL .= " AND debtortrans.salesperson='" . $_SESSION['SalesmanLogin'] . "'";
 }
 
 $ErrMsg = _('Could not retrieve the count of sales order lines in the period under review');
-$result = DB_query($sql,$ErrMsg);
+$Result = DB_query($SQL,$ErrMsg);
 
 
-$myrow=DB_fetch_row($result);
-$YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of order lines') . ' ' . locale_number_format($myrow[0]), 'left');
+$MyRow=DB_fetch_row($Result);
+$YPos-=$LineHeight;
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('Total number of order lines') . ' ' . locale_number_format($MyRow[0]), 'left');
 
-$YPos-=$line_height;
-$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . locale_number_format((1-($TotalDiffs/$myrow[0])) * 100,2) . '%', 'left');
+$YPos-=$LineHeight;
+$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,200,$FontSize,_('DIFOT') . ' ' . locale_number_format((1-($TotalDiffs/$MyRow[0])) * 100,2) . '%', 'left');
 
 $ReportFileName = $_SESSION['DatabaseName'] . '_DeliveryDifferences_' . date('Y-m-d').'.pdf';
 $pdf->OutputD($ReportFileName);
@@ -317,14 +317,14 @@ if ($_POST['Email']=='Yes'){
 	include('includes/htmlMimeMail.php');
 
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
+	$Attachment = $mail->getFile($_SESSION['reports_dir'] . '/'.$ReportFileName);
 	$mail->setText(_('Please find herewith delivery differences report from') . ' ' . $_POST['FromDate'] .  ' '. _('to') . ' ' . $_POST['ToDate']);
-	$mail->addAttachment($attachment, $ReportFileName, 'application/pdf');
+	$mail->addAttachment($Attachment, $ReportFileName, 'application/pdf');
 	if($_SESSION['SmtpSetting'] == 0){
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . ' <' . $_SESSION['CompanyRecord']['email'] . '>');
-		$result = $mail->send(array($_SESSION['FactoryManagerEmail']));
+		$Result = $mail->send(array($_SESSION['FactoryManagerEmail']));
 	}else{
-		$result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
+		$Result = SendmailBySmtp($mail,array($_SESSION['FactoryManagerEmail']));
 	}
 
 

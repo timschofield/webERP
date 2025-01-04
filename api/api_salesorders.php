@@ -71,13 +71,13 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the order type is set up in the weberp database */
-	function VerifyOrderType($ordertype, $i, $Errors) {
+	function VerifyOrderType($Ordertype, $i, $Errors) {
 		$Searchsql = "SELECT COUNT(typeabbrev)
 					 FROM salestypes
-					 WHERE typeabbrev='" . $ordertype."'";
+					 WHERE typeabbrev='" . $Ordertype."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = SalesTypeNotSetup;
 		}
 		return $Errors;
@@ -105,8 +105,8 @@ $SOH_DateFields = array ('orddate',
 					 FROM locations
 					  WHERE loccode='". $FromStockLocn."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = LocationCodeNotSetup;
 		}
 		return $Errors;
@@ -158,11 +158,11 @@ $SOH_DateFields = array ('orddate',
 
 /* Fetch the next line number */
 	function GetOrderLineNumber($OrderNo, $i, $Errors) {
-		$linesql = "SELECT MAX(orderlineno)
+		$Linesql = "SELECT MAX(orderlineno)
 					FROM salesorderdetails
 					 WHERE orderno='" . $OrderNo . "'";
-		$lineresult = api_DB_query($linesql);
-		if ($MyRow=DB_fetch_row($lineresult)) {
+		$Lineresult = api_DB_query($Linesql);
+		if ($MyRow=DB_fetch_row($Lineresult)) {
 			return $MyRow[0] + 1;
 		} else {
 			return 1;
@@ -175,8 +175,8 @@ $SOH_DateFields = array ('orddate',
 					 FROM salesorders
 					  WHERE orderno='".$OrderNo."'";
 		$SearchResult=api_DB_query($Searchsql);
-		$answer = DB_fetch_row($SearchResult);
-		if ($answer[0] == 0) {
+		$Answer = DB_fetch_row($SearchResult);
+		if ($Answer[0] == 0) {
 			$Errors[$i] = OrderHeaderNotSetup;
 		}
 		return $Errors;
@@ -207,8 +207,8 @@ $SOH_DateFields = array ('orddate',
 	}
 
 /* Check that the narrative field is 256 characters or less long */
-	function VerifyNarrative($narrative, $i, $Errors) {
-		if (mb_strlen($narrative)>256) {
+	function VerifyNarrative($Narrative, $i, $Errors) {
+		if (mb_strlen($Narrative)>256) {
 			$Errors[$i] = InvalidNarrative;
 		}
 		return $Errors;
@@ -268,8 +268,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderHeader as $key => $value) {
-			$OrderHeader[$key] = DB_escape_string($value);
+		foreach ($OrderHeader as $key => $Value) {
+			$OrderHeader[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors);
 		$Errors=VerifyBranchNoExists($OrderHeader['debtorno'],$OrderHeader['branchcode'], sizeof($Errors), $Errors);
@@ -337,12 +337,12 @@ $SOH_DateFields = array ('orddate',
 		$FieldValues='';
 		global  $SOH_DateFields;
 		$OrderHeader['orderno'] = GetNextTransNo(30);
-		foreach ($OrderHeader as $key => $value) {
+		foreach ($OrderHeader as $key => $Value) {
 			$FieldNames.=$key.', ';
 			if (in_array($key, $SOH_DateFields) ) {
-			    $value = FormatDateforSQL($value);	// Fix dates
+			    $Value = FormatDateforSQL($Value);	// Fix dates
 			}
-			$FieldValues.="'".$value."', ";
+			$FieldValues.="'".$Value."', ";
 		}
 		$SQL = "INSERT INTO salesorders (" . mb_substr($FieldNames,0,-2) . ")
 					VALUES (" . mb_substr($FieldValues,0,-2). ")";
@@ -370,8 +370,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderHeader as $key => $value) {
-			$OrderHeader[$key] = DB_escape_string($value);
+		foreach ($OrderHeader as $key => $Value) {
+			$OrderHeader[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyOrderHeaderExists($OrderHeader['orderno'], sizeof($Errors), $Errors);
 		$Errors=VerifyDebtorExists($OrderHeader['debtorno'], sizeof($Errors), $Errors);
@@ -438,11 +438,11 @@ $SOH_DateFields = array ('orddate',
 		}
 		global  $SOH_DateFields;
 		$SQL='UPDATE salesorders SET ';
-		foreach ($OrderHeader as $key => $value) {
+		foreach ($OrderHeader as $key => $Value) {
 			if (in_array($key, $SOH_DateFields) ) {
-			    $value = FormatDateforSQL($value);	// Fix dates
+			    $Value = FormatDateforSQL($Value);	// Fix dates
 			}
-			$SQL .= $key.'="'.$value.'", ';
+			$SQL .= $key.'="'.$Value.'", ';
 		}
 		$SQL = mb_substr($SQL,0,-2). " WHERE orderno='" . $OrderHeader['orderno']. "'";
 		if (sizeof($Errors)==0) {
@@ -468,8 +468,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderLine as $key => $value) {
-			$OrderLine[$key] = DB_escape_string($value);
+		foreach ($OrderLine as $key => $Value) {
+			$OrderLine[$key] = DB_escape_string($Value);
 		}
 		$OrderLine['orderlineno'] = GetOrderLineNumber($OrderLine['orderno'], sizeof($Errors), $Errors);
 		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors);
@@ -499,14 +499,14 @@ $SOH_DateFields = array ('orddate',
 		}
 		$FieldNames='';
 		$FieldValues='';
-		foreach ($OrderLine as $key => $value) {
+		foreach ($OrderLine as $key => $Value) {
 			$FieldNames.=$key.', ';
 			if ($key == 'actualdispatchdate') {
-			    $value = FormatDateWithTimeForSQL($value);
+			    $Value = FormatDateWithTimeForSQL($Value);
 			} elseif ($key == 'itemdue') {
-			    $value = FormatDateForSQL($value);
+			    $Value = FormatDateForSQL($Value);
 			}
-			$FieldValues.= "'" . $value . "', ";
+			$FieldValues.= "'" . $Value . "', ";
 		}
 
 		$SQL = "INSERT INTO salesorderdetails (" . mb_substr($FieldNames,0,-2) . ")
@@ -533,8 +533,8 @@ $SOH_DateFields = array ('orddate',
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		foreach ($OrderLine as $key => $value) {
-			$OrderLine[$key] = DB_escape_string($value);
+		foreach ($OrderLine as $key => $Value) {
+			$OrderLine[$key] = DB_escape_string($Value);
 		}
 		$Errors=VerifyOrderHeaderExists($OrderLine['orderno'], sizeof($Errors), $Errors);
 		$Errors=VerifyStockCodeExists($OrderLine['stkcode'], sizeof($Errors), $Errors);
@@ -559,13 +559,13 @@ $SOH_DateFields = array ('orddate',
 			$Errors=VerifyPOLine($OrderLine['poline'], sizeof($Errors), $Errors);
 		}
 		$SQL='UPDATE salesorderdetails SET ';
-		foreach ($OrderLine as $key => $value) {
+		foreach ($OrderLine as $key => $Value) {
 			if ($key == 'actualdispatchdate') {
-			    $value = FormatDateWithTimeForSQL($value);
+			    $Value = FormatDateWithTimeForSQL($Value);
 			}
 			elseif ($key == 'itemdue')
-			    $value = FormatDateForSQL($value);
-			$SQL .= $key.'="'.$value.'", ';
+			    $Value = FormatDateForSQL($Value);
+			$SQL .= $key.'="'.$Value.'", ';
 		}
 		//$SQL = mb_substr($SQL,0,-2).' WHERE orderno="'.$OrderLine['orderno'].'" and
 			//	" orderlineno='.$OrderLine['orderlineno'];
@@ -705,7 +705,7 @@ $SOH_DateFields = array ('orddate',
 								discountpercent,
 								taxcatid,
 								mbflag,
-								materialcost+labourcost+overheadcost AS standardcost
+								actualcost AS standardcost
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $OrderNo . "'
@@ -865,7 +865,7 @@ $SOH_DateFields = array ('orddate',
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+								stockmaster.actualcost AS standard
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLineRow['stkcode'] . "'

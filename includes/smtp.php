@@ -15,13 +15,13 @@
 		var $authenticated;
 		var $connection;
 		var $recipients;
-		var $headers;
+		var $Headers;
 		var $timeout;
 		var $errors;
 		var $status;
 		var $body;
 		var $from;
-		var $host;
+		var $Host;
 		var $port;
 		var $helo;
 		var $auth;
@@ -72,8 +72,8 @@
 
 		$this->errors   		= array();
 
-			foreach($params as $key => $value){
-				$this->$key = $value;
+			foreach($params as $key => $Value){
+				$this->$key = $Value;
 			}
 		}
 
@@ -128,8 +128,8 @@
 
 		function send($params = array()){
 
-			foreach($params as $key => $value){
-				$this->set($key, $value);
+			foreach($params as $key => $Value){
+				$this->set($key, $Value);
 			}
 
 			if($this->is_connected()){
@@ -142,8 +142,8 @@
 
 				$this->mail($this->from);
 				if(is_array($this->recipients))
-					foreach($this->recipients as $value)
-						$this->rcpt($value);
+					foreach($this->recipients as $Value)
+						$this->rcpt($Value);
 				else
 					$this->rcpt($this->recipients);
 
@@ -151,18 +151,18 @@
 					return FALSE;
 
 				// Transparency
-				$headers = str_replace(CRLF.'.', CRLF.'..', trim(implode(CRLF, $this->headers)));
+				$Headers = str_replace(CRLF.'.', CRLF.'..', trim(implode(CRLF, $this->headers)));
 				$body    = str_replace(CRLF.'.', CRLF.'..', $this->body);
 				$body    = $body[0] == '.' ? '.'.$body : $body;
 
-				$this->send_data($headers);
+				$this->send_data($Headers);
 				$this->send_data('');
 				$this->send_data($body);
 				$this->send_data('.');
 
-				$result = (substr(trim($this->get_data()), 0, 3) === '250');
+				$Result = (substr(trim($this->get_data()), 0, 3) === '250');
 				//$this->rset();
-				return $result;
+				return $Result;
 			}else{
 				$this->errors[] = 'Not connected!';
 				return FALSE;
@@ -342,17 +342,17 @@
 
 		function &get_data(){
 
-			$return = '';
-			$line   = '';
+			$Return = '';
+			$Line   = '';
 			$loops  = 0;
 
 			if(is_resource($this->connection)){
-				while((strpos($return, CRLF) === FALSE OR substr($line,3,1) !== ' ') AND $loops < 100){
-					$line    = fgets($this->connection, 512);
-					$return .= $line;
+				while((strpos($Return, CRLF) === FALSE OR substr($Line,3,1) !== ' ') AND $loops < 100){
+					$Line    = fgets($this->connection, 512);
+					$Return .= $Line;
 					$loops++;
 				}
-				return $return;
+				return $Return;
 
 			}else
 				return FALSE;
@@ -362,9 +362,9 @@
         * Sets a variable
         */
 
-		function set($var, $value){
+		function set($var, $Value){
 
-			$this->$var = $value;
+			$this->$var = $Value;
 			return TRUE;
 		}
 

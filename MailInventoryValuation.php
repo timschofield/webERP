@@ -62,7 +62,7 @@ $pdf->addInfo('Subject', _('Inventory Valuation'));
 /* END Brought from class.pdf.php constructor */
 
 $PageNumber = 1;
-$line_height = 12;
+$LineHeight = 12;
 
 /*Now figure out the inventory data to report for the category range under review */
 if ($Location=='All'){
@@ -72,8 +72,8 @@ if ($Location=='All'){
 				stockmaster.stockid,
 				stockmaster.description,
 				SUM(locstock.quantity) as qtyonhand,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-				SUM(locstock.quantity) *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+				stockmaster.actualcost AS unitcost,
+				SUM(locstock.quantity) *(stockmaster.actualcost) AS itemtotal
 			FROM stockmaster,
 				stockcategory,
 				locstock
@@ -97,8 +97,8 @@ if ($Location=='All'){
 				stockmaster.stockid,
 				stockmaster.description,
 				locstock.quantity as qtyonhand,
-				stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS unitcost,
-				locstock.quantity *(stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost) AS itemtotal
+				stockmaster.actualcost AS unitcost,
+				locstock.quantity *(stockmaster.actualcost) AS itemtotal
 			FROM stockmaster,
 				stockcategory,
 				locstock
@@ -120,7 +120,7 @@ if (DB_error_no() !=0) {
 	include('includes/header.php');
 	echo _('The inventory valuation could not be retrieved by the SQL because') . ' - ' . DB_error_msg();
 	echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	if ($debug==1){
+	if ($Debug==1){
 		echo '<br />' . $SQL;
 	}
 
@@ -141,18 +141,18 @@ While ($InventoryValn = DB_fetch_array($InventoryResult)){
 
 		/* need to print the total of previous category */
 			if ($_POST['DetailedReport']=='Yes'){
-				$YPos -= (2*$line_height);
+				$YPos -= (2*$LineHeight);
 				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Category . " - " . $CategoryName);
 			}
 
 			$DisplayCatTotVal = locale_number_format($CatTot_Val,2);
 			$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right');
-			$YPos -=$line_height;
+			$YPos -=$LineHeight;
 
 			If ($_POST['DetailedReport']=='Yes'){
 			/*draw a line under the CATEGORY TOTAL*/
-				$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-				$YPos -=(2*$line_height);
+				$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+				$YPos -=(2*$LineHeight);
 			}
 			$CatTot_Val=0;
 		}
@@ -162,7 +162,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult)){
 	}
 
 	if ($_POST['DetailedReport']=='Yes'){
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 		$FontSize=8;
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,$InventoryValn['stockid']);				$LeftOvers = $pdf->addTextWrap(120,$YPos,260,$FontSize,$InventoryValn['description']);
@@ -178,7 +178,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult)){
 	$Tot_Val += $InventoryValn['itemtotal'];
 	$CatTot_Val += $InventoryValn['itemtotal'];
 
-	if ($YPos < $Bottom_Margin + $line_height){
+	if ($YPos < $Bottom_Margin + $LineHeight){
 		include('includes/PDFInventoryValnPageHeader.inc');
 	}
 
@@ -187,7 +187,7 @@ While ($InventoryValn = DB_fetch_array($InventoryResult)){
 $FontSize =10;
 /*Print out the category totals */
 if ($_POST['DetailedReport']=='Yes'){
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize, _('Total for') . ' ' . $Category . ' - ' . $CategoryName, 'left');
 }
 
@@ -196,19 +196,19 @@ $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayCatTotVal, 'right'
 
 If ($_POST['DetailedReport']=='Yes'){
 	/*draw a line under the CATEGORY TOTAL*/
-	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-	$YPos -=(2*$line_height);
+	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$YPos -=(2*$LineHeight);
 }
 
-$YPos -= (2*$line_height);
+$YPos -= (2*$LineHeight);
 
 /*Print out the grand totals */
 $LeftOvers = $pdf->addTextWrap(80, $YPos,260-$Left_Margin,$FontSize, _('Grand Total Value'), 'right');
 $DisplayTotalVal = locale_number_format($Tot_Val,2);
 $LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 If ($_POST['DetailedReport']=='Yes'){
-	$pdf->line($Left_Margin, $YPos+$line_height-2,$Page_Width-$Right_Margin, $YPos+$line_height-2);
-	$YPos -=(2*$line_height);
+	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$YPos -=(2*$LineHeight);
 }
 
 if ($ListCount == 0) {
@@ -225,17 +225,17 @@ if ($ListCount == 0) {
 	$pdf-> __destruct();
 
 	$mail = new htmlMimeMail();
-	$attachment = $mail->getFile( $_SESSION['reports_dir'] . '/InventoryReport.pdf');
+	$Attachment = $mail->getFile( $_SESSION['reports_dir'] . '/InventoryReport.pdf');
 	$mail->setText(_('Please find herewith the stock valuation report'));
 	$mail->setSubject(_('Inventory Valuation Report'));
-	$mail->addAttachment($attachment, 'InventoryReport.pdf', 'application/pdf');
+	$mail->addAttachment($Attachment, 'InventoryReport.pdf', 'application/pdf');
 	if($_SESSION['SmtpSetting']==0){
 		$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-		$result = $mail->send($Recipients);
+		$Result = $mail->send($Recipients);
 	}else{
-		$result = SendmailBySmtp($mail,$Recipients);
+		$Result = SendmailBySmtp($mail,$Recipients);
 	}
-	if($result){
+	if($Result){
 			$Title = _('Print Inventory Valuation');
 			include('includes/header.php');
 			prnMsg(_('The Inventory valuation report has been mailed'),'success');

@@ -113,7 +113,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
    echo '<table class="selection">';
 
-   $tableheader = '<tr>
+   $Tableheader = '<tr>
 					<th>' . _('Type') . '</th>
 					<th>' . _('Number') . '</th>
 					<th>' . _('Supp Ref') . '</th>
@@ -125,7 +125,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 					<th>' . _('Amount') . '</th>
 					<th>' . _('Currency') . '</th>
 				</tr>';
-	echo $tableheader;
+	echo $Tableheader;
 
 	$RowCounter = 1;
 
@@ -206,7 +206,7 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 		$RowCounter++;
 		If ($RowCounter == 12){
 			$RowCounter=1;
-			echo $tableheader;
+			echo $Tableheader;
 		}
 	//end of page full new headings if
 	}

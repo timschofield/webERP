@@ -9,7 +9,7 @@ it also would not be applicable in a PO and possible other situations...
 if ($_POST['EntryType'] == 'KEYED'){
 	/*Also a multi select box for adding bundles to the dispatch without keying */
 
-	$sql = "SELECT serialno,
+	$SQL = "SELECT serialno,
 				quantity,
 			(SELECT SUM(moveqty)
 				FROM pickserialdetails
@@ -36,7 +36,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 				AND quantity > 0
 			ORDER BY createdate, quantity";
 	$ErrMsg = '<br />' .  _('Could not retrieve the items for'). ' ' . $StockID;
-	$Bundles = DB_query($sql, $ErrMsg );
+	$Bundles = DB_query($SQL, $ErrMsg );
 	echo '<table class="selection"><tr>';
 	if (DB_num_rows($Bundles)>0){
 		$AllSerials=array();
@@ -58,7 +58,7 @@ if ($_POST['EntryType'] == 'KEYED'){
 
 		$id=0;
 		$ItemsAvailable=0;
-		while ($myrow=DB_fetch_array($Bundles)){
+		while ($MyRow=DB_fetch_array($Bundles)){
 			if (is_null($MyRow['qtypickedtotal'])) {
 				$MyRow['qtypickedtotal'] = 0;
 			}
@@ -66,22 +66,22 @@ if ($_POST['EntryType'] == 'KEYED'){
 				$MyRow['qtypickedthisorder'] = 0;
 			}
 			if ($LineItem->Serialised==1){
-				if ( !array_key_exists($myrow['serialno'], $AllSerials) ){
-					echo '<option value="' . $myrow['serialno'] . '">' . $myrow['serialno'] . '</option>';
+				if ( !array_key_exists($MyRow['serialno'], $AllSerials) ){
+					echo '<option value="' . $MyRow['serialno'] . '">' . $MyRow['serialno'] . '</option>';
 					$ItemsAvailable++;
 				}
 			} else {
 
-				if ( !array_key_exists($myrow['serialno'], $AllSerials)  OR
-					($myrow['quantity'] - $AllSerials[$myrow['serialno']] >= 0) ) {
+				if ( !array_key_exists($MyRow['serialno'], $AllSerials)  OR
+					($MyRow['quantity'] - $AllSerials[$MyRow['serialno']] >= 0) ) {
 
 					//Use the $InOutModifier to ajust the negative or postive direction of the quantity. Otherwise the calculated quantity is wrong.
 					if (isset($AllSerials[$MyRow['serialno']])) {
-						$RecvQty = $myrow['quantity'] - $InOutModifier * $AllSerials[$myrow['serialno']];
+						$RecvQty = $MyRow['quantity'] - $InOutModifier * $AllSerials[$MyRow['serialno']];
 					} else {
-						$RecvQty = $myrow['quantity'];
+						$RecvQty = $MyRow['quantity'];
 					}
-					echo '<option value="' . $myrow['serialno'] . '/|/'. $RecvQty .'">' . $myrow['serialno'].' - ' . _('Qty left'). ': ' . $RecvQty . '</option>';
+					echo '<option value="' . $MyRow['serialno'] . '/|/'. $RecvQty .'">' . $MyRow['serialno'].' - ' . _('Qty left'). ': ' . $RecvQty . '</option>';
 					$ItemsAvailable += $RecvQty;
 				}
 			}

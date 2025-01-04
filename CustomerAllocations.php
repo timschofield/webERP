@@ -388,10 +388,10 @@ if (isset($_POST['AllocTrans'])) {
 		$YetToAlloc = ($AllocnItem->TransAmount - $AllocnItem->PrevAlloc);
 
 		if ( $AllocnItem->ID == $_POST['AllocTrans'] ) {
-			$curTrans = _('Being allocated');
+			$CurTrans = _('Being allocated');
 		} else if ($AllocnItem->AllocAmt > 0) {
 		} else {
-			$curTrans = "&nbsp;";
+			$CurTrans = "&nbsp;";
 		}
 
 		echo '<tr class="striped_row">
@@ -404,7 +404,7 @@ if (isset($_POST['AllocTrans'])) {
 
 		if ($AllocnItem->TransAmount < 0) {
 				$Balance+=$YetToAlloc;
-				echo '<td>' . $curTrans  . '</td>
+				echo '<td>' . $CurTrans  . '</td>
 						<td class="number">' . locale_number_format($Balance,$_SESSION['Alloc']->CurrDecimalPlaces) . '</td>
 					</tr>';
 		} else {

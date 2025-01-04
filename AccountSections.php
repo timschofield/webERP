@@ -94,7 +94,7 @@ if(isset($_POST['submit'])) {
 		$SQL = "UPDATE accountsection SET sectionname='" . $_POST['SectionName'] . "'
 				WHERE sectionid = '" . $_POST['SelectedSectionID'] . "'";
 
-		$msg = _('Record Updated');
+		$Msg = _('Record Updated');
 	} elseif($InputError !=1) {
 
 	/*SelectedSectionID is null cos no item selected on first time round so must be adding a record must be submitting new entries in the new account section form */
@@ -104,13 +104,13 @@ if(isset($_POST['submit'])) {
 										) VALUES (
 											'" . $_POST['SectionID'] . "',
 											'" . $_POST['SectionName'] ."')";
-		$msg = _('Record inserted');
+		$Msg = _('Record inserted');
 	}
 
 	if($InputError!=1) {
 		//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset ($_POST['SelectedSectionID']);
 		unset ($_POST['SectionID']);
 		unset ($_POST['SectionName']);

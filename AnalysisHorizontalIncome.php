@@ -18,10 +18,10 @@ Parameters:
 */
 
 // BEGIN: Functions division ===================================================
-function RelativeChange($selected_period, $previous_period) {
+function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
-	if($previous_period<>0) {
-		return locale_number_format(($selected_period-$previous_period)*100/$previous_period, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
+	if($PreviousPeriod<>0) {
+		return locale_number_format(($SelectedPeriod-$PreviousPeriod)*100/$PreviousPeriod, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
 		return _('N/A');
 	}
@@ -151,14 +151,12 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 	echo '</select>
 		</field>';
 
-	echo '<h3>', _('OR'), '</h3>';
-
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
 	echo	'<field>
-				<label for="Period">', _('Select Period'), '</label>
+				<label for="Period">', '<b>' , _('OR') , ' </b>' , _('Select Period'), '</label>
 				', ReportPeriodList($_POST['Period'], array('l', 't')), '
 			</field>',
 	// Show all accounts instead a summary:

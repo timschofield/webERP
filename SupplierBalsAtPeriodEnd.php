@@ -16,7 +16,7 @@ If (isset($_POST['PrintPDF'])
 
 	$FontSize=12;
 	$PageNumber=0;
-	$line_height=12;
+	$LineHeight=12;
 
 	  /*Now figure out the aged analysis for the Supplier range under review */
 
@@ -51,7 +51,7 @@ If (isset($_POST['PrintPDF'])
 		include('includes/header.php');
 		prnMsg(_('The Supplier details could not be retrieved by the SQL because') . ' ' . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -86,15 +86,15 @@ If (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayFXBalance,'right');
 			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$SupplierBalances['currency'],'left');
 
-			$YPos -=$line_height;
-			if ($YPos < $Bottom_Margin + $line_height){
+			$YPos -=$LineHeight;
+			if ($YPos < $Bottom_Margin + $LineHeight){
 			include('includes/PDFSupplierBalsPageHeader.inc');
 			}
 		}
 	} /*end Supplier aged analysis while loop */
 
-	$YPos -=$line_height;
-	if ($YPos < $Bottom_Margin + (2*$line_height)){
+	$YPos -=$LineHeight;
+	if ($YPos < $Bottom_Margin + (2*$LineHeight)){
 		$PageNumber++;
 		include('includes/PDFSupplierBalsPageHeader.inc');
 	}
@@ -140,16 +140,16 @@ $BookMark = '';
 			<label for="PeriodEnd">' . _('Balances As At') . ':</label>
 			<select name="PeriodEnd">';
 
-	$sql = "SELECT periodno,
+	$SQL = "SELECT periodno,
 					lastdate_in_period
 			FROM periods
 			ORDER BY periodno DESC";
 
 	$ErrMsg = _('Could not retrieve period data because');
-	$Periods = DB_query($sql,$ErrMsg);
+	$Periods = DB_query($SQL,$ErrMsg);
 
-	while ($myrow = DB_fetch_array($Periods)){
-		echo '<option value="' . $myrow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($myrow['lastdate_in_period'],'M',-1) . '</option>';
+	while ($MyRow = DB_fetch_array($Periods)){
+		echo '<option value="' . $MyRow['lastdate_in_period'] . '" selected="selected" >' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period'],'M',-1) . '</option>';
 	}
 	echo '</select>
 		</field>';

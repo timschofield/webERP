@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	$msg='';
+	$Msg='';
 
 	if (isset($SelectedReason) AND $InputError !=1) {
 
@@ -78,7 +78,7 @@ if (isset($_POST['submit'])) {
 							dissallowinvoices=0
 							WHERE reasoncode = '".$SelectedReason."'";
 		}
-		$msg = _('The credit status record has been updated');
+		$Msg = _('The credit status record has been updated');
 
 	} else if ($InputError !=1) {
 
@@ -101,12 +101,12 @@ if (isset($_POST['submit'])) {
 											0)";
 		}
 
-		$msg = _('A new credit status record has been inserted');
+		$Msg = _('A new credit status record has been inserted');
 	}
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
-	if ($msg != '') {
-		prnMsg($msg,'success');
+	if ($Msg != '') {
+		prnMsg($Msg,'success');
 	}
 	unset ($SelectedReason);
 	unset ($_POST['ReasonCode']);

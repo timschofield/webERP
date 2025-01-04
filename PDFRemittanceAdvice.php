@@ -10,7 +10,7 @@ If ((isset($_POST['PrintPDF']))
 			AND mb_strlen($_POST['ToCriteria'])>=1)	{
 	/*Now figure out the invoice less credits due for the Supplier range under review */
 
-	$sql = "SELECT suppliers.supplierid,
+	$SQL = "SELECT suppliers.supplierid,
 					suppliers.suppname,
 					suppliers.address1,
 					suppliers.address2,
@@ -31,7 +31,7 @@ If ((isset($_POST['PrintPDF']))
 			AND suppliers.remittance=1
 			ORDER BY supplierno";
 
-	$SuppliersResult = DB_query($sql);
+	$SuppliersResult = DB_query($SQL);
 	if (DB_num_rows($SuppliersResult)==0){
 		//then there aint awt to print
 		$Title = _('Print Remittance Advices Error');
@@ -47,7 +47,7 @@ If ((isset($_POST['PrintPDF']))
 	$pdf->addInfo('Title',_('Remittance Advice'));
 	$pdf->addInfo('Subject',_('Remittance Advice') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' ' . _('to') . ' ' . $_POST['ToCriteria'] . ' ' . _('and Paid On') . ' ' .  $_POST['PaymentDate']);
 
-	$line_height=12;
+	$LineHeight=12;
 
 	$SupplierID ='';
 	$RemittanceAdviceCounter =0;
@@ -61,7 +61,7 @@ If ((isset($_POST['PrintPDF']))
 		$AccumBalance = 0;
 
 		/* Now get the transactions and amounts that the payment was allocated to */
-		$sql = "SELECT systypes.typename,
+		$SQL = "SELECT systypes.typename,
 						supptrans.suppreference,
 						supptrans.trandate,
 						supptrans.transno,
@@ -75,14 +75,14 @@ If ((isset($_POST['PrintPDF']))
 						 supptrans.transno";
 
 
-		$TransResult = DB_query($sql,'','',false,false);
+		$TransResult = DB_query($SQL,'','',false,false);
 		if (DB_error_no() !=0) {
 			$Title = _('Remittance Advice Problem Report');
 			include('includes/header.php');
 			prnMsg(_('The details of the payment to the supplier could not be retrieved because') . ' - ' . DB_error_msg(),'error');
 			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($debug==1){
-				echo '<br />' . _('The SQL that failed was') . ' ' . $sql;
+			if ($Debug==1){
+				echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
 			}
 			include('includes/footer.php');
 			exit;
@@ -100,14 +100,14 @@ If ((isset($_POST['PrintPDF']))
 			$LeftOvers = $pdf->addTextWrap($Left_Margin+355, $YPos,80,$FontSize,locale_number_format($DetailTrans['amt'],$SuppliersPaid['currdecimalplaces']), 'right');
 			$AccumBalance += $DetailTrans['amt'];
 
-			$YPos -=$line_height;
-			if ($YPos < $Bottom_Margin + $line_height){
+			$YPos -=$LineHeight;
+			if ($YPos < $Bottom_Margin + $LineHeight){
 				$PageNumber++;
 				PageHeader();
 			}
 		} /*end while there are detail transactions to show */
-		$YPos -= (0.5*$line_height);
-    	$pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+		$YPos -= (0.5*$LineHeight);
+    	$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
 	    $LeftOvers = $pdf->addTextWrap($Left_Margin+280,$YPos,75,$FontSize,_('Total Payment:'), 'right');
 
@@ -115,8 +115,8 @@ If ((isset($_POST['PrintPDF']))
 
 	    $LeftOvers = $pdf->addTextWrap($Left_Margin+355,$YPos,80,$FontSize,locale_number_format($AccumBalance,$SuppliersPaid['currdecimalplaces']), 'right');
 
-	    $YPos -= (1.5*$line_height);
-	    $pdf->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+	    $YPos -= (1.5*$LineHeight);
+	    $pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
 	} /* end while there are supplier payments to retrieve allocations for */
 
@@ -186,7 +186,7 @@ function PageHeader(){
 	global $PageNumber;
 	global $YPos;
 	global $Xpos;
-	global $line_height;
+	global $LineHeight;
 	global $Page_Height;
 	global $Top_Margin;
 	global $Page_Width;
@@ -273,11 +273,11 @@ function PageHeader(){
 	$FontSize=8;
 	$XPos = $Page_Width/2 - 60;
 	$pdf->addText($XPos, $YPos,$FontSize, _('All amounts stated in') . ' - ' . $SuppliersPaid['currcode']);
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$pdf->addText($XPos, $YPos,$FontSize, $SuppliersPaid['terms']);
 
 	$YPos = $Page_Height - $Top_Margin - 180;
-	//$YPos -= $line_height;
+	//$YPos -= $LineHeight;
 	$XPos = $Left_Margin;
 
 	/*draw a nice curved corner box around the statement details */
@@ -301,7 +301,7 @@ function PageHeader(){
 	/*Finally join up to the top right corner where started */
 	$pdf->line($Page_Width-$Right_Margin, $Bottom_Margin+10,$Page_Width-$Right_Margin, $YPos-10);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$FontSize =10;
 	/*Set up headings */
 	$pdf->addText($Left_Margin+10, $YPos,$FontSize, _('Trans Type') );
@@ -310,11 +310,11 @@ function PageHeader(){
 	$pdf->addText($Left_Margin+310, $YPos,$FontSize, _('Total') );
 	$pdf->addText($Left_Margin+390, $YPos,$FontSize, _('This Payment') );
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	/*draw a line */
 	$pdf->line($Page_Width-$Right_Margin, $YPos,$XPos, $YPos);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$XPos = $Left_Margin;
 
 }

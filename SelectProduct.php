@@ -12,6 +12,8 @@ $BookMark = 'SelectingInventory';
 include ('includes/header.php');
 
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
+
 
 if (isset($_GET['StockID'])) {
 	//The page is called with a StockID
@@ -80,7 +82,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								stockmaster.decimalplaces,
 								stockmaster.controlled,
 								stockmaster.serialised,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS cost,
+								stockmaster.actualcost AS cost,
 								stockmaster.discontinued,
 								stockmaster.eoq,
 								stockmaster.volume,
@@ -171,10 +173,11 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
 								AND debtorno=''
 								AND branchcode=''
-								AND startdate <= '". Date('Y-m-d') ."' AND ( enddate >= '" . Date('Y-m-d') . "' OR enddate = '0000-00-00')
+								AND startdate <= CURRENT_DATE
+								AND enddate >= CURRENT_DATE
 								AND stockid='" . $StockID . "'");
 		if ($MyRow['mbflag'] == 'K' OR $MyRow['mbflag'] == 'A' OR $MyRow['mbflag'] == 'G') {
-			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost)) AS cost
+			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.actualcost)) AS cost
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
@@ -417,27 +420,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 
 		//show the item image if it has been uploaded
-		if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($ImageFile) ) {
-			if ($_SESSION['ShowStockidOnImages'] == '0'){
-				$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='.
-									'&amp;width=200'.
-									'&amp;height=200'.
-									'" alt="" />';
-			} else {
-				$StockImgLink = '<img class="StockImage" src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='. $StockID .
-									'&amp;width=200'.
-									'&amp;height=200'.
-									'" alt="" />';
-			}
-		} else if (file_exists ($ImageFile)) {
-			$StockImgLink = '<img src="' . $ImageFile . '" height="200" width="200" />';
-		} else {
-			$StockImgLink = _('No Image');
-		}
+		$StockImgLink = GetImageLink($ImageFile, $StockID, 200, 200, "", "");
 
 		echo '<div class="centre">' . $StockImgLink . '</div>';
 
@@ -551,10 +534,8 @@ if (isset($_POST['Keywords'])) {
 }
 echo '</field>';
 
-echo '<h3>' . _('OR') . '</h3>';
-
 echo '<field>
-		<label for="StockCode">' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
+		<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 if (isset($_POST['StockCode'])) {
 	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 } else {
@@ -562,10 +543,8 @@ if (isset($_POST['StockCode'])) {
 }
 echo '<field>';
 
-echo '<h3>' . _('OR') . '</h3>';
-
 echo '<field>
-		<label>', _('Enter partial') . ' <b>' . _('Supplier Code') . '</label>';
+		<label>' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Supplier Code') . '</label>';
 if (isset($_POST['SupplierStockCode'])) {
 	echo '<input type="text" name="SupplierStockCode" value="' . $_POST['SupplierStockCode'] . '" title="" size="15" maxlength="18" />
 		<fieldhelp>' . _('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
@@ -852,9 +831,9 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 		}
 		while (($MyRow = DB_fetch_array($SearchResult)) AND ($RowIndex <> $_SESSION['DisplayRecordsMax'])) {
 			if ($MyRow['mbflag'] == 'D') {
-				$qoh = _('N/A');
+				$QOH = _('N/A');
 			} else {
-				$qoh = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
+				$QOH = locale_number_format($MyRow['qoh'], $MyRow['decimalplaces']);
 			}
 			if ($MyRow['discontinued']==1){
 				$ItemStatus = '<p class="bad">' . _('Obsolete') . '</p>';
@@ -868,25 +847,14 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			} else {
 				$ImageFile ='';
 			}
-
-			if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
-				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-				'&amp;StockID='. urlencode($MyRow['stockid']).
-				'&amp;width=100'.
-				'&amp;height=100'.
-				'" alt="" />';
-			} else if (file_exists ($ImageFile)) {
-				$StockImgLink = '<img src="' . $ImageFile . '" height="100" width="100" />';
-			} else {
-				$StockImgLink = '<p>'._('No Image').'</p>';
-			}
+			$StockImgLink = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 			echo '<tr class="striped_row">
 				<td>' . $ItemStatus . '</td>
 			<td><input type="submit" name="Select" value="' . $MyRow['stockid'] . '" /></td>
 			<td>'.$StockImgLink.'</td>
 			<td title="'. $MyRow['longdescription'] . '">' . $MyRow['description'] . '</td>
-			<td class="number">' . $qoh . '</td>
+			<td class="number">' . $QOH . '</td>
 			<td>' . $MyRow['units'] . '</td>
 			<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . urlencode($MyRow['stockid']).'">' . _('View') . '</a></td>
 			</tr>';

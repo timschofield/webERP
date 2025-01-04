@@ -75,16 +75,16 @@ if ($_GET['Action'] == 'Enter'){
 			$Reference = 'Ref_' . $i;
 
 			if (strlen($_POST[$BarCode])>0){
-				$sql = "SELECT stockmaster.stockid
+				$SQL = "SELECT stockmaster.stockid
 								FROM stockmaster
 								WHERE stockmaster.barcode='". $_POST[$BarCode] ."'";
 
 				$ErrMsg = _('Could not determine if the part being ordered was a kitset or not because');
 				$DbgMsg = _('The sql that was used to determine if the part being ordered was a kitset or not was ');
-				$KitResult = DB_query($sql,$ErrMsg,$DbgMsg);
-				$myrow=DB_fetch_array($KitResult);
+				$KitResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+				$MyRow=DB_fetch_array($KitResult);
 
-				$_POST[$StockID] = strtoupper($myrow['stockid']);
+				$_POST[$StockID] = strtoupper($MyRow['stockid']);
 			}
 
 			if (mb_strlen($_POST[$StockID])>0){
@@ -92,15 +92,15 @@ if ($_GET['Action'] == 'Enter'){
 					$InputError=True;
 				}
 			$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $_POST[$StockID] . "'";
-				$result = DB_query($SQL);
-				if (DB_num_rows($result)==0){
+				$Result = DB_query($SQL);
+				if (DB_num_rows($Result)==0){
 					prnMsg( _('The stock code entered on line') . ' ' . $i . ' ' . _('is not a part code that has been added to the stock check file') . ' - ' . _('the code entered was') . ' ' . $_POST[$StockID] . '. ' . _('This line will have to be re-entered'),'warn');
 					$InputError = True;
 				}
 
 				if ($InputError==False){
 					$Added++;
-					$sql = "INSERT INTO stockcounts (stockid,
+					$SQL = "INSERT INTO stockcounts (stockid,
 									loccode,
 									qtycounted,
 									reference)
@@ -110,7 +110,7 @@ if ($_GET['Action'] == 'Enter'){
 									'" . $_POST[$Reference] . "')";
 
 					$ErrMsg = _('The stock count line number') . ' ' . $i . ' ' . _('could not be entered because');
-					$EnterResult = DB_query($sql,$ErrMsg);
+					$EnterResult = DB_query($SQL,$ErrMsg);
 				}
 			}
 		} // end of loop
@@ -132,68 +132,68 @@ if ($_GET['Action'] == 'Enter'){
 		$FileHandle = fopen($TempName, 'r');
 
 		//get the header row
-		$headRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
+		$HeadRow = fgetcsv($FileHandle, 10000, ",",'"');  // Modified to handle " "" " enclosed csv - useful if you need to include commas in your text descriptions
 
 		//check for correct number of fields
-		if ( count($headRow) != count($FieldHeadings) ) {
-			prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+		if ( count($HeadRow) != count($FieldHeadings) ) {
+			prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit;
 		}
 
 		//test header row field name and sequence
-		$head = 0;
-		foreach ($headRow as $headField) {
-			if ( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
-				prnMsg (_('File contains incorrect headers '. mb_strtoupper($headField). ' != '. mb_strtoupper($FieldHeadings[$head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $headings
+		$Head = 0;
+		foreach ($HeadRow as $HeadField) {
+			if ( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
+				prnMsg (_('File contains incorrect headers '. mb_strtoupper($HeadField). ' != '. mb_strtoupper($FieldHeadings[$Head]). '. Try downloading a new template.'),'error');  //Fixed $FieldHeadings from $Headings
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit;
 			}
-			$head++;
+			$Head++;
 		}
 
 		//start database transaction
 		DB_Txn_Begin();
 
 		//loop through file rows
-		$row = 1;
-		while ( ($myrow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+		$Row = 1;
+		while ( ($MyRow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
 
 			//check for correct number of fields
-			$fieldCount = count($myrow);
-			if ($fieldCount != $FieldTarget){
-				prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
+			$FieldCount = count($MyRow);
+			if ($FieldCount != $FieldTarget){
+				prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 				fclose($FileHandle);
 				include('includes/footer.php');
 				exit;
 			}
 
 			// cleanup the data (csv files often import with empty strings and such)
-			$StockID = mb_strtoupper($myrow[0]);
-			foreach ($myrow as &$value) {
-				$value = trim($value);
+			$StockID = mb_strtoupper($MyRow[0]);
+			foreach ($MyRow as &$Value) {
+				$Value = trim($Value);
 			}
 
 			//first off check if the item is in freeze
-			$sql = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $StockID . "'";
-			$result = DB_query($sql);
-			if (DB_num_rows($result)==0){
+			$SQL = "SELECT stockid FROM stockcheckfreeze WHERE stockid='" . $StockID . "'";
+			$Result = DB_query($SQL);
+			if (DB_num_rows($Result)==0){
 				$InputError = 1;
 				prnMsg( _('Stock item '. $StockID. ' is not a part code that has been added to the stock check file'),'warn');
 			}
 
 			//next validate inputs are sensible
-			if (mb_strlen($myrow[2]) >20) {
+			if (mb_strlen($MyRow[2]) >20) {
 				$InputError = 1;
 				prnMsg(_('The reference field must be 20 characters or less long'),'error');
 			}
-			else if (!is_numeric($myrow[1])) {
+			else if (!is_numeric($MyRow[1])) {
 				$InputError = 1;
 				prnMsg (_('The quantity counted must be numeric') ,'error');
 			}
-			else if ($myrow[1] < 0) {
+			else if ($MyRow[1] < 0) {
 				$InputError = 1;
 				prnMsg(_('The quantity counted must be zero or a positive number'),'error');
 			}
@@ -201,18 +201,18 @@ if ($_GET['Action'] == 'Enter'){
 			if ($InputError !=1){
 
 				//attempt to insert the stock item
-				$sql = "INSERT INTO stockcounts (stockid,
+				$SQL = "INSERT INTO stockcounts (stockid,
 									loccode,
 									qtycounted,
 									reference)
-								VALUES ('" . $myrow[0] . "',
+								VALUES ('" . $MyRow[0] . "',
 									'" . $_POST['Location'] . "',
-									'" . $myrow[1] . "',
-									'" . $myrow[2] . "')";
+									'" . $MyRow[1] . "',
+									'" . $MyRow[2] . "')";
 
-				$ErrMsg = _('The stock count line number') . ' ' . $row . ' ' . _('could not be entered because');
+				$ErrMsg = _('The stock count line number') . ' ' . $Row . ' ' . _('could not be entered because');
 				$DbgMsg = _('The SQL that was used to add the item failed was');
-				$EnterResult = DB_query($sql,$ErrMsg,$DbgMsg,true);
+				$EnterResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				if (DB_error_no() != 0) {
 					$InputError = 1;
@@ -223,11 +223,11 @@ if ($_GET['Action'] == 'Enter'){
 			if ($InputError == 1) { //this row failed so exit loop
 				break;
 			}
-			$row++;
+			$Row++;
 		}
 
 		if ($InputError == 1) { //exited loop with errors so rollback
-			prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
+			prnMsg(_('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
 			DB_Txn_Rollback();
 		} else { //all good so commit data transaction
 			DB_Txn_Commit();
@@ -251,27 +251,27 @@ if ($_GET['Action'] == 'Enter'){
 		echo '<table cellpadding="2" class="selection">';
 		echo '<tr>
 				<th colspan="3">' ._('Stock Check Counts at Location') . ':<select name="Location">';
-		$sql = "SELECT locations.loccode, locationname FROM locations
+		$SQL = "SELECT locations.loccode, locationname FROM locations
 				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
-		$result = DB_query($sql);
+		$Result = DB_query($SQL);
 
-		while ($myrow=DB_fetch_array($result)){
+		while ($MyRow=DB_fetch_array($Result)){
 
-			if (isset($_POST['Location']) AND $myrow['loccode']==$_POST['Location']){
-				echo '<option selected="selected" value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+			if (isset($_POST['Location']) AND $MyRow['loccode']==$_POST['Location']){
+				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['loccode'] . '">' . $myrow['locationname'] . '</option>';
+				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
 		}
 		echo '</select>&nbsp;<input type="submit" name="EnterByCat" value="' . _('Enter By Category') . '" /><select name="StkCat" onChange="ReloadForm(EnterCountsForm.EnterByCat)" >';
 
 		echo '<option value="">' . _('Not Yet Selected') . '</option>';
 
-		while ($myrow=DB_fetch_array($CatsResult)){
-			if ($_POST['StkCat']==$myrow['categoryid']) {
-				echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+		while ($MyRow=DB_fetch_array($CatsResult)){
+			if ($_POST['StkCat']==$MyRow['categoryid']) {
+				echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['categoryid'] . '">' . $myrow['categorydescription'] . '</option>';
+				echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 			}
 		}
 		echo '</select></th></tr>';
@@ -354,9 +354,9 @@ if ($_GET['Action'] == 'Enter'){
 	if (isset($_POST['DEL']) AND is_array($_POST['DEL']) ){
 		foreach ($_POST['DEL'] as $id=>$val){
 			if ($val == 'on'){
-				$sql = "DELETE FROM stockcounts WHERE id='".$id."'";
+				$SQL = "DELETE FROM stockcounts WHERE id='".$id."'";
 				$ErrMsg = _('Failed to delete StockCount ID #').' '.$i;
-				$EnterResult = DB_query($sql,$ErrMsg);
+				$EnterResult = DB_query($SQL,$ErrMsg);
 				prnMsg( _('Deleted Id #') . ' ' . $id, 'success');
 			}
 		}
@@ -366,7 +366,7 @@ if ($_GET['Action'] == 'Enter'){
 	$SQL = "select stockcounts.*,
 					canupd from stockcounts
 					INNER JOIN locationusers ON locationusers.loccode=stockcounts.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
-	$result = DB_query($SQL);
+	$Result = DB_query($SQL);
 	echo '<input type="hidden" name="Action" value="View" />';
 	echo '<table cellpadding="2" class="selection">';
 	echo '<tr>
@@ -375,15 +375,15 @@ if ($_GET['Action'] == 'Enter'){
 			<th>' . _('Qty Counted') . '</th>
 			<th>' . _('Reference') . '</th>
 			<th>' . _('Delete?') . '</th></tr>';
-	while ($myrow=DB_fetch_array($result)){
+	while ($MyRow=DB_fetch_array($Result)){
 		echo '<tr>
-			<td>'.$myrow['stockid'].'</td>
-			<td>'.$myrow['loccode'].'</td>
-			<td>'.$myrow['qtycounted'].'</td>
-			<td>'.$myrow['reference'].'</td>
+			<td>'.$MyRow['stockid'].'</td>
+			<td>'.$MyRow['loccode'].'</td>
+			<td>'.$MyRow['qtycounted'].'</td>
+			<td>'.$MyRow['reference'].'</td>
 			<td>';
-		if ($myrow['canupd']==1) {
-			echo '<input type="checkbox" name="DEL[' . $myrow['id'] . ']" maxlength="20" size="20" />';
+		if ($MyRow['canupd']==1) {
+			echo '<input type="checkbox" name="DEL[' . $MyRow['id'] . ']" maxlength="20" size="20" />';
 
 		}
 		echo '</td></tr>';

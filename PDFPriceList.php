@@ -133,7 +133,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					prices.startdate,
 					prices.enddate,
 					prices.price,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+					stockmaster.actualcost AS standardcost,
 					stockmaster.categoryid,
 					stockcategory.categorydescription,
 					prices.debtorno,
@@ -149,7 +149,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					AND stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					AND prices.debtorno='" . $_SESSION['CustomerID'] . "'
 					AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-					AND (prices.enddate='0000-00-00' OR prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+					AND prices.enddate >'" . FormatDateForSQL($_POST['EffectiveDate']) . "'" .
 					$WhereCurrency .
 					$ShowObsolete . "
 				ORDER BY
@@ -173,7 +173,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockmaster.longdescription,
 					prices.currabrev,
 					prices.price,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+					stockmaster.actualcost as standardcost,
 					stockmaster.categoryid,
 					stockcategory.categorydescription,
 					currencies.decimalplaces
@@ -184,7 +184,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				WHERE stockmaster.categoryid IN ('". implode("','",$_POST['Categories'])."')
 					AND prices.typeabbrev='" . $_POST['SalesType'] . "'
 					AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-					AND (prices.enddate='0000-00-00' OR prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "')" .
+					AND prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "'" .
 					$WhereCurrency .
 					$ShowObsolete . "
 					AND prices.debtorno LIKE '%%'
@@ -200,7 +200,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu'). '</a>';
-		if ($debug==1) {
+		if ($Debug==1) {
 			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
 		}
 		include('includes/footer.php');
@@ -239,7 +239,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 		$FontSize = 8;
 
-		if ($PriceList['enddate']!='0000-00-00') {
+		if ($PriceList['enddate']!='9999-12-31') {
 			$DisplayEndDate = ConvertSQLDate($PriceList['enddate']);
 		} else {
 			$DisplayEndDate = _('No End Date');
@@ -264,21 +264,21 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 			// Prints item image:
 			$SupportedImgExt = array('png','jpg','jpeg');
-            $glob = (glob($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
-			$imagefile = reset($glob);
+            $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+			$ImageFile = reset($Glob);
 			$YPosImage = $YPos;// Initializes the image bottom $YPos.
-			if (file_exists($imagefile) ) {
+			if (file_exists($ImageFile) ) {
 				if ($YPos-36 < $Bottom_Margin) {// If the image bottom reaches the bottom margin, do PageHeader().
 					PageHeader();
 				}
-				$LeftOvers = $pdf->Image($imagefile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
+				$LeftOvers = $pdf->Image($ImageFile,$Left_Margin+3, $Page_Height-$YPos, 36, 36);
 				$YPosImage = $YPos-36;// Stores the $YPos of the image bottom (see bottom).
 			}
 			// Prints stockmaster.longdescription:
 			$XPos = $Left_Margin+80;// Takes out this calculation from the loop.
 			$Width = $Page_Width-$Left_Margin-$Right_Margin-$XPos;// Takes out this calculation from the loop.
 			$FontSize2 = $FontSize*0.80;// Font size and line height of Full Description section.
-			PrintDetail($pdf,$PriceList['longdescription'],$Bottom_Margin,$XPos,$YPos,$Width,$FontSize2,'PageHeader',null, 'j', 0, $fill);
+			PrintDetail($pdf,$PriceList['longdescription'],$Bottom_Margin,$XPos,$YPos,$Width,$FontSize2,'PageHeader',null, 'j', 0, $Fill);
 
 			// Assigns to $YPos the lowest $YPos value between the image and the description:
 			$YPos = min($YPosImage, $YPos);
@@ -385,11 +385,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<field>
 			<label for="SalesType">', _('For Sales Type/Price List'), ':</label>
 			<select name="SalesType">';
-	$sql = "SELECT sales_type, typeabbrev FROM salestypes";
-	$SalesTypesResult=DB_query($sql);
+	$SQL = "SELECT sales_type, typeabbrev FROM salestypes";
+	$SalesTypesResult=DB_query($SQL);
 
-	while ($myrow=DB_fetch_array($SalesTypesResult)) {
-		echo '<option value="', $myrow['typeabbrev'], '">', $myrow['sales_type'], '</option>';
+	while ($MyRow=DB_fetch_array($SalesTypesResult)) {
+		echo '<option value="', $MyRow['typeabbrev'], '">', $MyRow['sales_type'], '</option>';
 	}
 	echo '</select>
 		</field>';
@@ -397,11 +397,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	echo '<field>
 			<label for="Currency">', _('For Currency'), ':</label>
 			<select name="Currency">';
-	$sql = "SELECT currabrev, currency FROM currencies ORDER BY currency";
-	$CurrencyResult=DB_query($sql);
+	$SQL = "SELECT currabrev, currency FROM currencies ORDER BY currency";
+	$CurrencyResult=DB_query($SQL);
 	echo '<option selected="selected" value="All">', _('All'), '</option>';
-	while ($myrow=DB_fetch_array($CurrencyResult)) {
-		echo '<option value="', $myrow['currabrev'], '">', $myrow['currency'], '</option>';
+	while ($MyRow=DB_fetch_array($CurrencyResult)) {
+		echo '<option value="', $MyRow['currabrev'], '">', $MyRow['currency'], '</option>';
 	}
 	echo '</select>
 		</field>';

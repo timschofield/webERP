@@ -73,14 +73,14 @@ Class SuppTrans {
 		$ErrMsg = _('The taxes and rates for this item could not be retrieved because');
 		$GetTaxRatesResult = DB_query($SQL,$ErrMsg);
 
-		while ($myrow = DB_fetch_array($GetTaxRatesResult)){
+		while ($MyRow = DB_fetch_array($GetTaxRatesResult)){
 
-			$this->Taxes[$myrow['calculationorder']] = new Tax($myrow['calculationorder'],
-																$myrow['taxauthid'],
-																$myrow['description'],
-																$myrow['taxrate'],
-																$myrow['taxontax'],
-																$myrow['purchtaxglaccount']);
+			$this->Taxes[$MyRow['calculationorder']] = new Tax($MyRow['calculationorder'],
+																$MyRow['taxauthid'],
+																$MyRow['description'],
+																$MyRow['taxrate'],
+																$MyRow['taxontax'],
+																$MyRow['purchtaxglaccount']);
 		}
 	} //end method GetTaxes()
 
@@ -514,12 +514,12 @@ Class Asset {
 		$this->AssetID = $AssetID;
 		$this->Amount = $Amount;
 
-		$result = DB_query("SELECT fixedassets.description,
+		$Result = DB_query("SELECT fixedassets.description,
 									fixedassetcategories.costact
 							FROM fixedassets INNER JOIN fixedassetcategories
 							ON fixedassets.assetcategoryid=fixedassetcategories.categoryid
 							WHERE assetid='" . $AssetID . "'");
-		$AssetRow = DB_fetch_array($result);
+		$AssetRow = DB_fetch_array($Result);
 		$this->Description = $AssetRow['description'];
 		$this->CostAct = $AssetRow['costact'];
 	}

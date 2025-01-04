@@ -138,7 +138,7 @@ if($NewTransfer) {
 	$Result = DB_query("SELECT description,
 							units,
 							mbflag,
-							materialcost+labourcost+overheadcost as standardcost,
+							actualcost as standardcost,
 							controlled,
 							serialised,
 							perishable,
@@ -285,7 +285,7 @@ if(isset($_POST['EnterTransfer']) ) {
 				$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 			}
 			// Get the item cost:
-			$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+			$SQLstandardcost = "SELECT stockmaster.actualcost AS standardcost
 								FROM stockmaster
 								WHERE stockmaster.stockid ='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'";
 			$ErrMsg = _('The standard cost of the item cannot be retrieved because');
@@ -442,7 +442,7 @@ if(isset($_POST['EnterTransfer']) ) {
 				$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 			}
 			// Get the item cost:
-			$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+			$SQLstandardcost = "SELECT stockmaster.actualcost AS standardcost
 								FROM stockmaster
 								WHERE stockmaster.stockid ='" . $_SESSION['Transfer']->TransferItem[0]->StockID . "'";
 			$ErrMsg = _('The standard cost of the item cannot be retrieved because');

@@ -18,7 +18,7 @@ $Header = '<tr>
 
 echo $Header;
 
-$sql = "SELECT gltrans.type,
+$SQL = "SELECT gltrans.type,
 			gltrans.trandate,
 			systypes.typename,
 			gltrans.typeno,
@@ -35,7 +35,7 @@ $sql = "SELECT gltrans.type,
 		HAVING ABS(SUM(amount))>= " . 1/pow(10,$_SESSION['CompanyRecord']['decimalplaces']) . "
 		ORDER BY gltrans.counterindex";
 
-$OutOfWackResult = DB_query($sql);
+$OutOfWackResult = DB_query($SQL);
 
 
 $RowCounter =0;

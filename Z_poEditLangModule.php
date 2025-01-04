@@ -37,9 +37,9 @@ if (isset($_POST['ReMergePO'])){
 		system($xgettextCmd);
 	/*now merge the translated file with the new template to get new strings*/
 
-		$msgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
+		$MsgMergeCmd = 'msgmerge --no-wrap --update ' . $PathToLanguage . ' ' . $PathToDefault;
 
-		system($msgMergeCmd);
+		system($MsgMergeCmd);
 		//$Result = rename($PathToNewLanguage, $PathToLanguage);
 		exit;
 	}
@@ -90,8 +90,8 @@ if (isset($_POST['module'])) {
 		}
 
     /*now need to create the .mo file from the .po file */
-		$msgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
-		system($msgfmtCommand);
+		$MsgfmtCommand = 'msgfmt ' . $PathToLanguage . ' -o ' . $PathToLanguage_mo;
+		system($MsgfmtCommand);
 
 		prnMsg (_('Done') . '<br />', 'info', ' ');
 
@@ -112,7 +112,7 @@ if (isset($_POST['module'])) {
 				$DefaultText[$j] = mb_substr($LangFile[$i], 7, mb_strlen($LangFile[$i])-9);
 			} elseif (mb_substr($LangFile[$i], 0 , 6) == 'msgstr') {
 				$ModuleText[$j] = mb_substr($LangFile[$i], 8, mb_strlen($LangFile[$i])-10);
-				$msgstr[$j] = $i;
+				$Msgstr[$j] = $i;
 				$j++;
 			}
 		}
@@ -158,8 +158,8 @@ if (isset($_POST['module'])) {
 			} else {
 				echo '<tr>';
 				echo '<td valign="top"><i>' . $DefaultText[$i] . '</i></td>';
-				echo '<td valign="top"><input type="text" size="60" name="moduletext_' . $msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>';
-				echo '<td valign="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $msgstr[$i] . '" value="' . $msgstr[$i] . '" /></td>';
+				echo '<td valign="top"><input type="text" size="60" name="moduletext_' . $Msgstr[$i] . '" value="' . $ModuleText[$i] . '" /></td>';
+				echo '<td valign="top">' . $AlsoIn[$i] . '<input type="hidden" name="msgstr_' . $Msgstr[$i] . '" value="' . $Msgstr[$i] . '" /></td>';
 				echo '</tr>';
 				echo '<tr><th colspan="3"></th></tr>';
 			}
@@ -190,25 +190,25 @@ if (isset($_POST['module'])) {
 /* $ListDirCmd should probably be defined in config.php as a global value */
 /* You'll need to change it if you are running a Windows server - sorry !! */
 
-	if ($handle = opendir('.')) {
+	if ($Handle = opendir('.')) {
     	$i=0;
-    	while (false !== ($file = readdir($handle))) {
-        if ((mb_substr($file, 0, 1) != ".") && (!is_dir($file))) {
-          $AvailableModules[$i] = $file;
+    	while (false !== ($File = readdir($Handle))) {
+        if ((mb_substr($File, 0, 1) != ".") && (!is_dir($File))) {
+          $AvailableModules[$i] = $File;
         	$i += 1;
         }
     	}
-  	  closedir($handle);
+  	  closedir($Handle);
 	}
 
-	if ($handle = opendir(".//includes")) {
-    	while (false !== ($file = readdir($handle))) {
-        if ((mb_substr($file, 0, 1) != ".") && (!is_dir($file))) {
-          $AvailableModules[$i] = $file;
+	if ($Handle = opendir(".//includes")) {
+    	while (false !== ($File = readdir($Handle))) {
+        if ((mb_substr($File, 0, 1) != ".") && (!is_dir($File))) {
+          $AvailableModules[$i] = $File;
         	$i += 1;
         }
     	}
-  	  closedir($handle);
+  	  closedir($Handle);
 	}
 
 	sort($AvailableModules);

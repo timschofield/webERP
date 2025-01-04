@@ -61,15 +61,15 @@ if (isset($_POST['submit'])) {
 
 		// First check the type is not being duplicated
 
-		$checkSql = "SELECT count(*)
+		$CheckSQL = "SELECT count(*)
 			     FROM internalstockcatrole
 			     WHERE secroleid= '" .  $_POST['SelectedRole'] . "'
 				 AND categoryid = '" .  $_POST['SelectedCategory'] . "'";
 
-		$checkresult = DB_query($checkSql);
-		$checkrow = DB_fetch_row($checkresult);
+		$Checkresult = DB_query($CheckSQL);
+		$CheckRow = DB_fetch_row($Checkresult);
 
-		if ( $checkrow[0] >0) {
+		if ( $CheckRow[0] >0) {
 			$InputError = 1;
 			prnMsg( _('The Stock Category') . ' ' . $_POST['categoryid'] . ' ' ._('already allowed as internal for this security role'),'error');
 		} else {
@@ -79,18 +79,18 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedRole'] . "',
 												'" . $_POST['SelectedCategory'] . "')";
 
-			$msg = _('Stock Category:') . ' ' . $_POST['SelectedCategory'].' '._('has been allowed to user role') .' '. $_POST['SelectedRole'] .  ' ' . _('as internal');
-			$checkSql = "SELECT count(secroleid)
+			$Msg = _('Stock Category:') . ' ' . $_POST['SelectedCategory'].' '._('has been allowed to user role') .' '. $_POST['SelectedRole'] .  ' ' . _('as internal');
+			$CheckSQL = "SELECT count(secroleid)
 							FROM securityroles";
-			$Result = DB_query($checkSql);
-			$row = DB_fetch_row($Result);
+			$Result = DB_query($CheckSQL);
+			$Row = DB_fetch_row($Result);
 		}
 	}
 
 	if ( $InputError !=1) {
 	//run the SQL from either of the above possibilites
 		$Result = DB_query($SQL);
-		prnMsg($msg,'success');
+		prnMsg($Msg,'success');
 		unset($_POST['SelectedCategory']);
 	}
 

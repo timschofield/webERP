@@ -117,7 +117,7 @@ if (isset($_POST['submit'])) {
 										rate='" .filter_number_format($_POST['ExchangeRate']) . "',
 										webcart='" .$_POST['webcart'] . "'
 					WHERE currabrev = '" . $SelectedCurrency . "'";
-		$msg = _('The currency definition record has been updated');
+		$Msg = _('The currency definition record has been updated');
 		$NewRate = $_POST['ExchangeRate'];
 
 	} else if ($InputError !=1) {
@@ -139,7 +139,7 @@ if (isset($_POST['submit'])) {
 						filter_number_format($_POST['DecimalPlaces']) . "', '" .
 						filter_number_format($_POST['ExchangeRate']) . "', '" .
 						$_POST['webcart'] . "')";
-		$msg = _('The currency definition record has been added');
+		$Msg = _('The currency definition record has been added');
 	}
 	//run the SQL from either of the above possibilites
 	$ExDiffTransNo = GetNextTransNo(36);
@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
 
 	$Result = DB_query($SQL);
 	if ($InputError!=1) {
-		prnMsg( $msg,'success');
+		prnMsg( $Msg,'success');
 	}
 
 	/* Now we should update the functional currency value of the bank accounts of the $SelectedCurrency

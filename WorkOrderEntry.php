@@ -9,6 +9,7 @@ $BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
 $Title = _('Work Order Entry');
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 
 echo '<p class="page_title_text">
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/transactions.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
@@ -164,7 +165,7 @@ if (isset($_POST['Save'])) {
 
 		// insert parent item info
 		foreach ($_SESSION['WorkOrder' . $Identifier]->Items as $Item) {
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,
+			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,
 											bom.loccode
 										FROM stockmaster
 										INNER JOIN bom
@@ -229,7 +230,7 @@ if (isset($_POST['delete'])) {
 	$HasTransResult = DB_query("SELECT transno
 									FROM stockmoves
 								WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-								AND reference " . LIKE . " '%" . $_POST['WO'] . "%'");
+								AND reference='" . $_POST['WO'] . "'");
 	if (DB_num_rows($HasTransResult) > 0) {
 		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'), 'error');
 		$CancelDelete = true;
@@ -418,7 +419,7 @@ if (isset($WOItemsResult)) {
 echo '</fieldset>';
 
 if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['WorkOrder' . $Identifier]->NumberOfItems > 0) {
-	$i = 0;
+	$i = 1;
 
 	echo '<table>
 			<tr>
@@ -428,6 +429,7 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 				<th>', _('Qty Received'), '</th>
 				<th>', _('Balance Remaining'), '</th>
 				<th>', _('Next Lot/SN Ref'), '</th>
+				<th colspan="2"></th>
 			</tr>';
 
 	foreach ($_SESSION['WorkOrder' . $Identifier]->Items as $WorkOrderItem) {
@@ -439,10 +441,12 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 		echo '<input type="hidden" name="OutputStockId', $i, '" value="', $WorkOrderItem->StockId, '" />';
 		echo '<tr class="striped_row">
 				<td>', $WorkOrderItem->StockId, ' - ', $DescriptionRow['description'], '</td>
-				<td><textarea spellcheck="true" style="width:100%" rows="2" cols="50" name="WOComments', $i, '" >', $WorkOrderItem->Comments, '</textarea></td>';
+				<td><textarea spellcheck="true" style="width:96%" rows="2" cols="50" name="WOComments', $i, '" >', $WorkOrderItem->Comments, '</textarea></td>';
 
 		if ($WorkOrderItem->Controlled == 1 and $_SESSION['DefineControlledOnWOEntry'] == 1) {
-			echo '<td class="number">', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '</td>';
+			echo '<td class="number">', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '
+					<input type="hidden" required="required" class="number" name="OutputQty', $i, '" value="', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size="8" maxlength="10" title="', _('The input format must be positive numeric'), '" />
+				</td>';
 		} else {
 			echo '<td class="number">
 					<input type="text" required="required" class="number" name="OutputQty', $i, '" value="', locale_number_format($WorkOrderItem->QuantityRequired, $WorkOrderItem->DecimalPlaces), '" size="8" maxlength="10" title="', _('The input format must be positive numeric'), '" />
@@ -467,6 +471,8 @@ if (isset($_SESSION['WorkOrder' . $Identifier]->NumberOfItems) and $_SESSION['Wo
 						<a href="', $RootPath, '/WOSerialNos.php?WO=', urlencode($_POST['WO']), '&StockID=', urlencode($WorkOrderItem->StockId), '&Description=', urlencode($DescriptionRow['description']), '&Serialised=', urlencode($WorkOrderItem->Serialised), '&NextSerialNo=', urlencode($WorkOrderItem->NextLotSerialNumbers), '">', $LotOrSN, '</a>
 					</td>';
 			}
+		} else {
+			echo '<td colspan="2"></td>';
 		}
 		echo '<td>';
 		if ($_SESSION['WikiApp'] != 0) {
@@ -644,13 +650,8 @@ if (isset($SearchResult)) {
 				$SupportedImgExt = array('png', 'jpg', 'jpeg');
 				$ImageFileArray = glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE);
 				$ImageFile = reset($ImageFileArray);
-				if (extension_loaded('gd') and function_exists('gd_info') and file_exists($ImageFile)) {
-					$ImageSource = '<img class="StockImage" src="GetStockImage.php?automake=1&textcolor=FFFFFF&bgcolor=CCCCCC&StockID=' . urlencode($MyRow['stockid']) . '" alt="" />';
-				} else if (file_exists($ImageFile)) {
-					$ImageSource = '<img class="StockImage" src="' . $ImageFile . '" />';
-				} else {
-					$ImageSource = _('No Image');
-				}
+				
+				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 				echo '<tr class="striped_row">
 						<td>', $MyRow['stockid'], '</td>

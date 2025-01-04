@@ -34,7 +34,7 @@ if (isset($_GET['BackupFile'])){
 } else {
 
 	$BackupFile =   $RootPath . '/companies/' . $_SESSION['DatabaseName']  .'/' . _('Backup') . '_' . Date('Y-m-d-H-i-s') . '.sql.gz';
-	$Command = 'mysqldump --opt -h' . $host . ' -u' . $DBUser . ' -p' . $DBPassword  . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' .
+	$Command = 'mysqldump --opt -h' . $Host . ' -u' . $DBUser . ' -p' . $DBPassword  . '  ' . $_SESSION['DatabaseName'] . '| gzip > ' .
 	$_SERVER['DOCUMENT_ROOT'] . $BackupFile;
 
 	exec($Command);
@@ -49,12 +49,12 @@ if (isset($_GET['BackupFile'])){
 //this could be a weighty file attachment!!
 include('includes/htmlMimeMail.php');
 $mail = new htmlMimeMail();
-$attachment = $mail->getFile( $BackupFile);
+$Attachment = $mail->getFile( $BackupFile);
 $mail->setText(_('webERP backup file attached'));
-$mail->addAttachment($attachment, $BackupFile, 'application/gz');
+$mail->addAttachment($Attachment, $BackupFile, 'application/gz');
 $mail->setSubject(_('Database Backup'));
 $mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-$result = $mail->send(array('"' . $_SESSION['UsersRealName'] . '" <' . $_SESSION['UserEmail'] . '>'));
+$Result = $mail->send(array('"' . $_SESSION['UsersRealName'] . '" <' . $_SESSION['UserEmail'] . '>'));
 
 prnMsg(_('A backup of the database has been taken and emailed to you'), 'info');
 unlink($BackupFile); // would be a security issue to leave it there for all to download/see

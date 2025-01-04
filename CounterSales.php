@@ -165,7 +165,7 @@ if (!isset($_SESSION['Items'.$identifier])) {
 
 				prnMsg(_('The branch details for branch code') . ': ' . $_SESSION['Items'.$identifier]->Branch . ' ' . _('against customer code') . ': ' . $_SESSION['Items'.$identifier]->DebtorNo . ' ' . _('could not be retrieved') . '. ' . _('Check the set up of the customer and branch'),'error');
 
-				if ($debug==1) {
+				if ($Debug==1) {
 					echo '<br />' . _('The SQL that failed to get the branch details was') . ':<br />' . $SQL;
 				}
 				include('includes/footer.php');
@@ -233,11 +233,11 @@ if (isset($_POST['CancelOrder'])) {
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous'])) {
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
-		$msg = _('Item description has been used in search');
+		$Msg = _('Item description has been used in search');
 	} else if ($_POST['StockCode']!='' AND $_POST['Keywords']=='') {
-		$msg = _('Item Code has been used in search');
+		$Msg = _('Item Code has been used in search');
 	} else if ($_POST['Keywords']=='' AND $_POST['StockCode']=='') {
-		$msg = _('Stock Category has been used in search');
+		$Msg = _('Stock Category has been used in search');
 	}
 	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
 		//insert wildcard characters in spaces
@@ -1435,7 +1435,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 						bom.quantity,
-						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+						stockmaster.actualcost AS standard
 						FROM bom,
 							stockmaster
 						WHERE bom.component=stockmaster.stockid
@@ -2205,8 +2205,8 @@ if (!isset($_POST['ProcessSale'])) {
 			echo '<td class="centre" colspan="8"><input type="hidden" name="SelectingOrderItems" value="1" /><input tabindex="'.strval($j+8).'" type="submit" value="'._('Add to Sale').'" /></td>';
 			echo '</table>';
 		} //end of if Frequently Ordered Items > 0
-		if (isset($msg)) {
-			echo '<div class="page_help_text"><p><b>' . $msg . '</b></p></div>';
+		if (isset($Msg)) {
+			echo '<div class="page_help_text"><p><b>' . $Msg . '</b></p></div>';
 		}
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Items') . '</p>
 			<div class="page_help_text">' . _('Search for Items') . _(', Searches the database for items, you can narrow the results by selecting a stock category, or just enter a partial item description or partial item code') . '.</div>';

@@ -37,10 +37,10 @@ if (isset($SelectedPeriod)) { //If it was called from itself (in other words an 
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 }
-elseif (isset($_GET['PeriodFrom'])) { //If it was called from the Trial Balance/P&L or Balance sheet
-	$FirstPeriodSelected = $_GET['PeriodFrom'];
+elseif (isset($_GET['PeriodTo'])) { //If it was called from the Trial Balance/P&L or Balance sheet, select the just last period
+	$FirstPeriodSelected = $_GET['PeriodTo'];
 	$LastPeriodSelected = $_GET['PeriodTo'];
-	$SelectedPeriod[0] = $_GET['PeriodFrom'];
+	$SelectedPeriod[0] = $_GET['PeriodTo'];
 	$SelectedPeriod[1] = $_GET['PeriodTo'];
 }
 else { // Otherwise just highlight the current period
@@ -170,7 +170,7 @@ if (isset($_POST['Show'])) {
 			FROM gltrans
 			INNER JOIN systypes
 				ON systypes.typeid=gltrans.type
-			INNER JOIN gltags
+			LEFT JOIN gltags
 				ON gltags.counterindex=gltrans.counterindex
 			WHERE gltrans.account = '" . $SelectedAccount . "'
 			AND posted=1
@@ -182,10 +182,10 @@ if (isset($_POST['Show'])) {
 	}
 
 	$SQL = $SQL . " ORDER BY periodno, gltrans.trandate, counterindex";
-	$namesql = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
-	$nameresult = DB_query($namesql);
-	$namerow = DB_fetch_array($nameresult);
-	$SelectedAccountName = $namerow['accountname'];
+	$NameSQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
+	$NameResult = DB_query($NameSQL);
+	$NameRow = DB_fetch_array($NameResult);
+	$SelectedAccountName = $NameRow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
 	$TransResult = DB_query($SQL, $ErrMsg);
 	$BankAccountInfo = isset($BankAccount) ? '<th>' . _('Org Currency') . '</th>
@@ -287,28 +287,28 @@ if (isset($_POST['Show'])) {
 		$OrgAmt = '';
 		$Currency = '';
 		if ($MyRow['type'] == 12 OR $MyRow['type'] == 22 OR $MyRow['type'] == 2 OR $MyRow['type'] == 1) {
-			$banksql = "SELECT ref,currcode,amount FROM banktrans
+			$BankSQL = "SELECT ref,currcode,amount FROM banktrans
 				WHERE type='" . $MyRow['type'] . "' AND transno='" . $MyRow['typeno'] . "' AND bankact='" . $SelectedAccount . "'";
 			$ErrMsg = _('Failed to retrieve bank data');
-			$bankresult = DB_query($banksql, $ErrMsg);
-			if (DB_num_rows($bankresult) > 0) {
-				$bankrow = DB_fetch_array($bankresult);
-				$BankRef = $bankrow['ref'];
-				$OrgAmt = $bankrow['amount'];
-				$Currency = $bankrow['currcode'];
+			$BankResult = DB_query($BankSQL, $ErrMsg);
+			if (DB_num_rows($BankResult) > 0) {
+				$BankRow = DB_fetch_array($BankResult);
+				$BankRef = $BankRow['ref'];
+				$OrgAmt = $BankRow['amount'];
+				$Currency = $BankRow['currcode'];
 			}
 			elseif ($MyRow['type'] == 1) {
 				//We should find out when transaction happens between bank accounts;
-				$bankreceivesql = "SELECT ref,type,transno,currcode,amount FROM banktrans
+				$BankReceiveSQL = "SELECT ref,type,transno,currcode,amount FROM banktrans
 							WHERE ref LIKE '@%' AND transdate='" . $MyRow['trandate'] . "' AND bankact='" . $SelectedAccount . "'";
 				$ErrMsg = _('Failed to retrieve bank receive data');
-				$bankresult = DB_query($bankreceivesql, $ErrMsg);
-				if (DB_num_rows($bankresult) > 0) {
-					while ($bankrow = DB_fetch_array($bankresult)) {
-						if (substr($bankrow['ref'], 1, strpos($bankrow['ref'], ' ') - 1) == $MyRow['typeno']) {
-							$BankRef = $bankrow['ref'];
-							$OrgAmt = $bankrow['amount'];
-							$Currency = $bankrow['currcode'];
+				$BankResult = DB_query($BankReceiveSQL, $ErrMsg);
+				if (DB_num_rows($BankResult) > 0) {
+					while ($BankRow = DB_fetch_array($BankResult)) {
+						if (substr($BankRow['ref'], 1, strpos($BankRow['ref'], ' ') - 1) == $MyRow['typeno']) {
+							$BankRef = $BankRow['ref'];
+							$OrgAmt = $BankRow['amount'];
+							$Currency = $BankRow['currcode'];
 							$BankReceipt = true;
 							break;
 						}

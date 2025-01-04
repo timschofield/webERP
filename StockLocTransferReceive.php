@@ -210,7 +210,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 					}
 					// Get the item cost:
-					$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+					$SQLstandardcost = "SELECT stockmaster.actualcost AS standardcost
 										FROM stockmaster
 										WHERE stockmaster.stockid ='" . $TrfLine->StockID . "'";
 					$ErrMsg = _('The standard cost of the item cannot be retrieved because');
@@ -366,7 +366,7 @@ if(isset($_POST['ProcessTransfer'])) {
 						$AccountCode = $StockGLCode['stockact'];// Select account code for stock.
 					}
 					// Get the item cost:
-					$SQLstandardcost = "SELECT stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+					$SQLstandardcost = "SELECT stockmaster.actualcost AS standardcost
 										FROM stockmaster
 										WHERE stockmaster.stockid ='" . $TrfLine->StockID . "'";
 					$ErrMsg = _('The standard cost of the item cannot be retrieved because');
@@ -542,7 +542,7 @@ if(isset($_SESSION['Transfer'])) {
 			<th colspan="7"><h3>' . _('Location Transfer Reference'). ' #' . $_SESSION['Transfer']->TrfID . ' '. _('from').' ' . $_SESSION['Transfer']->StockLocationFromName . ' '. _('to'). ' ' . $_SESSION['Transfer']->StockLocationToName . '</h3></th>
 		</tr>';
 
-	$tableheader = '<tr>
+	$Tableheader = '<tr>
 						<th>' .  _('Item Code') . '</th>
 						<th>' .  _('Item Description'). '</th>
 						<th>' .  _('Quantity Dispatched'). '</th>
@@ -552,7 +552,7 @@ if(isset($_SESSION['Transfer'])) {
 						<th>' .  _('Cancel Balance') . '</th>
 					</tr>';
 
-	echo $tableheader;
+	echo $Tableheader;
 
 	foreach ($_SESSION['Transfer']->TransferItem AS $TrfLine) {
 

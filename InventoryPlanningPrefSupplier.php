@@ -28,7 +28,7 @@ function NewPageHeader () {
 			$Left_Margin,
 			$Right_Margin,
 			$SupplierName,
-			$line_height;
+			$LineHeight;
 
 	/*PDF page header for inventory planning report */
 
@@ -41,7 +41,7 @@ function NewPageHeader () {
 
 	$LeftOvers = $PDF->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-	$YPos -=$line_height;
+	$YPos -=$LineHeight;
 
 	$FontSize=10;
 
@@ -56,14 +56,14 @@ function NewPageHeader () {
 	$FontSize=8;
 	$LeftOvers = $PDF->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
-	$YPos -=(2*$line_height);
+	$YPos -=(2*$LineHeight);
 
 	/*Draw a rectangle to put the headings in     */
 
-	$PDF->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
-	$PDF->line($Left_Margin, $YPos+$line_height,$Left_Margin, $YPos- $line_height);
-	$PDF->line($Left_Margin, $YPos- $line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
-	$PDF->line($Page_Width-$Right_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos- $line_height);
+	$PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
+	$PDF->line($Left_Margin, $YPos+$LineHeight,$Left_Margin, $YPos- $LineHeight);
+	$PDF->line($Left_Margin, $YPos- $LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
+	$PDF->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
 
 	/*set up the headings */
 	$XPos = $Left_Margin+1;
@@ -91,7 +91,7 @@ function NewPageHeader () {
 	$LeftOvers = $PDF->addTextWrap(694,$YPos,40,$FontSize,_('Splr Ords'),'centre');
 	$LeftOvers = $PDF->addTextWrap(735,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
 
-	$YPos =$YPos - (2*$line_height);
+	$YPos =$YPos - (2*$LineHeight);
 	$FontSize=8;
 }
 
@@ -138,7 +138,7 @@ if (isset($_POST['PrintPDF'])){
 
 
 	$PageNumber= 1;
-	$line_height= 12;
+	$LineHeight= 12;
 
       /*Now figure out the inventory data to report for the category range under review
       need QOH, QOO, QDem, Sales Mth -1, Sales Mth -2, Sales Mth -3, Sales Mth -4*/
@@ -183,7 +183,7 @@ if (isset($_POST['PrintPDF'])){
 	  include('includes/header.php');
 	   prnMsg(_('The inventory quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   if ($debug==1){
+	   if ($Debug==1){
 	      echo '<br />' . $SQL;
 	   }
 	   include('includes/footer.php');
@@ -206,16 +206,16 @@ if (isset($_POST['PrintPDF'])){
 			$FontSize=10;
 			if ($SupplierID!=''){ /*Then it's NOT the first time round */
 				/*draw a line under the supplier*/
-				$YPos -=$line_height;
+				$YPos -=$LineHeight;
 		   		$PDF->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
-				$YPos -=(2*$line_height);
+				$YPos -=(2*$LineHeight);
 			}
 			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['supplierno'] . ' - ' . $InventoryPlan['suppname'],'left');
 			$SupplierID = $InventoryPlan['supplierno'];
 			$FontSize=8;
 		}
 
-		$YPos -=$line_height;
+		$YPos -=$LineHeight;
 
 		$SQL = "SELECT SUM(CASE WHEN (prd>='" . $Period_1 . "' OR prd<='" . $Period_4 . "') THEN -qty ELSE 0 END) AS 4mthtotal,
 					SUM(CASE WHEN prd='" . $Period_1 . "' THEN -qty ELSE 0 END) AS prd1,
@@ -241,7 +241,7 @@ if (isset($_POST['PrintPDF'])){
 	  		include('includes/header.php');
 	   		prnMsg( _('The sales quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($debug==1){
+	   		if ($Debug==1){
 	      			echo '<br />' .  $SQL;
 	   		}
 	   		include('includes/footer.php');
@@ -268,7 +268,7 @@ if (isset($_POST['PrintPDF'])){
 	  		include('includes/header.php');
 	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($debug==1){
+	   		if ($Debug==1){
 	      			echo '<br />' . $SQL;
 	   		}
 	   		include('includes/footer.php');
@@ -301,7 +301,7 @@ if (isset($_POST['PrintPDF'])){
 	  		include('includes/header.php');
 	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($debug==1){
+	   		if ($Debug==1){
 	      			echo '<br />' . $SQL;
 	   		}
 	   		include('includes/footer.php');
@@ -353,16 +353,16 @@ if (isset($_POST['PrintPDF'])){
 			$LeftOvers = $PDF->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
 		}
 
-		if ($YPos < $Bottom_Margin + $line_height){
+		if ($YPos < $Bottom_Margin + $LineHeight){
 		   $PageNumber++;
 		   NewPageHeader();
 		}
 
 	} /*end inventory valn while loop */
 
-	$YPos -= (2*$line_height);
+	$YPos -= (2*$LineHeight);
 
-	$PDF->line($Left_Margin, $YPos+$line_height,$Page_Width-$Right_Margin, $YPos+$line_height);
+	$PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
 	if ($ListCount == 0) {
 		$Title = _('Print Inventory Planning Report Empty');

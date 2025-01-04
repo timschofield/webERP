@@ -18,10 +18,10 @@ Parameters:
 */
 
 // BEGIN: Functions division ===================================================
-function RelativeChange($selected_period, $previous_period) {
+function RelativeChange($SelectedPeriod, $PreviousPeriod) {
 	// Calculates the relative change between selected and previous periods. Uses percent with locale number format.
-	if($previous_period<>0) {
-		return locale_number_format(($selected_period-$previous_period)*100/$previous_period, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
+	if($PreviousPeriod<>0) {
+		return locale_number_format(($SelectedPeriod-$PreviousPeriod)*100/$PreviousPeriod, $_SESSION['CompanyRecord']['decimalplaces']) . '%';
 	} else {
 		return _('N/A');
 	}
@@ -83,18 +83,18 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 				<label for="PeriodTo">', _('Select the balance date'), '</label>
 		 		<select id="PeriodTo" name="PeriodTo" required="required">';
 
-	$periodno=GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='".$periodno . "'";
+	$PeriodNo=GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='".$PeriodNo . "'";
 	$Result = DB_query($SQL);
 	$MyRow=DB_fetch_array($Result);
-	$lastdate_in_period=$MyRow[0];
+	$LastDateInPeriod=$MyRow[0];
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($SQL);
 
 	while($MyRow=DB_fetch_array($Periods)) {
 		echo '<option';
-		if($MyRow['periodno']== $periodno) {
+		if($MyRow['periodno']== $PeriodNo) {
 			echo ' selected="selected"';
 		}
 		echo ' value="', $MyRow['periodno'], '">', MonthAndYearFromSQLDate($MyRow['lastdate_in_period']), '</option>';
@@ -340,18 +340,20 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 		}
 	}// End of loop.
 
-	while($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
-		if($_POST['ShowDetail']=='Detailed') {
-			echo $DrawTotalLine;
+	if (isset($MyRow)) {
+		while($MyRow['groupname']!=$ParentGroups[$Level] AND $Level>0) {
+			if($_POST['ShowDetail']=='Detailed') {
+				echo $DrawTotalLine;
+			}
+			echo '<tr>
+				<	td colspan="2">', $ParentGroups[$Level], '</td>
+					<td class="number">', locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', locale_number_format(-$GroupTotal[$Level]+$GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					<td class="number">', RelativeChange(-$GroupTotal[$Level],-$GroupTotalLY[$Level]), '</td>
+				</tr>';
+			$Level--;
 		}
-		echo '<tr>
-				<td colspan="2">', $ParentGroups[$Level], '</td>
-				<td class="number">', locale_number_format($GroupTotal[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', locale_number_format($GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', locale_number_format(-$GroupTotal[$Level]+$GroupTotalLY[$Level],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
-				<td class="number">', RelativeChange(-$GroupTotal[$Level],-$GroupTotalLY[$Level]), '</td>
-			</tr>';
-		$Level--;
 	}
 	if($_POST['ShowDetail']=='Detailed') {
 		echo $DrawTotalLine;
@@ -372,12 +374,14 @@ if(!isset($_POST['PeriodTo']) or isset($_POST['NewReport'])) {
 			<td class="number"><h2>', RelativeChange(-$SectionBalance,-$SectionBalanceLY), '</h2></td>
 		</tr>';
 
-	$Section = $MyRow['sectioninaccounts'];
+	if (isset($MyRow)) {
+		$Section = $MyRow['sectioninaccounts'];
 
-	if(isset($MyRow['sectioninaccounts']) and $_POST['ShowDetail']=='Detailed') {
-		echo '<tr>
-				<td colspan="6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
-			</tr>';
+		if(isset($MyRow['sectioninaccounts']) and $_POST['ShowDetail']=='Detailed') {
+			echo '<tr>
+					<td colspan="6"><h2>', $Sections[$MyRow['sectioninaccounts']], '</h2></td>
+				</tr>';
+		}
 	}
 	echo $DrawTotalLine;
 	echo'<tr>

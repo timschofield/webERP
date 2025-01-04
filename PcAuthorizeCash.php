@@ -106,26 +106,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			} else { // other currencies
 				$Amount = $MyRow['amount'] / $MyRow['rate'];
 			}
-			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-				$type = 2;
-				$AccountFrom = $MyRow['glaccountassignment'];
-				$AccountTo = $MyRow['glaccountpcash'];
-				$TagTo = 0;
-			} else {
-				$type = 1;
-				$Amount = -$Amount;
-				$AccountFrom = $MyRow['glaccountpcash'];
-				$SQLAccExp = "SELECT glaccount,
-									tag
-								FROM pcexpenses
-								WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
-				$ResultAccExp = DB_query($SQLAccExp);
-				$MyRowAccExp = DB_fetch_array($ResultAccExp);
-				$AccountTo = $MyRowAccExp['glaccount'];
-				$TagTo = $MyRowAccExp['tag'];
-			}
+			// it can only be ASSIGNCASH, not expenses
+			$Type = 2;
+			$AccountFrom = $MyRow['glaccountassignment'];
+			$AccountTo = $MyRow['glaccountpcash'];
+			$TagTo = 0;
 			//get typeno
-			$typeno = GetNextTransNo($type);
+			$TypeNo = GetNextTransNo($Type);
 			//build narrative
 			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
@@ -143,8 +130,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`jobref`,
 											`tag`)
 									VALUES (NULL,
-											'" . $type . "',
-											'" . $typeno . "',
+											'" . $Type . "',
+											'" . $TypeNo . "',
 											0,
 											'" . $MyRow['date'] . "',
 											'" . $PeriodNo . "',
@@ -168,8 +155,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`jobref`,
 										`tag`
 									) VALUES (NULL,
-										'" . $type . "',
-										'" . $typeno . "',
+										'" . $Type . "',
+										'" . $TypeNo . "',
 										0,
 										'" . $MyRow['date'] . "',
 										'" . $PeriodNo . "',
@@ -181,35 +168,35 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'" . $TagTo ."'
 									)";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
-			if ($MyRow['codeexpense'] == 'ASSIGNCASH') {
-				// if it's a cash assignation we need to updated banktrans table as well.
-				$ReceiptTransNo = GetNextTransNo(2);
-				$SQLBank = "INSERT INTO banktrans (transno,
-												type,
-												bankact,
-												ref,
-												exrate,
-												functionalexrate,
-												transdate,
-												banktranstype,
-												amount,
-												currcode
-											) VALUES (
-												'" . $ReceiptTransNo . "',
-												1,
-												'" . $AccountFrom . "',
-												'" . $Narrative . "',
-												1,
-												'" . $MyRow['rate'] . "',
-												'" . $MyRow['date'] . "',
-												'Cash',
-												'" . -$MyRow['amount'] . "',
-												'" . $MyRow['currency'] . "'
-											)";
-				$ErrMsg = _('Cannot insert a bank transaction because');
-				$DbgMsg = _('Cannot insert a bank transaction with the SQL');
-				$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
-			}
+
+			// as it's a cash assignation we need to update banktrans table as well.
+			$ReceiptTransNo = GetNextTransNo(2);
+			$SQLBank = "INSERT INTO banktrans (transno,
+											type,
+											bankact,
+											ref,
+											exrate,
+											functionalexrate,
+											transdate,
+											banktranstype,
+											amount,
+											currcode
+										) VALUES (
+											'" . $ReceiptTransNo . "',
+											1,
+											'" . $AccountFrom . "',
+											'" . $Narrative . "',
+											1,
+											'" . $MyRow['rate'] . "',
+											'" . $MyRow['date'] . "',
+											'Cash',
+											'" . -$MyRow['amount'] . "',
+											'" . $MyRow['currency'] . "'
+										)";
+			$ErrMsg = _('Cannot insert a bank transaction because');
+			$DbgMsg = _('Cannot insert a bank transaction with the SQL');
+			$ResultBank = DB_query($SQLBank, $ErrMsg, $DbgMsg, true);
+
 			$SQL = "UPDATE pcashdetails
 					SET authorized = CURRENT_DATE,
 					posted = 1
@@ -221,8 +208,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			} else {
 				prnMsg(_('There was a problem authorising the cash, and the transaction has not been posted'), 'error');
 			}
-		} else if ($MyRow['posted'] == 1) {
-			prnMsg(_('This cash has already been authorised, and cannot be posted again'), 'error');
 		}
 
 		echo '<tr class="striped_row">
@@ -244,18 +229,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			</td>
 		</tr>';
 	} //end of looping
-	$SQLamount = "SELECT sum(amount)
-			FROM pcashdetails
-			WHERE tabcode='" . $SelectedTabs . "'
-				AND codeexpense='ASSIGNCASH'";
-	$ResultAmount = DB_query($SQLamount);
-	$Amount = DB_fetch_array($ResultAmount);
-	if (!isset($Amount['0'])) {
-		$Amount['0'] = 0;
-	}
+	$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 	echo '<tr>
 			<td colspan="2" class="number">', _('Current balance'), ':</td>
-			<td class="number">', locale_number_format($Amount['0'], $CurrDecimalPlaces), '</td>
+			<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
 		</tr>';
 	// Do the postings
 	include('includes/GLPostings.inc');

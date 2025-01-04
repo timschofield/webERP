@@ -10,7 +10,7 @@ class StockAdjustment {
 	var $StandardCost;
 	var $DecimalPlaces;
 	var $Quantity;
-	var $tag;
+	var $Tag;
 	var $Narrative;
 	var $SerialItems; /*array to hold controlled items*/
 

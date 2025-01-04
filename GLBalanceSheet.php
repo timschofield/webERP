@@ -504,7 +504,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						AND YEAR(lastdate_in_period ) = YEAR(CURRENT_DATE())";
 		$PeriodResult = DB_query($PeriodSQL);
 		$PeriodRow = DB_fetch_array($PeriodResult);
-		$periodno = $PeriodRow['periodno'];;
+		$PeriodNo = $PeriodRow['periodno'];;
 
 	$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 	$Periods = DB_query($SQL);
@@ -512,7 +512,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	while ($MyRow = DB_fetch_array($Periods)) {
 		echo
 			'<option',
-			(($MyRow['periodno'] == $periodno) ? ' selected="selected"' : ''),
+			(($MyRow['periodno'] == $PeriodNo) ? ' selected="selected"' : ''),
 			' value="', $MyRow['periodno'], '">', ConvertSQLDate($MyRow['lastdate_in_period']), '</option>';
 	}
 	echo '</select>

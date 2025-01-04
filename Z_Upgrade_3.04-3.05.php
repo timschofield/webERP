@@ -50,7 +50,7 @@ if ($_POST['DoUpgrade'] == _('Perform Upgrade')){
 			}
 			if (mb_strpos($SQLScriptFile[$i],';')>0 AND ! $InAFunction){
 				$SQL = mb_substr($SQL,0,mb_strlen($SQL)-1);
-				$result = DB_query($SQL, $ErrMsg);
+				$Result = DB_query($SQL, $ErrMsg);
 				$SQL='';
 			}
 

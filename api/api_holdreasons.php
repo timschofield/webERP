@@ -11,11 +11,11 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = 'SELECT reasoncode FROM holdreasons';
-		$result = DB_query($sql);
+		$SQL = 'SELECT reasoncode FROM holdreasons';
+		$Result = DB_query($SQL);
 		$i=0;
-		while ($myrow=DB_fetch_array($result)) {
-			$HoldReasonList[$i]=$myrow[0];
+		while ($MyRow=DB_fetch_array($Result)) {
+			$HoldReasonList[$i]=$MyRow[0];
 			$i++;
 		}
 		return $HoldReasonList;
@@ -33,9 +33,9 @@
 			$Errors[0]=NoAuthorisation;
 			return $Errors;
 		}
-		$sql = "SELECT * FROM holdreasons WHERE reasoncode='".$holdreason."'";
-		$result = DB_query($sql);
-		return DB_fetch_array($result);
+		$SQL = "SELECT * FROM holdreasons WHERE reasoncode='".$holdreason."'";
+		$Result = DB_query($SQL);
+		return DB_fetch_array($Result);
 	}
 
 ?>

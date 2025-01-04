@@ -122,10 +122,10 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 	$FormDesign->LineHeight = $_POST['LineHeight'];
 	/*Iterate through the object filling in the values from the POST variables */
 	foreach ($FormDesign as $key) {
-		foreach ($key as $subkey => $value) {
+		foreach ($key as $subkey => $Value) {
 			if ($key['type'] == 'ElementArray') {
-				foreach ($value as $subsubkey => $subvalue) {
-					$value->$subsubkey = $_POST[$value['id'] . $subsubkey];
+				foreach ($Value as $subsubkey => $subvalue) {
+					$Value->$subsubkey = $_POST[$Value['id'] . $subsubkey];
 				}
 			} else {
 				$key->$subkey = $_POST[$key['id'] . $subkey];
@@ -183,16 +183,16 @@ if (empty($_POST['FormName'])) {
 				<td>
 					<select name="FormName">';
 	// Iterate throght the appropriate companies FormDesigns/ directory and extract the form name from each of the xml files found:
-	if ($handle = opendir($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/')) {
-		while (false !== ($file = readdir($handle))) {
-			if ($file[0] != '.') {
-				$FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $file);
+	if ($Handle = opendir($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/')) {
+		while (false !== ($File = readdir($Handle))) {
+			if ($File[0] != '.') {
+				$FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $File);
 				//echo "name is". $FormDesign['name'];
-				echo '<option value="', $file, '">' . /*_(*/
+				echo '<option value="', $File, '">' . /*_(*/
 				$FormDesign['name'] /*)*/ . '</option>';
 			}
 		}
-		closedir($handle);
+		closedir($Handle);
 	}
 	echo '</select>
 				</td>

@@ -14,7 +14,7 @@
 	$YPos = $Page_Height - $Top_Margin;
 	$pdf->addText($Left_Margin,$YPos,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 	$FontSize =10;
 	$pdf->setFont('','B');
 	$Heading = _('Profit and loss for the ') . $NumberOfMonths . _(' months to ') . _('and including ') . $PeriodToDate;
@@ -26,11 +26,11 @@
 		_('Printed'). ': ' . Date($_SESSION['DefaultDateFormat'])
 		. '   '. _('Page'). ' ' . $PageNumber);
 
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,_('Account'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+60,$YPos,100,$FontSize,_('Account Name'));
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+310,$YPos,70,$FontSize,_('Period Actual'),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+370,$YPos,70,$FontSize,_('Period Budget'),'right');
 	$LeftOvers = $pdf->addTextWrap($Left_Margin+430,$YPos,70,$FontSize,_('Last Year'),'right');
-	$YPos -= (2 * $line_height);
+	$YPos -= (2 * $LineHeight);
 ?>

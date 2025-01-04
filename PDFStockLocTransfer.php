@@ -54,11 +54,11 @@ $pdf->addInfo('Title', _('Inventory Location Transfer BOL') );
 $pdf->addInfo('Subject', _('Inventory Location Transfer BOL') . ' # ' . $_GET['TransferNo']);
 $FontSize=10;
 $PageNumber=1;
-$line_height=30;
+$LineHeight=30;
 
 $ErrMsg = _('An error occurred retrieving the items on the transfer'). '.' . '<p>' .  _('This page must be called with a location transfer reference number').'.';
 $DbgMsg = _('The SQL that failed while retrieving the items on the transfer was');
-$sql = "SELECT loctransfers.reference,
+$SQL = "SELECT loctransfers.reference,
 			   loctransfers.stockid,
 			   stockmaster.description,
 			   loctransfers.shipqty,
@@ -77,9 +77,9 @@ $sql = "SELECT loctransfers.reference,
 		INNER JOIN locationusers as locationusersrec ON locationusersrec.loccode=locationsrec.loccode AND locationusersrec.userid='" .  $_SESSION['UserID'] . "' AND locationusersrec.canview=1
 		WHERE loctransfers.reference='" . $_GET['TransferNo'] . "'";
 
-$result = DB_query($sql, $ErrMsg, $DbgMsg);
+$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-If (DB_num_rows($result)==0){
+If (DB_num_rows($Result)==0){
 
 	include ('includes/header.php');
 	prnMsg(_('The transfer reference selected does not appear to be set up') . ' - ' . _('enter the items to be transferred first'),'error');
@@ -87,10 +87,10 @@ If (DB_num_rows($result)==0){
 	exit;
 }
 
-$TransferRow = DB_fetch_array($result);
+$TransferRow = DB_fetch_array($Result);
 
 include ('includes/PDFStockLocTransferHeader.inc');
-$line_height=30;
+$LineHeight=30;
 $FontSize=10;
 
 do {
@@ -102,14 +102,14 @@ do {
 
 	$pdf->line($Left_Margin, $YPos-2,$Page_Width-$Right_Margin, $YPos-2);
 
-	$YPos -= $line_height;
+	$YPos -= $LineHeight;
 
-	if ($YPos < $Bottom_Margin + $line_height) {
+	if ($YPos < $Bottom_Margin + $LineHeight) {
 		$PageNumber++;
 		include('includes/PDFStockLocTransferHeader.inc');
 	}
 
-} while ($TransferRow = DB_fetch_array($result));
+} while ($TransferRow = DB_fetch_array($Result));
 $pdf->OutputD($_SESSION['DatabaseName'] . '_StockLocTrfShipment_' . date('Y-m-d') . '.pdf');
 $pdf->__destruct();
 ?>

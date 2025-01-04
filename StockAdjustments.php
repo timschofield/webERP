@@ -49,7 +49,7 @@ if ($NewAdjustment==true){
 							serialised,
 							decimalplaces,
 							perishable,
-							materialcost+labourcost+overheadcost AS totalcost,
+							actualcost AS totalcost,
 							units
 						FROM stockmaster
 						WHERE stockid='" . $_SESSION['Adjustment' . $identifier]->StockID . "'");
@@ -410,9 +410,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	$StockID = $_SESSION['Adjustment' . $identifier]->StockID;
 	$Controlled = $_SESSION['Adjustment' . $identifier]->Controlled;
 	$Quantity = $_SESSION['Adjustment' . $identifier]->Quantity;
-	$SQL="SELECT materialcost,
-				labourcost,
-				overheadcost,
+	$SQL="SELECT actualcost,
 				units,
 				decimalplaces
 			FROM stockmaster
@@ -422,7 +420,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	if (DB_num_rows($Result) > 0) {
 		$MyRow=DB_fetch_array($Result);
 		$_SESSION['Adjustment' . $identifier]->PartUnit=$MyRow['units'];
-		$_SESSION['Adjustment' . $identifier]->StandardCost=$MyRow['materialcost']+$MyRow['labourcost']+$MyRow['overheadcost'];
+		$_SESSION['Adjustment' . $identifier]->StandardCost=$MyRow['actualcost'];
 		$DecimalPlaces = $MyRow['decimalplaces'];
 	}
 }
@@ -510,7 +508,6 @@ $Result = DB_query($SQL);
 echo '<field>
 		<label for="tag">', _('Tag'), '</label>
 		<select multiple="multiple" name="tag[]">';
-echo '<option value="0">0 - ' . _('None') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
 		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';

@@ -44,7 +44,7 @@ if(isset($_POST['submit'])) {
 		$ErrMsg = _('The update of this tax authority failed because');
 		$Result = DB_query($SQL,$ErrMsg);
 
-		$msg = _('The tax authority for record has been updated');
+		$Msg = _('The tax authority for record has been updated');
 
 	} elseif($InputError !=1) {
 
@@ -71,7 +71,7 @@ if(isset($_POST['submit'])) {
 		$Errmsg = _('The addition of this tax authority failed because');
 		$Result = DB_query($SQL,$ErrMsg);
 
-		$msg = _('The new tax authority record has been added to the database');
+		$Msg = _('The new tax authority record has been added to the database');
 
 		$NewTaxID = DB_Last_Insert_ID('taxauthorities','taxid');
 
@@ -97,7 +97,7 @@ if(isset($_POST['submit'])) {
 		unset( $SelectedTaxID );
 	}
 
-	prnMsg($msg);
+	prnMsg($Msg);
 
 } elseif(isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button

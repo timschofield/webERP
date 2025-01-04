@@ -220,10 +220,10 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 		/*Get the exchange rate between the functional currency and the payment currency*/
 		$ExRateResult = DB_query("SELECT decimalplaces, rate FROM currencies WHERE currabrev='" . $MyRow['currabrev'] . "'");
 		$ExRateRow = DB_fetch_row($ExRateResult);
-		$tableExRate = $ExRateRow[1]; //this is the rate of exchange between the functional currency and the payment currency
+		$TableExRate = $ExRateRow[1]; //this is the rate of exchange between the functional currency and the payment currency
 		/*Calculate cross rate to suggest appropriate exchange rate between payment currency and account currency */
 		if ($SuggestedFunctionalExRate != 0) {
-			$SuggestedExRate = $tableExRate / $SuggestedFunctionalExRate;
+			$SuggestedExRate = $TableExRate / $SuggestedFunctionalExRate;
 		} else {
 			$SuggestedExRate = 0;
 		}

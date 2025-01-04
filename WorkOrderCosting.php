@@ -78,7 +78,7 @@ $WOItemsResult = DB_query("SELECT woitems.stockid,
 									stockmaster.description,
 									stockmaster.decimalplaces,
 									stockmaster.units,
-									stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS currcost,
+									stockmaster.actualcost AS currcost,
 									woitems.qtyreqd,
 									woitems.qtyrecd,
 									woitems.stdcost,
@@ -228,10 +228,10 @@ while ($RequirementsRow = DB_fetch_array($RequirementsResult)){
 
 	if ($IssueQty != 0){
 		$MultiCost = false;
-		foreach ($CostVariedStocks as $key=>$value){
-			if ($value['stockid'] == $RequirementsRow['stockid']){
-				if ($value['totalreqqty']!=0){
-					$CostVar = $IssueQty * $RequirementsRow['requiredqty']/$value['totalreqqty']*(($RequirementsRow['stdcost']) -($IssueCost/$IssueQty));
+		foreach ($CostVariedStocks as $key=>$Value){
+			if ($Value['stockid'] == $RequirementsRow['stockid']){
+				if ($Value['totalreqqty']!=0){
+					$CostVar = $IssueQty * $RequirementsRow['requiredqty']/$Value['totalreqqty']*(($RequirementsRow['stdcost']) -($IssueCost/$IssueQty));
 				} else {
 					$CostVar = 0;
 				}

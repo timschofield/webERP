@@ -62,11 +62,11 @@ if (isset($_GET['TemplateID'])) {
 }
 
 if (isset($_POST['JournalProcessDate'])) {
-	$_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
-
 	if (!Is_Date($_POST['JournalProcessDate'])) {
 		prnMsg(_('The date entered was not valid please enter the date to process the journal in the format') . $_SESSION['DefaultDateFormat'], 'warn');
 		$_POST['CommitBatch'] = 'Do not do it the date is wrong';
+	}else{
+		$_SESSION['JournalDetail']->JnlDate = $_POST['JournalProcessDate'];
 	}
 }
 
@@ -260,7 +260,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 	 A GL entry is created for each GL entry
 	*/
 
-	$PeriodNo = GetPeriod(ConvertSQLDate($_SESSION['JournalDetail']->JnlDate));
+	$PeriodNo = GetPeriod($_SESSION['JournalDetail']->JnlDate);
 
 	/*Start a transaction to do the whole lot inside */
 	DB_Txn_Begin();
@@ -355,8 +355,8 @@ elseif (isset($_GET['Delete'])) {
 }
 elseif (isset($_POST['Process']) and $_POST['Process'] == _('Accept')) { //user hit submit a new GL Analysis line into the journal
 	if ($_POST['GLCode'] != '') {
-		$extract = explode(' - ', $_POST['GLCode']);
-		$_POST['GLCode'] = $extract[0];
+		$Extract = explode(' - ', $_POST['GLCode']);
+		$_POST['GLCode'] = $Extract[0];
 	}
 	if ($_POST['Debit'] > 0) {
 		$_POST['GLAmount'] = filter_number_format($_POST['Debit']);
@@ -502,7 +502,6 @@ $Result = DB_query($SQL);
 echo '<field>
 	<label for="tag">', _('GL Tag') , '</label>
 	<select multiple="multiple" name="tag[]">';
-echo '<option value="0">0 - ', _('None') , '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_GET['Edit']) and isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] or (isset($_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) and in_array($MyRow['tagref'], $_SESSION['JournalDetail']->GLEntries[$_GET['Edit']]->tag)) {
 		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';

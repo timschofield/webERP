@@ -29,14 +29,14 @@ if ($JournalNo=='Preview') {
 // Set the paper size/orintation
 $PaperSize = $FormDesign->PaperSize;
 $PageNumber=1;
-$line_height=$FormDesign->LineHeight;
+$LineHeight=$FormDesign->LineHeight;
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('General Ledger Journal') );
 
 if ($JournalNo=='Preview') {
 	$LineCount = 2; // UldisN
 } else {
-	$sql="SELECT gltrans.typeno,
+	$SQL="SELECT gltrans.typeno,
 				gltrans.trandate,
 				gltrans.account,
 				chartmaster.accountname,
@@ -53,16 +53,16 @@ if ($JournalNo=='Preview') {
 			WHERE gltrans.type='" . $Type . "'
 				AND gltrans.typeno='" . $JournalNo . "'";
 
-	$result=DB_query($sql);
-	$LineCount = DB_num_rows($result); // UldisN
-	$myrow=DB_fetch_array($result);
-	$JournalDate=$myrow['trandate'];
-	DB_data_seek($result, 0);
+	$Result=DB_query($SQL);
+	$LineCount = DB_num_rows($Result); // UldisN
+	$MyRow=DB_fetch_array($Result);
+	$JournalDate=$MyRow['trandate'];
+	DB_data_seek($Result, 0);
 	include('includes/PDFGLJournalHeader.inc');
 }
-$counter=1;
+$Counter=1;
 $YPos=$FormDesign->Data->y;
-while ($counter<=$LineCount) {
+while ($Counter<=$LineCount) {
 	if ($JournalNo=='Preview') {
 		$AccountCode=str_pad('',10,'x');
 		$Date='1/1/1900';
@@ -72,17 +72,17 @@ while ($counter<=$LineCount) {
 		$Tag=str_pad('',25,'x');
 		$JobRef=str_pad('',25,'x');
 	} else {
-		$myrow=DB_fetch_array($result);
-		if ($myrow['tag']==0) {
-			$myrow['tagdescription']='None';
+		$MyRow=DB_fetch_array($Result);
+		if ($MyRow['tag']==0) {
+			$MyRow['tagdescription']='None';
 		}
-		$AccountCode = $myrow['account'];
-		$Description = $myrow['accountname'];
-		$Date = $myrow['trandate'];
-		$Narrative = $myrow['narrative'];
-		$Amount = $myrow['amount'];
-		$Tag = $myrow['tag'].' - '.$myrow['tagdescription'];
-		$JobRef = $myrow['jobref'];
+		$AccountCode = $MyRow['account'];
+		$Description = $MyRow['accountname'];
+		$Date = $MyRow['trandate'];
+		$Narrative = $MyRow['narrative'];
+		$Amount = $MyRow['amount'];
+		$Tag = $MyRow['tag'].' - '.$MyRow['tagdescription'];
+		$JobRef = $MyRow['jobref'];
 	}
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column1->x,$Page_Height-$YPos,$FormDesign->Data->Column1->Length,$FormDesign->Data->Column1->FontSize, $AccountCode);
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column2->x,$Page_Height-$YPos,$FormDesign->Data->Column2->Length,$FormDesign->Data->Column2->FontSize, $Description);
@@ -90,8 +90,8 @@ while ($counter<=$LineCount) {
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column4->x,$Page_Height-$YPos,$FormDesign->Data->Column4->Length,$FormDesign->Data->Column4->FontSize, locale_number_format($Amount,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $Tag);
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column6->x,$Page_Height-$YPos,$FormDesign->Data->Column6->Length,$FormDesign->Data->Column6->FontSize, $JobRef, 'left');
-	$YPos += $line_height;
-	$counter++;
+	$YPos += $LineHeight;
+	$Counter++;
 	if ($YPos >= $FormDesign->LineAboveFooter->starty){
 		/* We reached the end of the page so finsih off the page and start a newy */
 		$PageNumber++;

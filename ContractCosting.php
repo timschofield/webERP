@@ -28,7 +28,7 @@ if (!isset($_GET['SelectedContract'])){
 }
 
 /*Now read in actual usage of stock */
-$sql = "SELECT stockmoves.stockid,
+$SQL = "SELECT stockmoves.stockid,
 				stockmaster.description,
 				stockmaster.units,
 				stockmaster.decimalplaces,
@@ -43,7 +43,7 @@ $sql = "SELECT stockmoves.stockid,
 				stockmaster.units,
 				stockmaster.decimalplaces";
 $ErrMsg = _('Could not get the inventory issues for this contract because');
-$InventoryIssuesResult = DB_query($sql,$ErrMsg);
+$InventoryIssuesResult = DB_query($SQL,$ErrMsg);
 $InventoryIssues = array();
 while ($InventoryIssuesRow = DB_fetch_array($InventoryIssuesResult)){
 	$InventoryIssues[$InventoryIssuesRow['stockid']]['StockID'] = $InventoryIssuesRow['stockid'];
@@ -183,7 +183,7 @@ echo '<td colspan="6">
 			 </tr>';
 
 /*Now read in the actual other items charged to the contract */
-$sql = "SELECT supptrans.supplierno,
+$SQL = "SELECT supptrans.supplierno,
 				supptrans.suppreference,
 				supptrans.trandate,
 				contractcharges.amount,
@@ -195,7 +195,7 @@ $sql = "SELECT supptrans.supplierno,
 		WHERE contractcharges.contractref='" . $ContractRef . "'
 		ORDER BY contractcharges.anticipated";
 $ErrMsg = _('Could not get the other charges to the contract because');
-$OtherChargesResult = DB_query($sql,$ErrMsg);
+$OtherChargesResult = DB_query($SQL,$ErrMsg);
 $OtherReqtsActual =0;
 while ($OtherChargesRow=DB_fetch_array($OtherChargesResult)) {
 	if ($OtherChargesRow['anticipated']==0){
@@ -307,12 +307,12 @@ if (isset($_POST['CloseContract']) AND $_SESSION['Contract'.$identifier]->Status
 	 *  If work done on the contract is a write off then the user must also write off the stock of the contract item as a separate job
 	 */
 
-		$result =DB_query("SELECT qtyrecd FROM woitems
+		$Result =DB_query("SELECT qtyrecd FROM woitems
 							WHERE stockid='" . $_SESSION['Contract'.$identifier]->ContractRef . "'
 							AND wo='" . $_SESSION['Contract'.$identifier]->WO . "'");
-		if (DB_num_rows($result)==1) {
-			$myrow=DB_fetch_row($result);
-			if ($myrow[0]==0){ //then the contract wo has not been received (it will only ever be for 1 item)
+		if (DB_num_rows($Result)==1) {
+			$MyRow=DB_fetch_row($Result);
+			if ($MyRow[0]==0){ //then the contract wo has not been received (it will only ever be for 1 item)
 
 				$WOReceiptNo = GetNextTransNo(26);
 

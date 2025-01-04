@@ -14,7 +14,7 @@ if (isset($_POST['PrintPDF'])
 	$pdf->addInfo('Subject',_('Customer Balances'));
 	$FontSize=12;
 	$PageNumber=0;
-	$line_height=12;
+	$LineHeight=12;
 
 	/*Get the date of the last day in the period selected */
 
@@ -29,8 +29,8 @@ if (isset($_POST['PrintPDF'])
 					debtorsmaster.name,
 		  			currencies.currency,
 		  			currencies.decimalplaces,
-					SUM((debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc)/debtortrans.rate) AS balance,
-					SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS fxbalance,
+					SUM((debtortrans.balance)/debtortrans.rate) AS balance,
+					SUM(debtortrans.balance) AS fxbalance,
 					SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "' THEN
 					(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount)/debtortrans.rate ELSE 0 END) AS afterdatetrans,
 					SUM(CASE WHEN debtortrans.prd > '" . $_POST['PeriodEnd'] . "'
@@ -57,7 +57,7 @@ if (isset($_POST['PrintPDF'])
 		include('includes/header.php');
 		prnMsg(_('The customer details could not be retrieved by the SQL because') . DB_error_msg(),'error');
 		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 			echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -96,15 +96,15 @@ if (isset($_POST['PrintPDF'])
 			$LeftOvers = $pdf->addTextWrap(350,$YPos,100,$FontSize,$DebtorBalances['currency'],'left');
 
 
-			$YPos -=$line_height;
-			if ($YPos < $Bottom_Margin + $line_height){
+			$YPos -=$LineHeight;
+			if ($YPos < $Bottom_Margin + $LineHeight){
 				include('includes/PDFDebtorBalsPageHeader.inc');
 			}
 		}
 	} /*end customer aged analysis while loop */
 
-	$YPos -=$line_height;
-	if ($YPos < $Bottom_Margin + (2*$line_height)){
+	$YPos -=$LineHeight;
+	if ($YPos < $Bottom_Margin + (2*$LineHeight)){
 		$PageNumber++;
 		include('includes/PDFDebtorBalsPageHeader.inc');
 	}
@@ -151,12 +151,12 @@ if (isset($_POST['PrintPDF'])
 				<label for="PeriodEnd">' . _('Balances As At') . ':</label>
 				<select tabindex="3" name="PeriodEnd">';
 
-		$sql = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-		$Periods = DB_query($sql,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
+		$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
+		$Periods = DB_query($SQL,_('Could not retrieve period data because'),_('The SQL that failed to get the period data was'));
 
-		while ($myrow = DB_fetch_array($Periods)){
+		while ($MyRow = DB_fetch_array($Periods)){
 
-			echo '<option value="' . $myrow['periodno'] . '">' . MonthAndYearFromSQLDate($myrow['lastdate_in_period']) . '</option>';
+			echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
 
 		}
 	}

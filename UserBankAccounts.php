@@ -74,9 +74,9 @@ if (isset($_POST['submit'])) {
 										VALUES ('" . $_POST['SelectedBankAccount'] . "',
 												'" . $_POST['SelectedUser'] . "')";
 
-			$msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedBankAccount'] . ' ' . _('bank account has been changed');
+			$Msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedBankAccount'] . ' ' . _('bank account has been changed');
 			$Result = DB_query($SQL);
-			prnMsg($msg, 'success');
+			prnMsg($Msg, 'success');
 			unset($_POST['SelectedBankAccount']);
 		}
 	}
