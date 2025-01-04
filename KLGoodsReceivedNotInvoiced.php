@@ -1,10 +1,9 @@
 <?php
 
-/* Session started in session.php for password checking and authorisation level check config.php is in turn included in session.php*/
-
 include ('includes/session.php');
 $Title = _('Goods Received But Not Invoiced Yet');
 include ('includes/header.php');
+include ('includes/KLGeneralFunctions.php');
 
 $SQL = "SELECT grns.supplierid,
 				grns.deliverydate,
@@ -17,14 +16,15 @@ $SQL = "SELECT grns.supplierid,
 				(stockmaster.actualcost) AS standardcost,
 				currencies.rate,
 				currencies.decimalplaces
-		FROM grns INNER JOIN purchorderdetails
-		ON grns.podetailitem=purchorderdetails.podetailitem
+		FROM grns 
+		INNER JOIN purchorderdetails
+			ON grns.podetailitem=purchorderdetails.podetailitem
 		INNER JOIN suppliers
-		ON grns.supplierid = suppliers.supplierid
+			ON grns.supplierid = suppliers.supplierid
 		INNER JOIN stockmaster
-		ON grns.itemcode = stockmaster.stockid
+			ON grns.itemcode = stockmaster.stockid
 		INNER JOIN currencies
-		ON suppliers.currcode = currencies.currabrev
+			ON suppliers.currcode = currencies.currabrev
 		WHERE grns.qtyrecd - grns.quantityinv > 0
 		ORDER BY grns.supplierid,
 			purchorderdetails.orderno,
@@ -42,42 +42,36 @@ if (DB_num_rows($Result) != 0){
 
 	echo '<div>';
 	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Supplier') . '</th>
-						<th>' . _('PO#') . '</th>
-						<th>' . _('Item Code') . '</th>
-						<th>' . _('Date') . '</th>
-						<th>' . _('Qty Received') . '</th>
-						<th>' . _('Qty Invoiced') . '</th>
-						<th>' . _('Qty Pending') . '</th>
-						<th>' . _('Unit Price') . '</th>
-						<th>' .'' . '</th>
-						<th>' . _('Line Total') . '</th>
-						<th>' . '' . '</th>
-						<th>' . _('IDR Total') . '</th>
-						<th>' . '' . '</th>
-						<th>' . _('Std Cost') . '</th>
-						<th>' . _('Total') . '</th>
-						<th>' . _('Std Cost Total') . '</th>
-						<th>' . '' . '</th>
-					</tr>';
+	$TableHeader = '<thead>
+						<tr>
+							<th class="SortedColumn">' . _('Supplier') . '</th>
+							<th class="SortedColumn">' . _('PO#') . '</th>
+							<th class="SortedColumn">' . _('Item Code') . '</th>
+							<th class="SortedColumn">' . _('Date') . '</th>
+							<th>' . _('Qty Received') . '</th>
+							<th>' . _('Qty Invoiced') . '</th>
+							<th>' . _('Qty Pending') . '</th>
+							<th>' . _('Unit Price') . '</th>
+							<th>' .'' . '</th>
+							<th>' . _('Line Total') . '</th>
+							<th>' . '' . '</th>
+							<th>' . _('IDR Total') . '</th>
+							<th>' . '' . '</th>
+							<th>' . _('Std Cost') . '</th>
+							<th>' . _('Total') . '</th>
+							<th>' . _('Std Cost Total') . '</th>
+							<th>' . '' . '</th>
+						</tr>
+					</thead><tbody>';
 	echo $TableHeader;
-	$k = 0; //row colour counter
-	$i = 1;
 	$TotalHomeCurrency = 0;
 	$TotalAtStandardCost = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($k == 1) {
-			echo '<tr class="EvenTableRows">';
-			$k = 0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k = 1;
-		}
 		$QtyPending = $MyRow['qtyrecd'] - $MyRow['quantityinv'];
 		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $MyRow['unitprice'] / $MyRow['rate']);
 		$TotalAtStandardCost = $TotalAtStandardCost + ($QtyPending * $MyRow['standardcost']);
-		printf('<td>%s</td>
+		printf('<tr class="striped_row">
+				<td>%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td>%s</td>
@@ -113,15 +107,13 @@ if (DB_num_rows($Result) != 0){
 				locale_number_format(($QtyPending * $MyRow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']),
 				$_SESSION['CompanyRecord']['currencydefault']
 				);
-
-		if ($i==15){
-			$i=0;
-			echo $TableHeader;
-		} else {
-			$i++;
-		}
 	}
-	printf('<td colspan="10">%s</td>
+
+	echo '</tbody>
+			</tfooter>';
+	
+	printf('<tr class="striped_row">
+			<td colspan="10">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td>%s</td>
@@ -140,9 +132,9 @@ if (DB_num_rows($Result) != 0){
 			$_SESSION['CompanyRecord']['currencydefault']
 			);
 	
-	echo '</table>
-			</div>
-			</form>';
+	echo '</tfooter>
+			</table>
+			</div>';
 }
 
 include ('includes/footer.php');
