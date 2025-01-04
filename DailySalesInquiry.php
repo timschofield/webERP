@@ -1,6 +1,14 @@
 <?php
 
-/* $Id: DailySalesInquiry.php 6944 2014-10-27 07:15:34Z daintree $*/
+/*************************************************************************************************************************
+ * 
+ * KL RICARD: Change the SQL to use salesorders table to filter by SPG correctly
+ *			Added code do salesman in dropdown 			
+ *			Filter by Current salesman = 1
+ *			No one needs to know the GP% :-)
+ *			Probably this script needs to be renamed KL* and do not follow standard one
+ *  
+ ************************************************************************************************************************ */
 
 include('includes/session.php');
 $Title = _('Daily Sales Inquiry');
