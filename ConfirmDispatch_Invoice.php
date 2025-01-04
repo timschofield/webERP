@@ -2,7 +2,9 @@
 
 /************************************************************************************
 *
-* KL RICARD: Clustering, consigment, packaging modifications
+* KL RICARD: Clustering and PTADU consigment
+* 			Packaging modifications
+*			Changing order status in OpenCart
 *
 *************************************************************************************/
 
