@@ -69,32 +69,6 @@ if ((isset($AllowDemoMode)) and ($AllowDemoMode == True) and (!isset($demo_text)
 		echo '</select>';
 	}
 
-	echo '<label for="dropdownlist">', _('Company'), ':</label>';
-
-	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
-
-	echo '<ol id="dropdownlist" class="dropdownlist">';
-
-	$DirHandle = dir('companies/');
-
-	while (false !== ($CompanyEntry = $DirHandle->read())) {
-		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
-			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
-				include ('companies/' . $CompanyEntry . '/Companies.php');
-			} else {
-				$CompanyName[$CompanyEntry] = $CompanyEntry;
-			}
-			/*if ($CompanyEntry == $DefaultCompany) {
-				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
-			} else*/ {
-				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
-			}
-		}
-	}
-	$DirHandle->close();
-
-	echo '</ol>';
-
 	echo '<label>', _('User name'), ':</label>
 		<input type="text" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', _('User name'), '" maxlength="20" /><br />
 		<label>', _('Password'), ':</label>
