@@ -1,7 +1,13 @@
 <?php
 /* Defines the details of customer branches such as delivery address and contact details - also sales area, representative etc.*/
 
-include('includes/session.php');
+/*****************************************************************************************************************************
+ * 
+ * KL RICARD: Order shippers by name
+ * 
+ * ***************************************************************************************************************************/
+
+ include('includes/session.php');
 $Title = _('Customer Branches');// Screen identification.
 $ViewTopic = 'AccountsReceivable';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'NewCustomerBranch';// Anchor's id in the manual's html document.
@@ -892,7 +898,7 @@ if (!isset($_GET['delete'])) {
 		</tr>';
 
 
-
+	// KL RICARD Order shipppers by name
 	$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 	$ShipperResults = DB_query($SQL);
 	if (DB_num_rows($ShipperResults)==0){
