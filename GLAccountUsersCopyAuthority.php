@@ -1,5 +1,13 @@
 <?php
 
+/*****************************************************************************************************************************************
+ * 
+ * KL RICARD: Send email to admin when user copy authority from one user to another.
+ * 			- Only sysadmin can add/edit another sysadmin user. Now these scripts can be safely used by Personalia leader 
+ * 				and prevent any rogue employee to kick out sysadmin from webERP
+ * 
+ ****************************************************************************************************************************************/
+
 include ('includes/session.php');
 $Title = _('GLAccount - Users Authority Copy Authority');// Screen identificator.
 include('includes/header.php');
@@ -42,6 +50,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
+		// KL RICARD: Send email to admin when user copy authority from one user to another.
 		KLSendEmail("GLAccountUserRightsCopied", "Silent",$_SESSION['UserID'], $_POST['FromUserID'],$_POST['ToUserID']);
 		$Result = DB_Txn_Commit();
 

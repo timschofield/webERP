@@ -1,6 +1,12 @@
 <?php
 /* Maintenance of GL Accounts allowed for a user. */
 
+/*****************************************************************************************************************
+ * 
+ * KL RICARD: automatic email sending of user maintenance
+ * 
+ ****************************************************************************************************************/
+
 include('includes/session.php');
 $Title = _('GL Account Authorised Users');
 $ViewTopic = 'GeneralLedger';
@@ -111,6 +117,7 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 						'1')";
 				$ErrMsg = _('An access permission for a user could not be added');
 				if(DB_query($SQL, $ErrMsg)) {
+					// KL RICARD: automatic email sending of user maintenance
 					KLSendEmail("GLAccountsUserCreated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 					prnMsg(_('An access permission for a user was added') . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '. ' . _('User') . ': ' . $SelectedUser . '.', 'success');
 					unset($_GET['SelectedUser']);
@@ -124,6 +131,7 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 			AND userid='" . $SelectedUser . "'";
 		$ErrMsg = _('An access permission for a user could not be removed');
 		if(DB_query($SQL, $ErrMsg)) {
+			// KL RICARD: automatic email sending of user maintenance
 			KLSendEmail("GLAccountsUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 			prnMsg(_('An access permission for a user was removed') . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '. ' . _('User') . ': ' . $SelectedUser . '.', 'success');
 			unset($_GET['delete']);
@@ -136,6 +144,7 @@ if(!isset($SelectedGLAccount)) {// If is NOT set a GL account for users.
 				AND userid='" . $SelectedUser . "'";
 		$ErrMsg = _('An access permission to update a GL account could not be modified');
 		if(DB_query($SQL, $ErrMsg)) {
+			// KL RICARD: automatic email sending of user maintenance
 			KLSendEmail("GLAccountsUserUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedGLAccount);
 			prnMsg(_('An access permission to update a GL account was modified') . '. ' . _('GL Account') . ': ' . $SelectedGLAccount . '. ' . _('User') . ': ' . $SelectedUser . '.', 'success');
 			unset($_GET['ToggleUpdate']);

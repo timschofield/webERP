@@ -4,6 +4,8 @@
 *
 * KL RICARD: Keep the v4.13.1 version, as we want to keep the same SOP standard v4.15.2 
 * uses a different accountint SOP for fixed assets. To be improved probably in v5
+* 
+* Add some data entry validations
 *
 **************************************************************************************/
 
@@ -105,6 +107,8 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'BarCode';
 		$i++;
 	}
+
+	// KL RICARD Add some data entry validations
 	if (!is_numeric($_POST['Cost'])){
 		$InputError = 1;
 		prnMsg(_('The cost is expected to be numeric'),'error');
@@ -133,6 +137,8 @@ if (isset($_POST['submit'])) {
 		$Errors[$i] = 'Cost';
 		$i++;
 	}	
+	// KL RICARD END Add some data entry validations - End
+	
 	if (trim($_POST['AssetCategoryID'])==''){
 		$InputError = 1;
 		prnMsg(_('There are no asset categories defined. All assets must belong to a valid category,'),'error');
