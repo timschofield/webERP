@@ -2,6 +2,13 @@
 /* Defines the general ledger accounts */
 /* To delete, insert, or update an account. */
 
+/***********************************************************************************************************************************************************
+ * 
+ * KL RICARD: Controlled accounts
+ *			Multicompany mixed accounting 
+ * 
+ ************************************************************************************************************************************************************/
+
 // BEGIN: Functions division ---------------------------------------------------
 function CashFlowsActivityName($Activity) {
 	// Converts the cash flow activity number to an activity text.
@@ -86,7 +93,7 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query($SQL, $ErrMsg);
 
 		prnMsg(_('The new general ledger account has been added'),'success');
-		// update GL accounts for PTADU, PTBB, POIK, POPI, etc...
+		// KL RICARD update GL accounts for PTADU, PTBB, POIK, POPI, etc...
 		UpdateMultiCompanyAccounts();
 	}
 
@@ -216,7 +223,7 @@ if(isset($_POST['submit'])) {
 									$SQL = "DELETE FROM chartmaster WHERE accountcode= '" . $SelectedAccount ."'";
 									$Result = DB_query($SQL);
 									prnMsg(_('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'), 'succes');
-									// update GL accounts for PTADU, PTBB, POIK, POPI, etc...
+									// KL RICARD update GL accounts for PTADU, PTBB, POIK, POPI, etc...
 									UpdateMultiCompanyAccounts();
 								}
 							}
@@ -389,7 +396,7 @@ include('includes/footer.php');
 function UpdateMultiCompanyAccounts(){
 	//each time a GL account is inserted or deleted we have to update the chartmaster for each company
 
-	prnMsg('Updating PT ADU ChartmasterPMA table', 'info');
+	prnMsg('Updating PT ADU chartmasterADU table', 'info');
 
 	$Sql="CREATE TABLE IF NOT EXISTS `chartmasterADU` (
 		  `accountcode` varchar(20) NOT NULL DEFAULT '0',
@@ -400,38 +407,38 @@ function UpdateMultiCompanyAccounts(){
 		  KEY `Group_` (`group_`)
 		) ENGINE=InnoDB DEFAULT CHARSET=utf8";
 	$Result = DB_query($Sql);
-	prnMsg('      Recreated ChartmasterPMA table', 'info');
+	prnMsg('      Recreated chartmasterADU table', 'info');
 
 	$Sql="TRUNCATE `chartmasterADU`";
 	$Result = DB_query($Sql);
-	prnMsg('      Truncated ChartmasterPMA table', 'info');
+	prnMsg('      Truncated chartmasterADU table', 'info');
 
 	$Sql="INSERT INTO `chartmasterADU` (`accountcode`, `accountname`, `group_`) 
 			SELECT `accountcode`, `accountname`, `group_`
 			FROM chartmaster
 			WHERE (accountcode LIKE '%AD' OR accountcode = '350510100')";
 	$Result = DB_query($Sql);
-	prnMsg('      Inserted accounts into ChartmasterPMA table', 'info');
+	prnMsg('      Inserted accounts into chartmasterADU table', 'info');
 
 	$Sql="UPDATE chartmasterADU SET `group_` =  'Penjualan' WHERE `accountcode` = '410010000AD'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011210AD'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya Karyawan' WHERE `accountcode` = '612011220AD'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 //	$Sql="UPDATE chartmasterADU SET `group_` =  'Biaya General' WHERE `accountcode` = '510010070AD'";
 //	$Result = DB_query($Sql);
-//	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+//	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	$Sql="UPDATE chartmasterADU SET `group_` =  'Pajak Penghasilan' WHERE `accountcode` = '611012025AD'";
 	$Result = DB_query($Sql);
-	prnMsg('      Adjusting groups into ChartmasterPMA table', 'info');
+	prnMsg('      Adjusting groups into chartmasterADU table', 'info');
 
 	prnMsg('Updating PT. SMH ChartmasterSM table', 'info');
 

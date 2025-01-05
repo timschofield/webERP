@@ -2,6 +2,8 @@
 /**********************************************************************
 *
 * KL RICARD Controlled accounts emails
+*			Do not show "Supplier Transactions Payment Entry" table, as requested by Purchasing Team
+*			Don't store info in gltrans.tag as will be obsolete soon. Do not show 0-None as default for gltags
 *
 ***********************************************************************/
 

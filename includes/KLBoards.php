@@ -2745,15 +2745,15 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 	$SQLFilterProduct = "";
 	if ($TypeOfProduct != ""){
 		if ($TypeOfProduct == "PACKAGING"){
-			$TableTitleText = "Packaging " . $TitleWarning;
+			$TableTitleText = "Packaging " . $TableTitleText;
 			$SQLFilterProduct = " AND stockmaster.categoryid = 'SHPACK' ";
 		}elseif ($TypeOfProduct == "OTHERS"){
-			$TableTitleText = "Other " . $TitleWarning;
+			$TableTitleText = "Other " . $TableTitleText;
 			$SQLFilterProduct = " AND (stockmaster.categoryid = 'SHDISP'
 									OR stockmaster.categoryid = 'SHCONS'
 									OR stockmaster.categoryid = 'SHOTHE')";
 		}elseif ($TypeOfProduct == "FORSALE"){
-			$TableTitleText = "Items FOR SALE " . $TitleWarning;
+			$TableTitleText = "Items FOR SALE " . $TableTitleText;
 			$SQLFilterProduct = " AND stockmaster.categoryid != 'SHPACK'
 								AND stockmaster.categoryid != 'SHDISP'
 								AND stockmaster.categoryid != 'SHCONS'

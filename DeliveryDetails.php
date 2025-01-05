@@ -1,4 +1,12 @@
 <?php
+
+/*****************************************************************************************************************************************
+ * 
+ * KL RICARD: Order shippers alphabetically
+ * 			Change "Customer reference" for "Opencart/Marketplace/Other Ref"
+ * 
+ *****************************************************************************************************************************************/
+
 /* Used during order entry to allow the entry of delivery addresses other than the defaulted branch delivery address and information about carrier/shipping method etc. */
 
 /*
@@ -1080,6 +1088,7 @@ foreach ($CountriesArray as $CountryEntry => $CountryName) {
 echo '</select></td>
 	</tr>';
 
+// KL RICARD: Change text "Customer reference" for "Opencart/Marketplace/Other Ref"
 echo'	<tr>
 		<td>' .  _('Contact Phone Number') .':</td>
 		<td><input type="tel" size="25" maxlength="25" required="required" name="PhoneNo" value="' . $_SESSION['Items'.$identifier]->PhoneNo . '" title="' . _('Enter the telephone number of the contact at the delivery address.') . '" /></td>
@@ -1170,6 +1179,7 @@ echo'	<tr>
 		$ErrMsg = _('The shipper details could not be retrieved');
 		$DbgMsg = _('SQL used to retrieve the shipper details was') . ':';
 
+		// KL RICARD: Order shippers alphabetically
 		$SQL = "SELECT shipper_id, shippername FROM shippers ORDER BY shippername";
 		$ShipperResults = DB_query($SQL,$ErrMsg,$DbgMsg);
 		while ($MyRow=DB_fetch_array($ShipperResults)) {

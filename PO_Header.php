@@ -1,5 +1,12 @@
 <?php
 
+/*************************************************************************************************************
+ * 
+ * KL RICARD: Use of KL Fields in Purchase Order
+ * 			Hide duplicated fields in the form
+ * 
+ *************************************************************************************************************/
+
 include ('includes/DefinePOClass.php');
 include ('includes/session.php');
 

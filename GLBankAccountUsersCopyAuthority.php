@@ -1,5 +1,13 @@
 <?php
 
+/*****************************************************************************************************************************************
+ * 
+ * KL RICARD: Send email to admin when user copy authority from one user to another.
+ * 			- Only sysadmin can add/edit another sysadmin user. Now these scripts can be safely used by Personalia leader 
+ * 				and prevent any rogue employee to kick out sysadmin from webERP
+ * 
+ ****************************************************************************************************************************************/
+
 include ('includes/session.php');
 $Title = _('Bank Accounts - Users Authority Copy Authority');// Screen identificator.
 include('includes/header.php');

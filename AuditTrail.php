@@ -1,5 +1,10 @@
 <?php
 
+/***********************************************************************************************
+*
+* KL RICARD: do not show auditscripts table results
+*
+************************************************************************************************/
 
 include('includes/session.php');
 
@@ -192,8 +197,10 @@ if (isset($_POST['View'])) {
 			$RowColour = '#fe90bf';
 		}
 
-		if ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  ||
-			($_POST['SelectedTable'] == 'ALL')) {
+		// KL RICARD: Do not show auditscripts table results
+		if ((trim($_SESSION['SQLString']['table']) != 'auditscripts') AND 
+		   ((trim($_SESSION['SQLString']['table']) == $_POST['SelectedTable'])  OR
+			($_POST['SelectedTable'] == 'ALL'))) {
 			if (!isset($_SESSION['SQLString']['values'])) {
 				$_SESSION['SQLString']['values'][0]='';
 			}
