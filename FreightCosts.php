@@ -30,7 +30,7 @@ if (!isset($LocationFrom) OR !isset($ShipperID)) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	$SQL = "SELECT shippername, shipper_id FROM shippers ORDER BY shippername";
+	$SQL = "SELECT shippername, shipper_id FROM shippers";
 	$ShipperResults = DB_query($SQL);
 
 	echo '<fieldset>
