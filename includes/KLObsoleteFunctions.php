@@ -671,7 +671,7 @@ function ItemsNeedingAutomaticTranslation($RootPath){
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow[0] > 0){
 		$Text = locale_number_format($MyRow[0],0) . " items need Automatic Description Translation";
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		ShowWarningTitle($Text);
 	}
 }
 
@@ -685,7 +685,7 @@ function ItemsNeedingTranslationRevision($RootPath){
 	$MyRow = DB_fetch_array($Result);
 	if ($MyRow[0] > 0){
 		$Text = locale_number_format($MyRow[0],0) . " items need Translation Revision";
-		echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+		ShowWarningTitle($Text);
 	}
 }
 

@@ -996,14 +996,14 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 		$RLDaysGudang = round($MyRow['rldays']*$FactorGudangPackaging, 0);
 		$Text = $GudangCode . ' RL Factor for Packaging = ' . $RLFactorGudang;
 		if ($ShowMessages){
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			ShowWarningTitle($Text);
 		}
 		if ($EmailText!=''){
 			$EmailText = $EmailText . $Text . "\n";
 		}
 		$Text = $GudangCode . ' RL Days for Packaging = ' . $RLDaysGudang;
 		if ($ShowMessages){
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			ShowWarningTitle($Text);
 		}
 		if ($EmailText!=''){
 			$EmailText = $EmailText . $Text . "\n";
@@ -1034,7 +1034,7 @@ function AdjustPackagingGudang($GudangCode, $FactorGudangPackaging, $ShowMessage
 		while ($MyRow = DB_fetch_array($Result)) {
 			$Text = $GudangCode . ' ' . $MyRow['stockid'] . ' New RL = ' . $MyRow['rl'];
 			if ($ShowMessages){
-				echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+				ShowWarningTitle($Text);
 			}
 			if ($EmailText!=''){
 				$EmailText = $EmailText . $Text . "\n";
@@ -1107,19 +1107,15 @@ function AdjustPackagingItemByShop($Item, $Shop, $DaysSales, $ShowMessages, $upd
 		$NewRL = max(round($MyRow['sales'] / $DaysSales * $MyRow['rldaysforpackaging'],0),MIN_REORDER_LEVEL_PACKAGING_ITEM_PER_SHOP);
 		$OldRL = $MyRow['rl'];
 		if ($NewRL != $OldRL){
+			$Text = $Shop . ' ' . $Item .  
+				' Old RL = ' . $OldRL . 
+				' Used ' . $DaysSales . ' days = ' . $MyRow['sales'] . 
+				' New RL = ' . $NewRL;
 			if ($ShowMessages){
-				$Text = $Shop . ' ' . $Item .  
-					' Old RL = ' . $OldRL . 
-					' Used ' . $DaysSales . ' days = ' . $MyRow['sales'] . 
-					' New RL = ' . $NewRL;
-				echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+				ShowWarningTitle($Text);
 			}
 			if ($EmailText!=''){
-				$Text = $Shop . ' ' . $Item .  
-					' Old RL = ' . $OldRL .  
-					' Used ' . $DaysSales . ' days = ' . $MyRow['sales'] .  
-					' New RL = ' . $NewRL . "\n";
-				$EmailText = $EmailText . $Text;
+				$EmailText = $EmailText . $Text . "\n";
 			}
 			SetReorderLevel("PackagingOptimization", $Item, $Shop, $OldRL, $NewRL, $updateDB);
 		}

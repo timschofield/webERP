@@ -1,0 +1,75 @@
+#mask {
+display:none;
+top:0;
+right:0;
+bottom:0;
+left:0;
+position:fixed;
+background-color: rgba(26, 26, 26, 0.5);
+backdrop-filter: blur(2px);
+z-index:2;
+}
+#dialog {
+min-width:10%;
+max-width:50%;
+display:inline-block;
+background:#383C4A;
+z-index:99;
+border:solid #000 1px;
+border-radius:7px;
+position:fixed;
+top:50%;
+right:50%;
+margin-top:-9em;
+margin-right:-15em;
+box-shadow:0 0 15px #000;
+padding:2px 2px 5px;
+}
+#dialog #dialog_header {
+background:#2F343F;
+width:auto;
+border-radius:4px;
+font-size:130%;
+text-align:right;
+padding-left:5px;
+color:#C2C6D0;
+margin:2px;
+}
+#dialog .dialog_image {
+vertical-align:middle;
+}
+#dialog #dialog_main {
+background:transparent;
+width:auto;
+border-radius:4px;
+text-align:right;
+padding-left:5px;
+padding-right:5px;
+font-style:italic;
+font-size:130%;
+color:#C2C6D0;
+margin:3% 2px;
+}
+#dialog #dialog_buttons {
+text-align:left;
+}
+#dialog .okButton {
+display:inline-block;
+background-color:#444A58;
+border:thin;
+color:#C2C6D0;
+border-radius:3px;
+cursor:pointer;
+font-style:normal;
+max-width:48%;
+min-width:20%;
+border-color:#CCC;
+margin:2px 0px 5px 15px;
+padding:2px;
+}
+#dialog okButton:active {
+box-shadow:0 0 0;
+}
+#dialog okButton:hover {
+background-color:#595D66;
+}

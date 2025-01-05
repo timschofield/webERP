@@ -965,8 +965,9 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 				  </table>
 				  </div>';
 		} elseif ($TotalCost >= $ShowLimit){
-			$Text = "Components NOT Used in any BOM cost over the limit. Current cost = " . locale_number_format($TotalCost, 0);
-			echo '<p class="bad" align="center"><strong>' . $Text . '</strong></p>';
+			$WarningTitleText = "Components NOT Used in any BOM cost over the limit. Current cost = " . locale_number_format($TotalCost, 0);
+			ShowWarningTitle($WarningTitleText);
+
 		}
 	}
 	InsertKPI("Components", "Components not used in any BOM (IDR)", $TotalCost);
@@ -1904,9 +1905,13 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						if ($ShowAll){
 							$TableTitleText = 'Shop packaging order status';
 							ShowTableTitle($TableTitleText);
-							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate). '</p>';
-							echo '<p class="page_title_text_small" align="center">Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . '</p>';
-							echo '<p class="page_title_text_small" align="center">Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%</p>';
+							$TableSubTitleText = 'Forecast '.$DaysMinimumStock.' 	days ' . $Year . ' based on usage from '. ConvertSQLDate($FromDate) . ' to ' . ConvertSQLDate($ToDate) . 
+												'<br>' . 
+												'Forecast '.$DaysMinimumStock.' 	days ' . ($Year - 1) . ' based on usage from '. ConvertSQLDate($FromForecastDateLastYear) . ' to ' . ConvertSQLDate($ToForecastDateLastYear) . 
+												'<br>' .
+												'Trend retail against last year for Kapal-Laut = '. ($TrendThisYearKL*100).'%, Blink = '. ($TrendThisYearBL*100).'%, Outlet = '. ($TrendThisYearOU*100).'%';	
+												
+							ShowTableSubTitle($TableSubTitleText);
 						}else{
 							$TableTitleText = 'Shop packaging with insufficient stock for the next ' . ($DaysMinimumStock) . ' days.';
 							ShowTableTitle($TableTitleText);
@@ -4107,19 +4112,23 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 
 function ShowTotalItemsMoving(){
 	$NumItems = GetTotalItemsChangingPrice();
-	echo '<p class="bad" align="center"><strong>' . "# Items changing price: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items changing price: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items changing price", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("20");
-	echo '<p class="bad" align="center"><strong>' . "# Items moving to 20% discount: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items moving to 20% discount: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items moving to 20% discount", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("50");
-	echo '<p class="bad" align="center"><strong>' . "# Items moving to 50% discount: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items moving to 50% discount: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items moving to 50% discount", $NumItems);
 
 	$NumItems = GetTotalItemsMovingToDiscount("80");
-	echo '<p class="bad" align="center"><strong>' . "# Items moving to 80% discount: " . $NumItems . '</strong></p>';
+	$WarningTitleText = "# Items moving to 80% discount: " . $NumItems;
+	ShowWarningTitle($WarningTitleText);
 	InsertKPI("Prices", "Items moving to 80% discount", $NumItems);
 }
 

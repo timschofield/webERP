@@ -71,7 +71,7 @@ if ($_SESSION['UserID'] == "Ricard"){
 
 if ($ProcessSection01){
 	if($ShowSectionInfo){
-		$TableTitleText = "Sales Performance Board Section 01.";
+		$TableTitleText = "Sales Performance Board Section 01";
 		ShowTableTitle($TableTitleText);
 	}
 
@@ -162,7 +162,7 @@ if ($ProcessSection01){
 
 if ($ProcessSection02){
 	if($ShowSectionInfo){
-		$TableTitleText = "Transfers, Purchasing Performance Board Section 02.";
+		$TableTitleText = "Transfers, Purchasing Performance Board Section 02";
 		ShowTableTitle($TableTitleText);
 	}
 
@@ -284,7 +284,7 @@ if ($ProcessSection02){
 
 if ($ProcessSection03){
 	if($ShowSectionInfo){
-		$TableTitleText = "Packaging, Displays, Petty Cash, Financial Performance Board Section 03.";
+		$TableTitleText = "Packaging, Displays, Petty Cash, Financial Performance Board Section 03";
 		ShowTableTitle($TableTitleText);
 	}
 
@@ -3849,6 +3849,8 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 			$TotalRent = $TotalRent +($MyRow['yearlyrent']);
 			$TotalDateB = $TotalDateB +($MyRow['salesB']);
 		}
+		echo '</tbody>
+			<tfooter>';
 		if ($Typereport == "Shop"){
 			$Percent = (($TotalBothYearsDateA)-($TotalBothYearsDateB))/($TotalBothYearsDateB) * 100;
 			$Trend = " ";
@@ -3945,7 +3947,8 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 					$Rent
 					);
 		}
-		echo '</tbody></table>
+		echo '</tfooter>
+				</table>
 				</div>';
 		if (($Typereport == "Shop") AND ($Typeperiod == "YEAR")){
 			InsertKPI("Sales", "Trend retail ".$NumDaysA." days against last year (%)", $Percent);

@@ -1,5 +1,6 @@
 <?php
 
+/* Functions related to the daily cron job tasks for Kapal-Laut */
 
 function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLDefines.php');
@@ -15,7 +16,9 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 	include ('includes/WeberpToOpenCartSync.php');
 	include ('includes/OpenCartToWeberpSync.php');
 	include ('includes/OpenCartConnectDB.php');
-	
+	include ('includes/KLSmartStockTransfers.php');
+	include ('includes/htmlMimeMail.php');
+
 
 	if ($Group == "0100-CleanDB"){
 		$EmailText = KL_DailyCleanDB(FALSE, $EmailText);
@@ -39,6 +42,12 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 		$EmailText = KL_DailyRLZeroNotAvailable(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
 	}elseif ($Group == "1000-RLAdjustPackaging"){
 		$EmailText = KL_DailyRLAdjustmentsForPackaging(FALSE, TRUE, $RootPath, $EmailText); // Updates RL 
+	}elseif ($Group == "1050-SmartStockTransfersKL"){
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for KL
+	}elseif ($Group == "1060-SmartStockTransfersBL"){
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for BL 
+	}elseif ($Group == "1070-SmartStockTransfersOU"){
+		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for OU
 	}elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $EmailText);
 	}elseif ($Group == "1200-SyncWebERPOpenCart"){
@@ -49,7 +58,7 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
 
-	$Result = DB_query("UPDATE config SET confvalue=CURRENT_DATE	WHERE confname='KL_DailyChecks_LastRun'");
+	$Result = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='KL_DailyChecks_LastRun'");
 	if ($EmailText ==''){
 		prnMsg(_('The system has just run the daily Kapal-Laut checks.'),'info');
 		KLSendEmail("UserLoggingIn", "Silent", $_SESSION['UserID'], date('d/M/Y H:i'), $_SERVER["REMOTE_ADDR"]);
