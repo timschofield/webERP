@@ -1,5 +1,12 @@
 <?php
 
+/*********************************************************************************************************************
+ * 
+ * KL RICARD: Do not send email to managers for Internal Requests
+ * 			Don't store info in gltrans.tag as will be obsolete soon. Do not show 0-None as default for gltags
+ * 
+ ********************************************************************************************************************/
+
 
 include('includes/session.php');
 
@@ -200,7 +207,8 @@ if (isset($_POST['UpdateAll'])) {
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces ) ;
 				prnMsg( $ConfirmationText,'success');
 
-/*				if ($_SESSION['InventoryManagerEmail']!=''){
+				/*	KL RICARD: Do not send email to managers for Internal Requests
+				if ($_SESSION['InventoryManagerEmail']!=''){
 					$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
 					$EmailSubject = _('Internal Stock Request Fulfillment for'). ' ' . $StockID;
 					if($_SESSION['SmtpSetting']==0){
@@ -212,10 +220,8 @@ if (isset($_POST['UpdateAll'])) {
 						$mail->setText($ConfirmationText);
 						$Result = SendmailBySmtp($mail,array($_SESSION['InventoryManagerEmail']));
 					}
-
-
 				}
-*/
+				KL RICARD END: Do not send email to managers for Internal Requests */
 			} else {
 				$ConfirmationText = _('An internal stock request for'). ' ' . $StockID . ' ' . _('has been fulfilled from location').' ' . $Location .' '. _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces) . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
 				prnMsg( $ConfirmationText,'warn');

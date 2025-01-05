@@ -1,5 +1,11 @@
 <?php
 
+/********************************************************************************************************
+ * 
+ * KL RICARD: Send confirmation email to sys admin
+ * 			use of UPPER() to avoid case sensitive comparison. to be donated
+ * 
+ ********************************************************************************************************/
 include ('includes/session.php');
 $Title = _('Location - Users Authority Copy');// Screen identificator.
 include('includes/header.php');
@@ -41,6 +47,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
+		// KL RICARD: Send confirmation email to sys admin
 		KLSendEmail("LocationUserRightsCopied", "Silent",$_SESSION['UserID'], $_POST['FromUserID'],$_POST['ToUserID']);
 		$Result = DB_Txn_Commit();
 

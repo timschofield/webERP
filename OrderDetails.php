@@ -1,5 +1,10 @@
 <?php
 
+/**************************************************************************************************************************************************
+ * 
+ * KL RICARD: Change texts 
+ * 
+ **************************************************************************************************************************************************/
 
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
@@ -75,7 +80,7 @@ if (DB_num_rows($GetOrdHdrResult)==1) {
 	}
 
 
-
+	// KL RICARD: Change "Customer reference" for "Opencart/Marketplace/Other Ref"
 	echo '<table class="selection">
 			<tr>
 				<th colspan="4"><h3>' . _('Order Header Details For Order No').' '.$_GET['OrderNumber'] . '</h3></th>

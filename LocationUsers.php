@@ -1,5 +1,11 @@
 <?php
 
+/********************************************************************************************************
+ * 
+ * KL RICARD: Send confirmation email to sys admin
+ * 
+ ********************************************************************************************************/
+
 include('includes/session.php');
 $Title = _('Inventory Location Authorised Users Maintenance');
 $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
@@ -76,6 +82,7 @@ if (isset($_POST['submit'])) {
 
 			$Msg = _('User') . ': ' . $_POST['SelectedUser'] . ' ' . _('authority to use the') . ' ' . $_POST['SelectedLocation'] . ' ' . _('location has been changed');
 			$Result = DB_query($SQL);
+			// KL RICARD: Send confirmation email to sys admin
 			KLSendEmail("LocationUserCreated", "Silent",$_SESSION['UserID'], $_POST['SelectedUser'],$_POST['SelectedLocation']);
 			prnMsg($Msg, 'success');
 			unset($_POST['SelectedUser']);
@@ -88,6 +95,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Location user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	// KL RICARD: Send confirmation email to sys admin
 	KLSendEmail("LocationUserDeleted", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedLocation);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to use the') . ' ' . $SelectedLocation . ' ' . _('location removed'), 'success');
 	unset($_GET['delete']);
@@ -99,6 +107,7 @@ if (isset($_POST['submit'])) {
 
 	$ErrMsg = _('The Location user record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
+	// KL RICARD: Send confirmation email to sys admin
 	KLSendEmail("LocationUserUpdated", "Silent",$_SESSION['UserID'], $SelectedUser, $SelectedLocation);
 	prnMsg(_('User') . ' ' . $SelectedUser . ' ' . _('has had their authority to update') . ' ' . $SelectedLocation . ' ' . _('location removed'), 'success');
 	unset($_GET['ToggleUpdate']);
