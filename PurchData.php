@@ -107,9 +107,10 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 							'" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 							'" . $_POST['SuppliersUOM'] . "',
 							'" . filter_number_format($_POST['ConversionFactor']) . "',
-							'" . $_POST['SupplierDescription'] . "',
-							'" . $_POST['SupplierCode'] . "',
-							'" . filter_number_format($_POST['LeadTime']) . "',			                '" . filter_number_format($_POST['MinOrderQty']) . "',
+							'" . DB_escape_string($_POST['SupplierDescription']) . "',
+							'" . DB_escape_string($_POST['SupplierCode']) . "',
+							'" . filter_number_format($_POST['LeadTime']) . "',
+							'" . filter_number_format($_POST['MinOrderQty']) . "',
 							'" . $_POST['Preferred'] . "')";
         $ErrMsg = _('The supplier purchasing details could not be added to the database because');
         $DbgMsg = _('The SQL that failed was');
@@ -121,8 +122,8 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 										effectivefrom='" . FormatDateForSQL($_POST['EffectiveFrom']) . "',
 										suppliersuom='" . $_POST['SuppliersUOM'] . "',
 										conversionfactor='" . filter_number_format($_POST['ConversionFactor']) . "',
-										supplierdescription='" . $_POST['SupplierDescription'] . "',
-										suppliers_partno='" . $_POST['SupplierCode'] . "',
+										supplierdescription='" . DB_escape_string($_POST['SupplierDescription']) . "',
+										suppliers_partno='" . DB_escape_string($_POST['SupplierCode']) . "',
 										leadtime='" . filter_number_format($_POST['LeadTime']) . "',
 										minorderqty='" . filter_number_format($_POST['MinOrderQty']) . "',
 										preferred='" . $_POST['Preferred'] . "'
