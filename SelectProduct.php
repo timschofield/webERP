@@ -1,7 +1,8 @@
 <?php
 /***************************************************************************
 *
-* KL RICARD Top Sales
+* KL RICARD Add Top Sales
+* 			Limit supplier data to last 10 rows
 *
 ****************************************************************************/
 /* Selection of items. All item maintenance, transactions and inquiries start with this script. */

@@ -3,6 +3,7 @@
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - remove condition price > 0 to allow the sale of promotional items at price = 0
+- Change the title
 ***************************************************************************************/
 
 include('includes/DefineCartClass.php');
@@ -12,10 +13,11 @@ config.php is in turn included in session.php*/
 
 include('includes/session.php');
 
+// KL RICARD: CHange the Title
 if (isset($_GET['ModifyOrderNumber'])) {
-	$Title = _('Modifying Order') . ' ' . $_GET['ModifyOrderNumber'];
+	$Title = _('Modify Sales Order');
 } else {
-	$Title = _('Select Order Items');
+	$Title = _('Select Sales Order Items');
 }
 /* webERP manual links before header.php */
 $ViewTopic= 'SalesOrders';

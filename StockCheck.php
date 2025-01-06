@@ -1,5 +1,10 @@
 <?php
 
+/***************************************************************************************************************
+ * 
+ * KL RICARD: Show only locations that user can view, do not need update rights
+ * 
+ ****************************************************************************************************************/
 
 include('includes/session.php');
 
@@ -278,8 +283,9 @@ If (isset($_POST['PrintPDF'])){
 	echo '<tr>
 			<td>' . _('For Inventory in Location') . ':</td>
 			<td><select name="Location">';
+	// KL RICARD: Show only locations that user can view, do not need update rights
 	$SQL = "SELECT locations.loccode, locationname FROM locations
-			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1
+			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
 	$LocnResult=DB_query($SQL);
 

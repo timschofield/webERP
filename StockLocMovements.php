@@ -73,7 +73,6 @@ if ($_POST['StockLocation'] == 'All') {
 $SQLBeforeDate = FormatDateForSQL($_POST['BeforeDate']);
 $SQLAfterDate = FormatDateForSQL($_POST['AfterDate']);
 
-// KL RICARD: On GitHib script, stockmoves.loccode LIKE. We don't need like, we need exact match
 $SQL = "SELECT stockmoves.stockid,
 				stockmoves.stkmoveno,
 				systypes.typename,

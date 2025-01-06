@@ -3,6 +3,7 @@
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - change of "consignment" to "tracking"
+- Added Opencart powertrack fields to shippers DB 
 ***************************************************************************************/
 
 include('includes/session.php');

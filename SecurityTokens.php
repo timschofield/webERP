@@ -1,6 +1,12 @@
 <?php
 /* Administration of security tokens */
 
+/********************************************************************************************************************************
+ * 
+ * KL RICARD: change code to 6 characters max for token id.
+ * 
+ *******************************************************************************************************************************/
+
 include('includes/session.php');
 $Title = _('Maintain Security Tokens');
 $ViewTopic = 'SecuritySchema';

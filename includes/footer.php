@@ -1,5 +1,11 @@
 <?php
-/* KL RICARD Log the script we run so we can optimize CPU time*/
+/**********************************************************************
+*
+* KL RICARD Log the script we run so we can optimize CPU time
+*			Add ADU version
+*		Added PHP version
+***********************************************************************/
+
 if (isset($Title)) {
 	$TitleScriptRunning = $Title;
 }else{
