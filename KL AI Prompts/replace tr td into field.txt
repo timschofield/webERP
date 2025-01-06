@@ -9,5 +9,5 @@ General prompt rules:
 1) Do not cut long lines. 
 2) Do not delete any comment in the code
 3) Do not change, modify, upgrade any other part of the code not related to the propmt.
-4) Apply all changes above directly to the file in the editor.
+4) Apply all changes above directly to all the files in the working set
 
