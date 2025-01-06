@@ -3,7 +3,9 @@ Convert table-based data entry to field structures.
 This script has mixed data entry HTML tags:
 Some are <field> ... </field> structures and some are table-based <tr><td> ... </td></tr> structures
 
-I want you to replace ALL table-based data entry <tr><td> ... </td></tr> structures into <field> ... </field> structures
+I want you to:
+1) Replace ALL table-based data entry headers into <fieldset><legend> ... </legend> </fieldset> structures
+2) Replace ALL table-based data entry <tr><td> ... </td></tr> structures into <field> ... </field> structures
 
 General prompt rules: 
 1) Do not cut long lines. 
