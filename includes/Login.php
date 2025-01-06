@@ -1,5 +1,11 @@
 <?php
 
+/*********************************************************************************************
+ * 
+ * KL RICARD Select the default text and css depending on the code version
+ * 
+ *********************************************************************************************/
+
 include ($PathPrefix . 'includes/LanguageSetup.php');
 include ('LanguagesArray.php');
 
