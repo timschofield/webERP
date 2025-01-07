@@ -536,8 +536,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8B", "SHOPOU", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8G", "SHOPOU", $NumberOfTestExecuted, $RootPath);
 	}
-//////////////////////////
-// END OF SECTION
 }
 
 /***************************************************************************************
@@ -549,8 +547,6 @@ if ($ProcessSection02){
 		prnMsg("Performing Control Panel Section 02",'info');
 	}
 
-// SECTION 2 STARTS HERE
-////////////////////////////	
 	if ($KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
@@ -1561,6 +1557,8 @@ function CheckNegativeStock($RootPath){
 					);
 			$i++;
 		}
+		echo '</tbody>
+			<tfooter>';
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -1574,7 +1572,7 @@ function CheckNegativeStock($RootPath){
 				"", 
 				locale_number_format($Total,0)
 				);
-		echo '</tbody>
+		echo '</tfooter>
 			</table>
 			</div>';
 	}
@@ -4547,6 +4545,8 @@ function OutstandingOrders($customertype, $Ordertype, $RootPath){
 			$TotalValue += $MyRow['ordervalue'];
 			$i++;
 		}
+		echo '</tbody>
+			<tfooter>';
 		printf('<tr class="striped_row">
 				<td>%s</td>
 				<td>%s</td>
@@ -4564,7 +4564,7 @@ function OutstandingOrders($customertype, $Ordertype, $RootPath){
 				"Total IDR", 
 				locale_number_format($TotalValue,0)
 				);
-		echo '</tbody>
+		echo '</tfooter>
 			</table>
 			</div>';
 	}
