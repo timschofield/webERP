@@ -817,7 +817,31 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['AllowInvoicing'])) {
 		$_POST['AllowInvoicing'] = 1;// If not set, set value to "Yes".
 	}
+	if(!isset($_POST['GLAccountCode'])) {
+		$_POST['GLAccountCode'] = '';
+	}
 	// KL RICARD 
+	if(!isset($_POST['Priority'])) {
+		$_POST['Priority'] = 5;
+	}
+	if(!isset($_POST['SmartDispatchFrom'])) {
+		$_POST['SmartDispatchFrom'] = 'KANTO';
+	}
+	if(!isset($_POST['SmartDispatchMaxModels'])) {
+		$_POST['SmartDispatchMaxModels'] = 999;
+	}
+	if(!isset($_POST['SmartDispatchMinModels'])) {
+		$_POST['SmartDispatchMinModels'] = 1;
+	}
+	if(!isset($_POST['KLyearlyRent'])) {
+		$_POST['KLyearlyRent'] = 0;
+	}
+	if(!isset($_POST['KLPOSCashAccount'])) {
+		$_POST['KLPOSCashAccount'] = '';
+	}
+	if(!isset($_POST['KLPOSTag'])) {
+		$_POST['KLPOSTag'] = 0;
+	}
 	if(!isset($_POST['StockReadyToSell'])) {
 		$_POST['StockReadyToSell'] = 0;
 	}
@@ -841,6 +865,15 @@ if(!isset($_GET['delete'])) {
 	}
 	if(!isset($_POST['AllDisc80Items'])) {
 		$_POST['AllDisc80Items'] = 1;
+	}
+	if(!isset($_POST['PackagingFrom'])) {
+		$_POST['PackagingFrom'] = '';
+	}
+	if(!isset($_POST['RLFactorForPackaging'])) {
+		$_POST['RLFactorForPackaging'] = 5.5;
+	}
+	if(!isset($_POST['RLDaysForPackaging'])) {
+		$_POST['RLDaysForPackaging'] = 7;
 	}
 	// KL RICARD END
 	echo '<field>
@@ -928,40 +961,46 @@ if(!isset($_GET['delete'])) {
 			<fieldhelp>' . _('If counter sales are being used for this location then an existing customer branch code for the customer account code entered above needs to be entered here. All sales created from the counter sales will be recorded against this branch') . '</fieldhelp>
 		</field>';
 	// KL RICARD Custom fields
-	echo '
-		<tr>
-			<td>' . _('KL Priority for KL Smart Transfers') . ':' . '</td>
-			<td><input type="text" name="Priority" class="number" title="' . _('Priority for KL Shops Smart Transfers 1-Max Priority 9-Min Priority') . '" value="' . $_POST['Priority'] . '" size="1" maxlength="1" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('KL Smart Transfers from') . ':</td>
-			<td><input type="text" name="SmartDispatchFrom" title="' . _('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['SmartDispatchFrom'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('KL Smart Transfers # max models') . ':</td>
-			<td><input type="text" name="SmartDispatchMaxModels" class="number" title="' . _('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('KL Smart Transfers # min models') . ':</td>
-			<td><input type="text" name="SmartDispatchMinModels" class="number" title="' . _('Enter the minimum number of models to be included in KL Smart Transfers') . '" name="MinModels" value="' . $_POST['SmartDispatchMinModels'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('KL Yearly Rent IDR (Shops Only)') . ':</td>
-			<td><input type="text" name="KLyearlyRent" class="number" title="' . _('Enter the yearly rent in IDR') . '" name="KLyearlyRent" value="' . $_POST['KLyearlyRent'] . '" size="12" maxlength="12" /></td>
-		</tr>';
-	// POS Cash GL Account
-	echo '<tr title="', _('Enter the KL POS Cash GL account for this location, or leave it in blank if not needed'), '">
-			<td><label for="GLAccountCode">', _('KL POS Cash GL Account'), ':</label></td>
-			<td><input data-type="no-illegal-chars" id="KLPOSCashAccount" maxlength="20" name="KLPOSCashAccount" size="20" type="text" value="', $_POST['KLPOSCashAccount'], '" /></td></tr>';
-	// POS Tag
-	echo '<tr title="', _('Enter the KL POS Tag code for this location, or leave it in blank if not needed'), '">
-			<td><label for="KLPOSTag">', _('KL POS Tag'), ':</label></td>
-			<td><input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="', $_POST['KLPOSTag'], '" /></td></tr>';
+	echo '<field>
+			<label for="Priority">' . _('KL Priority for KL Smart Transfers') . ':</label>
+			<input type="text" name="Priority" class="number" title="' . _('Priority for KL Shops Smart Transfers 1-Max Priority 9-Min Priority') . '" value="' . $_POST['Priority'] . '" size="1" maxlength="1" />
+		</field>';
 
-	// Location Zone:
-	echo '<tr>
-		<td>' . _('KL Location Zone') . ':' . '</td>
-		<td><select name="Zone">';
+	echo '<field>
+			<label for="SmartDispatchFrom">' . _('KL Smart Transfers from') . ':</label>
+			<input type="text" name="SmartDispatchFrom" title="' . _('Enter the location code where KL Smart Transfers must pull stock to this location (usually KANTO)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['SmartDispatchFrom'] . '" size="5" maxlength="5" />
+		</field>';
+
+	echo '<field>
+			<label for="SmartDispatchMaxModels">' . _('KL Smart Transfers # max models') . ':</label>
+			<input type="text" name="SmartDispatchMaxModels" class="number" title="' . _('Enter the maximum number of models to be included in KL Smart Transfers') . '" name="MaxModels" value="' . $_POST['SmartDispatchMaxModels'] . '" size="5" maxlength="5" />
+		</field>';
+
+	echo '<field>
+			<label for="SmartDispatchMinModels">' . _('KL Smart Transfers # min models') . ':</label>
+			<input type="text" name="SmartDispatchMinModels" class="number" title="' . _('Enter the minimum number of models to be included in KL Smart Transfers') . '" name="MinModels" value="' . $_POST['SmartDispatchMinModels'] . '" size="5" maxlength="5" />
+		</field>';
+
+	echo '<field>
+			<label for="KLyearlyRent">' . _('KL Yearly Rent IDR (Shops Only)') . ':</label>
+			<input type="text" name="KLyearlyRent" class="number" title="' . _('Enter the yearly rent in IDR') . '" name="KLyearlyRent" value="' . $_POST['KLyearlyRent'] . '" size="12" maxlength="12" />
+		</field>';
+
+	echo '<field>
+			<label for="KLPOSCashAccount">' . _('KL POS Cash GL Account') . ':</label>
+			<input data-type="no-illegal-chars" id="KLPOSCashAccount" maxlength="20" name="KLPOSCashAccount" size="20" type="text" value="' . $_POST['KLPOSCashAccount'] . '" />
+			<fieldhelp>' . _('Enter the KL POS Cash GL account for this location, or leave it in blank if not needed') . '</fieldhelp>
+		</field>';
+
+	echo '<field>
+			<label for="KLPOSTag">' . _('KL POS Tag') . ':</label>
+			<input data-type="no-illegal-chars" id="KLPOSTag" maxlength="20" name="KLPOSTag" size="4" type="text" value="' . $_POST['KLPOSTag'] . '" />
+			<fieldhelp>' . _('Enter the KL POS Tag code for this location, or leave it in blank if not needed') . '</fieldhelp>
+		</field>';
+
+	echo '<field>
+			<label for="Zone">' . _('KL Location Zone') . ':</label>
+			<select name="Zone">';
 
 	$ZonesResult = DB_query("SELECT code, description FROM locationzones ORDER BY description");
 	while ($MyRow=DB_fetch_array($ZonesResult)) {
@@ -972,10 +1011,11 @@ if(!isset($_GET['delete'])) {
 		}
 	}
 
-	// Location Type:
-	echo '<tr>
-		<td>' . _('KL Location Type') . ':' . '</td>
-		<td><select name="TypeLoc">';
+	echo '</select></field>';
+
+	echo '<field>
+			<label for="TypeLoc">' . _('KL Location Type') . ':</label>
+			<select name="TypeLoc">';
 
 	$TypesResult = DB_query("SELECT code, description FROM locationtypes ORDER BY description");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
@@ -985,12 +1025,11 @@ if(!isset($_GET['delete'])) {
 			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
-	// categories for location
-	echo '<tr>
-			<td>' . _('Display ALL TEST items?') . ':</td>
-			<td><select name="AllTestItems">';
+	echo '</select></field>';
+
+	echo '<field>
+			<label for="AllTestItems">' . _('Display ALL TEST items?') . ':</label>
+			<select name="AllTestItems">';
 	if($_POST['AllTestItems']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -1001,11 +1040,11 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 
-	echo '<tr>
-			<td>' . _('Display ALL STABLE items?') . ':</td>
-			<td><select name="AllStableItems">';
+	echo '<field>
+			<label for="AllStableItems">' . _('Display ALL STABLE items?') . ':</label>
+			<select name="AllStableItems">';
 	if($_POST['AllStableItems']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -1016,11 +1055,11 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 
-	echo '<tr>
-			<td>' . _('Display ALL NO PO items?') . ':</td>
-			<td><select name="AllNoPoItems">';
+	echo '<field>
+			<label for="AllNoPoItems">' . _('Display ALL NO PO items?') . ':</label>
+			<select name="AllNoPoItems">';
 	if($_POST['AllNoPoItems']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -1031,11 +1070,11 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 
-	echo '<tr>
-			<td>' . _('Display ALL Discount 20% items?') . ':</td>
-			<td><select name="AllDisc20Items">';
+	echo '<field>
+			<label for="AllDisc20Items">' . _('Display ALL Discount 20% items?') . ':</label>
+			<select name="AllDisc20Items">';
 	if($_POST['AllDisc20Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -1046,11 +1085,11 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 
-	echo '<tr>
-			<td>' . _('Display ALL Discount 50% items?') . ':</td>
-			<td><select name="AllDisc50Items">';
+	echo '<field>
+			<label for="AllDisc50Items">' . _('Display ALL Discount 50% items?') . ':</label>
+			<select name="AllDisc50Items">';
 	if($_POST['AllDisc50Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -1061,11 +1100,11 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 
-	echo '<tr>
-			<td>' . _('Display ALL Discount 80% items?') . ':</td>
-			<td><select name="AllDisc80Items">';
+	echo '<field>
+			<label for="AllDisc80Items">' . _('Display ALL Discount 80% items?') . ':</label>
+			<select name="AllDisc80Items">';
 	if($_POST['AllDisc80Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -1076,12 +1115,11 @@ if(!isset($_GET['delete'])) {
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 
-	// Retail Partner:
-	echo '<tr>
-		<td>' . _('KL Retail Partner') . ':' . '</td>
-		<td><select name="PartnerCode">';
+	echo '<field>
+			<label for="PartnerCode">' . _('KL Retail Partner') . ':</label>
+			<select name="PartnerCode">';
 
 	$TypesResult = DB_query("SELECT partnercode, partnername FROM klretailpartners ORDER BY partnername");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
@@ -1091,13 +1129,11 @@ if(!isset($_GET['delete'])) {
 			echo '<option value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select></field>';
 
-	// Online Partner:
-	echo '<tr>
-		<td>' . _('KL Online Partner') . ':' . '</td>
-		<td><select name="OnlinePartnerCode">';
+	echo '<field>
+			<label for="OnlinePartnerCode">' . _('KL Online Partner') . ':</label>
+			<select name="OnlinePartnerCode">';
 
 	$TypesResult = DB_query("SELECT onlinepartnercode, onlinepartnername FROM klonlinepartners ORDER BY onlinepartnername");
 	while ($MyRow=DB_fetch_array($TypesResult)) {
@@ -1107,12 +1143,11 @@ if(!isset($_GET['delete'])) {
 			echo '<option value="' . $MyRow['onlinepartnercode'] . '">' . $MyRow['onlinepartnername'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select></field>';
 
-	echo '<tr>
-			<td>' . _('With Stock ready To Sell?') . ':</td>
-			<td><select name="StockReadyToSell">';
+	echo '<field>
+			<label for="StockReadyToSell">' . _('With Stock ready To Sell?') . ':</label>
+			<select name="StockReadyToSell">';
 	if($_POST['StockReadyToSell']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 		echo '<option value="0">' . _('No') . '</option>';
@@ -1120,11 +1155,11 @@ if(!isset($_GET['delete'])) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 		
-	echo '<tr>
-			<td>' . _('With Stock Available for Shop Online?') . ':</td>
-			<td><select name="StockAvailableForOnline">';
+	echo '<field>
+			<label for="StockAvailableForOnline">' . _('With Stock Available for Shop Online?') . ':</label>
+			<select name="StockAvailableForOnline">';
 	if($_POST['StockAvailableForOnline']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 		echo '<option value="0">' . _('No') . '</option>';
@@ -1132,22 +1167,22 @@ if(!isset($_GET['delete'])) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select></field>';
 
-	echo '<tr>
-			<td>' . _('Receives Packaging from') . ':</td>
-			<td><input type="text" name="PackagingFrom" title="' . _('Enter the location code where Packaging should be sent from (PACKA, PACKU, etc)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['PackagingFrom'] . '" size="5" maxlength="5" /></td>
-		</tr>';
+	echo '<field>
+			<label for="PackagingFrom">' . _('Receives Packaging from') . ':</label>
+			<input type="text" name="PackagingFrom" title="' . _('Enter the location code where Packaging should be sent from (PACKA, PACKU, etc)') . '" data-type="no-illegal-chars" name="LocCode" value="' . $_POST['PackagingFrom'] . '" size="5" maxlength="5" />
+		</field>';
 
-	echo '<tr>
-			<td>' . _('KL RL Factor for Packaging Transfers') . ':' . '</td>
-			<td><input type="text" name="RLFactorForPackaging" class="number" title="' . _('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" /></td>
-		</tr>';
+	echo '<field>
+			<label for="RLFactorForPackaging">' . _('KL RL Factor for Packaging Transfers') . ':</label>
+			<input type="text" name="RLFactorForPackaging" class="number" title="' . _('Factor to Multiply Reorder Level for Packaging Transfers') . '" value="' . $_POST['RLFactorForPackaging'] . '" size="4" maxlength="4" />
+		</field>';
 
-	echo '<tr>
-			<td>' . _('KL RL Days for Packaging Transfers') . ':' . '</td>
-			<td><input type="text" name="RLDaysForPackaging" class="number" title="' . _('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" /></td>
-		</tr>';
+	echo '<field>
+			<label for="RLDaysForPackaging">' . _('KL RL Days for Packaging Transfers') . ':</label>
+			<input type="text" name="RLDaysForPackaging" class="number" title="' . _('Set Reorder Level as needs of pacjaking for a number of days') . '" value="' . $_POST['RLDaysForPackaging'] . '" size="2" maxlength="2" />
+		</field>';
 
 	// KL RICARD END
 	echo '<field>
