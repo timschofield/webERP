@@ -35,139 +35,139 @@ function function_finish($begintime){
 	prnMsg('Function execution time: ' . locale_number_format($Totaltime,3) . ' seconds.','info');
 }
 
-function CodeModel($stockid){
-	return (substr($stockid, 0,6));
+function CodeModel($StockID){
+	return (substr($StockID, 0,6));
 }
 
-function isBead($stockid){
-	return (substr($stockid, 2,2) == "BE");
+function isBead($StockID){
+	return (substr($StockID, 2,2) == "BE");
 }
 
-function isBrooche($stockid){
-	return (substr($stockid, 2,2) == "PI");
+function isBrooche($StockID){
+	return (substr($StockID, 2,2) == "PI");
 }
 
-function isRing($stockid){
-	return (substr($stockid, 2,2) == "AN");
+function isRing($StockID){
+	return (substr($StockID, 2,2) == "AN");
 }
 
-function isSlimRing($stockid){
-	return (substr($stockid, 0,4) == "JSAN");
+function isSlimRing($StockID){
+	return (substr($StockID, 0,4) == "JSAN");
 }
 
-function isToeRing($stockid){
-	return (substr($stockid, 2,2) == "TR");
+function isToeRing($StockID){
+	return (substr($StockID, 2,2) == "TR");
 }
 
-function isBracelet($stockid){
-	return ((substr($stockid, 2,2) == "PU") OR (substr($stockid, 2,2) == "BR"));
+function isBracelet($StockID){
+	return ((substr($StockID, 2,2) == "PU") OR (substr($StockID, 2,2) == "BR"));
 }
 
-function isAnklet($stockid){
-	return (substr($stockid, 2,2) == "AK");
+function isAnklet($StockID){
+	return (substr($StockID, 2,2) == "AK");
 }
 
-function isFaceMask($stockid){
-	return (substr($stockid, 2,2) == "FM");
+function isFaceMask($StockID){
+	return (substr($StockID, 2,2) == "FM");
 }
 
-function isJewelleryBox($stockid){
-	return (substr($stockid, 2,2) == "BX");
+function isJewelleryBox($StockID){
+	return (substr($StockID, 2,2) == "BX");
 }
 
-function isJewelleryRoll($stockid){
-	return (substr($stockid, 2,2) == "JR");
+function isJewelleryRoll($StockID){
+	return (substr($StockID, 2,2) == "JR");
 }
 
-function isPendant($stockid){
-	return (substr($stockid, 2,2) == "PE");
+function isPendant($StockID){
+	return (substr($StockID, 2,2) == "PE");
 }
 
-function isNecklace($stockid){
-	return ((substr($stockid, 2,2) == "NE") OR (substr($stockid, 0,4) == "ALCL"));
+function isNecklace($StockID){
+	return ((substr($StockID, 2,2) == "NE") OR (substr($StockID, 0,4) == "ALCL"));
 }
 
-function isEarring($stockid){
-	return (substr($stockid, 2,2) == "AR");
+function isEarring($StockID){
+	return (substr($StockID, 2,2) == "AR");
 }
 
-function isPiercing($stockid){
-	return ((substr($stockid, 2,2) == "PC") AND (substr($stockid, 0,4) != "WKPC"));
+function isPiercing($StockID){
+	return ((substr($StockID, 2,2) == "PC") AND (substr($StockID, 0,4) != "WKPC"));
 }
 
-function isPolishingCloth($stockid){
-	return (substr($stockid, 0,4) == "WKPC");
+function isPolishingCloth($StockID){
+	return (substr($StockID, 0,4) == "WKPC");
 }
 
-function isEarcuff($stockid){
-	return (substr($stockid, 2,2) == "CF");
+function isEarcuff($StockID){
+	return (substr($StockID, 2,2) == "CF");
 }
 
-function isPackagingBox($stockid){
-	return (substr($stockid, 0,4) == "PKBX");
+function isPackagingBox($StockID){
+	return (substr($StockID, 0,4) == "PKBX");
 }
 
-function isPackagingPaperInsideBox($stockid){
-	return (substr($stockid, 0,4) == "PKKS");
+function isPackagingPaperInsideBox($StockID){
+	return (substr($StockID, 0,4) == "PKKS");
 }
 
-function isPlasticBag($stockid){
-	return ((substr($stockid, 0,4) == "BAPL") OR (substr($stockid, 0,4) == "BAGC"));
+function isPlasticBag($StockID){
+	return ((substr($StockID, 0,4) == "BAPL") OR (substr($StockID, 0,4) == "BAGC"));
 }
 
-function isBag($stockid){
-	return (substr($stockid, 2,2) == "BA");
+function isBag($StockID){
+	return (substr($StockID, 2,2) == "BA");
 }
 
-function isFoulard($stockid){
-	return (substr($stockid, 2,2) == "SC");
+function isFoulard($StockID){
+	return (substr($StockID, 2,2) == "SC");
 }
 
-function isTali($stockid){
-	return ((substr($stockid, 0,3) == "TM-") 
-		OR (substr($stockid, 0,4) == "TA15"));
+function isTali($StockID){
+	return ((substr($StockID, 0,3) == "TM-") 
+		OR (substr($StockID, 0,4) == "TA15"));
 }
 
-function isKeyHolder($stockid){
-	return (substr($stockid, 2,2) == "KI");
+function isKeyHolder($StockID){
+	return (substr($StockID, 2,2) == "KI");
 }
 
-function isFamily($stockid, $Family){
-	return (substr($stockid, 0,2) == $Family);
+function isFamily($StockID, $Family){
+	return (substr($StockID, 0,2) == $Family);
 }
 
-function TypeOfItem($stockid){
-	if (isRing($stockid)){
+function TypeOfItem($StockID){
+	if (isRing($StockID)){
 		$Type = "Ring";
-	}elseif (isToeRing($stockid)){
+	}elseif (isToeRing($StockID)){
 		$Type = "ToeRing";
-	}elseif (isBead($stockid)){
+	}elseif (isBead($StockID)){
 		$Type = "Bead";
-	}elseif (isBrooche($stockid)){
+	}elseif (isBrooche($StockID)){
 		$Type = "Brooche";
-	}elseif (isEarring($stockid)){
+	}elseif (isEarring($StockID)){
 		$Type = "Earring";
-	}elseif (isPiercing($stockid)){
+	}elseif (isPiercing($StockID)){
 		$Type = "Piercing";
-	}elseif (isEarcuff($stockid)){
+	}elseif (isEarcuff($StockID)){
 		$Type = "EarCuff";
-	}elseif (isFaceMask($stockid)){
+	}elseif (isFaceMask($StockID)){
 		$Type = "Face Mask";
-	}elseif (isJewelleryRoll($stockid)){
+	}elseif (isJewelleryRoll($StockID)){
 		$Type = "Jewellery Roll";
-	}elseif (isBracelet($stockid)){
+	}elseif (isBracelet($StockID)){
 		$Type = "Bracelet";
-	}elseif (isAnklet($stockid)){
+	}elseif (isAnklet($StockID)){
 		$Type = "Anklet";
-	}elseif (isPendant($stockid)){
+	}elseif (isPendant($StockID)){
 		$Type = "Pendant";
-	}elseif (isNecklace($stockid)){
+	}elseif (isNecklace($StockID)){
 		$Type = "Necklace";
-	}elseif (isPlasticBag($stockid)){
+	}elseif (isPlasticBag($StockID)){
 		$Type = "Bag";
-	}elseif (isBag($stockid)){
+	}elseif (isBag($StockID)){
 		$Type = "Bag";
-	}elseif (isTali($stockid)){
+	}elseif (isTali($StockID)){
 		$Type = "Tali";
 	}else{
 		$Type = "Unknown";
@@ -175,31 +175,31 @@ function TypeOfItem($stockid){
 	return $Type;
 }
 
-function CodeModelRing($stockid){
-	if (strlen($stockid) == 6){
-		$CodeModel = $stockid;
+function CodeModelRing($StockID){
+	if (strlen($StockID) == 6){
+		$CodeModel = $StockID;
 	}else{
-		if((substr($stockid, -2,1) == "0") 
-			OR (substr($stockid, -2,1) == "1")
-			OR (substr($stockid, -2,1) == "2")){
+		if((substr($StockID, -2,1) == "0") 
+			OR (substr($StockID, -2,1) == "1")
+			OR (substr($StockID, -2,1) == "2")){
 			// ring with sizes! We need to cut the 3 last characters -XX
-			$CodeModel = (substr($stockid, 0,strlen($stockid)-3));
+			$CodeModel = (substr($StockID, 0,strlen($StockID)-3));
 		}else{
-			$CodeModel = $stockid;
+			$CodeModel = $StockID;
 		}
 	}
 	return $CodeModel;
 }
 
-function RingSize($stockid){
-	if (strlen($stockid) == 6){
+function RingSize($StockID){
+	if (strlen($StockID) == 6){
 		$Size = "FR";
 	}else{
-		if((substr($stockid, -2,1) == "0") 
-			OR (substr($stockid, -2,1) == "1")
-			OR (substr($stockid, -2,1) == "2")){
+		if((substr($StockID, -2,1) == "0") 
+			OR (substr($StockID, -2,1) == "1")
+			OR (substr($StockID, -2,1) == "2")){
 			// ring with sizes! We need to get the 2 last characters -XX
-			$Size = substr($stockid, strlen($stockid)-2,2);
+			$Size = substr($StockID, strlen($StockID)-2,2);
 		}else{
 			$Size = "FR";
 		}
@@ -207,39 +207,39 @@ function RingSize($stockid){
 	return $Size;
 }
 
-function NumberSize($stockid){
-	if (strlen($stockid) == 6){
+function NumberSize($StockID){
+	if (strlen($StockID) == 6){
 		$Size = "NO SIZE";
-	}else if((substr($stockid, -2,1) == "0") 
-		OR (substr($stockid, -2,1) == "1")
-		OR (substr($stockid, -2,1) == "2")
-		OR (substr($stockid, -2,1) == "3")
-		OR (substr($stockid, -2,1) == "4")
-		OR (substr($stockid, -2,1) == "5")
-		OR (substr($stockid, -2,1) == "6")
-		OR (substr($stockid, -2,1) == "7")
-		OR (substr($stockid, -2,1) == "8")
-		OR (substr($stockid, -2,1) == "9")){
+	}else if((substr($StockID, -2,1) == "0") 
+		OR (substr($StockID, -2,1) == "1")
+		OR (substr($StockID, -2,1) == "2")
+		OR (substr($StockID, -2,1) == "3")
+		OR (substr($StockID, -2,1) == "4")
+		OR (substr($StockID, -2,1) == "5")
+		OR (substr($StockID, -2,1) == "6")
+		OR (substr($StockID, -2,1) == "7")
+		OR (substr($StockID, -2,1) == "8")
+		OR (substr($StockID, -2,1) == "9")){
 		// number sizes! We need to get the 2 last characters -XX
-		$Size = substr($stockid, strlen($stockid)-2,2);
+		$Size = substr($StockID, strlen($StockID)-2,2);
 	} else{
 		$Size = "NO SIZE";
 	}
 	return $Size;
 }
 
-function ClassicalSize($stockid){
-	if (strlen($stockid) == 6){
+function ClassicalSize($StockID){
+	if (strlen($StockID) == 6){
 		$Size = "NO SIZE";
-	}else if (substr($stockid, -3,3) == "-XS"){
+	}else if (substr($StockID, -3,3) == "-XS"){
 		$Size = "XS";
-	}else if (substr($stockid, -2,2) == "-S"){
+	}else if (substr($StockID, -2,2) == "-S"){
 		$Size = "S";
-	}else if (substr($stockid, -2,2) == "-M"){
+	}else if (substr($StockID, -2,2) == "-M"){
 		$Size = "M";
-	}else if (substr($stockid, -2,2) == "-L"){
+	}else if (substr($StockID, -2,2) == "-L"){
 		$Size = "L";
-	}else if (substr($stockid, -3,3) == "-XL"){
+	}else if (substr($StockID, -3,3) == "-XL"){
 		$Size = "XL";
 	}else{
 		$Size = "NO SIZE";
@@ -247,7 +247,7 @@ function ClassicalSize($stockid){
 	return $Size;
 }
 
-function ItemCodeQOH($Stockid, $CodeDetail, $Where){
+function ItemCodeQOH($StockID, $CodeDetail, $Where){
 	$ErrMsg = 'Error in function ItemCodeQOH()';
 
 	$SQL = "SELECT SUM(locstock.quantity) AS total
@@ -255,15 +255,15 @@ function ItemCodeQOH($Stockid, $CodeDetail, $Where){
 			WHERE locstock.loccode = locations.loccode ";
 
 	if ($CodeDetail == 'CODE_FULL'){
-		$SQL .= "AND  stockid = '". $Stockid ."'";
+		$SQL .= "AND  stockid = '". $StockID ."'";
 	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
-		if (isRing($Stockid)){
-			$SQL .= "AND stockid LIKE '". $Stockid ."%'";
+		if (isRing($StockID)){
+			$SQL .= "AND stockid LIKE '". $StockID ."%'";
 		}else{
-			$SQL .= "AND stockid = '". $Stockid ."'";
+			$SQL .= "AND stockid = '". $StockID ."'";
 		}
 	}else{
-		$SQL .= "AND stockid LIKE '". $Stockid ."%'";
+		$SQL .= "AND stockid LIKE '". $StockID ."%'";
 	}
 
 	if ($Where == "ALL_SHOPS"){
@@ -286,19 +286,19 @@ function ItemCodeQOH($Stockid, $CodeDetail, $Where){
 	return $Qty;
 }
 
-function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDetail){
+function ItemCodeQuantityInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQuantityInvoiced()';
 
 	if ($CodeDetail == 'CODE_FULL'){
-		$WhereCondition = "AND salesorderdetails.stkcode = '". $Stockid ."'";
+		$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
 	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
-		if (isRing($Stockid)){
-			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $Stockid ."%'";
+		if (isRing($StockID)){
+			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
 		}else{
-			$WhereCondition = "AND salesorderdetails.stkcode = '". $Stockid ."'";
+			$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
 		}
 	}else{
-		$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $Stockid ."%'";
+		$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
 	}
 
 	$SQL = "SELECT SUM(salesorderdetails.qtyinvoiced)
@@ -317,19 +317,19 @@ function ItemCodeQuantityInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDeta
 	return $Row['0'];
 }
 
-function ItemCodeAvgPriceInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDetail){
+function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeAvgPriceInvoiced()';
 	
 	if ($CodeDetail == 'CODE_FULL'){
-		$WhereCondition = "AND salesorderdetails.stkcode = '". $Stockid ."'";
+		$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
 	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
-		if (isRing($Stockid)){
-			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $Stockid ."%'";
+		if (isRing($StockID)){
+			$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
 		}else{
-			$WhereCondition = "AND salesorderdetails.stkcode = '". $Stockid ."'";
+			$WhereCondition = "AND salesorderdetails.stkcode = '". $StockID ."'";
 		}
 	}else{
-		$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $Stockid ."%'";
+		$WhereCondition = "AND salesorderdetails.stkcode LIKE '". $StockID ."%'";
 	}
 	
 	$SQL = "SELECT AVG(salesorderdetails.unitprice * (1 - salesorderdetails.discountpercent) / currencies.rate)
@@ -351,19 +351,19 @@ function ItemCodeAvgPriceInvoiced($Stockid,$FromDate,$ToDate,$Debtorno,$CodeDeta
 	return $Row['0'];
 }
 
-function ItemCodeQOO_PurchaseOrders($Stockid, $CodeDetail){
+function ItemCodeQOO_PurchaseOrders($StockID, $CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQOO_PurchaseOorders()';
 
 	if ($CodeDetail == 'CODE_FULL'){
-		$WhereCondition = "WHERE purchorderdetails.itemcode = '". $Stockid ."'";
+		$WhereCondition = "WHERE purchorderdetails.itemcode = '". $StockID ."'";
 	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
-		if (isRing($Stockid)){
-			$WhereCondition = "WHERE purchorderdetails.itemcode LIKE '". $Stockid ."%'";
+		if (isRing($StockID)){
+			$WhereCondition = "WHERE purchorderdetails.itemcode LIKE '". $StockID ."%'";
 		}else{
-			$WhereCondition = "WHERE purchorderdetails.itemcode = '". $Stockid ."'";
+			$WhereCondition = "WHERE purchorderdetails.itemcode = '". $StockID ."'";
 		}
 	}else{
-		$WhereCondition = "WHERE purchorderdetails.itemcode LIKE '". $Stockid ."%'";
+		$WhereCondition = "WHERE purchorderdetails.itemcode LIKE '". $StockID ."%'";
 	}
 
 	$SQL="SELECT SUM(purchorderdetails.quantityord -purchorderdetails.quantityrecd) AS QtyOnOrder
@@ -381,19 +381,19 @@ function ItemCodeQOO_PurchaseOrders($Stockid, $CodeDetail){
 	return $Row['0'];
 }
 
-function ItemCodeQOO_WorkOrders($Stockid,$CodeDetail){
+function ItemCodeQOO_WorkOrders($StockID,$CodeDetail){
 	$ErrMsg = 'Error in function ItemCodeQOO_WorkOorders()';
 
 	if ($CodeDetail == 'CODE_FULL'){
-		$WhereCondition = "AND woitems.stockid = '". $Stockid ."'";
+		$WhereCondition = "AND woitems.stockid = '". $StockID ."'";
 	}elseif ($CodeDetail == 'CODE_FULL_WITH_RINGS'){
-		if (isRing($Stockid)){
-			$WhereCondition = "AND woitems.stockid LIKE '". $Stockid ."%'";
+		if (isRing($StockID)){
+			$WhereCondition = "AND woitems.stockid LIKE '". $StockID ."%'";
 		}else{
-			$WhereCondition = "AND woitems.stockid = '". $Stockid ."'";
+			$WhereCondition = "AND woitems.stockid = '". $StockID ."'";
 		}
 	}else{
-		$WhereCondition = "AND woitems.stockid LIKE '". $Stockid ."%'";
+		$WhereCondition = "AND woitems.stockid LIKE '". $StockID ."%'";
 	}
 
 	$SQL="SELECT SUM(woitems.qtyreqd-woitems.qtyrecd) AS qtywo
@@ -573,9 +573,9 @@ function GetLocationNameFromCode($LocCode){
 	return $Row['0'];
 }
 
-function GetItemDescriptionFromCode($Stockid){
+function GetItemDescriptionFromCode($StockID){
 	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
-	$SQL="SELECT description FROM stockmaster WHERE stockid='" . $Stockid . "'";
+	$SQL="SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
 	$Row = DB_fetch_row($Result);
 	return $Row['0'];
@@ -692,7 +692,7 @@ function FindWebsiteBrand($StockID, $Category, $Description){
 		//should be a discounted item, we keep the previous brand if still available, otherwise we continue messing around
 		$SQL = "SELECT manufacturers_id
 				FROM salescatprod 
-				WHERE stockid = '" . $Stockid . "'";
+				WHERE stockid = '" . $StockID . "'";
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) != 0){
 			// assign the current brand
@@ -1052,11 +1052,11 @@ function ProcessPaymentOnlineOrder($OrderNo, $PaymentCode, $CustomerCode, $Total
 	return $Result;
 }
 
-function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOfPackaging){
+function ItemImagesURL($StockID, $NumberOfImage, $PackagingAlreadyFound, $TypeOfPackaging){
 	$PackagingImage =  FALSE;
 	if ($NumberOfImage == 1){
 		// main image
-		$URL = PATH_TO_CATALOG_IMAGES . $StockId.'.jpg';
+		$URL = PATH_TO_CATALOG_IMAGES . $StockID.'.jpg';
 	}elseif ($NumberOfImage == 999){
 		// last image of the lot MUST be a packaging image if still not found a packaging image
 		if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
@@ -1068,8 +1068,8 @@ function ItemImagesURL($StockId, $NumberOfImage, $PackagingAlreadyFound, $TypeOf
 	}else{
 		// extra images
 		$NumberOfImage = $NumberOfImage - 1;
-		if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockId.'.'.$NumberOfImage.'.jpg')){
-			$URL = PATH_TO_CATALOG_IMAGES . $StockId.'.'.$NumberOfImage.'.jpg';
+		if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockID.'.'.$NumberOfImage.'.jpg')){
+			$URL = PATH_TO_CATALOG_IMAGES . $StockID.'.'.$NumberOfImage.'.jpg';
 		}else{
 			if (($TypeOfPackaging != "") AND ($TypeOfPackaging != "NO-PACKAGING")){
 				$URL = PATH_TO_CATALOG_PACKAGING_IMAGES . $TypeOfPackaging.'.jpg';

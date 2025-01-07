@@ -10,6 +10,10 @@ include('includes/session.php');
 $Title = _('WO items can be produced with available stock');
 include('includes/header.php');
 
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '
+	</p>';
+
 if (isset($_POST['submit'])) {
     submit($RootPath, $_POST['Location']);
 } else {
@@ -20,7 +24,7 @@ if (isset($_POST['submit'])) {
 function submit($RootPath, $Location) {
 
 	$WhereLocation 	= " AND workorders.loccode = '". $Location ."' ";
-	
+
 	$SQL = "SELECT woitems.wo,
 				workorders.startdate,
 				woitems.stockid,
@@ -30,19 +34,18 @@ function submit($RootPath, $Location) {
 				stockmaster.units
 			FROM workorders, woitems, stockmaster
 			WHERE workorders.wo = woitems.wo
-				AND stockmaster.stockid = woitems.stockid 
+				AND stockmaster.stockid = woitems.stockid
 				AND workorders.closed = 0
 				AND woitems.qtyreqd > woitems.qtyrecd ".
 				$WhereLocation .
 			"ORDER BY woitems.wo, woitems.stockid"
 			;
-	
+
 	$ErrMsg = _('The SQL to find the WO items to produce ');
 	$ResultItems = DB_query($SQL,$ErrMsg);
 	if (DB_num_rows($ResultItems) != 0){
-	
+
 		echo '<p class="page_title_text" align="center"><strong>' . "Items in WO to be produced now in " . $Location . " with available stock" . '</strong></p>';
-		echo '<div>';
 		echo '<table class="selection">';
 		$TableHeader = '
 						<tr>
@@ -64,13 +67,13 @@ function submit($RootPath, $Location) {
 
 		while ($MyItem = DB_fetch_array($ResultItems)) {
 			echo $TableHeader;
-			
+
 			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
 			$QtyCanBeProduced = $QtyPending;
 
 			$WOLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $MyItem['wo'] . '">' . $MyItem['wo'] . '</a>';
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyItem['stockid'] . '">' . $MyItem['stockid'] . '</a>';
-			
+
 			printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -85,10 +88,10 @@ function submit($RootPath, $Location) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
+					</tr>',
 					$WOLink,
 					ConvertSQLDate($MyItem['startdate']), 
-					$CodeLink, 
+					$CodeLink,
 					locale_number_format($MyItem['qtyreqd'],$MyItem['decimalplaces']),
 					locale_number_format($MyItem['qtyrecd'],$MyItem['decimalplaces']),
 					locale_number_format($QtyPending,$MyItem['decimalplaces']),
@@ -117,11 +120,11 @@ function submit($RootPath, $Location) {
 						AND bom.parent = '" . $MyItem['stockid'] . "'
                         AND bom.effectiveafter <= CURRENT_DATE
                         AND bom.effectiveto > CURRENT_DATE";
-					 
+
 			$ErrMsg = _('The bill of material could not be retrieved because');
 			$BOMResult = DB_query ($SQLBOM,$ErrMsg);
 			$ItemCanBeproduced = TRUE;
-			
+
 			while ($MyComponent = DB_fetch_array($BOMResult)) {
 
 				$ComponentNeeded = $MyComponent['bomqty'] * $QtyPending;
@@ -135,7 +138,7 @@ function submit($RootPath, $Location) {
 				}
 
 				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyComponent['component'] . '">' . $MyComponent['component'] . '</a>';
-				
+
 				printf('<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -150,7 +153,7 @@ function submit($RootPath, $Location) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
+					</tr>',
 					'',
 					'',
 					'',
@@ -158,7 +161,7 @@ function submit($RootPath, $Location) {
 					'',
 					'',
 					'',
-					$ComponentLink, 
+					$ComponentLink,
 					locale_number_format($MyComponent['qoh'],$MyComponent['decimalplaces']),
 					locale_number_format($ComponentNeeded,$MyComponent['decimalplaces']),
 					locale_number_format($PrevisionShrinkage,$MyComponent['decimalplaces']),
@@ -187,7 +190,7 @@ function submit($RootPath, $Location) {
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
-					</tr>', 
+					</tr>',
 					'',
 					'',
 					'',
@@ -204,13 +207,12 @@ function submit($RootPath, $Location) {
 					$ComponentLink
 					);
 		}
-		echo '</table>
-				</div>';
+		echo '</table>';
 
 	}else{
 		prnMsg('No items waiting to be produced in ' . $Location);
 	}
-	
+
 } // End of function submit()
 
 
@@ -219,48 +221,41 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 // Display form fields. This function is called the first time
 // the page is called.
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text" align="center"><strong>' . "List of items in WO ready to be produced in: " . '</strong></p>';
 
-	echo '<table>';
+	echo '<fieldset>
+			<legend>', _('Select Location'), '</legend>';
 
-		echo '<tr>
-				<td>' . _('For Factory Location') . ':</td>
-				<td><select name="Location">';
+	echo '<field>
+			<label for="Location">' . _('For Factory Location') . ':</label>
+			<select name="Location">';
 
-		$SQL = "SELECT locations.loccode,
-					locationname
-				FROM locations
-				INNER JOIN locationusers
-					ON locationusers.loccode=locations.loccode
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "'
-					AND locationusers.canview=1
-				WHERE locations.usedforwo = 1";
+	$SQL = "SELECT locations.loccode,
+				locationname
+			FROM locations
+			INNER JOIN locationusers
+				ON locationusers.loccode=locations.loccode
+				AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+				AND locationusers.canview=1
+			WHERE locations.usedforwo = 1";
 
-		$LocnResult=DB_query($SQL);
+	$LocnResult=DB_query($SQL);
 
-		while ($MyRow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		}
-		echo '</select></td>
-			</tr>';
+	while ($MyRow=DB_fetch_array($LocnResult)){
+		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+	}
+	echo '</select>
+		</field>
+	</fieldset>';
 
 
-  echo '<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Search Items To Produce') . '" /></td>
-		</tr>
-		</table>
-	<br />';
-   echo '</div>
-         </form>';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Search Items To Produce') . '" />
+		</div>';
+	echo '</form>';
 
 } // End of function display()
 

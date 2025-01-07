@@ -22,7 +22,7 @@ TRUNCATE test_erp.`bankaccountusers`;
 INSERT INTO test_erp.bankaccountusers SELECT * FROM kurakura_kl_erp.bankaccountusers;
 
 TRUNCATE test_erp.`banktrans`;
-INSERT INTO test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans; 
+/*INSERT INTO test_erp.banktrans SELECT * FROM kurakura_kl_erp.banktrans; */
 
 TRUNCATE test_erp.`bom`;
 INSERT INTO test_erp.bom SELECT * FROM kurakura_kl_erp.bom; 
@@ -94,11 +94,11 @@ TRUNCATE test_erp.`debtorsmaster`;
 INSERT INTO test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 
 TRUNCATE test_erp.`debtortrans`;
-INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans;
-
+/*INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans;
+*/
 TRUNCATE test_erp.`debtortranstaxes`;
-INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes;
-
+/*INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes;
+*/
 TRUNCATE test_erp.`debtortype`;
 INSERT INTO test_erp.debtortype SELECT * FROM kurakura_kl_erp.debtortype;
 
@@ -520,7 +520,7 @@ TRUNCATE test_erp.`stockmaster`;
 INSERT INTO test_erp.stockmaster SELECT * FROM kurakura_kl_erp.stockmaster;
 
 TRUNCATE test_erp.`stockmoves`;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd <= 30;
+/*INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd <= 30;
 INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 30 AND prd <= 60;
 INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 60 AND prd <= 80;
 INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 80 AND prd <= 90;
@@ -529,9 +529,9 @@ INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE p
 INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 110 AND prd <= 115;
 INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 115 AND prd <= 120;
 INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 120 AND prd <= 125;
-
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 125 AND prd <= 130;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 130;
+INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 125 AND prd <= 150;
+*/
+INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 150;
 
 
 TRUNCATE test_erp.`stockmovestaxes`;

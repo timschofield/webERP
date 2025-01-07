@@ -61,8 +61,6 @@ echo '<table class="selection">
 	</thead>
 	<tbody>';
 
-echo $TableHeader;
-
 while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	if (isset($_POST['UpdateData'])

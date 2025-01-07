@@ -267,24 +267,23 @@ if (isset($_POST['CommitDepreciation']) AND $InputError==false){
 	include ('includes/GLPostings.inc');
 } else {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />
-		<table class="selection" width="30%">
-		<tr>';
+	echo '<fieldset>
+			<legend>', _('Select Criteria'), '</legend>';
 	if ($AllowUserEnteredProcessDate){
-		echo '<td>' . _('Date to Process Depreciation'). ':</td>
-			<td><input type="text" class="date" required="required" name="ProcessDate" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" /></td>';
+		echo '<field>
+				<label for="ProcessDate">' . _('Date to Process Depreciation'). ':</label>
+				<input type="text" class="date" required="required" name="ProcessDate" maxlength="10" size="11" value="' . $_POST['ProcessDate'] . '" />';
 	} else {
-		echo '<td>' . _('Date to Process Depreciation'). ':</td>
-			<td>' . $_POST['ProcessDate']  . '</td>';
+		echo '<field>
+				<label for="ProcessDate">' . _('Date to Process Depreciation'). ':</label>
+				<fieldtext>' . $_POST['ProcessDate']  . '</fieldtext>';
 	}
-	echo '<td><div class="centre"><input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'" /></div></td>
-		</tr>
-		</table>
-		<br />
-        </div>
-		</form>';
+	echo '</fieldset>
+		<div class="centre">
+			<input type="submit" name="CommitDepreciation" value="'._('Commit Depreciation').'" />
+		</div>
+	</form>';
 }
 include('includes/footer.php');
 ?>

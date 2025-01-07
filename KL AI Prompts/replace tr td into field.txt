@@ -1,0 +1,15 @@
+Convert table-based data entry to field structures.
+
+This script has mixed data entry HTML tags:
+Some are <field> ... </field> structures and some are table-based <tr><td> ... </td></tr> structures
+
+I want you to:
+1) Replace ALL table-based data entry headers into <fieldset><legend> ... </legend> </fieldset> structures
+2) Replace ALL table-based data entry <tr><td> ... </td></tr> structures into <field> ... </field> structures
+
+General prompt rules: 
+1) Do not cut long lines. 
+2) Do not delete any comment in the code
+3) Do not change, modify, upgrade any other part of the code not related to the propmt.
+4) Apply all changes above directly to all the files in the working set
+

@@ -404,11 +404,11 @@ function GetTotalFromOrder($Concept, $OrderId){
 	}
 }
 
-function ItemOnlineQOH($StockId){
+function ItemOnlineQOH($StockID){
 	$SQL = "SELECT SUM(locstock.quantity)
 			FROM locstock, locations
 			WHERE locstock.loccode = locations.loccode
-				AND locstock.stockid = '" . $StockId . "'
+				AND locstock.stockid = '" . $StockID . "'
 				AND locations.stockavailableforonline = '1'";
 	$ErrMsg =_('Could not get the QOH available in webERP for OpenCart because');
 	$Result = DB_query($SQL,$ErrMsg);
@@ -595,18 +595,18 @@ function CreateMetaDescriptionSalesCategory($Group, $Item){
 	return $MetaDescription;
 }
 
-function CreateMetaDescriptionItem($StockId, $Text){
-	$MetaDescription = $StockId . " " . CleanText($Text);
+function CreateMetaDescriptionItem($StockID, $Text){
+	$MetaDescription = $StockID . " " . CleanText($Text);
 	return $MetaDescription;
 }
 
-function CreateMetaTitleItem($StockId, $Name, $Separator){
-	$MetaTitle = $StockId . $Separator . $Name;
+function CreateMetaTitleItem($StockID, $Name, $Separator){
+	$MetaTitle = $StockID . $Separator . $Name;
 	return $MetaTitle;
 }
 
-function CreateMetaKeywordItem($StockId, $StoreName, $Tag, $TagSeparator){
-	$MetaKeyword = $StockId . $TagSeparator . $StoreName . $TagSeparator . $Tag;
+function CreateMetaKeywordItem($StockID, $StoreName, $Tag, $TagSeparator){
+	$MetaKeyword = $StockID . $TagSeparator . $StoreName . $TagSeparator . $Tag;
 	return $MetaKeyword;
 }
 
@@ -1108,7 +1108,7 @@ function GetWeberpShippingMethod($OpenCartShippingMethod){
 	return $WeberpShipping;
 }
 
-function GetGoogleProductFeedStatus($StockId, $SalesCategory, $Quantity){
+function GetGoogleProductFeedStatus($StockID, $SalesCategory, $Quantity){
 	$Status = 0;
 	if ((strpos(SALES_CATEGORIES_FOR_GOOGLE_PRODUCT_FEED, $SalesCategory) !== false)
 		AND ($Quantity > 0)){
@@ -1117,28 +1117,28 @@ function GetGoogleProductFeedStatus($StockId, $SalesCategory, $Quantity){
 	return $Status;
 }
 
-function GetGoogleProductFeedCategory($StockId, $SalesCategory){
-	if (isRing($StockId)){
+function GetGoogleProductFeedCategory($StockID, $SalesCategory){
+	if (isRing($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Rings";
-	}elseif (isToeRing($StockId)){
+	}elseif (isToeRing($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Rings";
-	}elseif (isEarring($StockId)){
+	}elseif (isEarring($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Earrings";
-	}elseif (isEarcuff($StockId)){
+	}elseif (isEarcuff($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Earrings";
-	}elseif (isPiercing($StockId)){
+	}elseif (isPiercing($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Piercings";
-	}elseif (isBracelet($StockId)){
+	}elseif (isBracelet($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Bracelets";
-	}elseif (isAnklet($StockId)){
+	}elseif (isAnklet($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Anklets";
-	}elseif (isPendant($StockId)){
+	}elseif (isPendant($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Necklaces";
-	}elseif (isNecklace($StockId)){
+	}elseif (isNecklace($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Necklaces";
-	}elseif (isPlasticBag($StockId)){
+	}elseif (isPlasticBag($StockID)){
 		$Category = "Clothing & Accessories > Handbags, Wallets & Cases > Handbags";
-	}elseif (isTali($StockId)){
+	}elseif (isTali($StockID)){
 		$Category = "Clothing & Accessories > Jewellery & Watches > Necklaces";
 	}else{
 		$Category = "Clothing & Accessories > Jewellery & Watches";
@@ -1277,21 +1277,21 @@ function MaintainPackagingImage($ProductId, $KLPackaging){
 	}
 }
 
-function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB){
+function InsertWebsiteSalesCategory($StockID, $WebsiteCategory, $Manufacturers_id, $MultipleCategories, $Featured, $UpdateDB){
 	if($UpdateDB){
 		
 		if (!$MultipleCategories){
 			// if don't allow an item in multiple sales categories, then delete the existing ones
 			$SQL =	"DELETE FROM salescatprod 
 						WHERE salescatid = '" . $WebsiteCategory . "' 
-							AND stockid ='" .  $Stockid . "'";
+							AND stockid ='" .  $StockID . "'";
 			$ErrMsg =_('Could not delete the previous website category for the item because');
 			$Result = DB_query($SQL,$ErrMsg);
 		}
 
 		$SQLCheck = "SELECT *
 				FROM salescatprod
-				WHERE salescatprod.stockid = '" . $Stockid . "'
+				WHERE salescatprod.stockid = '" . $StockID . "'
 					AND salescatprod.salescatid = '" . $WebsiteCategory . "'";	
 		$Result = DB_query($SQLCheck);
 
@@ -1305,7 +1305,7 @@ function InsertWebsiteSalesCategory($Stockid, $WebsiteCategory, $Manufacturers_i
 						date_updated)
 					VALUES (
 						'" . $WebsiteCategory . "',
-						'" . $Stockid . "',
+						'" . $StockID . "',
 						'" . $Manufacturers_id . "',
 						'" . $Featured . "',
 						NOW(),

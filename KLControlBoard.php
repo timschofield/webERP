@@ -2167,37 +2167,37 @@ function ImagesWithoutProduct($RootPath){
 		if ($File != '.ftpquota' AND
 			$File != 'Obsolete' AND
 			$File != 'part_pics'){
-			$StockId = substr($File, 0, strpos($File, $suffix));
-			if (strpos($StockId, '.1') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.1'));
+			$StockID = substr($File, 0, strpos($File, $suffix));
+			if (strpos($StockID, '.1') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.1'));
 			}
-			if (strpos($StockId, '.2') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.2'));
+			if (strpos($StockID, '.2') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.2'));
 			}
-			if (strpos($StockId, '.3') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.3'));
+			if (strpos($StockID, '.3') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.3'));
 			}
-			if (strpos($StockId, '.4') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.4'));
+			if (strpos($StockID, '.4') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.4'));
 			}
-			if (strpos($StockId, '.5') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.5'));
+			if (strpos($StockID, '.5') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.5'));
 			}
-			if (strpos($StockId, '.6') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.6'));
+			if (strpos($StockID, '.6') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.6'));
 			}
-			if (strpos($StockId, '.7') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.7'));
+			if (strpos($StockID, '.7') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.7'));
 			}
-			if (strpos($StockId, '.8') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.8'));
+			if (strpos($StockID, '.8') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.8'));
 			}
-			if (strpos($StockId, '.9') !== false){
-				$StockId = substr($File, 0, strpos($StockId, '.9'));
+			if (strpos($StockID, '.9') !== false){
+				$StockID = substr($File, 0, strpos($StockID, '.9'));
 			}
 			$SQL = "SELECT stockid
 				FROM stockmaster
-				WHERE stockmaster.stockid = '" . $StockId . "'";
+				WHERE stockmaster.stockid = '" . $StockID . "'";
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) == 0){
 				if ($ShowHeader){

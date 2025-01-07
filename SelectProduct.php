@@ -18,6 +18,7 @@ $BookMark = 'SelectingInventory';
 include ('includes/header.php');
 
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/ImageFunctions.php');
 // KL RICARD
 include ('includes/KLDefines.php');
 // KL RICARD END
@@ -487,27 +488,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		echo '<a href="' . $RootPath . '/StockTransfers.php?StockID=' . urlencode($StockID) . '&amp;NewTransfer=true">' . _('Location Transfers') . '</a><br />';
 
 		//show the item image if it has been uploaded
-		if ( extension_loaded ('gd') && function_exists ('gd_info') && file_exists ($ImageFile) ) {
-			if ($_SESSION['ShowStockidOnImages'] == '0'){
-				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='.
-									'&amp;width=200'.
-									'&amp;height=200'.
-									'" alt="" />';
-			} else {
-				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-									'&amp;StockID='.urlencode($StockID).
-									'&amp;text='. $StockID .
-									'&amp;width=200'.
-									'&amp;height=200'.
-									'" alt="" />';
-			}
-		} else if (file_exists ($ImageFile)) {
-			$StockImgLink = '<img src="' . $ImageFile . '" height="200" width="200" />';
-		} else {
-			$StockImgLink = _('No Image');
-		}
+		$StockImgLink = GetImageLink($ImageFile, $StockID, 200, 200, "", "");
 
 		echo '<div class="centre">' . $StockImgLink . '</div>';
 
@@ -587,8 +568,12 @@ echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . _('Search for Inventory Items'). '</p>';
-echo '<table class="selection"><tr>';
-echo '<td>' . _('In Stock Category') . ':';
+
+echo '<fieldset>
+		<legend class="search">', _('Search for Stock Item'), '</legend>';
+
+echo '<field>
+		<label for="StockCat">' . _('In Stock Category') . ':</label>';
 echo '<select name="StockCat">';
 if (!isset($_POST['StockCat'])) {
 	$_POST['StockCat'] ='';
@@ -605,37 +590,41 @@ while ($MyRow1 = DB_fetch_array($Result1)) {
 		echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td>';
-echo '<td>' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</td><td>';
+echo '</select>
+	</field>';
+
+echo '<field>
+		<label for="Keywords">' . _('Enter partial') . '<b> ' . _('Description') . '</b>:</label>';
 if (isset($_POST['Keywords'])) {
 	echo '<input type="text" autofocus="autofocus" name="Keywords" value="' . $_POST['Keywords'] . '" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 } else {
 	echo '<input type="text" autofocus="autofocus" name="Keywords" title="' . _('Enter text that you wish to search for in the item description') . '" size="20" maxlength="25" />';
 }
-echo '</td>
-	</tr>
-	<tr>
-		<td></td>
-		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</td>
-		<td>';
+echo '</field>';
+
+echo '<field>
+		<label for="StockCode">' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Stock Code') . '</b>:</label>';
 if (isset($_POST['StockCode'])) {
 	echo '<input type="text" name="StockCode" value="' . $_POST['StockCode'] . '" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 } else {
 	echo '<input type="text" name="StockCode" title="' . _('Enter text that you wish to search for in the item code') . '" size="15" maxlength="18" />';
 }
-echo '<tr>
-		<td></td>
-		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial') . ' <b>' . _('Supplier Code') . '</b>:</td>
-		<td>';
+echo '<field>';
+
+echo '<field>
+		<label>' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Supplier Code') . '</label>';
 if (isset($_POST['SupplierStockCode'])) {
-	echo '<input type="text" name="SupplierStockCode" value="' . $_POST['SupplierStockCode'] . '" title="' . _('Enter text that you wish to search for in the supplier\'s item code') . '" size="15" maxlength="18" />';
+	echo '<input type="text" name="SupplierStockCode" value="' . $_POST['SupplierStockCode'] . '" title="" size="15" maxlength="18" />
+		<fieldhelp>' . _('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
 } else {
-	echo '<input type="text" name="SupplierStockCode" title="' . _('Enter text that you wish to search for in the supplier\'s item code') . '" size="15" maxlength="18" />';
+	echo '<input type="text" name="SupplierStockCode" title="" size="15" maxlength="18" />
+		<fieldhelp>' . _('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
 }
-echo '</td></tr></table><br />';
-echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div><br />';
-echo '</div>
-      </form>';
+echo '</field>
+	</fieldset>';
+
+echo '<div class="centre"><input type="submit" name="Search" value="' . _('Search Now') . '" /></div>';
+echo '</form>';
 // query for list of record(s)
 if (isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {
 	$_POST['Search']='Search';
@@ -927,17 +916,7 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 				$ImageFile ='';
 			}
 			// KL RICARD We would like to not show the code inline. Failed so far.
-			if (extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
-				$StockImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-				'&amp;StockID='. urlencode($MyRow['stockid']) .
-				'&amp;width=100'.
-				'&amp;height=100'.
-				'" alt="" />';
-			} else if (file_exists ($ImageFile)) {
-				$StockImgLink = '<img src="' . $ImageFile . '" height="100" width="100" />';
-			} else {
-				$StockImgLink = '<p>'._('No Image').'</p>';
-			}
+			$StockImgLink = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 			echo '<tr class="striped_row">
 				<td>' . $ItemStatus . '</td>

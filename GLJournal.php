@@ -496,7 +496,7 @@ else {
 
 echo '</select>
 	</field>
-</fieldset><br />';
+	</table>';
 /* close off the table in the first column  */
 
 echo '<fieldset>

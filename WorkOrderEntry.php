@@ -51,9 +51,9 @@ if(is_null($LocRow['loccode']) OR $LocRow['loccode']=='') {
 	exit;
 }
 
-foreach ($_POST as $key=>$Value) {
+foreach ($_POST as $key=>$value) {
 	if(substr($key, 0, 9)=='OutputQty' OR substr($key, 0, 7)=='RecdQty') {
-		$_POST[$key] = filter_number_format($Value);
+		$_POST[$key] = filter_number_format($value);
 	}
 }
 
@@ -238,10 +238,10 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 	$ErrMsg = _('Failed to retrieve item number');
 	$SearchResult = DB_query($SQLCount,$ErrMsg);
 
-	$MyRow=DB_fetch_array($SearchResult);
+	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
 	unset($SearchResult);
-	$ListCount = $MyRow[0];
+	$ListCount = $myrow[0];
 	if($ListCount>0) {
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
 	} else {
@@ -274,28 +274,28 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 	if(DB_num_rows($SearchResult)==0 ) {
 		prnMsg (_('There are no products available meeting the criteria specified'),'info');
 
-		if($Debug==1) {
+		if($debug==1) {
 			prnMsg(_('The SQL statement used was') . ':<br />' . $SQL,'info');
 		}
 	}
 	if(DB_num_rows($SearchResult)==1) {
-		$MyRow=DB_fetch_array($SearchResult);
-		$NewItem = $MyRow['stockid'];
-		if(isset($MyRow['quantity'])) {
-			$ReqQty = $MyRow['quantity'];
+		$myrow=DB_fetch_array($SearchResult);
+		$NewItem = $myrow['stockid'];
+		if(isset($myrow['quantity'])) {
+			$ReqQty = $myrow['quantity'];
 		}
 		DB_data_seek($SearchResult,0);
 	}
 
 } //end of if search
 if(isset($_POST['Add'])) {
-	foreach($_POST as $key=>$Value) {
+	foreach($_POST as $key=>$value) {
 		if(strpos($key,'Check_')!==false) {
-			$NewItem[] = array('item'=>$Value,'qty'=>0);
+			$NewItem[] = array('item'=>$value,'qty'=>0);
 		}
-		if(strpos($key,'Qty_') !== false AND $Value>0) {
+		if(strpos($key,'Qty_') !== false AND $value>0) {
 			$No = substr($key,4);
-			$NewItem[] = array('item'=>$_POST['Item_'.$No],'qty'=>$Value);
+			$NewItem[] = array('item'=>$_POST['Item_'.$No],'qty'=>$value);
 		}
 	}
 }
@@ -338,15 +338,15 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 
 
 		if($InputError==false) {
-			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,
+			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,
 									bom.loccode
 									FROM stockmaster
 									INNER JOIN bom
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $NewItem . "'
 										AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
-										AND bom.effectiveafter<=CURRENT_DATE
-										AND bom.effectiveto>=CURRENT_DATE");
+										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 			$CostRow = DB_fetch_array($CostResult);
 			if(is_null($CostRow['cost'])) {
 					$Cost =0;
@@ -375,12 +375,12 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 									 '" . $Cost . "'
 								)";
 			$ErrMsg = _('The work order item could not be added');
-			$Result = DB_query($SQL,$ErrMsg);
+			$result = DB_query($SQL,$ErrMsg);
 
 			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 			WoRealRequirements($_POST['WO'], $CostRow['loccode'], $NewItem);
 
-			$Result = DB_Txn_Commit();
+			$result = DB_Txn_Commit();
 
 			unset($NewItem);
 		}
@@ -428,15 +428,15 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 
 
 	if($InputError==false) {
-			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,
+			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,
 									bom.loccode
 									FROM stockmaster
 									INNER JOIN bom
 										ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $Itm . "'
 										AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
-										AND bom.effectiveafter<=CURRENT_DATE
-										AND bom.effectiveto>=CURRENT_DATE");
+										AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+										AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 
 
 			$CostRow = DB_fetch_array($CostResult);
@@ -466,7 +466,7 @@ if(isset($NewItem) AND isset($_POST['WO'])) {
 									 '" . $Cost . "'
 								)";
 			$ErrMsg = _('The work order item could not be added');
-			$Result = DB_query($SQL,$ErrMsg);
+			$result = DB_query($SQL,$ErrMsg);
 			//Recursively insert real component requirements - see includes/SQL_CommonFunctions.in for function WoRealRequirements
 			WoRealRequirements($_POST['WO'], $CostRow['loccode'], $Itm);
 		} //end if there were no input errors
@@ -543,13 +543,13 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 			}
 			if($_POST['RecdQty'.$i]==0 AND (!isset($_POST['HasWOSerialNos'.$i]) OR $_POST['HasWOSerialNos'.$i]==false)) {
 				/* can only change location cost if QtyRecd=0 */
-				$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost,bom.loccode
+				$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost,bom.loccode
 												FROM stockmaster
 												INNER JOIN bom ON stockmaster.stockid=bom.component
 												WHERE bom.parent='" . $_POST['OutputItem'.$i] . "'
 												AND bom.loccode=(SELECT loccode FROM workorders WHERE wo='" . $_POST['WO'] . "')
-												AND bom.effectiveafter<=CURRENT_DATE
-												AND bom.effectiveto>=CURRENT_DATE");
+												AND bom.effectiveafter<='" . Date('Y-m-d') . "'
+												AND bom.effectiveto>='" . Date('Y-m-d') . "'");
 				$CostRow = DB_fetch_array($CostResult);
 				if(is_null($CostRow['cost'])) {
 					$Cost =0;
@@ -574,7 +574,7 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 		$ErrMsg = _('The work order could not be added/updated');
 		foreach ($SQL as $SQL_stmt) {
 		//	echo '<br />' . $SQL_stmt;
-			$Result = DB_query($SQL_stmt,$ErrMsg);
+			$result = DB_query($SQL_stmt,$ErrMsg);
 
 		}
 		if(!isset($_POST['Search'])) {
@@ -599,7 +599,7 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 	$HasTransResult = DB_query("SELECT transno
 									FROM stockmoves
 								WHERE (stockmoves.type= 26 OR stockmoves.type=28)
-								AND reference = '" . $_POST['WO'] . "'");
+								AND reference " . LIKE  . " '%" . $_POST['WO'] . "%'");
 	if(DB_num_rows($HasTransResult)>0) {
 		prnMsg(_('This work order cannot be deleted because it has issues or receipts related to it'),'error');
 		$CancelDelete=true;
@@ -611,18 +611,18 @@ if(isset($_POST['submit']) OR isset($_POST['Search'])) { //The update button has
 		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_POST['WO'] . "'";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the items on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_POST['WO'] . "'";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		// delete the actual work order
 		$SQL="DELETE FROM workorders WHERE wo='" . $_POST['WO'] . "'";
 		$ErrMsg=_('The work order could not be deleted');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 		DB_Txn_Commit();
 		prnMsg(_('The work order has been cancelled'),'success');
@@ -662,14 +662,14 @@ if(isset($_GET['Delete'])) {
 		$DbgMsg = _('The SQL used to delete the work order was');
 		//delete the worequirements
 		$SQL = "DELETE FROM worequirements WHERE wo='" . $_GET['WO'] . "' AND parentstockid='" . $_GET['StockID'] . "'";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the item on the work order
 		$SQL = "DELETE FROM woitems WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		//delete the controlled items defined in wip
 		$SQL="DELETE FROM woserialnos WHERE wo='" . $_GET['WO'] . "' AND stockid='" . $_GET['StockID'] . "' ";
 		$ErrMsg=_('The work order serial numbers could not be deleted');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		DB_Txn_Commit();
 		prnMsg(_('The item in this work order has been cancelled'),'success');
 		header('Location: '. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?WO=' . $_GET['WO']);
@@ -697,14 +697,14 @@ $SQL="SELECT workorders.loccode,
 $WOResult = DB_query($SQL);
 if(DB_num_rows($WOResult)==1) {
 
-	$MyRow = DB_fetch_array($WOResult);
-	$_POST['StartDate'] = ConvertSQLDate($MyRow['startdate']);
-	$_POST['CostIssued'] = $MyRow['costissued'];
-	$_POST['Closed'] = $MyRow['closed'];
-	$_POST['RequiredBy'] = ConvertSQLDate($MyRow['requiredby']);
-	$_POST['StockLocation'] = $MyRow['loccode'];
-	$_POST['Ref'] = $MyRow['reference'];
-	$_POST['Remark'] = $MyRow['remark'];
+	$myrow = DB_fetch_array($WOResult);
+	$_POST['StartDate'] = ConvertSQLDate($myrow['startdate']);
+	$_POST['CostIssued'] = $myrow['costissued'];
+	$_POST['Closed'] = $myrow['closed'];
+	$_POST['RequiredBy'] = ConvertSQLDate($myrow['requiredby']);
+	$_POST['StockLocation'] = $myrow['loccode'];
+	$_POST['Ref'] = $myrow['reference'];
+	$_POST['Remark'] = $myrow['remark'];
 	$ErrMsg =_('Could not get the work order items');
 	$WOItemsResult = DB_query("SELECT   woitems.stockid,
 										stockmaster.description,
@@ -809,7 +809,7 @@ echo '<tr>
 
 if(isset($WOResult)) {
 	echo '<tr><td class="label">' . _('Accumulated Costs') . ':</td>
-			  <td class="number">' . locale_number_format($MyRow['costissued'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
+			  <td class="number">' . locale_number_format($myrow['costissued'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td></tr>';
 }
 echo '</table>
 		<br /><table class="selection">';
@@ -888,7 +888,7 @@ $SQL="SELECT categoryid,
 		FROM stockcategory
 		WHERE stocktype='F' OR stocktype='M'
 		ORDER BY categorydescription";
-	$Result1 = DB_query($SQL);
+	$result1 = DB_query($SQL);
 
 echo '<table class="selection"><tr><td>' . _('Select a stock category') . ':<select name="StockCat">';
 
@@ -899,12 +899,12 @@ if(!isset($_POST['StockCat'])) {
 	echo '<option value="All">' . _('All') . '</option>';
 }
 
-while ($MyRow1 = DB_fetch_array($Result1)) {
+while ($myrow1 = DB_fetch_array($result1)) {
 
-	if($_POST['StockCat']==$MyRow1['categoryid']) {
-		echo '<option selected="True" value=' . $MyRow1['categoryid'] . '>' . $MyRow1['categorydescription'] . '</option>';
+	if($_POST['StockCat']==$myrow1['categoryid']) {
+		echo '<option selected="True" value=' . $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 	} else {
-		echo '<option value='. $MyRow1['categoryid'] . '>' . $MyRow1['categorydescription'] . '</option>';
+		echo '<option value='. $myrow1['categoryid'] . '>' . $myrow1['categorydescription'] . '</option>';
 	}
 }
 
@@ -976,26 +976,26 @@ if(isset($SearchResult)) {
 			$ItemCodes[] =$_POST['OutputItem'.$i];
 		}
 
-		while ($MyRow=DB_fetch_array($SearchResult)) {
+		while ($myrow=DB_fetch_array($SearchResult)) {
 
-			if(!in_array($MyRow['stockid'],$ItemCodes)) {
+			if(!in_array($myrow['stockid'],$ItemCodes)) {
 
 				$SupportedImgExt = array('png','jpg','jpeg');
-				$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
-				if(extension_loaded('gd') && function_exists('gd_info') && file_exists ($ImageFile) ) {
+				$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+				if(extension_loaded('gd') && function_exists('gd_info') && file_exists ($imagefile) ) {
 					$ImageSource = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.
-						'&amp;StockID='.urlencode($MyRow['stockid']).
+						'&amp;StockID='.urlencode($myrow['stockid']).
 						'&amp;text='.
 						'&amp;width=64'.
 						'&amp;height=64'.
 						'" alt="" />';
-				} else if(file_exists ($ImageFile)) {
-					$ImageSource = '<img src="' . $ImageFile . '" height="64" width="64" />';
+				} else if(file_exists ($imagefile)) {
+					$ImageSource = '<img src="' . $imagefile . '" height="64" width="64" />';
 				} else {
 					$ImageSource = _('No Image');
 				}
 
-				if($MyRow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1) { //need to add serial nos or batches to determine quantity
+				if($myrow['controlled']==1 AND $_SESSION['DefineControlledOnWOEntry']==1) { //need to add serial nos or batches to determine quantity
 
 				printf('<tr class="striped_row">
 						<td><font size="1">%s</font></td>
@@ -1006,16 +1006,16 @@ if(isset($SearchResult)) {
 						. _('Add to Work Order') . '</a></font></td>
 						<td><input type="checkbox" value="%s" name="Check_%s" /></td>
 						</tr>',
-						$MyRow['stockid'],
-						$MyRow['description'],
-						$MyRow['units'],
+						$myrow['stockid'],
+						$myrow['description'],
+						$myrow['units'],
 						$ImageSource,
-						htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&NewItem=' . urlencode($MyRow['stockid']).'&Line='.$i,
-						$MyRow['stockid'],
+						htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&NewItem=' . urlencode($myrow['stockid']).'&Line='.$i,
+						$myrow['stockid'],
 						$j);
 				} else {
-						if(!isset($MyRow['quantity'])) {
-							$MyRow['quantity'] = 0;
+						if(!isset($myrow['quantity'])) {
+							$myrow['quantity'] = 0;
 						}
 						printf('<tr class="striped_row">
 						<td><font size="1">%s</font></td>
@@ -1026,14 +1026,14 @@ if(isset($SearchResult)) {
 						. _('Add to Work Order') . '</a></font></td>
 						<td><input type="text" name="Qty_%s" value="%s" size="10" /><input type="hidden" value="%s" name="Item_%s" /></td>
 						</tr>',
-						$MyRow['stockid'],
-						$MyRow['description'],
-						$MyRow['units'],
+						$myrow['stockid'],
+						$myrow['description'],
+						$myrow['units'],
 						$ImageSource,
-						htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&NewItem=' . urlencode($MyRow['stockid']).'&Line='.$i,
+						htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&NewItem=' . urlencode($myrow['stockid']).'&Line='.$i,
 						$j,
-						$MyRow['quantity'],
-						$MyRow['stockid'],
+						$myrow['quantity'],
+						$myrow['stockid'],
 						$j);
 				}
 

@@ -86,7 +86,7 @@ if (isset($_POST['AddControlledItems'])){
 				if (!$InputError){
 					if ($i>0){
 						$SQL .= ',';
-						$ValueLine = "('".$StockId."','".$WO."','','";
+						$ValueLine = "('".$StockID."','".$WO."','','";
 
 					}
 					$SQL .= $ValueLine . $NextItemNumber . "')";

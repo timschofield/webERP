@@ -19,13 +19,10 @@ if (isset($_GET['StockID'])) {
 } else {
 	unset($StockID);
 }
-echo '<div>
-		<a href="'. $RootPath . '/SelectWorkOrder.php">' . _('Back to Work Orders'). '</a>
-		<br />';
+echo '<a href="'. $RootPath . '/SelectWorkOrder.php" class="toplink">' . _('Back to Work Orders'). '</a>';
 if(isset($SelectedWO)){
 
-	echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '">' . _('Back to Costing'). '</a>
-		<br />';
+	echo '<a href="'. $RootPath . '/WorkOrderCosting.php?WO=' .  $SelectedWO . '" class="toplink">' . _('Back to Costing'). '</a>';
 }
 echo '</div>';
 
@@ -33,7 +30,6 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/g
 	_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 if (!isset($SelectedWO) OR !isset($StockID)) {
@@ -86,8 +82,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	if (DB_num_rows($WOResult)==0){
 		prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-        echo '</div>';
-        echo '</form>';
+		echo '</div>';
+		echo '</form>';
 		include('includes/footer.php');
 		exit;
 	}
@@ -561,7 +557,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 							if ($_SESSION['DefineControlledOnWOEntry']==1){
 								//need to delete the item from woserialnos
-								$SQL = "DELETE FROM	woserialnos
+								$SQL = "DELETE FROM woserialnos
 											WHERE wo='" . $_POST['WO'] . "'
 											AND stockid='" . $_POST['StockID'] ."'
 											AND serialno='" . $_POST['SerialNo'.$i] . "'";
@@ -616,7 +612,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 												'" . $_POST['QualityText'] . "')";
 
 
-							}else{	//If it's a perishable product, add expiry date
+							}else{  //If it's a perishable product, add expiry date
 
 								$SQL = "INSERT INTO stockserialitems (stockid,
 																loccode,
@@ -661,13 +657,13 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 										INNER JOIN stockmoves ON stockserialmoves.stockmoveno=stockmoves.stkmoveno
 										WHERE stockmoves.type=26
 										AND stockserialmoves.stockid='" . $_POST['StockID'] . "'
-										AND stockserialmoves.serialno='" . 	$_POST['BatchRef'.$i] . "'";
+										AND stockserialmoves.serialno='" .  $_POST['BatchRef'.$i] . "'";
 
 							$BatchTotQtyResult = DB_query($SQL);
 							$BatchTotQtyRow = DB_fetch_row($BatchTotQtyResult);
-						/*	if ($BatchTotQtyRow[0] >= $_POST['QtyReqd'.$i]){
+						/*  if ($BatchTotQtyRow[0] >= $_POST['QtyReqd'.$i]){
 								//need to delete the item from woserialnos
-								$SQL = "DELETE FROM	woserialnos
+								$SQL = "DELETE FROM woserialnos
 										WHERE wo='" . $_POST['WO'] . "'
 										AND stockid='" . $_POST['StockID'] ."'
 										AND serialno='" . $_POST['BatchRef'.$i] . "'";
@@ -765,8 +761,8 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			unset($_POST['QualityText'.$i]);
 			unset($_POST['QtyReqd'.$i]);
 		}
-        echo '</div>';
-        echo '</form>';
+		echo '</div>';
+		echo '</form>';
 		/*end of process work order goods received entry */
 		include('includes/footer.php');
 		exit;
@@ -804,8 +800,8 @@ $WOResult = DB_query("SELECT workorders.loccode,
 
 if (DB_num_rows($WOResult)==0){
 	prnMsg(_('The selected work order item cannot be retrieved from the database'),'info');
-    echo '</div>';
-    echo '</form>';
+	echo '</div>';
+	echo '</form>';
 	include('includes/footer.php');
 	exit;
 }
@@ -813,8 +809,8 @@ $WORow = DB_fetch_array($WOResult);
 
 if ($WORow['closed']==1){
 	prnMsg(_('The selected work order has been closed and variances calculated and posted. No more receipts of manufactured items can be received against this work order. You should make up a new work order to receive this item against.'),'info');
-    echo '</div>';
-    echo '</form>';
+	echo '</div>';
+	echo '</form>';
 	include('includes/footer.php');
 	exit;
 }
@@ -830,18 +826,18 @@ echo '<table class="selection">
 		</tr>
 		 <tr>
 			<td>' . _('Manufactured at') . ':</td>
-		 	<td>' . $WORow['locationname'] . '</td>
+			<td>' . $WORow['locationname'] . '</td>
 			<td>' . _('Required By') . ':</td>
 			<td>' . ConvertSQLDate($WORow['requiredby']) . '</td>
 		</tr>
 		 <tr>
 			<td>' . _('Quantity Ordered') . ':</td>
-		 	<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($WORow['qtyreqd'],$WORow['decimalplaces']) . '</td>
 			<td colspan="2">' . $WORow['units'] . '</td>
 		</tr>
 		 <tr>
 			<td>' . _('Already Received') . ':</td>
-		 	<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($WORow['qtyrecd'],$WORow['decimalplaces']) . '</td>
 			<td colspan="2">' . $WORow['units'] . '</td>
 		</tr>
 		 <tr>
@@ -850,7 +846,7 @@ echo '<table class="selection">
 		//add expiry date for perishable product
 		if($WORow['perishable']==1){
 			echo '<td>' . _('Expiry Date') . ':<td>
-			      <td><input type="text" maxlength="10" size="11" name="ExpiryDate" class="date" required /></td>';
+				  <td><input type="text" maxlength="10" size="11" name="ExpiryDate" class="date" required /></td>';
 		}
 
 		echo '<td>' . _('Received Into') . ':</td>
@@ -875,11 +871,11 @@ while ($LocRow = DB_fetch_array($LocResult)){
 }
 echo '</select></td>
 	</tr>
-	</table>
-	<br />';
+	</table>';
 
 //Now Setup the form for entering quantities received
-echo '<table class="selection">';
+echo '<fieldset>
+		<legend>', _('Receive Work Order Items'), '</legend>';
 
 if($WORow['controlled']==1){ //controlled
 	$LotSNRefLength =mb_strlen($WORow['nextlotsnref']);
@@ -939,14 +935,13 @@ if($WORow['controlled']==1){ //controlled
 		if (!isset($i)){
 			$i=0;
 		}
-        echo '<td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>';
+		echo '<td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>';
 		echo '</tr>';
 		echo '<tr>
 				<td colspan="5"></td>
 			</tr>
-			</table>';
-		echo '<br />
-			<div class="centre">
+			</fieldset>';
+		echo '<div class="centre">
 				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 			</div>';
 	} else { //controlled but not serialised - just lot/batch control
@@ -972,9 +967,9 @@ if($WORow['controlled']==1){ //controlled
 					}
 					echo '<td><input type="textbox" name="BatchRef' . $i . '" value="' . $WOSNRow[0] . '" placeholder="'._('Batch/Lot No').'" /></td>
 						  <td><input type="textbox" class="number" name="Qty' . $i . '" placeholder="'._('Quantity').'" />
-						  		<input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[2] . '" />
-						  		<input type="hidden" name="QtyReqd' . $i . '" value="' . locale_number_format($WOSNRow[1],'Variable') . '" /></td>
-						  	</tr>';
+								<input type="hidden" name="QualityText' . $i . '" value="' . $WOSNRow[2] . '" />
+								<input type="hidden" name="QtyReqd' . $i . '" value="' . locale_number_format($WOSNRow[1],'Variable') . '" /></td>
+							</tr>';
 					$i++;
 				}
 			}
@@ -993,28 +988,26 @@ if($WORow['controlled']==1){ //controlled
 			}
 		}
 		echo '<tr>
-                 <td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>
-              </tr>
-              </table>';
-		echo '<br />
-			<div class="centre">
+				 <td><input type="hidden" name="CountOfInputs" value="' . $i . '" /></td>
+			  </tr>
+			  </fieldset>';
+		echo '<div class="centre">
 				<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 			</div>';
 	} //end of lot/batch control
 } else { //not controlled - an easy one!
 
-	echo '<tr>
-            <td><input type="hidden" name="CountOfInputs" value="1" /></td>
-			<td>' . _('Quantity Received') . ':</td>
-			<td><input type="text" class="number" name="Qty" required="required" title="'._('The input must be numeric').'" placeholder="'._('Received Qty').'" /></td>
-		</tr>
-		</table>';
-	echo '<br />
-		<div class="centre">
+	echo '<field>
+			<input type="hidden" name="CountOfInputs" value="1" />
+			<label for="Qty">' . _('Quantity Received') . ':</label>
+			<input type="text" class="number" name="Qty" required="required" title="" placeholder="'._('Received Qty').'" />
+			<fieldhelp>'._('The input must be numeric').'</fieldhelp>
+		</field>
+		</fieldset>';
+	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Process Manufactured Items Received') . '" />
 		</div>';
 }
-echo '</div>';
 echo '</form>';
 
 include('includes/footer.php');

@@ -253,27 +253,25 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 
 	echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table class="selection">';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>';
 
-	echo '<tr>
-			<td>' . _('From Supplier Code') . ':</td>
-			<td><input type="text" name="FromCriteria" required="required" autofocus="autofocus" data-type="no-illegal-chars" value="0" /></td>
-		</tr>
-		<tr>
-			<td>' . _('To Supplier Code'). ':</td>
-			<td><input type="text" name="ToCriteria" required="required" data-type="no-illegal-chars"  value="zzzzzzz" /></td>
-		</tr>
-		</table>
-		<br />
+	echo '<field>
+			<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
+			<input type="text" name="FromCriteria" required="required" autofocus="autofocus" data-type="no-illegal-chars" value="0" />
+		</field>
+		<field>
+			<label for="ToCriteria">' . _('To Supplier Code'). ':</label>
+			<input type="text" name="ToCriteria" required="required" data-type="no-illegal-chars"  value="zzzzzzz" />
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 			<input type="submit" name="ShowOnScreen" value="' . _('Show On Screen') . '" />
 		</div>
-        </div>
-        </form>';
+		</form>';
 
 	include('includes/footer.php');
 

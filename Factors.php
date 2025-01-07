@@ -197,63 +197,69 @@ if (isset($_POST['Amend']) or isset($_POST['Create'])) {
 	// its a new factor being added
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="FactorID" value="' . $FactorID .'" />
-        <input type="hidden" name="New" value="Yes" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Factor company Name') . ':</td>
-			<td><input tabindex="1" type="text" name="FactorName" required="required" size="42" maxlength="40" value="' . $_POST['FactorName'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 1') . ':</td>
-			<td><input tabindex="2" type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] .'" /></td>
-		</tr>
-		<tr><td>' . _('Address Line 2') . ':</td>
-			<td><input tabindex="3" type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] .'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 3') . ':</td>
-			<td><input tabindex="4" type="text" name="Address3" size="42" maxlength="40" value="' .$_POST['Address3'] .'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 4') . ':</td>
-			<td><input tabindex="5" type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'].'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 5') . ':</td>
-			<td><input tabindex="6" type="text" name="Address5" size="42" maxlength="40" value="' . $_POST['Address5'] .'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address Line 6') . ':</td>
-			<td><input tabindex="7" type="text" name="Address6" size="42" maxlength="40" value="' .$_POST['Address6'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Contact Name') . ':</td>
-			<td><input tabindex="8" type="text" name="ContactName" required="required"  size="20" maxlength="25" value="' . $_POST['ContactName'] .'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Telephone') . ':</td>
-			<td><input tabindex="9" type="tel" name="Telephone" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' .$_POST['Telephone'].'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Fax') . ':</td>
-			<td><input tabindex="10" type="tel" name="Fax" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' . $_POST['Fax'] .'" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Email') . ':</td>
-			<td><input tabindex="11" type="email" name="Email" size="55" maxlength="55" value="' . $_POST['Email'] . '" /></td>
-		</tr>
-		</table>';
+        <input type="hidden" name="New" value="Yes" />';
+        
+	if (isset($_POST['Amend'])) {
+		echo '<fieldset>
+				<legend>', _('Amend Factor Company Details'), '</legend>';
+	} else {
+		echo '<fieldset>
+				<legend>', _('Create Factor Company Details'), '</legend>';
+	}
+
+	echo '<field>
+			<label for="FactorName">' . _('Factor company Name') . ':</label>
+			<input tabindex="1" type="text" name="FactorName" required="required" size="42" maxlength="40" value="' . $_POST['FactorName'] . '" />
+		</field>
+		<field>
+			<label for="Address1">' . _('Address Line 1') . ':</label>
+			<input tabindex="2" type="text" name="Address1" size="42" maxlength="40" value="' . $_POST['Address1'] .'" />
+		</field>
+		<field>
+			<label for="Address2">' . _('Address Line 2') . ':</label>
+			<input tabindex="3" type="text" name="Address2" size="42" maxlength="40" value="' . $_POST['Address2'] .'" />
+		</field>
+		<field>
+			<label for="Address3">' . _('Address Line 3') . ':</label>
+			<input tabindex="4" type="text" name="Address3" size="42" maxlength="40" value="' .$_POST['Address3'] .'" />
+		</field>
+		<field>
+			<label for="Address4">' . _('Address Line 4') . ':</label>
+			<input tabindex="5" type="text" name="Address4" size="42" maxlength="40" value="' . $_POST['Address4'].'" />
+		</field>
+		<field>
+			<label for="Address5">' . _('Address Line 5') . ':</label>
+			<input tabindex="6" type="text" name="Address5" size="42" maxlength="40" value="' . $_POST['Address5'] .'" />
+		</field>
+		<field>
+			<label for="Address6">' . _('Address Line 6') . ':</label>
+			<input tabindex="7" type="text" name="Address6" size="42" maxlength="40" value="' .$_POST['Address6'] . '" />
+		</field>
+		<field>
+			<label for="ContactName">' . _('Contact Name') . ':</label>
+			<input tabindex="8" type="text" name="ContactName" required="required"  size="20" maxlength="25" value="' . $_POST['ContactName'] .'" />
+		</field>
+		<field>
+			<label for="Telephone">' . _('Telephone') . ':</label>
+			<input tabindex="9" type="tel" name="Telephone" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' .$_POST['Telephone'].'" />
+		</field>
+		<field>
+			<label for="Fax">' . _('Fax') . ':</label>
+			<input tabindex="10" type="tel" name="Fax" pattern="[0-9+()\ ]*" size="20" maxlength="25" value="' . $_POST['Fax'] .'" />
+		</field>
+		<field>
+			<label for="Email">' . _('Email') . ':</label>
+			<input tabindex="11" type="email" name="Email" size="55" maxlength="55" value="' . $_POST['Email'] . '" />
+		</field>
+		</fieldset>';
 }
 
 
 if (isset($_POST['Create'])) {
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input tabindex="12" type="submit" name="Submit" value="' . _('Insert New Factor') . '" />
-		</div>
         </div>
 		</form>';
 } else if (isset($_POST['Amend'])) {

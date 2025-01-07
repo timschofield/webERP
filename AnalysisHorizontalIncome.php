@@ -151,14 +151,12 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 	echo '</select>
 		</field>';
 
-	echo '<h3>', _('OR'), '</h3>';
-
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
 
 	echo	'<field>
-				<label for="Period">', _('Select Period'), '</label>
+				<label for="Period">', '<b>' , _('OR') , ' </b>' , _('Select Period'), '</label>
 				', ReportPeriodList($_POST['Period'], array('l', 't')), '
 			</field>',
 	// Show all accounts instead a summary:

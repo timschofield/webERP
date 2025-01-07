@@ -287,7 +287,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsToPrint'.$i];$LabelNumber++){
 				
 				// Get the data for each field
-				$StockId = $_POST['StockID' . $i];
+				$StockID = $_POST['StockID' . $i];
 //				$Description = $_POST['Description' . $i];
 
 				// define Logo information
@@ -367,12 +367,12 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 						$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
 					}
 					// print the barcode
-					$pdf->write1DBarcode($StockId, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
+					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}elseif ($_POST['LabelID'] == 'CodeSticker'){
 					//Print the logo
 					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 203, '', false, false, 0, false, false, false);
 					// print the barcode
-					$pdf->write1DBarcode($StockId, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
+					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}else{
 					//not code yet
 					return;

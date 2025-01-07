@@ -143,7 +143,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		$ActualBeginning = 0;
 		$BudgetBeginning = 0;
 		$LastBeginning = 0;
-		$Sql = "SELECT
+		$SQL = "SELECT
 					chartdetails.accountcode,
 					chartmaster.accountname,
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']) . "') THEN chartdetails.bfwd ELSE 0 END) AS ActualAmount,
@@ -155,7 +155,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4
 				GROUP BY chartdetails.accountcode
 				ORDER BY chartdetails.accountcode";
-		$Result = DB_query($Sql);
+		$Result = DB_query($SQL);
 		foreach($Result as $MyRow) {
 		if(ABS($MyRow['ActualAmount'])> 1
 			OR ABS($MyRow['BudgetAmount'])> 1
@@ -180,7 +180,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		}
 	} else {
 		// Prints a summary of Cash at beginning of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=OFF):
-		$Sql = "SELECT
+		$SQL = "SELECT
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']) . "') THEN chartdetails.bfwd ELSE 0 END) AS ActualAmount,
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodFrom']-12) . "') THEN chartdetails.bfwd ELSE 0 END) AS LastAmount
@@ -188,7 +188,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
 					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
 				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4";
-		$Result = DB_query($Sql);
+		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		$ActualBeginning = $MyRow['ActualAmount'];
 		$BudgetBeginning = $MyRow['BudgetAmount'];
@@ -208,7 +208,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		$ActualEnd = 0;
 		$BudgetEnd = 0;
 		$LastEnd = 0;
-		$Sql = "SELECT
+		$SQL = "SELECT
 					chartdetails.accountcode,
 					chartmaster.accountname,
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS ActualAmount,
@@ -220,7 +220,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4
 				GROUP BY chartdetails.accountcode
 				ORDER BY chartdetails.accountcode";
-		$Result = DB_query($Sql);
+		$Result = DB_query($SQL);
 		foreach($Result as $MyRow) {
 		if(ABS($MyRow['ActualAmount'])> 1
 			OR ABS($MyRow['BudgetAmount'])> 1
@@ -245,7 +245,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 		}
 	} else {
 		// Prints a summary of Cash at End of period (Parameters: PeriodFrom, PeriodTo, ShowZeroBalance=on/off, ShowCash=OFF):
-		$Sql = "SELECT
+		$SQL = "SELECT
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS ActualAmount,
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']) . "') THEN chartdetails.bfwdbudget ELSE 0 END) AS BudgetAmount,
 					Sum(CASE WHEN (chartdetails.period = '" . ($_POST['PeriodTo']-12) . "') THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS LastAmount
@@ -253,7 +253,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND $_POST['Action'
 					INNER JOIN chartdetails ON chartmaster.accountcode=chartdetails.accountcode
 					INNER JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
 				WHERE accountgroups.pandl=0 AND chartmaster.cashflowsactivity=4";
-		$Result = DB_query($Sql);
+		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_array($Result);
 		$ActualEnd = $MyRow['ActualAmount'];
 		$BudgetEnd = $MyRow['BudgetAmount'];

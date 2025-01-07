@@ -662,10 +662,11 @@ else {
 
 	++$j;
 
-	echo '<table class="selection"
-		<tr>
-			<td>' . _('Pick List Status') . ':</td>
-			<td><select name="Status">';
+	echo '<fieldset>
+			<legend<', _('Picking List Criteria'), '</legend>
+			<field>
+				<label for="Status">' . _('Pick List Status') . ':</label>
+				<select name="Status">';
 
 	if (($_SESSION['Items' . $identifier]->Status != 'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to change status on an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
@@ -691,41 +692,42 @@ else {
 		}
 	}
 
-	echo '</select></td></tr>';
-	echo '<tr>
-			<td>' . _('Consignment Note Ref') . ':</td>
-			<td><input tabindex="' . $j . '" type="text" data-type="no-illegal-chars" title="' . _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues') . '" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '" /></td>
-		</tr>';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Consignment">' . _('Consignment Note Ref') . ':</label>
+			<input tabindex="' . $j . '" type="text" data-type="no-illegal-chars" title="" maxlength="15" size="15" name="Consignment" value="' . $_POST['Consignment'] . '" />
+			<fieldhelp>' . _('Enter the consignment note reference to enable tracking of the delivery in the event of customer proof of delivery issues') . '</fieldhelp>
+		</field>';
 	++$j;
 
-	echo '<tr>
-			<td>' . _('No Of Packages in Delivery') . ':</td>
-			<td><input tabindex="' . $j . '" type="number" maxlength="6" size="6" class="integer" name="Packages" value="' . $_POST['Packages'] . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="Packages">' . _('No Of Packages in Delivery') . ':</label>
+			<input tabindex="' . $j . '" type="number" maxlength="6" size="6" class="integer" name="Packages" value="' . $_POST['Packages'] . '" />
+		</field>';
 
 	++$j;
-	echo '<tr>
-			<td>' . _('Pick List Comments') . ':</td>
-			<td><textarea tabindex="' . $j . '" name="Comments" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_SESSION['Items' . $identifier]->Comments) . '</textarea></td>
-		</tr>';
+	echo '<field>
+			<label for="Comments">' . _('Pick List Comments') . ':</label>
+			<textarea tabindex="' . $j . '" name="Comments" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_SESSION['Items' . $identifier]->Comments) . '</textarea>
+		</field>';
 
 	++$j;
-	echo '<tr>
-			<td>' . _('Order Internal Comments') . ':</td>
-			<td><textarea tabindex="' . $j . '" name="InternalComments" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_SESSION['Items' . $identifier]->InternalComments) . '</textarea></td>
-		</tr>';
+	echo '<field>
+			<label for="InternalComments">' . _('Order Internal Comments') . ':</label>
+			<textarea tabindex="' . $j . '" name="InternalComments" pattern=".{0,20}" cols="31" rows="5">' . reverse_escape($_SESSION['Items' . $identifier]->InternalComments) . '</textarea>
+		</field>';
 
 	++$j;
-	echo '</table>';
+	echo '</fieldset>';
 
 	if (($_SESSION['Items' . $identifier]->Status != 'Shipped') or (in_array($ARSecurity, $_SESSION['AllowedPageSecurityTokens']))) {
 		//only allow A/R to change status on an already shipped Pick, we expect to invoice, we need A/R intervention to prevent ship, cancel, no invoice, lost money
 		echo '<div class="centre">
-				<input type="submit" tabindex="' . $j . '" name="Update" value="' . _('Update') . '" />
-				<br />';
+				<input type="submit" tabindex="' . $j . '" name="Update" value="' . _('Update') . '" />';
 		++$j;
-		echo '<br />
-				<input type="submit" tabindex="' . $j . '" name="ProcessPickList" value="' . _('Process Pick List') . '" />
+		echo '<input type="submit" tabindex="' . $j . '" name="ProcessPickList" value="' . _('Process Pick List') . '" />
 			</div>
 			<input type="hidden" name="ShipVia" value="' . $_SESSION['Items' . $identifier]->ShipVia . '" />';
 	}

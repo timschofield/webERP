@@ -12,9 +12,11 @@ echo '<p class="page_title_text">
 
 echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">
 	<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />
-	<table>
-		<tr>
-			<td>', _('From Stock Location'), ':<select required="required" name="StockLocation">';
+	<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>
+		<field>
+			<label for="StockLocation">', _('From Stock Location'), ':</label>
+			<select required="required" name="StockLocation">';
 
 $SQL = "SELECT locationname,
 				locations.loccode
@@ -48,7 +50,8 @@ while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 	}
 }
 
-echo '</select>';
+echo '</select>
+	</field>';
 
 if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
 	$_POST['BeforeDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -56,15 +59,19 @@ if (!isset($_POST['BeforeDate']) or !Is_date($_POST['BeforeDate'])) {
 if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 	$_POST['AfterDate'] = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - 1, Date('d'), Date('y')));
 }
-echo ' ', _('Show Movements before'), ': <input type="text" class="date" name="BeforeDate" size="11" required="required" maxlength="10" value="', $_POST['BeforeDate'], '" />',
-	' ', _('But after'), ': <input type="text" class="date" name="AfterDate" size="11" required="required" maxlength="10" value="', $_POST['AfterDate'], '" />',
-	'</td>
-	 </tr>
-	 </table>
+echo '<field>
+		<label for="BeforeDate">', _('Show Movements before'), ':</label>
+		<input type="text" class="date" name="BeforeDate" size="11" required="required" maxlength="10" value="', $_POST['BeforeDate'], '" />
+	</field>';
+
+echo '<field>
+		<label for="AfterDate">', _('But after'), ':</label>
+		<input type="text" class="date" name="AfterDate" size="11" required="required" maxlength="10" value="', $_POST['AfterDate'], '" />
+	 </field>
+	 </fieldset>
 	<div class="centre">
 		<input type="submit" name="ShowMoves" value="', _('Show Stock Movements'), '" />
-	</div>
-	<br />';
+	</div>';
 
 if ($_POST['StockLocation'] == 'All') {
 	$_POST['StockLocation'] = '%%';

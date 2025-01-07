@@ -145,7 +145,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 				if (!ItemInLIst($MyRow['categoryid'], LIST_STOCK_CATEGORIES_OUTLET)){
 					// we don't send discounted items to marketplaces
 					
-					$StockId = $MyRow['stockid'];
+					$StockID = $MyRow['stockid'];
 
 					if ($MyRow['manufacturers_id'] == 1){
 						$NameOfShop = "Kapal-Laut";
@@ -155,11 +155,11 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$Brand = "Blink by Kapal-Laut";
 					}
 
-					$TextSizeIndonesian = CreateTextSize($StockId, "ID", true);
-					$TextSizeEnglish = CreateTextSize($StockId, "EN", true);
-					$TextSizeGrouping = CreateTextSize($StockId, "EN", false);
+					$TextSizeIndonesian = CreateTextSize($StockID, "ID", true);
+					$TextSizeEnglish = CreateTextSize($StockID, "EN", true);
+					$TextSizeGrouping = CreateTextSize($StockID, "EN", false);
 
-					$OnlySize = ClassicalSize($StockId);
+					$OnlySize = ClassicalSize($StockID);
 					if ($OnlySize != "NO SIZE"){
 						$NamaVariant = "Ukuran";
 					}else{
@@ -167,7 +167,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$OnlySize = "";
 					}
 
-					$Name = ItemMarketplaceName($StockId, $MyRow['description'], $MyRow['descriptiontranslation']);
+					$Name = ItemMarketplaceName($StockID, $MyRow['description'], $MyRow['descriptiontranslation']);
 					$Price = round($MyRow['price']);
 					$PriceDiscount = '';
 					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
@@ -176,11 +176,11 @@ function submit($TypeOfShop, $TypeOfFile) {
 							$TextSizeEnglish;
 					$Weight = $MyRow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
-					$QOH = ItemMarketplaceQOH($StockId);
-					$Category = FindShopeeCategory($StockId, $Name, $Description);
+					$QOH = ItemMarketplaceQOH($StockID);
+					$Category = FindShopeeCategory($StockID, $Name, $Description);
 					$Material = FindLazadaMaterial($TypeOfFile, $Name);
 					$Stone = FindLazadaStone($Name);
-					$WhatsInTheBox = WhatsInTheBox($StockId);
+					$WhatsInTheBox = WhatsInTheBox($StockID);
 					$Color = FindLAzadaColor($Name);
 
 					if ($MyRow['unitsdimension'] == 'mm'){
@@ -197,18 +197,18 @@ function submit($TypeOfShop, $TypeOfFile) {
 					$Weight = $MyRow['grossweight'] * 1000; // weight in grams
 
 					$PackagingImage = FALSE;
-					list($Url_1, $PackagingImage) = ItemImagesURL($StockId,   1, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_2, $PackagingImage) = ItemImagesURL($StockId,   2, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_3, $PackagingImage) = ItemImagesURL($StockId,   3, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_4, $PackagingImage) = ItemImagesURL($StockId,   4, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_5, $PackagingImage) = ItemImagesURL($StockId,   5, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_6, $PackagingImage) = ItemImagesURL($StockId,   6, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_7, $PackagingImage) = ItemImagesURL($StockId,   7, $PackagingImage, $MyRow['klpackaging']);
-					list($Url_8, $PackagingImage) = ItemImagesURL($StockId, 999, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_1, $PackagingImage) = ItemImagesURL($StockID,   1, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_2, $PackagingImage) = ItemImagesURL($StockID,   2, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_3, $PackagingImage) = ItemImagesURL($StockID,   3, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_4, $PackagingImage) = ItemImagesURL($StockID,   4, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_5, $PackagingImage) = ItemImagesURL($StockID,   5, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_6, $PackagingImage) = ItemImagesURL($StockID,   6, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_7, $PackagingImage) = ItemImagesURL($StockID,   7, $PackagingImage, $MyRow['klpackaging']);
+					list($Url_8, $PackagingImage) = ItemImagesURL($StockID, 999, $PackagingImage, $MyRow['klpackaging']);
 					// only a packaging pic for the 8th URL (if not yet)
 
 					if ($TypeOfFile == "FSMaster"){
-						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('A'.$i, $StockID);
 						$ActiveSheet->setCellValue('B'.$i, $Name);
 						$ActiveSheet->setCellValue('C'.$i, $Brand);
 						$ActiveSheet->setCellValue('D'.$i, $Category);
@@ -228,11 +228,11 @@ function submit($TypeOfShop, $TypeOfFile) {
 						$ActiveSheet->setCellValue('W'.$i, $Url_5);
 						$ActiveSheet->setCellValue('X'.$i, $Url_6);
 					}elseif($TypeOfFile == "FSQOH"){
-						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('A'.$i, $StockID);
 						$ActiveSheet->setCellValue('B'.$i, $Name);
 						$ActiveSheet->setCellValue('D'.$i, $QOH);
 					}elseif($TypeOfFile == "FSPrice"){
-						$ActiveSheet->setCellValue('A'.$i, $StockId);
+						$ActiveSheet->setCellValue('A'.$i, $StockID);
 						$ActiveSheet->setCellValue('B'.$i, $Name);
 						$ActiveSheet->setCellValue('AB'.$i, $Price);
 						$ActiveSheet->setCellValue('AC'.$i, $Price);

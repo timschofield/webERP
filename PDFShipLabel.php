@@ -12,11 +12,11 @@ if (isset($_GET['ORD'])) {
 }
 
 if (isset($_GET['StockID'])) {
-	$StockId = $_GET['StockID'];
+	$StockID = $_GET['StockID'];
 } elseif (isset($_POST['StockID'])) {
-	$StockId = $_POST['StockID'];
+	$StockID = $_POST['StockID'];
 } else {
-	unset($StockId);
+	unset($StockID);
 }
 
 

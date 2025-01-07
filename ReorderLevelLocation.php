@@ -62,18 +62,17 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	$Result = DB_query($SQL);
 
-	$SqlLoc="SELECT locationname
+	$SQLLoc="SELECT locationname
 		   FROM locations
 		   WHERE loccode='".$_POST['StockLocation']."'";
 
-	$ResultLocation = DB_query($SqlLoc);
+	$ResultLocation = DB_query($SQLLoc);
 	$Location=DB_fetch_array($ResultLocation);
 
 	echo'<p class="page_title_text"><strong>' . _('Location : ') . '' . $Location['locationname'] . ' </strong></p>';
 	echo'<p class="page_title_text"><strong>' . _('Number Of Days Sales : ') . '' . locale_number_format($_POST['NumberOfDays'],0) . '' . _(' Days ') . ' </strong></p>';
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" id="Update">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<table>';
     echo '<tr>
@@ -98,24 +97,24 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			<input type="hidden" value="' . locale_number_format($_POST['NumberOfDays'],0) . '" name="NumberOfDays" />';
 
 
-		$SqlInv="SELECT SUM(-qty) AS qtyinvoiced
+		$SQLInv="SELECT SUM(-qty) AS qtyinvoiced
 				FROM stockmoves
 				WHERE stockid='".$MyRow['stockid']."'
 				AND (type=10 OR type=11)
 				AND loccode='" . $_POST['StockLocation'] ."'
 				AND trandate >= '" . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-filter_number_format($_POST['NumberOfDays']))) . "'";
 
-		$ResultInvQty = DB_query($SqlInv);
+		$ResultInvQty = DB_query($SQLInv);
 		$SalesRow=DB_fetch_array($ResultInvQty);
 
 
 		//get On Hand all
 		//find the quantity onhand item
-		$SqlOH="SELECT SUM(quantity) AS qty
+		$SQLOH="SELECT SUM(quantity) AS qty
 				FROM locstock
 				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 				WHERE stockid='" . $MyRow['stockid'] . "'";
-		$TotQtyResult = DB_query($SqlOH);
+		$TotQtyResult = DB_query($SQLOH);
 		$TotQtyRow = DB_fetch_array($TotQtyResult);
 
 		/*	KL RICARD Fill the $Notes variable*/
@@ -155,33 +154,31 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 			</td>
 		</tr>
         </table>
-        </div>
 		</form>';
 
 
 } else { /*The option to submit was not hit so display form */
 
 
-	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div><br />';
+	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';
 
-	echo '<br />
-		<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		<div>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	$SQL = "SELECT locations.loccode,
 				   locationname
 		    FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1";
 	$ResultStkLocs = DB_query($SQL);
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Location') . ':</td>
-				<td><select name="StockLocation"> ';
+	echo '<fieldset>
+			<legend>', _('Report Criteria'), '</legend>
+			<field>
+				<label for="StockLocation">' . _('Location') . ':</label>
+				<select name="StockLocation"> ';
 
 	while ($MyRow=DB_fetch_array($ResultStkLocs)){
 		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
-	echo '</select></td></tr>';
+	echo '</select>
+		</field>';
 
 	$SQL="SELECT categoryid,
 				categorydescription
@@ -190,32 +187,35 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	$Result1 = DB_query($SQL);
 
-	echo '<tr><td>' . _('Category') . ':</td>
-				<td><select name="StockCat">';
+	echo '<field>
+			<label for="StockCat">' . _('Category') . ':</label>
+			<select name="StockCat">';
 
 	while ($MyRow1 = DB_fetch_array($Result1)) {
 		echo '<option value="' . $MyRow1['categoryid'] . '">' . $MyRow1['categorydescription'] . '</option>';
 	}
 
-	echo '</select></td></tr>';
-	echo '<tr>
-			<td>' . _('Number Of Days Sales') . ':</td>
-			<td><input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" /></td>
-          </tr>';
-	echo '<tr>
-			<td>' . _('Order By') . ':</td>
-			<td><select name="Sequence">
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="NumberOfDays">' . _('Number Of Days Sales') . ':</label>
+			<input type="text" class="number" name="NumberOfDays" maxlength="3" size="4" value="0" />
+		</field>';
+
+	echo '<field>
+			<label for="Sequence">' . _('Order By') . ':</label>
+			<select name="Sequence">
 				<option value="1">' .  _('Total Invoiced') . '</option>
 				<option value="2">' .  _('Item Code') . '</option>
-				</select></td>
-		</tr>';
-	echo '</table>
-			<br />
+			</select>
+		</field>';
+
+	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Submit') . '" />
 			</div>';
-    echo '</div>
-          </form>';
+    echo '</form>';
 
 } /*end of else not submit */
 include('includes/footer.php');

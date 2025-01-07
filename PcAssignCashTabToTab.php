@@ -160,7 +160,6 @@ if (!isset($SelectedTabs)){
 		_('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	$SQL = "SELECT tabcode
@@ -170,10 +169,12 @@ if (!isset($SelectedTabs)){
 
 	$Result = DB_query($SQL);
 
-    echo '<br /><table class="selection">'; //Main table
+    echo '<fieldset>
+			<legend>', _('Select Cash Tabs'), '</legend>'; //Main table
 
-    echo '<tr><td>' . _('Petty cash tab to assign cash from') . ':</td>
-            <td><select name="SelectedTabs">';
+    echo '<field>
+			<label for="SelectedTabs">' . _('Petty cash tab to assign cash from') . ':</label>
+			<select name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) AND $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="';
@@ -183,9 +184,12 @@ if (!isset($SelectedTabs)){
 		echo $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
 	}
 
-	echo '</select></td></tr>';
-  echo '<tr><td>' . _('Petty cash tab to assign cash to') . ':</td>
-	  <td><select name="SelectedTabsTo">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="SelectedTabsTo">' . _('Petty cash tab to assign cash to') . ':</label>
+			<select name="SelectedTabsTo">';
 	DB_data_seek($Result,0);
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabsTo']) AND $MyRow['tabcode'] == $_POST['SelectTabs']) {
@@ -195,17 +199,16 @@ if (!isset($SelectedTabs)){
 		}
 		echo $MyRow['tabcode'] . '">' . $MyRow['tabcode'] . '</option>';
 	}
-	echo '</select></td></tr>';
-   	echo '</table>'; // close main table
+	echo '</select>
+		</field>';
+   	echo '</fieldset>'; // close main table
     DB_free_result($Result);
 
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Accept') . '" />
 			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
-	echo '</div>
-          </form>';
+	echo '</form>';
 }
 
 //end of ifs and buts!
@@ -217,16 +220,16 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 	}
 	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Select another pair of tabs') . '</a></div>';
 
-	echo '<br /><table class="selection">';
-	echo '	<tr>
+	echo '<fieldset>';
+	echo '	<field>
 				<td>' . _('Petty cash tab to assign cash from') . ':</td>
 				<td>' . $SelectedTabs . '</td>
-			</tr>
-			<tr>
+			</field>
+			<field>
 				<td>' . _('Petty cash tab to assign cash to') . ':</td>
 				<td>' . $SelectedTabsTo . '</td>
-			</tr>';
-	echo '</table>';
+			</field>';
+	echo '</fieldset>';
 
 	if (! isset($_GET['edit']) OR isset ($_POST['GO'])){
 
@@ -270,15 +273,14 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		//Limit expenses history to X days
-		echo '<table class="selection">
-				<tr>
-					<td>' . _('Detail of Tab Movements For Last') .':
+		echo '<fieldset>
+				<field>
+					' . _('Detail of Tab Movements For Last') .':
 						<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
 						<input type="text" class="number" name="Days" value="' . $Days  . '" maxlength="3" size="4" /> ' . _('Days') . '
 						<input type="submit" name="Go" value="' . _('Go') . '" />
-					</td>
-				</tr>
-			</table>';
+				</field>
+			</fieldset>';
 
 		echo '<table class="selection">
 				<thead>
@@ -406,7 +408,6 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .'">
-			<div>
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /* Ricard: needs revision of this date initialization */
@@ -414,36 +415,33 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
 		}
 
-        echo '<br />
-				<table class="selection">'; //Main table
-            echo '<tr>
-					<th colspan="2"><h3>' . _('New Cash Assignment') . '</h3></th>
-				</tr>';
-		echo '<tr>
-				<td>' . _('Cash Assignment Date') . ':</td>
-				<td><input type="text" class="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['Date'] . '" /></td>
-			</tr>';
+		echo '<fieldset>'; //Main table
+		echo '<legend>' . _('New Cash Assignment') . '</legend>';
+		echo '<field>
+				<label for="Date">' . _('Cash Assignment Date') . ':</label>
+				<input type="text" class="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['Date'] . '" />
+			</field>';
 
 
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount'] = 0;
 		}
 
-		echo '<tr>
-				<td>' . _('Amount') . ':</td>
-				<td><input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$CurrDecimalPlaces) . '" /></td>
-			</tr>';
+		echo '<field>
+				<label for="Amount">' . _('Amount') . ':</label>
+				<input type="text" class="number" name="Amount" size="12" maxlength="11" value="' . locale_number_format($_POST['Amount'],$CurrDecimalPlaces) . '" />
+			</field>';
 
 		if (!isset($_POST['Notes'])) {
 			$_POST['Notes'] = '';
 		}
 
-		echo '<tr>
-				<td>' . _('Notes') . ':</td>
-				<td><input type="text" name="Notes" size="50" maxlength="49" value="' . $_POST['Notes'] . '" /></td>
-			</tr>';
+		echo '<field>
+				<label for="Notes">' . _('Notes') . ':</label>
+				<input type="text" name="Notes" size="50" maxlength="49" value="' . $_POST['Notes'] . '" />
+			</field>';
 
-		echo '</table>'; // close main table
+		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="CurrentAmount" value="' . $SelectedTab['0']. '" />
 			<input type="hidden" name="SelectedTabs" value="' . $SelectedTabs . '" />
 			<input type="hidden" name="Days" value="' . $Days . '" />

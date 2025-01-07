@@ -201,29 +201,29 @@ if (isset($_POST['ProcessCustomerChange'])){
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br />
-	<table>
-		<tr>
-			<td>' . _('Customer Code') . ':</td>
-			<td><input type="text" name="DebtorNo" size="20" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Existing Branch Code') . ':</td>
-			<td><input type="text" name="OldBranchCode" size="20" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('New Branch Code') . ':</td>
-			<td><input type="text" name="NewBranchCode" size="20" maxlength="20" /></td>
-		</tr>
-	</table>';
+echo '<fieldset>
+		<legend>', _('Branch Code Changes'), '</legend>
+		<field>
+			<label>' . _('Customer Code') . ':</label>
+			<input type="text" name="DebtorNo" size="20" maxlength="20" />
+		</field>
+		<field>
+			<label>' . _('Existing Branch Code') . ':</label>
+			<input type="text" name="OldBranchCode" size="20" maxlength="20" />
+		</field>
+		<field>
+			<label>' . _('New Branch Code') . ':</label>
+			<input type="text" name="NewBranchCode" size="20" maxlength="20" />
+		</field>
+	</fieldset>';
 
-echo '<input type="submit" name="ProcessCustomerChange" value="' . _('Process') . '" />';
+echo '<div class="centre">
+		<input type="submit" name="ProcessCustomerChange" value="' . _('Process') . '" />
+	</div>';
 
-echo '</div>
-      </form>';
+echo '</form>';
 
 include('includes/footer.php');
 ?>

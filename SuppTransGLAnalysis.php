@@ -85,6 +85,12 @@ if (isset($_GET['Edit'])) {
 	$_SESSION['SuppTrans']->Remove_GLCodes_From_Trans($_GET['Edit']);
 }
 
+if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
+	echo '<a href="' . $RootPath . '/SupplierInvoice.php" class="toplink">' . _('Back to Invoice Entry') . '</a>';
+} else {
+	echo '<a href="' . $RootPath . '/SupplierCredit.php" class="toplink">' . _('Back to Credit Note Entry') . '</a>';
+}
+
 /*Show all the selected GLCodes so far from the SESSION['SuppInv']->GLCodes array */
 if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
 	echo '<p class="page_title_text">
@@ -138,32 +144,19 @@ echo '</tbody>
 	</tfoot>
 	</table>';
 
-if ($_SESSION['SuppTrans']->InvoiceOrCredit == 'Invoice') {
-	echo '<br />
-		<div class="centre">
-			<a href="' . $RootPath . '/SupplierInvoice.php">' . _('Back to Invoice Entry') . '</a>
-		</div>';
-} else {
-	echo '<br />
-		<div class="centre">
-			<a href="' . $RootPath . '/SupplierCredit.php">' . _('Back to Credit Note Entry') . '</a>
-		</div>';
-}
-
 /*Set up a form to allow input of new GL entries */
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<br />
-	<table class="selection">';
+echo '<fieldset>
+		<legend>', _('Supplier GL Analysis'), '</legend>';
 if (!isset($_POST['GLCode'])) {
 	$_POST['GLCode'] = '';
 }
 
-echo '<tr>
-		<td>' . _('Select Tag') . ':</td>
-		<td><select name="Tag">';
+echo '<field>
+		<label for="Tag">' . _('Select Tag') . ':</label>
+		<select name="Tag">';
 
 $SQL = "SELECT tagref,
 			tagdescription
@@ -179,22 +172,21 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '<tr>
-		<td>' . _('Account Code') . ':</td>
-		<td><input type="text" data-type="no-illegal-chars" title="' . _('The input must be alpha-numeric characters') . '" placeholder="' . _('less than 20 alpha-numeric characters') . '" name="GLCode" size="21" maxlength="20" value="' . $_POST['GLCode'] . '" />
+echo '<field>
+		<label for="GLCode">' . _('Account Code') . ':</label>
+		<input type="text" data-type="no-illegal-chars" title="" placeholder="' . _('less than 20 alpha-numeric characters') . '" name="GLCode" size="21" maxlength="20" value="' . $_POST['GLCode'] . '" />
+		<fieldhelp>' . _('The input must be alpha-numeric characters') . '</fieldhelp>
 		<input type="hidden" name="JobRef" value="" /></td>
-	</tr>';
+	</field>';
 if (!isset($_POST['AcctSelection']) or $_POST['AcctSelection'] == '') {
 	$_POST['AcctSelection'] = $SupplierCodeRow[0];
 }
-echo '<tr>
-	<td>' . _('Account Selection') . ':
-		<br />(' . _('If you know the code enter it above') . '
-		<br />' . _('otherwise select the account from the list') . ')</td>
-	<td><select name="AcctSelection">';
+echo '<field>
+			<label for="AcctSelection">' . _('Account Selection') . ':</label>
+			<select name="AcctSelection">';
 
 $SQL = "SELECT chartmaster.accountcode,
 			   chartmaster.accountname
@@ -214,31 +206,30 @@ while ($MyRow = DB_fetch_array($Result)) {
 }
 
 echo '</select>
-	</td>
-	</tr>';
+	<fieldhelp>' . _('If you know the code enter it above') .' '._('otherwise select the account from the list') . '</fieldhelp>
+</field>';
 if (!isset($_POST['Amount'])) {
 	$_POST['Amount'] = 0;
 }
-echo '<tr>
-		<td>' . _('Amount'), ' (', $_SESSION['SuppTrans']->CurrCode, '):</td>
-		<td><input type="text" class="number" required="required" pattern="(?!^[-]?0[.,]0*$).{1,11}" title="' . _('The amount must be numeric and cannot be zero') . '" name="Amount" size="12" placeholder="' . _('No zero numeric') . '" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" /></td>
-	</tr>';
+echo '<field>
+		<label for="Amount">' . _('Amount'), ' (', $_SESSION['SuppTrans']->CurrCode, '):</label>
+		<input type="text" class="number" required="required" pattern="(?!^[-]?0[.,]0*$).{1,11}" title="" name="Amount" size="12" placeholder="' . _('No zero numeric') . '" maxlength="11" value="' . locale_number_format($_POST['Amount'], $_SESSION['SuppTrans']->CurrDecimalPlaces) . '" />
+		<fieldhelp>' . _('The amount must be numeric and cannot be zero') . '</fieldhelp>
+	</field>';
 
 if (!isset($_POST['Narrative'])) {
 	$_POST['Narrative'] = '';
 }
-echo '<tr>
-		<td>' . _('Narrative') . ':</td>
-		<td><textarea name="Narrative" cols="40" rows="2">' . $_POST['Narrative'] . '</textarea></td>
-	</tr>
-	</table>
-	<br />';
+echo '<field>
+		<label for="Narrative">' . _('Narrative') . ':</label>
+		<textarea name="Narrative" cols="40" rows="2">' . $_POST['Narrative'] . '</textarea>
+	</field>
+	</fieldset>';
 
 echo '<div class="centre">
 		<input type="submit" name="AddGLCodeToTrans" value="' . _('Enter GL Line') . '" />
 	</div>';
 
-echo '</div>
-      </form>';
+echo '</form>';
 include ('includes/footer.php');
 ?>

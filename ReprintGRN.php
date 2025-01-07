@@ -11,22 +11,17 @@ if (!isset($_POST['PONumber'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo '<table class="selection">
-		<tr>
-			<th colspan="2"><h3>' . _('Select a purchase order') . '</h3></th>
-		</tr>
-		<tr>
-			<td>' . _('Enter a Purchase Order Number') . '</td>
-			<td>' . '<input type="text" name="PONumber" class="number" size="7" value="'.$_POST['PONumber'].'" /></td>
-		</tr>
-		<tr>
-			<td colspan="2" class="centre"><input type="submit" name="Show" value="' . _('Show GRNs') . '" /></td>
-		</tr>
-	</table>
-    <br />
-    </div>
+echo '<fieldset>
+		<legend>' . _('Select a purchase order') . '</legend>
+		<field>
+			<label for="PONumber">' . _('Enter a Purchase Order Number') . '</label>
+			' . '<input type="text" name="PONumber" class="number" size="7" value="'.$_POST['PONumber'].'" />
+		</field>
+	</fieldset>
+	<div class="centre">
+		<input type="submit" name="Show" value="' . _('Show GRNs') . '" />
+	</div>
 	</form>';
 
 if (isset($_POST['Show'])) {

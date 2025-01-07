@@ -194,7 +194,6 @@ echo '<br />';
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') .  '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedDepartmentID)) {
@@ -218,36 +217,37 @@ if (! isset($_GET['delete'])) {
 			$AuthoriserID			= $MyRow['authoriser'];
 
 			echo '<input type="hidden" name="SelectedDepartmentID" value="' . $_POST['DepartmentID'] . '" />';
-			echo '<table class="selection">';
+			echo '<fieldset>
+					<legend>', _('Edit Department Details'), '</legend>';
 		}
 
 	}  else {
 		$_POST['DepartmentName']='';
-		echo '<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Create New Department Details'), '</legend>';
 	}
-	echo '<tr>
-			<td>' . _('Department Name') . ':' . '</td>
-			<td><input type="text" name="DepartmentName" size="50" required="required" title="' ._('The department name is required') . '" maxlength="100" value="' . $_POST['DepartmentName'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Authoriser') . '</td>
-			<td><select name="Authoriser">';
+	echo '<field>
+			<label for="DepartmentName">' . _('Department Name') . ':' . '</label>
+			<input type="text" name="DepartmentName" size="50" required="required" title="" maxlength="100" value="' . $_POST['DepartmentName'] . '" />
+			<fieldhelp>' ._('The department name is required') . '</fieldhelp>
+		</field>
+		<field>
+			<label for="Authoriser">' . _('Authoriser') . '</label>
+			<select name="Authoriser">';
 	$UserSQL="SELECT userid FROM www_users";
-	$Userresult=DB_query($UserSQL);
-	while ($MyRow=DB_fetch_array($Userresult)) {
+	$UserResult=DB_query($UserSQL);
+	while ($MyRow=DB_fetch_array($UserResult)) {
 		if ($MyRow['userid']==$AuthoriserID) {
 			echo '<option selected="True" value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		} else {
 			echo '<option value="'.$MyRow['userid'].'">' . $MyRow['userid'] . '</option>';
 		}
 	}
-	echo '</select></td>
-		</tr>
-		</table>
-		<br />
+	echo '</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="Submit" value="' . _('Enter Information') . '" />
-		</div>
         </div>
 		</form>';
 
