@@ -51,7 +51,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				$Class = 'error';
 				$Message[2] = $Message[2] ? $Message[2] : _('ERROR') . ' ' . _('Report');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 0) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
 			    break;
 
@@ -60,7 +60,7 @@ if (isset($Messages) and count($Messages) > 0) {
 				$Class = 'warn';
 				$Message[2] = $Message[2] ? $Message[2] : _('WARNING') . ' ' . _('Report');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 1) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
 				break;
 
@@ -68,7 +68,7 @@ if (isset($Messages) and count($Messages) > 0) {
                 $Class = 'info';
                 $Message[2] = $Message[2] ? $Message[2] : _('INFORMATION') . ' ' . _('Message');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 2) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
 				break;
 
@@ -77,7 +77,7 @@ if (isset($Messages) and count($Messages) > 0) {
                 $Class = 'success';
                 $Message[2] = $Message[2] ? $Message[2] : _('SUCCESS') . ' ' . _('Report');
 				if (!empty($LogFile) && isset($_SESSION['LogSeverity']) && $_SESSION['LogSeverity'] > 3) {
-					fwrite($LogFile, date('Y-m-d h-m-s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
+					fwrite($LogFile, date('Y-m-d H:i:s') . ',' . $Message[2] . ',' . $_SESSION['UserID'] . ',' . trim($Message[0], ',') . "\n");
 				}
 		}
 
