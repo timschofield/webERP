@@ -652,10 +652,6 @@ if ($ProcessSection02){
 		prnMsg("Packaging Information",'info');
 		InsuficientStockForShopPackaging('SHPACK', 30, FORECAST_DAYS_FOR_PACKAGING_STOCK, true, false, $RootPath); // Works for both regular and outlet shop packaging
 		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","ON PRODUCTION", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
-		POStatusControl("PACKAGING","STILL NOT FULLY PAID", 0, $PeriodNow, $RootPath);
-		$NumberOfTestExecuted++;
 		POStatusControl("PACKAGING","ARRIVING IN NEXT DAYS", 75, $PeriodNow, $RootPath);
 		$NumberOfTestExecuted++;
 	}
