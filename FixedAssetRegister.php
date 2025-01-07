@@ -16,6 +16,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	}
 
+	$DisposalSQL = '';
 	if ($_POST['DisposalStatus']=='ALL'){
 		$DisposalSQL .= " AND (fixedassets.disposaldate = '0000-00-00' 
 								OR fixedassets.disposaldate >='" . $DateFrom . "')";
@@ -344,9 +345,9 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		$_POST['DisposalStatus'] = "ACTIVE";
 	}
 
-	echo '<tr>
-			<th>' . _('Asset Disposal Status') . ':</th>
-			<td><select name="DisposalStatus">';
+	echo '<field>
+			<label for="DisposalStatus">' . _('Asset Disposal Status') . '</label>
+			<select name="DisposalStatus">';
 
 	if ($_POST['DisposalStatus']=='ALL'){
 		echo '	<option selected="selected" value="ALL">' . _('All') . '</option>
@@ -362,8 +363,8 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 				<option selected="selected" value="DISPOSED">' . _('Disposed') . '</option>';
 	}
 
-	echo '	</select></td>
-		</tr>';
+	echo '	</select>
+		</field>';
 		
 	if (empty($_POST['FromDate'])) {
 		$_POST['FromDate'] = '01/01/2017';
@@ -373,12 +374,12 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 	}
 
 	echo '<field>
-			<th>', _('From Date'), '</th>
+			<label for="FromDate">' . _('From Date') . '</label>
 			<input type="text" class="date" name="FromDate" required="required" title="" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
 			<fieldhelp>' . _('Enter the start date to show the cost and accumulated depreciation from') . '</fieldhelp>
 		</field>
 		<field>
-			<th>', _('To Date'), '</th>
+			<label for="ToDate">' . _('To Date') . '</label>
 			<input type="text" class="date" name="ToDate" required="required" title="" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
 			<fieldhelp>' . _('Enter the end date to show the cost and accumulated depreciation to') . '</fieldhelp>
 		</field>
