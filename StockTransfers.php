@@ -733,14 +733,11 @@ if(isset($_SESSION['Transfer']->TransferItem[0]->Controlled)
 		</field>';
 }
 //KL RICARD Added Reason
-echo '<tr>
-		<td>' 
-			. _('Reason').':
-		</td>
-		<td>
-			<input type="text" name="Reason" size="51" value="' . $_POST['Reason'] . '" maxlength="80" >
-		</td>
-	</tr>';
+echo '<field>
+        <label for="Reason">' . _('Reason') . ':</label>
+        <input type="text" name="Reason" size="51" value="' . $_POST['Reason'] . '" maxlength="80" />
+        <fieldhelp>' . _('Enter the reason for this stock transfer') . '</fieldhelp>
+    </field>';
 // KL RICARD End
 	
 echo '</fieldset>

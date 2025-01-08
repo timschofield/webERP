@@ -124,11 +124,11 @@ if (isset($_POST['AssetCode'])) {
 	echo '<input type="text" name="AssetCode" size="15" maxlength="13" />';
 }
 
-echo '</field>
-	</tr>
-echo '<tr>
-		<td>' . _('Asset Disposal Status') . ':</td>
-		<td><select name="DisposalStatus">';
+echo '</field>';
+
+echo '<field>
+		<label for="DisposalStatus">' . _('Asset Disposal Status') . ':</label>
+		<select name="DisposalStatus">';
 
 if ($_POST['DisposalStatus']=='ALL'){
 	echo '	<option selected="selected" value="ALL">' . _('All') . '</option>
@@ -144,11 +144,10 @@ if ($_POST['DisposalStatus']=='ALL'){
 			<option selected="selected" value="DISPOSED">' . _('Disposed') . '</option>';
 }
 
-echo '	</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '
-	</fieldset>
+echo '</fieldset>
 	<div class="centre">
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
 	</div>';

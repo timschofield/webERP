@@ -601,10 +601,7 @@ if (!isset($New) ) { //ie not new at all!
 	echo '<field>
 			<label>' .  _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
 			<input type="file" id="ItemPicture" name="ItemPicture" />
-			<br /><input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image').'
-			
-
-	';
+			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image');
 
 	$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 	$AssetImgLink = GetImageLink($ImageFile, 'ASSET_' . $AssetID, 64, 64, "", "");

@@ -225,19 +225,17 @@ if (!isset($_GET['delete'])) {
 			<label for="ShipperName">' .  _('Shipper Name') .':</label>
 			<input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) . ' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" />
 		</field>
-		<tr><td>' .  _('OpenCart Text') .':</td>
-			<td>
-				<input type="text" name="Opencart_Text"'. ' value="'. $_POST['Opencart_Text'] .'" size="20" maxlength="20" />
-			</td>
-		</tr>
-		<tr><td>' .  _('PowerTrack Code') .':</td>
-			<td>
-				<input type="text" name="Powertrack_Code"'. ' value="'. $_POST['Powertrack_Code'] .'" size="10" maxlength="10" />
-			</td>
-		</tr>
-	</fieldset>
+		<field>
+			<label for="Opencart_Text">' . _('OpenCart Text') . ':</label>
+			<input type="text" name="Opencart_Text" value="'. $_POST['Opencart_Text'] .'" size="20" maxlength="20" />
+		</field>
+		<field>
+			<label for="Powertrack_Code">' . _('PowerTrack Code') . ':</label>
+			<input type="text" name="Powertrack_Code" value="'. $_POST['Powertrack_Code'] .'" size="10" maxlength="10" />
+		</field>
+	</fieldset>';
 
-	<div class="centre">
+	echo '<div class="centre">
 		<input type="submit" name="submit" value="'. _('Enter Information').'" />
 	</div>
 	</form>';

@@ -35,20 +35,21 @@ if(isset($_POST['ProcessGLAccountCode'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '" method="post">';
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+echo '<fieldset>
+        <legend>' . _('GL Account Code Changes') . '</legend>
+        <field>
+            <label for="OldSuffix">' . _('GL Account Code Suffix') . ':</label>
+            <input type="text" name="OldSuffix" size="2" maxlength="2" />
+            <fieldhelp>' . _('Enter the existing GL account code suffix to change') . '</fieldhelp>
+        </field>
+        <field>
+            <label for="NewSuffix">' . _('New Account Code Suffix') . ':</label>
+            <input type="text" name="NewSuffix" size="2" maxlength="2" />
+            <fieldhelp>' . _('Enter the new GL account code suffix') . '</fieldhelp>
+        </field>
+    </fieldset>
 
-echo '<br />
-    <table>
-	<tr>
-		<td>' . _('GL Account Code Suffix') . ':</td>
-		<td><input type="text" name="OldSuffix" size="2" maxlength="2" /></td>
-	</tr>
-	<tr>
-		<td>' . _('New Account Code Suffix') . ':</td>
-		<td><input type="text" name="NewSuffix" size="2" maxlength="2" /></td>
-	</tr>
-	</table>
-
-		<input type="submit" name="ProcessGLAccountCode" value="' . _('Process') . '" />
+    <input type="submit" name="ProcessGLAccountCode" value="' . _('Process') . '" />
 	</div>
 	</form>';
 
