@@ -337,10 +337,10 @@ class htmlMimeMail
 	{
 		// Build the list of image extensions
 		while (list($key,) = each($this->image_types)) {
-			$extensions[] = $key;
+			$Extensions[] = $key;
 		}
 
-		preg_match_all('/(?:"|\')([^"\']+\.('.implode('|', $extensions).'))(?:"|\')/Ui', $this->html, $images);
+		preg_match_all('/(?:"|\')([^"\']+\.('.implode('|', $Extensions).'))(?:"|\')/Ui', $this->html, $images);
 
 		for ($i=0; $i<count($images[1]); $i++) {
 			if (file_exists($images_dir . $images[1][$i])) {
@@ -357,8 +357,8 @@ class htmlMimeMail
 
 			for ($i=0; $i<count($html_images); $i++) {
 				if ($image = $this->getFile($images_dir.$html_images[$i])) {
-					$ext = mb_substr($html_images[$i], strrpos($html_images[$i], '.') + 1);
-					$Content_type = $this->image_types[strtolower($ext)];
+					$Ext = mb_substr($html_images[$i], strrpos($html_images[$i], '.') + 1);
+					$Content_type = $this->image_types[strtolower($Ext)];
 					$this->addHtmlImage($image, basename($html_images[$i]), $Content_type);
 				}
 			}
@@ -526,44 +526,44 @@ class htmlMimeMail
 
 		switch (true) {
 			case $Text AND !$attachments:
-				$message = $this->_addTextPart($null, $this->text);
+				$Message = $this->_addTextPart($null, $this->text);
 				break;
 
 			case !$Text AND $attachments AND !$html:
-				$message = $this->_addMixedPart();
+				$Message = $this->_addMixedPart();
 
 				for ($i=0; $i<count($this->attachments); $i++) {
-					$this->_addAttachmentPart($message, $this->attachments[$i]);
+					$this->_addAttachmentPart($Message, $this->attachments[$i]);
 				}
 				break;
 
 			case $Text AND $attachments:
-				$message = $this->_addMixedPart();
-				$this->_addTextPart($message, $this->text);
+				$Message = $this->_addMixedPart();
+				$this->_addTextPart($Message, $this->text);
 
 				for ($i=0; $i<count($this->attachments); $i++) {
-					$this->_addAttachmentPart($message, $this->attachments[$i]);
+					$this->_addAttachmentPart($Message, $this->attachments[$i]);
 				}
 				break;
 
 			case $html AND !$attachments AND !$html_images:
 				if (!is_null($this->html_text)) {
-					$message = $this->_addAlternativePart($null);
-					$this->_addTextPart($message, $this->html_text);
-					$this->_addHtmlPart($message);
+					$Message = $this->_addAlternativePart($null);
+					$this->_addTextPart($Message, $this->html_text);
+					$this->_addHtmlPart($Message);
 				} else {
-					$message = $this->_addHtmlPart($null);
+					$Message = $this->_addHtmlPart($null);
 				}
 				break;
 
 			case $html AND !$attachments AND $html_images:
 				if (!is_null($this->html_text)) {
-					$message = $this->_addAlternativePart($null);
-					$this->_addTextPart($message, $this->html_text);
-					$related = $this->_addRelatedPart($message);
+					$Message = $this->_addAlternativePart($null);
+					$this->_addTextPart($Message, $this->html_text);
+					$related = $this->_addRelatedPart($Message);
 				} else {
-					$message = $this->_addRelatedPart($null);
-					$related = $message;
+					$Message = $this->_addRelatedPart($null);
+					$related = $Message;
 				}
 				$this->_addHtmlPart($related);
 				for ($i=0; $i<count($this->html_images); $i++) {
@@ -572,48 +572,48 @@ class htmlMimeMail
 				break;
 
 			case $html AND $attachments AND !$html_images:
-				$message = $this->_addMixedPart();
+				$Message = $this->_addMixedPart();
 				if (!is_null($this->html_text)) {
-					$alt = $this->_addAlternativePart($message);
+					$alt = $this->_addAlternativePart($Message);
 					$this->_addTextPart($alt, $this->html_text);
 					$this->_addHtmlPart($alt);
 				} else {
-					$this->_addHtmlPart($message);
+					$this->_addHtmlPart($Message);
 				}
 				for ($i=0; $i<count($this->attachments); $i++) {
-					$this->_addAttachmentPart($message, $this->attachments[$i]);
+					$this->_addAttachmentPart($Message, $this->attachments[$i]);
 				}
 				break;
 
 			case $html AND $attachments AND $html_images:
-				$message = $this->_addMixedPart();
+				$Message = $this->_addMixedPart();
 				if (!is_null($this->html_text)) {
-					$alt = $this->_addAlternativePart($message);
+					$alt = $this->_addAlternativePart($Message);
 					$this->_addTextPart($alt, $this->html_text);
 					$rel = $this->_addRelatedPart($alt);
 				} else {
-					$rel = $this->_addRelatedPart($message);
+					$rel = $this->_addRelatedPart($Message);
 				}
 				$this->_addHtmlPart($rel);
 				for ($i=0; $i<count($this->html_images); $i++) {
 					$this->_addHtmlImagePart($rel, $this->html_images[$i]);
 				}
 				for ($i=0; $i<count($this->attachments); $i++) {
-					$this->_addAttachmentPart($message, $this->attachments[$i]);
+					$this->_addAttachmentPart($Message, $this->attachments[$i]);
 				}
 				break;
 
 		}
 
-		if (isset($message)) {
-			$output = $message->encode();
+		if (isset($Message)) {
+			$output = $Message->encode();
 			$this->output   = $output['body'];
 			$this->headers  = array_merge($this->headers, $output['headers']);
 
 			// Add message ID header
 			srand((double)microtime()*10000000);
-//			$message_id = sprintf('<%s.%s@%s>', base_convert(time(), 10, 36), base_convert(rand(), 10, 36), !empty($GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST']) ? $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'] : $GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME']);
-//			$this->headers['Message-ID'] = $message_id;
+//			$Message_id = sprintf('<%s.%s@%s>', base_convert(time(), 10, 36), base_convert(rand(), 10, 36), !empty($GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST']) ? $GLOBALS['HTTP_SERVER_VARS']['HTTP_HOST'] : $GLOBALS['HTTP_SERVER_VARS']['SERVER_NAME']);
+//			$this->headers['Message-ID'] = $Message_id;
 
 			$this->is_built = true;
 			return true;

@@ -45,9 +45,9 @@ switch($_POST['Action']) {
 		}
 		break;// END Update.
 	case 'Reset':
-		$Sql = "UPDATE `chartmaster` SET `cashflowsactivity`='-1';";
+		$SQL = "UPDATE `chartmaster` SET `cashflowsactivity`='-1';";
 		$ErrMsg = _('Can not update chartmaster.cashflowsactivity because');
-		$Result = DB_query($Sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		if($Result) {
 			prnMsg(_('The cash flow activity was reset in all accounts'), 'success');
 		}
@@ -124,12 +124,12 @@ switch($_POST['Action']) {
 		$Criterion[$i++]['CashFlowsActivity'] = 0;
 
 		foreach($Criterion as $Criteria) {
-			$Sql = "UPDATE `chartmaster`
+			$SQL = "UPDATE `chartmaster`
 				SET `cashflowsactivity`=". $Criteria['CashFlowsActivity'] . "
 				WHERE `accountname` LIKE '%". addslashes(_($Criteria['AccountLike'])) . "%'
 				AND `cashflowsactivity`=-1";// Uses cashflowsactivity=-1 to NOT overwrite.
 			$ErrMsg = _('Can not update chartmaster.cashflowsactivity. Error code:');
-			$Result = DB_query($Sql, $ErrMsg);
+			$Result = DB_query($SQL, $ErrMsg);
 			// RChacon: Count replacements.
 		}
 		if($Result) {
@@ -153,47 +153,30 @@ echo '<div class="page_help_text">',
 	 '</div>';
 
 // Show a form to allow input of the action for the script to do:
-echo '<br />',
-	'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
+echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 	'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Form's head.
 		// Input table:
-		'<table class="selection">',
+		'<fieldset>',
 		// Content of the header and footer of the output table:
-		'<thead>
-			<tr>
-				<th colspan="2">', _('Action to do'), '</th>
-			</tr>
-		</thead><tfoot>
-			<tr>
-				<td colspan="2">',
-					'<div class="centre">',
-						'<button name="Action" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
-						'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
-						'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
-						'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
-						'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
-					'</div>',
-				'</td>
-			</tr>
-		</tfoot><tbody>';
-$Sql = "SELECT accountcode, accountname
+		'<legend>', _('Action to do'), '</legend>';
+$SQL = "SELECT accountcode, accountname
 		FROM chartmaster
 			LEFT JOIN accountgroups ON chartmaster.group_=accountgroups.groupname
 		WHERE accountgroups.pandl=0
 		ORDER BY accountcode";
-$GLAccounts = DB_query($Sql);
+$GLAccounts = DB_query($SQL);
 // Setups the net profit for the period GL account:
-echo		'<tr>
-				<td><label for="PeriodProfitAccount">', _('Net profit for the period GL account'), ':</label></td>
-	 			<td><select id="PeriodProfitAccount" name="PeriodProfitAccount" required="required">';
+echo		'<field>
+				<label for="PeriodProfitAccount">', _('Net profit for the period GL account'), ':</label>
+	 			<select id="PeriodProfitAccount" name="PeriodProfitAccount" required="required">';
 if(!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=='') {
 	$Result = DB_fetch_array(DB_query("SELECT confvalue FROM `config` WHERE confname ='PeriodProfitAccount'"));
 	if($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists so creates it.
 		echo		'<option value="">', _('Select...'), '</option>';
 		// Creates a configuration parameter for the net profit for the period GL account:
-		$Sql = "INSERT INTO `config` (confname, confvalue) VALUES ('PeriodProfitAccount', '" . $Result['accountcode'] . "')";
+		$SQL = "INSERT INTO `config` (confname, confvalue) VALUES ('PeriodProfitAccount', '" . $Result['accountcode'] . "')";
 		$ErrMsg = _('Could not add the new account code');
-		$Result = DB_query($Sql, $ErrMsg);
+		$Result = DB_query($SQL, $ErrMsg);
 		$_SESSION['PeriodProfitAccount'] = '';
 	} else {// If $Result is NOT NULL, the parameter exists so gets it.
 		$_SESSION['PeriodProfitAccount'] = $Result['confvalue'];
@@ -202,14 +185,13 @@ if(!isset($_SESSION['PeriodProfitAccount']) OR $_SESSION['PeriodProfitAccount']=
 while($MyRow = DB_fetch_array($GLAccounts)) {
 	echo			'<option', ($MyRow['accountcode'] == $_SESSION['PeriodProfitAccount'] ? ' selected="selected"' : '' ), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
-echo				'</select>',
-				(!isset($field_help) || $field_help ? _('GL account to post the net profit for the period') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.*/
-		 		'</td>
-			</tr>';
+echo				'</select>
+				<fieldhelp>', _('GL account to post the net profit for the period'), '</fieldhelp>
+		 	</field>';
 // Setups the retained earnings GL account:
-echo		'<tr>
-				<td><label for="RetainedEarningsAccount">', _('Retained earnings GL account'), ':</label></td>
-	 			<td><select id="RetainedEarningsAccount" name="RetainedEarningsAccount" required="required">';
+echo		'<field>
+				<label for="RetainedEarningsAccount">', _('Retained earnings GL account'), ':</label>
+	 			<select id="RetainedEarningsAccount" name="RetainedEarningsAccount" required="required">';
 if(!isset($_SESSION['RetainedEarningsAccount']) OR $_SESSION['RetainedEarningsAccount']=='') {
 	$Result = DB_fetch_array(DB_query("SELECT retainedearnings FROM `companies` WHERE `coycode`=1"));
 	if($Result == NULL) {// If $Result is NULL (false, 0, or the empty; because we use "==", instead of "==="), the parameter NOT exists.
@@ -223,12 +205,17 @@ DB_data_seek($GLAccounts,0);
 while($MyRow = DB_fetch_array($GLAccounts)) {
 	echo			'<option', ($MyRow['accountcode'] == $_SESSION['RetainedEarningsAccount'] ? ' selected="selected"' : '' ), ' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['accountname'], '</option>';
 }
-echo				'</select>',
-				(!isset($field_help) || $field_help ? _('GL account to post the retained earnings') : ''), // If it is not set the $field_help parameter OR it is TRUE, shows the page help text.*/
-		 		'</td>
-			</tr>
-		</tbody>
-		</table>
+echo				'</select>
+				<fieldhelp>', _('GL account to post the retained earnings'), '</fieldhelp>
+			</field>
+		</fieldset>
+		<div class="centre">',
+			'<button name="Action" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/tick.svg" /> ', _('Update'), '</button>', // "Update" button.
+			'<button name="Action" type="submit" value="Reset"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/cross.svg" /> ', _('Reset values'), '</button>', // "Reset values" button.
+			'<button name="Action" type="submit" value="Automatic"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/next.svg" /> ', _('Automatic setup'), '</button>', // "Automatic setup" button.
+			'<button name="Action" type="submit" value="Manual"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/previous.svg" /> ', _('Manual setup'), '</button>', // "Manual setup" button.
+			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
+		'</div>
 	</form>';
 
 include('includes/footer.php');

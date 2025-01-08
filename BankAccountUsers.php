@@ -96,12 +96,13 @@ if (!isset($SelectedBankAccount)) {
 /* It could still be the second time the page has been run and a record has been selected for modification - SelectedUser will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">
-			<tr>
-				<td>' . _('Select Bank Account') . ':</td>
-				<td><select name="SelectedBankAccount">';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+    
+	echo '<fieldset>
+			<legend>', _('Select Bank Account'), '</legend>
+			<field>
+				<label for="SelectedBankAccount">' . _('Select Bank Account') . ':</label>
+				<select name="SelectedBankAccount">';
 
 	$SQL = "SELECT
 				accountcode,
@@ -119,19 +120,17 @@ then none of the above are true. These will call the same page again and allow u
 			((isset($SelectedBankAccount) and $MyRow['accountcode']==$SelectedBankAccount) ? 'selected="selected"' : ''),
 			' value="', $MyRow['accountcode'], '">', $MyRow['accountcode'], ' - ', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 	}// End while loop
-	echo '</select></td>
-			</tr>
-		</table>'; // Close main table
+	echo '</select>
+		</field>
+	</fieldset>'; // Close main table
     DB_free_result($Result);
 
-	echo '<br />
-		<div class="centre">
+	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Accept') . '" />
 			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
-	echo '</div>
-          </form>';
+	echo '</form>';
 }
 
 //end of ifs and buts!
@@ -143,9 +142,10 @@ if (isset($_POST['process'])OR isset($SelectedBankAccount)) {
 	$MyRow = DB_fetch_array($Result);
 	$SelectedBankName = $MyRow['bankaccountname'];
 
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Authorised users for') . ' ' .$SelectedBankName . ' ' . _('bank account') .'</a></div>';
+	echo '<div class="centre">
+			<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Authorised users for') . ' ' .$SelectedBankName . ' ' . _('bank account') .'</a>
+		</div>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<input type="hidden" name="SelectedBankAccount" value="' . $SelectedBankAccount . '" />';
@@ -159,8 +159,7 @@ if (isset($_POST['process'])OR isset($SelectedBankAccount)) {
 
 	$Result = DB_query($SQL);
 
-	echo '<br />
-			<table class="selection">';
+	echo '<table class="selection">';
 	echo '<tr><th colspan="3"><h3>' . _('Authorised users for bank account') . ' ' .$SelectedBankName. '</h3></th></tr>';
 	echo '<tr>
 			<th>' . _('User Code') . '</th>
@@ -186,11 +185,12 @@ while ($MyRow = DB_fetch_array($Result)) {
 	if (! isset($_GET['delete'])) {
 
 
-		echo '<br /><table  class="selection">'; //Main table
+		echo '<fieldset>
+				<legend>', _('Select User'), '</legend>';
 
-		echo '<tr>
-				<td>' . _('Select User') . ':</td>
-				<td><select name="SelectedUser">';
+		echo '<field>
+				<label for="SelectedUser">' . _('Select User') . ':</label>
+				<select name="SelectedUser">';
 
 		$SQL = "SELECT userid,
 						realname
@@ -210,16 +210,18 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 		} //end while loop
 
-		echo '</select></td></tr>';
+		echo '</select>
+			</field>';
 
-	   	echo '</table>'; // close main table
+	   	echo '</fieldset>'; // close main table
         DB_free_result($Result);
 
-		echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" />
-									<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>';
+		echo '<div class="centre">
+				<input type="submit" name="submit" value="' . _('Accept') . '" />
+									<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			</div>';
 
-		echo '</div>
-              </form>';
+		echo '</form>';
 
 	} // end if user wish to delete
 }

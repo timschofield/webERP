@@ -83,14 +83,14 @@ function submit($SelectedFile) {
 			// get the data for a product
 			$Error = "";
 			$LazadaProductId = $worksheet->getCell('A'.$Row)->getCalculatedValue();
-			$StockId = $worksheet->getCell('Q'.$Row)->getCalculatedValue();
+			$StockID = $worksheet->getCell('Q'.$Row)->getCalculatedValue();
 			$LazadaProductName = $worksheet->getCell('C'.$Row)->getCalculatedValue();
 			
 			$SQL = "SELECT stockmaster.stockid,
 						salescatprod.manufacturers_id
 					FROM stockmaster, salescatprod
 					WHERE stockmaster.stockid = salescatprod.stockid
-						AND stockmaster.stockid = '" . $StockId . "'";
+						AND stockmaster.stockid = '" . $StockID . "'";
 			$Result = DB_query($SQL);
 			if (DB_num_rows($Result) != 0){
 				$MyRow = DB_fetch_array($Result);
@@ -99,16 +99,16 @@ function submit($SelectedFile) {
 				$LinkLazada = '<li><a rel="external" href="' . $URLLazada . '">' . _('Lazada') . '</a></li>';
 				
 				// Check if we have enough QOH to set it as enabled in Lazada
-				$QOH = ItemMarketplaceQOH($StockId);
+				$QOH = ItemMarketplaceQOH($StockID);
 				$EnabledLazada = ( $QOH > 0);
 				
-				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
+				if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockID)){
 					// Already exists, so only update the info with the newest lazada link and lazada product id if needed
-					ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada);
+					ItemUpdateLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLazada);
 					$Action = "Update";
 				}else{
 					// does not exist, so need to insert a new row for the item
-					ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada);
+					ItemInsertLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLazada);
 					$Action = "Insert";
 				}
 
@@ -124,7 +124,7 @@ function submit($SelectedFile) {
 					<td>%s</td>
 					</tr>', 
 					$i,
-					$StockId,
+					$StockID,
 					$LazadaProductId,
 					$LazadaStoreId,
 					$LinkLazada,

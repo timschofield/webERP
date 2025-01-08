@@ -6,7 +6,7 @@
 *
 *******************************************************************************/
 /* KL RICARD Configuration file for specific KL code */
-$KLCodeVersion = "009";
+$KLCodeVersion = "010";
 
 // let's setup all the variables depending on the environment
 if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){

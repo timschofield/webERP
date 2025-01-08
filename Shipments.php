@@ -199,7 +199,8 @@ if (isset($_POST['Update'])
 		$_SESSION['Shipment']->VoyageRef = $_POST['VoyageRef'];
 	}
 /*The user hit the update the shipment button and there are some lines on the shipment*/
-	if ($InputError == 0 AND (count($_SESSION['Shipment']->LineItems) > 0 OR isset($_GET['Add']))){
+
+	if ($InputError == 0 AND (isset($_SESSION['Shipment']) OR isset($_GET['Add']))){
 
 		$SQL = "SELECT shiptref FROM shipments WHERE shiptref =" . $_SESSION['Shipment']->ShiptRef;
 		$Result = DB_query($SQL);
@@ -295,25 +296,28 @@ if (isset($_GET['Delete']) AND $_SESSION['Shipment']->Closed==0){ //shipment is 
 	$_SESSION['Shipment']->Remove_From_Shipment($_GET['Delete']);
 }
 
-
-
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table class="selection">
-		<tr>
-			<td><b>' .  _('Shipment').': </b></td>
-			<td><b>' . $_SESSION['Shipment']->ShiptRef . '</b></td>
-			<td><b>' .  _('From'). ' ' . $_SESSION['Shipment']->SupplierName . '</b></td>
-		</tr>';
+echo '<fieldset>
+		<legend>', _('Shipment Details'), '</legend>
+		<field>
+			<label for="ShiptRef">' .  _('Shipment').': </label>
+			<fieldtext>' . $_SESSION['Shipment']->ShiptRef . '</fieldtext>
+		</field>
+		<field>
+			<label>' .  _('From'). '</label
+			<fieldtext>' . $_SESSION['Shipment']->SupplierName . '</fieldtext>
+		</field>';
 
-echo '<tr>
-		<td>' .  _('Vessel Name /Transport Agent'). ': </td>
-		<td colspan="3"><input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" /></td>
+echo '<field>
+		<label for="Vessel">' .  _('Vessel Name /Transport Agent'). ': </label>
+		<input type="text" name="Vessel" maxlength="50" size="50" value="' . $_SESSION['Shipment']->Vessel . '" />
+	</field>
+	<field>
 		<td>' . _('Tracking #').': </td>
-		<td><input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" /></td>
-	</tr>';
+		<input type="text" name="VoyageRef" maxlength="20" size="20" value="' . $_SESSION['Shipment']->VoyageRef . '" />
+	</field>';
 
 if (isset($_SESSION['Shipment']->ETA)){
 	$ETA = ConvertSQLDate($_SESSION['Shipment']->ETA);
@@ -321,13 +325,17 @@ if (isset($_SESSION['Shipment']->ETA)){
 	$ETA ='';
 }
 
-echo '<tr><td>' .  _('Expected Arrival Date (ETA)'). ': </td>';
+echo '<field>
+		<label for="ETA">' .  _('Expected Arrival Date (ETA)'). ': </label>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<td><input type="text" name="ETA" class="date"  maxlength="10" size="11" value="' . $ETA . '" /></td>';
+	echo '<input type="text" name="ETA" class="date"  maxlength="10" size="11" value="' . $ETA . '" />';
 } else {
-	echo '<td><input type="text" class="date" name="ETA" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" /></td>';
+	echo '<input type="text" class="date" name="ETA" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
 }
-echo '<td>' .  _('Into').' ';
+echo '<field>';
+
+echo '<field>
+		<label for="StockLocation">' .  _('Into Stock Location').':</label>';
 
 if (count($_SESSION['Shipment']->LineItems)>0){
 
@@ -352,7 +360,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 
 if (!isset($_SESSION['Shipment']->StockLocation)){
 
-	echo _('Stock Location').': <select name="StockLocation">';
+	echo '<select name="StockLocation">';
 
 	$SQL = "SELECT loccode, locationname FROM locations";
 
@@ -384,15 +392,16 @@ if (!isset($_SESSION['Shipment']->StockLocation)){
 	$ResultStkLocs = DB_query($SQL);
 	$MyRow=DB_fetch_array($ResultStkLocs);
 	echo '<input type="hidden" name="StockLocation" value="'.$_SESSION['Shipment']->StockLocation.'" />';
- 	echo $MyRow['locationname'];
+ 	echo '<fieldtext>', $MyRow['locationname'], '</fieldtext>';
 }
 
-echo '</td></tr></table>';
+echo '</field>
+	</fieldset>';
 
 if (count($_SESSION['Shipment']->LineItems)>0){
 	/* Always display all shipment lines */
 
-	echo '<br /><table class="selection">';
+	echo '<table class="selection">';
 	echo '<tr><th colspan="9"><h3>' .  _('Order Lines On This Shipment'). '</h3></th></tr>';
 
 	$TableHeader = '<tr>
@@ -434,8 +443,7 @@ if (count($_SESSION['Shipment']->LineItems)>0){
 echo '</table>';
 }//there are lines on the shipment
 
-echo '<br />
-		<div class="centre">
+echo '<div class="centre">
 			<input type="submit" name="Update" value="'. _('Update Shipment Details') . '" />
 		</div>';
 

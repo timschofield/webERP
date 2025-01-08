@@ -21,7 +21,6 @@ if(isset($_GET['StockID'])) {
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = "SELECT locations.loccode, locationname
@@ -29,10 +28,11 @@ $SQL = "SELECT locations.loccode, locationname
 	INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1";
 $ResultStkLocs = DB_query($SQL);
 
-echo '<table class="selection">
-		<tr>
-			<td>' . _('From Stock Location') . ':</td>
-			<td><select name="StockLocation"> ';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>
+		<field>
+			<label for="StockLocation">' . _('From Stock Location') . ':</label>
+			<select name="StockLocation"> ';
 
 while($MyRow=DB_fetch_array($ResultStkLocs)) {
 	if(isset($_POST['StockLocation']) AND $_POST['StockLocation']!='All') {
@@ -48,8 +48,8 @@ while($MyRow=DB_fetch_array($ResultStkLocs)) {
 		 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 $SQL="SELECT categoryid,
 				categorydescription
@@ -64,8 +64,9 @@ if(DB_num_rows($Result1)==0) {
 	exit;
 }
 
-echo '<tr><td>' . _('In Stock Category') . ':</td>
-		<td><select name="StockCat">';
+echo '<field>
+		<label for="StockCat">' . _('In Stock Category') . ':</label>
+		<select name="StockCat">';
 if(!isset($_POST['StockCat'])) {
 	$_POST['StockCat']='All';
 }
@@ -82,10 +83,12 @@ while($MyRow1 = DB_fetch_array($Result1)) {
 	}
 }
 
-echo '</select></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr><td>' . _('Shown Only Items Where') . ':</td>
-		<td><select name="BelowReorderQuantity">';
+echo '<field>
+		<label for="BelowReorderQuantity">' . _('Shown Only Items Where') . ':</label>
+		<select name="BelowReorderQuantity">';
 if(!isset($_POST['BelowReorderQuantity'])) {
 	$_POST['BelowReorderQuantity']='All';
 }
@@ -111,11 +114,11 @@ if($_POST['BelowReorderQuantity']=='All') {
 		<option value="OnOrder">' . _('Only items currently on order') . '</option>';
 }
 
-echo '</select></td></tr>
-	</table>';
+echo '</select>
+	</field>
+</fieldset>';
 
-echo '<br />
-	<div class="centre noprint">
+echo '<div class="centre noprint">
 		<input name="ShowStatus" type="submit" value="', _('Show Stock Status'), '" />
 	</div>';
 

@@ -2558,8 +2558,8 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 	}
 }
 
-function RoundPackagingTransfer($StockId, $n){
-	if(isPackagingPaperInsideBox($StockId)){
+function RoundPackagingTransfer($StockID, $n){
+	if(isPackagingPaperInsideBox($StockID)){
 		$n = ceil($n/TRANSFER_ROUNDING_PAPER_INSIDE_BOX)*TRANSFER_ROUNDING_PAPER_INSIDE_BOX;
 	}else{
 		if ($n < TRANSFER_ROUNDING_LIMIT01){
@@ -2575,12 +2575,12 @@ function RoundPackagingTransfer($StockId, $n){
 	return $n;
 }
 
-function PositionTopSalesItem($stockid, $TopItemsDays){
+function PositionTopSalesItem($StockID, $TopItemsDays){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
 	$SQL="SELECT ". $TopSalesField." AS topsalesposition
 		  FROM klsalesperformance
-		  WHERE stockid = '" . $stockid . "'";
+		  WHERE stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL);
 	$TopSalesPosition = 9999999;
 	if (DB_num_rows($Result) != 0){

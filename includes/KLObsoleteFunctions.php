@@ -282,25 +282,25 @@ function ImagesShouldNotBeInOpencartCatalog($RootPath){
 	$i= 0;
 	// get all images in part_pics folder
 	$suffix = ".jpg";
-	$imagefiles = getDirectoryTree(ABSOLUTE_PATH_OPENCART_IMAGES);
-	foreach ($imagefiles as $file) {
-		$StockId = substr($file, 0, strpos($file, $suffix));
-		if (strpos($StockId, '.1') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.1'));
+	$ImageFiles = getDirectoryTree(ABSOLUTE_PATH_OPENCART_IMAGES);
+	foreach ($ImageFiles as $file) {
+		$StockID = substr($file, 0, strpos($file, $suffix));
+		if (strpos($StockID, '.1') > 0){
+			$StockID = substr($file, 0, strpos($StockID, '.1'));
 		}
-		if (strpos($StockId, '.2') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.2'));
+		if (strpos($StockID, '.2') > 0){
+			$StockID = substr($file, 0, strpos($StockID, '.2'));
 		}
-		if (strpos($StockId, '.3') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.3'));
+		if (strpos($StockID, '.3') > 0){
+			$StockID = substr($file, 0, strpos($StockID, '.3'));
 		}
-		if (strpos($StockId, '.4') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.4'));
+		if (strpos($StockID, '.4') > 0){
+			$StockID = substr($file, 0, strpos($StockID, '.4'));
 		}
-		if (strpos($StockId, '.5') > 0){
-			$StockId = substr($file, 0, strpos($StockId, '.5'));
+		if (strpos($StockID, '.5') > 0){
+			$StockID = substr($file, 0, strpos($StockID, '.5'));
 		}
-		$ProductId = GetOpenCartProductId($StockId);
+		$ProductId = GetOpenCartProductId($StockID);
 		if ($ProductId == 0){
 			if ($ShowHeader){
 				$TableTitleText = _('Opencart Images without product in OpenCart');
@@ -525,7 +525,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 	}
 }
 
-function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges){
+function isReorderLevelManuallyChanged($StockID, $loccode, $maxmanualchanges){
 	if ($maxmanualchanges == 0){
 		return '0000-00-00';
 	}
@@ -533,7 +533,7 @@ function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges){
 	$SQL="SELECT transactiondate
 		FROM audittrail
 		WHERE transactiondate >= '".$StartDate."'
-			AND querystring LIKE '%" . $stockid . "%' 
+			AND querystring LIKE '%" . $StockID . "%' 
 			AND querystring LIKE '%" . $loccode . "%' 
 			AND querystring LIKE '%locstock%reorderlevel%' 
 		ORDER BY transactiondate DESC
@@ -549,13 +549,13 @@ function isReorderLevelManuallyChanged($stockid, $loccode, $maxmanualchanges){
 
 }
 
-function isTopSalesItem($stockid, $topitems, $TopItemsDays){
+function isTopSalesItem($StockID, $topitems, $TopItemsDays){
 
 	$TopSalesField = GetTopSalesField($TopItemsDays);
 
 	$SQL="SELECT ". $TopSalesField." AS topsalesposition
 		  FROM klsalesperformance
-		  WHERE stockid = '" . $stockid . "'";
+		  WHERE stockid = '" . $StockID . "'";
 	$Result = DB_query($SQL);
 	$istopsales = false;
 	if (DB_num_rows($Result) != 0){
@@ -1305,7 +1305,7 @@ function PricesNotUpdatedinXDays($numDays, $PercentageIncrease, $RootPath){
 	}
 }
 
-function SalesOfItemByLocation($stockid, $Location, $maxdays){
+function SalesOfItemByLocation($StockID, $Location, $maxdays){
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 	$SQL = "SELECT COUNT(qtyinvoiced) AS sales
 			FROM salesorderdetails, salesorders
@@ -1313,7 +1313,7 @@ function SalesOfItemByLocation($stockid, $Location, $maxdays){
 				AND salesorderdetails.completed = 1
 				AND salesorders.orddate >= '". $StartDate . "'
 				AND salesorders.fromstkloc = '". $Location . "'
-				AND salesorderdetails.stkcode LIKE '". $stockid . "%'";
+				AND salesorderdetails.stkcode LIKE '". $StockID . "%'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$MyRow = DB_fetch_array($Result);
@@ -1707,7 +1707,7 @@ function TopSalesNotInEnoughShops($starttopitems, $endtopitems, $maxdays, $minsh
 	}
 }
 
-function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDays, $RootPath){
+function WrongGiftItem($StockID, $customertype, $ErrorType, $OrderValue, $numDays, $RootPath){
 
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$numDays));
 
@@ -1728,11 +1728,11 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 	}
 	
 	if ($ErrorType == "OVER"){
-		$Titletext .= _(' Orders over ') . locale_number_format($OrderValue,0). _(' without GIFT ') . $stockid . _(' during the last ') . $numDays . ' days';
+		$Titletext .= _(' Orders over ') . locale_number_format($OrderValue,0). _(' without GIFT ') . $StockID . _(' during the last ') . $numDays . ' days';
 		$Sign = " >= ";
 		$Not = "NOT";
 	}else{
-		$Titletext .= _(' Orders below ') . locale_number_format($OrderValue,0). _(' with GIFT ') . $stockid . _(' during the last ') . $numDays . ' days';
+		$Titletext .= _(' Orders below ') . locale_number_format($OrderValue,0). _(' with GIFT ') . $StockID . _(' during the last ') . $numDays . ' days';
 		$Sign = " < ";
 		$Not = "";
 	}
@@ -1763,7 +1763,7 @@ function WrongGiftItem($stockid, $customertype, $ErrorType, $OrderValue, $numDay
 				" AND " . $Not . " EXISTS (SELECT * 
 								FROM salesorderdetails AS so2 
 								WHERE salesorders.orderno = so2.orderno 
-								AND so2.stkcode LIKE '" . $stockid . "' )". 
+								AND so2.stkcode LIKE '" . $StockID . "' )". 
 			" ORDER BY salesorders.orderno";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -2003,7 +2003,7 @@ function SyncDOKUPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 	return $EmailText;
 }
 
-function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
+function WebsiteCategoryDiscount($StockID, $Description, $Long, $Category){
 	$WebCat = 0;
 
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_OUTLET)){
@@ -2011,48 +2011,48 @@ function WebsiteCategoryDiscount($StockId, $Description, $Long, $Category){
 	}
 
 	// filter some false positives
-	if (ItemExcludedFromWebsite($StockId, $Category)){
+	if (ItemExcludedFromWebsite($StockID, $Category)){
 		$WebCat = ITEM_EXCLUDED_FROM_WEBSITE;
 	}
 
 	// define subcategory
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isRing($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isRing($StockID)){
 		$WebCat = RINGS_ON_SPECIAL;	
 	}
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarring($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarring($StockID)){
 		$WebCat = EARRINGS_ON_SPECIAL;	
 	}
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isPiercing($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isPiercing($StockID)){
 		$WebCat = EARRINGS_ON_SPECIAL;	
 	}
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarcuff($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isEarcuff($StockID)){
 		$WebCat = EARCUFFS_ON_SPECIAL;	
 	}
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBracelet($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBracelet($StockID)){
 		$WebCat = BRACELETS_ON_SPECIAL;	
 	}
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isNecklace($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isNecklace($StockID)){
 		$WebCat = NECKLACES_ON_SPECIAL;	
 	}
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isPendant($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isPendant($StockID)){
 		$WebCat = PENDANTS_ON_SPECIAL;	
 	}	
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isToeRing($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isToeRing($StockID)){
 		$WebCat = TOERINGS_ON_SPECIAL;	
 	}	
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isAnklet($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isAnklet($StockID)){
 		$WebCat = ANKLETS_ON_SPECIAL;	
 	}	
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBrooche($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isBrooche($StockID)){
 		$WebCat = BROOCHES_ON_SPECIAL;	
 	}	
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isKeyHolder($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isKeyHolder($StockID)){
 		$WebCat = KEYHOLDERS_ON_SPECIAL;	
 	}	
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isFaceMask($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isFaceMask($StockID)){
 		$WebCat = FACEMASKS_ON_SPECIAL;	
 	}
-	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isJewelleryRoll($StockId)){
+	if (($WebCat == JEWELLERY_ON_SPECIAL) AND isJewelleryRoll($StockID)){
 		$WebCat = JEWELLERY_ROLLS_ON_SPECIAL;	
 	}	
 	return $WebCat; 

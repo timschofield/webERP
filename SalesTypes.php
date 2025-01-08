@@ -220,9 +220,7 @@ if (isset($SelectedType)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" >
-		<div>
-		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<br />';
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 
 	// The user wish to EDIT an existing type
@@ -241,41 +239,38 @@ if (! isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />
 			<input type="hidden" name="TypeAbbrev" value="' . $_POST['TypeAbbrev'] . '" />
-			<table class="selection">
-			<tr>
-				<th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th>
-			</tr>
-			<tr>
-				<td>' . _('Type Code') . ':</td>
-				<td>' . $_POST['TypeAbbrev'] . '</td>
-			</tr>';
+			<fieldset>
+			<legend>' . _('Edit Sales Type/Price') . '</legend>
+			<field>
+				<label for="TypeAbbrev">' . _('Type Code') . ':</label>
+				<fieldtext>' . $_POST['TypeAbbrev'] . '</fieldtext>
+			</field>';
 
 	} else 	{
 
 		// This is a new type so the user may volunteer a type code
 
-		echo '<table class="selection">
-				<tr>
-					<th colspan="4"><b>' . _('Sales Type/Price List Setup') . '</b></th>
-				</tr>
-				<tr>
-					<td>' . _('Type Code') . ':</td>
-					<td><input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size="3" maxlength="2" name="TypeAbbrev" /></td>
-				</tr>';
+		echo '<fieldset>
+				<legend>' . _('Create Sales Type/Price List') . '</legend>
+				<field>
+					<label for="TypeAbbrev">' . _('Type Code') . ':</label>
+					<input type="text" ' . (in_array('SalesType',$Errors) ? 'class="inputerror"' : '' ) .' size="3" maxlength="2" name="TypeAbbrev" />
+				</field>';
 	}
 
 	if (!isset($_POST['Sales_Type'])) {
 		$_POST['Sales_Type']='';
 	}
-	echo '<tr>
-			<td>' . _('Sales Type Name') . ':</td>
-			<td><input type="text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" /></td>
-		</tr>
-		</table>'; // close main table
+	echo '<field>
+			<label for="Sales_Type">' . _('Sales Type Name') . ':</label>
+			<input type="text" name="Sales_Type" value="' . $_POST['Sales_Type'] . '" />
+		</field>
+		</fieldset>'; // close main table
 
-	echo '<br /><div class="centre"><input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>
-			</div>
-          </form>';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+		</div>
+	</form>';
 
 } // end if user wish to delete
 

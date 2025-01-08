@@ -54,13 +54,13 @@ if (DB_num_rows($Result) == 0) {
 // end of showing search facilities
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-	<div>
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
-		<table class="selection">
-		<tr>
-			<td>' . _('In Asset Category') . ':</td>
-			<td><select name="AssetCategory">';
+		<fieldset>
+		<legend class="search">', _('Search Criteria'), '</legend>
+		<field>
+			<label for="AssetCategory">' . _('In Asset Category') . ':</label>
+			<select name="AssetCategory">';
 
 if (!isset($_POST['AssetCategory'])) {
 	$_POST['AssetCategory'] = 'ALL';
@@ -78,19 +78,21 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
 	}
 }
-echo '</select></td>
-	<td>' . _('Enter partial description') . ':</td>
-	<td>';
+echo '</select>
+	</field>';
+
+echo '<field>
+		<label for="Keywords">' . _('Enter partial description') . ':</label>';
 if (isset($_POST['Keywords'])) {
 	echo '<input type="text" name="Keywords" autofocus="autofocus" value="' . $_POST['Keywords'] . '" size="20" maxlength="25" />';
 } else {
 	echo '<input type="text" name="Keywords" autofocus="autofocus" size="20" maxlength="25" />';
 }
-echo '</td>
-	</tr>
-	<tr>
-		<td>' . _('Asset Location') . ':</td>
-		<td><select name="AssetLocation">';
+echo '</field>';
+
+echo '<field>
+		<label for="AssetLocation">' . _('Asset Location') . ':</label>
+		<select name="AssetLocation">';
 
 if (!isset($_POST['AssetLocation'])) {
 	$_POST['AssetLocation'] = 'ALL';
@@ -109,22 +111,22 @@ while ($MyRow = DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['locationid'] . '">' . $MyRow['locationdescription'] . '</option>';
 	}
 }
-echo '</select>';
+echo '</select>
+	</field>';
 
-echo '  </td>
-		<td><b>' . _('OR') . ' ' . '</b>' . _('Enter partial asset code') . ':</td>
-		<td>';
+echo '<field>
+		<label>'. '<b>' . _('OR') . ' </b>' . _('Enter partial asset code') . ':</label>';
 if (isset($_POST['AssetCode'])) {
 	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" maxlength="13" />';
 } else {
 	echo '<input type="text" name="AssetCode" size="15" maxlength="13" />';
 }
 
-echo '</td>
-	</tr>';
-echo '<tr>
-		<td>' . _('Asset Disposal Status') . ':</td>
-		<td><select name="DisposalStatus">';
+echo '</field>';
+
+echo '<field>
+		<label for="DisposalStatus">' . _('Asset Disposal Status') . ':</label>
+		<select name="DisposalStatus">';
 
 if ($_POST['DisposalStatus']=='ALL'){
 	echo '	<option selected="selected" value="ALL">' . _('All') . '</option>
@@ -140,17 +142,13 @@ if ($_POST['DisposalStatus']=='ALL'){
 			<option selected="selected" value="DISPOSED">' . _('Disposed') . '</option>';
 }
 
-echo '	</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
-echo '
-	</table>
-	<br />
+echo '</fieldset>
 	<div class="centre">
 		<input type="submit" name="Search" value="' . _('Search Now') . '" />
-	</div>
-	<br />
-    </div>';
+	</div>';
 
 // query for list of record(s)
 if(isset($_POST['Go']) OR isset($_POST['Next']) OR isset($_POST['Previous'])) {

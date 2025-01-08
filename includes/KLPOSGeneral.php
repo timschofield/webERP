@@ -38,13 +38,13 @@ function KapalLautRetailAreaSelection($PaymentMethod, $identifier){
 	return $Area;
 }
 
-function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier){
+function AdjustPackagingMovement($StockID, $QtyDelivered, $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier){
 
 	if ($QtyDelivered != 0){
 		/* Need to get the current standard cost */
 		$SQL=	"SELECT (actualcost)
 				FROM stockmaster
-				WHERE stockmaster.stockid='" . $StockId . "'";
+				WHERE stockmaster.stockid='" . $StockID . "'";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0010');
 		$Result = DB_query($SQL, $ErrMsg);
 		if (DB_num_rows($Result)==1){
@@ -58,7 +58,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		/* Need to get the current location quantity will need it later for the stock movement */
 		$SQL=	"SELECT locstock.quantity
 				FROM locstock
-				WHERE locstock.stockid='" . $StockId . "'
+				WHERE locstock.stockid='" . $StockID . "'
 					AND loccode= '" . $_SESSION['UserStockLocation'] . "'";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0020');
 		$Result = DB_query($SQL, $ErrMsg);
@@ -80,7 +80,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					date)
 				VALUES ('" . $OrderNo . "',
 					'" . $_SESSION['UserStockLocation'] . "',
-					'" . $StockId . "',
+					'" . $StockID . "',
 					'" . $QtyDelivered . "',
 					CURRENT_DATE)";
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0030');
@@ -90,7 +90,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		/*	Update locstock at the shop for the qty */
 		$SQL = "UPDATE locstock
 					SET quantity = locstock.quantity - " . $QtyDelivered . "
-				WHERE locstock.stockid = '" . $StockId . "'
+				WHERE locstock.stockid = '" . $StockID . "'
 					AND loccode = '" . $_SESSION['UserStockLocation'] . "'";
 
 		$ErrMsg = _('ERROR: Contact the office!!!  -> AdjustPackagingMovement-0040');
@@ -115,7 +115,7 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 					standardcost,
 					newqoh,
 					narrative )
-				VALUES ('" . $StockId . "',
+				VALUES ('" . $StockID . "',
 					10,
 					'" . $InvoiceNo . "',
 					'" . $_SESSION['UserStockLocation'] . "',
@@ -138,26 +138,26 @@ function AdjustPackagingMovement($StockId, $QtyDelivered, $InvoiceNo, $PeriodNo,
 		/* Now account for the cost of sale and loss of stock */
 		if ($StandardCost !=0){
 			/*first the cost of sales entry*/
-			$AccountCOGL = GetCOGSGLAccount($Area, $StockId, $_SESSION['Items'.$identifier]->DefaultSalesType);
+			$AccountCOGL = GetCOGSGLAccount($Area, $StockID, $_SESSION['Items'.$identifier]->DefaultSalesType);
 			InsertIntoGLTrans("10", 
 							$InvoiceNo, 
 							Date('Y-m-d'),
 							$PeriodNo,
 							$AccountCOGL,
-							$StockId . " x " . $QtyDelivered . " @ " . round($StandardCost),
+							$StockID . " x " . $QtyDelivered . " @ " . round($StandardCost),
 							round($StandardCost * $QtyDelivered),
 							$Tag,
 							'ERROR-POS-00101'
 							);
 
 			/*now the stock entry*/
-			$StockGLCode = GetStockGLCode($StockId);
+			$StockGLCode = GetStockGLCode($StockID);
 			InsertIntoGLTrans("10", 
 							$InvoiceNo, 
 							Date('Y-m-d'),
 							$PeriodNo,
 							$StockGLCode['stockact'],
-							$StockId . " x " . $QtyDelivered . " @ " . round($StandardCost),
+							$StockID . " x " . $QtyDelivered . " @ " . round($StandardCost),
 							round(-$StandardCost * $QtyDelivered),
 							$Tag,
 							'ERROR-POS-00102'
@@ -649,7 +649,7 @@ function GetFilenameFromPOSIdentifier($id){
 
 
 function KLPrintReceiptTestWarning($KindOfDoc){
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
 	if (KLwebERPScriptCalledFromTEST()){
 		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID " . $KindOfDoc . $NewLine;
@@ -658,7 +658,7 @@ function KLPrintReceiptTestWarning($KindOfDoc){
 }
 
 function KLPrintNameOfShop(){
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	
 	// name of shop
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
@@ -699,7 +699,7 @@ function KLPrintNameOfShop(){
 
 function KLPrintReceiptHeader($identifier, $OrderNo){
 	
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 
 	$TextToPrint = $InitPrinter . $CenteredJustified;
 
@@ -795,7 +795,7 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 
 function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	
 	$TextToPrint = $NewLine;
 
@@ -858,7 +858,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 function KLPrintReceiptShopFooter($identifier, $OrderNo){
 
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 
 	// payment descriptions
 	$TextToPrint = $CharacterFontA. $NewLine;
@@ -1010,7 +1010,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 }
 
 function DoubleJustified($left, $right, $lenght, $fillchar){
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	return str_pad($left, $lenght - strlen($right), $fillchar) . $right . $NewLine;
 }
 

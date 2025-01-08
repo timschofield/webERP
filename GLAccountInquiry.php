@@ -53,10 +53,11 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 $DefaultPeriodDate = Date ('Y-m-d', Mktime(0,0,0,Date('m'),0,Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
-echo '<table class="selection">
-		<tr>
-			<td>' . _('Account').':</td>
-			<td><select name="Account">';
+echo '<fieldset>
+		<legend>', _('Inquiry Criteria'), '</legend>
+		<field>
+			<label for="Account">' . _('Account').':</label>
+			<select name="Account">';
 
 $SQL = "SELECT chartmaster.accountcode,
 			bankaccounts.accountcode AS bankact,
@@ -77,13 +78,13 @@ while($MyRow=DB_fetch_array($Account)) {
 		echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
 	}
  }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 
 //Select the tag
-echo '<tr>
-		<td>' . _('Select Tag') . ':</td>
-		<td><select name="tag">';
+echo '<field>
+		<label for="tag">' . _('Select Tag') . ':</label>
+		<select name="tag">';
 
 $SQL = "SELECT tagref,
 			tagdescription
@@ -100,13 +101,13 @@ while($MyRow=DB_fetch_array($Result)) {
 		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'].' - ' .$MyRow['tagdescription'] . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>';
+echo '</select>
+	</field>';
 // End select tag
 
-echo '<tr>
-		<td>' . _('For Period range').':</td>
-		<td><select name="Period[]" size="12" multiple="multiple">';
+echo '<field>
+		<label for="Period">' . _('For Period range').':</label>
+		<select name="Period[]" size="12" multiple="multiple">';
 
 $SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($SQL);
@@ -117,10 +118,9 @@ while($MyRow=DB_fetch_array($Periods)) {
 		echo '<option value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 	}
 }
-echo '</select></td>
-	</tr>
-	</table>
-	<br />
+echo '</select>
+	</field>
+	</fieldset>
 	<div class="centre">
 		<input type="submit" name="Show" value="'._('Show Account Transactions').'" />
 	</div>
@@ -209,14 +209,14 @@ if(isset($_POST['Show'])) {
 		$RunningTotal = 0;
 	} else {
 		// added to fix bug with Brought Forward Balance always being zero
-		$Sql = "SELECT bfwd,
+		$SQL = "SELECT bfwd,
 					actual,
 					period
 				FROM chartdetails
 				WHERE chartdetails.accountcode='" . $SelectedAccount . "'
 				AND chartdetails.period='" . $FirstPeriodSelected . "'";
 		$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-		$ChartDetailsResult = DB_query($Sql, $ErrMsg);
+		$ChartDetailsResult = DB_query($SQL, $ErrMsg);
 		$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 		$RunningTotal = $ChartDetailRow['bfwd'];
 		echo	'<tr>

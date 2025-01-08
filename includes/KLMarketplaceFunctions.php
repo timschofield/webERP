@@ -119,13 +119,13 @@ function ClearUrl($Url){
 	return $Clean;
 }
 
-function CreateTextSize($stockid, $language, $IncludeTextDescription){
-	$Size = ClassicalSize($stockid);
+function CreateTextSize($StockID, $language, $IncludeTextDescription){
+	$Size = ClassicalSize($StockID);
 	if ($Size == "NO SIZE"){
-		if (isRing($stockid)){
-			$Size = RingSize($stockid);
+		if (isRing($StockID)){
+			$Size = RingSize($StockID);
 		}else{
-			$Size = NumberSize($stockid);
+			$Size = NumberSize($StockID);
 		}		
 	} 
 	if ($IncludeTextDescription){
@@ -172,76 +172,76 @@ function ItemMarketplaceQOH($StockID){
 	return $QOH;
 }
 
-function SQLInsertNewItemKLStockmarketplaces($StockId){
+function SQLInsertNewItemKLStockmarketplaces($StockID){
 	$SQL="INSERT INTO klstockmarketplaces 
 				(stockid,
 				tokopediaenabled,
 				shopeeenabled,
 				lazadaenabled)
 		VALUES (
-			'" . $StockId . "',
+			'" . $StockID . "',
 			'0',
 			'0',
 			'0')";
 	return $SQL;
 }
 
-function ItemEnableLazadaInfo($StockId, $EnabledLazada){
-	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
+function ItemEnableLazadaInfo($StockID, $EnabledLazada){
+	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockID)){
 		// Already exists, should exist!!! so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
 				SET lazadaenabled='" . $EnabledLazada ."'
-			WHERE klstockmarketplaces.stockid='" . $StockId . "'
+			WHERE klstockmarketplaces.stockid='" . $StockID . "'
 				AND lazadaurl IS NOT NULL";
 	}else{
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
-		$SQL=SQLInsertNewItemKLStockmarketplaces($StockId);
+		$SQL=SQLInsertNewItemKLStockmarketplaces($StockID);
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Lazada marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Lazada marketplace info because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemEnableShopeeInfo($StockId, $EnabledShopee){
-	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
+function ItemEnableShopeeInfo($StockID, $EnabledShopee){
+	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockID)){
 		// Already exists, should exist!!! so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
 				SET shopeeenabled='" . $EnabledShopee ."'
-			WHERE klstockmarketplaces.stockid='" . $StockId . "'
+			WHERE klstockmarketplaces.stockid='" . $StockID . "'
 				AND shopeeurl IS NOT NULL";
 	}else{
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
-		$SQL=SQLInsertNewItemKLStockmarketplaces($StockId);
+		$SQL=SQLInsertNewItemKLStockmarketplaces($StockID);
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Shopee marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Shopee marketplace info because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemEnableTokopediaInfo($StockId, $EnabledTokopedia){
-	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockId)){
+function ItemEnableTokopediaInfo($StockID, $EnabledTokopedia){
+	if (DataExistsInWebERP("klstockmarketplaces", "stockid", $StockID)){
 		// Already exists, so only update the enable flag
 		$SQL = "UPDATE klstockmarketplaces
 				SET tokopediaenabled='" . $EnabledTokopedia ."'
-			WHERE klstockmarketplaces.stockid='" . $StockId . "'
+			WHERE klstockmarketplaces.stockid='" . $StockID . "'
 				AND tokopediaurl IS NOT NULL";
 	}else{
 		// does not exist, so need to insert a new row for the item as DISABLED, as it means we do not have the URL's yet
-		$SQL=SQLInsertNewItemKLStockmarketplaces($StockId);
+		$SQL=SQLInsertNewItemKLStockmarketplaces($StockID);
 	}
 	$DbgMsg = _('The SQL that failed to enable/disable the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot enable/disable the Tokopedia marketplace info because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada){
+function ItemInsertLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLazada){
 	$SQL="INSERT INTO klstockmarketplaces 
 				(stockid,
 				lazadaurl,
 				lazadaproductid,
 				lazadaenabled)
 		VALUES (
-			'" . $StockId . "',
+			'" . $StockID . "',
 			'" . $URLLazada . "',
 			'" . $LazadaProductId . "',
 			'" . $EnabledLazada . "')";
@@ -251,14 +251,14 @@ function ItemInsertLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLa
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee){
+function ItemInsertShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLShopee){
 	$SQL="INSERT INTO klstockmarketplaces 
 				(stockid,
 				shopeeurl,
 				shopeeproductid,
 				shopeeenabled)
 		VALUES (
-			'" . $StockId . "',
+			'" . $StockID . "',
 			'" . $URLShopee . "',
 			'" . $ShopeeProductId . "',
 			'" . $EnabledShopee . "')";
@@ -268,14 +268,14 @@ function ItemInsertShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLSh
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
+function ItemInsertTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
 	$SQL="INSERT INTO klstockmarketplaces 
 				(stockid,
 				tokopediaurl,
 				tokopediaproductid,
 				tokopediaenabled)
 		VALUES (
-			'" . $StockId . "',
+			'" . $StockID . "',
 			'" . $URLTokopedia . "',
 			'" . $TokopediaProductId . "',
 			'" . $EnabledTokopedia . "')";
@@ -285,53 +285,53 @@ function ItemInsertTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductI
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemUpdateLazadaInfo($StockId, $EnabledLazada, $LazadaProductId, $URLLazada){
+function ItemUpdateLazadaInfo($StockID, $EnabledLazada, $LazadaProductId, $URLLazada){
 	$SQL = "UPDATE klstockmarketplaces
 			SET lazadaurl = '" . $URLLazada . "',
 				lazadaproductid = '" . $LazadaProductId ."',
 				lazadaenabled='" . $EnabledLazada ."'
-		WHERE klstockmarketplaces.stockid='" . $StockId . "'";
+		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
 
 	$DbgMsg = _('The SQL that failed to update the Lazada marketplace info was');
 	$ErrMsg = _('Cannot update the Lazada marketplace info because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemUpdateShopeeInfo($StockId, $EnabledShopee, $ShopeeProductId, $URLShopee){
+function ItemUpdateShopeeInfo($StockID, $EnabledShopee, $ShopeeProductId, $URLShopee){
 	$SQL = "UPDATE klstockmarketplaces
 			SET shopeeurl = '" . $URLShopee . "',
 				shopeeproductid = '" . $ShopeeProductId ."',
 				shopeeenabled='" . $EnabledShopee ."'
-		WHERE klstockmarketplaces.stockid='" . $StockId . "'";
+		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
 
 	$DbgMsg = _('The SQL that failed to update the Shopee marketplace info was');
 	$ErrMsg = _('Cannot update the Shopee marketplace info because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function ItemUpdateTokopediaInfo($StockId, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
+function ItemUpdateTokopediaInfo($StockID, $EnabledTokopedia, $TokopediaProductId, $URLTokopedia){
 	$SQL = "UPDATE klstockmarketplaces
 			SET tokopediaurl = '" . $URLTokopedia . "',
 				tokopediaproductid = '" . $TokopediaProductId ."',
 				tokopediaenabled='" . $EnabledTokopedia ."'
-		WHERE klstockmarketplaces.stockid='" . $StockId . "'";
+		WHERE klstockmarketplaces.stockid='" . $StockID . "'";
 
 	$DbgMsg = _('The SQL that failed to update the Tokopedia marketplace info was');
 	$ErrMsg = _('Cannot update the Tokopedia marketplace info because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 }
 
-function FindShopeeCategory($StockId, $Name, $Description){
+function FindShopeeCategory($StockID, $Name, $Description){
 	$ShopeeCat = "";
-	if (isRing($StockId)){
+	if (isRing($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_RING;
-	}elseif (isToeRing($StockId)){
+	}elseif (isToeRing($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_TOE_RING;
-	}elseif (isBrooche($StockId)){
+	}elseif (isBrooche($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_BROOCHE;
-	}elseif (isPiercing($StockId)){
+	}elseif (isPiercing($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_PIERCING;
-	}elseif (isEarring($StockId)){
+	}elseif (isEarring($StockID)){
 		if (ItemInList("stud", $Description)){
 			$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
 		}else if (ItemInList("hoop", $Description)){
@@ -341,9 +341,9 @@ function FindShopeeCategory($StockId, $Name, $Description){
 		}else{
 			$ShopeeCat = SHOPEE_CATEGORY_EARRING;
 		}
-	}elseif (isEarcuff($StockId)){
+	}elseif (isEarcuff($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_EARRING_STUD;
-	}elseif (isBracelet($StockId)){
+	}elseif (isBracelet($StockID)){
 		if (ItemInList("bangle", $Description)){
 			$ShopeeCat = SHOPEE_CATEGORY_BANGLE;
 		}else if (ItemInList("pearl", $Description)){
@@ -351,15 +351,15 @@ function FindShopeeCategory($StockId, $Name, $Description){
 		}else{
 			$ShopeeCat = SHOPEE_CATEGORY_BRACELET;
 		}
-	}elseif (isAnklet($StockId)){
+	}elseif (isAnklet($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_ANKLET;
-	}elseif (isPendant($StockId)){
+	}elseif (isPendant($StockID)){
 		if (ItemInList("pearl", $Description)){
 			$ShopeeCat = SHOPEE_CATEGORY_PENDANT_PEARL;
 		}else{
 			$ShopeeCat = SHOPEE_CATEGORY_PENDANT;
 		}
-	}elseif (isNecklace($StockId)){
+	}elseif (isNecklace($StockID)){
 		if (ItemInList("choker", $Description)){
 			$ShopeeCat = SHOPEE_CATEGORY_CHOKER;
 		}else if (ItemInList("pearl", $Description)){
@@ -367,11 +367,11 @@ function FindShopeeCategory($StockId, $Name, $Description){
 		}else{
 			$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
 		}
-	}elseif (isTali($StockId)){
+	}elseif (isTali($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_NECKLACE;
-	}elseif (isBag($StockId)){
+	}elseif (isBag($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_BAG;
-	}elseif (isKeyHolder($StockId)){
+	}elseif (isKeyHolder($StockID)){
 		$ShopeeCat = SHOPEE_CATEGORY_KEYHOLDER;
 	}
 	return $ShopeeCat;
@@ -425,33 +425,33 @@ function FindLazadaStone($Text){
 	return $Stone;
 }
 
-function WhatsInTheBox($StockId){
+function WhatsInTheBox($StockID){
 	$Box = "";
-	if (isRing($StockId)){
+	if (isRing($StockID)){
 		$Box = "Ring";
-	}elseif (isToeRing($StockId)){
+	}elseif (isToeRing($StockID)){
 		$Box = "Toe Ring";
-	}elseif (isBrooche($StockId)){
+	}elseif (isBrooche($StockID)){
 		$Box = "Brooche";
-	}elseif (isEarring($StockId)){
+	}elseif (isEarring($StockID)){
 		$Box = "2 Earrings";
-	}elseif (isEarcuff($StockId)){
+	}elseif (isEarcuff($StockID)){
 		$Box = "2 Earcuffs";
-	}elseif (isPiercing($StockId)){
+	}elseif (isPiercing($StockID)){
 		$Box = "Piercing";
-	}elseif (isBracelet($StockId)){
+	}elseif (isBracelet($StockID)){
 		$Box = "Bracelet";
-	}elseif (isAnklet($StockId)){
+	}elseif (isAnklet($StockID)){
 		$Box = "Anklet";
-	}elseif (isPendant($StockId)){
+	}elseif (isPendant($StockID)){
 		$Box = "Pendant";
-	}elseif (isNecklace($StockId)){
+	}elseif (isNecklace($StockID)){
 		$Box = "Necklace";
-	}elseif (isTali($StockId)){
+	}elseif (isTali($StockID)){
 		$Box = "Tali Cord";
-	}elseif (isBag($StockId)){
+	}elseif (isBag($StockID)){
 		$Box = "Bag";
-	}elseif (isKeyHolder($StockId)){
+	}elseif (isKeyHolder($StockID)){
 		$Box = "Key Holder";
 	}
 	return $Box . ", Pouchbag, Jewellery Box";

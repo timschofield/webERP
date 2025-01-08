@@ -154,7 +154,6 @@ if (isset($SelectedQATest)) {
 if (! isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedQATest)) {
@@ -194,15 +193,17 @@ if (! isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedQATest" value="' . $SelectedQATest . '" />';
 		echo '<input type="hidden" name="TestID" value="' . $_POST['SelectedQATest'] . '" />';
-		echo '<table class="selection">
-				<tr>
-					<td>' . _('QA Test ID') . ':</td>
-					<td>' . $_POST['SelectedQATest'] . '</td>
-				</tr>';
+		echo '<fieldset>
+				<legend>', _('Edit QA Test'), '</legend>
+				<field>
+					<label for="SelectedQATest">' . _('QA Test ID') . ':</label>
+					<fieldtext>' . $_POST['SelectedQATest'] . '</fieldtext>
+				</field>';
 
 	} else { //end of if $SelectedQATest only do the else when a new record is being entered
 
-		echo '<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Create New QA Test'), '</legend>';
 
 	}
 	if (!isset($_POST['QATestName'])){
@@ -235,26 +236,32 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['ShowOnTestPlan'])) {
 		$_POST['ShowOnTestPlan']=1;
 	}
-	echo '<tr>
-			<td>' . _('QA Test Name') . ':</td>
-			<td><input type="text" '. (in_array('QATestName',$Errors) ? 'class="inputerror"' : '' ) .' name="QATestName"  required="required" title="' . _('The name of the Test you are setting up') . '" size="30" maxlength="50" value="' . $_POST['QATestName'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Method') . ':</td>
-			<td><input type="text" name="Method" title="' . _('ASTM, ISO, UL or other') . '" size="20" maxlength="20" value="' . $_POST['Method'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Group By') . ':</td>
-			<td><input type="text" name="GroupBy" title="' . _('Can be used to group certain Tests on the Product Specification or Certificate of
-Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupBy'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Units') . ':</td>
-			<td><input type="text" name="Units" title="' . _('How this is measured. PSI, Fahrenheit, Celsius etc.') . '" size="20" maxlength="20" value="' . $_POST['Units'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('Type') . ':</td>
-			<td><select title="' . _('What sort of data field is required to record the results for this test') . '" name="Type">';
+	if (!isset($_POST['DefaultValue'])) {
+		$_POST['DefaultValue'] = '';
+	}
+	echo '<field>
+			<label for="QATestName">' . _('QA Test Name') . ':</label>
+			<input type="text" '. (in_array('QATestName',$Errors) ? 'class="inputerror"' : '' ) .' name="QATestName"  required="required" title="" size="30" maxlength="50" value="' . $_POST['QATestName'] . '" />
+			<fieldhelp>' . _('The name of the Test you are setting up') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="Method">' . _('Method') . ':</label>
+			<input type="text" name="Method" title="" size="20" maxlength="20" value="' . $_POST['Method'] . '" />
+			<fieldhelp>' . _('ASTM, ISO, UL or other') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="GroupBy">' . _('Group By') . ':</label>
+			<input type="text" name="GroupBy" title="" size="20" maxlength="20" value="' . $_POST['GroupBy'] . '" />
+			<fieldhelp>' . _('Can be used to group certain Tests on the Product Specification or Certificate of Analysis or left blank') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="Units">' . _('Units') . ':</label>
+			<input type="text" name="Units" title="" size="20" maxlength="20" value="' . $_POST['Units'] . '" />
+			<fieldhelp>' . _('How this is measured. PSI, Fahrenheit, Celsius etc.') . '</fieldhelp>
+		</field>';
+	echo '<field>
+			<label for="Type">' . _('Type') . ':</label>
+			<td><select title="" name="Type">';
 	if ($_POST['Type']==0){
 		echo '<option selected="selected" value="0">' . _('Text Box') . '</option>';
 	} else {
@@ -280,14 +287,18 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	} else {
 		echo '<option value="4">' . _('Range') . '</option>';
 	}
-	echo '</select></td></tr><tr>
-			<td>' . _('Possible Values') . ':</td>
-			<td><input type="text" name="DefaultValue" size="50" maxlength="150" value="' . $_POST['DefaultValue']. '" /></td>
-		</tr>';
+	echo '</select>
+		<fieldhelp>' . _('What sort of data field is required to record the results for this test') . '</fieldhelp>
+	</field>';
 
-	echo '<tr>
-			<td>' . _('Numeric Value?') . ':</td>
-			<td><select name="NumericValue">';
+	echo '<field>
+			<label for="DefaultValue">' . _('Possible Values') . ':</label>
+			<input type="text" name="DefaultValue" size="50" maxlength="150" value="' . $_POST['DefaultValue']. '" />
+		</field>';
+
+	echo '<field>
+			<label for="NumericValue">' . _('Numeric Value?') . ':</label>
+			<select name="NumericValue">';
 	if ($_POST['NumericValue']==1){
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -298,9 +309,12 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr><tr>
-			<td>' . _('Show On Cert?') . ':</td>
-			<td><select name="ShowOnCert">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ShowOnCert">' . _('Show On Cert?') . ':</label>
+			<select name="ShowOnCert">';
 	if ($_POST['ShowOnCert']==1){
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -311,9 +325,12 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr><tr>
-			<td>' . _('Show On Spec?') . ':</td>
-			<td><select name="ShowOnSpec">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ShowOnSpec">' . _('Show On Spec?') . ':</label>
+			<select name="ShowOnSpec">';
 	if ($_POST['ShowOnSpec']==1){
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -324,9 +341,12 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr><tr>
-			<td>' . _('Show On Test Plan?') . ':</td>
-			<td><select name="ShowOnTestPlan">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ShowOnTestPlan">' . _('Show On Test Plan?') . ':</label>
+			<select name="ShowOnTestPlan">';
 	if ($_POST['ShowOnTestPlan']==1){
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -337,9 +357,12 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td></tr><tr>
-			<td>' . _('Active?') . ':</td>
-			<td><select name="Active">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="Active">' . _('Active?') . ':</label>
+			<select name="Active">';
 	if ($_POST['Active']==1){
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
 	} else {
@@ -350,14 +373,14 @@ Analysis or left blank') . '" size="20" maxlength="20" value="' . $_POST['GroupB
 	} else {
 		echo '<option value="0">' . _('No') . '</option>';
 	}
-	echo '</select></td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
+	echo '</select>
+		</field>';
+
+	echo '</fieldset>';
+
+	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-        </div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

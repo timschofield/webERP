@@ -121,34 +121,30 @@ if (isset($_POST['PrintPDF'])) {
 		. _('Stock') . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<br />
-		<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-        <div>
-        <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<table class="selection">
-		<tr>
-			<td>' . _('Print Option') . ':</td>
-			<td><select name="Fill">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="Fill">' . _('Print Option') . ':</label>
+			<select name="Fill">
 				<option selected="selected" value="yes">' . _('Print With Alternating Highlighted Lines') . '</option>
 				<option value="no">' . _('Plain Print') . '</option>
-				</select></td>
-		</tr>
-		<tr>
-			<td>' . _('Selection') . ':</td>
-			<td><select name="Selection">
+			</select>
+		</field>
+		<field>
+			<label for="Selection">' . _('Selection') . ':</label>
+			<select name="Selection">
 				<option selected="selected" value="All">' . _('All') . '</option>
 				<option value="WO">' . _('Work Orders Only') . '</option>
 				<option value="PO">' . _('Purchase Orders Only') . '</option>
-				</select></td>
-		</tr>
-		</table>
-		<br />
+			</select>
+		</field>
+		</fieldset>
 		<div class="centre">
 			<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
 		</div>
-        </div>
-        </form>';
+		</form>';
 
 	include('includes/footer.php');
 

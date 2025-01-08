@@ -10,6 +10,9 @@ $Result = DB_query("SELECT debtorsmaster.name,
 					 ON debtorsmaster.currcode=currencies.currabrev
 					 WHERE debtorsmaster.debtorno='" . $_SESSION['CustomerID'] . "'");
 $MyRow = DB_fetch_array($Result);
+$CurrCode = $MyRow['currcode'];
+$SalesType = $MyRow['salestype'];
+$CurrDecimalPlaces = $MyRow['currdecimalplaces'];
 
 $Title = _('Special Prices for') . ' '. htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8');
 
@@ -32,29 +35,7 @@ if (!isset($Item) OR !isset($_SESSION['CustomerID']) OR $_SESSION['CustomerID']=
 }
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
-		'" alt="" />' . _('Special Customer Prices') . '</p><br />';
-echo '<b>' . htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $MyRow['currcode'] . '<br />' . ' ' . _('for') . ' ';
-
-$CurrCode = $MyRow['currcode'];
-$SalesType = $MyRow['salestype'];
-$CurrDecimalPlaces = $MyRow['currdecimalplaces'];
-
-$Result = DB_query("SELECT stockmaster.description,
-							stockmaster.mbflag
-					FROM stockmaster
-					WHERE stockmaster.stockid='" . $Item . "'");
-
-$MyRow = DB_fetch_row($Result);
-if (DB_num_rows($Result)==0){
-	prnMsg( _('The part code entered does not exist in the database') . '. ' . _('Only valid parts can have prices entered against them'),'error');
-	$InputError=1;
-}
-if ($MyRow[1]=='K'){
-	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
-	exit;
-}
-
-echo $Item . ' - ' . $MyRow[0] . '</b><br />';
+		'" alt="" />' . _('Special Customer Prices') . '</p>';
 
 if (isset($_POST['submit'])) {
 
@@ -88,7 +69,7 @@ if (isset($_POST['submit'])) {
 		$InputError =1;
 		$Msg = _('The date this price is to take effect from must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
 	}
-	if ($_POST['EndDate']!='9999-12-31'){
+	if ($_POST['EndDate']!='0000-00-00'){
 		if (! Is_Date($_POST['EndDate']) AND $_POST['EndDate']!=''){ //EndDate can also be blank for default prices
 			$InputError =1;
 			$Msg = _('The date this price is be in effect to must be entered in the format') . ' ' . $_SESSION['DefaultDateFormat'];
@@ -102,7 +83,7 @@ if (isset($_POST['submit'])) {
 			$Msg = _('The end date is expected to be after today. There is no point entering a new price where the effective date is before today!');
 		}
 		if (trim($_POST['EndDate'])==''){
-			$_POST['EndDate'] = '9999-12-31';
+			$_POST['EndDate'] = '0000-00-00';
 		}
 	}
 
@@ -204,15 +185,14 @@ $ErrMsg = _('Could not retrieve the normal prices set up because');
 $DbgMsg = _('The SQL used to retrieve these records was');
 $Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-echo '<table><tr><td valign="top">';
 echo '<table class="selection">';
 
 if (DB_num_rows($Result) == 0) {
-	echo '<tr><td>' . _('There are no default prices set up for this part') . '</td></tr>';
+	prnMsg(  _('There are no default prices set up for this part'), 'info');
 } else {
 	echo '<tr><th>' . _('Normal Price') . '</th></tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($MyRow['enddate']=='9999-12-31'){
+		if ($MyRow['enddate']=='0000-00-00'){
 			$EndDateDisplay = _('No End Date');
 		} else {
 			$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
@@ -228,7 +208,7 @@ if (DB_num_rows($Result) == 0) {
 	}
 }
 
-echo '</table></td><td valign="top">';
+echo '</table>';
 
 //now get the prices for the customer selected
 
@@ -255,7 +235,7 @@ $Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 echo '<table class="selection">';
 
 if (DB_num_rows($Result) == 0) {
-	echo '<tr><td>' . _('There are no special prices set up for this part') . '</td></tr>';
+	prnMsg( _('There are no special prices set up for this part'), 'warn');
 } else {
 /*THERE IS ALREADY A spl price setup */
 	echo '<tr>
@@ -270,16 +250,25 @@ if (DB_num_rows($Result) == 0) {
 	} else {
 		$Branch = $MyRow['brname'];
 	}
-	if ($MyRow['enddate']=='9999-12-31'){
+	if ($MyRow['enddate']=='0000-00-00'){
 		$EndDateDisplay = _('No End Date');
 	} else {
 		$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 	}
+	$StockSQL = "SELECT units,
+						conversionfactor
+					FROM stockmaster
+					LEFT JOIN custitem
+					ON stockmaster.stockid=custitem.stockid
+					WHERE stockmaster.stockid='".$Item."'
+					AND custitem.debtorno='" . $_SESSION['CustomerID'] . "'";
+	$StockResult = DB_query($StockSQL);
+	$StockRow = DB_fetch_array($StockResult);
 	echo '<tr style="background-color:#CCCCCC">
 			<td class="number">' . locale_number_format($MyRow['price'],$CurrDecimalPlaces) . '</td>
 			<td>' . $Branch . '</td>
-			<td>' . $MyRow['units'] . '</td>
-			<td class="number">' . $MyRow['conversionfactor'] . '</td>
+			<td>' . $StockRow['units'] . '</td>
+			<td class="number">' . $StockRow['conversionfactor'] . '</td>
 			<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
 			<td>' . $EndDateDisplay . '</td>
 	 		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Price='.$MyRow['price'].'&amp;Branch='.$MyRow['branchcode'].
@@ -291,10 +280,9 @@ if (DB_num_rows($Result) == 0) {
 //END WHILE LIST LOOP
 }
 
-echo '</table></td></tr></table><br />';
+echo '</table></td></tr></table>';
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<input type="hidden" name="Item" value="' . $Item . '" />';
 
@@ -332,11 +320,30 @@ $SQL = "SELECT branchcode,
 		WHERE debtorno='" . $_SESSION['CustomerID'] . "'";
 $Result = DB_query($SQL);
 
-echo '<table class="selection">
-		<tr>
-			<td>' . _('Branch') . ':</td>
-			<td><select name="Branch">';
-if ($MyRow['branchcode']=='') {
+echo '<fieldset>';
+echo '<legend><b>' . htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8') . ' ' . _('in') . ' ' . $MyRow['currcode'] . '' . ' ' . _('for') . ' ';
+
+$Result = DB_query("SELECT stockmaster.description,
+							stockmaster.mbflag
+					FROM stockmaster
+					WHERE stockmaster.stockid='" . $Item . "'");
+
+$MyRow = DB_fetch_row($Result);
+if (DB_num_rows($Result)==0){
+	prnMsg( _('The part code entered does not exist in the database') . '. ' . _('Only valid parts can have prices entered against them'),'error');
+	$InputError=1;
+}
+if ($MyRow[1]=='K'){
+	prnMsg(_('The part selected is a kit set item') .', ' . _('these items explode into their components when selected on an order') . ', ' . _('prices must be set up for the components and no price can be set for the whole kit'),'error');
+	exit;
+}
+
+echo $Item . ' - ' . $MyRow[0] . '</b></legend>';
+
+echo '<field>
+		<label for="Branch">' . _('Branch') . ':</label>
+		<select name="Branch">';
+if (isset($MyRow['branchcode']) and $MyRow['branchcode']=='') {
 	echo '<option selected="selected" value="">' . _('All Branches') . '</option>';
 } else {
 	echo '<option value="">' . _('All Branches') . '</option>';
@@ -349,27 +356,29 @@ while ($MyRow=DB_fetch_array($Result)) {
 		echo '<option value="'.$MyRow['branchcode'].'">' . htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8') . '</option>';
 	}
 }
-echo '</select></td></tr>';
-echo '<tr>
-		<td>' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" class="date" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
-	</tr>';
-echo '<tr>
-		<td>' . _('End Date') . ':</td>
-		<td><input type="text" name="EndDate" class="date" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" /></td></tr>';
+echo '</select>
+	</field>';
 
-echo '<tr><td>' . _('Price') . ':</td>
-          <td><input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" /></td>
-		</tr>
-	</table>';
+echo '<field>
+		<label for="StartDate">' . _('Start Date') . ':</label>
+		<input type="text" name="StartDate" class="date" size="11" maxlength="10" value="' . $_POST['StartDate'] . '" />
+	</field>';
+echo '<field>
+		<label for="EndDate">' . _('End Date') . ':</label>
+		<input type="text" name="EndDate" class="date" size="11" maxlength="10" value="' . $_POST['EndDate'] . '" />
+	</field>';
+
+echo '<field>
+		<label for="Price">' . _('Price') . ':</label>
+		<input type="text" class="number" name="Price" size="11" maxlength="10" value="' . locale_number_format($_POST['Price'],2) . '" />
+	</field>
+</fieldset>';
 
 
-echo '<br />
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-		</div>
-        </div>
-		</form>';
+echo '<div class="centre">
+		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
+	</div>
+</form>';
 
 include('includes/footer.php');
 exit;
@@ -388,12 +397,10 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 					AND stockid='" . $Item . "'
 					AND currabrev='" . $CurrAbbrev . "'
 					AND typeabbrev='" . $PriceList . "'
-					AND enddate<>''
 					ORDER BY
 					branchcode,
 					startdate,
 					enddate";
-
 	$Result = DB_query($SQL);
 
 	unset($BranchCode);
@@ -441,7 +448,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 				AND typeabbrev='" . $PriceList . "'
 				AND debtorno ='" . $CustomerID . "'
 				AND branchcode=''
-				AND enddate ='9999-12-31'
+				AND enddate ='0000-00-00'
 				ORDER BY startdate";
 	$Result = DB_query($SQL);
 
@@ -456,7 +463,7 @@ function ReSequenceEffectiveDates ($Item, $PriceList, $CurrAbbrev, $CustomerID) 
 						AND startdate ='" . $OldStartDate . "'
 						AND debtorno ='" . $CustomerID . "'
 						AND branchcode=''
-						AND enddate = '9999-12-31'
+						AND enddate = '0000-00-00'
 						AND debtorno =''";
 			$UpdateResult = DB_query($SQL);
 		}

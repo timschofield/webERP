@@ -19,7 +19,7 @@ include('includes/KLPOSGeneral.php');
 
 include ('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
-include('includes/wcpESCPOSCommands.php');
+include('includes/KLESCPOSCommands.php');
 
 if (isset($_POST['Submit']) OR isset($_POST['EnterMoreItems'])){
 /*Trap any errors in input */
@@ -196,7 +196,7 @@ if(isset($_POST['Submit']) AND $InputError==False){
 	$FileName = GetFilenameFromPOSIdentifier($identifier);   
 	file_put_contents($FileName, $TextToPrint);
 	$TextActionToPrint = 'Print Return Transfer number: '. $_POST['Trf_ID'];
-	include ('includes/SilentPrinting.php');
+	include ('includes/KLSilentPrinting.php');
 	//################## PRINTING STUFF ##################### 
 
 	include('includes/footer.php');

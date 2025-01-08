@@ -10,9 +10,9 @@ if (isset($_GET['WO'])) {
 }
 
 if (isset($_GET['StockId'])) {
-	$StockId = $_GET['StockId'];
+	$StockID = $_GET['StockId'];
 } elseif (isset($_POST['StockId'])) {
-	$StockId = $_POST['StockId'];
+	$StockID = $_POST['StockId'];
 }
 
 if (isset($_GET['Location'])) {
@@ -21,7 +21,7 @@ if (isset($_GET['Location'])) {
 	$Location = $_POST['Location'];
 }
 
-if (isset($WO) and isset($StockId) and $WO != '') {
+if (isset($WO) and isset($StockID) and $WO != '') {
 
 	$SQL = "SELECT woitems.qtyreqd,
 					woitems.qtyrecd,
@@ -31,7 +31,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 			FROM woitems, stockmaster
 			WHERE stockmaster.stockid = woitems.stockid
 				AND woitems.wo = '" . $WO . "'
-				AND woitems.stockid = '" . $StockId . "' ";
+				AND woitems.stockid = '" . $StockID . "' ";
 
 	$ErrMsg = _('The SQL to find the details of the item to produce failed');
 	$ResultItems = DB_query($SQL, $ErrMsg);
@@ -52,7 +52,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 
 			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
 
-			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockId, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
+			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockID, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
 
 			$PartCounter = 0;
 
@@ -68,7 +68,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 					WHERE bom.component = stockmaster.stockid
 						AND bom.component = locstock.stockid
 						AND locstock.loccode = '" . $Location . "'
-						AND bom.parent = '" . $StockId . "'
+						AND bom.parent = '" . $StockID . "'
                         AND bom.effectiveafter <= CURRENT_DATE
                         AND bom.effectiveto > CURRENT_DATE";
 
@@ -92,7 +92,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 				$YPos-= $LineHeight;
 
 				if ($YPos < $Bottom_Margin + $LineHeight) {
-					PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
+					PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockID, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
 				}
 			}
 		}
@@ -104,10 +104,10 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 		PrintFooterSlip($pdf, _('Components Ready By'), _('Item Produced By'), _('Quality Control By'), $YPos, $FontSize, false);
 
 		if ($YPos < $Bottom_Margin + $LineHeight) {
-			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $Stockid, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
+			PrintHeader($pdf, $YPos, $PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockID, $MyItem['description'], $QtyPending, $MyItem['units'], $MyItem['decimalplaces'], $ReportDate);
 		}
 
-		$pdf->OutputD('WO-' . $WO . '-' . $StockId . '-' . Date('Y-m-d') . '.pdf');
+		$pdf->OutputD('WO-' . $WO . '-' . $StockID . '-' . Date('Y-m-d') . '.pdf');
 		$pdf->__destruct();
 	} else {
 		$Title = _('WO Item production Slip');
@@ -121,7 +121,7 @@ if (isset($WO) and isset($StockId) and $WO != '') {
 	}
 }
 
-function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockId, $Description, $Qty, $UOM, $DecimalPlaces, $ReportDate) {
+function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Left_Margin, $Page_Width, $Right_Margin, $WO, $StockID, $Description, $Qty, $UOM, $DecimalPlaces, $ReportDate) {
 
 	if ($PageNumber > 1) {
 		$pdf->newPage();
@@ -141,14 +141,14 @@ function PrintHeader(&$pdf, &$YPos, &$PageNumber, $Page_Height, $Top_Margin, $Le
 	$pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('WO') . ': ' . $WO);
 	$YPos-= $LineHeight;
 
-	$pdf->addTextWrap($Left_Margin, $YPos, 500, $FontSize, _('Item Code') . ': ' . $StockId . ' --> ' . $Description);
+	$pdf->addTextWrap($Left_Margin, $YPos, 500, $FontSize, _('Item Code') . ': ' . $StockID . ' --> ' . $Description);
 	$YPos-= $LineHeight;
 
 	$pdf->addTextWrap($Left_Margin, $YPos, 150, $FontSize, _('Quantity') . ': ' . locale_number_format($Qty, $DecimalPlaces) . ' ' . $UOM);
 	$YPos-= (2 * $LineHeight);
 
-	if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg')) {
-		$pdf->Image($_SESSION['part_pics_dir'] . '/' . $StockId . '.jpg', 135, $Page_Height - $Top_Margin - $YPos + 10, 200, 200);
+	if (file_exists($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg')) {
+		$pdf->Image($_SESSION['part_pics_dir'] . '/' . $StockID . '.jpg', 135, $Page_Height - $Top_Margin - $YPos + 10, 200, 200);
 		$YPos-= (16 * $LineHeight);
 	} /*end checked file exist*/
 

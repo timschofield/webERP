@@ -6,31 +6,9 @@
 *		Added PHP version
 ***********************************************************************/
 
-if (isset($Title)) {
-	$TitleScriptRunning = $Title;
-}else{
-	$TitleScriptRunning = "Undefined title";
-}
-
-$time = explode(' ', $_SESSION['ScriptStartTime']);
-$begintime = $time[1] + $time[0];
-
-$time = microtime();
-$time = explode(" ", $time);
-$endtime = $time[1] + $time[0];
-$runningtime = round(($endtime - $begintime),5);
-
-$AuditSQL = "INSERT INTO auditscripts (executiondate,
-					secondsrunning,
-					userid,
-					scripttitle)
-			VALUES('" . Date('Y-m-d H:i:s') . "',
-				'" . $runningtime . "',
-				'" . trim($_SESSION['UserID']) . "',
-				'" . DB_escape_string($TitleScriptRunning) . "')";
-$Result = DB_query($AuditSQL);
-
-/* END of logging the script */ 
+// log the script running time
+include_once ('AuditScriptsFunctions.php');
+RecordRunningTime($Title);
 
 echo '<div id="mask">
 		<div id="dialog"></div>

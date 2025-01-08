@@ -17,7 +17,6 @@ $SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='" . $SelectedSales
 $Result = DB_query($SQL);
 $MyRow = DB_fetch_array($Result);
 $SalesPersonName = $MyRow['salesmanname'];
-$SalesPersonArea = $MyRow['salesarea'];
 
 $Title = _('Sales Commission Maintenance For') . ' ' . $SalesPersonName;
 $ViewTopic = 'SalesPeople';

@@ -143,8 +143,8 @@
 		return $Errors;
 	}
 
-	function VerifyBatch($batch, $stockid, $Location, $i, $Errors) {
-		$SQL="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$stockid."'";
+	function VerifyBatch($batch, $StockID, $Location, $i, $Errors) {
+		$SQL="SELECT controlled, serialised FROM stockmaster WHERE stockid='".$StockID."'";
 		$Result=DB_query($SQL);
 		$MyRow=DB_fetch_row($Result);
 		if ($MyRow[0]!=1) {
@@ -155,7 +155,7 @@
 			return $Errors;
 		}
 		$SQL="SELECT quantity FROM stockserialitems
-              WHERE stockid='".$stockid. "'
+              WHERE stockid='".$StockID. "'
               AND loccode='".$Location."'
               AND serialno='".$batch."'";
 		$Result=DB_query($SQL);

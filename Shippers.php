@@ -181,7 +181,6 @@ if (isset($SelectedShipper)) {
 if (!isset($_GET['delete'])) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedShipper)) {
@@ -202,10 +201,15 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedShipper" value="'. $SelectedShipper .'" />';
 		echo '<input type="hidden" name="Shipper_ID" value="' . $_POST['Shipper_ID'] . '" />';
-		echo '<br /><table class="selection"><tr><td>' .  _('Shipper Code').':</td><td>' . $_POST['Shipper_ID'] . '</td></tr>';
+		echo '<fieldset>
+				<legend>', _('Edit Shipper Details'), '</legend>
+				<field>
+					<label for="Shipper_ID">' .  _('Shipper Code').':</label>
+					<fieldtext>' . $_POST['Shipper_ID'] . '</fieldtext>
+				</field>';
 	} else {
-		echo '<br />
-			<table class="selection">';
+		echo '<fieldset>
+				<legend>', _('Create New Shipper'), '</legend>';
 	}
 	if (!isset($_POST['ShipperName'])) {
 		$_POST['ShipperName']='';
@@ -217,28 +221,23 @@ if (!isset($_GET['delete'])) {
 		$_POST['Powertrack_Code']='';
 	}
 
-	echo '<tr><td>' .  _('Shipper Name') .':</td>
-			<td>
-				<input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) . ' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" />
-			</td>
-		</tr>
-		<tr><td>' .  _('OpenCart Text') .':</td>
-			<td>
-				<input type="text" name="Opencart_Text"'. ' value="'. $_POST['Opencart_Text'] .'" size="20" maxlength="20" />
-			</td>
-		</tr>
-		<tr><td>' .  _('PowerTrack Code') .':</td>
-			<td>
-				<input type="text" name="Powertrack_Code"'. ' value="'. $_POST['Powertrack_Code'] .'" size="10" maxlength="10" />
-			</td>
-		</tr>
-	</table>
+	echo '<field>
+			<label for="ShipperName">' .  _('Shipper Name') .':</label>
+			<input type="text" name="ShipperName"'. (in_array('ShipperName',$Errors) ? 'class="inputerror"' : '' ) . ' value="'. $_POST['ShipperName'] .'" size="35" maxlength="40" />
+		</field>
+		<field>
+			<label for="Opencart_Text">' . _('OpenCart Text') . ':</label>
+			<input type="text" name="Opencart_Text" value="'. $_POST['Opencart_Text'] .'" size="20" maxlength="20" />
+		</field>
+		<field>
+			<label for="Powertrack_Code">' . _('PowerTrack Code') . ':</label>
+			<input type="text" name="Powertrack_Code" value="'. $_POST['Powertrack_Code'] .'" size="10" maxlength="10" />
+		</field>
+	</fieldset>';
 
-	<br />
-	<div class="centre">
+	echo '<div class="centre">
 		<input type="submit" name="submit" value="'. _('Enter Information').'" />
 	</div>
-    </div>
 	</form>';
 
 } //end if record deleted no point displaying form to add record
