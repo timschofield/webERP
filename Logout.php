@@ -3,11 +3,16 @@
 /*****************************************************************************************
 KL RICARD MODIFICATIONS:
 - Change of AllowAnyone by AllowCronJobToBeRun to minimize risk of intrusions
+- Added the function RecordRunningTime to log the script running time
 *****************************************************************************************/
 
 $AllowCronJobToBeRun=True; /* Allow all users to log off  */
 
 include('includes/session.php');
+
+// KL RICARD log the script running time
+include_once ('includes/AuditScriptsFunctions.php');
+RecordRunningTime('Logout');
 
 // Cleanup
 session_unset();

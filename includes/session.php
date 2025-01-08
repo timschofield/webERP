@@ -73,6 +73,9 @@ if (!isset($_SESSION['AttemptsCounter']) or $AllowDemoMode == true) {
 	$_SESSION['AttemptsCounter'] = 0;
 }
 
+/* KL RICARD Log the script we run so we can optimize CPU time*/	
+$_SESSION['ScriptStartTime'] = microtime();
+
 /* iterate through all elements of the $_POST array and DB_escape_string them
 to limit possibility for SQL injection attacks and cross scripting attacks
 */

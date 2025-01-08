@@ -1,5 +1,14 @@
 <?php
 
+/***************************************************************************************
+ * 
+ * KL RICARD: Log the script we run so we can optimize CPU time and record login attempts
+ * 
+ * 
+ ***************************************************************************************/
+
+ include ('AuditScriptsFunctions.php');
+
 /*  Performs login checks and $_SESSION initialisation */
 
 define('UL_OK',  0);		/* User verified, session initialised */
@@ -23,7 +32,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 	if (!isset($_SESSION['AccessLevel']) OR $_SESSION['AccessLevel'] == '' OR
 		(isset($Name) AND $Name != '')) {
-	/* if not logged in */
+
+		/* KL RICARD Log the script we run so we can optimize CPU time*/	
+		$_SESSION['ScriptStartTime'] = microtime();
+
+		/* if not logged in */
 		$_SESSION['AccessLevel'] = '';
 		$_SESSION['CustomerID'] = '';
 		$_SESSION['UserBranch'] = '';
@@ -91,6 +104,8 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 			if ($MyRow['blocked']==1){
 			//the account is blocked
+				// KL RICARD: log the script running time
+				RecordRunningTime('Login attempt on blocked account'); 
 				return  UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
@@ -150,6 +165,8 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$Sec_Result = DB_query($SQL);
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
+				// KL RICARD: log the script running time
+				RecordRunningTime('Login attempt with config error'); 
 				return  UL_CONFIGERR;
 			} else {
 				$i=0;
@@ -246,12 +263,16 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			}
 
 			if(!isset($_SESSION['DB_Maintenance'])){
+				// KL RICARD: log the script running time
+				RecordRunningTime('Login attempt with config error'); 
 				return  UL_CONFIGERR;
 			} else {
 
 				if ($_SESSION['DB_Maintenance']==-1 AND !in_array(15, $_SESSION['AllowedPageSecurityTokens'])){
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
+					// KL RICARD: log the script running time
+					RecordRunningTime('Login attempt on maintenance mode'); 
 					return  UL_MAINTENANCE;
 				}
 			}
@@ -282,13 +303,18 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					}
 
 				}
-
+				// KL RICARD: log the script running time
+				RecordRunningTime('Login attempt on blocked account due to too many failed attempts'); 
 				return  UL_BLOCKED;
 			}
+			// KL RICARD: log the script running time
+			RecordRunningTime('Login attempt not valid'); 
 			return  UL_NOTVALID;
 		}
 	}		// End of userid/password check
 	// Run with debugging messages for the system administrator(s) but not anyone else
+	// KL RICARD: log the script running time
+	RecordRunningTime('Login successful'); 
 
 	return   UL_OK;		    /* All is well */
 }

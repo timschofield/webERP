@@ -298,8 +298,5 @@ if ($ScriptName != 'index.php') {
 }
 
 echo '<div id="MessageContainerHead"></div>';
-			
-/* KL RICARD Log the script we run so we can optimize CPU time*/	
-$_SESSION['ScriptStartTime'] = microtime();
 
 ?>
