@@ -690,14 +690,14 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		$_POST['InitiatorName'] = $MyRow['realname'];
 	}
 
-	// Start the main order header details
+	// Start the main order header details (main fieldset)
 	if ($_SESSION['ExistingOrder']) {
-		echo '<fieldset class="TwoByThreeColumn">
-				<legend>',_(' Modify Purchase Order Number') . ' ' . $_SESSION['PO' . $identifier]->OrderNo, '</legend>';
+		$LegendText = _(' Modify Purchase Order Number') . ' ' . $_SESSION['PO' . $identifier]->OrderNo;
 	} else {
-		echo '<fieldset class="TwoByThreeColumn">
-				<legend>', _('Purchase Order Header'), '</legend>';
+		$LegendText = _('New Purchase Order Header');
 	}
+	echo '<fieldset class="TwoByThreeColumn">
+			<legend>', $LegendText , '</legend>';
 
 	//Order Initiation fieldset
 	echo '<fieldset class="Column1x1">
@@ -871,11 +871,11 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 			</field>
 			<input type="hidden" name="StatusCommentsComplete" value="' . htmlspecialchars($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '" />
 			<field>
-				<td><input type="submit" name="UpdateStatus" value="' . _('Status Update') . '" /></td>
+				<input type="submit" name="UpdateStatus" value="' . _('Status Update') . '" />
 			</field>';
 	} //end its not a new order
 	//End Order status fieldset
-	echo '</fieldset><br />';
+	echo '</fieldset>';
 
 	//Warehouse info fieldset
 	echo '<fieldset class="Column1x2">
@@ -996,23 +996,23 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 			<input type="text" name="DelAdd1" size="41" maxlength="40" value="' . $_POST['DelAdd1'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 2 :</label>
+			<label for="DelAdd2">' . _('Address') . ' 2 :</label>
 			<input type="text" name="DelAdd2" size="41" maxlength="40" value="' . $_POST['DelAdd2'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 3 :</label>
+			<label for="DelAdd3">' . _('Address') . ' 3 :</label>
 			<input type="text" name="DelAdd3" size="41" maxlength="40" value="' . $_POST['DelAdd3'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 4 :</label>
+			<label for="DelAdd4">' . _('Address') . ' 4 :</label>
 			<input type="text" name="DelAdd4" size="41" maxlength="40" value="' . $_POST['DelAdd4'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 5 :</label>
+			<label for="DelAdd5">' . _('Address') . ' 5 :</label>
 			<input type="text" name="DelAdd5" size="21" maxlength="20" value="' . $_POST['DelAdd5'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 6 :</label>
+			<label for="DelAdd6">' . _('Address') . ' 6 :</label>
 			<input type="text" name="DelAdd6" size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" />
 		</field>';
 
@@ -1082,23 +1082,23 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 			<input type="text" name="SuppDelAdd1" size="41" maxlength="40" value="' . $_POST['SuppDelAdd1'] . '" />
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 2 :</label>
+			<label for="SuppDelAdd2">' . _('Address') . ' 2 :</label>
 			<td><input type="text" name="SuppDelAdd2" size="41" maxlength="40" value="' . $_POST['SuppDelAdd2'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 3 :</label>
+			<label for="SuppDelAdd3">' . _('Address') . ' 3 :</label>
 			<td><input type="text" name="SuppDelAdd3" size="41" maxlength="40" value="' . $_POST['SuppDelAdd3'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 4 :</label>
+			<label for="SuppDelAdd4">' . _('Address') . ' 4 :</label>
 			<td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 5 :</label>
+			<label for="SuppDelAdd5">' . _('Address') . ' 5 :</label>
 			<td><input type="text" name="SuppDelAdd5" size="41" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 6 :</label>
+			<label for="SuppDelAdd6">' . _('Address') . ' 6 :</label>
 			<td><input type="text" name="SuppDelAdd6" size="16" maxlength="15" value="' . $_POST['SuppDelAdd6'] . '" /></td>
 		</field>';
 
