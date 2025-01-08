@@ -102,10 +102,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 
-echo '<h1>' . _('OR') . ' ' . '</h1>';
-
 echo '<field>
-		<label>'. _('Enter partial asset code') . ':</label>';
+		<label>'. '<b>' . _('OR') . ' </b>' . _('Enter partial asset code') . ':</label>';
 if (isset($_POST['AssetCode'])) {
 	echo '<input type="text" class="number" name="AssetCode" value="' . $_POST['AssetCode'] . '" size="15" maxlength="13" />';
 } else {

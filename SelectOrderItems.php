@@ -1686,10 +1686,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				<input type="submit" name="SelectAsset" value="' . _('Fixed Asset Disposal') . '" />';
 		}
 		echo '</div>';
-		echo '<h2>' . _('Or') . '</h2>';
 		echo '<fieldset>
 				<field>
-					<div class="centre">' . _('Upload items from csv file') . '<input type="file" name="CSVFile" />
+					<div class="centre">' . '<b>' . _('OR') . ' </b>' . _('Upload items from csv file') . '<input type="file" name="CSVFile" />
 						<input type="submit" name="UploadFile" value="' . _('Upload File') . '" />
 					</div>
 				</td>

@@ -992,9 +992,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<input type="text" name="Keywords" size="20" maxlength="25" value="' . $_POST['Keywords'] . '" />
 				</field>';
 		 echo '<field>';
-		 echo '<h1>' ._('OR') . '</h1>';
 		 echo '<field>
-					<label>'. _('Enter extract of the Stock Code') . ':</label>
+					<label>'. '<b>' . _('OR') . ' </b>' . _('Enter extract of the Stock Code') . ':</label>
 					<input type="text" name="StockCode" size="15" maxlength="18" value="' . $_POST['StockCode'] . '" />
 				</tfield>';
 		 echo '</field>';

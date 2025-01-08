@@ -200,9 +200,8 @@ if(isset($_POST['Submit'])) {
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) > 0) {
 
-		echo '<h1>', _('OR'), '</h1>';
 		echo '<field>
-				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', _('To Existing Stock ID'), '</label>';
+				<label for="NewOrExisting"><input type="radio" name="NewOrExisting" value="E" />', '<b>' , _('OR') , ' </b>' , _('To Existing Stock ID'), '</label>';
 		echo '<select name="ExStockID">';
 		while ($MyRow = DB_fetch_row($Result)) {
 			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
