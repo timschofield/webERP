@@ -845,7 +845,8 @@ $MenuItems['system']['Maintenance']['Caption'] = array(	_('Inventory Categories 
 														_('Maintain Internal Departments'),
 														_('Maintain Internal Stock Categories to User Roles'),
 														_('KL Label Templates Maintenance'),
-														_('webERP Label Templates Maintenance'));
+														_('webERP Label Templates Maintenance'),
+														_('Dashboard Configuration'));
 
 $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/LocationZones.php',
@@ -861,7 +862,8 @@ $MenuItems['system']['Maintenance']['URL'] = array(	'/StockCategories.php',
 													'/Departments.php',
 													'/InternalStockCategoriesByRole.php',
 													'/KLLabels.php',
-													'/Labels.php');
+													'/Labels.php',
+													'/DashboardConfig.php');
 
 $MenuItems['Utilities']['Transactions']['Caption'] = array(	_('Change A Customer Code'),
 															_('Change A Customer Branch Code'),
