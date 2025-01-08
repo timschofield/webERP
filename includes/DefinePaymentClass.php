@@ -25,6 +25,11 @@ Class Payment {
 	var $Narrative;
 	var $BankTransRef;
 	var $GLItemCounter; /*Counter for the number of GL accounts being posted to by the Payment */
+	var $Paymenttype;
+	var $PaymentType;
+	var $gltrans_narrative;
+	var $supptrans_suppreference;
+	var $supptrans_transtext;
 
 	function __construct(){
 	/*Constructor function initialises a new Payment batch */
