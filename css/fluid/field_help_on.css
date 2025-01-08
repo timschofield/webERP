@@ -1,10 +1,11 @@
 form select:focus + fieldhelp, textarea:focus + fieldhelp, input:not([type=submit]):focus + fieldhelp {
-background:#BDF3BD;
-color:#0E3E0E;
+background:#303A43;
+color:#FFFFFF;
 padding:2px;
-padding-left:10px;
+padding-left:20px;
 border-top-left-radius:30px;
 border-bottom-left-radius:30px;
+border: 1px solid #CCDDFF;
 margin-left:2px;
 visibility:visible;
 height:auto;

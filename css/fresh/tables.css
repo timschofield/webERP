@@ -35,6 +35,7 @@ background-color:#eee;
 }
 table tr.striped_row:nth-of-type(even) {
 background-color:#72824D;
+color:#CAF17C;
 }
 table tr.striped_row:nth-of-type(odd) {
 background-color:#CAF17C;

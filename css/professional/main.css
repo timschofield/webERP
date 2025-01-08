@@ -109,9 +109,22 @@ height:48px;
 vertical-align:middle;
 }
 .toplink {
-float:left;
-margin-top:10px;
-display:inline-block;
+position:relative;
+background-image:url(images/previous.png);
+background-repeat: no-repeat;
+background-size:18px 18px;
+background-position:5px center;
+padding-left:26px;
+padding-right:1%;
+padding-bottom:0.3%;
+background-color:#614445;
+color:#FFFFFF;
+border: 2px solid #FFFFFF;
+border-radius:10px;
+margin-bottom:-1%;
+top:5px;
+left:5px;
+text-align:left
 }
 .clearfix {
   overflow: auto;
