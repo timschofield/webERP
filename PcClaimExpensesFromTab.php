@@ -670,6 +670,7 @@ if (!isset($SelectedTabs)) {
 				<label for="Amount">', _('Amount'), ':</label>
 				<input type="text" class="number" name="Amount" size="12" required="required" maxlength="11" value="', $_POST['Amount'], '" />
 			</field>';
+		/* KL RICARD END Do not show taxes 
 		if (isset($_GET['edit'])) {
 			$SQL = "SELECT counterindex,
 							pccashdetail,
@@ -767,12 +768,10 @@ KL RICARD END Do not show tag */
 		if (!isset($_POST['Receipt'])) {
 			$_POST['Receipt'] = '';
 		}
-		echo '<tr>
-				<td>', _('Receipt'), ':</td>
-				<td>
-					<input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" />
-				</td>
-			</tr>';
+		echo '<field>
+				<label for="Receipt">', _('Receipt'), ':</label>
+				<input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" />
+			</field>';
 		// KL RICARD END keep the receipt text field
 		
 		//For the accept attribute of the file element, prefix dots to the front of each supported file extension.

@@ -308,15 +308,21 @@ if (!isset($_GET['delete'])) {
 	// End select tag
 
 	// KL RICARD input 2 fields
-	echo '<tr>
-			<td>' . _('% Retention PPH21') . ':</td>
-			<td><input type="text" class="number" name="KLRetentionPPH21" size="6" maxlength="5" value="' . locale_number_format($_POST['KLRetentionPPH21'],2) . '" /></td>
-		</tr>';
+	if(!isset($_POST['KLRetentionPPH21'])) {
+		$_POST['KLRetentionPPH21'] = 0;
+	}
+	if(!isset($_POST['KLRetentionPPH23'])) {
+		$_POST['KLRetentionPPH23'] = 0;
+	}
+	echo '<field>
+			<label for="KLRetentionPPH21">' . _('% Retention PPH21') . ':</label>
+			<input type="text" class="number" name="KLRetentionPPH21" size="6" maxlength="5" value="' . locale_number_format($_POST['KLRetentionPPH21'],2) . '" />
+		</field>';
 
-	echo '<tr>
-			<td>' . _('% Retention PPH23') . ':</td>
-			<td><input type="text" class="number" name="KLRetentionPPH23" size="6" maxlength="5" value="' . locale_number_format($_POST['KLRetentionPPH23'],2) . '" /></td>
-		</tr>';
+	echo '<field>
+			<label for="KLRetentionPPH23">' . _('% Retention PPH23') . ':</label>
+			<input type="text" class="number" name="KLRetentionPPH23" size="6" maxlength="5" value="' . locale_number_format($_POST['KLRetentionPPH23'],2) . '" />
+		</field>';
 	// KL RICARD END 
 
 	$SQL = "SELECT taxcatid,

@@ -796,14 +796,14 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		$_POST['InitiatorName'] = $MyRow['realname'];
 	}
 
-	// Start the main order header details
+	// Start the main order header details (main fieldset)
 	if ($_SESSION['ExistingOrder']) {
-		echo '<fieldset class="TwoByThreeColumn">
-				<legend>',_(' Modify Purchase Order Number') . ' ' . $_SESSION['PO' . $identifier]->OrderNo, '</legend>';
+		$LegendText = _(' Modify Purchase Order Number') . ' ' . $_SESSION['PO' . $identifier]->OrderNo;
 	} else {
-		echo '<fieldset class="TwoByThreeColumn">
-				<legend>', _('Purchase Order Header'), '</legend>';
+		$LegendText = _('New Purchase Order Header');
 	}
+	echo '<fieldset class="TwoByThreeColumn">
+			<legend>', $LegendText , '</legend>';
 
 	//Order Initiation fieldset
 	echo '<fieldset class="Column1x1">
@@ -993,83 +993,94 @@ KL RICARD COMMENTED OUT END */
 				<label>', _('Status History'), '</label>
 				<fieldtext>',  html_entity_decode($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '</fieldtext>
 			</field>
-			<input type="hidden" name="StatusCommentsComplete" value="' . htmlspecialchars($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '" />
-			<field>
-				<td><input type="submit" name="UpdateStatus" value="' . _('Status Update') . '" /></td>
-			</field>';
+			<input type="hidden" name="StatusCommentsComplete" value="' . htmlspecialchars($_SESSION['PO' . $identifier]->StatusComments, ENT_QUOTES, 'UTF-8') . '" />';
+		echo '<div class="centre">
+			<input type="submit" name="UpdateStatus" value="' . _('Status Update') . '" />
+		</div>';
 	} //end its not a new order
 
-// KL RICARD maybe not needed	echo '</table>';
-	
-	echo '<table class="selection" width="100%">';
-
 	if ($_SESSION['PO' . $identifier]->Status == '') { //then its a new order
-		echo '<tr>
-				<td><input type="hidden" name="KLStatus" value="1000" />' . _('Negotiating with supplier') . '</td>
-			</tr>';
+		echo '<input type="hidden" name="KLStatus" value="1000" />' . _('Negotiating with supplier');
 	} else {
+		if (!isset($_POST['KLAgreedDeliveryDate'])){
+			$_POST['KLAgreedDeliveryDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
+		}
+		if (!isset($_POST['DeliveryDate'])){
+			$_POST['DeliveryDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
+		}
+		if (!isset($_POST['KLPaymentDate'])){
+			$_POST['KLPaymentDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
+		}
+		if (!isset($_POST['KLShipmentDate'])){
+			$_POST['KLShipmentDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
+		}
+		if (!isset($_POST['KLCustomsDate'])){
+			$_POST['KLCustomsDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
+		}
+		if (!isset($_POST['KLArrivalDate'])){
+			$_POST['KLArrivalDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
+		}
+		if (!isset($_POST['KLShipmentAWB'])){
+			$_POST['KLShipmentAWB'] = '';
+		}
 
-// This line should be used to not allow to go back on the status of the orders
-//		AND code >= '" . $_SESSION['PO' . $identifier]->KLStatus . "'
-
+		// KL RICARD This line should be used to not allow to go back on the status of the orders
+		//		AND code >= '" . $_SESSION['PO' . $identifier]->KLStatus . "'
 		$SQL = "SELECT code, 
-						description 
+					description 
 				FROM klpostatus, suppliers
 				WHERE klpostatus.paymentterm = suppliers.paymentterms
 					AND suppliers.supplierid = '" . $_SESSION['PO' . $identifier]->SupplierID . "'
 				ORDER BY code";
-				
 		$Result=DB_query($SQL);
-
-		echo '<tr>
-				<td>' . _('KL Status') . ':</td>
-				<td><select name="KLStatus">';
-
+		echo '<field>
+				<label for="KLStatus">', _('KL Status'), ':</label>
+				<select required="required" name="KLStatus">';
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($_POST['KLStatus'] == $MyRow['code']) {
-			echo '<option selected="selected" value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
+			if (isset($_POST['KLStatus']) and $MyRow['code'] == $_POST['KLStatus']) {
+				echo '<option selected="selected" value="', $MyRow['code'], '">', $MyRow['description'], '</option>';
 			} else {
-			echo '<option value="' . $MyRow['code'] . '">' . $MyRow['description'] . '</option>';
+				echo '<option value="', $MyRow['code'], '">', $MyRow['description'], '</option>';
 			}
 		} //end while loop
-		echo '</select></td>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Agreed Delivery Date') . ':</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLAgreedDeliveryDate" size="11" value="' . $_POST['KLAgreedDeliveryDate'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Delivery Date') . ':</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Payment Date') . ':</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLPaymentDate" size="11" value="' . $_POST['KLPaymentDate'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Shipment Date') . ':</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLShipmentDate" size="11" value="' . $_POST['KLShipmentDate'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Shipment AWB') . ':</td>
-				<td><input type="text" name="KLShipmentAWB" size="51" maxlength="50" title="' . _('Enter AWB tracking number') . '" value="' . $_POST['KLShipmentAWB'] . '" /></td>
-			</tr>		
-			<tr>
-				<td>' . _('Customs Date') . ':</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLCustomsDate" size="11" value="' . $_POST['KLCustomsDate'] . '" /></td>
-			</tr>
-			<tr>
-				<td>' . _('Arrival Date') . ':</td>
-				<td><input type="text" required="required" autofocus="autofocus" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="KLArrivalDate" size="11" value="' . $_POST['KLArrivalDate'] . '" /></td>
-			</tr>';
-	
-		echo '<tr>
-				<td><input type="submit" name="UpdateKLStatus" value="' . _('KL Status Update') . '" /></td>
-			</tr>';
+		echo '</select>
+			</field>';
+
+		echo '<field>
+				<label for="KLAgreedDeliveryDate">', _('Agreed Delivery Date'), ':</label>
+				<input type="text" class="date" name="KLAgreedDeliveryDate" size="11" required="required" maxlength="10" value="', $_POST['KLAgreedDeliveryDate'], '" />
+			</field>';
+		echo '<field>
+				<label for="DeliveryDate">', _('Delivery Date'), ':</label>
+				<input type="text" class="date" name="DeliveryDate" size="11" required="required" maxlength="10" value="', $_POST['DeliveryDate'], '" />
+			</field>';
+		echo '<field>
+				<label for="KLPaymentDate">', _('Payment Date'), ':</label>
+				<input type="text" class="date" name="KLPaymentDate" size="11" required="required" maxlength="10" value="', $_POST['KLPaymentDate'], '" />
+			</field>';
+		echo '<field>
+				<label for="KLShipmentDate">', _('Shipment Date'), ':</label>
+				<input type="text" class="date" name="KLShipmentDate" size="11" required="required" maxlength="10" value="', $_POST['KLShipmentDate'], '" />
+			</field>';
+		echo '<field>
+				<label for="KLShipmentAWB">', _('Shipment AWB'), ':</label>
+				<input type="text" name="KLShipmentAWB" size="51" maxlength="50" value="', $_POST['KLShipmentAWB'], '" />
+			</field>';
+		echo '<field>
+			<label for="KLCustomsDate">', _('Customs Date'), ':</label>
+			<input type="text" class="date" name="KLCustomsDate" size="11" required="required" maxlength="10" value="', $_POST['KLCustomsDate'], '" />
+		</field>';
+		echo '<field>
+			<label for="KLArrivalDate">', _('Arrival Date'), ':</label>
+			<input type="text" class="date" name="KLArrivalDate" size="11" required="required" maxlength="10" value="', $_POST['KLArrivalDate'], '" />
+		</field>';
+
+		echo '<div class="centre">
+				<input type="submit" name="UpdateKLStatus" value="' . _('KL Status Update') . '" />
+			</div>';
 	} //end its not a new order
 	
-	echo '</table>';	// KL RICARD maybe not needed
-	echo '</fieldset><br />';
+	echo '</fieldset>';
 
 
 	//Warehouse info fieldset
@@ -1191,23 +1202,23 @@ KL RICARD COMMENTED OUT END */
 			<input type="text" name="DelAdd1" size="41" maxlength="40" value="' . $_POST['DelAdd1'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 2 :</label>
+			<label for="DelAdd2">' . _('Address') . ' 2 :</label>
 			<input type="text" name="DelAdd2" size="41" maxlength="40" value="' . $_POST['DelAdd2'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 3 :</label>
+			<label for="DelAdd3">' . _('Address') . ' 3 :</label>
 			<input type="text" name="DelAdd3" size="41" maxlength="40" value="' . $_POST['DelAdd3'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 4 :</label>
+			<label for="DelAdd4">' . _('Address') . ' 4 :</label>
 			<input type="text" name="DelAdd4" size="41" maxlength="40" value="' . $_POST['DelAdd4'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 5 :</label>
+			<label for="DelAdd5">' . _('Address') . ' 5 :</label>
 			<input type="text" name="DelAdd5" size="21" maxlength="20" value="' . $_POST['DelAdd5'] . '" />
 		</field>
 		<field>
-			<label for="DelAdd1">' . _('Address') . ' 6 :</label>
+			<label for="DelAdd6">' . _('Address') . ' 6 :</label>
 			<input type="text" name="DelAdd6" size="16" maxlength="15" value="' . $_POST['DelAdd6'] . '" />
 		</field>';
 

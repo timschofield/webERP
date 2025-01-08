@@ -1,6 +1,11 @@
 <?php
-// PcReportTab.php
-// .
+
+/***************************************************************************************************
+ * 
+ * KL RICARD: Allow multiple authorizers and assigners for petty cash tabs
+ * 
+ ***************************************************************************************************/
+
 
 include ('includes/session.php');
 $ViewTopic = 'PettyCash';
