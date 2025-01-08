@@ -6,12 +6,12 @@
  *			Added code do salesman in dropdown 			
  *			Filter by Current salesman = 1
  *			No one needs to know the GP% :-)
- *			Probably this script needs to be renamed KL* and do not follow standard one
+ *			
  *  
  ************************************************************************************************************************ */
 
 include('includes/session.php');
-$Title = _('Daily Sales Inquiry');
+$Title = _('KL Daily Sales Inquiry');
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
@@ -50,9 +50,9 @@ echo '<field>
 		<label for="Salesperson">' . _('Salesperson') . ':</label>';
 
 if($_SESSION['SalesmanLogin'] != '') {
-	echo '<td>';
+	echo '<span>';
 	echo $_SESSION['UsersRealName'];
-	echo '</td>';
+	echo '</span>';
 }else{
 	echo '<select tabindex="2" name="Salesperson">';
 // KL RICARD Filter by Current = 1
@@ -74,10 +74,11 @@ if($_SESSION['SalesmanLogin'] != '') {
 echo '</select>';
 }
 
-echo '</tr>
-	  <tr>';
+echo '</field>';
 
-echo '<td>' . _('Customer Type') . ':</td><td><select tabindex="3" name="CustomerType">';
+echo '<field>
+		<label for="CustomerType">' . _('Customer Type') . ':</label>
+		<select tabindex="3" name="CustomerType">';
 $CustomerTypeResult = DB_query("SELECT typename, typeid FROM debtortype ORDER BY typename");
 if (!isset($_POST['CustomerType'])){
 	$_POST['CustomerType'] = 'All';
@@ -93,7 +94,8 @@ while ($CustomerTypeRow = DB_fetch_array($CustomerTypeResult)){
 		echo '<option value="' . $CustomerTypeRow['typeid'] . '">' . $CustomerTypeRow['typename'] . '</option>';
 	}
 }
-echo '</select></td>';
+echo '</select>
+	</field>';
 
 
 echo '</field>

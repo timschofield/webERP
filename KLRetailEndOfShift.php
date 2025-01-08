@@ -13,7 +13,7 @@ include('includes/KLPOSGeneral.php');
 
 include ('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
-include('includes/wcpESCPOSCommands.php');
+include('includes/KLESCPOSCommands.php');
 
 $Today = date('Y-m-d');
 
@@ -178,7 +178,7 @@ $identifier=GetPOSIdentifier();
 $FileName = GetFilenameFromPOSIdentifier($identifier);   
 file_put_contents($FileName, $TextToPrint);
 $TextActionToPrint = 'Print the Daily SPG End Of Shift';
-include ('includes/SilentPrinting.php');
+include ('includes/KLSilentPrinting.php');
 //################## PRINTING STUFF ##################### 
 
 include ('includes/footer.php');

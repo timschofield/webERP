@@ -3,7 +3,7 @@
 include ('includes/session.php');
 $Title = _('UTILITY PAGE Change ALL GL Account Code SUFFIX');// Screen identificator.
 $ViewTopic = 'SpecialUtilities';// Filename's id in ManualContents.php's TOC.
-$BookMark = 'Z_ChangePTGLAccountCode';// Anchor's id in the manual's html document.
+$BookMark = ''; // Anchor's id in the manual's html document.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/gl.png" title="',// Icon image.

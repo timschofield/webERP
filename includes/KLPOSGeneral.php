@@ -649,7 +649,7 @@ function GetFilenameFromPOSIdentifier($id){
 
 
 function KLPrintReceiptTestWarning($KindOfDoc){
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	$TextToPrint = $CharacterFontA;
 	if (KLwebERPScriptCalledFromTEST()){
 		$TextToPrint .= $NewLine .  $CenteredJustified . "TEST ONLY - THIS IS NOT A VALID " . $KindOfDoc . $NewLine;
@@ -658,7 +658,7 @@ function KLPrintReceiptTestWarning($KindOfDoc){
 }
 
 function KLPrintNameOfShop(){
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	
 	// name of shop
 	if ($_SESSION['TypeLoc'] == "SHOPKL"){
@@ -699,7 +699,7 @@ function KLPrintNameOfShop(){
 
 function KLPrintReceiptHeader($identifier, $OrderNo){
 	
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 
 	$TextToPrint = $InitPrinter . $CenteredJustified;
 
@@ -795,7 +795,7 @@ function KLPrintReceiptHeader($identifier, $OrderNo){
 
 function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	
 	$TextToPrint = $NewLine;
 
@@ -858,7 +858,7 @@ function KLPrintReceiptCustomerFooter($identifier, $OrderNo){
 
 function KLPrintReceiptShopFooter($identifier, $OrderNo){
 
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 
 	// payment descriptions
 	$TextToPrint = $CharacterFontA. $NewLine;
@@ -1010,7 +1010,7 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 }
 
 function DoubleJustified($left, $right, $lenght, $fillchar){
-	include('includes/wcpESCPOSCommands.php');
+	include('includes/KLESCPOSCommands.php');
 	return str_pad($left, $lenght - strlen($right), $fillchar) . $right . $NewLine;
 }
 

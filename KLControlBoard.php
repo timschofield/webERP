@@ -5231,7 +5231,7 @@ function UsersNotLoggingIn($maxdays, $Type, $RootPath){
 				<tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			$CodeLink = '<a href="' . $RootPath . '/WWW_User_Delete.php?UserID=' . $MyRow['userid'] . '">' . 'Delete' . '</a>';
+			$CodeLink = '<a href="' . $RootPath . '/KLUserDelete.php?UserID=' . $MyRow['userid'] . '">' . 'Delete' . '</a>';
 			printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s</td>

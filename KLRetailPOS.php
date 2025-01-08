@@ -53,7 +53,7 @@ include('includes/KLEmails.php');
 
 include ('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
-include('includes/wcpESCPOSCommands.php');
+include('includes/KLESCPOSCommands.php');
 
 include('includes/KLPOSInit.php');
 
@@ -1753,7 +1753,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 		$FileName = GetFilenameFromPOSIdentifier($identifier);   
 		file_put_contents($FileName, $Receipt);
 		$TextActionToPrint = 'Print the customer receipt';
-		include ('includes/SilentPrinting.php');
+		include ('includes/KLSilentPrinting.php');
 	   //################## PRINTING STUFF ##################### 
 
 		unset($_SESSION['Items'.$identifier]->LineItems);
