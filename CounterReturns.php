@@ -1673,10 +1673,9 @@ if (!isset($_POST['ProcessReturn'])) {
 		if (!isset($_POST['StockCode'])) {
 			$_POST['StockCode'] = '';
 		}
-		echo '<h1>', _('OR'), '</h1>';
 
 		echo '<field>
-				<label for="StockCode"> ', _('Enter extract of the Stock Code'), ':</label>
+				<label for="StockCode"> ', '<b>' , _('OR') , ' </b>' , _('Enter extract of the Stock Code'), ':</label>
 				<input type="search" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
 			</field>
 		</fieldset>';
