@@ -1,5 +1,4 @@
 <?php
-
 /********************************************************************************************************
 *
 * KL RICARD; Avoid checks for The general ledger debtors and creditors ledger (AR) (AP) integration

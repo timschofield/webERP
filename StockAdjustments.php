@@ -347,6 +347,14 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
+			foreach ($_POST['tag'] as $Tag) {
+				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
+													'" . $Tag . "')";
+				$ErrMsg = _('Cannot insert a GL tag for the stock adjustment because');
+				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			}
+
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										trandate,
@@ -501,23 +509,21 @@ if ($Controlled==1){
 	echo '<input type="text" class="number" name="Quantity" size="12" maxlength="12" value="' . locale_number_format($Quantity,$DecimalPlaces) . '" />';
 }
 echo '</field>';
-	//Select the tag
-echo '<field>
-		<label for="tag">' . _('Select Tag') . '</label>
-		<select name="tag">';
 
+//Select the tag
 $SQL = "SELECT tagref,
 				tagdescription
 		FROM tags
 		ORDER BY tagref";
-
-$Result=DB_query($SQL);
-echo '<option value="0">0 - ' . _('None') . '</option>';
-while ($MyRow=DB_fetch_array($Result)){
-	if (isset($_SESSION['Adjustment' . $identifier]->tag) AND $_SESSION['Adjustment' . $identifier]->tag==$MyRow['tagref']){
-		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'].' - ' .$MyRow['tagdescription'] . '</option>';
+$Result = DB_query($SQL);
+echo '<field>
+		<label for="tag">', _('Tag'), '</label>
+		<select multiple="multiple" name="tag[]">';
+while ($MyRow = DB_fetch_array($Result)) {
+	if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
+		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	} else {
-		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'].' - ' .$MyRow['tagdescription']. '</option>';
+		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
 }
 echo '</select>

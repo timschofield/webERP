@@ -3,6 +3,7 @@
 /********************************************************************
 *
 * KL RICARD: Use receipt text field and PPH21 and PPH23 retention
+*			Multiple assigners, authorizers, etc.				
 *            Option to show only unauthorized expenses
 *			 Hide tax, tag and purpose fields
 *
@@ -151,13 +152,24 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$ResultAccExp = DB_query($SQLAccExp);
 		$MyRowAccExp = DB_fetch_array($ResultAccExp);
 		$AccountTo = $MyRowAccExp['glaccount'];
-		$TagTo = $MyRow['tag'];
-		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
-		// KL RICARD pph21, pph23
+
+		$TagSQL = "SELECT tagref, tagdescription FROM tags INNER JOIN pctags ON tags.tagref=pctags.tag WHERE pctags.pccashdetail='" . $MyRow['counterindex'] . "'";
+		$TagResult = DB_query($TagSQL);
+		$TagDescription = '';
+		while ($TagRow = DB_fetch_array($TagResult)) {
+			if ($TagRow['tagref'] == 0) {
+				$TagRow['tagdescription'] = _('None');
+			}
+			$TagTo = $MyRow['tag'];
+			if ($ExpenseCodeDes == 'ASSIGNCASH') {
+				$TagDescription .= '';
+			} else {
+				$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
+			}
+		}
 		if ($MyRowAccExp['klretentionpph21'] != 0){
 			// gross up method
 			$HutangPPH21 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph21']/100)))-$NetAmount);
-		}else{
 			$HutangPPH21 = 0;
 		}
 		if ($MyRowAccExp['klretentionpph23'] != 0){
@@ -171,6 +183,13 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
+
+			$TagsSQL = "SELECT tag FROM pctags WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+			$TagsResult = DB_query($TagsSQL);
+			while ($TagRow = DB_fetch_array($TagsResult)) {
+				$Tags[] = $TagRow['tag'];
+			}
+
 			//build narrative
 			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
@@ -185,8 +204,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`narrative`,
 											`amount`,
 											`posted`,
-											`jobref`,
-											`tag`)
+											`jobref`)
 									VALUES (NULL,
 											'" . $Type . "',
 											'" . $TypeNo . "',
@@ -197,9 +215,9 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'" . $Narrative . "',
 											'" . $GrossAmount . "',
 											0,
-											'',
-											'" . $TagTo ."')";
+											'')";
 			$ResultFrom = DB_Query($SQLFrom, '', '', true);
+
 			$SQLTo = "INSERT INTO `gltrans` (`counterindex`,
 										`type`,
 										`typeno`,
@@ -210,8 +228,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`narrative`,
 										`amount`,
 										`posted`,
-										`jobref`,
-										`tag`)
+										`jobref`)
 								VALUES (NULL,
 										'" . $Type . "',
 										'" . $TypeNo . "',
@@ -223,9 +240,15 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'" . ($NetAmount + $HutangPPH21 + $HutangPPH23)."',
 
 										0,
-										'',
-										'" . $TagTo ."')";
+										'')";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
+			foreach ($Tags as $Tag) {
+				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
+													'" . $Tag . "')";
+				$ErrMsg = _('Cannot insert a GL tag for the payment line because');
+				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
+				$InsertResult = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			}
 
 			// KL RICARD
 			// if there's a PPH21 retention, we account for it
@@ -248,8 +271,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												`narrative`,
 												`amount`,
 												`posted`,
-												`jobref`,
-												`tag`)
+												`jobref`)
 										VALUES (NULL,
 												'".$Type."',
 												'".$TypeNo."',
@@ -260,8 +282,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												'". $Narrative ."',
 												'".-$HutangPPH21."',
 												0,
-												'',
-												'" . $TagTo ."')";
+												'')";
 				$ResultHutangPPH21 = DB_Query($SQLHutangPPH21,'', '', true);
 			}
 			
@@ -285,8 +306,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												`narrative`,
 												`amount`,
 												`posted`,
-												`jobref`,
-												`tag`)
+												`jobref`)
 										VALUES (NULL,
 												'".$Type."',
 												'".$TypeNo."',
@@ -297,9 +317,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												'". $Narrative ."',
 												'".-$HutangPPH23."',
 												0,
-												'',
-												'" . $TagTo ."')";
-				$ResultHutangPPH23 = DB_Query($SQLHutangPPH23,'', '', true);
+												'')";
 			}
 			// KL RICARD END
 
@@ -326,8 +344,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												`narrative`,
 												`amount`,
 												`posted`,
-												`jobref`,
-												`tag`)
+												`jobref`)
 										VALUES (NULL,
 												'" . $Type . "',
 												'" . $TypeNo . "',
@@ -338,8 +355,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												'" . $Narrative . "',
 												'" . -$MyTaxRow['amount'] . "',
 												0,
-												'',
-												'" . $TagTo ."')";
+												'')";
 				$ResultTax = DB_Query($SQLTo, '', '', true);
 			}
 

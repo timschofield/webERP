@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
 					glaccount = '" . $_POST['GLAccount'] . "',
 					klretentionpph21 = '" . $_POST['KLRetentionPPH21'] . "',
 					klretentionpph23 = '" . $_POST['KLRetentionPPH23'] . "',
-					tag = '" . $_POST['Tag'] . "',
+					tag = '" . implode(',', $_POST['tag']) . "',
 					taxcatid='" . $_POST['TaxCategory'] . "'
 				WHERE codeexpense = '" . $SelectedExpense . "'";
 		$Msg = _('The Expenses type') . ' ' . $SelectedExpense . ' ' . _('has been updated');
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['GLAccount'] . "',
 						'" . $_POST['KLRetentionPPH21'] . "',
 						'" . $_POST['KLRetentionPPH23'] . "',
-						'" . $_POST['Tag'] . "',
+						'" . implode(',', $_POST['Tag']) . "',
 						'" . $_POST['TaxCategory'] . "'
 						)";
 			$Msg = _('Expense') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
@@ -185,11 +185,16 @@ if (!isset($SelectedExpense)) {
 					WHERE accountcode='" . $MyRow['glaccount'] . "'";
 		$ResultDes = DB_query($SQLdesc);
 		$Description = DB_fetch_array($ResultDes);
+		$Tags = explode(',', $MyRow['tag']);
+		$DescriptionTag = '';
+		foreach ($Tags as $Tag) {
 		$SQLDescTag = "SELECT tagdescription
 					FROM tags
-					WHERE tagref='" . $MyRow['tag'] . "'";
+					WHERE tagref='" . $Tag . "'";
 		$ResultDesTag = DB_query($SQLDescTag);
-		$DescriptionTag = DB_fetch_array($ResultDesTag);
+			$TagRow = DB_fetch_array($ResultDesTag);
+			$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
+		}
 		$SQLTaxCat = "SELECT taxcatname
 					FROM taxcategories
 					WHERE taxcatid='" . $MyRow['taxcatid'] . "'";
@@ -200,7 +205,7 @@ if (!isset($SelectedExpense)) {
 				<td>', $MyRow['description'], '</td>
 				<td class="number">', $MyRow['glaccount'], '</td>
 				<td>', $Description['accountname'], '</td>
-				<td>', $DescriptionTag['tagdescription'], '</td>
+				<td>', $DescriptionTag, '</td>
 				<td>', $DescriptionTaxCat['taxcatname'], '</td>
 				<td>', locale_number_format($MyRow['klretentionpph21'],2), '</td>
 				<td>', locale_number_format($MyRow['klretentionpph23'],2), '</td>
@@ -240,7 +245,7 @@ if (!isset($_GET['delete'])) {
 		// KL RICARD added 2 fields 
 		$_POST['KLRetentionPPH21']  = $MyRow['klretentionpph21'];
 		$_POST['KLRetentionPPH23']  = $MyRow['klretentionpph23'];
-		$_POST['Tag'] = $MyRow['tag'];
+		$_POST['Tag'] = explode(',', $MyRow['tag']);
 		$_POST['TaxCategory'] = $MyRow['taxcatid'];
 		echo '<input type="hidden" name="SelectedExpense" value="', $SelectedExpense, '" />';
 		echo '<input type="hidden" name="CodeExpense" value="', $_POST['CodeExpense'], '" />';
@@ -286,26 +291,26 @@ if (!isset($_GET['delete'])) {
 	} //end while loop
 	echo '</select>
 		</field>';
-	//Select the tag
-	echo '<field>
-			<label for="Tag">', _('Tag'), ':</label>
-			<select name="Tag">';
-	$SQL = "SELECT tagref,
-					tagdescription
-			FROM tags
-			ORDER BY tagref";
-	$Result = DB_query($SQL);
-	echo '<option value="0">0 - ', _('None'), '</option>';
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['Tag']) and $_POST['Tag'] == $MyRow['tagref']) {
-			echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
-		} else {
-			echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+
+		//Select the tag
+		$SQL = "SELECT tagref,
+						tagdescription
+				FROM tags
+				ORDER BY tagref";
+		$Result = DB_query($SQL);
+		echo '<field>
+				<label for="tag">', _('Tag'), '</label>
+				<select multiple="multiple" name="tag[]">';
+		while ($MyRow = DB_fetch_array($Result)) {
+			if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
+				echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
+			} else {
+				echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
+			}
 		}
-	}
-	echo '</select>
-		</field>';
-	// End select tag
+		echo '</select>
+			</field>';
+		// End select tag
 
 	// KL RICARD input 2 fields
 	if(!isset($_POST['KLRetentionPPH21'])) {
