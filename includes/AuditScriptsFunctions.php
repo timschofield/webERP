@@ -5,7 +5,7 @@
 *
 ***********************************************************************/
 
-function RecordRunningTime($Title){
+function RecordRunningTime($Title, $UserName){
 
     if (isset($Title)) {
         $TitleScriptRunning = $Title;
@@ -27,7 +27,7 @@ function RecordRunningTime($Title){
                         scripttitle)
                 VALUES('" . Date('Y-m-d H:i:s') . "',
                     '" . $RunningTime . "',
-                    '" . trim($_SESSION['UserID']) . "',
+                    '" . trim($UserName) . "',
                     '" . DB_escape_string($TitleScriptRunning) . "')";
     $Result = DB_query($AuditSQL);
     

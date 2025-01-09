@@ -105,7 +105,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			if ($MyRow['blocked']==1){
 			//the account is blocked
 				// KL RICARD: log the script running time
-				RecordRunningTime('Login attempt on blocked account'); 
+				RecordRunningTime('Login attempt on blocked account', $Name); 
 				return  UL_BLOCKED;
 			}
 			/*reset the attempts counter on successful login */
@@ -166,7 +166,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['AllowedPageSecurityTokens'] = array();
 			if (DB_num_rows($Sec_Result)==0){
 				// KL RICARD: log the script running time
-				RecordRunningTime('Login attempt with config error'); 
+				RecordRunningTime('Login attempt with security tokens error', $_SESSION['UserID']); 
 				return  UL_CONFIGERR;
 			} else {
 				$i=0;
@@ -264,7 +264,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 			if(!isset($_SESSION['DB_Maintenance'])){
 				// KL RICARD: log the script running time
-				RecordRunningTime('Login attempt with config error'); 
+				RecordRunningTime('Login attempt with config error', $_SESSION['UserID']); 
 				return  UL_CONFIGERR;
 			} else {
 
@@ -272,7 +272,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 					// the configuration setting has been set to -1 ==> Allow SysAdmin Access Only
 					// the user is NOT a SysAdmin
 					// KL RICARD: log the script running time
-					RecordRunningTime('Login attempt on maintenance mode'); 
+					RecordRunningTime('Login attempt while on maintenance mode', $_SESSION['UserID']); 
 					return  UL_MAINTENANCE;
 				}
 			}
@@ -304,17 +304,17 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 
 				}
 				// KL RICARD: log the script running time
-				RecordRunningTime('Login attempt on blocked account due to too many failed attempts'); 
+				RecordRunningTime('Login attempt with wrong password: Account Blocked', $Name); 
 				return  UL_BLOCKED;
 			}
 			// KL RICARD: log the script running time
-			RecordRunningTime('Login attempt not valid'); 
+			RecordRunningTime('Login attempt with wrong password', $Name); 
 			return  UL_NOTVALID;
 		}
 	}		// End of userid/password check
 	// Run with debugging messages for the system administrator(s) but not anyone else
 	// KL RICARD: log the script running time
-	RecordRunningTime('Login successful'); 
+	RecordRunningTime('Login successful', $_SESSION['UserID']); 
 
 	return   UL_OK;		    /* All is well */
 }
