@@ -4,6 +4,7 @@
 /**************************************************************************************
 KL RICARD MODIFICATIONS:
 - management of the extra KL fields in stockmaster
+- For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025
 ***************************************************************************************/
 include ('includes/session.php');
 $Title = _('Item Maintenance');
@@ -1167,11 +1168,18 @@ echo '<field>
 		<label for="ClearImage"> ' . _('Clear Image') . '</label>
 		<input type="checkbox" name="ClearImage" id="ClearImage" value="1" >
 	</field>';
+
+/* KL RICARD: For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025
 if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}')) > 0) {
 	$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 } else {
 	$ImageFile = '';
 }
+KL RICARD END: For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025 */	
+
+// KL RICARD: create $ImageFile the old way
+$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+
 $StockImgLink = GetImageLink($ImageFile, $StockID, 64, 64, "", "");
 
 if ($StockImgLink != _('No Image')) {
