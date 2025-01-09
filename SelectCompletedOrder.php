@@ -4,7 +4,6 @@
  * 
  * KL RICARD: Minor text changes
  * 
- * 
  ******************************************************************************************/
 
 
@@ -457,8 +456,8 @@ echo '<field>
 		<input type="text" class="date" name="OrdersAfterDate" maxlength="10" size="11" value="' . $_POST['OrdersAfterDate'] . '" />
 	</field>';
 echo '<field>
-		<label for="CustomerRef">' . _('Customer Ref') . ':</label>
-		<td>' . _('Other Ref') . ':</td><td><input type="text" name="CustomerRef" maxlength="8" size="9" /></td>
+		<label for="CustomerRef">' . _('Other Ref') . ':</label>
+		<input type="text" name="CustomerRef" maxlength="8" size="9" /></td>
 	</field>
 	<field>
 		<label for="completed">' . _('Show Completed orders only') . '</label>
@@ -466,6 +465,9 @@ echo '<field>
 	</field>';
 
 echo '</fieldset>';
+echo '<div class="centre">
+		<input type="submit" name="SearchOrders" value="' . _('Search Orders') . '" />
+	</div>';
 
 if (!isset($SelectedStockItem)) {
 	$Result1 = DB_query("SELECT categoryid,
@@ -473,13 +475,10 @@ if (!isset($SelectedStockItem)) {
 						FROM stockcategory
 						ORDER BY categorydescription");
 
-   echo '<div class="centre">
-			<input type="submit" name="SearchOrders" value="' . _('Search Orders') . '" />
-		</div>';
-   echo '<div class="page_help_text">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
-   echo '<fieldset>
+	echo '<div class="page_help_text">' . _('To search for sales orders for a specific part use the part selection facilities below') . '</div>';
+	echo '<fieldset>
 			<legend class="search">', _('Orders By Item Search'), '</legend>';
-   echo '<field>
+	echo '<field>
 			<label for="StockCat">' . _('Select a stock category') . ':</label>
 			<select name="StockCat">';
 
