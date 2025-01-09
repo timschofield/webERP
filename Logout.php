@@ -12,7 +12,7 @@ include('includes/session.php');
 
 // KL RICARD log the script running time
 include_once ('includes/AuditScriptsFunctions.php');
-RecordRunningTime('Logout');
+RecordRunningTime('Logout', $_SESSION['UserID']);
 
 // Cleanup
 session_unset();
