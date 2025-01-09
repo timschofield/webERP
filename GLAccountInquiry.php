@@ -97,7 +97,7 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 
 $Result = DB_query($SQL);
-echo '<option value="0">0 - ' . _('All tags') . '</option>';
+echo '<option value="-1">-1 - ' . _('All tags') . '</option>';
 
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
@@ -177,7 +177,7 @@ if (isset($_POST['Show'])) {
 			AND periodno>='" . $FirstPeriodSelected . "'
 			AND periodno<='" . $LastPeriodSelected . "'";
 
-	if ($_POST['tag'] != 0) {
+	if ($_POST['tag'] != -1) {
 		$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
 	}
 

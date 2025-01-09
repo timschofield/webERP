@@ -731,7 +731,6 @@ if (!isset($SelectedTabs)) {
 		echo '<field>
 				<label for="tag">', _('Tag'), '</label>
 				<select multiple="multiple" name="tag[]">';
-		echo '<option value="0">0 - ' . _('None') . '</option>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if (isset($TagArray) and in_array($MyRow['tagref'], $TagArray)) {
 				echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';

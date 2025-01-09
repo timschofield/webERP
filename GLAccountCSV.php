@@ -83,7 +83,7 @@ $SQL = "SELECT tagref,
 		ORDER BY tagref";
 
 $Result = DB_query($SQL);
-echo '<option value="0">0 - ' . _('All tags') . '</option>';
+echo '<option value="-1">-1 - ' . _('All tags') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
@@ -151,7 +151,7 @@ if (isset($_POST['MakeCSV'])) {
 		$FirstPeriodSelected = min($SelectedPeriod);
 		$LastPeriodSelected = max($SelectedPeriod);
 
-		if ($_POST['tag'] == 0) {
+		if ($_POST['tag'] == -1) {
 			$SQL = "SELECT type,
 						systypes.typename,
 						gltrans.typeno,
@@ -166,11 +166,13 @@ if (isset($_POST['MakeCSV'])) {
 				INNER JOIN gltags
 					ON gltrans.counterindex=gltags.counterindex
 				WHERE gltrans.account = '" . $SelectedAccount . "'
-				AND systypes.typeid=gltrans.type
-				AND posted=1
-				AND periodno>='" . $FirstPeriodSelected . "'
-				AND periodno<='" . $LastPeriodSelected . "'
-				ORDER BY periodno, gltrans.trandate, gltrans.counterindex";
+					AND systypes.typeid=gltrans.type
+					AND posted=1
+					AND periodno>='" . $FirstPeriodSelected . "'
+					AND periodno<='" . $LastPeriodSelected . "'
+				ORDER BY periodno,
+					gltrans.trandate,
+					gltrans.counterindex";
 
 		}
 		else {
@@ -188,12 +190,14 @@ if (isset($_POST['MakeCSV'])) {
 					INNER JOIN gltags
 						ON gltrans.counterindex=gltags.counterindex
 					WHERE gltrans.account = '" . $SelectedAccount . "'
-					AND systypes.typeid=gltrans.type
-					AND posted=1
-					AND periodno>='" . $FirstPeriodSelected . "'
-					AND periodno<='" . $LastPeriodSelected . "'
-					AND gltags.tagref='" . $_POST['tag'] . "'
-					ORDER BY periodno, gltrans.trandate, gltrans.counterindex";
+						AND systypes.typeid=gltrans.type
+						AND posted=1
+						AND periodno>='" . $FirstPeriodSelected . "'
+						AND periodno<='" . $LastPeriodSelected . "'
+						AND gltags.tagref='" . $_POST['tag'] . "'
+					ORDER BY periodno,
+						gltrans.trandate,
+						gltrans.counterindex";
 		}
 
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');

@@ -55,7 +55,7 @@ if (isset($_POST['RunReport'])) {
 		$FirstPeriodSelected = min($SelectedPeriod);
 		$LastPeriodSelected = max($SelectedPeriod);
 
-		if ($_POST['tag'] == 0) {
+		if ($_POST['tag'] == -1) {
 			$SQL = "SELECT type,
 						typename,
 						gltrans.typeno,
@@ -67,7 +67,7 @@ if (isset($_POST['RunReport'])) {
 						FROM gltrans
 						INNER JOIN systypes
 							ON gltrans.type=systypes.typeid
-						INNER JOIN gltags
+						LEFT JOIN gltags
 							ON gltrans.counterindex=gltags.counterindex
 						WHERE gltrans.account = '" . $SelectedAccount . "'
 							AND posted=1
@@ -251,7 +251,10 @@ else {
 	$SQL = "SELECT chartmaster.accountcode,
 				   chartmaster.accountname
 			FROM chartmaster
-			INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+			INNER JOIN glaccountusers 
+				ON glaccountusers.accountcode=chartmaster.accountcode 
+				AND glaccountusers.userid='" . $_SESSION['UserID'] . "' 
+				AND glaccountusers.canview=1
 			ORDER BY chartmaster.accountcode";
 	$AccountsResult = DB_query($SQL);
 	$i = 0;
@@ -296,7 +299,7 @@ else {
 				ORDER BY tagref";
 
 	$Result = DB_query($SQL);
-	echo '<option value="0">0 - ' . _('All tags') . '</option>';
+	echo '<option value="-1">-1 - ' . _('All tags') . '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 			echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
