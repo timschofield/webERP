@@ -398,7 +398,7 @@ if (!isset($SelectedTabs)) {
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 		</p>';
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (!isset($Days)) {
@@ -414,12 +414,6 @@ if (!isset($SelectedTabs)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-		echo '<fieldset>';
-		echo '<field>
-				<label>' . _('Petty Cash Tab') . ':</label>
-				<fieldtext>' . $SelectedTabs . '</fieldtext>
-			</field>';
-		echo '</fieldset><br />';
 
 		//Limit expenses history to X days
 		echo '<fieldset>
@@ -767,14 +761,14 @@ if (!isset($SelectedTabs)) {
 				<label for="Notes">', _('Notes'), ':</label>
 				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
 			</field>';
-
+	
+		echo '<div class="centre">
+			<input type="submit" name="submit" value="', _('Accept'), '" />
+			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			</div>';
 		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 		echo '<input type="hidden" name="Days" value="', $Days, '" />';
-		echo '<div class="centre">
-				<input type="submit" name="submit" value="', _('Accept'), '" />
-				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
-			</div>';
 		echo '</form>';
 	} // end if user wish to delete
 }

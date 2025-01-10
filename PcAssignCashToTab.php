@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 		</p>';
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -118,9 +118,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Date']);
 	}
 } elseif (isset($_GET['delete'])) {
-	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
-		</p>';
+
 	$SQL = "DELETE FROM pcashdetails
 		WHERE counterindex='" . $SelectedIndex . "'";
 	$ErrMsg = _('The assignment of cash record could not be deleted because');
@@ -169,19 +167,12 @@ if (!isset($SelectedTabs)) {
 if (isset($_POST['Process']) or isset($SelectedTabs)) {
 	if (!isset($_POST['submit'])) {
 		echo '<p class="page_title_text">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 			</p>';
 	}
 	echo '<div class="centre">
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
-
-	echo '<form><fieldset>';
-	echo '<field>
-			<label>' . _('Petty Cash Tab') . ':</label>
-			<fieldtext>' . $SelectedTabs . '</fieldtext>
-		</field>';
-	echo '</fieldset></form>';
 
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (isset($_POST['Cancel'])) {
@@ -386,14 +377,14 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 				<label for="Notes">', _('Notes'), ':</label>
 				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
 			</field>';
-		echo '</fieldset>'; // close main table
-		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';
-		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
-		echo '<input type="hidden" name="Days" value="', $Days, '" />';
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Accept'), '" />
 				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
 			</div>';
+	echo '</fieldset>'; // close main table
+		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';
+		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
+		echo '<input type="hidden" name="Days" value="', $Days, '" />';
 		echo '</form>';
 	} // end if user wish to delete
 }
