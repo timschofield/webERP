@@ -90,7 +90,7 @@ if (isset($_POST['RunReport'])) {
 						FROM gltrans
 						INNER JOIN systypes
 							ON gltrans.type=systypes.typeid
-						INNER JOIN gltags
+						LEFT JOIN gltags
 							ON gltrans.counterindex=gltags.counterindex
 						WHERE gltrans.account = '" . $SelectedAccount . "'
 							AND posted=1

@@ -195,7 +195,7 @@ else if (isset($_POST['PrintPDF'])) {
 				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 				INNER JOIN gltrans ON chartmaster.accountcode= gltrans.account
 				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
-				INNER JOIN gltags ON gltags.counterindex=gltrans.counterindex
+				LEFT JOIN gltags ON gltags.counterindex=gltrans.counterindex
 			WHERE accountgroups.pandl=1
 				AND gltags.tagref='" . $_POST['tag'] . "'
 			GROUP BY accountgroups.sectioninaccounts,
@@ -529,7 +529,7 @@ else {
 			FROM chartmaster
 			INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
 			INNER JOIN gltrans ON chartmaster.accountcode= gltrans.account
-			INNER JOIN gltags ON gltags.counterindex=gltrans.counterindex
+			LEFT JOIN gltags ON gltags.counterindex=gltrans.counterindex
 			WHERE accountgroups.pandl=1
 				AND gltags.tagref='" . $_POST['tag'] . "'
 			GROUP BY accountgroups.sectioninaccounts,

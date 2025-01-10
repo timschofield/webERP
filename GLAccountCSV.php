@@ -163,7 +163,7 @@ if (isset($_POST['MakeCSV'])) {
 				FROM gltrans
 				INNER JOIN systypes
 					ON systypes.typeid=gltrans.type
-				INNER JOIN gltags
+				LEFT JOIN gltags
 					ON gltrans.counterindex=gltags.counterindex
 				WHERE gltrans.account = '" . $SelectedAccount . "'
 					AND systypes.typeid=gltrans.type
@@ -187,7 +187,7 @@ if (isset($_POST['MakeCSV'])) {
 					FROM gltrans
 					INNER JOIN systypes
 						ON systypes.typeid=gltrans.type
-					INNER JOIN gltags
+					LEFT JOIN gltags
 						ON gltrans.counterindex=gltags.counterindex
 					WHERE gltrans.account = '" . $SelectedAccount . "'
 						AND systypes.typeid=gltrans.type
