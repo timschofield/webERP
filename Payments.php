@@ -475,7 +475,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								$PaymentItem->GLCode . "','" .
 								$PaymentItem->Narrative . "','" .
 								($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" .
-								$PaymentItem->Cheque . "'
+								$PaymentItem->Cheque . 
 							"')";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was') , true);
