@@ -27,7 +27,7 @@ if (!isset($_POST['StockID'])) {
 			<label for="Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
 			<input tabindex="1" type="text" autofocus="autofocus" name="Keywords" size="20" maxlength="25" />
 		</field>
-			<b>' . _('OR') . '</b>
+			<b>' . _('OR') . ' </b>
 		<field>
 			<label for="StockCode">' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</label>
 			<input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" />

@@ -881,7 +881,7 @@ if (!isset($SelectedParent)) {
      <table class="selection" cellpadding="3">
 	<tr><td>' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</td>
 		<td><input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" /></td>
-		<td><b>' . _('OR') . '</b></td>
+		<td><b>' . _('OR') . ' </b></td>
 		<td>' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</td>
 		<td><input tabindex="2" type="text" name="StockCode" autofocus="autofocus" size="15" maxlength="18" /></td>
 	</tr>

@@ -97,8 +97,7 @@ if (!isset($AccountID)) {
 		<field>
 			<label for="Keywords">' . _('Enter extract of text in the Account name') .':</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
-		</field>
-		<h1>' .  _('OR') . '</h1>';
+		</field>';
 
 	$SQLAccountSelect="SELECT chartmaster.accountcode,
 							chartmaster.accountname,
@@ -111,7 +110,7 @@ if (!isset($AccountID)) {
 	$ResultSelection=DB_query($SQLAccountSelect);
 	$OptGroup = '';
 	echo '<field>
-			<label for="GLCode">', _('Search for Account Code'), '</label>
+			<label for="GLCode">', '<b>' , _('OR') , '</b>' , _('Search for Account Code'), '</label>
 			<select name="GLCode">';
 	echo '<option value="">' . _('Select an Account Code') . '</option>';
 	while ($MyRowSelection=DB_fetch_array($ResultSelection)){

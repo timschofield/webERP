@@ -332,13 +332,13 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 						<label for"Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
 						<input tabindex="1" type="text" name="Keywords" size="20" maxlength="25" />
 					</field>
-					<b>' . _('OR') . '</b>
+					<b>' . _('OR') . ' </b>
 					<field>
 						<label for="StockCode">' . _('Enter extract of the') . ' <b>' . _('Stock Code') . '</b>:</label>
 						<input tabindex="2" type="text" name="StockCode" size="15" maxlength="20" />
 					</field>
 					<field>
-						<b>' . _('OR') . '</b>
+						<b>' . _('OR') . ' </b>
 						<a href="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?listall=yes">' . _('List All Demands')  . '</a>
 					</field>
 				</fieldset>';

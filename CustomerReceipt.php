@@ -1251,10 +1251,10 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 		<tr>
 			<td>' . _('Text in the Customer') . ' ' . '<b>' . _('name') . '</b>:</td>
 			<td><input tabindex="9" type="text" name="Keywords" size="15" maxlength="25" /></td>
-			<td><b>' . _('OR') . '</b></td>
+			<td><b>' . _('OR') . ' </b></td>
 			<td>' . _('Text extract in the Customer') . ' ' . '<b>' . _('code') . '</b>:</td>
 			<td><input tabindex="10" type="text" name="CustCode" data-type="no-illegal-chars" title="' . _('Enter an extract of the customer code to search for. Customer codes can contain any alpha-numeric character or underscore') . '" size="10" maxlength="18" /></td>
-			<td><b>' . _('OR') . '</b></td>
+			<td><b>' . _('OR') . ' </b></td>
 			<td>' . _('Customer invoice number') . ':</td>
 			<td><input tabindex="11" type="text" name="CustInvNo" class="integer" size="8" maxlength="8" /></td>
 		</tr>
