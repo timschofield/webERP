@@ -153,6 +153,19 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$MyRowAccExp = DB_fetch_array($ResultAccExp);
 		$AccountTo = $MyRowAccExp['glaccount'];
 
+		if ($MyRowAccExp['klretentionpph21'] != 0){
+			// gross up method
+			$HutangPPH21 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph21']/100)))-$NetAmount);
+			$HutangPPH21 = 0;
+		}
+		if ($MyRowAccExp['klretentionpph23'] != 0){
+			// gross up method
+			$HutangPPH23 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph23']/100)))-$NetAmount);
+		}else{
+			$HutangPPH23 = 0;
+		}
+		// KL RICARD END pph21, pph23
+		
 		$TagSQL = "SELECT tagref, tagdescription FROM tags INNER JOIN pctags ON tags.tagref=pctags.tag WHERE pctags.pccashdetail='" . $MyRow['counterindex'] . "'";
 		$TagResult = DB_query($TagSQL);
 		$TagDescription = '';
@@ -167,19 +180,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 			}
 		}
-		if ($MyRowAccExp['klretentionpph21'] != 0){
-			// gross up method
-			$HutangPPH21 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph21']/100)))-$NetAmount);
-			$HutangPPH21 = 0;
-		}
-		if ($MyRowAccExp['klretentionpph23'] != 0){
-			// gross up method
-			$HutangPPH23 = round(($NetAmount / (1-($MyRowAccExp['klretentionpph23']/100)))-$NetAmount);
-		}else{
-			$HutangPPH23 = 0;
-		}
-		// KL RICARD END pph21, pph23
-		
+
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
@@ -453,32 +454,32 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	/*The option to submit was not hit so display form */
 	echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">';
 	echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-	echo '<fieldset>'; //Main table
 	$SQL = "SELECT tabcode
 		FROM pctabs
 		WHERE authorizerexpenses LIKE '%" . $_SESSION['UserID'] . "%'
 		ORDER BY tabcode";
 	$Result = DB_query($SQL);
-	echo '<field>
-			<td>', _('Authorise expenses on petty cash tab'), ':</td>
-			<td><select required="required" name="SelectedTabs">';
+	echo '<fieldset>
+			<field>
+				<label>', _('Authorise expenses on petty cash tab'), '</label>
+				<select required="required" name="SelectedTabs">';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['SelectTabs']) and $MyRow['tabcode'] == $_POST['SelectTabs']) {
 			echo '<option selected="selected" value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		} else {
 			echo '<option value="', $MyRow['tabcode'], '">', $MyRow['tabcode'], '</option>';
 		}
-	} //end while loop get type of tab
+	}
 	echo '</select>
-		</tr>';	
+			</field>';
+	
 	// KL RICARD
-	echo'	<tr>
-			 <td>' . _('Show only unauthorized expenses') . '</td>
-			 <td><input type="checkbox" title="' . _('Check this box to display only the expenses pending of authorization') . '" name="ShowOnlyUnauthorized" /></td>
-		</tr>';
+	echo '<field>
+			<label>', _('Show only unauthorized expenses'), '</label>
+			<input type="checkbox" title="', _('Check this box to display only the expenses pending of authorization'), '" name="ShowOnlyUnauthorized" />
+		</field>';
 	// KL RICARD END
-
-	echo '</fieldset>'; // close main table
+	echo '</fieldset>';
 	DB_free_result($Result);
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
