@@ -173,15 +173,18 @@ if (isset($_POST['Show'])) {
 			LEFT JOIN gltags
 				ON gltags.counterindex=gltrans.counterindex
 			WHERE gltrans.account = '" . $SelectedAccount . "'
-			AND posted=1
-			AND periodno>='" . $FirstPeriodSelected . "'
-			AND periodno<='" . $LastPeriodSelected . "'";
+				AND posted=1
+				AND periodno>='" . $FirstPeriodSelected . "'
+				AND periodno<='" . $LastPeriodSelected . "'";
 
-	if ($_POST['tag'] != -1) {
+	if (isset($_POST['tag']) and $_POST['tag'] != -1) {
 		$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
 	}
 
-	$SQL = $SQL . " ORDER BY periodno, gltrans.trandate, counterindex";
+	$SQL = $SQL . " ORDER BY periodno, 
+						gltrans.trandate, 
+						counterindex";
+
 	$NameSQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
 	$NameResult = DB_query($NameSQL);
 	$NameRow = DB_fetch_array($NameResult);

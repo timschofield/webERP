@@ -151,54 +151,33 @@ if (isset($_POST['MakeCSV'])) {
 		$FirstPeriodSelected = min($SelectedPeriod);
 		$LastPeriodSelected = max($SelectedPeriod);
 
-		if ($_POST['tag'] == -1) {
-			$SQL = "SELECT type,
-						systypes.typename,
-						gltrans.typeno,
-						gltrans.trandate,
-						gltrans.narrative,
-						gltrans.amount,
-						gltrans.periodno,
-						gltags.tagref AS tag
+		$SQL = "SELECT gltrans.type,
+					systypes.typename,
+					gltrans.typeno,
+					gltrans.trandate,
+					gltrans.narrative,
+					gltrans.amount,
+					gltrans.periodno,
+					gltags.tagref AS tag
 				FROM gltrans
 				INNER JOIN systypes
 					ON systypes.typeid=gltrans.type
-				INNER JOIN gltags
+				LEFT JOIN gltags
 					ON gltrans.counterindex=gltags.counterindex
 				WHERE gltrans.account = '" . $SelectedAccount . "'
 					AND systypes.typeid=gltrans.type
 					AND posted=1
 					AND periodno>='" . $FirstPeriodSelected . "'
-					AND periodno<='" . $LastPeriodSelected . "'
-				ORDER BY periodno,
+					AND periodno<='" . $LastPeriodSelected . "'";
+
+		if (isset($_POST['tag']) and $_POST['tag'] != -1) {
+			$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
+		}
+					
+		$SQL = " ORDER BY periodno,
 					gltrans.trandate,
 					gltrans.counterindex";
 
-		}
-		else {
-			$SQL = "SELECT gltrans.type,
-						systypes.typename,
-						gltrans.typeno,
-						gltrans.trandate,
-						gltrans.narrative,
-						gltrans.amount,
-						gltrans.periodno,
-						gltags.tagref AS tag
-					FROM gltrans
-					INNER JOIN systypes
-						ON systypes.typeid=gltrans.type
-					INNER JOIN gltags
-						ON gltrans.counterindex=gltags.counterindex
-					WHERE gltrans.account = '" . $SelectedAccount . "'
-						AND systypes.typeid=gltrans.type
-						AND posted=1
-						AND periodno>='" . $FirstPeriodSelected . "'
-						AND periodno<='" . $LastPeriodSelected . "'
-						AND gltags.tagref='" . $_POST['tag'] . "'
-					ORDER BY periodno,
-						gltrans.trandate,
-						gltrans.counterindex";
-		}
 
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
 		$TransResult = DB_query($SQL, $ErrMsg);
