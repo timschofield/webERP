@@ -12,8 +12,8 @@
 *
 * How do I use it?
 *
-* $Address_string = 'My Group: "Richard Heyes" <richard@localhost> (A comment), ted@example.com (Ted Bloggs), Barney;';
-* $structure = Mail_RFC822::parseAddressList($Address_string, 'example.com', TRUE)
+* $address_string = 'My Group: "Richard Heyes" <richard@localhost> (A comment), ted@example.com (Ted Bloggs), Barney;';
+* $structure = Mail_RFC822::parseAddressList($address_string, 'example.com', TRUE)
 * print_r($structure);
 *
 * @author  Richard Heyes <richard@phpguru.org>
@@ -26,9 +26,9 @@ class Mail_RFC822
 {
     /**
      * The address being parsed by the RFC822 object.
-     * @var string $Address
+     * @var string $address
      */
-    var $Address = '';
+    var $address = '';
 
     /**
      * The default domain to use for unqualified addresses.
@@ -44,15 +44,15 @@ class Mail_RFC822
 
     /**
      * Whether or not to validate atoms for non-ascii characters.
-     * @var boolean $Validate
+     * @var boolean $validate
      */
-    var $Validate = true;
+    var $validate = true;
 
     /**
      * The array of raw addresses built up as we parse.
-     * @var array $Addresses
+     * @var array $addresses
      */
-    var $Addresses = array();
+    var $addresses = array();
 
     /**
      * The final array of parsed address information that we build up.
@@ -98,19 +98,19 @@ class Mail_RFC822
      * calling parseAddressList(). One or the other.
      *
      * @access public
-     * @param string  $Address         The address(es) to validate.
+     * @param string  $address         The address(es) to validate.
      * @param string  $default_domain  Default domain/host etc. If not supplied, will be set to localhost.
      * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
-     * @param boolean $Validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
+     * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
      *
      * @return object Mail_RFC822 A new Mail_RFC822 object.
      */
-    function Mail_RFC822($Address = null, $default_domain = null, $nest_groups = null, $Validate = null, $limit = null)
+    function __construct($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
     {
-        if (isset($Address))        $this->address        = $Address;
+        if (isset($address))        $this->address        = $address;
         if (isset($default_domain)) $this->default_domain = $default_domain;
         if (isset($nest_groups))    $this->nestGroups     = $nest_groups;
-        if (isset($Validate))       $this->validate       = $Validate;
+        if (isset($validate))       $this->validate       = $validate;
         if (isset($limit))          $this->limit          = $limit;
     }
 
@@ -120,25 +120,25 @@ class Mail_RFC822
      * or when creating the object. One or the other.
      *
      * @access public
-     * @param string  $Address         The address(es) to validate.
+     * @param string  $address         The address(es) to validate.
      * @param string  $default_domain  Default domain/host etc.
      * @param boolean $nest_groups     Whether to return the structure with groups nested for easier viewing.
-     * @param boolean $Validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
+     * @param boolean $validate        Whether to validate atoms. Turn this off if you need to run addresses through before encoding the personal names, for instance.
      *
      * @return array A structured array of addresses.
      */
-    function parseAddressList($Address = null, $default_domain = null, $nest_groups = null, $Validate = null, $limit = null)
+    function parseAddressList($address = null, $default_domain = null, $nest_groups = null, $validate = null, $limit = null)
     {
 
         if (!isset($this->mailRFC822)) {
-            $obj = new Mail_RFC822($Address, $default_domain, $nest_groups, $Validate, $limit);
+            $obj = new Mail_RFC822($address, $default_domain, $nest_groups, $validate, $limit);
             return $obj->parseAddressList();
         }
 
-        if (isset($Address))        $this->address        = $Address;
+        if (isset($address))        $this->address        = $address;
         if (isset($default_domain)) $this->default_domain = $default_domain;
         if (isset($nest_groups))    $this->nestGroups     = $nest_groups;
-        if (isset($Validate))       $this->validate       = $Validate;
+        if (isset($validate))       $this->validate       = $validate;
         if (isset($limit))          $this->limit          = $limit;
 
         $this->structure  = array();
@@ -161,15 +161,15 @@ class Mail_RFC822
         // Loop through all the addresses
         for ($i = 0; $i < count($this->addresses); $i++){
 
-            if (($Return = $this->_validateAddress($this->addresses[$i])) === false
+            if (($return = $this->_validateAddress($this->addresses[$i])) === false
                 || isset($this->error)) {
                 return false;
             }
 
             if (!$this->nestGroups) {
-                $this->structure = array_merge($this->structure, $Return);
+                $this->structure = array_merge($this->structure, $return);
             } else {
-                $this->structure[] = $Return;
+                $this->structure[] = $return;
             }
         }
 
@@ -180,17 +180,17 @@ class Mail_RFC822
      * Splits an address into seperate addresses.
      *
      * @access private
-     * @param string $Address The addresses to split.
+     * @param string $address The addresses to split.
      * @return boolean Success or failure.
      */
-    function _splitAddresses($Address)
+    function _splitAddresses($address)
     {
 
         if (!empty($this->limit) AND count($this->addresses) == $this->limit) {
             return '';
         }
 
-        if ($this->_isGroup($Address) && !isset($this->error)) {
+        if ($this->_isGroup($address) && !isset($this->error)) {
             $split_char = ';';
             $is_group   = true;
         } elseif (!isset($this->error)) {
@@ -201,7 +201,7 @@ class Mail_RFC822
         }
 
         // Split the string based on the above ten or so lines.
-        $parts  = explode($split_char, $Address);
+        $parts  = explode($split_char, $address);
         $string = $this->_splitCheck($parts, $split_char);
 
         // If a group...
@@ -232,17 +232,17 @@ class Mail_RFC822
 
         // Remove the now stored address from the initial line, the +1
         // is to account for the explode character.
-        $Address = trim(mb_substr($Address, mb_strlen($string) + 1));
+        $address = trim(mb_substr($address, mb_strlen($string) + 1));
 
         // If the next char is a comma and this was a group, then
         // there are more addresses, otherwise, if there are any more
         // chars, then there is another address.
-        if ($is_group && mb_substr($Address, 0, 1) == ','){
-            $Address = trim(mb_substr($Address, 1));
-            return $Address;
+        if ($is_group && mb_substr($address, 0, 1) == ','){
+            $address = trim(mb_substr($address, 1));
+            return $address;
 
-        } elseif (mb_strlen($Address) > 0) {
-            return $Address;
+        } elseif (mb_strlen($address) > 0) {
+            return $address;
 
         } else {
             return '';
@@ -256,13 +256,13 @@ class Mail_RFC822
      * Checks for a group at the start of the string.
      *
      * @access private
-     * @param string $Address The address to check.
+     * @param string $address The address to check.
      * @return boolean Whether or not there is a group at the start of the string.
      */
-    function _isGroup($Address)
+    function _isGroup($address)
     {
         // First comma not in quotes, angles or escaped:
-        $parts  = explode(',', $Address);
+        $parts  = explode(',', $address);
         $string = $this->_splitCheck($parts, ',');
 
         // Now we have the first address, we can reliably check for a
@@ -379,18 +379,18 @@ class Mail_RFC822
      * Function to begin checking the address.
      *
      * @access private
-     * @param string $Address The address to validate.
+     * @param string $address The address to validate.
      * @return mixed False on failure, or a structured array of address information on success.
      */
-    function _validateAddress($Address)
+    function _validateAddress($address)
     {
         $is_group = false;
 
-        if ($Address['group']) {
+        if ($address['group']) {
             $is_group = true;
 
             // Get the group part of the name
-            $parts     = explode(':', $Address['address']);
+            $parts     = explode(':', $address['address']);
             $groupname = $this->_splitCheck($parts, ':');
             $structure = array();
 
@@ -407,31 +407,31 @@ class Mail_RFC822
                 }
             }
 
-            $Address['address'] = ltrim(mb_substr($Address['address'], mb_strlen($groupname . ':')));
+            $address['address'] = ltrim(mb_substr($address['address'], mb_strlen($groupname . ':')));
         }
 
         // If a group then split on comma and put into an array.
         // Otherwise, Just put the whole address in an array.
         if ($is_group) {
-            while (mb_strlen($Address['address']) > 0) {
-                $parts       = explode(',', $Address['address']);
-                $Addresses[] = $this->_splitCheck($parts, ',');
-                $Address['address'] = trim(mb_substr($Address['address'], mb_strlen(end($Addresses) . ',')));
+            while (mb_strlen($address['address']) > 0) {
+                $parts       = explode(',', $address['address']);
+                $addresses[] = $this->_splitCheck($parts, ',');
+                $address['address'] = trim(mb_substr($address['address'], mb_strlen(end($addresses) . ',')));
             }
         } else {
-            $Addresses[] = $Address['address'];
+            $addresses[] = $address['address'];
         }
 
-        // Check that $Addresses is set, if address like this:
+        // Check that $addresses is set, if address like this:
         // Groupname:;
         // Then errors were appearing.
-        if (!isset($Addresses)){
+        if (!isset($addresses)){
             $this->error = 'Empty group.';
             return false;
         }
 
-        for ($i = 0; $i < count($Addresses); $i++) {
-            $Addresses[$i] = trim($Addresses[$i]);
+        for ($i = 0; $i < count($addresses); $i++) {
+            $addresses[$i] = trim($addresses[$i]);
         }
 
         // Validate each mailbox.
@@ -439,22 +439,22 @@ class Mail_RFC822
         //                         geezer@domain.com
         //                         geezer
         // ... or any other format valid by RFC 822.
-        array_walk($Addresses, array($this, 'validateMailbox'));
+        array_walk($addresses, array($this, 'validateMailbox'));
 
         // Nested format
         if ($this->nestGroups) {
             if ($is_group) {
-                $structure->addresses = $Addresses;
+                $structure->addresses = $addresses;
             } else {
-                $structure = $Addresses[0];
+                $structure = $addresses[0];
             }
 
         // Flat format
         } else {
             if ($is_group) {
-                $structure = array_merge($structure, $Addresses);
+                $structure = array_merge($structure, $addresses);
             } else {
-                $structure = $Addresses;
+                $structure = $addresses;
             }
         }
 
@@ -676,13 +676,13 @@ class Mail_RFC822
         }
 
         if (isset($route)) {
-            $Return['adl'] = $route;
+            $return['adl'] = $route;
         } else {
-            $Return['adl'] = '';
+            $return['adl'] = '';
         }
 
-        $Return = array_merge($Return, $addr_spec);
-        return $Return;
+        $return = array_merge($return, $addr_spec);
+        return $return;
     }
 
     /**
