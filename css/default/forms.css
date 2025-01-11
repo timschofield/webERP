@@ -138,9 +138,22 @@ cursor: pointer;
 transition-duration:0.5s;
 }
 form input[type="submit"]:hover{
-background:#7F7F7F url(images/tick.png) center left 2%/24px no-repeat;
-color:#ffffff;
+box-shadow: 0 0 3px #480FCE;
 transition-duration:0.5s;
+}
+form input[title~="PDF"] {
+background-image:url(images/pdf.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
+form input[title~="View"] {
+background-image:url(images/screen.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
 }
 form input[type="reset"]{
 background:#BFBFBF url(images/reset.png) center left 8%/16px no-repeat;

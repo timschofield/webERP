@@ -15,7 +15,7 @@ include('includes/htmlMimeMail.php'); // need for sending email attachments
 //this code you will create a very large number of EDI invoices.
 
 /*Get the Customers who are enabled for EDI invoicing */
-$SQL = 'SELECT debtorno,
+$sql = 'SELECT debtorno,
 		edireference,
 		editransport,
 		ediaddress,
@@ -26,7 +26,7 @@ $SQL = 'SELECT debtorno,
 	FROM debtorsmaster INNER JOIN paymentterms ON debtorsmaster.paymentterms=paymentterms.termsindicator
 	WHERE ediinvoices=1';
 
-$EDIInvCusts = DB_query($SQL);
+$EDIInvCusts = DB_query($sql);
 
 if (DB_num_rows($EDIInvCusts)==0){
 	exit;
@@ -36,7 +36,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 	/*Figure out if there are any unset invoices or credits for the customer */
 
-	$SQL = "SELECT debtortrans.id,
+	$sql = "SELECT debtortrans.id,
 			transno,
 			type,
 			order_,
@@ -63,7 +63,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 		AND debtortrans.debtorno='" . $CustDetails['debtorno'] . "'";
 
 	$ErrMsg = _('There was a problem retrieving the customer transactions because');
-	$TransHeaders = DB_query($SQL,$ErrMsg);
+	$TransHeaders = DB_query($sql,$ErrMsg);
 
 
 	if (DB_num_rows($TransHeaders)==0){
@@ -111,7 +111,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 		//**************Need to get delivery address as may be diff from branch address
 
-		$SQL = "SELECT deliverto,
+		$sql = "SELECT deliverto,
 				deladd1,
 				deladd2,
 				deladd3,
@@ -123,7 +123,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 				WHERE order_ = '" . $OrderNo . "'";
 
 				$ErrMsg = _('There was a problem retrieving the ship to details because');
-				$ShipToLines = DB_query($SQL,$ErrMsg);
+				$ShipToLines = DB_query($sql,$ErrMsg);
 
 				While ($ShipTo = DB_fetch_array($ShipToLines)){
 					$ShipToName = $ShipTo[0];
@@ -150,7 +150,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 		//**************Taxrate, need to find
 
-		$SQL = "SELECT 	stockmovestaxes.taxrate
+		$sql = "SELECT 	stockmovestaxes.taxrate
 	                        FROM stockmoves,
 							stockmovestaxes
 	                        WHERE stockmoves.stkmoveno = stockmovestaxes.stkmoveno
@@ -158,9 +158,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 	                        AND stockmoves.show_on_inv_crds=1
 	                        LIMIT 0,1";
 
-		                $ResultTax = DB_query($SQL);
-
-		                $TaxRate = 100 * (mysql_result($ResultTax, 0));
+		                $ResultTax = DB_query($sql);
+						$TaxRow = DB_fetch_array($ResultTax);
+		                $TaxRate = 100 * ($TaxRow['taxrate']);
 
                 //**************Taxrate, need to find
 
@@ -180,9 +180,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 		//Get the message lines, replace variable names with data, write the output to a file one line at a time
 
-		$SQL = "SELECT section, linetext FROM edimessageformat WHERE partnercode='" . $CustDetails['debtorno'] . "' AND messagetype='INVOIC' ORDER BY sequenceno";
+		$sql = "SELECT section, linetext FROM edimessageformat WHERE partnercode='" . $CustDetails['debtorno'] . "' AND messagetype='INVOIC' ORDER BY sequenceno";
 		$ErrMsg =  _('An error occurred in getting the EDI format template for') . ' ' . $CustDetails['debtorno'] . ' ' . _('because');
-		$MessageLinesResult = DB_query($SQL,$ErrMsg);
+		$MessageLinesResult = DB_query($sql,$ErrMsg);
 
 
 		if (DB_num_rows($MessageLinesResult)>0){
@@ -216,7 +216,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 
 					if ($TransDetails['type']==10){ /*its an invoice */
-						 $SQL = "SELECT stockmoves.stockid,
+						 $sql = "SELECT stockmoves.stockid,
 						 		stockmaster.description,
 								-stockmoves.qty as quantity,
 								stockmoves.discountpercent,
@@ -232,7 +232,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 					} else {
 					/* credit note */
-			 			$SQL = "SELECT stockmoves.stockid,
+			 			$sql = "SELECT stockmoves.stockid,
 								stockmaster.description,
 								stockmoves.qty as quantity,
 								stockmoves.discountpercent,
@@ -245,7 +245,7 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 							AND stockmoves.type=11 and stockmoves.transno=" . $TransNo . "
 							AND stockmoves.show_on_inv_crds=1";
 					}
-					$TransLinesResult = DB_query($SQL);
+					$TransLinesResult = DB_query($sql);
 
 					$LineNumber = 0;
 					while ($TransLines = DB_fetch_array($TransLinesResult)){
@@ -253,13 +253,13 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 						$LineNumber++;
 						$StockID = $TransLines['stockid'];
-						$SQL = "SELECT partnerstockid
+						$sql = "SELECT partnerstockid
 								FROM ediitemmapping
 							WHERE supporcust='CUST'
 							AND partnercode ='" . $CustDetails['debtorno'] . "'
 							AND stockid='" . $TransLines['stockid'] . "'";
 
-						$CustStkResult = DB_query($SQL);
+						$CustStkResult = DB_query($sql);
 						if (DB_num_rows($CustStkResult)==1){
 							$CustStkIDRow = DB_fetch_row($CustStkResult);
 							$CustStockID = $CustStkIDRow[0];
@@ -299,9 +299,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 			if ($CustDetails['editransport']=='email'){
 
 				$mail = new htmlMimeMail();
-				$Attachment = $mail->getFile( "EDI_INV_" . $TransNo .".txt");
+				$attachment = $mail->getFile( "EDI_INV_" . $TransNo .".txt");
 				$mail->SetSubject('EDI Invoice/Credit Note ' . $TransNo);
-				$mail->addAttachment($Attachment, 'EDI_INV_' . $TransNo . '.txt', 'application/txt');
+				$mail->addAttachment($attachment, 'EDI_INV_' . $TransNo . '.txt', 'application/txt');
 				if($_SESSION['SmtpSetting']==0){
 					$mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
 					$MessageSent = $mail->send(array($CustDetails['ediaddress']));
@@ -344,9 +344,9 @@ while ($CustDetails = DB_fetch_array($EDIInvCusts)){
 
 			if ($MessageSent==True){ /*the email was sent sucessfully */
 				/* move the sent file to sent directory */
-				$Source = 'EDI_INV_' . $TransNo . '.txt';
+				$source = 'EDI_INV_' . $TransNo . '.txt';
                                 $destination = 'EDI_Sent/EDI_INV_' . $TransNo . '.txt';
-                                rename($Source, $destination);
+                                rename($source, $destination);
 
 			}
 

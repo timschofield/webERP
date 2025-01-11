@@ -3,7 +3,6 @@
 *
 * KL RICARD Controlled accounts emails
 *			Do not show "Supplier Transactions Payment Entry" table, as requested by Purchasing Team
-*			Don't store info in gltrans.tag as will be obsolete soon. Do not show 0-None as default for gltags
 *
 ***********************************************************************/
 
@@ -476,8 +475,8 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								$PaymentItem->GLCode . "','" .
 								$PaymentItem->Narrative . "','" .
 								($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" .
-								$PaymentItem->Cheque . "'
-							)";
+								$PaymentItem->Cheque . 
+							"')";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was') , true);
 					foreach ($PaymentItem->Tag as $Tag) {
@@ -572,8 +571,8 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								FormatDateForSQL($_SESSION['PaymentDetail' . $identifier]->DatePaid) . "','" .
 								$_SESSION['PaymentDetail' . $identifier]->Paymenttype . "','" .
 								$PaymentItem->Amount . "','" .
-								$_SESSION['PaymentDetail' . $identifier]->Currency . "'
-							)";
+								$_SESSION['PaymentDetail'.$identifier]->Currency .
+							"')";
 					$ErrMsg = _('Cannot insert a bank transaction because');
 					$DbgMsg = _('Cannot insert a bank transaction with the SQL');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);

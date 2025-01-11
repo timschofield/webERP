@@ -130,6 +130,20 @@ border-radius: 6px;
 cursor: pointer;
 color:#FFFFFF;
 }
+form input[title~="PDF"] {
+background-image:url(images/pdf.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
+form input[title~="View"] {
+background-image:url(images/screen.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
 form input[type="reset"]{
 background:#34A7E8;
 font-weight:bold;

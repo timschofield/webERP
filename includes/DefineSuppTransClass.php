@@ -475,13 +475,6 @@ Class GLCodes {
 		$this->Narrative = $Narrative;
 		$this->Tag = $Tag;
 
-		$TagResult=DB_query("SELECT tagdescription from tags where tagref='" . $Tag . "'");
-		$TagMyrow=DB_fetch_array($TagResult);
-		if ($Tag==0) {
-			$this->TagName=_('None');
-		} else {
-			$this->TagName=$TagMyrow['tagdescription'];
-		}
 	}
 
 	function GLCodes($Counter, $GLCode, $GLActName, $Amount, $Narrative, $Tag=0, $TagName=''){
@@ -496,7 +489,7 @@ Class Shipment {
 	Var $Counter;
 	Var $ShiptRef;
 	Var $Amount;
-	
+
 	function __construct($Counter, $ShiptRef, $Amount){
 		$this->Counter = $Counter;
 		$this->ShiptRef = $ShiptRef;

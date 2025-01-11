@@ -211,7 +211,6 @@ if (isset($_POST['submit'])) {
 
 		$SQL = "INSERT INTO pcashdetails (counterindex,
 										tabcode,
-										tag,
 										date,
 										codeexpense,
 										amount,
@@ -222,7 +221,6 @@ if (isset($_POST['submit'])) {
 										notes)
 								VALUES (NULL,
 										'" . $_POST['SelectedTabs'] . "',
-										'" . $_POST['Tag'] . "',
 										'" . FormatDateForSQL($_POST['Date']) . "',
 										'" . $_POST['SelectedExpense'] . "',
 										'" . -filter_number_format($_POST['Amount']) . "',
@@ -235,6 +233,17 @@ if (isset($_POST['submit'])) {
 		$Msg = _('The expense claim on tab') . ' ' . $_POST['SelectedTabs'] . ' ' . _('has been created');
 		$Result = DB_query($SQL);
 		$SelectedIndex = DB_Last_Insert_ID('pcashdetails', 'counterindex');
+
+		foreach ($_POST['tag'] as $Tag) {
+			$SQL = "INSERT INTO pctags (pccashdetail,
+										tag)
+									VALUES (
+										'" . $SelectedIndex . "',
+										'" . $Tag . "'
+									)";
+			$Result = DB_query($SQL);
+		}
+
 		foreach ($_POST as $Index => $Value) {
 			if (substr($Index, 0, 5) == 'index') {
 				$Index = $Value;
@@ -368,6 +377,7 @@ if (isset($_POST['submit'])) {
 	//Delete expenses record
 	$SQL = "DELETE FROM pcashdetails
 			WHERE pcashdetails.counterindex = '" . $SelectedIndex . "'";
+	$ErrMsg = _('Petty Cash Expense record could not be deleted because');
 	$Result = DB_query($SQL, $ErrMsg);
 	prnMsg(_('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been deleted'), 'success');
 	unset($_GET['delete']);
@@ -411,7 +421,7 @@ if (!isset($SelectedTabs)) {
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Petty Cash Claim Entry'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 		</p>';
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (!isset($Days)) {
@@ -427,12 +437,6 @@ if (!isset($SelectedTabs)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		echo '<form method="post" action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" enctype="multipart/form-data">';
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
-		echo '<fieldset>';
-		echo '<field>
-				<label>' . _('Petty Cash Tab') . ':</label>
-				<fieldtext>' . $SelectedTabs . '</fieldtext>
-			</field>';
-		echo '</fieldset><br />';
 
 		//Limit expenses history to X days
 		echo '<fieldset>
@@ -524,17 +528,19 @@ if (!isset($SelectedTabs)) {
 				$ReceiptText = _('No attachment');
 			}
 
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+			$TagSQL = "SELECT tagref, tagdescription FROM tags INNER JOIN pctags ON tags.tagref=pctags.tag WHERE pctags.pccashdetail='" . $MyRow['counterindex'] . "'";
 			$TagResult = DB_query($TagSQL);
-			$TagRow = DB_fetch_array($TagResult);
-			if ($MyRow['tag'] == 0) {
-				$TagRow['tagdescription'] = _('None');
-			}
-			$TagTo = $MyRow['tag'];
-			if ($ExpenseCodeDes == 'ASSIGNCASH') {
-				$TagDescription = '';
-			} else {
-				$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
+			$TagDescription = '';
+			while ($TagRow = DB_fetch_array($TagResult)) {
+				if ($TagRow['tagref'] == 0) {
+					$TagRow['tagdescription'] = _('None');
+				}
+				$TagTo = $MyRow['tag'];
+				if ($ExpenseCodeDes == 'ASSIGNCASH') {
+					$TagDescription .= '';
+				} else {
+					$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
+				}
 			}
 
 			$TaxesDescription = '';
@@ -631,7 +637,7 @@ if (!isset($SelectedTabs)) {
 		}
 		echo '<fieldset>';
 		if (isset($_GET['SelectedIndex'])) {
-			echo '<legend>', _('Update Expense'), '</legend';
+			echo '<legend>', _('Update Expense'), '</legend>';
 		} else {
 			echo '<legend>', _('New Expense'), '</legend>';
 		}
@@ -734,7 +740,8 @@ if (!isset($SelectedTabs)) {
 				++$i;
 			}
 		}
-
+KL RICARD END Do not show taxes */
+/*	KL RICARD END Do not show tag
 		//Select the tag
 		echo '<field>
 				<label for="Tag">', _('Tag'), ':</label>
@@ -744,14 +751,13 @@ if (!isset($SelectedTabs)) {
 			FROM tags
 			ORDER BY tagref";
 		$Result = DB_query($SQL);
-KL RICARD END Do not show taxes */
+KL RICARD END Do not show tag */
 		
 		if (!isset($_POST['Tag'])) {
-			$_POST['Tag'] = 0;
+			$_POST['Tag'] = $DefaultTag;
 		}
 		
 /*	KL RICARD END Do not show tag
-		echo '<option value="0">0 - ', _('None'), '</option>';
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($_POST['Tag'] == $MyRow['tagref']) {
 				echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
@@ -802,14 +808,14 @@ KL RICARD END Do not show purpose */
 				<label for="Notes">', _('Notes'), ':</label>
 				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
 			</field>';
-
+	
+		echo '<div class="centre">
+			<input type="submit" name="submit" value="', _('Accept'), '" />
+			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			</div>';
 		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 		echo '<input type="hidden" name="Days" value="', $Days, '" />';
-		echo '<div class="centre">
-				<input type="submit" name="submit" value="', _('Accept'), '" />
-				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
-			</div>';
 		echo '</form>';
 	} // end if user wish to delete
 }

@@ -4,7 +4,7 @@ Class Allocation {
 	Var $TransID;
 	Var $Amount;
 
-	function Allocation ($TransID, $Amount){
+	function __construct ($TransID, $Amount){
 		$this->TransID = $TransID;
 		$this->Amount = $Amount;
 	}
