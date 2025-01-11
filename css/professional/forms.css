@@ -132,6 +132,20 @@ form input[type="submit"]:hover{
 background:linear-gradient(315deg, #655051, #551b1b);
 color:#E6E6FA;
 }
+form input[title~="PDF"] {
+background-image:url(images/pdf.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
+form input[title~="View"] {
+background-image:url(images/screen.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
 form input[type="reset"]{
 background:#EEEEEE;
 padding-top: 5px;
