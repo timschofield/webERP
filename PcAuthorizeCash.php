@@ -127,8 +127,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											`narrative`,
 											`amount`,
 											`posted`,
-											`jobref`,
-											`tag`)
+											`jobref`)
 									VALUES (NULL,
 											'" . $Type . "',
 											'" . $TypeNo . "',
@@ -139,8 +138,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 											'" . $Narrative . "',
 											'" . -$Amount . "',
 											0,
-											'',
-											'" . $TagTo ."')";
+											'')";
 			$ResultFrom = DB_Query($SQLFrom, '', '', true);
 			$SQLTo = "INSERT INTO `gltrans` (`counterindex`,
 										`type`,
@@ -152,8 +150,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										`narrative`,
 										`amount`,
 										`posted`,
-										`jobref`,
-										`tag`
+										`jobref`
 									) VALUES (NULL,
 										'" . $Type . "',
 										'" . $TypeNo . "',
@@ -164,8 +161,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										'" . $Narrative . "',
 										'" . $Amount . "',
 										0,
-										'',
-										'" . $TagTo ."'
+										''
 									)";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
 
