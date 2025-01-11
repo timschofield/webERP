@@ -12,7 +12,7 @@ KL RICARD MODIFICATIONS:
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
-
+require 'vendor/autoload.php';
 // KL RICARD: Include the specific KL session functions
 include ($PathPrefix . 'KLsession.php');
 // KL RICARD END: Include the specific KL session functions
@@ -51,10 +51,13 @@ if (!isset($SysAdminEmail)) {
 
 ini_set('session.gc_maxlifetime', $SessionLifeTime);
 
-if (!ini_get('safe_mode')) {
-	set_time_limit($MaximumExecutionTime);
-	ini_set('max_execution_time', $MaximumExecutionTime);
-}
+//INI directive 'safe_mode' is deprecated since PHP 5.3 and removed since PHP 5.4
+/*
+ * if (!ini_get('safe_mode')) {
+ *	set_time_limit($MaximumExecutionTime);
+ *	ini_set('max_execution_time', $MaximumExecutionTime);
+ *}
+*/
 
 session_write_close(); //in case a previous session is not closed
 ini_set('session.cookie_httponly', 1);
@@ -81,7 +84,7 @@ to limit possibility for SQL injection attacks and cross scripting attacks
 */
 
 if (isset($_SESSION['DatabaseName'])) {
-	
+
 	foreach ($_POST as $PostVariableName => $PostVariableValue) {
 		if (gettype($PostVariableValue) != 'array') {
 			/*    if(get_magic_quotes_gpc()) {
@@ -206,14 +209,14 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 		case UL_OK; //user logged in successfully
 		include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
 		break;
-	
+
 		case UL_SHOWLOGIN:
 			include ($PathPrefix . 'includes/Login.php');
 			exit;
-	
+
 		case UL_BLOCKED:
 			die(include ($PathPrefix . 'includes/FailedLogin.php'));
-	
+
 		case UL_CONFIGERR:
 			$Title = _('Account Error Report');
 			include ($PathPrefix . 'includes/header.php');
@@ -221,15 +224,15 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 			prnMsg(_('Your user role does not have any access defined for webERP. There is an error in the security setup for this user account'), 'error');
 			include ($PathPrefix . 'includes/footer.php');
 			exit;
-	
+
 		case UL_NOTVALID:
 			$DemoText = '<font size="3" color="red"><b>' . _('incorrect password') . '</b></font><br /><b>' . _('The user/password combination') . '<br />' . _('is not a valid user of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
-	
+
 		case UL_MAINTENANCE:
 			$DemoText = '<font size="3" color="red"><b>' . _('system maintenance') . '</b></font><br /><b>' . _('webERP is not available right now') . '<br />' . _('during maintenance of the system') . '</b>';
 			die(include ($PathPrefix . 'includes/Login.php'));
-	
+
 	}
 
 	// KL RICARD Check if the user is allowed to access the page
@@ -390,7 +393,7 @@ function quote_smart($Value) {
 	// Quote if not integer
 	if (!is_numeric($Value)) {
 		$Value = "'" . DB_escape_string($Value) . "'";
-	} 
+	}
 	return $Value;
 }
 
