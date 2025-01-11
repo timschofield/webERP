@@ -76,7 +76,8 @@ if ($webERPType == 'PRODUCTION'){
 	// error_reporting (-1);
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
-	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+	error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 
 }else{
 	// use the TEST DB
@@ -103,6 +104,7 @@ if ($webERPType == 'PRODUCTION'){
 	// error_reporting (E_ALL);
 	// error_reporting (E_ALL & ~E_NOTICE);
 	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+	// error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING & ~E_DEPRECATED);
 }
 
 ?>
