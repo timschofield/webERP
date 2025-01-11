@@ -191,12 +191,12 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
 
-	echo '<form><fieldset>';
+	echo '<form>
+		<fieldset>';
 	echo '<field>
 			<label>' . _('Petty Cash Tab') . ':</label>
 			<fieldtext>' . $SelectedTabs . '</fieldtext>
 		</field>';
-	echo '</fieldset></form>';
 
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (isset($_POST['Cancel'])) {
@@ -239,13 +239,14 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 		//Limit expenses history to X days
-		echo '<fieldset>
-				<field>
+		echo '<field>
 					<label for="SelectedTabs">', _('Detail of Tab Movements For Last'), ':</label>
 					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
 					<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" />' . _('Days') . '
-					<input type="submit" name="Go" value="' . _('Go') . '" /></th>
 				</field>
+				<div class="centre">
+					<input type="submit" name="Go" value="' . _('Go') . '" /></th>
+				</div>
 			</fieldset>';
 
 		// KL RICARD Add receipt text field
@@ -417,10 +418,10 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		if (!isset($_POST['Receipt'])) {
 			$_POST['Receipt'] = '';
 		}
-		echo '<tr>
-				<td>', _('Receipt'), ':</td>
-				<td><input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" /></td>
-			</tr>';
+		echo '<field>
+				<label>', _('Receipt'), ':</label>
+				<input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" />
+			</field>';
 		// KL RICARD END	
 		echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';
