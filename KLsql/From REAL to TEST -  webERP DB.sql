@@ -36,17 +36,17 @@ INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;
 TRUNCATE test_erp.`chartmaster`;
 INSERT INTO test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
 
-TRUNCATE test_erp.`chartmasterIK`;
-INSERT INTO test_erp.chartmasterIK SELECT * FROM kurakura_kl_erp.chartmasterIK;
-
-TRUNCATE test_erp.`chartmasterPI`;
-INSERT INTO test_erp.chartmasterPI SELECT * FROM kurakura_kl_erp.chartmasterPI;
-
 TRUNCATE test_erp.`chartmasterADU`;
 INSERT INTO test_erp.chartmasterADU SELECT * FROM kurakura_kl_erp.chartmasterADU;
 
 TRUNCATE test_erp.`chartmasterBB`;
 INSERT INTO test_erp.chartmasterBB SELECT * FROM kurakura_kl_erp.chartmasterBB;
+
+TRUNCATE test_erp.`chartmasterIK`;
+INSERT INTO test_erp.chartmasterIK SELECT * FROM kurakura_kl_erp.chartmasterIK;
+
+TRUNCATE test_erp.`chartmasterPI`;
+INSERT INTO test_erp.chartmasterPI SELECT * FROM kurakura_kl_erp.chartmasterPI;
 
 TRUNCATE test_erp.`chartmasterSMH`;
 INSERT INTO test_erp.chartmasterSMH SELECT * FROM kurakura_kl_erp.chartmasterSMH;
@@ -76,7 +76,7 @@ TRUNCATE test_erp.`currencies`;
 INSERT INTO test_erp.currencies SELECT * FROM kurakura_kl_erp.currencies;
 
 TRUNCATE test_erp.`custallocns`;
-INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns; 
+INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= '2024-04-01'; 
 
 TRUNCATE test_erp.`custbranch`;
 INSERT INTO test_erp.custbranch SELECT * FROM kurakura_kl_erp.custbranch;
@@ -90,15 +90,21 @@ INSERT INTO test_erp.custitem SELECT * FROM kurakura_kl_erp.custitem;
 TRUNCATE test_erp.`custnotes`;
 INSERT INTO test_erp.custnotes SELECT * FROM kurakura_kl_erp.custnotes;
 
+TRUNCATE test_erp.`dashboard_scripts`;
+INSERT INTO test_erp.dashboard_scripts SELECT * FROM kurakura_kl_erp.dashboard_scripts;
+
+TRUNCATE test_erp.`dashboard_users`;
+INSERT INTO test_erp.dashboard_users SELECT * FROM kurakura_kl_erp.dashboard_users;
+
 TRUNCATE test_erp.`debtorsmaster`;
 INSERT INTO test_erp.debtorsmaster SELECT * FROM kurakura_kl_erp.debtorsmaster;
 
 TRUNCATE test_erp.`debtortrans`;
-/*INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans;
-*/
+/*INSERT INTO test_erp.debtortrans SELECT * FROM kurakura_kl_erp.debtortrans; */
+
 TRUNCATE test_erp.`debtortranstaxes`;
-/*INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes;
-*/
+/*INSERT INTO test_erp.debtortranstaxes SELECT * FROM kurakura_kl_erp.debtortranstaxes; */
+
 TRUNCATE test_erp.`debtortype`;
 INSERT INTO test_erp.debtortype SELECT * FROM kurakura_kl_erp.debtortype;
 
@@ -114,17 +120,17 @@ INSERT INTO test_erp.departments SELECT * FROM kurakura_kl_erp.departments;
 TRUNCATE test_erp.`discountmatrix`;
 INSERT INTO test_erp.discountmatrix SELECT * FROM kurakura_kl_erp.discountmatrix;
 
-TRUNCATE test_erp.`edi_orders_segs`;
-INSERT INTO test_erp.edi_orders_segs SELECT * FROM kurakura_kl_erp.edi_orders_segs;
-
 TRUNCATE test_erp.`ediitemmapping`;
 INSERT INTO test_erp.ediitemmapping SELECT * FROM kurakura_kl_erp.ediitemmapping;
 
 TRUNCATE test_erp.`edimessageformat`;
 INSERT INTO test_erp.edimessageformat SELECT * FROM kurakura_kl_erp.edimessageformat;
 
-TRUNCATE test_erp.`edi_orders_seg_groups`;
-INSERT INTO test_erp.edi_orders_seg_groups SELECT * FROM kurakura_kl_erp.edi_orders_seg_groups;
+TRUNCATE test_erp.`edi_orders_segs`;
+INSERT INTO test_erp.edi_orders_segs SELECT * FROM kurakura_kl_erp.edi_orders_segs;
+
+TRUNCATE test_erp.`ediitemmapping`;
+INSERT INTO test_erp.ediitemmapping SELECT * FROM kurakura_kl_erp.ediitemmapping;
 
 TRUNCATE test_erp.`emailsettings`;
 INSERT INTO test_erp.emailsettings SELECT * FROM kurakura_kl_erp.emailsettings;
@@ -151,7 +157,7 @@ TRUNCATE test_erp.`fixedassettasks`;
 INSERT INTO test_erp.fixedassettasks SELECT * FROM kurakura_kl_erp.fixedassettasks;
 
 TRUNCATE test_erp.`fixedassettrans`;
-INSERT INTO test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans;
+INSERT INTO test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans WHERE transdate >= '2024-01-01';
 
 TRUNCATE test_erp.`freightcosts`;
 INSERT INTO test_erp.freightcosts SELECT * FROM kurakura_kl_erp.freightcosts;
@@ -162,26 +168,29 @@ INSERT INTO test_erp.geocode_param SELECT * FROM kurakura_kl_erp.geocode_param;
 TRUNCATE test_erp.`glaccountusers`;
 INSERT INTO test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers;
 
+TRUNCATE test_erp.`gltags`;
+INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
+
 TRUNCATE test_erp.`gltrans`;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
+/* INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 60 AND periodno <= 80;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 80 AND periodno <= 90;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 90 AND periodno <= 100;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 100 AND periodno <= 110;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 110 AND periodno <= 115;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 115 AND periodno <= 120;
-
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 120 AND periodno <= 125;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 125 AND periodno <= 130;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130 AND periodno <= 135;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 135 AND periodno <= 140;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 140 AND periodno <= 145;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 145 AND periodno <= 150;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 155;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 155 AND periodno <= 160;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160;
-
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 110 AND periodno <= 120;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 120 AND periodno <= 130;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130 AND periodno <= 140;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 140 AND periodno <= 150;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 160; 
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160 AND periodno <= 170; */
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 170 AND periodno <= 180;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 180 AND periodno <= 190;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 190 AND periodno <= 200;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 190 AND periodno <= 200;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 200 AND periodno <= 210;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 210 AND periodno <= 220;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 220;
 
 TRUNCATE test_erp.`grns`;
 INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
@@ -208,13 +217,13 @@ TRUNCATE test_erp.`kladjustrl`;
 INSERT INTO test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl; 
 
 TRUNCATE test_erp.`klconsignment`;
-INSERT INTO test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment; 
-
-TRUNCATE test_erp.`klkpi`;
-INSERT INTO test_erp.klkpi SELECT * FROM kurakura_kl_erp.klkpi;
+INSERT INTO test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment WHERE saledate >= '2024-01-01'; 
 
 TRUNCATE test_erp.`klfreeexchanges`;
 INSERT INTO test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;
+
+TRUNCATE test_erp.`klkpi`;
+INSERT INTO test_erp.klkpi SELECT * FROM kurakura_kl_erp.klkpi;
 
 TRUNCATE test_erp.`klmaintenancetasks`;
 INSERT INTO test_erp.klmaintenancetasks SELECT * FROM kurakura_kl_erp.klmaintenancetasks;
@@ -244,7 +253,7 @@ TRUNCATE test_erp.`klpostatus`;
 INSERT INTO test_erp.klpostatus SELECT * FROM kurakura_kl_erp.klpostatus;
 
 TRUNCATE test_erp.`klretailcustomers`;
-INSERT INTO test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers;
+/* INSERT INTO test_erp.klretailcustomers SELECT * FROM kurakura_kl_erp.klretailcustomers; */
 
 TRUNCATE test_erp.`klretailpartners`;
 INSERT INTO test_erp.klretailpartners SELECT * FROM kurakura_kl_erp.klretailpartners;
@@ -292,7 +301,7 @@ TRUNCATE test_erp.`loctransfercancellations`;
 INSERT INTO test_erp.loctransfercancellations SELECT * FROM kurakura_kl_erp.loctransfercancellations;
 
 TRUNCATE test_erp.`loctransfers`;
-INSERT INTO test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers;
+INSERT INTO test_erp.loctransfers SELECT * FROM kurakura_kl_erp.loctransfers WHERE reference >= 200000;
 
 TRUNCATE test_erp.`mailgroupdetails`;
 INSERT INTO test_erp.mailgroupdetails SELECT * FROM kurakura_kl_erp.mailgroupdetails;
@@ -331,7 +340,7 @@ TRUNCATE test_erp.`orderdeliverydifferenceslog`;
 INSERT INTO test_erp.orderdeliverydifferenceslog SELECT * FROM kurakura_kl_erp.orderdeliverydifferenceslog;
 
 TRUNCATE test_erp.`packagingused`;
-INSERT INTO test_erp.packagingused SELECT * FROM kurakura_kl_erp.packagingused; 
+/* INSERT INTO test_erp.packagingused SELECT * FROM kurakura_kl_erp.packagingused; */
 
 TRUNCATE test_erp.`paymentmethods`;
 INSERT INTO test_erp.paymentmethods SELECT * FROM kurakura_kl_erp.paymentmethods;
@@ -340,7 +349,7 @@ TRUNCATE test_erp.`paymentterms`;
 INSERT INTO test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE test_erp.`pcashdetails`;
-INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails; 
+INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= '2024-01-01'; 
 
 TRUNCATE test_erp.`pcashdetailtaxes`;
 INSERT INTO test_erp.pcashdetailtaxes SELECT * FROM kurakura_kl_erp.pcashdetailtaxes;
@@ -351,14 +360,17 @@ INSERT INTO test_erp.pcexpenses SELECT * FROM kurakura_kl_erp.pcexpenses;
 TRUNCATE test_erp.`pcreceipts`;
 INSERT INTO test_erp.pcreceipts SELECT * FROM kurakura_kl_erp.pcreceipts;
 
-TRUNCATE test_erp.`pctabexpenses`;
-INSERT INTO test_erp.pctabexpenses SELECT * FROM kurakura_kl_erp.pctabexpenses;
-
 TRUNCATE test_erp.`pcsalaries`;
 INSERT INTO test_erp.pcsalaries SELECT * FROM kurakura_kl_erp.pcsalaries; 
 
+TRUNCATE test_erp.`pctabexpenses`;
+INSERT INTO test_erp.pctabexpenses SELECT * FROM kurakura_kl_erp.pctabexpenses;
+
 TRUNCATE test_erp.`pctabs`;
 INSERT INTO test_erp.pctabs SELECT * FROM kurakura_kl_erp.pctabs;
+
+TRUNCATE test_erp.`pctags`;
+INSERT INTO test_erp.pctags SELECT * FROM kurakura_kl_erp.pctags;
 
 TRUNCATE test_erp.`pctypetabs`;
 INSERT INTO test_erp.pctypetabs SELECT * FROM kurakura_kl_erp.pctypetabs;
@@ -435,17 +447,17 @@ INSERT INTO test_erp.reportlinks SELECT * FROM kurakura_kl_erp.reportlinks;
 TRUNCATE test_erp.`reports`;
 INSERT INTO test_erp.reports SELECT * FROM kurakura_kl_erp.reports;
 
-TRUNCATE test_erp.`returnitemreasons`;
-INSERT INTO test_erp.returnitemreasons SELECT * FROM kurakura_kl_erp.returnitemreasons;
-
 TRUNCATE test_erp.`returneditems`;
 INSERT INTO test_erp.returneditems SELECT * FROM kurakura_kl_erp.returneditems;
+
+TRUNCATE test_erp.`returnitemreasons`;
+INSERT INTO test_erp.returnitemreasons SELECT * FROM kurakura_kl_erp.returnitemreasons;
 
 TRUNCATE test_erp.`salariescalculated`;
 INSERT INTO test_erp.salariescalculated SELECT * FROM kurakura_kl_erp.salariescalculated;
 
 TRUNCATE test_erp.`salesanalysis`;
-INSERT INTO test_erp.salesanalysis SELECT * FROM kurakura_kl_erp.salesanalysis;
+INSERT INTO test_erp.salesanalysis SELECT * FROM kurakura_kl_erp.salesanalysis WHERE periodno >= 170;
 
 TRUNCATE test_erp.`salescat`;
 INSERT INTO test_erp.salescat SELECT * FROM kurakura_kl_erp.salescat;
@@ -456,6 +468,15 @@ INSERT INTO test_erp.salescatprod SELECT * FROM kurakura_kl_erp.salescatprod;
 TRUNCATE test_erp.`salescattranslations`;
 INSERT INTO test_erp.salescattranslations SELECT * FROM kurakura_kl_erp.salescattranslations;
 
+TRUNCATE test_erp.`salescommissionrates`;
+INSERT INTO test_erp.salescommissionrates SELECT * FROM kurakura_kl_erp.salescommissionrates;
+
+TRUNCATE test_erp.`salescommissions`;
+INSERT INTO test_erp.salescommissions SELECT * FROM kurakura_kl_erp.salescommissions;
+
+TRUNCATE test_erp.`salescommissiontypes`;
+INSERT INTO test_erp.salescommissiontypes SELECT * FROM kurakura_kl_erp.salescommissiontypes;
+
 TRUNCATE test_erp.`salesglpostings`;
 INSERT INTO test_erp.salesglpostings SELECT * FROM kurakura_kl_erp.salesglpostings;
 
@@ -463,10 +484,10 @@ TRUNCATE test_erp.`salesman`;
 INSERT INTO test_erp.salesman SELECT * FROM kurakura_kl_erp.salesman;
 
 TRUNCATE test_erp.`salesorderdetails`;
-INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 448300; 
+INSERT INTO test_erp.salesorderdetails SELECT * FROM kurakura_kl_erp.salesorderdetails WHERE orderno >= 600000; 
 
 TRUNCATE test_erp.`salesorders`;
-INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 448300; 
+INSERT INTO test_erp.salesorders SELECT * FROM kurakura_kl_erp.salesorders WHERE orderno >= 600000; 
 
 TRUNCATE test_erp.`salestypes`;
 INSERT INTO test_erp.salestypes SELECT * FROM kurakura_kl_erp.salestypes;
@@ -520,43 +541,31 @@ TRUNCATE test_erp.`stockmaster`;
 INSERT INTO test_erp.stockmaster SELECT * FROM kurakura_kl_erp.stockmaster;
 
 TRUNCATE test_erp.`stockmoves`;
-/*INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd <= 30;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 30 AND prd <= 60;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 60 AND prd <= 80;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 80 AND prd <= 90;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 90 AND prd <= 100;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 100 AND prd <= 110;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 110 AND prd <= 115;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 115 AND prd <= 120;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 120 AND prd <= 125;
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 125 AND prd <= 150;
-*/
-INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE prd > 150;
-
+INSERT INTO test_erp.stockmoves SELECT * FROM kurakura_kl_erp.stockmoves WHERE stkmoveno > 8000000;
 
 TRUNCATE test_erp.`stockmovestaxes`;
-INSERT INTO test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes; 
+INSERT INTO test_erp.stockmovestaxes SELECT * FROM kurakura_kl_erp.stockmovestaxes WHERE stkmoveno > 8000000;
 
 TRUNCATE test_erp.`stockrequest`;
-INSERT INTO test_erp.stockrequest SELECT * FROM kurakura_kl_erp.stockrequest;
+INSERT INTO test_erp.stockrequest SELECT * FROM kurakura_kl_erp.stockrequest WHERE dispatchid >= 30000;
 
 TRUNCATE test_erp.`stockrequestitems`;
-INSERT INTO test_erp.stockrequestitems SELECT * FROM kurakura_kl_erp.stockrequestitems; 
+INSERT INTO test_erp.stockrequestitems SELECT * FROM kurakura_kl_erp.stockrequestitems WHERE dispatchid >= 30000; 
 
 TRUNCATE test_erp.`stockserialitems`;
 INSERT INTO test_erp.stockserialitems SELECT * FROM kurakura_kl_erp.stockserialitems;
 
-TRUNCATE test_erp.`stocktags`;
-INSERT INTO test_erp.stocktags SELECT * FROM kurakura_kl_erp.stocktags;
-
 TRUNCATE test_erp.`stockserialmoves`;
 INSERT INTO test_erp.stockserialmoves SELECT * FROM kurakura_kl_erp.stockserialmoves;
+
+TRUNCATE test_erp.`stocktags`;
+INSERT INTO test_erp.stocktags SELECT * FROM kurakura_kl_erp.stocktags;
 
 TRUNCATE test_erp.`suppallocs`;
 INSERT INTO test_erp.suppallocs SELECT * FROM kurakura_kl_erp.suppallocs;
 
 TRUNCATE test_erp.`suppinvstogrn`;
-INSERT INTO test_erp.suppinvstogrn SELECT * FROM kurakura_kl_erp.suppinvstogrn;
+INSERT INTO test_erp.suppinvstogrn SELECT * FROM kurakura_kl_erp.suppinvstogrn WHERE grnno >= 50000;
 
 TRUNCATE test_erp.`suppliercontacts`;
 INSERT INTO test_erp.suppliercontacts SELECT * FROM kurakura_kl_erp.suppliercontacts;
@@ -571,10 +580,10 @@ TRUNCATE test_erp.`suppliertype`;
 INSERT INTO test_erp.suppliertype SELECT * FROM kurakura_kl_erp.suppliertype;
 
 TRUNCATE test_erp.`supptrans`;
-INSERT INTO test_erp.supptrans SELECT * FROM kurakura_kl_erp.supptrans; 
+INSERT INTO test_erp.supptrans SELECT * FROM kurakura_kl_erp.supptrans WHERE trandate >= '2024-01-01'; 
 
 TRUNCATE test_erp.`supptranstaxes`;
-INSERT INTO test_erp.supptranstaxes SELECT * FROM kurakura_kl_erp.supptranstaxes; 
+INSERT INTO test_erp.supptranstaxes SELECT * FROM kurakura_kl_erp.supptranstaxes WHERE supptransid >= 10000; 
 
 TRUNCATE test_erp.`systypes`;
 INSERT INTO test_erp.systypes SELECT * FROM kurakura_kl_erp.systypes;
@@ -619,16 +628,16 @@ TRUNCATE test_erp.`unitsofmeasure`;
 INSERT INTO test_erp.unitsofmeasure SELECT * FROM kurakura_kl_erp.unitsofmeasure;
 
 TRUNCATE test_erp.`woitems`;
-INSERT INTO test_erp.woitems SELECT * FROM kurakura_kl_erp.woitems;
+INSERT INTO test_erp.woitems SELECT * FROM kurakura_kl_erp.woitems WHERE wo >= 5000;
 
 TRUNCATE test_erp.`worequirements`;
-INSERT INTO test_erp.worequirements SELECT * FROM kurakura_kl_erp.worequirements;
+INSERT INTO test_erp.worequirements SELECT * FROM kurakura_kl_erp.worequirements WHERE wo >= 5000;
 
 TRUNCATE test_erp.`workcentres`;
 INSERT INTO test_erp.workcentres SELECT * FROM kurakura_kl_erp.workcentres;
 
 TRUNCATE test_erp.`workorders`;
-INSERT INTO test_erp.workorders SELECT * FROM kurakura_kl_erp.workorders; 
+INSERT INTO test_erp.workorders SELECT * FROM kurakura_kl_erp.workorders WHERE wo >= 5000;
 
 TRUNCATE test_erp.`woserialnos`;
 INSERT INTO test_erp.woserialnos SELECT * FROM kurakura_kl_erp.woserialnos;
