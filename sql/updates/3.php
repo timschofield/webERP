@@ -28,7 +28,7 @@ CreateTable('pctags',
 
 /* KL RICARD EXECUTE THIS */
 executeSQL("TRUNCATE gltags");
-executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans)");
+executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans WHERE gltrans.tag !=0)");
 /* KL RICARD END EXECUTE THIS */
 
 DropColumn('tag', 'gltrans');

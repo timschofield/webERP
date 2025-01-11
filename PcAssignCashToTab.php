@@ -7,6 +7,7 @@
 ***************************************************************/
 
 include('includes/session.php');
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
 $Title = _('Assignment of Cash to Petty Cash Tab');
 /* webERP manual links before header.php */
 $ViewTopic = 'PettyCash';
@@ -56,7 +57,7 @@ if (isset($_POST['submit'])) {
 	//initialise no input errors assumed initially before we test
 	$InputError = 0;
 	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 		</p>';
 	/* actions to take once the user has clicked the submit button
 	ie the page has called itself with some user input */
@@ -132,9 +133,7 @@ if (isset($_POST['submit'])) {
 		unset($_POST['Date']);
 	}
 } elseif (isset($_GET['delete'])) {
-	echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', _('Search'), '" alt="" />', ' ', $Title, '
-		</p>';
+
 	$SQL = "DELETE FROM pcashdetails
 		WHERE counterindex='" . $SelectedIndex . "'";
 	$ErrMsg = _('The assignment of cash record could not be deleted because');
@@ -184,19 +183,12 @@ if (!isset($SelectedTabs)) {
 if (isset($_POST['Process']) or isset($SelectedTabs)) {
 	if (!isset($_POST['submit'])) {
 		echo '<p class="page_title_text">
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, '
+				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/money_add.png" title="', $Title, '" alt="" />', ' ', $Title, ': ', $SelectedTabs, '
 			</p>';
 	}
 	echo '<div class="centre">
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
-
-	echo '<form>
-		<fieldset>';
-	echo '<field>
-			<label>' . _('Petty Cash Tab') . ':</label>
-			<fieldtext>' . $SelectedTabs . '</fieldtext>
-		</field>';
 
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (isset($_POST['Cancel'])) {
@@ -239,14 +231,13 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		echo '<input type="hidden" name="FormID" value="', $_SESSION['FormID'], '" />';
 
 		//Limit expenses history to X days
-		echo '<field>
+		echo '<fieldset>
+				<field>
 					<label for="SelectedTabs">', _('Detail of Tab Movements For Last'), ':</label>
-					<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
 					<input type="text" class="number" name="Days" value="', $Days, '" required="required" maxlength="3" size="4" />' . _('Days') . '
-				</field>
-				<div class="centre">
 					<input type="submit" name="Go" value="' . _('Go') . '" /></th>
-				</div>
+				</field>
+				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
 			</fieldset>';
 
 		// KL RICARD Add receipt text field
@@ -256,7 +247,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 						<th class="ascending">', _('Date'), '</th>
 						<th class="ascending">', _('Expense Code'), '</th>
 						<th class="ascending">', _('Amount'), '</th>
-						<th>', _('Business Purpose'), '</th>
 						<th>', _('Notes'), '</th>
 						<th>', _('Receipt'), '</th>
 						<th>', _('Receipt Attachment'), '</th>
@@ -311,7 +301,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 					<td>', ConvertSQLDate($MyRow['date']), '</td>
 					<td>', $ExpenseCodeDes, '</td>
 					<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
-					<td>', $MyRow['purpose'], '</td>
 					<td>', $MyRow['notes'], '</td>
 					<td>', $MyRow['receipt'], '</td>
 					<td>', $ReceiptText, '</td>
@@ -324,7 +313,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 					<td>', ConvertSQLDate($MyRow['date']), '</td>
 					<td>', $ExpenseCodeDes, '</td>
 					<td class="number">', locale_number_format($MyRow['amount'], $CurrDecimalPlaces), '</td>
-					<td>', $MyRow['purpose'], '</td>
 					<td>', $MyRow['notes'], '</td>
 					<td>', $MyRow['receipt'], '</td>
 					<td>', $ReceiptText, '</td>
@@ -397,7 +385,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		}
 		echo '<field>
 				<label for="New Cash Assignment">', _('Cash Assignment Date'), ':</label>
-				<input type="text" class="date" name="Date" size="11" required="required" maxlength="10" value="', $_POST['Date'], '" />
+				<input type="date" name="Date" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['Date']), '" />
 			</field>';
 		if (!isset($_POST['Amount'])) {
 			$_POST['Amount'] = 0;
@@ -423,14 +411,14 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 				<input type="text" name="Receipt" size="50" maxlength="49" value="', $_POST['Receipt'], '" />
 			</field>';
 		// KL RICARD END	
-		echo '</fieldset>'; // close main table
-		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';
-		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
-		echo '<input type="hidden" name="Days" value="', $Days, '" />';
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Accept'), '" />
 				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
 			</div>';
+	echo '</fieldset>'; // close main table
+		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';
+		echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
+		echo '<input type="hidden" name="Days" value="', $Days, '" />';
 		echo '</form>';
 	} // end if user wish to delete
 }
