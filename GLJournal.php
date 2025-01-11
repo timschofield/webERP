@@ -302,16 +302,14 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 										periodno,
 										account,
 										narrative,
-										amount,
-										tag)
+										amount)
 					VALUES ('0',
 						'" . $TransNo . "',
 						'" . FormatDateForSQL($_SESSION['JournalDetail']->JnlDate) . "',
 						'" . ($PeriodNo + 1) . "',
 						'" . $JournalItem->GLCode . "',
 						'" . _('Reversal') . " - " . $JournalItem->Narrative . "',
-						'" . -($JournalItem->Amount) . "',
-						'" . $JournalItem->tag . "'
+						'" . -($JournalItem->Amount) . "'
 						)";
 
 			$ErrMsg = _('Cannot insert a GL entry for the reversing journal because');
