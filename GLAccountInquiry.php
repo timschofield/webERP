@@ -37,7 +37,7 @@ if (isset($SelectedPeriod)) { //If it was called from itself (in other words an 
 	$FirstPeriodSelected = min($SelectedPeriod);
 	$LastPeriodSelected = max($SelectedPeriod);
 }
-elseif (isset($_GET['PeriodTo'])) { //If it was called from the Trial Balance/P&L or Balance sheet
+elseif (isset($_GET['PeriodTo'])) { //If it was called from the Trial Balance/P&L or Balance sheet, select the just last period
 	$FirstPeriodSelected = $_GET['PeriodTo'];
 	$LastPeriodSelected = $_GET['PeriodTo'];
 	$SelectedPeriod[0] = $_GET['PeriodTo'];
@@ -48,9 +48,9 @@ else { // Otherwise just highlight the current period
 	$LastPeriodSelected = GetPeriod(date($_SESSION['DefaultDateFormat']));
 }
 
-echo '<div class="page_help_text noprint">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
+echo '<div class="page_help_text noPrint">' . _('Use the keyboard Shift key to select multiple periods') . '</div><br />';
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
-echo '<div class="noprint">'; // Begin input of criteria div.
+echo '<div class="noPrint">'; // Begin input of criteria div.
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*Dates in SQL format for the last day of last month*/
@@ -72,7 +72,7 @@ $SQL = "SELECT chartmaster.accountcode,
 		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 		ORDER BY chartmaster.accountcode";
 $Account = DB_query($SQL);
-while($MyRow = DB_fetch_array($Account)) {
+while ($MyRow = DB_fetch_array($Account)) {
 	if ($MyRow['accountcode'] == $SelectedAccount) {
 		if (!is_null($MyRow['bankact'])) {
 			$BankAccount = true;
@@ -96,10 +96,10 @@ $SQL = "SELECT tagref,
 		FROM tags
 		ORDER BY tagref";
 
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 echo '<option value="-1">-1 - ' . _('All tags') . '</option>';
 
-while($MyRow = DB_fetch_array($Result)) {
+while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
@@ -116,7 +116,7 @@ echo '<field>
 
 $SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
 $Periods = DB_query($SQL);
-while($MyRow = DB_fetch_array($Periods)) {
+while ($MyRow = DB_fetch_array($Periods)) {
 	if (isset($FirstPeriodSelected) AND $MyRow['periodno'] >= $FirstPeriodSelected AND $MyRow['periodno'] <= $LastPeriodSelected) {
 		echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
 	}
@@ -173,21 +173,24 @@ if (isset($_POST['Show'])) {
 			LEFT JOIN gltags
 				ON gltags.counterindex=gltrans.counterindex
 			WHERE gltrans.account = '" . $SelectedAccount . "'
-			AND posted=1
-			AND periodno>='" . $FirstPeriodSelected . "'
-			AND periodno<='" . $LastPeriodSelected . "'";
+				AND posted=1
+				AND periodno>='" . $FirstPeriodSelected . "'
+				AND periodno<='" . $LastPeriodSelected . "'";
 
-	if ($_POST['tag'] != -1) {
- 		$SQL = $SQL . " AND tag='" . $_POST['tag'] . "'";
+	if (isset($_POST['tag']) and $_POST['tag'] != -1) {
+		$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
 	}
 
-	$SQL = $SQL . " ORDER BY periodno, gltrans.trandate, counterindex";
+	$SQL = $SQL . " ORDER BY periodno, 
+						gltrans.trandate, 
+						counterindex";
+
 	$NameSQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $SelectedAccount . "'";
 	$NameResult = DB_query($NameSQL);
-	$NameRow=DB_fetch_array($NameResult);
-	$SelectedAccountName=$NameRow['accountname'];
+	$NameRow = DB_fetch_array($NameResult);
+	$SelectedAccountName = $NameRow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
-	$TransResult = DB_query($SQL,$ErrMsg);
+	$TransResult = DB_query($SQL, $ErrMsg);
 	$BankAccountInfo = isset($BankAccount) ? '<th>' . _('Org Currency') . '</th>
 							<th>' . _('Amount in Org Currency') . '</th>
 							<th>' . _('Bank Ref') . '</th>' : '';
@@ -297,12 +300,12 @@ if (isset($_POST['Show'])) {
 				$OrgAmt = $BankRow['amount'];
 				$Currency = $BankRow['currcode'];
 			}
-			elseif($MyRow['type'] == 1) {
+			elseif ($MyRow['type'] == 1) {
 				//We should find out when transaction happens between bank accounts;
 				$BankReceiveSQL = "SELECT ref,type,transno,currcode,amount FROM banktrans
 							WHERE ref LIKE '@%' AND transdate='" . $MyRow['trandate'] . "' AND bankact='" . $SelectedAccount . "'";
 				$ErrMsg = _('Failed to retrieve bank receive data');
-				$BankResult = DB_query($BankReceiveSQL,$ErrMsg);
+				$BankResult = DB_query($BankReceiveSQL, $ErrMsg);
 				if (DB_num_rows($BankResult) > 0) {
 					while ($BankRow = DB_fetch_array($BankResult)) {
 						if (substr($BankRow['ref'], 1, strpos($BankRow['ref'], ' ') - 1) == $MyRow['typeno']) {
@@ -330,7 +333,7 @@ if (isset($_POST['Show'])) {
 
 		$URL_to_TransDetail = $RootPath . '/GLTransInquiry.php?TypeID=' . urlencode($MyRow['type']) . '&amp;TransNo=' . urlencode($MyRow['typeno']);
 		$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
-		if($MyRow['amount'] >= 0) {
+		if ($MyRow['amount'] >= 0) {
 			$DebitAmount = locale_number_format($MyRow['amount'], $_SESSION['CompanyRecord']['decimalplaces']);
 			$CreditAmount = '';
 		}
@@ -341,7 +344,7 @@ if (isset($_POST['Show'])) {
 		$RunningTotal += $MyRow['amount'];
 		$PeriodTotal += $MyRow['amount'];
 		echo '<tr class="striped_row">
-				<td class="text">', _($MyRow['typename']), '</td>
+				<td class="text">', _($MyRow['typename']) , '</td>
 				<td class="number"><a href="', $URL_to_TransDetail, '">', $MyRow['typeno'], '</a></td>
 				<td class="centre">', $FormatedTranDate, '</td>
 				<td class="text">', $MyRow['narrative'], '</td>

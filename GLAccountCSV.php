@@ -82,14 +82,14 @@ $SQL = "SELECT tagref,
 		FROM tags
 		ORDER BY tagref";
 
-$Result=DB_query($SQL);
+$Result = DB_query($SQL);
 echo '<option value="-1">-1 - ' . _('All tags') . '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
 	else {
-	   echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] .' - ' . $MyRow['tagdescription'] . '</option>';
+		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 	}
 }
 echo '</select>
@@ -151,15 +151,14 @@ if (isset($_POST['MakeCSV'])) {
 		$FirstPeriodSelected = min($SelectedPeriod);
 		$LastPeriodSelected = max($SelectedPeriod);
 
-		if ($_POST['tag'] == -1) {
-	 		$SQL= "SELECT type,
-						systypes.typename,
-						gltrans.typeno,
-						gltrans.trandate,
-						gltrans.narrative,
-						gltrans.amount,
-						gltrans.periodno,
-						gltags.tagref AS tag
+		$SQL = "SELECT gltrans.type,
+					systypes.typename,
+					gltrans.typeno,
+					gltrans.trandate,
+					gltrans.narrative,
+					gltrans.amount,
+					gltrans.periodno,
+					gltags.tagref AS tag
 				FROM gltrans
 				INNER JOIN systypes
 					ON systypes.typeid=gltrans.type
@@ -169,39 +168,19 @@ if (isset($_POST['MakeCSV'])) {
 					AND systypes.typeid=gltrans.type
 					AND posted=1
 					AND periodno>='" . $FirstPeriodSelected . "'
-					AND periodno<='" . $LastPeriodSelected . "'
-				ORDER BY periodno, 
-					gltrans.trandate, 
+					AND periodno<='" . $LastPeriodSelected . "'";
+
+		if (isset($_POST['tag']) and $_POST['tag'] != -1) {
+			$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
+		}
+					
+		$SQL = " ORDER BY periodno,
+					gltrans.trandate,
 					gltrans.counterindex";
 
-		}
-		else {
-	 		$SQL= "SELECT gltrans.type,
-						systypes.typename,
-						gltrans.typeno,
-						gltrans.trandate,
-						gltrans.narrative,
-						gltrans.amount,
-						gltrans.periodno,
-						gltags.tagref AS tag
-					FROM gltrans
-					INNER JOIN systypes
-						ON systypes.typeid=gltrans.type
-					LEFT JOIN gltags
-						ON gltrans.counterindex=gltags.counterindex
-					WHERE gltrans.account = '" . $SelectedAccount . "'
-						AND systypes.typeid=gltrans.type
-						AND posted=1
-						AND periodno>='" . $FirstPeriodSelected . "'
-						AND periodno<='" . $LastPeriodSelected . "'
-						AND gltags.tagref='" . $_POST['tag'] . "'
-					ORDER BY periodno,
-						gltrans.trandate,
-						gltrans.counterindex";
-		}
 
 		$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
-		$TransResult = DB_query($SQL,$ErrMsg);
+		$TransResult = DB_query($SQL, $ErrMsg);
 
 		fwrite($fp, $SelectedAccount . ' - ' . $AccountName . ' ' . _('for period') . ' ' . $FirstPeriodSelected . ' ' . _('to') . ' ' . $LastPeriodSelected . "\n");
 		if ($PandLAccount == True) {
@@ -216,7 +195,7 @@ if (isset($_POST['MakeCSV'])) {
 				AND chartdetails.period='" . $FirstPeriodSelected . "'";
 
 			$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-			$ChartDetailsResult = DB_query($SQL,$ErrMsg);
+			$ChartDetailsResult = DB_query($SQL, $ErrMsg);
 			$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 
 			$RunningTotal = $ChartDetailRow['bfwd'];
@@ -243,7 +222,7 @@ if (isset($_POST['MakeCSV'])) {
 							AND chartdetails.period='" . $PeriodNo . "'";
 
 					$ErrMsg = _('The chart details for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved');
-					$ChartDetailsResult = DB_query($SQL,$ErrMsg);
+					$ChartDetailsResult = DB_query($SQL, $ErrMsg);
 					$ChartDetailRow = DB_fetch_array($ChartDetailsResult);
 					if ($PeriodTotal < 0) {
 						fwrite($fp, $SelectedAccount . ', ' . $PeriodNo . ', ' . _('Period Total') . ',,,,' . -$PeriodTotal . "\n");
@@ -261,14 +240,14 @@ if (isset($_POST['MakeCSV'])) {
 
 			$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-			$TagSQL="SELECT tagdescription FROM tags WHERE tagref='".$MyRow['tag'] . "'";
-			$TagResult=DB_query($TagSQL);
+			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+			$TagResult = DB_query($TagSQL);
 			$TagRow = DB_fetch_array($TagResult);
-			if ($MyRow['amount']<0) {
-				fwrite($fp, $SelectedAccount . ',' . $MyRow['periodno'] . ', ' . $MyRow['typename'] . ',' . $MyRow['typeno'] . ',' . $FormatedTranDate . ',,' . -$MyRow['amount'] . ',' . $MyRow['narrative'] . ',' . $TagRow['tagdescription']. "\n");
+			if ($MyRow['amount'] < 0) {
+				fwrite($fp, $SelectedAccount . ',' . $MyRow['periodno'] . ', ' . $MyRow['typename'] . ',' . $MyRow['typeno'] . ',' . $FormatedTranDate . ',,' . -$MyRow['amount'] . ',' . $MyRow['narrative'] . ',' . $TagRow['tagdescription'] . "\n");
 			}
 			else {
-				fwrite($fp, $SelectedAccount . ',' . $MyRow['periodno'] . ', ' . $MyRow['typename'] . ',' . $MyRow['typeno'] . ',' . $FormatedTranDate . ',' . $MyRow['amount'] . ',,' . $MyRow['narrative'] . ',' . $TagRow['tagdescription']. "\n");
+				fwrite($fp, $SelectedAccount . ',' . $MyRow['periodno'] . ', ' . $MyRow['typename'] . ',' . $MyRow['typeno'] . ',' . $FormatedTranDate . ',' . $MyRow['amount'] . ',,' . $MyRow['narrative'] . ',' . $TagRow['tagdescription'] . "\n");
 			}
 		} //end loop around GLtrans
 		if ($PeriodTotal <> 0) {
