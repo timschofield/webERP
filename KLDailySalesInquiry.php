@@ -25,13 +25,11 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['MonthToShow'])){
 	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 }
+$EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 echo '<fieldset>';
 echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], _('Month to Show'), '');
-$EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
-
 echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Salesperson'), '', 'CURRENT');
 
 echo '<field>
