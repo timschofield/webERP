@@ -1,0 +1,18 @@
+Add a field, with a dropdown to select a partnercode, showing to the use the partnername
+
+from the table defined as:
+CREATE TABLE `klretailpartners` (
+  `partnercode` varchar(10) NOT NULL,
+  `partnername` varchar(50) NOT NULL,
+  `partnernameinvoice` varchar(50) NOT NULL,
+  `partneraddress` varchar(100) NOT NULL,
+  `partneraddressjalan` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+
+General prompt rules: 
+1) Do not cut long lines. 
+2) Do not delete any comment in the code
+3) Do not change, modify, upgrade any other part of the code not related to the propmt.
+4) Apply all changes above directly to all the files in the working set
