@@ -8,7 +8,7 @@ var $y0; // current y position
 var $x0; // current x position
 var $pageY; // y value of bottom of page less bottom margin
 
-	function PDF() {
+	function __construct() {
 		global $Prefs;
 		$PaperSize = explode(':',$Prefs['papersize']);
 		parent::__construct($Prefs['paperorientation'], 'mm', $PaperSize[0]);

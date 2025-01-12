@@ -16,7 +16,7 @@ class PDF extends PDF_Language {
 	var $pageY; // y value of bottom of page less bottom margin
 	var $PageCnt; // tracks the page count for correct page numbering for multipage and multiform printouts
 
-	function PDF() {
+	function __construct() {
 		global $Prefs;
 		define('RowSpace',2); // define separation between the heading rows
 		$PaperSize = explode(':',$Prefs['papersize']);
