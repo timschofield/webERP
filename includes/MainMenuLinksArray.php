@@ -360,7 +360,7 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/InternalStockRequest.php?New=Yes',
 													'/InternalStockRequestAuthorisation.php',
 													'/InternalStockRequestFulfill.php',
-													'/ReturnedItems.php');
+													'/KLReturnedItems.php');
 
 $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'),
 													_('KL Print Price Labels'),
@@ -810,7 +810,7 @@ $MenuItems['system']['Reports']['Caption'] = array(	_('Sales Types'),
 													_('Freight Costs Maintenance'),
 													_('Discount Matrix'));
 $MenuItems['system']['Reports']['URL'] = array(	'/SalesTypes.php',
-												'/ReturnedItemsReasons.php',
+												'/KLReturnedItemsReasons.php',
 												'/CustomerTypes.php',
 												'/SupplierTypes.php',
 												'/CreditStatus.php',
