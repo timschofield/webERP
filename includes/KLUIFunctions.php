@@ -6,7 +6,7 @@
  * 
  *********************************************************************************************************/
 
-function RetailPartnerDropDownFieldSelectOne($VariableName, $SelectedValue, $Label, $HelpText) {
+function FieldToSelectOneRetailPartner($VariableName, $SelectedValue, $Label, $HelpText) {
 
     $SQL = "SELECT partnercode, 
                 partnernameinvoice 

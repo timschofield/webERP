@@ -111,11 +111,16 @@ function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 }
 
 function MonthAndYearFromPeriodNo($PeriodNo) {
-	$PeriodSQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
-	$PeriodResult = DB_query($PeriodSQL);
-	$MyPeriodRow = DB_fetch_array($PeriodResult);
-	return MonthAndYearFromSQLDate($MyPeriodRow['lastdate_in_period']);
+	return MonthAndYearFromSQLDate(EndDateSQLFromPeriodNo($PeriodNo));
 }
+
+function EndDateSQLFromPeriodNo($PeriodNo) {
+	$SQL = "SELECT lastdate_in_period FROM periods WHERE periodno='" . $PeriodNo . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	return $MyRow['lastdate_in_period'];
+}
+
 
 function GetMonthText($MonthNumber){
 	switch ($MonthNumber) {

@@ -227,9 +227,9 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 		</p>';
 
 	echo '<fieldset>';
-	echo RetailPartnerDropDownFieldSelectOne("PartnerCode", $_POST['PartnerCode'], _('Company'), 'Select the company to export GL transactions');
-	echo DateFieldSelect ('FromDate', $_POST['FromDate'], _('From Date'), '');
-	echo DateFieldSelect ('ToDate', $_POST['ToDate'], _('To Date'), '');
+	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], _('Company'), 'Select the company to export GL transactions');
+	echo FieldToSelectOneDate ('FromDate', $_POST['FromDate'], _('From Date'), '');
+	echo FieldToSelectOneDate ('ToDate', $_POST['ToDate'], _('To Date'), '');
 	echo '</fieldset>';
 
 	echo '<div class="centre">

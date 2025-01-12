@@ -5,8 +5,8 @@
 /////////////////////////////////////////////////////////////////////
 
 echo FixedField("CompanyFrom", "PTADU", 'From', 'Select the company issuing the Faktur Pajak');	
-echo RetailPartnerDropDownFieldSelectOne("CompanyTo", $_POST['CompanyTo'], _('To'), 'Select the company receiving the Faktur Pajak');
-echo DateFieldSelect('EndDate', $_POST['EndDate'], _('Invoice Consignment Sales until'), '');
+echo FieldToSelectOneRetailPartner("CompanyTo", $_POST['CompanyTo'], _('To'), 'Select the company receiving the Faktur Pajak');
+echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Sales until'), '');
 
 echo '<field>
 		<label>' . 'Draft or Invoice' . ':</label>

@@ -1,7 +1,7 @@
 <?php
 
 include ('includes/session.php');
-$Title = _('KL Copy Reorder Level from one Location to another');// Screen identificator.
+$Title = _('Copy all reorder levels from one location to another');// Screen identificator.
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="',// Icon image.
@@ -10,6 +10,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php'); // Add this line to include UI functions
 
 if(isset($_POST['ProcessCopyAuthority'])) {
 
@@ -86,39 +87,14 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table>';
-echo ' <tr>
-		<td>' . _('Select Location to copy the Reorder Levels FROM') . ':</td>
-		<td><select name="FromLocationID">';
-$Result = DB_query("SELECT loccode,
-							locationname
-					FROM locations
-					ORDER BY locationname");
+echo '<fieldset>';
+echo FieldToSelectOneLocation("FromLocationID", $_POST['FromLocationID'], _('Select Location to copy the Reorder Levels FROM'), '', 'CANVIEW');
+echo FieldToSelectOneLocation("ToLocationID", $_POST['ToLocationID'], _('Select Location to copy the Reorder Levels TO'), '', 'CANUPDATE');
+echo '</fieldset>';
 
-echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
-while ($MyRow = DB_fetch_array($Result)) {
-	echo '<option value="';
-	echo $MyRow['loccode'] . '">' . $MyRow['loccode'] . ' - ' . $MyRow['locationname'] . '</option>';
-} //end while loop
-echo '</select></td></tr>';
+echo OneButtonCenteredForm("ProcessCopyAuthority", $Title);
 
-echo ' <tr>
-		<td>' . _('Select Location to copy the Reorder Levels TO') . ':</td>
-		<td><select name="ToLocationID">';
-$Result = DB_query("SELECT loccode,
-							locationname
-					FROM locations
-					ORDER BY locationname");
-
-echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
-while ($MyRow = DB_fetch_array($Result)) {
-	echo '<option value="';
-	echo $MyRow['loccode'] . '">' . $MyRow['loccode'] . ' - ' . $MyRow['locationname'] . '</option>';
-} //end while loop
-echo '</select></td></tr>';
-echo '</table>';
-echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Process Copy of Reorder Levels') . '" />
-	</div>
+echo '</div>
 	</form>';
 
 include('includes/footer.php');

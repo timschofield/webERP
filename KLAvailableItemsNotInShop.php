@@ -7,9 +7,6 @@ $Title = _('Items with stock available not in shop');
 include ('includes/header.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
-include('includes/KLGeneralFunctions.php');
-include('includes/KLUIFunctions.php');
-
 
 //check if input already
 if (!(isset($_POST['Search']))) {
@@ -22,9 +19,9 @@ if (!(isset($_POST['Search']))) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>';
-	echo StockCategoryFieldMultipleSelect("Categories", $_POST['Categories'], 'Item Categories', 'Select the categories of items');
-	echo LocationFieldSelectOne("FromLoc", $_POST['FromLoc'], _('Available at'), '', 'CANVIEW');
-	echo LocationFieldSelectOne("Shop", $_POST['Shop'], _('But NOT available at'), '', 'BALISHOPS');
+	echo FieldToSelectMultipleStockCategories("Categories", $_POST['Categories'], 'Item Categories', 'Select the categories of items');
+	echo FieldToSelectOneLocation("FromLoc", $_POST['FromLoc'], _('Available at'), '', 'CANVIEW');
+	echo FieldToSelectOneLocation("Shop", $_POST['Shop'], _('But NOT available at'), '', 'BALISHOPS');
     echo '</fieldset>';
 	
 	echo OneButtonCenteredForm("Search", _('Search'));

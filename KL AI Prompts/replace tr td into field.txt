@@ -7,6 +7,13 @@ I want you to:
 1) Replace ALL table-based data entry headers into <fieldset><legend> ... </legend> </fieldset> structures
 2) Replace ALL table-based data entry <tr><td> ... </td></tr> structures into <field> ... </field> structures
 
+Afterwards, look for:
+1) <field> ... </field> structures referring to the selection of a single location and replace the <field> ... </field> structure for a call to the function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label, $HelpText, $Filter) from includes/UIGeneralFunctions.php
+
+
+If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
+
+
 General prompt rules: 
 1) Do not cut long lines. 
 2) Do not delete any comment in the code
