@@ -119,7 +119,11 @@ form input[type="submit"]{
 background:#EEEEEE;
 padding-top: 5px;
 padding-bottom: 5px;
-padding-left: 16px;
+background-image:url(images/tick.svg);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
 padding-right: 16px;
 margin: 1px;
 border: 1px solid #1A1A1A;
@@ -132,7 +136,7 @@ form input[type="submit"]:hover{
 background:linear-gradient(315deg, #655051, #551b1b);
 color:#E6E6FA;
 }
-form input[title~="PDF"] {
+form input[name*="PDF"] {
 background-image:url(images/pdf.png);
 background-repeat: no-repeat;
 background-position:4px center;
@@ -146,11 +150,22 @@ background-position:4px center;
 background-size:18px 18px;
 padding-left:24px;
 }
+form input[name^="Search"] {
+background-image:url(images/search.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
 form input[type="reset"]{
 background:#EEEEEE;
+background-image:url(images/cross.svg);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
 padding-top: 5px;
 padding-bottom: 5px;
-padding-left: 16px;
+padding-left:24px;
 padding-right: 16px;
 margin: 1px;
 border: 1px solid #1A1A1A;
