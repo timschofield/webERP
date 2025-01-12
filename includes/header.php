@@ -1,8 +1,10 @@
 <?php
 // Titles and screen header
-// Needs the file config.php loaded where the variables are defined for
-//  $RootPath
-//  $Title - should be defined in the page this file is included with
+// $Title - should be defined in the page this file is included with, before the include to this header.php
+
+Global $PathPrefix; // in case this script is included inside a function, to prevent Notice: Undefined variable
+Global $LanguagesArray; // in case this script is included inside a function, to prevent Notice: Undefined variable
+
 if (!isset($RootPath)) {
 	$RootPath = dirname(htmlspecialchars(basename(__FILE__)));
 	if ($RootPath == '/' or $RootPath == "\\") {
