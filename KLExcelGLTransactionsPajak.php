@@ -12,21 +12,23 @@ if (!isset($_POST['FromDate'])){
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
+if (!isset($_POST['PartnerCode'])) {
+    $_POST['PartnerCode'] = 'PTADU';
+}
 
 if (isset($_POST['submit'])) {
-    submit($_POST['FromDate'], $_POST['ToDate']);
+    submit($_POST['PartnerCode'], $_POST['FromDate'], $_POST['ToDate']);
 } else {
     display($RootPath, $Theme);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($FromDate, $ToDate) {
+function submit($PartnerCode, $FromDate, $ToDate) {
 
 	//initialise no input errors
 	$InputError = 0;
 
 	//first off validate inputs sensible
-
 	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
 		prnMsg(_('Invalid From Date'),'error');
@@ -35,14 +37,26 @@ function submit($FromDate, $ToDate) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'),'error');
 	}
+	if (strtotime($_POST['FromDate']) > strtotime($_POST['ToDate'])) {
+		$InputError = 1;
+		prnMsg(_('The From Date must be before the To Date'),'error');
+	}
+	if (!isset($_POST['PartnerCode'])) {
+		$InputError = 1;
+		prnMsg(_('Invalid Cempany Code'),'error');
+	}
 
-	$SQLSettings =  "SELECT klretailpartners.accountcomissioncreditcard
+	$ShortPartnerCode = substr($PartnerCode, 2); // Remove first 2 characters from partner code PT or PO
+	
+	$SQLSettings =  "SELECT klretailpartners.accountcomissioncreditcard,
+						klretailpartners.accountcomissionwechat,
+						klretailpartners.accountcomissionqris
 					 FROM klretailpartners
-					 WHERE klretailpartners.partnercode = 'PTSMH'";
+					 WHERE klretailpartners.partnercode = '" . $PartnerCode . "'";
 	$ResultSettings = DB_query($SQLSettings);
 	if (DB_num_rows($ResultSettings)==0) {
 		$InputError = 1;
-		prnMsg(_('Invalid Retail partner Settings'),'error');
+		prnMsg(_('Invalid Company Settings'),'error');
 	} else {
 		$MyRowSettings = DB_fetch_array($ResultSettings); //get the only row returned
 	}
@@ -55,9 +69,9 @@ function submit($FromDate, $ToDate) {
 		// Set document properties
 		$objPHPExcel->getProperties()->setCreator("webERP")
 									 ->setLastModifiedBy("webERP")
-									 ->setTitle("GL Transactions")
-									 ->setSubject("GL Transactions")
-									 ->setDescription("GL Transactions")
+									 ->setTitle($PartnerCode . " GL Transactions")
+									 ->setSubject($PartnerCode . " GL Transactions")
+									 ->setDescription($PartnerCode . "GL Transactions")
 									 ->setKeywords("")
 									 ->setCategory("");
 	
@@ -75,23 +89,33 @@ function submit($FromDate, $ToDate) {
 		$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
 
 		$i = 2;
-		$ErrMsg = _('The SQL to find the KL GL Transactions ');
+		$ErrMsg = _('The SQL to find the GL Transactions for '. $PartnerCode);
+
+		$WhereGroupedAccounts = " ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
+									OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "'
+									OR gltrans.account = '" . $MyRowSettings['accountcomissionwechat'] . "'
+									OR gltrans.account = '" . $MyRowSettings['accountcomissionqris'] . "'
+									OR gltrans.account IN " . GL_CONSUMABLES . " 
+									OR gltrans.account IN " . GL_ADJUSTMENT_STOCK . " 
+									OR gltrans.account IN " . GL_COMMISSION_TOKOPEDIA . " 
+									OR gltrans.account IN " . GL_COMMISSION_SHOPEE . " 
+									OR gltrans.account IN " . GL_COMMISSION_PAYPAL . " " .
+									") ";
 		
 		// Regular GL accounts (NOT HPP (COGS) OR PENJUALAN))
 		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
-					chartmasterSMH.accountname AS 'AccountName', 
+					chartmaster" . $ShortPartnerCode . ".accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
 					ROUND(gltrans.amount,0) AS 'Amount', 
 					gltrans.narrative AS 'Description'
 				FROM gltrans, 
-					chartmasterSMH, 
+					chartmaster" . $ShortPartnerCode . ", 
 					accountgroups
-				WHERE gltrans.account = chartmasterSMH.accountcode
-					AND chartmasterSMH.group_ = accountgroups.groupname
+				WHERE gltrans.account = chartmaster" . $ShortPartnerCode . ".accountcode
+					AND chartmaster" . $ShortPartnerCode . ".group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
-					AND accountgroups.groupname NOT IN ('Penjualan', 'HPP (COGS)') 
-					AND gltrans.account != '" . $MyRowSettings['accountcomissioncreditcard'] . "' ".
+					AND NOT " . $WhereGroupedAccounts . " " .
 					$WhereFrom .
 					$WhereTo . " 
 				ORDER BY accountgroups.groupname ASC, 
@@ -116,18 +140,17 @@ function submit($FromDate, $ToDate) {
 		// Exception GL accounts grouped (HPP (COGS) OR PENJUALAN))
 		$SQL = "SELECT accountgroups.groupname AS 'Group',
 					gltrans.account AS 'AccountCode', 
-					chartmasterSMH.accountname AS 'AccountName', 
+					chartmaster" . $ShortPartnerCode . ".accountname AS 'AccountName', 
 					gltrans.trandate AS 'Date', 
 					SUM(ROUND(gltrans.amount,0)) AS 'Amount', 
 					gltrans.narrative AS 'Description'
 				FROM gltrans, 
-					chartmasterSMH, 
+					chartmaster" . $ShortPartnerCode . ", 
 					accountgroups
-				WHERE gltrans.account = chartmasterSMH.accountcode
-					AND chartmasterSMH.group_ = accountgroups.groupname
+				WHERE gltrans.account = chartmaster" . $ShortPartnerCode . ".accountcode
+					AND chartmaster" . $ShortPartnerCode . ".group_ = accountgroups.groupname
 					AND (accountgroups.pandl = 1)
-					AND ( accountgroups.groupname IN ('Penjualan', 'HPP (COGS)') 
-						OR gltrans.account = '" . $MyRowSettings['accountcomissioncreditcard'] . "') ".
+					AND " . $WhereGroupedAccounts . " " .
 					$WhereFrom .
 					$WhereTo . " 
 				GROUP BY accountgroups.groupname,
@@ -162,14 +185,14 @@ function submit($FromDate, $ToDate) {
 		}
 		
 		// Rename worksheet
-		$objPHPExcel->getActiveSheet()->setTitle('GL Transactions');
+		$objPHPExcel->getActiveSheet()->setTitle($PartnerCode . "GL Transactions");
 
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
 
-		// Redirect output to a client’s web browser (Excel2007)
+		// Redirect output to a clientï¿½s web browser (Excel2007)
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		$File = 'PTSungaiMutiaraHitam-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+		$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');
 		// If you're serving to IE 9, then the following may be needed
@@ -191,39 +214,53 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file with GL Transactions');
+	$Title = _('Export Excel with GL Transactions for PT');
 	include('includes/header.php');
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('GL Transactions for PT. Sungai Mutiara Hitam (Excel File)') . '" alt="" />' . ' ' . _('GL Transactions for PT. Sungai Mutiara Hitam (Excel File)') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table>';
+	echo '<fieldset>
+            <field>
+                <label>' . _('Company') . ':</label>
+                <select name="PartnerCode">';
+    
+    $SQL = "SELECT partnercode, 
+				partnername 
+			FROM klretailpartners
+			WHERE partnercode != 'NORETAIL'
+			ORDER BY partnername";
+    $Result = DB_query($SQL);
+    while ($MyRow = DB_fetch_array($Result)) {
+        if ($MyRow['partnercode'] == $_POST['PartnerCode']) {
+            echo '<option selected="selected" value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
+        } 
+		else {
+            echo '<option value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
+        }
+    }
+    echo '</select>
+            </field>';
 
-	echo '<tr>
-			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
+	echo ' <field>
+                <label>' . _('From Date') . ':</label>
+                <input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" />
+            </field>
+            <field>
+                <label>' . _('To Date') . ':</label>
+                <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" />
+            </field>
+        </fieldset>';
 
-	echo '</table>
-		<table>';
-
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File with GL Transactions') . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
-         </form>';
+	echo '<div class="centre">
+			<input type="submit" name="submit" value="' . _('Export Excel') . '" />
+		</div>';
+	echo '</form>';
+	
 	include('includes/footer.php');
 
 } // End of function display()
