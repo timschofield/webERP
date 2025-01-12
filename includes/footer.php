@@ -4,7 +4,10 @@
 * KL RICARD Log the script we run so we can optimize CPU time
 *			Add ADU version
 *		Added PHP version
+*		Added KLCodeVersion
 ***********************************************************************/
+
+Global $KLCodeVersion;
 
 // log the script running time
 include_once ('AuditScriptsFunctions.php');
