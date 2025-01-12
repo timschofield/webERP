@@ -2,7 +2,9 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
+include('includes/KLUIFunctions.php');
 
 $Title = _('Export CSV File for Faktur Pajak');
 
@@ -331,10 +333,8 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 } // End of function submit()
 
 
-function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)
 {
-// Display form fields. This function is called the first time
-// the page is called.
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -343,37 +343,36 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
+	echo '<fieldset>';
 
 	include('includes/KLConsignmentParameterSelection.php');
-	echo '<tr>
-			<td>' . 'Nomor Seri Faktur Pajak' . ':' . '</td>
-			<td><input type="text" name="NomorSeriFP" value="' . $_POST['NomorSeriFP'] . '" size="14" maxlength="13" /></td>
-		</tr>';
 
-	echo '<tr>
-			<td>' . 'Decimal Digits' . ':</td>
-			<td><select name="DecimalDigits">';
-	if($_POST['DecimalDigits']=="0") {
-		echo '<option selected="selected" value="0">' . '0 - For e-Faktur' . '</option>';
-		echo '<option value="2">' . '2 - For Pajak Online' . '</option>';
-	} else {
-		echo '<option selected="selected" value="2">' . '2 - For Pajak Online' . '</option>';
-		echo '<option value="0">' . '0 - For e-Faktur' . '</option>';
-	}
+	echo '<field>
+            <label>' . 'Nomor Seri Faktur Pajak' . ':</label>
+            <input type="text" name="NomorSeriFP" value="' . $_POST['NomorSeriFP'] . '" size="14" maxlength="13" />
+          </field>';
+
+    echo '<field>
+            <label>' . 'Decimal Digits' . ':</label>
+            <select name="DecimalDigits">';
+    if($_POST['DecimalDigits']=="0") {
+        echo '<option selected="selected" value="0">' . '0 - For e-Faktur' . '</option>';
+        echo '<option value="2">' . '2 - For Pajak Online' . '</option>';
+    } else {
+        echo '<option selected="selected" value="2">' . '2 - For Pajak Online' . '</option>';
+        echo '<option value="0">' . '0 - For e-Faktur' . '</option>';
+    }
+    echo '</select>
+          </field>';
+    echo '</fieldset>';
+
+	echo OneButtonCenteredForm("submit", $Title);
+
+	echo '</form>';
 	
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
-         </form>';
 	include('includes/footer.php');
 
 } // End of function display()

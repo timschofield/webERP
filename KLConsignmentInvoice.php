@@ -2,8 +2,10 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 
 $Title = _('Print Consignment Invoices');
 
@@ -12,9 +14,9 @@ if(!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom']='PTADU';
 }
 
-// The default company to Invoice to (PTBB).
+// The default company to Invoice to (PTSMH).
 if(!isset($_POST['CompanyTo'])) {
-	$_POST['CompanyTo']='PTBB';
+	$_POST['CompanyTo']='PTSMH';
 }
 
 // default date to invoice is until Yesterday
@@ -360,22 +362,19 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
+	echo '<fieldset>';
 
 	include('includes/KLConsignmentParameterSelection.php');
+	
+	echo '</fieldset>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
-         </form>';
+	echo OneButtonCenteredForm("submit", $Title);
+	
+	echo '</form>';
+	
 	include('includes/footer.php');
 
 } // End of function display()

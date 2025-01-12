@@ -2,7 +2,9 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
+include('includes/KLUIFunctions.php');
 
 require_once ('Classes/PHPExcel.php');
 
@@ -190,7 +192,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
 
-		// Redirect output to a client�s web browser (Excel2007)
+		// Redirect output to a client's web browser (Excel2007)
 		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 		$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
 		header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -224,37 +226,11 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<fieldset>
-            <field>
-                <label>' . _('Company') . ':</label>
-                <select name="PartnerCode">';
-    
-    $SQL = "SELECT partnercode, 
-				partnername 
-			FROM klretailpartners
-			WHERE partnercode != 'NORETAIL'
-			ORDER BY partnername";
-    $Result = DB_query($SQL);
-    while ($MyRow = DB_fetch_array($Result)) {
-        if ($MyRow['partnercode'] == $_POST['PartnerCode']) {
-            echo '<option selected="selected" value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
-        } 
-		else {
-            echo '<option value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
-        }
-    }
-    echo '</select>
-            </field>';
-
-	echo ' <field>
-                <label>' . _('From Date') . ':</label>
-                <input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" />
-            </field>
-            <field>
-                <label>' . _('To Date') . ':</label>
-                <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" />
-            </field>
-        </fieldset>';
+	echo '<fieldset>';
+	echo RetailPartnerDropDownFieldSelectOne("PartnerCode", $_POST['PartnerCode'], _('Company'), 'Select the company to export GL transactions');
+	echo DateFieldSelect ('FromDate', $_POST['FromDate'], _('From Date'), '');
+	echo DateFieldSelect ('ToDate', $_POST['ToDate'], _('To Date'), '');
+	echo '</fieldset>';
 
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="' . _('Export Excel') . '" />

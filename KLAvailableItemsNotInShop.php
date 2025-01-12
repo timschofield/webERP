@@ -5,7 +5,11 @@ config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('Items with stock available not in shop');
 include ('includes/header.php');
+include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
+include('includes/KLGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
+
 
 //check if input already
 if (!(isset($_POST['Search']))) {
@@ -17,88 +21,15 @@ if (!(isset($_POST['Search']))) {
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">
-			<thead>
-				<tr>
-					<th>' . _('Inventory Categories') . ':</th>
-					<th><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]" multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
-			ORDER BY categorydescription';
-	$CatResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-	}
-	echo '</select>
-			</th>
-		</tr>
-	</thead>
-	<tbody>';
+	echo '<fieldset>';
+	echo StockCategoryFieldMultipleSelect("Categories", $_POST['Categories'], 'Item Categories', 'Select the categories of items');
+	echo LocationFieldSelectOne("FromLoc", $_POST['FromLoc'], _('Available at'), '', 'CANVIEW');
+	echo LocationFieldSelectOne("Shop", $_POST['Shop'], _('But NOT available at'), '', 'BALISHOPS');
+    echo '</fieldset>';
+	
+	echo OneButtonCenteredForm("Search", _('Search'));
+	echo '</form>';
 
-	// location selection
-	$SQL="SELECT loccode,
-					locationname
-			FROM locations
-			ORDER BY locationname";
-	$Result1 = DB_query($SQL);
-
-	echo '<tr>
-			<td>' . _('Available AT') . ': </td>
-			<td><select name="FromLoc">';
-
-	while ($MyRow1 = DB_fetch_array($Result1)) {
-		if ($MyRow1['loccode']==$_POST['FromLoc']){
-			echo '<option selected="selected" value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
-		}
-	}
-    echo '</select></td>
-        </tr>';
-		
-	// location selection
-	$SQL="SELECT loccode,
-					locationname
-			FROM locations
-			WHERE typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
-			ORDER BY locationname";
-	$Result1 = DB_query($SQL);
-
-	echo '<tr>
-			<td>' . _('But NOT Available At') . ': </td>
-			<td><select name="Shop">';
-
-	while ($MyRow1 = DB_fetch_array($Result1)) {
-		if ($MyRow1['loccode']==$_POST['Shop']){
-			echo '<option selected="selected" value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow1['loccode'] . '">' . $MyRow1['locationname'] . '</option>';
-		}
-	}
-    echo '</select></td>
-        </tr>';
-/*	//view number of NumberOfTopItems items
-	echo '<tr>
-			<td>' . _('Number Of Top Items') . ' </td><td>:</td>
-			<td><input class="number" tabindex="4" type="text" name="NumberOfTopItems" size="8"	maxlength="8" value="100" /></td>
-		 </tr>
-		 <tr>
-			<td></td>
-			<td></td>
-		</tr>';
-*/	echo '
-	</tbody>
-	</table>
-	<br />
-	<div class="centre">
-		<input tabindex="5" type="submit" name="Search" value="' . _('Search') . '" />
-	</div>
-    </div>
-	</form>';
 } else {
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-60));
 	$SQL = "SELECT stockmaster.stockid,
