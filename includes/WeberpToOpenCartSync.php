@@ -68,7 +68,7 @@ function WeberpToOpenCartHourlySync($ShowMessages , $ControlTx = TRUE, $EmailTex
 		prnMsg('This script was last run on: ' . $LastTimeRun . ' Server time difference: ' . $TimeDifference,'success');
 		prnMsg('Server time now: ' . GetServerTimeNow($TimeDifference) ,'success');
 	}
-	if (($EmailText!='') AND ControlTx){
+	if (($EmailText!='') AND $ControlTx){
 		$EmailText = $EmailText . 'webERP to OpenCart Hourly Sync was last run on: ' . $LastTimeRun .  "\n" .
 					PrintTimeInformation();
 	}
