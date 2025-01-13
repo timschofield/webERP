@@ -6,6 +6,7 @@ include ('includes/session.php');
 $Title = _('Items with stock available not in shop');
 include ('includes/header.php');
 include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 include('includes/KLDefines.php');
 
 //check if input already

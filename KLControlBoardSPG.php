@@ -9,6 +9,7 @@ include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include ('includes/KLRetailCustomer.php');
+include('includes/KLUIFunctions.php');
 
 $PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
 

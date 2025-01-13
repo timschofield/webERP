@@ -33,6 +33,7 @@ include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
+include('includes/KLUIFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;

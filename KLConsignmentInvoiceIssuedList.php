@@ -3,9 +3,10 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLUIFunctions.php');
+
 
 $Title = _('List Issued Consignment Invoices');
 

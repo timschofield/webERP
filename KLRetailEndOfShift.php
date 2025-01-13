@@ -10,6 +10,7 @@ include ('includes/header.php');
 include ('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
+include('includes/KLUIFunctions.php');
 
 include ('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;

@@ -5,6 +5,7 @@ config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('Usage of Internal Stock - Shop Consumables');
 include ('includes/header.php');
+include('includes/KLUIFunctions.php');
 
 $NumberOfDays = 60;
 

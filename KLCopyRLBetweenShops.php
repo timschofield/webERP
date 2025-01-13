@@ -11,6 +11,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php'); // Add this line to include UI functions
+include('includes/KLUIFunctions.php');
 
 if(isset($_POST['ProcessCopyAuthority'])) {
 

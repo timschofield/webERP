@@ -10,6 +10,7 @@ include ('includes/header.php');
 include ('includes/KLDefines.php');
 include ('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 
 $UpdateDB = TRUE;
