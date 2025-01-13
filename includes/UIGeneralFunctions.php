@@ -6,18 +6,36 @@
  * 
  *********************************************************************************************************/
 
-function FieldToSelectOneDate($VariableName, $SelectedValue, $Label, $HelpText) {
+function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
+	$Attributes = ' ';
+	if (isset($AutoFocus) and $AutoFocus) {
+		$Attributes .= 'autofocus="autofocus" ';
+	}
+
+	if (isset($Required) and $Required) {
+		$Attributes .= 'required="required" ';
+	}
+
+	if (isset($TabIndex) and $TabIndex != '') {
+		$Attributes .= 'tabindex="' . $TabIndex . '" ';
+	}
+	return $Attributes;
+}
+
+function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<fieldhelp>' . $HelpText . '</fieldhelp>
-				<input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="' . $VariableName . '" size="10" maxlength="10" value="' . $SelectedValue . '" />
+				<input type="text"';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="' . $VariableName . '" size="10" maxlength="10" value="' . $SelectedValue . '" />
 			</field>';
 	return $HTML;
 }
 
 
-function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label, $HelpText, $Filter) {
+function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	if ($Filter == 'ALL') {
 		$SQL = "SELECT loccode,
 					locationname
@@ -60,7 +78,9 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label, $HelpTe
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<select name="' . $VariableName . '">
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if (!isset($SelectedValue)) {
@@ -81,7 +101,7 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label, $HelpTe
 }
 
 
-function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label, $HelpText) {
+function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	/* Select One Period, with a dropdown showing the month and Year */
 	$SQL = "SELECT periodno, 
 				lastdate_in_period 
@@ -92,7 +112,9 @@ function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label, $HelpText
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<select name="' . $VariableName . '">
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if (!isset($SelectedValue)) {
@@ -112,11 +134,13 @@ function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label, $HelpText
 }
 
 
-function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label, $HelpText, $Filter) {
+function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
-				<select name="' . $VariableName . '">
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
 	if($_SESSION['SalesmanLogin'] != '') {
@@ -163,7 +187,7 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label, $Hel
 }
 
 
-function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $Label, $HelpText) {
+function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	$SQL = "SELECT categoryid, 
 				categorydescription 
 			FROM stockcategory
@@ -172,7 +196,9 @@ function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $La
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '[]">' . $Label . ':</label>
-				<select autofocus="autofocus" required="required" minlength="1" size="12" name="' . $VariableName . '[]" multiple="multiple">
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'minlength="1" size="12" name="' . $VariableName . '[]" multiple="multiple">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 	
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -200,9 +226,11 @@ function FixedField($VariableName, $SelectedValue, $Label, $HelpText) {
 }
 
 
-function OneButtonCenteredForm($ButtonName, $ButtonValue) {
+function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex, $Required, $AutoFocus) {
 	$HTML = '<div class="centre">
-				<input type="submit" name="' . $ButtonName . '" value="' . $ButtonValue . '" />
+				<input type="submit" ';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $ButtonName . '" value="' . $ButtonValue . '" />
 			</div>';
 	return $HTML;
 }

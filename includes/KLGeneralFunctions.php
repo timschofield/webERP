@@ -1394,26 +1394,5 @@ function BrandTextFromCode($Brand){
 	return $BrandText;
 }
 
-function ShowTableTitle($Text){
-	echo '<p class="page_title_text" align="center">
-			<strong>' . 
-				$Text . '
-			</strong>
-		</p>';
-}
 
-function ShowTableSubTitle($Text){
-	echo '<p class="page_title_text_small" align="center">' . 
-			$Text . '
-		</p>';
-}
-
-
-function ShowWarningTitle($Text){
-	echo '<p class="bad" align="center">
-			<strong>' . 
-				$Text . '
-			</strong>
-		</p>';
-}
 ?>

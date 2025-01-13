@@ -19,12 +19,12 @@ if (!(isset($_POST['Search']))) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<fieldset>';
-	echo FieldToSelectMultipleStockCategories("Categories", $_POST['Categories'], 'Item Categories', 'Select the categories of items');
-	echo FieldToSelectOneLocation("FromLoc", $_POST['FromLoc'], _('Available at'), '', 'CANVIEW');
-	echo FieldToSelectOneLocation("Shop", $_POST['Shop'], _('But NOT available at'), '', 'BALISHOPS');
+	echo FieldToSelectMultipleStockCategories("Categories", $_POST['Categories'], 'Item Categories', 'Select the categories of items', '', 1, true, false);
+	echo FieldToSelectOneLocation("FromLoc", $_POST['FromLoc'], _('Available at'), '', 'CANVIEW', 2, true, false);
+	echo FieldToSelectOneLocation("Shop", $_POST['Shop'], _('But NOT available at'), '', 'BALISHOPS', 3, true, false);
     echo '</fieldset>';
 	
-	echo OneButtonCenteredForm("Search", _('Search'));
+	echo OneButtonCenteredForm("Search", _('Search'), 4, false, false);
 	echo '</form>';
 
 } else {

@@ -29,8 +29,8 @@ if (!isset($_POST['MonthToShow'])){
 $EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 echo '<fieldset>';
-echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], _('Month to Show'), '');
-echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Salesperson'), '', 'CURRENT');
+echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], _('Month to Show'), '', '', 1, true, false);
+echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Salesperson'), '', 'CURRENT', 2, true, false);
 
 echo '<field>
 		<label for="CustomerType">' . _('Customer Type') . ':</label>

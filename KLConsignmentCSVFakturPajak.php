@@ -348,7 +348,10 @@ function display($Title)
 
 	echo '<fieldset>';
 
-	include('includes/KLConsignmentParameterSelection.php');
+	echo FixedField("CompanyFrom", "PTADU", 'From', '');	
+	echo FieldToSelectOneRetailPartner("CompanyTo", $_POST['CompanyTo'], _('To'), 'Select the company receiving the Faktur Pajak', '', 1, true, false);
+	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Sales until'), '', '', 2, true, false);
+	echo FieldToSelectDraftOrInvoice('DraftOrInvoice', $_POST['DraftOrInvoice'], _('Draft or Invoice'), '', '', 3, true, false);
 
 	echo '<field>
             <label>' . 'Nomor Seri Faktur Pajak' . ':</label>
@@ -369,7 +372,7 @@ function display($Title)
           </field>';
     echo '</fieldset>';
 
-	echo OneButtonCenteredForm("submit", $Title);
+	echo OneButtonCenteredForm("submit", $Title, 6, false, false);
 
 	echo '</form>';
 	

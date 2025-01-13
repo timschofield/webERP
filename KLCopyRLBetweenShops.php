@@ -88,11 +88,11 @@ echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 echo '<fieldset>';
-echo FieldToSelectOneLocation("FromLocationID", $_POST['FromLocationID'], _('Select Location to copy the Reorder Levels FROM'), '', 'CANVIEW');
-echo FieldToSelectOneLocation("ToLocationID", $_POST['ToLocationID'], _('Select Location to copy the Reorder Levels TO'), '', 'CANUPDATE');
+echo FieldToSelectOneLocation("FromLocationID", $_POST['FromLocationID'], _('Select Location to copy the Reorder Levels FROM'), '', 'CANVIEW', 1, true, false);
+echo FieldToSelectOneLocation("ToLocationID", $_POST['ToLocationID'], _('Select Location to copy the Reorder Levels TO'), '', 'CANUPDATE', 2, true, false);
 echo '</fieldset>';
 
-echo OneButtonCenteredForm("ProcessCopyAuthority", $Title);
+echo OneButtonCenteredForm("ProcessCopyAuthority", $Title, 3, false, false);
 
 echo '</div>
 	</form>';

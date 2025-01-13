@@ -142,10 +142,10 @@ function display($Title) {
 
 	echo '<fieldset>';
 	echo FixedField("CompanyFrom", "PTADU", 'From', '');
-	echo FieldToSelectOneDate('StartDate', $_POST['StartDate'], _('Invoice Consignment Issued from'), '');
-	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Issued to'), '');
+	echo FieldToSelectOneDate('StartDate', $_POST['StartDate'], _('Invoice Consignment Issued from'), '', '', 1, true, false);
+	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Issued to'), '', '', 2, true, false);
 	echo '</fieldset>';
-	echo OneButtonCenteredForm("submit", $Title);
+	echo OneButtonCenteredForm("submit", $Title, 3, false, false);
 	echo '</form>';
 
 } // End of function display()
