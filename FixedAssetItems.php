@@ -413,7 +413,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 	$_POST['AssetCategoryID']  = '';
 	$_POST['SerialNo']  = '';
 	$_POST['AssetLocation']  = '';
-	$_POST['DepnType']  = '';
+	$_POST['DepnType']  = 0;
 	$_POST['BarCode']  = '';
 	$_POST['DepnRate']  = 0;
 	
