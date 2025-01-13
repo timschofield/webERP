@@ -218,7 +218,6 @@ if (isset($_POST['UpdateAll'])) {
 					$EmailSubject = _('Internal Stock Request Fulfillment for'). ' ' . $StockID;
 					if($_SESSION['SmtpSetting']==0){
 						      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
-					}
 					}else{
 						include('includes/htmlMimeMail.php');
 						$mail = new htmlMimeMail();
@@ -229,8 +228,8 @@ if (isset($_POST['UpdateAll'])) {
 						));
 					}
 				}
-				}
 				KL RICARD END: Do not send email to managers for Internal Requests */
+			}
 			else {
 				$ConfirmationText = _('An internal stock request for') . ' ' . $StockID . ' ' . _('has been fulfilled from location') . ' ' . $Location . ' ' . _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces) . ' ' . _('cannot be created as there is insufficient stock and your system is configured to not allow negative stocks');
 				prnMsg($ConfirmationText, 'warn');
@@ -276,8 +275,8 @@ if (!isset($_POST['Location'])) {
 			else {
 				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
-		}
-		} elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
+		} 
+		elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
 			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			$_POST['StockLocation']=$MyRow['loccode'];
 		}
