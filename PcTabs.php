@@ -426,7 +426,6 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="DefaultTag">', _('Default Tag'), ':</label>
 			<select name="DefaultTag">';
-	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['DefaultTag']) and $_POST['DefaultTag'] == $MyRow['tagref']) {
 			echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
@@ -445,7 +444,6 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="TaxGroup">', _('Tax Group'), ':</label>
 			<select name="TaxGroup">';
-	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxGroup']) and $_POST['TaxGroup'] == $MyRow['taxgroupid']) {
 			echo '<option selected="selected" value="', $MyRow['taxgroupid'], '">', $MyRow['taxgroupid'], ' - ', $MyRow['taxgroupdescription'], '</option>';

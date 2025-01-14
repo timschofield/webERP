@@ -512,9 +512,7 @@ if (!isset($SelectedTabs)) {
 					$TagRow['tagdescription'] = _('None');
 				}
 				$TagTo = $MyRow['tag'];
-				if ($ExpenseCodeDes == 'ASSIGNCASH') {
-					$TagDescription .= '';
-				} else {
+				if ($ExpenseCodeDes != 'ASSIGNCASH') {
 					$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 				}
 			}

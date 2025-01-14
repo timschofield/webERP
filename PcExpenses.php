@@ -279,7 +279,6 @@ if (!isset($_GET['delete'])) {
 	echo '<field>
 			<label for="TaxCategory">', _('Tax Category'), ':</label>
 			<select name="TaxCategory">';
-	echo '<option value="0">0 - ', _('None'), '</option>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['TaxCategory']) and $_POST['TaxCategory'] == $MyRow['taxcatid']) {
 			echo '<option selected="selected" value="', $MyRow['taxcatid'], '">', $MyRow['taxcatid'], ' - ', $MyRow['taxcatname'], '</option>';

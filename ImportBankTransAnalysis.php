@@ -308,7 +308,6 @@ if ($AllowGLAnalysis==false){
 			ORDER BY tagref";
 
 	$Result=DB_query($SQL);
-	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($MyRow=DB_fetch_array($Result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$MyRow['tagref']){
 			echo '<option selected value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'].' - ' .$MyRow['tagdescription'] . '</option>';

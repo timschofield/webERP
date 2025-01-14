@@ -294,7 +294,6 @@ $Result = DB_query($SQL);
 echo '<field>
 		<label for="Tag">', _('GL Tag'), '</label>
 		<select multiple="multiple" name="Tag[]">';
-echo '<option value="0">0 - ', _('None'), '</option>';
 while ($MyRow = DB_fetch_array($Result)) {
 	if (in_array($MyRow['tagref'], $Tags)) {
 		echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
