@@ -382,18 +382,18 @@ if (isset($_POST['Location'])) {
 			echo '<td class="centre"><input type="checkbox" name="' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>';
 
 			//Select the tag
-			$SQL = "SELECT tagref,
+			$SQLTag = "SELECT tagref,
 							tagdescription
 					FROM tags
 					ORDER BY tagref";
-			$Result = DB_query($SQL);
+			$ResultTag = DB_query($SQLTag);
 			echo '<td><select multiple="multiple" name="' . $LineRow['dispatchid'] . 'Tag' . $LineRow['dispatchitemsid'] . '[]">';
-			while ($MyRow = DB_fetch_array($Result)) {
-				if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] and in_array($MyRow['tagref'])) {
-					echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+			while ($MyRowTag = DB_fetch_array($ResultTag)) {
+				if (isset($_POST['tag']) and $_POST['tag'] == $MyRowTag['tagref'] and in_array($MyRowTag['tagref'])) {
+					echo '<option selected="selected" value="', $MyRowTag['tagref'], '">', $MyRowTag['tagref'], ' - ', $MyRowTag['tagdescription'], '</option>';
 				}
 				else {
-					echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+					echo '<option value="', $MyRowTag['tagref'], '">', $MyRowTag['tagref'], ' - ', $MyRowTag['tagdescription'], '</option>';
 				}
 			}
 			echo '</select></td>';
