@@ -113,7 +113,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 			$Result = DB_query($LineSQL, $ErrMsg, $DbgMsg, true);
 		}
 
-/* RICARD KL: DO not send these emails any more, as authorization is done automatically every day. Commented next 20 lines
+/* RICARD KL: DO not send these emails any more, as authorization is done automatically every day. 
 		$EmailSQL = "SELECT email
 					FROM www_users, departments
 					WHERE departments.authoriser = www_users.userid
@@ -132,7 +132,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 				$Result = SendmailBySmtp($mail, array($MyEmail['email']));
 			}
 		}
-*/
+ RICARD KL END: DO not send these emails any more, as authorization is done automatically every day. */
 	}
 	DB_Txn_Commit();
 	prnMsg(_('The internal stock request has been entered and now needs to be authorised'), 'success');
@@ -186,7 +186,7 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 	<fieldset>
 		<legend>', _('Internal Stock Request Details'), '</legend>
 	<field>
-		<label for="Department">' . _('Department') . ':</label>';
+		<label for="Department">' . _('Location needing the stock requested') . ':</label>';
 if ($_SESSION['AllowedDepartment'] == 0) {
 	// any internal department allowed
 	$SQL = "SELECT departmentid,
@@ -213,31 +213,16 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 	
+/* KL RICARD for our use, we request only to KANTOR */
+$_SESSION['Request']->Location = 'KANTO';
 echo '<field>
-		<label for="Location">' . _('Location from which to request stock') . ':</label>';
+		<label for="Location">' . _('Location from which to request stock') . ':</label>
+		<fieldtext>' . "Kantor KL". '</fieldtext>
+		</select>
+	</field>';
+/* KL RICARD END for our use, we request only to KANTOR */
 
-/* KL RICARD for our use, we prefer AND locationusers.canview=1 */
-$SQL = "SELECT locations.loccode,
-			locationname
-		FROM locations
-		INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" . $_SESSION['UserID'] . "' AND locationusers.canview=1
-		WHERE internalrequest = 1
-		ORDER BY locationname";
-/* KL RICARD END for our use, we prefer AND locationusers.canview=1 */
-
-$Result = DB_query($SQL);
-echo '<select name="Location">
-		<option value="">', _('Select a Location'), '</option>';
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_SESSION['Request']->Location) and $_SESSION['Request']->Location == $MyRow['loccode']) {
-		echo '<option selected value="', $MyRow['loccode'], '">', $MyRow['loccode'], ' - ', htmlspecialchars($MyRow['locationname'], ENT_QUOTES, 'UTF-8'), '</option>';
-	} else {
-		echo '<option value="', $MyRow['loccode'], '">', $MyRow['loccode'], ' - ', htmlspecialchars($MyRow['locationname'], ENT_QUOTES, 'UTF-8'), '</option>';
-	}
-}
-echo '</select>
-	</field>
-	<field>
+echo'<field>
 		<label for="DispatchDate">', _('Date when required'), ':</label>
 		<input type="text" class="date" name="DispatchDate" maxlength="10" size="11" value="', $_SESSION['Request']->DispatchDate, '" />
 	</field>
