@@ -168,8 +168,8 @@ INSERT INTO test_erp.geocode_param SELECT * FROM kurakura_kl_erp.geocode_param;
 TRUNCATE test_erp.`glaccountusers`;
 INSERT INTO test_erp.glaccountusers SELECT * FROM kurakura_kl_erp.glaccountusers;
 
-TRUNCATE test_erp.`gltags`;
-INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
+/*TRUNCATE test_erp.`gltags`;
+INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;*/
 
 TRUNCATE test_erp.`gltrans`;
 /* INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
@@ -425,6 +425,9 @@ INSERT INTO test_erp.recurringsalesorders SELECT * FROM kurakura_kl_erp.recurrin
 
 TRUNCATE test_erp.`recurrsalesorderdetails`;
 INSERT INTO test_erp.recurrsalesorderdetails SELECT * FROM kurakura_kl_erp.recurrsalesorderdetails;
+
+TRUNCATE test_erp.`regularpayments`;
+INSERT INTO test_erp.regularpayments SELECT * FROM kurakura_kl_erp.regularpayments;
 
 TRUNCATE test_erp.`relateditems`;
 INSERT INTO test_erp.relateditems SELECT * FROM kurakura_kl_erp.relateditems;
