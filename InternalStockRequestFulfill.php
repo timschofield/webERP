@@ -50,7 +50,7 @@ if (isset($_POST['UpdateAll'])) {
 			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 			$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 
 			// Need to get the current location quantity will need it later for the stock movement
 			$SQL = "SELECT locstock.quantity
@@ -207,26 +207,28 @@ if (isset($_POST['UpdateAll'])) {
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				}
 
-				$Result = DB_Txn_Commit();
+				DB_Txn_Commit();
 
 				$ConfirmationText = _('An internal stock request for') . ' ' . $StockID . ' ' . _('has been fulfilled from location') . ' ' . $Location . ' ' . _('for a quantity of') . ' ' . locale_number_format($Quantity, $DecimalPlaces);
 				prnMsg($ConfirmationText, 'success');
 
 				/*	KL RICARD: Do not send email to managers for Internal Requests
-				if ($_SESSION['InventoryManagerEmail']!=''){
+				if ($_SESSION['InventoryManagerEmail'] != '') {
 					$ConfirmationText = $ConfirmationText . ' ' . _('by user') . ' ' . $_SESSION['UserID'] . ' ' . _('at') . ' ' . Date('Y-m-d H:i:s');
-					$EmailSubject = _('Internal Stock Request Fulfillment for'). ' ' . $StockID;
-					if($_SESSION['SmtpSetting']==0){
-						      mail($_SESSION['InventoryManagerEmail'],$EmailSubject,$ConfirmationText);
-					}else{
-						include('includes/htmlMimeMail.php');
+					$EmailSubject = _('Internal Stock Request Fulfillment for') . ' ' . $StockID;
+					if ($_SESSION['SmtpSetting'] == 0) {
+						mail($_SESSION['InventoryManagerEmail'], $EmailSubject, $ConfirmationText);
+					}
+					else {
+						include ('includes/htmlMimeMail.php');
 						$mail = new htmlMimeMail();
 						$mail->setSubject($EmailSubject);
 						$mail->setText($ConfirmationText);
-						$result = SendmailBySmtp($mail, array(
+						$Result = SendmailBySmtp($mail, array(
 							$_SESSION['InventoryManagerEmail']
 						));
 					}
+
 				}
 				KL RICARD END: Do not send email to managers for Internal Requests */
 			}
@@ -267,21 +269,21 @@ if (!isset($_POST['Location'])) {
 			WHERE internalrequest = 1
 			ORDER BY locationname";
 	$ResultStkLocs = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($ResultStkLocs)){
+	while ($MyRow = DB_fetch_array($ResultStkLocs)) {
 		if (isset($_SESSION['Adjustment']->StockLocation)) {
-			if ($MyRow['loccode'] == $_SESSION['Adjustment']->StockLocation){
+			if ($MyRow['loccode'] == $_SESSION['Adjustment']->StockLocation) {
 				echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
 			else {
 				echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 			}
-		} 
-		elseif ($MyRow['loccode']==$_SESSION['UserStockLocation']){
+		}
+		elseif ($MyRow['loccode'] == $_SESSION['UserStockLocation']) {
 			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-			$_POST['StockLocation']=$MyRow['loccode'];
+			$_POST['StockLocation'] = $MyRow['loccode'];
 		}
 		else {
-		 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		}
 	}
 	echo '</select></td></tr>';
@@ -294,9 +296,9 @@ if (!isset($_POST['Location'])) {
 }
 
 /* Retrieve the requisition header information
- */
+*/
 if (isset($_POST['Location'])) {
-	$SQL="SELECT stockrequest.dispatchid,
+	$SQL = "SELECT stockrequest.dispatchid,
 			locations.locationname,
 			stockrequest.despatchdate,
 			stockrequest.narrative,
@@ -315,7 +317,7 @@ if (isset($_POST['Location'])) {
 		AND stockrequest.loccode='" . $_POST['Location'] . "'";
 	$Result = DB_query($SQL);
 
-	if (DB_num_rows($Result)==0) {
+	if (DB_num_rows($Result) == 0) {
 		prnMsg(_('There are no outstanding authorised requests for this location') , 'info');
 		echo '<br />';
 		echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Select another location') . '</a></div>';
@@ -389,19 +391,18 @@ if (isset($_POST['Location'])) {
 			echo '<td class="centre"><input type="checkbox" name="' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>';
 
 			//Select the tag
-			$SQL = "SELECT tagref,
-			tagdescription
-	FROM tags
-	ORDER BY tagref";
-			$Result = DB_query($SQL);
+			$SQLTag = "SELECT tagref,
+							tagdescription
+					FROM tags
+					ORDER BY tagref";
+			$ResultTag = DB_query($SQLTag);
 			echo '<td><select multiple="multiple" name="' . $LineRow['dispatchid'] . 'Tag' . $LineRow['dispatchitemsid'] . '[]">';
-			echo '<option value="0">0 - ', _('None') , '</option>';
-			while ($MyRow = DB_fetch_array($Result)) {
-				if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref'] and in_array($MyRow['tagref'])) {
-					echo '<option selected="selected" value="' . $mytagrow['tagref'] . '">' . $mytagrow['tagref'].' - ' .$myrow['tagdescription'] . '</option>';
+			while ($MyRowTag = DB_fetch_array($ResultTag)) {
+				if (isset($_POST['tag']) and $_POST['tag'] == $MyRowTag['tagref'] and in_array($MyRowTag['tagref'])) {
+					echo '<option selected="selected" value="', $MyRowTag['tagref'], '">', $MyRowTag['tagref'], ' - ', $MyRowTag['tagdescription'], '</option>';
 				}
 				else {
-					echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
+					echo '<option value="', $MyRowTag['tagref'], '">', $MyRowTag['tagref'], ' - ', $MyRowTag['tagdescription'], '</option>';
 				}
 			}
 			echo '</select></td>';
