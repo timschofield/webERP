@@ -14,7 +14,6 @@ Parameters:
 	NewReport: Click this button to start a new report.
 	IsIncluded: Parameter to indicate that a script is included within another.
 */
-$PageSecurity = 0;
 
 // BEGIN: Functions division ===================================================
 // END: Functions division =====================================================
