@@ -9,6 +9,13 @@ include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIFunctions.php');
 
+if (!isset($_POST['Categories'])) {
+	$_POST['Categories'] = [];
+}
+if (!isset($_POST['StockLocation'])) {
+	$_POST['StockLocation'] = '';
+}
+
 if (isset($_POST['submit'])) {
     submit($_POST['Categories'], $_POST['StockLocation']);
 } else {
