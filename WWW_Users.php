@@ -323,6 +323,10 @@ if(isset($_POST['submit'])) {
 			$ErrMsg = _('The Bank Accounts - User could not be deleted because');
 			$Result = DB_query($SQL, $ErrMsg);
 
+			$SQL="DELETE FROM purchorderauth WHERE userid='" . $SelectedUser . "'";
+			$ErrMsg = _('The Purchase Orders Authority could not be deleted because');;
+			$Result = DB_query($SQL, $ErrMsg);
+
 			$SQL = "DELETE FROM www_users WHERE userid='" . $SelectedUser . "'";
 			$ErrMsg = _('The User could not be deleted because');
 			$Result = DB_query($SQL, $ErrMsg);
