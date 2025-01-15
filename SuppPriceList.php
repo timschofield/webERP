@@ -16,29 +16,29 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	$pdf->addInfo('Subject',_('Price List of goods from a Supplier'));
 
 	$PageNumber=1;
-	$LineHeight=12;
+	$line_height=12;
 
 	//get supplier
-	$SQLsup = "SELECT suppname,
+	$sqlsup = "SELECT suppname,
 					  currcode,
 					  decimalplaces AS currdecimalplaces
 				FROM suppliers INNER JOIN currencies
 				ON suppliers.currcode=currencies.currabrev
 				WHERE supplierid='" . $_POST['supplier'] . "'";
-	$Resultsup = DB_query($SQLsup);
-	$RowSup = DB_fetch_array($Resultsup);
+	$resultsup = DB_query($sqlsup);
+	$RowSup = DB_fetch_array($resultsup);
 	$SupplierName=$RowSup['suppname'];
 	$CurrCode =$RowSup['currcode'];
 	$CurrDecimalPlaces=$RowSup['currdecimalplaces'];
 
 	//get category
 	if ($_POST['category']!='all'){
-		$SQLcat="SELECT categorydescription
+		$sqlcat="SELECT categorydescription
 				FROM `stockcategory`
 				WHERE categoryid ='" . $_POST['category'] . "'";
 
-		$Resultcat = DB_query($SQLcat);
-		$RowCat = DB_fetch_row($Resultcat);
+		$resultcat = DB_query($sqlcat);
+		$RowCat = DB_fetch_row($resultcat);
 		$Categoryname=$RowCat['0'];
 	} else {
 		$Categoryname='ALL';
@@ -54,7 +54,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 
 	//price and category = all
 	if (($_POST['price']=='all') AND ($_POST['category']=='all')){
-		$SQL = "SELECT 	purchdata.stockid,
+		$sql = "SELECT 	purchdata.stockid,
 					stockmaster.description,
 					purchdata.price,
 					purchdata.conversionfactor,
@@ -69,7 +69,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	//category=all and price != all
 		if (($_POST['price']!='all') AND ($_POST['category']=='all')){
 
-			$SQL = "SELECT purchdata.stockid,
+			$sql = "SELECT purchdata.stockid,
 							stockmaster.description,
 							(SELECT purchdata.price
 							 FROM purchdata
@@ -93,7 +93,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 			//price = all category !=all
 			if (($_POST['price']=='all')and($_POST['category']!='all')){
 
-				$SQL = "SELECT 	purchdata.stockid,
+				$sql = "SELECT 	purchdata.stockid,
 								stockmaster.description,
 								purchdata.price,
 								purchdata.conversionfactor,
@@ -107,7 +107,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 						ORDER BY stockid ASC ,dateprice DESC";
 			} else {
 			//price != all category !=all
-				$SQL = "SELECT 	purchdata.stockid,
+				$sql = "SELECT 	purchdata.stockid,
 								stockmaster.description,
 								(SELECT purchdata.price
 								 FROM purchdata
@@ -131,21 +131,21 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 			}
 		}
 	}
-	$Result = DB_query($SQL,'','',false,true);
+	$result = DB_query($sql,'','',false,true);
 
 	if (DB_error_no() !=0) {
 		$Title = _('Price List') . ' - ' . _('Problem Report');
 		include('includes/header.php');
 		prnMsg( _('The Price List could not be retrieved by the SQL because') . ' '  . DB_error_msg(),'error');
 		echo '<a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
+		if ($debug==1){
+			echo '<br />' . $sql;
 		}
 		include('includes/footer.php');
 		exit;
 	}
 
-	if (DB_num_rows($Result)==0) {
+	if (DB_num_rows($result)==0) {
 
 		$Title = _('Supplier Price List') . '-' . _('Report');
 		include('includes/header.php');
@@ -158,31 +158,31 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 				$Page_Width,$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 
 	$FontSize=8;
-	$Code='';
-	while ($MyRow = DB_fetch_array($Result)){
-		$YPos -=$LineHeight;
+	$code='';
+	while ($myrow = DB_fetch_array($result)){
+		$YPos -=$line_height;
 
-		$PriceDated=ConvertSQLDate($MyRow[4]);
+		$PriceDated=ConvertSQLDate($myrow[4]);
 
 		//if item has more than 1 price, write only price, date and supplier code for the old ones
-		if ($Code==$MyRow['stockid']){
+		if ($code==$myrow['stockid']){
 
-			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($MyRow['price'],$CurrDecimalPlaces),'right');
+			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($myrow['price'],$CurrDecimalPlaces),'right');
 			$pdf->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
-			$pdf->addTextWrap(470,$YPos,90,$FontSize,$MyRow['suppliers_partno'],'left');
-			$Code=$MyRow['stockid'];
+			$pdf->addTextWrap(470,$YPos,90,$FontSize,$myrow['suppliers_partno'],'left');
+			$code=$myrow['stockid'];
 		} else {
-			$Code=$MyRow['stockid'];
-			$pdf->addTextWrap(30,$YPos,100,$FontSize,$MyRow['stockid'],'left');
-			$pdf->addTextWrap(135,$YPos,160,$FontSize,$MyRow['description'],'left');
-			$pdf->addTextWrap(300,$YPos,50,$FontSize,locale_number_format($MyRow['conversionfactor'],'Variable'),'right');
-			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($MyRow['price'],$CurrDecimalPlaces),'right');
+			$code=$myrow['stockid'];
+			$pdf->addTextWrap(30,$YPos,100,$FontSize,$myrow['stockid'],'left');
+			$pdf->addTextWrap(135,$YPos,160,$FontSize,$myrow['description'],'left');
+			$pdf->addTextWrap(300,$YPos,50,$FontSize,locale_number_format($myrow['conversionfactor'],'Variable'),'right');
+			$pdf->addTextWrap(350,$YPos,50,$FontSize,locale_number_format($myrow['price'],$CurrDecimalPlaces),'right');
 			$pdf->addTextWrap(410,$YPos,50,$FontSize,$PriceDated,'left');
-			$pdf->addTextWrap(470,$YPos,90,$FontSize,$MyRow['suppliers_partno'],'left');
+			$pdf->addTextWrap(470,$YPos,90,$FontSize,$myrow['suppliers_partno'],'left');
 		}
 
 
-		if ($YPos < $Bottom_Margin + $LineHeight){
+		if ($YPos < $Bottom_Margin + $line_height){
 
 			PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 						$Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
@@ -192,7 +192,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	} /*end while loop  */
 
 
-	if ($YPos < $Bottom_Margin + $LineHeight){
+	if ($YPos < $Bottom_Margin + $line_height){
 		   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 					   $Right_Margin,$SupplierName,$Categoryname,$CurrCode,$CurrentOrAllPrices);
 	}
@@ -220,14 +220,14 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 			</thead>
 			<tbody>';
 
-		while ($MyRow = DB_fetch_array($Result)){
+		while ($myrow = DB_fetch_array($result)){
 			echo '<tr class="striped_row">
-				<td>' . $MyRow['stockid'] . '</td>
-				<td>' . $MyRow['description'] . '</td>
-				<td>' . $MyRow['conversionfactor'] . '</td>
-				<td>' . $MyRow['price'] . '</td>
-				<td>' . ConvertSQLDate($MyRow['dateprice']) . '</td>
-				<td>' . $MyRow['suppliers_partno'] . '</td>
+				<td>' . $myrow['stockid'] . '</td>
+				<td>' . $myrow['description'] . '</td>
+				<td>' . $myrow['conversionfactor'] . '</td>
+				<td>' . $myrow['price'] . '</td>
+				<td>' . ConvertSQLDate($myrow['dateprice']) . '</td>
+				<td>' . $myrow['suppliers_partno'] . '</td>
 				</tr>';
 
 		}
@@ -248,34 +248,34 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	$SQL = "SELECT supplierid,suppname FROM `suppliers`";
-	$Result = DB_query($SQL);
+	$sql = "SELECT supplierid,suppname FROM `suppliers`";
+	$result = DB_query($sql);
 	echo '<fieldset>
 			<legend>', _('Report Criteria'), '</legend>
 			<field>
 				<label for="supplier">' . _('Supplier') . ':</label>
 				<select name="supplier"> ';
-	while ($MyRow=DB_fetch_array($Result)){
-		if (isset($_POST['supplierid']) and ($MyRow['supplierid'] == $_POST['supplierid'])) {
-			 echo '<option selected="selected" value="' . $MyRow['supplierid'] . '">' . $MyRow['supplierid'].' - '.$MyRow['suppname'] . '</option>';
+	while ($myrow=DB_fetch_array($result)){
+		if (isset($_POST['supplierid']) and ($myrow['supplierid'] == $_POST['supplierid'])) {
+			 echo '<option selected="selected" value="' . $myrow['supplierid'] . '">' . $myrow['supplierid'].' - '.$myrow['suppname'] . '</option>';
 		} else {
-			 echo '<option value="' . $MyRow['supplierid'] . '">' . $MyRow['supplierid'].' - '.$MyRow['suppname'] . '</option>';
+			 echo '<option value="' . $myrow['supplierid'] . '">' . $myrow['supplierid'].' - '.$myrow['suppname'] . '</option>';
 		}
 	}
 	echo '</select>
 		</field>';
 
-	$SQL="SELECT categoryid, categorydescription FROM stockcategory";
-	$Result = DB_query($SQL);
+	$sql="SELECT categoryid, categorydescription FROM stockcategory";
+	$result = DB_query($sql);
 	echo '<field>
 			<label for="category">' . _('Category') . ':</label>
 			<select name="category"> ';
 		echo '<option value="all">' . _('ALL') . '</option>';
-	while ($MyRow=DB_fetch_array($Result)){
-		if (isset($_POST['categoryid']) and ($MyRow['categoryid'] == $_POST['categoryid'])) {
-			 echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categoryid']-$MyRow['categorydescription'] . '</option>';
+	while ($myrow=DB_fetch_array($result)){
+		if (isset($_POST['categoryid']) and ($myrow['categoryid'] == $_POST['categoryid'])) {
+			 echo '<option selected="selected" value="' . $myrow['categoryid'] . '">' . $myrow['categoryid'] . ' - ' . $myrow['categorydescription'] . '</option>';
 		} else {
-			 echo '<option value="' . $MyRow['categoryid'] . '">' .$MyRow['categoryid'].' - '. $MyRow['categorydescription'] . '</option>';
+			 echo '<option value="' . $myrow['categoryid'] . '">' .$myrow['categoryid'].' - '. $myrow['categorydescription'] . '</option>';
 		}
 	}
 	echo '</select>
@@ -309,30 +309,30 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 	if ($PageNumber>1){
 		$pdf->newPage();
 	}
-	$LineHeight=12;
+	$line_height=12;
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
-	$YPos -=(3*$LineHeight);
+	$YPos -=(3*$line_height);
 
 	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize+2,$_SESSION['CompanyRecord']['coyname']);
-	$YPos -=$LineHeight;
+	$YPos -=$line_height;
 
 	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('Supplier Price List for').' '.$CurrentOrAllPrices);
 
 	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
-	$YPos -= $LineHeight;
+	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Supplier').'   ');
 	$pdf->addTextWrap(95,$YPos,150,$FontSize,': '.$SupplierName);
 
-	$YPos -= $LineHeight;
+	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Category').' ');
 
 	$pdf->addTextWrap(95,$YPos,150,$FontSize,': '.$Categoryname);
-	$YPos -= $LineHeight;
+	$YPos -= $line_height;
 	$pdf->addTextWrap($Left_Margin,$YPos,50,$FontSize,_('Currency').'  ');
 	$pdf->addTextWrap(95,$YPos,50,$FontSize,': '.$CurrCode);
-	$YPos -=(2*$LineHeight);
+	$YPos -=(2*$line_height);
 	/*set up the headings */
 
 	$pdf->addTextWrap(30,$YPos,80,$FontSize,_('Code'), 'left');

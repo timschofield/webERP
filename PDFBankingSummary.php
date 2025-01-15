@@ -41,7 +41,7 @@ if (!isset($_POST['BatchNo'])){
 		</field>
 	</fieldset>';
 	echo '<div class="centre">
-			<input type="submit" name="EnterBatchNo" value="' . _('Create PDF') . '" />
+			<input type="submit" name="EnterBatchNo" title="PDF" value="' . _('Create PDF') . '" />
 		</div>
 	</form>';
 
