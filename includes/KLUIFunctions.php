@@ -6,26 +6,55 @@
  * 
  *********************************************************************************************************/
 
- function FieldToSelectDraftOrInvoice($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 		<label>' . $Label . ':</label>
 		<select';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $VariableName . '">';
-	if($SelectedValue == "DRAFT") {
-		$HTML .= '<option selected="selected" value="DRAFT">' . 'Draft' . '</option>
-				<option value="INVOICE">' . 'Invoice' . '</option>';
+	if($SelectedValue == $ValueOption1) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>';
 	}
 	else {
-		$HTML .= '<option selected="selected" value="INVOICE">' . 'Invoice' . '</option>
-				<option value="DRAFT">' . 'Draft' . '</option>';
+		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>';
 	}
 	$HTML .= '</select>
 			</field>';
 	return $HTML;
 }
+
+function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT manufacturers.manufacturers_id, 
+					manufacturers_name 
+			FROM manufacturers 
+			ORDER BY manufacturers_name";
+		$Result = DB_query($SQL);
 	
+		$HTML = '<field>
+					<label for="' . $VariableName . '">' . $Label . ':</label>
+					<select';
+		$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+		$HTML .= 'name="' . $VariableName . '">
+					<fieldhelp>' . $HelpText . '</fieldhelp>';
+		
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($MyRow['manufacturers_id'] == $SelectedValue) {
+				$HTML .= '<option selected="selected" value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
+			} 
+			else {
+				$HTML .= '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
+			}
+		}
+		$HTML .= '</select>
+				</field>';
+		return $HTML;
+	}
 
 
 function FieldToSelectOneRetailPartner($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {

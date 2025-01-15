@@ -4,6 +4,8 @@ require_once ('Classes/PHPExcel.php');
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php'); 
+include('includes/KLUIFunctions.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
@@ -189,7 +191,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			if ($TypeOfFile == "FullUpdate"){
 				$File ='AC-FULL-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
@@ -223,8 +225,6 @@ function submit($TypeOfShop, $TypeOfFile) {
 
 //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 function display($RootPath, $Theme) {
-// Display form fields. This function is called the first time
-// the page is called.
 	$Title = _('Excel file for uploading products to Admin Cerdas');
 
 	include('includes/header.php');
@@ -238,37 +238,26 @@ function display($RootPath, $Theme) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title. '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">
-			<tr><td>'. _('Marketplace kind of shop').':</td>
-			<td><select name="TypeOfShop" onchange="submit();"> ';
-	$SQL = "SELECT manufacturers.manufacturers_id, 
-					manufacturers_name 
-			FROM manufacturers 
-			ORDER BY manufacturers_name";
-	$LocResult = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
-	}
+	echo '<fieldset>
+			<legend>' . _('Admin Cerdas Export Options') . '</legend>';
+	
+	// Marketplace shop selection
+	echo FieldToSelectOneBrand('TypeOfShop', $_POST['TypeOfShop'], _('Marketplace kind of shop'), '', '', 1, true, false);
 
-	echo '<tr>
-			<td>' . _('Type of ACI File') . ':</td>
-			<td><select name="TypeOfFile">
-				<option selected="selected" value="FullUpdate">' . _('Full Update') . '</option>
-				<option value="QOHOnly">' . _('QOH-Stock available Only') . '</option>
-				<option value="PricesOnly">' . _('Prices Only') . '</option>
-			</select></td>
-		</tr>';
+	// File type selection
+	echo '<field>';
+	echo '<label>' . _('Type of ACI File') . ':</label>';
+	echo '<select name="TypeOfFile">
+			<option selected="selected" value="FullUpdate">' . _('Full Update') . '</option>
+			<option value="QOHOnly">' . _('QOH-Stock available Only') . '</option>
+			<option value="PricesOnly">' . _('Prices Only') . '</option>
+		  </select>';
+	echo '</field>';
 
-	echo '</table>
-		<table>';
+	echo '</fieldset>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel file to upload products to Admin Cerdas') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo OneButtonCenteredForm('submit', _('Create Excel file to upload products to Admin Cerdas'));
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

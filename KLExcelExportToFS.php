@@ -5,6 +5,8 @@ require_once ('Classes/PHPExcel.php');
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
@@ -249,7 +251,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -293,38 +295,24 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title. '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';	
+	echo '<fieldset>
+			<legend>' . _('FORSTOK Export Options') . '</legend>';
 	
-	echo '<tr><td>'. _('Marketplace kind of shop').':</td>
-			<td><select name="TypeOfShop" onchange="submit();"> ';
-	$SQL = "SELECT manufacturers.manufacturers_id, 
-					manufacturers_name 
-			FROM manufacturers 
-			ORDER BY manufacturers_name";
-	$LocResult = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
-	}
+	echo FieldToSelectOneBrand('submit', 'TypeOfShop', _('Marketplace kind of shop'), '', '', 1);
 
-	echo '<tr>
-			<td>' . _('Type of FORSTOK File') . ':</td>
-			<td><select name="TypeOfFile">
+	echo '<field>
+			<label>' . _('Type of FORSTOK File') . ':</label>
+			<select name="TypeOfFile">
 				<option selected="selected" value="FSMaster">' . _('Master FORSTOK') . '</option>
 				<option value="FSQOH">' . _('QOH FORSTOK Update') . '</option>
 				<option value="FSPrice">' . _('Price FORSTOK Update') . '</option>
-			</select></td>
-		</tr>';
+			</select>
+		</field>';
 
-	echo '</table>
-		<table>';
+	echo '</fieldset>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel file to upload products to FORSTOK') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo OneButtonCenteredForm('submit', _('Create Excel file to upload products to FORSTOK'));
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

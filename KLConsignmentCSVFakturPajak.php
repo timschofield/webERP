@@ -347,29 +347,16 @@ function display($Title)
 		</p>';
 
 	echo '<fieldset>';
-
 	echo FixedField("CompanyFrom", "PTADU", 'From', '');	
 	echo FieldToSelectOneRetailPartner("CompanyTo", $_POST['CompanyTo'], _('To'), 'Select the company receiving the Faktur Pajak', '', 1, true, false);
 	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Sales until'), '', '', 2, true, false);
-	echo FieldToSelectDraftOrInvoice('DraftOrInvoice', $_POST['DraftOrInvoice'], _('Draft or Invoice'), '', '', 3, true, false);
-
-	echo '<field>
-            <label>' . 'Nomor Seri Faktur Pajak' . ':</label>
-            <input type="text" name="NomorSeriFP" value="' . $_POST['NomorSeriFP'] . '" size="14" maxlength="13" />
-          </field>';
-
-    echo '<field>
-            <label>' . 'Decimal Digits' . ':</label>
-            <select name="DecimalDigits">';
-    if($_POST['DecimalDigits']=="0") {
-        echo '<option selected="selected" value="0">' . '0 - For e-Faktur' . '</option>';
-        echo '<option value="2">' . '2 - For Pajak Online' . '</option>';
-    } else {
-        echo '<option selected="selected" value="2">' . '2 - For Pajak Online' . '</option>';
-        echo '<option value="0">' . '0 - For e-Faktur' . '</option>';
-    }
-    echo '</select>
-          </field>';
+	echo FieldToSelectFromTwoOptions('DRAFT', 'Draft', 
+									'INVOICE', 'Invoice',
+									'DraftOrInvoice', $_POST['DraftOrInvoice'], _('Draft or Invoice'), '', '', 3, true, false);
+	echo FieldToSelectOneText("NomorSeriFP", $_POST['NomorSeriFP'], 14, 13, 'Nomor Seri Faktur Pajak', '', '', 4, true, false);
+	echo FieldToSelectFromTwoOptions('0', '0 - For e-Faktur', 
+									'2', '2 - For Pajak Online',
+									'DecimalDigits', $_POST['DecimalDigits'], _('Decimal Digits'), '', '', 3, true, false);
     echo '</fieldset>';
 
 	echo OneButtonCenteredForm("submit", $Title, 6, false, false);

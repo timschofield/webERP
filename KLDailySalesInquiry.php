@@ -30,36 +30,10 @@ $EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 echo '<fieldset>';
 echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], _('Month to Show'), '', '', 1, true, false);
-echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Salesperson'), '', 'CURRENT', 2, true, false);
-
-echo '<field>
-		<label for="CustomerType">' . _('Customer Type') . ':</label>
-		<select tabindex="3" name="CustomerType">';
-$CustomerTypeResult = DB_query("SELECT typename, typeid FROM debtortype ORDER BY typename");
-if (!isset($_POST['CustomerType'])){
-	$_POST['CustomerType'] = 'All';
-	echo '<option selected="selected" value="All">' . _('All') . '</option>';
-} else {
-	echo '<option value="All">' . _('All') . '</option>';
-}
-while ($CustomerTypeRow = DB_fetch_array($CustomerTypeResult)){
-
-	if ($_POST['CustomerType']==$CustomerTypeRow['typeid']) {
-		echo '<option selected="selected" value="' . $CustomerTypeRow['typeid'] . '">' . $CustomerTypeRow['typename'] . '</option>';
-	} else {
-		echo '<option value="' . $CustomerTypeRow['typeid'] . '">' . $CustomerTypeRow['typename'] . '</option>';
-	}
-}
-echo '</select>
-	</field>';
-
-
-echo '</field>
-	</fieldset>
-	<div class="centre">
-		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Daily Sales For The Selected Month') . '" />
-    </div>
-	</form>';
+echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Sales Person'), '', 'CURRENT', 2, true, false);
+echo FieldToSelectOneCustomerType("CustomerType", $_POST['CustomerType'], _('Customer Type'), '', '', 3, true, false);
+echo '</fieldset>';
+echo OneButtonCenteredForm("ShowResults", _('Show Daily Sales For The Selected Month'), 4, true, false);
 	
 /*Now get and display the sales data returned */
 if (mb_strpos($EndDateSQL,'/')) {

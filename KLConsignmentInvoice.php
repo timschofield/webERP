@@ -368,7 +368,9 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo FixedField("CompanyFrom", "PTADU", 'From', '');	
 	echo FieldToSelectOneRetailPartner("CompanyTo", $_POST['CompanyTo'], _('To'), 'Select the company receiving the Faktur Pajak', '', 1, true, false);
 	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Sales until'), '', '', 2, true, false);
-	echo FieldToSelectDraftOrInvoice('DraftOrInvoice', $_POST['DraftOrInvoice'], _('Draft or Invoice'), '', '', 3, true, false);
+	echo FieldToSelectFromTwoOptions('DRAFT', 'Draft', 
+									'INVOICE', 'Invoice',
+									'DraftOrInvoice', $_POST['DraftOrInvoice'], _('Draft or Invoice'), '', '', 3, true, false);
 	
 	echo '</fieldset>';
 

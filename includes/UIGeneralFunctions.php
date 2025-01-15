@@ -22,6 +22,41 @@ function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
 	return $Attributes;
 }
 
+function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	$SQL = "SELECT typename,
+				typeid
+			FROM debtortype
+			ORDER BY typename";
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if ($Required){
+		$HTML .= '<option value="All">' . _('All Customer Types') . '</option>';
+	} elseif (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="All">' . _('All Customer Types') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['typeid'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+
 function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
@@ -36,13 +71,8 @@ function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpT
 
 
 function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
-	if ($Filter == 'ALL') {
-		$SQL = "SELECT loccode,
-					locationname
-				FROM locations
-				ORDER BY locationname";
-	} 
-	elseif ($Filter == 'CANVIEW') {    
+	
+	if ($Filter == 'CANVIEW') {    
 		$SQL = "SELECT locations.loccode,
 					locations.locationname
 				FROM locations
@@ -71,7 +101,10 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 	}
 	else 
 	{
-		return '';
+		$SQL = "SELECT loccode,
+					locationname
+				FROM locations
+				ORDER BY locationname";
 	}
 
 	$Result = DB_query($SQL);
@@ -83,7 +116,9 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
-	if (!isset($SelectedValue)) {
+	if ($Required){
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue)) {
 		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 	}
 
@@ -166,10 +201,10 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 		$Result = DB_query($SQL);
 	
 		if (!isset($SelectedValue)) {
-			$HTML .= '<option selected="selected" value="All">' . _('All') . '</option>';
+			$HTML .= '<option selected="selected" value="All">' . _('All Sales Persons') . '</option>';
 		} 
 		else {
-			$HTML .= '<option value="All">' . _('All') . '</option>';
+			$HTML .= '<option value="All">' . _('All Sales Persons') . '</option>';
 		}
 	
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -183,6 +218,18 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 		$HTML .= '</select>
 				</field>';
 	}
+	return $HTML;
+}
+
+function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<fieldhelp>' . $HelpText . '</fieldhelp>
+				<input type="text"';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
+			</field>';
 	return $HTML;
 }
 
@@ -215,7 +262,7 @@ function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $La
 }
 
 
-function FixedField($VariableName, $SelectedValue, $Label, $HelpText) {
+function FixedField($VariableName, $SelectedValue, $Label = '', $HelpText = '') {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -226,7 +273,7 @@ function FixedField($VariableName, $SelectedValue, $Label, $HelpText) {
 }
 
 
-function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex, $Required, $AutoFocus) {
+function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex = '', $Required = true, $AutoFocus = false) {
 	$HTML = '<div class="centre">
 				<input type="submit" ';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	

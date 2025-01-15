@@ -5,6 +5,8 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php'); 
+include('includes/KLUIFunctions.php'); 
 include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -170,7 +172,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'KL-webERPCustomers-' . Date('Y-m-d'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -210,10 +212,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 } // End of function submit()
 
 
-function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
-{
-// Display form fields. This function is called the first time
-// the page is called.
+function display($RootPath, $Theme)  {
 	$Title = _('Excel file for Sendinblue: Export webERP Customers');
 
 	include('includes/header.php');
@@ -227,43 +226,35 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export webERP Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export webERP Customer') . '
 		</p>';
 
-	echo '<table>';
+	echo '<fieldset>
+		<legend>' . _('Selection Criteria') . '</legend>';
 
-	echo '<tr>
-			<td>' . _('From') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
-	echo '<tr><td>' . _('Type of Customers?') . ':</td>
-			<td><select name="TypeCustomers">
-				<option selected="selected" value="WEB">' . _('Online Only') . '</option>
-				<option value="OTHERS">' . _('Others') . '</option>
-				</select>
-			</td>
-		</tr>';
-	echo '<tr><td>' . _('Mark as Exported?') . ':</td>
-			<td><select name="MarkExported">
-				<option selected="selected" value="N">' . _('No') . '</option>
-				<option value="Y">' . _('Yes') . '</option>
-				</select>
-			</td>
-		</tr>';
+	echo FieldToSelectOneDate('FromDate', _('From'), $_POST['FromDate']);
+	echo FieldToSelectOneDate('ToDate', _('To'), $_POST['ToDate']);
+	
+	echo '<field>';
+	echo _('Type of Customers?') . ':';
+	echo '<select name="TypeCustomers">
+			<option selected="selected" value="WEB">' . _('Online Only') . '</option>
+			<option value="OTHERS">' . _('Others') . '</option>
+			</select>';
+	echo '</field>';
 
-	echo '</table>
-		<table>';
+	echo '<field>';
+	echo _('Mark as Exported?') . ':';
+	echo '<select name="MarkExported">
+			<option selected="selected" value="N">' . _('No') . '</option>
+			<option value="Y">' . _('Yes') . '</option>
+			</select>';
+	echo '</field>';
+	
+	echo '</fieldset>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File for Sendinblue') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo OneButtonCenteredForm('submit', _('Create Excel File for Sendinblue'));
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');
-
 } // End of function display()
 
 ?>

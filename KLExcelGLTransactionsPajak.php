@@ -226,15 +226,16 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<fieldset>';
-	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], _('Company'), 'Select the company to export GL transactions', '', 1, true, false);
-	echo FieldToSelectOneDate ('FromDate', $_POST['FromDate'], _('From Date'), '', '', 2, true, false);
-	echo FieldToSelectOneDate ('ToDate', $_POST['ToDate'], _('To Date'), '', '', 3, true, false);
+	echo '<fieldset><legend>' . _('Export Parameters') . '</legend>';
+	
+	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], _('Company'), _('Select the company to export GL transactions'), '', 1, true, false);
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From Date'), '', '', 2, true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To Date'), '', '', 3, true, false);
+	
 	echo '</fieldset>';
 
-	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Export Excel') . '" />
-		</div>';
+	echo OneButtonCenteredForm('submit', _('Export Excel'));
+
 	echo '</form>';
 	
 	include('includes/footer.php');

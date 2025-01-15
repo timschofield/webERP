@@ -1,13 +1,38 @@
-In all *.php and *.inc files in the main folder and includes folder, excluding all other folders:
+Convert table-based data entry to field structures.
 
-1) look for calls of the functions: ShowTableTitle($Text), ShowTableSubTitle($Text) and ShowWarningTitle($Text)
-2) then add the line 
-include('includes/KLUIFunctions.php'); 
-just below all the other include lines, around line 10 (only if the line include('includes/KLUIFunctions.php');  is missing.
+This script has mixed data entry HTML tags:
+Some are <field> ... </field> structures and some are table-based <tr><td> ... </td></tr> structures
+
+I want you to:
+1) Replace ALL table-based data entry headers into <fieldset><legend> ... </legend> </fieldset> structures
+2) Replace ALL table-based data entry <tr><td> ... </td></tr> structures into <field> ... </field> structures
+
+Afterwards, look for:
+1) <field> ... </field> structures referring to the selection of a single Customer Type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+2) <field> ... </field> structures referring to the input of a single date and replace the <field> ... </field> structure for a call to the function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+3) <field> ... </field> structures referring to the selection of a single location and replace the <field> ... </field> structure for a call to the function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+4) <field> ... </field> structures referring to the input of a single period and replace the <field> ... </field> structure for a call to the function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+5) <field> ... </field> structures referring to the input of a single sales person and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+6) <field> ... </field> structures referring to the input of a single text and replace the <field> ... </field> structure for a call to the function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+7) <field> ... </field> structures referring to the input of multiple stock categories and replace the <field> ... </field> structure for a call to the function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+8) <field> ... </field> structures referring to the input of a single manufacturer and replace the <field> ... </field> structure for a call to the function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+
+
+10) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
+
+in all these cases, 
+19) Respect the proper order of the parameters of the functions above, defined in 
+includes/UIGeneralFunctions.php and includes/KLUIGeneralFunctions.php
+
+20) Afterwards: if these lines are not in the script:
+include('includes/UIGeneralFunctions.php'); 
+include('includes/KLUIFunctions.php');
+add them just after include('includes/KLGeneralFunctions.php'); or after include('includes/KLDefines.php'); or after include('includes/SQL_CommonFunctions.inc');
+
 
 General prompt rules: 
 1) Do not cut long lines. 
 2) Do not delete any comment in the code
-3) Do not change, modify, upgrade any other part of the code not related to the propmt.
-4) Apply all changes above directly to all the files in the working set
-
+3) Do not add comments like //Added line
+4) Do not change, modify, upgrade any other part of the code not related to the propmt.
+5) Apply all changes above directly to all the files in the working set

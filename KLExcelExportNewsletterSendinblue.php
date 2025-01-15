@@ -5,6 +5,8 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php'); 
+include('includes/KLUIFunctions.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -80,7 +82,7 @@ function submit($MarkExported) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'KL-NewsletterSubscribers-' . Date('Y-m-d'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -131,26 +133,21 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Newsletter from OpenCart') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Newsletter from OpenCart') . '
 		</p>';
 
-	echo '<table>';
+	echo '<fieldset>
+		<legend>' . _('Export Options') . '</legend>';
 
-	echo '<tr><td>' . _('Mark as Exported?') . ':</td>
-			<td><select name="MarkExported">
-				<option selected="selected" value="N">' . _('No') . '</option>
-				<option value="Y">' . _('Yes') . '</option>
-				</select>
-			</td>
-		</tr>';
+	echo '<field>';
+	echo _('Mark as Exported?') . ':';
+	echo '<select name="MarkExported">
+			<option selected="selected" value="N">' . _('No') . '</option>
+			<option value="Y">' . _('Yes') . '</option>
+			</select>';
+	echo '</field>';
+	
+	echo '</fieldset>';
 
-	echo '</table>
-		<table>';
+	echo OneButtonCenteredForm('submit', _('Create Excel File for Sendinblue'));
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File for Sendinblue') . '" /></td>
-		</tr>
-		</table>
-		<br />';
 	echo '</div>
          </form>';
 	include('includes/footer.php');

@@ -6,6 +6,8 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y')));
@@ -183,7 +185,7 @@ function submit($FromDate, $ToDate) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'KL-FinancialAnalysis-' . Date('Y-m-d'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -226,25 +228,16 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Financial Analysis') . '" alt="" />' . ' ' . _('Excel file for Financial Analysis') . '
 		</p>';
-	echo '<table>';	
-	echo '<tr>
-			<td>' . _('From') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
 
+	echo '<fieldset><legend>' . _('Date Range Selection') . '</legend>';
+	
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', 1, true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', 2, true, false);
+	
+	echo '</fieldset>';
 
-	echo '</table>
-		<table>';
+	echo OneButtonCenteredForm('submit', _('Create Financial Analysis Excel File'));
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Financial Analysis Excel File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
 	echo '</div>
          </form>';
 	include('includes/footer.php');
