@@ -5,6 +5,8 @@ require_once ('Classes/PHPExcel.php');
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
@@ -283,7 +285,7 @@ function submit($TypeOfShop) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File ='LAZADA-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -327,31 +329,18 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title. '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">
-			<tr><td>'. _('Lazada shop').':</td>
-			<td><select name="TypeOfShop" onchange="submit();"> ';
-	$SQL = "SELECT manufacturers.manufacturers_id, 
-					manufacturers_name 
-			FROM manufacturers 
-			ORDER BY manufacturers_name";
-	$LocResult = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
-	}
+	echo '<fieldset>
+			<legend>' . _('Lazada Shop Selection') . '</legend>';
+			
+	echo FieldToSelectOneBrand('TypeOfShop', '', _('Lazada shop'), '', '', '', true, true);
+	
+	echo '</fieldset>';
 
-	echo '</table>
-		<table>';
+	echo OneButtonCenteredForm('submit', _('Create Excel file to upload products to Lazada'));
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel file to upload products to Lazada') . '" /></td>
-		</tr>
-		</table>
-		<br />';
 	echo '</div>
          </form>';
 	include('includes/footer.php');
-} // End of function display()
+} 
 
 ?>

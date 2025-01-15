@@ -6,6 +6,8 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -275,7 +277,7 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'KL-SalesAnalysis-' . Date('Y-m-d'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -310,63 +312,35 @@ function display($RootPath, $Theme){
 
 	include('includes/header.php');
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sales Analysis') . '" alt="" />' . ' ' . _('Excel file for Sales Analysis') . '
 		</p>';
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
-			ORDER BY categorydescription';
-	$CatResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-	}
-	echo '</select>
-			</td>
-		</tr>';
+	echo '<fieldset>
+	        <legend>' . _('Sales Analysis Parameters') . '</legend>';
 
-	echo '<tr>
-			<td>' . _('Item Codes detailed as') . ':</td>
-			<td><select name="CodeDetail">
+	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', '', true, true);
+
+	echo '<field>
+			<label for="CodeDetail">' . _('Item Codes detailed as') . ':</label>
+			<select name="CodeDetail">
 				<option selected="selected" value="CODE_FULL">' . _('Full Item Code') . '</option>
 				<option value="CODE_FULL_WITH_RINGS">' . _('Full Item Code + Rings Grouped') . '</option>
 				<option value="CODE_6">' . _('Basic Item Code (6 Char)') . '</option>
-			</select></td>
-		</tr>';
+			</select>
+		</field>';
+
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', '', true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', '', true, false);
+
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', _('Create Sales Analysis Excel File'));
 	
-	echo '<tr>
-			<td>' . _('From') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
-
-
-	echo '</table>
-		<table>';
-
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Sales Analysis Excel File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
-         </form>';
+	echo '</form>';
 	include('includes/footer.php');
 
 } // End of function display()

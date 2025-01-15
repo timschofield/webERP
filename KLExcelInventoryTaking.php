@@ -6,6 +6,8 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 
 if (isset($_POST['submit'])) {
     submit($_POST['Categories'], $_POST['StockLocation']);
@@ -153,7 +155,7 @@ function submit($ListCategories, $Location) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File ='Inventory-' .  $Location . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -188,57 +190,22 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 
 	include('includes/header.php');
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Inventory Taking') . '" alt="" />' . ' ' . _('Excel file for Inventory Taking') . '
 		</p>';
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
-			ORDER BY categorydescription';
-	$CatResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-	}
-	echo '</select>
-			</td>
-		</tr>';
+	echo '<fieldset><legend>' . _('Inventory Taking at Location Selection') . '</legend>';
 
-	echo '<tr><td>'. _('Location').':</td>
-			<td><select name="StockLocation" onchange="submit();"> ';
-	$SQL = "SELECT locations.loccode, 
-					locationname 
-			FROM locations 
-			INNER JOIN locationusers 
-				ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-			ORDER BY locationname";
-	$LocResult = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-	}
+	echo FieldToSelectMultipleStockCategories('Categories', $_POST['Categories'], _('Inventory Categories'), _('Select the categories to perform inventory taking at location'), '', 1, true, true);
+	echo FieldToSelectOneLocation('StockLocation', $_POST['StockLocation'], _('Location'), '', 'CANVIEW', 2, true, false);
 
-	echo '</table>
-		<table>';
+	echo '</fieldset>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Inventory Taking Excel File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo OneButtonCenteredForm('submit', _('Create Inventory Taking Excel File'));
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

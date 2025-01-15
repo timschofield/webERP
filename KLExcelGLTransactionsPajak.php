@@ -30,6 +30,9 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	//initialise no input errors
 	$InputError = 0;
 
+	$FromDateSQL = FormatDateForSQL($FromDate);
+	$ToDateSQL = FormatDateForSQL($ToDate);
+
 	//first off validate inputs sensible
 	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
@@ -39,7 +42,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'),'error');
 	}
-	if (strtotime($_POST['FromDate']) > strtotime($_POST['ToDate'])) {
+	if (strtotime($FromDateSQL) > strtotime($ToDateSQL)) {
 		$InputError = 1;
 		prnMsg(_('The From Date must be before the To Date'),'error');
 	}
@@ -87,8 +90,8 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Description');
 
 
-		$WhereFrom 	= " AND trandate >= '". FormatDateForSQL($FromDate) ."'";
-		$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
+		$WhereFrom 	= " AND trandate >= '". $FromDateSQL ."'";
+		$WhereTo 	= " AND trandate <= '". $ToDateSQL ."'";
 
 		$i = 2;
 		$ErrMsg = _('The SQL to find the GL Transactions for '. $PartnerCode);

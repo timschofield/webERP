@@ -6,6 +6,8 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -107,7 +109,7 @@ function submit($ListCategories, $DaysTopSales) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
+			// Redirect output to a clientï¿½s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			$File = 'KL-PriceAnalysis-' . Date('Y-m-d'). '.xlsx';
 			header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -142,55 +144,32 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 
 	include('includes/header.php');
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Price Analysis') . '" alt="" />' . ' ' . _('Excel file for Price Analysis') . '
 		</p>';
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
-			ORDER BY categorydescription';
-	$CatResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-	}
-	echo '</select>
-			</td>
-		</tr>';
+	echo '<fieldset>
+	        <legend>' . _('Analysis Parameters') . '</legend>';
 
-	//View number of days for Top Sales Calculations
-	echo '<tr>
-			<td>' . _('# Days for Top Sales Ranking') . ':</td>
-			<td><select name="DaysTopSales">';
-		echo '<option value="30">' . _('30 days') . '</option>';
-		echo '<option selected="selected" value="60">' . _('60 days') . '</option>';
-		echo '<option value="90">' . _('90 days') . '</option>';
-	echo '</select></td></tr>';
+	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', '', true, true);
 
-	echo '</table>
-		<table>';
+	echo '<field>
+			<label for="DaysTopSales">' . _('# Days for Top Sales Ranking') . ':</label>
+			<select name="DaysTopSales">
+				<option value="30">' . _('30 days') . '</option>
+				<option selected="selected" value="60">' . _('60 days') . '</option>
+				<option value="90">' . _('90 days') . '</option>
+			</select>
+		</field>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Prices Excel File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
-         </form>';
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', _('Create Prices Excel File'));
+	
+	echo '</form>';
 	include('includes/footer.php');
 
 } // End of function display()
