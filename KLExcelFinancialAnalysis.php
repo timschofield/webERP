@@ -10,7 +10,7 @@ include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,1,1,Date('Y')));

@@ -15,9 +15,9 @@ $Title = _('KL Daily Sales Inquiry');
 include('includes/header.php');
 include_once('includes/DateFunctions.inc');
 include('includes/UIGeneralFunctions.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/' . $Theme .'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
 echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';

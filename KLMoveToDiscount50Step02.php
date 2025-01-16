@@ -7,7 +7,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,

@@ -7,7 +7,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 if (isset($_POST['submit'])) {
     submit($_POST['Categories'], $_POST['Locations']);

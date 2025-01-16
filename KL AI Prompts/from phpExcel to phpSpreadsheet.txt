@@ -3,16 +3,24 @@ Convert this script from using PHPExcel to PHPSpreadsheet
 Before include('includes/session.php');
 add the line:
 require_once 'vendor/autoload.php';
-delete the line:
+delete the 2 lines:
 require_once ('Classes/PHPExcel.php');
+require_once ('Classes/PHPExcel/IOFactory.php');
 
 After the line include('includes/session.php');
 add the lines:
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 Add a field so user can select extension xlsx (Excel format) or ods (Ods format). By default, format must be 'xlsx', with a call to the function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+Add (if not yet in the code)
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
+}
+
 
 The declaration of the object changes from
 $objPHPExcel = new PHPExcel();

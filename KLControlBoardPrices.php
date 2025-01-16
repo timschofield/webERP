@@ -13,7 +13,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 include('includes/SQL_CommonFunctions.inc');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;

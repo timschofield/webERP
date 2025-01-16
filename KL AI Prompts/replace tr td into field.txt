@@ -9,16 +9,34 @@ I want you to:
 
 Afterwards, look for:
 1) <field> ... </field> structures referring to the selection of a single Customer Type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
 2) <field> ... </field> structures referring to the input of a single date and replace the <field> ... </field> structure for a call to the function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
 3) <field> ... </field> structures referring to the selection of a single location and replace the <field> ... </field> structure for a call to the function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
 4) <field> ... </field> structures referring to the input of a single period and replace the <field> ... </field> structure for a call to the function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+
 5) <field> ... </field> structures referring to the input of a single sales person and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
 6) <field> ... </field> structures referring to the input of a single text and replace the <field> ... </field> structure for a call to the function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+
 7) <field> ... </field> structures referring to the input of multiple stock categories and replace the <field> ... </field> structure for a call to the function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
 8) <field> ... </field> structures referring to the input of a single manufacturer and replace the <field> ... </field> structure for a call to the function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
 
+9) <field> ... </field> structures referring to the input of file to be uploaded and replace the <field> ... </field> structure for a call to the function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
-10) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
+10) <field> ... </field> structures referring to the input of 2 fixed options and replace the <field> ... </field> structure for a call to the function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+11) <field> ... </field> structures referring to the input of 3 fixed options and replace the <field> ... </field> structure for a call to the function  FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$ValueOption3, $LabelOption3,
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+
+18) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
 
 in all these cases, 
 19) Respect the proper order of the parameters of the functions above, defined in 
@@ -26,7 +44,7 @@ includes/UIGeneralFunctions.php and includes/KLUIGeneralFunctions.php
 
 20) Afterwards: if these lines are not in the script:
 include('includes/UIGeneralFunctions.php'); 
-include('includes/KLUIFunctions.php');
+include('includes/KUIGeneralFunctions.php');
 add them just after include('includes/KLGeneralFunctions.php'); or after include('includes/KLDefines.php'); or after include('includes/SQL_CommonFunctions.inc');
 
 

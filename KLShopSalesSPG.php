@@ -4,7 +4,7 @@ $Title = _('List of Items Sold in Shop');
 include ('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
 $StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-TRANSFER_LIST_DAYS_FOR_SPG));

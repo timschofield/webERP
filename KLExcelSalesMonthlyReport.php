@@ -1,6 +1,5 @@
 <?php
 require_once 'vendor/autoload.php';
-require_once ('Classes/PHPExcel.php');
 
 include('includes/session.php');
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
@@ -10,7 +9,7 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLGeneralFunctions.php');
 
 if (!isset($_POST['Period'])){

@@ -4,7 +4,7 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $Title = _('Export CSV File for Faktur Pajak');
 

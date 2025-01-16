@@ -69,6 +69,18 @@ function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpT
 	return $HTML;
 }
 
+function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<fieldhelp>' . $HelpText . '</fieldhelp>
+				<input type="file"';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= ' id="' . $VariableName . '" name="' . $VariableName . '" />
+			</field>';
+	return $HTML;
+}
+
 
 function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	

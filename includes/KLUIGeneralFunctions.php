@@ -8,7 +8,7 @@
 
 function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
-	$HTML = FieldToSelectFromTwoOptions('xlsx', 'Excel (xlsx)',
+	$HTML = FieldToSelectFromTwoOptions('xlsx', 'Excel 2007 (xlsx)',
 										'ods', 'OpenDocument (ods)',
 										$VariableName, $SelectedValue, $Label, $HelpText, $Filter, $TabIndex, $Required, $AutoFocus);
 
@@ -31,6 +31,36 @@ function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1,
 	else {
 		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>';
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$ValueOption3, $LabelOption3,
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+		<label>' . $Label . ':</label>
+		<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">';
+	if($SelectedValue == $ValueOption1) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>';
+	}
+	else if($SelectedValue == $ValueOption2) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>';
+	}
+	else {
+		$HTML .= '<option selected="selected" value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>';
 	}
 	$HTML .= '</select>
 			</field>';

@@ -5,7 +5,7 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
-include('includes/KLUIFunctions.php'); 
+include('includes/KLUIGeneralFunctions.php'); 
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 

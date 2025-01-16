@@ -8,7 +8,7 @@ include('includes/KLDefines.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLRetailCustomer.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;

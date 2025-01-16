@@ -3,7 +3,7 @@ include ('includes/session.php');
 $Title = _('Shop Inventory Control for SPG');
 include ('includes/header.php');
 include('includes/KLGeneralFunctions.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');
 
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);

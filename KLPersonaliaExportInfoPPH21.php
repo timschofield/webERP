@@ -1,30 +1,39 @@
 <?php
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+
+$Title = _('Export Info for PPH21 Deduction');
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 if (isset($_POST['submit'])) {
-	submit($_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
+	submit($_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType'], $_POST['Format'], $Title);
 } else {
-	display();
+	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Company, $LastDateOfPeriod, $SalaryType) {
+function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 
 	//initialise no input errors
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$LastDateOfPeriod = EndDateSQLFromPeriodNo($PeriodOfFile);
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export PPh21 Monthly Info for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export PPh21 Monthly Info for '). $LastDateOfPeriod;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export PPh21 THR Only Info for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export PPh21 THR Only Info for '). $LastDateOfPeriod;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -32,7 +41,7 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodExportDate + 1)){
+		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PPh21 Monthly Salary Slips should be last month";
 			$InputError = TRUE;
 		}
@@ -40,7 +49,7 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodExportDate)){
+		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PPh21 THR Only Salary Slips should be this current month";
 			$InputError = TRUE;
 		}
@@ -69,7 +78,7 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 						potonganabsen
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
-					AND periodno = '" . $PeriodExportDate . "'
+					AND periodno = '" . $PeriodOfFile . "'
 					AND salarytype = '" . $SalaryType . "'
 					AND UPPER(paymentmethod) != 'CASH'
 				ORDER BY zonepph21,
@@ -78,10 +87,10 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder( new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder() );
 		
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -93,7 +102,7 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 										 ->setCategory("");
 
 			// Add title data
-			$PeriodName = MonthAndYearFromSQLDate($LastDateOfPeriod);
+			$PeriodName = MonthAndYearFromSQLDate($PeriodOfFile);
 			$objPHPExcel->setActiveSheetIndex(0);
 			$objPHPExcel->getActiveSheet()->setTitle($PeriodName);
 
@@ -161,15 +170,24 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			if ($SalaryType == "MONTHLY"){
-				$File ='InfoPPH21-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
-			}else{
-				$File ='InfoPPH21-THR-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
-			}
-			header('Content-Disposition: attachment;filename="' . $File . '"');
-			header('Cache-Control: max-age=0');
+			// Redirect output to a client's web browser
+			if ($Format == 'xlsx') {
+                header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+                if ($SalaryType == "MONTHLY"){
+                    $File ='InfoPPH21-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
+                }else{
+                    $File ='InfoPPH21-THR-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
+                }
+            } else {
+                header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+                if ($SalaryType == "MONTHLY"){
+                    $File ='InfoPPH21-' .  $Company . '-' . $LastDateOfPeriod. '.ods';
+                }else{
+                    $File ='InfoPPH21-THR-' .  $Company . '-' . $LastDateOfPeriod. '.ods';
+                }
+            }
+            header('Content-Disposition: attachment;filename="' . $File . '"');
+            header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
 			header('Cache-Control: max-age=1');
 
@@ -179,11 +197,14 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+            if ($Format == 'xlsx') {
+                $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+        	} else if ($Format == 'ods') {
+                $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+            }
 			$objWriter->save('php://output');
 
 		}else{
-			$Title = _('Export Info for PPH21 Deduction');
 			include('includes/header.php');
 			prnMsg('No data to export for PPH21 deduction calculation');
 			include('includes/footer.php');
@@ -191,7 +212,7 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 	}else{
 		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+				<img src="' . $RootPath . '/css/' .  $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
 		include('includes/footer.php');
@@ -199,11 +220,10 @@ function submit($Company, $LastDateOfPeriod, $SalaryType) {
 } // End of function submit()
 
 
-function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Export Info for PPH21 Deduction');
 
 	include('includes/header.php');
 
@@ -213,21 +233,37 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
-	
-	include('includes/KLPersonaliaParameterSelection.php');
+	echo '<fieldset>
+		<legend>' . _('PPH21 Export Parameters') . '</legend>';
 
-	echo '<table>';
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Export Info for PPH21 Deduction') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara',
+									'PTBB', 'PT Bumi Biru',
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'Company', 
+									isset($_POST['Company']) ? $_POST['Company'] : 'PTADU',
+									_('For Employees of'));
+
+	echo FieldToSelectOnePeriod('PeriodOfFile',
+							isset($_POST['PeriodOfFile']) ? $_POST['PeriodOfFile'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
+							_('Select Month of the Salaries'));
+
+	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
+								'THRONLY', _('THR Only'),
+								'SalaryType',
+								isset($_POST['SalaryType']) ? $_POST['SalaryType'] : 'MONTHLY',
+								_('Type Of Salary'));
+
+    echo FieldToSelectSpreadSheetFormat('Format', 
+                                    isset($_POST['Format']) ? $_POST['Format'] : 'xlsx',
+                                    _('File Format'));
+
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', _('Export File for PPH21 Deduction'));
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

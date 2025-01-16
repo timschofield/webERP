@@ -8,7 +8,7 @@ $BookMark = "InventoryMovement";
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 
 if (isset($_GET['StockID'])){

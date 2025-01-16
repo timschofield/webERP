@@ -32,7 +32,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 include('includes/KLReorderLevel.php');
-include('includes/KLUIFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
