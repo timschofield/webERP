@@ -1,18 +1,26 @@
 <?php
 
+require_once 'vendor/autoload.php';
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php'); 
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
-require_once ('Classes/PHPExcel.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (!isset($_POST['FromPrice'])){
 	$_POST['FromPrice'] = 0;
 }
 if (!isset($_POST['ToPrice'])){
 	$_POST['ToPrice'] = 999999999;
+}
+if (!isset($_POST['Format'])){
+	$_POST['Format'] = 'xlsx';
 }
 
 if (isset($_POST['submit'])) {
@@ -64,8 +72,8 @@ function submit($FromPrice, $ToPrice) {
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if (DB_num_rows($Result) != 0){
 
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new PHPSpreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -113,9 +121,14 @@ function submit($FromPrice, $ToPrice) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-Products-Zalora-' . Date('Y-m-d'). '.xlsx';
+			// Redirect output to a client's web browser (Excel2007)
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = 'KL-Products-Zalora-' . Date('Y-m-d'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = 'KL-Products-Zalora-' . Date('Y-m-d'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -127,8 +140,13 @@ function submit($FromPrice, $ToPrice) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 		}else{
 			prnMsg('No Products selected for Zalora');
@@ -141,7 +159,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Zalora');
+	$Title = _('Export file for Zalora');
 	include('includes/header.php');
 
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
@@ -150,29 +168,20 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file to upload products to Zalora') . '" alt="" />' . ' ' . _('Excel file to upload products to Zalora') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table>';
+	echo '<fieldset>
+		<legend>' . _('Price Range Details') . '</legend>';
 
-	echo '<tr>
-			<td>' . _('Price Range') . ':</td>
-			<td><input type="text" name="FromPrice" size="20" maxlength="20" value="' . $_POST['FromPrice'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" name="ToPrice" size="20" maxlength="20" value="' . $_POST['ToPrice'] . '" /></td>
-			<td>' . _('IDR') . ':</td>
-		</tr>';
+	echo FieldToSelectOneText('FromPrice', $_POST['FromPrice'], 20, 20, _('From'), '', '', '', true, false);
+	echo FieldToSelectOneText('ToPrice', $_POST['ToPrice'], 20, 20, _('To (IDR)'), '', '', '', true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('Format'), '', '', '', true, false);
 
-	echo '</table>
-		<table>';
+	echo '</fieldset>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File for Zalora') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo OneButtonCenteredForm('submit',$Title);
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

@@ -1,5 +1,5 @@
 <?php
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -11,6 +11,10 @@ include('includes/KLUIFunctions.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
+
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 
 if (isset($_POST['submit'])) {
     submit($_POST['Categories'], $_POST['DaysTopSales']);
@@ -51,8 +55,8 @@ function submit($ListCategories, $DaysTopSales) {
 		$Result = DB_query($SQL);
 		if (DB_num_rows($Result) != 0){
 
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new PHPSpreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -109,9 +113,14 @@ function submit($ListCategories, $DaysTopSales) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client�s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-PriceAnalysis-' . Date('Y-m-d'). '.xlsx';
+			// Redirect output to a client's web browser
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = 'KL-PriceAnalysis-' . Date('Y-m-d'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = 'KL-PriceAnalysis-' . Date('Y-m-d'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -123,8 +132,13 @@ function submit($ListCategories, $DaysTopSales) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 		}else{
 			$Title = _('Excel file for Price Analysis');
@@ -164,10 +178,12 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 				<option value="90">' . _('90 days') . '</option>
 			</select>
 		</field>';
+	
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('Format'), '', '', '', true, false);
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Create Prices Excel File'));
+	echo OneButtonCenteredForm('submit', _('Export Price Analysis File'));
 	
 	echo '</form>';
 	include('includes/footer.php');

@@ -1,9 +1,16 @@
 <?php
+require_once 'vendor/autoload.php';
 require_once ('Classes/PHPExcel.php');
 
 include('includes/session.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIFunctions.php');
 include('includes/KLGeneralFunctions.php');
 
 if (!isset($_POST['Period'])){
@@ -43,10 +50,10 @@ function submit($Period) {
 		$ToDate = FormatDateForSQL($_POST['ToDate']);
 		
 		// Set value binder
-		PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+		\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 
-		// Create new PHPExcel object
-		$objPHPExcel = new PHPExcel();
+		// Create new Spreadsheet object
+		$objPHPExcel = new Spreadsheet();
 
 		// Set document properties
 		$objPHPExcel->getProperties()->setCreator("webERP")
@@ -96,10 +103,16 @@ function submit($Period) {
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
 
-		// Redirect output to a client’s web browser (Excel2007)
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		$File = 'KL-SalesMonthlyReport-' . Date('Y-m-d'). '.xlsx';
-		header('Content-Disposition: attachment;filename="' . $File . '"');
+		// Redirect output to a clientï¿½s web browser
+		if ($_POST['Format'] == 'xlsx') {
+            header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+            $File = 'KL-SalesMonthlyReport-' . Date('Y-m-d'). '.xlsx';
+        } else if ($_POST['Format'] == 'ods') {
+            header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+            $File = 'KL-SalesMonthlyReport-' . Date('Y-m-d'). '.ods';
+        }
+        
+        header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');
 		// If you're serving to IE 9, then the following may be needed
 		header('Cache-Control: max-age=1');
@@ -110,7 +123,11 @@ function submit($Period) {
 		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 		header ('Pragma: public'); // HTTP/1.0
 
-		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+		if ($_POST['Format'] == 'xlsx') {
+            $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+        } else if ($_POST['Format'] == 'ods') {
+            $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+        }
 		$objWriter->save('php://output');
 
 	}
@@ -134,45 +151,16 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sales Monthly Report') . '" alt="" />' . ' ' . _('Excel file for Sales Monthly Report') . '
 		</p>';
 
-	$SQL = "SELECT periodno,
-					lastdate_in_period
-			FROM periods
-			ORDER BY periodno DESC";
-	$Periods = DB_query($SQL);
+	echo '<fieldset>
+		<legend>' . _('Report Parameters') . '</legend>';
 
-	echo '<table class="selection">';
-	echo '	<tr><td>' . _('Select Month for Report') . ':</td>
-				<td><select name="Period">';
+	echo FieldToSelectOnePeriod('Period', $_POST['Period'], _('Select Month for Report'), '', '', '', true, true);
+    echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('Select File Format'), '', '', '', true, false);
 
-	while ($MyRow=DB_fetch_array($Periods)){
-		if(isset($_POST['Period']) AND $_POST['Period']!=''){
-			if( $_POST['Period']== $MyRow['periodno']){
-				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' .MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-			} else {
-				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-			}
-		} else {
-			if($MyRow['lastdate_in_period']==$DefaultFromDate){
-				echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-			} else {
-				echo '<option value="' . $MyRow['periodno'] . '">' . MonthAndYearFromSQLDate($MyRow['lastdate_in_period']) . '</option>';
-			}
-		}
-	}
+	echo '</fieldset>';
 
-	echo '</select></td>
-		</tr>';
+	echo OneButtonCenteredForm('submit', _('Create Sales Monthly Report Excel File'));
 
-	echo '</table>
-		<table>';
-
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Sales Monthly Report Excel File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
 	echo '</div>
          </form>';
 	include('includes/footer.php');
@@ -197,9 +185,9 @@ function SalesForPeriod($PeriodFrom, $PeriodTo, $CategoryList){
 function TitleCells($objPHPExcel, $Title, $Start, $End){
 	$objPHPExcel->getActiveSheet()->setCellValue($Start, $Title);
 	$objPHPExcel->getActiveSheet()->mergeCells($Start .":". $End);
-	$objPHPExcel->getActiveSheet()->getStyle($Start .":". $End)->getAlignment()->setVertical(PHPExcel_Style_Alignment::VERTICAL_CENTER);		
-	$objPHPExcel->getActiveSheet()->getStyle($Start .":". $End)->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_CENTER);		
-	$objPHPExcel->getActiveSheet()->getStyle($Start .":". $End)->getBorders()->getAllBorders()->setBorderStyle(PHPExcel_Style_Border::BORDER_THICK);
+	$objPHPExcel->getActiveSheet()->getStyle($Start .":". $End)->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);		
+	$objPHPExcel->getActiveSheet()->getStyle($Start .":". $End)->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);		
+	$objPHPExcel->getActiveSheet()->getStyle($Start .":". $End)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK);
 }
 
 

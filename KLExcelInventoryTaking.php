@@ -1,5 +1,5 @@
 <?php
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -9,11 +9,18 @@ include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIFunctions.php');
 
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 if (!isset($_POST['Categories'])) {
 	$_POST['Categories'] = [];
 }
 if (!isset($_POST['StockLocation'])) {
 	$_POST['StockLocation'] = '';
+}
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
 }
 
 if (isset($_POST['submit'])) {
@@ -55,10 +62,10 @@ function submit($ListCategories, $Location) {
 		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder( new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder() );
 		
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -162,11 +169,15 @@ function submit($ListCategories, $Location) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client�s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File ='Inventory-' .  $Location . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			// Redirect output based on format
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File ='Inventory-' .  $Location . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			} else {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File ='Inventory-' .  $Location . '-' . Date('Y-m-d-H-i-s'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
-			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
 			header('Cache-Control: max-age=1');
 
@@ -176,7 +187,11 @@ function submit($ListCategories, $Location) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+			}
 			$objWriter->save('php://output');
 
 		}else{
@@ -193,7 +208,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 {
 // Display form fields. This function is called the first time
 // the page is called.
-	$Title = _('Excel file for Inventory Taking');
+	$Title = _('Export file for Inventory Taking at a location');
 
 	include('includes/header.php');
 
@@ -208,13 +223,13 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 
 	echo FieldToSelectMultipleStockCategories('Categories', $_POST['Categories'], _('Inventory Categories'), _('Select the categories to perform inventory taking at location'), '', 1, true, true);
 	echo FieldToSelectOneLocation('StockLocation', $_POST['StockLocation'], _('Location'), '', 'CANVIEW', 2, true, false);
-
+	echo FieldToSelectSpreadSheetFormat("Format", $_POST['Format'], 'Spreadsheet File Format', '', '', 3, true, false);
+	
 	echo '</fieldset>';
+	
+	echo OneButtonCenteredForm('submit', _('Export Inventory Taking File'));
 
-	echo OneButtonCenteredForm('submit', _('Create Inventory Taking Excel File'));
-
-	echo '</div>
-         </form>';
+	echo '</form>';
 	include('includes/footer.php');
 
 } // End of function display()

@@ -1,8 +1,10 @@
 <?php
-
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
@@ -74,10 +76,10 @@ function submit($TypeOfShop, $TypeOfFile) {
 		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 		
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -174,7 +176,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 					$PriceDiscount = '';
 					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
 							$TextSizeIndonesian . " - "  . 
-							trim($MyRow['longdescription']) . " " .
+							trim($MyRow['longdescription']) . " " . 
 							$TextSizeEnglish;
 					$Weight = $MyRow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
@@ -252,8 +254,13 @@ function submit($TypeOfShop, $TypeOfFile) {
 			$objPHPExcel->setActiveSheetIndex(0);
 
 			// Redirect output to a client�s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -265,8 +272,13 @@ function submit($TypeOfShop, $TypeOfFile) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 		}else{
 			$Title = "Excel file for uploading products to FORSTOK";
@@ -299,6 +311,8 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<legend>' . _('FORSTOK Export Options') . '</legend>';
 	
 	echo FieldToSelectOneBrand('submit', 'TypeOfShop', _('Marketplace kind of shop'), '', '', 1);
+	
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
 
 	echo '<field>
 			<label>' . _('Type of FORSTOK File') . ':</label>
@@ -311,7 +325,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Create Excel file to upload products to FORSTOK'));
+	echo OneButtonCenteredForm('submit', _('Export file to upload products to FORSTOK'));
 
 	echo '</div>
          </form>';

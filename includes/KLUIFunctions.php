@@ -6,6 +6,15 @@
  * 
  *********************************************************************************************************/
 
+function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = FieldToSelectFromTwoOptions('xlsx', 'Excel (xlsx)',
+										'ods', 'OpenDocument (ods)',
+										$VariableName, $SelectedValue, $Label, $HelpText, $Filter, $TabIndex, $Required, $AutoFocus);
+
+	return $HTML;
+}
+
 function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1, 
 									$ValueOption2, $LabelOption2, 
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {

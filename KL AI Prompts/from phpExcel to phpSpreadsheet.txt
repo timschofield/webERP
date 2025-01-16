@@ -1,0 +1,38 @@
+Convert this script from using PHPExcel to PHPSpreadsheet
+
+Before include('includes/session.php');
+add the line:
+require_once 'vendor/autoload.php';
+delete the line:
+require_once ('Classes/PHPExcel.php');
+
+After the line include('includes/session.php');
+add the lines:
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+Add a field so user can select extension xlsx (Excel format) or ods (Ods format). By default, format must be 'xlsx', with a call to the function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+The declaration of the object changes from
+$objPHPExcel = new PHPExcel();
+to
+$objPHPExcel = new Spreadsheet();
+
+Setting the horizontal alignment style changes from
+$objPHPExcel->getActiveSheet()->getStyle('A:B')->getAlignment()->setHorizontal(PHPExcel_Style_Alignment::HORIZONTAL_LEFT);
+to
+$objPHPExcel->getActiveSheet()->getStyle('A:B')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+
+Creating the writer changes from
+$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007'); $objWriter->save('php://output');
+to
+if ($_POST['Format'] == 'xlsx') { $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel); $objWriter->save('php://output'); } else if ($_POST['Format'] == 'ods') { $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel); $objWriter->save('php://output'); }
+
+
+General prompt rules: 
+1) Do not cut long lines. 
+2) Do not delete any comment in the code
+3) Do not add comments like //Added line
+4) Do not change, modify, upgrade any other part of the code not related to the propmt.
+5) Apply all changes above directly to all the files in the working set

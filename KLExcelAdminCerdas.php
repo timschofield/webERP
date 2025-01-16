@@ -1,7 +1,11 @@
 <?php
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php'); 
@@ -12,12 +16,22 @@ include('includes/KLMarketplaceFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/GetPrice.inc');
 
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
+}
+if (!isset($_POST['TypeOfFile'])) {
+    $_POST['TypeOfFile'] = 'FullUpdate';
+}
+if (!isset($_POST['TypeOfShop'])) {
+	$_POST['TypeOfShop'] = 1;
+}
 
 if (isset($_POST['submit'])) {
     submit($_POST['TypeOfShop'], $_POST['TypeOfFile']);
 } else {
     display($RootPath, $Theme);
 }
+
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit($TypeOfShop, $TypeOfFile) {
@@ -65,10 +79,10 @@ function submit($TypeOfShop, $TypeOfFile) {
 		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 		
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -191,15 +205,23 @@ function submit($TypeOfShop, $TypeOfFile) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client�s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
 			if ($TypeOfFile == "FullUpdate"){
-				$File ='AC-FULL-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+				$File ='AC-FULL-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s');
 			}elseif ($TypeOfFile == "QOHOnly"){
-				$File ='AC-QOH-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+				$File ='AC-QOH-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s');
 			}elseif ($TypeOfFile == "PricesOnly"){
-				$File ='AC-PRICE-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+				$File ='AC-PRICE-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s');
 			}
+
+			// Redirect output to a client's web browser
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File .= '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File .= '.ods';
+			}
+
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -211,7 +233,11 @@ function submit($TypeOfShop, $TypeOfFile) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+			}
 			$objWriter->save('php://output');
 
 		}else{
@@ -254,9 +280,12 @@ function display($RootPath, $Theme) {
 		  </select>';
 	echo '</field>';
 
+	// Format selection
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'), '', '', 3, true, false);
+
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Create Excel file to upload products to Admin Cerdas'));
+	echo OneButtonCenteredForm('submit', _('Export file to upload products to Admin Cerdas'));
 
 	echo '</div>
          </form>';

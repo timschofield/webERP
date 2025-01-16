@@ -1,12 +1,15 @@
 <?php
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
-include('includes/KLUIFunctions.php'); // Added
+include('includes/KLUIFunctions.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -91,8 +94,8 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 		if (DB_num_rows($Result) != 0){
 			$TxResult = DB_Txn_Begin();
 
-		// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+		// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -166,9 +169,14 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client�s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.xlsx';
+			// Redirect output to a client's web browser
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -180,8 +188,13 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 			if ($MarkExported == "Y"){
 				$SQL = "UPDATE klretailcustomers 
@@ -226,6 +239,8 @@ function display($RootPath, $Theme) {
 	echo FieldToSelectOneDate('FromDate', _('From'), $_POST['FromDate']);
 	echo FieldToSelectOneDate('ToDate', _('To'), $_POST['ToDate']);
 	
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	
 	echo '<field>';
 	echo _('Mark as Exported?') . ':';
 	echo '<select name="MarkExported">
@@ -236,7 +251,7 @@ function display($RootPath, $Theme) {
 	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Create Excel File for Sendinblue'));
+	echo OneButtonCenteredForm('submit', _('Export File for Sendinblue'));
 
 	echo '</div>
          </form>';

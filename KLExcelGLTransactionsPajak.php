@@ -1,12 +1,15 @@
 <?php
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLUIFunctions.php');
-
-require_once ('Classes/PHPExcel.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -68,8 +71,8 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 
 	if ($InputError == 0){
 
-		// Create new PHPExcel object
-		$objPHPExcel = new PHPExcel();
+		// Create new Spreadsheet object
+		$objPHPExcel = new Spreadsheet();
 
 		// Set document properties
 		$objPHPExcel->getProperties()->setCreator("webERP")
@@ -195,9 +198,14 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
 
-		// Redirect output to a client's web browser (Excel2007)
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+		// Redirect output to a client's web browser
+		if ($_POST['Format'] == 'xlsx') {
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+		} else if ($_POST['Format'] == 'ods') {
+			header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+			$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.ods';
+		}
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');
 		// If you're serving to IE 9, then the following may be needed
@@ -209,8 +217,13 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 		header ('Pragma: public'); // HTTP/1.0
 
-		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-		$objWriter->save('php://output');
+		if ($_POST['Format'] == 'xlsx') {
+			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+			$objWriter->save('php://output');
+		} else if ($_POST['Format'] == 'ods') {
+			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+			$objWriter->save('php://output');
+		}
 	}
 } // End of function submit()
 
@@ -234,10 +247,11 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], _('Company'), _('Select the company to export GL transactions'), '', 1, true, false);
 	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From Date'), '', '', 2, true, false);
 	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To Date'), '', '', 3, true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'), '', '', 4, true, false);
 	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Export Excel'));
+	echo OneButtonCenteredForm('submit', _('Export File GL transactions of a PT'));
 
 	echo '</form>';
 	

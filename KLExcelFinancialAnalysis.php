@@ -1,7 +1,10 @@
 <?php
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -46,10 +49,10 @@ function submit($FromDate, $ToDate) {
 		if (TRUE){
 			
 			// Set value binder
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -185,9 +188,14 @@ function submit($FromDate, $ToDate) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client�s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-FinancialAnalysis-' . Date('Y-m-d'). '.xlsx';
+			// Redirect output to a client's web browser
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = 'KL-FinancialAnalysis-' . Date('Y-m-d'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = 'KL-FinancialAnalysis-' . Date('Y-m-d'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -199,8 +207,13 @@ function submit($FromDate, $ToDate) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 		}else{
 			$Title = _('Excel file for Financial Analysis');
@@ -234,9 +247,11 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', 1, true, false);
 	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', 2, true, false);
 	
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	
 	echo '</fieldset>';
 
-	echo OneButtonCenteredForm('submit', _('Create Financial Analysis Excel File'));
+	echo OneButtonCenteredForm('submit', _('Export file for Financial Analysis'));
 
 	echo '</div>
          </form>';
