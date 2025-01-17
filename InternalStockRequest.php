@@ -2,7 +2,8 @@
 
 /**********************************************************************************************
 *
-* KL RICARD for our use, we prefer AND locationusers.canview=1
+* KL RICARD Do not send emails to authorizers, as authorization is done automatically every day.
+*			Fixed departments and locations for our use.
 *
 **********************************************************************************************/ 
 
@@ -19,6 +20,25 @@ if (isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);
 	$_SESSION['Request'] = new StockRequest();
 }
+
+if (isset($_POST['Department'])) {
+		$_SESSION['Request']->Department = $_POST['Department'];
+}
+else{
+	if ($_SESSION['AllowedDepartment'] == 0) {
+		// any internal department allowed
+		$_POST['Department'] = '';
+	}
+	else {
+		// just 1 internal department allowed
+		$_POST['Department'] = $_SESSION['AllowedDepartment'];
+	}
+	$_SESSION['Request']->Department = $_POST['Department'];
+}
+
+/* KL RICARD for our use, we request only to KANTOR */
+$_SESSION['Request']->Location = 'KANTO';
+$_POST['Location'] = 'KANTO';
 
 if (isset($_POST['Update'])) {
 	$InputError = 0;
@@ -153,7 +173,7 @@ if (isset($_GET['Edit'])) {
 	echo '<legend>', _('Edit the Request Line'), '</legend>';
 	echo '<field>
 			<label>', _('Line number'), '</label>
-			<fieldtext>', $_SESSION['Request']->LineItems[$_GET['Edit']]->LineNumber, '</fieldtext>
+			<fieldtext>', $_SESSION['Request']->LineItems[$_GET['Edit']]->LineNumber + 1, '</fieldtext>
 		</field>
 		<field>
 			<label>', _('Stock Code'), '</label>
@@ -214,7 +234,6 @@ echo '</select>
 	</field>';
 	
 /* KL RICARD for our use, we request only to KANTOR */
-$_SESSION['Request']->Location = 'KANTO';
 echo '<field>
 		<label for="Location">' . _('Location from which to request stock') . ':</label>
 		<fieldtext>' . "Kantor KL". '</fieldtext>
