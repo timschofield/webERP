@@ -1,7 +1,12 @@
 <?php
-require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -9,16 +14,20 @@ include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php'); 
 include('includes/KLGeneralFunctions.php');
 
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+}
+
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
+}
+
+if (!isset($_POST['CodeDetail'])) {
+    $_POST['CodeDetail'] = 'CODE_FULL';
 }
 
 if (isset($_POST['submit'])) {
@@ -337,21 +346,16 @@ function display($RootPath, $Theme){
 	echo '<fieldset>
 			<legend>' . _('Report Parameters') . '</legend>';
 
-	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', '', true, true);
+	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', 1, true, true);
 
-	echo '<field>';
-	echo '<label for="CodeDetail">' . _('Item Codes detailed as') . ':</label>
-		<select name="CodeDetail">
-			<option selected="selected" value="CODE_FULL">' . _('Full Item Code') . '</option>
-			<option value="CODE_FULL_WITH_RINGS">' . _('Full Item Code + Rings Grouped') . '</option>
-			<option value="CODE_6">' . _('Basic Item Code (6 Char)') . '</option>
-		</select>';
-	echo '</field>';
-	
-	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', '', true);
-	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', '', true);
-
+	echo FieldToSelectFromThreeOptions('CODE_FULL', _('Full Item Code'),
+									'CODE_FULL_WITH_RINGS', _('Full Item Code + Rings Grouped'),
+									'CODE_6', _('Basic Item Code (6 Char)'),
+									'CodeDetail', $_POST['CodeDetail'],	_('Item Codes detailed as'), '', '', 2, true, false);
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', 3, true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', 4, true, false);
 	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+
 	echo '</fieldset>';
 
 	echo OneButtonCenteredForm('submit', _('Export Sales Analysis File'));

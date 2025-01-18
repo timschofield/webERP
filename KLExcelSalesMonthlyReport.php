@@ -1,7 +1,8 @@
 <?php
-require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -14,6 +15,10 @@ include('includes/KLGeneralFunctions.php');
 
 if (!isset($_POST['Period'])){
 	$_POST['Period'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+}
+
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
 }
 
 if (isset($_POST['submit'])) {

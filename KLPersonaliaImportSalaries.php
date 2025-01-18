@@ -1,12 +1,13 @@
 <?php
-require_once 'vendor/autoload.php';
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Shared\Date;
-
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
 
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
@@ -35,7 +36,7 @@ if (!isset($_POST['SelectedFile'])) {
 }
 
 if (isset($_POST['submit'])) {
-    submit($_POST['PeriodOfFile'], $_POST['SelectedFile'], $_POST['SalaryType']);
+    submit($_POST['PeriodSelectedByUser'], $_POST['SelectedFile'], $_POST['SalaryType'], $RootPath);
 } else {
     display();
 }
@@ -43,9 +44,7 @@ if (isset($_POST['submit'])) {
 include('includes/footer.php');
 
 
-
-//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($PeriodOfFile, $SelectedFile, $SalaryType) {
+function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
@@ -65,33 +64,34 @@ function submit($PeriodOfFile, $SelectedFile, $SalaryType) {
 	$ExcelSheetName = "General Settings";
 	$objPHPExcel->setActiveSheetIndexByName($ExcelSheetName);
 	$worksheet = $objPHPExcel->getActiveSheet();
-//	$ExcelPeriodLastDate = ConvertExcelDate($worksheet->getCell('E10'));
-	$ExcelPeriodLastDate = ConvertExcelDate($worksheet->getCell('E10')->getValue());
+    $ExcelLastDate = ConvertExcelDate($worksheet->getCell('E10'), 'Y-m-d');
+
+	$ExcelPeriod = GetPeriod(ConvertSQLDate($ExcelLastDate));
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+
 	$MonthOfSalary = $worksheet->getCell('E11')->getCalculatedValue();
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Importing Excel with Monthly Salary Information for '). $MonthOfSalary;
+		$PageTitle = _('Importing Excel with Monthly Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Importing Excel with THR ONLY Salary Information for '). $MonthOfSalary;
+		$PageTitle = _('Importing Excel with THR ONLY Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
 	}else{
 		prnMsg("The type of Salary " . $SalaryType . " is not accepted", "warn");
 		$InputError = TRUE;
 	}
 	
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 		'</p>';
 
-	if($ExcelPeriodLastDate != $PeriodOfFile){
-		prnMsg("The month selected by the user " . $PeriodOfFile . " is not the same as the month of the Excel file " . $ExcelPeriodLastDate,"warn");
+	if($ExcelPeriod != $PeriodSelectedByUser){
+		prnMsg("The month selected by the user " . MonthAndYearFromPeriodNo($PeriodSelectedByUser) . " is not the same as the month of the Excel file " .  MonthAndYearFromPeriodNo($ExcelPeriod),"warn");
 		$InputError = TRUE;
 	}
 
-	$PeriodPeriodOfFile = GetPeriod(ConvertSQLDate($PeriodOfFile));
-	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodPeriodOfFile + 1)){
+		if($PeriodNow != ($PeriodSelectedByUser + 1)){
 			prnMsg("The month selected by the user and the Excel file should be last month","warn");
 //			$InputError = TRUE;
 		}
@@ -99,7 +99,7 @@ function submit($PeriodOfFile, $SelectedFile, $SalaryType) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodPeriodOfFile)){
+		if($PeriodNow != ($PeriodSelectedByUser)){
 			prnMsg("The month selected by the user and the Excel file should be this current month","warn");
 			$InputError = TRUE;
 		}
@@ -109,7 +109,7 @@ function submit($PeriodOfFile, $SelectedFile, $SalaryType) {
 	
 		// let's delete the previous records of that month for test purposes
 		$SQL = "DELETE FROM salariescalculated
-				WHERE periodno = '" . $PeriodPeriodOfFile . "'
+				WHERE periodno = '" . $PeriodSelectedByUser . "'
 					AND salarytype = '" . $SalaryType . "'";
 		$Result = DB_query($SQL);
 		
@@ -214,7 +214,6 @@ function submit($PeriodOfFile, $SelectedFile, $SalaryType) {
 								$TunjanganTransport +
 								$TunjanganJabatan +
 								$KomisiTetap +
-								$GajiPokok +
 								$TunjanganMasaKerja +
 								$TunjanganKendaraan +
 								$KomisiRetail +
@@ -280,7 +279,7 @@ function submit($PeriodOfFile, $SelectedFile, $SalaryType) {
 									potonganlain2notes,
 									bulatan)
 								VALUES
-									('" . $PeriodPeriodOfFile . "',
+									('" . $PeriodSelectedByUser . "',
 									'" . $SalaryType . "',
 									'" . $CodeName . "',
 									'" . $FullName . "',
@@ -319,7 +318,7 @@ function submit($PeriodOfFile, $SelectedFile, $SalaryType) {
 									'" . $PotonganLain2Notes . "',
 									'" . $Bulatan . "'
 									)";
-					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
+					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,'',true);
 					
 					printf('<tr class="striped_row">
 							<td class="number">%s</td>
@@ -356,8 +355,8 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 	echo '<fieldset>';
 
-	echo FieldToSelectOnePeriod('PeriodOfFile',
-								isset($_POST['PeriodOfFile']) ? $_POST['PeriodOfFile'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
+	echo FieldToSelectOnePeriod('PeriodSelectedByUser',
+								isset($_POST['PeriodSelectedByUser']) ? $_POST['PeriodSelectedByUser'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
 								_('Select Month of the Salaries'));
 
 	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),

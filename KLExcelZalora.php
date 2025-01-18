@@ -1,7 +1,13 @@
 <?php
 
-require_once 'vendor/autoload.php';
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
@@ -9,16 +15,14 @@ include('includes/KLUIGeneralFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-
 if (!isset($_POST['FromPrice'])){
 	$_POST['FromPrice'] = 0;
 }
+
 if (!isset($_POST['ToPrice'])){
 	$_POST['ToPrice'] = 999999999;
 }
+
 if (!isset($_POST['Format'])){
 	$_POST['Format'] = 'xlsx';
 }

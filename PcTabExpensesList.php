@@ -1,12 +1,13 @@
 <?php
 
-require_once 'vendor/autoload.php';
-
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
+
+require_once 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+include('includes/SQL_CommonFunctions.inc');
 
 if (isset($_POST['submit'])) {
 

@@ -1,7 +1,8 @@
 <?php
-require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -19,6 +20,9 @@ if (!isset($_POST['ToDate'])){
 }
 if (!isset($_POST['PartnerCode'])) {
     $_POST['PartnerCode'] = 'PTADU';
+}
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
 }
 
 if (isset($_POST['submit'])) {

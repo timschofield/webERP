@@ -270,15 +270,11 @@ function display($RootPath, $Theme) {
 	// Marketplace shop selection
 	echo FieldToSelectOneBrand('TypeOfShop', $_POST['TypeOfShop'], _('Marketplace kind of shop'), '', '', 1, true, false);
 
-	// File type selection
-	echo '<field>';
-	echo '<label>' . _('Type of ACI File') . ':</label>';
-	echo '<select name="TypeOfFile">
-			<option selected="selected" value="FullUpdate">' . _('Full Update') . '</option>
-			<option value="QOHOnly">' . _('QOH-Stock available Only') . '</option>
-			<option value="PricesOnly">' . _('Prices Only') . '</option>
-		  </select>';
-	echo '</field>';
+	// ACI File type selection
+	echo FieldToSelectFromThreeOptions('FullUpdate', _('Full Update'),
+										'QOHOnly', _('QOH-Stock available Only'),
+										'PricesOnly', _('Prices Only'),
+										'TypeOfFile', $_POST['TypeOfFile'],	_('Type of ACI File'), '', '', 2, true, false);
 
 	// Format selection
 	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'), '', '', 3, true, false);

@@ -4,6 +4,9 @@
 			GENERAL KL FUNCTIONS
 **************************************************************************************************/
 
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+
 function ListToArray($List, $Separator){
 	$CleanUp = array("(", ")", "'");
 	return explode($Separator, str_replace($CleanUp, "", $List));
@@ -621,14 +624,14 @@ function FindReasonOfReturn($ReasonCode){
 	return $Row['0'];
 }
 
-function ConvertExcelDate($cell, $format = 'Y-m-d') {
+function ConvertExcelDate(Cell $cell, $format = 'Y-m-d') {
     // converts an excel cell into a valid date to work with
+    $cellValue = $cell->getValue();
     if (Date::isDateTime($cell)) {
-        $ConvertedDate = date($format, Date::excelToTimestamp($cell->getCalculatedValue()));                          
+        return Date::excelToDateTimeObject($cellValue)->format($format);
     } else {
-        $ConvertedDate = '0000-00-00';                          
+        return '0000-00-00';
     }
-    return $ConvertedDate;
 }
 
 function AdjustBulatan($Amount, $RoundTo){

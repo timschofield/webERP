@@ -1,7 +1,12 @@
 <?php
-require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
@@ -12,9 +17,13 @@ include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
 
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
+}
+
+if (!isset($_POST['DaysTopSales'])) {
+    $_POST['DaysTopSales'] = '60';
+}
 
 if (isset($_POST['submit'])) {
     submit($_POST['Categories'], $_POST['DaysTopSales']);
@@ -168,18 +177,14 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 	echo '<fieldset>
 	        <legend>' . _('Analysis Parameters') . '</legend>';
 
-	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', '', true, true);
+	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', 1, true, true);
 
-	echo '<field>
-			<label for="DaysTopSales">' . _('# Days for Top Sales Ranking') . ':</label>
-			<select name="DaysTopSales">
-				<option value="30">' . _('30 days') . '</option>
-				<option selected="selected" value="60">' . _('60 days') . '</option>
-				<option value="90">' . _('90 days') . '</option>
-			</select>
-		</field>';
-	
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('Format'), '', '', '', true, false);
+	echo FieldToSelectFromThreeOptions('30', _('30 days'),
+									'60', _('60 days'),
+									'90', _('90 days'),
+									'DaysTopSales', $_POST['DaysTopSales'],	_('# Days for Top Sales Ranking'), '', '', 2, true, false);
+
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('Format'), '', '', 3, true, false);
 
 	echo '</fieldset>';
 

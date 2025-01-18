@@ -1,10 +1,12 @@
 <?php
-require_once 'vendor/autoload.php';
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
@@ -311,17 +313,14 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<legend>' . _('FORSTOK Export Options') . '</legend>';
 	
 	echo FieldToSelectOneBrand('submit', 'TypeOfShop', _('Marketplace kind of shop'), '', '', 1);
-	
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
 
-	echo '<field>
-			<label>' . _('Type of FORSTOK File') . ':</label>
-			<select name="TypeOfFile">
-				<option selected="selected" value="FSMaster">' . _('Master FORSTOK') . '</option>
-				<option value="FSQOH">' . _('QOH FORSTOK Update') . '</option>
-				<option value="FSPrice">' . _('Price FORSTOK Update') . '</option>
-			</select>
-		</field>';
+	// FORSTOK File type selection
+	echo FieldToSelectFromThreeOptions('FSMaster', _('Master FORSTOK'),
+										'FSQOH', _('QOH FORSTOK Update'),
+										'FSPrice', _('Price FORSTOK Update'),
+										'TypeOfFile', $_POST['TypeOfFile'],	_('Type of FORSTOK File'), '', '', 2, true, false);
+
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
 
 	echo '</fieldset>';
 
