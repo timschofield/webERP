@@ -677,6 +677,20 @@ function GLAccountBelongsTo($Account){
 	return $Company;
 }
 
+function isBankAccount($GLAccount){
+	$ErrMsg = 'Error in function isBankAccount()';
+	$SQL = "SELECT *
+			FROM bankaccounts
+			WHERE accountcode = '" . $GLAccount . "'";
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result) == 0){
+		return false;
+	}
+	else{
+		return true;
+	}
+}
+
 function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
 	return $CompanyFrom . '-' . $CompanyTo . '-' . $EndDate;
 }

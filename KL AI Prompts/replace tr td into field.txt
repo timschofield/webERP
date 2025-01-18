@@ -35,6 +35,14 @@ Afterwards, look for:
 									$ValueOption3, $LabelOption3,
 									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
+12) <field> ... </field> structures referring to the input of a single GL Account and replace the <field> ... </field> structure for a call to the function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) taking care of the filter
+
+13) <field> ... </field> structures referring to the input of a single tag and replace the <field> ... </field> structure for a call to the function FieldToSelectOneTag($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+14) <field> ... </field> structures referring to the input of multiple (or a range of) periods and replace the <field> ... </field> structure for a call to the function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastSelectedValue, $Label = '', $HelpText = '', $Filter = 'ASC', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+15) <field> ... </field> structures referring to the input of a single GL Account group and replace the <field> ... </field> structure for a call to the function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
 
 18) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
 

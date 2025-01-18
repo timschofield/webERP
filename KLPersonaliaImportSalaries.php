@@ -1,14 +1,8 @@
 <?php
+require_once ('Classes/PHPExcel.php');
+require_once ('Classes/PHPExcel/IOFactory.php');
+
 include('includes/session.php');
-
-require_once 'vendor/autoload.php';
-use PhpOffice\PhpSpreadsheet\Helper\Sample;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
-use PhpOffice\PhpSpreadsheet\Shared\Date;
-use PhpOffice\PhpSpreadsheet\Cell\Cell;
-
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -16,6 +10,7 @@ include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
 $Title = _('Import Excel with Monthly Salary Information');
+
 include('includes/header.php');
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" enctype="multipart/form-data">
@@ -27,16 +22,8 @@ if(!isset($_POST['SalaryType'])) {
 	$_POST['SalaryType']='MONTHLY';
 }
 
-if (!isset($_POST['Format'])) {
-    $_POST['Format'] = 'xlsx';
-}
-
-if (!isset($_POST['SelectedFile'])) {
-    $_POST['SelectedFile'] = '';
-}
-
 if (isset($_POST['submit'])) {
-    submit($_POST['PeriodSelectedByUser'], $_POST['SelectedFile'], $_POST['SalaryType'], $RootPath);
+    submit($_POST['DateOfFile'], $_POST['SelectedFile'], $_POST['SalaryType']);
 } else {
     display();
 }
@@ -44,7 +31,9 @@ if (isset($_POST['submit'])) {
 include('includes/footer.php');
 
 
-function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
+
+//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
+function submit($DateOfFile, $SelectedFile, $SalaryType) {
 
 	// upload to server and load it...
 	// http://stackoverflow.com/questions/38581632/how-to-upload-excel-file-to-php-server-from-input-type-file
@@ -53,8 +42,8 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
 	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
 	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
-	$inputFileType = IOFactory::identify($Target_file);
-	$objReader = IOFactory::createReader($inputFileType);
+	$inputFileType = PHPExcel_IOFactory::identify($Target_file);
+	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
 	$objPHPExcel = $objReader->load($Target_file);
 	
 	//initialise no input errors
@@ -64,34 +53,32 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	$ExcelSheetName = "General Settings";
 	$objPHPExcel->setActiveSheetIndexByName($ExcelSheetName);
 	$worksheet = $objPHPExcel->getActiveSheet();
-    $ExcelLastDate = ConvertExcelDate($worksheet->getCell('E10'), 'Y-m-d');
-
-	$ExcelPeriod = GetPeriod(ConvertSQLDate($ExcelLastDate));
-	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-
+	$ExcelPeriodLastDate = ConvertExcelDate($worksheet->getCell('E10'));
 	$MonthOfSalary = $worksheet->getCell('E11')->getCalculatedValue();
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Importing Excel with Monthly Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
+		$PageTitle = _('Importing Excel with Monthly Salary Information for '). $MonthOfSalary;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Importing Excel with THR ONLY Salary Information for '). MonthAndYearFromPeriodNo($ExcelPeriod);
+		$PageTitle = _('Importing Excel with THR ONLY Salary Information for '). $MonthOfSalary;
 	}else{
 		prnMsg("The type of Salary " . $SalaryType . " is not accepted", "warn");
 		$InputError = TRUE;
 	}
 	
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 		'</p>';
 
-	if($ExcelPeriod != $PeriodSelectedByUser){
-		prnMsg("The month selected by the user " . MonthAndYearFromPeriodNo($PeriodSelectedByUser) . " is not the same as the month of the Excel file " .  MonthAndYearFromPeriodNo($ExcelPeriod),"warn");
+	if($ExcelPeriodLastDate != $DateOfFile){
+		prnMsg("The month selected by the user " . $DateOfFile . " is not the same as the month of the Excel file " . $ExcelPeriodLastDate,"warn");
 		$InputError = TRUE;
 	}
 
+	$PeriodDateOfFile = GetPeriod(ConvertSQLDate($DateOfFile));
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodSelectedByUser + 1)){
+		if($PeriodNow != ($PeriodDateOfFile + 1)){
 			prnMsg("The month selected by the user and the Excel file should be last month","warn");
 //			$InputError = TRUE;
 		}
@@ -99,7 +86,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodSelectedByUser)){
+		if($PeriodNow != ($PeriodDateOfFile)){
 			prnMsg("The month selected by the user and the Excel file should be this current month","warn");
 			$InputError = TRUE;
 		}
@@ -109,7 +96,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 	
 		// let's delete the previous records of that month for test purposes
 		$SQL = "DELETE FROM salariescalculated
-				WHERE periodno = '" . $PeriodSelectedByUser . "'
+				WHERE periodno = '" . $PeriodDateOfFile . "'
 					AND salarytype = '" . $SalaryType . "'";
 		$Result = DB_query($SQL);
 		
@@ -119,7 +106,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 		
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
-		$highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
+		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
 		$InsertErrMsg = _('The SQL to insert Imported Salary Info failed');
 		
 		echo '<div>';
@@ -214,6 +201,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 								$TunjanganTransport +
 								$TunjanganJabatan +
 								$KomisiTetap +
+								$GajiPokok +
 								$TunjanganMasaKerja +
 								$TunjanganKendaraan +
 								$KomisiRetail +
@@ -279,7 +267,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 									potonganlain2notes,
 									bulatan)
 								VALUES
-									('" . $PeriodSelectedByUser . "',
+									('" . $PeriodDateOfFile . "',
 									'" . $SalaryType . "',
 									'" . $CodeName . "',
 									'" . $FullName . "',
@@ -318,7 +306,7 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 									'" . $PotonganLain2Notes . "',
 									'" . $Bulatan . "'
 									)";
-					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,'',true);
+					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,$DbgMsg,true);
 					
 					printf('<tr class="striped_row">
 							<td class="number">%s</td>
@@ -348,24 +336,19 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 
 function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
-	global $RootPath;	
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Import Excel with Monthly Salary Information') . '" alt="" />' . ' ' . _('Import Excel with Monthly Salary Information') . '
 		</p>';
 
 	echo '<fieldset>';
 
-	echo FieldToSelectOnePeriod('PeriodSelectedByUser',
-								isset($_POST['PeriodSelectedByUser']) ? $_POST['PeriodSelectedByUser'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
-								_('Select Month of the Salaries'));
+	echo FieldToSelectOnePeriod('DateOfFile', $_POST['DateOfFile'], _('Select Month of the Salaries'));
 
 	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
 									'THRONLY', _('THR Only'),
 									'SalaryType', 
 									$_POST['SalaryType'],
 									_('Type Of Salary'));
-
-	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
 
 	echo FieldToSelectOneFile('SelectedFile', _('File with Gaji Information'));
 	echo '</fieldset>';

@@ -81,6 +81,38 @@ function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filte
 	return $HTML;
 }
 
+function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	$SQL = "SELECT groupname
+			FROM accountgroups
+			ORDER BY sequenceintb ASC";
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if ($Required){
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['groupname'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['groupname'] . '">' . $MyRow['groupname'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['groupname'] . '">' . $MyRow['groupname'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
 
 function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	
@@ -241,6 +273,42 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 				<input type="text"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
+			</field>';
+	return $HTML;
+}
+
+function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastSelectedValue, $Label = '', $HelpText = '', $Filter = 'ASC', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	/* Select a range of Periods, showing the month and Year */
+	if ($Filter == 'ASC') {
+		$OrderSQL = " ORDER BY periodno";
+	}
+	else {
+		$OrderSQL = " ORDER BY periodno DESC";
+	}
+
+	$SQL = "SELECT periodno, 
+				lastdate_in_period 
+			FROM periods"
+			. $OrderSQL;
+	
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '[]">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'minlength="1" size="12" name="' . $VariableName . '[]" multiple="multiple">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($FirstSelectedValue) AND $MyRow['periodno'] >= $FirstSelectedValue AND $MyRow['periodno'] <= $LastSelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
+		}
+		else {
+			$HTML .= '<option value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
+		}
+	}
+	$HTML .= '</select>
 			</field>';
 	return $HTML;
 }
