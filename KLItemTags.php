@@ -215,7 +215,6 @@ if (! isset($_GET['delete'])) {
 
 		echo '<fieldset>
 				<legend>' . _('Edit Tag Details') . '</legend>';
-//		echo '<div>' . _('Tag ID') . ': ' . $_POST['tagid'] . '</div>';
 
 	}
 	else {

@@ -277,6 +277,39 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 	return $HTML;
 }
 
+function createTextArea($name, $cols = 60, $rows = 5, $defaultValue = '', $label = '', $helpText = '') {
+    $html = '<field>';
+    
+    if ($label != '') {
+        $html .= '<label for="' . $name . '">' . $label . ':</label>';
+    }
+    
+    $html .= '<textarea name="' . $name . '" cols="' . $cols . '" rows="' . $rows . '">' . htmlspecialchars($defaultValue) . '</textarea>';
+    
+    if ($helpText != '') {
+        $html .= '<fieldhelp>' . $helpText . '</fieldhelp>';
+    }
+    
+    $html .= '</field>';
+    
+    return $html;
+}
+
+
+function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>';
+    if ($HTML != '') {
+        $HTML .= '<label for="' . $VariableName . '">' . $Label . ':</label>';
+    }
+    $HTML .= '<textarea name="' . $VariableName . '" cols="' . $Cols . '" rows="' . $Rows . '">' . htmlspecialchars($SelectedValue) . '</textarea>';
+    if ($HelpText != '') {
+        $HTML .= '<fieldhelp>' . $helpText . '</fieldhelp>';
+    }
+    $HTML .= '</field>';
+	return $HTML;
+}
+
 function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	if ($Filter == 'CANVIEW') {    
 		$SQL = "SELECT locations.loccode,

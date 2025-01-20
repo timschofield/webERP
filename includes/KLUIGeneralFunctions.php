@@ -279,6 +279,43 @@ function FieldToSelectOneKPIConcept($VariableName, $SelectedValue, $Label = '', 
 	return $HTML;
 }
 
+
+function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	$SQL = "SELECT maintenancetype,
+					description
+				FROM klmaintenancetypes 
+				ORDER BY description";
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if ($Required){
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['maintenancetype'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['maintenancetype'] . '">' . $MyRow['description'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['maintenancetype'] . '">' . $MyRow['description'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+
+
 function FieldToSelectOneRetailPartner($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 $SQL = "SELECT partnercode, 
