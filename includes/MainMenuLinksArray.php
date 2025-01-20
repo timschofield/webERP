@@ -400,6 +400,7 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('Stock Transfer Note'),
 													_('Aged Controlled Stock Report'),
 													_('Internal stock request inquiry'),
+													_('Pending Internal Stock Requests for SPG'),
 													_('KL Service Fee Calculator'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
@@ -440,6 +441,7 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/PDFStockTransfer.php',
 												'/AgedControlledInventory.php',
 												'/InternalStockRequestInquiry.php',
+												'/KLInternalStockRequestView.php',
 												'/KLServiceFeeCalculator.php');
 
 $MenuItems['stock']['Maintenance']['Caption'] = array(	_('Add A New Item'),

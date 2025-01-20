@@ -98,6 +98,7 @@ function KL_DailyCleanDB($ShowMessages, $EmailText){
 	$EmailText = CleanDiscountForObsoleteItems($ShowMessages, $EmailText);
 	$EmailText = CleanObsoleteFromWebsite($ShowMessages, $EmailText);
 	$EmailText = CleanPurchOrderDetails($ShowMessages, $EmailText);
+	$EmailText = CleanWorkOrdersWithoutItems($ShowMessages, $EmailText);
 	$EmailText = CleanInternalRequestsWithoutItems($ShowMessages, $EmailText);
 	$EmailText = SetStatusCompleteToFinishedOldPurchaseOrders(150, $ShowMessages, $EmailText);
 	$EmailText = CleanWrongPrices($ShowMessages, $EmailText);
@@ -275,6 +276,20 @@ function CleanPurchOrderDetails($ShowMessages, $EmailText){
 	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
 	return $EmailText;
 }
+
+function CleanWorkOrdersWithoutItems($ShowMessages, $EmailText){
+	$SQL = "DELETE w
+			FROM workorders w
+			LEFT JOIN woitems wi 
+				ON w.wo = wi.wo
+			WHERE wi.wo IS NULL;";
+	$ErrMsg ='Could not clean workorders table because';
+	$Result = DB_query($SQL,$ErrMsg);
+	$Text = "Table workorders without items cleaned.";
+	$EmailText = ShowOrEmail($ShowMessages, $EmailText, $Text);
+	return $EmailText;
+}
+
 
 function CleanDiscountForObsoleteItems($ShowMessages, $EmailText){
 	$SQL = "UPDATE stockmaster
