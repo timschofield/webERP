@@ -319,6 +319,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 												'".-$HutangPPH23."',
 												0,
 												'')";
+				$ResultHutangPPH23 = DB_Query($SQLHutangPPH23,'', '', true);
 			}
 			// KL RICARD END
 
