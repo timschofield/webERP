@@ -277,6 +277,65 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 	return $HTML;
 }
 
+function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	if ($Filter == 'CANVIEW') {    
+		$SQL = "SELECT locations.loccode,
+					locations.locationname
+				FROM locations
+				INNER JOIN locationusers 
+					ON locationusers.loccode=locations.loccode 
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+					AND locationusers.canview=1
+				ORDER BY locations.locationname";
+	} 
+	elseif ($Filter == 'CANUPDATE') {    
+		$SQL = "SELECT locations.loccode,
+					locations.locationname
+				FROM locations
+				INNER JOIN locationusers 
+					ON locationusers.loccode=locations.loccode 
+					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
+					AND locationusers.canupd=1
+				ORDER BY locations.locationname";
+	}
+	elseif ($Filter == 'BALISHOPS') {    
+		$SQL = "SELECT loccode,
+					locationname
+				FROM locations
+				WHERE typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . "
+				ORDER BY locationname";
+	}
+	else 
+	{
+		$SQL = "SELECT loccode,
+					locationname
+				FROM locations
+				ORDER BY locationname";
+	}
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '[]">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'minlength="1" size="12" name="' . $VariableName . '[]" multiple="multiple">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+	
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND in_array($MyRow['loccode'], $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+
 function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastSelectedValue, $Label = '', $HelpText = '', $Filter = 'ASC', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	/* Select a range of Periods, showing the month and Year */
 	if ($Filter == 'ASC') {

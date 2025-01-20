@@ -45,6 +45,7 @@ Afterwards, look for:
 
 16) <field> ... </field> structures referring to the input of a single KPI Concept and replace the <field> ... </field> structure for a call to the function FieldToSelectOneKPIConcept($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
+17) <field> ... </field> structures referring to the input of multiple locations and replace the <field> ... </field> structure for a call to the function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
 
 

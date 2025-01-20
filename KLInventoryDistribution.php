@@ -8,6 +8,7 @@ include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
 
 if (isset($_POST['submit'])) {
     submit($_POST['Categories'], $_POST['Locations']);
@@ -296,55 +297,18 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Inventory Distribution by Type') . '" alt="" />' . ' ' . _('Inventory Distribution by Type') . '
 		</p>';
 
-	echo '<table class="selection">';
-	echo ' <tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
-			ORDER BY categorydescription';
-	$CatResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-	}
-	echo '</select>
-			</td>
-		</tr>';
+    echo '<fieldset>
+            <legend>' . _('Selection Criteria') . '</legend>';
 
-	echo ' <tr>
-				<td>' . _('Select Inventory Locations') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Locations[]"multiple="multiple">';
-	$SQL = 'SELECT loccode, locationname 
-			FROM locations 
-			ORDER BY locationname';
-	$LocResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($LocResult)) {
-		if (isset($_POST['Locations']) AND in_array($MyRow['loccode'], $_POST['Locations'])) {
-			echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		}
-	}
-	echo '</select>
-			</td>
-		</tr>';
+    echo FieldToSelectMultipleStockCategories('Categories', (isset($_POST['Categories']) ? $_POST['Categories'] : array()), 
+                                            _('Select Inventory Categories'), '', '', '', true, true);
+    echo FieldToSelectMultipleLocations('Locations', (isset($_POST['Locations']) ? $_POST['Locations'] : array()), 
+                                      _('Select Inventory Locations'), '', 'CANVIRE', '', true, false);
+    echo '</fieldset>';
 
-		
-	echo '</table>
-		<table>';
-
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Inventory Distribution by Type') . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
+    echo OneButtonCenteredForm('submit', _('Inventory Distribution by Type'));
+    
+    echo '</div>
          </form>';
 
 } // End of function display()
