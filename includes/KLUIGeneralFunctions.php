@@ -67,6 +67,46 @@ function FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1,
 	return $HTML;
 }
 
+function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$ValueOption3, $LabelOption3,
+									$ValueOption4, $LabelOption4,
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+		<label>' . $Label . ':</label>
+		<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">';
+	if($SelectedValue == $ValueOption1) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>';
+	}
+	else if($SelectedValue == $ValueOption2) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>';
+	}
+	else if($SelectedValue == $ValueOption3) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>';
+	}
+	else {
+		$HTML .= '<option selected="selected" value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>';
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
 function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$SQL = "SELECT manufacturers.manufacturers_id, 
@@ -205,6 +245,39 @@ function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $
 	return $HTML;
 }
 
+function FieldToSelectOneKPIConcept($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT DISTINCT class,
+				concept 
+			FROM klkpi 
+			ORDER BY class, concept";
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if ($Required){
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['concept'] == $SelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
 
 function FieldToSelectOneRetailPartner($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 

@@ -43,6 +43,10 @@ Afterwards, look for:
 
 15) <field> ... </field> structures referring to the input of a single GL Account group and replace the <field> ... </field> structure for a call to the function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
+16) <field> ... </field> structures referring to the input of a single KPI Concept and replace the <field> ... </field> structure for a call to the function FieldToSelectOneKPIConcept($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+
+
 
 18) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
 

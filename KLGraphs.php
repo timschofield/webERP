@@ -2,6 +2,9 @@
 
 include('includes/session.php');
 include('includes/phplot/phplot.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
 $Title=_('KPI Graph');
 
 include('includes/header.php');
@@ -18,6 +21,10 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 
+if (!isset($_POST['Concept'])){
+	$_POST['Concept']='';
+}
+
 if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
 	if (FormatDateForSQL($_POST['FromDate']) > FormatDateForSQL($_POST['ToDate'])){
 		prnMsg(_('The selected date from is actually after the date to!'),'error');
@@ -28,6 +35,7 @@ if (isset($_POST['FromDate']) AND isset($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) 
 	OR !isset($_POST['ToDate'])
 	OR !isset($_POST['Concept'])
+	OR $_POST['Concept']==''
 	OR $ErrorInDates){
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
@@ -36,55 +44,18 @@ if (!isset($_POST['FromDate'])
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<table class="selection">';
-	echo '<tr>
-			<td>' . _('From') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
-	$ConceptResult = DB_query("SELECT DISTINCT class,
-								concept 
-							FROM klkpi 
-							ORDER BY class, concept");
+	echo '<fieldset>
+			<legend>' . _('KPI Graph Parameters') . '</legend>';
 
-	if (!isset($_POST['Concept'])){
-		$_POST['Concept']='';
-	}
-	echo '<tr>
-			<td>' . _('For KPI Concept:')  . '</td>
-			<td><select name="Concept">';
-	while ($MyRow=DB_fetch_array($ConceptResult)){
-		if($MyRow['concept']==$_POST['Concept']){
-			echo '<option selected="selected" value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['concept'] . '">' . $MyRow['class'] . ' - ' . $MyRow['concept'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', '', true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', '', true, false);
+	echo FieldToSelectOneKPIConcept('Concept', $_POST['Concept'], _('KPI Concept to Graph'), '', '', '', true, false);
 
-/*	echo '<tr>
-			<td>' . _('Graph Type') . '</td>
-			<td><select name="GraphType">
-				<option value="bars">' . _('Bar Graph') . '</option>
-				<option value="stackedbars">' . _('Stacked Bar Graph') . '</option>
-				<option value="lines">' . _('Line Graph') . '</option>
-				<option value="linepoints">' . _('Line Point Graph') . '</option>
-				<option value="area">' . _('Area Graph') . '</option>
-				<option value="points">' . _('Points Graph') . '</option>
-				<option value="pie">' . _('Pie Graph') . '</option>
-				<option value="thinbarline">' . _('Thin Bar Line Graph') . '</option>
-				<option value="squared">' . _('Squared Graph') . '</option>
-				<option value="stackedarea">' . _('Stacked Area Graph') . '</option>
-				</select></td>
-			</tr>';
-*/
-	echo '</table>
-		<br />
-			<div class="centre"><input type="submit" name="ShowGraph" value="' . _('Show KPI Graph') .'" /></div>
-		</div>
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('ShowGraph', _('Show KPI Graph'));
+	
+	echo '</div>
         </form>';
 	include('includes/footer.php');
 

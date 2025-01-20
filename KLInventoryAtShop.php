@@ -4,6 +4,8 @@
 
 include('includes/session.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 if (isset($_POST['PrintPDF'])){
 
@@ -120,57 +122,25 @@ if (isset($_POST['PrintPDF'])){
 				<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '
 			</p>';
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
               <div>
-            <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-			<table class="selection">';
+            <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr>
-				<td>' . _('For Inventory in Location') . ':</td>
-				<td><select name="Location">';
+	echo '<fieldset>
+			<legend>' . _('Selection Criteria') . '</legend>';
 
-		$SQL = "SELECT loccode,
-						locationname
-				FROM locations";
-
-		$LocnResult=DB_query($SQL);
-
-		while ($MyRow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		}
-		echo '</select></td>
-			</tr>';
-
-		echo '<tr>
-			<td>' . _('For Stock Categories') . ':</td>
-			<td><select name="Category">';
-
-		$SQL = "SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription";
-		$CatResult=DB_query($SQL);
-
-		echo '<option value="All">' . _('All Stock Categories') . '</option>';
-
-		while ($MyRow=DB_fetch_array($CatResult)){
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-		echo '</select>
-				</td>
-			</tr>';
-			
-		echo '<tr>
-				<td>' . _('Include Shop Displaying Category') . ':</td>
-				<td><select name="DisplayingItems">
-					<option selected="selected" value="No">' . _('No') . '</option>
-					<option value="Yes">' . _('Yes') . '</option>
-					</select></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
-				<input type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-			</div>';
-        echo '</div>
-              </form>';
+	echo FieldToSelectOneLocation('Location', '', _('For Inventory in Location'), '', '', '', true, true);
+	echo FieldToSelectMultipleStockCategories('Category', 'All', _('For Stock Categories'), '', '', '', true);
+	echo FieldToSelectFromTwoOptions('No', _('No'), 
+								   'Yes', _('Yes'),
+								   'DisplayingItems', 'No', _('Include Shop Displaying Category'));
+	
+	echo '</fieldset>';
+	
+	echo OneButtonCenteredForm('PrintPDF', _('Print PDF'));
+	
+	echo '</div>
+		</form>';
 
 include('includes/footer.php');
 

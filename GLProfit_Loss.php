@@ -1,4 +1,10 @@
 <?php
+
+/*****************************************************************************************
+ * 
+ * KL RICARD: Multicompany options
+ * 
+ ****************************************************************************************/
 // GLProfit_Loss.php
 // Shows the profit and loss of the company for the range of periods entered.
 /*
@@ -29,6 +35,32 @@ $BookMark = 'ProfitAndLoss';
 include_once('includes/SQL_CommonFunctions.inc');
 include_once('includes/AccountSectionsDef.php'); // This loads the $Sections variable
 include_once('includes/CurrenciesArray.php');// Array to retrieve currency name.
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
+
+// KL RICARD: prepare the data for each company
+if (!isset($_POST['Company'])) {
+	$_POST['Company'] = 'ALL';
+	$Title = _('Profit and Loss for KL group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'ALL') {
+	$Title = _('Profit and Loss for KL Group');
+	$Table = 'chartmaster';
+}
+else if ($_POST['Company'] == 'PTADU') {
+	$Title = _('Profit and Loss for PT. Angin Dingin Utara');
+	$Table = 'chartmasterADU';
+}
+else if ($_POST['Company'] == 'PTSMH') {
+	$Title = _('Profit and Loss for PT. Sungai Mutiara Hitam');
+	$Table = 'chartmasterSMH';
+}
+else if ($_POST['Company'] == 'PTBB') {
+	$Title = _('Profit and Loss for PT. Bumi Biru');
+	$Table = 'chartmasterBB';
+}
+
 
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	// Merges gets into posts:
@@ -38,11 +70,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if(isset($_GET['PeriodTo'])) {
 		$_POST['PeriodTo'] = $_GET['PeriodTo'];
 	}
+	if(isset($_GET['Company'])) {
+		$_POST['Company'] = $_GET['Company'];
+	}
 
 	// Sets PeriodFrom and PeriodTo from Period:
 	if(isset($_POST['Period']) and $_POST['Period'] != '') {
-		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'] . 'From');
-		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'] . 'To');
+		$_POST['PeriodFrom'] = ReportPeriod($_POST['Period'] , 'From');
+		$_POST['PeriodTo'] = ReportPeriod($_POST['Period'] , 'To');
 	}
 
 	// Validates the data submitted in the form:
@@ -76,24 +111,24 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				accountgroups.parentgroupname,
 				accountgroups.groupname,
 				chartdetails.accountcode,
-				chartmaster.accountname,
+				" . $Table . ".accountname,
 				SUM(CASE WHEN chartdetails.period='" . $_POST['PeriodFrom'] . "' THEN chartdetails.bfwd ELSE 0 END) AS firstprdbfwd,
 				SUM(CASE WHEN chartdetails.period='" . $_POST['PeriodFrom'] . "' THEN chartdetails.bfwdbudget ELSE 0 END) AS firstprdbudgetbfwd,
 				SUM(CASE WHEN chartdetails.period='" . $_POST['PeriodTo'] . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lastprdcfwd,
 				SUM(CASE WHEN chartdetails.period='" . ($_POST['PeriodFrom'] - 12) . "' THEN chartdetails.bfwd ELSE 0 END) AS lyfirstprdbfwd,
 				SUM(CASE WHEN chartdetails.period='" . ($_POST['PeriodTo']-12) . "' THEN chartdetails.bfwd + chartdetails.actual ELSE 0 END) AS lylastprdcfwd,
 				SUM(CASE WHEN chartdetails.period='" . $_POST['PeriodTo'] . "' THEN chartdetails.bfwdbudget + chartdetails.budget ELSE 0 END) AS lastprdbudgetcfwd
-			FROM chartmaster
-				INNER JOIN accountgroups ON chartmaster.group_ = accountgroups.groupname
-				INNER JOIN chartdetails	ON chartmaster.accountcode= chartdetails.accountcode
-				INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmaster.accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
+			FROM " . $Table . "
+				INNER JOIN accountgroups ON " . $Table . ".group_ = accountgroups.groupname
+				INNER JOIN chartdetails	ON " . $Table . ".accountcode= chartdetails.accountcode
+				INNER JOIN glaccountusers ON glaccountusers.accountcode=" . $Table . ".accountcode AND glaccountusers.userid='" .  $_SESSION['UserID'] . "' AND glaccountusers.canview=1
 			WHERE accountgroups.pandl=1
 			GROUP BY
 				accountgroups.sectioninaccounts,
 				accountgroups.parentgroupname,
 				accountgroups.groupname,
 				chartdetails.accountcode,
-				chartmaster.accountname
+				" . $Table . ".accountname
 			ORDER BY
 				accountgroups.sectioninaccounts,
 				accountgroups.sequenceintb,
@@ -111,9 +146,11 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$MyRow = DB_fetch_row($Result);
 	$PeriodToDate = MonthAndYearFromSQLDate($MyRow[0]);
 	$NumberOfMonths = $_POST['PeriodTo'] - $_POST['PeriodFrom'] + 1;
+
+	// KL RICARD: CHange the title, to adapt it to each company option
 	$HTML .= '<div class="centre" id="ReportHeader">
-				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-				' . _('Profit and Loss for the month of ') . $PeriodToDate . '<br />
+				' . $Title . '<br /> 
+				' . _('Profit and Loss for the month of ') . $PeriodToDate . '
 				' . _(' AND for the ') . $NumberOfMonths . ' ' . _('months to') . ' ' . $PeriodToDate . '<br />
 				' . _('All amounts stated in') . ': ' . _($CurrencyName[$_SESSION['CompanyRecord']['currencydefault']]) . '
 			</div>';// Page title.
@@ -701,11 +738,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('General Ledger Profit and Loss');
 		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . _('Profit and Loss Report') . '" alt="" />
-				' . _('Profit and Loss Report') . '
+				<img src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" title="' . $Title . '" alt="" />
+				' . $Title . '
 			</p>';
 		echo $HTML;
 		echo // Shows a form to select an action after the report was shown:
@@ -725,7 +761,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/printer.png" title="' . // Icon image.
-		$Title2 . '" /> ' . // Icon title.
+		$Title . '" /> ' . // Icon title.
 		$Title . '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
 		_('Profit and loss statement (P&amp;L) . also called an Income Statement . or Statement of Operations . this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out . also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for . also known as the "bottom line").') . '<br />' .
@@ -737,10 +773,19 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		'<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />',
 		// Input table:
 		'<fieldset>
-			<legend>' . _('Report Criteria') . '</legend>',
+			<legend>' . _('Report Criteria') . '</legend>';
+	
+	// KL RICARD select the company to include
+	echo FieldToSelectFromFourOptions('ALL', 'All companies', 
+									'PTADU', 'PT Angin Dingin Utara', 
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', $_POST['Company'], 'Companies to include in P & L', '', '', '', true, false);
+	// KL RICARD END select the company to include
+	
 	// Content of the body of the input table:
 	// Select period from:
-			'<field>
+	echo '<field>
 				<label for="PeriodFrom">' . _('Select period from') . '</label>
 		 		<select id="PeriodFrom" name="PeriodFrom" required="required">';
 	$Periods = DB_query('SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC');
@@ -784,7 +829,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						AND YEAR(lastdate_in_period ) = YEAR(CURRENT_DATE())";
 		$PeriodResult = DB_query($PeriodSQL);
 		$PeriodRow = DB_fetch_array($PeriodResult);
-		$_POST['PeriodTo'] = $PeriodRow['periodno'];;
+		$_POST['PeriodTo'] = $PeriodRow['periodno'];
 	}
 	echo '<field>
 			<label for="PeriodTo">' . _('Select period to') . '</label>
@@ -800,10 +845,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	if(!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
-	echo '<h3>' . _('OR') . '</h3>';
 
 	echo '<field>
-			<label for="Period">' . _('Select Period') . '</label>
+			<label for="Period">' .'<b>' . _('OR') . ' </b>'.  _('Select Period') . '</label>
 			' . ReportPeriodList($_POST['Period'], array('l', 't')),
 			'<fieldhelp>' . _('Select a period instead of using the beginning and end of the reporting period.') . '</fieldhelp>
 		</field>';
@@ -820,17 +864,16 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			'<label for="ShowZeroBalance">' . _('Show accounts with zero balance') . '</label>
 		 	<input',(isset($_POST['ShowZeroBalance']) && $_POST['ShowZeroBalance'] ? ' checked="checked"' : '') . ' id="ShowZeroBalance" name="ShowZeroBalance" type="checkbox">
 		 	<fieldhelp>' . _('Check this box to show all accounts including those with zero balance') . '</fieldhelp>
-		</field>',
-		'</fieldset>';
+		</field>';
 
-	/*Now do the posting while the user is thinking about the period to select */
+	echo '</fieldset>';
 
 	echo '<div class="centre">
 			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF P & L Account').'" />
 			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') .'" />
 		</div>',
 		'</form>';
-
+	/*Now do the posting while the user is thinking about the period to select */
 	include('includes/GLPostings.inc');
 	include('includes/footer.php');
 
