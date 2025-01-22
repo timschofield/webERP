@@ -139,27 +139,27 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			// KL RICARD Add custom fields to SQL
 			if(!isset( $_SESSION['PO' . $identifier]->KLAgreedDeliveryDate) 
 				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLAgreedDeliveryDate) == '0000-00-00')){
-				$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = date($_SESSION['DefaultDateFormat']);
+				$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->DeliveryDate) 
 				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) == '0000-00-00')){
-				$_SESSION['PO' . $identifier]->DeliveryDate = date($_SESSION['DefaultDateFormat']);
+				$_SESSION['PO' . $identifier]->DeliveryDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLPaymentDate) 
 				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) == '0000-00-00')){
-				$_SESSION['PO' . $identifier]->KLPaymentDate = date($_SESSION['DefaultDateFormat']);
+				$_SESSION['PO' . $identifier]->KLPaymentDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLShipmentDate) 
 				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLShipmentDate) == '0000-00-00')){
-				$_SESSION['PO' . $identifier]->KLShipmentDate = date($_SESSION['DefaultDateFormat']);
+				$_SESSION['PO' . $identifier]->KLShipmentDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLCustomsDate) 
 				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLCustomsDate) == '0000-00-00')){
-				$_SESSION['PO' . $identifier]->KLCustomsDate = date($_SESSION['DefaultDateFormat']);
+				$_SESSION['PO' . $identifier]->KLCustomsDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLArrivalDate) 
 				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) == '0000-00-00')){
-				$_SESSION['PO' . $identifier]->KLArrivalDate = date($_SESSION['DefaultDateFormat']);
+				$_SESSION['PO' . $identifier]->KLArrivalDate = '00/00/0000';
 			}
 
 			$SQL = "INSERT INTO purchorders ( orderno,

@@ -838,29 +838,29 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		</field>';
 
 	if (!isset($_POST['KLAgreedDeliveryDate'])) {
-		$_POST['KLAgreedDeliveryDate'] = date($_SESSION['DefaultDateFormat']);
+		$_POST['KLAgreedDeliveryDate'] = '00/00/0000';
 	}
 	//Delivery Date for this PO
 	if (!isset($_POST['DeliveryDate'])) {
-		$_POST['DeliveryDate'] = date($_SESSION['DefaultDateFormat']);
+		$_POST['DeliveryDate'] = '00/00/0000';
 	}
 	if (!isset($_POST['KLStatus'])) {
 		$_POST['KLStatus'] = '1000';
 	}
 	if (!isset($_POST['KLPaymentDate'])) {
-		$_POST['KLPaymentDate'] = date($_SESSION['DefaultDateFormat']);
+		$_POST['KLPaymentDate'] = '00/00/0000';
 	}
 	if (!isset($_POST['KLShipmentDate'])) {
-		$_POST['KLShipmentDate'] = date($_SESSION['DefaultDateFormat']);
+		$_POST['KLShipmentDate'] = '00/00/0000';
 	}
 	if (!isset($_POST['KLShipmentAWB'])) {
 		$_POST['KLShipmentAWB'] = '';
 	}
 	if (!isset($_POST['KLCustomsDate'])) {
-		$_POST['KLCustomsDate'] = date($_SESSION['DefaultDateFormat']);
+		$_POST['KLCustomsDate'] = '00/00/0000';
 	}
 	if (!isset($_POST['KLArrivalDate'])) {
-		$_POST['KLArrivalDate'] = date($_SESSION['DefaultDateFormat']);
+		$_POST['KLArrivalDate'] = '00/00/0000';
 	}
 /*	KL RICARD COMMENTED OUT as it is repeated on the order status column
 	echo '<field>
@@ -1002,7 +1002,7 @@ KL RICARD COMMENTED OUT END */
 	if ($_SESSION['PO' . $identifier]->Status == '') { //then its a new order
 		echo '<input type="hidden" name="KLStatus" value="1000" />' . _('Negotiating with supplier');
 	} else {
-		if (!isset($_POST['KLAgreedDeliveryDate'])){
+/*		if (!isset($_POST['KLAgreedDeliveryDate'])){
 			$_POST['KLAgreedDeliveryDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
 		}
 		if (!isset($_POST['DeliveryDate'])){
@@ -1020,7 +1020,7 @@ KL RICARD COMMENTED OUT END */
 		if (!isset($_POST['KLArrivalDate'])){
 			$_POST['KLArrivalDate'] = $_SESSION['PO' . $identifier]->Orig_OrderDate;
 		}
-		if (!isset($_POST['KLShipmentAWB'])){
+*/		if (!isset($_POST['KLShipmentAWB'])){
 			$_POST['KLShipmentAWB'] = '';
 		}
 
