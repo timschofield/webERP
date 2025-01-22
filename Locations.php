@@ -1073,7 +1073,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></field>';
 
 	echo '<field>
-			<label for="AllDisc20Items">' . _('Display ALL Discount 20% items?') . ':</label>
+			<label for="AllDisc20Items">' . _('Display Discount 20% items?') . ':</label>
 			<select name="AllDisc20Items">';
 	if($_POST['AllDisc20Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -1088,7 +1088,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></field>';
 
 	echo '<field>
-			<label for="AllDisc50Items">' . _('Display ALL Discount 50% items?') . ':</label>
+			<label for="AllDisc50Items">' . _('Display Discount 50% items?') . ':</label>
 			<select name="AllDisc50Items">';
 	if($_POST['AllDisc50Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
@@ -1103,7 +1103,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select></field>';
 
 	echo '<field>
-			<label for="AllDisc80Items">' . _('Display ALL Discount 80% items?') . ':</label>
+			<label for="AllDisc80Items">' . _('Display Discount 80% items?') . ':</label>
 			<select name="AllDisc80Items">';
 	if($_POST['AllDisc80Items']==1) {
 		echo '<option selected="selected" value="1">' . _('Yes') . '</option>';
