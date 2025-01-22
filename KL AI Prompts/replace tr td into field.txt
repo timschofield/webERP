@@ -58,7 +58,7 @@ includes/UIGeneralFunctions.php and includes/KLUIGeneralFunctions.php
 
 20) Afterwards: if these lines are not in the script:
 include('includes/UIGeneralFunctions.php'); 
-include('includes/KUIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 add them just after include('includes/KLGeneralFunctions.php'); or after include('includes/KLDefines.php'); or after include('includes/SQL_CommonFunctions.inc');
 
 
