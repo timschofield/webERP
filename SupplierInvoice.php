@@ -1145,7 +1145,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 											trandate,
 											periodno,
 											account,
-											narrative
+											narrative,
 											amount)
 									VALUES (20,
 										'" . $InvoiceNo . "',
