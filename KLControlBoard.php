@@ -506,6 +506,12 @@ if ($ProcessSection01){
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKL", $RootPath);
 		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKLDISCOUNT20", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKLDISCOUNT50", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPKLDISCOUNT80", $RootPath);
+		$NumberOfTestExecuted++;
 
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("STABKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
@@ -515,6 +521,12 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("DISC8A", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
 		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBL", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBLDISCOUNT20", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBLDISCOUNT50", $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsWithStockKantorButReorderLevelTokoZero("SHOPBLDISCOUNT80", $RootPath);
 		$NumberOfTestExecuted++;
 
 		$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTBA", "SHOPBL", $NumberOfTestExecuted, $RootPath);
@@ -1302,8 +1314,6 @@ function CashAtShops($MinCashPerShop, $MaxCashPerShop, $MinCashAllShops, $MaxCas
 
 function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted, $RootPath){
 
-	$MinQOH = NumberOfShops($ShopType);
-	
 	if (ItemInList($Category, LIST_STOCK_CATEGORIES_TEST)){
 		$Condition = " AND locations.alltestitems = '1' ";
 	}elseif (ItemInList($Category, LIST_STOCK_CATEGORIES_STABLE)){
@@ -1323,11 +1333,14 @@ function CategoryItemsMissingInShops($Category, $ShopType, $NumberOfTestExecuted
 		WHERE typeloc = '" . $ShopType . "'" 
 		. $Condition;
 	$Result = DB_query($SQL);
+	$MinQOH = DB_num_rows($Result);
 	while ($MyRow = DB_fetch_array($Result)){
 		CategoryItemsNotInShop($Category, $MyRow['loccode'], $MinQOH, "ALL", $RootPath);
 		$NumberOfTestExecuted++;
-		CategoryItemsNotInShop($Category, $MyRow['loccode'], 1, "KANTOR", $RootPath);
-		$NumberOfTestExecuted++;
+		if (!ItemInLIst($Category, LIST_STOCK_CATEGORIES_OUTLET)){
+			CategoryItemsNotInShop($Category, $MyRow['loccode'], 1, "KANTOR", $RootPath);
+			$NumberOfTestExecuted++;
+		}
 	}
 	return $NumberOfTestExecuted;
 	
@@ -1357,47 +1370,14 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 		$TitleQOH = "QOH Available";
 	}
 
-	// count to how many shops do we need to set the RL
-	if ($Category == 'TESTKA'){
-		$WhereCat = " AND stockmaster.categoryid = 'TESTKA' ";
-	} else if ($Category == 'STABKA') {
-		$WhereCat = " AND stockmaster.categoryid = 'STABKA' ";
-	} else if ($Category == 'NOPOKA') {
-		$WhereCat = " AND stockmaster.categoryid = 'NOPOKA' ";
-	} else if ($Category == 'TESTBA') {
-		$WhereCat = " AND stockmaster.categoryid = 'TESTBA' ";
-	} else if ($Category == 'STABBA') {
-		$WhereCat = " AND stockmaster.categoryid = 'STABBA' ";
-	} else if ($Category == 'NOPOBA') {
-		$WhereCat = " AND stockmaster.categoryid = 'NOPOBA' ";
-	} else if ($Category == 'DISC2A') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC2A')";
-	} else if ($Category == 'DISC2B') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC2B')";
-	} else if ($Category == 'DISC2G') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC2G')";
-	} else if ($Category == 'DISC5A') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC5A')";
-	} else if ($Category == 'DISC5B') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC5B')";
-	} else if ($Category == 'DISC5G') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC5G')";
-	} else if ($Category == 'DISC8A') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC8A')";
-	} else if ($Category == 'DISC8B') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC8B')";
-	} else if ($Category == 'DISC8G') {
-		$WhereCat = " AND (stockmaster.categoryid = 'DISC8G')";
-	}
-
 	$SQL = "SELECT stockmaster.stockid,
 					stockmaster.description,
 					locstock.loccode, " . 
 					$SQLQty . " AS qoh,
 					locstock.reorderlevel
 			FROM stockmaster, locstock
-			WHERE stockmaster.stockid = locstock.stockid" . 
-				$WhereCat . "
+			WHERE stockmaster.stockid = locstock.stockid
+				AND stockmaster.categoryid = '" . $Category . "'
 				AND stockmaster.discontinued = 0
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
@@ -1426,7 +1406,6 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 							AND l.quantity =  0)
 			ORDER BY stockmaster.stockid";
 
-//prnMsg($SQL);
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		ShowTableTitle($TableTitleText);
@@ -1456,20 +1435,22 @@ function CategoryItemsNotInShop($Category, $Shop, $MinQOH, $WhereisQOH, $RootPat
 			$LinkRL3 = '';
 			$LinkRL4 = '';
 			$LinkRL5 = '';
-			if ($MyRow['qoh'] >= 1){
-				$LinkRL1  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=1' . '">' . '1' . '</a>';
-			}
-			if ($MyRow['qoh'] >= 2){
-				$LinkRL2  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=2' . '">' . '2' . '</a>';
-			}
-			if ($MyRow['qoh'] >= 3){
-				$LinkRL3  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=3' . '">' . '3' . '</a>';
-			}
-			if ($MyRow['qoh'] >= 4){
-				$LinkRL4  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=4' . '">' . '4' . '</a>';
-			}
-			if ($MyRow['qoh'] >= 5){
-				$LinkRL5  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=5' . '">' . '5' . '</a>';
+			if (!ItemInLIst($Category, LIST_STOCK_CATEGORIES_OUTLET)){
+				if ($MyRow['qoh'] >= 1){
+					$LinkRL1  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=1' . '">' . '1' . '</a>';
+				}
+				if ($MyRow['qoh'] >= 2){
+					$LinkRL2  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=2' . '">' . '2' . '</a>';
+				}
+				if ($MyRow['qoh'] >= 3){
+					$LinkRL3  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=3' . '">' . '3' . '</a>';
+				}
+				if ($MyRow['qoh'] >= 4){
+					$LinkRL4  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=4' . '">' . '4' . '</a>';
+				}
+				if ($MyRow['qoh'] >= 5){
+					$LinkRL5  = '<a href="' . $RootPath . '/KLAutoStockReorderLevel.php?StockID=' . $MyRow['stockid'] . '&LocCode=' . $Shop . '&RL=5' . '">' . '5' . '</a>';
+				}
 			}
 
 			printf('<tr class="striped_row">
@@ -3455,13 +3436,46 @@ No pending transfer regarding this item
 	$ShopsToSetRL = NumberOfShops($TypeOfShop);
 	if ($TypeOfShop == "SHOPKL"){
 		$Message = 'KAPAL-LAUT';
-		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . ")";
+		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . ")";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' ";
+	}elseif ($TypeOfShop == "SHOPKLDISCOUNT20"){
+		$Message = 'KAPAL-LAUT with 20% Discount';
+		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2A' ";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
+								AND locations.alldisc20items = 1 ";
+	}elseif ($TypeOfShop == "SHOPKLDISCOUNT50"){
+		$Message = 'KAPAL-LAUT with 50% Discount';
+		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5A' ";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
+								AND locations.alldisc20items = 1 ";
+	}elseif ($TypeOfShop == "SHOPKLDISCOUNT80"){
+		$Message = 'KAPAL-LAUT with 80% Discount';
+		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8A' ";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPKL' 
+								AND locations.alldisc20items = 1 ";
 	}elseif ($TypeOfShop == "SHOPBL"){
 		$Message = 'BLINK';
-		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
+		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . ")";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' ";
+	}elseif ($TypeOfShop == "SHOPBLDISCOUNT20"){
+		$Message = 'BLINK with 20% Discount';
+		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC2B' ";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
+								AND locations.alldisc20items = 1 ";
+	}elseif ($TypeOfShop == "SHOPBLDISCOUNT50"){
+		$Message = 'BLINK with 50% Discount';
+		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC5B' ";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
+								AND locations.alldisc20items = 1 ";
+	}elseif ($TypeOfShop == "SHOPBLDISCOUNT80"){
+		$Message = 'BLINK with 80% Discount';
+		$ConditionCategory =  " AND stockmaster.categoryid = 'DISC8B' ";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPBL' 
+								AND locations.alldisc20items = 1 ";
 	}elseif ($TypeOfShop == "SHOPOU"){
 		$Message = 'OUTLET';
-		$Condition =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")";
+		$ConditionCategory =  " AND (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . ")";
+		$ConditionTypeOfShop = " AND locations.typeloc = 'SHOPOU' ";
 	}else{
 		//error_
 		return;
@@ -3474,7 +3488,8 @@ No pending transfer regarding this item
 				FROM locstock
 				WHERE locstock.stockid = stockmaster.stockid
 				AND (locstock.loccode = " . CODE_KANTOR . " ))AS QtyKantor
-			FROM stockmaster, stockcategory
+			FROM stockmaster, 
+				stockcategory
 			WHERE stockmaster.categoryid = stockcategory.categoryid
 				AND stockmaster.klchangingprice = 0
 				AND stockmaster.klmovingdiscount20 = 0
@@ -3484,8 +3499,8 @@ No pending transfer regarding this item
 				AND (SELECT SUM(locstock.reorderlevel)
 					FROM locstock, locations
 					WHERE locstock.stockid = stockmaster.stockid
-						AND locstock.loccode = locations.loccode
-						AND locations.typeloc = '" . $TypeOfShop . "') = 0
+						AND locstock.loccode = locations.loccode " . 
+						$ConditionTypeOfShop . ") = 0
 				AND (SELECT SUM(locstock.quantity)
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -3495,7 +3510,7 @@ No pending transfer regarding this item
 						WHERE  pendingqty > 0
 							AND loctransfers.stockid =  stockmaster.stockid)
 				AND stockcategory.stocktype = 'F' " . 
-				$Condition . "
+				$ConditionCategory . "
 			ORDER BY stockid";
 // prnMsg($SQL);
 	$Result = DB_query($SQL);

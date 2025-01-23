@@ -2258,9 +2258,9 @@ function LocationInformationReview($RootPath){
 							<th class="SortedColumn">' . _('All Test?') . '</th>
 							<th class="SortedColumn">' . _('All Stable?') . '</th>
 							<th class="SortedColumn">' . _('All NOPO?') . '</th>
-							<th class="SortedColumn">' . _('All 20%D?') . '</th>
-							<th class="SortedColumn">' . _('All 50%D?') . '</th>
-							<th class="SortedColumn">' . _('All 80%D?') . '</th>
+							<th class="SortedColumn">' . _('Sell 20%D?') . '</th>
+							<th class="SortedColumn">' . _('Sell 50%D?') . '</th>
+							<th class="SortedColumn">' . _('Sell 80%D?') . '</th>
 							<th class="SortedColumn">' . _('Pack Factor') . '</th>
 							<th class="SortedColumn">' . _('Pack Days') . '</th>
 						</tr>
