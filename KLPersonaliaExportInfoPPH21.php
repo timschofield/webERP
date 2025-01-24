@@ -239,22 +239,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<fieldset>
 		<legend>' . _('PPH21 Export Parameters') . '</legend>';
 
-	echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara',
-									'PTSMH', 'PT Sungai Mutiara Hitam',
-									'PTBB', 'PT Bumi Biru',
-									'Company', 
-									isset($_POST['Company']) ? $_POST['Company'] : 'PTADU',
-									_('For Employees of'));
-
-	echo FieldToSelectOnePeriod('PeriodOfFile',
-							isset($_POST['PeriodOfFile']) ? $_POST['PeriodOfFile'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
-							_('Select Month of the Salaries'));
-
-	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
-								'THRONLY', _('THR Only'),
-								'SalaryType',
-								isset($_POST['SalaryType']) ? $_POST['SalaryType'] : 'MONTHLY',
-								_('Type Of Salary'));
+	include ('includes/KLPersonaliaParameterSelection.php');
 
     echo FieldToSelectSpreadSheetFormat('Format', 
                                     isset($_POST['Format']) ? $_POST['Format'] : 'xlsx',
