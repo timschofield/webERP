@@ -5,6 +5,8 @@ $Title = _('Customer Info Card Maintenance');
 
 include('includes/KLCountriesForRetail.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
 include('includes/header.php');
 
@@ -34,25 +36,25 @@ if (isset($_POST['submit'])) {
 	//first off validate inputs sensible
 
 	if (!isset($_POST['FirstName'])){
-		$_POST['FisrtName'] ='';
+		$_POST['FisrtName'] = '';
 	}
 	if (!isset($_POST['LastName'])){
-		$_POST['LastName'] ='';
+		$_POST['LastName'] = '';
 	}
 	if (!isset($_POST['Country'])){
-		$_POST['Country'] ='';
+		$_POST['Country'] = '';
 	}
 	if (!isset($_POST['DateOfBirth'])){
-		$_POST['DateOfBirth'] ='';
+		$_POST['DateOfBirth'] = '';
 	}
 	if (!isset($_POST['Email'])){
-		$_POST['Email'] ='';
+		$_POST['Email'] = '';
 	}
 	if (!isset($_POST['Sex'])){
-		$_POST['Sex'] ='';
+		$_POST['Sex'] = '';
 	}
 
-	if ($InputError !=1) {
+	if ($InputError != 1) {
 		RecordRetailCustomerInformation($SelectedOrder, $_POST['FirstName'], $_POST['LastName'], $_POST['Country'], $_POST['DateOfBirth'], $_POST['Email'], $_POST['Sex']);
 		unset($SelectedOrder);
 		unset($_POST['FirstName']);
@@ -64,7 +66,8 @@ if (isset($_POST['submit'])) {
 
 } elseif (isset($_GET['delete'])) {
 
-	$SQL="DELETE FROM klretailcustomers WHERE orderno='". $SelectedOrder."'";
+	$SQL = "DELETE FROM klretailcustomers 
+			WHERE orderno='". $SelectedOrder."'";
 	$ErrMsg = _('The customer retail info could not be deleted because');
 	$Result = DB_query($SQL,$ErrMsg);
 
@@ -103,38 +106,34 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
-	echo '<tr>
-			<th>' . _('Order #') . '</th>
-			<th>' . _('Invoice #') . '</th>
-			<th>' . _('Date') . '</th>
-			<th>' . _('First Name') . '</th>
-			<th>' . _('Last Name') . '</th>
-			<th>' . _('Country') . '</th>
-			<th>' . _('Date of Birth') . '</th>
-			<th>' . _('email') . '</th>
-			<th>' . _('Sex') . '</th>
-		</tr>';
-	$k=0;
+	echo '<thead>
+			<tr>
+				<th>' . _('Order #') . '</th>
+				<th>' . _('Invoice #') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('First Name') . '</th>
+				<th>' . _('Last Name') . '</th>
+				<th>' . _('Country') . '</th>
+				<th>' . _('Date of Birth') . '</th>
+				<th>' . _('email') . '</th>
+				<th>' . _('Sex') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
+
 	while ($MyRow=DB_fetch_array($Result)) {
+		echo '<tr class="striped_row">';
 
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
-
-	if ($MyRow['date_of_birth'] == '') {
-		$TextDOB = '';
-	} else {
-		$TextDOB = ConvertSQLDate($MyRow['date_of_birth']);
-	}
-	if ($MyRow['Country'] == '0') {
-		$TextCountry = '';
-	} else {
-		$TextCountry = $MyRow['Country'];
-	}
+		if ($MyRow['date_of_birth'] == '') {
+			$TextDOB = '';
+		} else {
+			$TextDOB = ConvertSQLDate($MyRow['date_of_birth']);
+		}
+		if ($MyRow['Country'] == '0') {
+			$TextCountry = '';
+		} else {
+			$TextCountry = $MyRow['Country'];
+		}
 
 	printf('<td>%s</td>
 			<td>%s</td>
@@ -161,7 +160,8 @@ or deletion of the records*/
 			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['orderno']);
 
 	} //END WHILE LIST LOOP
-	echo '</table>
+	echo '</tbody>
+		</table>
 		<br />
 		</div>
 		</form>';
@@ -213,69 +213,25 @@ if (! isset($_GET['delete'])) {
 		$_POST['date_of_birth'] = $MyRow['date_of_birth'];
 		$_POST['Email'] = $MyRow['email'];
 		$_POST['Sex'] = $MyRow['sex'];
-
+		if ($_POST['Sex'] == ''){
+			$_POST['Sex'] = 'F';
+		}
 		echo '<input type="hidden" name="SelectedOrder" value="' . $SelectedOrder . '" />';
-		echo '<table class="selection">
-				<tr><th colspan=3>' . _('Customer Info Card for webERP Order :') . $SelectedOrder . '</th></tr>';
+		echo '<fieldset>
+				<legend>' . _('Customer Info Card for webERP Order :') . $SelectedOrder . '</legend>';
 		
-		echo '<tr>';
-		echo 	'<td>' . _('Name') . ':</td>';
-		echo 	'<td><input type="text" class="text" name="FirstName" maxlength="32" size="32" value="' . $_POST['FirstName'] . '" /></td>';
-		echo 	'<td><input type="text" class="text" name="LastName" maxlength="32" size="32" value="' . $_POST['LastName'] . '" /></td>';
-		echo '</tr>';	
+		echo FieldToSelectOneText('FirstName', $_POST['FirstName'], 32, 32, _('First Name'), '', '', '', true, false);
+		echo FieldToSelectOneText('LastName', $_POST['LastName'], 32, 32, _('Last Name'), '', '', '', true, false);
+		echo FieldToSelectOneCountry($CountriesForRetail, 'Country', $_POST['Country'], _('Country'), '', '', '', false, false);
+		echo FieldToSelectOneDate('DateOfBirth', $_POST['DateOfBirth'], _('Date Of Birth'), '', '', '', false, false);
+		echo FieldToSelectFromTwoOptions('F', _('Female'), 'M', _('Male'), 'Sex', $_POST['Sex'], _('Sex'), '', '', '', true, false);
+		echo FieldToSelectOneText('Email', $_POST['Email'], 32, 255, _('Email'), '', '', '', false, false);
 
-		echo '<tr>
-				<td>' . _('Country') . ':</td>
-				<td><select name="Country">';
-		foreach ($CountriesForRetail as $CountryEntry => $CountryName){
-			if (isset($_POST['Country']) AND (strtoupper($_POST['Country']) == strtoupper($CountryEntry))){
-				echo '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName  . '</option>';
-			} else {
-				echo '<option value="' . $CountryEntry . '">' . $CountryName  . '</option>';
-			}
-		}
-		echo '</select></td>	
-			</tr>';
+		echo '</fieldset>';
+		
+		echo OneButtonCenteredForm('submit', _('Enter Information'));
 
-		echo '<tr>';
-		echo	'<td>' . _('Date Of Birth') . ':</td>';
-		echo	'<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="DateOfBirth" maxlength="10" size="10" value="' . $_POST['DateOfBirth'] . '" /></td>';
-		echo '</tr>';	
-
-
-		echo '<tr><td>' . _('Sex') . ':</td>
-				<td><select name="Sex">';
-
-		if ($_POST['Sex']=="M"){
-			echo 	'<option value="">' . _('') . '</option>
-					<option selected="selected" value="M">' . _('Male') . '</option>
-					<option value="F">' . _('Female') . '</option>';
-		} elseif ($_POST['Sex']=="F"){
-			echo 	'<option value="">' . _('') . '</option>
-					<option value="M">' . _('Male') . '</option>
-					<option selected="selected" value="F">' . _('Female') . '</option>';
-		}else{
-			echo 	'<option selected="selected" value="">' . _('') . '</option>
-					<option value="M">' . _('Male') . '</option>
-					<option value="F">' . _('Female') . '</option>';
-		}
-
-		echo '		</select>
-				</td>
-			</tr>';
-
-		echo '<tr>';
-		echo	'<td>' . _('email') . ':</td>';
-		echo	'<td><input type="email" class="text" name="Email" maxlength="255" size="32" value="' . $_POST['Email'] . '" /></td>';
-		echo '</tr>';	
-		echo '</select></td>
-			</tr>
-			</table>
-			<br />
-			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-			</div>
-			</div>
+		echo '</div>
 			</form>';
 	}
 } //end if record deleted no point displaying form to add record
