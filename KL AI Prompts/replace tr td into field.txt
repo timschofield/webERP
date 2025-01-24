@@ -49,22 +49,27 @@ Afterwards, look for:
 
 18) <field> ... </field> structures referring to the input of a single Maintenance type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
+19) <field> ... </field> structures referring to the input of a single Sales Area and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
-18) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
+20) <field> ... </field> structures referring to the input of a single Sys Type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+
+29) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
 
 in all these cases, 
-19) Respect the proper order of the parameters of the functions above, defined in 
+30) Respect the proper order of the parameters of the functions above, defined in 
 includes/UIGeneralFunctions.php and includes/KLUIGeneralFunctions.php
 
-20) Afterwards: if these lines are not in the script:
+31) Afterwards: if these lines are not in the script:
 include('includes/UIGeneralFunctions.php'); 
 include('includes/KLUIGeneralFunctions.php');
 add them just after include('includes/KLGeneralFunctions.php'); or after include('includes/KLDefines.php'); or after include('includes/SQL_CommonFunctions.inc');
 
 
 General prompt rules: 
-1) Do not cut long lines. 
-2) Do not delete any comment in the code
-3) Do not add comments like //Added line
-4) Do not change, modify, upgrade any other part of the code not related to the propmt.
-5) Apply all changes above directly to all the files in the working set
+1) Do not change any logic, just the data presentation
+2) Do not cut long lines. 
+3) Do not delete any comment in the code
+4) Do not add comments like //Added line
+5) Do not change, modify, upgrade any other part of the code not related to the propmt.
+6) Apply all changes above directly to all the files in the working set
