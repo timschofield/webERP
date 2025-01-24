@@ -24,16 +24,13 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	//first off validate inputs sensible
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$PeriodMonth = MonthAndYearFromSQLDate($PeriodOfFile);
-	
-	$Today = date('Y-m-d');
-	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
+
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Slip Gaji '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = _('Slip Gaji ') . $PeriodMonth;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Slip THR '). ConvertSQLDate($PeriodOfFile);
+		$PageTitle = _('Slip THR ') . $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -137,7 +134,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 			}
 			
 			// prepare the email to accounting team
-			$Subject  = $Company . " slip gaji distribution " . substr($PeriodOfFile,0,7);
+			$Subject  = $Company . " slip gaji distribution " . $PeriodMonth;
 			$TextAdmin = $TextAdmin . "\n---\r\n"; // \r is needed for signature separating
 			$TextAdmin = $TextAdmin . 'Email sent by ' . $AdminTeam . ' at '. date('d/M/Y H:i:s') .'';
 			
@@ -200,18 +197,22 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<fieldset>
 		<legend>' . _('Parameters Selection') . '</legend>';
 
-	echo FieldToSelectFromThreeOptions('PTADU', _('PT. Angin Dingin Utara'),
-								'PTSMH', _('PT. Sungai Mutiara Hitam'),
-								'PTBB', _('PT. Bumi Biru'),
-								'Company', '', _('Company Name'), '', '', '', true);
+	echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara',
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', 
+									isset($_POST['Company']) ? $_POST['Company'] : 'PTADU',
+									_('For Employees of'));
 
 	echo FieldToSelectOnePeriod('PeriodOfFile',
 								isset($_POST['PeriodOfFile']) ? $_POST['PeriodOfFile'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
 								_('Select Month of the Salaries'));
 
 	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
-								'THRONLY', _('THR Only'),
-								'SalaryType', '', _('Salary Type'), '', '', '', true);
+									'THRONLY', _('THR Only'),
+									'SalaryType',
+									isset($_POST['SalaryType']) ? $_POST['SalaryType'] : 'MONTHLY',
+									_('Type Of Salary'));
 
 	echo '</fieldset>';
 
