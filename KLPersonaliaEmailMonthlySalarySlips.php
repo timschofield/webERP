@@ -3,6 +3,8 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/htmlMimeMail.php');
 
 $Title = _('Email Salary Slips To Employees');
@@ -14,21 +16,24 @@ if (isset($_POST['submit'])) {
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
+function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
+	$PeriodMonth = MonthAndYearFromSQLDate($PeriodOfFile);
+	
+	$Today = date('Y-m-d');
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
+	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Slip Gaji '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Slip Gaji '). ConvertSQLDate($PeriodOfFile);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Slip THR '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Slip THR '). ConvertSQLDate($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -38,7 +43,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodExportDate + 1)){
+		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
 //			$InputError = TRUE;
 		}
@@ -46,7 +51,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodExportDate)){
+		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PDF THR Only Salary Slips should be this current month";
 			$InputError = TRUE;
 		}
@@ -65,9 +70,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				require_once('includes/tcpdf/tcpdf.php');
 
  				if ($SalaryType == "MONTHLY"){
-					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . substr($LastDateOfPeriod,0,7);
+					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . substr($PeriodMonth,0,7);
 				}else{
-					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . substr($LastDateOfPeriod,0,7);
+					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . substr($PeriodMonth,0,7);
 				}
 				
 				include('includes/KLPersonaliaPDFNewSalarySlip.php');
@@ -117,7 +122,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 				}
 
 				// KL RICARD Send to a dummy address depending on the code version
-				if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+				if (KLwebERPScriptCalledFromTEST()){
 					// the current script filename contains TEST, we are on TEST code
 					$SendTo = 'webmaster@kapal-laut.com';
 				}
@@ -132,7 +137,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 			}
 			
 			// prepare the email to accounting team
-			$Subject  = $Company . " slip gaji distribution " . substr($LastDateOfPeriod,0,7);
+			$Subject  = $Company . " slip gaji distribution " . substr($PeriodOfFile,0,7);
 			$TextAdmin = $TextAdmin . "\n---\r\n"; // \r is needed for signature separating
 			$TextAdmin = $TextAdmin . 'Email sent by ' . $AdminTeam . ' at '. date('d/M/Y H:i:s') .'';
 			
@@ -152,7 +157,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 			}
 			
 			// KL RICARD Send to a dummy address depending on the code version
-			if (strpos($_SERVER['PHP_SELF'],"TEST")!== false){
+			if (KLwebERPScriptCalledFromTEST()){
 				// the current script filename contains TEST, we are on TEST code
 				$SendTo = 'webmaster@kapal-laut.com';
 			}
@@ -192,17 +197,26 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
+	echo '<fieldset>
+		<legend>' . _('Parameters Selection') . '</legend>';
 
-	include('includes/KLPersonaliaParameterSelection.php');
-	
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo FieldToSelectFromThreeOptions('PTADU', _('PT. Angin Dingin Utara'),
+								'PTSMH', _('PT. Sungai Mutiara Hitam'),
+								'PTBB', _('PT. Bumi Biru'),
+								'Company', '', _('Company Name'), '', '', '', true);
+
+	echo FieldToSelectOnePeriod('PeriodOfFile',
+								isset($_POST['PeriodOfFile']) ? $_POST['PeriodOfFile'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
+								_('Select Month of the Salaries'));
+
+	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
+								'THRONLY', _('THR Only'),
+								'SalaryType', '', _('Salary Type'), '', '', '', true);
+
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', $Title);
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

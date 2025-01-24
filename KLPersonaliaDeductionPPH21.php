@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $Title=_('Update of PPH21 Deduction');
 include('includes/header.php');
@@ -9,7 +11,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/i
 
 //update database if update pressed
 if (isset($_POST['submit'])){
-	for ($i=1;$i<count($_POST);$i++){ //loop through the returned customers
+	for ($i=1;$i<count($_POST);$i++){ //loop through the returned employess
 		if (isset($_POST['CodeName' . $i]) AND is_numeric(filter_number_format($_POST['PotonganPPH21'.$i]))){
 			if ($_POST['PotonganPPH21'.$i] > 0){
 				// should be always negative
@@ -27,8 +29,8 @@ if (isset($_POST['submit'])){
 
 if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
-	$PeriodPPH21 = GetPeriod(ConvertSQLDate($_POST['DateOfFile']));
-	$PeriodName = MonthAndYearFromSQLDate($_POST['DateOfFile']);
+	$PeriodPPH21 = $_POST['PeriodOfFile'];
+	$PeriodName = MonthAndYearFromPeriodNo($_POST['PeriodOfFile']);
 
 	$SQL="SELECT codename,
 				fullname,
@@ -43,37 +45,31 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 	$Result = DB_query($SQL);
 
-	echo'<p class="page_title_text"><strong>' . _('Company: ') . '' . $_POST['Company'] . ' </strong></p>';
-	echo'<p class="page_title_text"><strong>' . _('Month: ') . '' . $PeriodName . ' </strong></p>';
-	$k=0; //row colour counter
+	echo'<p class="page_title_text">' . _('Company: ') . '' . $_POST['Company'] . ' ' . _('Month: ') . $PeriodName .' </p>';
 	echo '<form action="KLPersonaliaDeductionPPH21.php" method="post" id="Update">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<input type="hidden" name="Company" value="' . $_GET['Company'] . '" />';
 	echo '<table>';
 	
-	echo '<tr>
-            <th>' . _('Zone PPH21') . '</th>
-            <th>' . _('Full Name') . '</th>
-            <th>' . _('Code Name') . '</th>
-            <th>' . _('Deduction PPH21') . '</th>
-        </tr>';
+	echo '<thead>
+            <tr>
+                <th>' . _('Zone PPH21') . '</th>
+                <th>' . _('Full Name') . '</th>
+                <th>' . _('Code Name') . '</th>
+                <th>' . _('Deduction PPH21') . '</th>
+            </tr>
+          </thead>
+          <tbody>';
 
 	$i=1;
 	while ($MyRow=DB_fetch_array($Result))	{
-
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
+		echo '<tr class="striped_row">';
 
 		//variable for update data
 
 		echo'<input type="hidden" value="' . $_POST['Company'] . '" name="Company" />
-			<input type="hidden" value="' . $_POST['DateOfFile'] . '" name="DateOfFile" />
+			<input type="hidden" value="' . $_POST['PeriodOfFile'] . '" name="PeriodOfFile" />
 			<input type="hidden" value="' . $_POST['SalaryType'] . '" name="SalaryType" />
 			<input type="hidden" value="' . $PeriodPPH21 . '" name="PeriodPPH21" />';
 
@@ -90,6 +86,7 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 				<input type="submit" name="submit" value="' . _('Update') . '" />
 			</td>
 		</tr>
+        </tbody>
         </table>
         </div>
 		</form>';
@@ -97,25 +94,34 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 } else { /*The option to submit was not hit so display form */
 
-	echo '<br />
-		<br />
-		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 		<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
-		</p>';
+	echo '<fieldset>
+		<legend>' . _('Selection Parameters') . '</legend>';
 
-	echo '<table class="selection">';
+	echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara',
+									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
+									'Company', 
+									isset($_POST['Company']) ? $_POST['Company'] : 'PTADU',
+									_('For Employees of') . ':');
 
-	include('includes/KLPersonaliaParameterSelection.php');
+	echo FieldToSelectOnePeriod('PeriodOfFile',
+								isset($_POST['PeriodOfFile']) ? $_POST['PeriodOfFile'] : GetPeriod(Date($_SESSION['DefaultDateFormat'])) - 1,
+								_('Select Month of the Salaries'));
 
-	echo '</table>
-			<br />
-			<div class="centre">
-				<input type="submit" name="submit" value="' . _('Submit') . '" />
-			</div>';
+	echo FieldToSelectFromTwoOptions('MONTHLY', _('Monthly Salary'),
+									'THRONLY', _('THR Only'),
+									'SalaryType',
+									isset($_POST['SalaryType']) ? $_POST['SalaryType'] : 'MONTHLY',
+									_('Type Of Salary') . ':');
+
+	echo '</fieldset>';
+	
+	echo OneButtonCenteredForm('submit', _('Submit'));
+	
     echo '</div>
           </form>';
 

@@ -29,12 +29,12 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 
 	//first off validate inputs sensible
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$LastDateOfPeriod = EndDateSQLFromPeriodNo($PeriodOfFile);
+	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export PPh21 Monthly Info for '). $LastDateOfPeriod;
+		$PageTitle = _('Export PPh21 Monthly Info for '). $PeriodMonth;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export PPh21 THR Only Info for '). $LastDateOfPeriod;
+		$PageTitle = _('Export PPh21 THR Only Info for '). $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -103,9 +103,8 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 										 ->setCategory("");
 
 			// Add title data
-			$PeriodName = MonthAndYearFromSQLDate($PeriodOfFile);
 			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setTitle($PeriodName);
+			$objPHPExcel->getActiveSheet()->setTitle($PeriodMonth);
 
 			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Zone PPH21');
 			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Full Name');
@@ -175,16 +174,16 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 			if ($Format == 'xlsx') {
                 header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
                 if ($SalaryType == "MONTHLY"){
-                    $File ='InfoPPH21-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
+                    $File ='InfoPPH21-' .  $Company . '-' . $PeriodMonth. '.xlsx';
                 }else{
-                    $File ='InfoPPH21-THR-' .  $Company . '-' . $LastDateOfPeriod. '.xlsx';
+                    $File ='InfoPPH21-THR-' .  $Company . '-' . $PeriodMonth. '.xlsx';
                 }
             } else {
                 header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
                 if ($SalaryType == "MONTHLY"){
-                    $File ='InfoPPH21-' .  $Company . '-' . $LastDateOfPeriod. '.ods';
+                    $File ='InfoPPH21-' .  $Company . '-' . $PeriodMonth. '.ods';
                 }else{
-                    $File ='InfoPPH21-THR-' .  $Company . '-' . $LastDateOfPeriod. '.ods';
+                    $File ='InfoPPH21-THR-' .  $Company . '-' . $PeriodMonth. '.ods';
                 }
             }
             header('Content-Disposition: attachment;filename="' . $File . '"');
@@ -241,8 +240,8 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 		<legend>' . _('PPH21 Export Parameters') . '</legend>';
 
 	echo FieldToSelectFromThreeOptions('PTADU', 'PT Angin Dingin Utara',
-									'PTBB', 'PT Bumi Biru',
 									'PTSMH', 'PT Sungai Mutiara Hitam',
+									'PTBB', 'PT Bumi Biru',
 									'Company', 
 									isset($_POST['Company']) ? $_POST['Company'] : 'PTADU',
 									_('For Employees of'));
