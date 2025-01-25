@@ -84,7 +84,7 @@ echo '<div class="help-bubble" id="help-bubble">
 		<div class="help-content" id="help-content"></div>
 	</div>';
 KL RICARD END */
-
+/* KL RICARD
 if (isset($_GET['FontSize'])) {
 	$SQL = "UPDATE www_users
 				SET fontsize='" . $_GET['FontSize'] . "'
@@ -113,7 +113,7 @@ echo '<style>
 					font-size: ', $_SESSION['FontSize'], ';
 				}
 			</style>';
-
+KL RICARD END */
 $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 
 echo '<header class="noPrint">';
@@ -139,6 +139,8 @@ echo '<div id="ExitIcon">
 if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
 	/* KL RICARD Customized Action Icons on every page */
+	include('includes/KLRoles.php');
+
 	echo '<div id="ActionIcon">
 		<a class="FontSize" data-title="', _('Online Shop'), '" href="https://kapal-laut.com">
 			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" alt="', _('Online Shop'), '" />', _('Online Shop'), '
@@ -146,29 +148,30 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 	</div>';
 
 	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Intranet'), '" href="', $PathPrefix, $RootPath, '../../wiki/index.php">
+		<a class="FontSize" data-title="', _('Intranet'), '" href="https://ptadu.com/wiki/index.php">
 			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/plugin.png" alt="', _('Intranet'), '" />', _('Intranet'), '
 		</a>
 	</div>';
+	if (!$KL_SPGSeniorOrSupport 
+		AND !$KL_SPGJunior){
+		echo '<div id="ActionIcon">
+			<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
+				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
+			</a>
+		</div>';
 
-	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
-		</a>
-	</div>';
+		echo '<div id="ActionIcon">
+			<a class="FontSize" data-title="', _('Items'), '" href="', $PathPrefix, $RootPath, '/SelectProduct.php">
+				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" alt="', _('Items'), '" />', _('Items'), '
+			</a>
+		</div>';
 
-	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Items'), '" href="', $PathPrefix, $RootPath, '/SelectProduct.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/inventory.png" alt="', _('Items'), '" />', _('Items'), '
-		</a>
-	</div>';
-
-	echo '<div id="ActionIcon">
-		<a class="FontSize" data-title="', _('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
-			<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
-		</a>
-	</div>';
-	
+		echo '<div id="ActionIcon">
+			<a class="FontSize" data-title="', _('Customers'), '" href="', $PathPrefix, $RootPath, '/SelectCustomer.php">
+				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/customer.png" alt="', _('Customers'), '" />', _('Customers'), '
+			</a>
+		</div>';
+	}
 	/* KL RICARD END Customized action icons on every page */
 
 	/* KL RICARD No show the Manual Link
@@ -257,6 +260,7 @@ KL RICARD END No show the Dashboard */
 echo '<br /><div class="ScriptTitle">', $Title, '</div>';
 if ($ScriptName == 'index.php') {
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+/*	KL RICARD No show the Font Size
 	if ($_SESSION['ScreenFontSize'] == 0) {
 		echo '<a style="font-size:0.667rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=0" data-title="', _('Small text size'), '"><u>A</u></a>';
 	} else {
@@ -272,6 +276,8 @@ if ($ScriptName == 'index.php') {
 	} else {
 		echo '<a style="font-size:1rem;" class="FontSize" href="', $PathPrefix, $RootPath, '/index.php?FontSize=2" data-title="', _('Large text size'), '">A</a>';
 	}
+KL RICARD No show the Font Size */
+
 /*	KL RICARD No show the theme
 	echo '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 	echo '<div class="ScriptTitle">', _('Theme'), ':</div>';

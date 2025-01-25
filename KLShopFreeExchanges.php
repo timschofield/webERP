@@ -9,29 +9,6 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
 
-/*
-
-CREATE TABLE IF NOT EXISTS `klfreeexchanges` (
-  `counterexchange` int(11) NOT NULL AUTO_INCREMENT,
-  `itemfrom` varchar(20) NOT NULL,
-  `itemto` varchar(20) NOT NULL,
-  `date` datetime NOT NULL,
-  `userid` varchar(20) NOT NULL,
-  `invoicenumber` varchar(50) NOT NULL,
-  PRIMARY KEY (`counterexchange`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
-INSERT INTO  `scripts` (
-`script` ,
-`pagesecurity` ,
-`description`
-)
-VALUES (
-'KLShopFreeExchanges.php',  '1500',  'Tali Exchanges control script'
-);
-
-*/
-
 if (isset($_GET['SelectedExchange'])){
 	$SelectedExchange =mb_strtoupper($_GET['SelectedExchange']);
 } elseif(isset($_POST['SelectedExchange'])){
@@ -252,25 +229,19 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
-	echo '<tr>
-			<th>' . _('Exchange #') . '</th>
-			<th>' . _('Date') . '</th>
-			<th>' . _('From') . '</th>
-			<th>' . _('To') . '</th>
-			<th>' . _('Yellow#') . '</th>
-		</tr>';
-	$k=0;
+	echo '<thead>
+			<tr>
+				<th>' . _('Exchange #') . '</th>
+				<th>' . _('Date') . '</th>
+				<th>' . _('From') . '</th>
+				<th>' . _('To') . '</th>
+				<th>' . _('Yellow#') . '</th>
+			</tr>
+		</thead>
+		<tbody>';
 	while ($MyRow=DB_fetch_array($Result)) {
-
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k++;
-	}
-
-	printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td>%s</td>
@@ -283,7 +254,8 @@ or deletion of the records*/
 			$MyRow['invoicenumber']
 			);
 	} //END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</tbody>
+		</table>';
 } //end of ifs and buts!
 
 if (isset($SelectedExchange)) {

@@ -368,24 +368,6 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 	return $HTML;
 }
 
-function createTextArea($name, $cols = 60, $rows = 5, $defaultValue = '', $label = '', $helpText = '') {
-    $html = '<field>';
-    
-    if ($label != '') {
-        $html .= '<label for="' . $name . '">' . $label . ':</label>';
-    }
-    
-    $html .= '<textarea name="' . $name . '" cols="' . $cols . '" rows="' . $rows . '">' . htmlspecialchars($defaultValue) . '</textarea>';
-    
-    if ($helpText != '') {
-        $html .= '<fieldhelp>' . $helpText . '</fieldhelp>';
-    }
-    
-    $html .= '</field>';
-    
-    return $html;
-}
-
 
 function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
@@ -541,6 +523,17 @@ function OneButtonCenteredForm($ButtonName, $ButtonValue, $TabIndex = '', $Requi
 				<input type="submit" ';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $ButtonName . '" value="' . $ButtonValue . '" />
+			</div>';
+	return $HTML;
+}
+
+function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $ButtonValue2, $TabIndex = '', $Required = true, $AutoFocus = false) {
+	$HTML = '<div class="centre">
+				<input type="submit" ';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $ButtonName1 . '" value="' . $ButtonValue1 . '" />
+				<input type="submit" ';
+	$HTML .= 'name="' . $ButtonName2 . '" value="' . $ButtonValue2 . '" />
 			</div>';
 	return $HTML;
 }

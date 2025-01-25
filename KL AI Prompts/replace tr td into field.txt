@@ -53,8 +53,13 @@ Afterwards, look for:
 
 20) <field> ... </field> structures referring to the input of a single Sys Type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
+21) <field> ... </field> structures referring to the input of a single Returned Item Reason and replace the <field> ... </field> structure for a call to the function FieldToSelectOneReturnedItemReason($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
-29) If there is a input type = "submit", replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
+22) <field> ... </field> structures referring to the input of a single Service Fee Reason and replace the <field> ... </field> structure for a call to the function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+
+29) If there is a input type = "submit" with one button, replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
+29) If there is a input type = "submit" with two buttons, replace it for a call to the function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $ButtonValue2) from includes/UIGeneralFunctions.php
 
 in all these cases, 
 30) Respect the proper order of the parameters of the functions above, defined in 

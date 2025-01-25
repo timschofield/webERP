@@ -1,8 +1,7 @@
 <?php
 
 include('includes/session.php');
-$Title = _('Stock Service Price');
-/* webERP manual links before header.php */
+$Title = _('Service Fee Calculator');
 $ViewTopic= "Inventory";
 $BookMark = "Service Fee";
 include('includes/header.php');
@@ -10,6 +9,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLDefines.php');
 include('includes/KLUIGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php'); 
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -36,30 +36,12 @@ $MyRow = DB_fetch_array($Result);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Stock Code') . ':<input type="text" data-type="no-illegal-chars" title ="'._('Input the stock code.').'" placeholder="'._('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
 
-$SQL = "SELECT servicecode,
-			servicedescription
-	FROM klservicetypes
-	ORDER BY servicedescription";
-
-$Result = DB_query($SQL);
-echo '<tr>
-	<td>' . _('Type of Service') . ':</td>
-	<td><select name="ServiceCode" required="required" autofocus="autofocus" >';
-while($MyRow = DB_fetch_array($Result)) {
-	if(isset($_POST['ServiceCode']) and $MyRow['servicecode']==$_POST['ServiceCode']) {
-		echo '<option selected="selected" value="';
-	} else {
-		echo '<option value="';
-	}
-	echo $MyRow['servicecode'] . '">' . $MyRow['servicedescription'] . '</option>';
-}
-echo '</select></td>
-	</tr>';
-
-echo ' <input type="submit" name="ShowStatus" value="' . _('Check Service Fee') . '" />';
-echo '<br /><br />';
+echo '<fieldset><legend>' .$Title . '</legend>';
+echo FieldToSelectOneText('StockID', $StockID, 21, 20, _('Stock Code'), '', '', '', true, false);
+echo FieldToSelectOneServiceFee('ServiceCode', $ServiceCode, _('Type of Service'), '', '', '', true, true);
+echo '</fieldset>';
+echo OneButtonCenteredForm('ShowStatus', _('Check Service Fee'));
 
 if (($StockID != '') AND ($ServiceCode != '')){
 	$Today  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));

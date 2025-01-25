@@ -49,10 +49,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$i++;
 }
 echo '</tbody>
-	</table>
-	</div>
-	</form>';
-echo '<br />';
+	</table>';
 
 include ('includes/footer.php');
 ?>

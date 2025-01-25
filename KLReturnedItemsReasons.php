@@ -1,9 +1,8 @@
 <?php
 
-/* $Id returnitemreasons.php 4183 2010-12-14 09:30:20Z daintree $ */
-
 include('includes/session.php');
-$Title = _('Item Return Reasons') . ' / ' . _('Maintenance');
+include('includes/UIGeneralFunctions.php');
+$Title = _('Reasons for Item Return Maintenance');
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
@@ -18,8 +17,8 @@ if (isset($Errors)) {
 
 $Errors = array();
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Item Return Reasons')
-	. '" alt="" />' . _('Item Return Setup') . '</p>
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title
+	. '" alt="" />' . $Title . '</p>
 	<div class="page_help_text">' . _('Add/edit/delete Item Return Reason') . '</div>
 	<br />';
 
@@ -35,14 +34,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['reasonname']) >100) {
 		$InputError = 1;
-		echo prnMsg(_('The Item Return name description must be 100 characters or less long'),'error');
+		prnMsg(_('The Item Return name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'returnitemreasons';
 		$i++;
 	}
 
 	if (mb_strlen(trim($_POST['reasonname']))==0) {
 		$InputError = 1;
-		echo prnMsg(_('The Item Return name description must contain at least one character'),'error');
+		prnMsg(_('The Item Return name description must contain at least one character'),'error');
 		$Errors[$i] = 'returnitemreasons';
 		$i++;
 	}
@@ -54,7 +53,7 @@ if (isset($_POST['submit'])) {
 	$CheckRow=DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0) {
 		$InputError = 1;
-		echo prnMsg(_('You already have a Item Return Reason called').' '.$_POST['reasonname'],'error');
+		prnMsg(_('You already have a Item Return Reason called').' '.$_POST['reasonname'],'error');
 		$Errors[$i] = 'ReasonName';
 		$i++;
 	}
@@ -124,23 +123,19 @@ if (!isset($SelectedType)){
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
-	echo '<tr>
-		<th class="ascending" >' . _('Type ID') . '</th>
-		<th class="ascending" >' . _('Type Name') . '</th>
-		</tr>';
+	echo '<thead>
+		<tr>
+			<th class="SortedColumn">' . _('Type ID') . '</th>
+			<th class="SortedColumn">' . _('Type Name') . '</th>
+		</tr>
+		</thead>
+		<tbody>';
 
 $k=0; //row colour counter
 
 while ($MyRow = DB_fetch_row($Result)) {
-	if ($k==1){
-		echo '<tr class="EvenTableRows">';
-		$k=0;
-	} else {
-		echo '<tr class="OddTableRows">';
-		$k=1;
-	}
-
-	printf('<td>%s</td>
+	printf('<tr class="striped_row">
+			<td>%s</td>
 			<td>%s</td>
 			<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
 			<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' .
@@ -154,7 +149,8 @@ while ($MyRow = DB_fetch_row($Result)) {
 		$MyRow[0]);
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 }
 
 //end of ifs and buts!
@@ -169,12 +165,11 @@ if (! isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
     echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<br />
-		<table class="selection">'; //Main table
+	
+	echo '<fieldset>
+		<legend>' . _('Return Reason Details') . '</legend>';
 
-	// The user wish to EDIT an existing type
-	if ( isset($SelectedType) AND $SelectedType!='' ) {
-
+	if (isset($SelectedType) AND $SelectedType!='') {
 		$SQL = "SELECT reasonid,
 			       reasonname
 		        FROM returnitemreasons
@@ -189,31 +184,19 @@ if (! isset($_GET['delete'])) {
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />';
 		echo '<input type="hidden" name="reasonid" value="' . $_POST['reasonid'] . '" />';
 
-		// We dont allow the user to change an existing type code
-
-		echo '<tr>
-				<td>' ._('Type ID') . ': </td>
-				<td>' . $_POST['reasonid'] . '</td>
-			</tr>';
+		echo '<field>' . _('Type ID') . ': ' . $_POST['reasonid'] . '</field>';
 	}
 
 	if (!isset($_POST['reasonname'])) {
 		$_POST['reasonname']='';
 	}
-	echo '<tr>
-			<td>' . _('Type Name') . ':</td>
-			<td><input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="'._('The input should not be over 100 characters and contains illegal characters').'" name="reasonname" placeholder="'._('less than 100 characters').'" value="' . $_POST['reasonname'] . '" /></td>
-		</tr>';
 
-	echo '<tr>
-			<td colspan="2">
-				<div class="centre">
-					<input type="submit" name="submit" value="' . _('Accept') . '" />
-				</div>
-			</td>
-		</tr>
-		</table>
-		</div>
+	echo FieldToSelectOneText('reasonname', $_POST['reasonname'], 100, 100, _('Type Name'), '',	'',	'',	true, false);
+
+	echo '</fieldset>';
+	echo OneButtonCenteredForm('submit', _('Accept'));
+
+	echo '</div>
 		</form>';
 
 } // end if user wish to delete
