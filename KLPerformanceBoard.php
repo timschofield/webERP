@@ -4391,16 +4391,18 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 
 	$TotalModels  = TotalModels($Brand);
 	$TotalItems   = TotalItems($Brand);
-	$DisplayItems = TotalDisplayItems($Brand);
-	$AvailableForSaleItems = $TotalItems - $DisplayItems;
 	$DailySoldItemsThisYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysThisYear, $ToLastDaysThisYear) / $NumDays;
 	$DailySoldItemsLastYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysLastYear, $ToLastDaysLastYear) / $NumDays;
 	$TrendThisYear = ($DailySoldItemsThisYearPastDays - $DailySoldItemsLastYearPastDays) / $DailySoldItemsLastYearPastDays;
 	if ($Brand != "SHOPOU"){
+		$DisplayItems = TotalDisplayItems($Brand);
+		$AvailableForSaleItems = $TotalItems - $DisplayItems;
 		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, $FromNextDaysLastYear, $ToNextDaysLastYear) / $NumDaysLastYear;
 		$ItemsToBeSoldNextDaysBasedOnTrendLastYear = $DailySoldItemsLastYearNextDays * ($TrendThisYear+1);
 		$EstimationDailyItemsToBeSoldNextDays = max($DailySoldItemsThisYearPastDays, $ItemsToBeSoldNextDaysBasedOnTrendLastYear);
 	}else{
+		$DisplayItems = 0; // for sicounted items we don't want to keep enough for display, we want to get rid of them
+		$AvailableForSaleItems = $TotalItems ;
 		$EstimationDailyItemsToBeSoldNextDays = $DailySoldItemsThisYearPastDays;
 	}
 	$DaysStockForSale = $AvailableForSaleItems / $EstimationDailyItemsToBeSoldNextDays;
@@ -4448,13 +4450,15 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 			"Total Stock (PCS)", 
 			locale_number_format($TotalItems,0)
 			);
-	printf('<tr>
+	if ($Brand != "SHOPOU"){
+		printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Stock needed for display (PCS)", 
 			locale_number_format($DisplayItems,0)
 			);
+	}
 	printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>
