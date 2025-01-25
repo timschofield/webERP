@@ -136,75 +136,75 @@ function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $Help
 }
 
 function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
-	if ($Filter = 'PTADU_ALL') {
+	if ($Filter == 'PTADU_ALL') {
 		$SuffixPT = 'ADU';
 		$WhereUser = '';
 	}
-	elseif ($Filter = 'PTADU_VIEW') {
+	elseif ($Filter == 'PTADU_VIEW') {
 		$SuffixPT = 'ADU';
 		$WhereUser = 'AND glaccountusers.canview=1';
 	}
-	elseif ($Filter = 'PTADU_UPDATE') {
+	elseif ($Filter == 'PTADU_UPDATE') {
 		$SuffixPT = 'ADU';
 		$WhereUser = 'AND glaccountusers.canupd=1';
 	}
-	elseif ($Filter = 'PTSMH_ALL') {
+	elseif ($Filter == 'PTSMH_ALL') {
 		$SuffixPT = 'SMH';
 		$WhereUser = '';
 	}
-	elseif ($Filter = 'PTSMH_VIEW') {
+	elseif ($Filter == 'PTSMH_VIEW') {
 		$SuffixPT = 'SMH';
 		$WhereUser = 'AND glaccountusers.canview=1';
 	}
-	elseif ($Filter = 'PTSMH_UPDATE') {
+	elseif ($Filter == 'PTSMH_UPDATE') {
 		$SuffixPT = 'SMH';
 		$WhereUser = 'AND glaccountusers.canupd=1';
 	}
-	elseif ($Filter = 'PTBB_ALL') {
+	elseif ($Filter == 'PTBB_ALL') {
 		$SuffixPT = 'BB';
 		$WhereUser = '';
 	}
-	elseif ($Filter = 'PTBB_VIEW') {
+	elseif ($Filter == 'PTBB_VIEW') {
 		$SuffixPT = 'BB';
 		$WhereUser = 'AND glaccountusers.canview=1';
 	}
-	elseif ($Filter = 'PTBB_UPDATE') {
+	elseif ($Filter == 'PTBB_UPDATE') {
 		$SuffixPT = 'BB';
 		$WhereUser = 'AND glaccountusers.canupd=1';
 	}
-	elseif ($Filter = 'POIK_ALL') {
+	elseif ($Filter == 'POIK_ALL') {
 		$SuffixPT = 'IK';
 		$WhereUser = '';
 	}
-	elseif ($Filter = 'POIK_VIEW') {
+	elseif ($Filter == 'POIK_VIEW') {
 		$SuffixPT = 'IK';
 		$WhereUser = 'AND glaccountusers.canview=1';
 	}
-	elseif ($Filter = 'POIK_UPDATE') {
+	elseif ($Filter == 'POIK_UPDATE') {
 		$SuffixPT = 'IK';
 		$WhereUser = 'AND glaccountusers.canupd=1';
 	}
-	elseif ($Filter = 'POPI_ALL') {
+	elseif ($Filter == 'POPI_ALL') {
 		$SuffixPT = 'PI';
 		$WhereUser = '';
 	}
-	elseif ($Filter = 'POPI_VIEW') {
+	elseif ($Filter == 'POPI_VIEW') {
 		$SuffixPT = 'PI';
 		$WhereUser = 'AND glaccountusers.canview=1';
 	}
-	elseif ($Filter = 'POPI_UPDATE') {
+	elseif ($Filter == 'POPI_UPDATE') {
 		$SuffixPT = 'PI';
 		$WhereUser = 'AND glaccountusers.canupd=1';
 	}
-	elseif ($Filter = 'ALL') {
+	elseif ($Filter == 'ALL') {
 		$SuffixPT = '';
 		$WhereUser = '';
 	}
-	elseif ($Filter = 'VIEW') {
+	elseif ($Filter == 'VIEW') {
 		$SuffixPT = '';
 		$WhereUser = 'AND glaccountusers.canview=1';
 	}
-	elseif ($Filter = 'UPDATE') {
+	elseif ($Filter == 'UPDATE') {
 		$SuffixPT = '';
 		$WhereUser = 'AND glaccountusers.canupd=1';
 	}

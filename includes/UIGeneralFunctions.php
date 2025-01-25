@@ -22,6 +22,29 @@ function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
 	return $Attributes;
 }
 
+function FieldToSelectOneCountry($CountriesArray, $VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	foreach ($CountriesArray as $CountryEntry => $CountryName){
+		if (isset($SelectedValue) AND (strtoupper($SelectedValue) == strtoupper($CountryEntry))){
+			$HTML .=  '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName  . '</option>';
+		} else {
+			$HTML .=  '<option value="' . $CountryEntry . '">' . $CountryName  . '</option>';
+		}
+	}
+
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+
 function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	$SQL = "SELECT typename,
 				typeid
@@ -212,6 +235,40 @@ function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $Hel
 	return $HTML;
 }
 
+function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT areacode,
+				areadescription
+			FROM areas
+			ORDER BY areadescription";
+
+	$Result = DB_query($SQL);
+
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['areacode'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
 
 function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
@@ -262,6 +319,40 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 		$HTML .= '</select>
 				</field>';
 	}
+	return $HTML;
+}
+
+function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT typeid, 
+				typename 
+			FROM systypes 
+			ORDER BY typename";
+
+	$Result = DB_query($SQL);
+
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['typeid'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
 	return $HTML;
 }
 

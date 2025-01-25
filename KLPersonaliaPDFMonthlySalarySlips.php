@@ -3,31 +3,32 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $Title = _('Export PDF Salary Slips');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
+	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
 } else {
 	display($Title);
 }
 
-//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
+function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
+	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
+
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export PDF Monthly Salary Slips for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export PDF Monthly Salary Slips for ') . $PeriodMonth;
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export PDF THR Only Slips for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export PDF THR Only Slips for ') . $PeriodMonth;
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -35,7 +36,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodExportDate + 1)){
+		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
 //			$InputError = TRUE;
 		}
@@ -43,7 +44,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodExportDate)){
+		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export PDF THR Only Salary Slips should be this current month";
 			$InputError = TRUE;
 		}
@@ -58,9 +59,9 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 			require_once('includes/tcpdf/tcpdf.php');
 			
 			if ($SalaryType == "MONTHLY"){
-				$CoreFileName = $Company . '-MonthlySalarySlips-' . substr($LastDateOfPeriod,0,7);
+				$CoreFileName = $Company . '-MonthlySalarySlips-' . $PeriodMonth;
 			}else{
-				$CoreFileName = $Company . '-THROnlySalarySlips-' . substr($LastDateOfPeriod,0,7);
+				$CoreFileName = $Company . '-THROnlySalarySlips-' . $PeriodMonth;
 			}
 			
 			include('includes/KLPersonaliaPDFNewSalarySlip.php');
@@ -112,7 +113,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 
 			$pdf->SetFont($FontType, '', $FontBigSize);
 			$pdf->ln(5);
-			$pdf->MultiCell(0, 0, 'Salary totals for ' . ConvertSQLDate($LastDateOfPeriod), 0, 'L', 0, 1, '', '', true);
+			$pdf->MultiCell(0, 0, 'Salary totals for ' . $PeriodMonth, 0, 'L', 0, 1, '', '', true);
 			$pdf->ln(5);
 			$pdf->MultiCell(0, 0, 'Total Employees by Bank Danamon Transfer LLG: ' .	locale_number_format($EmployeesByBankTransferLLG), 0, 'L', 0, 1, '', '', true);
 			$pdf->MultiCell(0, 0, 'Total Amount by Bank Danamon Transfer LLG: ' .	locale_number_format($AmountByBankTransferLLG), 0, 'L', 0, 1, '', '', true);
@@ -148,7 +149,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 		
 		}else{
 			include('includes/header.php');
-			prnMsg('No data to export PDF Monthly Salary Slips ');
+			prnMsg('No data to export PDF Monthly Salary Slips', 'info');
 			include('includes/footer.php');
 		}
 	}else{
@@ -177,17 +178,15 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
+	echo '<fieldset>
+		<legend>' . _('Parameters Selection') . '</legend>';
 
-	include('includes/KLPersonaliaParameterSelection.php');
-	
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	include ('includes/KLPersonaliaParameterSelection.php');
+
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', $Title);
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');
