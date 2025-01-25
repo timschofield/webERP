@@ -88,17 +88,34 @@ if (!isset($_POST['FromDate'])
 	$i = 0;
 	$InitialDate = "";
 	$FinalDate = "";
+	$MinValue = 99999999999999999;
+	$MaxValue = -99999999999999999;
 	while ($MyRow = DB_fetch_array($KPIResult)){
 		if ($InitialDate == ""){
 			// first row, we can get the frist date, in case we don't have the full range requested
 			$InitialDate = $MyRow['date'];
 		}
 		$FinalDate = $MyRow['date'];
+		if ($MinValue > $MyRow['value']){
+			$MinValue = $MyRow['value'];
+		}
+		if ($MaxValue < $MyRow['value']){
+			$MaxValue = $MyRow['value'];
+		}
 		$GraphArray[$i] = array($MyRow['date'],$MyRow['value']);
 		$i++;
 	}
 
 	$GraphTitle = $_POST['Concept'] . ' ' . _('From') . ' ' . ConvertSQLDate($InitialDate) . ' ' . _('to') . ' ' . ConvertSQLDate($FinalDate) . "\n\r";
+
+	$Range = max(abs($MaxValue), abs($MinValue));
+	if ($Range < 5){
+		$PrecisionY = 2;
+	}else if ($Range < 50){
+		$PrecisionY = 1;
+	}else{
+		$PrecisionY = 0;
+	}
 
 	$graph = new PHPlot(1200,600);
 	$graph->SetTitleColor('blue');
@@ -118,7 +135,7 @@ if (!isset($_POST['FromDate'])
 	$graph->SetDrawYGrid(TRUE);
 	$graph->SetDataType('text-data');
 	$graph->SetNumberFormat($DecimalPoint, $ThousandsSeparator);
-	$graph->SetPrecisionY($_SESSION['CompanyRecord']['decimalplaces']);
+	$graph->SetPrecisionY($PrecisionY);
 	$graph->SetYDataLabelPos('none');
 	$graph->TuneYAutoRange(0, 0, 0);
 	$graph->SetDataColors(
