@@ -2852,23 +2852,31 @@ function ItemsInSetup($Check, $Category, $RootPath){
 function ItemsInWrongShops($ShopType, $RootPath){
 
 	if ($ShopType == "SHOPKL"){
-		$TableTitleText = 'Blink or KL 80% Discount Items on KL shops';
-		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_DISC_20_50 . "
-						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_DISC_20_50 . "
-						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
-						AND locations.typeloc = 'SHOPKL' ";
+		$TableTitleText = 'Blink or KL Discount not allowed items on KL shops';
+		$Condition =  " AND NOT (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_KAPAL_LAUT . "
+							OR (stockmaster.categoryid = 'DISC2A' AND locations.alldisc20items = 1)
+							OR (stockmaster.categoryid = 'DISC5A' AND locations.alldisc50items = 1)
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . "
+							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items = 1)
+							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items = 1)
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
+						) AND locations.typeloc = 'SHOPKL' ";
 	}elseif ($ShopType == "SHOPBL"){
-		$TableTitleText = 'KL or Blink 80% Discount items on BLINK shops';
-		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_BLINK_INCLUDING_DISC_20_50 . "
-						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_DISC_20_50 . "
-						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
-						AND locations.typeloc = 'SHOPBL' ";
+		$TableTitleText = 'KL or Blink Discount not allowed items on BLINK shops';
+		$Condition =  " AND NOT (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_BLINK . "
+							OR (stockmaster.categoryid = 'DISC2B' AND locations.alldisc20items = 1)
+							OR (stockmaster.categoryid = 'DISC5B' AND locations.alldisc50items = 1)
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL . "
+							OR (stockmaster.categoryid = 'DISC2G' AND locations.alldisc20items = 1)
+							OR (stockmaster.categoryid = 'DISC5G' AND locations.alldisc50items = 1)
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
+						) AND locations.typeloc = 'SHOPBL' ";
 	}elseif ($ShopType == "SHOPOU"){
 		$TableTitleText = 'KL or Blink full priced items on OUTLET shops';
-		$Condition =  " AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_OUTLET . "
-						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT . "
-						AND stockmaster.categoryid NOT IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
-						AND locations.typeloc = 'SHOPOU' ";
+		$Condition =  " AND NOT (stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_OUTLET . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_GENERAL_INCLUDING_ALL_DISCOUNT . "
+							OR stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_IN_SHOPS_NOT_FOR_SALE . "
+						) AND locations.typeloc = 'SHOPOU' ";
 	}elseif ($ShopType == "DEFECTIVE"){
 		$TableTitleText = 'Discounted -D items on KL or Blink shops';
 		$Condition =  " AND UPPER(RIGHT(stockmaster.stockid,2)) = '-D'
