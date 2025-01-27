@@ -9,7 +9,7 @@
 $KLCodeVersion = "012";
 
 // let's setup all the variables depending on the environment
-if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
+if (URLWithoutScriptNameContains("LOCAL-TEST")){
 	// the current script filename resides in the WAMPP localhost, we are on TEST code
 	// localhost development environment must go with the remote test DB (safest) in Exabytes
 	$webERPType = 'TEST';
@@ -24,9 +24,9 @@ if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
 	$Host = 'localhost';
 	$OpenCartDBHost = 'localhost';
 	$OldDataDBHost = 'localhost';
-	if (strpos(strtoupper($_SERVER['HTTP_HOST']),"DEVELOPMENT")!== false){
+	if (URLWithoutScriptNameContains("DEVELOPMENT")){
 		// we are on ptadu-development.com (development code)
-		if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
+		if (URLWithoutScriptNameContains("TEST")){
 			// development environment with the test DB (safe)
 			$webERPType = 'TEST';
 			$ErrorReportingType = 'DEVELOPMENT';
@@ -41,7 +41,7 @@ if (strpos(strtoupper($_SERVER['HTTP_HOST']),"LOCAL-TEST")!== false){
 		}
 	} else {
 		// we are on ptadu.com (production code)
-		if (strpos(strtoupper($_SERVER['PHP_SELF']),"TEST")!== false){
+		if (URLWithoutScriptNameContains("TEST")){
 			// Training staff environment: we are on production code with the test DB 
 			$webERPType = 'TEST';
 			$ErrorReportingType = 'DEVELOPMENT';
