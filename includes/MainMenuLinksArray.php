@@ -139,7 +139,6 @@ $MenuItems['Sales']['Reports']['Caption'] = array( _('Sales Order Inquiry'),
 													_('KL Quality and Returns Report'),
 													_('KL Retail Customer Analysis'),
 													_('KL Excel Sales Analysis'),
-													_('KL Excel Sales Monthly Report'),
 													_('Sell Through Support Claims Report'));
 
 $MenuItems['Sales']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
@@ -176,7 +175,6 @@ $MenuItems['Sales']['Reports']['URL'] = array( '/SelectCompletedOrder.php',
 												'/KLQualityReturnsPerformance.php',
 												'/KLRetailCustomerBoard.php',
 												'/KLExcelSalesAnalysis.php',
-												'/KLExcelSalesMonthlyReport.php',
 												'/PDFSellThroughSupportClaim.php');
 
 $MenuItems['Sales']['Maintenance']['Caption'] = array( _('Create Contract'),
@@ -363,7 +361,6 @@ $MenuItems['stock']['Transactions']['URL'] = array(	'/PO_SelectOSPurchOrder.php'
 													'/KLReturnedItems.php');
 
 $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'),
-													_('KL Print Price Labels'),
 													_('Print Price Labels'),
 													_('Reprint GRN'),
 													_('Inventory Item Movements'),
@@ -391,8 +388,6 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('List Negative Stocks'),
 													_('Period Stock Transaction Listing'),
 													_('KL Excel Inventory Taking At Location'),
-													_('KL Inventory Taking At Shop'),
-													_('KL Internal Usage Consumable Stock'),
 													_('KL Stock Available Not in Shop'),
 													_('KL Active Transfer Status'),
 													_('KL Price Analysis'),
@@ -404,7 +399,6 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('KL Service Fee Calculator'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
-												'/KLPDFPrintLabel.php',
 												'/PDFPrintLabelTCPDF.php',
 												'/ReprintGRN.php',
 												'/StockMovements.php',
@@ -432,8 +426,6 @@ $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
 												'/PDFStockNegatives.php',
 												'/PDFPeriodStockTransListing.php',
 												'/KLExcelInventoryTaking.php',
-												'/KLInventoryAtShop.php',
-												'/KLUsageInternalStock.php',
 												'/KLAvailableItemsNotInShop.php',
 												'/KLTransferStatus.php',
 												'/KLExcelPriceAnalysis.php',
@@ -587,7 +579,6 @@ $MenuItems['GL']['Reports']['Caption'] = array( _('Bank Account Reconciliation S
 												_('Export Excel GL Transactions for PT'),
 												_('Horizontal Analysis of Statement of Financial Position'),
 												_('Horizontal Analysis of Statement of Comprehensive Income'),
-												_('KL Excel Financial Analysis'),
 												_('KL Consignment Invoices Issued List'),
 												_('Tag Reports'),
 												_('Tax Reports'));
@@ -612,7 +603,6 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
 											'/KLExcelGLTransactionsPajak.php',
 											'/AnalysisHorizontalPosition.php',
 											'/AnalysisHorizontalIncome.php',
-											'/KLExcelFinancialAnalysis.php',
 											'/KLConsignmentInvoiceIssuedList.php',
 											'/GLTagProfit_Loss.php',
 											'/Tax.php');																						
