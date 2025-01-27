@@ -22,7 +22,7 @@ function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
 	return $Attributes;
 }
 
-function FieldToSelectOneCountry($CountriesArray, $VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -31,11 +31,11 @@ function FieldToSelectOneCountry($CountriesArray, $VariableName, $SelectedValue,
 	$HTML .= 'name="' . $VariableName . '">
 				<fieldhelp>' . $HelpText . '</fieldhelp>';
 
-	foreach ($CountriesArray as $CountryEntry => $CountryName){
-		if (isset($SelectedValue) AND (strtoupper($SelectedValue) == strtoupper($CountryEntry))){
-			$HTML .=  '<option selected="selected" value="' . $CountryEntry . '">' . $CountryName  . '</option>';
+	foreach ($Array as $Entry => $Name){
+		if (isset($SelectedValue) AND (strtoupper($SelectedValue) == strtoupper($Entry))){
+			$HTML .=  '<option selected="selected" value="' . $Entry . '">' . $Name  . '</option>';
 		} else {
-			$HTML .=  '<option value="' . $CountryEntry . '">' . $CountryName  . '</option>';
+			$HTML .=  '<option value="' . $Entry . '">' . $Name  . '</option>';
 		}
 	}
 
@@ -270,7 +270,7 @@ function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $
 }
 
 
-function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
@@ -301,11 +301,16 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 	
 		$Result = DB_query($SQL);
 	
-		if (!isset($SelectedValue)) {
-			$HTML .= '<option selected="selected" value="All">' . _('All Sales Persons') . '</option>';
+		if ($AllowAll) {
+			if (!isset($SelectedValue)) {
+				$HTML .= '<option selected="selected" value="All">' . _('All Sales Persons') . '</option>';
+			} 
+			else {
+				$HTML .= '<option value="All">' . _('All Sales Persons') . '</option>';
+			}
 		} 
 		else {
-			$HTML .= '<option value="All">' . _('All Sales Persons') . '</option>';
+			$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
 		}
 	
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -355,6 +360,19 @@ function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $He
 			</field>';
 	return $HTML;
 }
+
+function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<fieldhelp>' . $HelpText . '</fieldhelp>
+				<input type="password" pattern=".{5,}"';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= '" name="' . $VariableName . '"  placeholder="'._('At least 5 characters').'" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
+			</field>';
+	return $HTML;
+}
+
 
 function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 

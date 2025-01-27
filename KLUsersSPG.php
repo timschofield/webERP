@@ -2,7 +2,6 @@
 /**************************************************************************
 KL RICARD WWW_Users modified for KL use ONLY to maintain SPG accounts 
 ***************************************************************************/
-/* $Id: WWW_Users.php 6807 2014-08-11 14:12:30Z agaluski $*/
 
 // HARDCODED FOR KL 
 $ModulesAllowed = "1,0,0,0,1,0,0,1,0,0,0,0,";
@@ -28,6 +27,8 @@ include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLEmails.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/group_add.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>
 	<br />';
@@ -272,6 +273,7 @@ if (!isset($SelectedUser)) {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
+	echo '<thead>';
 	echo '<tr>
 			<th>' . _('User Login') . '</th>
 			<th>' . _('SPG') . '</th>
@@ -280,17 +282,11 @@ if (!isset($SelectedUser)) {
 			<th>' . _('Access Level')  . '</th>
 			<th>' . _('Status') . '</th>
 		</tr>';
-
-	$k=0; //row colour counter
+	echo '</thead>';
+	echo '<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if ($k==1){
-			echo '<tr class="EvenTableRows">';
-			$k=0;
-		} else {
-			echo '<tr class="OddTableRows">';
-			$k=1;
-		}
+		echo '<tr class="striped_row">';
 
 		if ($MyRow['lastvisitdate']=='') {
 			$LastVisitDate = Date($_SESSION['DefaultDateFormat']);
@@ -327,6 +323,7 @@ if (!isset($SelectedUser)) {
 				$MyRow['userid']);
 
 	} //END WHILE LIST LOOP
+	echo '</tbody>';
 	echo '</table><br />';
 } //end of ifs and buts!
 
@@ -378,131 +375,24 @@ if (isset($SelectedUser)) {
 	echo '<input type="hidden" name="UserID" value="' . $_POST['UserID'] . '" />';
 }
 
-echo '<table class="selection">';
+echo '<fieldset><legend>' . _('SPG User Details') . '</legend>';
 
-echo '<tr>
-		<td>' . _('SPG') . ':</td>
-		<td><select name="Salesman">';
+echo FieldToSelectOneSalesPerson('Salesman', isset($_POST['Salesman']) ? $_POST['Salesman'] : '', _('SPG'), false, '', '', '', true, true);
+echo FieldToSelectOneLocation('DefaultLocation', isset($_POST['DefaultLocation']) ? $_POST['DefaultLocation'] : '', _('KL Shop'), '', LIST_BALI_SHOPS_BY_TYPE);
+echo FieldToSelectOneDepartment('Department', isset($_POST['Department']) ? $_POST['Department'] : '', _('KL Shop for Internal Requests'), '', 'departmentid <> 1');
+echo FieldToSelectOnePassword('Password', $_POST['Password'], 22, 20, _('Password'), '');
+echo FieldToSelectOneEntryFromArray($SecurityRoles, 'Access', isset($_POST['Access']) ? $_POST['Access'] : '', _('Access Level'));
+echo FieldToSelectFromTwoOptions('0', _('Open'),
+								'1', _('Blocked'), 'Blocked', 
+								isset($_POST['Blocked']) ? $_POST['Blocked'] : '0', _('Account Status'), '', '', '', true);
 
-$SQL = "SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmancode";
-$Result = DB_query($SQL);
-if ((isset($_POST['Salesman']) AND $_POST['Salesman']=='') OR !isset($_POST['Salesman'])){
-	echo '<option selected="selected" value=""></option>';
-} else {
-	echo '<option value=""></option>';
-}
-while ($MyRow=DB_fetch_array($Result)){
+echo '</fieldset>';
 
-	if (isset($_POST['Salesman']) AND $MyRow['salesmancode'] == $_POST['Salesman']){
-		echo '<option selected="selected" value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmancode'] . ' -> ' . $MyRow['salesmanname'] . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['salesmancode'] . '">' . $MyRow['salesmancode'] . ' -> ' . $MyRow['salesmanname'] . '</option>';
-	}
+echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" />';
 
-}
-echo '</select></td>
-	</tr>';
+echo OneButtonCenteredForm('submit', _('Enter Information'));
 
-echo '<tr>
-		<td>' . _('KL Shop') . ':</td>
-		<td><select name="DefaultLocation">';
-
-$SQL = "SELECT loccode, 
-				locationname
-		FROM locations 
-		WHERE typeloc IN " . LIST_BALI_SHOPS_BY_TYPE . " 
-		ORDER BY locationname";
-$Result = DB_query($SQL);
-if ((isset($_POST['DefaultLocation']) AND $_POST['DefaultLocation']=='') OR !isset($_POST['DefaultLocation'])){
-	echo '<option selected="selected" value=""></option>';
-} else {
-	echo '<option value=""></option>';
-}
-while ($MyRow=DB_fetch_array($Result)){
-	if (isset($_POST['DefaultLocation']) AND $MyRow['loccode'] == $_POST['DefaultLocation']){
-		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname']  . '</option>';
-	}
-}
-
-echo '</select></td>
-	</tr>';
-
-/* Allowed Department for Internal Requests */
-
-echo '<tr>
-		<td>' . _('KL Shop for Internal Requests') . ':</td>';
-
-$SQL="SELECT departmentid,
-			description
-		FROM departments
-		WHERE departmentid <> 1
-		ORDER BY description";
-
-$Result=DB_query($SQL);
-echo '<td><select name="Department">';
-if ((isset($_POST['Department']) AND $_POST['Department']=='0') OR !isset($_POST['Department'])){
-	echo '<option selected="selected" value="0"></option>';
-} else {
-	echo '<option value=""></option>';
-}
-while ($MyRow=DB_fetch_array($Result)){
-	if (isset($_POST['Department']) AND $MyRow['departmentid'] == $_POST['Department']){
-		echo '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
-	} else {
-		echo '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
-	}
-}
-echo '</select></td>
-	</tr>';
-	
-	
-if (!isset($_POST['Password'])) {
-	$_POST['Password']='';
-}
-echo '<tr>
-		<td>' . _('Password') . ':</td>
-		<td><input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('At least 5 characters').'" title="'._('Passwords must be 5 characters or more and cannot same as the users id. A mix of upper and lower case and some non-alphanumeric characters are recommended.').'" /></td>
-	</tr>';
-	
-echo '<tr>
-		<td>' . _('Access Level') . ':</td>
-		<td><select name="Access">';
-
-foreach ($SecurityRoles as $SecKey => $SecVal) {
-	if (isset($_POST['Access']) and $SecKey == $_POST['Access']){
-		echo '<option selected="selected" value="' . $SecKey . '">' . $SecVal  . '</option>';
-	} else {
-		echo '<option value="' . $SecKey . '">' . $SecVal  . '</option>';
-	}
-}
-echo '</select>';
-echo '<input type="hidden" name="ID" value="'.$_SESSION['UserID'].'" /></td>
-
-    </tr>';
-
-/* Account status */
-
-echo '<tr>
-		<td>' . _('Account Status') . ':</td>
-		<td><select required="required" name="Blocked">';
-if ($_POST['Blocked']==0){
-	echo '<option selected="selected" value="0">' . _('Open') . '</option>';
-	echo '<option value="1">' . _('Blocked') . '</option>';
-} else {
- 	echo '<option selected="selected" value="1">' . _('Blocked') . '</option>';
-	echo '<option value="0">' . _('Open') . '</option>';
-}
-echo '</select></td>
-	</tr>';
-
-echo '</table>
-	<br />
-	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-	</div>
-    </div>
+echo '</div>
 	</form>';
 
 include('includes/footer.php');

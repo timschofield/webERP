@@ -57,6 +57,13 @@ Afterwards, look for:
 
 22) <field> ... </field> structures referring to the input of a single Service Fee Reason and replace the <field> ... </field> structure for a call to the function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
+23) <field> ... </field> structures referring to the input of a password and replace the <field> ... </field> structure for a call to the function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+24) <field> ... </field> structures referring to the input of a single department and replace the <field> ... </field> structure for a call to the function FieldToSelectOneDepartmentd($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+25) <field> ... </field> structures referring to the selection of a key from an array and replace the <field> ... </field> structure for a call to the function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+
 
 29) If there is a input type = "submit" with one button, replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
 29) If there is a input type = "submit" with two buttons, replace it for a call to the function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $ButtonValue2) from includes/UIGeneralFunctions.php

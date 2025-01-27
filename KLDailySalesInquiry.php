@@ -30,7 +30,7 @@ $EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
 echo '<fieldset>';
 echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], _('Month to Show'), '', '', 1, true, false);
-echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Sales Person'), '', 'CURRENT', 2, true, false);
+echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Sales Person'), '', 'CURRENT', true, 2, true, false);
 echo FieldToSelectOneCustomerType("CustomerType", $_POST['CustomerType'], _('Customer Type'), '', '', 3, true, false);
 echo '</fieldset>';
 echo OneButtonCenteredForm("ShowResults", _('Show Daily Sales For The Selected Month'), 4, true, false);

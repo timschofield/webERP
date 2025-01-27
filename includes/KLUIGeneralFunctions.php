@@ -141,6 +141,52 @@ function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $Help
 	return $HTML;
 }
 
+function FieldToSelectOneDepartment($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+	
+	if($Filter == 'NOTKANTOR') {
+		$SQL = "SELECT departmentid,
+					description
+				FROM departments
+				WHERE departmentid != 1
+				ORDER BY description";
+	}
+	else {
+		$SQL = "SELECT departmentid,
+					description
+				FROM departments
+				ORDER BY description";
+	}
+
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+	
+	if ($Required){
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['departmentid'] == $SelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['departmentid'] . '">' . $MyRow['description'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+
+
 function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 	if ($Filter == 'PTADU_ALL') {
 		$SuffixPT = 'ADU';

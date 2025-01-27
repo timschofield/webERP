@@ -25,8 +25,7 @@ echo _('Stock Code Begins with ') . ':<input type="text" data-type="no-illegal-c
 
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Availability') . '" />';
 
-echo '<br />
-		<table class="selection">
+echo '<table class="selection">
 		<thead>
 			<tr>
 				<th class="SortedColumn">' . _('Location') . '</th>
@@ -39,8 +38,9 @@ if ($StockID != ''){
 	$SQL = "SELECT locstock.loccode,
 					locations.locationname,
 					SUM(locstock.quantity) AS quantity
-			FROM locstock INNER JOIN locations
-			ON locstock.loccode=locations.loccode
+			FROM locstock 
+			INNER JOIN locations
+				ON locstock.loccode=locations.loccode
 			WHERE locstock.stockid LIKE '" . $StockID . "%'
 				AND  (locations.stockreadytosell= '1'
 					OR locations.loccode = 'KANTO')
@@ -99,7 +99,8 @@ if ($StockID != ''){
 	}
 	echo '</tbody>
 		<tfooter>';
-	echo '<tr class="striped_row"><td>Total available:</td>';
+	echo '<tr class="striped_row">
+		<td>Total available:</td>';
 
 	printf('<td class="number">%s</td></tr>',
 			locale_number_format_zero_blank($Total, 0)

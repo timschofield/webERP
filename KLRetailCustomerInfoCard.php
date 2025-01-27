@@ -222,7 +222,7 @@ if (! isset($_GET['delete'])) {
 		
 		echo FieldToSelectOneText('FirstName', $_POST['FirstName'], 32, 32, _('First Name'), '', '', '', true, false);
 		echo FieldToSelectOneText('LastName', $_POST['LastName'], 32, 32, _('Last Name'), '', '', '', true, false);
-		echo FieldToSelectOneCountry($CountriesForRetail, 'Country', $_POST['Country'], _('Country'), '', '', '', false, false);
+		echo FieldToSelectOneEntryFromArray($CountriesForRetail, 'Country', $_POST['Country'], _('Country'), '', '', '', false, false);
 		echo FieldToSelectOneDate('DateOfBirth', $_POST['DateOfBirth'], _('Date Of Birth'), '', '', '', false, false);
 		echo FieldToSelectFromTwoOptions('F', _('Female'), 'M', _('Male'), 'Sex', $_POST['Sex'], _('Sex'), '', '', '', true, false);
 		echo FieldToSelectOneText('Email', $_POST['Email'], 32, 255, _('Email'), '', '', '', false, false);
