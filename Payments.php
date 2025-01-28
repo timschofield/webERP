@@ -471,14 +471,15 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							)";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was') , true);
-					foreach ($PaymentItem->Tag as $Tag) {
-						$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-															'" . $Tag . "')";
-						$ErrMsg = _('Cannot insert a GL tag for the payment line because');
-						$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+					if (isset($PaymentItem->Tag)){
+						foreach ($PaymentItem->Tag as $Tag) {
+							$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
+																'" . $Tag . "')";
+							$ErrMsg = _('Cannot insert a GL tag for the payment line because');
+							$DbgMsg = _('The SQL that failed to insert the GL tag record was');
+							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+						}
 					}
-
 					$TotalAmount += $PaymentItem->Amount;
 				}
 				$_SESSION['PaymentDetail' . $identifier]->Amount = $TotalAmount;
@@ -834,6 +835,10 @@ elseif (isset($_POST['Process']) AND !$BankAccountEmpty) { //user hit submit a n
 		$ChequeNoResult = DB_query($ChequeNoSQL);
 	}
 
+	if (!isset($_POST['Tag'])){
+		$_POST['Tag'] = array();
+	}
+
 	if (is_numeric($_POST['GLManualCode'])) {
 
 		$SQL = "SELECT accountname
@@ -872,7 +877,7 @@ elseif (isset($_POST['Process']) AND !$BankAccountEmpty) { //user hit submit a n
 			}
 		}
 	}
-	elseif (DB_num_rows($ChequeNoResult) != 0 AND $_POST['Cheque'] != '') {
+	elseif (isset($ChequeNoResult) AND DB_num_rows($ChequeNoResult) != 0 AND $_POST['Cheque'] != '') {
 		prnMsg(_('The cheque number has already been used') . ' - ' . _('This GL analysis item could not be added') , 'error');
 	}
 	elseif ($_POST['GLCode'] == '') {
@@ -1333,14 +1338,16 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 		$PaymentTotal = 0;
 		foreach ($_SESSION['PaymentDetail' . $identifier]->GLItems as $PaymentItem) {
 			$TagDescriptions = '';
-			foreach ($PaymentItem->Tag as $Tag) {
-				$TagSql = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-				$TagResult = DB_query($TagSql);
-				$TagRow = DB_fetch_array($TagResult);
-				if ($Tag == 0) {
-					$TagRow['tagdescription'] = _('None');
+			if (isset($PaymentItem->Tag)){
+				foreach ($PaymentItem->Tag as $Tag) {
+					$TagSql = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
+					$TagResult = DB_query($TagSql);
+					$TagRow = DB_fetch_array($TagResult);
+					if ($Tag == 0) {
+						$TagRow['tagdescription'] = _('None');
+					}
+					$TagDescriptions.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
 				}
-				$TagDescriptions.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
 			}
 
 			echo '<tr>
