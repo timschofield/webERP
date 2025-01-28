@@ -1,13 +1,12 @@
 <?php
 
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('Kapal-Laut General Transfer Status');
 include ('includes/header.php');
 include('includes/KLBoards.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 TransfersDelayed(2, $RootPath);
 

@@ -9,6 +9,7 @@ include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
+include('includes/KLUIGeneralFunctions.php');
 
 CheckPackagingToBeRefilled(TRUE, TRUE, $RootPath);
 

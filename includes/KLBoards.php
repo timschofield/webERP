@@ -1840,7 +1840,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$NumberOfOpenShopsOU = NumberOfShops("SHOPOU");
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			$DailyUse = $MyRow['qused'] / $DaysUsage;
+			$DailyUse = ($DaysUsage > 0) ? ($MyRow['qused'] / $DaysUsage) : 0;
 			$UsedLastXDays = ceil($DailyUse * $DaysUsage);
 			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
 			if (ItemInList($MyRow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
@@ -1851,7 +1851,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$ForecastUsedLastYear = ceil($MyRow['qusedlastyear'] * (1 + $TrendThisYearOU));
 			}
 			$ForecastUsageNextDays = max( $ForecastUsedThisYear, $ForecastUsedLastYear);
-			$ForecastUsageDaily = $ForecastUsageNextDays / $DaysMinimumStock;
+			$ForecastUsageDaily = ($DaysMinimumStock > 0) ? ($ForecastUsageNextDays / $DaysMinimumStock) : 0;
 
 			// to prevent shortage on slow moving items in ANY gudang, and be still able to serve the item to the shops
 			// we need to keep a minimum stock always in gudang
@@ -2055,9 +2055,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$i++;
 		}
 		if (!$ShowHeader){
-			$TotalDailyUse = $UsageXDays / $DaysUsage;
-			$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
-			$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
+			$TotalDailyUse = ($DaysUsage > 0) ? ($UsageXDays / $DaysUsage) : 0;
+			$TotalDaysQOH = ($TotalDailyUse != 0) ? floor($QOHTotal / $TotalDailyUse) : 0;
+			$TotalDaysQOO = ($TotalDailyUse != 0) ? floor(($QOHTotal + $PendingQOO) / $TotalDailyUse) : 0;
 			echo'</tbody>
 				<tfooter>';
 			if ($ExtendedVersion){
@@ -4022,7 +4022,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 
-			$NewStdCost = $MyRow['price'] / $MyRow['conversionfactor'] * (1/$MyRow['rate']) * $StdFactor;
+			$NewStdCost = $MyRow['price'] / max(0.0001,$MyRow['conversionfactor']) * (1/max(0.0001,$MyRow['rate'])) * $StdFactor;
 			$Price = locale_number_format($MyRow['price'],$MyRow['decimalplaces']);
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . '&SupplierID='. $MyRow['supplierno'] . '&Edit=1&EffectiveFrom='. $MyRow['effectivefrom']  .' ">' . $Price . '</a>';
 			if ($Mode == "SHOWONLY"){
