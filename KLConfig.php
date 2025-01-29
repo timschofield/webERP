@@ -13,7 +13,8 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 	// the current script filename resides in the WAMPP localhost, we are on TEST code
 	// localhost development environment must go with the remote test DB (safest) in Exabytes
 	$webERPType = 'TEST';
-	$ErrorReportingType = 'PRODUCTION'; // even if it is TEST, for the time being do not overload with warnings, better than DEVELOPMENT
+//	$ErrorReportingType = 'PRODUCTION'; // even if it is TEST, for the time being do not overload with warnings, better than DEVELOPMENT
+	$ErrorReportingType = 'DEVELOPMENT'; 
 	$Theme = 'silverwolf';
 	$Host = '202.157.184.151';
 	$OpenCartDBHost = '202.157.184.151';
