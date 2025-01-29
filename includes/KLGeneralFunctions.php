@@ -1465,4 +1465,20 @@ function BrandTextFromCode($Brand){
 	return $BrandText;
 }
 
+function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
+	if ($QtyNeeded > 0){
+		if ($PanSize == 0){
+			$OptimumOrderQuantity = max($Eoq, $QtyNeeded);
+		}
+		else{
+			$OptimumOrderQuantity = max($Eoq, ceil($QtyNeeded / $PanSize) * $PanSize);
+		}
+	}
+	else{
+		$OptimumOrderQuantity = 0;
+	}
+	return $OptimumOrderQuantity;
+}
+
+
 ?>

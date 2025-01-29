@@ -1890,11 +1890,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $MyRow['qoo']));
 				}
 			}
-			if ($QtyNeeded > 0){
-				$QtyToOrder = max($MyRow['eoq'], ceil($QtyNeeded/$PanSize)*$PanSize);
-			}else{
-				$QtyToOrder = 0;
-			}
+			
+			$QtyToOrder = OptimumOrderQuantity($QtyNeeded, $MyRow['eoq'], $PanSize);
+
 			// phasing out these codes, don't want to buy anymore
 			if ($MyRow['stockid'] == "PKSB02-L"){
 				$QtyToOrder = 0;
