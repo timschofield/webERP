@@ -316,8 +316,11 @@ function ItemCodeQuantityInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
 	}
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDetail){
@@ -350,8 +353,11 @@ function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
 	}
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function ItemCodeQOO_PurchaseOrders($StockID, $CodeDetail){
@@ -534,8 +540,11 @@ function GetAreaFromCustomer($CustomerCode){
 			WHERE custbranch.debtorno ='". $CustomerCode . "'
 			AND custbranch.branchcode = '" . $CustomerCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetCurrencyFromCustomer($CustomerCode){
@@ -544,8 +553,11 @@ function GetCurrencyFromCustomer($CustomerCode){
 			FROM debtorsmaster
 			WHERE debtorsmaster.debtorno ='". $CustomerCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetOnlinePartnerFromArea($Area){
@@ -556,48 +568,66 @@ function GetCategoryNameFromCode($CategoryId){
 	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
 	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid='" . $CategoryId . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetDefaultLocationFromUser($UserId){
 	$ErrMsg = 'Error in function GetDefaultLocationFromUser()';
 	$SQL = "SELECT defaultlocation FROM www_users WHERE userid='".$UserId."'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetLocationNameFromCode($LocCode){
 	$ErrMsg = 'Error in function GetLocationNameFromCode()';
 	$SQL="SELECT locationname FROM locations WHERE loccode='" . $LocCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetItemDescriptionFromCode($StockID){
 	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
 	$SQL="SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetTotalItemsChangingPrice(){
 	$ErrMsg = 'Error in function GetTotalItemsChangingPrice()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klchangingprice='1'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function GetTotalItemsMovingToDiscount($DiscountLevel){
 	$ErrMsg = 'Error in function GetTotalItemsMovingToDiscount()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klmovingdiscount".$DiscountLevel."='1'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function NegativeNumber($Value){
@@ -620,8 +650,11 @@ function FindReasonOfReturn($ReasonCode){
 	$ErrMsg = 'Error in function FindReasonOfReturn()';
 	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid='" . $ReasonCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function ConvertExcelDate(Cell $cell, $format = 'Y-m-d') {
@@ -1254,8 +1287,11 @@ function GetLastKPIValue($Class,$Concept){
 			ORDER BY date DESC
 			LIMIT 1";
 	$Result = DB_query($SQL);		
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['value'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['value'];
+	}
+	return '';
 	
 }
 
@@ -1287,8 +1323,11 @@ function TotalItemsToBeReceivedByPO($Brand){
 			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
 			$Operator1." ";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function TotalItemsToBeReceivedByWO($Brand){
@@ -1312,8 +1351,11 @@ function TotalItemsToBeReceivedByWO($Brand){
 			AND woitems.qtyreqd > woitems.qtyrecd ".
 			$Operator1." ";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function TotalModels($Brand){
@@ -1332,8 +1374,11 @@ function TotalModels($Brand){
 			WHERE discontinued = 0 " . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['0'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
  
 function TotalItems($Brand){
@@ -1352,8 +1397,11 @@ function TotalItems($Brand){
 			WHERE stockmaster.stockid = locstock.stockid " . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['0'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
 
 function TotalDisplayItems($Brand){
@@ -1373,8 +1421,11 @@ function TotalDisplayItems($Brand){
 				AND locstock.quantity >= 1" . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['0'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
 
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
@@ -1394,8 +1445,11 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 				AND salesorderdetails.itemdue <= '" . $ToDate . "'" . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return ($MyRow['0']);
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
 
 function BrandTextFromCode($Brand){
@@ -1409,6 +1463,21 @@ function BrandTextFromCode($Brand){
 		$BrandText = "ERROR";
 	}
 	return $BrandText;
+}
+
+function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
+	if ($QtyNeeded > 0){
+		if ($PanSize == 0){
+			$OptimumOrderQuantity = max($Eoq, $QtyNeeded);
+		}
+		else{
+			$OptimumOrderQuantity = max($Eoq, ceil($QtyNeeded / $PanSize) * $PanSize);
+		}
+	}
+	else{
+		$OptimumOrderQuantity = 0;
+	}
+	return $OptimumOrderQuantity;
 }
 
 

@@ -13,7 +13,8 @@ if (URLWithoutScriptNameContains("LOCAL-TEST")){
 	// the current script filename resides in the WAMPP localhost, we are on TEST code
 	// localhost development environment must go with the remote test DB (safest) in Exabytes
 	$webERPType = 'TEST';
-	$ErrorReportingType = 'PRODUCTION'; // even if it is TEST, for the time being do not overload with warnings, better than DEVELOPMENT
+//	$ErrorReportingType = 'PRODUCTION'; // even if it is TEST, for the time being do not overload with warnings, better than DEVELOPMENT
+	$ErrorReportingType = 'DEVELOPMENT'; 
 	$Theme = 'silverwolf';
 	$Host = '202.157.184.151';
 	$OpenCartDBHost = '202.157.184.151';
@@ -88,8 +89,8 @@ if ($webERPType == 'PRODUCTION'){
 	$CompanyList[0] = array('database'=>'test_erp' ,'company'=>'Kapal-Laut TEST' );
 	
 	// use the TEST Opencart DB
-	$OpenCartDBUser = 'DBU_kl_shop';
-	$OpenCartDBPassword = '2e549bf390a028a9fRR55.2afd';
+	$OpenCartDBUser = 'DBU_ptadu_test';
+	$OpenCartDBPassword = 'LTq%w@.KkJcZ$@!^HBz';
 	$OpenCartDBName = 'test_online_shop';
 	
 	//Use the TEST old data DB
