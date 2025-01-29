@@ -86,7 +86,7 @@ if (isset($_POST['ProcessStockChange'])){
 										shrinkfactor,
 										nextserialno,
 										netweight,
-										lastcostupdate
+										lastcostupdate,
 										lastcategoryupdate,
 										length,
 										width,
@@ -139,10 +139,9 @@ if (isset($_POST['ProcessStockChange'])){
 					klmovingdiscount80
 				FROM stockmaster
 				WHERE stockid='" . $_POST['OldStockID'] . "'";
-
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to insert the new stock master record failed');
-		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		echo ' ... ' . _('completed');
 
 		ChangeFieldInTable("locstock", "stockid", $_POST['OldStockID'], $_POST['NewStockID']);
@@ -249,7 +248,7 @@ if (isset($_POST['ProcessStockChange'])){
 		echo '<p>' . _('Stock Code') . ': ' . $_POST['OldStockID'] . ' ' . _('was successfully changed to') . ' : ' . $_POST['NewStockID'];
 
 		// If the current SelectedStockItem is the same as the OldStockID, it updates to the NewStockID:
-		if ($_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
+		if (isset($_SESSION['SelectedStockItem']) AND $_SESSION['SelectedStockItem'] == $_POST['OldStockID']) {
 			$_SESSION['SelectedStockItem'] = $_POST['NewStockID'];
 		}
 

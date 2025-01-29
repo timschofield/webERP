@@ -1356,7 +1356,7 @@ echo '</select>
 	
 echo '<field>
 		<label for="Length">' . _('length') . ':</label>
-		<input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+		<input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
 	</field>';
 echo '<field>
 		<label for="Width">' . _('Width') . ':</label>
@@ -1699,7 +1699,6 @@ if ($New == 1) {
 	echo '<input type="submit" name="submit" value="' . _('Update') . '" /><br />';
 	echo '<input type="submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
-	prnMsg(_('Only click the Delete button if you are sure you wish to delete the item!') . '<br />' . _('Checks will be made to ensure that there are no stock movements, sales analysis records, sales order items or purchase order items for the item') . '. ' . _('No deletions will be allowed if they exist') . '.', 'warn', _('WARNING'));
 }
 
 echo '</div>

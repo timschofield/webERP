@@ -89,8 +89,8 @@ if ($webERPType == 'PRODUCTION'){
 	$CompanyList[0] = array('database'=>'test_erp' ,'company'=>'Kapal-Laut TEST' );
 	
 	// use the TEST Opencart DB
-	$OpenCartDBUser = 'DBU_kl_shop';
-	$OpenCartDBPassword = '2e549bf390a028a9fRR55.2afd';
+	$OpenCartDBUser = 'DBU_ptadu_test';
+	$OpenCartDBPassword = 'LTq%w@.KkJcZ$@!^HBz';
 	$OpenCartDBName = 'test_online_shop';
 	
 	//Use the TEST old data DB

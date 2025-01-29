@@ -64,8 +64,8 @@ if ($_SESSION['UserID'] == "Ricard"){
 	$KL_AdministrationTeam = TRUE;
 	$KL_BusinessDevelopmentManager = TRUE;
  	$KL_SalesDirector = TRUE;
-*/	$KL_PurchasingTeam = TRUE;
-/*	$KL_ShopSupportTeam = TRUE;
+	$KL_PurchasingTeam = TRUE;
+	$KL_ShopSupportTeam = TRUE;
 	$KL_ShopSupportLeader = TRUE;
 	$KL_OnlineSales = TRUE;
 	$KL_ShopManager = TRUE;
@@ -125,10 +125,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
 		$NumberOfTestExecuted++;
-//		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
-//		$NumberOfTestExecuted++;
-//		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam) {
@@ -140,10 +136,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
 		$NumberOfTestExecuted++;
-//		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
-//		$NumberOfTestExecuted++;
-//		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
-//		$NumberOfTestExecuted++;
 	}
 
 	/***************************************************************************************
