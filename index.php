@@ -14,6 +14,11 @@ if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset(
 	$_SESSION['FirstRun'] = false;
 }
 
+if (isset($_POST['CompanyNameField'])) {
+	$SQL = "INSERT INTO sessions VALUES ('" . session_id() . "', NOW())";
+	$Result = DB_query($SQL);
+}
+
 $Title = _('Main Menu');
 $SQL = "SELECT value FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";
 $Result = DB_query($SQL);
