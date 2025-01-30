@@ -7,6 +7,8 @@ $SQL ="INSERT INTO session_data VALUES('" . $_SESSION['UserID'] . "', 'module', 
 $Result = DB_query($SQL);
 $SQL = "DELETE FROM login_data WHERE sessionid='" . session_id() . "'";
 $Result = DB_query($SQL);
+$SQL = "DELETE FROM sessions WHERE sessionid='" . session_id() . "'";
+$Result = DB_query($SQL);
 
 // Cleanup
 session_unset();
