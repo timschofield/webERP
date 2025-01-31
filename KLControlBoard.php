@@ -947,8 +947,6 @@ if ($ProcessSection02){
 	}
 	
 	if ($KL_SystemAdmin
-		OR $KL_BusinessDevelopmentManager
-		OR $KL_SalesDirector
 		OR $KL_ShopSupportLeader){ 
 		ItemsNotNeededInOnlineOrderButRequested($RootPath);
 		$NumberOfTestExecuted++;
