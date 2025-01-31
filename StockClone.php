@@ -651,7 +651,7 @@ if (empty($_POST['StockID']) || ($_POST['StockID'] == $_POST['OldStockID']) || i
 
 }
 if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']== 1 ) { // Must be modifying an existing item and no changes made yet
-// KL RICARD Added the lastcategoryupdate field
+// KL RICARD Added the lastcategoryupdate and dimension fields
 	$SelectedStockID = $_POST['OldStockID'];
 	$SQL = "SELECT stockid,
 					description,
@@ -668,6 +668,10 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 					volume,
 					grossweight,
 					netweight,
+					length,
+					width,
+					height,
+					unitsdimension,
 					barcode,
 					discountcategory,
 					taxcatid,
@@ -943,8 +947,8 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	echo '</select></field>';
 		
 	echo '<field>
-			<label for="length">' . _('length') . ':</label>
-			<input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
+			<label for="Length">' . _('length') . ':</label>
+			<input ' . (in_array('length',$Errors) ?  'class="inputerror"' : '' ) .'   type="text" class="number" name="Length" size="12" maxlength="11" value="' . locale_number_format($_POST['Length'],0) . '" />' . ' '. $_POST['UnitsDimension'] . '
 		</field>';
 	echo '<field>
 			<label for="Width">' . _('Width') . ':</label>
@@ -1248,7 +1252,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 	}
 	echo '<input type="hidden" name="PropertyCounter" value="' . $PropertyCounter . '" />';
 
-	echo '<input type="submit" name="submit" value="' . _('Insert New Item') . '" />';
+	echo '<input type="submit" name="submit" value="' . _('Clone Item') . '" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
 
 //}
