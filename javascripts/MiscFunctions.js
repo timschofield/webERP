@@ -294,7 +294,20 @@ function UpdateFavourites(e, t) {
 	return false
 }
 
+function ping() {
+	Target = "Sessions.php?Id="+localStorage.Id;
+	if (window.XMLHttpRequest) {
+		xmlhttp = new XMLHttpRequest
+	} else {
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP")
+	}
+	xmlhttp.open("GET", Target, true);
+	xmlhttp.send();
+	return false}
+
 function unload() {
+//	alert(localStorage.Theme);
+	console.log('hello');
 /*	Target = "Logout.php";
 	if (window.XMLHttpRequest) {
 		xmlhttp = new XMLHttpRequest
@@ -306,5 +319,6 @@ function unload() {
 	return false*/
 }
 
+//setInterval(ping, 10000);
+
 window.onload=initial;
-window.onbeforeunload=unload;
