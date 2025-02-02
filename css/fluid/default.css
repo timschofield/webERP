@@ -89,6 +89,8 @@ visibility: hidden;
 position: relative;
 }
 .graph {
-width:950px;
-height:450px;
+display:block;
+width:75%;
+height:80%;
+margin:auto;
 }
