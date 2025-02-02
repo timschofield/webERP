@@ -1,3 +1,9 @@
+:root {
+--main_colour1:#1A1A1A;
+--main_colour2:#777777;
+--border_colour:#FFFFFF;
+--text_colour:#E6EAF7;
+}
 body {
 background: rgb(69,68,134);
 background: linear-gradient(90deg, #26386D 0%, #909EC9 100%);
@@ -102,4 +108,36 @@ box-shadow:0 0 5px #7E7575
 }
 input.button:active {
 background:#000
+}
+a {
+text-decoration:none;
+margin-bottom:5px;
+}
+.logo {
+font-family: DejaVu,Futura,Trebuchet MS,Arial,sans-serif;
+display:inline;
+font-size:32pt;
+width:auto;
+cursor:default;
+}
+.logo-left {
+background: var(--main_colour2);
+color:var(--main_colour1);
+padding-left:4px;
+border-top-left-radius:32px;
+border-bottom-left-radius:32px;
+border-top:solid 2px var(--border_colour);
+border-bottom:solid 2px var(--border_colour);
+border-left:solid 2px var(--border_colour);
+}
+.logo-right {
+background: var(--main_colour1);
+color:var(--text_colour2);
+padding-right:4px;
+font-style:italic;
+border-top-right-radius:32px;
+border-bottom-right-radius:32px;
+border-top:solid 2px var(--border_colour);
+border-bottom:solid 2px var(--border_colour);
+border-right:solid 2px var(--border_colour);
 }
