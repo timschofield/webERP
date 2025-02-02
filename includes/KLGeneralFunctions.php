@@ -630,16 +630,22 @@ function GetTotalItemsMovingToDiscount($DiscountLevel){
 	return 0;
 }
 
-function NegativeNumber($Value){
-	// be sure the value returned is negative
-	if ($Value > 0){
-		$Value = -$Value;
-	}
-	return $Value;
+function EnsureNumberIsNegativeNumber($Value){
+    // Return 0 if the parameter is not a number
+    if (!is_numeric($Value)) {
+        return 0;
+    }
+    // Be sure the value returned is negative
+    if ($Value > 0){
+        $Value = -$Value;
+    }
+    return $Value;
 }
-
-function PositiveNumber($Value){
-	// be sure the value returned is positive
+function EnsureNumberIsPositiveNumber($Value){
+    // Return 0 if the parameter is not a number
+    if (!is_numeric($Value)) {
+        return 0;
+    }	// be sure the value returned is positive
 	if ($Value < 0){
 		$Value = -$Value;
 	}
@@ -657,14 +663,20 @@ function FindReasonOfReturn($ReasonCode){
 	return '';
 }
 
-function ConvertExcelDate(Cell $cell, $format = 'Y-m-d') {
-    // converts an excel cell into a valid date to work with
-    $cellValue = $cell->getValue();
-    if (Date::isDateTime($cell)) {
-        return Date::excelToDateTimeObject($cellValue)->format($format);
+function ConvertExcelDate($value, $format = 'Y-m-d') {
+    // First check if the value is already a Cell object
+    if ($value instanceof Cell) {
+        $cellValue = $value->getValue();
     } else {
-        return '0000-00-00';
+        $cellValue = $value;
     }
+    
+    // Check if it's a valid Excel date
+    if (is_numeric($cellValue)) {
+        return Date::excelToDateTimeObject($cellValue)->format($format);
+    }
+    
+    return '0000-00-00';
 }
 
 function AdjustBulatan($Amount, $RoundTo){
