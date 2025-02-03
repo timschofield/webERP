@@ -1049,19 +1049,19 @@ KL RICARD COMMENTED OUT END */
 
 		echo '<field>
 				<label for="KLAgreedDeliveryDate">', _('Agreed Delivery Date'), ':</label>
-				<input type="text" class="date" name="KLAgreedDeliveryDate" size="11" required="required" maxlength="10" value="', $_POST['KLAgreedDeliveryDate'], '" />
+				<input type="date" name="KLAgreedDeliveryDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLAgreedDeliveryDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="DeliveryDate">', _('Delivery Date'), ':</label>
-				<input type="text" class="date" name="DeliveryDate" size="11" required="required" maxlength="10" value="', $_POST['DeliveryDate'], '" />
+				<input type="date" name="DeliveryDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['DeliveryDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="KLPaymentDate">', _('Payment Date'), ':</label>
-				<input type="text" class="date" name="KLPaymentDate" size="11" required="required" maxlength="10" value="', $_POST['KLPaymentDate'], '" />
+				<input type="date" name="KLPaymentDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLPaymentDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="KLShipmentDate">', _('Shipment Date'), ':</label>
-				<input type="text" class="date" name="KLShipmentDate" size="11" required="required" maxlength="10" value="', $_POST['KLShipmentDate'], '" />
+				<input type="date" name="KLShipmentDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLShipmentDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="KLShipmentAWB">', _('Shipment AWB'), ':</label>
@@ -1069,11 +1069,11 @@ KL RICARD COMMENTED OUT END */
 			</field>';
 		echo '<field>
 			<label for="KLCustomsDate">', _('Customs Date'), ':</label>
-			<input type="text" class="date" name="KLCustomsDate" size="11" required="required" maxlength="10" value="', $_POST['KLCustomsDate'], '" />
+			<input type="date" name="KLCustomsDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLCustomsDate']), '" />
 		</field>';
 		echo '<field>
 			<label for="KLArrivalDate">', _('Arrival Date'), ':</label>
-			<input type="text" class="date" name="KLArrivalDate" size="11" required="required" maxlength="10" value="', $_POST['KLArrivalDate'], '" />
+			<input type="date" name="KLArrivalDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLArrivalDate']), '" />
 		</field>';
 
 		echo '<div class="centre">

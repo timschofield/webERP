@@ -191,8 +191,6 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 							AND mbflag='M'
 						ORDER BY stockmaster.stockid";
 		} else {
-		<input type="text" name="StartDate" size="12" maxlength="12" value="', $_SESSION['WorkOrder' . $Identifier]->StartDate, '" class="date" />
-		<input type="text" name="RequiredBy" size="12" maxlength="12" value="', $_SESSION['WorkOrder' . $Identifier]->RequiredBy, '" class="date" />
 			$SQL = "SELECT  stockmaster.stockid,
 							stockmaster.description,
 							stockmaster.units,
@@ -784,7 +782,7 @@ if(!isset($_POST['StartDate'])) {
 
 echo '<tr>
 		<td class="label">' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_POST['StartDate'] .'" class="date" /></td>
+		<td><input type="date" name="StartDate" size="12" maxlength="12" value="' . FormatDateForSQL($_POST['StartDate']) .'" /></td>
 	</tr>';
 
 if(!isset($_POST['RequiredBy'])) {
@@ -793,7 +791,7 @@ if(!isset($_POST['RequiredBy'])) {
 
 echo '<tr>
 		<td class="label">' . _('Required By') . ':</td>
-		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_POST['RequiredBy'] .'" class="date" /></td>
+		<td><input type="date" name="RequiredBy" size="12" maxlength="12" value="' . FormatDateForSQL($_POST['RequiredBy']) .'" /></td>
 	</tr>';
 if(!isset($_POST['Ref'])) {
 	$_POST['Ref'] = '';

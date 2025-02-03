@@ -79,15 +79,14 @@ function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = ''
 	return $HTML;
 }
 
-
 function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$HTML = '<field>
 				<label for="' . $VariableName . '">' . $Label . ':</label>
 				<fieldhelp>' . $HelpText . '</fieldhelp>
-				<input type="text"';
+				<input type="date"';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
-	$HTML .= 'class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="' . $VariableName . '" size="10" maxlength="10" value="' . $SelectedValue . '" />
+	$HTML .= ' name="' . $VariableName . '" size="11" maxlength="10" value="' .  FormatDateForSQL($SelectedValue) . '" />
 			</field>';
 	return $HTML;
 }

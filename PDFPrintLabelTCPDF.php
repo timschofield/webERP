@@ -462,7 +462,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 
 		echo '<tr>
 			<td>' . _('Prices Effective As At') . ':</td>
-			<td><input type="text" size="11" class="date"	alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+			<td><input type="date" size="11" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date('Y-m-d') . '" />';
         echo '</td></tr>';
 		echo'<tr><td></td></tr>';
 		echo'<tr><th colspan="2">' . _('Number of labels to print') . '</th></tr>

@@ -655,7 +655,7 @@ if (!isset($_POST['AssetCategoryID'])) {
 
 echo '<field>
 		<label>' . _('Date Purchased') . ':</label>
-		<input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DatePurchased" maxlength="10" size="11" value="' . $_POST['DatePurchased'] . '" />
+		<input type="date" required="required" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DatePurchased" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['DatePurchased']) . '" />
 	</field>';
 
 echo '<field>
