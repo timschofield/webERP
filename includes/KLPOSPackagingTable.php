@@ -164,7 +164,9 @@ if ($_SESSION['TypeLoc'] == "SHOPBL"){
 }
 
 // If the shop is using OUTLET packaging, show it!
-if ($_SESSION['TypeLoc'] == "SHOPOU"){
+if (($_SESSION['TypeLoc'] == "SHOPOU")
+	OR ($_SESSION['TypeLoc'] == "SHOPKL")
+	OR ($_SESSION['TypeLoc'] == "SHOPBL")){
 
 	if (!isset($_POST['OutletPouchBag02L'])){
 		$_POST['OutletPouchBag02L'] =0;
@@ -202,8 +204,11 @@ if ($_SESSION['TypeLoc'] == "SHOPOU"){
 	echo '<td>' . _('OUTLET Pouch Bag Medium') . ':</td>
 		  <td><input type="text" class="number" name="OutletPouchBag02M" maxlength="3" size="3" value="' . $_POST['OutletPouchBag02M'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('OUTLET Shopping Bag') . ':</td>
+/*	echo '<td>' . _('OUTLET Shopping Bag') . ':</td>
 		  <td><input type="text" class="number" name="OutletShoppingBag03M" maxlength="3" size="3" value="' . $_POST['OutletShoppingBag03M'] . '" /></td></tr>';
+*/
+	echo '<td></td>
+		<td></td>';
 	echo'</tr>';
 	
 	echo '<tr>

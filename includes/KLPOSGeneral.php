@@ -980,7 +980,9 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 			$TextToPrint .= $NewLine;
 		}
 	}
-	if ($_SESSION['TypeLoc'] == "SHOPOU"){
+	if (($_SESSION['TypeLoc'] == "SHOPOU")
+		OR ($_SESSION['TypeLoc'] == "SHOPKL")
+		OR ($_SESSION['TypeLoc'] == "SHOPBL")){
 		if ($_POST['OutletPouchBag02L'] != 0){
 			$TextToPrint .= "Outlet Pouchbag-L: ". $_POST['OutletPouchBag02L'] . " pouches";
 			$TextToPrint .= $NewLine;

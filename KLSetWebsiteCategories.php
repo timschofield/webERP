@@ -526,10 +526,10 @@ function WebsiteCategoryBlinkJewellery($StockID, $Description, $Long, $Category)
 	if (($WebCat == BLINK_JEWELLERY) AND isKeyHolder($StockID)){
 		$WebCat = BLINK_KEYHOLDERS;	
 	}	
-	if (($WebCat == GENERAL_JEWELLERY) AND isFaceMask($StockID)){
+	if (($WebCat == GENERAL_ACCESSORIES) AND isFaceMask($StockID)){
 		$WebCat = GE_FACEMASKS;	
 	}	
-	if (($WebCat == GENERAL_JEWELLERY) AND isJewelleryRoll($StockID)){
+	if (($WebCat == GENERAL_ACCESSORIES) AND isJewelleryRoll($StockID)){
 		$WebCat = GE_JEWELLERY_ROLLS;	
 	}	
 	return $WebCat; 

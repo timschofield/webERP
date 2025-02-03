@@ -1543,7 +1543,9 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			AdjustPackagingMovement("PKSB04-S", $_POST['BlinkShoppingBag04S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 		}
 
-		if ($_SESSION['TypeLoc'] == "SHOPOU"){
+		if (($_SESSION['TypeLoc'] == "SHOPOU")
+			OR ($_SESSION['TypeLoc'] == "SHOPKL")
+			OR ($_SESSION['TypeLoc'] == "SHOPBL")){
 			AdjustPackagingMovement("PKPB02-L", $_POST['OutletPouchBag02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKPB02-M", $_POST['OutletPouchBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKPB02-S", $_POST['OutletPouchBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
