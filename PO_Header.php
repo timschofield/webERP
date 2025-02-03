@@ -9,6 +9,7 @@
 
 include ('includes/DefinePOClass.php');
 include ('includes/session.php');
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
 
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
@@ -866,7 +867,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 	echo '<field>
 		<tr>
 			<label for="DeliveryDate">' . _('Delivery Date') . ':</label>
-			<input type="text" required="required" autofocus="autofocus" class="date" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" />
+			<input required="required" autofocus="autofocus" type="date" name="DeliveryDate" size="11" value="' . FormatDateForSQL($_POST['DeliveryDate']) . '" />
 		</field>';
 KL RICARD COMMENTED OUT END */
 	// Initiator name

@@ -7,8 +7,10 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 
 include('includes/DefineSuppTransClass.php');
+
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
+if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);};
 
 $Title = _('Enter Supplier Credit Note Against Goods Received');
 
@@ -159,7 +161,7 @@ $SQL = "SELECT grnno,
 		LEFT JOIN stockmaster
 		ON purchorderdetails.itemcode=stockmaster.stockid
 		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
-		AND grns.deliverydate >= '" . FormatDateForSQL($_POST['Show_Since']) . "'
+		AND grns.deliverydate >= '" . $_POST['Show_Since'] . "'
 		ORDER BY grns.grnno";
 $GRNResults = DB_query($SQL);
 
@@ -178,7 +180,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	<table class="selection">
 	<tr>
 			<th colspan="10"><h3>' . _('Show Goods Received Since') . ':&nbsp;</h3>
-			<input type="text" name="Show_Since" maxlength="11" size="12" class="date" value="' . $_POST['Show_Since'] . '" />
+			<input name="Show_Since" maxlength="11" size="12" type="date" value="' . FormatDateForSQL($_POST['Show_Since']) . '" />
 		<input type="submit" name="FindGRNs" value="' . _('Display GRNs') . '" />
 		<h3> ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
 		</tr>

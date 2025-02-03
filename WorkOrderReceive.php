@@ -846,7 +846,7 @@ echo '<table class="selection">
 		//add expiry date for perishable product
 		if($WORow['perishable']==1){
 			echo '<td>' . _('Expiry Date') . ':<td>
-				  <td><input type="text" maxlength="10" size="11" name="ExpiryDate" class="date" required /></td>';
+				  <td><input maxlength="10" size="11" name="ExpiryDate" type="date" required /></td>';
 		}
 
 		echo '<td>' . _('Received Into') . ':</td>

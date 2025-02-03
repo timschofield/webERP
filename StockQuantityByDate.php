@@ -1,5 +1,6 @@
 <?php
 include ('includes/session.php');
+if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);};
 $Title = _('Stock On Hand By Date');
 include ('includes/header.php');
 
@@ -71,7 +72,7 @@ if (!isset($_POST['OnHandDate'])) {
 
 echo '<field>
 		<label for="OnHandDate">' . _('On-Hand On Date') . ':</label>
-		<input type="text" class="date" name="OnHandDate" size="12" required="required" maxlength="10" value="' . $_POST['OnHandDate'] . '" />
+		<input type="date" name="OnHandDate" size="12" required="required" maxlength="10" value="' . FormatDateForSQL($_POST['OnHandDate']) . '" />
 	</field>';
 
 if (isset($_POST['ShowZeroStocks'])) {
@@ -97,13 +98,15 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 	if ($_POST['StockCategory'] == 'All') {
 		$SQL = "SELECT stockid,
 						 description,
-						 decimalplaces
+						 decimalplaces,
+						 controlled
 					 FROM stockmaster
 					 WHERE (mbflag='M' OR mbflag='B')";
 	} else {
 		$SQL = "SELECT stockid,
 						description,
-						decimalplaces
+						decimalplaces,
+						controlled
 					 FROM stockmaster
 					 WHERE categoryid = '" . $_POST['StockCategory'] . "'
 					 AND (mbflag='M' OR mbflag='B')";
@@ -153,7 +156,7 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 
 		while ($LocQtyRow = DB_fetch_array($LocStockResult)) {
 
-			if ($MyRows['controlled'] == 1) {
+			if ($MyRow['controlled'] == 1) {
 				$Controlled = _('Yes');
 			} else {
 				$Controlled = _('No');
@@ -179,7 +182,9 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 
 	} //end of while loop
 	echo '<tr>
-			<td>' . _('Total Quantity') . ': ' . $TotalQuantity . '</td>
+			<td></td>
+			<td>' . _('Total Quantity') . ':</td>
+			<td class="number">' . $TotalQuantity . '</td>
 		</tr>
 		</table>';
 }

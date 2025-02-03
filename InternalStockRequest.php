@@ -10,6 +10,7 @@
 include ('includes/DefineStockRequestClass.php');
 
 include ('includes/session.php');
+if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);};
 $Title = _('Create an Internal Stock Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
@@ -237,7 +238,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 }
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 	<label for="Location">' . _('Location from which to request stock') . ':</label>';
 
@@ -276,7 +277,7 @@ echo '</field>';
 
 echo'<field>
 		<label for="DispatchDate">', _('Date when required'), ':</label>
-		<input type="text" class="date" name="DispatchDate" maxlength="10" size="11" value="', $_SESSION['Request']->DispatchDate, '" />
+		<input type="date" name="DispatchDate" maxlength="10" size="11" value="', FormatDateForSQL($_SESSION['Request']->DispatchDate), '" />
 	</field>
 	<field>
 		<label for="Narrative">', _('Narrative'), ':</label>
@@ -377,7 +378,7 @@ while ($MyRow1 = DB_fetch_array($Result1)) {
 
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 		<label for="Keywords">', _('Enter partial'), '<b> ', _('Description'), '</b>:</label>';
 

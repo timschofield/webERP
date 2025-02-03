@@ -6,6 +6,8 @@
 // If Date Type is Delivery, the main file is grns
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $ViewTopic = '';/* ?????????? */
 $BookMark = 'POReport';
 $Title = _('Purchase Order Report');
@@ -1514,8 +1516,8 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 		</field>
 		<field>
 			<label from="FromDate">' . _('Date Range') . ':</label>
-			<input type="text" required="required" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] .'" /> ' . _('To') . '
-			<input type="text" required="required" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+			<input required="required" type="date" name="FromDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) .'" /> ' . _('To') . '
+			<input required="required" type="date" name="ToDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		<field>
 			<label for="PartNumberOp">' . _('Part Number') . ':</label>

@@ -1,8 +1,8 @@
 <?php
 
-
 include('includes/DefineContractClass.php');
 include('includes/session.php');
+if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);};
 
 if (isset($_GET['ModifyContractNo'])) {
 	$Title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
@@ -947,7 +947,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<field>
 			<label for="RequiredDate">', _('Required Date'), ':</label>
-			<input type="text" class="date" name="RequiredDate" size="11" value="', $_SESSION['Contract' . $identifier]->RequiredDate, '" />
+			<input type="date" name="RequiredDate" size="11" value="', FormatDateForSQL($_SESSION['Contract' . $identifier]->RequiredDate), '" />
 		</field>';
 
 	echo '<field>

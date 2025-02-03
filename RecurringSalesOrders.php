@@ -10,6 +10,8 @@ $BookMark = 'RecurringSalesOrders';
 
 include('includes/session.php');
 $Title = _('Recurring Orders');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);};
 
 
 /* webERP manual links before header.php */
@@ -428,13 +430,13 @@ if (!isset($_POST['StartDate'])){
 if ($NewRecurringOrder=='Yes'){
 	echo '<field>
 			<label for="StartDate">' .  _('Start Date') .':</label>
-			<input type="text" class="date" name="StartDate" size="11" maxlength="10" value="' . $_POST['StartDate'] .'" />
+			<input type="date" name="StartDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['StartDate']) .'" />
 		</field>';
 } else {
 	echo '<field>
 			<label>' .  _('Last Recurrence') . ':</label>
 			<fieldtext>' . $_POST['StartDate'], '<fieldtext>
-			<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '" />
+			<input type="hidden" name="StartDate" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
 		</field>';
 }
 
@@ -444,7 +446,7 @@ if (!isset($_POST['StopDate'])){
 
 echo '<field>
 		<label for="StopDate">' .  _('Finish Date') .':</label>
-		<input type="text" class="date" name="StopDate" size="11" maxlength="10" value="' . $_POST['StopDate'] .'" />
+		<input type="date" name="StopDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['StopDate']) .'" />
 	</field>';
 
 echo '<field>

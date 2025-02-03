@@ -3,6 +3,8 @@
 // Allows payments and receipts to be matched off against bank statements.
 
 include('includes/session.php');
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);};
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);};
 $Title = _('Bank Matching');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'BankMatching';
@@ -129,12 +131,12 @@ if (!isset($_POST['AfterDate']) OR !Is_Date($_POST['AfterDate'])) {
 // Change to allow input of FROM DATE and then TO DATE, instead of previous back-to-front method, add datepicker
 echo '<field>
 		<label for="AfterDate">' . _('Show') . ' ' . $TypeName . ' ' . _('from') . ':</label>
-		<input tabindex="3" type="text" name="AfterDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['AfterDate'] . '" />
+		<input tabindex="3" name="AfterDate" type="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . FormatDateForSQL($_POST['AfterDate']) . '" />
 	</field>';
 
 echo '<field>
         <label for="BeforeDate">' . _('to') . ':</label>
-		<input tabindex="2" type="text" name="BeforeDate" class="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_POST['BeforeDate'] . '" />
+		<input tabindex="2" name="BeforeDate" type="date" size="12" maxlength="10" required="required" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . FormatDateForSQL($_POST['BeforeDate']) . '" />
 	</field>';
 echo '<field>
 		<label for="Ostg_or_All">' . _('Choose outstanding') . ' ' . $TypeName . ' ' . _('only or all') . ' ' . $TypeName . ' ' . _('in the date range') . ':</label>

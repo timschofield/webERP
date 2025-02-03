@@ -199,7 +199,7 @@ if (isset($_POST['CancelReturn'])) {
 	echo '</font></p>';
 }
 
-if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
+if (isset($_POST['search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 		$Msg='<div class="page_help_text">' . _('Item description has been used in search') . '.</div>';
@@ -1686,6 +1686,10 @@ if (!isset($_POST['ProcessReturn'])) {
 			echo '<br />';
 		}
 
+		echo '<div class="centre">
+				<input type="submit" name="search" value="Search Items" />
+			</div>';
+
 
 		if (isset($SearchResult)) {
 			$j = 1;
@@ -1814,7 +1818,7 @@ if (!isset($_POST['ProcessReturn'])) {
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
 	 		echo '<td><input type="text" name="part_' . $i . '" ' . ($i==1 ? 'autofocus="autofocus" ': '') . 'size="21" data-type="no-illegal-chars" title="' . _('Enter a part code to be returned. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '" maxlength="20" /></td>
 					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" />
-						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
+						<input type="hidden" type="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
 				</tr>';
    		}
 	 	echo '</table>
@@ -1826,8 +1830,7 @@ if (!isset($_POST['ProcessReturn'])) {
 
   	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >=1) {
-  		echo '<br />
-			<div class="centre">
+  		echo '<div class="centre">
 				<input type="submit" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" />
 			</div>';
 	}

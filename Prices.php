@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);};
 $Title = _('Item Prices');
 $ViewTopic = 'Prices';
 /*$BookMark = '';// Anchor's id in the manual's html document.*/
@@ -320,17 +322,17 @@ if (!isset($_POST['StartDate'])){
 	$_POST['StartDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['EndDate'])){
-	$_POST['EndDate'] = '';
+	$_POST['EndDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 echo '<field>
 		<label for="StartDate">' . _('Price Effective From Date')  . ':</label>
-		<input type="text" class="date" name="StartDate" required="required" size="10" maxlength="10" title="" value="' . $_POST['StartDate'] . '" />
+		<input type="date" name="StartDate" required="required" size="10" maxlength="10" title="" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
 		<fieldhelp>' . _('Enter the date from which this price should take effect.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for="EndDate">' . _('Price Effective To Date')  . ':</label>
-		<input type="text" class="date" name="EndDate" size="10" maxlength="10" title="" value="' . $_POST['EndDate'] . '" />
+		<input type="date" name="EndDate" size="10" maxlength="10" title="" value="' . FormatDateForSQL($_POST['EndDate']) . '" />
 		<fieldhelp>' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
 		<input type="hidden" name="Item" value="' . $Item.'" />
 	</field>';

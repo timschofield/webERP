@@ -3,6 +3,7 @@
 // Assign cash from one tab to another.
 
 include('includes/session.php');
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
 $ViewTopic= 'PettyCash';
 $BookMark = 'CashAssignment';
 $Title = _('Assignment of Cash from Tab to Tab');
@@ -419,7 +420,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		echo '<legend>' . _('New Cash Assignment') . '</legend>';
 		echo '<field>
 				<label for="Date">' . _('Cash Assignment Date') . ':</label>
-				<input type="text" class="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['Date'] . '" />
+				<input type="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['Date']) . '" />
 			</field>';
 
 

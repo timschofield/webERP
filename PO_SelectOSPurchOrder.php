@@ -9,6 +9,8 @@
 $PricesSecurity = 12;
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
 $Title = _('Search Outstanding Purchase Orders');
 
@@ -279,9 +281,9 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 
 	echo '<field>
 			<label for="DateFrom">' . _('Orders Between') . '</label>
-			<input type="text" name="DateFrom" value="' . ConvertSQLDate($DateFrom) . '"  class="date" size="10" />
+			<input name="DateFrom" value="' . date('Y-m-d',strtotime($DateFrom)) . '"  type="date" size="10" />
 		' . _('and') . ':&nbsp;
-			<input type="text" name="DateTo" value="' . ConvertSQLDate($DateTo) . '"  class="date" size="10" />
+			<input name="DateTo" value="' . date('Y-m-d',strtotime($DateTo)) . '"  type="date" size="10" />
 		</field>
 		<field>
 			<label for="PODetails">' . _('Show PO Details') . '</label>

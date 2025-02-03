@@ -1,6 +1,8 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
 require_once 'vendor/autoload.php';
 use PhpOffice\PhpSpreadsheet\Helper\Sample;
@@ -307,8 +309,8 @@ if (isset($_POST['submit'])) {
 
 	echo '<field>
 			<label>' . _('Date Range') . ':</label>
-			<input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
-				' . _('To') . ':<input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+			<input type="date" name="FromDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
+				' . _('To') . ':<input type="date" name="ToDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 
 	echo '<field>

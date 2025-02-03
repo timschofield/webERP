@@ -5,6 +5,7 @@
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
 
 include('includes/SQL_CommonFunctions.inc');
 
@@ -744,7 +745,7 @@ $_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'
 
 echo '<field>
 		<label for="ReqDelDate">' . _('Required Delivery Date') . ':</label>
-		<input type="text" class="date" size="11" maxlength="10" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" />
+		<input type="date" size="11" maxlength="10" name="ReqDelDate" value="' . FormatDateForSQL($_POST['ReqDelDate']) . '" />
 	</field>';
 
 echo '</fieldset>'; /* end of main table */

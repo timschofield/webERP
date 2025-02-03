@@ -2,6 +2,7 @@
 /* Creates a report of the customer and branch information held. This report has options to print only customer branches in a specified sales area and sales person. Additional option allows to list only those customers with activity either under or over a specified amount, since a specified date. */
 
 include('includes/session.php');
+if (isset($_POST['ActivitySince'])){$_POST['ActivitySince'] = ConvertSQLDate($_POST['ActivitySince']);};
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerListing';
 
@@ -416,7 +417,7 @@ if(isset($_POST['PrintPDF'])) {
 	$DefaultActivitySince = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-6,0,Date('y')));
 	echo '<field>
 			<label for="ActivitySince">' . _('Activity Since'). ':</label>
-			<input type="text" class="date" name="ActivitySince" size="11" maxlength="10" value="' . $DefaultActivitySince . '" />
+			<input type="date" name="ActivitySince" size="11" maxlength="10" value="' . FormatDateForSQL($DefaultActivitySince) . '" />
 		</field>';
 
 	echo '</fieldset>

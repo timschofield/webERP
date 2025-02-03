@@ -4,6 +4,8 @@
 include('includes/session.php');
 $Title = _('Top Customer Sales Inquiry');
 include('includes/header.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Sales Inquiry') . '" alt="" />' . ' ' . _('Top Customer Sales Inquiry') . '</p>';
 echo '<div class="page_help_text">' . _('Select the parameters for the report') . '</div><br />';
@@ -58,11 +60,11 @@ if ($_POST['DateRange']=='Custom'){
 	}
 	echo '<field>
 			<label for="FromDate">' . _('Date From') . ':</label>
-			<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+			<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>';
 	echo '<field>
 			<label for="ToDate">' . _('Date To') . ':</label>
-			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+			<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 }
 echo '</fieldset>

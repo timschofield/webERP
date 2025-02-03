@@ -2,6 +2,8 @@
 
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Supplier Transactions Inquiry');
 include('includes/header.php');
 
@@ -53,11 +55,11 @@ if (!isset($_POST['SupplierNo'])) {
 }
 echo '<field>
 		<label for="FromDate">' . _('From Date') . ':</label>
-		<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+		<input type="date" name="FromDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 	</field>
 	<field>
 		<label for="ToDate">' . _('To Date') . ':</label>
-		<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+		<input type="date" name="ToDate" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 	</field>
 	<field>
 		<label for="SupplierNo">' . _('Supplier No') . ':</label>
