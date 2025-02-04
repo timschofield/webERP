@@ -43,11 +43,11 @@ echo '<fieldset>
 		<legend>', _('Report Criteria'), '</legend>';
 
 echo '<field>
-		<label for="FromDate">' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</label>
+		<label for="FromDate">' .  _('From Date') . '</label>
 		<input tabindex="1" type="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' . FormatDateForSQL($_POST['FromDate']) . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
 	</field>
 	<field>
-		<label for="ToDate">' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</label>
+		<label for="ToDate">' .  _('To Date') . '</label>
 		<input tabindex="2" type="date" name="ToDate" size="11" maxlength="10" required="required" value="' . FormatDateForSQL($_POST['ToDate']) . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
 	</field>';
 
