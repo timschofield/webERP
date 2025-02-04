@@ -314,10 +314,10 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			$StockID = $_POST['StockID' . $i];
 
 			// define Logo information
-			if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP)){
+			if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT)){
 				$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
 			}
-			elseif (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP)){
+			elseif (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT)){
 				$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
 			}
 			else{
@@ -325,7 +325,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			}
 
 			if ($_POST['LabelID'] == 'T570'){
-				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP)){
+				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT)){
 					$LogoXPosition = 14.0;
 					$LogoYPosition = 1.0;
 					$LogoHeight = 4.5;
@@ -337,7 +337,7 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 				}
 			}
 			elseif ($_POST['LabelID'] == 'CodeSticker'){
-				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP)){
+				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT)){
 					$LogoXPosition = 18.0;
 					$LogoYPosition = 1.0;
 					$LogoHeight = 6.0;
