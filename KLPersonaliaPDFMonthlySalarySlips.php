@@ -38,7 +38,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
-//			$InputError = TRUE;
+			$InputError = TRUE;
 		}
 	}
 	
@@ -155,7 +155,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	}else{
 		include('includes/header.php');
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
 		include('includes/footer.php');
@@ -175,7 +175,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<fieldset>
