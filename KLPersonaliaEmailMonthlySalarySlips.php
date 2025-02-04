@@ -10,7 +10,7 @@ include('includes/htmlMimeMail.php');
 $Title = _('Email Salary Slips To Employees');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
+	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
 } else {
 	display($Title);
 }
@@ -25,7 +25,6 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
-
 
 	if ($SalaryType == "MONTHLY"){
 		$PageTitle = _('Slip Gaji ') . $PeriodMonth;
@@ -42,7 +41,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 	if ($SalaryType == "MONTHLY"){
 		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export PDF Monthly Salary Slips should be last month";
-//			$InputError = TRUE;
+			$InputError = TRUE;
 		}
 	}
 	
@@ -171,7 +170,7 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 		}
 	}else{
 		echo '<p class="page_title_text">
-				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
+				<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
 	}
@@ -191,7 +190,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
 	echo '<fieldset>
