@@ -2,13 +2,15 @@
 
 /******************************************************************************************************
  * 
- * KL RICARD: Heavily modified KL file.
+ * KL RICARD: Heavily modified standard file. 
  * 
  ******************************************************************************************************/
 
 include('includes/session.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+
+if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);};
 
 if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND isset($_POST['StockCategory'])

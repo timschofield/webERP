@@ -7,10 +7,12 @@ include('includes/session.php');
 $Title = _('KL Sales Inquiry');
 include('includes/header.php');
 
-# Sets default date range for current month
-if (!isset($_POST['FromDate'])){
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
-// RICARD KL Modification. From date should be today as default
+// Sets default date range for current month
+if (!isset($_POST['FromDate'])){
+	// RICARD KL Modification. From date should be today as default
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['ToDate'])){

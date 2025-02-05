@@ -399,7 +399,7 @@ $MenuItems['stock']['Reports']['Caption'] = array(	_('Serial Item Research Tool'
 													_('KL Service Fee Calculator'));
 
 $MenuItems['stock']['Reports']['URL'] = array(	'/StockSerialItemResearch.php',
-												'/PDFPrintLabelTCPDF.php',
+												'/KLPDFPrintLabelTCPDF.php',
 												'/ReprintGRN.php',
 												'/StockMovements.php',
 												'/StockStatus.php',
