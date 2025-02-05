@@ -35,6 +35,18 @@ if (isset($_GET['AssetID'])){
 	$AssetID = '';
 }
 
+if (!isset($_POST['Description'])){
+	$_POST['Description'] = '';
+}
+
+if (!isset($_POST['LongDescription'])){
+	$_POST['LongDescription'] = '';
+}
+
+if (!isset($_POST['BarCode'])){
+	$_POST['BarCode'] = '';
+}
+
 $SupportedImgExt = array('png','jpg','jpeg');
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
@@ -102,7 +114,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (mb_strlen($_POST['BarCode']) >20) {
+	if (isset($_POST['BarCode']) AND (mb_strlen($_POST['BarCode']) >20)) {
 		$InputError = 1;
 		prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		$Errors[$i] = 'BarCode';
@@ -134,7 +146,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($_POST['Cost'] < $_POST['AccumDepn']){
 		$InputError = 1;
-		prnMsg(_('The Accumulated Depreciation can not ne higher then Cost'),'error');
+		prnMsg(_('The Accumulated Depreciation cannot be higher than Cost'),'error');
 		$Errors[$i] = 'Cost';
 		$i++;
 	}	
@@ -321,10 +333,10 @@ if (isset($_POST['submit'])) {
 			$DbgMsg = _('The SQL that was used to add the asset failed was');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
+			if (DB_error_no() == 0) { //the insert of the new code worked so bang in the fixedassettrans records too
 				$NewAssetID = DB_Last_Insert_ID('fixedassets', 'assetid');
 				$TransNo = GetNextTransNo(49);
-				$PeriodNo = GetPeriod($_POST['DatePurchased']);
+				$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DatePurchased']));
 
 				$SQL = "INSERT INTO fixedassettrans ( assetid,
 												transtype,
@@ -368,8 +380,7 @@ if (isset($_POST['submit'])) {
 				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
 				$InsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 			}
-			
-			if (DB_error_no() ==0) {
+			if (DB_error_no() == 0) {
 				prnMsg( _('The new asset has been added to the database with an asset code of:') . ' ' . $NewAssetID,'success');
 				unset($_POST['LongDescription']);
 				unset($_POST['Description']);
