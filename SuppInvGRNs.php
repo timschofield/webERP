@@ -64,7 +64,7 @@ if (isset($_POST['ModifyGRN'])){
 			$Complete = False;
 		}
 
-		if (filter_number_format($_POST['This_QuantityInv'+$i])+$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->Prev_QuantityInv-$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->QtyRecd > 0){
+		if (filter_number_format($_POST['This_QuantityInv'.$i])+$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->Prev_QuantityInv-$_SESSION['SuppTrans']->GRNs[$_POST['GRNNo'.$i]]->QtyRecd > 0){
 			prnMsg(_('The quantity being invoiced is more than the outstanding quantity that was delivered. It is not possible to enter an invoice for a quantity more than was received into stock'),'warn');
 			$InputError = True;
 		}
