@@ -132,7 +132,7 @@ if(!extension_loaded('mbstring')){
 
 			if(!preg_match(',^[^/\\\?%:\|<>\"]+$,',$_POST['CompanyName'])){
 				$InputError = 1;
-				echo _('The Company names cannot contain illegal characters such as /\?%:|<>"');
+				echo _('The Company names cannot contain illegal characters') . ' /\?%:|<>"';
 
 			}
 			$CompanyName= $_POST['CompanyName'];
@@ -149,7 +149,7 @@ if(!extension_loaded('mbstring')){
 
 			if(!preg_match(',[a-zA-Z0-9_\&\-\ ]*,',$_POST['Database'])){
 				$InputError = 1;
-				echo _('The database name should not contains illegal characters such as "/\?%:|<>" etc');
+				echo _('The database name should not contains illegal characters') . ' "/\?%:|<>';
 
 			}
 			$DatabaseName = strtolower($_POST['Database']);
@@ -253,7 +253,7 @@ if(!extension_loaded('mbstring')){
 				$CountrySQL = $_POST['CountrySQL'];
 			}else{
 				$InputError = 1;
-				echo _('The country SQL file name must only contain letters,"-","_"');
+				echo _('The country SQL file name must only contain letters');
 			}
 		}else{
 				$InputError = 1;
@@ -500,7 +500,7 @@ if(!extension_loaded('mbstring')){
 			}
 			if(preg_match(',[/\\\?%:\|<>\."]+,',$_POST['Database'])){
 				$InputError = 1;
-				echo _('The database name should be lower case and not contains illegal characters such as "/\?%:|<>"');
+				echo _('The database name should be lower case and not contains illegal characters') . ' /\?%:|<>';
 
 			}
 			$DatabaseName = $_POST['Database'];
@@ -848,7 +848,7 @@ function Installation($DefaultLanguage)
 
         <?php echo '
         <div class="page_help_text">
-            <p>' .  _('webERP is an open source application licenced under GPL V2 and absolutely free to download.<br /> By installing webERP you acknowledge you have read <a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">the licence</a>. <br />Please visit the official webERP website for more information.').'
+            <p>' .  _('webERP is an open source application licenced under GPL V2 and absolutely free to download.<br /> By installing webERP you acknowledge you have read') . '<a href="http://www.gnu.org/licenses/gpl-2.0.html#SEC1" target="_blank">the licence</a>' . '<br />' . _('Please visit the official webERP website for more information.').'
             </p>
             <p><img src="../css/webERPsm.gif" title="webERP" alt="webERP" />&#160; <a href="http://www.weberp.org">http://www.weberp.org</a></p>
         </div>';
@@ -990,7 +990,7 @@ function CompanySetup($UserLanguage,$HostName,$UserName,$Password,$DatabaseName,
                 <li>
                     <label for="CompanyName"><?php echo _("Company Name"); ?>: </label>
                     <input type="text" name="CompanyName" required="true" pattern='[^|/\\\?%:\<>"]+' value="<?php echo $CompanyName; ?>" maxlength="50" />
-                    <span><?php echo _('The name of your company should not contain characters such as |\?%:<>"'); ?></span>
+                    <span><?php echo _('The name of your company should not contain characters such as') . ' |\?%:<>"'; ?></span>
                 </li>
                 <li>
                     <label for="CountrySQL"><?php echo _("Chart of Accounts"); ?>: </label>

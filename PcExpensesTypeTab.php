@@ -18,7 +18,7 @@ if (isset($_POST['SelectedCode'])) {
 }
 if (!isset($_GET['delete']) and (ContainsIllegalCharacters($SelectedCode) or mb_strpos($SelectedCode, ' ') > 0)) {
 	$InputError = 1;
-	prnMsg(_('The petty cash tab type contain any of the following characters " \' - &amp; or a space'), 'error');
+	prnMsg(_('The petty cash tab type contain any of the following characters') . ' ' . '" \' - &amp; or a space', 'error');
 }
 if (isset($_POST['SelectedTab'])) {
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);

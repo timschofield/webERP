@@ -152,7 +152,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 		}
 		if(ContainsIllegalCharacters($SupplierID)) {
 			$InputError = 1;
-			prnMsg(_('The supplier code cannot contain any of the illegal characters') ,'error');
+			prnMsg(_('The supplier code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 			$Errors[$i]='ID';
 			$i++;
 		}

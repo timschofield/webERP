@@ -28,7 +28,7 @@ if (isset($_POST['Submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['MeasureName'])) {
 		$InputError = 1;
-		prnMsg( _('The unit of measure cannot contain any of the illegal characters') ,'error');
+		prnMsg( _('The unit of measure cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 	}
 	if (trim($_POST['MeasureName']) == '') {
 		$InputError = 1;
