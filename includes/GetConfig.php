@@ -65,6 +65,7 @@ if(isset($ForceConfigReload) AND $ForceConfigReload==true OR !isset($_SESSION['C
 					creditorsact,
 					payrollact,
 					grnact,
+					commissionsact,
 					exchangediffact,
 					purchasesexchangediffact,
 					retainedearnings,
