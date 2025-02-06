@@ -74,6 +74,13 @@ if (isset($AutoPrintPage)) {
 	echo '<body onload="initial(); load()" onunload="GUnload()">';
 }
 
+echo '<div class="help-bubble" id="help-bubble">
+		<div class="help-header" id="help-header">
+			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+		</div>
+		<div class="help-content" id="help-content"></div>
+	</div>';
+
 $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 /* KL RICARD
 echo '<div class="help-bubble" id="help-bubble">
@@ -138,6 +145,7 @@ echo '<div id="ExitIcon">
 
 if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 	/* KL RICARD Customized Action Icons on every page */
 	include('includes/KLRoles.php');
 
@@ -156,7 +164,7 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 		AND !$KL_SPGJunior){
 		echo '<div id="ActionIcon">
 			<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
-				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
+						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" title="', _('Help'), '" alt="', _('Help'), '" />
 			</a>
 		</div>';
 

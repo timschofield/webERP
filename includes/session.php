@@ -12,7 +12,7 @@ KL RICARD MODIFICATIONS:
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
-require 'vendor/autoload.php';
+require $PathPrefix.'vendor/autoload.php';
 // KL RICARD: Include the specific KL session functions
 include ($PathPrefix . 'KLsession.php');
 // KL RICARD END: Include the specific KL session functions
