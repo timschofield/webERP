@@ -165,7 +165,7 @@ else {
 					echo '<td class="number"><a href="PDFGLJournalCN.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
 				}
 				else {
-					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '">' . _('Print') . '</a></td></tr>';
+					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
 				}
 
 				$LastJournal = $MyRow['typeno'];
