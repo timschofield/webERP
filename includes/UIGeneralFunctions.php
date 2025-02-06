@@ -549,7 +549,7 @@ function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $Butt
 				<input type="submit" ';
 	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
 	$HTML .= 'name="' . $ButtonName1 . '" value="' . $ButtonValue1 . '" />
-				<input type="submit" ';
+				<input type="reset" ';
 	$HTML .= 'name="' . $ButtonName2 . '" value="' . $ButtonValue2 . '" />
 			</div>';
 	return $HTML;

@@ -147,7 +147,7 @@ if (isset($_POST['Process'])) {
 			<input type="submit" name="Confirm" value="' . _('Confirm and Send Email') . '" />
 			<br />
 			<br />
-			<input type="submit" name="Cancel" value="' . _('Cancel Offer') . '" />
+			<input type="reset" name="Cancel" value="' . _('Cancel Offer') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');

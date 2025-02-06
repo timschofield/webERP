@@ -140,7 +140,7 @@ if (!isset($SelectedUser)) {
 
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Accept') . '" />
-			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
 	echo '</form>';
@@ -234,7 +234,7 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Accept') . '" />
-				<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+				<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
 			</div>
 			</form>';
 
