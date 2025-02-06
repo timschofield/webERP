@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Import General Ledger Transactions');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
@@ -100,7 +102,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		//Then check that the date is in a correct format
 		if (!Is_date($myrow[0])) {
 			$InputError = 1;
-			prnMsg (_('The date "'. $myrow[0]. '" is not in the correct format'),'error');
+			prnMsg (_('The date '. $myrow[0]. ' is not in the correct format'),'error');
 		}
 
 		//Find the period number from the date

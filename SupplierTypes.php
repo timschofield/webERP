@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Supplier Types') . ' / ' . _('Maintenance');
+$ViewTopic = 'Setup';
+$BookMark = ''
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){

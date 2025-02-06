@@ -5,6 +5,8 @@
 //$PageSecurity = 2;
 include ('includes/session.php');
 $Title = _('Shipments Open Inquiry');
+$ViewTopic = 'Shipments';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' .

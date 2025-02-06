@@ -4,6 +4,8 @@
 config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('Raw Materials Not Used Anywhere');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include ('includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,
@@ -44,7 +46,7 @@ if (DB_num_rows($Result) != 0){
 		$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 		$LineValue = $MyRow['qoh'] * $MyRow['stdcost'];
 		$TotalValue = $TotalValue + $LineValue;
-		
+
 		printf('<tr class="striped_row">
 				<td class="number">%s</td>
 				<td>%s</td>
@@ -52,9 +54,9 @@ if (DB_num_rows($Result) != 0){
 				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
-				</tr>', 
-				$i, 
-				$CodeLink, 
+				</tr>',
+				$i,
+				$CodeLink,
 				$MyRow['description'],
 				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
 				locale_number_format($MyRow['stdcost'],$_SESSION['CompanyRecord']['decimalplaces']),
@@ -67,9 +69,9 @@ if (DB_num_rows($Result) != 0){
 			<td colspan="4">%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
-			</tr>', 
+			</tr>',
 			'',
-			_('Total').':', 
+			_('Total').':',
 			locale_number_format($TotalValue,$_SESSION['CompanyRecord']['decimalplaces']));
 
 	echo '</table>

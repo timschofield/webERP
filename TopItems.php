@@ -183,6 +183,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 } else {
+	$ViewTopic = 'Sales';
+	$BookMark = '';
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text">

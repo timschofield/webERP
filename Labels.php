@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Label Templates');
+$ViewTopic = 'Setup';
+$BookMark = 'Labels.php';
 include('includes/header.php');
 
 //define PaperSize array sizes in mm

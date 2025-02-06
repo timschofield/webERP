@@ -3,6 +3,8 @@
 
 include ('includes/session.php');
 $Title = _('Make locationusers Records');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 echo '<br /><br />' . _('This script makes stock location records for parts where they do not already exist');

@@ -12,6 +12,9 @@ include('includes/session.php');
 
 $Title = _('Imported Bank Transaction General Ledger Analysis');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = '';
+
 include('includes/header.php');
 
 if (!isset($_SESSION['Trans'])){

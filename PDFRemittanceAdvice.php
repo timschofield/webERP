@@ -128,6 +128,8 @@ If ((isset($_POST['PrintPDF']))
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Remittance Advices');
+	$ViewTopic = 'AccountsPayable';
+	$BookMark = '';
 	include('includes/header.php');
 
     echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '

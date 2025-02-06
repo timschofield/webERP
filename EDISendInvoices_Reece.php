@@ -5,6 +5,8 @@
 $PageSecurity =15;
 
 include ('includes/session.php');
+$ViewTopic = 'EDI';
+$BookMark = '';
 include ('includes/header.php');
 include('includes/SQL_CommonFunctions.inc'); //need for EDITransNo
 include('includes/htmlMimeMail.php'); // need for sending email attachments

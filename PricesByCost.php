@@ -2,6 +2,8 @@
 
 include ('includes/session.php');
 $Title = _('Update of Prices By A Multiple Of Cost');
+$ViewTopic= 'Sales';
+$BookMark = '';
 include ('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Update Price By Cost') . '</p>';

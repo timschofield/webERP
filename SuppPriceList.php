@@ -239,6 +239,8 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('Supplier Price List');
+	$ViewTopic = 'AccountsPayable';
+	$BookMark = ''
 	include('includes/header.php');
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Purchase') . '" alt="" />' . ' ' . _('Supplier Price List') . '

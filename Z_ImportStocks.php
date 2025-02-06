@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Import Items');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="' . $RootPath . '/css/' . $Theme .
 		'/images/inventory.png" title="' .
@@ -101,7 +103,7 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		$testrow = DB_fetch_row($result);
 		if ($testrow[0] != 0) {
 			$InputError = 1;
-			prnMsg (_('Stock item "'. $StockID. '" already exists'),'error');
+			prnMsg (_('Stock item '. $StockID. ' already exists'),'error');
 		}
 
 		//next validate inputs are sensible

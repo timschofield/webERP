@@ -4,6 +4,9 @@ include('includes/session.inc');
 
 $Title = _('Bill Of Materials Maintenance');
 
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
+
 include('includes/header.inc');
 include('includes/SQL_CommonFunctions.inc');
 

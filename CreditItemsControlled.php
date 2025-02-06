@@ -5,6 +5,9 @@ include('includes/DefineCartClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
 
+$ViewTopic = 'ARTransactions';
+$BookMark = 'CreditNotes';
+
 $Title = _('Specify Credited Controlled Items');
 
 /* Session started in header.php for password checking and authorisation level check */

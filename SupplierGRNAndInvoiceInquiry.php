@@ -1,6 +1,8 @@
 <?php
 include('includes/session.php');
 $Title = _('Supplier Invoice and GRN inquiry');
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
 include('includes/header.php');
 if (isset($_GET['SelectedSupplier'])) {
 	$SupplierID= $_GET['SelectedSupplier'];

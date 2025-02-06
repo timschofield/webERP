@@ -4,6 +4,8 @@ include('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Internal Stock Request Inquiry');
+$ViewTopic = 'Inventory';
+$BookMark = 'InventoryRequests';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '</p>';

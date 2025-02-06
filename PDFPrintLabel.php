@@ -264,6 +264,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 } else { /*The option to print PDF was not hit */
 
 	$Title= _('Price Labels');
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />

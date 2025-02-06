@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Customer Allocations != DebtorTrans.Alloc');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 /*First off get the DebtorTransID of all invoices where allocations dont agree to the recorded allocation */

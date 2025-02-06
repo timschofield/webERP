@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title=_('Preferred Supplier Purchasing');
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){

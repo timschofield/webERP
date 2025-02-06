@@ -13,6 +13,8 @@ include('includes/DefineSuppTransClass.php');
 include('includes/session.php');
 
 $Title = _('Shipment Charges or Credits');
+$ViewTopic = 'AccountsPayable';
+$BookMark = ''
 
 include('includes/header.php');
 

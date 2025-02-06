@@ -210,6 +210,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 } else {
+	$ViewTopic = 'Sales';
+	$BookMark = '';
 	include ('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';

@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('EDI Message Format');
+$ViewTopic = 'EDI';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_GET['PartnerCode'])){
@@ -228,12 +230,12 @@ echo '<field>
 		<label for="SequenceNo">Sequence Number:</label>
 		<input tabindex="3" type="text" name="SequenceNo" size="3" maxlength="3" value="'.$_POST['SequenceNo'].'" />
 	</field>';
-	
+
 echo '<field>
 		<label for="LineText">' .  _('Line Text') . ':'  . '</label>
 		<input tabindex="4" type="text" name="LineText" size="50" maxlength="50" value="'.$_POST['LineText'] .'" />
 	</field>';
-	
+
 echo '</fieldset>';
 
 if (isset($_GET['SelectedMessageLine'])) {

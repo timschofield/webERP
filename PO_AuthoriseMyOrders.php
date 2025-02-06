@@ -5,6 +5,9 @@ include('includes/session.php');
 
 $Title = _('Authorise Purchase Orders');
 
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
+
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title .

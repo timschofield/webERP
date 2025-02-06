@@ -21,6 +21,8 @@ if (isset($_GET['OrderNumber'])) {
 	exit;
 }
 
+$ViewTopic = 'SalesOrders';
+$BookMark = '';
 include('includes/header.php');
 
 $OrderHeaderSQL = "SELECT salesorders.debtorno,

@@ -151,6 +151,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title = _('Reorder Level Reporting');
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include ('includes/header.php');
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Use this report to display the reorder levels for Inventory items in different categories.') . '</div>';

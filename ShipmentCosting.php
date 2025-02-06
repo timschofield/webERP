@@ -3,6 +3,10 @@
 
 include('includes/session.php');
 $Title = _('Shipment Costing');
+
+$ViewTopic = 'Shipments';
+$BookMark = '';
+
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');

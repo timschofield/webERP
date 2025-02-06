@@ -25,6 +25,8 @@ include('includes/DefineSuppTransClass.php');
 include('includes/session.php');
 if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
 $Title = _('Supplier Credit Note');
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');

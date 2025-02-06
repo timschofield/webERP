@@ -10,6 +10,8 @@ KL RICARD MODIFICATIONS:
 include('includes/session.php');
 
 $Title=_('Reorder Level Location Reporting');
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Location Report') . '</p>';

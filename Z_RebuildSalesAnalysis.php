@@ -4,6 +4,8 @@
 $PageSecurity = 15;
 include ('includes/session.php');
 $Title = _('Rebuild sales analysis Records');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 echo '<br /><br />' . _('This script rebuilds sales analysis records. NB: all sales budget figures will be lost!');

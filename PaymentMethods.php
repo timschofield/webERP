@@ -3,9 +3,9 @@
 include('includes/session.php');
 $Title = _('Payment Methods');
 /* Manual links before header.php */
-/* RChacon: This is a topic to create.
+/* RChacon: This is a topic to create.*/
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC.
-$BookMark = 'PaymentMethods';// Anchor's id in the manual's html document.*/
+$BookMark = 'PaymentMethods';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Payments') .

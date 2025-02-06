@@ -11,6 +11,8 @@ if (isset($_POST['TransferNo'])) {
 
 if (!isset($_GET['TransferNo'])){
 
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include ('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . _('Reprint transfer docket') . '</p>';

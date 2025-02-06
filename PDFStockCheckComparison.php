@@ -337,6 +337,8 @@ If (isset($_POST['PrintPDF']) AND isset($_POST['ReportOrClose'])){
 } else { /*The option to print PDF was not hit */
 
 	$Title= _('Inventory Comparison Report');
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '

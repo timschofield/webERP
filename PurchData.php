@@ -4,7 +4,8 @@ include ('includes/session.php');
 if (isset($_POST['EffectiveFrom'])){$_POST['EffectiveFrom'] = ConvertSQLDate($_POST['EffectiveFrom']);};
 
 $Title = _('Supplier Purchasing Data');
-
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
 include ('includes/header.php');
 
 if (isset($_GET['SupplierID'])) {

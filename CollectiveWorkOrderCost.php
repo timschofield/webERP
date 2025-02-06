@@ -7,8 +7,8 @@ if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateF
 if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);};
 
 $Title = _('Search Work Orders');
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'Z_ChangeGLAccountCode';
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,

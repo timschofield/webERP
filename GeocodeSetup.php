@@ -5,6 +5,9 @@ include('includes/session.php');
 $Title = _('Geocode Maintenance');
 include('includes/header.php');
 
+$ViewTopic = 'Setup';
+$BookMark = '';
+
 if (isset($_GET['SelectedParam'])){
 	$SelectedParam = $_GET['SelectedParam'];
 } elseif(isset($_POST['SelectedParam'])){

@@ -15,6 +15,8 @@ if (isset($_POST['Date']) AND !Is_Date($_POST['Date'])){
 if (!isset($_POST['Date'])){
 
 	 $Title = _('Supplier Transaction Listing');
+	 $ViewTopic = 'AccountsPayable';
+	 $BookMark = '';
 	 include ('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '

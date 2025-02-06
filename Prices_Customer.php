@@ -19,6 +19,8 @@ $Name = $MyRow['name'];
 
 $Title = _('Special Prices for') . ' '. htmlspecialchars($MyRow['name'], ENT_QUOTES, 'UTF-8');
 
+$ViewTopic = 'Sales';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_GET['Item'])){

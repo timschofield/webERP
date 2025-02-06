@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Search Work Orders');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';

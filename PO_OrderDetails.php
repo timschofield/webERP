@@ -9,6 +9,9 @@ if (isset($_GET['OrderNo'])) {
 } else {
 	$Title = _('Reviewing A Purchase Order');
 }
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
+
 include('includes/header.php');
 
 if (isset($_GET['FromGRNNo'])){

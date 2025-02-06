@@ -250,6 +250,9 @@ if (isset($_POST['PrintPDF'])) {
 
 } else { /*The option to print PDF was not hit so display form */
 
+	$ViewTopic = 'Manufacturing';
+	$BookMark = '';
+
 	$Title=_('Quantity Extended BOM Listing');
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';

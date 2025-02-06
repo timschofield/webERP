@@ -6,6 +6,9 @@ if (isset($_POST['EffectiveTo'])){$_POST['EffectiveTo'] = ConvertSQLDate($_POST[
 
 $Title = _('Sell Through Support');
 
+$ViewTopic = 'Sales';
+$BookMark = '';
+
 include ('includes/header.php');
 
 if (isset($_GET['SupplierID']) AND $_GET['SupplierID']!='') {

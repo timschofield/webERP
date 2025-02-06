@@ -3,6 +3,8 @@
 include('includes/session.php');
 
 $Title = _('Units Of Measure');
+$ViewTopic = 'Setup';
+$BookMark = ''
 
 include('includes/header.php');
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .

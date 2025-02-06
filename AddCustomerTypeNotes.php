@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Customer Type (Group) Notes');
+$ViewTopic = 'AccountsReceivable';
+$BookMark = 'CustomerTypeNotes';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 

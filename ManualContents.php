@@ -72,7 +72,7 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 	// if not submittws then coming into manual to look at TOC
 	// if SelectTableOfContents set then user wants it displayed
 	if(!isset($_POST['Submit'])) {
-		echo '<p>', _('Click on a link to view a page, or check boxes and click on "Display Checked" to view selected in one page'), '</p>';
+		echo '<p>', _('Click on a link to view a page, or check boxes and click on Display Checked to view selected in one page'), '</p>';
 		echo '<p><input type="submit" name="Submit" value="', _('Display Checked'), '" /></p>';
 	}
 	echo '<h1>';

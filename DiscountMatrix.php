@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Discount Matrix Maintenance');
+$ViewTopic = 'SalesOrders';
+$BookMark = 'DiscountMatrix';
 include('includes/header.php');
 
 if (isset($Errors)) {

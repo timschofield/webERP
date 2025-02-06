@@ -9,6 +9,9 @@ include('includes/session.php');
 
 $Title = _('Copy a BOM to New Item Code');
 
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
+
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');

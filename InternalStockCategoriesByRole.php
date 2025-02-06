@@ -5,6 +5,9 @@
 include('includes/session.php');
 $Title = _('Internal Stock Categories Requests By Security Role Maintenance ');
 
+$ViewTopic = 'Inventory';
+$BookMark = 'InventoryRequests';
+
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Payment Entry')

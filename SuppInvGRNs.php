@@ -7,6 +7,8 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
 $Title = _('Enter Supplier Invoice Against Goods Received');
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">

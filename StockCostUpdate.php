@@ -5,6 +5,8 @@ $UpdateSecurity =10;
 
 include('includes/session.php');
 $Title = _('Stock Cost Update');
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 

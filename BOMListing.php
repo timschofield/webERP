@@ -107,6 +107,10 @@ If (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Bill Of Material Listing');
+
+	$ViewTopic = 'Manufacturing';
+	$BookMark = '';
+
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/reports.png" title="' . _('Search') .
 		'" alt="" />' . ' ' . $Title . '</p>';
