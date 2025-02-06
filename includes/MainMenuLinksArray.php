@@ -7,9 +7,9 @@ unset($_SESSION['MenuItems']);
 $SQL = "SELECT `modulelink`,
 				`reportlink` ,
 				`modulename`
-			FROM modules
-			WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
-			ORDER BY `sequence`";
+		FROM modules
+		WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
+		ORDER BY `sequence`";
 $Result = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -17,13 +17,14 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$ReportList[$MyRow['modulelink']] = $MyRow['reportlink'];
 	$ModuleList[] = _($MyRow['modulename']);
 }
+
 $SQL = "SELECT `modulelink`,
 				`menusection` ,
 				`caption` ,
 				`url`
-			FROM menuitems
-			WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
-			ORDER BY `sequence`, `menusection`";
+		FROM menuitems
+		WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
+		ORDER BY `sequence`, `menusection`";
 $Result = DB_query($SQL);
 
 while ($MyRow = DB_fetch_array($Result)) {
