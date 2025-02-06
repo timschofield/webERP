@@ -245,7 +245,7 @@ if (isset($_POST['ConfimSave'])) {
 
 	echo '<div class="centre">
 			<input type="submit" name="SaveTemplate" value="', _('Save as template') , '" /><br />
-			<input type="submit" name="Cancel" value="', _('Cancel') , '" />
+			<input type="reset" name="Cancel" value="', _('Cancel') , '" />
 		</div>';
 	echo '</form>';
 

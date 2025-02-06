@@ -676,7 +676,7 @@ if (isset($New)) {
 			<input type="submit" name="submit" value="' . _('Update') . '" />
 		</div>';
 	echo '<div class="centre">
-			<input type="submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
+			<input type="reset" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
 }
 
 echo '</div>

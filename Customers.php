@@ -1176,13 +1176,13 @@ if (!isset($DebtorNo)) {
 	if (isset($_POST['New']) AND $_POST['New']) {
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Add New Customer') . '" />&nbsp;
-				<input type="submit" name="Reset" value="' . _('Reset') . '" />
+				<input type="reset" name="Reset" value="' . _('Reset') . '" />
 			</div>';
 	} elseif (!isset($_GET['Modify'])){
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Update Customer') . '" />&nbsp;
-				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
+				<input type="reset" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
             </div>';
 	}
 

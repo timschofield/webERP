@@ -942,7 +942,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		  }
 		  echo '<div class="centre">
 				<input type="submit" name="Update" value="' . _('Update') . '" />
-				<input type="submit" name="CancelCredit" value="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');" />';
+				<input type="reset" name="CancelCredit" value="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');" />';
 		  if (!isset($_POST['ProcessCredit']) AND $OKToProcess == true){
 			echo '<input type="submit" name="ProcessCredit" value="' . _('Process Credit Note') . '" />';
 		  }

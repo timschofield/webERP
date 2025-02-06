@@ -159,7 +159,7 @@ if (!isset($SelectedTabs)) {
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }
@@ -379,7 +379,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			</field>';
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Accept'), '" />
-				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+				<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 			</div>';
 	echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';

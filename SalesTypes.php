@@ -270,7 +270,7 @@ if (! isset($_GET['delete'])) {
 		</fieldset>'; // close main table
 
 	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Accept') . '" /><input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="submit" name="submit" value="' . _('Accept') . '" /><input type="reset" name="Cancel" value="' . _('Cancel') . '" />
 		</div>
 	</form>';
 

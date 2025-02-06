@@ -752,7 +752,7 @@ echo '</fieldset>'; /* end of main table */
 
 echo '<div class="centre">
 		<input type="submit" name="EnterLine" value="' . _('Add Item to Order') . '" />
-		<input type="submit" name="Cancel" value="' . _('Start Again') . '" />
+		<input type="reset" name="Cancel" value="' . _('Start Again') . '" />
 		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
 	</div>
 	</form>';

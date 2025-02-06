@@ -1831,7 +1831,7 @@ if (!isset($_POST['ProcessReturn'])) {
   	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >=1) {
   		echo '<div class="centre">
-				<input type="submit" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" />
+				<input type="reset" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" />
 			</div>';
 	}
 }

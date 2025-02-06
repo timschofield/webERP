@@ -1105,7 +1105,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if ($_SESSION['Contract'.$identifier]->Status!=2) {
 		echo '<div class="centre">
 				 <br />
-				 <input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
+				 <input type="reset" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
 			  </div>';
 	}
 	echo '</form>';
