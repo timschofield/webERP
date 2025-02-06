@@ -73,13 +73,15 @@ if (isset($AutoPrintPage)) {
 } else {
 	echo '<body onload="initial(); load()" onunload="GUnload()">';
 }
-
+ 
+/* KL RICARD Comment these lines as only show an X on the left top corner
 echo '<div class="help-bubble" id="help-bubble">
-		<div class="help-header" id="help-header">
-			<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
-		</div>
-		<div class="help-content" id="help-content"></div>
-	</div>';
+	<div class="help-header" id="help-header">
+		<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+	</div>
+	<div class="help-content" id="help-content"></div>
+</div>';
+KL RICARD Comment these lines as only show an X on the left top corner */
 
 $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 /* KL RICARD
