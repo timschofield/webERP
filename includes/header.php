@@ -166,7 +166,7 @@ if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 		AND !$KL_SPGJunior){
 		echo '<div id="ActionIcon">
 			<a class="FontSize" data-title="', _('Suppliers'), '" href="', $PathPrefix, $RootPath, '/SelectSupplier.php">
-						<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/manual.png" title="', _('Help'), '" alt="', _('Help'), '" />
+				<img src="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/images/supplier.png" alt="', _('Suppliers'), '" />', _('Suppliers'), '
 			</a>
 		</div>';
 
