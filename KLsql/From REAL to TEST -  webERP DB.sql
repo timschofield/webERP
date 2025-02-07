@@ -312,6 +312,12 @@ INSERT INTO test_erp.mailgroups SELECT * FROM kurakura_kl_erp.mailgroups;
 TRUNCATE test_erp.`manufacturers`;
 INSERT INTO test_erp.manufacturers SELECT * FROM kurakura_kl_erp.manufacturers;
 
+TRUNCATE test_erp.`menuitems`;
+INSERT INTO test_erp.menuitems SELECT * FROM kurakura_kl_erp.menuitems;
+
+TRUNCATE test_erp.`modules`;
+INSERT INTO test_erp.modules SELECT * FROM kurakura_kl_erp.modules;
+
 TRUNCATE test_erp.`mrpcalendar`;
 INSERT INTO test_erp.mrpcalendar SELECT * FROM kurakura_kl_erp.mrpcalendar;
 

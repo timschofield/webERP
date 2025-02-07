@@ -8,7 +8,6 @@ $SQL = "SELECT `modulelink`,
 				`reportlink` ,
 				`modulename`
 		FROM modules
-		WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
 		ORDER BY `sequence`";
 $Result = DB_query($SQL);
 
@@ -23,7 +22,6 @@ $SQL = "SELECT `modulelink`,
 				`caption` ,
 				`url`
 		FROM menuitems
-		WHERE secroleid = '" . $_SESSION['AccessLevel'] . "'
 		ORDER BY `sequence`, `menusection`";
 $Result = DB_query($SQL);
 

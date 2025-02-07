@@ -1,22 +1,20 @@
 <?php
 
 CreateTable('modules', 'CREATE TABLE `modules` (
-  `secroleid` int NOT NULL DEFAULT "8",
   `modulelink` varchar(10) NOT NULL DEFAULT "",
   `reportlink` varchar(4) NOT NULL DEFAULT "",
   `modulename` varchar(25) NOT NULL DEFAULT "",
   `sequence` int NOT NULL DEFAULT "1",
-  PRIMARY KEY (`secroleid`,`modulelink`)
+  PRIMARY KEY (`modulelink`)
 )');
 
 CreateTable('menuitems', 'CREATE TABLE `menuitems` (
-  `secroleid` int NOT NULL DEFAULT "8",
   `modulelink` varchar(10) NOT NULL DEFAULT "",
   `menusection` varchar(15) NOT NULL DEFAULT "",
   `caption` varchar(60) NOT NULL DEFAULT "",
   `url` varchar(60) NOT NULL DEFAULT "",
   `sequence` int NOT NULL DEFAULT "1",
-  PRIMARY KEY (`secroleid`,`modulelink`,`menusection`,`caption`)
+  PRIMARY KEY (`modulelink`,`menusection`,`caption`)
 )');
 
 
@@ -55,7 +53,7 @@ NewMenuItem('Sales', 'Reports', _('Sales By Sales Type Inquiry'), '/SalesByTypeP
 NewMenuItem('Sales', 'Reports', _('Sales By Category Inquiry'), '/SalesCategoryPeriodInquiry.php', 80);
 NewMenuItem('Sales', 'Reports', _('Sales By Category By Item Inquiry'), '/StockCategorySalesInquiry.php', 90);
 NewMenuItem('Sales', 'Reports', _('Sales Analysis Reports'), '/SalesAnalRepts.php', 100);
-NewMenuItem('Sales', 'Reports', _('KPI Graphs'), '/KLGraph.php', 110);
+NewMenuItem('Sales', 'Reports', _('KPI Graphs'), '/KLGraphs.php', 110);
 NewMenuItem('Sales', 'Reports', _('Sales Graphs'), '/SalesGraph.php', 120);
 NewMenuItem('Sales', 'Reports', _('Top Sellers Inquiry'), '/SalesTopItemsInquiry.php', 130);
 NewMenuItem('Sales', 'Reports', _('Order Delivery Differences Report'), '/PDFDeliveryDifferences.php', 140);
