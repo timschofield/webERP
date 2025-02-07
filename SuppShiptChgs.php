@@ -14,7 +14,7 @@ include('includes/session.php');
 
 $Title = _('Shipment Charges or Credits');
 $ViewTopic = 'AccountsPayable';
-$BookMark = ''
+$BookMark = '';
 
 include('includes/header.php');
 

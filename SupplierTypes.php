@@ -4,7 +4,7 @@
 include('includes/session.php');
 $Title = _('Supplier Types') . ' / ' . _('Maintenance');
 $ViewTopic = 'Setup';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
@@ -77,7 +77,7 @@ if (isset($_POST['submit'])) {
 		$Msg = _('Supplier type') . ' ' . $_POST['TypeName'] .  ' ' . _('has been created');
 		$CheckSQL = "SELECT count(typeid) FROM suppliertype";
 		$Result = DB_query($CheckSQL);
-		$Row = DB_fetch_row($Result);
+		$row = DB_fetch_row($Result);
 	}
 
 	if ( $InputError !=1) {

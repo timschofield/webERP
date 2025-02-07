@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = _('Receive Work Order');
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 

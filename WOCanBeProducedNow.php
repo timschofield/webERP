@@ -9,7 +9,7 @@
 include('includes/session.php');
 $Title = _('WO items can be produced with available stock');
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">

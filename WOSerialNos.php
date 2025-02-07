@@ -39,7 +39,7 @@ if ($Serialised==1){
 	$Title = _('Work Order Batches in Progress');
 }
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 
 include('includes/header.php');
 

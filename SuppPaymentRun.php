@@ -27,8 +27,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$Title = _('Payment Run - Problem Report');
 	$RefCounter = 0;
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Payment Run Report'));
-	$pdf->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
+	$PDF->addInfo('Title',_('Payment Run Report'));
+	$PDF->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
 	$LineHeight=12;
@@ -142,7 +142,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 				$AccumBalance = 0;
 				$AccumDiffOnExch = 0;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,
+				$LeftOvers = $PDF->addTextWrap($Left_Margin,
 												$YPos,
 												450-$Left_Margin,
 												$FontSize,
@@ -154,7 +154,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
 
 			/*Positive is a favourable */
 			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / filter_number_format($_POST['ExRate']));
@@ -193,8 +193,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 			}
 
-			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
-			$LeftOvers = $pdf->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+			$LeftOvers = $PDF->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
+			$LeftOvers = $PDF->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 			$YPos -=$LineHeight;
 			if ($YPos < $Bottom_Margin + $LineHeight){
@@ -223,20 +223,20 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			exit;
 		}
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
-		$LeftOvers = $pdf->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
-		$LeftOvers = $pdf->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
+		$LeftOvers = $PDF->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
+		$LeftOvers = $PDF->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 	}
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
+	$PDF->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Payment Run');
 	$ViewTopic = 'AccountsPayable';
-	$BookMark = ''
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">

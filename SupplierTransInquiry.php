@@ -6,7 +6,7 @@ if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromD
 if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Supplier Transactions Inquiry');
 $ViewTopic = 'AccountsPayable';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">

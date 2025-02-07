@@ -3,7 +3,7 @@
 include('includes/session.php');
 $Title = _('Work Order Status Inquiry');
 $ViewTopic = 'Manufacturing';
-$BookMark = ''
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_GET['WO'])) {
