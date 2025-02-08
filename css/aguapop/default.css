@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* $Id: default.css 7166 2015-02-21 21:18:59Z Joshua $*/
 /*
 
@@ -13,14 +14,29 @@ button img {
 	/* Describes how button image should be displayed. */
 	height:32px;
 	width:32px;
+=======
+@font-face {
+font-family: 'Ubuntu';
+font-style: normal;
+font-weight: 400;
+>>>>>>> bf07731cfc85ecb68a81f1817737e82a23612802
 }
 
 body {
+<<<<<<< HEAD
 	font-family:Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
 	background: silver;  
 	margin:0;
 	padding:0;
+=======
+font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+font-weight:400;
+background:silver;
+margin:0;
+padding:0;
+color:#201919;
+>>>>>>> bf07731cfc85ecb68a81f1817737e82a23612802
 }
 
 /* default styles */

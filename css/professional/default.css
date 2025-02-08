@@ -25,11 +25,26 @@ button img {
 }
 
 body {
+<<<<<<< HEAD
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size:10pt;
 	background-color: #ddd;
 	margin:0;
 	padding:0;
+=======
+font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+font-weight:400;
+background-color:#FFFFFF;
+margin:0;
+padding:0;
+}
+.summary_box{
+width:20%;
+border: 1px solid;
+text-align: left;
+padding: 1%;
+border-radius: 4px;
+>>>>>>> bf07731cfc85ecb68a81f1817737e82a23612802
 }
 
 img {

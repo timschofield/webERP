@@ -101,12 +101,21 @@ if (isset($_POST['submit'])) {
 											0)";
 		}
 
+<<<<<<< HEAD
 		$Msg = _('A new credit status record has been inserted');
 	}
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
 	if ($Msg != '') {
 		prnMsg($Msg,'success');
+=======
+		$msg = _('A new credit status record has been inserted');
+	}
+	//run the SQL from either of the above possibilites
+	$Result = DB_query($SQL);
+	if ($msg != '') {
+		prnMsg($msg,'success');
+>>>>>>> bf07731cfc85ecb68a81f1817737e82a23612802
 	}
 	unset ($SelectedReason);
 	unset ($_POST['ReasonCode']);

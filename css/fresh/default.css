@@ -18,10 +18,40 @@ the next project. :)
 ***/
 
 body {
+<<<<<<< HEAD
 	font-family: Arial, Verdana, Helvetica, sans-serif;;
 	font-size: 12px;
 	margin:0;
 	padding:0;
+=======
+font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+font-weight:400;
+margin:0;
+padding:0;
+}
+.summary_box{
+width:20%;
+border: 1px solid;
+text-align: left;
+padding: 1%;
+border-radius: 4px;
+}
+img {
+width:32px;
+height:32px;
+}
+img.StockImage {
+width:48px;
+transition: transform .5s;
+}
+img.StockImage:hover {
+transform: scale(5);
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+img.Graph {
+width:90%;
+height:auto;
+>>>>>>> bf07731cfc85ecb68a81f1817737e82a23612802
 }
 
 /*** default styles ***/
