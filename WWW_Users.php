@@ -3,6 +3,7 @@
 /**************************************************************************************
 *
 * KL RICARD: Some restrictions by role, send emails to admin, allow usage of group os scripts Personalia
+* 			Simplify table display, add some fields to the user table
 *
 ***************************************************************************************/
 
@@ -26,8 +27,9 @@ if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	}
 }
 
-// KL RICARD : Include KL scripts needed 
 include('includes/header.php');
+
+// KL RICARD : Include KL scripts needed 
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 // KL RICARD END
@@ -346,13 +348,9 @@ if(!isset($SelectedUser)) {
 				<th class="ascending">', _('Timeout'), '</th>
 				<th class="ascending">', _('Customer Code'), '</th>
 				<th class="ascending">', _('Branch Code'), '</th>
-				<th class="ascending">', _('Supplier Code'), '</th>
-				<th class="ascending">', _('Salesperson'), '</th>
+				<th class="ascending">', _('SPG Code'), '</th>
 				<th class="ascending">', _('Last Visit'), '</th>
 				<th class="ascending">', _('Security Role'), '</th>
-				<th class="ascending">', _('Report Size'), '</th>
-				<th class="ascending">', _('Theme'), '</th>
-				<th class="ascending">', _('Language'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -383,10 +381,10 @@ if(!isset($SelectedUser)) {
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if($MyRow[8] == '') {
+		if(!isset($MyRow['lastvisitdate'])) {
 			$LastVisitDate = _('No login record');
 		} else {
-			$LastVisitDate = ConvertSQLDate($MyRow[8]);
+			$LastVisitDate = ConvertSQLDate($MyRow['lastvisitdate']);
 		}
 		/*The SecurityHeadings array is defined in config.php */
 		echo '<tr class="striped_row">
@@ -394,16 +392,12 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['realname'], '</td>
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>
-				<td class="number">', $MyRow['timeout'], 'mins</td>
+				<td class="number">', $MyRow['timeout'], ' mins</td>
 				<td class="text">', $MyRow['customerid'], '</td>
 				<td class="text">', $MyRow['branchcode'], '</td>
-				<td class="text">', $MyRow['supplierid'], '</td>
 				<td class="text">', $MyRow['salesman'], '</td>
 				<td class="centre">', $LastVisitDate, '</td>
 				<td class="text">', $SecurityRoles[($MyRow['fullaccess'])], '</td>
-				<td class="text">', $MyRow['pagesize'], '</td>
-				<td class="text">', $MyRow['theme'], '</td>
-				<td class="text">', $LanguagesArray[$MyRow['language']]['LanguageName'], '</td>
 				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '">', _('Edit'), '</a></td>
 				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this user?'), '\');">', _('Delete'), '</a></td>
 			</tr>';
