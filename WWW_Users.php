@@ -382,10 +382,10 @@ if(!isset($SelectedUser)) {
 	$Result = DB_query($Sql);
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if($MyRow[8] == '') {
+		if(!isset($MyRow['lastvisitdate'])) {
 			$LastVisitDate = _('No login record');
 		} else {
-			$LastVisitDate = ConvertSQLDate($MyRow[8]);
+			$LastVisitDate = ConvertSQLDate($MyRow['lastvisitdate']);
 		}
 		/*The SecurityHeadings array is defined in config.php */
 		echo '<tr class="striped_row">
