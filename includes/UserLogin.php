@@ -117,6 +117,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['DefaultPageSize'] = $MyRow['pagesize'];
 			$_SESSION['UserStockLocation'] = $MyRow['defaultlocation'];
 			$_SESSION['UserEmail'] = $MyRow['email'];
+			$_SESSION['Timeout'] = $MyRow['timeout'];
 			$_SESSION['ModulesEnabled'] = explode(",", $MyRow['modulesallowed']);
 			$_SESSION['UsersRealName'] = $MyRow['realname'];
 			$_SESSION['Theme'] = $MyRow['theme'];

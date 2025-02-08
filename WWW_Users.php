@@ -184,6 +184,7 @@ if(isset($_POST['submit'])) {
 						customerid='" . $_POST['Cust'] ."',
 						phone='" . $_POST['Phone'] ."',
 						email='" . $_POST['Email'] ."',
+						timeout='" . $_POST['Timeout'] . "',
 						" . $UpdatePassword . "
 						branchcode='" . $_POST['BranchCode'] . "',
 						supplierid='" . $_POST['SupplierID'] . "',
@@ -225,6 +226,7 @@ if(isset($_POST['submit'])) {
 					password,
 					phone,
 					email,
+					timeout,
 					pagesize,
 					fullaccess,
 					cancreatetender,
@@ -247,6 +249,7 @@ if(isset($_POST['submit'])) {
 					'" . CryptPass($_POST['Password']) ."',
 					'" . $_POST['Phone'] . "',
 					'" . $_POST['Email'] ."',
+					'" . $_POST['Timeout'] ."',
 					'" . $_POST['PageSize'] ."',
 					'" . $_POST['Access'] . "',
 					'" . $_POST['CanCreateTender'] . "',
@@ -305,6 +308,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Salesman']);
 		unset($_POST['Phone']);
 		unset($_POST['Email']);
+		unset($_POST['Timeout']);
 		unset($_POST['Password']);
 		unset($_POST['PageSize']);
 		unset($_POST['Access']);
@@ -339,6 +343,7 @@ if(!isset($SelectedUser)) {
 				<th class="ascending">', _('Full Name'), '</th>
 				<th class="ascending">', _('Telephone'), '</th>
 				<th class="ascending">', _('Email'), '</th>
+				<th class="ascending">', _('Timeout'), '</th>
 				<th class="ascending">', _('Customer Code'), '</th>
 				<th class="ascending">', _('Branch Code'), '</th>
 				<th class="ascending">', _('Supplier Code'), '</th>
@@ -357,6 +362,7 @@ if(!isset($SelectedUser)) {
 					realname,
 					phone,
 					email,
+					timeout,
 					customerid,
 					branchcode,
 					supplierid,
@@ -388,6 +394,7 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['realname'], '</td>
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>
+				<td class="number">', $MyRow['timeout'], 'mins</td>
 				<td class="text">', $MyRow['customerid'], '</td>
 				<td class="text">', $MyRow['branchcode'], '</td>
 				<td class="text">', $MyRow['supplierid'], '</td>
@@ -420,6 +427,7 @@ if(isset($SelectedUser)) {
 				realname,
 				phone,
 				email,
+				timeout,
 				customerid,
 				password,
 				branchcode,
@@ -448,6 +456,7 @@ if(isset($SelectedUser)) {
 	$_POST['RealName'] = $MyRow['realname'];
 	$_POST['Phone'] = $MyRow['phone'];
 	$_POST['Email'] = $MyRow['email'];
+	$_POST['Timeout']	= $MyRow['timeout'];
 	$_POST['Cust']	= $MyRow['customerid'];
 	$_POST['BranchCode'] = $MyRow['branchcode'];
 	$_POST['SupplierID'] = $MyRow['supplierid'];
@@ -517,6 +526,9 @@ if(!isset($_POST['Phone'])) {
 if(!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
+if(!isset($_POST['Timeout'])) {
+	$_POST['Timeout']=5;
+}
 echo '<field>
 		<label for="Password">' . _('Password') . ':</label>
 		<input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('At least 5 characters').'" title="" />
@@ -534,6 +546,11 @@ echo '<field>
 		<label for="Email">' . _('Email Address') .':</label>
 		<input type="email" name="Email" placeholder="' . _('e.g. user@domain.com') . '" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="" />
 		<fieldhelp>'._('A valid email address is required').'</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="Timeout">' . _('Timeout after') .':</label>
+		<input type="text" class="number" name="Timeout" required="required" value="' . $_POST['Timeout'] .'" size="4" maxlength="5" title="" />minutes
+		<fieldhelp>'._('Log the user out after this interval of non-use').'</fieldhelp>
 	</field>';
 echo '<field>
 		<label for="Access">' . _('Security Role') . ':</label>
