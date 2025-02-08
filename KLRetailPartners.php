@@ -714,16 +714,16 @@ if(!isset($_GET['delete'])) {
 	echo '<fieldset><legend>' . _('Invoice Details') . '</legend>';
 	echo FieldToSelectOneText('PartnerNameInvoice', $_POST['PartnerNameInvoice'], 51, 50, _('Partner Name in Consignment Invoice/FP'), '');
 	echo FieldToSelectOneText('partneraddressjalan', $_POST['partneraddressjalan'], 51, 100, _('Jalan in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressblok', $_POST['partneraddressblok'], 21, 20, _('Blok in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressblok', $_POST['partneraddressblok'], 21, 20, _('Blok in Consignment Invoice/FP'),'','','',false, false);
 	echo FieldToSelectOneText('partneraddressnomor', $_POST['partneraddressnomor'], 21, 20, _('Nomor in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressrt', $_POST['partneraddressrt'], 21, 20, _('RT in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressrw', $_POST['partneraddressrw'], 21, 20, _('RW in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddresskecamatan', $_POST['partneraddresskecamatan'], 51, 50, _('Kecamatan in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddresskelurahan', $_POST['partneraddresskelurahan'], 51, 50, _('Kelurahan in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddresskabupaten', $_POST['partneraddresskabupaten'], 51, 50, _('Kabupaten in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressrt', $_POST['partneraddressrt'], 21, 20, _('RT in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddressrw', $_POST['partneraddressrw'], 21, 20, _('RW in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddresskecamatan', $_POST['partneraddresskecamatan'], 51, 50, _('Kecamatan in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddresskelurahan', $_POST['partneraddresskelurahan'], 51, 50, _('Kelurahan in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddresskabupaten', $_POST['partneraddresskabupaten'], 51, 50, _('Kabupaten in Consignment Invoice/FP'),'','','',false, false);
 	echo FieldToSelectOneText('partneraddresspropinsi', $_POST['partneraddresspropinsi'], 51, 50, _('Propinsi in Consignment Invoice/FP'));
 	echo FieldToSelectOneText('partneraddresskodepos', $_POST['partneraddresskodepos'], 11, 10, _('Kode Pos in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, _('Telepon in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, _('Telepon in Consignment Invoice/FP'),'','','',false, false);
 	echo FieldToSelectOneText('PartnerNPWPInvoice', $_POST['PartnerNPWPInvoice'], 21, 20, _('NPWP in Consignment Invoice/FP'));
 	echo '</fieldset>';
 
