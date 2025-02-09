@@ -393,7 +393,7 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['realname'], '</td>
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>
-				<td class="number">', $MyRow['timeout'], 'mins</td>
+				<td class="number">', $MyRow['timeout'], ' ' , _('mins') , '</td>
 				<td class="text">', $MyRow['customerid'], '</td>
 				<td class="text">', $MyRow['branchcode'], '</td>
 				<td class="text">', $MyRow['supplierid'], '</td>

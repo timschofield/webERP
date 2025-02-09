@@ -906,8 +906,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF P & L Account').'" />
-			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') .'" />
+			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF Cash Flow Statement').'" />
+			<input type="submit" name="View" title="View" value="' . _('Show Cash Flow Statement') .'" />
 		</div>',
 		'</form>';
 }
