@@ -956,24 +956,31 @@ function CashStatus($Year,
 	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 
-	if ($SaldoUSD <= $USDMaxEasyPurchasePerMonth){
+	if ($SaldoUSD >= $PORunningTotalUSD){
+		$ToBeExchanged = 0;
+	} 
+	elseif ($SaldoUSD <= $USDMaxEasyPurchasePerMonth){
 		if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
 			AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
 			$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
 													$SaldoADUGlobalUSDMax - $SaldoUSD), 5000);	
-		}elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
+		}
+		elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
 			$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
-		}else{
+		}
+		else{
 			$ToBeExchanged = 0;	
 		}
-	}else{
+	}
+	else{
 		$ToBeExchanged = 0;	
 	}
 	
 	if ($SaldoADUPayoneerUSD < $SaldoADUPayoneerUSDMin){
 		$ToBeTransferredToPayoneer = round_multiple_of(min($SaldoADUPayoneerUSDMax - $SaldoADUPayoneerUSD, 
 															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), 5000);	
-	}else{
+	}
+	else{
 		$ToBeTransferredToPayoneer = 0;
 	}
 
