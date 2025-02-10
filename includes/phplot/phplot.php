@@ -830,10 +830,10 @@ class PHPlot
     protected function GetColorIndexArray($color_array, $max_colors)
     {
         $n = min(count($color_array), $max_colors);
-        $result = array();
+        $Result = array();
         for ($i = 0; $i < $n; $i++)
-            $result[] = $this->GetColorIndex($color_array[$i]);
-        return $result;
+            $Result[] = $this->GetColorIndex($color_array[$i]);
+        return $Result;
     }
 
     /**
@@ -849,10 +849,10 @@ class PHPlot
     protected function GetDarkColorIndexArray($color_array, $max_colors)
     {
         $n = min(count($color_array), $max_colors);
-        $result = array();
+        $Result = array();
         for ($i = 0; $i < $n; $i++)
-            $result[] = $this->GetDarkColorIndex($color_array[$i]);
-        return $result;
+            $Result[] = $this->GetDarkColorIndex($color_array[$i]);
+        return $Result;
     }
 
     /**
@@ -1374,15 +1374,15 @@ class PHPlot
         if (!preg_match('/^\d+-\d+(-\d+)*$/', $which_style)) {
             return $this->PrintError("SetDefaultDashedStyle(): Wrong parameter '$which_style'.");
         }
-        $result = '';
+        $Result = '';
         $use_color = TRUE;
         $transparent = ' ' . IMG_COLOR_TRANSPARENT;
         // Expand the dashed line style specifier:
         foreach (explode('-', $which_style) as $n) {
-            $result .= str_repeat($use_color ? ' #' : $transparent, $n);
+            $Result .= str_repeat($use_color ? ' #' : $transparent, $n);
             $use_color = !$use_color;  // Alternate color and transparent
         }
-        $this->default_dashed_style = ltrim($result);
+        $this->default_dashed_style = ltrim($Result);
         return TRUE;
     }
 
@@ -2866,13 +2866,13 @@ class PHPlot
     protected function CheckOptionArray($opt, $acc, $func)
     {
         $opt_array = (array)$opt;
-        $result = array();
+        $Result = array();
         foreach ($opt_array as $option) {
             $choice = $this->CheckOption($option, $acc, $func);
             if (is_null($choice)) return NULL; // In case CheckOption error handler returns
-            $result[] = $choice;
+            $Result[] = $choice;
         }
-        return $result;
+        return $Result;
     }
 
     /**
@@ -7125,9 +7125,9 @@ class PHPlot
     {
         $x = $this->xtr($x_world);
         $y = $this->ytr($y_world);
-        $result = $this->DrawShape($x, $y, $column, $color);
+        $Result = $this->DrawShape($x, $y, $column, $color);
         $this->DoCallback('data_points', 'dot', $row, $column, $x, $y);
-        return $result;
+        return $Result;
     }
 
     /**
