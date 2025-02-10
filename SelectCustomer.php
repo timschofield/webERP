@@ -292,7 +292,7 @@ if(isset($_POST['CustType'])) {
 	if(DB_num_rows($Result2) == 0) {
 		$DataError = 1;
 		echo '<a href="CustomerTypes.php" target="_parent">' . _('Setup Types') . '</a>';
-		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></field>';
+		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error','',true) . '</td></field>';
 	} else {
 		// If OK show select box with option selected
 		echo '<select name="CustType">
@@ -316,7 +316,7 @@ if(isset($_POST['CustType'])) {
 	if(DB_num_rows($Result2) == 0) {
 		$DataError = 1;
 		echo '<a href="CustomerTypes.php" target="_parent">' . _('Setup Types') . '</a>';
-		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></field>';
+		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error','',true) . '</td></field>';
 	} else {
 		// if OK show select box with available options to choose
 		echo '<select name="CustType">
@@ -338,7 +338,7 @@ $Result2 = DB_query("SELECT areacode, areadescription FROM areas");
 if(DB_num_rows($Result2) == 0) {
 	$DataError = 1;
 	echo '<a href="Areas.php" target="_parent">' . _('Setup Areas') . '</a>';
-	echo '<field><td colspan="2">' . prnMsg(_('No Sales Areas defined'), 'error') . '</td></field>';
+	echo '<field><td colspan="2">' . prnMsg(_('No Sales Areas defined'), 'error','',true) . '</td></field>';
 } else {
 	// if OK show select box with available options to choose
 	echo '<select name="Area">';
