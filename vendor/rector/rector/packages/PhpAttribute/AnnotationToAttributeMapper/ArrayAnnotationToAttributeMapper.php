@@ -82,7 +82,7 @@ final class ArrayAnnotationToAttributeMapper implements AnnotationToAttributeMap
     {
         if ($arrayItem->key === null && $arrayItem->value instanceof ClassConstFetch && $arrayItem->value->class instanceof Name && \strpos((string) $arrayItem->value->class, "'") !== \false) {
             $arrayItem->value = new String_($this->valueResolver->getValue($arrayItem->value));
-            return $arrayItem;
+            /*return $arrayItem;*/
         }
         return $arrayItem;
     }
