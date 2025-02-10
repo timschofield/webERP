@@ -170,9 +170,11 @@ if (isset($_POST['submit'])) {
 					$PeriodQty[$i] += 1;
 				}
 			}
-
 			$i = 0;
-			foreach ($PeriodQty as $DemandQty) {
+			foreach ($PeriodQty as $demandqty) {
+				if (!isset($DemandQty) or $DemandQty == ' ') {
+					$DemandQty = 0;
+				}
 					$SQL = "INSERT INTO mrpdemands (stockid,
 									mrpdemandtype,
 									quantity,
