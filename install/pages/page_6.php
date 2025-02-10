@@ -1,5 +1,5 @@
 <?php
-$host = $_SESSION['Installer']['HostName'];
+$Host = $_SESSION['Installer']['HostName'];
 $DBUser = $_SESSION['Installer']['UserName'];
 $DBPassword = $_SESSION['Installer']['Password'];
 $DBType = $_SESSION['Installer']['DBMS'];
@@ -318,8 +318,6 @@ if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 
 	} else {
 		echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 	}
-//	$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','1')";
-//	$Result = DB_query($SQL);
 
 	$DBErrors = 0;
 	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $filename) {
@@ -458,6 +456,9 @@ if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 
 	ob_flush();
 	echo '<div class="success">' . _('Database now contains the demo data.') . '</div>';
 }
+
+$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir','companies/" . $_SESSION['DatabaseName'] . "/part_pics')";
+$Result = DB_query($SQL);
 
 $CompanyFileHandler = fopen($Path_To_Root . '/companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
 $Contents = "<?php\n\n";
