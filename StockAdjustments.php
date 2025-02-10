@@ -430,7 +430,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	if (DB_num_rows($Result) > 0) {
 		$MyRow=DB_fetch_array($Result);
 		$_SESSION['Adjustment' . $identifier]->PartUnit=$MyRow['units'];
-		$_SESSION['Adjustment' . $identifier]->StandardCost=$MyRow['materialcost']+$MyRow['labourcost']+$MyRow['overheadcost'];
+		$_SESSION['Adjustment' . $identifier]->StandardCost=$MyRow['actualcost'];
 		$DecimalPlaces = $MyRow['decimalplaces'];
 	}
 }

@@ -133,7 +133,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					prices.startdate,
 					prices.enddate,
 					prices.price,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standardcost,
+					stockmaster.actualcost AS standardcost,
 					stockmaster.categoryid,
 					stockcategory.categorydescription,
 					prices.debtorno,
@@ -173,7 +173,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					stockmaster.longdescription,
 					prices.currabrev,
 					prices.price,
-					stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost as standardcost,
+					stockmaster.actualcost as standardcost,
 					stockmaster.categoryid,
 					stockcategory.categorydescription,
 					currencies.decimalplaces

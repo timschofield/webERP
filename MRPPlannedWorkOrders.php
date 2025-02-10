@@ -31,8 +31,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
-					   (stockmaster.actualcost ) as computedcost
+						stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -49,8 +48,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
-					(stockmaster.actualcost ) as computedcost
+						stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -75,8 +73,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
-					(stockmaster.actualcost ) as computedcost
+						stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid

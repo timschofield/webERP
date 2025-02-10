@@ -26,9 +26,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 					unitcost,
 					stockmaster.units,
 					stockmaster.decimalplaces,
-					stockmaster.materialcost,
-					stockmaster.labourcost,
-					stockmaster.overheadcost,
+					stockmaster.actualcost,
 					stockmaster.stockid,
 					stockmaster.description
 				HAVING SUM(locstock.quantity)!=0

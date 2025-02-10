@@ -211,12 +211,12 @@ function BomMaterialCost($Parent) {
 	$Result1 = DB_query($SQL);
 	$MyRow1 = DB_fetch_row($Result1);
 	$QOH = $MyRow1[0];
-	$SQL = "SELECT Sum(stockmaster.materialcost*bom.quantity) AS SumOfmaterialcost
-	   					FROM bom LEFT JOIN stockmaster
-						ON bom.component = stockmaster.stockid
-						WHERE bom.parent='". $Parent . "'
-                        AND bom.effectiveafter <= CURRENT_DATE
-                        AND bom.effectiveto > CURRENT_DATE";
+	$SQL = "SELECT SUM(actualcost) AS SumOfmaterialcost
+			FROM bom LEFT JOIN stockmaster
+				ON bom.component = stockmaster.stockid
+			WHERE bom.parent='". $Parent . "'
+                AND bom.effectiveafter <= CURRENT_DATE
+                AND bom.effectiveto > CURRENT_DATE";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	$MaterialCost = $MyRow[0];

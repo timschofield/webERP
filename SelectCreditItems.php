@@ -622,7 +622,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.controlled,
 								stockmaster.decimalplaces,
 								stockmaster.serialised,
-								(actualcost) AS standardcost,
+								stockmaster.actualcost AS standardcost,
 								stockmaster.taxcatid
 							FROM stockmaster
 							WHERE stockmaster.stockid = '". $_POST['NewItem'] . "'";

@@ -36,7 +36,7 @@ if ($AlreadyOnThisOrder!=1){
 					stockmaster.units,
 					stockmaster.volume,
 					stockmaster.grossweight,
-					(actualcost) AS standardcost,
+					stockmaster. actualcost AS standardcost,
 					locstock.quantity,
 					stockmaster.mbflag,
 					stockmaster.discountcategory,

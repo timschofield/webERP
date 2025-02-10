@@ -19,7 +19,7 @@ $SQL = "SELECT salesorders.orderno,
 				salesorders.orddate,
 				salesorders.deliverto,
 				salesorders.deliverydate,
-				sum(salesorderdetails.linenetprice) as ordervalue,
+				SUM(salesorderdetails.linenetprice) as ordervalue,
 				datepackingslipprinted,
 				printedpackingslip
 			FROM salesorders,

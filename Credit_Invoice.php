@@ -722,7 +722,8 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 					$StandardCost = 0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 					$SQL = "SELECT	bom.component,
 									bom.quantity,
-									stockmaster.actualcost AS standard							FROM bom,
+								stockmaster.actualcost AS standard
+								FROM bom,
 									stockmaster
 								WHERE bom.component=stockmaster.stockid
 								AND bom.parent='" . $CreditLine->StockID . "'

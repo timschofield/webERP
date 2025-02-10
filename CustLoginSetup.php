@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
 	} elseif (mb_strstr($_POST['Password'],$_POST['UserID'])!= false){
 		$InputError = 1;
 		prnMsg(_('The password cannot contain the user id'),'error');
-	} elseif ((mb_strlen($_POST['Cust'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {
+	} elseif ((mb_strlen($_SESSION['CustomerID'])>0) AND (mb_strlen($_POST['BranchCode'])==0)) {
 		$InputError = 1;
 		prnMsg(_('If you enter a Customer Code you must also enter a Branch Code valid for this Customer'),'error');
 	}
@@ -87,6 +87,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "INSERT INTO www_users (userid,
 										realname,
 										customerid,
+										salesman,
 										branchcode,
 										password,
 										phone,
@@ -101,6 +102,7 @@ if (isset($_POST['submit'])) {
 									VALUES ('" . $_POST['UserID'] . "',
 											'" . $_POST['RealName'] ."',
 											'" . $_SESSION['CustomerID'] ."',
+											'',
 											'" . $_POST['BranchCode'] ."',
 											'" . CryptPass($_POST['Password']) ."',
 											'" . $_POST['Phone'] . "',
@@ -108,7 +110,7 @@ if (isset($_POST['submit'])) {
 											'" . $_POST['PageSize'] ."',
 											'7',
 											'" . $InventoryLocation ."',
-											'1,1,0,0,0,0,0,0',
+											'1,1,0,0,0,0,0,0,0,0,0,',
 											'" . $_SESSION['DefaultDisplayRecordsMax'] . "',
 											'" . $_POST['Theme'] . "',
 											'". $_POST['UserLanguage'] ."')";

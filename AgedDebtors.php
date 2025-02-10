@@ -34,9 +34,7 @@ if(isset($_POST['PrintPDF'])
 				debtorsmaster.creditlimit,
 				holdreasons.dissallowinvoices,
 				holdreasons.reasondescription,
-				SUM(
-					debtortrans.balance
-				) AS balance,
+				SUM(debtortrans.balance) AS balance,
 				SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 					THEN
@@ -106,9 +104,7 @@ if(isset($_POST['PrintPDF'])
 				debtorsmaster.creditlimit,
 				holdreasons.dissallowinvoices,
 				holdreasons.reasondescription,
-			SUM(
-					debtortrans.balance
-				) AS balance,
+				SUM(debtortrans.balance) AS balance,
 			SUM(
 					CASE WHEN (paymentterms.daysbeforedue > 0)
 						THEN

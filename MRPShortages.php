@@ -77,11 +77,11 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.mbflag,
 					   stockmaster.actualcost,
 					   stockmaster.decimalplaces,
-					   (stockmaster.actualcost ) as computedcost,
+					   (stockmaster.actualcost) as computedcost,
 					   demandtotal.demand,
 					   supplytotal.supply,
 					   (demandtotal.demand - supplytotal.supply) *
-					   (stockmaster.actualcost ) as extcost
+					   (stockmaster.actualcost) as extcost
 					FROM stockmaster
 						LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
 						LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
@@ -113,12 +113,11 @@ if (isset($_POST['PrintPDF'])) {
 		stockmaster.mbflag,
 		stockmaster.actualcost,
 		stockmaster.decimalplaces,
-		(stockmaster.actualcost ) as computedcost,
+		(stockmaster.actualcost) as computedcost,
 		demandtotal.demand,
 		supplytotal.supply,
 	   (demandtotal.demand - supplytotal.supply) *
-	   (stockmaster.materialcost + stockmaster.labourcost +
-		stockmaster.overheadcost ) as extcost
+	   (stockmaster.actualcost) as extcost
 		   FROM stockmaster
 			 LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
 			 LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
@@ -128,7 +127,6 @@ if (isset($_POST['PrintPDF'])) {
 			   stockmaster.mbflag,
 			   stockmaster.actualcost,
 			   stockmaster.decimalplaces,
-			   computedcost,
 			   supplytotal.supply,
 			   demandtotal.demand " . $SQLHaving . " ORDER BY '" . $_POST['Sort'] . "'";
 	$Result = DB_query($SQL, '', '', false, true);

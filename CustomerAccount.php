@@ -101,7 +101,7 @@ $SQL = "SELECT debtortrans.id,
 			debtortrans.trandate,
 			debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst as totalamount,
 			debtortrans.alloc,
-			debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc as balance,
+			debtortrans.balance as balance,
 			debtortrans.settled
 		FROM debtortrans INNER JOIN systypes
 			ON debtortrans.type=systypes.typeid
@@ -166,8 +166,7 @@ $SQL = "SELECT debtorsmaster.name,
 				CASE WHEN (TO_DAYS(Now()) - TO_DAYS(DATE_ADD(DATE_ADD(debtortrans.trandate, " . interval('1','MONTH') . "), " .
 				interval('(paymentterms.dayinfollowingmonth - DAYOFMONTH(debtortrans.trandate))','DAY') . "))
 				>= " . $_SESSION['PastDueDays2'] . ")
-				THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight +
-				debtortrans.ovdiscount - debtortrans.alloc
+				THEN debtortrans.balance
 				ELSE 0 END
 			END) AS overdue2
 		FROM debtorsmaster INNER JOIN paymentterms
