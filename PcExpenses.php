@@ -110,10 +110,6 @@ if (isset($_POST['submit'])) {
 						'" . $_POST['TaxCategory'] . "'
 						)";
 			$Msg = _('Expense') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
-			$CheckSQL = "SELECT count(codeexpense)
-						FROM pcexpenses";
-			$Result = DB_query($CheckSQL);
-			$Row = DB_fetch_row($Result);
 		}
 	}
 	if ($InputError != 1) {
