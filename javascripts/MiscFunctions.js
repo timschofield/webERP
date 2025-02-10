@@ -262,7 +262,6 @@ function remSelOpt(e, t) {
 	for (i = 0; i < len1; i++) {
 		if (t.options[i].value == e) {
 			t.options[i] = null;
-			break
 		}
 	}
 }
