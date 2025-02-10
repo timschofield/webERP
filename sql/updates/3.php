@@ -1,12 +1,8 @@
 <?php
 
-/* KL RICARD ALREADY EXECUTED
 executeSQL("ALTER TABLE tags MODIFY tagref INT AUTO_INCREMENT");
-KL RICARD ALREADY EXECUTED END */
-
 executeSQL("ALTER TABLE pcexpenses MODIFY tag VARCHAR(100)");
 
-/* KL RICARD ALREADY EXECUTED
 CreateTable('gltags',
 "CREATE TABLE `gltags` (
   `counterindex` INT(11) NOT NULL DEFAULT '0',
@@ -15,7 +11,6 @@ CreateTable('gltags',
   FOREIGN KEY (counterindex) REFERENCES gltrans(counterindex),
   FOREIGN KEY (tagref) REFERENCES tags(tagref)
 )");
-KL RICARD ALREADY EXECUTED END */
 
 CreateTable('pctags',
 "CREATE TABLE `pctags` (
@@ -24,15 +19,8 @@ CreateTable('pctags',
   PRIMARY KEY (`pccashdetail`,`tag`)
 )");
 
-/* KL RICARD ALREADY EXECUTED
 executeSQL("INSERT INTO tags VALUES(0, 'None')");
 executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans)");
-KL RICARD ALREADY EXECUTED END */
-
-/* KL RICARD EXECUTE THIS */
-executeSQL("TRUNCATE gltags");
-executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans WHERE gltrans.tag !=0)");
-/* KL RICARD END EXECUTE THIS */
 
 DropColumn('tag', 'gltrans');
 
