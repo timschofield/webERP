@@ -72,13 +72,9 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 	// if not submittws then coming into manual to look at TOC
 	// if SelectTableOfContents set then user wants it displayed
 	if(!isset($_POST['Submit'])) {
-		echo '<p>', _('Click on a link to view a page, or check boxes and click on Display Checked to view selected in one page'), '</p>';
-		echo '<p><input type="submit" name="Submit" value="', _('Display Checked'), '" /></p>';
+		echo '<p>', _('Click on a link to view a page'), '</p>';
 	}
 	echo '<h1>';
-	if(!isset($_POST['Submit'])) {
-		echo '<input name="SelectTableOfContents" type="checkbox">';
-	}
 	echo _('Table of Contents'), '</h1>';
 	$j = 0;
 	foreach($TOC_Array['TableOfContents'] as $Title => $SubLinks) {
@@ -87,10 +83,9 @@ if(((!isset($_POST['Submit'])) and (empty($_GET['ViewTopic']))) || ((isset($_POS
 			<li class="toc"';
 		// List topic title:
 		if(!isset($_POST['Submit'])) {
-			echo ' style="list-style-type:none;"><input id="roundedOne', $j, '" name="', $Name, '" type="checkbox" value="None" /';
+			echo ' style="list-style-type:none;">';
 		}
-		echo '>
-			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic=', $Title, '">', $SubLinks[0], '</a></li>';
+		echo '<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?ViewTopic=', $Title, '">', $SubLinks[0], '</a></li>';
 		// List topic content:
 		if(count($SubLinks) > 1) {
 			echo '<ul>';
