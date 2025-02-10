@@ -215,7 +215,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		'<input name="PeriodFrom" type="hidden" value="', $_POST['PeriodFrom'], '" />',
 		'<input name="PeriodTo" type="hidden" value="', $_POST['PeriodTo'], '" />',
 		'<input name="ShowDetails" type="hidden" value="', $_POST['ShowDetails'], '" />',
-		'<div class="centre noprint">', // Form buttons:
+		'<div class="centre noPrint">', // Form buttons:
 			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
 			'<button onclick="window.location=\'index.php?Application=PO\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.

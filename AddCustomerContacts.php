@@ -19,7 +19,7 @@ if (isset($_POST['DebtorNo'])){
 } elseif (isset($_GET['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
-echo '<a class="noprint" href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
+echo '<a class="noPrint" href="' . $RootPath . '/Customers.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Customers') . '</a><br />';
 $SQLname="SELECT name FROM debtorsmaster WHERE debtorno='" . $DebtorNo . "'";
 $Result = DB_query($SQLname);
 $Row = DB_fetch_array($Result);
@@ -135,7 +135,7 @@ if (!isset($Id)) {
 			<th class="text">', _('Email'), '</th>
 			<th class="text">', _('Statement'), '</th>
 			<th class="text">', _('Notes'), '</th>
-			<th class="noprint" colspan="2">&nbsp;</th>
+			<th class="noPrint" colspan="2">&nbsp;</th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -146,8 +146,8 @@ if (!isset($Id)) {
 				<td class="text"><a href="mailto:%s">%s</a></td>
 				<td class="text">%s</td>
 				<td class="text">%s</td>
-				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-				<td class="noprint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td>
+				<td class="noPrint"><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
+				<td class="noPrint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td>
 				</tr>',
 				$MyRow['contactname'],
 				$MyRow['role'],
@@ -201,10 +201,10 @@ if (!isset($_GET['delete'])) {
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />
 			<input type="hidden" name="Con_ID" value="' . $_POST['Con_ID'] . '" />
 			<input type="hidden" name="DebtorNo" value="' . $_POST['DebtorNo'] . '" />';
-			
+
 		echo '<fieldset>
 				<legend>', _('Edit Customer Contact Details'), '</legend>';
-				
+
 		echo '<field>
 				<label for="Con_ID">', _('Contact Code'), ':</label>
 				<fieldtext>', $_POST['Con_ID'], '</fieldtext>
@@ -281,7 +281,7 @@ if (!isset($_GET['delete'])) {
 		</field>';
 
 	echo '</fieldset>';
-	
+
 	echo '<div class ="centre">
 			<input name="submit" type="submit" value="', _('Enter Information'), '" />
 		</div>

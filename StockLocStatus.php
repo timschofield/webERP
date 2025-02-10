@@ -118,7 +118,7 @@ echo '</select>
 	</field>
 </fieldset>';
 
-echo '<div class="centre noprint">
+echo '<div class="centre noPrint">
 		<input name="ShowStatus" type="submit" value="', _('Show Stock Status'), '" />
 	</div>';
 

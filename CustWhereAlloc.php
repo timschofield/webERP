@@ -16,10 +16,10 @@ if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<p class="page_title_text noprint">
+echo '<p class="page_title_text noPrint">
 		<img alt="" src="'. $RootPath. '/css/'. $Theme.'/images/money_add.png" title="',_('Customer Where Allocated'), '" /> ',$Title. '
 	</p>';// Page title.
-	
+
 echo '<fieldset>
 		<field>
 			<label for="TransType">' . _('Type') . ':</label>
@@ -51,7 +51,7 @@ echo '<field>
 		<input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="10" size="10" value="'. $_POST['TransNo'] . '" />
 	</field>
 	</fieldset>
-	<div class="centre noprint">
+	<div class="centre noPrint">
 		<input tabindex="3" type="submit" name="ShowResults" value="' . _('Show How Allocated') . '" />
 	</div>';
 
@@ -107,7 +107,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 			} else {
 				$SQL .= "ON debtortrans.id = custallocns.transid_allocfrom
 					WHERE custallocns.transid_allocto = '" . $AllocToID . "'";
-		
+
 			}
 
 		} else {
@@ -209,7 +209,7 @@ if ($_POST['TransType']== 12) {
 		while ($MyRow = DB_fetch_array($Result)){
 			echo '<div class="centre">
 							<strong>'._('GL Account') .' ' . $MyRow['account'] . '</strong> '. _('Amount') . locale_number_format($MyRow['amount'],$CurrDecimalPlaces).'<br/> '. _('To local currency'). ' ' . locale_number_format($MyRow['amount']*$Rate,$CurrDecimalPlaces).' ' . _('at rate') . ' ' . $Rate .
-				
+
 					'</div>';
 					$GrandTotal += $MyRow['amount'] * $Rate;
 		}
@@ -222,7 +222,7 @@ if ($_POST['TransType']== 12) {
 echo '</div>';
 echo '</form>';
 if(isset($Printer)) {
-	echo '<div class="centre noprint">
+	echo '<div class="centre noPrint">
 			<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 		'</div>';// "Print This" button.

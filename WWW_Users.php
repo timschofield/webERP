@@ -351,7 +351,7 @@ if(!isset($SelectedUser)) {
 				<th class="SortedColumn">', _('SPG Code'), '</th>
 				<th class="SortedColumn">', _('Last Visit'), '</th>
 				<th class="SortedColumn">', _('Security Role'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';

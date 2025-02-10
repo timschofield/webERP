@@ -15,7 +15,7 @@ if(isset($_GET['TransNo']) AND isset($_GET['TransType'])) {
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-	<p class="page_title_text noprint">
+	<p class="page_title_text noPrint">
 		<img alt="" src="'. $RootPath. '/css/'. $Theme.'/images/money_add.png" title="',_('Supplier Where Allocated'), '" /> ',$Title. '
 	</p>';
 
@@ -51,7 +51,7 @@ echo '<field>
 		<input tabindex="2" type="text" class="number" name="TransNo"  required="required" maxlength="20" size="20" value="'. $_POST['TransNo'] . '" />
 	</field>
 	</fieldset>
-	<div class="centre noprint">
+	<div class="centre noPrint">
 		<input tabindex="3" type="submit" name="ShowResults" value="' . _('Show How Allocated') . '" />
 	</div>';
 
@@ -182,7 +182,7 @@ if(isset($_POST['ShowResults']) AND $_POST['TransNo']!='') {
 }
 echo '</form>';
 if(isset($Printer)) {
-	echo '<div class="centre noprint">
+	echo '<div class="centre noPrint">
 			<button onclick="javascript:window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
 				'/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 		'</div>';
