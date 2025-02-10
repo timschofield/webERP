@@ -137,9 +137,9 @@ or deletion of the records*/
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Geocode Setup') . '" alt="" />' .
 			_('Setup configuration for Geocoding of Customers and Suppliers')  . '</p>';
 	echo '<div class="page_help_text">' .  _('Get a google API key at ') .
-		'<a href="http://code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
+		'<a href="//code.google.com/apis/maps/signup.html" target="_blank"> http://code.google.com/apis/maps/signup.html</a></div>';
 	echo '<div class="centre"><p>' .  _('Find the lat/long for your map center point at ') .
-			'<a href="http://www.batchgeocode.com/lookup/" target="_blank">http://www.batchgeocode.com/lookup/</a></p>';
+			'<a href="//www.batchgeocode.com/lookup/" target="_blank">http://www.batchgeocode.com/lookup/</a></p>';
 	prnMsg(_('Set the maps centre point using the Center Longitude and Center Latitude. Set the maps screen size using the height and width in pixels (px)'),'info');
 	echo '</div><br />';
 	echo '<table border="1">';
