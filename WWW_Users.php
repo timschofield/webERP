@@ -548,7 +548,7 @@ echo '<field>
 	</field>';
 echo '<field>
 		<label for="Timeout">' . _('Timeout after') .':</label>
-		<input type="text" class="number" name="Timeout" required="required" value="' . $_POST['Timeout'] .'" size="4" maxlength="5" title="" />minutes
+		<input type="text" class="number" name="Timeout" required="required" value="' . $_POST['Timeout'] .'" size="4" maxlength="5" title="" />&nbsp;', _('minutes'), '
 		<fieldhelp>'._('Log the user out after this interval of non-use').'</fieldhelp>
 	</field>';
 echo '<field>
