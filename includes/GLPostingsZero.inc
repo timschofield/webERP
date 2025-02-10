@@ -84,7 +84,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 
 	$UnpostedTransResult = DB_query($SQL);
 
-	$TransStart = DB_Txn_Begin();
+    DB_Txn_Begin();
 	$CurrentAccount='0';
 	$TotalAmount=0;
 	while ($UnpostedTrans=DB_fetch_array($UnpostedTransResult)) {
@@ -119,7 +119,7 @@ for ( $CurrPeriod = $CreateFrom; $CurrPeriod <= $CreateTo; $CurrPeriod++ ) {
 	$SQL = "UPDATE gltrans SET posted = 1 WHERE periodno = '" . $CurrPeriod . "' AND posted=0";
 	$Posted = DB_query($SQL);
 
-	$TransCommit = DB_Txn_Commit();
+	DB_Txn_Commit();
 }
 
 ?>

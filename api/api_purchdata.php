@@ -5,6 +5,7 @@
 			VerifySupplierNoExists($SupplierID, $i, $Errors)!=0) {
 				$Errors[$i] = StockSupplierLineDoesntExist;
 		}
+        return $Errors;
 	}
 
 	function VerifySuppliersUOM($suppliersuom, $i, $Errors) {

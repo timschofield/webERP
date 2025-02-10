@@ -79,7 +79,7 @@ if (isset($_POST['Add'])) {
 		} else {
 			$Completed = 0;
 		}
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,

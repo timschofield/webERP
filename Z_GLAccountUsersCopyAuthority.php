@@ -25,7 +25,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 	}
 
 	if($InputError ==0) {// no input errors
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		echo '<br />' . _('Deleting the current authority to view / update the GL Accounts of user') . ' ' .  $_POST['ToUserID'];
 		$SQL = "DELETE FROM glaccountusers WHERE userid = '" . $_POST['ToUserID'] . "'";
@@ -45,7 +45,7 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 		echo ' ... ' . _('completed');
 		echo '<br />';
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0
 }

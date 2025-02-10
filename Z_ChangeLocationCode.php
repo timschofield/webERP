@@ -54,7 +54,7 @@ if(isset($_POST['ProcessLocationChange'])) {
 	}
 
 	if($InputError ==0) {// no input errors
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		DB_IgnoreForeignKeys();
 
 		echo '<br />' . _('Adding the new location record');
@@ -246,7 +246,7 @@ if(isset($_POST['ProcessLocationChange'])) {
 
 		DB_ReinstateForeignKeys();
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		echo '<br />' . _('Deleting the old location record');
 		$SQL = "DELETE FROM locations WHERE loccode='" . $_POST['OldLocationID'] . "'";

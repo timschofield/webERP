@@ -381,7 +381,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 			$WOIssueNo = GetNextTransNo(28);
 			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 
 			while ($WeekTimeRow = DB_fetch_array($WeekTimeResult)) {
 
@@ -495,7 +495,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 												_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('Could not change the timesheet status to approved because'),
 												_('The following SQL was used to update the work order'),
 												true);
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			prnMsg(_('Timesheet posted'),'success');
 		} //end of if there is unposted in this week to post
 	} //end of if the timesheet has a full working week

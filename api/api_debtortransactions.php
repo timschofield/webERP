@@ -462,11 +462,11 @@ function ConvertToSQLDate($DateEntry) {
 
 
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$ReceiptNo;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 	}
@@ -546,7 +546,7 @@ function ConvertToSQLDate($DateEntry) {
 		$DispTaxProvinceID = $MyRow[0];
 
 	/*Start an SQL transaction */
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 	/*Now Get the next credit note number - function in SQL_CommonFunctions*/
 		$CreditNoteNo = GetNextTransNo(11);
 		$PeriodNo = GetCurrentPeriod();
@@ -1159,11 +1159,11 @@ function ConvertToSQLDate($DateEntry) {
 		}
 
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$CreditNoteNo;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 	} /*End of CreateCreditNote method */
@@ -1252,7 +1252,7 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			$SQL = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) .")
 									VALUES ('" . mb_substr($FieldValues,0,-2) ."') ";
 			$Result = DB_query($SQL);
@@ -1286,7 +1286,7 @@ function ConvertToSQLDate($DateEntry) {
 											'" . $InvoiceDetails['jobref'] . "',
 											1)";
 			$Result = api_DB_query($SQL);
-			$Result= DB_Txn_Commit();
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {
@@ -1456,10 +1456,10 @@ function ConvertToSQLDate($DateEntry) {
 			} //end loop around potential positive receipts not fully allocated already
 		}
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 
@@ -1550,7 +1550,7 @@ function ConvertToSQLDate($DateEntry) {
 			$FieldValues.='"'.$Value.'", ';
 		}
 		if (sizeof($Errors)==0) {
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			$SQL = "INSERT INTO debtortrans (" . mb_substr($FieldNames,0,-2) . ")
 						VALUES ('".mb_substr($FieldValues,0,-2) ."') ";
 			$Result = DB_query($SQL);
@@ -1582,7 +1582,7 @@ function ConvertToSQLDate($DateEntry) {
 											0,
 											'" . $CreditDetails['jobref'] ."')";
 			$Result = DB_query($SQL);
-			$Result= DB_Txn_Commit();
+			DB_Txn_Commit();
 			if (DB_error_no() != 0) {
 				$Errors[0] = DatabaseUpdateFailed;
 			} else {

@@ -69,7 +69,7 @@ While ($myrow = DB_fetch_array($Result)){
 prnMsg(_('The number of stock movements to be deleted is') . ': ' . DB_num_rows($Result),'info');
 
 /*Setup a database transaction */
-$result = DB_Txn_Begin();
+DB_Txn_Begin();
 
 /*Delete any log entries */
 
@@ -174,7 +174,7 @@ $ErrMsg = _('The SQL to delete the general ledger journal records failed because
 $Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 prnMsg(_('The GL journal records associated with the invoice have been deleted'),'info');
 
-$result = DB_Txn_Commit();
+DB_Txn_Commit();
 
 prnMsg(_('Invoice number') . ' ' . $_GET['InvoiceNo'] . ' ' . _('has been deleted'),'info');
 

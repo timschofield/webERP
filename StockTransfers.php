@@ -261,7 +261,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 		$SQLTransferDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		// Need to get the current location quantity will need it later for the stock movement
 		$SQL="SELECT locstock.quantity
@@ -604,7 +604,7 @@ if(isset($_POST['EnterTransfer']) ) {
 		}
 		/* KL RICARD End modification */
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 
 		prnMsg(_('An inventory transfer of').' ' . $_SESSION['Transfer']->TransferItem[0]->StockID . ' - ' . $_SESSION['Transfer']->TransferItem[0]->ItemDescription . ' '. _('has been created from').' ' . $_SESSION['Transfer']->StockLocationFrom . ' '. _('to') . ' ' . $_SESSION['Transfer']->StockLocationTo . ' '._('for a quantity of').' ' . $_SESSION['Transfer']->TransferItem[0]->Quantity,'success');

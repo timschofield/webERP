@@ -335,7 +335,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$StkLocAddResult = DB_query($SQL);
 		$StkLocAddress = DB_fetch_array($StkLocAddResult);
 
-		 $Result = DB_Txn_Begin();
+		 DB_Txn_Begin();
 
 		 /*Insert to purchase order header record */
 		 $SQL = "INSERT INTO purchorders (supplierno,
@@ -568,7 +568,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		}
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 		unset($_SESSION['SPL'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		echo '<br /><br /><a href="' . $RootPath . '/SpecialOrder.php">' . _('Enter A New Special Order') . '</a>';
 		exit;

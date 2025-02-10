@@ -157,7 +157,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 
 		/************************ BEGIN SQL TRANSACTIONS ************************/
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28);
 
@@ -390,7 +390,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 									SET costissued=costissued+" . ($QuantityIssued * $IssueItemRow['cost']) . "
 									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, $DbgMsg, true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of') . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' ' . $_POST['WO'] . ' ' . _('has been processed'), 'info');
 		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
@@ -477,7 +477,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 	}
 	if (isset($InputError) and $InputError == false) {
 		/************************ BEGIN SQL TRANSACTIONS ************************/
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat'])); //backdate
@@ -597,7 +597,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 
 			prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of') . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' ' . $_POST['WO'] . ' ' . _('has been processed'), 'info');
 		} //end of foreach loop;
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
 		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against') . '</a></li></ul>';

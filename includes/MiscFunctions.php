@@ -6,7 +6,7 @@
 /** STANDARD MESSAGE HANDLING & FORMATTING **/
 /*  ******************************************  */
 
-function prnMsg($Msg, $Type = 'info', $Prefix = '', $Return = false) {
+function prnMsg($Msg, $Type = 'info', $Prefix = '') {
 	global $Messages;
     if($Return){
         $Prefix = $Type == 'info'

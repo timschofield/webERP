@@ -43,7 +43,7 @@ while ($MyRow = DB_fetch_array($Result)){
 	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']),Date($_SESSION['DefaultDateFormat']))) {
 		$MailText .= _('NB: THIS JOB IS OVERDUE');
 	}
-	$MailText . "\n\n";
+	$MailText .= "\n\n";
 }
 if (DB_num_rows($Result)>0){
 	${'Mail' . $LastUserResponsible}->setText($MailText);
@@ -80,7 +80,7 @@ while ($MyRow = DB_fetch_array($Result)){
 		${'Mail' . $MyRow['manager']}->setFrom('Do_not_reply <>');
 	}
 	$MailText .= _('Asset') . ': ' . $MyRow['description'] . "\n" . _('Task:') . ' ' . $MyRow['taskdescription'] . "\n" . _('Due:') . ' ' . ConvertSQLDate($MyRow['duedate']);
-	$MailText . "\n\n";
+	$MailText .= "\n\n";
 }
 if (DB_num_rows($Result)>0){
 	${'Mail' . $LastManager}->setText($MailText);

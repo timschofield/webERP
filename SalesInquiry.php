@@ -1057,8 +1057,8 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				locale_number_format($TotalQty,2),
 				locale_number_format($TotalExtCost,$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($TotalExtPrice,$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($TotalInvQty,2),
-				' ');
+				locale_number_format($TotalInvQty,2)
+				);
 			echo '</pre>';
 		} // End of if($_POST['ReportType']
 

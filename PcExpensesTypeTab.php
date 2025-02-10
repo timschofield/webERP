@@ -31,7 +31,7 @@ if (isset($_POST['Cancel'])) {
 }
 if (isset($_POST['Process'])) {
 	if ($_POST['SelectedTab'] == '') {
-		echo prnMsg(_('You have not selected a tab to maintain the expenses on'), 'error');
+		echo prnMsg(_('You have not selected a tab to maintain the expenses on'), 'error','',true);
 		echo '<br />';
 		unset($SelectedTab);
 		unset($_POST['SelectedTab']);
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 	$InputError = 0;
 	if ($_POST['SelectedExpense'] == '') {
 		$InputError = 1;
-		echo prnMsg(_('You have not selected an expense to add to this tab'), 'error');
+		echo prnMsg(_('You have not selected an expense to add to this tab'), 'error','',true);
 		echo '<br />';
 		unset($SelectedTab);
 	}
