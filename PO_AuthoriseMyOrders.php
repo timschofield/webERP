@@ -57,12 +57,12 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 /* Create the table for the purchase order header */
 echo '<thead>
 		<tr>
-		<th class="ascending">' . _('Order Number') . '</th>
-		<th class="ascending">' . _('Supplier') . '</th>
-		<th class="ascending">' . _('Date Ordered') . '</th>
-		<th class="ascending">' . _('Initiator') . '</th>
-		<th class="ascending">' . _('Delivery Date') . '</th>
-		<th class="ascending">' . _('Status') . '</th>
+		<th class="SortedColumn">' . _('Order Number') . '</th>
+		<th class="SortedColumn">' . _('Supplier') . '</th>
+		<th class="SortedColumn">' . _('Date Ordered') . '</th>
+		<th class="SortedColumn">' . _('Initiator') . '</th>
+		<th class="SortedColumn">' . _('Delivery Date') . '</th>
+		<th class="SortedColumn">' . _('Status') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -115,11 +115,11 @@ while ($MyRow=DB_fetch_array($Result)) {
 					<table class="selection" align="left">
 					<thead>
 					<tr>
-						<th class="ascending">' . _('Product') . '</th>
-						<th class="ascending">' . _('Quantity Ordered') . '</th>
-						<th class="ascending">' . _('Currency') . '</th>
-						<th class="ascending">' . _('Price') . '</th>
-						<th class="ascending">' . _('Line Total') . '</th>
+						<th class="SortedColumn">' . _('Product') . '</th>
+						<th class="SortedColumn">' . _('Quantity Ordered') . '</th>
+						<th class="SortedColumn">' . _('Currency') . '</th>
+						<th class="SortedColumn">' . _('Price') . '</th>
+						<th class="SortedColumn">' . _('Line Total') . '</th>
 						</tr>
 					</thead>
 					<tbody>';

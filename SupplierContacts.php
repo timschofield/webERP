@@ -147,11 +147,11 @@ if (!isset($SelectedContact)){
 					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $MyRow['suppname'] . '</h3></th>
 				</tr>
 				<tr>
-				<th class="ascending">' . _('Name') . '</th>
-				<th class="ascending">' . _('Position') . '</th>
-				<th class="ascending">' . _('Phone No') . '</th>
-				<th class="ascending">' . _('Fax No') . '</th>
-				<th class="ascending">' . _('Email') . '</th>
+				<th class="SortedColumn">' . _('Name') . '</th>
+				<th class="SortedColumn">' . _('Position') . '</th>
+				<th class="SortedColumn">' . _('Phone No') . '</th>
+				<th class="SortedColumn">' . _('Fax No') . '</th>
+				<th class="SortedColumn">' . _('Email') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

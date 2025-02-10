@@ -262,16 +262,16 @@ or deletion of the records*/
 		<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Category Description') . '</th>' . '
-				<th class="ascending">' . _('Stock Type') . '</th>' . '
-				<th class="ascending">' . _('Default Tax Category') . '</th>' . '
-				<th class="ascending">' . _('Stock GL') . '</th>' . '
-				<th class="ascending">' . _('Adjts GL') . '</th>
-				<th class="ascending">' . _('Issues GL') . '</th>
-				<th class="ascending">' . _('Price Var GL') . '</th>
-				<th class="ascending">' . _('Usage Var GL') . '</th>
-				<th class="ascending">' . _('WIP GL') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Category Description') . '</th>' . '
+				<th class="SortedColumn">' . _('Stock Type') . '</th>' . '
+				<th class="SortedColumn">' . _('Default Tax Category') . '</th>' . '
+				<th class="SortedColumn">' . _('Stock GL') . '</th>' . '
+				<th class="SortedColumn">' . _('Adjts GL') . '</th>
+				<th class="SortedColumn">' . _('Issues GL') . '</th>
+				<th class="SortedColumn">' . _('Price Var GL') . '</th>
+				<th class="SortedColumn">' . _('Usage Var GL') . '</th>
+				<th class="SortedColumn">' . _('WIP GL') . '</th>
 				<th colspan="2">' . _('Maintenance') . '</th>
 			</tr>
 		</thead>

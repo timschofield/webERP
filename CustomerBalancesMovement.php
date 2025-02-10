@@ -112,11 +112,11 @@ if (!isset($_POST['CreateCSV'])){
 	echo '<table>
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Customer') . ' </th>
-				<th class="ascending">' . _('Opening Balance') . '</th>
-				<th class="ascending">' . _('Debits') . '</th>
-				<th class="ascending">' . _('Credits') . '</th>
-				<th class="ascending">' . _('Balance') . '</th>
+				<th class="SortedColumn">' . _('Customer') . ' </th>
+				<th class="SortedColumn">' . _('Opening Balance') . '</th>
+				<th class="SortedColumn">' . _('Debits') . '</th>
+				<th class="SortedColumn">' . _('Credits') . '</th>
+				<th class="SortedColumn">' . _('Balance') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

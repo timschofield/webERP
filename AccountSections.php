@@ -174,8 +174,8 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('Section Number'), '</th>
-				<th class="ascending">', _('Section Description'), '</th>
+				<th class="SortedColumn">', _('Section Number'), '</th>
+				<th class="SortedColumn">', _('Section Description'), '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

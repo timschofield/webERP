@@ -162,7 +162,7 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Tax Province') . '</th>
+				<th class="SortedColumn">' . _('Tax Province') . '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

@@ -256,18 +256,18 @@ if (!isset($_GET['Modify'])){
 				<table>
 					<thead>
 					<tr>
-						<th class="ascending">' . _('Sequence') . ' #</th>
-						<th class="ascending">' . _('GRN Number') . '</th>
-						<th class="ascending">' . _('Supplier\'s Ref') . '</th>
-						<th class="ascending">' . _('Order') . '</th>
-						<th class="ascending">' . _('Item Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('Total Qty Received') . '</th>
-						<th class="ascending">' . _('Qty Already Invoiced') . '</th>
-						<th class="ascending">' . _('Qty Yet To Invoice') . '</th>
-						<th class="ascending">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending">' . _('Select'), '</th>
+						<th class="SortedColumn">' . _('Sequence') . ' #</th>
+						<th class="SortedColumn">' . _('GRN Number') . '</th>
+						<th class="SortedColumn">' . _('Supplier\'s Ref') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Total Qty Received') . '</th>
+						<th class="SortedColumn">' . _('Qty Already Invoiced') . '</th>
+						<th class="SortedColumn">' . _('Qty Yet To Invoice') . '</th>
+						<th class="SortedColumn">' . _('Order Price in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('Line Value in') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('Select'), '</th>
 					</tr>
 					</thead>
 					<tbody>';

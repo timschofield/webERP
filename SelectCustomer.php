@@ -404,14 +404,14 @@ if(isset($Result)) {
 		echo '<table cellpadding="2" class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">' . _('Code') . '</th>
-						<th class="ascending">' . _('Customer Name') . '</th>
-						<th class="ascending">' . _('Branch') . '</th>
-						<th class="ascending">' . _('Contact') . '</th>
-						<th class="ascending">' . _('Type') . '</th>
-						<th class="ascending">' . _('Phone') . '</th>
-						<th class="ascending">' . _('Fax') . '</th>
-						<th class="ascending">' . _('Email') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Customer Name') . '</th>
+						<th class="SortedColumn">' . _('Branch') . '</th>
+						<th class="SortedColumn">' . _('Contact') . '</th>
+						<th class="SortedColumn">' . _('Type') . '</th>
+						<th class="SortedColumn">' . _('Phone') . '</th>
+						<th class="SortedColumn">' . _('Fax') . '</th>
+						<th class="SortedColumn">' . _('Email') . '</th>
 					</tr>
 				</thead>';
 		$RowIndex = 0;
@@ -722,10 +722,10 @@ function initMap() {
 			echo '<br /><table width="45%">
  					<thead>
 						<tr>
-							<th class="ascending">' . _('Name') . '</th>
-							<th class="ascending">' . _('Role') . '</th>
-							<th class="ascending">' . _('Phone Number') . '</th>
-							<th class="ascending">' . _('Email') . '</th>
+							<th class="SortedColumn">' . _('Name') . '</th>
+							<th class="SortedColumn">' . _('Role') . '</th>
+							<th class="SortedColumn">' . _('Phone Number') . '</th>
+							<th class="SortedColumn">' . _('Email') . '</th>
 							<th class="text">' . _('Statement') . '</th>
 							<th class="text">', _('Notes'), '</th>
 							<th class="noprint">', _('Edit'), '</th>
@@ -799,10 +799,10 @@ function initMap() {
 			echo '<table style="width: 45%;">
 				<thead>
 					<tr>
-					<th class="ascending">' . _('Date') . '</th>
+					<th class="SortedColumn">' . _('Date') . '</th>
 					<th>' . _('Note') . '</th>
 					<th>' . _('Hyperlink') . '</th>
-					<th class="ascending">' . _('Priority') . '</th>
+					<th class="SortedColumn">' . _('Priority') . '</th>
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
 					<th> <a href="AddCustomerNotes.php?DebtorNo=', urlencode($_SESSION['CustomerID']), '">' . ' ' . _('Add New Note') . '</a> </th>
@@ -837,10 +837,10 @@ function initMap() {
 			echo '<table style="width: 45%;">
 				<thead>
 					<tr>
-				 	<th class="ascending">' . _('Date') . '</th>
+				 	<th class="SortedColumn">' . _('Date') . '</th>
 					<th>' . _('Note') . '</th>
 					<th>' . _('File Link / Reference / URL') . '</th>
-					<th class="ascending">' . _('Priority') . '</th>
+					<th class="SortedColumn">' . _('Priority') . '</th>
 					<th>' . _('Edit') . '</th>
 					<th>' . _('Delete') . '</th>
 					<th><a href="AddCustomerTypeNotes.php?DebtorType=' . $CustomerType . '">' . _('Add New Group Note') . '</a></th>

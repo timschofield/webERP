@@ -78,10 +78,10 @@ if (isset($_POST['Submit'])) {
 		echo '<table class="selection">
 			<thead>
 			<tr>
-					<th class="ascending">' . _('Supplier Delivery Note') . '</th>
-					<th class="ascending">' . _('GRN Batch No') . '</th>
-					<th class="ascending">' . _('PO No') . '</th>
-					<th class="ascending">' . _('Invoice No') . '</th>
+					<th class="SortedColumn">' . _('Supplier Delivery Note') . '</th>
+					<th class="SortedColumn">' . _('GRN Batch No') . '</th>
+					<th class="SortedColumn">' . _('PO No') . '</th>
+					<th class="SortedColumn">' . _('Invoice No') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

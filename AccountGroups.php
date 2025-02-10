@@ -283,11 +283,11 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 	echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Group Name') . '</th>
-				<th class="ascending">' . _('Section') . '</th>
-				<th class="ascending">' . _('Sequence In TB') . '</th>
-				<th class="ascending">' . _('Profit and Loss') . '</th>
-				<th class="ascending">' . _('Parent Group') . '</th>
+				<th class="SortedColumn">' . _('Group Name') . '</th>
+				<th class="SortedColumn">' . _('Section') . '</th>
+				<th class="SortedColumn">' . _('Sequence In TB') . '</th>
+				<th class="SortedColumn">' . _('Profit and Loss') . '</th>
+				<th class="SortedColumn">' . _('Parent Group') . '</th>
 				<th class="noprint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
@@ -410,7 +410,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		<fieldhelp>' . _('Select the name of the parent group, or select Top level group if it has no parent') . '</fieldhelp>
 	</field>';
-	
+
 	echo '<field>
 			<label for="SectionInAccounts">', _('Section In Accounts'), ':</label>
 			<select ',
@@ -429,7 +429,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		<fieldhelp>' . _('The account section to which this group belongs') . '</fieldhelp>
 	</field>';
-	
+
 	echo '<field>
 			<label for="PandL">', _('Profit and Loss'), ':</label>
 			<select name="PandL" tabindex="4" title="">';
@@ -443,13 +443,13 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		<fieldhelp', _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '</fieldhelp>
 	</field>';
-	
+
 	echo '<field>
 			<label for="SequenceInTB">', _('Sequence In TB'), ':</label>
 			<input class="number" maxlength="4" name="SequenceInTB" required="required" tabindex="5" type="text" value="', $_POST['SequenceInTB'], '" title="" />
 			<fieldhelp>', _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '</fieldhelp>
 		</field>';
-		
+
 	echo '</fieldset>';
 	if(isset($_GET['SelectedAccountGroup'])) {
 		echo '<div class="centre">

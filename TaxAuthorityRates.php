@@ -78,9 +78,9 @@ if(DB_num_rows($TaxRatesResult)>0) {
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
-			<th class="ascending">' . _('Tax Category') . '</th>
-			<th class="ascending">' . _('Tax Rate') . '</th>
+			<th class="SortedColumn">' . _('Deliveries From') . '<br />' . _('Tax Province') . '</th>
+			<th class="SortedColumn">' . _('Tax Category') . '</th>
+			<th class="SortedColumn">' . _('Tax Rate') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

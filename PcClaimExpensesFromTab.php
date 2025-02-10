@@ -480,13 +480,13 @@ if (!isset($SelectedTabs)) {
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">', _('Date of Expense'), '</th>
-						<th class="ascending">', _('Expense Code'), '</th>
-						<th class="ascending">', _('Amount'), '</th>
+						<th class="SortedColumn">', _('Date of Expense'), '</th>
+						<th class="SortedColumn">', _('Expense Code'), '</th>
+						<th class="SortedColumn">', _('Amount'), '</th>
 						<th>', _('Notes'), '</th>
 						<th>', _('Receipt'), '</th>
 						<th>', _('Receipt Attachment'), '</th>
-						<th class="ascending">', _('Date Authorised'), '</th>
+						<th class="SortedColumn">', _('Date Authorised'), '</th>
 					</tr>
 				</thead>
 				<tbody>';

@@ -192,16 +192,16 @@ if (DB_num_rows($GRNResults)>0){
 	echo '<table class="selection">
 		<thead>
 			<tr>
-						<th class="ascending">' . _('GRN') . '</th>
-						<th class="ascending">' . _('Order') . '</th>
-						<th class="ascending">' . _('Item Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('Delivered') . '</th>
-						<th class="ascending">' . _('Total Qty') . '<br />' . _('Received') . '</th>
-						<th class="ascending">' . _('Qty Invoiced') . '</th>
-						<th class="ascending">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
-						<th class="ascending">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('GRN') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Delivered') . '</th>
+						<th class="SortedColumn">' . _('Total Qty') . '<br />' . _('Received') . '</th>
+						<th class="SortedColumn">' . _('Qty Invoiced') . '</th>
+						<th class="SortedColumn">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
+						<th class="SortedColumn">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>
 		</thead>
 		<tbody>';

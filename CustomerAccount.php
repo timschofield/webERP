@@ -244,11 +244,11 @@ echo _('Show all transactions after'), ':
 echo '<br /><table class="selection">
 	<thead>
 		<tr>
-			<th class="ascending">', _('Type'), '</th>
-			<th class="ascending">', _('Number'), '</th>
-			<th class="ascending">', _('Date'), '</th>
+			<th class="SortedColumn">', _('Type'), '</th>
+			<th class="SortedColumn">', _('Number'), '</th>
+			<th class="SortedColumn">', _('Date'), '</th>
 			<th>', _('Branch'), '</th>
-			<th class="ascending">', _('Reference'), '</th>
+			<th class="SortedColumn">', _('Reference'), '</th>
 			<th>', _('Comments'), '</th>
 			<th>', _('Order'), '</th>
 			<th>', _('Charges'), '</th>

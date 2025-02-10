@@ -95,9 +95,9 @@ if (DB_num_rows($Result) > 0) {
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Location ID') . '</th>
-			<th class="ascending">' . _('Location Description') . '</th>
-			<th class="ascending">' . _('Parent Location') . '</th>
+			<th class="SortedColumn">' . _('Location ID') . '</th>
+			<th class="SortedColumn">' . _('Location Description') . '</th>
+			<th class="SortedColumn">' . _('Parent Location') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -111,7 +111,7 @@ if (DB_num_rows($Result) > 0) {
 			$ParentResult=DB_query($ParentSql);
 			$ParentRow=DB_fetch_array($ParentResult);
 			echo '<td>' . $ParentRow['locationdescription'] . '</td>';
-		} else { 
+		} else {
 			echo '<td>', _('No Parent Location'), '</td>';
 		}
 		echo '<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', urlencode($MyRow['locationid']), '">', _('Edit'), '</a></td></tr>';
@@ -122,11 +122,11 @@ if (DB_num_rows($Result) > 0) {
 
 	echo '<form id="LocationForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') .  '">';
     echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-    
+
 	echo '<fieldset>';
 if (isset($_GET['SelectedLocation'])) {
 	echo '<legend>', _('Edit Asset Location'), '</legend>';
-	
+
 	echo '<field>
 			<label for="LocationID">' . _('Location ID') . '</label>
 			<input type="hidden" name="LocationID" value="'.$LocationID.'" />
@@ -146,7 +146,7 @@ echo '<field>
 		<input type="text" name="LocationDescription" required="required" title="" size="20" value="'.$LocationDescription.'" />
 		<fieldhelp>' . _('Enter the fixed asset location description. Up to 20 characters') . '</fieldhelp>
 	</field>';
-	
+
 echo '<field>
 		<label for="ParentLocationID">' . _('Parent Location') . '</label>
 		<select name="ParentLocationID">';

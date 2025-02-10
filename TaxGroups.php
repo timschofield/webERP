@@ -172,8 +172,8 @@ if(!isset($SelectedGroup)) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending" >' . _('Group No') . '</th>
-					<th class="ascending" >' . _('Tax Group') . '</th>
+					<th class="SortedColumn" >' . _('Group No') . '</th>
+					<th class="SortedColumn" >' . _('Tax Group') . '</th>
 					<th colspan="2" >&nbsp;</th>
 				</tr>
 			</thead>

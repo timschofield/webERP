@@ -271,8 +271,8 @@ if(isset($SearchResult) AND !isset($_POST['Select'])) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
 				<th>' . _('Units') . '</th>
 				</tr>
 			</thead>

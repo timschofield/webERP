@@ -404,16 +404,16 @@ if (!isset($SelectedBranch)){
 		echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Name') . '</th>
-				<th class="ascending">' . _('Branch Contact') . '</th>
-				<th class="ascending">' . _('Salesman') . '</th>
-				<th class="ascending">' . _('Area') . '</th>
-				<th class="ascending">' . _('Phone No') . '</th>
-				<th class="ascending">' . _('Fax No') . '</th>
-				<th class="ascending">' . _('Email') . '</th>
-				<th class="ascending">' . _('Tax Group') . '</th>
-				<th class="ascending">' . _('Enabled?') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Name') . '</th>
+				<th class="SortedColumn">' . _('Branch Contact') . '</th>
+				<th class="SortedColumn">' . _('Salesman') . '</th>
+				<th class="SortedColumn">' . _('Area') . '</th>
+				<th class="SortedColumn">' . _('Phone No') . '</th>
+				<th class="SortedColumn">' . _('Fax No') . '</th>
+				<th class="SortedColumn">' . _('Email') . '</th>
+				<th class="SortedColumn">' . _('Tax Group') . '</th>
+				<th class="SortedColumn">' . _('Enabled?') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -638,13 +638,13 @@ if (!isset($_GET['delete'])) {
 	echo '<input tabindex="2" type="text" autofocus="autofocus" required="required" name="BrName" title="" minlength="5" size="41" maxlength="40" value="'. $_POST['BrName'].'" />
 		<fieldhelp>' . _('The branch name should identify the particular delivery address of the customer and must be entered') . '</fieldhelp>
 	</field>';
-	
+
 	echo '<field>
 			<label for="ContactName">' . _('Branch Contact').':</label>';
 	if (!isset($_POST['ContactName'])) {$_POST['ContactName']='';}
 	echo '<input tabindex="3" type="text" name="ContactName" required="required" size="41" maxlength="40" value="'. $_POST['ContactName'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="BrAddress1">' . _('Street Address 1 (Street)').':</label>';
 	if (!isset($_POST['BrAddress1'])) {
@@ -652,7 +652,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input tabindex="4" type="text" name="BrAddress1" size="41" maxlength="40" value="'. $_POST['BrAddress1'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="BrAddress2">' . _('Street Address 2 (Street)').':</label>';
 	if (!isset($_POST['BrAddress2'])) {
@@ -660,7 +660,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input tabindex="5" type="text" name="BrAddress2" size="41" maxlength="40" value="'. $_POST['BrAddress2'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="BrAddress3">' . _('Street Address 3 (Suburb/City)').':</label>';
 	if (!isset($_POST['BrAddress3'])) {
@@ -668,7 +668,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input tabindex="6" type="text" name="BrAddress3" size="41" maxlength="40" value="'. $_POST['BrAddress3'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="BrAddress4">' . _('Street Address 4 (State/Province)').':</label>';
 	if (!isset($_POST['BrAddress4'])) {
@@ -676,7 +676,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input tabindex="7" type="text" name="BrAddress4" size="51" maxlength="50" value="'. $_POST['BrAddress4'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="BrAddress5">' . _('Street Address 5 (Postal Code)').':</label>';
 	if (!isset($_POST['BrAddress5'])) {
@@ -684,7 +684,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input tabindex="8" type="text" name="BrAddress5" size="21" maxlength="20" value="'. $_POST['BrAddress5'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="BrAddress6">' . _('Country').':</label>';
 	if (!isset($_POST['BrAddress6'])) {
@@ -710,7 +710,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input tabindex="10" type="text" name="SpecialInstructions" size="56" value="'. $_POST['SpecialInstructions'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for=EstDeliveryDays">' . _('Default days to deliver').':</label>';
 	if (!isset($_POST['EstDeliveryDays'])) {
@@ -718,7 +718,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '<input ' .(in_array('EstDeliveryDays',$Errors) ? 'class="inputerror"' : '' ) .' tabindex="11" type="text" class="integer" name="EstDeliveryDays" size="4" maxlength="2" value="'. $_POST['EstDeliveryDays'].'" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="FwdDate">' . _('Forward Date After (day in month)').':</label>';
 	if (!isset($_POST['FwdDate'])) {
@@ -827,7 +827,7 @@ if (!isset($_GET['delete'])) {
 	}// End while loop.
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="PhoneNo">' . _('Phone Number').':</label>';
 	if (!isset($_POST['PhoneNo'])) {
@@ -880,7 +880,7 @@ if (!isset($_GET['delete'])) {
 
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="DisableTrans">' . _('Transactions on this branch') . ':</label>
 			<select tabindex="20" name="DisableTrans">';
@@ -980,9 +980,9 @@ if (!isset($_GET['delete'])) {
 			<label for="CustBranchCode">', _('Customers Internal Branch Code (EDI)'), ':</label>
 			<input maxlength="30" name="CustBranchCode" size="31" tabindex="28" type="text" value="', $_POST['CustBranchCode'], '" />
 		</field>';
-		
+
 	echo '</fieldset>';
-	
+
 	echo '<div class="centre">
 			<input name="submit" tabindex="29" type="submit" value="', _('Enter Or Update Branch'), '" />
 		</div>

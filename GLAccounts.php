@@ -262,7 +262,7 @@ if(!isset($_GET['delete'])) {
 
 	echo '<fieldset>
 			<legend>', $Legend, '</legend>';
-			
+
 	echo '<field>
 			<label for="AccountCode">', _('Account Code'), ':</label>
 			<input ', (empty($_POST['AccountCode']) ? 'autofocus="autofocus" ' : 'disabled="disabled" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="" type="text" value="', $_POST['AccountCode'], '" />

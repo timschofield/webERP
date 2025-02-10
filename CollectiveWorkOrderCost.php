@@ -54,12 +54,12 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 				echo '<table class="selection">
 					<thead>
 						<tr>
-							<th class="ascending">' . _('Item') . '</th>
+							<th class="SortedColumn">' . _('Item') . '</th>
 						<th>' . _('Description') . '</th>
-						<th class="ascending">' . _('Date Issued') . '</th>
-						<th class="ascending">' . _('Issued Qty') . '</th>
-						<th class="ascending">' . _('Issued Cost') . '</th>
-						<th class="ascending">' . _('Work Order') . '</th>
+						<th class="SortedColumn">' . _('Date Issued') . '</th>
+						<th class="SortedColumn">' . _('Issued Qty') . '</th>
+						<th class="SortedColumn">' . _('Issued Cost') . '</th>
+						<th class="SortedColumn">' . _('Work Order') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -354,9 +354,9 @@ if (!isset($StockID)) {
 			<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('On Hand') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
 				</tr>
 			</thead>
@@ -477,17 +477,17 @@ if (!isset($StockID)) {
 				<tr>
 					<th>' . _('Select') . '</th>
 					<th>' . _('Modify') . '</th>
-					<th class="ascending">' . _('Status') . '</th>
+					<th class="SortedColumn">' . _('Status') . '</th>
 					<th>' . _('Issue To') . '</th>
 					<th>' . _('Receive') . '</th>
 					<th>' . _('Costing') . '</th>
 					<th>' . _('Paperwork') . '</th>
-					<th class="ascending">' . _('Item') . '</th>
-					<th class="ascending">' . _('Quantity Required') . '</th>
-					<th class="ascending">' . _('Quantity Received') . '</th>
-					<th class="ascending">' . _('Quantity Outstanding') . '</th>
-					<th class="ascending">' . _('Start Date')  . '</th>
-					<th class="ascending">' . _('Required Date') . '</th>
+					<th class="SortedColumn">' . _('Item') . '</th>
+					<th class="SortedColumn">' . _('Quantity Required') . '</th>
+					<th class="SortedColumn">' . _('Quantity Received') . '</th>
+					<th class="SortedColumn">' . _('Quantity Outstanding') . '</th>
+					<th class="SortedColumn">' . _('Start Date')  . '</th>
+					<th class="SortedColumn">' . _('Required Date') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

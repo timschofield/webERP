@@ -288,9 +288,9 @@ if(isset($StockItemsResult)){
 		<table cellpadding="2" class="selection">
 		<thead>
 			<tr>
-			<th class="ascending" >' . _('Code') . '</th>
-			<th class="ascending" >' . _('Description') . '</th>
-			<th class="ascending" >' . _('Total Applied') . '</th>
+			<th class="SortedColumn" >' . _('Code') . '</th>
+			<th class="SortedColumn" >' . _('Description') . '</th>
+			<th class="SortedColumn" >' . _('Total Applied') . '</th>
 			<th>' . _('Units') . '</th>
 			</tr>
 		</thead>

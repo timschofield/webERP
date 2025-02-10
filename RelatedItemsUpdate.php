@@ -152,8 +152,8 @@ if (DB_num_rows($Result) > 0) {
 				<input type="submit" name="NewPart" value="' . _('List Related Items') . '" /></th>
 			</tr>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
 				<th>' . _('Delete') . '</th>
 			</tr>
 		</thead>

@@ -412,17 +412,17 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 		echo '<table>
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Item Code') . '</th>
-					<th class="ascending">' . _('Item Description') . '</th>
-					<th class="ascending">' . _('Bin') . '</th>
-					<th class="ascending">' . _('On Hand') . '</th>
-					<th class="ascending">' . _('Demand') . '</th>
-					<th class="ascending">' . _('Supp Ords') . '</th>
-					<th class="ascending">' . _('Previous') . '<br />' ._('Month') . '</th>
-					<th class="ascending">' . _('Last') . '<br />' ._('Month') . '</th>
-					<th class="ascending">' . _('Week') . '<br />' ._('3') . '</th>
-					<th class="ascending">' . _('Week') . '<br />' ._('2') . '</th>
-					<th class="ascending">' . _('Last') . '<br />' ._('Week') . '</th>
+					<th class="SortedColumn">' . _('Item Code') . '</th>
+					<th class="SortedColumn">' . _('Item Description') . '</th>
+					<th class="SortedColumn">' . _('Bin') . '</th>
+					<th class="SortedColumn">' . _('On Hand') . '</th>
+					<th class="SortedColumn">' . _('Demand') . '</th>
+					<th class="SortedColumn">' . _('Supp Ords') . '</th>
+					<th class="SortedColumn">' . _('Previous') . '<br />' ._('Month') . '</th>
+					<th class="SortedColumn">' . _('Last') . '<br />' ._('Month') . '</th>
+					<th class="SortedColumn">' . _('Week') . '<br />' ._('3') . '</th>
+					<th class="SortedColumn">' . _('Week') . '<br />' ._('2') . '</th>
+					<th class="SortedColumn">' . _('Last') . '<br />' ._('Week') . '</th>
 					<th>' . _('Order Qty') . '</th>
 				</tr>
 			</thead>

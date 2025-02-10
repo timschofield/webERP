@@ -206,11 +206,11 @@ if ($AllowGLAnalysis==false){
 					<th colspan="5">' . _('General ledger Analysis') . '</th>
 				</tr>
 				<tr>
-					<th class="ascending">' . _('Account') . '</th>
-					<th class="ascending">' . _('Name') . '</th>
-					<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
+					<th class="SortedColumn">' . _('Account') . '</th>
+					<th class="SortedColumn">' . _('Name') . '</th>
+					<th class="SortedColumn">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
 					<th>' . _('Narrative') . '</th>
-					<th class="ascending">' . _('Tag') . '</th>
+					<th class="SortedColumn">' . _('Tag') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

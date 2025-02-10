@@ -77,13 +77,13 @@ if (isset($StockID)) {
 		echo '<table width="97%" class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Used By') . '</th>
-					<th class="ascending">' . _('Status') . '</th>
-					<th class="ascending">' . _('Work Centre') . '</th>
-					<th class="ascending">' . _('Location') . '</th>
-					<th class="ascending">' . _('Quantity Required') . '</th>
-					<th class="ascending">' . _('Effective After') . '</th>
-					<th class="ascending">' . _('Effective To') . '</th>
+					<th class="SortedColumn">' . _('Used By') . '</th>
+					<th class="SortedColumn">' . _('Status') . '</th>
+					<th class="SortedColumn">' . _('Work Centre') . '</th>
+					<th class="SortedColumn">' . _('Location') . '</th>
+					<th class="SortedColumn">' . _('Quantity Required') . '</th>
+					<th class="SortedColumn">' . _('Effective After') . '</th>
+					<th class="SortedColumn">' . _('Effective To') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

@@ -271,15 +271,15 @@ if ($Edit == false) {
         echo '<table cellpadding="2" class="selection">
 			<thead>
 				<tr>
-							<th class="ascending">' . _('Supplier') . '</th>
-							<th class="ascending">' . _('Price') . '</th>
+							<th class="SortedColumn">' . _('Supplier') . '</th>
+							<th class="SortedColumn">' . _('Price') . '</th>
 							<th>' . _('Supplier Unit') . '</th>
 							<th>' . _('Conversion Factor') . '</th>
-							<th class="ascending">' . _('Cost Per Our Unit') .  '</th>
-							<th class="ascending">' . _('Currency') . '</th>
-							<th class="ascending">' . _('Effective From') . '</th>
-							<th class="ascending">' . _('Min Order Qty') . '</th>
-							<th class="ascending">' . _('Lead Time') . '</th>
+							<th class="SortedColumn">' . _('Cost Per Our Unit') .  '</th>
+							<th class="SortedColumn">' . _('Currency') . '</th>
+							<th class="SortedColumn">' . _('Effective From') . '</th>
+							<th class="SortedColumn">' . _('Min Order Qty') . '</th>
+							<th class="SortedColumn">' . _('Lead Time') . '</th>
 							<th>' . _('Preferred') . '</th>
 				</tr>
 			</thead>
@@ -465,12 +465,12 @@ if (isset($SuppliersResult)) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<thead>
 			<tr>
-						<th class="ascending">' . _('Code') . '</th>
-	                	<th class="ascending">' . _('Supplier Name') . '</th>
-						<th class="ascending">' . _('Currency') . '</th>
-						<th class="ascending">' . _('Address 1') . '</th>
-						<th class="ascending">' . _('Address 2') . '</th>
-						<th class="ascending">' . _('Address 3') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+	                	<th class="SortedColumn">' . _('Supplier Name') . '</th>
+						<th class="SortedColumn">' . _('Currency') . '</th>
+						<th class="SortedColumn">' . _('Address 1') . '</th>
+						<th class="SortedColumn">' . _('Address 2') . '</th>
+						<th class="SortedColumn">' . _('Address 3') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -695,11 +695,11 @@ if (!isset($SuppliersResult)) {
 		echo '<table cellpadding="2" colspan="7" class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Discount Name') . '</th>
-	               	<th class="ascending">' . _('Discount') . '<br />' . _('Value') . '</th>
-					<th class="ascending">' . _('Discount') . '<br />' . _('Percent') . '</th>
-					<th class="ascending">' . _('Effective From') . '</th>
-					<th class="ascending">' . _('Effective To') . '</th>
+					<th class="SortedColumn">' . _('Discount Name') . '</th>
+	               	<th class="SortedColumn">' . _('Discount') . '<br />' . _('Value') . '</th>
+					<th class="SortedColumn">' . _('Discount') . '<br />' . _('Percent') . '</th>
+					<th class="SortedColumn">' . _('Effective From') . '</th>
+					<th class="SortedColumn">' . _('Effective To') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

@@ -883,9 +883,9 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			<thead>
 				<tr>
 							<th>' . _('Stock Status') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
                             				<th>'. _('image').'</th>
-							<th class="ascending">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
 				</tr>

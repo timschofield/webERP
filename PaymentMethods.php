@@ -203,12 +203,12 @@ if (isset($_POST['submit'])) {
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Payment Method') . '</th>
-			<th class="ascending">' . _('Use For Payments') . '</th>
-			<th class="ascending">' . _('Use For Receipts') . '</th>
-			<th class="ascending">' . _('Use Pre-printed Stationery') . '</th>
-			<th class="ascending">' . _('Open POS Cash Drawer for Sale') . '</th>
-			<th class="ascending">' . _('Payment discount') . ' %</th>
+			<th class="SortedColumn">' . _('Payment Method') . '</th>
+			<th class="SortedColumn">' . _('Use For Payments') . '</th>
+			<th class="SortedColumn">' . _('Use For Receipts') . '</th>
+			<th class="SortedColumn">' . _('Use Pre-printed Stationery') . '</th>
+			<th class="SortedColumn">' . _('Open POS Cash Drawer for Sale') . '</th>
+			<th class="SortedColumn">' . _('Payment discount') . ' %</th>
 			<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

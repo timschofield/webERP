@@ -452,10 +452,10 @@ if (!isset($SelectedSampleID)) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('On Hand') . '</th>
-							<th class="ascending">' . _('Units') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('On Hand') . '</th>
+							<th class="SortedColumn">' . _('Units') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -537,15 +537,15 @@ if (!isset($SelectedSampleID)) {
 			echo '<table cellpadding="2" width="90%" class="selection">
 				<thead>
 					<tr>
-								<th class="ascending">' . _('Enter Results') . '</th>
-								<th class="ascending">' . _('Specification') . '</th>
-								<th class="ascending">' . _('Description') . '</th>
-								<th class="ascending">' . _('Lot / Serial') . '</th>
-								<th class="ascending">' . _('Identifier') . '</th>
-								<th class="ascending">' . _('Created By') . '</th>
-								<th class="ascending">' . _('Sample Date') . '</th>
-								<th class="ascending">' . _('Comments') . '</th>
-								<th class="ascending">' . _('Cert Allowed') . '</th>
+								<th class="SortedColumn">' . _('Enter Results') . '</th>
+								<th class="SortedColumn">' . _('Specification') . '</th>
+								<th class="SortedColumn">' . _('Description') . '</th>
+								<th class="SortedColumn">' . _('Lot / Serial') . '</th>
+								<th class="SortedColumn">' . _('Identifier') . '</th>
+								<th class="SortedColumn">' . _('Created By') . '</th>
+								<th class="SortedColumn">' . _('Sample Date') . '</th>
+								<th class="SortedColumn">' . _('Comments') . '</th>
+								<th class="SortedColumn">' . _('Cert Allowed') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

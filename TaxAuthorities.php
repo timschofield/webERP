@@ -142,14 +142,14 @@ if(!isset($SelectedTaxAuthID)) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending" >' . _('ID') . '</th>
-				<th class="ascending" >' . _('Tax Authority') . '</th>
-				<th class="ascending" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
-				<th class="ascending" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
-				<th class="ascending" >' . _('Bank') . '</th>
-				<th class="ascending" >' . _('Bank Account') . '</th>
-				<th class="ascending" >' . _('Bank Act Type') . '</th>
-				<th class="ascending" >' . _('Bank Swift') . '</th>
+				<th class="SortedColumn" >' . _('ID') . '</th>
+				<th class="SortedColumn" >' . _('Tax Authority') . '</th>
+				<th class="SortedColumn" >' . _('Input Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="SortedColumn" >' . _('Output Tax') . '<br />' . _('GL Account') . '</th>
+				<th class="SortedColumn" >' . _('Bank') . '</th>
+				<th class="SortedColumn" >' . _('Bank Account') . '</th>
+				<th class="SortedColumn" >' . _('Bank Act Type') . '</th>
+				<th class="SortedColumn" >' . _('Bank Swift') . '</th>
 				<th colspan="4">&nbsp;</th>
 			</tr>
 		</thead>

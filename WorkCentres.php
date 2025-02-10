@@ -126,11 +126,11 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('WC Code'), '</th>
-				<th class="ascending">', _('Description'), '</th>
-				<th class="ascending">', _('Location'), '</th>
-				<th class="ascending">', _('Overhead GL Account'), '</th>
-				<th class="ascending">', _('Overhead Per Hour'), '</th>
+				<th class="SortedColumn">', _('WC Code'), '</th>
+				<th class="SortedColumn">', _('Description'), '</th>
+				<th class="SortedColumn">', _('Location'), '</th>
+				<th class="SortedColumn">', _('Overhead GL Account'), '</th>
+				<th class="SortedColumn">', _('Overhead Per Hour'), '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

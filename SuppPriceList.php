@@ -210,11 +210,11 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Code') . '</th>
+					<th class="SortedColumn">' . _('Code') . '</th>
 				<th>' . _('Description') . '</th>
 				<th>' . _('Conv Factor') . '</th>
 				<th>' . _('Price') . '</th>
-				<th class="ascending">' . _('Date From') . '</th>
+				<th class="SortedColumn">' . _('Date From') . '</th>
 				<th>' . _('Supp Code') . '</th>
 				</tr>
 			</thead>

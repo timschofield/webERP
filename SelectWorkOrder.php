@@ -235,9 +235,9 @@ if (!isset($StockID)) {
 		echo '<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('On Hand') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
 				</tr>
 			</thead>
@@ -346,18 +346,18 @@ if (!isset($StockID)) {
 				<thead>
 				<tr>
 					<th>' . _('Modify') . '</th>
-					<th class="ascending">' . _('Status') . '</th>
+					<th class="SortedColumn">' . _('Status') . '</th>
 					<th>' . _('Issue To') . '</th>
 					<th>' . _('Receive') . '</th>
 					<th>' . _('Costing') . '</th>
 					<th>' . _('Paperwork') . '</th>
 					<th>' . _('Location') . '</th>
-					<th class="ascending">' . _('Item') . '</th>
-					<th class="ascending">' . _('Quantity Required') . '</th>
-					<th class="ascending">' . _('Quantity Received') . '</th>
-					<th class="ascending">' . _('Quantity Outstanding') . '</th>
-					<th class="ascending">' . _('Start Date')  . '</th>
-					<th class="ascending">' . _('Required Date') . '</th>
+					<th class="SortedColumn">' . _('Item') . '</th>
+					<th class="SortedColumn">' . _('Quantity Required') . '</th>
+					<th class="SortedColumn">' . _('Quantity Received') . '</th>
+					<th class="SortedColumn">' . _('Quantity Outstanding') . '</th>
+					<th class="SortedColumn">' . _('Start Date')  . '</th>
+					<th class="SortedColumn">' . _('Required Date') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

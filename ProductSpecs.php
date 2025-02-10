@@ -158,10 +158,10 @@ if (isset($_GET['ListTests'])) {
 			<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Add') . '</th>
-					<th class="ascending">' . _('Name') . '</th>
-					<th class="ascending">' . _('Method') . '</th>
-					<th class="ascending">' . _('Units') . '</th>
+					<th class="SortedColumn">' . _('Add') . '</th>
+					<th class="SortedColumn">' . _('Name') . '</th>
+					<th class="SortedColumn">' . _('Method') . '</th>
+					<th class="SortedColumn">' . _('Units') . '</th>
 					<th>' . _('Possible Values') . '</th>
 					<th>' . _('Target Value') . '</th>
 					<th>' . _('Range Min') . '</th>
@@ -379,18 +379,18 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Name') . '</th>
-			<th class="ascending">' . _('Method') . '</th>
-			<th class="ascending">' . _('Units') . '</th>
-			<th class="ascending">' . _('Type') . '</th>
+			<th class="SortedColumn">' . _('Name') . '</th>
+			<th class="SortedColumn">' . _('Method') . '</th>
+			<th class="SortedColumn">' . _('Units') . '</th>
+			<th class="SortedColumn">' . _('Type') . '</th>
 			<th>' . _('Possible Values') . '</th>
 			<th>' . _('Target Value') . '</th>
 			<th>' . _('Range Min') . '</th>
 			<th>' . _('Range Max') . '</th>
-			<th class="ascending">' . _('Show on Cert') . '</th>
-			<th class="ascending">' . _('Show on Spec') . '</th>
-			<th class="ascending">' . _('Show on Test Plan') . '</th>
-			<th class="ascending">' . _('Active') . '</th>
+			<th class="SortedColumn">' . _('Show on Cert') . '</th>
+			<th class="SortedColumn">' . _('Show on Spec') . '</th>
+			<th class="SortedColumn">' . _('Show on Test Plan') . '</th>
+			<th class="SortedColumn">' . _('Active') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

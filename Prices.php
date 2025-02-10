@@ -217,11 +217,11 @@ if (DB_num_rows($Result) > 0) {
 				<input type="text" required="required" autofocus="autofocus" name="Item" size="22" value="' . $Item . '" maxlength="20" />
 				<input type="submit" name="NewPart" value="' . _('Review Prices') . '" /></th>
 			</tr>
-			<tr><th class="ascending">' . _('Currency') . '</th>
-				<th class="ascending">' . _('Sales Type') . '</th>
-				<th class="ascending">' . _('Price') . '</th>
-				<th class="ascending">' . _('Start Date') . ' </th>
-				<th class="ascending">' . _('End Date') . '</th>';
+			<tr><th class="SortedColumn">' . _('Currency') . '</th>
+				<th class="SortedColumn">' . _('Sales Type') . '</th>
+				<th class="SortedColumn">' . _('Price') . '</th>
+				<th class="SortedColumn">' . _('Start Date') . ' </th>
+				<th class="SortedColumn">' . _('End Date') . '</th>';
 	if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])) { // If is allow to modify prices.
 		echo   '<th colspan="2">' . _('Maintenance') . '</th>';
 	}

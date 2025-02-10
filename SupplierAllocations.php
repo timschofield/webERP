@@ -452,13 +452,13 @@ if (isset($_POST['AllocTrans'])){
 		echo '<table class="selection">
 			<thead>
 				<tr>
-							<th class="ascending">' . _('Type') . '</th>
-				 			<th class="ascending">' . _('Trans') . '<br />' . _('Number') . '</th>
-							<th class="ascending">' . _('Trans')  . '<br />' . _('Date') . '</th>
-							<th class="ascending">' . _('Supp') . '<br />' . _('Ref') . '</th>
-							<th class="ascending">' . _('Total') . '<br />' . _('Amount')  . '</th>
-							<th class="ascending">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
-							<th class="ascending">' . _('This') . '<br />' . _('Allocation') . '</th>
+							<th class="SortedColumn">' . _('Type') . '</th>
+				 			<th class="SortedColumn">' . _('Trans') . '<br />' . _('Number') . '</th>
+							<th class="SortedColumn">' . _('Trans')  . '<br />' . _('Date') . '</th>
+							<th class="SortedColumn">' . _('Supp') . '<br />' . _('Ref') . '</th>
+							<th class="SortedColumn">' . _('Total') . '<br />' . _('Amount')  . '</th>
+							<th class="SortedColumn">' . _('Yet to') . '<br />' . _('Allocate') . '</th>
+							<th class="SortedColumn">' . _('This') . '<br />' . _('Allocation') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

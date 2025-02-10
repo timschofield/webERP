@@ -410,18 +410,18 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 			<tr>
-			<th class="ascending">' . _('Test ID') . '</th>
-			<th class="ascending">' . _('Name') . '</th>
-			<th class="ascending">' . _('Method') . '</th>
-			<th class="ascending">' . _('Group By') . '</th>
-			<th class="ascending">' . _('Units') . '</th>
-			<th class="ascending">' . _('Type') . '</th>
+			<th class="SortedColumn">' . _('Test ID') . '</th>
+			<th class="SortedColumn">' . _('Name') . '</th>
+			<th class="SortedColumn">' . _('Method') . '</th>
+			<th class="SortedColumn">' . _('Group By') . '</th>
+			<th class="SortedColumn">' . _('Units') . '</th>
+			<th class="SortedColumn">' . _('Type') . '</th>
 			<th>' . _('Possible Values') . '</th>
-			<th class="ascending">' . _('Numeric Value') . '</th>
-			<th class="ascending">' . _('Show on Cert') . '</th>
-			<th class="ascending">' . _('Show on Spec') . '</th>
-			<th class="ascending">' . _('Show on Test Plan') . '</th>
-			<th class="ascending">' . _('Active') . '</th>
+			<th class="SortedColumn">' . _('Numeric Value') . '</th>
+			<th class="SortedColumn">' . _('Show on Cert') . '</th>
+			<th class="SortedColumn">' . _('Show on Spec') . '</th>
+			<th class="SortedColumn">' . _('Show on Test Plan') . '</th>
+			<th class="SortedColumn">' . _('Active') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

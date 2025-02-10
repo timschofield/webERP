@@ -56,9 +56,9 @@ echo '<table class="selection">
 		<th colspan="3"><h3><b>' . $StockID . ' - ' . $MyRow[0] . '</b>  (' . _('In Units of') . ' ' . $MyRow[1] . ')</h3></th>
 		</tr>
 		<tr>
-					<th class="ascending">' . _('Location') . '</th>
-					<th class="ascending">' . _('Quantity On Hand') . '</th>
-					<th class="ascending">' . _('Re-Order Level') . '</th>
+					<th class="SortedColumn">' . _('Location') . '</th>
+					<th class="SortedColumn">' . _('Quantity On Hand') . '</th>
+					<th class="SortedColumn">' . _('Re-Order Level') . '</th>
 		</tr>
 	</thead>
 	<tbody>';

@@ -159,16 +159,16 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Code') . '</th>
-					<th class="ascending">' . _('Description') . '</th>
-					<th class="ascending">' . _('Customer') . '</th>
-					<th class="ascending">' . _('Branch') . '</th>
-					<th class="ascending">' . _('Start Date') . '</th>
-					<th class="ascending">' . _('End Date') . '</th>
-					<th class="ascending">' . _('Cost') . '</th>
-					<th class="ascending">' . _('GP %') . '</th>
-					<th class="ascending">' . _('Price Proposed') . '</th>
-					<th class="ascending">' . _('List Price') . '</th>
+					<th class="SortedColumn">' . _('Code') . '</th>
+					<th class="SortedColumn">' . _('Description') . '</th>
+					<th class="SortedColumn">' . _('Customer') . '</th>
+					<th class="SortedColumn">' . _('Branch') . '</th>
+					<th class="SortedColumn">' . _('Start Date') . '</th>
+					<th class="SortedColumn">' . _('End Date') . '</th>
+					<th class="SortedColumn">' . _('Cost') . '</th>
+					<th class="SortedColumn">' . _('GP %') . '</th>
+					<th class="SortedColumn">' . _('Price Proposed') . '</th>
+					<th class="SortedColumn">' . _('List Price') . '</th>
 				<tr>
 			</thead>
 			<tbody>';

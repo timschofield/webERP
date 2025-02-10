@@ -88,10 +88,10 @@ echo '</p></div>';
 echo '<table class="selection">
 	<thead>
 		<tr>
-					<th class="ascending">' . _('Contract') . '</th>
-					<th class="ascending">' . _('Amount') . '</th>
-					<th class="ascending">' . _('Narrative') . '</th>
-					<th class="ascending">' . _('Anticipated') . '</th>
+					<th class="SortedColumn">' . _('Contract') . '</th>
+					<th class="SortedColumn">' . _('Amount') . '</th>
+					<th class="SortedColumn">' . _('Narrative') . '</th>
+					<th class="SortedColumn">' . _('Anticipated') . '</th>
 		</tr>
 	</thead>
 	<tbody>';

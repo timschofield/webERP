@@ -342,11 +342,11 @@ if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Code') . '</th>
-			<th class="ascending">' . _('Description') . '</th>
-			<th class="ascending">' . _('On Hand') . '</th>
-			<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-			<th class="ascending">' . _('Units') . '</th>
+			<th class="SortedColumn">' . _('Code') . '</th>
+			<th class="SortedColumn">' . _('Description') . '</th>
+			<th class="SortedColumn">' . _('On Hand') . '</th>
+			<th class="SortedColumn">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+			<th class="SortedColumn">' . _('Units') . '</th>
 		</tr>
 		</thead>
 		<tbody>';
@@ -686,29 +686,29 @@ else {
 			<thead>';
 
 	if (isset($_POST['PODetails'])) {
-		$BalHead = '<th class="ascending">' . _('Balance') .' (' . _('Stock ID') . '--' . _('Quantity') . ' )</th>';
+		$BalHead = '<th class="SortedColumn">' . _('Balance') .' (' . _('Stock ID') . '--' . _('Quantity') . ' )</th>';
 	} else {
 		$BalHead = '';
 	}
 	// KL RICARD Use custom fields
 	echo '<tr>
-			<th class="ascending">' . _('Order #') . '</th>
-			<th class="ascending">' . _('Order Date') . '</th>
-			<th class="ascending">' . _('Delivery Date') . '</th>
-			<th class="ascending">' . _('Payment Date') . '</th>
-			<th class="ascending">' . _('Shipment Date') . '</th>
-			<th class="ascending">' . _('Arrival Date') . '</th>
-			<th class="ascending">' . _('Supplier') . '</th>
+			<th class="SortedColumn">' . _('Order #') . '</th>
+			<th class="SortedColumn">' . _('Order Date') . '</th>
+			<th class="SortedColumn">' . _('Delivery Date') . '</th>
+			<th class="SortedColumn">' . _('Payment Date') . '</th>
+			<th class="SortedColumn">' . _('Shipment Date') . '</th>
+			<th class="SortedColumn">' . _('Arrival Date') . '</th>
+			<th class="SortedColumn">' . _('Supplier') . '</th>
 			' . $BalHead . '
-			<th class="ascending">' . _('Currency') . '</th>';
+			<th class="SortedColumn">' . _('Currency') . '</th>';
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<th class="ascending">' . _('Order Total') . '</th>';
 	}
 	// KL RICARD Use custom fields
-	echo '<th class="ascending">' . _('# Items') . '</th>';
-	echo '	<th class="ascending">' . _('KL Status') . '</th>
-			<th class="ascending">' . _('Status') . '</th>
+	echo '<th class="SortedColumn">' . _('# Items') . '</th>';
+	echo '	<th class="SortedColumn">' . _('KL Status') . '</th>
+			<th class="SortedColumn">' . _('Status') . '</th>
 			<th>' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
 			</tr>

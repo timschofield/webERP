@@ -179,10 +179,10 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">' . _('Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('On Hand') . '</th>
-						<th class="ascending">' . _('Units') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('On Hand') . '</th>
+						<th class="SortedColumn">' . _('Units') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -268,16 +268,16 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				echo '<table cellpadding="2" width="90%" class="selection">
 					<thead>
 						<tr>
-							<th class="ascending">' . _('Copy Results') . '</th>
-							<th class="ascending">' . _('Enter Results') . '</th>
-							<th class="ascending">' . _('Specification') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Lot / Serial') . '</th>
-							<th class="ascending">' . _('Identifier') . '</th>
-							<th class="ascending">' . _('Created By') . '</th>
-							<th class="ascending">' . _('Sample Date') . '</th>
-							<th class="ascending">' . _('Comments') . '</th>
-							<th class="ascending">' . _('Cert Allowed') . '</th>
+							<th class="SortedColumn">' . _('Copy Results') . '</th>
+							<th class="SortedColumn">' . _('Enter Results') . '</th>
+							<th class="SortedColumn">' . _('Specification') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Lot / Serial') . '</th>
+							<th class="SortedColumn">' . _('Identifier') . '</th>
+							<th class="SortedColumn">' . _('Created By') . '</th>
+							<th class="SortedColumn">' . _('Sample Date') . '</th>
+							<th class="SortedColumn">' . _('Comments') . '</th>
+							<th class="SortedColumn">' . _('Cert Allowed') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -487,10 +487,10 @@ if (isset($_GET['ListTests'])) {
 		<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Add') . '</th>
-				<th class="ascending">' . _('Name') . '</th>
-				<th class="ascending">' . _('Method') . '</th>
-				<th class="ascending">' . _('Units') . '</th>
+				<th class="SortedColumn">' . _('Add') . '</th>
+				<th class="SortedColumn">' . _('Name') . '</th>
+				<th class="SortedColumn">' . _('Method') . '</th>
+				<th class="SortedColumn">' . _('Units') . '</th>
 				<th>' . _('Possible Values') . '</th>
 				<th>' . _('Target Value') . '</th>
 				<th>' . _('Range Min') . '</th>
@@ -782,14 +782,14 @@ $Result = DB_query($SQL);
 echo '<table cellpadding="2" width="90%" class="selection">
 	<thead>
 		<tr>
-			<th class="ascending">' . _('Test Name') . '</th>
-			<th class="ascending">' . _('Test Method') . '</th>
-			<th class="ascending">' . _('Range') . '</th>
-			<th class="ascending">' . _('Target Value') . '</th>
-			<th class="ascending">' . _('Test Date') . '</th>
-			<th class="ascending">' . _('Tested By') . '</th>
-			<th class="ascending">' . _('Test Result') . '</th>
-			<th class="ascending">' . _('On Cert') . '</th>
+			<th class="SortedColumn">' . _('Test Name') . '</th>
+			<th class="SortedColumn">' . _('Test Method') . '</th>
+			<th class="SortedColumn">' . _('Range') . '</th>
+			<th class="SortedColumn">' . _('Target Value') . '</th>
+			<th class="SortedColumn">' . _('Test Date') . '</th>
+			<th class="SortedColumn">' . _('Tested By') . '</th>
+			<th class="SortedColumn">' . _('Test Result') . '</th>
+			<th class="SortedColumn">' . _('On Cert') . '</th>
 		</tr>
 	</thead>
 	<tbody>';

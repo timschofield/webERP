@@ -637,9 +637,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<table class="selection">
 			<thead>
 				<tr>
-				<th class="ascending" >' . _('Customer') . '</th>
-				<th class="ascending" >' . _('Branch') . '</th>
-				<th class="ascending" >' . _('Contact') . '</th>
+				<th class="SortedColumn" >' . _('Customer') . '</th>
+				<th class="SortedColumn" >' . _('Branch') . '</th>
+				<th class="SortedColumn" >' . _('Contact') . '</th>
 				<th>' . _('Phone') . '</th>
 				<th>' . _('Fax') . '</th>
 				</tr>
@@ -1538,14 +1538,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<table class="table1">
 					<thead>
 					<tr>
-						<th class="ascending" >' . _('Code') . '</th>
-						<th class="ascending" >' . _('Description') . '</th>
+						<th class="SortedColumn" >' . _('Code') . '</th>
+						<th class="SortedColumn" >' . _('Description') . '</th>
 						<th>' . _('Units') . '</th>
-						<th class="ascending" >' . _('On Hand') . '</th>
-						<th class="ascending" >' . _('On Demand') . '</th>
-						<th class="ascending" >' . _('On Order') . '</th>
-						<th class="ascending" >' . _('Available') . '</th>
-						<th class="ascending" >' . _('Quantity') . '</th>
+						<th class="SortedColumn" >' . _('On Hand') . '</th>
+						<th class="SortedColumn" >' . _('On Demand') . '</th>
+						<th class="SortedColumn" >' . _('On Order') . '</th>
+						<th class="SortedColumn" >' . _('Available') . '</th>
+						<th class="SortedColumn" >' . _('Quantity') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -1726,14 +1726,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td colspan="1"><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input name="Next" type="submit" value="'._('Next').'" /></td>
 					</tr>
 					<tr>
-					<th class="ascending" >' . _('Code') . '</th>
-		   			<th class="ascending" >' . _('Description') . '</th>
-					<th class="ascending" >' . _('Customer Item') . '</th>
+					<th class="SortedColumn" >' . _('Code') . '</th>
+		   			<th class="SortedColumn" >' . _('Description') . '</th>
+					<th class="SortedColumn" >' . _('Customer Item') . '</th>
 		   			<th>' . _('Units') . '</th>
-		   			<th class="ascending" >' . _('On Hand') . '</th>
-		   			<th class="ascending" >' . _('On Demand') . '</th>
-		   			<th class="ascending" >' . _('On Order') . '</th>
-		   			<th class="ascending" >' . _('Available') . '</th>
+		   			<th class="SortedColumn" >' . _('On Hand') . '</th>
+		   			<th class="SortedColumn" >' . _('On Demand') . '</th>
+		   			<th class="SortedColumn" >' . _('On Order') . '</th>
+		   			<th class="SortedColumn" >' . _('Available') . '</th>
 		   			<th>' . _('Quantity') . '</th>
 					</tr>
 				</thead>
