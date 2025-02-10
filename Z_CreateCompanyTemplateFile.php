@@ -212,9 +212,9 @@ if (isset($_POST['CreateTemplate'])){
 		   $mail->setSubject('Company Template Submission');
 		   if($_SESSION['SmtpSetting']==0){
 		 	 $mail->setFrom($_SESSION['CompanyRecord']['coyname'] . '<' . $_SESSION['CompanyRecord']['email'] . '>');
-			 $result = $mail->send($Recipients);
+			 $Result = $mail->send($Recipients);
 		   }else{
-			$result = SendmailBySmtp($mail,$Recipients);
+			$Result = SendmailBySmtp($mail,$Recipients);
 		   }
           /*end of SQL Script creation */
       }/*end if Input error*/

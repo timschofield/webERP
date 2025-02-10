@@ -171,18 +171,26 @@ if(isset($_POST['Submit'])) {
 				AND  mbflag IN ('M', 'A', 'K', 'G');";
 	$Result = DB_query($SQL);
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('From Stock ID') . '</td>';
-	echo '<td><select name="StockID">';
-	while($MyRow = DB_fetch_row($Result)) {
-		echo '<option value="'.$MyRow[0].'">' . $MyRow[0].' -- '.$MyRow[1] . '</option>';
+	echo '<fieldset>
+			<legend>', _('Copy Criteria'), '</legend>';
+
+	echo '<field>
+			<label for="StockID">', _('From Stock ID'), '</label>
+			<select name="StockID">';
+	while ($MyRow = DB_fetch_row($Result)) {
+		if (isset($_GET['Item']) and $MyRow[0] == $_GET['Item']) {
+			echo '<option selected="selected" value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
+		} else {
+			echo '<option value="', $MyRow[0], '">', $MyRow[0], ' -- ', $MyRow[1], '</option>';
+		}
 	}
-	echo '</select></td>
-			</tr>';
-	echo '<tr>
-			<td><input type="radio" name="NewOrExisting" value="N" />' . _(' To New Stock ID') . '</td>';
-	echo '<td><input type="text" maxlength="20" autofocus="autofocus" pattern="[a-zA-Z0-9_\-]*" name="ToStockID" title="' . _('Enter a new item code to copy the existing item and its bill of material to. Item codes can contain only alpha-numeric characters, underscore or hyphens.') . '" /></td></tr>';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+			<label for="ToStockID"><input type="radio" name="NewOrExisting" value="N" />', _(' To New Stock ID'), '</label>
+			<input type="text" required="required" maxlength="20" name="ToStockID" />
+		</field>';
 
 	$SQL = "SELECT stockid,
 					description

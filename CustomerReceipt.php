@@ -1048,7 +1048,7 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
 			$Result=DB_query($SQL);
-		$MyRow=DB_fetch_array($Result);
+			$MyRow=DB_fetch_array($Result);
 
 			echo '<tr>
 					<td class="number">' . locale_number_format($ReceiptItem->Amount,$_SESSION['ReceiptBatch' . $identifier]->CurrDecimalPlaces) . '</td>

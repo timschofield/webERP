@@ -124,8 +124,8 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 				FROM tags
 				ORDER BY tagref";
 
-	$Result=DB_query($SQL);
-	while ($MyRow=DB_fetch_array($Result)) {
+	$Result = DB_query($SQL);
+	while ($MyRow = DB_fetch_array($Result)) {
 		if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
 			echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
 		}
@@ -162,8 +162,8 @@ else if (isset($_POST['PrintPDF'])) {
 	$TagRow=DB_fetch_array($TagResult);
 	$Tag=$TagRow['tagdescription'];
 	include ('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Income and Expenditure'));
-	$pdf->addInfo('Subject', _('Income and Expenditure'));
+	$PDF->addInfo('Title', _('Income and Expenditure'));
+	$PDF->addInfo('Subject', _('Income and Expenditure'));
 	$PageNumber = 0;
 	$FontSize = 10;
 	$LineHeight = 12;
@@ -265,13 +265,13 @@ else if (isset($_POST['PrintPDF'])) {
 							$ActGrpLabel = $ParentGroups[$Level];
 						}
 						if ($Section == 1) { /*Income */
-							$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-							$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+							$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+							$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 							$YPos -= (2 * $LineHeight);
 						}
 						else { /*Costs */
-							$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-							$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+							$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+							$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 							$YPos -= (2 * $LineHeight);
 						}
 						$GrpPrdLY[$Level] = 0;
@@ -292,13 +292,13 @@ else if (isset($_POST['PrintPDF'])) {
 						$ActGrpLabel = $ParentGroups[$Level];
 					}
 					if ($Section == 1) { /*Income */
-						$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-						$pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+						$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+						$PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 						$YPos -= (2 * $LineHeight);
 					}
 					else { /*Costs */
-						$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-						$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+						$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+						$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 						$YPos -= (2 * $LineHeight);
 					}
 					$GrpPrdActual[$Level] = 0;
@@ -314,15 +314,15 @@ else if (isset($_POST['PrintPDF'])) {
 
 		if ($MyRow['sectioninaccounts'] != $Section) {
 
-			$pdf->setFont('', 'B');
+			$PDF->setFont('', 'B');
 			$FontSize = 10;
 			if ($Section != '') {
-				$pdf->line($Left_Margin + 310, $YPos + $LineHeight, $Left_Margin + 500, $YPos + $LineHeight);
-				$pdf->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
+				$PDF->line($Left_Margin + 310, $YPos + $LineHeight, $Left_Margin + 500, $YPos + $LineHeight);
+				$PDF->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
 				if ($Section == 1) { /*Income*/
 
-					$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					$YPos -= (2 * $LineHeight);
 
 					$TotalIncome = - $SectionPrdActual;
@@ -330,15 +330,15 @@ else if (isset($_POST['PrintPDF'])) {
 					$TotalLYIncome = - $SectionPrdLY;
 				}
 				else {
-					$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					$YPos -= (2 * $LineHeight);
 				}
 				if ($Section == 2) { /*Cost of Sales - need sub total for Gross Profit*/
-					$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Gross Profit'));
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
-					$pdf->line($Left_Margin + 310, $YPos + $LineHeight, $Left_Margin + 500, $YPos + $LineHeight);
-					$pdf->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
+					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Gross Profit'));
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+					$DPF->line($Left_Margin + 310, $YPos + $LineHeight, $Left_Margin + 500, $YPos + $LineHeight);
+					$PDF->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
 					$YPos -= (2 * $LineHeight);
 
 					if ($TotalIncome != 0) {
@@ -347,8 +347,8 @@ else if (isset($_POST['PrintPDF'])) {
 					else {
 						$PrdGPPercent = 0;
 					}
-					$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Gross Profit Percent'));
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($PrdGPPercent, 1) . '%', 'right');
+					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Gross Profit Percent'));
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($PrdGPPercent, 1) . '%', 'right');
 					$YPos -= (2 * $LineHeight);
 				}
 			}
@@ -359,11 +359,11 @@ else if (isset($_POST['PrintPDF'])) {
 			$Section = $MyRow['sectioninaccounts'];
 
 			if ($_POST['Detail'] == 'Detailed') {
-				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$MyRow['sectioninaccounts']]);
+				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$MyRow['sectioninaccounts']]);
 				$YPos -= (2 * $LineHeight);
 			}
 			$FontSize = 8;
-			$pdf->setFont('', '');
+			$PDF->setFont('', '');
 		}
 
 		if ($MyRow['groupname'] != $ActGrp) {
@@ -374,11 +374,11 @@ else if (isset($_POST['PrintPDF'])) {
 			$ParentGroups[$Level] = $ActGrp;
 			if ($_POST['Detail'] == 'Detailed') {
 				$FontSize = 10;
-				$pdf->setFont('', 'B');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $MyRow['groupname']);
+				$PDF->setFont('', 'B');
+				$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $MyRow['groupname']);
 				$YPos -= (2 * $LineHeight);
 				$FontSize = 8;
-				$pdf->setFont('', '');
+				$PDF->setFont('', '');
 			}
 		}
 
@@ -393,13 +393,13 @@ else if (isset($_POST['PrintPDF'])) {
 		$SectionPrdActual += $AccountPeriodActual;
 
 		if ($_POST['Detail'] == _('Detailed')) {
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $MyRow['account']);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 60, $YPos, 190, $FontSize, $MyRow['accountname']);
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $MyRow['account']);
+			$LeftOvers = $PDF->addTextWrap($Left_Margin + 60, $YPos, 190, $FontSize, $MyRow['accountname']);
 			if ($Section == 1) { /*Income*/
-				$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+				$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			}
 			else {
-				$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+				$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			}
 			$YPos -= $LineHeight;
 		}
@@ -417,13 +417,13 @@ else if (isset($_POST['PrintPDF'])) {
 					$ActGrpLabel = $ParentGroups[$Level];
 				}
 				if ($Section == 1) { /*Income */
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					$YPos -= (2 * $LineHeight);
 				}
 				else { /*Costs */
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-					$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+					$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 					$YPos -= (2 * $LineHeight);
 				}
 				$GrpPrdActual[$Level] = 0;
@@ -442,13 +442,13 @@ else if (isset($_POST['PrintPDF'])) {
 				$ActGrpLabel = $ParentGroups[$Level];
 			}
 			if ($Section == 1) { /*Income */
-				$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-				$pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+				$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+				$PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 				$YPos -= (2 * $LineHeight);
 			}
 			else { /*Costs */
-				$LeftOvers = $pdf->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+				$LeftOvers = $PDF->addTextWrap($Left_Margin + ($Level * 10) , $YPos, 200 - ($Level * 10) , $FontSize, $ActGrpLabel);
+				$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 				$YPos -= (2 * $LineHeight);
 			}
 			$GrpPrdActual[$Level] = 0;
@@ -461,13 +461,13 @@ else if (isset($_POST['PrintPDF'])) {
 	}
 	if ($Section != '') {
 
-		$pdf->setFont('', 'B');
-		$pdf->line($Left_Margin + 310, $YPos + 10, $Left_Margin + 500, $YPos + 10);
-		$pdf->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
+		$PDF->setFont('', 'B');
+		$PDF->line($Left_Margin + 310, $YPos + 10, $Left_Margin + 500, $YPos + 10);
+		$PDF->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
 
 		if ($Section == 1) { /*Income*/
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, $Sections[$Section]);
+			$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			$YPos -= (2 * $LineHeight);
 
 			$TotalIncome = - $SectionPrdActual;
@@ -475,28 +475,28 @@ else if (isset($_POST['PrintPDF'])) {
 			$TotalLYIncome = - $SectionPrdLY;
 		}
 		else {
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $Sections[$Section]);
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $Sections[$Section]);
+			$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			$YPos -= (2 * $LineHeight);
 		}
 		if ($Section == 2) { /*Cost of Sales - need sub total for Gross Profit*/
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, _('Gross Profit'));
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, _('Gross Profit'));
+			$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 			$YPos -= (2 * $LineHeight);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(100 * ($TotalIncome - $SectionPrdActual) / $TotalIncome, 1) . '%', 'right');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(100 * ($TotalIncome - $SectionPrdActual) / $TotalIncome, 1) . '%', 'right');
 			$YPos -= (2 * $LineHeight);
 		}
 	}
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, _('Profit') . ' - ' . _('Loss'));
-	$LeftOvers = $pdf->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$PeriodProfitLoss, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
+	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, _('Profit') . ' - ' . _('Loss'));
+	$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$PeriodProfitLoss, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 
-	$pdf->line($Left_Margin + 310, $YPos + $LineHeight , $Left_Margin + 500, $YPos + $LineHeight);
-	$pdf->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
+	$PDF->line($Left_Margin + 310, $YPos + $LineHeight , $Left_Margin + 500, $YPos + $LineHeight);
+	$PDF->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_' . 'Tag_Income_Statement_' . date('Y-m-d') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_' . 'Tag_Income_Statement_' . date('Y-m-d') . '.pdf');
+	$PDF->__destruct();
 	exit;
 
 }
@@ -544,8 +544,8 @@ else {
 
 	$AccountsResult = DB_query($SQL, _('No general ledger accounts were returned by the SQL because') , _('The SQL that failed was'));
 	$SQL = "SELECT tagdescription FROM tags WHERE tagref='" . $_POST['tag'] . "'";
-	$Result=DB_query($SQL);
-	$MyRow=DB_fetch_row($Result);
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_row($Result);
 
 	/*show a table of the accounts info returned by the SQL
 	 Account Code ,   Account Name , Month Actual, Month Budget, Period Actual, Period Budget */
