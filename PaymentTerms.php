@@ -174,15 +174,17 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
+	echo '<thead>
+			<tr>
+				<th colspan="6"><h3>' . _('Payment Terms.') . '</h3></th>
+			</tr>';
 	echo '<tr>
-			<th colspan="6"><h3>' . _('Payment Terms.') . '</h3></th>
-		</tr>';
-	echo '<tr>
-			<th>' . _('Term Code') . '</th>
-			<th>' . _('Description') . '</th>
-			<th>' . _('Following Month On') . '</th>
-			<th>' . _('Due After (Days)') . '</th>
-		</tr>';
+			<th class="SortedColumn">' . _('Term Code') . '</th>
+			<th class="SortedColumn">' . _('Description') . '</th>
+			<th class="SortedColumn">' . _('Following Month On') . '</th>
+			<th class="SortedColumn">' . _('Due After (Days)') . '</th>
+		</tr>
+	</thead>';
 
 	while ($MyRow=DB_fetch_array($Result)) {
 
@@ -198,21 +200,14 @@ or deletion of the records*/
 			$DueAfterText = $MyRow['daysbeforedue'] . ' ' . _('days');
 		}
 
-	printf('<tr><td>%s</td>
-	        <td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%s?SelectedTerms=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedTerms=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment term?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['termsindicator'],
-			$MyRow['terms'],
-			$FollMthText,
-			$DueAfterText,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$MyRow[0],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$MyRow[0]);
+	echo '<tr class="striped_row">
+			<td>', $MyRow['termsindicator'], '</td>
+			<td>', $MyRow['terms'], '</td>
+			<td>', $FollMthText, '</td>
+			<td>', $DueAfterText, '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '">' . _('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedTerms=', $MyRow[0], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this payment term?') . '\');">' . _('Delete') . '</a></td>
+		</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';
