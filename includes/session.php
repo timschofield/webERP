@@ -387,6 +387,17 @@ function HighestFileName($PathPrefix) {
 	return basename(array_pop($files), ".php");
 }
 
+if (sizeof($_POST) > 0 and !isset($AllowAnyone)) {
+	/*Security check to ensure that the form submitted is originally sourced from webERP with the FormID = $_SESSION['FormID'] - which is set before the first login*/
+	if (!isset($_POST['FormID']) or ($_POST['FormID'] != $_SESSION['FormID'])) {
+		$Title = _('Error in form verification');
+		include ('includes/header.php');
+		prnMsg(_('This form was not submitted with a correct ID'), 'error');
+		include ('includes/footer.php');
+		exit;
+	}
+}
+
 function quote_smart($Value) {
 	// Stripslashes
 	if (phpversion() < "5.3") {
