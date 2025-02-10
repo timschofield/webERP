@@ -3,21 +3,16 @@
  * http://web-erp.sourceforge.net
  *
  */
-body {
-	color:#000;
-	font-family:"Ubuntu", "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
-	font-size:.85em;
-	font-weight:lighter;
-	width:100%;
-}
 
 form{
 width:100%;
 }
 
-img {
+p > img {
 	border:none;
 	width:50%;
+	height:auto;
+	box-shadow:1px 1px #A9BD55;
 }
 
 #pagetitle {
@@ -69,14 +64,6 @@ h4 {
 	margin-right:1%;
 	padding:4px 4px 4px 40px;
 	/* Heading level 4 format. */
-}
-
-a {
-	text-decoration:none;
-}
-
-a:hover {
-	color:#03c;
 }
 
 .floatright {
