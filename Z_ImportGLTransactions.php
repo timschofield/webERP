@@ -60,10 +60,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 	$TransNo = GetNextTransNo( $_POST['TransactionType']);
 
 	//Get the exchange rate to use between the transaction currency and the functional currency
-	$sql = "SELECT rate FROM currencies WHERE currabrev='" . $_POST['Currency'] . "'";
-	$result = DB_query($sql);
-	$myrow = DB_fetch_array($result);
-	$ExRate = $myrow['rate'];
+	$SQL = "SELECT rate FROM currencies WHERE currabrev='" . $_POST['Currency'] . "'";
+	$Result = DB_query($SQL);
+	$MyRow = DB_fetch_array($Result);
+	$ExRate = $MyRow['rate'];
 
 	//start database transaction
 	DB_Txn_Begin();
@@ -73,10 +73,10 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 
 	//loop through file rows
 	$Row = 1;
-	while ( ($myrow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
 
 		//check for correct number of fields
-		$FieldCount = count($myrow);
+		$FieldCount = count($MyRow);
 		if ($FieldCount != $FieldTarget){
 			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
@@ -85,28 +85,28 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach ($myrow as &$value) {
+		foreach ($MyRow as &$value) {
 			$value = trim($value);
 			$value = str_replace('"', '', $value);
 		}
 
 		//first off check that the account code actually exists
-		$sql = "SELECT COUNT(accountcode) FROM chartmaster WHERE accountcode='" . $myrow[1] . "'";
-		$result = DB_query($sql);
-		$TestRow = DB_fetch_row($result);
+		$SQL = "SELECT COUNT(accountcode) FROM chartmaster WHERE accountcode='" . $MyRow[1] . "'";
+		$Result = DB_query($SQL);
+		$TestRow = DB_fetch_row($Result);
 		if ($TestRow[0] == 0) {
 			$InputError = 1;
-			prnMsg (_('Account code' . ' ' . $myrow[1] . ' ' . 'does not exist'),'error');
+			prnMsg (_('Account code' . ' ' . $MyRow[1] . ' ' . 'does not exist'),'error');
 		}
 
 		//Then check that the date is in a correct format
-		if (!Is_date($myrow[0])) {
+		if (!Is_date($MyRow[0])) {
 			$InputError = 1;
-			prnMsg (_('The date '. $myrow[0]. ' is not in the correct format'),'error');
+			prnMsg (_('The date') . ' ' . $MyRow[0]. ' ' . _('is not in the correct format'),'error');
 		}
 
 		//Find the period number from the date
-		$Period = GetPeriod($myrow[0]);
+		$Period = GetPeriod($MyRow[0]);
 
 		//All transactions must be in the same period
 		if (isset($PreviousPeriod) and $PreviousPeriod != $Period) {
@@ -115,11 +115,11 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		//Finally force the amount to be a double
-		$myrow[3] = (double)$myrow[3];
+		$MyRow[3] = (double)$MyRow[3];
 		if ($InputError !=1){
 
 			//Firstly add the line to the gltrans table
-			$sql = "INSERT INTO gltrans (type,
+			$SQL = "INSERT INTO gltrans (type,
 										typeno,
 										chequeno,
 										trandate,
@@ -130,29 +130,29 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 									) VALUES (
 										'" . $_POST['TransactionType'] . "',
 										'" . $TransNo . "',
-										'" . $myrow[2] . "',
-										'" . FormatDateForSQL($myrow[0]) . "',
+										'" . $MyRow[2] . "',
+										'" . FormatDateForSQL($MyRow[0]) . "',
 										'" . $Period . "',
-										'" . $myrow[1] . "',
-										'" . $myrow[4] . "',
-										'" . round($myrow[3]/$ExRate, 2) . "'
+										'" . $MyRow[1] . "',
+										'" . $MyRow[4] . "',
+										'" . round($MyRow[3]/$ExRate, 2) . "'
 									)";
 
-			$result = DB_query($sql);
+			$Result = DB_query($SQL);
 
-			if ($_POST['TransactionType'] != 0 AND IsBankAccount($myrow[1])) {
+			if ($_POST['TransactionType'] != 0 AND IsBankAccount($MyRow[1])) {
 
 				//Get the exchange rate to use between the transaction currency and the bank account currency
-				$sql = "SELECT rate
+				$SQL = "SELECT rate
 						FROM currencies
 						INNER JOIN bankaccounts
 							ON currencies.currabrev=bankaccounts.currcode
-						WHERE bankaccounts.accountcode='" . $myrow[1] . "'";
+						WHERE bankaccounts.accountcode='" . $MyRow[1] . "'";
 
-				$result = DB_query($sql);
-				$MyRateRow = DB_fetch_array($result);
+				$Result = DB_query($SQL);
+				$MyRateRow = DB_fetch_array($Result);
 				$FuncExRate = $MyRateRow['rate'];
-				$sql = "INSERT INTO banktrans (transno,
+				$SQL = "INSERT INTO banktrans (transno,
 												type,
 												bankact,
 												ref,
@@ -166,20 +166,20 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 											) VALUES (
 												'" . $TransNo . "',
 												'" . $_POST['TransactionType'] . "',
-												'" . $myrow[1] . "',
-												'" . $myrow[4] . "',
-												'" . $myrow[2] . "',
+												'" . $MyRow[1] . "',
+												'" . $MyRow[4] . "',
+												'" . $MyRow[2] . "',
 												'" . ($ExRate/$FuncExRate) . "',
 												'" . $FuncExRate . "',
-												'" . FormatDateForSQL($myrow[0]) . "',
+												'" . FormatDateForSQL($MyRow[0]) . "',
 												'" . _('Cheque') . "',
-												'" . round($myrow[3], 2) . "',
+												'" . round($MyRow[3], 2) . "',
 												'" . $_POST['Currency'] . "'
 											)";
-				$result = DB_query($sql);
+				$Result = DB_query($SQL);
 			}
 			$PreviousPeriod = $Period;
-			$TransactionTotal = $TransactionTotal + $myrow[3];
+			$TransactionTotal = $TransactionTotal + $MyRow[3];
 		}
 
 		if ($InputError == 1) { //this row failed so exit loop
@@ -234,17 +234,17 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 			<label>', _('Select Currency') . ':&nbsp;</label>
 			<select name="Currency">';
 	$SQL = "SELECT currency, currabrev, rate FROM currencies";
-	$result = DB_query($SQL);
-	if (DB_num_rows($result) == 0) {
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) == 0) {
 		echo '</select>';
 		prnMsg(_('No currencies are defined yet') . '. ' . _('Receipts cannot be entered until a currency is defined'), 'warn');
 
 	} else {
-		while ($myrow = DB_fetch_array($result)) {
-			if ($_SESSION['CompanyRecord']['currencydefault'] == $myrow['currabrev']) {
-				echo '<option selected="selected" value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+		while ($MyRow = DB_fetch_array($Result)) {
+			if ($_SESSION['CompanyRecord']['currencydefault'] == $MyRow['currabrev']) {
+				echo '<option selected="selected" value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 			} else {
-				echo '<option value="' . $myrow['currabrev'] . '">' . $myrow['currency'] . '</option>';
+				echo '<option value="' . $MyRow['currabrev'] . '">' . $MyRow['currency'] . '</option>';
 			}
 		}
 		echo '</select>
@@ -265,9 +265,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 include('includes/footer.php');
 
 function IsBankAccount($Account) {
-	$sql ="SELECT accountcode FROM bankaccounts WHERE accountcode='" . $Account . "'";
-	$result = DB_query($sql);
-	if (DB_num_rows($result)==0) {
+	$SQL ="SELECT accountcode FROM bankaccounts WHERE accountcode='" . $Account . "'";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result)==0) {
 		return false;
 	} else {
 		return true;

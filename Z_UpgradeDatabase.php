@@ -26,7 +26,7 @@ if (!isset($_SESSION['DBVersion'])) {
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/user.png" class="TitleIcon" id="TitleIcon" title="" alt="" /></div>';
 
 	//include ('includes/header.php');
-	
+
 
 	function executeSQL($SQL, $TrapErrors = False) {
 		global $SQLFile;
@@ -149,7 +149,7 @@ if (!isset($_SESSION['DBVersion'])) {
 		$ForceConfigReload = True;
 
 		echo '<div class="centre">
-			<a href="' . $RootPath . '/Logout.php" title="' . _('Log out of KwaMoja') . '" alt="">
+			<a href="' . $RootPath . '/Logout.php" title="' . _('Log out of') . ' ' . 'webERP" alt="">
 				', _('You need to logout and log back in for these changes to take affect'), '
 			</a>
 		</div>';
