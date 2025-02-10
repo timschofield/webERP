@@ -716,7 +716,7 @@ class Server
             $_xh = $xmlRpcParser->parse($data, $this->functions_parameters_type, XMLParser::ACCEPT_REQUEST, $options);
             // BC
             if (!is_array($_xh)) {
-                $_xh = $xmlRpcParser->_xh;
+                $_xh = $xmlRpcParser->__get('_xh');
             }
         } catch (NoSuchMethodException $e) {
             return new static::$responseClass(0, $e->getCode(), $e->getMessage());

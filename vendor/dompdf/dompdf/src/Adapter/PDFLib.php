@@ -234,7 +234,7 @@ class PDFLib implements Canvas
         }
 
         // fetch PDFLib version information for the producer field
-        $this->_pdf->set_info("Producer Addendum", sprintf("%s + PDFLib %s", $dompdf->version, $this->getPDFLibMajorVersion()));
+        $this->_pdf->set_info("Producer Addendum", sprintf("%s + PDFLib %s", $dompdf->__get('version'), $this->getPDFLibMajorVersion()));
 
         // Silence pedantic warnings about missing TZ settings
         $tz = @date_default_timezone_get();

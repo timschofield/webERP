@@ -5,14 +5,14 @@ font-family:"Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verda
 font-size:10pt;
 margin:0;
 padding:0;
-text-align:center
+text-align:center;
 vertical-align:middle;
 }
 
 #container {
 -moz-box-shadow:0 0 15px #DADADA;
 -webkit-box-shadow:0 0 15px #DADADA;
-background:linear-gradient(135deg,#ffffff0%,#f6f6f647%,#ededed100%);
+background:linear-gradient(135deg,#ffffff 0%,#f6f6f6 47%,#ededed 100%);
 border:solid #A49999 1px;
 border-radius:15px;
 box-shadow:0 0 15px #DADADA;
