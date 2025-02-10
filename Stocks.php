@@ -552,9 +552,9 @@ if (isset($_POST['submit'])) {
 					}
 					if ($_POST['PropNumeric' . $i] == 1) {
 						$_POST['PropValue' . $i] = filter_number_format($_POST['PropValue' . $i]);
-					} else {
+					} /*else {
 						$_POST['PropValue' . $i] = $_POST['PropValue' . $i];
-					}
+					}*/
 					$Result = DB_query("INSERT INTO stockitemproperties (stockid,
 																		stkcatpropid,
 																		value)
@@ -760,9 +760,9 @@ if (isset($_POST['submit'])) {
 
 						if ($_POST['PropNumeric' . $i] == 1) {
 							$_POST['PropValue' . $i] = filter_number_format($_POST['PropValue' . $i]);
-						} else {
+						} /*else {
 							$_POST['PropValue' . $i] = $_POST['PropValue' . $i];
-						}
+						}*/
 
 						$Result = DB_query("INSERT INTO stockitemproperties (stockid,
 													stkcatpropid,

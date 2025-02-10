@@ -22,7 +22,7 @@ Class Allocation {
 	}
 
 	function Allocation(){
-		self::__construct;
+		self::__construct();
 	}
 
 	function add_to_AllocsAllocn ($ID, $TransType, $TypeNo, $TransDate, $AllocAmt, $TransAmount, $ExRate, $DiffOnExch, $PrevDiffOnExch, $PrevAlloc, $PrevAllocRecordID){

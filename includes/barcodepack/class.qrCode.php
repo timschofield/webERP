@@ -622,7 +622,6 @@ class qrCode extends barcode {
 						if($goLeft==1) {
 							// Jdi doleva
 							$x = $x-1;
-							$y = $y;
 							$goLeft = 0;
 						} else {
 							// top right
@@ -651,7 +650,6 @@ class qrCode extends barcode {
 						if($goLeft==1) {
 							// Doleva
 							$x = $x-1;
-							$y = $y;
 							$goLeft = 0;
 						} else {
 							// down and right

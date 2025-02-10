@@ -1200,11 +1200,11 @@
 		ob_start('ob_file_callback');
 /*x*/		if ($xmlrpcmsg->getNumParams() == 3)
 /*x*/		{
-/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
+/*x*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCredit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )),
 /*x*/			$xmlrpcmsg->getParam( 1 )->scalarval(  ),
 /*x*/				$xmlrpcmsg->getParam( 2 )->scalarval(  ))) );
 /*x*/		} else {
-/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCedit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
+/*e*/		 $rtn = new xmlrpcresp( php_xmlrpc_encode(InsertSalesCredit(php_xmlrpc_decode($xmlrpcmsg->getParam( 0 )), '', '')));
 /*x*/		}
 		ob_end_flush();
 		return $rtn;

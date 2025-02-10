@@ -286,7 +286,7 @@ class code128 extends linearBarcode {
 					$checksumCounter++;
 				}
 				$characterSet = 'C';
-			} else if(isset($this->text{$i+1})) {
+			} else if(isset($this->text[$i+1])) {
 				$newCharacterSet = $this->findCharacterSet($this->text[$i+1]);
 				if($characterSet==self::CHARSET_C) {
 					if($newCharacterSet==self::CHARSET_A) {

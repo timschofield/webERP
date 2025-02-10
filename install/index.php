@@ -234,7 +234,7 @@ if(!extension_loaded('mbstring')){
 		If(!empty($_FILES['LogoFile'])){//We check the file upload situation
 			if($_FILES['LogoFile']['error'] == UPLOAD_ERR_INI_SIZE || $_FILES['LogoFile']['error'] == UPLOAD_ERR_FORM_SIZE){//the file is over the php.ini limit or over the from limit
 				$InputError = 1;
-				if(upload_max_filesize < 0.01){
+				if((float)ini_get('upload_max_filesize') < 0.01){
 					echo _('The company logo file failed to upload due to it\'s size. The file was over the upload_max_filesize set in your php.ini configuration.');
 
 				}else{

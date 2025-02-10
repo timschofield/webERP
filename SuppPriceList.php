@@ -202,7 +202,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['View'])) {
 	} else {
 		$Title = _('View supplier price');
 		include('includes/header.inc');
-		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUTOES,'UTF-8').'">'._('return').'</a>';
+		echo '<a href="'.htmlspecialchars($_SERVER['PHP_SELF'],'ENT_QUTOES','UTF-8').'">'._('return').'</a>';
 		echo '<p class="page_title_text">'. _('Supplier Price List for').' : '.$CurrentOrAllPrices . '<br/>'
 			._('Supplier').'   : '.$SupplierName.' <br/>'._('Category').' : '.$Categoryname.
 			'</p>';

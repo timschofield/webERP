@@ -264,7 +264,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 			// Prints item image:
 			$SupportedImgExt = array('png','jpg','jpeg');
-			$imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+            $glob = (glob($_SESSION['part_pics_dir'] . '/' . $PriceList['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+			$imagefile = reset($glob);
 			$YPosImage = $YPos;// Initializes the image bottom $YPos.
 			if (file_exists($imagefile) ) {
 				if ($YPos-36 < $Bottom_Margin) {// If the image bottom reaches the bottom margin, do PageHeader().

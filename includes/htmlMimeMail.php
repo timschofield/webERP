@@ -357,7 +357,8 @@ class htmlMimeMail
 	private function _findHtmlImages($images_dir)
 	{
 		// Build the list of image extensions
-		while (list($key,) = each($this->image_types)) {
+		# while (list($key,) = each($this->image_types)) { # 20241023-depreciated
+        foreach($this->image_types as $key => $value){
 			$extensions[] = $key;
 		}
 		preg_match_all('/(?:"|\')([^"\']+\.('.implode('|', $extensions).'))(?:"|\')/Ui', $this->html, $images);
@@ -542,7 +543,8 @@ class htmlMimeMail
 	public function buildMessage($params = array())
 	{
 		if (!empty($params)) {
-			while (list($key, $value) = each($params)) {
+			# while (list($key, $value) = each($params)) { # 20241023-depreciated
+            foreach ($params as $key => $value) {
 				$this->build_params[$key] = $value;
 			}
 		}

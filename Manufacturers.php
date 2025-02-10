@@ -328,7 +328,6 @@ if (!isset($_GET['delete'])) {
 
 	echo '</field>';
 		if (isset($SelectedManufacturer)){
-
 			$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/BRAND-' . $SelectedManufacturer . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
 			if (extension_loaded('xgd') && function_exists('gd_info') && file_exists($ImageFile)){
 				$BrandImgLink = '<img src="GetStockImage.php?automake=1&amp;textcolor=FFFFFF&amp;bgcolor=CCCCCC'.

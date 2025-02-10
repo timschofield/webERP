@@ -39,7 +39,7 @@ if ($_GET['ProduceCVSFile']==True){
 	$Title = _('Sales Analysis Comma Separated File (CSV) Generation');
 	include('includes/header.php');
 
-	 echo 'http://' . getenv(SERVER_NAME) . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
+	 echo 'http://' . getenv('SERVER_NAME') . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv';
 	 echo '<meta http-equiv="Refresh" content="0; url=' . $RootPath . '/' . $_SESSION['reports_dir'] .  '/SalesAnalysis.csv">';
 
 	 echo '<p>' . _('You should automatically be forwarded to the CSV Sales Analysis file when it is ready') . '. ' . _('If this does not happen') . ' <a href="' . $RootPath . '/' . $_SESSION['reports_dir'] . '/SalesAnalysis.csv">' . _('click here') . '</a> ' . _('to continue') . '<br />';

@@ -301,7 +301,7 @@ class PDF extends PDF_Language {
 function BuildPDF($ReportID, $Prefs) {
 	global $FieldListings, $FieldValues;
 	// first fetch all the fields we need to display
-	$FieldListings = '';
+	$FieldListings = [];
 	$sql = "SELECT seqnum, params FROM ".DBRptFields."
 		WHERE reportid=".$ReportID." AND entrytype='fieldlist' AND visible=1
 		ORDER BY seqnum";
@@ -311,7 +311,7 @@ function BuildPDF($ReportID, $Prefs) {
 		$FieldListings[] = $FieldValues;
 	}
 	// check for at least one field selected to show
-	if (!$FieldListings) { // No fields are checked to show, that's bad
+	if (!empty($FieldListings)) { // No fields are checked to show, that's bad
 		$usrMsg['message'] = RPT_NOROWS;
 		$usrMsg['level'] = 'error';
 		return $usrMsg;
@@ -572,10 +572,12 @@ function BuildPDF($ReportID, $Prefs) {
 					$tblHeading[] = $TableField['TblDesc'];
 				}
 				$tblField = mb_substr($tblField,0,-2); // remove the last two chars (comma and space)
-				$SingleObject['params']['Data'][] = $tblHeading; // set the first data element to the headings
+				$SingleObject['params']['Data'] = [$tblHeading]; // set the first data element to the headings
 				$sql = "SELECT ".$tblField.$TrailingSQL;
 				$Result=DB_query($sql,'','',false,true);
-				while ($Temp = DB_fetch_assoc($Result)) $SingleObject['params']['Data'][] = $Temp;
+				while ($Temp = DB_fetch_assoc($Result)){
+                    $SingleObject['params']['Data'][] = $Temp;
+                }
 				$pdf->FormTable($SingleObject['params']);
 			}
 		}
