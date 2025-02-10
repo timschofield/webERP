@@ -128,68 +128,73 @@ if (!file_exists($Path_To_Root . '/companies/' . $_SESSION['Installer']['Databas
 	}
 }
 
-//$Msg holds the text of the new config.php file
-$Msg = "<?php\n\n";
-$Msg.= "// User configurable variables\n";
-$Msg.= "//---------------------------------------------------\n\n";
-$Msg.= "//DefaultLanguage to use for the login screen and the setup of new users.\n";
-$Msg.= "\$DefaultLanguage = '" . $_SESSION['Installer']['Language'] . "';\n\n";
-$Msg.= "// Whether to display the demo login and password or not on the login screen\n";
-$Msg.= "\$AllowDemoMode = FALSE;\n\n";
-$Msg.= "// Connection information for the database\n";
-$Msg.= "// \$Host is the computer ip address or name where the database is located\n";
-$Msg.= "// assuming that the webserver is also the sql server\n";
-$Msg.= "\$Host = '" . $_SESSION['Installer']['HostName'] . "';\n\n";
-$Msg.= "// assuming that the web server is also the sql server\n";
-$Msg.= "\$DBType = '" . $_SESSION['Installer']['DBMS'] . "';\n";
-$Msg.= "//assuming that the web server is also the sql server\n";
-$Msg.= "\$DBUser = '" . $_SESSION['Installer']['UserName'] . "';\n";
-$Msg.= "\$DBPassword = '" . $_SESSION['Installer']['Password'] . "';\n";
-$Msg.= "// The timezone of the business - this allows the possibility of having;\n";
-$Msg.= "define('TIMEZONE', '" . $_SESSION['Installer']['TimeZone'] . "');\n";
-$Msg.= "date_default_timezone_set(TIMEZONE);\n";
-$Msg.= "\$AllowCompanySelectionBox = 'ShowSelectionBox';\n";
-$Msg.= "//The system administrator name use the user input mail;\n";
-if (strtolower($_SESSION['Installer']['Email']) != 'admin@kwamoja.com') {
-	$Msg.= "\$SysAdminEmail = '" . $_SESSION['Installer']['Email'] . "';\n";
-}
-if (isset($NewCompany)) {
-	$Msg.= "\$DefaultCompany = '" . $_SESSION['Installer']['Database'] . "';\n";
-} else {
-	$Msg.= "\$DefaultCompany = '" . $_SESSION['Installer']['Database'] . "';\n";
-}
-$Msg.= "\$SessionLifeTime = 3600;\n";
-$Msg.= "\$MaximumExecutionTime = 120;\n";
-$Msg.= "\$DefaultClock = 12;\n";
-$Msg.= "\$RootPath = dirname(htmlspecialchars(\basename(__FILE__),ENT_QUOTES,'UTF-8'));\n";
-$Msg.= "if (isset(\$DirectoryLevelsDeep)){\n";
-$Msg.= "   for (\$i=0;\$i<\$DirectoryLevelsDeep;\$i++){\n";
-$Msg.= "		\$RootPath = mb_substr(\$RootPath,0, strrpos(\$RootPath,'/'));\n";
-$Msg.= "	}\n";
-$Msg.= "}\n";
+// Make installer options compatible with config.distrib.php options.
+/**
+ * IMPORTANT!!
+ * Must match the variables found inside config.distrib.php.
+ *  */ 
+$configArray = $_SESSION['Installer'];
+$configArray += [
+    'Host'            => $_SESSION['Installer']['HostName'],
+    'DBUser'          => $_SESSION['Installer']['UserName'],
+    'DBPassword'      => $_SESSION['Installer']['Password'],
+    'DBType'          => $_SESSION['Installer']['DBMS'],
+    'DefaultLanguage' => $_SESSION['Installer']['Language'],
+    'DefaultDatabase' => $_SESSION['Installer']['Database'],
+    'SysAdminEmail'   => $_SESSION['Installer']['AdminEmail']
+];
 
-$Msg.= "if (\$RootPath == '/' OR \$RootPath == '\\\') {\n";
-$Msg.= "	\$RootPath = '';\n";
-$Msg.= "}\n";
-$Msg.= "error_reporting(E_ALL && ~E_NOTICE);\n";
-$Msg.= "\$Debug = 0;\n";
-$Msg.= "/* Make sure there is nothing - not even spaces after this last ?> */\n";
-$Msg.= "?>";
+// Define the paths relative to the `installer` directory
+$sampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
+$newConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
 
-//write the config.php file since we have test the writability of the root path and companies,
-//there is little possibility that it will fail here. So just an warn if it is failed.
-if (!$zp = fopen($Path_To_Root . '/config.php', 'w')) {
-	echo '<div class="error">' . _("Cannot open the configuration file") . $Config_File . '</div>';
-} else {
-	if (!fwrite($zp, $Msg)) {
-		fclose($zp);
-		echo '<div class="error">' . _("Cannot write to the configuration file") . $Config_File . '</div>';
-	}
-	//close file
-	fclose($zp);
+// Read the content of the sample config file
+if (!file_exists($sampleConfigFile)) {    
+	echo '<div class="error">' . _('The sample configuration file does not exist.') . '</div>';
 }
-echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
-ob_flush();
+
+// Open the sample file for reading and create the new config file for writing
+$sampleHandle = fopen($sampleConfigFile, 'r');
+$newLines = [];
+
+if ($sampleHandle) {
+    while (($line = fgets($sampleHandle)) !== false) {
+        // Check if the line is commented (starting with //, #, or within /* */)
+        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $line);
+
+        // Skip replacements on comment lines, otherwise process a config line.
+        if (!$isComment) {
+            // Loop Installer Data
+            foreach ($configArray as $key => $value) {
+                // if (strpos($line, $key) !== false) {
+				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $line)) {
+                    $newValue = addslashes($value);
+                    $line = "\$$key = '$newValue';\n";
+                    unset($configArray[$key]);
+                }
+            }
+			// Replace date_default_timezone_set            
+			if (strpos($line, 'date_default_timezone_set') !== false) {
+                $newValue = addslashes($_SESSION['Installer']['TimeZone']);                
+				$line = "date_default_timezone_set('".$newValue."');\n";
+            }
+        }
+        // Append the line to the new content
+        $newLines[] = $line;
+    }
+
+    fclose($sampleHandle);
+} else {    
+	echo '<div class="error">' . _('Unable to read the sample configuration file.') . '</div>';
+}
+
+// Write the updated content to the new config file
+$newConfigContent = implode($newLines);
+if (file_put_contents($newConfigFile, $newConfigContent)) {
+    echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
+} else {
+	echo '<div class="error">' . _('Cannot write to the configuration file') . $Config_File . '</div>';
+}
 
 $DBErrors = 0;
 foreach (glob($Path_To_Root . "/install/tables/*.sql") as $filename) {
@@ -205,7 +210,7 @@ if ($DBErrors > 0) {
 }
 ob_flush();
 
-/* Now we uploade the chosen chart of accounts */
+/* Now we upload the chosen chart of accounts */
 if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 'Yes') {
 	DB_IgnoreForeignKeys();
 	$SQL = "INSERT INTO www_users  (userid,
