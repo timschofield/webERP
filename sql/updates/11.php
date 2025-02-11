@@ -3,7 +3,7 @@
 CreateTable('login_data', 'CREATE TABLE `login_data` (
   `sessionid` char(26),
   `userid` varchar(20),
-  `login` datetime NOT NULL DEFAULT NOW(),
+  `login` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `script` varchar(100) NOT NULL DEFAULT "",
   PRIMARY KEY (`sessionid`)
 )');
