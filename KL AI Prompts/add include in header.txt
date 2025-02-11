@@ -1,0 +1,13 @@
+In all *.php and *.inc files in the main folder and includes folder, excluding all other folders:
+
+1) look for calls of the functions: ShowTableTitle($Text), ShowTableSubTitle($Text) and ShowWarningTitle($Text)
+2) then add the line 
+include('includes/KLUIFunctions.php'); 
+just below all the other include lines, around line 10 (only if the line include('includes/KLUIFunctions.php');  is missing.
+
+General prompt rules: 
+1) Do not cut long lines. 
+2) Do not delete any comment in the code
+3) Do not change, modify, upgrade any other part of the code not related to the propmt.
+4) Apply all changes above directly to all the files in the working set
+

@@ -7,8 +7,8 @@
 * Last Modified..: 21 December 2001
 */
 
-	define('SMTP_STATUS_NOT_CONNECTED', 1, TRUE);
-	define('SMTP_STATUS_CONNECTED', 2, TRUE);
+	define('SMTP_STATUS_NOT_CONNECTED', 1);
+	define('SMTP_STATUS_CONNECTED', 2);
 
 	class smtp{
 
@@ -44,10 +44,10 @@
 		*             to fsockopen()
         */
 
-		function smtp($params = array()){
+		function __construct($params = array()){
 
 			if(!defined('CRLF'))
-				define('CRLF', "\r\n", TRUE);
+				define('CRLF', "\r\n");
 
 			$this->authenticated	= FALSE;
 			$this->timeout			= 5;

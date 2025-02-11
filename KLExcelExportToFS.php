@@ -1,10 +1,16 @@
 <?php
 
-require_once ('Classes/PHPExcel.php');
-
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
@@ -72,10 +78,10 @@ function submit($TypeOfShop, $TypeOfFile) {
 		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 		
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -172,7 +178,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 					$PriceDiscount = '';
 					$Description = trim($MyRow['longdescriptiontranslation']). " " . 
 							$TextSizeIndonesian . " - "  . 
-							trim($MyRow['longdescription']) . " " .
+							trim($MyRow['longdescription']) . " " . 
 							$TextSizeEnglish;
 					$Weight = $MyRow['grossweight'] * 1000; // webERP in KG, AdminCerdas in gr
 					
@@ -249,9 +255,14 @@ function submit($TypeOfShop, $TypeOfFile) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			// Redirect output to a clientï¿½s web browser (Excel2007)
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = $NameOfShop . '-' .  $TypeOfFile . '-' . Date('Y-m-d-H-i-s'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -263,8 +274,13 @@ function submit($TypeOfShop, $TypeOfFile) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 		}else{
 			$Title = "Excel file for uploading products to FORSTOK";
@@ -293,38 +309,23 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title. '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';	
+	echo '<fieldset>
+			<legend>' . _('FORSTOK Export Options') . '</legend>';
 	
-	echo '<tr><td>'. _('Marketplace kind of shop').':</td>
-			<td><select name="TypeOfShop" onchange="submit();"> ';
-	$SQL = "SELECT manufacturers.manufacturers_id, 
-					manufacturers_name 
-			FROM manufacturers 
-			ORDER BY manufacturers_name";
-	$LocResult = DB_query($SQL);
-	while ($MyRow=DB_fetch_array($LocResult)){
-		 echo '<option value="' . $MyRow['manufacturers_id'] . '">' . $MyRow['manufacturers_name'] . '</option>';
-	}
+	echo FieldToSelectOneBrand('submit', 'TypeOfShop', _('Marketplace kind of shop'), '', '', 1);
 
-	echo '<tr>
-			<td>' . _('Type of FORSTOK File') . ':</td>
-			<td><select name="TypeOfFile">
-				<option selected="selected" value="FSMaster">' . _('Master FORSTOK') . '</option>
-				<option value="FSQOH">' . _('QOH FORSTOK Update') . '</option>
-				<option value="FSPrice">' . _('Price FORSTOK Update') . '</option>
-			</select></td>
-		</tr>';
+	// FORSTOK File type selection
+	echo FieldToSelectFromThreeOptions('FSMaster', _('Master FORSTOK'),
+										'FSQOH', _('QOH FORSTOK Update'),
+										'FSPrice', _('Price FORSTOK Update'),
+										'TypeOfFile', $_POST['TypeOfFile'],	_('Type of FORSTOK File'), '', '', 2, true, false);
 
-	echo '</table>
-		<table>';
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel file to upload products to FORSTOK') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', _('Export file to upload products to FORSTOK'));
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

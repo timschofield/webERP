@@ -3,6 +3,8 @@
 /* Defines the KL retail Partners */
 
 include('includes/session.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 $Title = _('KL Retail Partners Maintenance');// Screen identification.
 $ViewTopic = '';// Filename's id in ManualContents.php's TOC.
 $BookMark = '';// Anchor's id in the manual's html document.
@@ -429,7 +431,7 @@ if(!isset($_GET['delete'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if(isset($SelectedPartner)) {
-		//editing an existing Location
+		//editing an existing Partner
 
 		$SQL = "SELECT partnercode,
 					partnername,
@@ -538,26 +540,18 @@ if(!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedPartner" value="' . $SelectedPartner . '" />';
 		echo '<input type="hidden" name="PartnerCode" value="' . $_POST['PartnerCode'] . '" />';
-		echo '<table class="selection">';
-		echo '<tr>
-				<th colspan="2">' . _('Amend Retail Partner details') . '</th>
-			</tr>';
-		echo '<tr>
-				<td>' . _('Retail Partner Code') . ':</td>
-				<td>' . $_POST['PartnerCode'] . '</td>
-			</tr>';
+
+		echo '<fieldset><legend>' . _('Edit Retail Partner details') . '</legend>';
+		echo '<field>' . _('Retail Partner Code') . ': ' . $_POST['PartnerCode'] . '</field>';
+		echo '</fieldset>';
+
 	} else {//end of if $SelectedPartner only do the else when a new record is being entered
 		if(!isset($_POST['PartnerCode'])) {
 			$_POST['PartnerCode'] = '';
 		}
-		echo '<table class="selection">
-				<tr>
-					<th colspan="2"><h3>' . _('New Retail Partner details') . '</h3></th>
-				</tr>';
-		echo '<tr>
-				<td>' . _('Partner Code') . ':</td>
-				<td><input type="text" autofocus="autofocus" required="required" title="' . _('Enter up to 20 characters for the retail partner code') . '" data-type="no-illegal-chars" name="PartnerCode" value="' . $_POST['PartnerCode'] . '" size="20" maxlength="20" /></td>
-			</tr>';
+		echo '<fieldset><legend>' . _('New Retail Partner details') . '</legend>';
+		echo FieldToSelectOneText('PartnerCode', $_POST['PartnerCode'], 20, 20, _('Partner Code'), '', 'no-illegal-chars', '', true, true);
+		echo '</fieldset>';
 	}
 	if(!isset($_POST['PartnerName'])) {
 		$_POST['PartnerName'] = '';
@@ -704,409 +698,83 @@ if(!isset($_GET['delete'])) {
 		$_POST['CounterInvoiceC'] = 0;
 	}
 
-	echo '<tr>
-			<td>' . _('Partner Name in POS Slip') . ':' . '</td>
-			<td><input type="text" name="PartnerName" required="required" value="'. $_POST['PartnerName'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Address in POS Slip') . ':' . '</td>
-			<td><input type="text" name="PartnerAddress" value="' . $_POST['PartnerAddress'] . '" size="51" maxlength="100" /></td>
-		</tr>
-		<tr>
-			<td>' . _('NPWP in POS Slip') . ':' . '</td>
-			<td><input type="text" name="PartnerNPWP" value="' . $_POST['PartnerNPWP'] . '" size="21" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Partner Name in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="PartnerNameInvoice" required="required" value="'. $_POST['PartnerNameInvoice'] . '" title="' . _('Enter the retail partner name') . '" namesize="51" maxlength="50" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Jalan in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddressjalan" value="' . $_POST['partneraddressjalan'] . '" size="51" maxlength="100" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Blok in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddressblok" value="' . $_POST['partneraddressblok'] . '" size="21" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Nomor in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddressnomor" value="' . $_POST['partneraddressnomor'] . '" size="21" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('RT in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddressrt" value="' . $_POST['partneraddressrt'] . '" size="21" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('RW in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddressrw" value="' . $_POST['partneraddressrw'] . '" size="21" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Kecamatan in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddresskecamatan" value="' . $_POST['partneraddresskecamatan'] . '" size="51" maxlength="50" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Kelurahan in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddresskelurahan" value="' . $_POST['partneraddresskelurahan'] . '" size="51" maxlength="50" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Kabupaten in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddresskabupaten" value="' . $_POST['partneraddresskabupaten'] . '" size="51" maxlength="50" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Propinsi in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddresspropinsi" value="' . $_POST['partneraddresspropinsi'] . '" size="51" maxlength="50" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Kode Pos in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partneraddresskodepos" value="' . $_POST['partneraddresskodepos'] . '" size="11" maxlength="10" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Telepon in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="partnertelepon" value="' . $_POST['partnertelepon'] . '" size="21" maxlength="20" /></td>
-		</tr>
-		<tr>
-			<td>' . _('NPWP in Consignment Invoice/FP') . ':' . '</td>
-			<td><input type="text" name="PartnerNPWPInvoice" value="' . $_POST['PartnerNPWPInvoice'] . '" size="21" maxlength="20" /></td>
-		</tr>';
-		
-	echo $ExtraSpace;
+	echo '<fieldset><legend>' . _('Partner POS Parameters') . '</legend>';
+	echo FieldToSelectOneText('PartnerName', $_POST['PartnerName'], 51, 50, _('Partner Name in POS Slip'), '');
+	echo FieldToSelectOneText('PartnerAddress', $_POST['PartnerAddress'], 51, 100, _('Address in POS Slip'));
+	echo FieldToSelectOneText('PartnerNPWP', $_POST['PartnerNPWP'], 21, 20, _('NPWP in POS Slip'));
+	echo FieldToSelectOneSalesArea('AreaSalesCreditCard', $_POST['AreaSalesCreditCard'], _('Credit Card Sales Area'));
+	echo FieldToSelectOneSalesArea('AreaSalesCash', $_POST['AreaSalesCash'], _('Cash Sales Area'));
+	echo FieldToSelectOneSalesArea('AreaSalesCashOthers', $_POST['AreaSalesCashOthers'], _('Other Cash Sales Area'));
+	echo FieldToSelectOneText('CashSalesReported', $_POST['CashSalesReported'], 5, 5, _('% cash Sales Reported'));
+	echo FieldToSelectOneSysType('CounterInvoiceA', $_POST['CounterInvoiceA'], _('Counter Invoices Credit Card'));
+	echo FieldToSelectOneSysType('CounterInvoiceB', $_POST['CounterInvoiceB'], _('Counter Invoices Cash'));
+	echo FieldToSelectOneSysType('CounterInvoiceC', $_POST['CounterInvoiceC'], _('Counter Invoices Other Cash'));
+	echo '</fieldset>';
 
-	echo '<tr>
-			<td>' . _('% PPN') . ':</td>
-			<td><input type="text" name="PPN" class="number" title="' . _('PPN to apply') . '" value="' . $_POST['PPN'] . '" size="5" maxlength="5" /></td>
-		</tr>';
+	echo '<fieldset><legend>' . _('Invoice Details') . '</legend>';
+	echo FieldToSelectOneText('PartnerNameInvoice', $_POST['PartnerNameInvoice'], 51, 50, _('Partner Name in Consignment Invoice/FP'), '');
+	echo FieldToSelectOneText('partneraddressjalan', $_POST['partneraddressjalan'], 51, 100, _('Jalan in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressblok', $_POST['partneraddressblok'], 21, 20, _('Blok in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressnomor', $_POST['partneraddressnomor'], 21, 20, _('Nomor in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressrt', $_POST['partneraddressrt'], 21, 20, _('RT in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressrw', $_POST['partneraddressrw'], 21, 20, _('RW in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddresskecamatan', $_POST['partneraddresskecamatan'], 51, 50, _('Kecamatan in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddresskelurahan', $_POST['partneraddresskelurahan'], 51, 50, _('Kelurahan in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddresskabupaten', $_POST['partneraddresskabupaten'], 51, 50, _('Kabupaten in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddresspropinsi', $_POST['partneraddresspropinsi'], 51, 50, _('Propinsi in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddresskodepos', $_POST['partneraddresskodepos'], 11, 10, _('Kode Pos in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, _('Telepon in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('PartnerNPWPInvoice', $_POST['PartnerNPWPInvoice'], 21, 20, _('NPWP in Consignment Invoice/FP'));
+	echo '</fieldset>';
 
-	echo '<tr>
-		<td>' . _('PPN GL Account') . ':' . '</td>
-		<td><select name="AccountPPN">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountPPN']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	echo '<fieldset><legend>' . _('Tax Information') . '</legend>';
+	echo FieldToSelectOneText('PPN', $_POST['PPN'], 5, 5, _('% PPN to apply'), '');
+	echo FieldToSelectOneGLAccount('AccountPPN', $_POST['AccountPPN'], _('PPN GL Account'));
+	echo '</fieldset>';
 
-	echo $ExtraSpace;
+	echo '<fieldset><legend>' . _('EDC Comission Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountComissionCreditCard', $_POST['AccountComissionCreditCard'], _('Credit Card Comission GL Account'));
+	echo FieldToSelectOneGLAccount('AccountBankDanamon', $_POST['AccountBankDanamon'], _('Bank Danamon GL Account'));
+	echo FieldToSelectOneText('ComissionCCDanamon', $_POST['ComissionCCDanamon'], 5, 5, _('% Credit Card Comission Bank Danamon'));
+	echo FieldToSelectOneText('ComissionAmexDanamon', $_POST['ComissionAmexDanamon'], 5, 5, _('% AMEX Comission Bank Danamon'));
+	echo FieldToSelectOneGLAccount('AccountBankBNI', $_POST['AccountBankBNI'], _('Bank BNI GL Account'));
+	echo FieldToSelectOneText('ComissionCCBNI', $_POST['ComissionCCBNI'], 5, 5, _('% Credit Card Comission Bank BNI'));
+	echo FieldToSelectOneText('ComissionAmexBNI', $_POST['ComissionAmexBNI'], 5, 5, _('% AMEX Comission Bank BNI'));
+	echo FieldToSelectOneGLAccount('AccountBankMandiri', $_POST['AccountBankMandiri'], _('Bank Mandiri GL Account'));
+	echo FieldToSelectOneText('ComissionCCMandiri', $_POST['ComissionCCMandiri'], 5, 5, _('% Credit Card Comission Bank Mandiri'));
+	echo FieldToSelectOneGLAccount('AccountBankBCA', $_POST['AccountBankBCA'], _('Bank BCA GL Account'));
+	echo FieldToSelectOneText('ComissionCCBCA', $_POST['ComissionCCBCA'], 5, 5, _('% Credit Card Comission Bank BCA'));
+	echo FieldToSelectOneText('ComissionAmexBCA', $_POST['ComissionAmexBCA'], 5, 5, _('% AMEX Comission Bank BCA'));
+	echo '</fieldset>';
 
-	echo '<tr>
-		<td>' . _('Credit Card Sales Area') . ':' . '</td>
-		<td><select name="AreaSalesCreditCard">';
-	$AreaSales = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescription");
-	while ($MyRow=DB_fetch_array($AreaSales)) {
-		if($_POST['AreaSalesCreditCard']==$MyRow['areacode']) {
-			echo '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	echo '<fieldset><legend>' . _('WeChat Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountWeChat', $_POST['AccountWeChat'], _('WeChat GL Account'));
+	echo FieldToSelectOneText('ComissionWeChat', $_POST['ComissionWeChat'], 5, 5, _('% Comission WeChat'));
+	echo FieldToSelectOneGLAccount('AccountComissionWeChat', $_POST['AccountComissionWeChat'], _('WeChat Comission GL Account'));
+	echo '</fieldset>';
 
-	echo '<tr>
-		<td>' . _('Cash Sales Area') . ':' . '</td>
-		<td><select name="AreaSalesCash">';
-	$AreaSales = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescription");
-	while ($MyRow=DB_fetch_array($AreaSales)) {
-		if($_POST['AreaSalesCash']==$MyRow['areacode']) {
-			echo '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	echo '<fieldset><legend>' . _('QRIS Information') . '</legend>';
+	echo FieldToSelectOneGLAccount('AccountQRIS', $_POST['AccountQRIS'], _('QRIS Mandiri GL Account'));
+	echo FieldToSelectOneText('ComissionQRIS', $_POST['ComissionQRIS'], 5, 5, _('% Comission QRIS Mandiri'));
+	echo FieldToSelectOneGLAccount('AccountComissionQRIS', $_POST['AccountComissionQRIS'], _('QRIS Mandiri Comission GL Account'));
+	echo '</fieldset>';
 
-	echo '<tr>
-		<td>' . _('Other Cash Sales Area') . ':' . '</td>
-		<td><select name="AreaSalesCashOthers">';
-	$AreaSales = DB_query("SELECT areacode, areadescription FROM areas ORDER BY areadescription");
-	while ($MyRow=DB_fetch_array($AreaSales)) {
-		if($_POST['AreaSalesCashOthers']==$MyRow['areacode']) {
-			echo '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
+	echo '<fieldset><legend>' . _('PTADU Consignment Information') . '</legend>';
+	echo FieldToSelectOneText('PercentConsignmentPTADU', $_POST['PercentConsignmentPTADU'], 5, 5, _('% Consignment to PT ADU'));
+	echo FieldToSelectOneGLAccount('AccountConsignmentSalesPTADU', $_POST['AccountConsignmentSalesPTADU'], _('Consignment Sales PT. ADU GL Account'));
+	echo FieldToSelectOneGLAccount('AccountConsignmentCOGSPartner', $_POST['AccountConsignmentCOGSPartner'], _('Consignment COGS Partner GL Account'));
+	echo '</fieldset>';
 
-	echo '<tr>
-			<td>' . _('% cash Sales Reported') . ':</td>
-			<td><input type="text" name="CashSalesReported" class="number"  value="' . $_POST['CashSalesReported'] . '" size="5" maxlength="5" /></td>
-		</tr>';
+/*	KL RICARD: These parameters are obsolete. Used for HPP Compensation in accounting
+	echo '<fieldset><legend>' . _('HPP Compensation (Obsolete)') . '</legend>';
+	echo FieldToSelectOneText('HPPCompensation', $_POST['HPPCompensation'], 5, 5, _('% HPP Compensation'));
+	echo FieldToSelectOneGLAccount('AccountHPPCompensation', $_POST['AccountHPPCompensation'], _('HPP Compensation GL Account'));
+	echo '</fieldset>';
+	KL RICARD END: These parameters are obsolete. Used for HPP Compensation in accounting
+*/
+	echo OneButtonCenteredForm('submit', _('Enter Information'));
 
-	echo '<tr>
-		<td>' . _('Counter Invoices A') . ':' . '</td>
-		<td><select name="CounterInvoiceA">';
-	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
-	while ($MyRow=DB_fetch_array($InvoiceSysType)) {
-		if($_POST['CounterInvoiceA']==$MyRow['typeid']) {
-			echo '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-		
-	echo '<tr>
-		<td>' . _('Counter Invoices B') . ':' . '</td>
-		<td><select name="CounterInvoiceB">';
-	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
-	while ($MyRow=DB_fetch_array($InvoiceSysType)) {
-		if($_POST['CounterInvoiceB']==$MyRow['typeid']) {
-			echo '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-		<td>' . _('Counter Invoices C') . ':' . '</td>
-		<td><select name="CounterInvoiceC">';
-	$InvoiceSysType = DB_query("SELECT typeid, typename FROM systypes ORDER BY typename");
-	while ($MyRow=DB_fetch_array($InvoiceSysType)) {
-		if($_POST['CounterInvoiceC']==$MyRow['typeid']) {
-			echo '<option selected="selected" value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['typeid'] . '">' . $MyRow['typename'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo $ExtraSpace;
-
-	echo '<tr>
-		<td>' . _('Credit Card Comission GL Account') . ':' . '</td>
-		<td><select name="AccountComissionCreditCard">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountComissionCreditCard']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-		<td>' . _('Bank Danamon GL Account') . ':' . '</td>
-		<td><select name="AccountBankDanamon">';
-	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountBankDanamon']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('% Credit Card Comission Bank Danamon') . ':</td>
-			<td><input type="text" name="ComissionCCDanamon" class="number" value="' . $_POST['ComissionCCDanamon'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('% AMEX Comission Bank Danamon') . ':</td>
-			<td><input type="text" name="ComissionAmexDanamon" class="number" value="' . $_POST['ComissionAmexDanamon'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('Bank BNI GL Account') . ':' . '</td>
-		<td><select name="AccountBankBNI">';
-	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountBankBNI']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('% Credit Card Comission Bank BNI') . ':</td>
-			<td><input type="text" name="ComissionCCBNI" class="number" value="' . $_POST['ComissionCCBNI'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('% AMEX Comission Bank BNI') . ':</td>
-			<td><input type="text" name="ComissionAmexBNI" class="number" value="' . $_POST['ComissionAmexBNI'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('Bank Mandiri GL Account') . ':' . '</td>
-		<td><select name="AccountBankMandiri">';
-	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountBankMandiri']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('% Credit Card Comission Bank Mandiri') . ':</td>
-			<td><input type="text" name="ComissionCCMandiri" class="number" value="' . $_POST['ComissionCCMandiri'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('Bank BCA GL Account') . ':' . '</td>
-		<td><select name="AccountBankBCA">';
-	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountBankBCA']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('% Credit Card Comission Bank BCA') . ':</td>
-			<td><input type="text" name="ComissionCCBCA" class="number" value="' . $_POST['ComissionCCBCA'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('% AMEX Comission Bank BCA') . ':</td>
-			<td><input type="text" name="ComissionAmexBCA" class="number" value="' . $_POST['ComissionAmexBCA'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo $ExtraSpace;
-
-	echo '<tr>
-		<td>' . _('WeChat GL Account') . ':' . '</td>
-		<td><select name="AccountWeChat">';
-	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountWeChat']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('% Comission WeChat') . ':</td>
-			<td><input type="text" name="ComissionWeChat" class="number" value="' . $_POST['ComissionWeChat'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('WeChat Comission GL Account') . ':' . '</td>
-		<td><select name="AccountComissionWeChat">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountComissionWeChat']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo $ExtraSpace;
-
-	echo '<tr>
-		<td>' . _('QRIS Mandiri GL Account') . ':' . '</td>
-		<td><select name="AccountQRIS">';
-	$GLAccount = DB_query("SELECT accountcode, bankaccountname FROM bankaccounts ORDER BY bankaccountname");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountQRIS']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['bankaccountname'] . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo '<tr>
-			<td>' . _('% Comission QRIS Mandiri') . ':</td>
-			<td><input type="text" name="ComissionQRIS" class="number" value="' . $_POST['ComissionQRIS'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('QRIS Mandiri Comission GL Account') . ':' . '</td>
-		<td><select name="AccountComissionQRIS">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountComissionQRIS']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo $ExtraSpace;
-
-	echo '<tr>
-			<td>' . _('% Consignment to PT ADU') . ':</td>
-			<td><input type="text" name="PercentConsignmentPTADU" class="number" value="' . $_POST['PercentConsignmentPTADU'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('Consignment Sales PT. ADU GL Account') . ':' . '</td>
-		<td><select name="AccountConsignmentSalesPTADU">';
-	$GLAccount = DB_query("SELECT accountcode, accountname 
-							FROM chartmaster 
-							WHERE group_ = 'Clustering' 
-							ORDER BY accountcode");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountConsignmentSalesPTADU']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-		
-	echo '<tr>
-		<td>' . _('Consignment COGS Partner GL Account') . ':' . '</td>
-		<td><select name="AccountConsignmentCOGSPartner">';
-	$GLAccount = DB_query("SELECT accountcode, accountname 
-							FROM chartmaster 
-							WHERE group_ = 'Clustering' 
-							ORDER BY accountcode");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountConsignmentCOGSPartner']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-
-	echo $ExtraSpace;
-
-	echo '<tr>
-			<td>' . _('% HPP Compensation') . ':</td>
-			<td><input type="text" name="HPPCompensation" class="number" title="' . _('HPP Compensation') . '" value="' . $_POST['HPPCompensation'] . '" size="5" maxlength="5" /></td>
-		</tr>';
-
-	echo '<tr>
-		<td>' . _('HPP Compensation GL Account') . ':' . '</td>
-		<td><select name="AccountHPPCompensation">';
-	$GLAccount = DB_query("SELECT accountcode, accountname FROM chartmaster ORDER BY accountcode");
-	while ($MyRow=DB_fetch_array($GLAccount)) {
-		if($_POST['AccountHPPCompensation']==$MyRow['accountcode']) {
-			echo '<option selected="selected" value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		} else {
-			echo '<option value="' . $MyRow['accountcode'] .  '">' . $MyRow['accountcode'] . ' - ' . htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false) . '</option>';
-		}
-	}
-	echo '</select></td></tr>';
-	
-	echo '</table>
-		<br />
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
-		</div>
-		</div>
+	echo '</div>
 		</form>';
 
 }//end if record deleted no point displaying form to add record

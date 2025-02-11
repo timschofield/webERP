@@ -4,6 +4,9 @@
 			GENERAL KL FUNCTIONS
 **************************************************************************************************/
 
+use PhpOffice\PhpSpreadsheet\Shared\Date;
+use PhpOffice\PhpSpreadsheet\Cell\Cell;
+
 function ListToArray($List, $Separator){
 	$CleanUp = array("(", ")", "'");
 	return explode($Separator, str_replace($CleanUp, "", $List));
@@ -313,8 +316,11 @@ function ItemCodeQuantityInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
 	}
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDetail){
@@ -347,8 +353,11 @@ function ItemCodeAvgPriceInvoiced($StockID,$FromDate,$ToDate,$Debtorno,$CodeDeta
 		$SQL = $SQL . " AND salesorders.debtorno LIKE '". $Debtorno ."%'";
 	}
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function ItemCodeQOO_PurchaseOrders($StockID, $CodeDetail){
@@ -531,8 +540,11 @@ function GetAreaFromCustomer($CustomerCode){
 			WHERE custbranch.debtorno ='". $CustomerCode . "'
 			AND custbranch.branchcode = '" . $CustomerCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetCurrencyFromCustomer($CustomerCode){
@@ -541,8 +553,11 @@ function GetCurrencyFromCustomer($CustomerCode){
 			FROM debtorsmaster
 			WHERE debtorsmaster.debtorno ='". $CustomerCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetOnlinePartnerFromArea($Area){
@@ -553,60 +568,84 @@ function GetCategoryNameFromCode($CategoryId){
 	$ErrMsg = 'Error in function GetCategoryNameFromCode()';
 	$SQL="SELECT categorydescription FROM stockcategory WHERE categoryid='" . $CategoryId . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetDefaultLocationFromUser($UserId){
 	$ErrMsg = 'Error in function GetDefaultLocationFromUser()';
 	$SQL = "SELECT defaultlocation FROM www_users WHERE userid='".$UserId."'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetLocationNameFromCode($LocCode){
 	$ErrMsg = 'Error in function GetLocationNameFromCode()';
 	$SQL="SELECT locationname FROM locations WHERE loccode='" . $LocCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetItemDescriptionFromCode($StockID){
 	$ErrMsg = 'Error in function GetItemDescriptionFromCode()';
 	$SQL="SELECT description FROM stockmaster WHERE stockid='" . $StockID . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
 function GetTotalItemsChangingPrice(){
 	$ErrMsg = 'Error in function GetTotalItemsChangingPrice()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klchangingprice='1'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function GetTotalItemsMovingToDiscount($DiscountLevel){
 	$ErrMsg = 'Error in function GetTotalItemsMovingToDiscount()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klmovingdiscount".$DiscountLevel."='1'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
-}
-
-function NegativeNumber($Value){
-	// be sure the value returned is negative
-	if ($Value > 0){
-		$Value = -$Value;
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
 	}
-	return $Value;
+	return 0;
 }
 
-function PositiveNumber($Value){
-	// be sure the value returned is positive
+function EnsureNumberIsNegativeNumber($Value){
+    // Return 0 if the parameter is not a number
+    if (!is_numeric($Value)) {
+        return 0;
+    }
+    // Be sure the value returned is negative
+    if ($Value > 0){
+        $Value = -$Value;
+    }
+    return $Value;
+}
+function EnsureNumberIsPositiveNumber($Value){
+    // Return 0 if the parameter is not a number
+    if (!is_numeric($Value)) {
+        return 0;
+    }	// be sure the value returned is positive
 	if ($Value < 0){
 		$Value = -$Value;
 	}
@@ -617,18 +656,27 @@ function FindReasonOfReturn($ReasonCode){
 	$ErrMsg = 'Error in function FindReasonOfReturn()';
 	$SQL="SELECT reasonname FROM returnitemreasons WHERE reasonid='" . $ReasonCode . "'";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return '';
 }
 
-function ConvertExcelDate($cell, $format = 'Y-m-d'){
-	// converts an excel cell into a valid date to work with
-	if(PHPExcel_Shared_Date::isDateTime($cell)) {
-		$ConvertedDate = date($format,PHPExcel_Shared_Date::ExcelToPHP($cell->getCalculatedValue()));                          
-	}else{
-		$ConvertedDate = '0000-00-00';                          
-	}
-	return $ConvertedDate;
+function ConvertExcelDate($value, $format = 'Y-m-d') {
+    // First check if the value is already a Cell object
+    if ($value instanceof Cell) {
+        $cellValue = $value->getValue();
+    } else {
+        $cellValue = $value;
+    }
+    
+    // Check if it's a valid Excel date
+    if (is_numeric($cellValue)) {
+        return Date::excelToDateTimeObject($cellValue)->format($format);
+    }
+    
+    return '0000-00-00';
 }
 
 function AdjustBulatan($Amount, $RoundTo){
@@ -672,6 +720,20 @@ function GLAccountBelongsTo($Account){
 		$Company = "CASH";
 	}
 	return $Company;
+}
+
+function isBankAccount($GLAccount){
+	$ErrMsg = 'Error in function isBankAccount()';
+	$SQL = "SELECT *
+			FROM bankaccounts
+			WHERE accountcode = '" . $GLAccount . "'";
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result) == 0){
+		return false;
+	}
+	else{
+		return true;
+	}
 }
 
 function CreateConsignmentInvoiceNumber($CompanyFrom, $CompanyTo, $EndDate){
@@ -1237,8 +1299,11 @@ function GetLastKPIValue($Class,$Concept){
 			ORDER BY date DESC
 			LIMIT 1";
 	$Result = DB_query($SQL);		
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['value'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['value'];
+	}
+	return '';
 	
 }
 
@@ -1270,8 +1335,11 @@ function TotalItemsToBeReceivedByPO($Brand){
 			AND purchorders.status IN ('Authorised', 'Printed', 'Pending')" . 
 			$Operator1." ";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function TotalItemsToBeReceivedByWO($Brand){
@@ -1295,8 +1363,11 @@ function TotalItemsToBeReceivedByWO($Brand){
 			AND woitems.qtyreqd > woitems.qtyrecd ".
 			$Operator1." ";
 	$Result = DB_query($SQL,$ErrMsg);
-	$Row = DB_fetch_row($Result);
-	return $Row['0'];
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return $Row['0'];
+	}
+	return 0;
 }
 
 function TotalModels($Brand){
@@ -1315,8 +1386,11 @@ function TotalModels($Brand){
 			WHERE discontinued = 0 " . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['0'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
  
 function TotalItems($Brand){
@@ -1335,8 +1409,11 @@ function TotalItems($Brand){
 			WHERE stockmaster.stockid = locstock.stockid " . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['0'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
 
 function TotalDisplayItems($Brand){
@@ -1356,8 +1433,11 @@ function TotalDisplayItems($Brand){
 				AND locstock.quantity >= 1" . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return $MyRow['0'];
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
 
 function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
@@ -1377,8 +1457,11 @@ function NumItemsSoldPerBrand($Brand, $FromDate, $ToDate){
 				AND salesorderdetails.itemdue <= '" . $ToDate . "'" . 
 				$Operator1 ."";
 	$Result = DB_query($SQL);
-	$MyRow = DB_fetch_array($Result);
-	return ($MyRow['0']);
+	if (DB_num_rows($Result) > 0) {
+		$MyRow = DB_fetch_array($Result);
+		return $MyRow['0'];
+	}
+	return 0;
 }
 
 function BrandTextFromCode($Brand){
@@ -1394,26 +1477,20 @@ function BrandTextFromCode($Brand){
 	return $BrandText;
 }
 
-function ShowTableTitle($Text){
-	echo '<p class="page_title_text" align="center">
-			<strong>' . 
-				$Text . '
-			</strong>
-		</p>';
+function OptimumOrderQuantity($QtyNeeded, $Eoq, $PanSize){
+	if ($QtyNeeded > 0){
+		if ($PanSize == 0){
+			$OptimumOrderQuantity = max($Eoq, $QtyNeeded);
+		}
+		else{
+			$OptimumOrderQuantity = max($Eoq, ceil($QtyNeeded / $PanSize) * $PanSize);
+		}
+	}
+	else{
+		$OptimumOrderQuantity = 0;
+	}
+	return $OptimumOrderQuantity;
 }
 
-function ShowTableSubTitle($Text){
-	echo '<p class="page_title_text_small" align="center">' . 
-			$Text . '
-		</p>';
-}
 
-
-function ShowWarningTitle($Text){
-	echo '<p class="bad" align="center">
-			<strong>' . 
-				$Text . '
-			</strong>
-		</p>';
-}
 ?>

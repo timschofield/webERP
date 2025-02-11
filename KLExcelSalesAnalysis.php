@@ -1,10 +1,17 @@
 <?php
-require_once ('Classes/PHPExcel.php');
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php'); 
 include('includes/KLGeneralFunctions.php');
 
 if (!isset($_POST['FromDate'])){
@@ -13,6 +20,14 @@ if (!isset($_POST['FromDate'])){
 
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+}
+
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
+}
+
+if (!isset($_POST['CodeDetail'])) {
+    $_POST['CodeDetail'] = 'CODE_FULL';
 }
 
 if (isset($_POST['submit'])) {
@@ -83,10 +98,10 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 		if (DB_num_rows($Result) != 0){
 			
 			// Set value binder
-			PHPExcel_Cell::setValueBinder( new PHPExcel_Cell_AdvancedValueBinder() );
+			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -275,9 +290,14 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-SalesAnalysis-' . Date('Y-m-d'). '.xlsx';
+			// Redirect output to a client's web browser
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = 'KL-SalesAnalysis-' . Date('Y-m-d'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = 'KL-SalesAnalysis-' . Date('Y-m-d'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -289,7 +309,11 @@ function submit($ListCategories, $FromDate, $ToDate, $CodeDetail) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+			}
 			$objWriter->save('php://output');
 
 		}else{
@@ -319,52 +343,23 @@ function display($RootPath, $Theme){
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sales Analysis') . '" alt="" />' . ' ' . _('Excel file for Sales Analysis') . '
 		</p>';
 
-	echo '<table class="selection">
-			<tr>
-				<td>' . _('Select Inventory Categories') . ':</td>
-				<td><select autofocus="autofocus" required="required" minlength="1" size="12" name="Categories[]"multiple="multiple">';
-	$SQL = 'SELECT categoryid, categorydescription 
-			FROM stockcategory 
-			ORDER BY categorydescription';
-	$CatResult = DB_query($SQL);
-	while ($MyRow = DB_fetch_array($CatResult)) {
-		if (isset($_POST['Categories']) AND in_array($MyRow['categoryid'], $_POST['Categories'])) {
-			echo '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] .'</option>';
-		} else {
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-	}
-	echo '</select>
-			</td>
-		</tr>';
+	echo '<fieldset>
+			<legend>' . _('Report Parameters') . '</legend>';
 
-	echo '<tr>
-			<td>' . _('Item Codes detailed as') . ':</td>
-			<td><select name="CodeDetail">
-				<option selected="selected" value="CODE_FULL">' . _('Full Item Code') . '</option>
-				<option value="CODE_FULL_WITH_RINGS">' . _('Full Item Code + Rings Grouped') . '</option>
-				<option value="CODE_6">' . _('Basic Item Code (6 Char)') . '</option>
-			</select></td>
-		</tr>';
-	
-	echo '<tr>
-			<td>' . _('From') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
+	echo FieldToSelectMultipleStockCategories('Categories', isset($_POST['Categories']) ? $_POST['Categories'] : array(), _('Select Inventory Categories'), '', '', 1, true, true);
 
+	echo FieldToSelectFromThreeOptions('CODE_FULL', _('Full Item Code'),
+									'CODE_FULL_WITH_RINGS', _('Full Item Code + Rings Grouped'),
+									'CODE_6', _('Basic Item Code (6 Char)'),
+									'CodeDetail', $_POST['CodeDetail'],	_('Item Codes detailed as'), '', '', 2, true, false);
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From'), '', '', 3, true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To'), '', '', 4, true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
 
-	echo '</table>
-		<table>';
+	echo '</fieldset>';
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Sales Analysis Excel File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	echo OneButtonCenteredForm('submit', _('Export Sales Analysis File'));
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

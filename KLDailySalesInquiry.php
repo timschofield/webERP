@@ -13,8 +13,11 @@
 include('includes/session.php');
 $Title = _('KL Daily Sales Inquiry');
 include('includes/header.php');
+include_once('includes/DateFunctions.inc');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
-echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
+echo '<p class="page_title_text"><img src="'.$RootPath.'/css/' . $Theme .'/images/transactions.png" title="' . _('Daily Sales') . '" alt="" />' . ' ' . _('Daily Sales') . '</p>';
 echo '<div class="page_help_text">' . _('Select the month to show daily sales for') . '</div>';
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
@@ -22,88 +25,15 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 
 if (!isset($_POST['MonthToShow'])){
 	$_POST['MonthToShow'] = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$Result = DB_query("SELECT lastdate_in_period FROM periods WHERE periodno='" . $_POST['MonthToShow'] . "'");
-	$MyRow = DB_fetch_array($Result);
-	$EndDateSQL = $MyRow['lastdate_in_period'];
 }
+$EndDateSQL = EndDateSQLFromPeriodNo($_POST['MonthToShow']);
 
-echo '<fieldset>
-		<legend>', _('Report Criteria'), '</legend>
-		<field>
-			<label for="MonthToShow">' . _('Month to Show') . ':</label>
-			<select tabindex="1" name="MonthToShow">';
-
-$PeriodsResult = DB_query("SELECT periodno, lastdate_in_period FROM periods");
-
-while ($PeriodRow = DB_fetch_array($PeriodsResult)){
-	if ($_POST['MonthToShow']==$PeriodRow['periodno']) {
-		echo '<option selected="selected" value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
-		$EndDateSQL = $PeriodRow['lastdate_in_period'];
-	} else {
-		echo '<option value="' . $PeriodRow['periodno'] . '">' . MonthAndYearFromSQLDate($PeriodRow['lastdate_in_period']) . '</option>';
-	}
-}
-echo '</select>
-	<field>';
-
-echo '<field>
-		<label for="Salesperson">' . _('Salesperson') . ':</label>';
-
-if($_SESSION['SalesmanLogin'] != '') {
-	echo '<span>';
-	echo $_SESSION['UsersRealName'];
-	echo '</span>';
-}else{
-	echo '<select tabindex="2" name="Salesperson">';
-// KL RICARD Filter by Current = 1
-	$SalespeopleResult = DB_query("SELECT salesmancode, salesmanname FROM salesman WHERE current = 1 ORDER BY salesmancode");
-	if (!isset($_POST['Salesperson'])){
-		$_POST['Salesperson'] = 'All';
-		echo '<option selected="selected" value="All">' . _('All') . '</option>';
-	} else {
-		echo '<option value="All">' . _('All') . '</option>';
-	}
-	while ($SalespersonRow = DB_fetch_array($SalespeopleResult)){
-
-		if ($_POST['Salesperson']==$SalespersonRow['salesmancode']) {
-			echo '<option selected="selected" value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmancode'] . '-' . $SalespersonRow['salesmanname'] . '</option>';
-		} else {
-			echo '<option value="' . $SalespersonRow['salesmancode'] . '">' . $SalespersonRow['salesmancode'] . '-' . $SalespersonRow['salesmanname'] . '</option>';
-		}
-	}
-echo '</select>';
-}
-
-echo '</field>';
-
-echo '<field>
-		<label for="CustomerType">' . _('Customer Type') . ':</label>
-		<select tabindex="3" name="CustomerType">';
-$CustomerTypeResult = DB_query("SELECT typename, typeid FROM debtortype ORDER BY typename");
-if (!isset($_POST['CustomerType'])){
-	$_POST['CustomerType'] = 'All';
-	echo '<option selected="selected" value="All">' . _('All') . '</option>';
-} else {
-	echo '<option value="All">' . _('All') . '</option>';
-}
-while ($CustomerTypeRow = DB_fetch_array($CustomerTypeResult)){
-
-	if ($_POST['CustomerType']==$CustomerTypeRow['typeid']) {
-		echo '<option selected="selected" value="' . $CustomerTypeRow['typeid'] . '">' . $CustomerTypeRow['typename'] . '</option>';
-	} else {
-		echo '<option value="' . $CustomerTypeRow['typeid'] . '">' . $CustomerTypeRow['typename'] . '</option>';
-	}
-}
-echo '</select>
-	</field>';
-
-
-echo '</field>
-	</fieldset>
-	<div class="centre">
-		<input tabindex="4" type="submit" name="ShowResults" value="' . _('Show Daily Sales For The Selected Month') . '" />
-    </div>
-	</form>';
+echo '<fieldset>';
+echo FieldToSelectOnePeriod("MonthToShow", $_POST['MonthToShow'], _('Month to Show'), '', '', 1, true, false);
+echo FieldToSelectOneSalesPerson("Salesperson", $_POST['Salesperson'],  _('Sales Person'), '', 'CURRENT', true, 2, true, false);
+echo FieldToSelectOneCustomerType("CustomerType", $_POST['CustomerType'], _('Customer Type'), '', '', 3, true, false);
+echo '</fieldset>';
+echo OneButtonCenteredForm("ShowResults", _('Show Daily Sales For The Selected Month'), 4, true, false);
 	
 /*Now get and display the sales data returned */
 if (mb_strpos($EndDateSQL,'/')) {

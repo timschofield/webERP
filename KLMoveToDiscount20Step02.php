@@ -7,6 +7,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
+include('includes/KLUIGeneralFunctions.php');
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -59,7 +60,7 @@ include('includes/KLPrices.php');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
-		$TableHeader = '<tr>
+		$TableHeader = '<thead><tr>
 							<th>' . _('#') . '</th>
 							<th>' . _('Code') . '</th>
 							<th>' . _('Description') . '</th>
@@ -72,18 +73,10 @@ include('includes/KLPrices.php');
 							<th>' . _('QOH Total') . '</th>
 							<th>' . _('Discount') . '</th>
 							<th>' . _('Labels') . '</th>
-						</tr>';
+						</tr></thead><tbody>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
 			$CodeLink = '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			if ((($MyRow['qohkantor'] + $MyRow['qohotherlocs']) == $MyRow['qohtotal'])
 				AND ($MyRow['intransitfromkantor'] == 0)
@@ -105,7 +98,8 @@ include('includes/KLPrices.php');
 				$NewDiscountCategory = $MyRow['discountcategory'];
 				$NewLabelsPrinted = 'Not yet';
 			}
-			printf('<td class="number">%s</td>
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td>%s</td>
@@ -133,8 +127,7 @@ include('includes/KLPrices.php');
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody></table></div>';
 	}else{
 		prnMsg("No items to be moved to 20% discount at the moment", "success");
 	}

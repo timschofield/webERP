@@ -38,8 +38,7 @@ echo _('Stock Code') . ':<input type="text" data-type="no-illegal-chars" title =
 
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Stock Availability') . '" />';
 
-echo '<br />
-		<table class="selection">
+echo '<table class="selection">
 		<thead>
 			<th></th>
 			<th class="SortedColumn">' . _('Location') . '</th>
@@ -52,8 +51,9 @@ if ($StockID != ''){
 	$SQL = "SELECT locstock.loccode,
 					locations.locationname,
 					locstock.quantity
-			FROM locstock INNER JOIN locations
-			ON locstock.loccode=locations.loccode
+			FROM locstock 
+			INNER JOIN locations
+				ON locstock.loccode=locations.loccode
 			WHERE locstock.stockid = '" . $StockID . "'
 				AND  (locations.stockreadytosell= '1'
 					OR locations.loccode = 'KANTO')
@@ -106,8 +106,10 @@ if ($StockID != ''){
 	}
 }
 
-echo '</tbody></table>';
-echo '</div></form>';
+echo '</tfooter>
+	</table>
+	</div>
+	</form>';
 include('includes/footer.php');
 
 ?>

@@ -1,13 +1,14 @@
 <?php
-/* $Id: GLAccounts.php 4837 2012-01-24 23:41:46Z vvs2012 $*/
 
 include('includes/session.php');
-$Title = _('Chart of Accounts Maintenance for Retail Partner PI');
+$Title = _('Chart of Accounts Maintenance for POPI');
 
 $ViewTopic= 'GeneralLedger';
 $BookMark = 'GLAccounts';
 
 include('includes/header.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 if (isset($_POST['SelectedAccount'])){
 	$SelectedAccount = $_POST['SelectedAccount'];
@@ -89,42 +90,23 @@ if (!isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedAccount" value="' . $SelectedAccount . '" />';
 		echo '<input type="hidden" name="AccountCode" value="' . $_POST['AccountCode'] .'" />';
-		echo '<table class="selection">
-				<tr><td>' . _('Account Code') . ':</td>
-					<td>' . $_POST['AccountCode'] . '</td></tr>';
+		
+		echo '<fieldset><legend>' . _('Account Details') . '</legend>';
+		echo FieldToSelectOneText('AccountCode', $_POST['AccountCode'], 30, 30, _('Account Code'), '', '', '', true, true);
 	} else {
-		echo '<table class="selection">';
-		echo '<tr><td>' . _('Account Code') . ':</td>
-					<td><input type="text" name="AccountCode" size="30" class="number" maxlength="30" /></td>
-				</tr>';
+		echo '<fieldset><legend>' . _('Account Details') . '</legend>';
+		echo FieldToSelectOneText('AccountCode', '', 30, 30, _('Account Code'), '', '', '', true, true);
 	}
 
-	if (!isset($_POST['AccountName'])) {$_POST['AccountName']='';}
-	echo '<tr><td>' . _('Account Name') . ':</td><td><input type="Text" size="51" maxlength="50" name="AccountName" value="' . $_POST['AccountName'] . '" /></td></tr>';
-
-	$SQL = 'SELECT groupname FROM accountgroups ORDER BY sequenceintb';
-	$Result = DB_query($SQL);
-
-	echo '<tr><td>' . _('Account Group') . ':</td><td><select name=Group>';
-
-	while ($MyRow = DB_fetch_array($Result)){
-		if (isset($_POST['Group']) and $MyRow[0]==$_POST['Group']){
-			echo '<option selected="selected" value="';
-		} else {
-			echo '<option value="';
-		}
-		echo $MyRow[0] . '">' . $MyRow[0] . '</option>';
+	if (!isset($_POST['AccountName'])) {
+		$_POST['AccountName']='';
 	}
+	echo FieldToSelectOneText('AccountName', $_POST['AccountName'], 51, 50, _('Account Name'), '', '', '', true, false);
+	echo FieldToSelectOneGLAccountGroup('Group', (isset($_POST['Group']) ? $_POST['Group'] : ''), _('Account Group'), '', '', '', true, false);
+	
+	echo '</fieldset>';
 
-	if (!isset($_GET['SelectedAccount']) or $_GET['SelectedAccount']=='') {
-		echo '<script>defaultControl(document.GLAccounts.AccountCode);</script>';
-	} else {
-		echo '<script>defaultControl(document.GLAccounts.AccountName);</script>';
-	}
-
-	echo '</select></td></tr></table>';
-
-	echo '<br /><div class="centre"><input type="Submit" name="submit" value="'. _('Enter Information') . '" /></div>';
+	echo OneButtonCenteredForm('submit', _('Enter PT. PI GL Account Details'));
 
 	echo '</form>';
 

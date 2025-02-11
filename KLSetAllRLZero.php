@@ -10,22 +10,27 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
-if(isset($_POST['ProcessCopyAuthority'])) {
+if (!isset($_POST['FromLocationID'])){
+	$_POST['FromLocationID'] = '';
+}
+
+if(isset($_POST['ProcessReorderLevelZero'])) {
 
 	$InputError =0;
 
 	if($InputError ==0) {// no input errors
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
-		echo '<br />' . _('Setting ZERO to all Reorder Levels of location ') . ' ' .  $_POST['FromLocationID'];
 		$SQL = "UPDATE locstock SET reorderlevel = 0 WHERE loccode = '" . $_POST['FromLocationID'] . "'";
 		$DbgMsg = _('The SQL statement that failed was');
 		$ErrMsg =_('The SQL to set RL = 0 at location failed');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-		echo ' ... ' . _('completed');
+		prnMsg(_('Setting ZERO to all Reorder Levels of location ') . ' ' .  $_POST['FromLocationID'] . ' ' . _('completed'),'success');
 		
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 	}//only do the stuff above if  $InputError==0
 }
@@ -34,25 +39,15 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 echo '<div class="centre">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-echo '<table>';
-echo ' <tr>
-		<td>' . _('Select Location to set Reorder Levels to ZERO') . ':</td>
-		<td><select name="FromLocationID">';
-$Result = DB_query("SELECT loccode,
-							locationname
-					FROM locations
-					ORDER BY locationname");
+echo '<fieldset>
+        <legend>' . _('Location Selection') . '</legend>';
+echo FieldToSelectOneLocation('FromLocationID', $_POST['FromLocationID'], _('Select Location to set Reorder Levels to ZERO'), '', '', '', true, false);
+echo '</fieldset>';
 
-echo '<option selected value="">' . _('Not Yet Selected') . '</option>';
-while ($MyRow = DB_fetch_array($Result)) {
-	echo '<option value="';
-	echo $MyRow['loccode'] . '">' . $MyRow['loccode'] . ' - ' . $MyRow['locationname'] . '</option>';
-} //end while loop
-echo '</select></td></tr>';
-echo '</table>';
-echo '<input type="submit" name="ProcessCopyAuthority" value="' . _('Set Reorder Levels Zero') . '" />
-	</div>
-	</form>';
+echo OneButtonCenteredForm('ProcessReorderLevelZero', _('Set Reorder Levels Zero'));
+
+echo '</div>
+      </form>';
 
 include('includes/footer.php');
 ?>

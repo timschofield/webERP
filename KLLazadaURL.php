@@ -1,13 +1,20 @@
 <?php
-require_once ('Classes/PHPExcel.php');
-require_once ('Classes/PHPExcel/IOFactory.php');
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
 include('includes/OpenCartGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $Title = _('Import Excel with Lazada URL information');
 
@@ -17,6 +24,10 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	  <div>
 		<br/>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+
+if (!isset($_POST['SelectedFile'])) {
+    $_POST['SelectedFile'] = '';
+}
 
 if (isset($_POST['submit'])) {
     submit($_POST['SelectedFile']);
@@ -38,8 +49,8 @@ function submit($SelectedFile) {
 	$Target_file = $Target_dir . basename($_FILES["SelectedFile"]["name"]);
 	$ImageFileType = pathinfo($Target_file,PATHINFO_EXTENSION);
 	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
-	$inputFileType = PHPExcel_IOFactory::identify($Target_file);
-	$objReader = PHPExcel_IOFactory::createReader($inputFileType);
+	$inputFileType = IOFactory::identify($Target_file);
+	$objReader = IOFactory::createReader($inputFileType);
 	$objPHPExcel = $objReader->load($Target_file);
 	
 	//initialise no input errors
@@ -59,7 +70,7 @@ function submit($SelectedFile) {
 
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'
-		$highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn);
+		$highestColumnIndex = Coordinate::columnIndexFromString($highestColumn);
 		
 		echo '<div>';
 		echo '<table>
@@ -145,26 +156,21 @@ function submit($SelectedFile) {
 
 function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 {
-	// Display form fields. This function is called the first time the page is called.
-	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
-		</p>';
-	echo '<table class="selection">';
+    echo '<p class="page_title_text">
+            <img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+        </p>';
 
-	echo '<tr><td>' . _('Excel file with Lazada Information:') . '</td><td><input type="file"  name="SelectedFile" id="SelectedFile"/></td><td>
-			</td></tr>
-		</table>';
+    echo '<fieldset>
+            <legend>' . _('Import file with Lazada Information') . '</legend>';
 
-	echo '<table>
-		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Import File') . '" /></td>
-		</tr>
-		</table>
-		<br />';
-	echo '</div>
-		</form>';
+    echo FieldToSelectOneFile("SelectedFile", _('File with Lazada Information'),'','', '', true, false);
+
+    echo '</fieldset>';
+
+    echo OneButtonCenteredForm('submit', _('Import File'));
+
+    echo '</div>
+        </form>';
 
 } // End of function display()
 

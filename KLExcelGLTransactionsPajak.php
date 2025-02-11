@@ -1,10 +1,16 @@
 <?php
 
 include('includes/session.php');
-include('includes/SQL_CommonFunctions.inc');
-include('includes/KLDefines.php');
 
-require_once ('Classes/PHPExcel.php');
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
+include('includes/SQL_CommonFunctions.inc');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLDefines.php');
+include('includes/KLUIGeneralFunctions.php');
 
 if (!isset($_POST['FromDate'])){
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat'], mktime(0,0,0,Date('m'),1,Date('Y')));
@@ -14,6 +20,9 @@ if (!isset($_POST['ToDate'])){
 }
 if (!isset($_POST['PartnerCode'])) {
     $_POST['PartnerCode'] = 'PTADU';
+}
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
 }
 
 if (isset($_POST['submit'])) {
@@ -28,6 +37,9 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	//initialise no input errors
 	$InputError = 0;
 
+	$FromDateSQL = FormatDateForSQL($FromDate);
+	$ToDateSQL = FormatDateForSQL($ToDate);
+
 	//first off validate inputs sensible
 	if (!Is_Date($_POST['FromDate'])) {
 		$InputError = 1;
@@ -37,7 +49,7 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		$InputError = 1;
 		prnMsg(_('Invalid To Date'),'error');
 	}
-	if (strtotime($_POST['FromDate']) > strtotime($_POST['ToDate'])) {
+	if (strtotime($FromDateSQL) > strtotime($ToDateSQL)) {
 		$InputError = 1;
 		prnMsg(_('The From Date must be before the To Date'),'error');
 	}
@@ -63,8 +75,8 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 
 	if ($InputError == 0){
 
-		// Create new PHPExcel object
-		$objPHPExcel = new PHPExcel();
+		// Create new Spreadsheet object
+		$objPHPExcel = new Spreadsheet();
 
 		// Set document properties
 		$objPHPExcel->getProperties()->setCreator("webERP")
@@ -85,8 +97,8 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Description');
 
 
-		$WhereFrom 	= " AND trandate >= '". FormatDateForSQL($FromDate) ."'";
-		$WhereTo 	= " AND trandate <= '". FormatDateForSQL($ToDate) ."'";
+		$WhereFrom 	= " AND trandate >= '". $FromDateSQL ."'";
+		$WhereTo 	= " AND trandate <= '". $ToDateSQL ."'";
 
 		$i = 2;
 		$ErrMsg = _('The SQL to find the GL Transactions for '. $PartnerCode);
@@ -190,9 +202,14 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 		$objPHPExcel->setActiveSheetIndex(0);
 
-		// Redirect output to a client�s web browser (Excel2007)
-		header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-		$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+		// Redirect output to a client's web browser
+		if ($_POST['Format'] == 'xlsx') {
+			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+			$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.xlsx';
+		} else if ($_POST['Format'] == 'ods') {
+			header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+			$File = $PartnerCode . '-GL-' . FormatDateForSQL($FromDate). '-' . FormatDateForSQL($ToDate) . '.ods';
+		}
 		header('Content-Disposition: attachment;filename="' . $File . '"');
 		header('Cache-Control: max-age=0');
 		// If you're serving to IE 9, then the following may be needed
@@ -204,8 +221,13 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 		header ('Pragma: public'); // HTTP/1.0
 
-		$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-		$objWriter->save('php://output');
+		if ($_POST['Format'] == 'xlsx') {
+			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+			$objWriter->save('php://output');
+		} else if ($_POST['Format'] == 'ods') {
+			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+			$objWriter->save('php://output');
+		}
 	}
 } // End of function submit()
 
@@ -224,41 +246,17 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<fieldset>
-            <field>
-                <label>' . _('Company') . ':</label>
-                <select name="PartnerCode">';
-    
-    $SQL = "SELECT partnercode, 
-				partnername 
-			FROM klretailpartners
-			WHERE partnercode != 'NORETAIL'
-			ORDER BY partnername";
-    $Result = DB_query($SQL);
-    while ($MyRow = DB_fetch_array($Result)) {
-        if ($MyRow['partnercode'] == $_POST['PartnerCode']) {
-            echo '<option selected="selected" value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
-        } 
-		else {
-            echo '<option value="' . $MyRow['partnercode'] . '">' . $MyRow['partnername'] . '</option>';
-        }
-    }
-    echo '</select>
-            </field>';
+	echo '<table>';
+	
+	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], _('Company'), _('Select the company to export GL transactions'), '', 1, true, false);
+	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From Date'), '', '', 2, true, false);
+	echo FieldToSelectOneDate('ToDate', $_POST['ToDate'], _('To Date'), '', '', 3, true, false);
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'), '', '', 4, true, false);
+	
+	echo '</fieldset>';
 
-	echo ' <field>
-                <label>' . _('From Date') . ':</label>
-                <input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" />
-            </field>
-            <field>
-                <label>' . _('To Date') . ':</label>
-                <input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" />
-            </field>
-        </fieldset>';
+	echo OneButtonCenteredForm('submit', _('Export File GL transactions of a PT'));
 
-	echo '<div class="centre">
-			<input type="submit" name="submit" value="' . _('Export Excel') . '" />
-		</div>';
 	echo '</form>';
 	
 	include('includes/footer.php');

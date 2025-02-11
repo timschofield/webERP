@@ -4,6 +4,8 @@ include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $Title = _('Move Monthly Salaries Data to Petty Cash');
 include('includes/header.php');
@@ -13,15 +15,15 @@ echo '<p class="page_title_text">
 	</p>';
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['PaymentDate'], $_POST['SalaryType']);
+	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['PaymentDate'], $_POST['SalaryType']);
 } else {
 	display($Title);
 }
 
 include('includes/footer.php');
 
-//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) {
+
+function submit($Title, $Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 
 	$PaymentDate = FormatDateForSQL($PaymentDate);
 	
@@ -29,15 +31,14 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 	$InputError = FALSE;
 	
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
+	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Move Monthly Salary to Petty Cash for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Move Monthly Salary to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Move THR Only to Petty Cash for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Move THR Only to Petty Cash for '). MonthAndYearFromPeriodNo($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -45,7 +46,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodExportDate + 1)){
+		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to Move Monthly Salaries Data to Petty Cash should be last month";
 			$InputError = TRUE;
 		}
@@ -53,7 +54,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 	
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodExportDate)){
+		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to Move THR Only Data to Petty Cash should be this current month";
 			$InputError = TRUE;
 		}
@@ -93,7 +94,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 						bulatan
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
-					AND periodno = '" . $PeriodExportDate . "'
+					AND periodno = '" . $PeriodOfFile . "'
 					AND salarytype = '" . $SalaryType . "'
 				ORDER BY paymentmethod,
 					joiningdate,
@@ -139,13 +140,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 								$MyRow['komisiretail'] +
 								$MyRow['komisisupport'] +
 								$MyRow['bonuspenjualan'];
-//				if (($MyRow['codename'] == 'Ricard') OR 
-//					($MyRow['codename'] == 'Laia')){
-//					// Bonus paid as commissions to Ricard and Laia for PTADU goes to different GL than karyawan
-//					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMM-SHAREHOLDERS", $PaymentDate, $Commissions, $MyRow['codename']);
-//				}else{
-					MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $MyRow['codename']);
-//				}
+				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "COMMISSIONS", $PaymentDate, $Commissions, $MyRow['codename']);
 				
 				//Shifts
 				$Shifts = $MyRow['lembur'] +
@@ -211,17 +206,13 @@ function submit($Title, $Company, $LastDateOfPeriod, $PaymentDate, $SalaryType) 
 				</div>
 				</form>';
 		}else{
-			include('includes/header.php');
 			prnMsg('No data to Move Monthly Salaries Data to Petty Cash ');
-			include('includes/footer.php');
 		}
 	}else{
-		include('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $PageTitle . '" alt="" />' . ' ' . $PageTitle . 
 			'</p>';
 		prnMsg($InputErrorMessage, "warn");
-		include('includes/footer.php');
 	}
 } // End of function submit()
 
@@ -268,35 +259,23 @@ function MoveSalaryTxToPC($Company, $PaymentMethod, $Expense, $PaymentDate, $Amo
 	}
 }
 
-
-function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
+function display($Title) 
 {
-// Display form fields. This function is called the first time
-// the page is called.
+	// Display form fields. This function is called the first time the page is called.
+	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-          <div>
-			<br/>';
+          <div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-	echo '<table class="selection">';
+	echo '<fieldset><legend>' . _('Parameters Selection') . '</legend>';
 	
-	include('includes/KLPersonaliaParameterSelection.php');
+	include ('includes/KLPersonaliaParameterSelection.php');
 
-	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$PeriodsResult = DB_query("SELECT lastdate_in_period, periodno FROM periods WHERE periodno = '" . ($PeriodNow - 1) . "'");
-	$PeriodRow = DB_fetch_row($PeriodsResult);
-	$LastDate = $PeriodRow[0];
-	
-	echo '<tr>
-		<td>' . _('Payment date') . ':</td>
-		<td><input type="text" size="11" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="PaymentDate" value="' . ConvertSQLDate($LastDate) . '" />';
-	echo '</td></tr>';
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td colspan="2"><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</table>
-		<br />';
+ 	echo FieldToSelectOneDate('PaymentDate', ConvertSQLDate(EndDateSQLFromPeriodNo($PeriodNow - 1)), _('Payment date'), '', '', '', true, false);
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', $Title);
+
 	echo '</div>
          </form>';
 

@@ -7,6 +7,8 @@ include('includes/KLDefines.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 if (isset($_GET['SelectedPriceChange'])){
 	$SelectedPriceChange =mb_strtoupper($_GET['SelectedPriceChange']);
@@ -197,6 +199,7 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
+	echo '<thead>';
 	echo '<tr>
 			<th>' . _('#') . '</th>
 			<th>' . _('Item Code') . '</th>
@@ -204,11 +207,11 @@ or deletion of the records*/
 			<th>' . _('New Retail Price') . '</th>
 			<th>' . _('Start Date') . '</th>
 		</tr>';
+	echo '</thead>';
+	echo '<tbody>';
 	$i=1;
-	$k=0;
 	while ($MyRow=DB_fetch_array($Result)) {
-		$k = StartEvenOrOddRow($k);
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row"><td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
 				<td class="number">%s</td>
@@ -227,6 +230,7 @@ or deletion of the records*/
 				$MyRow['counterpricechange']);
 		$i++;
 	} //END WHILE LIST LOOP
+	echo '</tbody>';
 	echo '</table><br />';
 } //end of ifs and buts!
 
@@ -269,23 +273,12 @@ if (! isset($_GET['delete'])) {
 	  $_POST['NewRetailPrice']=0;
 	}
 
-	echo '<tr>
-			<td>' . _('Item Code') . ':</td>
-			<td><input type="text" name="Stockid" size="20" maxlength="20" value="' . $_POST['Stockid'] . '" /></td>
-		</tr>';
-	echo '<tr>
-			<td>' . _('New Retail Price') . ':</td>
-			<td><input type="text" class="number" name="NewRetailPrice" size="12" maxlength="11" value="' . $_POST['NewRetailPrice'] . '" /></td>
-		</tr>';
-
-	echo '</select></td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Enter Price Change') . '" />
-		</div>
-        </div>
+	echo '<fieldset><legend>' . _('Price Change') . '</legend>';
+	echo FieldToSelectOneText('Stockid', $_POST['Stockid'], 20, 20, _('Item Code'), '', '', '', true, false);
+	echo FieldToSelectOneText('NewRetailPrice', $_POST['NewRetailPrice'], 12, 11, _('New Retail Price'), '', 'class="number"', '', true, false);
+	echo '</fieldset>';
+	echo OneButtonCenteredForm('submit', _('Enter Price Change'));
+	echo '</div>
 		</form>';
 
 } //end if record deleted no point displaying form to add record

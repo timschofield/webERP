@@ -2,6 +2,8 @@
 /* $Id: ItemTags.php 6941 2014-10-26 23:18:08Z daintree $*/
 
 include('includes/session.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KUIGeneralFunctions.php');
 $Title = _('Item Tags') . ' / ' . _('Maintenance');
 include('includes/header.php');
 
@@ -209,17 +211,16 @@ if (! isset($_GET['delete'])) {
 		$_POST['TagNameBahasa']  = $MyRow['tagnamebahasa'];
 
 		echo '<input type="hidden" name="SelectedTag" value="' . $SelectedTag . '" />
-			<input type="hidden" name="tagid" value="' . $_POST['tagid'] . '" />
-			<table class="selection">';
+			<input type="hidden" name="tagid" value="' . $_POST['tagid'] . '" />';
 
-		// We dont allow the user to change an existing type code
+		echo '<fieldset>
+				<legend>' . _('Edit Tag Details') . '</legend>';
 
-		echo '<tr>
-				<td>' . _('Tag ID') . ': ' . $_POST['tagid'] . '</td>
-			</tr>';
-	} else 	{
-		// This is a new type so the user may volunteer a type code
-		echo '<table class="selection">';
+	}
+	else {
+		echo '<fieldset>
+				<legend>' . _('New Tag Details') . '</legend>';
+
 	}
 
 	if (!isset($_POST['TagName'])) {
@@ -228,20 +229,14 @@ if (! isset($_GET['delete'])) {
 	if (!isset($_POST['TagNameBahasa'])) {
 		$_POST['TagNameBahasa']='';
 	}
-	echo '<tr>
-			<td>' . _('Tag English') . ':</td>
-			<td><input type="text" name="TagName"  required="required" title="' . _('The tag name in English is required') . '" value="' . $_POST['TagName'] . '" /></td>
-		</tr>
-		<tr>
-			<td>' . _('Tag Bahasa') . ':</td>
-			<td><input type="text" name="TagNameBahasa"  required="required" title="' . _('The tag name is in Bahasa required') . '" value="' . $_POST['TagNameBahasa'] . '" /></td>
-		</tr>
-		</table>
-		<br />
-		<div class="centre">
-			<input type="submit" name="submit" value="' . _('Accept') . '" />
-		</div>
-	</div>
+
+	echo FieldToSelectOneText('TagName', $_POST['TagName'], 50, 100, _('Tag English'), '', '', '', true, false);
+	echo FieldToSelectOneText('TagNameBahasa', $_POST['TagNameBahasa'], 50, 100, _('Tag Bahasa'), '', '', '', true, false);
+	echo '</fieldset>';
+
+	echo OneButtonCenteredForm('submit', _('Accept'));
+
+	echo '</div>
 	</form>';
 
 } // end if user wish to delete

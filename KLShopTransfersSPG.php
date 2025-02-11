@@ -3,6 +3,7 @@ include ('includes/session.php');
 $Title = _('List of Transfers from/to shop');
 include ('includes/header.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');
 
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);

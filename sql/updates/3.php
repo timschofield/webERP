@@ -24,7 +24,10 @@ CreateTable('pctags',
   PRIMARY KEY (`pccashdetail`,`tag`)
 )");
 
-//executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans)");
+/* KL RICARD ALREADY EXECUTED
+executeSQL("INSERT INTO tags VALUES(0, 'None')");
+executeSQL("INSERT INTO gltags (SELECT counterindex, tag  FROM gltrans)");
+KL RICARD ALREADY EXECUTED END */
 
 /* KL RICARD EXECUTE THIS */
 executeSQL("TRUNCATE gltags");

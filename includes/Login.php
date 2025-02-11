@@ -10,7 +10,7 @@ include ($PathPrefix . 'includes/LanguageSetup.php');
 include ('LanguagesArray.php');
 
 // KL RICARD Select the default text and css depending on the code version
-if (strpos($_SERVER['PHP_SELF'],"TEST") !== false){
+if (KLwebERPScriptCalledFromTEST()) {
 	// the current script filename contains TEST, we are on TEST database
 	$TextLogin = 'TEST webERP';
 	$CSS = 'login-TEST.css';

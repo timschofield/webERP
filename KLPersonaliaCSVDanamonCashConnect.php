@@ -3,31 +3,32 @@
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $Title = _('Export CSV File for Transfer Danamon Cash Connect');
 
 if (isset($_POST['submit'])) {
-	submit($Title, $_POST['Company'], $_POST['DateOfFile'], $_POST['SalaryType']);
+	submit($Title, $_POST['Company'], $_POST['PeriodOfFile'], $_POST['SalaryType']);
 } else {
 	display($Title);
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
+function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 
 	//initialise no input errors
 	$InputError = FALSE;
 
 	//first off validate inputs sensible
-	$PeriodExportDate = GetPeriod(ConvertSQLDate($LastDateOfPeriod));
 	$Today = date('Y-m-d');
 	$PeriodNow = GetPeriod(Date($_SESSION['DefaultDateFormat']));
-	$PeriodMonth = MonthAndYearFromSQLDate($LastDateOfPeriod);
+	$PeriodMonth = MonthAndYearFromPeriodNo($PeriodOfFile);
 	
 	if ($SalaryType == "MONTHLY"){
-		$PageTitle = _('Export CSV Danamon Cash Connect Monthly Salary for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export CSV Danamon Cash Connect Monthly Salary for '). ConvertSQLDate($PeriodOfFile);
 	}elseif($SalaryType == "THRONLY"){
-		$PageTitle = _('Export CSV Danamon Cash Connect THR Only for '). ConvertSQLDate($LastDateOfPeriod);
+		$PageTitle = _('Export CSV Danamon Cash Connect THR Only for '). ConvertSQLDate($PeriodOfFile);
 	}else{
 		$InputErrorMessage = "The type of Salary " . $SalaryType . " is not accepted";
 		$InputError = TRUE;
@@ -35,7 +36,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 
 	// The month selected should be last month for Monthly salaries
 	if ($SalaryType == "MONTHLY"){
-		if($PeriodNow != ($PeriodExportDate + 1)){
+		if($PeriodNow != ($PeriodOfFile + 1)){
 			$InputErrorMessage = "The month selected to export Monthly Salary CSV File for Transfer Danamon Cash Connect should be last month";
 			$InputError = TRUE;
 		}
@@ -43,7 +44,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 		
 	// The month selected should be current month for THR Only salaries
 	if ($SalaryType == "THRONLY"){
-		if($PeriodNow != ($PeriodExportDate)){
+		if($PeriodNow != ($PeriodOfFile)){
 			$InputErrorMessage = "The month selected to export THR Only CSV File for Transfer LLG Danamon should be current month";
 			$InputError = TRUE;
 		}
@@ -76,7 +77,7 @@ function submit($Title, $Company, $LastDateOfPeriod, $SalaryType) {
 						bulatan
 				FROM salariescalculated
 				WHERE company = '" . $Company . "'
-					AND periodno = '" . $PeriodExportDate . "'
+					AND periodno = '" . $PeriodOfFile . "'
 					AND salarytype = '" . $SalaryType . "'
 					AND UPPER(paymentmethod) = 'BANK'
 				ORDER BY joiningdate,
@@ -265,17 +266,15 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">';
-
-	include('includes/KLPersonaliaParameterSelection.php');
+	echo '<fieldset>
+		<legend>' . _('Parameters') . '</legend>';
 	
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</table>
-		<br />';
+	include ('includes/KLPersonaliaParameterSelection.php');
+
+	echo '</fieldset>';
+	
+	echo OneButtonCenteredForm('submit', $Title);
+
 	echo '</div>
          </form>';
 	include('includes/footer.php');

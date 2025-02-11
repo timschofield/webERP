@@ -32,6 +32,7 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
 include('includes/KLEmails.php');
 include('includes/KLReorderLevel.php');
+include('includes/KLUIGeneralFunctions.php');
 
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -124,10 +125,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
 		$NumberOfTestExecuted++;
-//		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
-//		$NumberOfTestExecuted++;
-//		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWLINK", $RootPath);
-//		$NumberOfTestExecuted++;
 	}
 
 	if ($KL_PurchasingTeam) {
@@ -139,10 +136,6 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		WrongStandardCost("Hong Kong"  , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
 		$NumberOfTestExecuted++;
-//		WrongStandardCost("Philippines", "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
-//		$NumberOfTestExecuted++;
-//		WrongStandardCost("India"      , "", STANDARD_COST_FACTOR_FOREIGN, 0.04, "SHOWONLY", $RootPath);
-//		$NumberOfTestExecuted++;
 	}
 
 	/***************************************************************************************
@@ -1563,6 +1556,8 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 
 	$SQL = "SELECT stockmaster.stockid,
 				stockmaster.description,
+				stockmaster.eoq,
+				stockmaster.pansize,
 				(SELECT locstock.quantity
 					FROM locstock
 					WHERE locstock.stockid = stockmaster.stockid
@@ -1612,8 +1607,9 @@ function ConsumablesGoodsNotEnoughStock($DaysUsage, $DaysMinStock, $DaysStockPur
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			$Needed = (($MyRow['usageKL'] / $DaysUsage) * $DaysMinStock ) - $MyRow['qtyKANTOR'];
-			$Recommended = (($MyRow['usageKL'] / $DaysUsage) * $DaysStockPurchase);
-			printf('<td class="number">%s</td>
+			$Recommended = OptimumOrderQuantity((($MyRow['usageKL'] / $DaysUsage) * $DaysStockPurchase), $MyRow['eoq'], $MyRow['pansize']);
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
 					<td>%s</td>
 					<td>%s</td>
 					<td class="number">%s</td>

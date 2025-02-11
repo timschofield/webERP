@@ -1,10 +1,17 @@
 <?php
-require_once ('Classes/PHPExcel.php');
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -27,6 +34,9 @@ if (!isset($_POST['FromDate'])){
 }
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
+}
+if (!isset($_POST['Format'])) {
+    $_POST['Format'] = 'xlsx';
 }
 
 if (isset($_POST['submit'])) {
@@ -89,8 +99,8 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 		if (DB_num_rows($Result) != 0){
 			$TxResult = DB_Txn_Begin();
 
-		// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+		// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -164,9 +174,14 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.xlsx';
+			// Redirect output to a client's web browser
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = 'KL-RetailCustomers-' . Date('Y-m-d'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -178,8 +193,13 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 			if ($MarkExported == "Y"){
 				$SQL = "UPDATE klretailcustomers 
@@ -205,8 +225,6 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 
 //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 function display($RootPath, $Theme) {
-// Display form fields. This function is called the first time
-// the page is called.
 	$Title = _('Excel file for Sendinblue: Export Retail Customer');
 
 	include('includes/header.php');
@@ -220,36 +238,29 @@ function display($RootPath, $Theme) {
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Retail Customer') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Retail Customer') . '
 		</p>';
 
-	echo '<table>';
+	echo '<fieldset>
+		<legend>' . _('Selection Criteria') . '</legend>';
 
-	echo '<tr>
-			<td>' . _('From:') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
-			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
-		</tr>';
-	echo '<tr><td>' . _('Mark as Exported?') . ':</td>
-			<td><select name="MarkExported">
-				<option selected="selected" value="N">' . _('No') . '</option>
-				<option value="Y">' . _('Yes') . '</option>
-				</select>
-			</td>
-		</tr>';
+	echo FieldToSelectOneDate('FromDate', _('From'), $_POST['FromDate']);
+	echo FieldToSelectOneDate('ToDate', _('To'), $_POST['ToDate']);
+	
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
+	
+	echo '<field>';
+	echo _('Mark as Exported?') . ':';
+	echo '<select name="MarkExported">
+			<option selected="selected" value="N">' . _('No') . '</option>
+			<option value="Y">' . _('Yes') . '</option>
+			</select>';
+	echo '</field>';
+	
+	echo '</fieldset>';
 
-	echo '</table>
-		<table>';
+	echo OneButtonCenteredForm('submit', _('Export File for Sendinblue'));
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File for Sendinblue') . '" /></td>
-		</tr>
-		</table>
-		<br />';
 	echo '</div>
          </form>';
 	include('includes/footer.php');
-
 } // End of function display()
 
 ?>

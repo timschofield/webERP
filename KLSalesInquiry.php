@@ -4,7 +4,7 @@
 // If Date Type is Invoice, stockmoves is the main table
 
 include('includes/session.php');
-$Title = _('Sales Inquiry');
+$Title = _('KL Sales Inquiry');
 include('includes/header.php');
 
 # Sets default date range for current month
@@ -60,13 +60,14 @@ if (isset($_POST['SummaryType'])){
 }
 
 if (isset($_POST['submit'])) {
-    submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType);
+    submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType);
 } else {
     display();
 }
 
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
-function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$DebtorNameOp,$SaveSummaryType) {
+function submit($PartNumber, $PartNumberOp, $DebtorNo, $DebtorNoOp, $DebtorName, $DebtorNameOp, $SaveSummaryType) {
+	include('includes/KLRoles.php');
 
 	//initialise no input errors
 	$InputError = 0;
@@ -858,7 +859,7 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				$Linectr = 0;
 			while ($MyRow = DB_fetch_array($Result)) {
 			    $Linectr++;
-				// KL MOD: Hide costs
+				// KL Ricard MOD: Hide costs
 				if ($KL_SystemAdmin){
 					$Cost = $MyRow['extcost'];
 				}else{
@@ -1023,8 +1024,8 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				    // qty is from stockmoves
 				    $DisplayQty = $MyRow['qty'];
 				}
-				// KL MOD: Hode costs
-				if($_SESSION['UserID'] == "Ricard") {
+				// KL RICARD MOD: Hide costs
+				if ($KL_SystemAdmin){
 					$Cost = $MyRow['extcost'];
 				}else{
 					$Cost = 0;
@@ -1220,11 +1221,6 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 			<td>' . _('Transaction Number sort only valid for Invoice Date Type') . '</td>
 		</tr>';
 
- 
-//   echo '<tr><td>&nbsp;</td></tr>
-//		<tr><td>&nbsp;</td></tr>
-//		<tr><td>&nbsp;</td></tr>';
-
 	echo '<tr><td>&nbsp;</td></tr>';
     echo '<tr><td>' . _('Summary Type') . ':</td>
 			<td><select name="SummaryType">
@@ -1239,19 +1235,13 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 				<option value="salesman">' . _('Salesman') . '</option>
 				<option value="area">' . _('Sales Area') . '</option>
 			</select></td>
-			<td>&nbsp;</td>
 			<td>' . _('Transaction Number summary only valid for Invoice Date Type') . '</td>
 		</tr>';
 
-  echo '<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
+  echo '<tr>
 			<td><input type="submit" name="submit" value="' . _('Run Inquiry') . '" /></td>
 		</tr>
-		</table>
-	<br />';
+		</table>';
    echo '</div>
          </form>';
 

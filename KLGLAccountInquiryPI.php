@@ -1,7 +1,9 @@
 <?php
-// GLAccountInquiry.php
-// Shows the general ledger transactions for a specified account over a specified range of periods.
+
 include ('includes/session.php');
+include ('includes/KLGeneralFunctions.php');
+include ('includes/UIGeneralFunctions.php');
+include ('includes/KLUIGeneralFunctions.php');
 $Title = _('General Ledger Account Inquiry for POPI');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLAccountInquiry';
@@ -58,80 +60,36 @@ $DefaultPeriodDate = Date('Y-m-d', Mktime(0, 0, 0, Date('m') , 0, Date('Y')));
 
 /*Show a form to allow input of criteria for TB to show */
 echo '<fieldset>
-		<legend>', _('Inquiry Criteria') , '</legend>
-		<field>
-			<label for="Account">' . _('Account') . ':</label>
-			<select name="Account">';
+		<legend>', _('Inquiry Criteria') , '</legend>';
 
-$SQL = "SELECT chartmasterPI.accountcode,
-			bankaccounts.accountcode AS bankact,
-			bankaccounts.currcode,
-			chartmasterPI.accountname
-		FROM chartmasterPI LEFT JOIN bankaccounts
-		ON chartmasterPI.accountcode=bankaccounts.accountcode
-		INNER JOIN glaccountusers ON glaccountusers.accountcode=chartmasterPI.accountcode AND glaccountusers.userid='" . $_SESSION['UserID'] . "' AND glaccountusers.canview=1
-		ORDER BY chartmasterPI.accountcode";
-$Account = DB_query($SQL);
-while ($MyRow = DB_fetch_array($Account)) {
-	if ($MyRow['accountcode'] == $SelectedAccount) {
-		if (!is_null($MyRow['bankact'])) {
-			$BankAccount = true;
-		}
-		echo '<option selected="selected" value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
-	}
-	else {
-		echo '<option value="' . $MyRow['accountcode'] . '">' . $MyRow['accountcode'] . ' ' . htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) . '</option>';
-	}
-}
-echo '</select>
-	</field>';
+// Replace Account selection with function call
+echo FieldToSelectOneGLAccount('Account', 
+                             isset($SelectedAccount) ? $SelectedAccount : '',
+                             _('Account'),
+                             '',
+                             'PTPI_VIEW');
 
-//Select the tag
-echo '<field>
-		<label for="tag">' . _('Select Tag') . ':</label>
-		<select name="tag">';
+// Replace Tag selection with function call  
+echo FieldToSelectOneTag('tag',
+                        isset($_POST['tag']) ? $_POST['tag'] : '',
+                        _('Select Tag'),
+                        '');
 
-$SQL = "SELECT tagref,
-			tagdescription
-		FROM tags
-		ORDER BY tagref";
+// Replace Period selection with function call
+echo FieldToSelectMultiplePeriods('Period',
+                                 isset($FirstPeriodSelected) ? $FirstPeriodSelected : '',
+                                 isset($LastPeriodSelected) ? $LastPeriodSelected : '',
+                                 _('For Period range'),
+                                 '',
+                                 'ASC');
 
-$Result = DB_query($SQL);
-echo '<option value="0">0 - ' . _('All tags') . '</option>';
+echo '</fieldset>';
 
-while ($MyRow = DB_fetch_array($Result)) {
-	if (isset($_POST['tag']) and $_POST['tag'] == $MyRow['tagref']) {
-		echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
-	}
-	else {
-		echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
-	}
-}
-echo '</select>
-	</field>';
-// End select tag
-echo '<field>
-		<label for="Period">' . _('For Period range') . ':</label>
-		<select name="Period[]" size="12" multiple="multiple">';
+// Replace submit button with function call
+echo OneButtonCenteredForm('Show', _('Show Account Transactions'));
 
-$SQL = "SELECT periodno, lastdate_in_period FROM periods ORDER BY periodno DESC";
-$Periods = DB_query($SQL);
-while ($MyRow = DB_fetch_array($Periods)) {
-	if (isset($FirstPeriodSelected) AND $MyRow['periodno'] >= $FirstPeriodSelected AND $MyRow['periodno'] <= $LastPeriodSelected) {
-		echo '<option selected="selected" value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
-	}
-	else {
-		echo '<option value="' . $MyRow['periodno'] . '">' . _(MonthAndYearFromSQLDate($MyRow['lastdate_in_period'])) . '</option>';
-	}
-}
-echo '</select>
-	</field>
-	</fieldset>
-	<div class="centre">
-		<input type="submit" name="Show" value="' . _('Show Account Transactions') . '" />
-	</div>
-	</div>', // End input of criteria div.
-'</form>';
+echo '</div>'; // End input of criteria div.
+echo '</form>';
 
 /* End of the Form  rest of script is what happens if the show button is hit*/
 
@@ -173,22 +131,23 @@ if (isset($_POST['Show'])) {
 			LEFT JOIN gltags
 				ON gltags.counterindex=gltrans.counterindex
 			WHERE gltrans.account = '" . $SelectedAccount . "'
-			AND posted=1
-			AND periodno>='" . $FirstPeriodSelected . "'
-			AND periodno<='" . $LastPeriodSelected . "'";
+				AND posted=1
+				AND periodno>='" . $FirstPeriodSelected . "'
+				AND periodno<='" . $LastPeriodSelected . "'";
 
 	if ($_POST['tag'] != 0) {
 		$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
 	}
 
 	$SQL = $SQL . " ORDER BY periodno, gltrans.trandate, counterindex";
+
 	$NameSQL = "SELECT accountname FROM chartmasterPI WHERE accountcode='" . $SelectedAccount . "'";
 	$NameResult = DB_query($NameSQL);
 	$NameRow = DB_fetch_array($NameResult);
 	$SelectedAccountName = $NameRow['accountname'];
 	$ErrMsg = _('The transactions for account') . ' ' . $SelectedAccount . ' ' . _('could not be retrieved because');
 	$TransResult = DB_query($SQL, $ErrMsg);
-	$BankAccountInfo = isset($BankAccount) ? '<th>' . _('Org Currency') . '</th>
+	$BankAccountInfo = isBankAccount($SelectedAccount) ? '<th>' . _('Org Currency') . '</th>
 							<th>' . _('Amount in Org Currency') . '</th>
 							<th>' . _('Bank Ref') . '</th>' : '';
 	echo '<br />
@@ -321,7 +280,7 @@ if (isset($_POST['Show'])) {
 				}
 
 			}
-			elseif (isset($BankAccount)) {
+			elseif (isBankAccount($SelectedAccount)) {
 				$BankRef = '';
 				$OrgAmt = $MyRow['amount'];
 				$Currency = $_SESSION['CompanyRecord']['currencydefault'];
@@ -349,7 +308,7 @@ if (isset($_POST['Show'])) {
 				<td class="number">', $CreditAmount, '</td>
 				<td class="number">', locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , '</td>
 				<td class="text">', $MyRow['tagdescription'], '</td>';
-		if (isset($BankAccount)) {
+		if (isBankAccount($SelectedAccount)) {
 			echo '<td class="text">', $Currency, '</td>
 				<td class="number"><b>', locale_number_format($OrgAmt, $_SESSION['CompanyRecord']['decimalplaces']) , '</b></td>
 				<td class="text">', $BankRef, '</td>';

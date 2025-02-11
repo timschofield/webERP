@@ -7,9 +7,81 @@ I want you to:
 1) Replace ALL table-based data entry headers into <fieldset><legend> ... </legend> </fieldset> structures
 2) Replace ALL table-based data entry <tr><td> ... </td></tr> structures into <field> ... </field> structures
 
-General prompt rules: 
-1) Do not cut long lines. 
-2) Do not delete any comment in the code
-3) Do not change, modify, upgrade any other part of the code not related to the propmt.
-4) Apply all changes above directly to all the files in the working set
+Afterwards, look for:
+1) <field> ... </field> structures referring to the selection of a single Customer Type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneCustomerType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
 
+2) <field> ... </field> structures referring to the input of a single date and replace the <field> ... </field> structure for a call to the function FieldToSelectOneDate($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+3) <field> ... </field> structures referring to the selection of a single location and replace the <field> ... </field> structure for a call to the function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+4) <field> ... </field> structures referring to the input of a single period and replace the <field> ... </field> structure for a call to the function FieldToSelectOnePeriod($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+
+5) <field> ... </field> structures referring to the input of a single sales person and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+6) <field> ... </field> structures referring to the input of a single text and replace the <field> ... </field> structure for a call to the function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+
+7) <field> ... </field> structures referring to the input of multiple stock categories and replace the <field> ... </field> structure for a call to the function FieldToSelectMultipleStockCategories($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+8) <field> ... </field> structures referring to the input of a single manufacturer and replace the <field> ... </field> structure for a call to the function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) 
+
+9) <field> ... </field> structures referring to the input of file to be uploaded and replace the <field> ... </field> structure for a call to the function FieldToSelectOneFile($VariableName, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+10) <field> ... </field> structures referring to the input of 2 fixed options and replace the <field> ... </field> structure for a call to the function FieldToSelectFromTwoOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+11) <field> ... </field> structures referring to the input of 3 fixed options and replace the <field> ... </field> structure for a call to the function  FieldToSelectFromThreeOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$ValueOption3, $LabelOption3,
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+12) <field> ... </field> structures referring to the input of a single GL Account and replace the <field> ... </field> structure for a call to the function FieldToSelectOneGLAccount($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) taking care of the filter
+
+13) <field> ... </field> structures referring to the input of a single tag and replace the <field> ... </field> structure for a call to the function FieldToSelectOneTag($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+14) <field> ... </field> structures referring to the input of multiple (or a range of) periods and replace the <field> ... </field> structure for a call to the function FieldToSelectMultiplePeriods($VariableName, $FirstSelectedValue, $LastSelectedValue, $Label = '', $HelpText = '', $Filter = 'ASC', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+15) <field> ... </field> structures referring to the input of a single GL Account group and replace the <field> ... </field> structure for a call to the function FieldToSelectOneGLAccountGroup($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+16) <field> ... </field> structures referring to the input of a single KPI Concept and replace the <field> ... </field> structure for a call to the function FieldToSelectOneKPIConcept($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+17) <field> ... </field> structures referring to the input of multiple locations and replace the <field> ... </field> structure for a call to the function FieldToSelectMultipleLocations($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+18) <field> ... </field> structures referring to the input of a single Maintenance type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneMaintenanceType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+19) <field> ... </field> structures referring to the input of a single Sales Area and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSalesArea($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+20) <field> ... </field> structures referring to the input of a single Sys Type and replace the <field> ... </field> structure for a call to the function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+21) <field> ... </field> structures referring to the input of a single Returned Item Reason and replace the <field> ... </field> structure for a call to the function FieldToSelectOneReturnedItemReason($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+22) <field> ... </field> structures referring to the input of a single Service Fee Reason and replace the <field> ... </field> structure for a call to the function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+23) <field> ... </field> structures referring to the input of a password and replace the <field> ... </field> structure for a call to the function FieldToSelectOnePassword($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+24) <field> ... </field> structures referring to the input of a single department and replace the <field> ... </field> structure for a call to the function FieldToSelectOneDepartmentd($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+25) <field> ... </field> structures referring to the selection of a key from an array and replace the <field> ... </field> structure for a call to the function FieldToSelectOneEntryFromArray($Array, $VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false)
+
+
+
+29) If there is a input type = "submit" with one button, replace it for a call to the function OneButtonCenteredForm($ButtonName, $ButtonValue) from includes/UIGeneralFunctions.php
+29) If there is a input type = "submit" with two buttons, replace it for a call to the function TwoButtonsCenteredForm($ButtonName1, $ButtonValue1, $ButtonName2, $ButtonValue2) from includes/UIGeneralFunctions.php
+
+in all these cases, 
+30) Respect the proper order of the parameters of the functions above, defined in 
+includes/UIGeneralFunctions.php and includes/KLUIGeneralFunctions.php
+
+31) Afterwards: if these lines are not in the script:
+include('includes/UIGeneralFunctions.php'); 
+include('includes/KLUIGeneralFunctions.php');
+add them just after include('includes/KLGeneralFunctions.php'); or after include('includes/KLDefines.php'); or after include('includes/SQL_CommonFunctions.inc');
+
+
+General prompt rules: 
+1) Do not change any logic, just the data presentation
+2) Do not cut long lines. 
+3) Do not delete any comment in the code
+4) Do not add comments like //Added line
+5) Do not change, modify, upgrade any other part of the code not related to the propmt.
+6) Apply all changes above directly to all the files in the working set

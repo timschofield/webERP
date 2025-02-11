@@ -1053,10 +1053,10 @@ function ErrorsInTransfers($maxdays, $RootPath){
 						$MyRow['recloc'],
 						locale_number_format($MyRow['shipped_models'], 0),
 						locale_number_format($MyRow['cancelled_models'], 0),
-						locale_number_format($MyRow['cancelled_models'] / $MyRow['shipped_models'] * 100, 2) . '%',
+						locale_number_format(($MyRow['shipped_models'] != 0) ? ($MyRow['cancelled_models'] / $MyRow['shipped_models'] * 100) : 0, 2) . '%',
 						locale_number_format($MyRow['shipped_quantity'], 0),
 						locale_number_format($MyRow['cancelled_quantity'], 0),
-						locale_number_format($MyRow['cancelled_quantity'] / $MyRow['shipped_quantity'] * 100, 2) . '%'
+						locale_number_format(($MyRow['shipped_quantity'] != 0) ? ($MyRow['cancelled_quantity'] / $MyRow['shipped_quantity'] * 100) : 0, 2) . '%'
 						);
 				$NumTransfersWithErrors++;
 			}
@@ -1078,16 +1078,16 @@ function ErrorsInTransfers($maxdays, $RootPath){
 				<td class="number">%s</td>
 				</tr>',
 				locale_number_format($NumTransfers, 0),
-				locale_number_format($NumTransfersWithErrors / $NumTransfers * 100, 2) . '%',
+				locale_number_format(($NumTransfers != 0) ? ($NumTransfersWithErrors / $NumTransfers * 100) : 0, 2) . '%',
 				'',
 				'',
 				'TOTAL',
 				locale_number_format($TotalShippedModels, 0),
 				locale_number_format($TotalCancelledModels, 0),
-				locale_number_format($TotalCancelledModels / $TotalShippedModels * 100, 2) . '%',
+				locale_number_format(($TotalShippedModels != 0) ? ($TotalCancelledModels / $TotalShippedModels * 100) : 0, 2) . '%',
 				locale_number_format($TotalShippedQty, 0),
 				locale_number_format($TotalCancelledQty, 0),
-				locale_number_format($TotalCancelledQty / $TotalShippedQty * 100, 2) . '%'
+				locale_number_format(($TotalShippedQty != 0) ? ($TotalCancelledQty / $TotalShippedQty * 100) : 0, 2) . '%'
 				);
 		echo '</tfooter>
 			  </table>
@@ -1205,26 +1205,10 @@ function FinishedStockDistribution($Kind, $ByReport){
 		$i = 1;
 		$Totalpcs = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($MyRow['optimalstock'] != 0){
-				$PercentStock = locale_number_format(($MyRow['realstock']/$MyRow['optimalstock']) * 100,0) . "%";
-			}else{
-				$PercentStock = "";
-			}
-			if ($MyRow['optimalmodels'] != 0){
-				$PercentModels =locale_number_format(($MyRow['realmodels']/$MyRow['optimalmodels']) * 100,0). "%";
-			}else{
-				$PercentModels = "";
-			}
-			if ($MyRow['realmodels'] != 0){
-				$RealPcsModel =locale_number_format(($MyRow['realstock']/$MyRow['realmodels']),1);
-			}else{
-				$RealPcsModel = "";
-			}
-			if ($MyRow['optimalmodels'] != 0){
-				$OptimalPcsModel =locale_number_format(($MyRow['optimalstock']/$MyRow['optimalmodels']),1);
-			}else{
-				$OptimalPcsModel = "";
-			}
+			$PercentStock = ($MyRow['optimalstock'] != 0) ? locale_number_format(($MyRow['realstock']/$MyRow['optimalstock']) * 100,0) . "%" : "";
+			$PercentModels = ($MyRow['optimalmodels'] != 0) ? locale_number_format(($MyRow['realmodels']/$MyRow['optimalmodels']) * 100,0). "%" : "";
+			$RealPcsModel = ($MyRow['realmodels'] != 0) ? locale_number_format(($MyRow['realstock']/$MyRow['realmodels']),1) : "";
+			$OptimalPcsModel = ($MyRow['optimalmodels'] != 0) ? locale_number_format(($MyRow['optimalstock']/$MyRow['optimalmodels']),1) : "";
 			if ($ByReport == "LOCATION"){
 				printf('<tr class="striped_row">
 							<td class="number">%s</td>
@@ -1554,7 +1538,7 @@ function FinishedStockDistributionByShopAndCategory(){
 						<td class="number">%s</td>
 						<td class="number">%s</td>
 						<td class="number">%s</td>
-					<td class="number">%s</td>
+						<td class="number">%s</td>
 					</tr>',
 					$i,
 					$MyRow['locationname'],
@@ -1840,7 +1824,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 		$NumberOfOpenShopsOU = NumberOfShops("SHOPOU");
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			$DailyUse = $MyRow['qused'] / $DaysUsage;
+			$DailyUse = ($DaysUsage > 0) ? ($MyRow['qused'] / $DaysUsage) : 0;
 			$UsedLastXDays = ceil($DailyUse * $DaysUsage);
 			$ForecastUsedThisYear = ceil($DailyUse * ($DaysMinimumStock));
 			if (ItemInList($MyRow['stockid'], LIST_ITEMS_KAPAL_LAUT_PACKAGING)){
@@ -1851,7 +1835,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$ForecastUsedLastYear = ceil($MyRow['qusedlastyear'] * (1 + $TrendThisYearOU));
 			}
 			$ForecastUsageNextDays = max( $ForecastUsedThisYear, $ForecastUsedLastYear);
-			$ForecastUsageDaily = $ForecastUsageNextDays / $DaysMinimumStock;
+			$ForecastUsageDaily = ($DaysMinimumStock > 0) ? ($ForecastUsageNextDays / $DaysMinimumStock) : 0;
 
 			// to prevent shortage on slow moving items in ANY gudang, and be still able to serve the item to the shops
 			// we need to keep a minimum stock always in gudang
@@ -1869,10 +1853,10 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 
 			$OptimumQOH = max($ForecastUsageNextDays, $MinQOHGudang);
 			$QOH = max($MyRow['qohgudang']+$MyRow['qohshops'],0);
-			$QOHDays = ($ForecastUsageDaily != 0) ? ($QOH / $ForecastUsageDaily) : 0; // QOH expressed in days at daily forecast rate
+			$QOHDays = ($ForecastUsageDaily > 0) ? ($QOH / $ForecastUsageDaily) : 0; // QOH expressed in days at daily forecast rate
 			$MissingQOH = max($OptimumQOH - $QOH, 0);
-			$DaysQOH = ($DailyUse != 0) ? floor($QOH / $DailyUse): 0;
-			$DaysQOO = ($DailyUse != 0) ? floor(($QOH + $MyRow['qoo']) / $DailyUse) : 0;
+			$DaysQOH = ($DailyUse > 0) ? floor($QOH / $DailyUse): 0;
+			$DaysQOO = ($DailyUse > 0) ? floor(($QOH + $MyRow['qoo']) / $DailyUse) : 0;
 			if ($MyRow['pansize'] > 0){
 				$PanSize = $MyRow['pansize'];
 			}else{
@@ -1890,11 +1874,9 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					$QtyNeeded = max(0, ($ForecastUsageNextDays - $QOH - $MyRow['qoo']));
 				}
 			}
-			if ($QtyNeeded > 0){
-				$QtyToOrder = max($MyRow['eoq'], ceil($QtyNeeded/$PanSize)*$PanSize);
-			}else{
-				$QtyToOrder = 0;
-			}
+			
+			$QtyToOrder = OptimumOrderQuantity($QtyNeeded, $MyRow['eoq'], $PanSize);
+
 			// phasing out these codes, don't want to buy anymore
 			if (($MyRow['stockid'] == "PKSB02-L")
 				OR ($MyRow['stockid'] == "PKPB02-L")
@@ -1989,7 +1971,12 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 				$TotalQOHOptimum += $OptimumQOH;
 				$TotalQOHGudang += $MyRow['qohgudang'];
 				$TotalQOHShops += $MyRow['qohshops'];
-
+				if ($OptimumQOH != 0) {
+					$PercentShortage = $MissingQOH / $OptimumQOH * 100;
+				} else {
+					$PercentShortage = 0;  
+				}
+	
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				if ($ExtendedVersion){
 					printf('<tr class="striped_row">
@@ -2023,7 +2010,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format($QOH,0),
 						locale_number_format($QOHDays,0),
 						locale_number_format($MissingQOH,0),
-						locale_number_format($MissingQOH/$OptimumQOH*100,0) .'%',
+						locale_number_format($PercentShortage,0) .'%',
 						locale_number_format_zero_blank($MyRow['qoo'],0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
@@ -2051,7 +2038,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 						locale_number_format($QOH,0),
 						locale_number_format($QOHDays,0),
 						locale_number_format($MissingQOH,0),
-						locale_number_format($MissingQOH/$OptimumQOH*100,0) .'%',
+						locale_number_format($PercentShortage,0) .'%',
 						locale_number_format_zero_blank($MyRow['qoo'],0),
 						locale_number_format_zero_blank($QtyToOrder,0)
 						);
@@ -2060,9 +2047,19 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			$i++;
 		}
 		if (!$ShowHeader){
-			$TotalDailyUse = $UsageXDays / $DaysUsage;
-			$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
-			$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
+			$TotalDailyUse = ($DaysUsage > 0) ? ($UsageXDays / $DaysUsage) : 0;
+			if ($TotalDailyUse != 0) {
+				$TotalDaysQOH = floor($QOHTotal / $TotalDailyUse);
+				$TotalDaysQOO = floor(($QOHTotal + $PendingQOO) / $TotalDailyUse);
+			} else {
+				$TotalDaysQOH = 0;
+				$TotalDaysQOO = 0;
+			}
+			if ($TotalQOHOptimum != 0) {
+				$PercentTotalShortage = $MissingTotal / $TotalQOHOptimum * 100;
+			} else {
+				$PercentTotalShortage = 0;  
+			}
 			echo'</tbody>
 				<tfooter>';
 			if ($ExtendedVersion){
@@ -2097,7 +2094,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($QOHTotal,0),
 					'',
 					locale_number_format($MissingTotal,0),
-					locale_number_format($MissingTotal/$TotalQOHOptimum*100,0).'%',
+					locale_number_format($PercentTotalShortage,0).'%',
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
@@ -2125,11 +2122,14 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 					locale_number_format($QOHTotal,0),
 					'',
 					locale_number_format($MissingTotal,0),
-					locale_number_format($MissingTotal/$TotalQOHOptimum*100,0).'%',
+					locale_number_format($PercentTotalShortage,0).'%',
 					locale_number_format_zero_blank($PendingQOO,0),
 					locale_number_format_zero_blank($OptimumOrder,0)
 					);
 			}
+			echo '</tfooter>
+				</table>
+				</div>';
 
 			InsertKPI("Packaging", "Packaging current daily use (PCS)", $TotalDailyUse);
 			InsertKPI("Packaging", "Packaging used last " . $DaysUsage .  " days (PCS)", $UsageXDays);
@@ -2141,10 +2141,7 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			InsertKPI("Packaging", "Packaging Optimum Order (PCS)", $OptimumOrder);
 			InsertKPI("Packaging", "Packaging Optimum QOH (PCS)", $TotalQOHOptimum);
 			InsertKPI("Packaging", "Packaging Shortage (PCS)", $MissingTotal);
-			InsertKPI("Packaging", "Packaging Shortage (%)", round($MissingTotal/$TotalQOHOptimum*100,0));
-			echo '</tfooter>
-				</table>
-				</div>';
+			InsertKPI("Packaging", "Packaging Shortage (%)", round($PercentTotalShortage,0));
 		}
 	}
 }
@@ -3171,7 +3168,11 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS")
 			AND ($TypeOfProduct == "FORSALE")){
-			$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
+			if ($CurrentTotalQtyItemsForSale != 0) {
+				$AverageItemCost = $CurrentTotalValueItemsForSale / $CurrentTotalQtyItemsForSale;
+			} else {
+				$AverageItemCost = 0;
+			}
 			InsertKPI("Stock", "Average Standard Cost for item for sale (IDR)", $AverageItemCost);
 			$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxdays));
 			$SQL = "SELECT SUM(amount) AS cogs
@@ -4027,7 +4028,11 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 
-			$NewStdCost = $MyRow['price'] / $MyRow['conversionfactor'] * (1/$MyRow['rate']) * $StdFactor;
+			if ($MyRow['conversionfactor'] > 0 && $MyRow['rate'] > 0) {
+				$NewStdCost = $MyRow['price'] / $MyRow['conversionfactor'] * (1/$MyRow['rate']) * $StdFactor;
+			} else {
+				$NewStdCost = 0;
+			}
 			$Price = locale_number_format($MyRow['price'],$MyRow['decimalplaces']);
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . '&SupplierID='. $MyRow['supplierno'] . '&Edit=1&EffectiveFrom='. $MyRow['effectivefrom']  .' ">' . $Price . '</a>';
 			if ($Mode == "SHOWONLY"){
@@ -4070,7 +4075,11 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 					// SHOWLINK
 					$StdCostText = '<a href="' . $RootPath . '/KLUpdateStandardCost.php?StockId=' . $MyRow['stockid'] . '&NewCost=' . round($NewStdCost,0) .'">' . locale_number_format($NewStdCost,0) . '</a>';
 				}
-				$Percent = ($MyRow['stdcost'] != 0) ? ((($MyRow['price'] / $MyRow['conversionfactor'] * (1/$MyRow['rate']) * $StdFactor)/$MyRow['stdcost'] * 100)-100) : 100 ;
+				if ($MyRow['stdcost'] != 0) {
+					$PercentDiff = ((($MyRow['price'] / $MyRow['conversionfactor'] * (1/$MyRow['rate']) * $StdFactor)/$MyRow['stdcost'] * 100)-100);
+				} else {
+					$PercentDiff = 0;
+				}
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
 						<td>%s</td>
@@ -4104,7 +4113,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 						locale_number_format($MyRow['qoh'],0),
 						$MyRow['units'],
 						$StdCostText,
-						locale_number_format($Percent,1) . '%'
+						locale_number_format($PercentDiff,1) . '%'
 						);
 			}
 			$i++;

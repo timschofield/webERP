@@ -38,7 +38,7 @@ $SQL = "SELECT 	codename,
 				bulatan
 		FROM salariescalculated
 		WHERE company = '" . $Company . "'
-			AND periodno = '" . $PeriodExportDate . "'
+			AND periodno = '" . $PeriodOfFile . "'
 			AND salarytype = '" . $SalaryType . "'
 		ORDER BY paymentmethod,
 			codename";

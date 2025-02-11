@@ -516,7 +516,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 	$_POST['Cost']  = 0;
 	$_POST['AccumDepn']  = 0;
 	$_POST['DatePurchased']=Date($_SESSION['DefaultDateFormat']);
-	$_POST['DepnType']  = '';
+	$_POST['DepnType']  = 0;
 	$_POST['BarCode']  = '';
 	$_POST['DepnRate']  = 0;
 

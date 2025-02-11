@@ -8,6 +8,8 @@ $BookMark = "InventoryMovement";
 include('includes/header.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
+include('includes/KLUIGeneralFunctions.php');
+
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -40,8 +42,6 @@ echo '<div class="centre"><input type="hidden" name="FormID" value="' . $_SESSIO
 echo _('Stock Code') . ':<input type="text" data-type="no-illegal-chars" title ="'._('Input the stock code to inquire upon. Only alpha-numeric characters are allowed in stock codes with no spaces punctuation or special characters. Underscore or dashes are allowed.').'" placeholder="'._('Alpha-numeric only').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" />';
 
 echo ' <input type="submit" name="ShowStatus" value="' . _('Show Item Movements in ') . $LocationName . '" />';
-echo '<br /><br />';
-
 if ($StockID != ''){
 	$Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='".$StockID."'");
 	$MyRow = DB_fetch_row($Result);

@@ -1,5 +1,10 @@
 <?php
-/* $Id: PDFPriceLabelsbyTCPDF.php  */
+
+/******************************************************************************************************
+ * 
+ * KL RICARD: Heavily modified KL file.
+ * 
+ ******************************************************************************************************/
 
 include('includes/session.php');
 include('includes/KLDefines.php');
@@ -151,8 +156,8 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 					<td>' . $LabelRow['stockid'] . '</td>
 					<td>' . $LabelRow['categoryid'] . '</td>
 					<td>' . $LabelRow['description'] . '</td>
-					<td class="number">' . locale_number_format($LabelRow['price'],$LabelRow['decimalplaces']) . '</td>
-					<td class="number">' . locale_number_format($LabelsToPrint,0) . '</td>
+					<td class="number">' . locale_number_format($LabelRow['price'], 0) . '</td>
+					<td class="number">' . locale_number_format($LabelsToPrint, 0) . '</td>
 					<td>';
 			if (isset($_POST['SelectAll']) AND isset($_POST['CheckAll'])) {
 				echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
@@ -164,7 +169,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 			echo '<input type="hidden" name="StockID' . $i . '" value="' . $LabelRow['stockid'] . '" />
 				<input type="hidden" name="Category' . $i . '" value="' . $LabelRow['categoryid'] . '" />
 				<input type="hidden" name="Description' . $i . '" value="' . $LabelRow['description'] . '" />
-				<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['barcode'] . '" />
+				<input type="hidden" name="Barcode' . $i . '" value="' . $LabelRow['stockid'] . '" />
 				<input type="hidden" name="DiscountCategory' . $i . '" value="' . $LabelRow['discountcategory'] . '" />
 				<input type="hidden" name="LabelsToPrint' . $i . '" value="' . $LabelsToPrint . '" />
 				<input type="hidden" name="Price' . $i . '" value="' . $LabelRow['price'] . '" />';
@@ -246,6 +251,27 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		// not coded yet
 		return;
 	}
+
+	if ($_POST['LabelID'] == 'T570'){
+		$CoreFileName = "Pricetags";
+	}else{
+		$CoreFileName = "CodeStickers";
+	}
+	if ($_POST['Location'] != "None"){
+		$CoreFileName = $CoreFileName . "-QOH-" . $_POST['Location'];
+	}
+	if ($_POST['LocationStock'] != "None"){
+		$CoreFileName = $CoreFileName . "-STOCK-" . $_POST['LocationStock'];
+	}
+	if ($_POST['ChangeToday'] != "Nothing"){
+		$CoreFileName = $CoreFileName . "-". $_POST['ChangeToday'];
+	}
+	if ($_POST['StockCategory'] != "All"){
+		$CoreFileName = $CoreFileName . "-". $_POST['StockCategory'];
+	}
+	
+	$FileName= $CoreFileName . '-' . Date('Y-m-d-H-i-s') . '.pdf';
+
 	$BarcodeStyle = array(
 			'position' => '',
 			'align' => 'C',
@@ -284,66 +310,74 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 	$LabelsPrinted = 0;
 	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
 		if (isset($_POST['PrintLabel'.$i])){
-			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsToPrint'.$i];$LabelNumber++){
-				
-				// Get the data for each field
-				$StockID = $_POST['StockID' . $i];
-//				$Description = $_POST['Description' . $i];
+			// Get the data for each field
+			$StockID = $_POST['StockID' . $i];
 
-				// define Logo information
-				if ($_POST['LabelID'] == 'T570'){
-					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
-						OR $_POST['Category' . $i] == "SETBLA"){
-						$LogoXPosition = 14.0;
-						$LogoYPosition = 1.0;
-						$LogoHeight = 4.5;
-						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
-					}else{
-						$LogoXPosition = 12.0;
-						$LogoYPosition = 1.0;
-						$LogoHeight = 4.0;
-						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
-					}
-				}elseif ($_POST['LabelID'] == 'CodeSticker'){
-					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK)
-						OR $_POST['Category' . $i] == "SETBLA"){
-						$LogoXPosition = 18.0;
-						$LogoYPosition = 1.0;
-						$LogoHeight = 6.0;
-						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
-					}else{
-						$LogoXPosition = 14.0;
-						$LogoYPosition = 1.0;
-						$LogoHeight = 6.0;
-						$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
-					}
-				}else{
-					//not code yet
-					return;
+			// define Logo information
+			if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT)){
+				$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelBLINK.jpg';
+			}
+			elseif (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_KAPAL_LAUT_INCLUDING_SETUP_ALL_DISCOUNT)){
+				$LogoFile = 'companies/' . $_SESSION['DatabaseName'] . '/LogoLabelKL.jpg';
+			}
+			else{
+				$LogoFile = '';
+			}
+
+			if ($_POST['LabelID'] == 'T570'){
+				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT)){
+					$LogoXPosition = 14.0;
+					$LogoYPosition = 1.0;
+					$LogoHeight = 4.5;
 				}
-				// define prices for discounted items
-				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
-					$ResultDiscount = DB_query("SELECT MAX(discountrate) AS discount
-									FROM discountmatrix
-								WHERE salestype='" . RETAIL_PRICE_LIST . "'
-								AND discountcategory ='" . $_POST['DiscountCategory'. $i] . "'
-								AND quantitybreak <='1'");
-					$MyRow = DB_fetch_row($ResultDiscount);
-					if ($MyRow[0]!=0){ 
-						// there's a discount!
-						$PercentageDiscount = $MyRow[0];
-						$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1-($PercentageDiscount)),0) . ' '. CURRENCY_CODE;
-						$Price = "WAS: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
-					}else{
-						// no discount, price discounted by fixed price
-						$PercentageDiscount = 0;
-						$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
-						$Price = "";
-					}
-				}else{
-					// define prices for not discounted items
-					$Price = locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+				else{
+					$LogoXPosition = 12.0;
+					$LogoYPosition = 1.0;
+					$LogoHeight = 4.0;
 				}
+			}
+			elseif ($_POST['LabelID'] == 'CodeSticker'){
+				if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_BLINK_INCLUDING_SETUP_ALL_DISCOUNT)){
+					$LogoXPosition = 18.0;
+					$LogoYPosition = 1.0;
+					$LogoHeight = 6.0;
+				}
+				else{
+					$LogoXPosition = 14.0;
+					$LogoYPosition = 1.0;
+					$LogoHeight = 6.0;
+				}
+			}
+			else{
+				//not code yet
+				return;
+			}
+
+			// define prices for discounted items
+			if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
+				$ResultDiscount = DB_query("SELECT MAX(discountrate) AS discount
+								FROM discountmatrix
+							WHERE salestype='" . RETAIL_PRICE_LIST . "'
+							AND discountcategory ='" . $_POST['DiscountCategory'. $i] . "'
+							AND quantitybreak <='1'");
+				$MyRow = DB_fetch_row($ResultDiscount);
+				if ($MyRow[0]!=0){ 
+					// there's a discount!
+					$PercentageDiscount = $MyRow[0];
+					$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1-($PercentageDiscount)),0) . ' '. CURRENCY_CODE;
+					$Price = "WAS: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+				}else{
+					// no discount, price discounted by fixed price
+					$PercentageDiscount = 0;
+					$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+					$Price = "";
+				}
+			}else{
+				// define prices for not discounted items
+				$Price = locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+			}
+
+			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsToPrint'.$i];$LabelNumber++){
 				
 				$pdf->AddPage();
 
@@ -383,25 +417,6 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		} //this label is set to print
 	} //loop through labels selected to print
 
-	if ($_POST['LabelID'] == 'T570'){
-		$CoreFileName = "Pricetags";
-	}else{
-		$CoreFileName = "CodeStickers";
-	}
-	if ($_POST['Location'] != "None"){
-		$CoreFileName = $CoreFileName . "-QOH-" . $_POST['Location'];
-	}
-	if ($_POST['LocationStock'] != "None"){
-		$CoreFileName = $CoreFileName . "-STOCK-" . $_POST['LocationStock'];
-	}
-	if ($_POST['ChangeToday'] != "Nothing"){
-		$CoreFileName = $CoreFileName . "-". $_POST['ChangeToday'];
-	}
-	if ($_POST['StockCategory'] != "All"){
-		$CoreFileName = $CoreFileName . "-". $_POST['StockCategory'];
-	}
-	
-	$FileName= $CoreFileName . '-' . Date('Y-m-d-H-i-s') . '.pdf';
 	$pdf->Output($FileName, 'D');
 	$pdf->__destruct();
 

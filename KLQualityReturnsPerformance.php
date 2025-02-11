@@ -7,13 +7,10 @@ include ('includes/header.php');
 include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
-
-$PeriodNow=GetPeriod(Date($_SESSION['DefaultDateFormat']));
-
-prnMsg("Performing Control Panel Section 02",'info');
 
 if ($KL_SystemAdmin 
 	OR $KL_BusinessDevelopmentManager){

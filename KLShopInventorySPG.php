@@ -3,6 +3,7 @@ include ('includes/session.php');
 $Title = _('Shop Inventory Control for SPG');
 include ('includes/header.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');
 
 $LocationName = GetLocationNameFromCode($_SESSION['UserStockLocation']);
@@ -48,10 +49,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$i++;
 }
 echo '</tbody>
-	</table>
-	</div>
-	</form>';
-echo '<br />';
+	</table>';
 
 include ('includes/footer.php');
 ?>

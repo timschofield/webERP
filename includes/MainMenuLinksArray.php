@@ -548,7 +548,8 @@ $MenuItems['GL']['Transactions']['Caption'] = array(	_('Bank Account Payments En
 														_('Bank Account Payments Matching'),
 														_('Bank Account Receipts Matching'),
 														_('KL Consignment Invoices'),
-														_('KL Export CSV for Faktur Pajak'));
+														_('KL Export CSV for Faktur Pajak'),
+														_('Process Regular Payments'));
 
 $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL',
@@ -557,7 +558,8 @@ $MenuItems['GL']['Transactions']['URL'] = array('/Payments.php?NewPayment=Yes',
 												'/BankMatching.php?Type=Payments',
 												'/BankMatching.php?Type=Receipts',
 												'/KLConsignmentInvoice.php',
-												'/KLConsignmentCSVFakturPajak.php');
+												'/KLConsignmentCSVFakturPajak.php',
+												'/RegularPaymentsProcess.php');
 										
 $MenuItems['GL']['Reports']['Caption'] = array( _('Bank Account Reconciliation Statement'),
 												_('Cheque Payments Listing'),
@@ -569,11 +571,6 @@ $MenuItems['GL']['Reports']['Caption'] = array( _('Bank Account Reconciliation S
 												_('Trial Balance'),
 												_('Balance Sheet'),
 												_('Profit and Loss Statement'),
-												_('Profit and Loss Statement for PT. Angin Dingin Utara'),
-												_('Profit and Loss Statement for PT. Sungai Mutiara Hitam'),
-												_('Profit and Loss Statement for PT. Bumi Biru'),
-												_('Profit and Loss Statement for Retail Partner POIK'),
-												_('Profit and Loss Statement for Retail Partner POPI'),
 												_('KL Cash Variation'),
 												_('Cash Flow Statement'),
 												_('Export Excel GL Transactions for PT'),
@@ -593,11 +590,6 @@ $MenuItems['GL']['Reports']['URL'] = array(	'/BankReconciliation.php',
 											'/GLTrialBalance.php',
 											'/GLBalanceSheet.php',
 											'/GLProfit_Loss.php',
-											'/KLGLProfit_LossADU.php',
-											'/KLGLProfit_LossSMH.php',
-											'/KLGLProfit_LossBB.php',
-											'/KLGLProfit_LossIK.php',
-											'/KLGLProfit_LossPI.php',
 											'/KLGLCashVariation.php',
 											'/GLCashFlowsIndirect.php',
 											'/KLExcelGLTransactionsPajak.php',
@@ -623,7 +615,8 @@ $MenuItems['GL']['Maintenance']['Caption'] = array(	_('Account Sections'),
 													_('Bank Accounts'),
 													_('Bank Account Authorized Users'),
 													_('User Authorized Bank Accounts'),
-													_('Copy Authority Bank Accounts from user A to B'));
+													_('Copy Authority Bank Accounts from user A to B'), 
+													_('Setup Regular Payments'));
 
 $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/AccountGroups.php',
@@ -641,7 +634,8 @@ $MenuItems['GL']['Maintenance']['URL'] = array(		'/AccountSections.php',
 													'/BankAccounts.php',
 													'/BankAccountUsers.php',
 													'/UserBankAccounts.php',
-													'/GLBankAccountUsersCopyAuthority.php');
+													'/GLBankAccountUsersCopyAuthority.php',
+													'/RegularPaymentsSetup.php');
 
 $MenuItems['FA']['Transactions']['Caption'] = array(_('Add a new Asset'),
 													_('Select an Asset'),

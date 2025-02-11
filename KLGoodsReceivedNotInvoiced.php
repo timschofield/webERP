@@ -4,6 +4,7 @@ include ('includes/session.php');
 $Title = _('Goods Received But Not Invoiced Yet');
 include ('includes/header.php');
 include ('includes/KLGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $SQL = "SELECT grns.supplierid,
 				grns.deliverydate,

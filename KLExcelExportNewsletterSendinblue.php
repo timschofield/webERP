@@ -1,10 +1,17 @@
 <?php
-require_once ('Classes/PHPExcel.php');
 
 include('includes/session.php');
+
+require_once 'vendor/autoload.php';
+use PhpOffice\PhpSpreadsheet\Helper\Sample;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+
 include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php'); 
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLCountriesForRetail.php');
 include('includes/OpenCartGeneralFunctions.php');
 include('includes/OpenCartConnectDB.php');
@@ -36,8 +43,8 @@ function submit($MarkExported) {
 		$Result = DB_query_oc($SQL,$ErrMsg);
 		if (DB_num_rows($Result) != 0){
 
-			// Create new PHPExcel object
-			$objPHPExcel = new PHPExcel();
+			// Create new Spreadsheet object
+			$objPHPExcel = new Spreadsheet();
 
 			// Set document properties
 			$objPHPExcel->getProperties()->setCreator("webERP")
@@ -80,9 +87,14 @@ function submit($MarkExported) {
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
 			$objPHPExcel->setActiveSheetIndex(0);
 
-			// Redirect output to a client’s web browser (Excel2007)
-			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-			$File = 'KL-NewsletterSubscribers-' . Date('Y-m-d'). '.xlsx';
+			// Redirect output to a client's web browser
+			if ($_POST['Format'] == 'xlsx') {
+				header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+				$File = 'KL-NewsletterSubscribers-' . Date('Y-m-d'). '.xlsx';
+			} else if ($_POST['Format'] == 'ods') {
+				header('Content-Type: application/vnd.oasis.opendocument.spreadsheet');
+				$File = 'KL-NewsletterSubscribers-' . Date('Y-m-d'). '.ods';
+			}
 			header('Content-Disposition: attachment;filename="' . $File . '"');
 			header('Cache-Control: max-age=0');
 			// If you're serving to IE 9, then the following may be needed
@@ -94,8 +106,13 @@ function submit($MarkExported) {
 			header ('Cache-Control: cache, must-revalidate'); // HTTP/1.1
 			header ('Pragma: public'); // HTTP/1.0
 
-			$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-			$objWriter->save('php://output');
+			if ($_POST['Format'] == 'xlsx') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter->save('php://output');
+			} else if ($_POST['Format'] == 'ods') {
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter->save('php://output');
+			}
 
 			if ($MarkExported == "Y"){
 				$SQL = "UPDATE 	oc_ne_marketing 
@@ -131,26 +148,23 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Excel file for Sendinblue: Export Newsletter from OpenCart') . '" alt="" />' . ' ' . _('Excel file for Sendinblue: Export Newsletter from OpenCart') . '
 		</p>';
 
-	echo '<table>';
+	echo '<fieldset>
+		<legend>' . _('Export Options') . '</legend>';
+		
+	echo FieldToSelectSpreadSheetFormat('Format', $_POST['Format'], _('File Format'));
 
-	echo '<tr><td>' . _('Mark as Exported?') . ':</td>
-			<td><select name="MarkExported">
-				<option selected="selected" value="N">' . _('No') . '</option>
-				<option value="Y">' . _('Yes') . '</option>
-				</select>
-			</td>
-		</tr>';
+	echo '<field>';
+	echo _('Mark as Exported?') . ':';
+	echo '<select name="MarkExported">
+			<option selected="selected" value="N">' . _('No') . '</option>
+			<option value="Y">' . _('Yes') . '</option>
+			</select>';
+	echo '</field>';
+	
+	echo '</fieldset>';
 
-	echo '</table>
-		<table>';
+	echo OneButtonCenteredForm('submit', _('Export File for Sendinblue'));
 
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . _('Create Excel File for Sendinblue') . '" /></td>
-		</tr>
-		</table>
-		<br />';
 	echo '</div>
          </form>';
 	include('includes/footer.php');

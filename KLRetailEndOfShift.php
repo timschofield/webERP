@@ -10,6 +10,7 @@ include ('includes/header.php');
 include ('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPOSGeneral.php');
+include('includes/KLUIGeneralFunctions.php');
 
 include ('includes/WebClientPrint/WebClientPrint.php');
 use Neodynamic\SDK\Web\WebClientPrint;
@@ -53,7 +54,7 @@ if (DB_num_rows($Result) != 0){
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">';
-	$TableHeader = '<tr>
+	$TableHeader = '<thead><tr>
 						<th>' . _('#') . '</th>
 						<th>' . _('Order#') . '</th>
 						<th>' . _('Invoice#') . '</th>
@@ -62,9 +63,8 @@ if (DB_num_rows($Result) != 0){
 						<th>' . _('Returned Goods') . '</th>
 						<th>' . _('Voucher Discount') . '</th>
 						<th>' . _('Total') . '</th>
-					</tr>';
+					</tr></thead><tbody>';
 	echo $TableHeader;
-	$k = 0; //row colour counter
 	
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Invoices++;
@@ -114,8 +114,8 @@ if (DB_num_rows($Result) != 0){
 			}
 		}
 		
-		$k = StartEvenOrOddRow($k);
-		printf('<td class="number">%s</td>
+		printf('<tr class="striped_row">
+				<td class="number">%s</td>
 				<td class="number">%s</td>
 				<td>%s</td>
 				<td class="number">%s</td>
@@ -145,7 +145,8 @@ if (DB_num_rows($Result) != 0){
 	$TextToPrint .= "Total include returns/vouchers: " . number_format($Total) . $NewLine;
 	$TextToPrint .= "Total Personal Sales SPG: " . number_format($TotalCash + $TotalCreditCard) . $NewLine;
 	
-	printf('<td class="number">%s</td>
+	printf('<tr class="striped_row">
+			<td class="number">%s</td>
 			<td>%s</td>
 			<td>%s</td>
 			<td class="number">%s</td>
@@ -163,7 +164,7 @@ if (DB_num_rows($Result) != 0){
 			number_format($TotalVouchers), 
 			number_format($Total)
 			);
-	echo '</table>
+	echo '</tbody></table>
 			</div>';
 }else{
 	$TextToPrint .= $Emphasized . $CenteredJustified . "NO SALES TODAY" . $NewLine;

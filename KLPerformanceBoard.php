@@ -33,6 +33,7 @@ include('includes/KLDefines.php');
 include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLPrices.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $begintime = time_start();
 $NumberOfTestExecuted = 0;
@@ -955,24 +956,31 @@ function CashStatus($Year,
 	$SaldoUSD = $SaldoADUDanamonUSD + $SaldoADUPayoneerUSD + $SaldoAyeCargoUSD;
 	$ShortageUSDuntilEndOfMonth = $POPaymentsPendingUSDuntilEndOfMonth - $SaldoUSD;
 
-	if ($SaldoUSD <= $USDMaxEasyPurchasePerMonth){
+	if ($SaldoUSD >= $PORunningTotalUSD){
+		$ToBeExchanged = 0;
+	} 
+	elseif ($SaldoUSD <= $USDMaxEasyPurchasePerMonth){
 		if (($USDAlreadyExhangedThisMonth < $USDMaxEasyPurchasePerMonth) 
 			AND ($SaldoADUDanamonUSD < $SaldoADUDanamonUSDMax)){
 			$ToBeExchanged = round_multiple_of(min($USDMaxEasyPurchasePerMonth - $USDAlreadyExhangedThisMonth,
 													$SaldoADUGlobalUSDMax - $SaldoUSD), 5000);	
-		}elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
+		}
+		elseif ($ShortageUSDuntilEndOfMonth > $SaldoADUDanamonUSD){
 			$ToBeExchanged = round_multiple_of($ShortageUSDuntilEndOfMonth, 5000);	
-		}else{
+		}
+		else{
 			$ToBeExchanged = 0;	
 		}
-	}else{
+	}
+	else{
 		$ToBeExchanged = 0;	
 	}
 	
 	if ($SaldoADUPayoneerUSD < $SaldoADUPayoneerUSDMin){
 		$ToBeTransferredToPayoneer = round_multiple_of(min($SaldoADUPayoneerUSDMax - $SaldoADUPayoneerUSD, 
 															$SaldoADUDanamonUSD - $SaldoADUDanamonUSDMin), 5000);	
-	}else{
+	}
+	else{
 		$ToBeTransferredToPayoneer = 0;
 	}
 
@@ -2767,16 +2775,18 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 
 	$TotalModels  = TotalModels($Brand);
 	$TotalItems   = TotalItems($Brand);
-	$DisplayItems = TotalDisplayItems($Brand);
-	$AvailableForSaleItems = $TotalItems - $DisplayItems;
 	$DailySoldItemsThisYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysThisYear, $ToLastDaysThisYear) / $NumDays;
 	$DailySoldItemsLastYearPastDays = NumItemsSoldPerBrand($Brand, $FromLastDaysLastYear, $ToLastDaysLastYear) / $NumDays;
 	$TrendThisYear = ($DailySoldItemsThisYearPastDays - $DailySoldItemsLastYearPastDays) / $DailySoldItemsLastYearPastDays;
 	if ($Brand != "SHOPOU"){
+		$DisplayItems = TotalDisplayItems($Brand);
+		$AvailableForSaleItems = $TotalItems - $DisplayItems;
 		$DailySoldItemsLastYearNextDays = NumItemsSoldPerBrand($Brand, $FromNextDaysLastYear, $ToNextDaysLastYear) / $NumDaysLastYear;
 		$ItemsToBeSoldNextDaysBasedOnTrendLastYear = $DailySoldItemsLastYearNextDays * ($TrendThisYear+1);
 		$EstimationDailyItemsToBeSoldNextDays = max($DailySoldItemsThisYearPastDays, $ItemsToBeSoldNextDaysBasedOnTrendLastYear);
 	}else{
+		$DisplayItems = 0; // for sicounted items we don't want to keep enough for display, we want to get rid of them
+		$AvailableForSaleItems = $TotalItems ;
 		$EstimationDailyItemsToBeSoldNextDays = $DailySoldItemsThisYearPastDays;
 	}
 	$DaysStockForSale = $AvailableForSaleItems / $EstimationDailyItemsToBeSoldNextDays;
@@ -2824,13 +2834,15 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 			"Total Stock (PCS)", 
 			locale_number_format($TotalItems,0)
 			);
-	printf('<tr>
+	if ($Brand != "SHOPOU"){
+		printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>
 			</tr>', 
 			"Stock needed for display (PCS)", 
 			locale_number_format($DisplayItems,0)
 			);
+	}
 	printf('<tr>
 			<td>%s</td>
 			<td class="number">%s</td>

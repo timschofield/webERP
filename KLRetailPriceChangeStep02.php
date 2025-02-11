@@ -1,5 +1,4 @@
 <?php
-/* $Id: SalesPeople.php 5785 2012-12-29 04:47:42Z daintree $*/
 
 include('includes/session.php');
 $Title = _('KL Change of Retail Price -> Step 02');
@@ -8,6 +7,7 @@ include('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLPrices.php');
+include('includes/KLUIGeneralFunctions.php');
 
 	$SQL = "SELECT stockmaster.stockid, 
 				stockmaster.description,
@@ -59,7 +59,8 @@ include('includes/KLPrices.php');
 		$TableTitleText = _('Items ready to change Retail Price in KL kantor');
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
-		echo '<table class="selection">';
+		echo '<table class="selection">
+              <thead>';
 		$TableHeader = '<tr>
 							<th>' . _('#') . '</th>
 							<th>' . _('Code') . '</th>
@@ -75,16 +76,10 @@ include('includes/KLPrices.php');
 							<th>' . _('Labels') . '</th>
 						</tr>';
 		echo $TableHeader;
-		$k = 0; //row colour counter
+		echo '</thead><tbody>';
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
-			if ($k == 1) {
-				echo '<tr class="EvenTableRows">';
-				$k = 0;
-			} else {
-				echo '<tr class="OddTableRows">';
-				$k = 1;
-			}
+			echo '<tr class="striped_row">';
 			$CodeLink = '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 			if ((($MyRow['qohkantor'] + $MyRow['qohotherlocs']) == $MyRow['qohtotal'])
 				AND ($MyRow['intransitfromkantor'] == 0)
@@ -134,8 +129,9 @@ include('includes/KLPrices.php');
 					);
 			$i++;
 		}
-		echo '</table>
-				</div>';
+		echo '</tbody>
+			</table>
+			</div>';
 	}else{
 		prnMsg("No items in process of price change at the moment", "success");
 	}

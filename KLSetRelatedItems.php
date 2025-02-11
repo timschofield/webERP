@@ -10,6 +10,8 @@ include ('includes/header.php');
 include ('includes/KLDefines.php');
 include ('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
 $UpdateDB = TRUE;
 
@@ -31,13 +33,15 @@ if (DB_num_rows($Result) != 0){
 	ShowTableTitle($TableTitleText);
 	echo '<div>';
 	echo '<table class="selection">';
+	echo '<thead>';
 	$TableHeader = '<tr>
 						<th>' . _('#') . '</th>
 						<th>' . _('Code') . '</th>
 						<th>' . _('Related') . '</th>
 					</tr>';
 	echo $TableHeader;
-	$k = 0; //row colour counter
+	echo '</thead>';
+	echo '<tbody>';
 	$i = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
 		
@@ -104,8 +108,8 @@ if (DB_num_rows($Result) != 0){
 				$Resultinsert = DB_query($SQLinsert,$ErrMsg);
 
 				$i++;
-				$k = StartEvenOrOddRow($k);
-				printf('<td class="number">%s</td>
+				printf('<tr class="striped_row">
+						<td class="number">%s</td>
 						<td>%s</td>
 						<td>%s</td>
 						</tr>', 
@@ -116,6 +120,7 @@ if (DB_num_rows($Result) != 0){
 			}
 		}
 	}
+	echo '</tbody>';
 	echo '</table>
 			</div>';
 	prnMsg("Number of related items pairs in website catalog: " . locale_number_format($i));

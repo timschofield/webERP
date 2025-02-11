@@ -588,8 +588,9 @@ INSERT INTO test_erp.supptranstaxes SELECT * FROM kurakura_kl_erp.supptranstaxes
 TRUNCATE test_erp.`systypes`;
 INSERT INTO test_erp.systypes SELECT * FROM kurakura_kl_erp.systypes;
 
+/* do not copy to avoid prolem with auto generated codes
 TRUNCATE test_erp.`tags`;
-INSERT INTO test_erp.tags SELECT * FROM kurakura_kl_erp.tags;
+INSERT INTO test_erp.tags SELECT * FROM kurakura_kl_erp.tags; */
 
 TRUNCATE test_erp.`taxauthorities`;
 INSERT INTO test_erp.taxauthorities SELECT * FROM kurakura_kl_erp.taxauthorities;

@@ -117,7 +117,11 @@ padding-left:24px;
 form input[type="submit"]{
 background:#8A8A8A;
 font-weight:bold;
-padding-left: 16px;
+background-image:url(images/tick.svg);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
 padding-right: 16px;
 padding-top:6px;
 padding-bottom:6px;
@@ -130,24 +134,35 @@ border-radius: 6px;
 cursor: pointer;
 color:#FFFFFF;
 }
-form input[title~="PDF"] {
+form input[name*="PDF"] {
 background-image:url(images/pdf.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
 padding-left:24px;
 }
-form input[title~="View"] {
+form input[name*="View"] {
 background-image:url(images/screen.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
 padding-left:24px;
 }
+form input[name*="Search"] {
+background-image:url(images/search.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:24px;
+}
 form input[type="reset"]{
-background:#34A7E8;
+background:#8A8A8A;
+background-image:url(images/cross.svg);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
 font-weight:bold;
-padding-left: 16px;
+padding-left: 24px;
 padding-right: 16px;
 padding-top:6px;
 padding-bottom:6px;

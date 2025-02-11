@@ -2,10 +2,13 @@
 
 include('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 
-$Title = _('Print Consignment Invoices');
+
+$Title = _('List Issued Consignment Invoices');
 
 // The default company to Invoice from (PTADU).
 if(!isset($_POST['CompanyFrom'])) {
@@ -31,9 +34,6 @@ if (isset($_POST['submit'])) {
 include('includes/footer.php');
 
 
-
-
-//####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 	include('includes/header.php');
 
@@ -123,61 +123,32 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 					);
 			echo '</tbody>
 				</table>
-				</div>
-				</form>';
+				</div>';
 		}
 	}
 } // End of function submit()
 
 
-function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
-{
+function display($Title) {
 // Display form fields. This function is called the first time
 // the page is called.
 	include('includes/header.php');
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-		  <div>
-			<br/>';
+
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	echo '<p class="page_title_text">
-			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
+			<img src="' . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table class="selection">
-			<thead>
-				<tr>
-					<th>' . 'From' . ':</th>
-					<th><select name="CompanyFrom">';
-	if($_POST['CompanyFrom']=="PTADU") {
-		echo '<option selected="selected" value="PTADU">' . 'PT ADU' . '</option>';
-	} else {
-		echo '<option value="PTADU">' . 'PT ADU' . '</option>';
-	}
-	echo '</select></th></tr>
-			</thead>
-			<tbody>';	
+	echo '<fieldset>';
+	echo FixedField("CompanyFrom", "PTADU", 'From', '');
+	echo FieldToSelectOneDate('StartDate', $_POST['StartDate'], _('Invoice Consignment Issued from'), '', '', 1, true, false);
+	echo FieldToSelectOneDate('EndDate', $_POST['EndDate'], _('Invoice Consignment Issued to'), '', '', 2, true, false);
+	echo '</fieldset>';
+	echo OneButtonCenteredForm("submit", $Title, 3, false, false);
+	echo '</form>';
 
-	echo '<tr>
-			<td>' . _('Invoice Consignment Issued from') . '</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="StartDate" size="10" maxlength="10" value="' . $_POST['StartDate'] . '" /></td>
-		</tr>';
-
-	echo '<tr>
-			<td>' . _('Invoice Consignment Issued to') . '</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="EndDate" size="10" maxlength="10" value="' . $_POST['EndDate'] . '" /></td>
-		</tr>';
-
-	echo '<tr><td>&nbsp;</td></tr>
-		<tr>
-			<td>&nbsp;</td>
-			<td><input type="submit" name="submit" value="' . $Title . '" /></td>
-		</tr>
-		</tbody>
-		</table>
-		<br />';
-	echo '</div>
-         </form>';
 } // End of function display()
 
 ?>

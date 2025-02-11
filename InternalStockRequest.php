@@ -3,42 +3,47 @@
 /**********************************************************************************************
 *
 * KL RICARD Do not send emails to authorizers, as authorization is done automatically every day.
-*			Fixed departments and locations for our use.
+*			Fixed departments and locations for SPG.
 *
 **********************************************************************************************/ 
 
 include ('includes/DefineStockRequestClass.php');
 
 include ('includes/session.php');
-$Title = _('Create an Internal Materials Request');
+$Title = _('Create an Internal Stock Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/KLRoles.php');
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);
 	$_SESSION['Request'] = new StockRequest();
 }
 
-if (isset($_POST['Department'])) {
-		$_SESSION['Request']->Department = $_POST['Department'];
-}
-else{
-	if ($_SESSION['AllowedDepartment'] == 0) {
-		// any internal department allowed
-		$_POST['Department'] = '';
-	}
-	else {
-		// just 1 internal department allowed
-		$_POST['Department'] = $_SESSION['AllowedDepartment'];
-	}
-	$_SESSION['Request']->Department = $_POST['Department'];
-}
 
-/* KL RICARD for our use, we request only to KANTOR */
-$_SESSION['Request']->Location = 'KANTO';
-$_POST['Location'] = 'KANTO';
+
+/* KL RICARD for SPG, we request only to KANTOR and SPG are only allowed 1 location */
+if ($KL_SPGSeniorOrSupport 
+	OR $KL_SPGJunior){
+	if (isset($_POST['Department'])) {
+			$_SESSION['Request']->Department = $_POST['Department'];
+	}
+	else{
+		if ($_SESSION['AllowedDepartment'] == 0) {
+			// any internal department allowed
+			$_POST['Department'] = '';
+		}
+		else {
+			// just 1 internal department allowed
+			$_POST['Department'] = $_SESSION['AllowedDepartment'];
+		}
+		$_SESSION['Request']->Department = $_POST['Department'];
+	}
+	$_SESSION['Request']->Location = 'KANTO';
+	$_POST['Location'] = 'KANTO';
+}
 
 if (isset($_POST['Update'])) {
 	$InputError = 0;
@@ -88,7 +93,7 @@ if (isset($_POST['Submit']) and (!empty($_SESSION['Request']->LineItems))) {
 	DB_Txn_Begin();
 	$InputError = 0;
 	if ($_SESSION['Request']->Department == '') {
-		prnMsg(_('You must select a Department for the request'), 'error');
+		prnMsg(_('You must select a department (Location from) for the request'), 'error');
 		$InputError = 1;
 	}
 	if ($_SESSION['Request']->Location == '') {
@@ -233,13 +238,41 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 	
-/* KL RICARD for our use, we request only to KANTOR */
 echo '<field>
-		<label for="Location">' . _('Location from which to request stock') . ':</label>
-		<fieldtext>' . "Kantor KL". '</fieldtext>
-		</select>
-	</field>';
-/* KL RICARD END for our use, we request only to KANTOR */
+	<label for="Location">' . _('Location from which to request stock') . ':</label>';
+
+/* KL RICARD for SPG, we request only to KANTOR */
+if ($KL_SPGSeniorOrSupport 
+	OR $KL_SPGJunior){
+		echo '<fieldtext>' . "Kantor KL". '</fieldtext>';
+}else{
+	/* KL RICARD for our use, we prefer AND locationusers.canview=1 */
+	$SQL = "SELECT locations.loccode,
+				locationname
+			FROM locations
+			INNER JOIN locationusers 
+				ON locationusers.loccode=locations.loccode 
+				AND locationusers.userid='" . $_SESSION['UserID'] . "' 
+				AND locationusers.canview=1
+			WHERE internalrequest = 1
+			ORDER BY locationname";
+	/* KL RICARD END for our use, we prefer AND locationusers.canview=1 */
+
+	$Result = DB_query($SQL);
+	echo '<select name="Location">
+			<option value="">', _('Select a Location'), '</option>';
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($_SESSION['Request']->Location) and $_SESSION['Request']->Location == $MyRow['loccode']) {
+			echo '<option selected value="', $MyRow['loccode'], '">', htmlspecialchars($MyRow['locationname'], ENT_QUOTES, 'UTF-8'), '</option>';
+		} else {
+			echo '<option value="', $MyRow['loccode'], '">', htmlspecialchars($MyRow['locationname'], ENT_QUOTES, 'UTF-8'), '</option>';
+		}
+	}
+	echo '</select>';	
+}
+/* KL RICARD END for SPG, we request only to KANTOR */
+
+echo '</field>';
 
 echo'<field>
 		<label for="DispatchDate">', _('Date when required'), ':</label>

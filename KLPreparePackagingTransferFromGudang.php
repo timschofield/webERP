@@ -9,7 +9,6 @@ include('includes/KLEmails.php');
 
  
 if (!isset($_GET['From'])){
-	echo '<br />';
 	prnMsg( _('This page must be given the gudang location code.'), 'error');
 	include('includes/footer.php');
 	exit;
@@ -18,7 +17,6 @@ if (!isset($_GET['From'])){
 }
 
 if (!isset($_GET['To'])){
-	echo '<br />';
 	prnMsg( _('This page must be given the destination location code.'), 'error');
 	include('includes/footer.php');
 	exit;
@@ -52,8 +50,6 @@ $Result = DB_query($SQL,$ErrMsg);
 prnMsg("Updated date of email for packaging transfer to shop to today");
 
 DB_Txn_Commit();
-
- 
  
 include('includes/footer.php');
 
