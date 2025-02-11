@@ -72,7 +72,7 @@ echo '</head>';
 if (isset($AutoPrintPage)) {
 	echo '<body onload="window.print()">';
 } else {
-	echo '<body onload="initial(); load()" onunload="GUnload()">';
+	echo '<body onload="initial(); load()" onbeforeunload="unload()">';
 }
  
 /* KL RICARD Comment these lines as only show an X on the left top corner
