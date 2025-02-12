@@ -303,12 +303,17 @@ function SyncProductBasicInformation($ShowMessages, $LastTimeRun , $EmailText= '
 							WHERE product_id = '" . $ProductId . "'
 								AND language_id = '" . $LanguageId . "'";
 				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
-
-				$SQLUpdate = "UPDATE oc_product_to_store SET
-								store_id = '" . $StoreId . "'
-							WHERE product_id = '" . $ProductId . "'";
-				$ResultUpdate = DB_query_oc($SQLUpdate,$UpdateErrMsg,$DbgMsg,true);
-
+				
+				if (!DataExistsInOpenCart('oc_product_to_store', 'store_id', $StoreId, 'product_id', $ProductId)){
+					$SQLInsert = "INSERT INTO oc_product_to_store
+								(product_id,
+								store_id)
+							VALUES
+								('" . $ProductId . "',
+								'" . $StoreId . "'
+								)";
+					$ResultUpdate = DB_query_oc($SQLInsert,$UpdateErrMsg,$DbgMsg,true);
+				}
 			}else{
 				$Action = "Insert";
 
