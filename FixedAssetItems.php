@@ -793,7 +793,6 @@ if (isset($New)) {
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Update') . '" />
 		</div>';
-		prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
 	echo '<br />
 		<div class="centre">
 			<input type="reset" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
