@@ -302,7 +302,7 @@ if (isset($_POST['UpdatePrices'])){
 							WHERE typeabbrev= '" . $_POST['BasePriceList'] . "'
 								AND currabrev='" . $_POST['CurrCode'] . "'
 								AND debtorno=''
-								AND startdate <=CURRENT_DATE
+								AND startdate <= CURRENT_DATE
 								AND enddate >= CURRENT_DATE
 								AND stockid='" . $MyRow['stockid'] . "'
 							ORDER BY startdate DESC";
@@ -342,8 +342,8 @@ if (isset($_POST['UpdatePrices'])){
 													WHERE typeabbrev= '" . $_POST['PriceList'] . "'
 													AND debtorno =''
 													AND currabrev='" . $_POST['CurrCode'] . "'
-													AND startdate <=CURRENT_DATE
-													AND enddate>=CURRENT_DATE
+													AND startdate <= CURRENT_DATE
+													AND enddate >= CURRENT_DATE
 													AND stockid='" . $MyRow['stockid'] . "'");
 				if (DB_num_rows($CurrentPriceResult)==1){
 					$DayPriorToNewPrice = DateAdd($_POST['PriceStartDate'],'d',-1);

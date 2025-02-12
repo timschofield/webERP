@@ -475,8 +475,8 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								$PaymentItem->GLCode . "','" .
 								$PaymentItem->Narrative . "','" .
 								($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" .
-								$PaymentItem->Cheque . 
-							"')";
+								$PaymentItem->Cheque . "'
+							)";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was') , true);
 					if (isset($PaymentItem->Tag)){
@@ -1472,20 +1472,20 @@ else {
 					<th class="Ascending">' . _('This time to pay') . '</th>
 				</tr>';
 	$ids = '';
-	while ($myrow = DB_fetch_array($Result)) {
-		$ids .= $i > 0 ? ';' . $myrow['id'] : $myrow['id'];
-		if (!isset($_POST['paid' . $myrow['id']])) {
-			$_POST['paid' . $myrow['id']] = 0;
+	while ($MyRow = DB_fetch_array($Result)) {
+		$ids .= $i > 0 ? ';' . $MyRow['id'] : $MyRow['id'];
+		if (!isset($_POST['paid' . $MyRow['id']])) {
+			$_POST['paid' . $MyRow['id']] = 0;
 		}
 		echo '<tr>
-					<td>' . ConvertSQLDate($myrow['trandate']) . '</td>
-					<td>' . $myrow['typename'] . '</td>
-					<td>' . $myrow['transno'] . '</td>
-					<td>' . $myrow['suppreference'] . '</td>
-					<td class="number">' . locale_number_format($myrow['amount'], $_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces) . '</td>
-					<td><input onclick="AddAmount(this,' . $myrow['id'] . ');" type="checkbox" name="check' . $myrow['id'] . '" value="' . $myrow['amount'] . '" />' . _('Pay') . '</td>
-					<td><input type="text" class="number" id="' . $myrow['id'] . '" name="paid' . $myrow['id'] . '" value="' . $_POST['paid' . $myrow['id']] . '" />
-					<input type="hidden" name="remainamt' . $myrow['id'] . '" value="' . $myrow['amount'] . '" />
+					<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
+					<td>' . $MyRow['typename'] . '</td>
+					<td>' . $MyRow['transno'] . '</td>
+					<td>' . $MyRow['suppreference'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['amount'], $_SESSION['PaymentDetail' . $identifier]->CurrDecimalPlaces) . '</td>
+					<td><input onclick="AddAmount(this,' . $MyRow['id'] . ');" type="checkbox" name="check' . $MyRow['id'] . '" value="' . $MyRow['amount'] . '" />' . _('Pay') . '</td>
+					<td><input type="text" class="number" id="' . $MyRow['id'] . '" name="paid' . $MyRow['id'] . '" value="' . $_POST['paid' . $MyRow['id']] . '" />
+					<input type="hidden" name="remainamt' . $MyRow['id'] . '" value="' . $MyRow['amount'] . '" />
 					</td>
 					</tr>';
 		$i++;

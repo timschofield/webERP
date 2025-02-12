@@ -139,6 +139,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$GrossAmount = ($MyRow['amount']) / $MyRow['rate'];
 			$NetAmount = ($MyRow['amount'] - $TaxTotalRow['totaltax']) / $MyRow['rate'];
 		}
+		// it is not an ASSIGNCASH, as it has been moved to PCAuthorizeCash.php, it is always an expense
 		$Type = 1;
 		$NetAmount = -$NetAmount;
 		$AccountFrom = $MyRow['glaccountpcash'];
@@ -174,11 +175,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$TagRow['tagdescription'] = _('None');
 			}
 			$TagTo = $MyRow['tag'];
-			if ($ExpenseCodeDes == 'ASSIGNCASH') {
-				$TagDescription .= '';
-			} else {
-				$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
-			}
+			$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 		}
 
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {

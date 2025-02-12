@@ -142,8 +142,8 @@ function Create_POS_Data_Full ($POSDebtorNo, $POSBranchCode, $PathPrefix) {
 							AND controlled=0
 							AND prices.branchcode=''
 							AND prices.currabrev='" . $CurrCode . "'
-							AND prices.startdate <='" . Date('Y-m-d:23.59') . "'
-							AND (prices.enddate >='" . Date('Y-m-d:23.59') . "' OR prices.enddate='0000-00-00')
+							AND prices.startdate <= CURRENT_DATE
+							AND (prices.enddate >= CURRENT_DATE OR prices.enddate='9999-12-31')
 							GROUP BY prices.stockid,
 									prices.typeabbrev,
 									prices.currabrev,

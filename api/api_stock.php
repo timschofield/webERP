@@ -719,8 +719,8 @@
 				 WHERE stockid='" .$StockID. "'
 				 AND typeabbrev='" .$SalesType. "'
 				 AND currabrev='".$Currency. "'
-				 AND startdate<=CURRENT_DATE
-				 AND enddate>CURRENT_DATE";
+				 AND startdate <= CURRENT_DATE
+				 AND enddate > CURRENT_DATE";
 		$Result = DB_query($SQL);
 		$MyRow = DB_fetch_row($Result);
 		if ($MyRow[0]==0) {
