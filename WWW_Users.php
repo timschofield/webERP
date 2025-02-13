@@ -25,7 +25,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '</p>';// Page title.
 
 if($AllowDemoMode) {
-	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	prnMsg(_('Demo mode is currently active, which disables the security model administration'), 'warn');
 	include('includes/footer.php');
 	exit;
 }
