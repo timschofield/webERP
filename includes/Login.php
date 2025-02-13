@@ -112,8 +112,11 @@ if (isset($DemoText)) {
 
 echo '</div>';
 
-echo '<button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()"><img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
-</button>';
+echo '<div style="text-align: center;">
+        <button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
+            <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
+        </button>
+      </div>';
 
 echo '</form>
 	</div>
