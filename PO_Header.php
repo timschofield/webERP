@@ -1295,23 +1295,23 @@ KL RICARD COMMENTED OUT END */
 			<input type="text" name="SuppDelAdd1" size="41" maxlength="40" value="' . $_POST['SuppDelAdd1'] . '" />
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 2 :</label>
+			<label for="SuppDelAdd2">' . _('Address') . ' 2 :</label>
 			<td><input type="text" name="SuppDelAdd2" size="41" maxlength="40" value="' . $_POST['SuppDelAdd2'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 3 :</label>
+			<label for="SuppDelAdd3">' . _('Address') . ' 3 :</label>
 			<td><input type="text" name="SuppDelAdd3" size="41" maxlength="40" value="' . $_POST['SuppDelAdd3'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 4 :</label>
+			<label for="SuppDelAdd4">' . _('Address') . ' 4 :</label>
 			<td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 5 :</label>
+			<label for="SuppDelAdd5">' . _('Address') . ' 5 :</label>
 			<td><input type="text" name="SuppDelAdd5" size="41" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 6 :</label>
+			<label for="SuppDelAdd6">' . _('Address') . ' 6 :</label>
 			<td><input type="text" name="SuppDelAdd6" size="16" maxlength="15" value="' . $_POST['SuppDelAdd6'] . '" /></td>
 		</field>';
 

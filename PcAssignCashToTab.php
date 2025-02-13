@@ -189,7 +189,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 	echo '<div class="centre">
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
-
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (isset($_POST['Cancel'])) {
 			unset($_POST['Amount']);
