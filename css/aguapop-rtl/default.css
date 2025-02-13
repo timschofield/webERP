@@ -96,3 +96,14 @@ position: relative;
     max-width: 100%;
     margin: 0 auto;
 }
+p{ /* some text need to be centered */
+    /*text-align:center;*/
+}
+p.good {
+    font-weight: bold;
+    color: green;
+}
+p.bad {
+    font-weight: bold;
+    color:red;
+}
