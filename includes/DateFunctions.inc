@@ -80,7 +80,6 @@ function Is_date($DateEntry) {
 	}
 } //end of Is_Date function
 
-
 function MonthAndYearFromSQLDate($DateEntry, $UseShortMonthAndYear = false) {
 
 	if (mb_strpos($DateEntry,'/')) {
@@ -236,7 +235,6 @@ function DayOfWeekFromSQLDate($DateEntry) {
 	return date( 'w', mktime(0,0,0, (int)$Date_Array[1],(int)$Date_Array[2],(int)$Date_Array[0]));
 
 }
-
 
 function DayOfMonthFromSQLDate($DateEntry) {
 
@@ -506,8 +504,6 @@ function ConvertEDIDate($DateEntry, $EDIFormatCode) {
 
 
 }
-
-
 
 function Format_Date($DateEntry) {
 

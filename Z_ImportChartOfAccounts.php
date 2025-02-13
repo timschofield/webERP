@@ -55,10 +55,10 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 
 	//loop through file rows
 	$LineNumber = 1;
-	while ( ($myrow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
+	while ( ($MyRow = fgetcsv($FileHandle, 10000, ',')) !== FALSE ) {
 
 		//check for correct number of fields
-		$FieldCount = count($myrow);
+		$FieldCount = count($MyRow);
 		if ($FieldCount != count($FieldHeadings)){
 			prnMsg (count($FieldHeadings) . ' ' . _('fields required') . ', '. $FieldCount. ' ' . _('fields received'),'error');
 			fclose($FileHandle);
@@ -67,35 +67,35 @@ if (isset($_FILES['ChartFile']) and $_FILES['ChartFile']['name']) { //start file
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		$AccountCode = mb_strtoupper($myrow[0]);
-		foreach ($myrow as &$value) {
-			$value = trim($value);
-			$value = str_replace('"', '', $value);
+		$AccountCode = mb_strtoupper($MyRow[0]);
+		foreach ($MyRow as &$Value) {
+			$Value = trim($Value);
+			$Value = str_replace('"', '', $Value);
 		}
 
 		//Then check that the account group actually exists
-		$sql = "SELECT COUNT(groupname) FROM accountgroups WHERE groupname='" . $myrow[2] . "'";
-		$result = DB_query($sql);
-		$testrow = DB_fetch_row($result);
+		$SQL = "SELECT COUNT(groupname) FROM accountgroups WHERE groupname='" . $MyRow[2] . "'";
+		$Result = DB_query($SQL);
+		$testrow = DB_fetch_row($Result);
 		if ($testrow[0] == 0) {
 			$InputError = 1;
-			prnMsg (_('Account Group') . ' "' . $myrow[2]. '" ' . _('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
+			prnMsg (_('Account Group') . ' "' . $MyRow[2]. '" ' . _('does not exist. First enter the account groups you require in webERP before attempting to import the accounts.'),'error');
 		}
 
 		if ($InputError !=1){
 
 			//Insert the chart record
-			$sql = "INSERT INTO chartmaster (accountcode,
+			$SQL = "INSERT INTO chartmaster (accountcode,
 											accountname,
 											group_
 										) VALUES (
-										'" . $myrow[0] . "',
-										'" . $myrow[1] . "',
-										'" . $myrow[2] . "')";
+										'" . $MyRow[0] . "',
+										'" . $MyRow[1] . "',
+										'" . $MyRow[2] . "')";
 
 			$ErrMsg =  _('The general ledger account could not be added because');
 			$DbgMsg = _('The SQL that was used to add the general ledger account that failed was');
-			$result = DB_query($sql, $ErrMsg, $DbgMsg);
+			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 		}
 
 		if ($InputError == 1) { //this row failed so exit loop

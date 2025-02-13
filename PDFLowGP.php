@@ -9,7 +9,7 @@ if (isset($_POST['ToDate'])) {$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']
 if (!isset($_POST['FromCat'])  OR $_POST['FromCat']=='') {
 	$Title=_('Low Gross Profit Sales');
 }
-$debug=0;
+$Debug=0;
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$HTML = '';
@@ -71,7 +71,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	  include('includes/header.php');
 		prnMsg(_('The low GP items could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
 		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' . $SQL;
 		}
 		include('includes/footer.php');
@@ -83,7 +83,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		include('includes/header.php');
 		prnMsg(_('No low GP items retrieved'), 'warn');
 		echo '<br /><a href="'  . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($debug==1){
+		if ($Debug==1){
 		  echo '<br />' .  $SQL;
 		}
 		include('includes/footer.php');

@@ -61,7 +61,7 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 	}
 
 	if ($InputError == 0 AND isset($_POST['AddRecord'])) {
-        $SQL = "INSERT INTO sellthroughsupport (supplierno,
+		$SQL = "INSERT INTO sellthroughsupport (supplierno,
 												debtorno,
 												categoryid,
 												stockid,
@@ -82,11 +82,11 @@ if ((isset($_POST['AddRecord']) OR isset($_POST['UpdateRecord'])) AND isset($Sup
 
 		$ErrMsg = _('The sell through support record could not be added to the database because');
 		$DbgMsg = _('The SQL that failed was');
-        $AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
+		$AddResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 		prnMsg(_('This sell through support has been added to the database'), 'success');
 	}
 	if ($InputError == 0 AND isset($_POST['UpdateRecord'])) {
-        $SQL = "UPDATE sellthroughsupport SET debtorno='" . $_POST['DebtorNo'] . "',
+		$SQL = "UPDATE sellthroughsupport SET debtorno='" . $_POST['DebtorNo'] . "',
 											categoryid='" . $_POST['CategoryID'] . "',
 											stockid='" . $_POST['StockID'] . "',
 											narrative='" . $_POST['Narrative'] . "',
@@ -170,7 +170,7 @@ if (isset($_POST['SearchSupplier'])) {
 					</tr>';
 	echo $TableHeader;
 
-    while ($MyRow = DB_fetch_array($SuppliersResult)) {
+	while ($MyRow = DB_fetch_array($SuppliersResult)) {
 	   printf('<tr class="striped_row">
 				<td><input type="submit" name="SupplierID" value="%s" /></td>
 				<td>%s</td>
@@ -231,7 +231,7 @@ if (isset($SupplierID)) { /* Then display all the sell through support for the s
 
 if (isset($SupplierID) AND $Edit == false) {
 
-    $SQL = "SELECT	id,
+	$SQL = "SELECT	id,
 					sellthroughsupport.debtorno,
 					debtorsmaster.name,
 					rebateamount,
@@ -252,7 +252,7 @@ if (isset($SupplierID) AND $Edit == false) {
 			WHERE supplierno = '" . $SupplierID . "'
 			ORDER BY sellthroughsupport.effectivefrom DESC";
 	$ErrMsg = _('The supplier sell through support deals could not be retrieved because');
-    $Result = DB_query($SQL, $ErrMsg);
+	$Result = DB_query($SQL, $ErrMsg);
 	if (DB_num_rows($Result)==0) {
 		prnMsg(_('There are no sell through support deals entered for this supplier'), 'info');
 	} else {

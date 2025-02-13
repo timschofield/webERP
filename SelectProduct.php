@@ -902,7 +902,6 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			} else {
 				$ImageFile ='';
 			}
-			// KL RICARD We would like to not show the code inline. Failed so far.
 			$StockImgLink = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 			echo '<tr class="striped_row">

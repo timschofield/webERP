@@ -62,74 +62,74 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 	$FileHandle = fopen($TempName, 'r');
 
 	//get the header row
-	$headRow = fgetcsv($FileHandle, 10000, ",");
+	$HeadRow = fgetcsv($FileHandle, 10000, ",");
 
 	//check for correct number of fields
-	if( count($headRow) != count($FieldHeadings) ) {
-		prnMsg (_('File contains '. count($headRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
+	if( count($HeadRow) != count($FieldHeadings) ) {
+		prnMsg (_('File contains '. count($HeadRow). ' columns, expected '. count($FieldHeadings). '. Try downloading a new template.'),'error');
 		fclose($FileHandle);
 		include('includes/footer.php');
 		exit;
 	}
 
 	//test header row field name and sequence
-	$head = 0;
-	foreach($headRow as $headField) {
-		if( mb_strtoupper($headField) != mb_strtoupper($FieldHeadings[$head]) ) {
-			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($headField). ' != '. mb_strtoupper($header[$head]). '. Try downloading a new template.'),'error');
+	$Head = 0;
+	foreach($HeadRow as $HeadField) {
+		if( mb_strtoupper($HeadField) != mb_strtoupper($FieldHeadings[$Head]) ) {
+			prnMsg (_('File contains incorrect headers ('. mb_strtoupper($HeadField). ' != '. mb_strtoupper($Header[$Head]). '. Try downloading a new template.'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit;
 		}
-		$head++;
+		$Head++;
 	}
 
 	//start database transaction
 	DB_Txn_Begin();
 
 	//loop through file rows
-	$row = 1;
+	$Row = 1;
 	$UpdatedNum=0;
 	$InsertNum=0;
-	while( ($filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
+	while( ($Filerow = fgetcsv($FileHandle, 10000, ",")) !== FALSE ) {
 		//check for correct number of fields
-		$fieldCount = count($filerow);
-		if($fieldCount != $FieldTarget) {
-			prnMsg (_($FieldTarget. ' fields required, '. $fieldCount. ' fields received'),'error');
+		$FieldCount = count($Filerow);
+		if($FieldCount != $FieldTarget) {
+			prnMsg (_($FieldTarget. ' fields required, '. $FieldCount. ' fields received'),'error');
 			fclose($FileHandle);
 			include('includes/footer.php');
 			exit;
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach($filerow as &$value) {
-			$value = trim($value);
+		foreach($Filerow as &$Value) {
+			$Value = trim($Value);
 		}
 
-		$SupplierID=mb_strtoupper($filerow[0]);
-		$_POST['SuppName']=$filerow[1];
-		$_POST['Address1']=$filerow[2];
-		$_POST['Address2']=$filerow[3];
-		$_POST['Address3']=$filerow[4];
-		$_POST['Address4']=$filerow[5];
-		$_POST['Address5']=$filerow[6];
-		$_POST['Address6']=$filerow[7];
-		$_POST['Phone']=$filerow[8];
-		$_POST['Fax']=$filerow[9];
-		$_POST['Email']=$filerow[10];
-		$_POST['SupplierType']=$filerow[11];
-		$_POST['CurrCode']=$filerow[12];
-		$_POST['SupplierSince']=$filerow[13];
-		$_POST['PaymentTerms']=$filerow[14];
-		$_POST['BankPartics']=$filerow[15];
-		$_POST['BankRef']=$filerow[16];
-		$_POST['BankAct']=$filerow[17];
-		$_POST['Remittance']=$filerow[18];
-		$_POST['TaxGroup']=$filerow[19];
-		$_POST['FactorID']=$filerow[20];
-		$_POST['TaxRef']=$filerow[21];
-		$latitude = $filerow[22];
-		$longitude = $filerow[23];
+		$SupplierID=mb_strtoupper($Filerow[0]);
+		$_POST['SuppName']=$Filerow[1];
+		$_POST['Address1']=$Filerow[2];
+		$_POST['Address2']=$Filerow[3];
+		$_POST['Address3']=$Filerow[4];
+		$_POST['Address4']=$Filerow[5];
+		$_POST['Address5']=$Filerow[6];
+		$_POST['Address6']=$Filerow[7];
+		$_POST['Phone']=$Filerow[8];
+		$_POST['Fax']=$Filerow[9];
+		$_POST['Email']=$Filerow[10];
+		$_POST['SupplierType']=$Filerow[11];
+		$_POST['CurrCode']=$Filerow[12];
+		$_POST['SupplierSince']=$Filerow[13];
+		$_POST['PaymentTerms']=$Filerow[14];
+		$_POST['BankPartics']=$Filerow[15];
+		$_POST['BankRef']=$Filerow[16];
+		$_POST['BankAct']=$Filerow[17];
+		$_POST['Remittance']=$Filerow[18];
+		$_POST['TaxGroup']=$Filerow[19];
+		$_POST['FactorID']=$Filerow[20];
+		$_POST['TaxRef']=$Filerow[21];
+		$latitude = $Filerow[22];
+		$longitude = $Filerow[23];
 		//initialise no input errors assumed initially before we test
 		$i=1;
 		/* actions to take once the user has clicked the submit button
@@ -198,29 +198,29 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 			$SQL_SupplierSince = FormatDateForSQL($_POST['SupplierSince']);
 
 			//first off validate inputs sensible
-			$sql="SELECT COUNT(supplierid) FROM suppliers WHERE supplierid='".$SupplierID."'";
-			$result=DB_query($sql);
-			$myrow=DB_fetch_row($result);
+			$SQL="SELECT COUNT(supplierid) FROM suppliers WHERE supplierid='".$SupplierID."'";
+			$Result=DB_query($SQL);
+			$MyRow=DB_fetch_row($Result);
 
-			$SuppExists = ($myrow[0]>0);
+			$SuppExists = ($MyRow[0]>0);
 
 			if($SuppExists AND $_POST['UpdateIfExists']!=1) {
 				$UpdatedNum++;
 			}elseif($SuppExists) {
 				$UpdatedNum++;
-				$supptranssql = "SELECT supplierno
+				$SuppTransSQL = "SELECT supplierno
 								FROM supptrans
 								WHERE supplierno='".$SupplierID ."'";
-				$suppresult = DB_query($supptranssql);
-				$supptrans = DB_num_rows($suppresult);
+				$SuppResult = DB_query($SuppTransSQL);
+				$SuppTrans = DB_num_rows($SuppResult);
 
-				$suppcurrssql = "SELECT currcode
+				$SuppCurrsSQL = "SELECT currcode
 								FROM suppliers
 								WHERE supplierid='".$SupplierID ."'";
-				$currresult = DB_query($suppcurrssql);
-				$suppcurr = DB_fetch_row($currresult);
+				$Currresult = DB_query($SuppCurrsSQL);
+				$SuppCurrs = DB_fetch_row($Currresult);
 
-				$sql = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
+				$SQL = "UPDATE suppliers SET suppname='" . $_POST['SuppName'] . "',
 							address1='" . $_POST['Address1'] . "',
 							address2='" . $_POST['Address2'] . "',
 							address3='" . $_POST['Address3'] . "',
@@ -231,8 +231,8 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 							fax = '". $_POST['Fax']."',
 							email = '" . $_POST['Email'] . "',
 							supptype = '".$_POST['SupplierType']."',";
-				if($supptrans == 0)$sql.="currcode='" . $_POST['CurrCode'] . "',";
-							$sql.="suppliersince='".$SQL_SupplierSince . "',
+				if($SuppTrans == 0)$SQL.="currcode='" . $_POST['CurrCode'] . "',";
+							$SQL.="suppliersince='".$SQL_SupplierSince . "',
 							paymentterms='" . $_POST['PaymentTerms'] . "',
 							bankpartics='" . $_POST['BankPartics'] . "',
 							bankref='" . $_POST['BankRef'] . "',
@@ -245,18 +245,18 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 							taxref='". $_POST['TaxRef'] ."'
 						WHERE supplierid = '".$SupplierID."'";
 
-				if($suppcurr[0] != $_POST['CurrCode']) {
+				if($SuppCurrs[0] != $_POST['CurrCode']) {
 					prnMsg( _('Cannot change currency code as transactions already exist'), 'info');
 				}
 
 				$ErrMsg = _('The supplier could not be updated because');
 				$DbgMsg = _('The SQL that was used to update the supplier but failed was');
-				// echo $sql;
-				$result = DB_query($sql, $ErrMsg, $DbgMsg);
+				// echo $SQL;
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			} else { //its a new supplier
 				$InsertNum++;
-				$sql = "INSERT INTO suppliers (supplierid,
+				$SQL = "INSERT INTO suppliers (supplierid,
 											suppname,
 											address1,
 											address2,
@@ -308,7 +308,7 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 				$ErrMsg = _('The supplier') . ' ' . $_POST['SuppName'] . ' ' . _('could not be added because');
 				$DbgMsg = _('The SQL that was used to insert the supplier but failed was');
 
-				$result = DB_query($sql, $ErrMsg, $DbgMsg);
+				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 			}
 			if(DB_error_no() ==0) {
@@ -323,12 +323,12 @@ if(isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file pr
 			break;
 		}
 
-		$row++;
+		$Row++;
 
 	}
 
 	if($InputError == 1) { //exited loop with errors so rollback
-		prnMsg(_('Failed on row '. $row. '. Batch import has been rolled back.'),'error');
+		prnMsg(_('Failed on row '. $Row. '. Batch import has been rolled back.'),'error');
 		DB_Txn_Rollback();
 	} else { //all good so commit data transaction
 		DB_Txn_Commit();

@@ -23,7 +23,7 @@ if (isset($_GET['SelectedTag'])) {
 		$Description = '';
 	}
 	else {
-		$SQL="SELECT tagref,
+		$SQL = "SELECT tagref,
 					tagdescription
 				FROM tags
 				WHERE tagref='" . $_GET['SelectedTag'] . "'";
@@ -99,7 +99,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>' . $MyRow['tagref'] . '</td>
 			<td>' . $MyRow['tagdescription'] . '</td>
 			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $MyRow['tagref'] . '&amp;Action=edit">' . _('Edit') . '</a></td>
-			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],E NT_QUOTES, 'UTF-8') . '?SelectedTag=' . $MyRow['tagref'] . '&amp;Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
+			<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedTag=' . $MyRow['tagref'] . '&amp;Action=delete" onclick="return confirm(\'' . _('Are you sure you wish to delete this GL tag?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 }
 

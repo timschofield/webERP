@@ -21,7 +21,7 @@ if ($JournalNo=='Preview') {
 // Set the paper size/orintation
 $PaperSize = $FormDesign->PaperSize;
 $PageNumber=1;
-$line_height=$FormDesign->LineHeight;
+$LineHeight=$FormDesign->LineHeight;
 include('includes/PDFStarter.php');
 $pdf->addInfo('Title', _('中国(甲式10)会计凭证') );
 $pdf->addInfo('Author','webERP ' . 'CQZ二次修改');
@@ -31,7 +31,7 @@ $pdf->SetProtection(array('modify','copy','annot-forms'), '');
 if ($JournalNo=='Preview') {
 	$LineCount = 2; // UldisN
 } else {
-	$sql="SELECT gltrans.type,
+	$SQL="SELECT gltrans.type,
 				gltrans.typeno,
 				gltrans.trandate,
 				gltrans.account,
@@ -51,17 +51,17 @@ if ($JournalNo=='Preview') {
 				ON gltrans.tag=tags.tagref
 			WHERE gltrans.type='".$TypeID."'
 				AND gltrans.typeno='" . $JournalNo . "'";
-	$result=DB_query($sql);
-	$LineCount = DB_num_rows($result); // UldisN
-	$myrow=DB_fetch_array($result);
-	$JournalDate=$myrow['trandate'];
-	DB_data_seek($result, 0);
-	$Typemame=$myrow['typename'];
+	$Result=DB_query($SQL);
+	$LineCount = DB_num_rows($Result); // UldisN
+	$MyRow=DB_fetch_array($Result);
+	$JournalDate=$MyRow['trandate'];
+	DB_data_seek($Result, 0);
+	$Typemame=$MyRow['typename'];
 	include('includes/PDFGLJournalHeaderCN.inc');
 }
-$counter=1;
+$Counter=1;
 $YPos=$FormDesign->Data->y;
-while ($counter<=$LineCount) {
+while ($Counter<=$LineCount) {
 	if ($JournalNo=='Preview') {
 		$AccountCode=str_pad('',10,'x');
 		$Date='1/1/1900';
@@ -71,26 +71,26 @@ while ($counter<=$LineCount) {
 		$Tag=str_pad('',25,'x');
 		$JobRef=str_pad('',25,'x');
 	} else {
-		$myrow=DB_fetch_array($result);
-		if ($myrow['tag']==0) {
-			$myrow['tagdescription']='None';
+		$MyRow=DB_fetch_array($Result);
+		if ($MyRow['tag']==0) {
+			$MyRow['tagdescription']='None';
 		}
-		$AccountCode = $myrow['account'];
-		$Description = $myrow['accountname'];
-		$Date = $myrow['trandate'];
-		$Narrative = $myrow['narrative'];
-		$Amount = $myrow['amount'];
-		$Tag = $myrow['tag'].' - '.$myrow['tagdescription'];
-		$JobRef = $myrow['jobref'];
+		$AccountCode = $MyRow['account'];
+		$Description = $MyRow['accountname'];
+		$Date = $MyRow['trandate'];
+		$Narrative = $MyRow['narrative'];
+		$Amount = $MyRow['amount'];
+		$Tag = $MyRow['tag'].' - '.$MyRow['tagdescription'];
+		$JobRef = $MyRow['jobref'];
 	}
 
-	if ( $myrow['amount'] > 0) {
-			$DebitAmount = locale_number_format($myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
-			$DebitTotal += $myrow['amount'];
+	if ( $MyRow['amount'] > 0) {
+			$DebitAmount = locale_number_format($MyRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
+			$DebitTotal += $MyRow['amount'];
 			$CreditAmount = ' ';
 	} else {
-			$CreditAmount = locale_number_format(-$myrow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
-			$CreditTotal += $myrow['amount'];
+			$CreditAmount = locale_number_format(-$MyRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']);
+			$CreditTotal += $MyRow['amount'];
 			$DebitAmount = ' ';
 	}
 	$pdf->SetTextColor(0,0,0);
@@ -109,8 +109,8 @@ while ($counter<=$LineCount) {
 	$LeftOvers = $pdf->addTextWrap($FormDesign->Data->Column5->x+3,$Page_Height-$YPos,$FormDesign->Data->Column5->Length,$FormDesign->Data->Column5->FontSize, $CreditAmount, 'right');
 
 
-	$YPos += $line_height;
-	$counter++;
+	$YPos += $LineHeight;
+	$Counter++;
 
 	$DebitTotal1=locale_number_format($DebitTotal,$_SESSION['CompanyRecord']['decimalplaces'],  'right');
 	$CreditTotal1=locale_number_format(-$CreditTotal,$_SESSION['CompanyRecord']['decimalplaces'],  'right');
@@ -141,10 +141,10 @@ $LeftOvers = $pdf->addTextWrap($FormDesign->Headings->Column9->x+3,$Page_Height 
 $pdf->SetFont('javiergb', '', 10);
 
 if ($LineCount == 0) {   //UldisN
-	$title = _('GRN Error');
+	$Title = _('GRN Error');
 	include('includes/header.php');
 	prnMsg(_('There were no GRN to print'),'warn');
-	echo '<br /><a href="'.$rootpath.'/index.php">'. _('Back to the menu').'</a>';
+	echo '<br /><a href="'.$RootPath.'/index.php">'. _('Back to the menu').'</a>';
 	include('includes/footer.php');
 	exit;
 } else {

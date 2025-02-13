@@ -33,10 +33,10 @@ $PrivilegesSql = "SELECT * FROM INFORMATION_SCHEMA.USER_PRIVILEGES WHERE GRANTEE
 
 $DBExistsResult = @mysqli_query($DB, $DBExistsSql);
 $PrivilegesResult = @mysqli_query($DB, $PrivilegesSql);
-$rows = @mysqli_num_rows($DBExistsResult);
+$Rows = @mysqli_num_rows($DBExistsResult);
 $Privileges = @mysqli_num_rows($PrivilegesResult);
 
-if ($rows == 0) { /* Then the database does not exist */
+if ($Rows == 0) { /* Then the database does not exist */
 	if ($Privileges == 0) {
 		$Errors[] = _('The database does not exist, and this database user does not have privileges to create it');
 	} else { /* Then we can create the database */
@@ -145,60 +145,60 @@ $configArray += [
 ];
 
 // Define the paths relative to the `installer` directory
-$sampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
-$newConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
+$SampleConfigFile = $Path_To_Root . '/config.distrib.php'; // Go up one level to access the main directory
+$NewConfigFile = $Path_To_Root . '/config.php'; // Output the new file in the main directory
 
 // Read the content of the sample config file
-if (!file_exists($sampleConfigFile)) {    
+if (!file_exists($SampleConfigFile)) {    
 	echo '<div class="error">' . _('The sample configuration file does not exist.') . '</div>';
 }
 
 // Open the sample file for reading and create the new config file for writing
-$sampleHandle = fopen($sampleConfigFile, 'r');
-$newLines = [];
+$SampleHandle = fopen($SampleConfigFile, 'r');
+$NewLines = [];
 
-if ($sampleHandle) {
-    while (($line = fgets($sampleHandle)) !== false) {
+if ($SampleHandle) {
+    while (($Line = fgets($SampleHandle)) !== false) {
         // Check if the line is commented (starting with //, #, or within /* */)
-        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $line);
+        $isComment = preg_match('/^\s*(\/\/|#|\/\*|\*\/)/', $Line);
 
         // Skip replacements on comment lines, otherwise process a config line.
         if (!$isComment) {
             // Loop Installer Data
-            foreach ($configArray as $key => $value) {
-                // if (strpos($line, $key) !== false) {
-				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $line)) {
-                    $newValue = addslashes($value);
-                    $line = "\$$key = '$newValue';\n";
+            foreach ($configArray as $key => $Value) {
+                // if (strpos($Line, $key) !== false) {
+				if (preg_match('/\$\b' . preg_quote($key, '/') . '\b/', $Line)) {
+                    $NewValue = addslashes($Value);
+                    $Line = "\$$key = '$NewValue';\n";
                     unset($configArray[$key]);
                 }
             }
 			// Replace date_default_timezone_set            
-			if (strpos($line, 'date_default_timezone_set') !== false) {
-                $newValue = addslashes($_SESSION['Installer']['TimeZone']);                
-				$line = "date_default_timezone_set('".$newValue."');\n";
+			if (strpos($Line, 'date_default_timezone_set') !== false) {
+                $NewValue = addslashes($_SESSION['Installer']['TimeZone']);                
+				$Line = "date_default_timezone_set('".$NewValue."');\n";
             }
         }
         // Append the line to the new content
-        $newLines[] = $line;
+        $NewLines[] = $Line;
     }
 
-    fclose($sampleHandle);
+    fclose($SampleHandle);
 } else {    
 	echo '<div class="error">' . _('Unable to read the sample configuration file.') . '</div>';
 }
 
 // Write the updated content to the new config file
-$newConfigContent = implode($newLines);
-if (file_put_contents($newConfigFile, $newConfigContent)) {
+$NewConfigContent = implode($NewLines);
+if (file_put_contents($NewConfigFile, $NewConfigContent)) {
     echo '<div class="success">' . _('The config.php file has been created based on your settings.') . '</div>';
 } else {
 	echo '<div class="error">' . _('Cannot write to the configuration file') . $Config_File . '</div>';
 }
 
 $DBErrors = 0;
-foreach (glob($Path_To_Root . "/install/tables/*.sql") as $filename) {
-	$SQLScriptFile = file_get_contents($filename);
+foreach (glob($Path_To_Root . "/install/tables/*.sql") as $FileName) {
+	$SQLScriptFile = file_get_contents($FileName);
 	DB_IgnoreForeignKeys();
 	$Result = DB_query($SQLScriptFile);
 	$DBErrors += DB_error_no($Result);
@@ -324,9 +324,18 @@ if (isset($_SESSION['Installer']['Demo']) and $_SESSION['Installer']['Demo'] != 
 		echo '<div class="error">' . _('There was an error with creating permission for the admin user') . ' - ' . DB_error_msg() . '</div>';
 	}
 
+	$SQL = "INSERT INTO tags VALUES(0, 'None')";
+	$Result = DB_query($SQL);
+	if (DB_error_no() == 0) {
+		echo '<div class="success">' . _('The default GL tag has been inserted.') . '</div>';
+	} else {
+		echo '<div class="error">' . _('There was an error inserting the default GL tag') . ' - ' . DB_error_msg() . '</div>';
+	}
+	ob_flush();
+
 	$DBErrors = 0;
-	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $filename) {
-		$SQLScriptFile = file_get_contents($filename);
+	foreach (glob($Path_To_Root . "/install/sql/*.sql") as $FileName) {
+		$SQLScriptFile = file_get_contents($FileName);
 		DB_IgnoreForeignKeys();
 		$Result = DB_query($SQLScriptFile);
 		$DBErrors += DB_error_no($Result);

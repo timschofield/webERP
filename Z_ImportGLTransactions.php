@@ -85,9 +85,9 @@ if (isset($_FILES['userfile']) and $_FILES['userfile']['name']) { //start file p
 		}
 
 		// cleanup the data (csv files often import with empty strings and such)
-		foreach ($MyRow as &$value) {
-			$value = trim($value);
-			$value = str_replace('"', '', $value);
+		foreach ($MyRow as &$Value) {
+			$Value = trim($Value);
+			$Value = str_replace('"', '', $Value);
 		}
 
 		//first off check that the account code actually exists

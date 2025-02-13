@@ -152,8 +152,8 @@ if (isset($_POST['RunReport'])) {
 
 			$FormatedTranDate = ConvertSQLDate($MyRow['trandate']);
 
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='".$MyRow['tag'] . "'";
-			$TagResult=DB_query($TagSQL);
+			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
+			$TagResult = DB_query($TagSQL);
 			$TagRow = DB_fetch_array($TagResult);
 
 			// to edit this block
@@ -188,10 +188,10 @@ if (isset($_POST['RunReport'])) {
 		else { //its a debit balance b/fwd
 			$LeftOvers = $PDF->addTextWrap(160, $YPos, 50, $FontSize, locale_number_format($RunningTotal, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 		}
-       	$YPos -= $LineHeight;
+		$YPos -= $LineHeight;
 		//draw a line under each account printed
 		$PDF->line($Left_Margin, $YPos, $Page_Width - $Right_Margin, $YPos);
-        $YPos -= $LineHeight;
+		$YPos -= $LineHeight;
 	} /*end for each SelectedAccount */
 	/*Now check that there is some output and print the report out */
 	if (count($_POST['Account']) == 0) {
@@ -319,7 +319,7 @@ function NewPageHeader() {
 	$FontSize = 8;
 	$LeftOvers = $PDF->addTextWrap($Page_Width - $Right_Margin - 120, $YPos, 120, $FontSize, _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
-	$YPos -=(2*$LineHeight);
+	$YPos -= (2 * $LineHeight);
 
 	/*Draw a rectangle to put the headings in     */
 
@@ -339,6 +339,6 @@ function NewPageHeader() {
 	$LeftOvers = $PDF->addTextWrap(320, $YPos, 150, $FontSize, _('Narrative') , 'centre');
 	$LeftOvers = $PDF->addTextWrap(470, $YPos, 80, $FontSize, _('Tag') , 'centre');
 
-	$YPos =$YPos - (2 * $LineHeight);
+	$YPos = $YPos - (2 * $LineHeight);
 }
 ?>

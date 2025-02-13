@@ -157,10 +157,10 @@ if ((!isset($_POST['PeriodFrom']) AND !isset($_POST['PeriodTo'])) OR isset($_POS
 }
 else if (isset($_POST['PrintPDF'])) {
 
-	$TagSQL="SELECT tagdescription FROM tags WHERE tagref='".$_POST['tag']."'";
-	$TagResult=DB_query($TagSQL);
-	$TagRow=DB_fetch_array($TagResult);
-	$Tag=$TagRow['tagdescription'];
+	$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $_POST['tag'] . "'";
+	$TagResult = DB_query($TagSQL);
+	$TagRow = DB_fetch_array($TagResult);
+	$Tag = $TagRow['tagdescription'];
 	include ('includes/PDFStarter.php');
 	$PDF->addInfo('Title', _('Income and Expenditure'));
 	$PDF->addInfo('Subject', _('Income and Expenditure'));
@@ -308,7 +308,7 @@ else if (isset($_POST['PrintPDF'])) {
 		}
 
 		// Print heading if at end of page
-		if ($YPos < ($Bottom_Margin +(2 * $LineHeight))) {
+		if ($YPos < ($Bottom_Margin + (2 * $LineHeight))) {
 			include ('includes/PDFTagProfitAndLossPageHeader.inc');
 		}
 
@@ -337,7 +337,7 @@ else if (isset($_POST['PrintPDF'])) {
 				if ($Section == 2) { /*Cost of Sales - need sub total for Gross Profit*/
 					$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 200, $FontSize, _('Gross Profit'));
 					$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format($TotalIncome - $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
-					$DPF->line($Left_Margin + 310, $YPos + $LineHeight, $Left_Margin + 500, $YPos + $LineHeight);
+					$PDF->line($Left_Margin + 310, $YPos + $LineHeight, $Left_Margin + 500, $YPos + $LineHeight);
 					$PDF->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
 					$YPos -= (2 * $LineHeight);
 
@@ -492,7 +492,7 @@ else if (isset($_POST['PrintPDF'])) {
 	$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, _('Profit') . ' - ' . _('Loss'));
 	$LeftOvers = $PDF->addTextWrap($Left_Margin + 310, $YPos, 70, $FontSize, locale_number_format(-$PeriodProfitLoss, $_SESSION['CompanyRecord']['decimalplaces']) , 'right');
 
-	$PDF->line($Left_Margin + 310, $YPos + $LineHeight , $Left_Margin + 500, $YPos + $LineHeight);
+	$PDF->line($Left_Margin + 310, $YPos + $LineHeight, $Left_Margin + 500, $YPos + $LineHeight);
 	$PDF->line($Left_Margin + 310, $YPos, $Left_Margin + 500, $YPos);
 
 	$PDF->OutputD($_SESSION['DatabaseName'] . '_' . 'Tag_Income_Statement_' . date('Y-m-d') . '.pdf');

@@ -62,19 +62,19 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 			<th>', _('Status'), '</th>
 		</tr>';
 	$k = 0;
-	while ($row = DB_fetch_array($SalesOrdersResult2)) {
-		$FormatedOrderValue2 = locale_number_format($row['ordervalue'], $row['currdecimalplaces']);
-		$Total+= $row['ordervalue'];
+	while ($Row = DB_fetch_array($SalesOrdersResult2)) {
+		$FormatedOrderValue2 = locale_number_format($Row['ordervalue'], $Row['currdecimalplaces']);
+		$Total+= $Row['ordervalue'];
 
-		$FormatedOrderDate1 = ConvertSQLDate($row['orddate']);
-		$FormatedDelDate1 = ConvertSQLDate($row['deliverydate']);
+		$FormatedOrderDate1 = ConvertSQLDate($Row['orddate']);
+		$FormatedDelDate1 = ConvertSQLDate($Row['deliverydate']);
 
 		echo '<tr class="striped_row">
-			<td> ', $row['suppname'], ' </td>
+			<td> ', $Row['suppname'], ' </td>
 			<td>', $FormatedOrderDate1, '</td>
 			<td>', $FormatedDelDate1, '</td>
 			<td class="number">', $FormatedOrderValue2, '</td>
-			<td> ', $row['status'], ' </td> ';
+			<td> ', $Row['status'], ' </td> ';
 
 	}
 	echo '</tbody>

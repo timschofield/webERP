@@ -611,11 +611,14 @@ echo '<field>
 if (!isset($New) ) { //ie not new at all!
 
 	echo '<field>
-			<label>' .  _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
+			<label for="ItemPicture">' .  _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
 			<input type="file" id="ItemPicture" name="ItemPicture" />
-			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image');
-
-	$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		</field>
+		<field>
+			<label for"ClearImage">'._('Clear Image').'</label>
+			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ';
+    $Glob = (glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$ImageFile = reset($Glob);
 	$AssetImgLink = GetImageLink($ImageFile, 'ASSET_' . $AssetID, 64, 64, "", "");
 	if ($AssetImgLink!=_('No Image')) {
 		echo '<div class="fieldvalue">' . _('Image') . '<br />' . $AssetImgLink . '</div></field>';

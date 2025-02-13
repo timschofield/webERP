@@ -358,7 +358,8 @@ if (isset($SearchResult)) {
 	while ($MyRow=DB_fetch_array($SearchResult)) {
 
 		$SupportedImgExt = array('png','jpg','jpeg');
-		$Imagefile = reset((glob($_SESSION['part_pics_dir'] . '/' . $myrow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+        $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($Glob);
 		$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 		
 		echo '<tr class="striped_row">

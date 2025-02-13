@@ -171,7 +171,7 @@ if (isset($_POST['submit'])) {
 				}
 			}
 			$i = 0;
-			foreach ($PeriodQty as $demandqty) {
+			foreach ($PeriodQty as $DemandQty) {
 				if (!isset($DemandQty) or $DemandQty == ' ') {
 					$DemandQty = 0;
 				}
