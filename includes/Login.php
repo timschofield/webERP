@@ -46,7 +46,7 @@ echo '</head>';
 echo '<body>
 	<div id="container">
 		<div id="login_logo">
-			<div class="logo logo-left">' . $TextLogin . '</div><div class="logo logo-right"></div>
+			<div><strong>' . $TextLogin . '</strong></div>
 		</div>
 		<div id="login_box">
 			<form action="index.php" name="LogIn" method="post" class="noPrint">
@@ -129,8 +129,11 @@ if (isset($DemoText)) {
 
 echo '</div>';
 
-echo '<button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()"><img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
-</button>';
+echo '<div style="text-align: center;">
+        <button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
+            <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
+        </button>
+      </div>';
 
 echo '</form>
 	</div>
