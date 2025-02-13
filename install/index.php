@@ -102,7 +102,7 @@ if (isset($_SESSION['Installer']['License_Agreed']) and !$_SESSION['Installer'][
 	echo '<input type="submit" class="install nav_button" name="install" value="', _('Install'), '" />';
 } elseif ($_SESSION['Installer']['CurrentPage'] == 6) {
 	echo '<div class="nav_button">
-			<a href="../Logout.php">', _('Restart webERP'), '</a>
+			<a href="../Logout.php?Installed=Yes">', _('Restart webERP'), '</a>
 				<img src="images/restart.png"  style="float:right; width:24px;">
 		</div>';
 } else {
