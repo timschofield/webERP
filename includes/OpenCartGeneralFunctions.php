@@ -665,7 +665,7 @@ function GetWeberpItemBrand($webERPCategoryId, $ManufacturerId){
 	return $ItemBrand;
 }
 
-Function GetNextSequenceNo ($SequenceType){
+Function GetNextSequenceNo ($TransType){
 
 	/* SQL to get the next transaction number these are maintained in the table SysTypes - Transaction Types
 	Also updates the transaction number
@@ -674,25 +674,18 @@ Function GetNextSequenceNo ($SequenceType){
 	11 sales credit note
 	12 sales receipt
 	etc	*/
-
-	DB_query("LOCK TABLES systypes WRITE");
-
-	$SQL = "SELECT typeno FROM systypes WHERE typeid = '" . $SequenceType . "'";
-
-	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
-	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
-	$GetTransNoResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
-	$MyRow = DB_fetch_row($GetTransNoResult);
-
-	$SQL = "UPDATE systypes SET typeno = '" . ($MyRow[0] + 1) . "' WHERE typeid = '" . $SequenceType . "'";
+	
+	DB_query("SELECT typeno FROM systypes WHERE typeid='" . $TransType ."' FOR UPDATE");
+	$SQL = "UPDATE systypes SET typeno = typeno + 1 WHERE typeid = '" . $TransType . "'";
 	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The transaction number could not be incremented');
 	$DbgMsg =  _('The following SQL to increment the transaction number was used');
 	$UpdTransNoResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
-	DB_query("UNLOCK TABLES");
-
-	return $MyRow[0] + 1;
+	$SQL = "SELECT typeno FROM systypes WHERE typeid= '" . $TransType . "'";
+	$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': <BR>' . _('The next transaction number could not be retrieved from the database because');
+	$DbgMsg =  _('The following SQL to retrieve the transaction number was used');
+	$GetTransNoResult = DB_query($SQL,$ErrMsg,$DbgMsg);
+	$MyRow = DB_fetch_row($GetTransNoResult);
+	return $MyRow[0];	
 }
 
 function InsertCustomerReceipt ($CustomerCode, $AmountPaid, $FreightCost, $CustomerCurrency, $Rate, $BankAccount, $PaymentSystem, $TransactionID, $OrderNo, $PeriodNo) {
