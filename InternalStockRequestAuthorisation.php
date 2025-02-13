@@ -21,7 +21,7 @@ if (isset($_POST['UpdateAll'])) {
 			$Result=DB_query($SQL);
 		}
 		if (strpos($POSTVariableName, 'cancel')!== false) {
- 			$CancelItems = explode('cancel', $POSTVariableName);
+			$CancelItems = explode('cancel', $POSTVariableName);
  			$SQL = "UPDATE stockrequestitems
  						SET completed=1
  						WHERE dispatchid='" . $CancelItems[0] . "'

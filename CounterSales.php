@@ -949,7 +949,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ) { /*only show order lin
 	}
 	echo '<field>
 			<label for="CashReceived">', _('Cash Received'), ':</label>
-			<input type="text" class="number" id="CashReceived" name="CashReceived" required="required"  maxlength="12" size="12" value="', $_POST['CashReceived'], '" onkeyup="CalculateChangeDue();" />
+			<input type="text" class="number" id="CashReceived" name="CashReceived" required="required"  maxlength="12" size="12" value="', $_POST['CashReceived'], '" onblur="CounterSales.CalculateChangeDue()" />
 		</field>';
 
 	if (!isset($_POST['AmountPaid'])) {
@@ -2433,9 +2433,11 @@ if (!isset($_POST['ProcessSale'])) {
 	}
 	echo '</form>';
 }
-echo '<script src="', $RootPath, 'javscripts/CounterSalesFunctions.js"></script>';
+
 ?>
+<script src="<?=$RootPath?>/javascripts/CounterSalesFunctions.js"></script>
 <script defer="defer">
+	CounterSales.SetTotalDue(<?=$_SESSION['Items'.$identifier]->total+$TaxTotal?>);
 	CounterSales.SetItemList(<?php echo json_encode($_SESSION['ItemList']); ?>);
 	CounterSales.SetQuickEntryTableId('QuickEntryTable');
 	CounterSales.SetRowCounter(<?php echo empty($i) ? 0 : $i; ?>);
