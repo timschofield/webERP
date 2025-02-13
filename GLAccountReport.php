@@ -77,7 +77,7 @@ if (isset($_POST['RunReport'])) {
 			$SQL = $SQL . " AND gltags.tagref='" . $_POST['tag'] . "'";
 		}
 
-		$SQL = " ORDER BY periodno,
+		$SQL = $SQL . " ORDER BY periodno,
 						gltrans.trandate,
 						gltrans.counterindex";
 
