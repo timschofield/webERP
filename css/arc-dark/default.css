@@ -90,6 +90,8 @@ border-radius:5px;
 position: relative;
 }
 .graph {
-width:950px;
-height:450px;
+    width: 95vw;
+    height: 80vh;
+    max-width: 100%;
+    margin: 0 auto;
 }
