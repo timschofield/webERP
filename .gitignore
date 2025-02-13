@@ -9,3 +9,4 @@ nbproject/
 # except for weberpdemo
 !/companies/weberpdemo
 .vscode/launch.json
+Thumbs.db
