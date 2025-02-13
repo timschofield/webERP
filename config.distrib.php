@@ -17,7 +17,7 @@ $DefaultLanguage = 'en_GB.utf8';
 $DefaultTheme = 'xenos';
 
 // Whether to display the demo login and password or not on the login screen
-$AllowDemoMode = True;
+$AllowDemoMode = False;
 
 // email address of the system administrator
 $SysAdminEmail = 'admin@mydomain.com';
