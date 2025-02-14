@@ -16,6 +16,8 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
+
 // KL RICARD
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -240,14 +242,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										0,
 										'')";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
-			foreach ($Tags as $Tag) {
-				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-													'" . $Tag . "')";
-				$ErrMsg = _('Cannot insert a GL tag for the payment line because');
-				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-				$InsertResult = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			}
-
+			InsertGLTags($Tags);
+			
 			// KL RICARD
 			// if there's a PPH21 retention, we account for it
 			if ($HutangPPH21 != 0){
