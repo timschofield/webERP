@@ -240,9 +240,10 @@ if (DB_num_rows($Result)>0){
 	$pdf->OutputD($_SESSION['DatabaseName'] . '_Customer_Order_' . $_GET['TransNo'] . '_' . Date('Y-m-d') .'.pdf');
 	$pdf-> __destruct();
 
-	$SQL = "UPDATE salesorders SET printedpackingslip=1,
-									datepackingslipprinted='" . Date('Y-m-d') . "'
-			WHERE salesorders.orderno='" . $_GET['TransNo'] . "'";
+	$SQL = "UPDATE salesorders 
+			SET printedpackingslip = 1,
+				datepackingslipprinted = CURRENT_DATE
+			WHERE salesorders.orderno = '" . $_GET['TransNo'] . "'";
 	$Result = DB_query($SQL);
 } else {
 	$Title = _('Print Packing Slip Error');

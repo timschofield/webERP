@@ -121,8 +121,8 @@ if ($AlreadyOnThisOrder!=1){
 					WHERE stockid='" . $NewItem . "'
 					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
 						OR debtorno='')
-					AND effectivefrom <='" . Date('Y-m-d') . "'
-					AND effectiveto >='" . Date('Y-m-d') . "'";
+					AND effectivefrom <= CURRENT_DATE
+					AND effectiveto >= CURRENT_DATE";
 			$SellSuppResult = DB_query($SQL);
 			$SellSupportDiscount = 0;
 			$SellSupportPercent = 0;
@@ -151,8 +151,8 @@ if ($AlreadyOnThisOrder!=1){
 					WHERE stockmaster.stockid='" . $NewItem . "'
 					AND (debtorno='" . $_SESSION['Items'.$identifier]->DebtorNo . "'
 						OR debtorno='')
-					AND effectivefrom <='" . Date('Y-m-d') . "'
-					AND effectiveto >='" . Date('Y-m-d') . "'";
+					AND effectivefrom <= CURRENT_DATE
+					AND effectiveto >= CURRENT_DATE";
 			$SellSuppResult = DB_query($SQL);
 			/*Only the highest discount is taken - it is not accumulated ? */
 			if (DB_num_rows($SellSuppResult) > 0){

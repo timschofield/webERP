@@ -187,7 +187,7 @@ $SQL = "SELECT regularpayments.id,
 			INNER JOIN chartmaster
 				ON chartmaster.accountcode=regularpayments.glcode
 			WHERE completed=0
-				AND nextpayment<=CURRENT_DATE";
+				AND nextpayment <= CURRENT_DATE";
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {

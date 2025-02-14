@@ -42,8 +42,8 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								MAX(purchdata.effectivefrom) AS latesteffectivefrom
 							FROM purchdata
 							WHERE purchdata.supplierno = '" . $_POST['Supplier'] . "'
-							AND purchdata.effectivefrom <='" . Date('Y-m-d') . "'
-							AND purchdata.stockid = '". $StockID . "'
+								AND purchdata.effectivefrom <= CURRENT_DATE
+								AND purchdata.stockid = '". $StockID . "'
 							GROUP BY purchdata.price,
 									purchdata.conversionfactor,
 									purchdata.supplierdescription,
@@ -63,10 +63,10 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 										discountamount
 								FROM supplierdiscounts
 								WHERE supplierno= '" . $_POST['Supplier'] . "'
-								AND effectivefrom <='" . Date('Y-m-d') . "'
-								AND (effectiveto >='" . Date('Y-m-d') . "'
-									OR effectiveto ='0000-00-00')
-								AND stockid = '". $StockID . "'";
+									AND effectivefrom <= CURRENT_DATE
+									AND (effectiveto >= CURRENT_DATE
+										OR effectiveto ='0000-00-00')
+									AND stockid = '". $StockID . "'";
 
 						$ItemDiscountPercent = 0;
 						$ItemDiscountAmount = 0;
@@ -436,13 +436,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 			$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
 								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d') . "') THEN -qty ELSE 0 END) AS lastmonth,
+								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
 								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
 								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
-								trandate<='" . Date('Y-m-d') . "') THEN -qty ELSE 0 END) AS wk1
+								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
 					FROM stockmoves
 					WHERE stockid='" . $ItemRow['stockid'] . "'
 					AND (type=10 OR type=11)";

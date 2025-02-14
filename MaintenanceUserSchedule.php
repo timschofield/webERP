@@ -16,7 +16,9 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/g
 
 
 if (isset($_GET['Complete'])) {
-	$Result = DB_query("UPDATE fixedassettasks SET lastcompleted='" . Date('Y-m-d') . "' WHERE taskid='" . $_GET['TaskID'] . "'");
+	$Result = DB_query("UPDATE fixedassettasks 
+						SET lastcompleted = CURRENT_DATE 
+						WHERE taskid='" . $_GET['TaskID'] . "'");
 }
 
 

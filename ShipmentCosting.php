@@ -327,19 +327,19 @@ if (DB_num_rows($LineItemsResult) > 0) {
 					$CostIncrement = ($MyRow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit) - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 					$SQL = "UPDATE stockmaster
-								SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost=materialcost+" . $CostIncrement . ",
-									lastcostupdate='" . Date('Y-m-d') . "'
+							SET lastcost=materialcost+overheadcost+labourcost,
+								materialcost=materialcost+" . $CostIncrement . ",
+								lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,'',TRUE);
 
 				} else {
 					$SQL = "UPDATE stockmaster
-								SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost='" . $ItemShipmentCost . "',
-									lastcostupdate='" . Date('Y-m-d') . "'
-								WHERE stockid='" . $MyRow['itemcode'] . "'";
+							SET lastcost=materialcost+overheadcost+labourcost,
+								materialcost='" . $ItemShipmentCost . "',
+								lastcostupdate = CURRENT_DATE
+							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,'',TRUE);
 
@@ -453,7 +453,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												labourcost=0,
 												overheadcost=0,
 												lastcost='" . $StdCostUnit . "',
-												lastcostupdate='" . Date('Y-m-d') . "'
+												lastcostupdate = CURRENT_DATE
 										WHERE stockid='" . $MyRow['itemcode'] . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg();

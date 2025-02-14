@@ -275,7 +275,10 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			ftp_quit($conn_id);
 
 			/* Update the order printed flag to prevent double sendings */
-			$SQL = "UPDATE salesorders SET printedpackingslip=1, datepackingslipprinted='" . Date('Y-m-d') . "' WHERE salesorders.orderno=" . $_GET['OrderNo'];
+			$SQL = "UPDATE salesorders 
+					SET printedpackingslip=1, 
+						datepackingslipprinted = CURRENT_DATE 
+					WHERE salesorders.orderno=" . $_GET['OrderNo'];
 			$Result = DB_query($SQL);
 
 			echo '<p>' . _('Order Number') . ' ' . $_GET['OrderNo'] . ' ' . _('has been sent via FTP to Radio Beacon a copy of the file that was sent is held on the server at') . '<br />' . $FileName;

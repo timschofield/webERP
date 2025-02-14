@@ -417,8 +417,8 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 							ON stockmaster.stockid=bom.component
 						WHERE bom.parent='" . $OrderLine->StockID . "'
 							AND locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'
-							AND effectiveafter <'" . Date('Y-m-d') . "'
-							AND effectiveto >='" . Date('Y-m-d') . "'";
+							AND effectiveafter < CURRENT_DATE
+							AND effectiveto >= CURRENT_DATE";
 
 				$ErrMsg = _('Could not retrieve the component quantity left at the location once the assembly item on this order is invoiced (for the purposes of checking that stock will not go negative because)');
 				$Result = DB_query($SQL, $ErrMsg);

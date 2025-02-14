@@ -33,8 +33,8 @@ if (!isset($_POST['supplierid'])) {
 		LEFT JOIN suppliers
 			ON suppliers.supplierid=offers.supplierid
 		WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
-		AND offers.expirydate>'" . date('Y-m-d') . "'
-		AND purchorderauth.cancreate=0";
+			AND offers.expirydate > CURRENT_DATE
+			AND purchorderauth.cancreate=0";
 	$Result=DB_query($SQL);
 	if (DB_num_rows($Result)==0) {
 		prnMsg(_('There are no offers outstanding that you are authorised to deal with'), 'information');
@@ -83,8 +83,8 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			LEFT JOIN stockmaster
 				ON stockmaster.stockid=offers.stockid
 			WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
-			AND offers.expirydate>='" . date('Y-m-d') . "'
-			AND offers.supplierid='" . $_POST['supplierid'] . "'
+				AND offers.expirydate >= CURRENT_DATE
+				AND offers.supplierid='" . $_POST['supplierid'] . "'
 			ORDER BY offerid";
 	$Result=DB_query($SQL);
 

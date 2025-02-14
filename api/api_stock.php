@@ -731,7 +731,7 @@
 							WHERE stockid='" .$StockID. "'
 							 AND typeabbrev='" .$SalesType. "'
 							 AND currabrev='".$Currency. "'
-							 AND startdate<=CURRENT_DATE
+							 AND startdate<= CURRENT_DATE
 							 AND enddate>CURRENT_DATE";
 		}
 		$Result = DB_query($SQL);

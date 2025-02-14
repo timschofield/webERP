@@ -508,11 +508,12 @@ if (isset($_POST['submit'])) {
 
 					//now update cloned item costs
 						DB_Txn_Begin();
-						$SQL = "UPDATE stockmaster SET	materialcost='" . $OldRow['materialcost'] . "',
-										labourcost     ='" . $OldRow['labourcost'] . "',
-										overheadcost   ='" . $OldRow['overheadcost'] . "',
-										lastcost       ='" . $OldRow['lastcost'] . "',
-										lastcostupdate ='" . Date('Y-m-d')."'
+						$SQL = "UPDATE stockmaster 	
+								SET	materialcost ='" . $OldRow['materialcost'] . "',
+									labourcost ='" . $OldRow['labourcost'] . "',
+									overheadcost ='" . $OldRow['overheadcost'] . "',
+									lastcost ='" . $OldRow['lastcost'] . "',
+									lastcostupdate = CURRENT_DATE
 								WHERE stockid='" . $_POST['StockID'] . "'";
 						$ErrMsg = _('The cost details for the cloned stock item could not be updated because');
 						$DbgMsg = _('The SQL that failed was');

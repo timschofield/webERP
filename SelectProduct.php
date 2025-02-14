@@ -170,19 +170,19 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 										price
 								FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
-								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
-								AND debtorno=''
-								AND branchcode=''
-								AND startdate <= CURRENT_DATE
-								AND enddate >= CURRENT_DATE
-								AND stockid='" . $StockID . "'");
+									AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
+									AND debtorno=''
+									AND branchcode=''
+									AND startdate <= CURRENT_DATE 
+									AND enddate >= CURRENT_DATE
+									AND stockid='" . $StockID . "'");
 		if ($MyRow['mbflag'] == 'K' OR $MyRow['mbflag'] == 'A' OR $MyRow['mbflag'] == 'G') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.actualcost)) AS cost
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
-                                    AND bom.effectiveafter <= '" . date('Y-m-d') . "'
-                                    AND bom.effectiveto > '" . date('Y-m-d') . "'");
+										AND bom.effectiveafter <= CURRENT_DATE
+										AND bom.effectiveto > CURRENT_DATE");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {

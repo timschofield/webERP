@@ -40,11 +40,11 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 				INNER JOIN currencies
 				ON prices.currabrev=currencies.currabrev
 				WHERE stockmaster.discontinued = 0
-				" . $Category . "
-				AND   prices.price" . $Comparator . "(stockmaster.actualcost) * '" . filter_number_format($_POST['Margin']) . "'
-				AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-				AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-				AND prices.enddate>= CURRENT_DATE";
+					" . $Category . "
+					AND   prices.price" . $Comparator . "(stockmaster.actualcost) * '" . filter_number_format($_POST['Margin']) . "'
+					AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+					AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+					AND prices.enddate >= CURRENT_DATE";
 	$Result = DB_query($SQL);
 	$NumRow = DB_num_rows($Result);
 
@@ -72,33 +72,33 @@ if (isset($_POST['submit']) OR isset($_POST['update'])) {
 
 				$SQLTestExists = "SELECT price FROM prices
 									WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
-									AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-									AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-									AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
-									AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
-									AND prices.startdate ='" . date('Y-m-d') . "'";
+										AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+										AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+										AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
+										AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
+										AND prices.startdate = CURRENT_DATE";
 				$TestExistsResult = DB_query($SQLTestExists);
 				if (DB_num_rows($TestExistsResult)==1){
 					 //then we are updating
 					$SQLUpdate = "UPDATE prices	SET price = '" . filter_number_format($_POST['Price_' . $PriceCounter]) . "'
 									WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
-									AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-									AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-									AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
-									AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
-									AND prices.startdate ='" . date('Y-m-d') . "'
-									AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
+										AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+										AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+										AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
+										AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
+										AND prices.startdate = CURRENT_DATE
+										AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
 				$ResultUpdate = DB_query($SQLUpdate);
 				} else { //there is not a price already starting today so need to create one
 					//update the old price to have an end date of yesterday too
 					$SQLUpdate = "UPDATE prices	SET enddate = '" . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-1)) . "'
 									WHERE stockid = '" . $_POST['StockID_' . $PriceCounter] . "'
-									AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
-									AND prices.currabrev ='" . $_POST['CurrCode'] . "'
-									AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
-									AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
-									AND prices.startdate ='" . $_POST['StartDate_' . $PriceCounter] . "'
-									AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
+										AND prices.typeabbrev ='" . $_POST['SalesType'] . "'
+										AND prices.currabrev ='" . $_POST['CurrCode'] . "'
+										AND prices.debtorno ='" . $_POST['DebtorNo_' . $PriceCounter] . "'
+										AND prices.branchcode ='" . $_POST['BranchCode_' . $PriceCounter] . "'
+										AND prices.startdate ='" . $_POST['StartDate_' . $PriceCounter] . "'
+										AND prices.enddate ='" . $_POST['EndDate_' . $PriceCounter] . "'";
 					$Result = DB_query($SQLUpdate);
 					//we need to add a new price from today
 					$SQLInsert = "INSERT INTO prices (	stockid,
