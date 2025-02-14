@@ -289,7 +289,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				}
 
 				$SQL = "UPDATE stockmaster SET
-							lastcostupdate=CURRENT_DATE,
+							lastcostupdate= CURRENT_DATE,
 							materialcost='" . $Cost . "',
 							labourcost='" . $ItemCostRow['labourcost'] . "',
 							overheadcost='" . $ItemCostRow['overheadcost'] . "',

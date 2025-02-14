@@ -743,7 +743,7 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 									labourcost='" . 0 . "',
 									overheadcost='" . 0 . "',
 									lastcost='" . $OldCost . "',
-									lastcostupdate ='" . Date('Y-m-d')."'
+									lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $StockID . "'";
 
 	$ErrMsg = _('The cost details for the stock item could not be updated because');

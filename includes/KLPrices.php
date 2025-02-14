@@ -355,7 +355,7 @@ function UpdateDiscountCategory($StockID, $NewCategory, $DiscountCode){
 	/* Update the stockmaster record */
 	$SQL = "UPDATE stockmaster 
 			SET categoryid='" . $NewCategory . "',
-				lastcategoryupdate = '" .Date('Y-m-d') . "',
+				lastcategoryupdate = CURRENT_DATE,
 				discountcategory = '" . $DiscountCode . "'
 			WHERE stockid ='" . $StockID . "'";
 

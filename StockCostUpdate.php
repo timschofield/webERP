@@ -68,12 +68,13 @@ if (isset($_POST['UpdateData'])){
 		DB_Txn_Begin();
 		ItemCostUpdateGL($StockID, $NewCost, $OldCost, $_POST['QOH']);
 
-		$SQL = "UPDATE stockmaster SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
-										labourcost='" . filter_number_format($_POST['LabourCost']) . "',
-										overheadcost='" . filter_number_format($_POST['OverheadCost']) . "',
-										lastcost='" . $OldCost . "',
-										lastcostupdate ='" . Date('Y-m-d')."'
-								WHERE stockid='" . $StockID . "'";
+		$SQL = "UPDATE stockmaster 
+				SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
+					labourcost='" . filter_number_format($_POST['LabourCost']) . "',
+					overheadcost='" . filter_number_format($_POST['OverheadCost']) . "',
+					lastcost='" . $OldCost . "',
+					lastcostupdate = CURRENT_DATE
+				WHERE stockid='" . $StockID . "'";
 
 		$ErrMsg = _('The cost details for the stock item could not be updated because');
 		$DbgMsg = _('The SQL that failed was');

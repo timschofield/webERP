@@ -473,7 +473,7 @@ if (isset($_POST['submit'])) {
 							categoryid='" . $_POST['CategoryID'] . "', ";
 				// KL RICARD
 				if ($OldCategoryId != $_POST['CategoryID']){
-					$SQL = $SQL . "lastcategoryupdate=CURRENT_DATE, ";
+					$SQL = $SQL . "lastcategoryupdate = CURRENT_DATE, ";
 				}
 				$SQL = $SQL . "length='" . filter_number_format($_POST['Length']) . "',
 							width='" . filter_number_format($_POST['Width']) . "',
