@@ -12,6 +12,7 @@ $BookMark = 'InventoryAdjustments';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other adjustment sessions on the same machine  */
@@ -339,14 +340,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
-			foreach ($_POST['tag'] as $Tag) {
-				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-													'" . $Tag . "')";
-				$ErrMsg = _('Cannot insert a GL tag for the stock adjustment because');
-				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			}
+			InsertGLTags($_POST['tag']);
 
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,

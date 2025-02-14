@@ -22,6 +22,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 $PageTitleText, '" /> ', // Icon title.
 $PageTitleText, '</p>'; // Page title.
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 if (isset($_POST['PaymentCancelled'])) {
 	prnMsg(_('Payment Cancelled since cheque was not printed') , 'warning');
@@ -471,15 +472,7 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 							)";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was') , true);
-					if (isset($PaymentItem->Tag)){
-						foreach ($PaymentItem->Tag as $Tag) {
-							$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-																'" . $Tag . "')";
-							$ErrMsg = _('Cannot insert a GL tag for the payment line because');
-							$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-						}
-					}
+					InsertGLTags($PaymentItem->Tag);
 					$TotalAmount += $PaymentItem->Amount;
 				}
 				$_SESSION['PaymentDetail' . $identifier]->Amount = $TotalAmount;

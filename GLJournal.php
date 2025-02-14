@@ -9,6 +9,7 @@ $BookMark = 'GLJournals';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 if (isset($_GET['NewJournal']) and $_GET['NewJournal'] == 'Yes' and isset($_SESSION['JournalDetail'])) {
 
@@ -286,14 +287,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
-		foreach ($JournalItem->tag as $Tag) {
-			$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-											'" . $Tag . "')";
-			$ErrMsg = _('Cannot insert a GL tag for the journal line because');
-			$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-		}
+		InsertGLTags($JournalItem->tag);
 
 		if ($_POST['JournalType'] == 'Reversing') {
 			$SQL = "INSERT INTO gltrans (type,
@@ -315,14 +309,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 			$ErrMsg = _('Cannot insert a GL entry for the reversing journal because');
 			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
-			foreach ($JournalItem->tag as $Tag) {
-				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-												'" . $Tag . "')";
-				$ErrMsg = _('Cannot insert a GL tag for the journal line because');
-				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			}
+			InsertGLTags($JournalItem->tag);
 		}
 	}
 

@@ -30,6 +30,7 @@ $BookMark = '';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);
@@ -734,14 +735,7 @@ then do the updates and inserts to process the credit note entered */
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-
-				foreach ($EnteredGLCode->Tag as $Tag) {
-					$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-														'" . $Tag . "')";
-					$ErrMsg = _('Cannot insert a GL tag for the supplier Invoice because');
-					$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-				}
+				InsertGLTags($EnteredGLCode->Tag);
 
 				$LocalTotal += ($EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate);
 			}

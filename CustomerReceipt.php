@@ -19,6 +19,8 @@ if ($_GET['Type']=='GL') {
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
+
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
 } else {
@@ -338,13 +340,7 @@ if (isset($_POST['CommitBatch'])){
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				foreach ($ReceiptItem->tag as $Tag) {
-					$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-														'" . $Tag . "')";
-					$ErrMsg = _('Cannot insert a GL tag for the journal line because');
-					$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-				}
+				InsertGLTags($ReceiptItem->tag);
 			}
 
 			/*check to see if this is a GL posting to another bank account (or the same one)
