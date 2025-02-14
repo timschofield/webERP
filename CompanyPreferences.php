@@ -253,7 +253,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 } //end while loop
 
-DB_free_Result($Result);
+DB_free_result($Result);
 
 echo '</select>
 	</field>';
@@ -362,7 +362,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 	}
 } //end while loop
 
-DB_free_Result($Result);
+DB_free_result($Result);
 
 echo '</select>
 	<fieldhelp>' . _('Select the general ledger account to be used for clearing profit and loss accounts to that represents the accumulated retained profits of the business. Only balance sheet accounts are available for this selection.') . '</fieldhelp>
