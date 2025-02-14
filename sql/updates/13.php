@@ -2,7 +2,7 @@
 
 CreateTable('sessions', 'CREATE TABLE `sessions` (
   `sessionid` char(32),  
-  `last_poll` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `last_poll` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 )');
 
 if ($_SESSION['Updates']['Errors'] == 0) {
