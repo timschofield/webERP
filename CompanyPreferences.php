@@ -41,6 +41,18 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1){
 
+		$CompanyFileHandler = fopen('companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
+		$Contents = "<?php\n\n";
+		$Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_POST['CoyName'] . "';\n";
+		$Contents.= "?>";
+
+		if (!fwrite($CompanyFileHandler, $Contents)) {
+			fclose($CompanyFileHandler);
+			echo '<div class="error">' . _("Cannot write to the Companies.php file") . '</div>';
+		}
+		//close file
+		fclose($CompanyFileHandler);
+
 		$SQL = "UPDATE companies SET coyname='" . $_POST['CoyName'] . "',
 									companynumber = '" . $_POST['CompanyNumber'] . "',
 									gstno='" . $_POST['GSTNo'] . "',
