@@ -9,6 +9,7 @@ $Title=_('Reorder Level Location Reporting');
 $ViewTopic = 'Inventory';
 $BookMark = '';
 include('includes/header.php');
+include('includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Reorder Level Location Report') . '</p>';
 
@@ -102,18 +103,13 @@ if (isset($_POST['submit']) OR isset($_POST['Update'])) {
 
 		//get On Hand all
 		//find the quantity onhand item
-		$SqlOH="SELECT SUM(quantity) AS qty
-				FROM locstock
-				INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE stockid='" . $MyRow['stockid'] . "'";
-		$TotQtyResult = DB_query($SqlOH);
-		$TotQtyRow = DB_fetch_array($TotQtyResult);
+		$QOH = GetQuantityOnHand($MyRow['stockid'], 'USER_CAN_VIEW');
 
 		echo '<tr class="striped_row">
 			<td>' . $MyRow['stockid'] . '</td>
 			<td>' . $MyRow['description'] . '</td>
 			<td class="number">' . locale_number_format($SalesRow['qtyinvoiced'],$MyRow['decimalplaces']) . '</td>
-			<td class="number">' . locale_number_format($TotQtyRow['qty'],$MyRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($QOH,$MyRow['decimalplaces']) . '</td>
 			<td class="number">' . locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']) . '</td>
 			<td class="number">';
 		if ($MyRow['canupd']==1) {

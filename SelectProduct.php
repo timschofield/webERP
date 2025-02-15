@@ -12,6 +12,7 @@ $BookMark = 'SelectingInventory';
 include ('includes/header.php');
 
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/StockFunctions.php');
 include ('includes/ImageFunctions.php');
 
 
@@ -272,12 +273,8 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		break;
 		case 'M':
 		case 'B':
-			$QOHResult = DB_query("SELECT sum(quantity)
-							FROM locstock
-							WHERE stockid = '" . $StockID . "'");
-			$QOHRow = DB_fetch_row($QOHResult);
-			$QOH = locale_number_format($QOHRow[0], $MyRow['decimalplaces']);
-
+			// get the QOH for all locations. Function defined in StockFunctions.php
+			$QOH = locale_number_format(GetQuantityOnHand($StockID, 'ALL'), $MyRow['decimalplaces']);
 			// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
 			$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, '');
 			// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc

@@ -15,6 +15,7 @@ $BookMark = 'SalesOrderCounterSales';
 include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include('includes/GetSalesTransGLCodes.inc');
 
 $AlreadyWarnedAboutCredit = false;
@@ -1176,9 +1177,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 				AND $_SESSION['AutoCreateWOs']==1) { //oh yeah its all on!
 
 				//now get the data required to test to see if we need to make a new WO
-				$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'");
-				$QOHRow = DB_fetch_row($QOHResult);
-				$QOH = $QOHRow[0];
+				$QOH = GetQuantityOnHand($StockItem->StockID, 'ALL');
 
 				$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 						FROM salesorderdetails INNER JOIN salesorders
@@ -2137,16 +2136,9 @@ if (!isset($_POST['ProcessSale'])) {
 			$j = 1;
 
 			while ($MyRow=DB_fetch_array($Result2)) {
-	// This code needs sorting out, but until then :
 				$ImageSource = _('No Image');
-	// Find the quantity in stock at location
-				$QohSql = "SELECT sum(quantity)
-						   FROM locstock
-						   WHERE stockid='" .$MyRow['stockid'] . "' AND
-						   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QohResult =  DB_query($QohSql);
-				$QohRow = DB_fetch_row($QohResult);
-				$QOH = $QohRow[0];
+				// Find the quantity in stock at location
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				// Find the quantity on outstanding sales orders
 				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
@@ -2291,13 +2283,7 @@ if (!isset($_POST['ProcessSale'])) {
 			while ($MyRow=DB_fetch_array($SearchResult)) {
 
 				// Find the quantity in stock at location
-				$QOHSql = "SELECT sum(quantity) AS qoh
- 					   FROM locstock
-					   WHERE locstock.stockid='" .$MyRow['stockid'] . "'
-					   AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSql);
-				$QOHRow = DB_fetch_array($QOHResult);
-				$QOH = $QOHRow['qoh'];
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				// Find the quantity on outstanding sales orders
 				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem

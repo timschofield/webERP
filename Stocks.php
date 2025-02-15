@@ -8,6 +8,7 @@ $BookMark = 'InventoryAddingItems';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/StockFunctions.php');
 include ('includes/ImageFunctions.php');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
@@ -797,10 +798,8 @@ if (isset($_POST['submit'])) {
 						prnMsg(_('Cannot delete this item because there are existing purchase order items for it'), 'warn');
 						echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('purchase order item record relating to this part');
 					} else {
-						$SQL = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='" . $StockID . "' GROUP BY stockid";
-						$Result = DB_query($SQL);
-						$MyRow = DB_fetch_row($Result);
-						if ($MyRow[0] != 0) {
+						$QOH = GetQuantityOnHand($StockID, 'ALL');
+						if ($QOH != 0) {
 							$CancelDelete = 1;
 							prnMsg(_('Cannot delete this item because there is currently some stock on hand'), 'warn');
 							echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('on hand for this part');

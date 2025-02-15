@@ -2,6 +2,7 @@
 
 
 include ('includes/session.php');
+include ('includes/StockFunctions.php');
 include ('includes/PDFStarter.php');
 $FontSize = 10;
 $pdf->addInfo('Title', _('Top Items Search Result'));
@@ -91,18 +92,13 @@ if (DB_num_rows($Result)>0){
 	$YPos = $YPos - 6;
 	while ($MyRow = DB_fetch_array($Result)) {
 		//find the quantity onhand item
-		$SQLoh = "SELECT sum(quantity)as qty
-					FROM locstock
-					INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-					WHERE stockid='" . DB_escape_string($MyRow['stkcode']) . "'";
-		$oh = DB_query($SQLoh);
-		$ohRow = DB_fetch_row($oh);
+		$QOH = GetQuantityOnHand($MyRow['stkcode'], 'USER_CAN_VIEW');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 1, $YPos, 80, $FontSize, $MyRow['stkcode']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 100, $YPos, 100, $FontSize, $MyRow['description']);
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 330, $YPos, 30, $FontSize, locale_number_format($MyRow['totalinvoiced'],$MyRow['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 370, $YPos, 300 - $Left_Margin, $FontSize, $MyRow['units'], 'left');
 		$LeftOvers = $pdf->addTextWrap($Left_Margin + 400, $YPos, 70, $FontSize, locale_number_format($MyRow['valuesales'], $_SESSION['CompanyRecord']['decimalplaces']), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin + 490, $YPos, 30, $FontSize, locale_number_format($ohRow[0],$MyRow['decimalplaces']), 'right');
+		$LeftOvers = $pdf->addTextWrap($Left_Margin + 490, $YPos, 30, $FontSize, locale_number_format($QOH,$MyRow['decimalplaces']), 'right');
 		if (mb_strlen($LeftOvers) > 1) {
 			$LeftOvers = $pdf->addTextWrap($Left_Margin + 1 + 94, $YPos - $LineHeight, 270, $FontSize, $LeftOvers, 'left');
 			$YPos-= $LineHeight;

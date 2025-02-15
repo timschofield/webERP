@@ -15,6 +15,7 @@ include('includes/header.php');
 
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include('includes/GetSalesTransGLCodes.inc');
 
 if (empty($_GET['identifier'])) {
@@ -1716,14 +1717,8 @@ if (!isset($_POST['ProcessReturn'])) {
 			while ($MyRow=DB_fetch_array($SearchResult)) {
 
 				// Find the quantity in stock at location
-				$QOHSql = "SELECT sum(quantity) AS qoh
- 					   FROM locstock
-					   WHERE locstock.stockid='" .$MyRow['stockid'] . "'
-					   AND loccode = '" . $_SESSION['Items' . $identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSql);
-				$QOHRow = DB_fetch_array($QOHResult);
-				$QOH = $QOHRow['qoh'];
-
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
+				
 				// Find the quantity on outstanding sales orders
 				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
 						 FROM salesorderdetails INNER JOIN salesorders

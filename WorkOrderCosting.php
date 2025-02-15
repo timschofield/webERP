@@ -6,7 +6,7 @@ $ViewTopic = 'Manufacturing';
 $BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
-
+include('includes/StockFunctions.php');
 
 if (isset($_GET['WO'])) {
 	$SelectedWO = $_GET['WO'];
@@ -355,11 +355,7 @@ If (isset($_POST['Close'])) {
 			of the variance relating to the stock still on hand should be posted to the stock value
 			*/
 
-			$TotOnHandResult =DB_query("SELECT SUM(quantity)
-										FROM locstock
-										WHERE stockid='" . $WORow['stockid'] . "'");
-			$TotOnHandRow = DB_fetch_row($TotOnHandResult);
-			$TotalOnHand = $TotOnHandRow[0];
+			$TotalOnHand = GetQuantityOnHand($WORow['stockid'], 'ALL');
 
 			if ($TotalOnHand >= $WORow['qtyrecd']){
 				$ProportionOnHand = 1;

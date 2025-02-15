@@ -22,6 +22,7 @@ include('includes/header.php');
 
 include('includes/FreightCalculation.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include('includes/CountriesArray.php');
 
 if(isset($_GET['identifier'])) {
@@ -440,9 +441,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			echo '<br />';
 
 			//now get the data required to test to see if we need to make a new WO
-			$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'");
-			$QOHRow = DB_fetch_row($QOHResult);
-			$QOH = $QOHRow[0];
+			$QOH = GetQuantityOnHand($StockItem->StockID, 'ALL');
 
 			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
 					FROM salesorderdetails INNER JOIN salesorders

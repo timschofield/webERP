@@ -6,6 +6,7 @@ include ('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Top Items Searching');
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 //check if input already
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
@@ -98,13 +99,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			break;
 			case 'M':
 			case 'B':
-				$QOHResult = DB_query("SELECT sum(quantity)
-								FROM locstock
-								INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-								WHERE stockid = '" . DB_escape_string($MyRow['stkcode']) . "'");
-				$QOHRow = DB_fetch_row($QOHResult);
-				$QOH = $QOHRow[0];
-
+				// get the QOH for the location user can view. Function defined in StockFunctions.php
+				$QOH = GetQuantityOnHand($MyRow['stkcode'], 'USER_CAN_VIEW');
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stkcode'], '');
 				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc

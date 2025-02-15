@@ -30,6 +30,7 @@ $BookMark = '';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include ('includes/GLFunctions.php');
 
 if (isset($_GET['New'])) {
@@ -876,21 +877,12 @@ then do the updates and inserts to process the credit note entered */
 
 							if ($_SESSION['WeightedAverageCosting']==1){ /*Weighted Average costing */
 
-								/*
-								First off figure out the new weighted average cost Need the following data:
+								/* First off figure out the new weighted average cost Need the following data:
+								- How many in stock now
+								- The quantity being invoiced here - $EnteredGRN->This_QuantityInv
+								- The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate */
 
-								How many in stock now
-								The quantity being invoiced here - $EnteredGRN->This_QuantityInv
-								The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate
-								*/
-
-								$SQL ="SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
-								$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
-								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-								$QtyRow = DB_fetch_row($Result);
-								$TotalQuantityOnHand = $QtyRow[0];
-
+								$TotalQuantityOnHand = GetQuantityOnHand($EnteredGRN->ItemCode, 'ALL');
 
 								/*The cost adjustment is the price variance / the total quantity in stock
 								But thats only provided that the total quantity in stock is greater than the quantity charged on this invoice
