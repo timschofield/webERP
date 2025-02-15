@@ -283,16 +283,9 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 			$QOO = locale_number_format($QOO, $MyRow['decimalplaces']);
 		break;
 	}
-	$Demand = 0;
-	$DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-							FROM salesorderdetails INNER JOIN salesorders
-							ON salesorders.orderno = salesorderdetails.orderno
-							INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-							WHERE salesorderdetails.completed=0
-							AND salesorders.quotation=0
-							AND salesorderdetails.stkcode='" . $StockID . "'");
-	$DemRow = DB_fetch_row($DemResult);
-	$Demand = $DemRow[0];
+
+	$Demand = GetDemandQuantityDueToOutstandingSalesOrders($StockID, 'USER_CAN_VIEW');
+
 	$DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
 										FROM salesorderdetails INNER JOIN salesorders
 										ON salesorders.orderno = salesorderdetails.orderno

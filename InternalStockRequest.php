@@ -539,47 +539,12 @@ if (isset($SearchResult)) {
 
 	$i = 0;
 	while ($MyRow = DB_fetch_array($SearchResult)) {
-		if ($MyRow['decimalplaces'] == '') {
-			/* This REALLY seems to be a redundant (unnecessary) re-query?
-			 * The default on stockmaster is 0, so an empty string should never
-			 * be true, as decimalplaces is in all queries from lines 382-482.
-			*/
-			$DecimalPlacesSQL = "SELECT decimalplaces
-								FROM stockmaster
-								WHERE stockid='" . $MyRow['stockid'] . "'";
-			$DecimalPlacesResult = DB_query($DecimalPlacesSQL);
-			$DecimalPlacesRow = DB_fetch_array($DecimalPlacesResult);
-			$DecimalPlaces = $DecimalPlacesRow['decimalplaces'];
-		} else {
-			$DecimalPlaces = $MyRow['decimalplaces'];
-		}
+		$DecimalPlaces = $MyRow['decimalplaces'];
 
-		$QOHSQL = "SELECT sum(locstock.quantity) AS qoh
-							   FROM locstock
-					WHERE locstock.stockid='" . $MyRow['stockid'] . "'
-						AND loccode = '" . $_SESSION['Request']->Location . "'";
-		$QOHResult = DB_query($QOHSQL);
-		$QOHRow = DB_fetch_array($QOHResult);
-		$QOH = $QOHRow['qoh'];
+		$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $_SESSION['Request']->Location);
 
 		// Find the quantity on outstanding sales orders
-		$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-				FROM salesorderdetails
-				INNER JOIN salesorders
-				 ON salesorders.orderno = salesorderdetails.orderno
-				 WHERE salesorders.fromstkloc='" . $_SESSION['Request']->Location . "'
-				 AND salesorderdetails.completed=0
-				 AND salesorders.quotation=0
-				 AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
-		$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Request']->Location . ' ' . _('cannot be retrieved because');
-		$DemandResult = DB_query($SQL, $ErrMsg);
-
-		$DemandRow = DB_fetch_row($DemandResult);
-		if ($DemandRow[0] != null) {
-			$DemandQty = $DemandRow[0];
-		} else {
-			$DemandQty = 0;
-		}
+		$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($MyRow['stockid'], $_SESSION['Request']->Location);
 
 		$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
 		$WoQty = GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');

@@ -2141,24 +2141,7 @@ if (!isset($_POST['ProcessSale'])) {
 				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				// Find the quantity on outstanding sales orders
-				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorders.orderno = salesorderdetails.orderno
-						WHERE  salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
-						AND salesorderdetails.completed=0
-						AND salesorders.quotation=0
-						AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
-
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
-					 _('cannot be retrieved because');
-				$DemandResult = DB_query($SQL,$ErrMsg);
-
-				$DemandRow = DB_fetch_row($DemandResult);
-				if ($DemandRow[0] != null) {
-				  $DemandQty =  $DemandRow[0];
-				} else {
-				  $DemandQty = 0;
-				}
+				$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
@@ -2286,23 +2269,7 @@ if (!isset($_POST['ProcessSale'])) {
 				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				// Find the quantity on outstanding sales orders
-				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						 FROM salesorderdetails INNER JOIN salesorders
-						 ON salesorders.orderno = salesorderdetails.orderno
-						 WHERE salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
-						 AND salesorderdetails.completed=0
-						 AND salesorders.quotation=0
-						 AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
-
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
-				$DemandResult = DB_query($SQL,$ErrMsg);
-
-				$DemandRow = DB_fetch_row($DemandResult);
-				if ($DemandRow[0] != null) {
-				  $DemandQty =  $DemandRow[0];
-				} else {
-				  $DemandQty = 0;
-				}
+				$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
 				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');

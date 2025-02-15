@@ -129,23 +129,7 @@ echo '</thead>
 
 while ($MyRow=DB_fetch_array($LocStockResult)) {
 
-	$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-			FROM salesorderdetails INNER JOIN salesorders
-			ON salesorders.orderno = salesorderdetails.orderno
-			WHERE salesorders.fromstkloc='" . $MyRow['loccode'] . "'
-			AND salesorderdetails.completed=0
-			AND salesorders.quotation=0
-			AND salesorderdetails.stkcode='" . $StockID . "'";
-
-	$ErrMsg = _('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
-	if (DB_num_rows($DemandResult)==1){
-	  $DemandRow = DB_fetch_row($DemandResult);
-	  $DemandQty =  $DemandRow[0];
-	} else {
-	  $DemandQty =0;
-	}
+	$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($StockID, $MyRow['loccode']);
 
 	//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
 	$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
