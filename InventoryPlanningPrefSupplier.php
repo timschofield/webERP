@@ -97,6 +97,7 @@ function NewPageHeader () {
 
 include('includes/session.php');
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF'])){
 

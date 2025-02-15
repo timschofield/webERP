@@ -13,6 +13,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '</p>';// Page title.
 
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 if(isset($_GET['StockID'])) {
 	$StockID = trim(mb_strtoupper($_GET['StockID']));

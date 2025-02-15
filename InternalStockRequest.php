@@ -9,6 +9,7 @@ $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['Transfer']);
