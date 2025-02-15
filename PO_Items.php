@@ -668,9 +668,9 @@ if (isset($_POST['NewItem'])
 										discountamount
 								FROM supplierdiscounts
 								WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-								AND effectivefrom <= CURRENT_DATE
-								AND effectiveto >= CURRENT_DATE
-								AND stockid = '". $ItemCode . "'";
+									AND effectivefrom <= CURRENT_DATE
+									AND effectiveto >= CURRENT_DATE
+									AND stockid = '". $ItemCode . "'";
 
 						$ItemDiscountPercent = 0;
 						$ItemDiscountAmount = 0;
@@ -810,8 +810,8 @@ if (isset($_POST['UploadFile'])) {
 									MAX(purchdata.effectivefrom) AS latesteffectivefrom
 								FROM purchdata
 								WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-								AND purchdata.effectivefrom <= CURRENT_DATE
-								AND purchdata.stockid = '". $ItemCode . "'
+									AND purchdata.effectivefrom <= CURRENT_DATE
+									AND purchdata.stockid = '". $ItemCode . "'
 								GROUP BY purchdata.price,
 										purchdata.conversionfactor,
 										purchdata.supplierdescription,
@@ -831,9 +831,9 @@ if (isset($_POST['UploadFile'])) {
 											discountamount
 									FROM supplierdiscounts
 									WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-									AND effectivefrom <= CURRENT_DATE
-									AND effectiveto >= CURRENT_DATE
-									AND stockid = '". $ItemCode . "'";
+										AND effectivefrom <= CURRENT_DATE
+										AND effectiveto >= CURRENT_DATE
+										AND stockid = '". $ItemCode . "'";
 
 							$ItemDiscountPercent = 0;
 							$ItemDiscountAmount = 0;

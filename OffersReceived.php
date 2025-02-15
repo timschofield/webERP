@@ -83,8 +83,8 @@ if (!isset($_POST['submit']) and isset($_POST['supplierid'])) {
 			LEFT JOIN stockmaster
 				ON stockmaster.stockid=offers.stockid
 			WHERE purchorderauth.userid='" . $_SESSION['UserID'] . "'
-			AND offers.expirydate >= CURRENT_DATE
-			AND offers.supplierid='" . $_POST['supplierid'] . "'
+				AND offers.expirydate >= CURRENT_DATE
+				AND offers.supplierid='" . $_POST['supplierid'] . "'
 			ORDER BY offerid";
 	$Result=DB_query($SQL);
 
