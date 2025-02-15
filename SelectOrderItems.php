@@ -26,6 +26,7 @@ $BookMark = 'SalesOrderEntry';
 include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 if (isset($_POST['QuickEntry'])){
 	unset($_POST['PartSearch']);

@@ -7,6 +7,7 @@ $ViewTopic= "Inventory";
 $BookMark = "PlanningReport";
 
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF'])) {
 
