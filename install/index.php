@@ -33,7 +33,7 @@ if (isset($_GET['Page'])) {
 	$_SESSION['Installer']['TimeZone'] = 'Europe/London';
 	$_SESSION['Installer']['Email'] = 'info@example.com';
 	$_SESSION['Installer']['AdminAccount'] = 'admin';
-	$_SESSION['Installer']['KwaMojaPassword'] = 'weberp';
+	$_SESSION['Installer']['AdminPassword'] = 'weberp';
 	$_SESSION['Installer']['Demo'] = 'No';
 }
 
