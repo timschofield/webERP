@@ -186,104 +186,20 @@ if (isset($_POST['PrintPDF'])) {
 	   		exit;
 		}
 
+		$ListCount = DB_num_rows($SalesResult);
 		$SalesRow = DB_fetch_array($SalesResult);
 
 		if ($_POST['Location']=='All'){
-			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-				FROM salesorderdetails INNER JOIN salesorders
-				ON salesorderdetails.orderno=salesorders.orderno
-				INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
-				AND salesorderdetails.completed = 0
-				AND salesorders.quotation=0";
+			$LocationCode = 'ALL';
 		} else {
-			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-				FROM salesorderdetails INNER JOIN salesorders
-				ON salesorderdetails.orderno=salesorders.orderno
-				INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
-				AND salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
-				AND salesorderdetails.completed = 0
-				AND salesorders.quotation=0";
+			$LocationCode = $_POST['Location'];
 		}
 
-		$DemandResult = DB_query($SQL, '', '', false , false);
-		$ListCount = DB_num_rows($DemandResult);
-
-		if (DB_error_no() !=0) {
-	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.php');
-	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($Debug==1){
-	      			echo '<br />' . $SQL;
-	   		}
-	   		include('includes/footer.php');
-	   		exit;
-		}
-
-// Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-
-		if ($_POST['Location']=='All'){
-			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-				FROM salesorderdetails INNER JOIN bom
-					ON salesorderdetails.stkcode=bom.parent
-					INNER JOIN	stockmaster
-					ON stockmaster.stockid=bom.parent
-					INNER JOIN salesorders
-					ON salesorders.orderno = salesorderdetails.orderno
-					INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-				AND bom.component='" . $InventoryPlan['stockid'] . "'
-				AND stockmaster.mbflag='A'
-				AND salesorderdetails.completed=0
-				AND salesorders.quotation=0";
-		} else {
-			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-				FROM salesorderdetails INNER JOIN bom
-					ON salesorderdetails.stkcode=bom.parent
-					INNER JOIN	stockmaster
-					ON stockmaster.stockid=bom.parent
-					INNER JOIN salesorders
-					ON salesorders.orderno = salesorderdetails.orderno
-					INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-				AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-				AND bom.component='" . $InventoryPlan['stockid'] . "'
-				AND stockmaster.stockid=bom.parent
-				AND salesorders.fromstkloc ='" . $_POST['Location'] . "'
-				AND stockmaster.mbflag='A'
-				AND salesorderdetails.completed=0
-				AND salesorders.quotation=0";
-		}
-
-		$BOMDemandResult = DB_query($SQL,'','',false,false);
-
-		if (DB_error_no() !=0) {
-	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.php');
-	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($Debug==1){
-	      			echo '<br />' . $SQL;
-	   		}
-	   		include('includes/footer.php');
-	   		exit;
-		}
-
-		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-		if ($_POST['Location']=='All'){
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], '');
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], '');
-		} else {
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], $_POST['Location']);
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], $_POST['Location']);
-		}
-
-		$DemandRow = DB_fetch_array($DemandResult);
-		$BOMDemandRow = DB_fetch_array($BOMDemandResult);
-		$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
+		// get the demand of the item
+		$TotalDemand = GetDemand($InventoryPlan['stockid'], $LocationCode);
+		
+		// Get the QOO of the item
+		$QOO = GetQuantityOnOrder($InventoryPlan['stockid'], $LocationCode);
 
 		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 110, $FontSize, $InventoryPlan['stockid'], 'left');
 		$LeftOvers = $pdf->addTextWrap(130, $YPos, 120,6,$InventoryPlan['description'],'left');

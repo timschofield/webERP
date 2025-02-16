@@ -462,88 +462,10 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 
 			$SalesRow = DB_fetch_array($SalesResult);
 
-			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-					FROM salesorderdetails INNER JOIN salesorders
-					ON salesorderdetails.orderno=salesorders.orderno
-					WHERE salesorderdetails.stkcode = '" . $ItemRow['stockid'] . "'
-					AND salesorderdetails.completed = 0
-					AND salesorders.quotation=0";
-
-			$DemandResult = DB_query($SQL, '', '', false, false);
-
-
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'.$SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit;
-			}
-
-	// Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-
-			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-					FROM salesorderdetails INNER JOIN bom
-					ON salesorderdetails.stkcode=bom.parent
-					INNER JOIN	stockmaster
-					ON stockmaster.stockid=bom.parent
-					INNER JOIN salesorders
-					ON salesorders.orderno = salesorderdetails.orderno
-					WHERE  salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-					AND bom.component='" . $ItemRow['stockid'] . "'
-					AND stockmaster.mbflag='A'
-					AND salesorderdetails.completed=0
-					AND salesorders.quotation=0";
-
-			$BOMDemandResult = DB_query($SQL,'','',false,false);
-
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'.$SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit;
-			}
-
-			$SQL = "SELECT SUM(purchorderdetails.quantityord- purchorderdetails.quantityrecd) as qtyonorder
-					FROM purchorderdetails
-					LEFT JOIN purchorders
-					ON purchorderdetails.orderno = purchorders.orderno
-					LEFT JOIN purchdata
-					ON purchorders.supplierno=purchdata.supplierno
-					AND purchorderdetails.itemcode=purchdata.stockid
-					WHERE  purchorderdetails.itemcode = '" . $ItemRow['stockid'] . "'
-					AND purchorderdetails.completed = 0
-					AND purchorders.status <> 'Cancelled'
-					AND purchorders.status <> 'Rejected'
-					AND purchorders.status <> 'Pending'
-					AND purchorders.status <> 'Completed'";
-
-			$DemandRow = DB_fetch_array($DemandResult);
-			$BOMDemandRow = DB_fetch_array($BOMDemandResult);
-			$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
-
-			$OnOrdResult = DB_query($SQL, '', '', false, false);
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'. $SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit;
-			}
-			$OnOrdRow = DB_fetch_array($OnOrdResult);
+			// Get the demand
+			$TotalDemand = GetDemand($ItemRow['stockid'], 'ALL');
+			// Get the QOO
+			$QOO = GetQuantityOnOrder($ItemRow['stockid'], 'ALL');
 
 			if (!isset($_POST['OrderQty' . $i])){
 				$_POST['OrderQty' . $i] =0;
@@ -554,7 +476,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					<td>' . $ItemRow['bin'] . '</td>
 					<td class="number">' . round($ItemRow['qoh'],$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($TotalDemand,$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($OnOrdRow['qtyonorder'],$ItemRow['decimalplaces']) . '</td>
+					<td class="number">' . round($QOO,$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($SalesRow['previousmonth'],$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($SalesRow['lastmonth'],$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($SalesRow['wk3'],$ItemRow['decimalplaces']) . '</td>

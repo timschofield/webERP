@@ -278,8 +278,7 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					}
 					$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 					$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
-					$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
-						+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+					$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 					
 						$Issues++;
 					printf('<tr class="striped_row">
@@ -402,8 +401,7 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				}
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
-					+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 
 					$Issues++;
 				printf('<tr class="striped_row">
@@ -526,8 +524,7 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 				$Increase = locale_number_format(($RecommendedPrice-$MyRow['retailprice'])/$MyRow['retailprice']*100,1).'%';
 				$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
-					+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 				$IncomeIncrease = ($MyRow['qoh'] + $QOO) * ($RecommendedPrice-$MyRow['retailprice']);
 
 				printf('<tr class="striped_row">
@@ -636,8 +633,7 @@ function PriceWrongRounding($RootPath){
 				$DownPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RoundedDown .  '">' . locale_number_format($RoundedDown,0) . '</a>';
 				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
 				$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
-					+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 					$Issues++;
 				printf('<tr class="striped_row">
 						<td class="number">%s</td>
@@ -733,8 +729,7 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			$PriceALink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $PriceA .  '">' . locale_number_format($PriceA,0) . '</a>';
 			$PriceBLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $PriceB .  '">' . locale_number_format($PriceB,0) . '</a>';
 			$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '') 
-				+ GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+			$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 				$Issues++;
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>

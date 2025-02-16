@@ -62,6 +62,54 @@ Retrieves the total quantity on hand for a specific stock item across specified 
 	}
 }
 
+function GetDemand($StockID, $Location){
+/****************************************************************************************************
+## GetDemand Function
+Calculates the total demand for a stock item by aggregating all types of demand.
+
+### Parameters
+- `$StockID` (string): The unique identifier for the stock item
+- `$Location` (string): Location filter parameter to be passed to all demand functions
+
+### Returns
+- `float`: Total demand quantity, calculated as sum of:
+  - Outstanding sales orders
+  - Required components in assembly items
+  - Required components in work orders
+
+### Notes
+- Acts as a helper function to combine all demand sources
+- Inherits location filtering behavior from called functions
+****************************************************************************************************/
+	$TotalDemand = GetDemandQuantityDueToOutstandingSalesOrders($StockID, $Location);
+	$TotalDemand += GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location);
+	$TotalDemand += GetDemandQuantityAsComponentInWorkOrders($StockID, $Location);
+	return $TotalDemand;
+}
+
+function GetQuantityOnOrder($StockID, $Location){
+/****************************************************************************************************
+## GetQuantityOnOrder Function
+Calculates the total quantity on order for a stock item by aggregating all types of incoming orders.
+
+### Parameters
+- `$StockID` (string): The unique identifier for the stock item
+- `$Location` (string): Location filter parameter to be passed to all order functions
+
+### Returns
+- `float`: Total quantity on order, calculated as sum of:
+  - Outstanding purchase orders
+  - Expected production from work orders
+
+### Notes
+- Acts as a helper function to combine all order sources
+- Inherits location filtering behavior from called functions
+****************************************************************************************************/
+	$TotalOnOrder = GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location);
+	$TotalOnOrder += GetQuantityOnOrderDueToWorkOrders($StockID, $Location);
+	return $TotalOnOrder;
+}
+
 function GetQuantityOnOrderDueToPurchaseOrders($StockID, $Location){
 /****************************************************************************************************
 ## GetQuantityOnOrderDueToPurchaseOrders Function
@@ -248,6 +296,174 @@ Calculates the total quantity of a stock item that is demanded due to outstandin
 	}
 }
 	
+function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
+/****************************************************************************************************
+## GetDemandQuantityAsComponentInAssemblyItems Function
+Calculates the total quantity of a stock item that is demanded as a component in Bill of Materials (BOM) 
+for outstanding sales orders.
 
+### Parameters
+- `$StockID` (string): The unique identifier for the stock item
+- `$Location` (string): Location filter parameter with the following options:
+  - `''` or `'ALL'`: Returns demand from all locations
+  - `'USER_CAN_VIEW'`: Returns demand from locations user has view permissions
+  - `'USER_CAN_UPDATE'`: Returns demand from locations user has update permissions
+  - Specific location code: Returns demand from that specific location
+
+### Returns
+- `float`: The sum of quantities needed as components (order quantity * BOM quantity)
+- Returns `0` if no demand exists for this component
+
+### Query Conditions
+- Only includes non-completed order lines (`completed=0`)
+- Only includes outstanding quantities (ordered minus invoiced > 0)
+- Excludes quotations (`quotation=0`)
+- Filters by user location permissions when applicable
+****************************************************************************************************/
+
+	if (($Location == '') OR ($Location == 'ALL')){
+		// All locations to be considered
+		$WhereLocation = '';
+		$UserAllowedLocations = '';
+		$ErrMsg = _('The quantity demanded for this product as a component in BOM in all locations cannot be retrieved because');
+	}
+	elseif  ($Location == 'USER_CAN_VIEW'){
+		// All user is allowed to view locations to be considered
+		$WhereLocation = '';
+		$UserAllowedLocations = "INNER JOIN locationusers 
+									ON locationusers.loccode = salesorders.fromstkloc 
+									AND locationusers.userid = '" .  $_SESSION['UserID'] . "' 
+									AND locationusers.canview = 1 ";
+		$ErrMsg = _('The quantity demanded for this product as a component in BOM in all locations the user can view cannot be retrieved because');
+	}
+	elseif  ($Location == 'USER_CAN_UPDATE'){
+		// All user is allowed to update locations to be considered
+		$WhereLocation = '';
+		$UserAllowedLocations = "INNER JOIN locationusers 
+									ON locationusers.loccode = salesorders.fromstkloc 
+									AND locationusers.userid = '" .  $_SESSION['UserID'] . "' 
+									AND locationusers.canupd = 1 ";
+		$ErrMsg = _('The quantity demanded for this product as a component in BOM in locations the user can update cannot be retrieved because');
+	}
+	else{
+		// Just 1 location to consider
+		$WhereLocation = " AND salesorders.fromstkloc = '" . $Location . "'";
+		$UserAllowedLocations = '';
+		$ErrMsg = _('The quantity demanded for this product as a component in BOM in the specified location cannot be retrieved because');
+	}
+	$DbgMsg = _('The following SQL to retrieve the demanded stock quantity  as a component in BOM was used');
+
+	$SQL = "SELECT SUM((salesorderdetails.quantity - salesorderdetails.qtyinvoiced) * bom.quantity) AS demand
+			FROM salesorderdetails 
+			INNER JOIN salesorders
+				ON salesorderdetails.orderno = salesorders.orderno
+			INNER JOIN bom
+				ON salesorderdetails.stkcode = bom.parent
+			INNER JOIN stockmaster
+				ON stockmaster.stockid = bom.parent" .
+			$UserAllowedLocations . "
+			WHERE salesorderdetails.quantity - salesorderdetails.qtyinvoiced > 0
+				AND bom.component = '" . $StockID . "'
+				AND salesorderdetails.completed = 0
+				AND salesorders.quotation = 0 " .
+				$WhereLocation;
+
+	$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
+	if (DB_num_rows($Result) == 0) {
+		return 0;
+	}
+	else{
+		$MyRow = DB_fetch_array($Result);
+		return (float)$MyRow['demand'];
+	}
+}
+	
+
+function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location){
+/****************************************************************************************************
+## GetDemandQuantityAsComponentInWorkOrders Function
+Calculates the total quantity of a stock item that is demanded as a component in active work orders.
+
+### Parameters
+- `$StockID` (string): The unique identifier for the stock item
+- `$Location` (string): Location filter parameter with the following options:
+  - `''` or `'ALL'`: Returns demand from all locations
+  - `'USER_CAN_VIEW'`: Returns demand from locations user has view permissions
+  - `'USER_CAN_UPDATE'`: Returns demand from locations user has update permissions
+  - Specific location code: Returns demand from that specific location
+
+### Returns
+- `float`: The sum of quantities needed as components (quantity per unit * (required - received))
+- Returns `0` if no demand exists for this component
+
+### Query Conditions
+- Only includes non-closed work orders (`closed=0`)
+- Calculates demand based on remaining quantities to be received
+- Takes into account the quantity per unit (qtypu) from work requirements
+- Filters by user location permissions when applicable
+****************************************************************************************************/
+
+	if ($Location == ''){
+		// All locations to be considered
+		$WhereLocation = '';
+		$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
+	}else{
+		// Just 1 location to consider
+		$WhereLocation = " AND workorders.loccode='" . $Location . "'";
+		$ErrMsg = _('The workorder component demand for this product from') . ' ' . $Location . ' ' . _('cannot be retrieved because');
+	}
+	if (($Location == '') OR ($Location == 'ALL')){
+		// All locations to be considered
+		$WhereLocation = '';
+		$UserAllowedLocations = '';
+		$ErrMsg = _('The quantity demanded for this product as a component in work orders in all locations cannot be retrieved because');
+	}
+	elseif  ($Location == 'USER_CAN_VIEW'){
+		// All user is allowed to view locations to be considered
+		$WhereLocation = '';
+		$UserAllowedLocations = "INNER JOIN locationusers 
+									ON locationusers.loccode = workorders.loccode 
+									AND locationusers.userid = '" .  $_SESSION['UserID'] . "' 
+									AND locationusers.canview = 1 ";
+		$ErrMsg = _('The quantity demanded for this product as a component in work orders in all locations the user can view cannot be retrieved because');
+	}
+	elseif  ($Location == 'USER_CAN_UPDATE'){
+		// All user is allowed to update locations to be considered
+		$WhereLocation = '';
+		$UserAllowedLocations = "INNER JOIN locationusers 
+									ON locationusers.loccode = workorders.loccode 
+									AND locationusers.userid = '" .  $_SESSION['UserID'] . "' 
+									AND locationusers.canupd = 1 ";
+		$ErrMsg = _('The quantity demanded for this product as a component in work orders in locations the user can update cannot be retrieved because');
+	}
+	else{
+		// Just 1 location to consider
+		$WhereLocation = " AND workorders.loccode = '" . $Location . "'";
+		$UserAllowedLocations = '';
+		$ErrMsg = _('The quantity demanded for this product as a component in work orders in the specified location cannot be retrieved because');
+	}
+	$DbgMsg = _('The following SQL to retrieve the demanded stock quantity  as a component in work orders was used');
+
+	$SQL = "SELECT SUM(qtypu * (woitems.qtyreqd - woitems.qtyrecd)) AS demand	
+			FROM woitems 
+			INNER JOIN worequirements
+				ON woitems.stockid = worequirements.parentstockid
+			INNER JOIN workorders
+				ON woitems.wo = workorders.wo
+					AND woitems.wo = worequirements.wo ".
+			$UserAllowedLocations . "
+			WHERE workorders.closed = 0
+				AND worequirements.stockid = '" . $StockID . "'" .
+				$WhereLocation;
+			
+	$Result = DB_query($SQL, $ErrMsg);
+	if (DB_num_rows($Result) == 0) {
+		return 0;
+	}
+	else{
+		$MyRow = DB_fetch_array($Result);
+		return (float)$MyRow['demand'];
+	}
+}
 
 ?>
