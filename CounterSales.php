@@ -1178,39 +1178,11 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 
 				//now get the data required to test to see if we need to make a new WO
 				$QOH = GetQuantityOnHand($StockItem->StockID, 'ALL');
-
-				$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorderdetails.orderno=salesorders.orderno
-						WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
-						AND salesorderdetails.completed = 0
-						AND salesorders.quotation = 0";
-				$DemandResult = DB_query($SQL);
-				$DemandRow = DB_fetch_row($DemandResult);
-				$QuantityDemand = $DemandRow[0];
-
-				$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorderdetails.orderno=salesorders.orderno
-						INNER JOIN bom
-						ON salesorderdetails.stkcode=bom.parent
-						INNER JOIN stockmaster
-						ON stockmaster.stockid=bom.parent
-						WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-						AND bom.component='" . $StockItem->StockID . "'
-						AND salesorderdetails.completed=0
-						AND salesorders.quotation=0";
-				$AssemblyDemandResult = DB_query($SQL);
-				$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
-				$QuantityAssemblyDemand = $AssemblyDemandRow[0];
-
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QuantityPurchOrders= GetQuantityOnOrderDueToPurchaseOrders($StockItem->StockID, '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QuantityWorkOrders = GetQuantityOnOrderDueToWorkOrders($StockItem->StockID, '');
+				$QuantityDemand = GetDemand($StockItem->StockID, 'ALL');
+				$QuantityOnOrder= GetQuantityOnOrder($StockItem->StockID, 'ALL');
 
 				//Now we have the data - do we need to make any more?
-				$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
+				$ShortfallQuantity = $QOH-$QuantityDemand + $QuantityOnOrder;
 
 				if ($ShortfallQuantity < 0) { //then we need to make a work order
 					//How many should the work order be for??
@@ -2140,13 +2112,11 @@ if (!isset($_POST['ProcessSale'])) {
 				// Find the quantity in stock at location
 				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Find the quantity on outstanding sales orders
-				$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
+				// Find the demand
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				// Get the QOO 
+				$QOO = GetQuantityOnOrder($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 
@@ -2268,13 +2238,11 @@ if (!isset($_POST['ProcessSale'])) {
 				// Find the quantity in stock at location
 				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Find the quantity on outstanding sales orders
-				$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
+				// Find the demand
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				// Get the QOO 
+				$QOO = GetQuantityOnOrder($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 

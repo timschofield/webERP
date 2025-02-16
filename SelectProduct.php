@@ -274,36 +274,17 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		case 'M':
 		case 'B':
 			// get the QOH for all locations. Function defined in StockFunctions.php
-			$QOH = locale_number_format(GetQuantityOnHand($StockID, 'ALL'), $MyRow['decimalplaces']);
-			// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, '');
-			// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-			$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, '');
-
-			$QOO = locale_number_format($QOO, $MyRow['decimalplaces']);
+			$QOH = GetQuantityOnHand($StockID, 'ALL');
+			// Get the QOO
+			$QOO = GetQuantityOnOrder($StockID, 'ALL');
 		break;
 	}
 
-	$Demand = GetDemandQuantityDueToOutstandingSalesOrders($StockID, 'USER_CAN_VIEW');
-
-	$DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-										FROM salesorderdetails INNER JOIN salesorders
-										ON salesorders.orderno = salesorderdetails.orderno
-										INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
-										INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
-										INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-										WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-										AND bom.component='" . $StockID . "'
-										AND stockmaster.mbflag='A'
-										AND salesorders.quotation=0");
-	$DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
-	$Demand+= $DemAsComponentRow[0];
-	//Also the demand for the item as a component of works orders
-	$Demand += GetItemDemandAsAComponentOfWorkOrders($StockID,'');
+	$Demand = GetDemand($StockID, 'ALL');
 
 	echo '<tr>
 			<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
-			<td style="width:17%; text-align:right" class="select">' . $QOH . '</td>
+			<td style="width:17%; text-align:right" class="select">' . locale_number_format($QOH, $MyRow['decimalplaces']) . '</td>
 		</tr>
 		<tr>
 			<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
@@ -311,7 +292,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		</tr>
 		<tr>
 			<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
-			<td style="width:17%; text-align:right" class="select">' . $QOO . '</td>
+			<td style="width:17%; text-align:right" class="select">' . locale_number_format($QOO, $MyRow['decimalplaces']) . '</td>
 		</tr>
 		</table>'; //end of nested table
 	echo '</td>'; //end cell of master table

@@ -170,58 +170,7 @@ if (isset($_POST['PrintPDF'])){
 
 		if (isset($_POST['ShowInfo']) and $_POST['ShowInfo']==true){
 
-			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-			   		FROM salesorderdetails INNER JOIN salesorders
-			   		ON salesorderdetails.orderno=salesorders.orderno
-			   		WHERE salesorders.fromstkloc ='" . $_POST['Location'] . "'
-			   		AND salesorderdetails.stkcode = '" . $InventoryCheckRow['stockid'] . "'
-			   		AND salesorderdetails.completed = 0
-			   		AND salesorders.quotation=0";
-
-			$DemandResult = DB_query($SQL,'','',false, false);
-
-			if (DB_error_no() !=0) {
-	 			$Title = _('Stock Check Sheets - Problem Report');
-		  		include('includes/header.php');
-		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' ' . DB_error_msg(), 'error');
-	   			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-	   			if ($Debug==1){
-		  				echo '<br />' . $SQL;
-		   		}
-		   		include('includes/footer.php');
-	   			exit;
-			}
-
-			$DemandRow = DB_fetch_array($DemandResult);
-			$DemandQty = $DemandRow['qtydemand'];
-
-			//Also need to add in the demand for components of assembly items
-			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-						   FROM salesorderdetails INNER JOIN salesorders
-						   ON salesorders.orderno = salesorderdetails.orderno
-						   INNER JOIN bom
-						   ON salesorderdetails.stkcode=bom.parent
-						   INNER JOIN stockmaster
-						   ON stockmaster.stockid=bom.parent
-						   WHERE salesorders.fromstkloc='" . $_POST['Location'] . "'
-						   AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-						   AND bom.component='" . $InventoryCheckRow['stockid'] . "'
-						   AND stockmaster.mbflag='A'
-						   AND salesorders.quotation=0";
-
-			$DemandResult = DB_query($SQL,'','',false,false);
-			if (DB_error_no() !=0) {
-				prnMsg(_('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because') . ' - ' . DB_error_msg(),'error');
-				if ($Debug==1){
-		   			echo '<br />' . _('The SQL that failed was') . ' ' . $SQL;
-				}
-				exit;
-			}
-
-			if (DB_num_rows($DemandResult)==1){
-	  			$DemandRow = DB_fetch_row($DemandResult);
-	  			$DemandQty += $DemandRow[0];
-			}
+			$DemandQty = GetDemand($InventoryCheckRow['stockid'], $_POST['Location']);
 
 			$LeftOvers = $pdf->addTextWrap(350,$YPos,60,$FontSize,locale_number_format($InventoryCheckRow['qoh'], $InventoryCheckRow['decimalplaces']), 'right');
 			$LeftOvers = $pdf->addTextWrap(410,$YPos,60,$FontSize,locale_number_format($DemandQty,$InventoryCheckRow['decimalplaces']), 'right');

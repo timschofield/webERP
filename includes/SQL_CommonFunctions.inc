@@ -361,41 +361,6 @@ function EnsureGLEntriesBalance ($TransType, $TransTypeNo) {
 	}
 }
 
-function GetItemDemandAsAComponentOfWorkOrders($StockID, $Location){
-	if ($Location == ''){
-		// All locations to be considered
-		$WhereLocation = '';
-		$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
-	}else{
-		// Just 1 location to consider
-		$WhereLocation = " AND workorders.loccode='" . $Location . "'";
-		$ErrMsg = _('The workorder component demand for this product from') . ' ' . $Location . ' ' . _('cannot be retrieved because');
-	}
-	$SQL = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
-			FROM woitems 
-			INNER JOIN worequirements
-				ON woitems.stockid=worequirements.parentstockid
-			INNER JOIN workorders
-				ON woitems.wo=workorders.wo
-					AND woitems.wo=worequirements.wo
-			INNER JOIN locationusers 
-				ON locationusers.loccode=workorders.loccode 
-					AND locationusers.userid='" .  $_SESSION['UserID'] . "' 
-					AND locationusers.canview=1
-			WHERE workorders.closed=0
-				AND worequirements.stockid='" . $StockID . "'" .
-			$WhereLocation;
-			
-	$DemandResult = DB_query($SQL, $ErrMsg);
-	if (DB_num_rows($DemandResult) == 0) {
-		$Demand = 0;
-	}else{
-		$DemandRow = DB_fetch_row($DemandResult);
-		$Demand = $DemandRow[0];
-	}
-	return $Demand;
-}
-
 /*Creates sample and testresults */
 function CreateQASample ($ProdSpecKey, $LotKey, $Identifier, $Comments, $Cert, $DuplicateOK) {
 	$Result = DB_query("SELECT COUNT(testid) FROM prodspecs

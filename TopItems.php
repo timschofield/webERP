@@ -99,12 +99,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			break;
 			case 'M':
 			case 'B':
-				// get the QOH for the location user can view. Function defined in StockFunctions.php
+				// get the QOH for the location user can view. 
 				$QOH = GetQuantityOnHand($MyRow['stkcode'], 'USER_CAN_VIEW');
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stkcode'], '');
-				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stkcode'], '');
+				// Get the QOO due to Purchase orders for all locations. 
+				$QOO = GetQuantityOnOrder($MyRow['stkcode'], 'ALL');
 			break;
 		}
 	        if(is_numeric($QOH) and is_numeric($QOO)){

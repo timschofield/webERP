@@ -543,13 +543,10 @@ if (isset($SearchResult)) {
 
 		$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $_SESSION['Request']->Location);
 
-		// Find the quantity on outstanding sales orders
-		$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($MyRow['stockid'], $_SESSION['Request']->Location);
+		$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Request']->Location);
 
-		$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-		$WoQty = GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+		$OnOrder = GetQuantityOnOrder($MyRow['stockid'], 'ALL');
 
-		$OnOrder = $PurchQty + $WoQty;
 		$Available = $QOH - $DemandQty + $OnOrder;
 
 		echo '<tr class="striped_row">

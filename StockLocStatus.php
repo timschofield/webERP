@@ -189,48 +189,11 @@ if(isset($_POST['ShowStatus'])) {
 
 		$StockID = $MyRow['stockid'];
 
-		$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($StockID, $MyRow['loccode']);
+		// get the demand for the item at the location
+		$DemandQty = GetDemand($StockID, $MyRow['loccode']);
 
-		//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-		$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-				FROM salesorderdetails INNER JOIN salesorders
-					ON salesorders.orderno = salesorderdetails.orderno
-				INNER JOIN bom
-					ON salesorderdetails.stkcode=bom.parent
-				INNER JOIN stockmaster
-					ON stockmaster.stockid=bom.parent
-				WHERE salesorders.fromstkloc='" . $MyRow['loccode'] . "'
-				AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-				AND bom.component='" . $StockID . "'
-				AND stockmaster.mbflag='A'
-				AND salesorders.quotation=0";
-
-		$ErrMsg = _('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
-		$DemandResult = DB_query($SQL, $ErrMsg);
-
-		if(DB_num_rows($DemandResult)==1) {
-			$DemandRow = DB_fetch_row($DemandResult);
-			$DemandQty += $DemandRow[0];
-		}
-		$SQL = "SELECT SUM((woitems.qtyreqd-woitems.qtyrecd)*bom.quantity) AS dem
-				FROM workorders INNER JOIN woitems
-					ON woitems.wo = workorders.wo
-				INNER JOIN bom
-					ON woitems.stockid = bom.parent
-				WHERE workorders.closed=0
-				AND bom.component = '". $StockID . "'
-				AND workorders.loccode='". $MyRow['loccode'] ."'";
-		$DemandResult = DB_query($SQL, $ErrMsg);
-
-		if(DB_num_rows($DemandResult)==1) {
-			$DemandRow = DB_fetch_row($DemandResult);
-			$DemandQty += $DemandRow[0];
-		}
-
-		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $MyRow['loccode']);
-		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $MyRow['loccode']);
+		// Get the QOO 
+		$QOO = GetQuantityOnOrder($StockID, $MyRow['loccode']);
 
 		if(($_POST['BelowReorderQuantity']=='Below' AND ($MyRow['quantity']-$MyRow['reorderlevel']-$DemandQty)<0)
 				OR $_POST['BelowReorderQuantity']=='All' OR $_POST['BelowReorderQuantity']=='NotZero'

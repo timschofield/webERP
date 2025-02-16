@@ -1719,13 +1719,11 @@ if (!isset($_POST['ProcessReturn'])) {
 				// Find the quantity in stock at location
 				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 				
-				// Find the quantity on outstanding sales orders
-				$DemandQty = GetDemandQuantityDueToOutstandingSalesOrders($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
+				// get the demand of the item
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO= GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				// Get the QOO
+				$QOO= GetQuantityOnOrder($MyRow['stockid'],  $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 

@@ -443,52 +443,12 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			//now get the data required to test to see if we need to make a new WO
 			$QOH = GetQuantityOnHand($StockItem->StockID, 'ALL');
 
-			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-					FROM salesorderdetails INNER JOIN salesorders
-					ON salesorderdetails.orderno=salesorders.orderno
-					WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
-					AND salesorderdetails.completed = 0
-					AND salesorders.quotation=0";
-			$DemandResult = DB_query($SQL);
-			$DemandRow = DB_fetch_row($DemandResult);
-			$QuantityDemand = $DemandRow[0];
+			$QuantityDemand = GetDemand($StockItem->StockID, 'ALL');
 
-			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-					FROM salesorderdetails INNER JOIN salesorders
-					ON salesorderdetails.orderno=salesorders.orderno
-					INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
-					INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
-					WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-					AND bom.component='" . $StockItem->StockID . "'
-					AND salesorders.quotation=0
-					AND stockmaster.mbflag='A'
-					AND salesorderdetails.completed=0";
-			$AssemblyDemandResult = DB_query($SQL);
-			$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
-			$QuantityAssemblyDemand = $AssemblyDemandRow[0];
-
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-					FROM purchorderdetails,
-						purchorders
-					WHERE purchorderdetails.orderno = purchorders.orderno
-					AND purchorderdetails.itemcode = '" . $StockItem->StockID . "'
-					AND purchorderdetails.completed = 0";
-			$PurchOrdersResult = DB_query($SQL);
-			$PurchOrdersRow = DB_fetch_row($PurchOrdersResult);
-			$QuantityPurchOrders = $PurchOrdersRow[0];
-
-			$SQL = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) as qtyonorder
-					FROM woitems INNER JOIN workorders
-					ON woitems.wo=workorders.wo
-					WHERE woitems.stockid = '" . $StockItem->StockID . "'
-					AND woitems.qtyreqd > woitems.qtyrecd
-					AND workorders.closed = 0";
-			$WorkOrdersResult = DB_query($SQL);
-			$WorkOrdersRow = DB_fetch_row($WorkOrdersResult);
-			$QuantityWorkOrders = $WorkOrdersRow[0];
+			$QuantityOnOrder = GetQuantityOnOrder($StockItem->StockID, 'ALL');
 
 			//Now we have the data - do we need to make any more?
-			$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
+			$ShortfallQuantity = $QOH-$QuantityDemand+$QuantityOnOrder;
 
 			if($ShortfallQuantity < 0) {//then we need to make a work order
 				//How many should the work order be for??
