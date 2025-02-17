@@ -225,6 +225,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 									WHERE sessionid='" . session_id() . "'";
 					$Result = DB_query($SQL);
 				}
+				unset($Result);
 			}
 		break;
 
