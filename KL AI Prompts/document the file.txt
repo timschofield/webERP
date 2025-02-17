@@ -1,0 +1,20 @@
+At the beginning of the file:
+
+1) write an alphabetical list of the functions included in the file and a very short description of what they do.
+
+2) inside each function write the documentation of the function, including:
+2.1) Brief description
+2.2) Parameters
+2.3) Returns
+
+3) Encapsulate the documentation with lines: 
+/**************************************************************************************************************
+Documentation goes here
+**************************************************************************************************************/
+
+General prompt rules: 
+1) Do not cut long lines. 
+2) Do not delete any comment in the code
+3) Do not add comments similar to //Added line
+4) Do not change, modify, upgrade any other part of the code not related to the propmt.
+5) Apply all changes above directly to all the files in the working set
