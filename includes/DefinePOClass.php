@@ -53,7 +53,7 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
-var $Total;
+	var $Total;
 	var $DefaultReceivedDate;
 
 // KL RICARD
