@@ -66,6 +66,8 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	}
 
 	if ($InputError == 0){
+		// Set value binder
+		\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 
 		// Create new Spreadsheet object
 		$objPHPExcel = new Spreadsheet();
@@ -215,11 +217,10 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 
 		if ($_POST['Format'] == 'xlsx') {
 			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
-			$objWriter->save('php://output');
 		} else if ($_POST['Format'] == 'ods') {
 			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
-			$objWriter->save('php://output');
 		}
+		$objWriter->save('php://output');
 	}
 } // End of function submit()
 
