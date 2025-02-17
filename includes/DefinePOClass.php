@@ -43,7 +43,6 @@ Class PurchOrder {
 	var $LinesOnOrder;
 	var $PrintedPurchaseOrder;
 	var $DatePurchaseOrderPrinted;
-	var $Total;
 	var $GLLink; /*Is the GL link to stock activated only checked when order initiated or reading in for modification */
 	var $Version;
 	var $Status;
@@ -54,7 +53,7 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
-	var $Total;
+var $Total;
 	var $DefaultReceivedDate;
 
 // KL RICARD
