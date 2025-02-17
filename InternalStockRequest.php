@@ -541,7 +541,7 @@ if (isset($SearchResult)) {
 	while ($MyRow = DB_fetch_array($SearchResult)) {
 		$DecimalPlaces = $MyRow['decimalplaces'];
 
-		$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $_SESSION['Request']->Location);
+		$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Request']->Location);
 
 		$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Request']->Location);
 

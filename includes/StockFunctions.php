@@ -1,4 +1,16 @@
 <?php
+/**************************************************************************************************************
+Functions in this file:
+
+GetDemand                                     - Calculates total demand from all sources
+GetDemandQuantityAsComponentInAssemblyItems  - Gets quantity needed as components in bill of materials
+GetDemandQuantityAsComponentInWorkOrders     - Gets quantity needed as components in work orders
+GetDemandQuantityDueToOutstandingSalesOrders - Gets quantity demanded from outstanding sales orders
+GetQuantityOnHand                            - Gets total quantity available in stock
+GetQuantityOnOrder                           - Gets total quantity on order from all sources
+GetQuantityOnOrderDueToPurchaseOrders        - Gets quantity on order from purchase orders
+GetQuantityOnOrderDueToWorkOrders           - Gets quantity to be produced from work orders
+**************************************************************************************************************/
 
 function GetQuantityOnHand($StockID, $Location){
 /****************************************************************************************************
@@ -295,7 +307,7 @@ Calculates the total quantity of a stock item that is demanded due to outstandin
 		return (float)$MyRow['demand'];
 	}
 }
-	
+
 function GetDemandQuantityAsComponentInAssemblyItems($StockID, $Location){
 /****************************************************************************************************
 ## GetDemandQuantityAsComponentInAssemblyItems Function
@@ -377,7 +389,6 @@ for outstanding sales orders.
 		return (float)$MyRow['demand'];
 	}
 }
-	
 
 function GetDemandQuantityAsComponentInWorkOrders($StockID, $Location){
 /****************************************************************************************************
