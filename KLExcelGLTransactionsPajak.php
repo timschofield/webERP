@@ -41,14 +41,6 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	$ToDateSQL = FormatDateForSQL($ToDate);
 
 	//first off validate inputs sensible
-	if (!Is_Date($_POST['FromDate'])) {
-		$InputError = 1;
-		prnMsg(_('Invalid From Date'),'error');
-	}
-	if (!Is_Date($_POST['ToDate'])) {
-		$InputError = 1;
-		prnMsg(_('Invalid To Date'),'error');
-	}
 	if (strtotime($FromDateSQL) > strtotime($ToDateSQL)) {
 		$InputError = 1;
 		prnMsg(_('The From Date must be before the To Date'),'error');
