@@ -88,10 +88,11 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	}
 } elseif(isset($_POST['UpdateOrder'])) {
 	//A calculation order update
+	unset($Result);
 	$SQL = "SELECT taxauthid FROM taxgrouptaxes WHERE taxgroupid='" . $SelectedGroup . "'";
 	$Result = DB_query($SQL,_('Could not get tax authorities in the selected tax group'));
 
-	while($MyRow=DB_fetch_row($Result)) {
+	while ($MyRow=DB_fetch_row($Result)) {
 
 		if(is_numeric($_POST['CalcOrder_' . $MyRow[0]]) AND $_POST['CalcOrder_' . $MyRow[0]] < 10) {
 
@@ -101,7 +102,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 				WHERE taxgroupid='" . $SelectedGroup . "'
 				AND taxauthid='" . $MyRow[0] . "'";
 
-			$Result = DB_query($SQL);
+			$UpdateResult = DB_query($SQL);
 		}
 	}
 
