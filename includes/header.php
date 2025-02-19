@@ -106,8 +106,16 @@ echo '<style>
 
 echo '<header class="noPrint">';
 
+if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.png';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpg';
+}
+
 echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
-		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/logo.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
+		<img src="', $CompanyLogo, '" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
 	</div>';
 
 echo '<div id="Info">
