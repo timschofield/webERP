@@ -48,13 +48,12 @@ Class PurchOrder {
 	var $PaymentTerms;
 	var $Contact;
 	var $Port;
-	var $Total;
 	var $DefaultReceivedDate;
 
 	function __construct(){
 	/*Constructor function initialises a new purchase order object */
 		$this->LineItems = array();
-		$this->total=0;
+		$this->Total=0;
 		$this->LinesOnOrder=0;
 	}
 
@@ -79,7 +78,7 @@ Class PurchOrder {
 						$QtyRecd=0,
 						$GLActName='',
 						$DecimalPlaces=2,
-						$SuppliersUnit,
+						$SuppliersUnit='',
 						$ConversionFactor=1,
 						$LeadTime=1,
 						$Suppliers_PartNo='',
@@ -250,7 +249,7 @@ Class LineDetails {
 						$UOM,
 						$GLCode,
 						$ReqDelDate,
-						$ShiptRef =0,
+						$ShiptRef,
 						$Completed,
 						$JobRef,
 						$QtyInv,
@@ -307,7 +306,7 @@ Class LineDetails {
 						$UOM,
 						$GLCode,
 						$ReqDelDate,
-						$ShiptRef =0,
+						$ShiptRef,
 						$Completed,
 						$JobRef,
 						$QtyInv,
@@ -329,7 +328,7 @@ Class LineDetails {
 						$UOM,
 						$GLCode,
 						$ReqDelDate,
-						$ShiptRef =0,
+						$ShiptRef,
 						$Completed,
 						$JobRef,
 						$QtyInv,
