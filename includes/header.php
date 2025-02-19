@@ -112,6 +112,8 @@ if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
 	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg';
 } else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
 	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpg';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.gif')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.gif';
 }
 
 echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
