@@ -36,7 +36,7 @@ if (isset($_POST['Go'])) {
 }
 
 echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', _('Authorisation of Assigned Cash '), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', $Title, '
 		</p>';
 
 if (isset($SelectedTabs)) {
@@ -58,7 +58,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	//Limit expenses history to X days
 	echo '<fieldset>
 			<field>
-				<label for="SelectedTabs">', _('Detail of Tab Movements For Last '), ':</label>
+				<label for="SelectedTabs">', _('Detail of tab cash assignments for the last'), ' :</label>
 				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
 				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
 				<input type="submit" name="Go" value="', _('Go'), '" />
