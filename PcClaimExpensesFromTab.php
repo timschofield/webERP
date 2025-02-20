@@ -68,9 +68,9 @@ if (isset($_POST['submit'])) {
 	if (isset($SelectedIndex) and $InputError != 1) { //Edit
 		$SQL = "UPDATE pcashdetails
 			SET date = '" . FormatDateForSQL($_POST['Date']) . "',
-				tag = '" . $_POST['Tag'] . "',
 				codeexpense = '" . $_POST['SelectedExpense'] . "',
 				amount = '" . -filter_number_format($_POST['Amount']) . "',
+				purpose='" . $_POST['Purpose'] . "',
 				notes = '" . $_POST['Notes'] . "'
 			WHERE counterindex = '" . $SelectedIndex . "'";
 		$Msg = _('The expense record on tab') . ' ' . $SelectedTabs . ' ' . _('has been updated');
@@ -89,6 +89,17 @@ if (isset($_POST['submit'])) {
 												WHERE counterindex='" . $Index ."'";
 				$Result = DB_query($SQL);
 			}
+		}
+		$SQL = "DELETE FROM pctags WHERE pccashdetail='" . $SelectedIndex . "'";
+		$Result = DB_query($SQL);
+		foreach ($_POST['tag'] as $Tag) {
+			$SQL = "INSERT INTO pctags (pccashdetail,
+										tag)
+									VALUES (
+										'" . $SelectedIndex . "',
+										'" . $Tag . "'
+									)";
+			$Result = DB_query($SQL);
 		}
 		if (isset($_FILES['Receipt']) and $_FILES['Receipt']['name'] != '') {
 			$UploadOriginalName = $_FILES['Receipt']['name'];
@@ -434,7 +445,6 @@ if (!isset($SelectedTabs)) {
 		}
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,
@@ -511,7 +521,6 @@ if (!isset($SelectedTabs)) {
 				if ($TagRow['tagref'] == 0) {
 					$TagRow['tagdescription'] = _('None');
 				}
-				$TagTo = $MyRow['tag'];
 				if ($ExpenseCodeDes != 'ASSIGNCASH') {
 					$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 				}
@@ -584,7 +593,6 @@ if (!isset($SelectedTabs)) {
 		if (isset($_GET['edit'])) {
 			$SQL = "SELECT counterindex,
 							tabcode,
-							tag,
 							date,
 							codeexpense,
 							amount,
@@ -601,10 +609,14 @@ if (!isset($SelectedTabs)) {
 			$_POST['Amount'] = -$MyRow['amount'];
 			$_POST['Purpose'] = $MyRow['purpose'];
 			$_POST['Notes'] = $MyRow['notes'];
-			$_POST['Tag'] = $MyRow['tag'];
 			echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 			echo '<input type="hidden" name="SelectedIndex" value="', $SelectedIndex, '" />';
 			echo '<input type="hidden" name="Days" value="', $Days, '" />';
+			$TagSQL = "SELECT tag FROM pctags WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
+			$TagResult = DB_query($TagSQL);
+			while ($TagRow = DB_fetch_array($TagResult)) {
+				$TagArray[] = $TagRow['tag'];
+			}
 		} //end of Get Edit
 		if (!isset($_POST['Date'])) {
 			$_POST['Date'] = Date($_SESSION['DefaultDateFormat']);
@@ -759,7 +771,7 @@ if (!isset($SelectedTabs)) {
 				<label for="Notes">', _('Notes'), ':</label>
 				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
 			</field>';
-	
+
 		echo '<div class="centre">
 			<input type="submit" name="submit" value="', _('Accept'), '" />
 			<input type="reset" name="Cancel" value="', _('Cancel'), '" />

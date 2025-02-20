@@ -23,7 +23,6 @@ if (isset($_POST['Cancel'])) {
 	unset($_POST['CodeExpense']);
 	unset($_POST['Description']);
 	unset($_POST['GLAccount']);
-	unset($_POST['Tag']);
 }
 if (isset($Errors)) {
 	unset($Errors);
@@ -62,7 +61,6 @@ if (isset($_POST['submit'])) {
 		$SQL = "UPDATE pcexpenses
 				SET description = '" . $_POST['Description'] . "',
 					glaccount = '" . $_POST['GLAccount'] . "',
-					tag = '" . implode(',', $_POST['tag']) . "',
 					taxcatid='" . $_POST['TaxCategory'] . "'
 				WHERE codeexpense = '" . $SelectedExpense . "'";
 		$Msg = _('The Expenses type') . ' ' . $SelectedExpense . ' ' . _('has been updated');
@@ -82,12 +80,10 @@ if (isset($_POST['submit'])) {
 						(codeexpense,
 			 			 description,
 			 			 glaccount,
-			 			 tag,
 			 			 taxcatid)
 				VALUES ('" . $_POST['CodeExpense'] . "',
 						'" . $_POST['Description'] . "',
 						'" . $_POST['GLAccount'] . "',
-						'" . implode(',', $_POST['tag']) . "',
 						'" . $_POST['TaxCategory'] . "'
 						)";
 			$Msg = _('Expense') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
@@ -101,7 +97,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['CodeExpense']);
 		unset($_POST['Description']);
 		unset($_POST['GLAccount']);
-		unset($_POST['tag']);
 		unset($_POST['TaxGroup']);
 	}
 } elseif (isset($_GET['delete'])) {
@@ -132,7 +127,6 @@ if (!isset($SelectedExpense)) {
 	$SQL = "SELECT codeexpense,
 					description,
 					glaccount,
-					tag,
 					taxcatid
 			FROM pcexpenses
 			ORDER BY codeexpense";
@@ -143,7 +137,6 @@ if (!isset($SelectedExpense)) {
 				<th>', _('Description'), '</th>
 				<th>', _('Account Code'), '</th>
 				<th>', _('Account Description'), '</th>
-				<th>', _('Tag'), '</th>
 				<th>', _('Tax Category'), '</th>
 			</tr>';
 
@@ -153,16 +146,6 @@ if (!isset($SelectedExpense)) {
 					WHERE accountcode='" . $MyRow['glaccount'] . "'";
 		$ResultDes = DB_query($SQLdesc);
 		$Description = DB_fetch_array($ResultDes);
-		$Tags = explode(',', $MyRow['tag']);
-		$DescriptionTag = '';
-		foreach ($Tags as $Tag) {
-			$SqlDescTag = "SELECT tagdescription
-					FROM tags
-					WHERE tagref='" . $Tag . "'";
-			$ResultDesTag = DB_query($SqlDescTag);
-			$TagRow = DB_fetch_array($ResultDesTag);
-			$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
-		}
 		$SqlTaxCat = "SELECT taxcatname
 					FROM taxcategories
 					WHERE taxcatid='" . $MyRow['taxcatid'] . "'";
@@ -173,7 +156,6 @@ if (!isset($SelectedExpense)) {
 				<td>', $MyRow['description'], '</td>
 				<td class="number">', $MyRow['glaccount'], '</td>
 				<td>', $Description['accountname'], '</td>
-				<td>', $DescriptionTag, '</td>
 				<td>', $DescriptionTaxCat['taxcatname'], '</td>
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', $MyRow['codeexpense'], '">', _('Edit'), '</a></td>
 				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedExpense=', $MyRow['codeexpense'], '&amp;delete=yes" onclick="return MakeConfirm(\'' . _('Are you sure you wish to delete this expense code and all the details it may have set up?') . '\', \'Confirm Delete\', this);">' . _('Delete') . '</a></td>
@@ -196,7 +178,6 @@ if (!isset($_GET['delete'])) {
 		$SQL = "SELECT codeexpense,
 						description,
 						glaccount,
-						tag,
 						taxcatid
 					FROM pcexpenses
 					WHERE codeexpense='" . $SelectedExpense . "'";
@@ -205,7 +186,6 @@ if (!isset($_GET['delete'])) {
 		$_POST['CodeExpense'] = $MyRow['codeexpense'];
 		$_POST['Description'] = $MyRow['description'];
 		$_POST['GLAccount'] = $MyRow['glaccount'];
-		$_POST['tag'] = explode(',', $MyRow['tag']);
 		$_POST['TaxCategory'] = $MyRow['taxcatid'];
 		echo '<input type="hidden" name="SelectedExpense" value="', $SelectedExpense, '" />';
 		echo '<input type="hidden" name="CodeExpense" value="', $_POST['CodeExpense'], '" />';
@@ -251,26 +231,6 @@ if (!isset($_GET['delete'])) {
 	} //end while loop
 	echo '</select>
 		</field>';
-
-		//Select the tag
-		$SQL = "SELECT tagref,
-						tagdescription
-				FROM tags
-				ORDER BY tagref";
-		$Result = DB_query($SQL);
-		echo '<field>
-				<label for="tag">', _('Tag'), '</label>
-				<select multiple="multiple" name="tag[]">';
-		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
-				echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
-			} else {
-				echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
-			}
-		}
-		echo '</select>
-			</field>';
-		// End select tag
 
 	$SQL = "SELECT taxcatid,
 					taxcatname
