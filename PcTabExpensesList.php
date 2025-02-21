@@ -50,7 +50,6 @@ if (isset($_POST['submit'])) {
 
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,
@@ -124,7 +123,6 @@ if (isset($_POST['submit'])) {
 			$objPHPExcel->getActiveSheet()->setCellValue('D10', 'Balance');
 			$objPHPExcel->getActiveSheet()->setCellValue('E10', 'Tax');
 			$objPHPExcel->getActiveSheet()->setCellValue('F10', 'Tax Group');
-			$objPHPExcel->getActiveSheet()->setCellValue('G10', 'Tag');
 			$objPHPExcel->getActiveSheet()->setCellValue('H10', 'Business Purpose');
 			$objPHPExcel->getActiveSheet()->setCellValue('I10', 'Notes');
 			$objPHPExcel->getActiveSheet()->setCellValue('J10', 'Receipt Attachment');
@@ -147,15 +145,6 @@ if (isset($_POST['submit'])) {
 				} else {
 						$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 				}
-
-				$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
-				$TagResult = DB_query($TagSQL);
-				$TagRow = DB_fetch_array($TagResult);
-				if ($MyRow['tag'] == 0) {
-					$TagRow['tagdescription'] = _('None');
-				}
-				$TagTo = $MyRow['tag'];
-				$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
 
 				$TaxesDescription = '';
 				$TaxesTaxAmount = '';
@@ -210,7 +199,6 @@ if (isset($_POST['submit'])) {
 				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, '=D'.($i-1).'+C'.$i.'');
 				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $TaxesTaxAmount);
 				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $TaxesDescription);
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $TagDescription);
 				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $MyRow['purpose']);
 				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['notes']);
 				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $ReceiptText);

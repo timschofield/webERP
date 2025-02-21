@@ -110,7 +110,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$Type = 2;
 			$AccountFrom = $MyRow['glaccountassignment'];
 			$AccountTo = $MyRow['glaccountpcash'];
-			$TagTo = 0;
 			//get typeno
 			$TypeNo = GetNextTransNo($Type);
 			//build narrative

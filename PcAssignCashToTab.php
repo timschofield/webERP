@@ -193,7 +193,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,
@@ -328,7 +327,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			$CurrDecimalPlaces = $MyRow['decimalplaces'];
 			$SQL = "SELECT counterindex,
 							tabcode,
-							tag,
 							date,
 							codeexpense,
 							amount,
