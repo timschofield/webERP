@@ -636,8 +636,7 @@ if (!isset($SelectedTabs)) {
 				<select required="required" name="SelectedExpense">';
 		DB_free_result($Result);
 		$SQL = "SELECT pcexpenses.codeexpense,
-					pcexpenses.description,
-					pctabs.defaulttag
+					pcexpenses.description
 			FROM pctabexpenses, pcexpenses, pctabs
 			WHERE pctabexpenses.codeexpense = pcexpenses.codeexpense
 				AND pctabexpenses.typetabcode = pctabs.typetabcode
@@ -651,7 +650,6 @@ if (!isset($SelectedTabs)) {
 			} else {
 				echo '<option value="', $MyRow['codeexpense'], '">', $MyRow['codeexpense'], ' - ', $MyRow['description'], '</option>';
 			}
-			$DefaultTag = $MyRow['defaulttag'];
 		} //end while loop
 		echo '</select>
 			</field>';

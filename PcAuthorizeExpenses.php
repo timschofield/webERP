@@ -68,7 +68,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		</fieldset>';
 	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
-				pcashdetails.tag,
 				pcashdetails.date,
 				pcashdetails.codeexpense,
 				pcashdetails.amount,
@@ -111,12 +110,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
 		$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
-		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
-		$TagResult = DB_query($TagSQL);
-		$TagRow = DB_fetch_array($TagResult);
-		if ($MyRow['tag'] == 0) {
-			$TagRow['tagdescription'] = _('None');
-		}
 		$TaxTotalSQL = "SELECT SUM(amount) as totaltax FROM pcashdetailtaxes WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
 		$TaxTotalResult = DB_query($TaxTotalSQL);
 		$TaxTotalRow = DB_fetch_array($TaxTotalResult);
@@ -132,8 +125,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$Type = 1;
 		$NetAmount = -$NetAmount;
 		$AccountFrom = $MyRow['glaccountpcash'];
-		$SQLAccExp = "SELECT glaccount,
-							tag
+		$SQLAccExp = "SELECT glaccount
 						FROM pcexpenses
 						WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
 		$ResultAccExp = DB_query($SQLAccExp);

@@ -71,7 +71,6 @@ if (isset($_POST['Submit'])) {
 									authorizerexpenses = '" . $_POST['SelectAuthoriserExpenses'] . "',
 									glaccountassignment = '" . $_POST['GLAccountCash'] . "',
 									glaccountpcash = '" . $_POST['GLAccountPcashTab'] . "',
-									defaulttag = '" . $_POST['DefaultTag'] . "',
 									taxgroupid='" . $_POST['TaxGroup'] . "'
 				WHERE tabcode = '" . $SelectedTab . "'";
 		$Msg = _('The Petty Cash Tab') . ' ' . $SelectedTab . ' ' . _('has been updated');
@@ -97,7 +96,6 @@ if (isset($_POST['Submit'])) {
 										 authorizerexpenses,
 										 glaccountassignment,
 										 glaccountpcash,
-										 defaulttag,
 										 taxgroupid)
 								VALUES ('" . $_POST['TabCode'] . "',
 									'" . $_POST['SelectUser'] . "',
@@ -109,7 +107,6 @@ if (isset($_POST['Submit'])) {
 									'" . $_POST['SelectAuthoriserExpenses'] . "',
 									'" . $_POST['GLAccountCash'] . "',
 									'" . $_POST['GLAccountPcashTab'] . "',
-									'" . $_POST['DefaultTag'] . "',
 									'" . $_POST['TaxGroup'] . "'
 								)";
 			$Msg = _('The Petty Cash Tab') . ' ' . $_POST['TabCode'] . ' ' . _('has been created');
@@ -154,7 +151,6 @@ if (!isset($SelectedTab)) {
 					authorizerexpenses,
 					glaccountassignment,
 					glaccountpcash,
-					defaulttag,
 					currencies.decimalplaces,
 					chartmaster1.accountname AS glactassigntname,
 					chartmaster2.accountname AS glactpcashname,
@@ -185,18 +181,10 @@ if (!isset($SelectedTab)) {
 					<th>', _('Authoriser - Expenses'), '</th>
 					<th>', _('GL Account For Cash Assignment'), '</th>
 					<th>', _('GL Account Petty Cash Tab'), '</th>
-					<th>', _('Default Tag'), '</th>
 					<th>', _('Tax Group'), '</th>
 				</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['defaulttag'] . "'";
-			$TagResult = DB_query($TagSQL);
-			if (DB_num_rows($TagResult) > 0) {
-				$TagRow = DB_fetch_array($TagResult);
-			} else {
-				$TagRow['tagdescription'] = '';
-			}
 			echo '<tr class="striped_row">
 					<td>', $MyRow['tabcode'], '</td>
 					<td>', $MyRow['usercode'], '</td>
@@ -208,7 +196,6 @@ if (!isset($SelectedTab)) {
 					<td>', $MyRow['authorizerexpenses'], '</td>
 					<td>', $MyRow['glaccountassignment'] . ' - ' . $MyRow['glactassigntname'], '</td>
 					<td>', $MyRow['glaccountpcash'] . ' - ' . $MyRow['glactpcashname'], '</td>
-					<td>', $TagRow['tagdescription'], '</td>
 					<td>', $MyRow['taxgroupdescription'], '</td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '">' . _('Edit') . '</a></td>
 					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedTab=', $MyRow['tabcode'], '&amp;delete=yes" onclick=\' return confirm("' . _('Are you sure you wish to delete this tab code?') . '", \'Confirm Delete\', this);\'>' . _('Delete') . '</a></td>
@@ -238,7 +225,6 @@ if (!isset($_GET['delete'])) {
 						authorizerexpenses,
 						glaccountassignment,
 						glaccountpcash,
-						defaulttag,
 						taxgroupid
 					FROM pctabs
 				WHERE tabcode='" . $SelectedTab . "'";
@@ -254,7 +240,6 @@ if (!isset($_GET['delete'])) {
 		$_POST['SelectAuthoriserExpenses'] = $MyRow['authorizerexpenses'];
 		$_POST['GLAccountCash'] = $MyRow['glaccountassignment'];
 		$_POST['GLAccountPcashTab'] = $MyRow['glaccountpcash'];
-		$_POST['DefaultTag'] = $MyRow['defaulttag'];
 		$_POST['TaxGroup'] = $MyRow['taxgroupid'];
 		echo '<input type="hidden" name="SelectedTab" value="', $SelectedTab, '" />';
 		echo '<input type="hidden" name="TabCode" value="', $_POST['TabCode'], '" />';
@@ -417,25 +402,8 @@ if (!isset($_GET['delete'])) {
 	} //end while loop
 	echo '</select>
 		</field>';
-	//Select the tag
-	$SQL = "SELECT tagref,
-					tagdescription
-			FROM tags
-			ORDER BY tagref";
-	$Result = DB_query($SQL);
-	echo '<field>
-			<label for="DefaultTag">', _('Default Tag'), ':</label>
-			<select name="DefaultTag">';
-	while ($MyRow = DB_fetch_array($Result)) {
-		if (isset($_POST['DefaultTag']) and $_POST['DefaultTag'] == $MyRow['tagref']) {
-			echo '<option selected="selected" value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
-		} else {
-			echo '<option value="', $MyRow['tagref'], '">', $MyRow['tagref'], ' - ', $MyRow['tagdescription'], '</option>';
-		}
-	}
-	echo '</select>
-		</field>';
-	// End select tag
+
+	//Select the tax
 	$SQL = "SELECT taxgroupid,
 					taxgroupdescription
 			FROM taxgroups
@@ -453,7 +421,7 @@ if (!isset($_GET['delete'])) {
 	}
 	echo '</select>
 		</field>';
-	// End select tag
+	// End select tax
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Submit" value="', _('Accept'), '" />
