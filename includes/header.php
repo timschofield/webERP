@@ -129,8 +129,18 @@ $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 echo '<header class="noPrint">';
 
 /* KL RICARD: We don't want the logo on every page
+if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.png';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpg';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.gif')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.gif';
+}
+
 echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
-		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/LogoKLBlink.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
+		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/logo.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
 	</div>';
  KL RICARD END */
  

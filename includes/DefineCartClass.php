@@ -75,6 +75,9 @@ Class Cart {
 	var $BuyerName;
 	var $SpecialInstructions;
 	var $Packages;
+	var $total;
+	var $totalVolume;
+	var $totalWeight;
 
 	function __construct(){
 	/*Constructor function initialises a new shopping cart */

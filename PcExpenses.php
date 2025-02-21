@@ -29,13 +29,10 @@ if (isset($_POST['Cancel'])) {
 	unset($_POST['CodeExpense']);
 	unset($_POST['Description']);
 	unset($_POST['GLAccount']);
-	unset($_POST['Tag']);
 	// KL RICARD
 	unset($_POST['KLRetentionPPH21']);
 	unset($_POST['KLRetentionPPH23']);
 }
-
-
 if (isset($Errors)) {
 	unset($Errors);
 }
@@ -76,7 +73,6 @@ if (isset($_POST['submit'])) {
 					glaccount = '" . $_POST['GLAccount'] . "',
 					klretentionpph21 = '" . $_POST['KLRetentionPPH21'] . "',
 					klretentionpph23 = '" . $_POST['KLRetentionPPH23'] . "',
-					tag = '" . implode(',', $_POST['tag']) . "',
 					taxcatid='" . $_POST['TaxCategory'] . "'
 				WHERE codeexpense = '" . $SelectedExpense . "'";
 		$Msg = _('The Expenses type') . ' ' . $SelectedExpense . ' ' . _('has been updated');
@@ -99,14 +95,12 @@ if (isset($_POST['submit'])) {
 			 			 glaccount,
 			 			 klretentionpph21,
 			 			 klretentionpph23,
-			 			 tag,
 			 			 taxcatid)
 				VALUES ('" . $_POST['CodeExpense'] . "',
 						'" . $_POST['Description'] . "',
 						'" . $_POST['GLAccount'] . "',
 						'" . $_POST['KLRetentionPPH21'] . "',
 						'" . $_POST['KLRetentionPPH23'] . "',
-						'" . implode(',', $_POST['Tag']) . "',
 						'" . $_POST['TaxCategory'] . "'
 						)";
 			$Msg = _('Expense') . ' ' . $_POST['CodeExpense'] . ' ' . _('has been created');
@@ -120,13 +114,11 @@ if (isset($_POST['submit'])) {
 		unset($_POST['CodeExpense']);
 		unset($_POST['Description']);
 		unset($_POST['GLAccount']);
-		unset($_POST['Tag']);
 		unset($_POST['TaxGroup']);
 		// KL RICARD
 		unset($_POST['KLRetentionPPH21']);
 		unset($_POST['KLRetentionPPH23']);
 	}
-
 } elseif (isset($_GET['delete'])) {
 	// PREVENT DELETES IF DEPENDENT RECORDS IN 'PcTabExpenses'
 	$SQL = "SELECT COUNT(*)
@@ -156,7 +148,6 @@ if (!isset($SelectedExpense)) {
 	$SQL = "SELECT codeexpense,
 					description,
 					glaccount,
-					tag,
 					taxcatid,
 					klretentionpph21,
 					klretentionpph23
@@ -169,7 +160,6 @@ if (!isset($SelectedExpense)) {
 				<th>', _('Description'), '</th>
 				<th>', _('Account Code'), '</th>
 				<th>', _('Account Description'), '</th>
-				<th>', _('Tag'), '</th>
 				<th>', _('Tax Category'), '</th>
 				<th>' . _('% PPH21') . '</th>
 				<th>' . _('% PPH23') . '</th>
@@ -181,27 +171,16 @@ if (!isset($SelectedExpense)) {
 					WHERE accountcode='" . $MyRow['glaccount'] . "'";
 		$ResultDes = DB_query($SQLdesc);
 		$Description = DB_fetch_array($ResultDes);
-		$Tags = explode(',', $MyRow['tag']);
-		$DescriptionTag = '';
-		foreach ($Tags as $Tag) {
-		$SQLDescTag = "SELECT tagdescription
-					FROM tags
-					WHERE tagref='" . $Tag . "'";
-		$ResultDesTag = DB_query($SQLDescTag);
-			$TagRow = DB_fetch_array($ResultDesTag);
-			$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
-		}
-		$SQLTaxCat = "SELECT taxcatname
+		$SqlTaxCat = "SELECT taxcatname
 					FROM taxcategories
 					WHERE taxcatid='" . $MyRow['taxcatid'] . "'";
-		$ResultTaxCat = DB_query($SQLTaxCat);
+		$ResultTaxCat = DB_query($SqlTaxCat);
 		$DescriptionTaxCat = DB_fetch_array($ResultTaxCat);
 		echo '<tr class="striped_row">
 				<td>', $MyRow['codeexpense'], '</td>
 				<td>', $MyRow['description'], '</td>
 				<td class="number">', $MyRow['glaccount'], '</td>
 				<td>', $Description['accountname'], '</td>
-				<td>', $DescriptionTag, '</td>
 				<td>', $DescriptionTaxCat['taxcatname'], '</td>
 				<td>', locale_number_format($MyRow['klretentionpph21'],2), '</td>
 				<td>', locale_number_format($MyRow['klretentionpph23'],2), '</td>
@@ -229,7 +208,6 @@ if (!isset($_GET['delete'])) {
 						glaccount,
 						klretentionpph21,
 						klretentionpph23,
-						tag,
 						taxcatid
 					FROM pcexpenses
 					WHERE codeexpense='" . $SelectedExpense . "'";
@@ -241,7 +219,6 @@ if (!isset($_GET['delete'])) {
 		// KL RICARD added 2 fields 
 		$_POST['KLRetentionPPH21']  = $MyRow['klretentionpph21'];
 		$_POST['KLRetentionPPH23']  = $MyRow['klretentionpph23'];
-		$_POST['Tag'] = explode(',', $MyRow['tag']);
 		$_POST['TaxCategory'] = $MyRow['taxcatid'];
 		echo '<input type="hidden" name="SelectedExpense" value="', $SelectedExpense, '" />';
 		echo '<input type="hidden" name="CodeExpense" value="', $_POST['CodeExpense'], '" />';
@@ -287,26 +264,6 @@ if (!isset($_GET['delete'])) {
 	} //end while loop
 	echo '</select>
 		</field>';
-
-		//Select the tag
-		$SQL = "SELECT tagref,
-						tagdescription
-				FROM tags
-				ORDER BY tagref";
-		$Result = DB_query($SQL);
-		echo '<field>
-				<label for="tag">', _('Tag'), '</label>
-				<select multiple="multiple" name="tag[]">';
-		while ($MyRow = DB_fetch_array($Result)) {
-			if (isset($_POST['tag']) and in_array($MyRow['tagref'], $_POST['tag'])) {
-				echo '<option selected="selected" value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
-			} else {
-				echo '<option value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'] . ' - ' . $MyRow['tagdescription'] . '</option>';
-			}
-		}
-		echo '</select>
-			</field>';
-		// End select tag
 
 	// KL RICARD input 2 fields
 	if(!isset($_POST['KLRetentionPPH21'])) {

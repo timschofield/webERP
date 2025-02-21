@@ -255,7 +255,6 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,

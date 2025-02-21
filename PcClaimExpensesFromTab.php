@@ -78,7 +78,6 @@ if (isset($_POST['submit'])) {
 		// KL RICARD Keep the receipt text field
 		$SQL = "UPDATE pcashdetails
 			SET date = '" . FormatDateForSQL($_POST['Date']) . "',
-				tag = '" . $_POST['Tag'] . "',
 				codeexpense = '" . $_POST['SelectedExpense'] . "',
 				amount = '" . -filter_number_format($_POST['Amount']) . "',
 				receipt = '" . $_POST['Receipt'] . "',
@@ -100,6 +99,17 @@ if (isset($_POST['submit'])) {
 												WHERE counterindex='" . $Index ."'";
 				$Result = DB_query($SQL);
 			}
+		}
+		$SQL = "DELETE FROM pctags WHERE pccashdetail='" . $SelectedIndex . "'";
+		$Result = DB_query($SQL);
+		foreach ($_POST['tag'] as $Tag) {
+			$SQL = "INSERT INTO pctags (pccashdetail,
+										tag)
+									VALUES (
+										'" . $SelectedIndex . "',
+										'" . $Tag . "'
+									)";
+			$Result = DB_query($SQL);
 		}
 		if (isset($_FILES['Receipt']) and $_FILES['Receipt']['name'] != '') {
 			$UploadOriginalName = $_FILES['Receipt']['name'];
@@ -461,7 +471,6 @@ if (!isset($SelectedTabs)) {
 		// KL RICARD Keep the receipt text field
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,
@@ -536,7 +545,6 @@ if (!isset($SelectedTabs)) {
 				if ($TagRow['tagref'] == 0) {
 					$TagRow['tagdescription'] = _('None');
 				}
-				$TagTo = $MyRow['tag'];
 				if ($ExpenseCodeDes != 'ASSIGNCASH') {
 					$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 				}
@@ -606,7 +614,6 @@ if (!isset($SelectedTabs)) {
 			// KL RICARD Keep the receipt text field
 			$SQL = "SELECT counterindex,
 							tabcode,
-							tag,
 							date,
 							codeexpense,
 							amount,
@@ -626,7 +633,6 @@ if (!isset($SelectedTabs)) {
 			// KL RICARD Keep the receipt text field
 			$_POST['Receipt'] = $MyRow['receipt'];
 			$_POST['Notes'] = $MyRow['notes'];
-			$_POST['Tag'] = $MyRow['tag'];
 			echo '<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />';
 			echo '<input type="hidden" name="SelectedIndex" value="', $SelectedIndex, '" />';
 			echo '<input type="hidden" name="Days" value="', $Days, '" />';
@@ -649,8 +655,7 @@ if (!isset($SelectedTabs)) {
 				<select required="required" name="SelectedExpense">';
 		DB_free_result($Result);
 		$SQL = "SELECT pcexpenses.codeexpense,
-					pcexpenses.description,
-					pctabs.defaulttag
+					pcexpenses.description
 			FROM pctabexpenses, pcexpenses, pctabs
 			WHERE pctabexpenses.codeexpense = pcexpenses.codeexpense
 				AND pctabexpenses.typetabcode = pctabs.typetabcode
@@ -664,7 +669,6 @@ if (!isset($SelectedTabs)) {
 			} else {
 				echo '<option value="', $MyRow['codeexpense'], '">', $MyRow['codeexpense'], ' - ', $MyRow['description'], '</option>';
 			}
-			$DefaultTag = $MyRow['defaulttag'];
 		} //end while loop
 		echo '</select>
 			</field>';
@@ -807,7 +811,7 @@ KL RICARD END Do not show purpose */
 				<label for="Notes">', _('Notes'), ':</label>
 				<input type="text" name="Notes" size="50" maxlength="49" value="', $_POST['Notes'], '" />
 			</field>';
-	
+
 		echo '<div class="centre">
 			<input type="submit" name="submit" value="', _('Accept'), '" />
 			<input type="reset" name="Cancel" value="', _('Cancel'), '" />

@@ -211,7 +211,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		// KL RICARD Add receipt field
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,
@@ -349,7 +348,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			// KL RICARD add receipt text field
 			$SQL = "SELECT counterindex,
 							tabcode,
-							tag,
 							date,
 							codeexpense,
 							amount,

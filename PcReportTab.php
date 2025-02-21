@@ -34,7 +34,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 						authorizerexpenses,
 						glaccountassignment,
 						glaccountpcash,
-						defaulttag,
 						taxgroupid
 			FROM pctabs
 			WHERE tabcode = '" . $SelectedTabs . "'";
@@ -143,7 +142,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	$SQL = "SELECT counterindex,
 					tabcode,
-					tag,
 					date,
 					codeexpense,
 					amount,
@@ -169,7 +167,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 					<th class="SortedColumn">' . _('Gross Amount') . '</th>
 					<th>' . _('Tax') . '</th>
 					<th>' . _('Tax Group') . '</th>
-					<th>' . _('Tag') . '</th>
 					<th>' . _('Business Purpose') . '</th>
 					<th>' . _('Notes') . '</th>
 					<th>' . _('Receipt Attachment') . '</th>
@@ -179,15 +176,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			</tbody>';
 
 	while ($MyRow = DB_fetch_array($TabDetail)) {
-
-		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
-		$TagResult = DB_query($TagSQL);
-		$TagRow = DB_fetch_array($TagResult);
-		if ($MyRow['tag'] == 0) {
-			$TagRow['tagdescription'] = _('None');
-		}
-		$TagTo = $MyRow['tag'];
-		$TagDescription = $TagTo . ' - ' . $TagRow['tagdescription'];
 
 		$TaxesDescription = '';
 		$TaxesTaxAmount = '';
@@ -252,7 +240,6 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<td class="number">' . locale_number_format($MyRow['amount'], $CurrDecimalPlaces) . '</td>
 				<td class="number">' . $TaxesTaxAmount . '</td>
 				<td>' . $TaxesDescription . '</td>
-				<td>' . $TagDescription . '</td>
 				<td>' . $MyRow['purpose'] . '</td>
 				<td>' . $MyRow['notes'] . '</td>
 				<td>' . $ReceiptText . '</td>

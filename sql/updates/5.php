@@ -201,10 +201,10 @@ NewMenuItem('manuf', 'Maintenance', _('Employees'), '/Employees.php', 9);
 
 NewMenuItem('GL', 'Transactions', _('Bank Account Payments Entry'), '/Payments.php?NewPayment=Yes', 1);
 NewMenuItem('GL', 'Transactions', _('Bank Account Receipts Entry'), '/CustomerReceipt.php?NewReceipt=Yes&amp;Type=GL', 2);
-NewMenuItem('GL', 'Transactions', _('Import Bank Transactions'), '/GLJournal.php?NewJournal=Yes', 3);
+NewMenuItem('GL', 'Transactions', _('Import Bank Transactions'), '/ImportBankTrans.php', 3);
 NewMenuItem('GL', 'Transactions', _('Bank Account Payments Matching'), '/BankMatching.php?Type=Payments', 4);
 NewMenuItem('GL', 'Transactions', _('Bank Account Receipts Matching'), '/BankMatching.php?Type=Receipts', 5);
-NewMenuItem('GL', 'Transactions', _('Journal Entry'), '/ImportBankTrans.php', 6);
+NewMenuItem('GL', 'Transactions', _('Journal Entry'), '/GLJournal.php?NewJournal=Yes', 6);
 NewMenuItem('GL', 'Transactions', _('Process Regular Payments'), '/RegularPaymentsProcess.php', 7);
 
 NewMenuItem('GL', 'Reports', _('Bank Account Balances'), '/BankAccountBalances.php', 1);
