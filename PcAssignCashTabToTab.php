@@ -3,6 +3,7 @@
 // Assign cash from one tab to another.
 
 include('includes/session.php');
+if (isset($_POST['Date'])){$_POST['Date'] = ConvertSQLDate($_POST['Date']);};
 $ViewTopic= 'PettyCash';
 $BookMark = 'CashAssignment';
 $Title = _('Assignment of Cash from Tab to Tab');
@@ -206,7 +207,7 @@ if (!isset($SelectedTabs)){
 
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Accept') . '" />
-			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 	echo '</form>';
 }
@@ -254,7 +255,6 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,
@@ -285,13 +285,13 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">' . _('Date') . '</th>
-						<th class="ascending">' . _('Expense Code') . '</th>
-						<th class="ascending">' . _('Amount') . '</th>
+						<th class="SortedColumn">' . _('Date') . '</th>
+						<th class="SortedColumn">' . _('Expense Code') . '</th>
+						<th class="SortedColumn">' . _('Amount') . '</th>
 						<th>' . _('Business Purpose') . '</th>
 						<th>' . _('Notes') . '</th>
 						<th>' . _('Receipt Attachment') . '</th>
-						<th class="ascending">' . _('Date Authorised') . '</th>
+						<th class="SortedColumn">' . _('Date Authorised') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -337,7 +337,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
 
-		if (($MyRow['authorized'] == '0000-00-00') AND ($Description['0'] == 'ASSIGNCASH')){
+		/*if (($MyRow['authorized'] == '0000-00-00') AND ($Description['0'] == 'ASSIGNCASH')){
 			// only cash assignations NOT authorized can be modified or deleted
 			echo '<tr class="striped_row">
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
@@ -348,7 +348,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				<td>' . $ReceiptText . '</td>
 				<td>' . $AuthorisedDate . '</td>
 				</tr>';
-		}else{
+		}else*/ {
 			echo '<tr class="striped_row">
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>
 				<td>', $ExpenseCodeDes, '</td>
@@ -419,7 +419,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 		echo '<legend>' . _('New Cash Assignment') . '</legend>';
 		echo '<field>
 				<label for="Date">' . _('Cash Assignment Date') . ':</label>
-				<input type="text" class="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['Date'] . '" />
+				<input type="date" name="Date" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['Date']) . '" />
 			</field>';
 
 
@@ -450,7 +450,7 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 			<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Accept') . '" />
-				<input type="submit" name="Cancel" value="' . _('Cancel') . '" /></div>
+				<input type="reset" name="Cancel" value="' . _('Cancel') . '" /></div>
 			</div>
 		</form>';
 

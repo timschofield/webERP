@@ -24,13 +24,13 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('The Tabs type code cannot be an empty string'), 'error');
 	} elseif (mb_strlen($_POST['TypeTabCode']) > 20) {
 		$InputError = 1;
-		echo prnMsg(_('The tab code must be twenty characters or less long'), 'error');
+		prnMsg(_('The tab code must be twenty characters or less long'), 'error');
 	} elseif (ContainsIllegalCharacters($_POST['TypeTabCode']) or mb_strpos($_POST['TypeTabCode'], ' ') > 0) {
 		$InputError = 1;
-		prnMsg(_('The petty cash tab type code cannot contain any of the illegal characters'), 'error');
+		prnMsg(_('The petty cash tab type code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space', 'error');
 	} elseif (mb_strlen($_POST['TypeTabDescription']) > 50) {
 		$InputError = 1;
-		echo prnMsg(_('The tab code must be Fifty characters or less long'), 'error');
+		prnMsg(_('The tab code must be Fifty characters or less long'), 'error');
 	}
 	if (isset($SelectedTab) and $InputError != 1) {
 		$SQL = "UPDATE pctypetabs
@@ -169,7 +169,7 @@ if (!isset($_GET['delete'])) {
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="submit" value="', _('Accept'), '" />
-			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>
 	</form>';
 } // end if user wish to delete

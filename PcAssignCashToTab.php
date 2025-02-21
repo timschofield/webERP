@@ -175,7 +175,7 @@ if (!isset($SelectedTabs)) {
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }
@@ -189,7 +189,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 	echo '<div class="centre">
 			<a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select another tab'), '</a>
 		</div>';
-
 	if (!isset($_GET['edit']) or isset($_POST['GO'])) {
 		if (isset($_POST['Cancel'])) {
 			unset($_POST['Amount']);
@@ -212,7 +211,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		// KL RICARD Add receipt field
 		$SQL = "SELECT counterindex,
 						tabcode,
-						tag,
 						date,
 						codeexpense,
 						amount,
@@ -244,13 +242,13 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">', _('Date'), '</th>
-						<th class="ascending">', _('Expense Code'), '</th>
-						<th class="ascending">', _('Amount'), '</th>
+						<th class="SortedColumn">', _('Date'), '</th>
+						<th class="SortedColumn">', _('Expense Code'), '</th>
+						<th class="SortedColumn">', _('Amount'), '</th>
 						<th>', _('Notes'), '</th>
 						<th>', _('Receipt'), '</th>
 						<th>', _('Receipt Attachment'), '</th>
-						<th class="ascending">', _('Date Authorised'), '</th>
+						<th class="SortedColumn">', _('Date Authorised'), '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -350,7 +348,6 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 			// KL RICARD add receipt text field
 			$SQL = "SELECT counterindex,
 							tabcode,
-							tag,
 							date,
 							codeexpense,
 							amount,
@@ -413,7 +410,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 		// KL RICARD END	
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Accept'), '" />
-				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+				<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 			</div>';
 	echo '</fieldset>'; // close main table
 		echo '<input type="hidden" name="CurrentAmount" value="', $Amount['0'], '" />';

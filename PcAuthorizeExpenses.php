@@ -16,6 +16,8 @@ $ViewTopic = 'PettyCash';
 $BookMark = 'AuthorizeExpense';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
+
 // KL RICARD
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
@@ -48,7 +50,7 @@ if (isset($_POST['Go'])) {
 }
 
 echo '<p class="page_title_text">
-			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', _('Authorisation of Petty Cash Expenses'), '
+			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Petty Cash'), '" alt="" />', $Title, '
 		</p>';
 
 
@@ -70,7 +72,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	//Limit expenses history to X days
 	echo '<fieldset>
 			<field>
-				<label for="SelectedTabs">', _('Detail of Tab Movements For Last '), ':</label>
+				<label for="SelectedTabs">', _('Detail of tab expenses for the last '), ':</label>
 				<input type="hidden" name="SelectedTabs" value="', $SelectedTabs, '" />
 				<input type="text" class="number" name="Days" value="', $Days, '" maxlength="3" size="4" />', _('Days'), '
 				<input type="submit" name="Go" value="', _('Go'), '" />
@@ -79,7 +81,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	// KL RICARD add the receipt text field
 	$SQL = "SELECT pcashdetails.counterindex,
 				pcashdetails.tabcode,
-				pcashdetails.tag,
 				pcashdetails.date,
 				pcashdetails.codeexpense,
 				pcashdetails.amount,
@@ -104,7 +105,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	if (isset($_POST['ShowOnlyUnauthorized'])){
 		$SQL .= "AND pcashdetails.authorized = '0000-00-00' ";
 	}
-	$SQL .=		" ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";$Result = DB_query($SQL);
+	$SQL .=		" ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
+	$Result = DB_query($SQL);
 	echo '<table class="selection">
 			<thead>
 				<tr>
@@ -123,12 +125,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 		$CurrDecimalPlaces = $MyRow['decimalplaces'];
 		//update database if update pressed
 		$PeriodNo = GetPeriod(ConvertSQLDate($MyRow['date']));
-		$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $MyRow['tag'] . "'";
-		$TagResult = DB_query($TagSQL);
-		$TagRow = DB_fetch_array($TagResult);
-		if ($MyRow['tag'] == 0) {
-			$TagRow['tagdescription'] = _('None');
-		}
 		$TaxTotalSQL = "SELECT SUM(amount) as totaltax FROM pcashdetailtaxes WHERE pccashdetail='" . $MyRow['counterindex'] . "'";
 		$TaxTotalResult = DB_query($TaxTotalSQL);
 		$TaxTotalRow = DB_fetch_array($TaxTotalResult);
@@ -139,14 +135,14 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			$GrossAmount = ($MyRow['amount']) / $MyRow['rate'];
 			$NetAmount = ($MyRow['amount'] - $TaxTotalRow['totaltax']) / $MyRow['rate'];
 		}
+		// it is not an ASSIGNCASH, as it has been moved to PCAuthorizeCash.php, it is always an expense
 		$Type = 1;
 		$NetAmount = -$NetAmount;
 		$AccountFrom = $MyRow['glaccountpcash'];
 		// KL RICARD add pph21 and pph23 in SQL
 		$SQLAccExp = "SELECT glaccount,
 							klretentionpph21,
-							klretentionpph23,
-							tag
+							klretentionpph23
 						FROM pcexpenses
 						WHERE codeexpense = '" . $MyRow['codeexpense'] . "'";
 		$ResultAccExp = DB_query($SQLAccExp);
@@ -174,11 +170,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				$TagRow['tagdescription'] = _('None');
 			}
 			$TagTo = $MyRow['tag'];
-			if ($ExpenseCodeDes == 'ASSIGNCASH') {
-				$TagDescription .= '';
-			} else {
-				$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
-			}
+			$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 		}
 
 		if (isset($_POST['Submit']) and $_POST['Submit'] == _('Update') and isset($_POST[$MyRow['counterindex']])) {
@@ -243,14 +235,8 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 										0,
 										'')";
 			$ResultTo = DB_Query($SQLTo, '', '', true);
-			foreach ($Tags as $Tag) {
-				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-													'" . $Tag . "')";
-				$ErrMsg = _('Cannot insert a GL tag for the payment line because');
-				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-				$InsertResult = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			}
-
+			InsertGLTags($Tags);
+			
 			// KL RICARD
 			// if there's a PPH21 retention, we account for it
 			if ($HutangPPH21 != 0){
@@ -484,7 +470,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	DB_free_result($Result);
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }

@@ -18,7 +18,7 @@ if (isset($_POST['SelectedCode'])) {
 }
 if (!isset($_GET['delete']) and (ContainsIllegalCharacters($SelectedCode) or mb_strpos($SelectedCode, ' ') > 0)) {
 	$InputError = 1;
-	prnMsg(_('The petty cash tab type contain any of the following characters " \' - &amp; or a space'), 'error');
+	prnMsg(_('The petty cash tab type contain any of the following characters') . ' ' . '" \' - &amp; or a space', 'error');
 }
 if (isset($_POST['SelectedTab'])) {
 	$SelectedTab = mb_strtoupper($_POST['SelectedTab']);
@@ -31,7 +31,7 @@ if (isset($_POST['Cancel'])) {
 }
 if (isset($_POST['Process'])) {
 	if ($_POST['SelectedTab'] == '') {
-		echo prnMsg(_('You have not selected a tab to maintain the expenses on'), 'error');
+		prnMsg(_('You have not selected a tab to maintain the expenses on'), 'error');
 		echo '<br />';
 		unset($SelectedTab);
 		unset($_POST['SelectedTab']);
@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 	$InputError = 0;
 	if ($_POST['SelectedExpense'] == '') {
 		$InputError = 1;
-		echo prnMsg(_('You have not selected an expense to add to this tab'), 'error');
+		prnMsg(_('You have not selected an expense to add to this tab'), 'error');
 		echo '<br />';
 		unset($SelectedTab);
 	}
@@ -112,7 +112,7 @@ if (!isset($SelectedTab)) {
 	echo '</fieldset>'; // close main table
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="', _('Accept'), '" />
-			<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+			<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 		</div>';
 	echo '</form>';
 }
@@ -176,7 +176,7 @@ if (isset($_POST['process']) or isset($SelectedTab)) {
 		echo '</fieldset>'; // close main table
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="', _('Accept'), '" />
-				<input type="submit" name="Cancel" value="', _('Cancel'), '" />
+				<input type="reset" name="Cancel" value="', _('Cancel'), '" />
 			</div>';
 		echo '</form>';
 	} // end if user wish to delete
