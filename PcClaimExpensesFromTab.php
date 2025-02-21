@@ -579,9 +579,10 @@ if (!isset($SelectedTabs)) {
 		$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 		echo '</tbody>
 				<tfoot>
-					<tr>
-					<td colspan="2" class="number">', _('Current balance'), ':</td>
-					<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
+					<tr class="total_row">
+						<td colspan="2" class="number">', _('Current balance'), ':</td>
+						<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
+						<td colspan="9"></td>
 					</tr>
 				</tfoot>';
 		echo '</table>';
