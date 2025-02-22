@@ -10,22 +10,24 @@ function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "")
 			$ImageLink = '<img src="GetStockImage.php?automake=1' . 
                                                     '&textcolor=FFFFFF' .
                                                     '&bgcolor=CCCCCC' .
-                                                    '&amp;width=' . $Width . 
-                                                    '&amp;height=' . $Height .
-                                                    '&amp;StockID=' . urlencode($Item) .
-                                                    '" alt="" />';
+                                                    '&width=' . $Width . 
+                                                    '&height=' . $Height .
+                                                    '&StockID=' . urlencode($Item) .
+													'" alt="' . htmlspecialchars($AltText, ENT_QUOTES) . '" />';
         } else {
             $ImageLink = '<img src="GetStockImage.php?automake=1' . 
                                                     '&textcolor=FFFFFF' .
                                                     '&bgcolor=CCCCCC' .
-                                                    '&amp;text='. $Item .
-                                                    '&amp;width=' . $Width . 
-                                                    '&amp;height=' . $Height .
-                                                    '&amp;StockID=' . urlencode($Item) .
-                                                    '" alt="" />';
+                                                    '&text='. $Item .
+                                                    '&width=' . $Width . 
+                                                    '&height=' . $Height .
+                                                    '&StockID=' . urlencode($Item) .
+													'" alt="' . htmlspecialchars($AltText, ENT_QUOTES) . '" />';
 		}
     } else if (file_exists($ImageFile)) {
-        $ImageLink = '<img class="StockImage" src="' . $ImageFile . '" />';
+        $ImageLink = '<img class="StockImage" src="' . $ImageFile . 
+                                            '" width="' . $Width . 
+                                            '" height="' . $Height . '" />';
     } else {
         $ImageLink = _('No Image');
     }
