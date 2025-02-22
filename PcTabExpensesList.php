@@ -69,10 +69,10 @@ if (isset($_POST['submit'])) {
 		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPExcel object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("PC Tab Expenses List")
 										 ->setSubject("PC Tab Expenses List")
@@ -82,54 +82,54 @@ if (isset($_POST['submit'])) {
 
 			// Formatting
 
-			$objPHPExcel->getActiveSheet()->getStyle('A')->getAlignment()->setWrapText(true);
-			$objPHPExcel->getActiveSheet()->getStyle('A')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-			$objPHPExcel->getActiveSheet()->getStyle('B5')->getNumberFormat()->setFormatCode('#,##0.00');
-			$objPHPExcel->getActiveSheet()->getStyle('C:E')->getNumberFormat()->setFormatCode('#,##0.00');
-			$objPHPExcel->getActiveSheet()->getStyle('E1:E2')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-			$objPHPExcel->getActiveSheet()->getStyle('J')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
-			$objPHPExcel->getActiveSheet()->getStyle('A:J')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
-			$objPHPExcel->getActiveSheet()->getStyle('10')->getFont()->setBold(true);
-			$objPHPExcel->getActiveSheet()->getStyle('A1:A8')->getFont()->setBold(true);
-			$objPHPExcel->getActiveSheet()->getStyle('D1:D2')->getFont()->setBold(true);
+			$SpreadSheet->getActiveSheet()->getStyle('A')->getAlignment()->setWrapText(true);
+			$SpreadSheet->getActiveSheet()->getStyle('A')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+			$SpreadSheet->getActiveSheet()->getStyle('B5')->getNumberFormat()->setFormatCode('#,##0.00');
+			$SpreadSheet->getActiveSheet()->getStyle('C:E')->getNumberFormat()->setFormatCode('#,##0.00');
+			$SpreadSheet->getActiveSheet()->getStyle('E1:E2')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+			$SpreadSheet->getActiveSheet()->getStyle('J')->getNumberFormat()->setFormatCode('dd/mm/yyyy');
+			$SpreadSheet->getActiveSheet()->getStyle('A:J')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_LEFT);
+			$SpreadSheet->getActiveSheet()->getStyle('10')->getFont()->setBold(true);
+			$SpreadSheet->getActiveSheet()->getStyle('A1:A8')->getFont()->setBold(true);
+			$SpreadSheet->getActiveSheet()->getStyle('D1:D2')->getFont()->setBold(true);
 
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Tab Code');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', $MyTab['tabcode']);
-			$objPHPExcel->getActiveSheet()->setCellValue('A2', 'User Code');
-			$objPHPExcel->getActiveSheet()->setCellValue('B2', $MyTab['usercode']);
-			$objPHPExcel->getActiveSheet()->setCellValue('A3', 'Type of Tab');
-			$objPHPExcel->getActiveSheet()->setCellValue('B3', $MyTab['typetabcode']);
-			$objPHPExcel->getActiveSheet()->setCellValue('A4', 'Currency');
-			$objPHPExcel->getActiveSheet()->setCellValue('B4', $MyTab['currency']);
-			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Limit');
-			$objPHPExcel->getActiveSheet()->setCellValue('B5', $MyTab['tablimit']);
-			$objPHPExcel->getActiveSheet()->setCellValue('A6', 'Cash Assigner');
-			$objPHPExcel->getActiveSheet()->setCellValue('B6', $MyTab['assigner']);
-			$objPHPExcel->getActiveSheet()->setCellValue('A7', 'Authorizer - Cash');
-			$objPHPExcel->getActiveSheet()->setCellValue('B7', $MyTab['authorizer']);
-			$objPHPExcel->getActiveSheet()->setCellValue('A8', 'Authorizer - Expenses');
-			$objPHPExcel->getActiveSheet()->setCellValue('B8', $MyTab['authorizerexpenses']);
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setCellValue('A1', 'Tab Code');
+			$SpreadSheet->getActiveSheet()->setCellValue('B1', $MyTab['tabcode']);
+			$SpreadSheet->getActiveSheet()->setCellValue('A2', 'User Code');
+			$SpreadSheet->getActiveSheet()->setCellValue('B2', $MyTab['usercode']);
+			$SpreadSheet->getActiveSheet()->setCellValue('A3', 'Type of Tab');
+			$SpreadSheet->getActiveSheet()->setCellValue('B3', $MyTab['typetabcode']);
+			$SpreadSheet->getActiveSheet()->setCellValue('A4', 'Currency');
+			$SpreadSheet->getActiveSheet()->setCellValue('B4', $MyTab['currency']);
+			$SpreadSheet->getActiveSheet()->setCellValue('A5', 'Limit');
+			$SpreadSheet->getActiveSheet()->setCellValue('B5', $MyTab['tablimit']);
+			$SpreadSheet->getActiveSheet()->setCellValue('A6', 'Cash Assigner');
+			$SpreadSheet->getActiveSheet()->setCellValue('B6', $MyTab['assigner']);
+			$SpreadSheet->getActiveSheet()->setCellValue('A7', 'Authorizer - Cash');
+			$SpreadSheet->getActiveSheet()->setCellValue('B7', $MyTab['authorizer']);
+			$SpreadSheet->getActiveSheet()->setCellValue('A8', 'Authorizer - Expenses');
+			$SpreadSheet->getActiveSheet()->setCellValue('B8', $MyTab['authorizerexpenses']);
 
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'From');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', $FromDate);
-			$objPHPExcel->getActiveSheet()->setCellValue('D2', 'To');
-			$objPHPExcel->getActiveSheet()->setCellValue('E2', $ToDate);
+			$SpreadSheet->getActiveSheet()->setCellValue('D1', 'From');
+			$SpreadSheet->getActiveSheet()->setCellValue('E1', $FromDate);
+			$SpreadSheet->getActiveSheet()->setCellValue('D2', 'To');
+			$SpreadSheet->getActiveSheet()->setCellValue('E2', $ToDate);
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A10', 'Date');
-			$objPHPExcel->getActiveSheet()->setCellValue('B10', 'Expense Code');
-			$objPHPExcel->getActiveSheet()->setCellValue('C10', 'Gross Amount');
-			$objPHPExcel->getActiveSheet()->setCellValue('D10', 'Balance');
-			$objPHPExcel->getActiveSheet()->setCellValue('E10', 'Tax');
-			$objPHPExcel->getActiveSheet()->setCellValue('F10', 'Tax Group');
-			$objPHPExcel->getActiveSheet()->setCellValue('H10', 'Business Purpose');
-			$objPHPExcel->getActiveSheet()->setCellValue('I10', 'Notes');
-			$objPHPExcel->getActiveSheet()->setCellValue('J10', 'Receipt Attachment');
-			$objPHPExcel->getActiveSheet()->setCellValue('K10', 'Date Authorized');
+			$SpreadSheet->getActiveSheet()->setCellValue('A10', 'Date');
+			$SpreadSheet->getActiveSheet()->setCellValue('B10', 'Expense Code');
+			$SpreadSheet->getActiveSheet()->setCellValue('C10', 'Gross Amount');
+			$SpreadSheet->getActiveSheet()->setCellValue('D10', 'Balance');
+			$SpreadSheet->getActiveSheet()->setCellValue('E10', 'Tax');
+			$SpreadSheet->getActiveSheet()->setCellValue('F10', 'Tax Group');
+			$SpreadSheet->getActiveSheet()->setCellValue('H10', 'Business Purpose');
+			$SpreadSheet->getActiveSheet()->setCellValue('I10', 'Notes');
+			$SpreadSheet->getActiveSheet()->setCellValue('J10', 'Receipt Attachment');
+			$SpreadSheet->getActiveSheet()->setCellValue('K10', 'Date Authorized');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('B11', 'Previous Balance');
-			$objPHPExcel->getActiveSheet()->setCellValue('D11', $MyPreviousBalance['previous']);
+			$SpreadSheet->getActiveSheet()->setCellValue('B11', 'Previous Balance');
+			$SpreadSheet->getActiveSheet()->setCellValue('D11', $MyPreviousBalance['previous']);
 
 			// Add data
 			$i = 12;
@@ -193,37 +193,37 @@ if (isset($_POST['submit'])) {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 				}
 
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, ConvertSQLDate($MyRow['date']));
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $ExpenseCodeDes);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['amount']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, '=D'.($i-1).'+C'.$i.'');
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $TaxesTaxAmount);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $TaxesDescription);
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, $MyRow['purpose']);
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['notes']);
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $ReceiptText);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, ConvertSQLDate($MyRow['date']));
+				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, $ExpenseCodeDes);
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, $MyRow['amount']);
+				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, '=D'.($i-1).'+C'.$i.'');
+				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, $TaxesTaxAmount);
+				$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, $TaxesDescription);
+				$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, $MyRow['purpose']);
+				$SpreadSheet->getActiveSheet()->setCellValue('I'.$i, $MyRow['notes']);
+				$SpreadSheet->getActiveSheet()->setCellValue('J'.$i, $ReceiptText);
 				if (isset($ReceiptURL)) {
-					$objPHPExcel->getActiveSheet()->getCell('J'.$i)->getHyperlink()->setUrl($ReceiptURL);
-					$objPHPExcel->getActiveSheet()->getStyle('J'.$i)->applyFromArray(array( 'font' => array( 'color' => ['rgb' => '0000FF'], 'underline' => 'single' )));
+					$SpreadSheet->getActiveSheet()->getCell('J'.$i)->getHyperlink()->setUrl($ReceiptURL);
+					$SpreadSheet->getActiveSheet()->getStyle('J'.$i)->applyFromArray(array( 'font' => array( 'color' => ['rgb' => '0000FF'], 'underline' => 'single' )));
 				}
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $AuthorisedDate);
+				$SpreadSheet->getActiveSheet()->setCellValue('K'.$i, $AuthorisedDate);
 
 				$i++;
 			}
 
 			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('A11');
+			$SpreadSheet->getActiveSheet()->freezePane('A11');
 
 			// Auto Size columns
 			foreach(range('A','K') as $ColumnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
+				$SpreadSheet->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 
 			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle($TabToShow);
+			$SpreadSheet->getActiveSheet()->setTitle($TabToShow);
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output to a client’s web browser (Excel2007)
 			header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
@@ -241,10 +241,10 @@ if (isset($_POST['submit'])) {
 
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 
