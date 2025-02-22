@@ -1237,6 +1237,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 	echo '<fieldset>
 			<legend>' . _('General Ledger Payment Analysis Entry') . '</legend>';
 
+	/* KL RICARD Do not show tags
 	//Select the Tag
 	echo '<field>
 			<label for="Tag">', _('Select Tag') , ':</label>
@@ -1260,6 +1261,8 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 			<fieldhelp>', _('Select one or more tags from the list. Use the CTRL button to select multiple tags') , '</fieldhelp>
 		</field>';
 	// End select Tag
+	KL RICARD Do not show tags */
+
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	if (isset($_POST['GLManualCode'])) {
 		echo '<field>

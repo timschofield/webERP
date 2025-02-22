@@ -504,6 +504,7 @@ if ($Controlled==1){
 }
 echo '</field>';
 
+/* KL RICARD Do not show tags
 //Select the tag
 $SQL = "SELECT tagref,
 				tagdescription
@@ -523,6 +524,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 // End select tag
+KL RICARD Do not show tags */
 
 echo '</fieldset>
 	<div class="centre">

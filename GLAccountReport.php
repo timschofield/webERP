@@ -267,6 +267,7 @@ else {
 	echo '</select>
 		</field>';
 
+	/*KL RICARD Do not show tags
 	//Select the tag
 	echo '<field>
 			<label for="tag">' . _('Select Tag') . ':</label>
@@ -290,6 +291,8 @@ else {
 	echo '</select>
 		</field>';
 	// End select tag
+	KL RICARD Do not show tags */
+	
 	echo '</fieldset>
 		<div class="centre">
 			<input type="submit" name="RunReport" value="' . _('Run Report') . '" />

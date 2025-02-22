@@ -349,7 +349,9 @@ if (isset($_POST['CommitBatch'])){
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
+				/* KL RICARD Do not show tags
 				InsertGLTags($ReceiptItem->tag);
+				KL RICARD Do not show tags */
 			}
 
 			/*check to see if this is a GL posting to another bank account (or the same one)
@@ -1026,12 +1028,13 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 				<th>' . _('Amount') . ' ' . _('Received') . '</th>
 				<th>' . _('GL Code') . '</th>
 				<th>' . _('Narrative') . '</th>
-				<th>' . _('Tag') . '</th>
 			</tr>';
 
 		foreach ($_SESSION['ReceiptBatch' . $identifier]->Items as $ReceiptItem) {
 
+			/* KL RICARD Do not show tags
 			$TagDescriptions = GetDescriptionsFromTagArray($ReceiptItem->tag);
+			KL RICARD Do not show tags */
 			
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
 			$Result=DB_query($SQL);
@@ -1041,7 +1044,6 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 					<td class="number">' . locale_number_format($ReceiptItem->Amount,$_SESSION['ReceiptBatch' . $identifier]->CurrDecimalPlaces) . '</td>
 					<td>' . $ReceiptItem->GLCode.' - '.$MyRow['accountname'] . '</td>
 					<td>' .  stripslashes($ReceiptItem->Narrative) . '</td>
-					<td>' .  $TagDescriptions . '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete='     . urlencode($ReceiptItem->ID)
 																								. '&Type='       . urlencode($_GET['Type'])
 																								. '&identifier=' . urlencode($identifier) . '">'
@@ -1128,6 +1130,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 	echo '<fieldset>
 			<legend>' . _('General Ledger Receipt Entry') . '</legend>';
 
+	/* KL RICARD Do not show tags
 	//Select the tag
 	echo '<field>
 			<label for="tag[]">', _('Select Tag(s)'), ':</label>
@@ -1150,8 +1153,9 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 		<fieldhelp>', _('Select any number of tags to associate this receipt with - use the ctrl button to pick multiple tags.'), '</fieldhelp>
 	</field>';
 
-// End select tag
-
+	// End select tag
+	KL RICARD Do not show tags */
+	
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<field>
 			<label for="GLCode">' . _('GL Account') . ':</label>
