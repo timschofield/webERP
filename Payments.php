@@ -1330,18 +1330,8 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 
 		$PaymentTotal = 0;
 		foreach ($_SESSION['PaymentDetail' . $identifier]->GLItems as $PaymentItem) {
-			$TagDescriptions = '';
-			if (isset($PaymentItem->Tag)){
-				foreach ($PaymentItem->Tag as $Tag) {
-					$TagSql = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-					$TagResult = DB_query($TagSql);
-					$TagRow = DB_fetch_array($TagResult);
-					if ($Tag == 0) {
-						$TagRow['tagdescription'] = _('None');
-					}
-					$TagDescriptions.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-				}
-			}
+
+			$TagDescriptions = GetDescriptionsFromTagArray($PaymentItem->Tag);
 
 			echo '<tr>
 				<td>' . $PaymentItem->Cheque . '</td>

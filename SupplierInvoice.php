@@ -832,15 +832,7 @@ if (!isset($_POST['PostInvoice'])) {
 
 			foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 
-				$DescriptionTag = '';
-				foreach ($EnteredGLCode->Tag as $Tag) {
-					$SqlDescTag = "SELECT tagdescription
-							FROM tags
-							WHERE tagref='" . $Tag . "'";
-					$ResultDesTag = DB_query($SqlDescTag);
-					$TagRow = DB_fetch_array($ResultDesTag);
-					$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
-				}
+				$DescriptionTag = GetDescriptionsFromTagArray($EnteredGLCode->Tag);
 
 				echo '<tr>
 						<td>' . $EnteredGLCode->GLCode . '</td>

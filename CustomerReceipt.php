@@ -1022,17 +1022,8 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 
 		foreach ($_SESSION['ReceiptBatch' . $identifier]->Items as $ReceiptItem) {
 
-			$TagDescriptions = '';
-			foreach ($ReceiptItem->tag as $Tag) {
-				$TagSql = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-				$TagResult = DB_query($TagSql);
-				$TagRow = DB_fetch_array($TagResult);
-				if ($Tag == 0) {
-					$TagRow['tagdescription'] = _('None');
-				}
-				$TagDescriptions.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-			}
-
+			$TagDescriptions = GetDescriptionsFromTagArray($ReceiptItem->tag);
+			
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
 			$Result=DB_query($SQL);
 			$MyRow=DB_fetch_array($Result);

@@ -8,6 +8,7 @@ $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
 
 include ('includes/header.php');
+include ('includes/GLFunctions.php');
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="" />', ' ', $Title, '
@@ -407,13 +408,7 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 			</tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Tags = explode(',', $MyRow['tag']);
-		$TagText = '';
-		foreach ($Tags as $Tag) {
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-			$TagResult = DB_query($TagSQL);
-			$TagRow = DB_fetch_array($TagResult);
-			$TagText.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-		}
+		$TagText = GetDescriptionsFromTagArray($Tags);
 		echo '<tr class="striped_row">
 				<td>', $Frequencies[$MyRow['frequency']], '</td>
 				<td class="number">', $MyRow['days'], '</td>

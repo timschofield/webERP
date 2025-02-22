@@ -575,20 +575,7 @@ $CreditTotal = 0;
 foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	echo '<tr class="striped_row">
 		<td>';
-	foreach ($JournalItem->tag as $Tag) {
-		$SQL = "SELECT tagdescription
-				FROM tags
-				WHERE tagref='" . $Tag . "'";
-		$Result = DB_query($SQL);
-		$MyRow = DB_fetch_row($Result);
-		if ($Tag == 0) {
-			$TagDescription = _('None');
-		}
-		else {
-			$TagDescription = $MyRow[0];
-		}
-		echo $Tag . ' - ' . $TagDescription . '<br />';
-	}
+	echo GetDescriptionsFromTagArray($JournalItem->tag);
 	echo '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount > 0) {

@@ -12,6 +12,7 @@ $Title = _('Supplier Transaction General Ledger Analysis');
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'SuppTransGLAnalysis';
 include ('includes/header.php');
+include ('includes/GLFunctions.php');
 
 if (!isset($_SESSION['SuppTrans'])) {
 	prnMsg(_('To enter a supplier invoice or credit note the supplier must first be selected from the supplier selection screen') . ', ' . _('then the link to enter a supplier invoice or supplier credit note must be clicked on'), 'info');
@@ -121,15 +122,7 @@ $TotalGLValue = 0;
 
 foreach ($_SESSION['SuppTrans']->GLCodes AS $EnteredGLCode) {
 
-	$DescriptionTag = '';
-	foreach ($EnteredGLCode->Tag as $Tag) {
-		$SqlDescTag = "SELECT tagdescription
-				FROM tags
-				WHERE tagref='" . $Tag . "'";
-		$ResultDesTag = DB_query($SqlDescTag);
-		$TagRow = DB_fetch_array($ResultDesTag);
-		$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
-	}
+	$DescriptionTag = GetDescriptionsFromTagArray($EnteredGLCode->Tag);
 
 	echo '<tr>
 			<td class="text">' . $EnteredGLCode->GLCode . '</td>
