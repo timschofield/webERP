@@ -223,13 +223,7 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 		}
 		$DecimalPLaces = $ExRateRow[0];
 		$Tags = explode(',', $MyRow['tag']);
-		$TagText = '';
-		foreach ($Tags as $Tag) {
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-			$TagResult = DB_query($TagSQL);
-			$TagRow = DB_fetch_array($TagResult);
-			$TagText.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-		}
+		$TagText = GetDescriptionsFromTagArray($Tags);
 		echo '<tr class="striped_row">
 				<td>', $MyRow['bankaccountname'], '</td>
 				<td>', $MyRow['glcode'], ' - ', $MyRow['accountname'], '</td>
