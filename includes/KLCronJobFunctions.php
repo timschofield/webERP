@@ -1,8 +1,8 @@
 <?php
 
-/* Functions related to the daily cron job tasks for Kapal-Laut */
+/* Functions related to the cron job tasks for Kapal-Laut */
 
-function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
+function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLDefines.php');
 	include('includes/KLPrices.php');
 	include('includes/KLBoards.php');
@@ -19,8 +19,10 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 	include ('includes/KLSmartStockTransfers.php');
 	include ('includes/htmlMimeMail.php');
 
-
-	if ($Group == "0100-CleanDB"){
+	if ($Group == "0010-SyncOpenCart"){
+		$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);
+		$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
+	}elseif ($Group == "0100-CleanDB"){
 		$EmailText = KL_DailyCleanDB(FALSE, $EmailText);
 	}elseif ($Group == "0200-Obsolete"){
 		$EmailText = KL_DailySetObsoleteNoStock(FALSE, $EmailText);
@@ -58,7 +60,7 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 		$EmailText = $EmailText . "Group " . $Group . " not found." . "\n";
 	}
 
-	$Result = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='KL_DailyChecks_LastRun'");
+	$Result = DB_query("UPDATE config SET confvalue = CURRENT_DATE WHERE confname='KLCronJobChecks_LastRun'");
 	if ($EmailText ==''){
 		prnMsg(_('The system has just run the daily Kapal-Laut checks.'),'info');
 		KLSendEmail("UserLoggingIn", "Silent", $_SESSION['UserID'], date('d/M/Y H:i'), $_SERVER["REMOTE_ADDR"]);
@@ -67,28 +69,6 @@ function KL_DailyChecks($Group, $RootPath, $EmailText= ''){
 	return $EmailText;
 	
 }
-
-function KL_HourlyChecks($RootPath, $EmailText=''){
-	include('includes/KLDefines.php');
-	include('includes/KLPrices.php');
-	include('includes/KLBoards.php');
-	include('includes/KLReorderLevel.php');
-	include('includes/KLEmails.php');
-	include('includes/KLGeneralFunctions.php');
-	include('includes/KLMarketplaceFunctions.php');
-	include('includes/GetPrice.inc');
-	include('includes/SQL_CommonFunctions.inc');
-	include ('includes/OpenCartGeneralFunctions.php');
-	include ('includes/WeberpToOpenCartSync.php');
-	include ('includes/OpenCartToWeberpSync.php');
-	include ('includes/OpenCartConnectDB.php');
-	
-	$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);
-	$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
-	
-	return $EmailText;
-}
-
 
 function KL_DailyCleanDB($ShowMessages, $EmailText){
 	$EmailText = YesterdayServerUsage($ShowMessages, $EmailText);
@@ -202,7 +182,6 @@ function KL_DailyEmailsToStaff($EmailText){
 }
 
 function KL_DailyOptimizationDatabase($TablesPerDay, $ShowMessages, $EmailText = ''){
-//	$NumberDay = substr(Date('Y-m-d'),-2); // Get the date number
 	$ErrMsg ='Could not OPTIMIZE tables because';
 
 	$SQL = "SHOW TABLES";
