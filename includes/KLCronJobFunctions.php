@@ -19,7 +19,7 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include ('includes/KLSmartStockTransfers.php');
 	include ('includes/htmlMimeMail.php');
 
-	if ($Group == "0010-SyncOpenCart"){
+	if ($Group == "0010-HourlySyncOpenCart"){
 		$EmailText = WeberpToOpenCartHourlySync(FALSE , TRUE, $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
 	}elseif ($Group == "0100-CleanDB"){
@@ -52,7 +52,7 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 		$EmailText = KLPrepareGroupSmartStockTransfers($Group, $RootPath, $EmailText); // prepares the Smart Stock Transfers for OU
 	}elseif ($Group == "1100-OptimizeDB"){
 		$EmailText = KL_DailyOptimizationDatabase(5, FALSE, $EmailText);
-	}elseif ($Group == "1200-SyncWebERPOpenCart"){
+	}elseif ($Group == "1200-DailySyncOpenCart"){
 		$EmailText = KL_DailyCleanOpenCartDB(FALSE , $EmailText);
 		$EmailText = WeberpToOpenCartDailySync(FALSE , $EmailText);
 		$EmailText = OpenCartToWeberpSync(FALSE , $EmailText);
