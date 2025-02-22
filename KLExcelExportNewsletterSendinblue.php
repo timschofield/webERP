@@ -44,10 +44,10 @@ function submit($MarkExported) {
 		if (DB_num_rows($Result) != 0){
 
 			// Create new Spreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Sendinblue Newsletter Subscribers")
 										 ->setSubject("Sendinblue Newsletter Subscribers")
@@ -56,36 +56,36 @@ function submit($MarkExported) {
 										 ->setCategory("");
 		
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'EMAIL');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'FAMILY_NAME');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'FIRST_NAME');
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setCellValue('A1', 'EMAIL');
+			$SpreadSheet->getActiveSheet()->setCellValue('B1', 'FAMILY_NAME');
+			$SpreadSheet->getActiveSheet()->setCellValue('C1', 'FIRST_NAME');
 
 			// Add data
 			$i = 2;
 			while ($MyRow = DB_fetch_array($Result)) {
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['email']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($MyRow['lastname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($MyRow['firstname']));
+				$SpreadSheet->setActiveSheetIndex(0);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, $MyRow['email']);
+				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($MyRow['lastname']));
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($MyRow['firstname']));
 				
 				$i++;
 			}
 			
 			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('A2');
+			$SpreadSheet->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
 			foreach(range('A','F') as $ColumnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
+				$SpreadSheet->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 			
 			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle('Newsletter Subscribers');
+			$SpreadSheet->getActiveSheet()->setTitle('Newsletter Subscribers');
 
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output to a client's web browser
 			if ($_POST['Format'] == 'xlsx') {
@@ -107,10 +107,10 @@ function submit($MarkExported) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 

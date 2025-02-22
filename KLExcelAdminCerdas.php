@@ -82,10 +82,10 @@ function submit($TypeOfShop, $TypeOfFile) {
 			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 		
 			// Create new Spreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Admin Cerdas " . $NameOfShop)
 										 ->setSubject("Admin Cerdas " . $NameOfShop)
@@ -94,42 +94,42 @@ function submit($TypeOfShop, $TypeOfFile) {
 										 ->setCategory("");
 
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setTitle(("AC " . $NameOfShop));
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setTitle(("AC " . $NameOfShop));
 			
 			if ($TypeOfFile == "FullUpdate"){
-				$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
-				$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
-				$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Harga');
-				$objPHPExcel->getActiveSheet()->setCellValue('D5', 'Harga Diskon');
-				$objPHPExcel->getActiveSheet()->setCellValue('E5', 'Deskripsi');
-				$objPHPExcel->getActiveSheet()->setCellValue('F5', 'Berat (gram)');
-				$objPHPExcel->getActiveSheet()->setCellValue('G5', 'Stok');
-				$objPHPExcel->getActiveSheet()->setCellValue('H5', 'URL Foto 1');
-				$objPHPExcel->getActiveSheet()->setCellValue('I5', 'URL Foto 2');
-				$objPHPExcel->getActiveSheet()->setCellValue('J5', 'URL Foto 3');
-				$objPHPExcel->getActiveSheet()->setCellValue('K5', 'Kategori');
-				$objPHPExcel->getActiveSheet()->setCellValue('L5', 'URL Foto 4');
-				$objPHPExcel->getActiveSheet()->setCellValue('M5', 'URL Foto 5');
-				$objPHPExcel->getActiveSheet()->setCellValue('N5', 'Nama Variasi');
+				$SpreadSheet->getActiveSheet()->setCellValue('A5', 'Kode');
+				$SpreadSheet->getActiveSheet()->setCellValue('B5', 'Nama Produk');
+				$SpreadSheet->getActiveSheet()->setCellValue('C5', 'Harga');
+				$SpreadSheet->getActiveSheet()->setCellValue('D5', 'Harga Diskon');
+				$SpreadSheet->getActiveSheet()->setCellValue('E5', 'Deskripsi');
+				$SpreadSheet->getActiveSheet()->setCellValue('F5', 'Berat (gram)');
+				$SpreadSheet->getActiveSheet()->setCellValue('G5', 'Stok');
+				$SpreadSheet->getActiveSheet()->setCellValue('H5', 'URL Foto 1');
+				$SpreadSheet->getActiveSheet()->setCellValue('I5', 'URL Foto 2');
+				$SpreadSheet->getActiveSheet()->setCellValue('J5', 'URL Foto 3');
+				$SpreadSheet->getActiveSheet()->setCellValue('K5', 'Kategori');
+				$SpreadSheet->getActiveSheet()->setCellValue('L5', 'URL Foto 4');
+				$SpreadSheet->getActiveSheet()->setCellValue('M5', 'URL Foto 5');
+				$SpreadSheet->getActiveSheet()->setCellValue('N5', 'Nama Variasi');
 				$StartingRow = 6;
 			}elseif ($TypeOfFile == "QOHOnly"){
-				$objPHPExcel->getActiveSheet()->setCellValue('A5', 'Kode');
-				$objPHPExcel->getActiveSheet()->setCellValue('B5', 'Nama Produk');
-				$objPHPExcel->getActiveSheet()->setCellValue('C5', 'Stok');
+				$SpreadSheet->getActiveSheet()->setCellValue('A5', 'Kode');
+				$SpreadSheet->getActiveSheet()->setCellValue('B5', 'Nama Produk');
+				$SpreadSheet->getActiveSheet()->setCellValue('C5', 'Stok');
 				$StartingRow = 6;
 			}elseif ($TypeOfFile == "PricesOnly"){
-				$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Kode');
-				$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Nama Produk');
-				$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Harga');
-				$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Harga Diskon');
+				$SpreadSheet->getActiveSheet()->setCellValue('A1', 'Kode');
+				$SpreadSheet->getActiveSheet()->setCellValue('B1', 'Nama Produk');
+				$SpreadSheet->getActiveSheet()->setCellValue('C1', 'Harga');
+				$SpreadSheet->getActiveSheet()->setCellValue('D1', 'Harga Diskon');
 				$StartingRow = 2;
 			}
 
 			// Add data
 			$i = $StartingRow;
-			$objPHPExcel->setActiveSheetIndex(0);
-			$ActiveSheet = $objPHPExcel->getActiveSheet();
+			$SpreadSheet->setActiveSheetIndex(0);
+			$ActiveSheet = $SpreadSheet->getActiveSheet();
 			
 			while ($MyRow = DB_fetch_array($Result)) {
 
@@ -203,7 +203,7 @@ function submit($TypeOfShop, $TypeOfFile) {
 			}
 	
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			if ($TypeOfFile == "FullUpdate"){
 				$File ='AC-FULL-' .  $NameOfShop . '-' . Date('Y-m-d-H-i-s');
@@ -234,9 +234,9 @@ function submit($TypeOfShop, $TypeOfFile) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$objWriter->save('php://output');
 

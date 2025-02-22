@@ -66,10 +66,10 @@ function submit($ListCategories, $Location) {
 			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder( new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder() );
 		
 			// Create new Spreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Inventory Taking")
 										 ->setSubject("Inventory Taking")
@@ -78,48 +78,48 @@ function submit($ListCategories, $Location) {
 										 ->setCategory("");
 
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setTitle('Inventory');
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setTitle('Inventory');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Location:');
-			$objPHPExcel->getActiveSheet()->setCellValue('B2', 'Date:');
-//			$objPHPExcel->getActiveSheet()->setCellValue('B3', 'Category:');
+			$SpreadSheet->getActiveSheet()->setCellValue('B1', 'Location:');
+			$SpreadSheet->getActiveSheet()->setCellValue('B2', 'Date:');
+//			$SpreadSheet->getActiveSheet()->setCellValue('B3', 'Category:');
  
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', $Location);
-			$objPHPExcel->getActiveSheet()->setCellValue('C2', $Now);
-//			$objPHPExcel->getActiveSheet()->setCellValue('C3', implode("','",$_POST['Categories']));
- 			$objPHPExcel->getActiveSheet()->setCellValue('C3', 'COPY the formula of H6 until the end of stock');
+			$SpreadSheet->getActiveSheet()->setCellValue('C1', $Location);
+			$SpreadSheet->getActiveSheet()->setCellValue('C2', $Now);
+//			$SpreadSheet->getActiveSheet()->setCellValue('C3', implode("','",$_POST['Categories']));
+ 			$SpreadSheet->getActiveSheet()->setCellValue('C3', 'COPY the formula of H6 until the end of stock');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
-			$objPHPExcel->getActiveSheet()->setCellValue('B5', 'DESCRIPTION');
-			$objPHPExcel->getActiveSheet()->setCellValue('C5', 'CATEGORY');
+			$SpreadSheet->getActiveSheet()->setCellValue('A5', 'ITEM CODE');
+			$SpreadSheet->getActiveSheet()->setCellValue('B5', 'DESCRIPTION');
+			$SpreadSheet->getActiveSheet()->setCellValue('C5', 'CATEGORY');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('D5', 'QOH');
-			$objPHPExcel->getActiveSheet()->setCellValue('E5', 'TRANSIT OUT');
-			$objPHPExcel->getActiveSheet()->setCellValue('F5', 'TRANSIT IN');
+			$SpreadSheet->getActiveSheet()->setCellValue('D5', 'QOH');
+			$SpreadSheet->getActiveSheet()->setCellValue('E5', 'TRANSIT OUT');
+			$SpreadSheet->getActiveSheet()->setCellValue('F5', 'TRANSIT IN');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('G5', 'TO COUNT');
-			$objPHPExcel->getActiveSheet()->setCellValue('H5', 'COUNTED');
-			$objPHPExcel->getActiveSheet()->setCellValue('I5', 'DIFFERENCE');
-			$objPHPExcel->getActiveSheet()->setCellValue('J5', 'COUNTED MANUALLY');
-			$objPHPExcel->getActiveSheet()->setCellValue('K5', 'FINAL DIFFERENCE');
-			$objPHPExcel->getActiveSheet()->setCellValue('L5', 'COMMENTS');
+			$SpreadSheet->getActiveSheet()->setCellValue('G5', 'TO COUNT');
+			$SpreadSheet->getActiveSheet()->setCellValue('H5', 'COUNTED');
+			$SpreadSheet->getActiveSheet()->setCellValue('I5', 'DIFFERENCE');
+			$SpreadSheet->getActiveSheet()->setCellValue('J5', 'COUNTED MANUALLY');
+			$SpreadSheet->getActiveSheet()->setCellValue('K5', 'FINAL DIFFERENCE');
+			$SpreadSheet->getActiveSheet()->setCellValue('L5', 'COMMENTS');
 
-			$objPHPExcel->getActiveSheet()->getStyle('A:G')->getNumberFormat()->setFormatCode('#,###');
-			$objPHPExcel->getActiveSheet()->getStyle('H:K')->getNumberFormat()->setFormatCode('#,##0');
-			$objPHPExcel->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
+			$SpreadSheet->getActiveSheet()->getStyle('A:G')->getNumberFormat()->setFormatCode('#,###');
+			$SpreadSheet->getActiveSheet()->getStyle('H:K')->getNumberFormat()->setFormatCode('#,##0');
+			$SpreadSheet->getActiveSheet()->getStyle('3')->getNumberFormat()->setFormatCode('0.0%');
 
-			$objPHPExcel->getActiveSheet()->setCellValue('H6', '=COUNTIFS(Barcodes!$A$1:$C$10000,A6)');
+			$SpreadSheet->getActiveSheet()->setCellValue('H6', '=COUNTIFS(Barcodes!$A$1:$C$10000,A6)');
 
-			$objPHPExcel->createSheet(1);
-			$objPHPExcel->setActiveSheetIndex(1);
-			$objPHPExcel->getActiveSheet()->setTitle('Barcodes');
+			$SpreadSheet->createSheet(1);
+			$SpreadSheet->setActiveSheetIndex(1);
+			$SpreadSheet->getActiveSheet()->setTitle('Barcodes');
 
 			// Add data
 			$StartingRow = 6;
 			$i = $StartingRow;
-			$objPHPExcel->setActiveSheetIndex(0);
-			$ActiveSheet = $objPHPExcel->getActiveSheet();
+			$SpreadSheet->setActiveSheetIndex(0);
+			$ActiveSheet = $SpreadSheet->getActiveSheet();
 			
 			while ($MyRow = DB_fetch_array($Result)) {
 
@@ -168,7 +168,7 @@ function submit($ListCategories, $Location) {
 			
 
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output based on format
 			if ($_POST['Format'] == 'xlsx') {
@@ -189,9 +189,9 @@ function submit($ListCategories, $Location) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 			}
 			$objWriter->save('php://output');
 

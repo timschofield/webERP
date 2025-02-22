@@ -65,10 +65,10 @@ function submit($ListCategories, $DaysTopSales) {
 		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPSpreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Price Analysis")
 										 ->setSubject("Price Analysis")
@@ -77,50 +77,50 @@ function submit($ListCategories, $DaysTopSales) {
 										 ->setCategory("");
 		
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'CODE');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'DESCRIPTION');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'CATEGORY');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'DOB_CATEGORY');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'QOH');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'TOP_ITEM');
-			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'STANDARD_COST');
-			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'DOB_PRICE');
-			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'RETAILPRICE');
-			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'PRICEFACTOR');
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setCellValue('A1', 'CODE');
+			$SpreadSheet->getActiveSheet()->setCellValue('B1', 'DESCRIPTION');
+			$SpreadSheet->getActiveSheet()->setCellValue('C1', 'CATEGORY');
+			$SpreadSheet->getActiveSheet()->setCellValue('D1', 'DOB_CATEGORY');
+			$SpreadSheet->getActiveSheet()->setCellValue('E1', 'QOH');
+			$SpreadSheet->getActiveSheet()->setCellValue('F1', 'TOP_ITEM');
+			$SpreadSheet->getActiveSheet()->setCellValue('G1', 'STANDARD_COST');
+			$SpreadSheet->getActiveSheet()->setCellValue('H1', 'DOB_PRICE');
+			$SpreadSheet->getActiveSheet()->setCellValue('I1', 'RETAILPRICE');
+			$SpreadSheet->getActiveSheet()->setCellValue('J1', 'PRICEFACTOR');
  
 			// Add data
 			$i = 2;
 			while ($MyRow = DB_fetch_array($Result)) {
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['stockid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['description']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['categoryid']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['lastcategoryupdate']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $MyRow['qoh']);
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, PositionTopSalesItem($MyRow['stockid'], $DaysTopSales));
-				$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, round($MyRow['standardcost'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, ConvertSQLDate($MyRow['DOB_price']));
-				$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['retailprice']);
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, round(($MyRow['retailprice']/$MyRow['standardcost']),2));
+				$SpreadSheet->setActiveSheetIndex(0);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, $MyRow['stockid']);
+				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, $MyRow['description']);
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, $MyRow['categoryid']);
+				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['lastcategoryupdate']));
+				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, $MyRow['qoh']);
+				$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, PositionTopSalesItem($MyRow['stockid'], $DaysTopSales));
+				$SpreadSheet->getActiveSheet()->setCellValue('G'.$i, round($MyRow['standardcost'],0));
+				$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, ConvertSQLDate($MyRow['DOB_price']));
+				$SpreadSheet->getActiveSheet()->setCellValue('I'.$i, $MyRow['retailprice']);
+				$SpreadSheet->getActiveSheet()->setCellValue('J'.$i, round(($MyRow['retailprice']/$MyRow['standardcost']),2));
 				
 				$i++;
 			}
 			
 			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('A2');
+			$SpreadSheet->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
 			foreach(range('A','J') as $ColumnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
+				$SpreadSheet->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 			
 			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle('Price Analysis');
+			$SpreadSheet->getActiveSheet()->setTitle('Price Analysis');
 
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output to a client's web browser
 			if ($_POST['Format'] == 'xlsx') {
@@ -142,10 +142,10 @@ function submit($ListCategories, $DaysTopSales) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 

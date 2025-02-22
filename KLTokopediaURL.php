@@ -48,7 +48,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 	move_uploaded_file($_FILES["SelectedFile"]["tmp_name"], $Target_file);
 	$inputFileType = IOFactory::identify($Target_file);
 	$objReader = IOFactory::createReader($inputFileType);
-	$objPHPExcel = $objReader->load($Target_file);
+	$SpreadSheet = $objReader->load($Target_file);
 	
 	//initialise no input errors
 	$InputError = FALSE;
@@ -59,7 +59,7 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 
 	if(!$InputError){
 	
-		$worksheet = $objPHPExcel->getActiveSheet();
+		$worksheet = $SpreadSheet->getActiveSheet();
 		
 		$highestRow         = $worksheet->getHighestRow(); // e.g. 10
 		$highestColumn      = $worksheet->getHighestColumn(); // e.g 'F'

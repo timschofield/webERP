@@ -91,10 +91,10 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder( new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder() );
 		
 			// Create new Spreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Info Deduction PPH21")
 										 ->setSubject("Info Deduction PPH21")
@@ -103,36 +103,36 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 										 ->setCategory("");
 
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setTitle($PeriodMonth);
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setTitle($PeriodMonth);
 
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Zone PPH21');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Full Name');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Upah Pokok');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Tunjangan Makan');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Tunjangan Transport');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Tunjangan Jabatan');
-			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'Tunjangan Masa Kerja');
-			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'Tunjangan Kendaraan');
-			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'Komisi Tetap');
-			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'Komisi Retail');
-			$objPHPExcel->getActiveSheet()->setCellValue('K1', 'Komisi Support');
-			$objPHPExcel->getActiveSheet()->setCellValue('L1', 'Bonus Penjualan');
-			$objPHPExcel->getActiveSheet()->setCellValue('M1', 'Lembur');
-			$objPHPExcel->getActiveSheet()->setCellValue('N1', 'THR');
-			$objPHPExcel->getActiveSheet()->setCellValue('O1', 'Penerima lain-lain');
-			$objPHPExcel->getActiveSheet()->setCellValue('P1', 'Penerima lain-lain Notes');
-			$objPHPExcel->getActiveSheet()->setCellValue('Q1', 'Potongan JHT');
-			$objPHPExcel->getActiveSheet()->setCellValue('R1', 'Potongan ASKES');
-			$objPHPExcel->getActiveSheet()->setCellValue('S1', 'Potongan Absen');
+			$SpreadSheet->getActiveSheet()->setCellValue('A1', 'Zone PPH21');
+			$SpreadSheet->getActiveSheet()->setCellValue('B1', 'Full Name');
+			$SpreadSheet->getActiveSheet()->setCellValue('C1', 'Upah Pokok');
+			$SpreadSheet->getActiveSheet()->setCellValue('D1', 'Tunjangan Makan');
+			$SpreadSheet->getActiveSheet()->setCellValue('E1', 'Tunjangan Transport');
+			$SpreadSheet->getActiveSheet()->setCellValue('F1', 'Tunjangan Jabatan');
+			$SpreadSheet->getActiveSheet()->setCellValue('G1', 'Tunjangan Masa Kerja');
+			$SpreadSheet->getActiveSheet()->setCellValue('H1', 'Tunjangan Kendaraan');
+			$SpreadSheet->getActiveSheet()->setCellValue('I1', 'Komisi Tetap');
+			$SpreadSheet->getActiveSheet()->setCellValue('J1', 'Komisi Retail');
+			$SpreadSheet->getActiveSheet()->setCellValue('K1', 'Komisi Support');
+			$SpreadSheet->getActiveSheet()->setCellValue('L1', 'Bonus Penjualan');
+			$SpreadSheet->getActiveSheet()->setCellValue('M1', 'Lembur');
+			$SpreadSheet->getActiveSheet()->setCellValue('N1', 'THR');
+			$SpreadSheet->getActiveSheet()->setCellValue('O1', 'Penerima lain-lain');
+			$SpreadSheet->getActiveSheet()->setCellValue('P1', 'Penerima lain-lain Notes');
+			$SpreadSheet->getActiveSheet()->setCellValue('Q1', 'Potongan JHT');
+			$SpreadSheet->getActiveSheet()->setCellValue('R1', 'Potongan ASKES');
+			$SpreadSheet->getActiveSheet()->setCellValue('S1', 'Potongan Absen');
 
-			$objPHPExcel->getActiveSheet()->getStyle('C:S')->getNumberFormat()->setFormatCode('#,##0');
+			$SpreadSheet->getActiveSheet()->getStyle('C:S')->getNumberFormat()->setFormatCode('#,##0');
 
 			// Add data
 			$StartingRow = 2;
 			$i = $StartingRow;
-			$objPHPExcel->setActiveSheetIndex(0);
-			$ActiveSheet = $objPHPExcel->getActiveSheet();
+			$SpreadSheet->setActiveSheetIndex(0);
+			$ActiveSheet = $SpreadSheet->getActiveSheet();
 			
 			while ($MyRow = DB_fetch_array($Result)) {
 
@@ -168,7 +168,7 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 			}
 			
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output to a client's web browser
 			if ($Format == 'xlsx') {
@@ -198,9 +198,9 @@ function submit($Company, $PeriodOfFile, $SalaryType, $Format, $Title) {
 			header ('Pragma: public'); // HTTP/1.0
 
             if ($Format == 'xlsx') {
-                $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+                $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
         	} else if ($Format == 'ods') {
-                $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+                $objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
             }
 			$objWriter->save('php://output');
 
