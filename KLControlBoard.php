@@ -485,6 +485,8 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SERSU", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
+		GoodsJustTransferred("SERSV", "KANTO", 2, 30, $RootPath);
+		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SERSW", "KANTO", 2, 30, $RootPath);
 		$NumberOfTestExecuted++;
 		GoodsJustTransferred("SERDE", "KANTO", 2, 30, $RootPath);
@@ -568,6 +570,8 @@ if ($ProcessSection02){
 		ValueStockLocation("SERDE",    0,  150, 0, 0);
 		$NumberOfTestExecuted++;
 		ValueStockLocation("SERSU",    0,  150, 0, 0);
+		$NumberOfTestExecuted++;
+		ValueStockLocation("SERSV",    0,  150, 0, 0);
 		$NumberOfTestExecuted++;
 		ValueStockLocation("SERSW",    0,  150, 0, 0);
 		$NumberOfTestExecuted++;
@@ -1056,7 +1060,7 @@ function ActiveItemsNoSales($maxdays, $group, $RootPath){
 	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d', -$maxdays));
 
 // This line goes in WHERE quantity if (Service Excluded) 
-//							AND locstock.loccode NOT IN ('SERSU','SERVI')) AS quantity
+//							AND locstock.loccode NOT IN ('SERSU','SERSV','SERVI')) AS quantity
 	
 	$SQL = "SELECT 	stockmaster.stockid,
 					stockmaster.description,
