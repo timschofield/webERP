@@ -1643,14 +1643,14 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 				(s.actualcost) AS stdcost,(SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = s.stockid
-					AND locstock.loccode NOT IN ('SERSU')) AS availablestock
+					AND locstock.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") AS availablestock
 			FROM stockmaster AS s
 			WHERE s.discontinued = 0
 			AND s.categoryid = '".$CategoryComponent."'
 			AND ((SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = s.stockid
-					AND locstock.loccode NOT IN ('SERSU')) > 0)
+					AND locstock.loccode NOT IN " . LIST_SERVICE_LOCATIONS . ") > 0)
 			AND EXISTS(
 				SELECT bom.component
 				FROM bom,stockmaster AS stP, stockmaster AS stC
