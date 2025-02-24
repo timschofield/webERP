@@ -39,7 +39,7 @@ echo '</select>
 echo '<field>
 			<label for="Logo">' . _('Company logo file') . ': </label>
 			<input type="file" accept="image/jpg" name="LogoFile" title="' . _('A jpg file up to 10kb, and not greater than 170px x 80px') . '" />
-			<fieldhelp>' . _('jpg file to 10kb, and not greater than 170px x 80px') . '<br />' . _('If you do not select a file, the default webERP logo will be used') . '</fieldhelp>
+			<fieldhelp>' . _('jpg/jpeg/png/gif files up to 10kb, and not greater than 170px x 80px') . '<br />' . _('If you do not select a file, the default webERP logo will be used') . '</fieldhelp>
 		</field>
 	</ul>
 </fieldset>';
