@@ -757,6 +757,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						stockmaster.description,
 						stockmaster.longdescription,
 						stockmaster.units,
+						stockmaster.decimalplaces,
 						custitem.cust_part,
 						custitem.cust_description
 				FROM stockmaster INNER JOIN stockcategory
@@ -1547,7 +1548,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				// Get the demand
 				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Get the QOO 
+				// Get the QOO
 				$OnOrder = GetQuantityOnOrder($MyRow['stockid'], 'ALL');
 
 				$Available = $QOH - $DemandQty + $OnOrder;
@@ -1710,7 +1711,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				// Get the demand
 				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Get the QOO 
+				// Get the QOO
 				$OnOrder = GetQuantityOnOrder($MyRow['stockid'], 'ALL');
 
 				$Available = $QOH - $DemandQty + $OnOrder;
