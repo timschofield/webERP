@@ -17,6 +17,7 @@ if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset(
 if (isset($_POST['CompanyNameField'])) {
 	$SQL = "INSERT INTO sessions VALUES ('" . session_id() . "', NOW())";
 	$Result = DB_query($SQL);
+	setcookie('Company', $_POST['CompanyNameField'], time() + 3600 * 24 * 30);
 }
 
 $Title = _('Main Menu');

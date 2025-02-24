@@ -53,6 +53,12 @@ if ($AllowCompanySelectionBox === 'Hide') {
 
 	$DirHandle = dir('companies/');
 
+	if (!isset($_COOKIE["Company"])) {
+		$Company = $DefaultCompany;
+	} else {
+		$Company = $_COOKIE["Company"];
+	}
+
 	while (false !== ($CompanyEntry = $DirHandle->read())) {
 		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
@@ -60,7 +66,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 			} else {
 				$CompanyName[$CompanyEntry] = $CompanyEntry;
 			}
-			if ($CompanyEntry == $DefaultCompany) {
+			if ($Company == $CompanyEntry) {
 				echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
 			} else {
 				echo '<option value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
