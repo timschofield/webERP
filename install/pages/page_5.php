@@ -9,7 +9,7 @@ echo '<fieldset>
 			<ul>
 				<field>
 					<label for="CompanyName">' . _("Company Name") . ': </label>
-					<input type="text" name="CompanyName" required="required" value="' . $_SESSION['Installer']['Database'] . '" maxlength="50" size="30" />
+					<input type="text" name="CompanyName" required="required" maxlength="50" size="30" />
 					<fieldhelp>' . _('The full name of the company that you want to be used throughout webERP') . '</fieldhelp>
 				</field>
 				<field>
