@@ -15,23 +15,23 @@ echo '<form method="post" action="index.php?Page=4">
 		<fieldset>
 			<legend>' . _('Administrator account settings') . '</legend>
 			<div class="page_help_text">
-				<ul>
-					<field>' . _('The default user name is') . ' ' . '<b><i>admin</i></b>' . ' ' . _('which you can change below.') . '</field>
-					<field>' . _('The default password is') . ' ' . '<b><i>weberp</i></b>' . ' ' . _('which you can change below.') . '</field>
-				</ul>
+				<p>' . _('Please enter your administrator account details below.') . '<br />
+				</p>
+				<p>' . _('The default user name is') . ' ' . '<b><i>admin</i></b>' . ' ' . _('which you can change below.') . '<br />
+				   ' . _('The default password is') . ' ' . '<b><i>weberp</i></b>' . ' ' . _('which you can change below.') . '</p>
 			</div>
 			<ul>
 				<field>
-					<label for="adminaccount">' . _('webERP Admin Account') . ': </label>
+					<label for="adminaccount">' . _('User Name') . ': </label>
 					<input type="text" name="adminaccount" value="', $_SESSION['Installer']['AdminUser'], '" />
 				</field>
 				<field>
-					<label for="Email">' . _('Email address') . ': </label>
+					<label for="Email">' . _('Email Address') . ': </label>
 					<input type="email" name="Email" value="' . $_SESSION['Installer']['AdminEmail'] . '" placeholder="admin@yoursite.com" />
-					<fieldhelp>' . _('For example: admin@yourcompany.com') . '</fieldhelp>
+					<fieldhelp>' . _('For example: admin@yoursite.com') . '</fieldhelp>
 				</field>
 				<field>
-					<label for="webERPPassword">' . _('webERP Password') . ': </label>
+					<label for="webERPPassword">' . _('Password') . ': </label>
 					<input type="password" name="webERPPassword" required="required" value="' . $_SESSION['Installer']['AdminPassword'] . '" />
 				</field>
 				<field>
@@ -41,9 +41,9 @@ echo '<form method="post" action="index.php?Page=4">
 			</ul>';
 
 if ($DataSaved != '') {
-	echo '<input type="submit" id="save" name="test" value="Save admin user details" /><img class="result_icon" src="valid.png" />', $Message;
+	echo '<input type="submit" id="save" name="test" value="Save admin account details" /><img class="result_icon" src="valid.png" />', $Message;
 } else {
-	echo '<input type="submit" id="save" name="test" value="Save admin user details" />';
+	echo '<input type="submit" id="save" name="test" value="Save admin account details" />';
 }
 echo '</fieldset>
 	</form>';
