@@ -19,6 +19,8 @@ include ('includes/SQL_CommonFunctions.inc');
 include ('includes/StockFunctions.php');
 include ('includes/GLFunctions.php');
 
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
+
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
 }
@@ -639,8 +641,8 @@ if (!isset($_POST['PostInvoice'])) {
 		$_SESSION['SuppTrans']->TranDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') , Date('d') - 1, Date('y')));
 	}
 	echo '<field>
-			<label for="TranDate">' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</label>
-			<input type="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" />
+			<label for="TranDate">' . _('Invoice Date') . ') :</label>
+			<input type="date" size="11" maxlength="10" name="TranDate" value="' . FormatDateForSQL($_SESSION['SuppTrans']->TranDate) . '" />
 		</field>';
 
 	echo '<field>
