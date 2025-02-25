@@ -73,12 +73,12 @@ if (isset($_POST['Search']) or isset($_POST['CSV']) or isset($_POST['Go']) or is
 				custbranch.phoneno,
 				custbranch.faxno,
 				custbranch.email
-			FROM debtorsmaster 
+			FROM debtorsmaster
 			LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
 			INNER JOIN debtortype
 				ON debtorsmaster.typeid = debtortype.typeid";
-	$SearchKeywords = '';	
+	$SearchKeywords = '';
 	if (!(($_POST['Keywords'] == '') and ($_POST['CustCode'] == '') and ($_POST['CustPhone'] == '') and ($_POST['CustType'] == 'ALL') and ($_POST['Area'] == 'ALL') and ($_POST['CustAdd'] == ''))) {
 		// criteria is set, proceed with SQL refinement
 		$SearchKeywords = mb_strtoupper(trim(str_replace(' ', '%', $_POST['Keywords'])));
@@ -122,7 +122,7 @@ if ($_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST
 	$SQL = "SELECT debtorsmaster.name,
 				custbranch.phoneno,
 				custbranch.brname
-			FROM debtorsmaster 
+			FROM debtorsmaster
 			INNER JOIN custbranch
 			ON debtorsmaster.debtorno=custbranch.debtorno
 			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'";
@@ -246,129 +246,100 @@ echo '<p class="page_title_text">
 	</p>'; // Page title.
 echo '<fieldset>
 		<legend>', _('Search Criteria'), '</legend>
-		<field>
-			<label for="Keywords">', _('Enter a partial Name'), ':</label>';
-if (isset($_POST['Keywords'])) {
-	echo '<input type="search" name="Keywords" value="', $_POST['Keywords'], '" size="20" maxlength="25" />';
-} // isset($_POST['Keywords'])
-else {
-	echo '<input type="search" name="Keywords" size="20" maxlength="25" />';
-}
-echo '</field>';
-
-echo '<h1>', _('OR'), '</h1>';
+		<field>';
+echo '<field>
+		<label for="Keywords">', _('Enter a partial Name'), ':</label>
+		<input type="text" maxlength="25" name="Keywords" title=""  size="20" ',( isset($_POST['Keywords']) ? 'value="' . $_POST['Keywords'] . '" ' : '' ), '/>
+		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their name will be returned') , '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="CustCode">', _('Enter a partial Code'), ':</label>';
-if (isset($_POST['CustCode'])) {
-	echo '<input autofocus="autofocus" maxlength="18" name="CustCode" size="15" type="search" value="', $_POST['CustCode'], '" />';
-} else {
-	echo '<input autofocus="autofocus" maxlength="18" name="CustCode" size="15" type="search" />';
-} // isset($_POST['CustCode'])
-echo '</field>';
-
-echo '<h1>', _('OR'), '</h1>';
+		<label for="CustCode">', '<b>' . _('OR') . ' </b>' . _('Enter a partial Code'), ':</label>
+		<input maxlength="18" name="CustCode" pattern="[\w-]*" size="15" type="text" title="" ', (isset($_POST['CustCode']) ? 'value="' . $_POST['CustCode'] . '" ' : '' ), '/>
+		<fieldhelp>', _('If there is an entry in this field then customers with the text entered in their customer code will be returned') , '</fieldhelp>
+	</field>';
 
 echo '<field>
-		<label for="CustPhone">', _('Enter a partial Phone Number'), ':</label>';
-if (isset($_POST['CustPhone'])) {
-	echo '<input maxlength="18" name="CustPhone" size="15" type="tel" value="', $_POST['CustPhone'], '" />';
-} else {
-	echo '<input maxlength="18" name="CustPhone" size="15" type="tel" />';
-} // isset($_POST['CustPhone'])
-echo '</field>';
-
-echo '<h1>', _('OR'), '</h1>';
+		<label for="CustPhone">', '<b>' . _('OR') . ' </b>' . _('Enter a partial Phone Number'), ':</label>
+		<input maxlength="18" name="CustPhone" pattern="[0-9\-\s()+]*" size="15" type="tel" ',( isset($_POST['CustPhone']) ? 'value="' . $_POST['CustPhone'] . '" ' : '' ), '/>
+	</field>';
 
 echo '<field>
-		<label for="CustAdd">', _('Enter part of the Address'), ':</label>';
-if (isset($_POST['CustAdd'])) {
-	echo '<input maxlength="25" name="CustAdd" size="20" type="search" value="', $_POST['CustAdd'], '" />';
-} else {
-	echo '<input maxlength="25" name="CustAdd" size="20" type="search" />';
-} // isset($_POST['CustAdd'])
-echo '</field>';
-
-echo '<h1>', _('OR'), '</h1>';
+		<label for="CustAdd">', '<b>' . _('OR') . ' </b>' . _('Enter part of the Address'), ':</label>
+		<input maxlength="25" name="CustAdd" size="20" type="text" ',(isset($_POST['CustAdd']) ? 'value="' . $_POST['CustAdd'] . '" ' : '' ), '/>
+	</field>';
 
 echo '<field>
-		<label for="CustType">', _('Choose a Type'), ':</label>';
-if (isset($_POST['CustType'])) {
+		<label for="CustType">', '<b>' . _('OR') . ' </b>' . _('Choose a Type'), ':</label>
+		<field>';
+if(isset($_POST['CustType'])) {
 	// Show Customer Type drop down list
 	$Result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
 	// Error if no customer types setup
-	if (DB_num_rows($Result2) == 0) {
-		$DataError = 1;
-		echo '<a href="CustomerTypes.php" target="_parent">', _('Setup Types'), '</a>';
-		prnMsg(_('No Customer types defined'), 'error');
-	} // DB_num_rows($Result2) == 0
-	else {
-		// If OK show select box with option selected
-		echo '<select name="CustType">
-				<option value="ALL">', _('Any'), '</option>';
-		while ($MyRow = DB_fetch_array($Result2)) {
-			if ($_POST['CustType'] == $MyRow['typename']) {
-				echo '<option selected="selected" value="', $MyRow['typename'], '">', $MyRow['typename'], '</option>';
-			} // $_POST['CustType'] == $MyRow['typename']
-			else {
-				echo '<option value="', $MyRow['typename'], '">', $MyRow['typename'], '</option>';
-			}
-		} // end while loop
-		DB_data_seek($Result2, 0);
-		echo '</select>
-		</field>';
-	}
-} // isset($_POST['CustType'])
-else {
-	// No option selected="selected" yet, so show Customer Type drop down list
-	$Result2 = DB_query("SELECT typeid, typename FROM debtortype");
-	// Error if no customer types setup
-	if (DB_num_rows($Result2) == 0) {
+	if(DB_num_rows($Result2) == 0) {
 		$DataError = 1;
 		echo '<a href="CustomerTypes.php" target="_parent">' . _('Setup Types') . '</a>';
-		echo '<tr><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error') . '</td></tr>';
-	} // DB_num_rows($Result2) == 0
-	else {
+		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error','',true) . '</td></field>';
+	} else {
+		// If OK show select box with option selected
+		echo '<select name="CustType">
+				<option value="ALL">' . _('Any') . '</option>';
+		while ($MyRow = DB_fetch_array($Result2)) {
+			if($_POST['CustType'] == $MyRow['typename']) {
+				echo '<option selected="selected" value="' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
+			}// $_POST['CustType'] == $MyRow['typename']
+			else {
+				echo '<option value="' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
+			}
+		}// end while loop
+		DB_data_seek($Result2, 0);
+		echo '</select>
+			</field>';
+	}
+} else {// CustType is not set
+	// No option selected="selected" yet, so show Customer Type drop down list
+	$Result2 = DB_query("SELECT typeid, typename FROM debtortype ORDER BY typename");
+	// Error if no customer types setup
+	if(DB_num_rows($Result2) == 0) {
+		$DataError = 1;
+		echo '<a href="CustomerTypes.php" target="_parent">' . _('Setup Types') . '</a>';
+		echo '<field><td colspan="2">' . prnMsg(_('No Customer types defined'), 'error','',true) . '</td></field>';
+	} else {
 		// if OK show select box with available options to choose
 		echo '<select name="CustType">
 				<option value="ALL">' . _('Any') . '</option>';
 		while ($MyRow = DB_fetch_array($Result2)) {
 			echo '<option value="' . $MyRow['typename'] . '">' . $MyRow['typename'] . '</option>';
-		} // end while loop
+		}// end while loop
 		DB_data_seek($Result2, 0);
 		echo '</select>
 			</field>';
 	}
 }
 
-echo '<h1>', _('OR'), '</h1>';
-
 /* Option to select a sales area */
 echo '<field>
-		<label for="Area">', _('Choose an Area'), ':</label>';
+		<label for="Area">' . '<b>' . _('OR') . ' </b>' . _('Choose an Area') . ':</label>';
 $Result2 = DB_query("SELECT areacode, areadescription FROM areas");
 // Error if no sales areas setup
-if (DB_num_rows($Result2) == 0) {
+if(DB_num_rows($Result2) == 0) {
 	$DataError = 1;
-	echo '<a href="Areas.php" target="_parent">', _('Setup Areas'), '</a>';
-	echo prnMsg(_('No Sales Areas defined'), 'error'), '
-	</field>';
-} // DB_num_rows($Result2) == 0
-else {
+	echo '<a href="Areas.php" target="_parent">' . _('Setup Areas') . '</a>';
+	echo '<field><td colspan="2">' . prnMsg(_('No Sales Areas defined'), 'error','',true) . '</td></field>';
+} else {
 	// if OK show select box with available options to choose
-	echo '<select name="Area">
-			<option value="ALL">', _('Any'), '</option>';
+	echo '<select name="Area">';
+	echo '<option value="ALL">' . _('Any') . '</option>';
 	while ($MyRow = DB_fetch_array($Result2)) {
-		if (isset($_POST['Area']) and $_POST['Area'] == $MyRow['areacode']) {
-			echo '<option selected="selected" value="' . $MyRow['areacode'], '">', $MyRow['areadescription'], '</option>';
-		} // isset($_POST['Area']) and $_POST['Area'] == $MyRow['areacode']
-		else {
-			echo '<option value="', $MyRow['areacode'], '">', $MyRow['areadescription'], '</option>';
+		if(isset($_POST['Area']) AND $_POST['Area'] == $MyRow['areacode']) {
+			echo '<option selected="selected" value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
+		} else {
+			echo '<option value="' . $MyRow['areacode'] . '">' . $MyRow['areadescription'] . '</option>';
 		}
-	} // end while loop
+	}// end while loop
 	DB_data_seek($Result2, 0);
 	echo '</select>
-		</field>';
+		<field>';
 }
 echo '</fieldset>';
 
@@ -653,7 +624,7 @@ function initMap() {
 		if ($_SESSION['CustomerID'] != '') {
 			$SQL = "SELECT debtortype.typeid,
 							debtortype.typename
-					FROM debtorsmaster 
+					FROM debtorsmaster
 					INNER JOIN debtortype
 						ON debtorsmaster.typeid = debtortype.typeid
 					WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
@@ -672,7 +643,7 @@ function initMap() {
 						debtorsmaster.lastpaid,
 						debtorsmaster.lastpaiddate,
 						currencies.decimalplaces AS currdecimalplaces
-					FROM debtorsmaster 
+					FROM debtorsmaster
 					INNER JOIN currencies
 						ON debtorsmaster.currcode=currencies.currabrev
 					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
