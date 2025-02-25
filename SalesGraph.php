@@ -199,9 +199,9 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<field>
 			<label for="GraphOn">' . _('Graph On:') . '</label>
 			<fieldset>
-				<label>' . _('All') . '</label><input type="radio" name="GraphOn" value="All" checked="checked" />
-				<label>' . _('Customer') . '</label><input type="radio" name="GraphOn" value="Customer" />
-				<label>' . _('Item Code') . '</label><input type="radio" name="GraphOn" value="StockID" />
+				<div><input type="radio" id="All" name="GraphOn" value="All" checked="checked" /><label for="All">' . _('All') . '</label></div>
+				<div><input type="radio" id="Customer" name="GraphOn" value="Customer" /><label for="Customer">' . _('Customer') . '</label></div>
+				<div><input type="radio" id="StockID" name="GraphOn" value="StockID" /><label for="StockID">' . _('Item Code') . '</label></div>
 			</fieldset>
 		</field>';
 	echo '<field>
@@ -216,9 +216,9 @@ if ((! isset($_POST['FromPeriod']) OR ! isset($_POST['ToPeriod']))
 	echo '<field>
 			<label for="GraphValue">' . _('Graph Value:') . '</label>
 			<fieldset>
-				<label>' . _('Net Sales Value') . '</label><input type="radio" name="GraphValue" value="Net" checked="checked" />
-				<label>' . _('Gross Profit') . '</label><input type="radio" name="GraphValue" value="GP" />
-				<label>' . _('Quantity') . '</label><input type="radio" name="GraphValue" value="Quantity" />
+				<div><label>' . _('Net Sales Value') . '</label><input type="radio" name="GraphValue" value="Net" checked="checked" /></div>
+				<div><label>' . _('Gross Profit') . '</label><input type="radio" name="GraphValue" value="GP" /></div>
+				<div><label>' . _('Quantity') . '</label><input type="radio" name="GraphValue" value="Quantity" /></div>
 			</fieldset>
 		</field>';
 
