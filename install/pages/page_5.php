@@ -9,7 +9,7 @@ echo '<fieldset>
 			<ul>
 				<field>
 					<label for="CompanyName">' . _("Company Name") . ': </label>
-					<input type="text" name="CompanyName" required="required" value="' . $_SESSION['Installer']['Database'] . '" maxlength="50" size="30" />
+					<input type="text" name="CompanyName" required="required" maxlength="50" size="30" />
 					<fieldhelp>' . _('The full name of the company that you want to be used throughout webERP') . '</fieldhelp>
 				</field>
 				<field>
@@ -39,7 +39,7 @@ echo '</select>
 echo '<field>
 			<label for="Logo">' . _('Company logo file') . ': </label>
 			<input type="file" accept="image/jpg" name="LogoFile" title="' . _('A jpg file up to 10kb, and not greater than 170px x 80px') . '" />
-			<fieldhelp>' . _('jpg file to 10kb, and not greater than 170px x 80px') . '<br />' . _('If you do not select a file, the default webERP logo will be used') . '</fieldhelp>
+			<fieldhelp>' . _('jpg/jpeg/png/gif files up to 10kb, and not greater than 170px x 80px') . '<br />' . _('If you do not select a file, the default webERP logo will be used') . '</fieldhelp>
 		</field>
 	</ul>
 </fieldset>';

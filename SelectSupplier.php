@@ -149,13 +149,13 @@ $TableHead =
 		<thead>
 			<tr>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
 					_('Supplier Inquiries') . '</th>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
 					_('Supplier Transactions') . '</th>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
 					_('Supplier Maintenance') . '</th>
 			</tr>
 		</thead>

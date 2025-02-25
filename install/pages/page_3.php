@@ -28,11 +28,12 @@ echo '<form method="post" action="index.php?Page=3">
 		<fieldset>
 			<legend>' . _('Database settings') . '</legend>
 			<div class="page_help_text">
-				<p>' . _('Please enter your Database information below.') . '<br />
+				<p>' . _('Please enter your database information below.') . '<br />
 				</p>
 			</div>
+			<ul>
 				<field>
-					<label for="dbms">' . _('DBMS driver') . ': </label>
+					<label for="dbms">' . _('DBMS Driver') . ': </label>
 					<select name="dbms">';
 
 if ($_SESSION['Installer']['DBMS'] == 'mysqli') {
@@ -47,7 +48,7 @@ if ($_SESSION['Installer']['DBMS'] == 'mariadb') {
 }
 
 echo '</select>
-		<fieldhelp>' . _('Select the DBMS you are using') . '</fieldhelp>
+		<fieldhelp>' . _('Select the Database Management System you are using') . '</fieldhelp>
 				</field>
 				<field>
 					<label for="HostName">' . _('Host Name') . ': </label>
@@ -78,7 +79,8 @@ echo '</select>
 					<label for="Password">' . _('Password') . ': </label>
 					<input type="password" name="Password" placeholder="' . _('Database user password') . '" value="' . $_SESSION['Installer']['Password'] . '" />
 					<fieldhelp>' . _('Enter the database user password if one exists') . '</fieldhelp>
-				</field>';
+				</field>
+			</ul>';
 if ($Result != '') {
 	echo '<input type="submit" id="save" name="test" value="', _('Save details and test the connection'), '" /><img class="result_icon" src="', $Result, '.png" />', $Message;
 } else {
