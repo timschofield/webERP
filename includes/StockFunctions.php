@@ -147,8 +147,8 @@ Calculates the total quantity of a stock item that is currently on order through
 - Uses prepared statements to prevent SQL injection
 
  ****************************************************************************************************/
-if ($Location == ""){
-		// All locations to be considered
+	if (($Location == '') OR ($Location == 'ALL')){
+	// All locations to be considered
 		$WhereLocation = "";
 		$ErrMsg = _('The quantity on order due to purchase orders for') . ' ' . $StockID . ' ' . _('to be received into all locations cannot be retrieved because');
 	}else{
@@ -202,7 +202,7 @@ Calculates the total quantity of a stock item that is currently on order through
 - Only includes non-closed work orders (`closed=0`)
 - Filters by user location permissions (canview=1)
 ****************************************************************************************************/
-	if ($Location == ''){
+	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
 		$ErrMsg = _('The quantity on order due to work orders for') . ' ' . $StockID . ' ' . _('to be received into all locations cannot be retrieved because');
@@ -414,7 +414,7 @@ Calculates the total quantity of a stock item that is demanded as a component in
 - Filters by user location permissions when applicable
 ****************************************************************************************************/
 
-	if ($Location == ''){
+	if (($Location == '') OR ($Location == 'ALL')){
 		// All locations to be considered
 		$WhereLocation = '';
 		$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
