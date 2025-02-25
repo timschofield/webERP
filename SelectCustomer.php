@@ -35,7 +35,7 @@ if (isset($_POST['JustSelectedACustomer'])) {
 	if (isset($_POST['SubmitCustomerSelection'])) {
 		foreach ($_POST['SubmitCustomerSelection'] as $CustomerID => $BranchCode) $_SESSION['CustomerID'] = $CustomerID;
 		$_SESSION['BranchCode'] = $BranchCode;
-	} else {
+	} elseif (!isset($_POST['Search'])){
 		prnMsg(_('Unable to identify the selected customer'), 'error');
 	}
 }
@@ -85,7 +85,7 @@ if (isset($_POST['Search']) or isset($_POST['CSV']) or isset($_POST['Go']) or is
 		$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
 		$_POST['CustPhone'] = trim($_POST['CustPhone']);
 		$_POST['CustAdd'] = trim($_POST['CustAdd']);
-		$SQL .= "WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%'
+		$SQL .= " WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%'
 						AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
 						AND (custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' OR custbranch.phoneno IS NULL)
 						AND (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
