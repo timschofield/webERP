@@ -60,54 +60,38 @@ if (isset($_POST['Search']) or isset($_POST['CSV']) or isset($_POST['Go']) or is
 	if (isset($_POST['Search'])) {
 		$_POST['PageOffset'] = 1;
 	} // isset($_POST['Search'])
-	if (($_POST['Keywords'] == '') and ($_POST['CustCode'] == '') and ($_POST['CustPhone'] == '') and ($_POST['CustType'] == 'ALL') and ($_POST['Area'] == 'ALL') and ($_POST['CustAdd'] == '')) {
-		// no criteria set then default to all customers
-		$SQL = "SELECT debtorsmaster.debtorno,
-					debtorsmaster.name,
-					debtorsmaster.address1,
-					debtorsmaster.address2,
-					debtorsmaster.address3,
-					debtorsmaster.address4,
-					custbranch.branchcode,
-					custbranch.brname,
-					custbranch.contactname,
-					debtortype.typename,
-					custbranch.phoneno,
-					custbranch.faxno,
-					custbranch.email
-				FROM debtorsmaster LEFT JOIN custbranch
+	$SQL = "SELECT debtorsmaster.debtorno,
+				debtorsmaster.name,
+				debtorsmaster.address1,
+				debtorsmaster.address2,
+				debtorsmaster.address3,
+				debtorsmaster.address4,
+				custbranch.branchcode,
+				custbranch.brname,
+				custbranch.contactname,
+				debtortype.typename,
+				custbranch.phoneno,
+				custbranch.faxno,
+				custbranch.email
+			FROM debtorsmaster 
+			LEFT JOIN custbranch
 				ON debtorsmaster.debtorno = custbranch.debtorno
-				INNER JOIN debtortype
+			INNER JOIN debtortype
 				ON debtorsmaster.typeid = debtortype.typeid";
-	} else {
+	$SearchKeywords = '';	
+	if (!(($_POST['Keywords'] == '') and ($_POST['CustCode'] == '') and ($_POST['CustPhone'] == '') and ($_POST['CustType'] == 'ALL') and ($_POST['Area'] == 'ALL') and ($_POST['CustAdd'] == ''))) {
+		// criteria is set, proceed with SQL refinement
 		$SearchKeywords = mb_strtoupper(trim(str_replace(' ', '%', $_POST['Keywords'])));
 		$_POST['CustCode'] = mb_strtoupper(trim($_POST['CustCode']));
 		$_POST['CustPhone'] = trim($_POST['CustPhone']);
 		$_POST['CustAdd'] = trim($_POST['CustAdd']);
-		$SQL = "SELECT debtorsmaster.debtorno,
-						debtorsmaster.name,
-						debtorsmaster.address1,
-						debtorsmaster.address2,
-						debtorsmaster.address3,
-						debtorsmaster.address4,
-						custbranch.branchcode,
-						custbranch.brname,
-						custbranch.contactname,
-						debtortype.typename,
-						custbranch.phoneno,
-						custbranch.faxno,
-						custbranch.email
-					FROM debtorsmaster INNER JOIN debtortype
-						ON debtorsmaster.typeid = debtortype.typeid
-					LEFT JOIN custbranch
-						ON debtorsmaster.debtorno = custbranch.debtorno
-					WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%'
-					AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
-					AND (custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' OR custbranch.phoneno IS NULL)
-					AND (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-						OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-						OR debtorsmaster.address3 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
-						OR debtorsmaster.address4 " . LIKE . " '%" . $_POST['CustAdd'] . "%')"; // If there is no custbranch set, the phoneno in custbranch will be null, so we add IS NULL condition otherwise those debtors without custbranches setting will be no searchable and it will make a inconsistence with customer receipt interface.
+		$SQL .= "WHERE debtorsmaster.name " . LIKE . " '%" . $SearchKeywords . "%'
+						AND debtorsmaster.debtorno " . LIKE . " '%" . $_POST['CustCode'] . "%'
+						AND (custbranch.phoneno " . LIKE . " '%" . $_POST['CustPhone'] . "%' OR custbranch.phoneno IS NULL)
+						AND (debtorsmaster.address1 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+							OR debtorsmaster.address2 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+							OR debtorsmaster.address3 " . LIKE . " '%" . $_POST['CustAdd'] . "%'
+							OR debtorsmaster.address4 " . LIKE . " '%" . $_POST['CustAdd'] . "%')"; // If there is no custbranch set, the phoneno in custbranch will be null, so we add IS NULL condition otherwise those debtors without custbranches setting will be no searchable and it will make a inconsistence with customer receipt interface.
 		if (mb_strlen($_POST['CustType']) > 0 and $_POST['CustType'] != 'ALL') {
 			$SQL.= " AND debtortype.typename = '" . $_POST['CustType'] . "'";
 		} // mb_strlen($_POST['CustType']) > 0 and $_POST['CustType'] != 'ALL'
@@ -135,24 +119,18 @@ if (isset($_POST['Search']) or isset($_POST['CSV']) or isset($_POST['Go']) or is
 
 } // end of if search
 if ($_SESSION['CustomerID'] != '' and !isset($_POST['Search']) and !isset($_POST['CSV'])) {
-	if (!isset($_SESSION['BranchCode'])) {
-		$SQL = "SELECT debtorsmaster.name,
-					custbranch.phoneno,
-					custbranch.brname
-			FROM debtorsmaster INNER JOIN custbranch
+	$SQL = "SELECT debtorsmaster.name,
+				custbranch.phoneno,
+				custbranch.brname
+			FROM debtorsmaster 
+			INNER JOIN custbranch
 			ON debtorsmaster.debtorno=custbranch.debtorno
 			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'";
 
-	} // !isset($_SESSION['BranchCode'])
-	else {
-		$SQL = "SELECT debtorsmaster.name,
-					custbranch.phoneno,
-					custbranch.brname
-			FROM debtorsmaster INNER JOIN custbranch
-			ON debtorsmaster.debtorno=custbranch.debtorno
-			WHERE custbranch.debtorno='" . $_SESSION['CustomerID'] . "'
-			AND custbranch.branchcode='" . $_SESSION['BranchCode'] . "'";
-	}
+	if (isset($_SESSION['BranchCode'])) {
+		$SQL .= " AND custbranch.branchcode='" . $_SESSION['BranchCode'] . "'";
+	} // isset($_SESSION['BranchCode'])
+
 	$ErrMsg = _('The customer name requested cannot be retrieved because');
 	$CustomerResult = DB_query($SQL, $ErrMsg);
 	if ($MyRow = DB_fetch_array($CustomerResult)) {
@@ -405,7 +383,7 @@ if (isset($_SESSION['SalesmanLogin']) and $_SESSION['SalesmanLogin'] != '') {
 } // isset($_SESSION['SalesmanLogin']) and $_SESSION['SalesmanLogin'] != ''
 if (isset($SearchResult)) {
 	unset($_SESSION['CustomerID']);
-	$ListCount = DB_num_rows($Result);
+	$ListCount = DB_num_rows($SearchResult);
 	$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax']);
 	if (!isset($_POST['CSV'])) {
 		if (isset($_POST['Next'])) {
@@ -442,7 +420,7 @@ if (isset($SearchResult)) {
 		} // $ListPageMax > 1
 		$RowIndex = 0;
 	} // !isset($_POST['CSV'])
-	if (DB_num_rows($Result) <> 0) {
+	if (DB_num_rows($SearchResult) <> 0) {
 		echo '<table cellpadding="2">
 				<thead>
 					<tr>
@@ -675,8 +653,9 @@ function initMap() {
 		if ($_SESSION['CustomerID'] != '') {
 			$SQL = "SELECT debtortype.typeid,
 							debtortype.typename
-						FROM debtorsmaster INNER JOIN debtortype
-					ON debtorsmaster.typeid = debtortype.typeid
+					FROM debtorsmaster 
+					INNER JOIN debtortype
+						ON debtorsmaster.typeid = debtortype.typeid
 					WHERE debtorsmaster.debtorno = '" . $_SESSION['CustomerID'] . "'";
 			$ErrMsg = _('An error occurred in retrieving the information');
 			$Result = DB_query($SQL, $ErrMsg);
@@ -693,8 +672,9 @@ function initMap() {
 						debtorsmaster.lastpaid,
 						debtorsmaster.lastpaiddate,
 						currencies.decimalplaces AS currdecimalplaces
-					FROM debtorsmaster INNER JOIN currencies
-					ON debtorsmaster.currcode=currencies.currabrev
+					FROM debtorsmaster 
+					INNER JOIN currencies
+						ON debtorsmaster.currcode=currencies.currabrev
 					WHERE debtorsmaster.debtorno ='" . $_SESSION['CustomerID'] . "'";
 			$DataResult = DB_query($SQL);
 			$MyRow = DB_fetch_array($DataResult);
@@ -702,7 +682,7 @@ function initMap() {
 			$SQL = "SELECT sum(ovamount+ovgst) as total
 					FROM debtortrans
 					WHERE debtorno = '" . $_SESSION['CustomerID'] . "'
-					AND type !=12";
+						AND type !=12";
 			$Total1Result = DB_query($SQL);
 			$row = DB_fetch_array($Total1Result);
 			echo '<table style="width: 45%;">
