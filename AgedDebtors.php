@@ -2,20 +2,21 @@
  /* Lists customer account balances in detail or summary in selected currency */
 
 include('includes/session.php');
+use Dompdf\Dompdf;
 
-if(isset($_POST['PrintPDF'])
+if(isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and isset($_POST['FromCriteria'])
 	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])
 	and mb_strlen($_POST['ToCriteria'])>=1) {
-
+/*
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Aged Customer Balance Listing'));
-	$pdf->addInfo('Subject',_('Aged Customer Balances'));
+	$PDF->addInfo('Title',_('Aged Customer Balance Listing'));
+	$PDF->addInfo('Subject',_('Aged Customer Balances'));
 	$FontSize = 12;
 	$PageNumber = 0;
 	$LineHeight = 12;
-
+*/
 	  /*Now figure out the aged analysis for the customer range under review */
 	if($_SESSION['SalesmanLogin'] != '') {
 		$_POST['Salesman'] = $_SESSION['SalesmanLogin'];
@@ -262,7 +263,43 @@ if(isset($_POST['PrintPDF'])
 		exit;
 	}
 
-	include ('includes/PDFAgedDebtorsPageHeader.inc');
+
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Aged Customer Balances For Customers from') . ' ' . $_POST['FromCriteria'] . ' ' .  _('to') . ' ' . $_POST['ToCriteria'] . '<br />
+					' . _('And Trading in') . ' ' . $_POST['Currency'] . '<br />';
+	if (trim($_POST['Salesman'])!=''){
+		$SQL = "SELECT salesmanname FROM salesman WHERE salesmancode='".$_POST['Salesman']."'";
+		$rs = DB_query($SQL,'','',False,False);
+		$Row = DB_fetch_array($rs);
+		$HTML .= _('And Has at Least 1 Branch Serviced By Sales Person #'). ' '. $_POST['Salesman'] . ' - ' . $Row['salesmanname'] . '<br />';
+	}
+	$HTML .=  _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>' . _('Customer') . '</th>
+							<th>' . _('Balance') . '</th>
+							<th>' . _('Current') . '</th>
+							<th>' . _('Due Now') . '</th>
+							<th>' . $_SESSION['PastDueDays1'] . ' ' . _('Days Over') . '</th>
+							<th>' . $_SESSION['PastDueDays2'] . ' ' . _('Days Over') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 
 	$TotBal=0;
 	$TotCurr=0;
@@ -287,23 +324,16 @@ if(isset($_POST['PrintPDF'])
 		$TotOD1 += ($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2']);
 		$TotOD2 += $AgedAnalysis['overdue2'];
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$AgedAnalysis['debtorno'] . ' - ' . $AgedAnalysis['name'],'left');
-		$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
-		$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
-		$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,$DisplayDue,'right');
-		$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayOverdue1,'right');
-		$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
-
-		$YPos -=$LineHeight;
-		if($YPos < $Bottom_Margin + $LineHeight) {
-			include('includes/PDFAgedDebtorsPageHeader.inc');
-		}
-
+		$HTML .= '<tr class="striped_row">
+					<td>' . $AgedAnalysis['debtorno'] . ' - ' . $AgedAnalysis['name'] . '</td>
+					<td class="number">' . $DisplayBalance . '</td>
+					<td class="number">' . $DisplayCurrent . '</td>
+					<td class="number">' . $DisplayDue . '</td>
+					<td class="number">' . $DisplayOverdue1 . '</td>
+					<td class="number">' . $DisplayOverdue2 . '</td>
+				</tr>';
 
 		if($_POST['DetailedReport']=='Yes') {
-
-			/*draw a line under the customer aged analysis*/
-			$pdf->line($Page_Width-$Right_Margin, $YPos+10,$Left_Margin, $YPos+10);
 
 			$SQL = "SELECT systypes.typename,
 						debtortrans.transno,
@@ -364,12 +394,21 @@ if(isset($_POST['PrintPDF'])
 				exit;
 			}
 
+			$HTML .= '<tr>
+						<td colspan="6">
+							<table>';
+
 			while ($DetailTrans = DB_fetch_array($DetailResult)) {
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,60,$FontSize,$DetailTrans['typename'],'left');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,60,$FontSize,$DetailTrans['transno'],'left');
 				$DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+125,$YPos,75,$FontSize,$DisplayTranDate,'left');
+				$HTML .= '<tr>
+							<th>' . $DetailTrans['typename'] . '</th>
+							<th>' . $DetailTrans['transno'] . '</th>
+							<th>' . $DisplayTranDate . '</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>';
 
 				$DisplayDue = locale_number_format($DetailTrans['due']-$DetailTrans['overdue1'],$CurrDecimalPlaces);
 				$DisplayCurrent = locale_number_format($DetailTrans['balance']-$DetailTrans['due'],$CurrDecimalPlaces);
@@ -377,32 +416,22 @@ if(isset($_POST['PrintPDF'])
 				$DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],$CurrDecimalPlaces);
 				$DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'],$CurrDecimalPlaces);
 
-				$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
-				$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
-				$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,$DisplayDue,'right');
-				$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayOverdue1,'right');
-				$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
-
-				$YPos -=$LineHeight;
-				if($YPos < $Bottom_Margin + $LineHeight) {
-					include('includes/PDFAgedDebtorsPageHeader.inc');
-				}
+				$HTML .= '<tr class="striped_row">
+							<td class="number">' . $DisplayBalance . '</td>
+							<td class="number">' . $DisplayCurrent . '</td>
+							<td class="number">' . $DisplayDue . '</td>
+							<td class="number">' . $DisplayOverdue1 . '</td>
+							<td class="number">' . $DisplayOverdue2 . '</td>
+						</tr>';
 
 			} /*end while there are detail transactions to show */
+			$HTML .= '</table>
+					</td>
+				</tr>';
+
 			$FontSize=8;
-			/*draw a line under the detailed transactions before the next customer aged analysis*/
-			$pdf->line($Page_Width-$Right_Margin, $YPos+10,$Left_Margin, $YPos+10);
 		} /*Its a detailed report */
 	} /*end customer aged analysis while loop */
-
-	$YPos -=$LineHeight;
-	if($YPos < $Bottom_Margin + (2*$LineHeight)) {
-		$PageNumber++;
-		include('includes/PDFAgedDebtorsPageHeader.inc');
-	} elseif($_POST['DetailedReport']=='Yes') {
-		//dont do a line if the totals have to go on a new page
-		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);
-	}
 
 	$DisplayTotBalance = locale_number_format($TotBal,$CurrDecimalPlaces);
 	$DisplayTotDue = locale_number_format($TotDue,$CurrDecimalPlaces);
@@ -410,22 +439,53 @@ if(isset($_POST['PrintPDF'])
 	$DisplayTotOverdue1 = locale_number_format($TotOD1,$CurrDecimalPlaces);
 	$DisplayTotOverdue2 = locale_number_format($TotOD2,$CurrDecimalPlaces);
 
-	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-	$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayTotCurrent,'right');
-	$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,$DisplayTotDue,'right');
-	$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayTotOverdue1,'right');
-	$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayTotOverdue2,'right');
+	$HTML .= '<tr class="total_row">
+				<td></td>
+				<td class="number">' . $DisplayTotBalance . '</td>
+				<td class="number">' . $DisplayTotCurrent . '</td>
+				<td class="number">' . $DisplayTotDue . '</td>
+				<td class="number">' . $DisplayTotOverdue1 . '</td>
+				<td class="number">' . $DisplayTotOverdue2 . '</td>
+			</tr>';
 
-	if($ListCount == 0) {
-		$Title = _('Aged Customer Account Analysis') . ' - ' . _('Problem Report') . '....';
-		include('includes/header.php');
-		prnMsg(_('There are no customers with balances meeting the criteria specified to list'),'info');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		include('includes/footer.php');
-		exit;
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_' . 'AgedDebtors_' . date('Y-m-d') . '.pdf');
-		$pdf-> __destruct();
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_AgedDebtors_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Aged Debtor Analysis');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Aged Debtor Analysis') . '" alt="" />' . ' ' . _('Aged Debtor Analysis') . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
 	}
 
 } else { /*The option to print PDF was not hit */
@@ -437,18 +497,18 @@ if(isset($_POST['PrintPDF'])
 
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 
 	if((!isset($_POST['FromCriteria']) or !isset($_POST['ToCriteria']))) {
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-		
+
 		echo '<fieldset>
 				<legend>', _('Select Report Criteria'), '</legend>';
-				
+
 		echo '<field>
 				<label for="FromCriteria">' . _('From Customer Code') . ':' . '</label>
 				<input tabindex="1" autofocus="autofocus" required="required" type="text" maxlength="6" size="7" name="FromCriteria" value="0" title="" />
@@ -486,7 +546,7 @@ if(isset($_POST['PrintPDF'])
 				<fieldhelp>', _('Only show customers for a particular salesperson, or for all sales people'), '</fieldhelp>';
 		}
 		echo '</field>';
-		
+
 		echo '<field>
 				<label for="Currency">' . _('Only show customers trading in') . ':' . '</label>
 				<select tabindex="5" name="Currency">';
@@ -504,7 +564,7 @@ if(isset($_POST['PrintPDF'])
 		echo '</select>
 			<fieldhelp>', _('Select the customer currency, and just show customers trading in that currency'), '</fieldhelp>
 		</field>';
-		
+
 		echo '<field>
 				<label for="DetailedReport">' . _('Summary or detailed report') . ':' . '</label>
 				<select tabindex="6" name="DetailedReport">
@@ -513,12 +573,13 @@ if(isset($_POST['PrintPDF'])
 				</select>
 				<fieldhelp>', _('The report can be shown as a summary report, or a detailed report'), '</fieldhelp>
 			</field>';
-			
+
 		echo '</fieldset>';
-		
+
 		echo '<div class="centre">
-				<input tabindex="7" type="submit" name="PrintPDF" value="' . _('Print PDF') , '" />
-            </div>
+				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+			</div>
 		</form>';
 	}
 	include('includes/footer.php');
