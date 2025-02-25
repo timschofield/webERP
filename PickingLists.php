@@ -196,7 +196,31 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 
 			while ($MyRow = DB_fetch_array($LineItemsResult)) {
 
-				$_SESSION['Items' . $identifier]->add_to_cart($MyRow['stkcode'], $MyRow['quantity'], $MyRow['description'], $MyRow['longdescription'], $MyRow['unitprice'], $MyRow['discountpercent'], $MyRow['units'], $MyRow['volume'], $MyRow['grossweight'], 0, $MyRow['mbflag'], $MyRow['actualdispatchdate'], $MyRow['qtyinvoiced'], $MyRow['discountcategory'], $MyRow['controlled'], $MyRow['serialised'], $MyRow['decimalplaces'], htmlspecialchars_decode($MyRow['narrative']), 'No', $MyRow['orderlineno'], $MyRow['taxcatid'], '', $MyRow['itemdue'], $MyRow['poline'], $MyRow['standardcost']);
+				$_SESSION['Items' . $identifier]->add_to_cart($MyRow['stkcode'],
+															$MyRow['quantity'],
+															$MyRow['description'],
+															$MyRow['longdescription'],
+															$MyRow['unitprice'],
+															$MyRow['discountpercent'],
+															$MyRow['units'],
+															$MyRow['volume'],
+															$MyRow['grossweight'],
+															0,
+															$MyRow['mbflag'],
+															$MyRow['actualdispatchdate'],
+															$MyRow['qtyinvoiced'],
+															$MyRow['discountcategory'],
+															$MyRow['controlled'],
+															$MyRow['serialised'],
+															$MyRow['decimalplaces'],
+															htmlspecialchars_decode($MyRow['narrative']),
+															'No',
+															$MyRow['orderlineno'],
+															$MyRow['taxcatid'],
+															'',
+															$MyRow['itemdue'],
+															$MyRow['poline'],
+															$MyRow['standardcost']);
 				/*NB NO Updates to DB */
 
 				$SerialItemsSQL = "SELECT pickserialdetails.stockid,
