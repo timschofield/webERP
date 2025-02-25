@@ -147,7 +147,31 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 
 				$LineNumber = $_SESSION['CreditItems' . $identifier]->LineCounter;
 
-				$_SESSION['CreditItems' . $identifier]->add_to_cart($MyRow['stockid'], $MyRow['quantity'], $MyRow['description'], $MyRow['longdescription'], $MyRow['price'], $MyRow['discountpercent'], $MyRow['units'], $MyRow['volume'], $MyRow['grossweight'], 0, $MyRow['mbflag'], $MyRow['trandate'], 0, $MyRow['discountcategory'], $MyRow['controlled'], $MyRow['serialised'], $MyRow['decimalplaces'], str_replace("\\r\\n", " ", $MyRow['narrative']), 'No', -1, $MyRow['taxcatid'], '', '', '', $MyRow['standardcost']);
+				$_SESSION['CreditItems' . $identifier]->add_to_cart($MyRow['stockid'],
+																	$MyRow['quantity'],
+																	$MyRow['description'],
+																	$MyRow['longdescription'],
+																	$MyRow['price'],
+																	$MyRow['discountpercent'],
+																	$MyRow['units'],
+																	$MyRow['volume'],
+																	$MyRow['grossweight'],
+																	0,
+																	$MyRow['mbflag'],
+																	$MyRow['trandate'],
+																	0,
+																	$MyRow['discountcategory'],
+																	$MyRow['controlled'],
+																	$MyRow['serialised'],
+																	$MyRow['decimalplaces'],
+																	str_replace("\\r\\n", " ", $MyRow['narrative']),
+																	'No',
+																	-1,
+																	$MyRow['taxcatid'],
+																	'',
+																	'',
+																	'',
+																	$MyRow['standardcost']);
 
 				$_SESSION['CreditItems' . $identifier]->GetExistingTaxes($LineNumber, $MyRow['stkmoveno']);
 
