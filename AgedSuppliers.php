@@ -1,22 +1,15 @@
 <?php
 
-
 include('includes/session.php');
+use Dompdf\Dompdf;
 $ViewTopic = 'AccountsPayable';
 $BookMark = 'AgedCreditors';
 
-if (isset($_POST['PrintPDF'])
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])
 	and isset($_POST['FromCriteria'])
 	and mb_strlen($_POST['FromCriteria'])>=1
 	and isset($_POST['ToCriteria'])
 	and mb_strlen($_POST['ToCriteria'])>=1){
-
-	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Aged Supplier Listing'));
-	$pdf->addInfo('Subject',_('Aged Suppliers'));
-	$FontSize=12;
-	$PageNumber=0;
-	$LineHeight=12;
 
 	  /*Now figure out the aged analysis for the Supplier range under review */
 
@@ -105,19 +98,39 @@ if (isset($_POST['PrintPDF'])
 
 	$SupplierResult = DB_query($SQL,'','',False,False); /*dont trap errors */
 
-	if (DB_error_no() !=0) {
-		$Title = _('Aged Supplier Account Analysis') . ' - ' . _('Problem Report') ;
-		include('includes/header.php');
-		prnMsg(_('The Supplier details could not be retrieved by the SQL because') .  ' ' . DB_error_msg(),'error');
-		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-		if ($Debug==1){
-			echo '<br />' . $SQL;
-		}
-		include('includes/footer.php');
-		exit;
+
+	$HTML = '';
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
 	}
 
-	include ('includes/PDFAgedSuppliersPageHeader.inc');
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>
+				<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Aged Supplier Balances For Suppliers from') . ' ' . $_POST['FromCriteria'] . ' ' . _('to') . ' ' . $_POST['ToCriteria'] . '<br />
+					' . _('And Trading in') . ' ' . $_POST['Currency'] . '<br />
+					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				</div>';
+
+	$HTML .= '<table>
+					<thead>
+						<tr>
+							<th>' . _('Supplier') . '</th>
+							<th>' . _('Balance') . '</th>
+							<th>' . _('Current') . '</th>
+							<th>' . _('Due Now') . '</th>
+							<th>' . $_SESSION['PastDueDays1'] . ' ' . _('Days Over') . '</th>
+							<th>' . $_SESSION['PastDueDays2'] . ' ' . _('Days Over') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
+
 	$TotBal = 0;
 	$TotDue = 0;
 	$TotCurr = 0;
@@ -143,23 +156,16 @@ if (isset($_POST['PrintPDF'])
 		$TotOD1 += ($AgedAnalysis['overdue1']-$AgedAnalysis['overdue2']);
 		$TotOD2 += $AgedAnalysis['overdue2'];
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,220-$Left_Margin,$FontSize,$AgedAnalysis['supplierid'] . ' - ' . $AgedAnalysis['suppname'],'left');
-		$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
-		$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
-		$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,$DisplayDue,'right');
-		$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayOverdue1,'right');
-		$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
-
-		$YPos -=$LineHeight;
-		if ($YPos < $Bottom_Margin + $LineHeight){
-			  include('includes/PDFAgedSuppliersPageHeader.inc');
-		}
+		$HTML .= '<tr class="striped_row">
+					<td>' . $AgedAnalysis['supplierid'] . ' - ' . $AgedAnalysis['suppname'] . '</td>
+					<td class="number">' . $DisplayBalance . '</td>
+					<td class="number">' . $DisplayCurrent . '</td>
+					<td class="number">' . $DisplayDue . '</td>
+					<td class="number">' . $DisplayOverdue1 . '</td>
+					<td class="number">' . $DisplayOverdue2 . '</td>
+				</tr>';
 
 		if ($_POST['DetailedReport']=='Yes'){
-
-		   $FontSize=6;
-		   /*draw a line under the Supplier aged analysis*/
-		   $pdf->line($Page_Width-$Right_Margin, $YPos+10,$Left_Margin, $YPos+10);
 
 		   $SQL = "SELECT systypes.typename,
 							supptrans.suppreference,
@@ -192,24 +198,22 @@ if (isset($_POST['PrintPDF'])
 							AND supptrans.supplierno = '" . $AgedAnalysis["supplierid"] . "'";
 
 			$DetailResult = DB_query($SQL,'','',False,False); /*dont trap errors - trapped below*/
-			if (DB_error_no() !=0) {
-			$Title = _('Aged Supplier Account Analysis - Problem Report');
-			include('includes/header.php');
-			prnMsg(_('The details of outstanding transactions for Supplier') . ' - ' . $AgedAnalysis['supplierid'] . ' ' . _('could not be retrieved because') . ' - ' . DB_error_msg(),'error');
-			echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
-			if ($Debug==1){
-			   echo '<br />' . _('The SQL that failed was') . '<br />' . $SQL;
-			}
-			include('includes/footer.php');
-			exit;
-			}
+
+			$HTML .= '<tr>
+						<td colspan="6">
+							<table>';
 
 			while ($DetailTrans = DB_fetch_array($DetailResult)){
 
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+5,$YPos,60,$FontSize,$DetailTrans['typename'],'left');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,50,$FontSize,$DetailTrans['suppreference'],'left');
 				$DisplayTranDate = ConvertSQLDate($DetailTrans['trandate']);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin+105,$YPos,70,$FontSize,$DisplayTranDate,'left');
+				$HTML .= '<tr>
+							<th>' . $DetailTrans['typename'] . '</th>
+							<th>' . $DetailTrans['suppreference'] . '</th>
+							<th>' . $DisplayTranDate . '</th>
+							<th></th>
+							<th></th>
+							<th></th>
+						</tr>';
 
 				$DisplayDue = locale_number_format($DetailTrans['due']-$DetailTrans['overdue1'],$CurrDecimalPlaces);
 				$DisplayCurrent = locale_number_format($DetailTrans['balance']-$DetailTrans['due'],$CurrDecimalPlaces);
@@ -217,33 +221,20 @@ if (isset($_POST['PrintPDF'])
 				$DisplayOverdue1 = locale_number_format($DetailTrans['overdue1']-$DetailTrans['overdue2'],$CurrDecimalPlaces);
 				$DisplayOverdue2 = locale_number_format($DetailTrans['overdue2'],$CurrDecimalPlaces);
 
-				$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayBalance,'right');
-				$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayCurrent,'right');
-				$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,$DisplayDue,'right');
-				$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayOverdue1,'right');
-				$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayOverdue2,'right');
+				$HTML .= '<tr class="striped_row">
+							<td class="number">' . $DisplayBalance . '</td>
+							<td class="number">' . $DisplayCurrent . '</td>
+							<td class="number">' . $DisplayDue . '</td>
+							<td class="number">' . $DisplayOverdue1 . '</td>
+							<td class="number">' . $DisplayOverdue2 . '</td>
+						</tr>';
 
-				$YPos -=$LineHeight;
-				if ($YPos < $Bottom_Margin + $LineHeight){
-				$PageNumber++;
-				include('includes/PDFAgedSuppliersPageHeader.inc');
-				$FontSize=6;
-				}
 			} /*end while there are detail transactions to show */
-			/*draw a line under the detailed transactions before the next Supplier aged analysis*/
-		   $pdf->line($Page_Width-$Right_Margin, $YPos+10,$Left_Margin, $YPos+10);
-		   $FontSize=8;
+			$HTML .= '</table>
+					</td>
+				</tr>';
 		} /*Its a detailed report */
 	} /*end Supplier aged analysis while loop */
-
-	$YPos -=$LineHeight;
-	if ($YPos < $Bottom_Margin + (2*$LineHeight)){
-		$PageNumber++;
-		include('includes/PDFAgedSuppliersPageHeader.inc');
-	} elseif ($_POST['DetailedReport']=='Yes') {
-		//dont do a line if the totals have to go on a new page
-		$pdf->line($Page_Width-$Right_Margin, $YPos+10 ,220, $YPos+10);
-	}
 
 	$DisplayTotBalance = locale_number_format($TotBal,$CurrDecimalPlaces);
 	$DisplayTotDue = locale_number_format($TotDue,$CurrDecimalPlaces);
@@ -251,24 +242,54 @@ if (isset($_POST['PrintPDF'])
 	$DisplayTotOverdue1 = locale_number_format($TotOD1,$CurrDecimalPlaces);
 	$DisplayTotOverdue2 = locale_number_format($TotOD2,$CurrDecimalPlaces);
 
-	$LeftOvers = $pdf->addTextWrap(220,$YPos,60,$FontSize,$DisplayTotBalance,'right');
-	$LeftOvers = $pdf->addTextWrap(280,$YPos,60,$FontSize,$DisplayTotCurrent,'right');
-	$LeftOvers = $pdf->addTextWrap(340,$YPos,60,$FontSize,$DisplayTotDue,'right');
-	$LeftOvers = $pdf->addTextWrap(400,$YPos,60,$FontSize,$DisplayTotOverdue1,'right');
-	$LeftOvers = $pdf->addTextWrap(460,$YPos,60,$FontSize,$DisplayTotOverdue2,'right');
+	$HTML .= '<tr class="total_row">
+				<td></td>
+				<td class="number">' . $DisplayTotBalance . '</td>
+				<td class="number">' . $DisplayTotCurrent . '</td>
+				<td class="number">' . $DisplayTotDue . '</td>
+				<td class="number">' . $DisplayTotOverdue1 . '</td>
+				<td class="number">' . $DisplayTotOverdue2 . '</td>
+			</tr>';
 
-	$YPos -=$LineHeight;
-	$pdf->line($Page_Width-$Right_Margin, $YPos ,220, $YPos);
-
-	if ($ListCount == 0) {
-		$Title = _('Aged Supplier Analysis');
-		include('includes/header.php');
-		prnMsg(_('There are no results so the PDF is empty'));
-		include('includes/footer.php');
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_AgedSuppliers_' . date('Y-m-d').'.pdf');
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
 	}
-	$pdf->__destruct();
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'landscape');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_AgedCreditors_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Aged Creditor Analysis');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Aged Creditor Analysis') . '" alt="" />' . ' ' . _('Aged Creditor Analysis') . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
 } else { /*The option to print PDF was not hit */
 
 	$Title = _('Aged Supplier Analysis');
@@ -280,7 +301,7 @@ if (isset($_POST['PrintPDF'])
 
 	/*if $FromCriteria is not set then show a form to allow input	*/
 
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
@@ -337,8 +358,9 @@ if (isset($_POST['PrintPDF'])
 		echo '</fieldset>';
 
 		echo '<div class="centre">
-				<input tabindex="6" type="submit" name="PrintPDF" value="' . _('Print PDF') . '" />
-            </div>
+				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+			</div>
 		</form>';
 	}
 	include('includes/footer.php');
