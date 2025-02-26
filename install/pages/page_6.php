@@ -224,7 +224,7 @@ function CreateTables($Path_To_Root) {
 
 CreateTables($Path_To_Root);
 
-function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root) {
+function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, $CompanyName, $Path_To_Root, $DataBaseName) {
 	if (isset($Demo) and $Demo != 'Yes') {
 		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
@@ -411,11 +411,11 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 	/* Create the admin user */
 	} else {
 		echo '<div class="success">' . _('Populating the database with demo data.') . '</div>';
-		PopulateSQLDataBySQL('demo.sql', $DB, $DBType, false, $DataBaseName);
+		PopulateSQLDataBySQL('demo.sql');
 		$SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('FirstLogIn','0')";
 		$Result = DB_query($SQL);
-		$CompanyDir = $PathPrefix . 'companies/' . $DataBaseName;
-		foreach (glob($PathPrefix . "companies/default/part_pics/*.jp*") as $JpegFile) {
+		$CompanyDir = $Path_To_Root . 'companies/' . $DataBaseName;
+		foreach (glob($Path_To_Root . "companies/default/part_pics/*.jp*") as $JpegFile) {
 			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
 		copy("../companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
@@ -493,7 +493,8 @@ UploadData($_SESSION['Installer']['Demo'],
 			$_SESSION['Installer']['Language'],
 			$_SESSION['Installer']['CoA'],
 			$_SESSION['CompanyRecord']['coyname'],
-			$Path_To_Root);
+			$Path_To_Root,
+			$_SESSION['Installer']['Database']);
 
 $SQL = "INSERT INTO `config` (`confname`, `confvalue`) VALUES ('part_pics_dir','companies/" . $_SESSION['DatabaseName'] . "/part_pics')";
 $Result = DB_query($SQL);
@@ -526,9 +527,7 @@ function CryptPass($Password) {
 	}
 	return $Hash;
 }
-function PopulateSQLDataBySQL($File, $DB, $DBType, $NewDB = false, $DemoDB = 'kwamojademo') {
-	$DBName = ($NewDB) ? $NewDB : $DemoDB;
-	($DBType == 'mysqli') ? mysql_select_db($DBName, $DB) : mysqli_select_db($DB, $DBName);
+function PopulateSQLDataBySQL($File) {
 	$SQLScriptFile = file($File);
 	$ScriptFileEntries = sizeof($SQLScriptFile);
 	$SQL = '';
@@ -549,7 +548,7 @@ function PopulateSQLDataBySQL($File, $DB, $DBType, $NewDB = false, $DemoDB = 'kw
 		}
 		if (mb_strpos($SQLScriptFile[$i - 1], ';') > 0 and !$InAFunction) {
 			// Database created above with correct name.
-			$Result = ($DBType == 'mysql') ? mysql_query($SQL, $DB) : mysqli_query($DB, $SQL);
+			$Result = DB_query($SQL);
 			$SQL = '';
 		}
 		flush();
