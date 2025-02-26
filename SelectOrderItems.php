@@ -1050,7 +1050,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$AlreadyWarnedAboutCredit = false;
 
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
-			$_POST['ItemDue_' . $OrderLine->LineNumber] = ConvertSQLDate($_POST['ItemDue_' . $OrderLine->LineNumber]);
+			if (isset($_POST['ItemDue_' . $OrderLine->LineNumber])){
+				$_POST['ItemDue_' . $OrderLine->LineNumber] = ConvertSQLDate($_POST['ItemDue_' . $OrderLine->LineNumber]);
+			}
+			else{
+				$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+			}
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 
@@ -1782,7 +1787,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" title="' . _('Enter the item code ordered') . '" /></td>
 						<td><input class="number" type="text" name="qty_' . $i . '" size="6" maxlength="6" title="' . _('Enter the quantity of the item ordered by the customer') . '" /></td>
 						<td><input type="date" name="itemdue_' . $i . '" size="25" maxlength="25"
-                        value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
+                        value="' . FormatDateForSQL($DefaultDeliveryDate) . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
                       </tr>';
 	   		}
 			echo '</table>
