@@ -261,7 +261,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										'',
 										'',
 										'',
-										'" . $SysAdminEmail . "',
+										'" . $_SESSION['Installer']['AdminEmail'] . "',
 										'',
 										8,
 										1,
@@ -418,7 +418,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 		foreach (glob($Path_To_Root . "companies/default/part_pics/*.jp*") as $JpegFile) {
 			copy("../companies/default/part_pics/" . basename($JpegFile), $CompanyDir . '/part_pics/' . basename($JpegFile));
 		}
-		copy("../companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
+//		copy("companies/weberpdemo/logo.png", $CompanyDir . '/logo.png');
 		DB_IgnoreForeignKeys();
 		$SQL = "INSERT INTO www_users  (userid,
 										password,
@@ -454,7 +454,7 @@ function UploadData($Demo, $AdminPassword, $AdminUser, $Email, $Language, $CoA, 
 										'',
 										'',
 										'',
-										'" . $SysAdminEmail . "',
+										'" . $_SESSION['Installer']['AdminEmail'] . "',
 										'',
 										8,
 										1,
