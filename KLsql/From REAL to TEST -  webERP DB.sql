@@ -9,6 +9,9 @@ INSERT INTO test_erp.accountsection SELECT * FROM kurakura_kl_erp.accountsection
 TRUNCATE test_erp.`areas`;
 INSERT INTO test_erp.areas SELECT * FROM kurakura_kl_erp.areas;
 
+TRUNCATE test_erp.`assetmanager`;
+INSERT INTO test_erp.assetmanager SELECT * FROM kurakura_kl_erp.assetmanager;
+
 TRUNCATE test_erp.`auditscripts`;
 /* INSERT INTO test_erp.auditscripts SELECT * FROM kurakura_kl_erp.auditscripts; */
 
