@@ -221,14 +221,14 @@ if (isset($_GET['NewOrder']) and isset($_GET['StockID']) and isset($_GET['Select
 	/* set the SupplierID we got */
 	$_SESSION['PO' . $identifier]->SupplierID = $_GET['SelectedSupplier'];
 	$_SESSION['PO' . $identifier]->DeliveryDate = date($_SESSION['DefaultDateFormat']);
-	$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = '00/00/0000';
-	$_SESSION['PO' . $identifier]->DeliveryDate = '00/00/0000';
+	$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = ConvertSQLDate('1000-01-01');
+	$_SESSION['PO' . $identifier]->DeliveryDate = ConvertSQLDate('1000-01-01');
 	$_SESSION['PO' . $identifier]->KLStatus = '1000';
-	$_SESSION['PO' . $identifier]->KLPaymentDate = '00/00/0000';
-	$_SESSION['PO' . $identifier]->KLShipmentDate = '00/00/0000';
+	$_SESSION['PO' . $identifier]->KLPaymentDate = ConvertSQLDate('1000-01-01');
+	$_SESSION['PO' . $identifier]->KLShipmentDate = ConvertSQLDate('1000-01-01');
 	$_SESSION['PO' . $identifier]->KLShipmentAWB = '';
-	$_SESSION['PO' . $identifier]->KLCustomsDate = '00/00/0000';
-	$_SESSION['PO' . $identifier]->KLArrivalDate = '00/00/0000';
+	$_SESSION['PO' . $identifier]->KLCustomsDate = ConvertSQLDate('1000-01-01');
+	$_SESSION['PO' . $identifier]->KLArrivalDate = ConvertSQLDate('1000-01-01');
 	$_SESSION['PO' . $identifier]->Initiator = $_SESSION['UserID'];
 	$_SESSION['RequireSupplierSelection'] = 0;
 	$_POST['Select'] = $_GET['SelectedSupplier'];
@@ -838,29 +838,29 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		</field>';
 
 	if (!isset($_POST['KLAgreedDeliveryDate'])) {
-		$_POST['KLAgreedDeliveryDate'] = '00/00/0000';
+		$_POST['KLAgreedDeliveryDate'] = '01/01/1000';
 	}
 	//Delivery Date for this PO
 	if (!isset($_POST['DeliveryDate'])) {
-		$_POST['DeliveryDate'] = '00/00/0000';
+		$_POST['DeliveryDate'] = '01/01/1000';
 	}
 	if (!isset($_POST['KLStatus'])) {
 		$_POST['KLStatus'] = '1000';
 	}
 	if (!isset($_POST['KLPaymentDate'])) {
-		$_POST['KLPaymentDate'] = '00/00/0000';
+		$_POST['KLPaymentDate'] = '01/01/1000';
 	}
 	if (!isset($_POST['KLShipmentDate'])) {
-		$_POST['KLShipmentDate'] = '00/00/0000';
+		$_POST['KLShipmentDate'] = '01/01/1000';
 	}
 	if (!isset($_POST['KLShipmentAWB'])) {
 		$_POST['KLShipmentAWB'] = '';
 	}
 	if (!isset($_POST['KLCustomsDate'])) {
-		$_POST['KLCustomsDate'] = '00/00/0000';
+		$_POST['KLCustomsDate'] = '01/01/1000';
 	}
 	if (!isset($_POST['KLArrivalDate'])) {
-		$_POST['KLArrivalDate'] = '00/00/0000';
+		$_POST['KLArrivalDate'] = '01/01/1000';
 	}
 /*	KL RICARD COMMENTED OUT as it is repeated on the order status column
 	echo '<field>

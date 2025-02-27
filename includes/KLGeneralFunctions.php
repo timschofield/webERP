@@ -676,7 +676,7 @@ function ConvertExcelDate($value, $format = 'Y-m-d') {
         return Date::excelToDateTimeObject($cellValue)->format($format);
     }
     
-    return '0000-00-00';
+    return '1000-01-01';
 }
 
 function AdjustBulatan($Amount, $RoundTo){

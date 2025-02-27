@@ -53,7 +53,7 @@ include('includes/KLUIGeneralFunctions.php');
 				klmovetodiscount20.discountcategory
 			FROM stockmaster, klmovetodiscount20					
 			WHERE stockmaster.stockid = klmovetodiscount20.stockid
-				AND klmovetodiscount20.endprocessdate = '0000-00-00'";
+				AND klmovetodiscount20.endprocessdate = '1000-01-01'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = _('Items ready to be moved to 20% Discount in Kantor');

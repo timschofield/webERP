@@ -282,10 +282,10 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 	if (Is_date($DateOfBirth)){
 		$DateOfBirth = FormatDateForSQL($DateOfBirth);
 	}else{
-		$DateOfBirth = '0000-00-00';
+		$DateOfBirth = '1000-01-01';
 	}
 	if (($Country != '0') 
-		OR ($DateOfBirth != '0000-00-00') 
+		OR ($DateOfBirth != '1000-01-01') 
 		OR ($Email != '') 
 		OR ($Sex != '')){ 
 
@@ -294,7 +294,7 @@ function RecordRetailCustomerInformation($OrderNo, $FirstName, $LastName, $Count
 		$Email = mb_strtolower($Email);
 		$Today  = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
-		if (($DateOfBirth != '') AND ($DateOfBirth != '0000-00-00') AND ($Today > $DateOfBirth)){
+		if (($DateOfBirth != '') AND ($DateOfBirth != '1000-01-01') AND ($Today > $DateOfBirth)){
 			$Age = date_diff(date_create($DateOfBirth), date_create($Today))->y; 
 		}else{
 			$Age = 0;

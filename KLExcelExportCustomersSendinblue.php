@@ -100,10 +100,10 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			$TxResult = DB_Txn_Begin();
 
 		// Create new Spreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Sendinblue Customers")
 										 ->setSubject("Sendinblue Customers")
@@ -112,67 +112,67 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 										 ->setCategory("");
 		
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'EMAIL');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'FAMILY_NAME');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'FIRST_NAME');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'COUNTRY');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'SEX');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'DATE_OF_BIRTH');
-			$objPHPExcel->getActiveSheet()->setCellValue('G1', 'AGE_AT_PURCHASE_DATE');
-			$objPHPExcel->getActiveSheet()->setCellValue('H1', 'HAS_VIP_CARD');
-			$objPHPExcel->getActiveSheet()->setCellValue('I1', 'PURCHASE_DATE');
-			$objPHPExcel->getActiveSheet()->setCellValue('J1', 'PURCHASE_ITEMS');
-			$objPHPExcel->getActiveSheet()->setCellValue('K1', 'PURCHASE_VALUE_IDR');
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setCellValue('A1', 'EMAIL');
+			$SpreadSheet->getActiveSheet()->setCellValue('B1', 'FAMILY_NAME');
+			$SpreadSheet->getActiveSheet()->setCellValue('C1', 'FIRST_NAME');
+			$SpreadSheet->getActiveSheet()->setCellValue('D1', 'COUNTRY');
+			$SpreadSheet->getActiveSheet()->setCellValue('E1', 'SEX');
+			$SpreadSheet->getActiveSheet()->setCellValue('F1', 'DATE_OF_BIRTH');
+			$SpreadSheet->getActiveSheet()->setCellValue('G1', 'AGE_AT_PURCHASE_DATE');
+			$SpreadSheet->getActiveSheet()->setCellValue('H1', 'HAS_VIP_CARD');
+			$SpreadSheet->getActiveSheet()->setCellValue('I1', 'PURCHASE_DATE');
+			$SpreadSheet->getActiveSheet()->setCellValue('J1', 'PURCHASE_ITEMS');
+			$SpreadSheet->getActiveSheet()->setCellValue('K1', 'PURCHASE_VALUE_IDR');
 
 			// Add data
 			$i = 2;
 			while ($MyRow = DB_fetch_array($Result)) {
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, ReviseEmailAddress($MyRow['email']));
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($MyRow['lastname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($MyRow['firstname']));
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$MyRow['country']]);
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, $MyRow['sex']);
+				$SpreadSheet->setActiveSheetIndex(0);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, ReviseEmailAddress($MyRow['email']));
+				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, CapitalizeName($MyRow['lastname']));
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, CapitalizeName($MyRow['firstname']));
+				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$MyRow['country']]);
+				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, $MyRow['sex']);
 				
-				if (($MyRow['date_of_birth'] != '0000-00-00') AND ($MyRow['date_of_birth'] < Date('Y-m-d'))){
-					$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $MyRow['date_of_birth']);
+				if (($MyRow['date_of_birth'] != '1000-01-01') AND ($MyRow['date_of_birth'] < Date('Y-m-d'))){
+					$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, $MyRow['date_of_birth']);
 				}
 				
 				if ($MyRow['age'] != '0'){
-					$objPHPExcel->getActiveSheet()->setCellValue('G'.$i, $MyRow['age']);
+					$SpreadSheet->getActiveSheet()->setCellValue('G'.$i, $MyRow['age']);
 				}
 				
 				if ($MyRow['vipcards'] == 0){
-					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'N');
+					$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'N');
 				}else{
-					$objPHPExcel->getActiveSheet()->setCellValue('H'.$i, 'Y');
+					$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'Y');
 				}
 				
-				if ($MyRow['orddate'] != '0000-00-00'){
-					$objPHPExcel->getActiveSheet()->setCellValue('I'.$i, $MyRow['orddate']);
+				if ($MyRow['orddate'] != '1000-01-01'){
+					$SpreadSheet->getActiveSheet()->setCellValue('I'.$i, $MyRow['orddate']);
 				}
 
-				$objPHPExcel->getActiveSheet()->setCellValue('J'.$i, $MyRow['purchase_items']);
-				$objPHPExcel->getActiveSheet()->setCellValue('K'.$i, $MyRow['purchase_value']);
+				$SpreadSheet->getActiveSheet()->setCellValue('J'.$i, $MyRow['purchase_items']);
+				$SpreadSheet->getActiveSheet()->setCellValue('K'.$i, $MyRow['purchase_value']);
 				
 				$i++;
 			}
 			
 			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('A2');
+			$SpreadSheet->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
 			foreach(range('A','F') as $ColumnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
+				$SpreadSheet->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 			
 			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle('Retail Customer');
+			$SpreadSheet->getActiveSheet()->setTitle('Retail Customer');
 
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output to a client's web browser
 			if ($_POST['Format'] == 'xlsx') {
@@ -194,10 +194,10 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 

@@ -1966,7 +1966,7 @@ function PettyCashStatus($Currency){
 			FROM pcashdetails,pctabs	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
 				AND pctabs.currency = '". $Currency ."'
-				AND pcashdetails.authorized != '0000-00-00'
+				AND pcashdetails.authorized != '1000-01-01'
 			GROUP BY pcashdetails.tabcode
 			HAVING ( SUM(pcashdetails.amount) <= -0.01
 					OR SUM(pcashdetails.amount) >= 0.01)";

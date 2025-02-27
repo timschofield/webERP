@@ -387,7 +387,7 @@ function SendEmailChangePriceReadyForStep02($EmailText){
 				klchangeprice.newretailprice
 			FROM stockmaster, klchangeprice					
 			WHERE stockmaster.stockid = klchangeprice.stockid
-				AND klchangeprice.endprocessdate = '0000-00-00'";
+				AND klchangeprice.endprocessdate = '1000-01-01'";
 				
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -429,7 +429,7 @@ function SendEmailMoveToDiscountReadyForStep02($TypeDiscount, $EmailText){
 				klmovetodiscount".$TypeDiscount.".discountcategory
 			FROM stockmaster, klmovetodiscount".$TypeDiscount."					
 			WHERE stockmaster.stockid = klmovetodiscount".$TypeDiscount.".stockid
-				AND klmovetodiscount".$TypeDiscount.".endprocessdate = '0000-00-00'";
+				AND klmovetodiscount".$TypeDiscount.".endprocessdate = '1000-01-01'";
 				
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){

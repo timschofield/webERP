@@ -53,7 +53,7 @@ include('includes/KLUIGeneralFunctions.php');
 				klchangeprice.newretailprice
 			FROM stockmaster, klchangeprice					
 			WHERE stockmaster.stockid = klchangeprice.stockid
-				AND klchangeprice.endprocessdate = '0000-00-00'";
+				AND klchangeprice.endprocessdate = '1000-01-01'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
 		$TableTitleText = _('Items ready to change Retail Price in KL kantor');

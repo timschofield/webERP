@@ -1022,7 +1022,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 							'" . $ConsignmentPrice  . "',
 							'" . $StandardCost  . "',
 							'" . ($StandardCost - $Compensation) . "',
-							'0000-00-00')";
+							'1000-01-01')";
 
 				$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR CALL THE OFFICE') . ': ' . _('The Consignment Sales Details could not be inserted because');
 				$DbgMsg = _('The following SQL to insert the klconsignment record was used');

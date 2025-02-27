@@ -3700,32 +3700,32 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/PO_Header.php?ModifyOrderNumber=' . $MyRow['orderno'] . '">' . $MyRow['orderno'] . '</a>';
 			$OrderDate = ConvertSQLDate(substr($MyRow['orddate'],0,10));
-			if ($MyRow['agreeddeliverydate'] == '0000-00-00'){
+			if ($MyRow['agreeddeliverydate'] == '1000-01-01'){
 				$MyRow['agreeddeliverydate'] = '';
 			} else {
 				$MyRow['agreeddeliverydate'] = ConvertSQLDate($MyRow['agreeddeliverydate']);
 			}
-			if ($MyRow['deliverydate'] == '0000-00-00'){
+			if ($MyRow['deliverydate'] == '1000-01-01'){
 				$MyRow['deliverydate'] = '';
 			} else {
 				$MyRow['deliverydate'] = ConvertSQLDate($MyRow['deliverydate']);
 			}
-			if ($MyRow['paymentdate'] == '0000-00-00'){
+			if ($MyRow['paymentdate'] == '1000-01-01'){
 				$MyRow['paymentdate'] = '';
 			} else {
 				$MyRow['paymentdate'] = ConvertSQLDate($MyRow['paymentdate']);
 			}
-			if ($MyRow['shipmentdate'] == '0000-00-00'){
+			if ($MyRow['shipmentdate'] == '1000-01-01'){
 				$MyRow['shipmentdate'] = '';
 			} else {
 				$MyRow['shipmentdate'] = ConvertSQLDate($MyRow['shipmentdate']);
 			}
-			if ($MyRow['customsdate'] == '0000-00-00'){
+			if ($MyRow['customsdate'] == '1000-01-01'){
 				$MyRow['customsdate'] = '';
 			} else {
 				$MyRow['customsdate'] = ConvertSQLDate($MyRow['customsdate']);
 			}
-			if ($MyRow['arrivaldate'] == '0000-00-00'){
+			if ($MyRow['arrivaldate'] == '1000-01-01'){
 				$MyRow['arrivaldate'] = '';
 			} else {
 				$MyRow['arrivaldate'] = ConvertSQLDate($MyRow['arrivaldate']);

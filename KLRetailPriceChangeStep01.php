@@ -111,7 +111,7 @@ if (isset($_POST['submit'])) {
 					startprocessdate=CURRENT_DATE,
 					newretailprice='" . filter_number_format($_POST['NewRetailPrice']) . "',
 					pricechanged=0,
-					endprocessdate='0000-00-00'
+					endprocessdate='1000-01-01'
 				WHERE counterpricechange = '".$SelectedPriceChange."'";
 
 		$Msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
@@ -127,7 +127,7 @@ if (isset($_POST['submit'])) {
 					CURRENT_DATE,
 					'" . filter_number_format($_POST['NewRetailPrice']) . "',
 					0,
-					'0000-00-00')";
+					'1000-01-01')";
 		$Msg = _('KL Retail Price Change Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
 	}
 	if ($InputError !=1) {
@@ -195,7 +195,7 @@ or deletion of the records*/
 				newretailprice,
 				startprocessdate
 			FROM klchangeprice
-			WHERE endprocessdate = '0000-00-00'";
+			WHERE endprocessdate = '1000-01-01'";
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
