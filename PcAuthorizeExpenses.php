@@ -103,7 +103,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 				AND pcashdetails.codeexpense<>'ASSIGNCASH'";
 	// KL RICARD 
 	if (isset($_POST['ShowOnlyUnauthorized'])){
-		$SQL .= "AND pcashdetails.authorized = '0000-00-00' ";
+		$SQL .= "AND pcashdetails.authorized = '1000-01-01' ";
 	}
 	$SQL .=		" ORDER BY pcashdetails.date, pcashdetails.counterindex ASC";
 	$Result = DB_query($SQL);
@@ -412,7 +412,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			echo '<td>' . ConvertSQLDate(Date('Y-m-d'));
 		} else {
 			//compare against raw SQL format date, then convert for display.
-			if (($MyRow['authorized'] != '0000-00-00')) {
+			if (($MyRow['authorized'] != '1000-01-01')) {
 				echo '<td>', ConvertSQLDate($MyRow['authorized']);
 			} else {
 				echo '<td class="number"><input type="checkbox" name="', $MyRow['counterindex'], '" />';

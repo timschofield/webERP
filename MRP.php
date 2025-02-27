@@ -387,7 +387,7 @@ if (isset($_POST['submit'])) {
 
 	prnMsg(_('Loading supplies from inventory on hand'),'info');
 	flush();
-	// Set date for inventory already onhand to 0000-00-00 so it is first in sort
+	// Set date for inventory already onhand to 1000-01-01 so it is first in sort
 	if ($_POST['location'][0] == 'All') {
 		$WhereLocation = ' ';
 	} elseif (sizeof($_POST['location']) == 1) {

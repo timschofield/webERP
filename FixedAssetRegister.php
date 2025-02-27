@@ -26,12 +26,12 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 
 	$DisposalSQL = '';
 		if ($_POST['DisposalStatus']=='ALL'){
-		$DisposalSQL .= " AND (fixedassets.disposaldate = '0000-00-00' 
+		$DisposalSQL .= " AND (fixedassets.disposaldate = '1000-01-01' 
 								OR fixedassets.disposaldate >='" . $DateFrom . "')";
 	} elseif ($_POST['DisposalStatus']=='ACTIVE') {
-		$DisposalSQL .= ' AND disposaldate = "0000-00-00"';
+		$DisposalSQL .= ' AND disposaldate = "1000-01-01"';
 	}else{
-		$DisposalSQL .= ' AND disposaldate != "0000-00-00"';
+		$DisposalSQL .= ' AND disposaldate != "1000-01-01"';
 	}
 
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
@@ -146,9 +146,9 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			$Ancestors[$i] = $ParentRow['locationdescription'];
 		}
 		*/
-		if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['disposaldate']),$_POST['FromDate']) OR $MyRow['disposaldate']='0000-00-00') {
+		if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['disposaldate']),$_POST['FromDate']) OR $MyRow['disposaldate']='1000-01-01') {
 
-			if ($MyRow['disposaldate']!='0000-00-00' AND Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($MyRow['disposaldate']))){
+			if ($MyRow['disposaldate']!='1000-01-01' AND Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($MyRow['disposaldate']))){
 				/*The asset was disposed during the period */
 				$CostCfwd = 0;
 				$AccumDepnCfwd = 0;
@@ -157,7 +157,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 				$AccumDepnCfwd = $MyRow['perioddepn'] + $MyRow['depnbfwd'];
 			}
 			// KL RICARD Added disposal date on the report
-			if ($MyRow['disposaldate']=='0000-00-00'){
+			if ($MyRow['disposaldate']=='1000-01-01'){
 				$DisposalDate = "";
 			}else{
 				$DisposalDate = $MyRow['disposaldate'];
@@ -223,7 +223,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 					echo '|_' . $Ancestors[$i] . '<br />';
 				}
 			*/
-			if ($MyRow['disposaldate']=='0000-00-00'){
+			if ($MyRow['disposaldate']=='1000-01-01'){
 				$DisposalDate = "";
 			}else{
 				$DisposalDate = ConvertSQLDate($MyRow['disposaldate']);

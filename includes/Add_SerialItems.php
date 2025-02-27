@@ -95,7 +95,7 @@ if ( (isset($_POST['AddBatches']) AND $_POST['AddBatches']!='')) {
 				if (isset($_POST['ExpiryDate' . $i])){
 					$ExpiryDate = $_POST['ExpiryDate' . $i];
 				} else {
-					$ExpiryDate ='0000-00-00';
+					$ExpiryDate ='1000-01-01';
 				}
 				if (!$SerialError){
 					$LineItem->SerialItems[$NewSerialNo] = new SerialItem ($_POST['SerialNo' . $i], $NewQty, $ExpiryDate);

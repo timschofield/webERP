@@ -280,8 +280,8 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				'" . $PickingListNo ."',
 				'" . $OrdersToPick[$i]['orderno']."',
 				'" . FormatDateForSQL($_POST['TransDate'])."',
-				'" . date('Y-m-d')."',
-				'0000-00-00')";
+				CURRENT_DATE,
+				'1000-01-01')";
 			$HeaderResult=DB_query($SQL);
 		} else {
 			$LinesToShow=1;

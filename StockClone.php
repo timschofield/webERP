@@ -843,7 +843,7 @@ if ( (!isset($_POST['UpdateCategories']) AND ($InputError!=1))  OR $_POST['New']
 
 	// KL RICARD
 	if (!isset($_POST['lastcategoryupdate']) OR $_POST['lastcategoryupdate']==''){
-		$_POST['lastcategoryupdate']='0000-00-00';
+		$_POST['lastcategoryupdate']='1000-01-01';
 	}
 	// END KL RICARD
 

@@ -840,7 +840,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	} else {
 		$ShowOnCertText = _('No');
 	}
-	if ($MyRow['testdate']=='0000-00-00'){
+	if ($MyRow['testdate']=='1000-01-01'){
 		$TestDate=ConvertSQLDate(date('Y-m-d'));
 	} else {
 		$TestDate=ConvertSQLDate($MyRow['testdate']);
