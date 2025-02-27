@@ -142,40 +142,31 @@ if (!isset($SelectedContact)){
 		$MyRow = DB_fetch_array($Result);
 
 		echo '<table class="selection">
-			<thead>
-				<tr>
-					<th colspan="7"><h3>' . _('Contacts Defined for') . ' - ' . $MyRow['suppname'] . '</h3></th>
-				</tr>
-				<tr>
-				<th class="SortedColumn">' . _('Name') . '</th>
-				<th class="SortedColumn">' . _('Position') . '</th>
-				<th class="SortedColumn">' . _('Phone No') . '</th>
-				<th class="SortedColumn">' . _('Fax No') . '</th>
-				<th class="SortedColumn">' . _('Email') . '</th>
+				<thead>
+					<tr>
+						<th colspan="7">' . _('Contacts Defined for') . ' - ' . $MyRow['suppname'] . '</th>
+					</tr>
+					<tr>
+					<th class="SortedColumn">' . _('Name') . '</th>
+					<th class="SortedColumn">' . _('Position') . '</th>
+					<th class="SortedColumn">' . _('Phone No') . '</th>
+					<th class="SortedColumn">' . _('Fax No') . '</th>
+					<th class="SortedColumn">' . _('Email') . '</th>
+					<th colspan="2"></th>
 				</tr>
 			</thead>
 			<tbody>';
 
 		do {
-			printf('<tr><td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="mailto:%s">%s</a></td>
-					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SupplierID=%s&amp;SelectedContact=%s&amp;delete=yes" onclick="return confirm(\''  . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete') . '</a></td></tr>',
-					$MyRow['contact'],
-					$MyRow['position'],
-					$MyRow['tel'],
-					$MyRow['fax'],
-					$MyRow['email'],
-					$MyRow['email'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$SupplierID,
-					$MyRow['contact'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?',
-					$SupplierID,
-					$MyRow['contact']);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['contact'], '</td>
+					<td>', $MyRow['position'], '</td>
+					<td>', $MyRow['tel'], '</td>
+					<td>', $MyRow['fax'], '</td>
+					<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '">' . _('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SupplierID=', $SupplierID, '&amp;SelectedContact=', $MyRow['contact'], '&amp;delete=yes" onclick="return confirm(\''  . _('Are you sure you wish to delete this contact?') . '\');">' .  _('Delete') . '</a></td>
+				</tr>';
 		} while ($MyRow = DB_fetch_array($Result));
 		echo '</tbody></table><br />';
 	} else {

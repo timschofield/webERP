@@ -656,16 +656,12 @@ if (isset($StockItemsResult)
 
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 
-		printf('<tr class="striped_row">
-				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>',
-				$MyRow['stockid'],
-				$MyRow['description'],
-				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-				$MyRow['units']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+			</tr>';
 //end of page full new headings if
 	}
 //end of while loop
@@ -999,11 +995,11 @@ if (isset($StockItemsResult)
 
 			if ($_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only') {
 				echo '<tr class="striped_row">
-							<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+							<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
 							<td><a href="', $PrintAck, '">', _('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
 							', $PrintPickLabel, '
 							<td><a href="', $Confirm_Invoice, '">', _('Invoice'), '</a></td>
-			 				<td><a href="', $PrintDispatchNote, '" target="_blank">', $PrintText, ' <img src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /></a></td>
+			 				<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
 							<td><a href="', $PrintLabels, '">', _('Labels'), '</a></td>
 			 				<td>', $MyRow['name'], '</td>
 			 				<td>', $MyRow['brname'], '</td>
@@ -1023,28 +1019,17 @@ if (isset($StockItemsResult)
 						</tr>';
 
 			} else { /*must be quotes only */
-				printf('<tr class="striped_row">
-						<td><a href="%s">%s</a></td>
-						<td><a href="%s" target="_blank">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="%s">' . _('Portrait') . '</a></td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$ModifyPage,
-						$MyRow['orderno'],
-						$PrintQuotation,
-						$PrintQuotationPortrait,
-						$MyRow['name'],
-						$MyRow['brname'],
-						$MyRow['customerref'],
-						$FormatedOrderDate,
-						$FormatedDelDate,
-						html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'),
-						$FormatedOrderValue);
+				echo '<tr class="striped_row">
+						<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+						<td><a href="', $PrintQuotation, '" target="_blank">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="', $PrintQuotationPortrait, '">' . _('Portrait') . '</a></td>
+						<td>', $MyRow['name'], '</td>
+						<td>', $MyRow['brname'], '</td>
+						<td>', $MyRow['customerref'], '</td>
+						<td>', $FormatedOrderDate, '</td>
+						<td>', $FormatedDelDate, '</td>
+						<td>', html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'), '</td>
+						<td class="number">', $FormatedOrderValue, '</td>
+					</tr>';
 			}
 		}//end while loop through orders to display
 

@@ -1558,29 +1558,18 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$Available = $QOH - $DemandQty + $OnOrder;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td title="%s">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><input class="number" ' . ($j==0 ? 'autofocus="autofocus"':'') . ' type="text" required="required" size="6" name="OrderQty%s" value="0" />
-						<input name="StockID%s" type="hidden" value="%s" />
+				echo '<tr class="striped_row">
+						<td>', $MyRow['stockid'], '</td>
+						<td title="', $MyRow['longdescription'], '">', $MyRow['description'], '</td>
+						<td>', $MyRow['units'], '</td>
+						<td class="number">', locale_number_format($QOH, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($DemandQty, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($OnOrder, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($Available, $MyRow['decimalplaces']), '</td>
+						<td><input class="number" ' . ($j==0 ? 'autofocus="autofocus"':'') . ' type="text" required="required" size="6" name="OrderQty', $j, '" value="0" />
+							<input name="StockID', $j, '" type="hidden" value="', $MyRow['stockid'], '" />
 						</td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['longdescription'],
-						$MyRow['description'],
-						$MyRow['units'],
-						locale_number_format($QOH, $MyRow['decimalplaces']),
-						locale_number_format($DemandQty, $MyRow['decimalplaces']),
-						locale_number_format($OnOrder, $MyRow['decimalplaces']),
-						locale_number_format($Available, $MyRow['decimalplaces']),
-						$j,
-						$j,
-						$MyRow['stockid']);
+					</tr>';
 				$j++;
 				$i++;
 #end of page full new headings if
@@ -1682,7 +1671,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 
-            echo '<div>';
 			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
 			echo '<thead>
@@ -1721,31 +1709,19 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 				$Available = $QOH - $DemandQty + $OnOrder;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td title="%s">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><input class="number" type="text" size="6" name="OrderQty%s"  ' . ($i==0 ? 'autofocus="autofocus"':'') . ' value="0" min="0"/>
-						<input name="StockID%s" type="hidden" value="%s" />
+				echo '<tr class="striped_row">
+						<td>', $MyRow['stockid'], '</td>
+						<td title="', $MyRow['longdescription'], '">', $MyRow['description'], '</td>
+						<td>', $MyRow['cust_part'] . '-' . $MyRow['cust_description'], '</td>
+						<td>', $MyRow['units'], '</td>
+						<td class="number">', locale_number_format($QOH,$MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($DemandQty,$MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($OnOrder,$MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($Available,$MyRow['decimalplaces']), '</td>
+						<td><input class="number" type="text" size="6" name="OrderQty', $j, '"  ' . ($i==0 ? 'autofocus="autofocus"':'') . ' value="0" min="0"/>
+						<input name="StockID', $j, '" type="hidden" value="', $MyRow['stockid'], '" />
 						</td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['longdescription'],
-						$MyRow['description'],
-						$MyRow['cust_part'] . '-' . $MyRow['cust_description'],
-						$MyRow['units'],
-						locale_number_format($QOH,$MyRow['decimalplaces']),
-						locale_number_format($DemandQty,$MyRow['decimalplaces']),
-						locale_number_format($OnOrder,$MyRow['decimalplaces']),
-						locale_number_format($Available,$MyRow['decimalplaces']),
-						$j,
-						$j,
-						$MyRow['stockid'] );
+					</tr>';
 				$i++;
 				$j++;
 	#end of page full new headings if

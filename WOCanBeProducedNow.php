@@ -42,25 +42,23 @@ function submit($RootPath, $Location) {
 
 		echo '<p class="page_title_text" align="center"><strong>' . "Items in WO to be produced now in " . $Location . " with available stock" . '</strong></p>';
 		echo '<table class="selection">';
-		$TableHeader = '
-						<tr>
-							<th>' . _('WO') . '</th>
-							<th>' . _('Stock ID') . '</th>
-							<th>' . _('Requested') . '</th>
-							<th>' . _('Received') . '</th>
-							<th>' . _('Pending') . '</th>
-							<th>' . _('UOM') . '</th>
-							<th>' . _('Component') . '</th>
-							<th>' . _('QOH') . '</th>
-							<th>' . _('Needed') . '</th>
-							<th>' . _('Shrinkage') . '</th>
-							<th>' . _('UOM') . '</th>
-							<th></th>
-							<th>' . _('Result') . '</th>
-						</tr>';
 
 		while ($MyItem = DB_fetch_array($ResultItems)) {
-			echo $TableHeader;
+			echo '<tr>
+					<th>' . _('WO') . '</th>
+					<th>' . _('Stock ID') . '</th>
+					<th>' . _('Requested') . '</th>
+					<th>' . _('Received') . '</th>
+					<th>' . _('Pending') . '</th>
+					<th>' . _('UOM') . '</th>
+					<th>' . _('Component') . '</th>
+					<th>' . _('QOH') . '</th>
+					<th>' . _('Needed') . '</th>
+					<th>' . _('Shrinkage') . '</th>
+					<th>' . _('UOM') . '</th>
+					<th></th>
+					<th>' . _('Result') . '</th>
+				</tr>';
 
 			$QtyPending = $MyItem['qtyreqd'] - $MyItem['qtyrecd'];
 			$QtyCanBeProduced = $QtyPending;
@@ -68,34 +66,21 @@ function submit($RootPath, $Location) {
 			$WOLink = '<a href="' . $RootPath . '/WorkOrderEntry.php?WO=' . $MyItem['wo'] . '">' . $MyItem['wo'] . '</a>';
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyItem['stockid'] . '">' . $MyItem['stockid'] . '</a>';
 
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$WOLink,
-					$CodeLink,
-					locale_number_format($MyItem['qtyreqd'],$MyItem['decimalplaces']),
-					locale_number_format($MyItem['qtyrecd'],$MyItem['decimalplaces']),
-					locale_number_format($QtyPending,$MyItem['decimalplaces']),
-					$MyItem['units'],
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					''
-					);
+			echo '<tr class="striped_row">
+					<td class="number">', $WOLink, '</td>
+					<td>', $CodeLink, '</td>
+					<td class="number">', locale_number_format($MyItem['qtyreqd'],$MyItem['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyItem['qtyrecd'],$MyItem['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($QtyPending,$MyItem['decimalplaces']), '</td>
+					<td>', $MyItem['units'], '</td>
+					<td></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>';
 
 			// Get the BOM for this item
 			$SQLBOM = "SELECT bom.parent,
@@ -131,34 +116,21 @@ function submit($RootPath, $Location) {
 
 				$ComponentLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyComponent['component'] . '">' . $MyComponent['component'] . '</a>';
 
-				printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					$ComponentLink,
-					locale_number_format($MyComponent['qoh'],$MyComponent['decimalplaces']),
-					locale_number_format($ComponentNeeded,$MyComponent['decimalplaces']),
-					locale_number_format($PrevisionShrinkage,$MyComponent['decimalplaces']),
-					$MyComponent['units'],
-					$Available,
-					''
-					);
+				echo '<tr class="striped_row">
+						<td class="number"></td>
+						<td></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td></td>
+						<td>', $ComponentLink, '</td>
+						<td class="number">', locale_number_format($MyComponent['qoh'],$MyComponent['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($ComponentNeeded,$MyComponent['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($PrevisionShrinkage,$MyComponent['decimalplaces']), '</td>
+						<td>', $MyComponent['units'], '</td>
+						<td>', $Available, '</td>
+						<td></td>
+					</tr>';
 			}
 			if ($ItemCanBeproduced){
 				$Action = 'Produce ' . locale_number_format($QtyPending,0) . ' x ' . $MyItem['stockid'] . ' for WO ' . locale_number_format($MyItem['wo'],0);
@@ -166,34 +138,21 @@ function submit($RootPath, $Location) {
 			}else{
 				$ComponentLink = "";
 			}
-				printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					$ComponentLink
-					);
+				echo '<tr class="striped_row">
+						<td class="number"></td>
+						<td></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td></td>
+						<td></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td class="number"></td>
+						<td></td>
+						<td></td>
+						<td>', $ComponentLink, '</td>
+					</tr>';
 		}
 		echo '</table>';
 

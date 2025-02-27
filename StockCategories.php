@@ -258,54 +258,39 @@ or deletion of the records*/
 				FROM stockcategory";
 	$Result = DB_query($SQL);
 
-	echo '<br />
-		<table class="selection">
-		<thead>
-			<tr>
-				<th class="SortedColumn">' . _('Code') . '</th>
-				<th class="SortedColumn">' . _('Category Description') . '</th>' . '
-				<th class="SortedColumn">' . _('Stock Type') . '</th>' . '
-				<th class="SortedColumn">' . _('Default Tax Category') . '</th>' . '
-				<th class="SortedColumn">' . _('Stock GL') . '</th>' . '
-				<th class="SortedColumn">' . _('Adjts GL') . '</th>
-				<th class="SortedColumn">' . _('Issues GL') . '</th>
-				<th class="SortedColumn">' . _('Price Var GL') . '</th>
-				<th class="SortedColumn">' . _('Usage Var GL') . '</th>
-				<th class="SortedColumn">' . _('WIP GL') . '</th>
-				<th colspan="2">' . _('Maintenance') . '</th>
-			</tr>
-		</thead>
-		<tbody>';
+	echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . _('Code') . '</th>
+					<th class="SortedColumn">' . _('Category Description') . '</th>' . '
+					<th class="SortedColumn">' . _('Stock Type') . '</th>' . '
+					<th class="SortedColumn">' . _('Default Tax Category') . '</th>' . '
+					<th class="SortedColumn">' . _('Stock GL') . '</th>' . '
+					<th class="SortedColumn">' . _('Adjts GL') . '</th>
+					<th class="SortedColumn">' . _('Issues GL') . '</th>
+					<th class="SortedColumn">' . _('Price Var GL') . '</th>
+					<th class="SortedColumn">' . _('Usage Var GL') . '</th>
+					<th class="SortedColumn">' . _('WIP GL') . '</th>
+					<th colspan="2">' . _('Maintenance') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedCategory=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-				$MyRow['categoryid'],
-				$MyRow['categorydescription'],
-				$StockTypeName[$MyRow['stocktype']],
-				$TaxCategoryName[$MyRow['defaulttaxcatid']],
-				$MyRow['stockact'],
-				$MyRow['adjglact'],
-				$MyRow['issueglact'],
-				$MyRow['purchpricevaract'],
-				$MyRow['materialuseagevarac'],
-				$MyRow['wipact'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['categoryid'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['categoryid']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['categoryid'], '</td>
+				<td>', $MyRow['categorydescription'], '</td>
+				<td>', $StockTypeName[$MyRow['stocktype']], '</td>
+				<td>', $TaxCategoryName[$MyRow['defaulttaxcatid']], '</td>
+				<td class="number">', $MyRow['stockact'], '</td>
+				<td class="number">', $MyRow['adjglact'], '</td>
+				<td class="number">', $MyRow['issueglact'], '</td>
+				<td class="number">', $MyRow['purchpricevaract'], '</td>
+				<td class="number">', $MyRow['materialuseagevarac'], '</td>
+				<td class="number">', $MyRow['wipact'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this stock category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody></table>';

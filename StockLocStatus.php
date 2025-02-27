@@ -171,19 +171,24 @@ if(isset($_POST['ShowStatus'])) {
 	$LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 
-	echo '<br />', DisplayDateTime(), // Display current date and time.
-		'<br />
-		<table cellpadding="5" cellspacing="4" class="selection">
-			<tr>
-				<th>', _('StockID'), '</th>
-				<th class="text">', _('Description'), '</th>
-				<th class="number">', _('Quantity On Hand'), '</th>
-				<th>', _('Bin Loc'), '</th>
-				<th class="number">', _('Re-Order Level'), '</th>
-				<th class="number">', _('Demand'), '</th>
-				<th class="number">', _('Available'), '</th>
-				<th class="number">', _('On Order'), '</th>
-			</tr>';
+	echo '<table cellpadding="5" cellspacing="4" class="selection">
+			<thead>
+				<tr>
+					<th colspan="9">', DisplayDateTime(), '</th>
+				</tr>
+				<tr>
+					<th class="SortedColumn">', _('StockID'), '</th>
+					<th class="SortedColumn">', _('Description'), '</th>
+					<th class="SortedColumn">', _('Quantity On Hand'), '</th>
+					<th class="SortedColumn">', _('Bin Loc'), '</th>
+					<th class="SortedColumn">', _('Re-Order Level'), '</th>
+					<th class="SortedColumn">', _('Demand'), '</th>
+					<th class="SortedColumn">', _('Available'), '</th>
+					<th class="SortedColumn">', _('On Order'), '</th>
+					<th class="SortedColumn">', _('Controlled'), '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while($MyRow=DB_fetch_array($LocStockResult)) {
 
@@ -192,7 +197,7 @@ if(isset($_POST['ShowStatus'])) {
 		// get the demand for the item at the location
 		$DemandQty = GetDemand($StockID, $MyRow['loccode']);
 
-		// Get the QOO 
+		// Get the QOO
 		$QOO = GetQuantityOnOrder($StockID, $MyRow['loccode']);
 
 		if(($_POST['BelowReorderQuantity']=='Below' AND ($MyRow['quantity']-$MyRow['reorderlevel']-$DemandQty)<0)
@@ -201,67 +206,48 @@ if(isset($_POST['ShowStatus'])) {
 
 			if(($_POST['BelowReorderQuantity']=='NotZero') AND (($MyRow['quantity']-$DemandQty)>0)) {
 
-				printf('<tr class="striped_row">
-					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
-					<td class="text">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=%s">%s</a></td>
-					<td class="number">%s</td>',
-					mb_strtoupper($MyRow['stockid']),
-					mb_strtoupper($MyRow['stockid']),
-					$MyRow['description'],
-					locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']),
-					$MyRow['bin'],
-					locale_number_format($MyRow['reorderlevel'],$MyRow['decimalplaces']),
-					locale_number_format($DemandQty,$MyRow['decimalplaces']),
-					mb_strtoupper($MyRow['stockid']),
-					locale_number_format($MyRow['quantity'] - $DemandQty,$MyRow['decimalplaces']),
-					locale_number_format($QOO,$MyRow['decimalplaces']));
+				echo '<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=', mb_strtoupper($MyRow['stockid']), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
+						<td class="text">', $MyRow['description'], '</td>
+						<td class="number">', locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']), '</td>
+						<td>', $MyRow['bin'], '</td>
+						<td class="number">', locale_number_format($MyRow['reorderlevel'],$MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($DemandQty,$MyRow['decimalplaces']), '</td>
+						<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=', mb_strtoupper($MyRow['stockid']), '">', locale_number_format($MyRow['quantity'] - $DemandQty,$MyRow['decimalplaces']), '</a></td>
+						<td class="number">', locale_number_format($QOO,$MyRow['decimalplaces']), '</td>';
 
 				if($MyRow['serialised'] ==1) { /*The line is a serialised item*/
-
 					echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&Location=' . $MyRow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
 				} elseif($MyRow['controlled']==1) {
 					echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
+				} else {
+					echo '<td>' . _('Not Controlled') . '</td></tr>';
 				}
 			} else if($_POST['BelowReorderQuantity']!='NotZero') {
-				printf('<tr class="striped_row">
-						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=%s">%s</a></td>
-    					<td>%s</td>
-    					<td class="number">%s</td>
-    					<td>%s</td>
-    					<td class="number">%s</td>
-    					<td class="number">%s</td>
-    					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=%s">%s</a></td>
-    					<td class="number">%s</td>',
-    					mb_strtoupper($MyRow['stockid']),
-    					mb_strtoupper($MyRow['stockid']),
-    					$MyRow['description'],
-    					locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']),
-    					$MyRow['bin'],
-    					locale_number_format($MyRow['reorderlevel'],$MyRow['decimalplaces']),
-    					locale_number_format($DemandQty,$MyRow['decimalplaces']),
-    					mb_strtoupper($MyRow['stockid']),
-    					locale_number_format($MyRow['quantity'] - $DemandQty,$MyRow['decimalplaces']),
-    					locale_number_format($QOO,$MyRow['decimalplaces']));
+				echo '<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=', mb_strtoupper($MyRow['stockid']), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
+    					<td>', $MyRow['description'], '</td>
+    					<td class="number">', locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']), '</td>
+    					<td>', $MyRow['bin'], '</td>
+    					<td class="number">', locale_number_format($MyRow['reorderlevel'],$MyRow['decimalplaces']), '</td>
+    					<td class="number">', locale_number_format($DemandQty,$MyRow['decimalplaces']), '</td>
+    					<td class="number"><a target="_blank" href="' . $RootPath . '/SelectProduct.php?StockID=', mb_strtoupper($MyRow['stockid']), '">', locale_number_format($MyRow['quantity'] - $DemandQty,$MyRow['decimalplaces']), '</a></td>
+    					<td class="number">', locale_number_format($QOO,$MyRow['decimalplaces']), '</td>';
 				if($MyRow['serialised'] ==1) { /*The line is a serialised item*/
-
 					echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Serialised=Yes&Location=' . $MyRow['loccode'] . '&StockID=' . $StockID . '">' . _('Serial Numbers') . '</a></td></tr>';
 				} elseif($MyRow['controlled']==1) {
 					echo '<td><a target="_blank" href="' . $RootPath . '/StockSerialItems.php?Location=' . $MyRow['loccode'] . '&StockID=' . $StockID . '">' . _('Batches') . '</a></td></tr>';
+				} else {
+					echo '<td>' . _('Not Controlled') . '</td></tr>';
 				}
 			} //end of page full new headings if
 		} //end of if BelowOrderQuantity or all items
 	}
 	//end of while loop
 
-	echo '</table>';
+	echo '</tbody></table>';
 } /* Show status button hit */
-echo '</div>
-      </form>';
+echo '</form>';
 
 include('includes/footer.php');
 ?>

@@ -152,8 +152,7 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	$MyRow = DB_fetch_array($Result);
 	$SelectedUserName = $MyRow['realname'];
 
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Authorised inventory locations for') . ' ' . $SelectedUserName . '</a></div>
-		<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 
@@ -170,39 +169,32 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="6"><h3>' . _('Authorised Inventory Locations for User') . ': ' . $SelectedUserName . '</h3></th>
+			<th colspan="6">' . _('Authorised Inventory Locations for User') . ': ' . $SelectedUserName . '</th>
 		</tr>';
 	echo '<tr>
 			<th>' . _('Code') . '</th>
 			<th>' . _('Name') . '</th>
 			<th>' . _('View') . '</th>
 			<th>' . _('Update') . '</th>
+			<th colspan="2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		if ($MyRow['canupd'] == 1) {
-			$ToggleText = '<td><a href="%s?SelectedLocation=%s&amp;ToggleUpdate=0&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this location?') . '\');">' . _('Remove Update') . '</a></td>';
+			$ToggleText = '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedLocation=' . $MyRow['loccode'] . '&amp;ToggleUpdate=0&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this location?') . '\');">' . _('Remove Update') . '</a></td>';
 		} else {
-			$ToggleText = '<td><a href="%s?SelectedLocation=%s&amp;ToggleUpdate=1&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this location?') . '\');">' . _('Add Update') . '</a></td>';
+			$ToggleText = '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedLocation=' . $MyRow['loccode'] . '&amp;ToggleUpdate=1&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this location?') . '\');">' . _('Add Update') . '</a></td>';
 		}
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>' .
+		echo '<tr class="striped_row">
+				<td>', $MyRow['loccode'], '</td>
+				<td>', $MyRow['locationname'], '</td>
+				<td>', $MyRow['canview'], '</td>
+				<td>', $MyRow['canupd'], '</td>' .
 				$ToggleText . '
-				<td><a href="%s?SelectedLocation=%s&amp;delete=yes&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this location?') . '\');">' . _('Un-authorise') . '</a></td>
-				</tr>',
-				$MyRow['loccode'],
-				$MyRow['locationname'],
-				$MyRow['canview'],
-				$MyRow['canupd'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-				$MyRow['loccode'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-				$MyRow['loccode']);
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedLocation=', $MyRow['loccode'], '&amp;delete=yes&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this location?') . '\');">' . _('Un-authorise') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';

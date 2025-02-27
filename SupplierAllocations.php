@@ -551,16 +551,17 @@ if (isset($_POST['AllocTrans'])){
   }
   echo '<table class="selection">';
 
-  $TableHeader = '<tr>
-					<th>' . _('Trans Type')  . '</th>
-					<th>' . _('Supplier') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') .  '</th>
-					<th>' . _('Total') . '</th>
-					<th>' . _('To Alloc') . '</th>
-				</tr>';
-
-  echo $TableHeader;
+	echo '<thead>
+			<tr>
+				<th class="SortedColumn">' . _('Trans Type')  . '</th>
+				<th class="SortedColumn">' . _('Supplier') . '</th>
+				<th class="SortedColumn">' . _('Number') . '</th>
+				<th class="SortedColumn">' . _('Date') .  '</th>
+				<th class="SortedColumn">' . _('Total') . '</th>
+				<th class="SortedColumn">' . _('To Alloc') . '</th>
+			</tr>
+		</thead>
+	<tbody>';
 
   /* set up table of TransType - Supplier - Trans No - Date - Total - Left to alloc  */
 
@@ -568,23 +569,15 @@ if (isset($_POST['AllocTrans'])){
 
   while ($MyRow = DB_fetch_array($Result)) {
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td><a href="%sAllocTrans=%s">' . _('Allocate')  . '</a></td>
-			</tr>',
-			_($MyRow['typename']),
-			$MyRow['suppname'],
-			$MyRow['transno'],
-			ConvertSQLDate($MyRow['trandate']),
-			locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']),
-			locale_number_format($MyRow['total']-$MyRow['alloc'], $MyRow['currdecimalplaces']),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['id']);
+	echo '<tr class="striped_row">
+			<td>', _($MyRow['typename']), '</td>
+			<td>', $MyRow['suppname'], '</td>
+			<td>', $MyRow['transno'], '</td>
+			<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+			<td class="number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
+			<td class="number">', locale_number_format($MyRow['total']-$MyRow['alloc'], $MyRow['currdecimalplaces']), '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans=', $MyRow['id'], '">' . _('Allocate')  . '</a></td>
+		</tr>';
 
   }
 
@@ -620,45 +613,38 @@ if (isset($_POST['AllocTrans'])){
   $Result = DB_query($SQL);
 
   echo '<table class="selection">';
-  $TableHeader = '<tr>
-					<th>' . _('Trans Type') . '</th>
-			  		<th>' . _('Supplier') . '</th>
-			  		<th>' . _('Number') . '</th>
-			  		<th>' . _('Date') . '</th>
-			  		<th>' . _('Total') . '</th>
-			  		<th>' . _('To Alloc') . '</th>
-					<th>' . _('More Info') . '</th>
-				</tr>' ;
 
-  echo $TableHeader;
+  echo '<thead>
+			<tr>
+				<th class="SortedColumn">' . _('Trans Type') . '</th>
+				<th class="SortedColumn">' . _('Supplier') . '</th>
+		 		<th class="SortedColumn">' . _('Number') . '</th>
+		  		<th class="SortedColumn">' . _('Date') . '</th>
+		  		<th class="SortedColumn">' . _('Total') . '</th>
+		  		<th class="SortedColumn">' . _('To Alloc') . '</th>
+				<th class="SortedColumn">' . _('More Info') . '</th>
+			</tr>
+		</thead>';
 
   /* set up table of Tran Type - Supplier - Trans No - Date - Total - Left to alloc  */
-
+	echo '<tbody>';
   $RowCounter = 0;
   while ($MyRow = DB_fetch_array($Result)) {
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td><a href="%sAllocTrans=%s">' . _('Allocate') . '</a></td>
-			</tr>',
-			_($MyRow['typename']),
-			$MyRow['suppname'],
-			$MyRow['transno'],
-			ConvertSQLDate($MyRow['trandate']),
-			locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']),
-			locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['id']);
-
+	echo '<tr class="striped_row">
+			<td>', _($MyRow['typename']), '</td>
+			<td>', $MyRow['suppname'], '</td>
+			<td>', $MyRow['transno'], '</td>
+			<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+			<td class="number">', locale_number_format($MyRow['total'],$MyRow['currdecimalplaces']), '</td>
+			<td class="number">', locale_number_format($MyRow['total']-$MyRow['alloc'],$MyRow['currdecimalplaces']), '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?AllocTrans=', $MyRow['id'], '">' . _('Allocate') . '</a></td>
+		</tr>';
 
   }  //END WHILE LIST LOOP
 
-  echo '</table>';
+  echo '</tbody>
+	</table>';
 
   if (DB_num_rows($Result) == 0) {
 	prnMsg(_('There are no allocations to be done'),'info');

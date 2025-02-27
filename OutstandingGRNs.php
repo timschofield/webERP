@@ -73,8 +73,8 @@ if (isset($_POST['FromCriteria'])
 If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Outstanding GRNs Report'));
-	$pdf->addInfo('Subject',_('Outstanding GRNs Valuation'));
+	$PDF->addInfo('Title',_('Outstanding GRNs Report'));
+	$PDF->addInfo('Subject',_('Outstanding GRNs Valuation'));
 	$FontSize=10;
 	$PageNumber=1;
 	$LineHeight=12;
@@ -95,15 +95,15 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
                   include('includes/PDFOstdgGRNsPageHeader.inc');
                }
 				$YPos -= (2*$LineHeight);
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
+				$LeftOvers = $PDF->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName);
 				$DisplaySuppTotVal = locale_number_format($SuppTot_Val,$GRNs['currdecimalplaces']);
-				$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
+				$LeftOvers = $PDF->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
 				$YPos -=$LineHeight;
-				$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+				$PDF->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
 				$YPos -=(2*$LineHeight);
 				$SuppTot_Val=0;
 			}
-			$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$GRNs['supplierid'] . ' - ' . $GRNs['suppname']);
+			$LeftOvers = $PDF->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,$GRNs['supplierid'] . ' - ' . $GRNs['suppname']);
 			$Supplier = $GRNs['supplierid'];
 			$SupplierName = $GRNs['suppname'];
 		}
@@ -114,9 +114,9 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 		} else {
 			$ItemDecimalPlaces = $GRNs['itemdecimalplaces'];
 		}
-		$LeftOvers = $pdf->addTextWrap(32,$YPos,40,$FontSize,$GRNs['grnno']);
-		$LeftOvers = $pdf->addTextWrap(70,$YPos,40,$FontSize,$GRNs['orderno']);
-		$LeftOvers = $pdf->addTextWrap(110,$YPos,200,$FontSize,$GRNs['itemcode'] . ' - ' . $GRNs['itemdescription']);
+		$LeftOvers = $PDF->addTextWrap(32,$YPos,40,$FontSize,$GRNs['grnno']);
+		$LeftOvers = $PDF->addTextWrap(70,$YPos,40,$FontSize,$GRNs['orderno']);
+		$LeftOvers = $PDF->addTextWrap(110,$YPos,200,$FontSize,$GRNs['itemcode'] . ' - ' . $GRNs['itemdescription']);
 		$DisplayStdCost = locale_number_format($GRNs['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']);
 		$DisplayQtyRecd = locale_number_format($GRNs['qtyrecd'],$ItemDecimalPlaces);
 		$DisplayQtyInv = locale_number_format($GRNs['quantityinv'],$ItemDecimalPlaces);
@@ -124,11 +124,11 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 		$LineValue = ($GRNs['qtyrecd']- $GRNs['quantityinv'])*$GRNs['stdcostunit'];
 		$DisplayValue = locale_number_format($LineValue,$_SESSION['CompanyRecord']['decimalplaces']);
 
-		$LeftOvers = $pdf->addTextWrap(310,$YPos,50,$FontSize,$DisplayQtyRecd,'right');
-		$LeftOvers = $pdf->addTextWrap(360,$YPos,50,$FontSize,$DisplayQtyInv, 'right');
-		$LeftOvers = $pdf->addTextWrap(410,$YPos,50,$FontSize,$DisplayQtyOstg, 'right');
-		$LeftOvers = $pdf->addTextWrap(460,$YPos,50,$FontSize,$DisplayStdCost, 'right');
-		$LeftOvers = $pdf->addTextWrap(510,$YPos,50,$FontSize,$DisplayValue, 'right');
+		$LeftOvers = $PDF->addTextWrap(310,$YPos,50,$FontSize,$DisplayQtyRecd,'right');
+		$LeftOvers = $PDF->addTextWrap(360,$YPos,50,$FontSize,$DisplayQtyInv, 'right');
+		$LeftOvers = $PDF->addTextWrap(410,$YPos,50,$FontSize,$DisplayQtyOstg, 'right');
+		$LeftOvers = $PDF->addTextWrap(460,$YPos,50,$FontSize,$DisplayStdCost, 'right');
+		$LeftOvers = $PDF->addTextWrap(510,$YPos,50,$FontSize,$DisplayValue, 'right');
 
 		$Tot_Val += $LineValue;
 		$SuppTot_Val += $LineValue;
@@ -142,105 +142,82 @@ If (isset($_POST['PrintPDF']) AND DB_num_rows($GRNsResult)>0){
 
 /*Print out the supplier totals */
 	$YPos -=$LineHeight;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName, 'left');
+	$LeftOvers = $PDF->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Total for') . ' ' . $Supplier . ' - ' . $SupplierName, 'left');
 
 	$DisplaySuppTotVal = locale_number_format($SuppTot_Val,2);
-	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
+	$LeftOvers = $PDF->addTextWrap(500,$YPos,60,$FontSize,$DisplaySuppTotVal, 'right');
 
 	/*draw a line under the SUPPLIER TOTAL*/
-	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$PDF->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
 	$YPos -=(2*$LineHeight);
 
 	$YPos -= (2*$LineHeight);
 
 /*Print out the grand totals */
-	$LeftOvers = $pdf->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
+	$LeftOvers = $PDF->addTextWrap(80,$YPos,260-$Left_Margin,$FontSize,_('Grand Total Value'), 'right');
 	$DisplayTotalVal = locale_number_format($Tot_Val,2);
-	$LeftOvers = $pdf->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
-	$pdf->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
+	$LeftOvers = $PDF->addTextWrap(500,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+	$PDF->line($Left_Margin, $YPos+$LineHeight-2,$Page_Width-$Right_Margin, $YPos+$LineHeight-2);
 	$YPos -=(2*$LineHeight);
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_OSGRNsValuation_' . date('Y-m-d').'.pdf');
+	$PDF->__destruct();
 } elseif (isset($_POST['ShowOnScreen'])  AND DB_num_rows($GRNsResult)>0) {
 	$Title=_('Outstanding GRNs Report');
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><strong>' . _('Goods Received but not invoiced Yet') . '</strong></p>';
+	echo '<p class="page_title_text">
+			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' ._('Inventory') . '" alt="" />
+			' . _('Goods Received but not invoiced Yet') . '
+		</p>';
 
 	echo '<div class="page_help_text">' . _('Shows the list of goods received not yet invoiced, both in supplier currency and home currency. When run for all suppliers, the total in home curency should match the GL Account for Goods received not invoiced.') . '</div>';
 
-	echo '<div>';
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' . _('Supplier') . '</th>
-						<th>' . _('Supplier Name') . '</th>
-						<th>' . _('PO#') . '</th>
-						<th>' . _('Item Code') . '</th>
-						<th>' . _('Qty Received') . '</th>
-						<th>' . _('Qty Invoiced') . '</th>
-						<th>' . _('Qty Pending') . '</th>
-						<th>' . _('Unit Price') . '</th>
-						<th>' .'' . '</th>
-						<th>' . _('Line Total') . '</th>
-						<th>' . '' . '</th>
-						<th>' . _('Line Total') . '</th>
-						<th>' . '' . '</th>
-					</tr>';
-	echo $TableHeader;
-	$i = 1;
+	echo '<table class="selection">
+			<tr>
+				<th>' . _('Supplier') . '</th>
+				<th>' . _('Supplier Name') . '</th>
+				<th>' . _('PO#') . '</th>
+				<th>' . _('Item Code') . '</th>
+				<th>' . _('Qty Received') . '</th>
+				<th>' . _('Qty Invoiced') . '</th>
+				<th>' . _('Qty Pending') . '</th>
+				<th>' . _('Unit Price') . '</th>
+				<th>' .'' . '</th>
+				<th>' . _('Line Total') . '</th>
+				<th>' . '' . '</th>
+				<th>' . _('Line Total') . '</th>
+				<th>' . '' . '</th>
+			</tr>';
+
 	$TotalHomeCurrency = 0;
 	while ($GRNs = DB_fetch_array($GRNsResult) ){
 		$QtyPending = $GRNs['qtyrecd'] - $GRNs['quantityinv'];
 		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $GRNs['stdcostunit']);
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>',
-				$GRNs['supplierid'],
-				$GRNs['suppname'],
-				$GRNs['orderno'],
-				$GRNs['itemcode'],
-				$GRNs['qtyrecd'],
-				$GRNs['quantityinv'],
-				$QtyPending,
-				locale_number_format($GRNs['unitprice'],$GRNs['decimalplaces']),
-				$GRNs['currcode'],
-				locale_number_format(($QtyPending * $GRNs['unitprice']),$GRNs['decimalplaces']),
-				$GRNs['currcode'],
-				locale_number_format(($GRNs['qtyrecd'] - $GRNs['quantityinv'])*$GRNs['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']),
-				$_SESSION['CompanyRecord']['currencydefault']);
-
-		if ($i==15){
-			$i=0;
-			echo $TableHeader;
-		} else {
-			$i++;
-		}
+		echo '<tr class="striped_row">
+				<td>', $GRNs['supplierid'], '</td>
+				<td>', $GRNs['suppname'], '</td>
+				<td class="number">', $GRNs['orderno'], '</td>
+				<td>', $GRNs['itemcode'], '</td>
+				<td class="number">', $GRNs['qtyrecd'], '</td>
+				<td class="number">', $GRNs['quantityinv'], '</td>
+				<td class="number">', $QtyPending, '</td>
+				<td class="number">', locale_number_format($GRNs['unitprice'],$GRNs['decimalplaces']), '</td>
+				<td>', $GRNs['currcode'], '</td>
+				<td class="number">', locale_number_format(($QtyPending * $GRNs['unitprice']),$GRNs['decimalplaces']), '</td>
+				<td>', $GRNs['currcode'], '</td>
+				<td class="number">', locale_number_format(($GRNs['qtyrecd'] - $GRNs['quantityinv'])*$GRNs['stdcostunit'],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td>', $_SESSION['CompanyRecord']['currencydefault'], '</td>
+			</tr>';
 	}
-	printf('<tr><td colspan="10">%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			</tr>',
-			'',
-			_('Total').':',
-			locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']),
-			$_SESSION['CompanyRecord']['currencydefault']);
+	echo '<tr class="total_row">
+			<td colspan="10"></td>
+			<td>', _('Total').':</td>
+			<td class="number">', locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+			<td>', $_SESSION['CompanyRecord']['currencydefault'], '</td>
+		</tr>';
 
-	echo '</table>
-			</div>';
+	echo '</table>';
 
 	include('includes/footer.php');
 

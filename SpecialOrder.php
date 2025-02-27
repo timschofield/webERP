@@ -143,22 +143,19 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 			<br />
 			<table class="selection">';
 
-		$TableHeader = '<tr>
-							<th>' ._('Code') . '</th>
-							<th>' . _('Branch Name') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<tr>
+				<th>' ._('Code') . '</th>
+				<th>' . _('Branch Name') . '</th>
+			</tr>';
 
 		$j = 1;
 
 		while ($MyRow=DB_fetch_array($BranchResult)) {
 
-			printf('<tr class="striped_row">
-					<td><input type="submit" name="SelectBranch" value="%s" /></td>
-					<td>%s</td>
-					</tr>',
-				$MyRow['branchcode'],
-				htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8', false));
+			echo '<tr class="striped_row">
+					<td><input type="submit" name="SelectBranch" value="', $MyRow['branchcode'], '" /></td>
+					<td>', htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8', false), '</td>
+				</tr>';
 
 //end of page full new headings if
 		}

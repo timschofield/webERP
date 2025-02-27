@@ -263,6 +263,7 @@ if (DB_num_rows($Result)!=0){
 			<th>' . _('Col') . ' #<br />' . _('Denominator') . '</th>
 			<th>' . _('Operator') . '</th>
 			<th>' . _('Budget') . '<br />' . _('Or Actual') . '</th>
+			<th></th>
 		</tr>';
 
 	do {
@@ -278,36 +279,20 @@ if (DB_num_rows($Result)!=0){
 		$BudOrAct = _('N/A');
 	}
 
-		printf('<tr class="striped_row">
-			<td><a href=\'%sReportID=%s&amp;SelectedCol=%s\'>%s</a></td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td>%s</td>
-          	<td><a href="%sReportID=%s&amp;SelectedCol=%s&amp;delete=1">' . _('Delete') . '</a></td></tr>',
-          	htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-          	$ReportID,
-          	$MyRow[1],
-          	$MyRow[1],
-          	$MyRow[2],
-          	$MyRow[3],
-          	$Calc,
-          	$MyRow[5],
-          	$MyRow[6],
-          	$MyRow[7],
-          	$MyRow[8],
-          	$MyRow[9],
-          	$MyRow[10],
-          	$BudOrAct,
-          	htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-          	$ReportID,
-          	$MyRow[1]);
+		echo '<tr class="striped_row">
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ReportID=', $ReportID, '&amp;SelectedCol=', $MyRow[1], '">', $MyRow[1], '</a></td>
+				<td>', $MyRow[2], '</td>
+				<td>', $MyRow[3], '</td>
+				<td>', $Calc, '</td>
+				<td>', $MyRow[5], '</td>
+				<td>', $MyRow[6], '</td>
+				<td>', $MyRow[7], '</td>
+				<td>', $MyRow[8], '</td>
+				<td>', $MyRow[9], '</td>
+				<td>', $MyRow[10], '</td>
+				<td>', $BudOrAct, '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ReportID=', $ReportID, '&amp;SelectedCol=', $MyRow[1], '&amp;delete=1">' . _('Delete') . '</a></td>
+			</tr>';
 
 	} while ($MyRow = DB_fetch_array($Result));
 	//END WHILE LIST LOOP

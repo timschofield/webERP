@@ -42,6 +42,12 @@ if (empty($_GET['identifier'])) {
 	$identifier = $_GET['identifier'];
 }
 
+if (isset($SelectedSupplier)) {
+	echo '<a class="toplink" href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
+} else {
+	echo '<a class="toplink" href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
+}
+
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 	<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -148,11 +154,6 @@ $OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
 */
 
 if (!isset($OrderNumber) or $OrderNumber == '') {
-	if (isset($SelectedSupplier)) {
-		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
-	} else {
-		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
-	}
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<fieldset>
 			<legend>', _('Order Search Options'), '</legend>
@@ -361,17 +362,13 @@ if (isset($StockItemsResult)) {
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 		$MyRow['qoh'] = $QOH[$MyRow['stockid']];
 
-		printf('<tr class="striped_row">
-				<td><input type="submit" name="SelectedStockItem" value="%s"</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td></tr>',
-				$MyRow['stockid'],
-				$MyRow['description'],
-				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-				locale_number_format($MyRow['qord'],$MyRow['decimalplaces']),
-				$MyRow['units']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '"</td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['qord'],$MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+			</tr>';
 	} //end of while loop through search items
 
 	echo '</tbody></table>';

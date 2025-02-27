@@ -156,33 +156,19 @@ if(!isset($SelectedTaxAuthID)) {
 		<tbody>';
 
 	while($MyRow = DB_fetch_row($Result)) {
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedTaxAuthID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedTaxAuthID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax authority?') . '\');">' . _('Delete') . '</a></td>
-				<td><a href="%sTaxAuthority=%s">' . _('Edit Rates') . '</a></td>
-				</tr>',
-				$MyRow[0],
-				$MyRow[1],
-				$MyRow[3],
-				$MyRow[2],
-				$MyRow[4],
-				$MyRow[5],
-				$MyRow[6],
-				$MyRow[7],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow[0],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow[0],
-				$RootPath . '/TaxAuthorityRates.php?',
-				$MyRow[0]);
+		echo  '<tr class="striped_row">
+				<td class="number">', $MyRow[0], '</td>
+				<td>', $MyRow[1], '</td>
+				<td class="number">', $MyRow[3], '</td>
+				<td class="number">', $MyRow[2], '</td>
+				<td>', $MyRow[4], '</td>
+				<td>', $MyRow[5], '</td>
+				<td>', $MyRow[6], '</td>
+				<td>', $MyRow[7], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxAuthID=', $MyRow[0], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedTaxAuthID=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax authority?') . '\');">' . _('Delete') . '</a></td>
+				<td><a href="', $RootPath . '/TaxAuthorityRates.php?TaxAuthority=', $MyRow[0], '">' . _('Edit Rates') . '</a></td>
+			</tr>';
 
 	}
 	//END WHILE LIST LOOP

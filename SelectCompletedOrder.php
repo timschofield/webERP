@@ -250,7 +250,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 						salesorders.orddate,
 						salesorders.deliverydate,
 						salesorders.deliverto,
-						currencies.decimalplaces AS currdecimalplaces, 
+						currencies.decimalplaces AS currdecimalplaces,
 						SUM(salesorderdetails.linenetprice) AS ordervalue
 					FROM salesorders INNER JOIN salesorderdetails
 						ON salesorders.orderno = salesorderdetails.orderno
@@ -273,7 +273,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							salesorders.customerref,
 							salesorders.orddate,
 							salesorders.deliverydate,
-							salesorders.deliverto, 
+							salesorders.deliverto,
 							SUM(salesorderdetails.linenetprice) AS ordervalue
 						FROM salesorders INNER JOIN salesorderdetails
 							ON salesorders.orderno = salesorderdetails.orderno
@@ -296,7 +296,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 							salesorders.customerref,
 							salesorders.orddate,
 							salesorders.deliverydate,
-							salesorders.deliverto, 
+							salesorders.deliverto,
 							SUM(salesorderdetails.linenetprice) AS ordervalue
 						FROM salesorders INNER JOIN salesorderdetails
 							ON salesorders.orderno = salesorderdetails.orderno
@@ -325,7 +325,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								salesorders.customerref,
 								salesorders.orddate,
 								salesorders.deliverydate,
-								salesorders.deliverto, 
+								salesorders.deliverto,
 								SUM(salesorderdetails.linenetprice) AS ordervalue
 							FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
@@ -349,7 +349,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								salesorders.customerref,
 								salesorders.orddate,
 								salesorders.deliverto,
-								salesorders.deliverydate, 
+								salesorders.deliverydate,
 								SUM(salesorderdetails.linenetprice) AS ordervalue
 							FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
@@ -374,7 +374,7 @@ if (isset($_POST['SearchParts']) AND $_POST['SearchParts']!=''){
 								salesorders.customerref,
 								salesorders.orddate,
 								salesorders.deliverto,
-								salesorders.deliverydate, 
+								salesorders.deliverydate,
 								SUM(salesorderdetails.linenetprice) AS ordervalue
 							FROM salesorders INNER JOIN salesorderdetails
 								ON salesorders.orderno = salesorderdetails.orderno
@@ -519,37 +519,26 @@ if (!isset($SelectedStockItem)) {
 
 if (isset($StockItemsResult)) {
 
-	echo '<br />
-		<table cellpadding="2" class="selection">';
-
-	$TableHeadings = '<tr>
-						<th>' . _('Code') . '</th>
-						<th>' . _('Description') . '</th>
-						<th>' . _('On Hand') . '</th>
-						<th>' . _('Purchase Orders') . '</th>
-						<th>' . _('Sales Orders') . '</th>
-						<th>' . _('Units') . '</th>
-					</tr>';
-
-	echo $TableHeadings;
-
-	$j = 1;
+	echo '<table cellpadding="2" class="selection">
+			<tr>
+				<th>' . _('Code') . '</th>
+				<th>' . _('Description') . '</th>
+				<th>' . _('On Hand') . '</th>
+				<th>' . _('Purchase Orders') . '</th>
+				<th>' . _('Sales Orders') . '</th>
+				<th>' . _('Units') . '</th>
+			</tr>';
 
 	while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
-		printf('<tr class="striped_row">
-				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td></tr>',
-				$MyRow['stockid'],
-				$MyRow['description'],
-				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-				locale_number_format($MyRow['qoo'],$MyRow['decimalplaces']),
-				locale_number_format($MyRow['qdem'],$MyRow['decimalplaces']),
-				$MyRow['units']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['qoo'],$MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['qdem'],$MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+			</tr>';
 
 //end of page full new headings if
 	}
@@ -572,21 +561,17 @@ If (isset($SalesOrdersResult)) {
 
 /*show a table of the orders returned by the SQL */
 
-	echo '<br /><table cellpadding="2" width="90%" class="selection">';
-
-	$Tableheader = '<tr><th>' . _('Order') . ' #</th>
-						<th>' . _('Customer') . '</th>
-						<th>' . _('Branch') . '</th>
-						<th>' . _('Cust Order') . ' #</th>
-						<th>' . _('Order Date') . '</th>
-						<th>' . _('Req Del Date') . '</th>
-						<th>' . _('Delivery To') . '</th>
-						<th>' . _('Order Total') . '</th>
-					</tr>';
-
-	echo $Tableheader;
-
-	$j = 1;
+	echo '<table cellpadding="2" width="90%" class="selection">
+			<tr>
+				<th>' . _('Order') . ' #</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Cust Order') . ' #</th>
+				<th>' . _('Order Date') . '</th>
+				<th>' . _('Req Del Date') . '</th>
+				<th>' . _('Delivery To') . '</th>
+				<th>' . _('Order Total') . '</th>
+			</tr>';
 
 	while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
 
@@ -595,25 +580,16 @@ If (isset($SalesOrdersResult)) {
 		$FormatedOrderDate = ConvertSQLDate($MyRow['orddate']);
 		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$MyRow['currdecimalplaces']);
 
-		printf('<tr class="striped_row">
-				<td><a href="%s">%s</a></td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$ViewPage,
-				$MyRow['orderno'],
-				$MyRow['name'],
-				$MyRow['brname'],
-				$MyRow['customerref'],
-				$FormatedOrderDate,
-				$FormatedDelDate,
-				$MyRow['deliverto'],
-				$FormatedOrderValue);
+		echo '<tr class="striped_row">
+				<td><a href="', $ViewPage, '">', $MyRow['orderno'], '</a></td>
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['brname'], '</td>
+				<td>', $MyRow['customerref'], '</td>
+				<td>', $FormatedOrderDate, '</td>
+				<td>', $FormatedDelDate, '</td>
+				<td>', $MyRow['deliverto'], '</td>
+				<td class="number">', $FormatedOrderValue, '</td>
+			</tr>';
 
 //end of page full new headings if
 	}
@@ -622,8 +598,7 @@ If (isset($SalesOrdersResult)) {
 	echo '</table>';
 }
 
-echo '</div>
-      </form>';
+echo '</form>';
 include('includes/footer.php');
 
 ?>

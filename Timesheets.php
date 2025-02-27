@@ -539,26 +539,16 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="mailto:%s">%s</a></td>
-					<td class="noPrint"><a href="%sSelectedEmployee=%s">' . _('Select') . '</a></td>
-					<td class="noPrint"><a href="Employees.php?SelectedEmployee=%s">' . _('Edit') . '</a></td>
-				</tr>',
-				$MyRow['id'],
-				$MyRow['firstname'],
-				$MyRow['surname'],
-				$MyRow['stockid'],
-				$MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'],
-				$MyRow['email'],
-				$MyRow['email'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['id'],
-				$MyRow['id']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['id'], '</td>
+				<td>', $MyRow['firstname'], '</td>
+				<td>', $MyRow['surname'], '</td>
+				<td>', $MyRow['stockid'], '</td>
+				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
+				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . _('Select') . '</a></td>
+				<td class="noPrint"><a href="Employees.php?SelectedEmployee=', $MyRow['id'], '">' . _('Edit') . '</a></td>
+			</tr>';
 		}
 		//END WHILE LIST LOOP
 		echo '</tbody></table>';

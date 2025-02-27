@@ -15,7 +15,7 @@ if (isset($_GET['StockID'])){
 	$StockID = '';
 }
 
-echo '<a href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
+echo '<a class="toplink" href="' . $RootPath . '/SelectProduct.php">' . _('Back to Items') . '</a>';
 
 echo '<p class="page_title_text">
 		<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" /><b>' . $Title. '</b>
@@ -25,7 +25,6 @@ $Result = DB_query("SELECT description, units FROM stockmaster WHERE stockid='" 
 $MyRow = DB_fetch_row($Result);
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 $SQL = "SELECT locstock.loccode,
@@ -53,7 +52,7 @@ echo '<table class="selection">
 		<th colspan="3">' . _('Stock Code') . ':<input  type="text" data-type="no-illegal-chars" title="'._('The stock id should not contains illegal characters and blank or percentage mark is not allowed').'" required="required" name="StockID" size="21" value="' . $StockID . '" maxlength="20" /><input type="submit" name="Show" value="' . _('Show Re-Order Levels') . '" /></th>
 		</tr>
 		<tr>
-		<th colspan="3"><h3><b>' . $StockID . ' - ' . $MyRow[0] . '</b>  (' . _('In Units of') . ' ' . $MyRow[1] . ')</h3></th>
+		<th colspan="3"><b>' . $StockID . ' - ' . $MyRow[0] . '</b>  (' . _('In Units of') . ' ' . $MyRow[1] . ')</th>
 		</tr>
 		<tr>
 					<th class="SortedColumn">' . _('Location') . '</th>
@@ -78,40 +77,31 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 
 	}
 	if ($MyRow['canupd']==1) {
-		$UpdateCode='<input title="'._('Input safety stock quantity').'" type="text" class="number" name="%s" maxlength="10" size="10" value="%s" />
-			<input type="hidden" name="Old_%s" value="%s" />';
+		$UpdateCode='<input title="'._('Input safety stock quantity').'" type="text" class="number" name="' . $MyRow['loccode'] . '" maxlength="10" size="10" value="' . $MyRow['reorderlevel'] . '" />
+			<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
 	} else {
-		$UpdateCode='<input type="hidden" name="%s">%s<input type="hidden" name="Old_%s" value="%s" />';
+		$UpdateCode='<input type="hidden" name="' . $MyRow['loccode'] . '">' . $MyRow['reorderlevel'] . '<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
 	}
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
+	echo '<tr class="striped_row">
+			<td>', $MyRow['locationname'], '</td>
+			<td class="number">', locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']), '</td>
 			<td class="number">' . $UpdateCode . '</td>
-			</tr>',
-			$MyRow['locationname'],
-			locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']),
-			$MyRow['loccode'],
-			$MyRow['reorderlevel'],
-			$MyRow['loccode'],
-			$MyRow['reorderlevel']);
+			</tr>';
 
 }
 //end of while loop
 
-echo '</tbody></table>
-	<br />
+echo '</tbody>
+	</table>
 	<div class="centre">
-		<input type="submit" name="UpdateData" value="' . _('Update') . '" />
-		<br />
-		<br />';
+		<input type="submit" name="UpdateData" value="' . _('Update') . '" />';
 
-echo '<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
+echo '<br /><a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '">' . _('Show Stock Movements') . '</a>';
 echo '<br /><a href="' . $RootPath . '/StockUsage.php?StockID=' . $StockID . '">' . _('Show Stock Usage') . '</a>';
 echo '<br /><a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Sales Orders') . '</a>';
 echo '<br /><a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 
 echo '</div>
-    </div>
 	</form>';
 include('includes/footer.php');
 ?>

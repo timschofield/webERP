@@ -143,8 +143,7 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	$MyRow = DB_fetch_array($Result);
 	$SelectedUserName = $MyRow['realname'];
 
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Authorised bank accounts for') . ' ' . $SelectedUserName . '</a></div>
-		<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="SelectedUser" value="' . $SelectedUser . '" />';
 
@@ -158,30 +157,29 @@ if (isset($_POST['process']) or isset($SelectedUser)) {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
+	echo '<thead>
+			<tr>
+				<th colspan="6">' . _('Authorised bank accounts for User') . ': ' . $SelectedUserName . '</th>
+			</tr>';
 	echo '<tr>
-			<th colspan="6"><h3>' . _('Authorised bank accounts for User') . ': ' . $SelectedUserName . '</h3></th>
-		</tr>';
-	echo '<tr>
-			<th>' . _('Code') . '</th>
-			<th>' . _('Name') . '</th>
-		</tr>';
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Name') . '</th>
+				<th></th>
+			</tr>
+		</thead>';
 
+	echo '<tbody>';
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%s?SelectedBankAccount=%s&amp;delete=yes&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this bank account?') . '\');">' . _('Un-authorise') . '</a></td>
-				</tr>',
-				$MyRow['accountcode'],
-				$MyRow['bankaccountname'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$MyRow['accountcode'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$MyRow['accountcode']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['accountcode'], '</td>
+				<td>', $MyRow['bankaccountname'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedBankAccount=', $MyRow['accountcode'], '&amp;delete=yes&amp;SelectedUser=' . $SelectedUser . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this bank account?') . '\');">' . _('Un-authorise') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
-	echo '</table>';
+	echo '</tbody>
+		</table>';
 
 	if (!isset($_GET['delete'])) {
 

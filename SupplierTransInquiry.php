@@ -113,46 +113,35 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 
    echo '<table class="selection">';
 
-   $Tableheader = '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Supp Ref') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Supplier') . '</th>
-					<th>' . _('Comments') . '</th>
-					<th>' . _('Due Date') . '</th>
-					<th>' . _('Ex Rate') . '</th>
-					<th>' . _('Amount') . '</th>
-					<th>' . _('Currency') . '</th>
-				</tr>';
-	echo $Tableheader;
+	echo '<tr>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Number') . '</th>
+			<th>' . _('Supp Ref') . '</th>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Supplier') . '</th>
+			<th>' . _('Comments') . '</th>
+			<th>' . _('Due Date') . '</th>
+			<th>' . _('Ex Rate') . '</th>
+			<th>' . _('Amount') . '</th>
+			<th>' . _('Currency') . '</th>
+		</tr>';
 
 	$RowCounter = 1;
 
 	while ($MyRow=DB_fetch_array($TransResult)) {
 
-		printf ('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>',
-				$MyRow['typename'],
-				$MyRow['transno'],
-				$MyRow['suppreference'],
-				ConvertSQLDate($MyRow['trandate']),
-				$MyRow['supplierno'] . ' - ' . $MyRow['suppname'],
-				$MyRow['transtext'],
-				ConvertSQLDate($MyRow['duedate']),
-				locale_number_format($MyRow['rate'],'Variable'),
-				locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
-				$MyRow['currcode']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['typename'], '</td>
+				<td>', $MyRow['transno'], '</td>
+				<td>', $MyRow['suppreference'], '</td>
+				<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+				<td>', $MyRow['supplierno'] . ' - ' . $MyRow['suppname'], '</td>
+				<td>', $MyRow['transtext'], '</td>
+				<td>', ConvertSQLDate($MyRow['duedate']), '</td>
+				<td class="number">', locale_number_format($MyRow['rate'],'Variable'), '</td>
+				<td class="number">', locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']), '</td>
+				<td>', $MyRow['currcode'], '</td>
+			</tr>';
 
 
 		$GLTransResult = DB_query("SELECT account,
@@ -171,9 +160,9 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 				</tr>';
 		} else {
 			echo '<tr>
-					<td colspan="2"></td>
+					<td colspan="1"></td>
 					<td colspan="8">
-						<table class="selection" width="100%">';
+						<table style="float:left" width="100%">';
 			echo '<tr>
 					<th colspan="2"><b>' . _('GL Account') . '</b></th>
 					<th><b>' . _('Local Amount') . '</b></th>
@@ -182,16 +171,12 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
 			$CheckGLTransBalance =0;
 			while ($GLTransRow = DB_fetch_array($GLTransResult)){
 
-				printf('<tr>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>',
-						$GLTransRow['account'],
-						$GLTransRow['accountname'],
-						locale_number_format($GLTransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']),
-						$GLTransRow['narrative']);
+				echo '<tr class="striped_row">
+						<td>', $GLTransRow['account'], '</td>
+						<td>', $GLTransRow['accountname'], '</td>
+						<td class="number">', locale_number_format($GLTransRow['amount'],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						<td>', $GLTransRow['narrative'], '</td>
+					</tr>';
 
 				$CheckGLTransBalance += $GLTransRow['amount'];
 			}

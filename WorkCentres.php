@@ -138,24 +138,15 @@ or deletion of the records*/
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		printf('<tr>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td><a href="%s&amp;SelectedWC=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete')  . '</a></td>
-				</tr>',
-				$MyRow['code'],
-				$MyRow['description'],
-				$MyRow['locationname'],
-				$MyRow['overheadrecoveryact'],
-				$MyRow['overheadperhour'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['code'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['code']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['code'], '</td>
+				<td>', $MyRow['description'], '</td>
+				<td>', $MyRow['locationname'], '</td>
+				<td>', $MyRow['overheadrecoveryact'], '</td>
+				<td class="number">', $MyRow['overheadperhour'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete')  . '</a></td>
+			</tr>';
 	}
 
 	//END WHILE LIST LOOP

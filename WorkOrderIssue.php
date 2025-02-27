@@ -1015,13 +1015,13 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 					$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
 
 					$IssueLink = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&amp;StockID=' . urlencode($_POST['StockID']) . '&amp;IssueItem=' . urlencode($MyRow['stockid']) . '&amp;FromLocation=' . $_POST['FromLocation'];
-					printf('<tr class="striped_row">
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td><a href="%s">' . _('Add to Work Order') . '</a></td>
-							</tr>', $MyRow['stockid'], $MyRow['description'], $MyRow['units'], $ImageSource, $IssueLink);
+					echo '<tr class="striped_row">
+							<td>', $MyRow['stockid'], '</td>
+							<td>', $MyRow['description'], '</td>
+							<td>', $MyRow['units'], '</td>
+							<td>', $ImageSource, '</td>
+							<td><a href="', $IssueLink, '">' . _('Add to Work Order') . '</a></td>
+						</tr>';
 
 					$j++;
 					if ($j == 25) {

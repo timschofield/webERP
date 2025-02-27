@@ -422,6 +422,7 @@ or deletion of the records*/
 			<th class="SortedColumn">' . _('Show on Spec') . '</th>
 			<th class="SortedColumn">' . _('Show on Test Plan') . '</th>
 			<th class="SortedColumn">' . _('Active') . '</th>
+			<th colspan="2"></th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -472,41 +473,25 @@ or deletion of the records*/
 			break;
 	} //end switch
 
-	printf('<tr class="striped_row">
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedQATest=%s">' .  _('Edit') . '</a></td>
-			<td><a href="%sSelectedQATest=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this QA Test ?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['testid'],
-			$MyRow['name'],
-			$MyRow['method'],
-			$MyRow['groupby'],
-			$MyRow['units'],
-			$TypeDisp,
-			$MyRow['defaultvalue'],
-			$IsNumeric,
-			$ShowOnCertText,
-			$ShowOnSpecText,
-			$ShowOnTestPlanText,
-			$ActiveText,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['testid'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['testid']);
+	echo '<tr class="striped_row">
+			<td class="number">', $MyRow['testid'], '</td>
+			<td>', $MyRow['name'], '</td>
+			<td>', $MyRow['method'], '</td>
+			<td>', $MyRow['groupby'], '</td>
+			<td>', $MyRow['units'], '</td>
+			<td>', $TypeDisp, '</td>
+			<td>', $MyRow['defaultvalue'], '</td>
+			<td>', $IsNumeric, '</td>
+			<td>', $ShowOnCertText, '</td>
+			<td>', $ShowOnSpecText, '</td>
+			<td>', $ShowOnTestPlanText, '</td>
+			<td>', $ActiveText, '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '">' .  _('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this QA Test ?') . '\');">' . _('Delete') . '</a></td>
+		</tr>';
 
 	} //END WHILE LIST LOOP
-	echo '</tbody></table><br />';
+	echo '</tbody></table>';
 } //end of ifs and buts!
 include('includes/footer.php');
 ?>

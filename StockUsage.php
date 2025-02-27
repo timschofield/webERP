@@ -152,13 +152,13 @@ if (isset($_POST['ShowUsage'])){
 	}
 
 	echo '<table class="selection">
-		<thead>
-			<tr>
-						<th class="SortedColumn">' . _('Month') . '</th>
-						<th class="SortedColumn">' . _('Usage') . '</th>
-			</tr>
-		</thead>
-		<tbody>';
+			<thead>
+				<tr>
+					<th>' . _('Month') . '</th>
+					<th class="SortedColumn">' . _('Usage') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	$TotalUsage = 0;
 	$PeriodsCounter =0;
@@ -169,12 +169,10 @@ if (isset($_POST['ShowUsage'])){
 
 		$TotalUsage += $MyRow['qtyused'];
 		$PeriodsCounter++;
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$DisplayDate,
-				locale_number_format($MyRow['qtyused'],$DecimalPlaces));
+		echo '<tr class="striped_row">
+				<td>', $DisplayDate, '</td>
+				<td class="number">', locale_number_format($MyRow['qtyused'],$DecimalPlaces), '</td>
+			</tr>';
 	} //end of while loop
 
 	echo '</tbody></table>';
@@ -187,21 +185,22 @@ if (isset($_POST['ShowUsage'])){
 
 } /* end if Show Usage is clicked */
 
+
 echo '<div class="centre">';
-echo '<br />
-    <a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status')  . '</a>';
-echo '<br />
-	<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Movements') . '</a>';
-echo '<br />
-	<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Search Outstanding Sales Orders') . '</a>';
+echo '<a href="' . $RootPath . '/StockStatus.php?StockID=' . $StockID . '">' . _('Show Stock Status')  . '</a>';
+if (isset($_POST['StockLocation'])) {
+	echo '<br />
+		<a href="' . $RootPath . '/StockMovements.php?StockID=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Show Stock Movements') . '</a>';
+	echo '<br />
+		<a href="' . $RootPath . '/SelectSalesOrder.php?SelectedStockItem=' . $StockID . '&amp;StockLocation=' . $_POST['StockLocation'] . '">' . _('Search Outstanding Sales Orders') . '</a>';
+}
 echo '<br />
 	<a href="' . $RootPath . '/SelectCompletedOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Completed Sales Orders') . '</a>';
 echo '<br />
 	<a href="' . $RootPath . '/PO_SelectOSPurchOrder.php?SelectedStockItem=' . $StockID . '">' . _('Search Outstanding Purchase Orders') . '</a>';
 
 echo '</div>
-      </div>
-      </form>';
+	</form>';
 include('includes/footer.php');
 
 ?>
