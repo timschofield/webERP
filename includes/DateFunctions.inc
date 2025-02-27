@@ -299,7 +299,7 @@ and converts to a format specified in $_SESSION['DefaultDateFormat']*/
 				return '0000/0/0';
 				break;
 			case 'Y-m-d':
-				return '0000-0-0';
+				return '1000-01-01';
 				break;
 		}
 	} else {
@@ -560,7 +560,7 @@ function Format_Date($DateEntry) {
 function EnsureSQLDateFormat($Date) {
 	// All credit to GitHub Copilot
 	$Date = mb_substr($Date, 0, 10); // chop off the time stuff
-	if ($Date == '0000-00-00'){
+	if ($Date == '1000-01-01'){
 		return true; // The date is "no date", but in the correct SQL format
 	}else{
 		$DateTime = DateTime::createFromFormat('Y-m-d', $Date);

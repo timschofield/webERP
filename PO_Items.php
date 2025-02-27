@@ -982,7 +982,7 @@ if (isset($_POST['NonStockOrder'])) {
 								ORDER BY assetid DESC");
 	echo '<option selected="selected" value="Not an Asset">' . _('Not an Asset') . '</option>';
 	while ($AssetRow = DB_fetch_array($AssetsResult)){
-		if ($AssetRow['datepurchased']=='0000-00-00'){
+		if ($AssetRow['datepurchased']=='1000-01-01'){
 			$DatePurchased = _('Not yet purchased');
 		} else {
 			$DatePurchased = ConvertSQLDate($AssetRow['datepurchased']);

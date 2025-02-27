@@ -698,8 +698,8 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 					/*Over-ride any GL account specified in the order with the asset category cost account */
 					$_SESSION['PO'.$identifier]->LineItems[$OrderLine->LineNo]->GLCode = $AssetRow['costact'];
 					/*Now if there are no previous additions to this asset update the date purchased */
-					if ($AssetRow['datepurchased']=='0000-00-00') {
-						/* it is a new addition as the date is set to 0000-00-00 when the asset record is created
+					if ($AssetRow['datepurchased']=='1000-01-01') {
+						/* it is a new addition as the date is set to 1000-01-01 when the asset record is created
 						 * before any cost is added to the asset
 						 */
 						$SQL = "UPDATE fixedassets

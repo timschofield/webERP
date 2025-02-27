@@ -1811,7 +1811,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<tr>
 					<td>' . _('Asset to Dispose Of') . ':</td>
 					<td><select name="AssetToDisposeOf">';
-			$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='0000-00-00'");
+			$AssetsResult = DB_query("SELECT assetid, description FROM fixedassets WHERE disposaldate='1000-01-01'");
 			echo '<option selected="selected" value="NoAssetSelected">' . _('Select Asset To Dispose of From the List Below') . '</option>';
 			while ($AssetRow = DB_fetch_array($AssetsResult)){
 				echo '<option value="' . $AssetRow['assetid'] . '">' . $AssetRow['assetid'] . ' - ' . $AssetRow['description'] . '</option>';

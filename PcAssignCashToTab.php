@@ -79,7 +79,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "UPDATE pcashdetails
 				SET date = '" . FormatDateForSQL($_POST['Date']) . "',
 					amount = '" . filter_number_format($_POST['Amount']) . "',
-					authorized = '0000-00-00',
+					authorized = '1000-01-01',
 					notes = '" . $_POST['Notes'] . "'
 				WHERE counterindex = '" . $SelectedIndex . "'";
 		$Msg = _('Assignment of cash to PC Tab ') . ' ' . $SelectedTabs . ' ' . _('has been updated');
@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 					'" . FormatDateForSQL($_POST['Date']) . "',
 					'ASSIGNCASH',
 					'" . filter_number_format($_POST['Amount']) . "',
-					'0000-00-00',
+					'1000-01-01',
 					'0',
 					NULL,
 					'" . $_POST['Notes'] . "'
@@ -246,7 +246,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 					$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 			}
 
-			if ($MyRow['authorized'] == '0000-00-00') {
+			if ($MyRow['authorized'] == '1000-01-01') {
 				$AuthorisedDate = _('Unauthorised');
 			} else {
 				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
@@ -273,7 +273,7 @@ if (isset($_POST['Process']) or isset($SelectedTabs)) {
 				$ReceiptText = _('No attachment');
 			}
 
-			if (($MyRow['authorized'] == '0000-00-00') and ($ExpenseCodeDes == 'ASSIGNCASH')) {
+			if (($MyRow['authorized'] == '1000-01-01') and ($ExpenseCodeDes == 'ASSIGNCASH')) {
 				// only cash assignations NOT authorized can be modified or deleted
 				echo '<tr class="striped_row">
 					<td>', ConvertSQLDate($MyRow['date']), '</td>

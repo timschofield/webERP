@@ -284,7 +284,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				'" . $OrdersToPick[$i]['orderno']."',
 				'" . FormatDateForSQL($_POST['TransDate'])."',
 				CURRENT_DATE,
-				'0000-00-00')";
+				'1000-01-01')";
 			$HeaderResult=DB_query($SQL);
 		} else {
 			$LinesToShow=1;

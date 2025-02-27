@@ -124,7 +124,7 @@ if (isset($_POST['submit'])) {
 					'" . FormatDateForSQL($_POST['Date']) . "',
 					'ASSIGNCASH',
 					'" . filter_number_format($_POST['Amount']) . "',
-					'0000-00-00',
+					'1000-01-01',
 					'0',
 					NULL,
 					'" . $_POST['Notes'] . "'
@@ -134,7 +134,7 @@ if (isset($_POST['submit'])) {
 					'" . FormatDateForSQL($_POST['Date']) . "',
 					'ASSIGNCASH',
 					'" . filter_number_format(-$_POST['Amount']) . "',
-					'0000-00-00',
+					'1000-01-01',
 					'0',
 					NULL,
 					'" . $_POST['Notes'] . "'
@@ -331,13 +331,13 @@ if (isset($_POST['Process']) OR isset($SelectedTabs)) {
 				$ReceiptText = _('No attachment');
 			}
 
-		if ($MyRow['authorized'] == '0000-00-00') {
+		if ($MyRow['authorized'] == '1000-01-01') {
 				$AuthorisedDate = _('Unauthorised');
 		} else {
 			$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
 		}
 
-		/*if (($MyRow['authorized'] == '0000-00-00') AND ($Description['0'] == 'ASSIGNCASH')){
+		/*if (($MyRow['authorized'] == '1000-01-01') AND ($Description['0'] == 'ASSIGNCASH')){
 			// only cash assignations NOT authorized can be modified or deleted
 			echo '<tr class="striped_row">
 				<td>' . ConvertSQLDate($MyRow['date']) . '</td>

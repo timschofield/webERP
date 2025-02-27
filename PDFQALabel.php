@@ -24,7 +24,7 @@ if ($GRNNo == 'Preview'){
 	$MyRow['serialno'] =  str_pad('', 20,'x');
 	$MyRow['reslot'] =  str_pad('', 20,'x');
 	$SuppRow['suppname'] = str_pad('', 30,'x');
-	$MyRow['deliverydate'] = '0000-00-00';
+	$MyRow['deliverydate'] = '1000-01-01';
 	$MyRow['orderno'] = '0000000000';
 	$NoOfGRNs =1;
 } else { //NOT PREVIEW
