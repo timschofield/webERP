@@ -22,7 +22,7 @@ function GetExpiryDate ($StockID, $LocCode, $BundleRef){
 				AND serialno = '" . $BundleRef . "'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result)==0){
-		return '0000-00-00';
+		return '1000-01-01';
 	} else {
 		$MyRow = DB_fetch_row($Result);
 		return ConvertSQLDate($MyRow[0]);
@@ -35,15 +35,15 @@ class SerialItem {
 	var $ExpiryDate;
 
 	//Constructor
-	function __construct($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
+	function __construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01'){
 
 		$this->BundleRef = $BundleRef;
 		$this->BundleQty = $BundleQty;
 		$this->ExpiryDate = $ExpiryDate;
 	}
 
-	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='0000-00-00'){
-		self::__construct($BundleRef, $BundleQty, $ExpiryDate='0000-00-00');
+	function SerialItem($BundleRef, $BundleQty, $ExpiryDate='1000-01-01'){
+		self::__construct($BundleRef, $BundleQty, $ExpiryDate='1000-01-01');
 	}
 
 

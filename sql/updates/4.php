@@ -9,9 +9,9 @@ CreateTable('regularpayments', "CREATE TABLE IF NOT EXISTS `regularpayments` (
   `amount` double NOT NULL default 0,
   `currabrev` char(3) NOT NULL DEFAULT '',
   `narrative` varchar(255) default '',
-  `firstpayment` date NOT NULL default '0000-00-00',
-  `finalpayment` date NOT NULL default '0000-00-00',
-  `nextpayment` date NOT NULL default '0000-00-00',
+  `firstpayment` date NOT NULL default '1000-01-01',
+  `finalpayment` date NOT NULL default '1000-01-01',
+  `nextpayment` date NOT NULL default '1000-01-01',
   `completed` tinyint(1) NOT NULL DEFAULT 0,
   PRIMARY KEY  (`id`)
 )");

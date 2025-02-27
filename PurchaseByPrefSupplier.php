@@ -65,7 +65,7 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								WHERE supplierno= '" . $_POST['Supplier'] . "'
 									AND effectivefrom <= CURRENT_DATE
 									AND (effectiveto >= CURRENT_DATE
-										OR effectiveto ='0000-00-00')
+										OR effectiveto ='1000-01-01')
 									AND stockid = '". $StockID . "'";
 
 						$ItemDiscountPercent = 0;

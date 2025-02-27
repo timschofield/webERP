@@ -61,7 +61,7 @@ $SQL="SELECT fixedassets.assetid,
 			ON fixedassets.assetid=fixedassettrans.assetid
 		WHERE fixedassettrans.transdate<='" . FormatDateForSQL($_POST['ProcessDate']) . "'
 			AND fixedassets.datepurchased<='" . FormatDateForSQL($_POST['ProcessDate']) . "'
-			AND fixedassets.disposaldate = '0000-00-00'
+			AND fixedassets.disposaldate = '1000-01-01'
 		GROUP BY fixedassets.assetid,
 			fixedassets.description,
 			fixedassets.depntype,
