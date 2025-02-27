@@ -61,7 +61,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				WHERE klconsignment.stockid = stockmaster.stockid
 					AND companycode = '" . $CompanyFrom . "'
 					AND partnercode = '" . $CompanyTo . "'
-					AND (fakturpajakdate = '0000-00-00'
+					AND (fakturpajakdate = '1000-01-01'
 						OR fakturpajakdate = '" . $EndDateSQL . "')
 					AND saledate <= '" . $EndDateSQL . "'
 				GROUP BY klconsignment.stockid
@@ -297,7 +297,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 						SET fakturpajakdate = '". $EndDateSQL ."'
 						WHERE companycode = '" . $CompanyFrom . "'
 							AND partnercode = '" . $CompanyTo . "'
-							AND fakturpajakdate = '0000-00-00'
+							AND fakturpajakdate = '1000-01-01'
 							AND saledate <= '" . $EndDateSQL . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
 				$DbgMsg = 'SQL to update klconsignment record: ';

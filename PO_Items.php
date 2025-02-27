@@ -139,27 +139,27 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			/*Insert to purchase order header record */
 			// KL RICARD Add custom fields to SQL
 			if(!isset( $_SESSION['PO' . $identifier]->KLAgreedDeliveryDate) 
-				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLAgreedDeliveryDate) == '0000-00-00')){
+				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLAgreedDeliveryDate) == '1000-01-01')){
 				$_SESSION['PO' . $identifier]->KLAgreedDeliveryDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->DeliveryDate) 
-				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) == '0000-00-00')){
+				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->DeliveryDate) == '1000-01-01')){
 				$_SESSION['PO' . $identifier]->DeliveryDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLPaymentDate) 
-				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) == '0000-00-00')){
+				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLPaymentDate) == '1000-01-01')){
 				$_SESSION['PO' . $identifier]->KLPaymentDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLShipmentDate) 
-				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLShipmentDate) == '0000-00-00')){
+				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLShipmentDate) == '1000-01-01')){
 				$_SESSION['PO' . $identifier]->KLShipmentDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLCustomsDate) 
-				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLCustomsDate) == '0000-00-00')){
+				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLCustomsDate) == '1000-01-01')){
 				$_SESSION['PO' . $identifier]->KLCustomsDate = '00/00/0000';
 			}
 			if(!isset( $_SESSION['PO' . $identifier]->KLArrivalDate) 
-				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) == '0000-00-00')){
+				OR (FormatDateForSQL($_SESSION['PO'.$identifier]->KLArrivalDate) == '1000-01-01')){
 				$_SESSION['PO' . $identifier]->KLArrivalDate = '00/00/0000';
 			}
 

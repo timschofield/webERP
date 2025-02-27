@@ -228,9 +228,9 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	if ($_POST['DisposalStatus']=='ALL'){
 		$SQL .= ' ';
 	} elseif ($_POST['DisposalStatus']=='ACTIVE') {
-		$SQL .= ' AND disposaldate = "0000-00-00"';
+		$SQL .= ' AND disposaldate = "1000-01-01"';
 	}else{
-		$SQL .= ' AND disposaldate != "0000-00-00"';
+		$SQL .= ' AND disposaldate != "1000-01-01"';
 	}
 
 	$SQL .= " ORDER BY fixedassets.assetid";

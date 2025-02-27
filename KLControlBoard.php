@@ -1767,7 +1767,7 @@ function GLTransDateControl(){
 					narrative,
 					amount
 			FROM gltrans
-			WHERE trandate = '0000-00-00'";
+			WHERE trandate = '1000-01-01'";
 			
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -2109,7 +2109,7 @@ function PettyCashBalanceControlControl($Currency, $PCGLAccounts, $AcceptedDiffe
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
 				AND pctabs.currency = currencies.currabrev
 				AND pctabs.currency = '". $Currency ."'
-				AND pcashdetails.authorized != '0000-00-00'";
+				AND pcashdetails.authorized != '1000-01-01'";
 
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_array($Result);
@@ -2319,7 +2319,7 @@ function ItemsChangingPriceDelayed($NumDays, $RootPath){
 				klchangeprice.newretailprice
 			FROM stockmaster, klchangeprice					
 			WHERE stockmaster.stockid = klchangeprice.stockid
-				AND klchangeprice.endprocessdate = '0000-00-00'
+				AND klchangeprice.endprocessdate = '1000-01-01'
 				AND klchangeprice.startprocessdate <= '". $StartDate ."'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -2986,7 +2986,7 @@ function ItemsMovingToDiscountDelayed($TypeDiscount, $NumDays, $RootPath){
 				klmovetodiscount".$TypeDiscount.".discountcategory
 			FROM stockmaster, klmovetodiscount".$TypeDiscount."					
 			WHERE stockmaster.stockid = klmovetodiscount".$TypeDiscount.".stockid
-				AND klmovetodiscount".$TypeDiscount.".endprocessdate = '0000-00-00'
+				AND klmovetodiscount".$TypeDiscount.".endprocessdate = '1000-01-01'
 				AND klmovetodiscount".$TypeDiscount.".startprocessdate <= '". $StartDate ."'";
 	$Result = DB_query($SQL);
 	if (DB_num_rows($Result) != 0){
@@ -3912,7 +3912,7 @@ function OnlineCustomersNoOrderPlaced($RootPath){
 					debtorsmaster.clientsince
 			FROM debtorsmaster
 			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
-				AND debtorsmaster.klemailnowebshoporder = '0000-00-00'
+				AND debtorsmaster.klemailnowebshoporder = '1000-01-01'
 				AND NOT EXISTS (SELECT * 
 								FROM salesorders
 								WHERE salesorders.debtorno = debtorsmaster.debtorno)
@@ -4163,9 +4163,9 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 						ON debtorsmaster.currcode = currencies.currabrev
 				WHERE debtorsmaster.debtorno = 'LAZADA'
 					AND salesorders.quotation = 0
-					AND ((salesorders.klemailthankyouorder = '0000-00-00' 
+					AND ((salesorders.klemailthankyouorder = '1000-01-01' 
 								AND salesorders.klemailtrackingconfirm <= '" . $ThankYouDate . "' 
-								AND salesorders.klemailtrackingconfirm != '0000-00-00')
+								AND salesorders.klemailtrackingconfirm != '1000-01-01')
 						)
 				GROUP BY salesorders.orderno,	
 					debtorsmaster.name,
@@ -4201,7 +4201,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 					AND debtorsmaster.debtorno != 'LAZADA'
 					AND salesorders.quotation = 0
 					AND (	(debtortrans.type = 12 
-								AND salesorders.klemailpaymentconfirm = '0000-00-00')
+								AND salesorders.klemailpaymentconfirm = '1000-01-01')
 						)
 				GROUP BY salesorders.orderno,	
 					debtorsmaster.name,
@@ -4235,7 +4235,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 			
 			$EmailType3 = "ThankYouOrder";
 			$EmailType4 = "NoSendThankYou";
-			if ($MyRow['klemailthankyouorder']== '0000-00-00'){
+			if ($MyRow['klemailthankyouorder']== '1000-01-01'){
 				$EmailLinkText3 = 'Send now';
 				$EmailLinkText4 = 'Do NOT send';
 				$EmailLink3 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['orderno'] . '&EmailType=' . $EmailType3. '&CustomerOrder=' . $MyRow['customerref'] . '">'. $EmailLinkText3 .'</a>';
@@ -4246,7 +4246,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 			}
 
 			$EmailType2 = "TrackingConfirmation";
-			if ($MyRow['klemailtrackingconfirm']== '0000-00-00'){
+			if ($MyRow['klemailtrackingconfirm']== '1000-01-01'){
 				$EmailLinkText = 'Send now';
 				$EmailLink2 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['orderno'] . '&EmailType=' . $EmailType2. '&CustomerOrder=' . $MyRow['customerref'] . '">'. $EmailLinkText .'</a>';
 				$EmailLink3 = 'Tracking Confirmation first';
@@ -4256,7 +4256,7 @@ function OnlineOrdersFollowUp($Source, $numDays, $RootPath){
 			}
 			
 			$EmailType1 = "PaymentConfirmation";
-			if ($MyRow['klemailpaymentconfirm']== '0000-00-00'){
+			if ($MyRow['klemailpaymentconfirm']== '1000-01-01'){
 				$EmailLinkText = 'Send now';
 				$EmailLink1 = '<a href="' . $RootPath . '/KLFollowUpOnlineEmails.php?TransNo=' . $MyRow['orderno'] . '&EmailType=' . $EmailType1. '&CustomerOrder=' . $MyRow['customerref'] . '">'. $EmailLinkText .'</a>';
 				$EmailLink2 = 'Payment Confirmation first';
@@ -4872,7 +4872,7 @@ function PettyCashToBeAuthorized($AuthorizationType){
 				pctabs.currency
 			FROM pcashdetails,pctabs	
 			WHERE pcashdetails.tabcode = pctabs.tabcode	
-				AND pcashdetails.authorized = '0000-00-00'" .
+				AND pcashdetails.authorized = '1000-01-01'" .
 				$SQLAuthority . "
 			GROUP BY pcashdetails.tabcode";
 	$Result = DB_query($SQL);

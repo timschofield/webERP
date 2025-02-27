@@ -125,7 +125,7 @@ if ($_GET['EmailType']!='NoSendThankYou'){
 				AND salesorders.fromstkloc=locations.loccode
 				AND currencies.currabrev=debtorsmaster.currcode 
 				AND debtortrans.order_=salesorders.orderno
-				AND (debtortrans.type = 12 AND salesorders.klemailtrackingconfirm = '0000-00-00') 
+				AND (debtortrans.type = 12 AND salesorders.klemailtrackingconfirm = '1000-01-01') 
 				AND salesorders.orderno='" . $_GET['TransNo'] . "'";
 		
 	}elseif ($_GET['EmailType']=='TrackingConfirmation'){

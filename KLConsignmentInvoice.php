@@ -54,7 +54,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 				WHERE klconsignment.stockid = stockmaster.stockid
 					AND companycode = '" . $CompanyFrom . "'
 					AND partnercode = '" . $CompanyTo . "'
-					AND invoicedtopartner = '0000-00-00'
+					AND invoicedtopartner = '1000-01-01'
 					AND saledate <= '" . $EndDate . "'
 				GROUP BY klconsignment.stockid
 				ORDER BY klconsignment.stockid";
@@ -270,7 +270,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 						SET invoicedtopartner = '". $EndDate ."'
 						WHERE companycode = '" . $CompanyFrom . "'
 							AND partnercode = '" . $CompanyTo . "'
-							AND invoicedtopartner = '0000-00-00'
+							AND invoicedtopartner = '1000-01-01'
 							AND saledate <= '" . $EndDate . "'";
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00001';		
 				$DbgMsg = 'SQL to update klconsignment record: ';
