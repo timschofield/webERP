@@ -56,6 +56,7 @@ Class PurchOrder {
 	var $Port;
 	var $total;
 	var $DefaultReceivedDate;
+	var $Total;
 
 // KL RICARD
 	var $KLStatus;
