@@ -844,30 +844,30 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 			<fieldtext>' . $_POST['Version'] . '</fieldtext>
 		</field>';
 
-	if (!isset($_POST['KLAgreedDeliveryDate'])) {
-		$_POST['KLAgreedDeliveryDate'] = '01/01/1000';
-	}
 	//Delivery Date for this PO
 	if (!isset($_POST['DeliveryDate'])) {
-		$_POST['DeliveryDate'] = '01/01/1000';
+		$_POST['DeliveryDate'] = ConvertSQLDate('1000-01-01');
 	}
 	if (!isset($_POST['KLStatus'])) {
 		$_POST['KLStatus'] = '1000';
 	}
+	if (!isset($_POST['KLAgreedDeliveryDate'])) {
+		$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate('1000-01-01');
+	}
 	if (!isset($_POST['KLPaymentDate'])) {
-		$_POST['KLPaymentDate'] = '01/01/1000';
+		$_POST['KLPaymentDate'] = ConvertSQLDate('1000-01-01');
 	}
 	if (!isset($_POST['KLShipmentDate'])) {
-		$_POST['KLShipmentDate'] = '01/01/1000';
+		$_POST['KLShipmentDate'] = ConvertSQLDate('1000-01-01');
 	}
 	if (!isset($_POST['KLShipmentAWB'])) {
 		$_POST['KLShipmentAWB'] = '';
 	}
 	if (!isset($_POST['KLCustomsDate'])) {
-		$_POST['KLCustomsDate'] = '01/01/1000';
+		$_POST['KLCustomsDate'] = ConvertSQLDate('1000-01-01');
 	}
 	if (!isset($_POST['KLArrivalDate'])) {
-		$_POST['KLArrivalDate'] = '01/01/1000';
+		$_POST['KLArrivalDate'] = ConvertSQLDate('1000-01-01');
 	}
 /*	KL RICARD COMMENTED OUT as it is repeated on the order status column
 	echo '<field>
