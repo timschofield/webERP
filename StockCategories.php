@@ -20,6 +20,10 @@ asort($StockTypeName);
 $TaxCategoryName = array();
 $Query = "SELECT taxcatid, taxcatname FROM taxcategories ORDER BY taxcatname";
 $Result = DB_query($Query);
+if (DB_num_rows($Result) == 0) {
+	prnMsg(_('There are no Tax Categories defined for this company. To define Tax Categories click') . ' ' .
+		'<a href="'.$PathPrefix.'TaxCategories.php" target="_blank">' . _('here'). '</a>', 'warn');
+}
 while ($Row = DB_fetch_array($Result)) {
 	$TaxCategoryName[$Row['taxcatid']] = $Row['taxcatname'];
 }
@@ -404,7 +408,7 @@ if (!isset($_POST['DefaultTaxCatID'])) {
 }
 echo '<field>
 		<label for="DefaultTaxCatID">' . _('Default Tax Category') .':</label>
-		<select id="DefaultTaxCatID"  name="DefaultTaxCatID">';
+		<select required="required" id="DefaultTaxCatID"  name="DefaultTaxCatID">';
 foreach ($TaxCategoryName as $TaxCategoryId => $Row) {
 	echo '<option';
 	if ($_POST['DefaultTaxCatID'] == $TaxCategoryId) {
