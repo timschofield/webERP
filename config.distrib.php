@@ -19,6 +19,9 @@ $DefaultTheme = 'xenos';
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = False;
 
+// Whether to display company logo in drop down list at login
+$ShowLogoAtLogin = True;
+
 // email address of the system administrator
 $SysAdminEmail = 'admin@mydomain.com';
 
