@@ -814,7 +814,7 @@ function SyncSnapPaymentInformation($TimeDifference, $ShowMessages, $LastTimeRun
 			FROM oc_order
 			WHERE oc_order.order_status_id = 2
 				AND oc_order.payment_code = 'snap'
-				AND oc_order.kl_payment_sync_to_weberp = '0000-00-00 00:00:00'
+				AND oc_order.kl_payment_sync_to_weberp = '1000-01-01 00:00:00'
 				AND ( oc_order.date_added >= '" . $LastTimeRun . "'
 					OR oc_order.date_modified >= '" . $LastTimeRun . "')
 			ORDER BY oc_order.order_id ASC";
@@ -936,7 +936,7 @@ function EmailOrdersReadyToPrepare($ShowMessages, $EmailText){
 						ON debtorsmaster.currcode = currencies.currabrev
 				WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_WEBSITE . ")
 					AND salesorders.quotation = 0
-					AND salesorders.klemailpaymentconfirm = '0000-00-00'
+					AND salesorders.klemailpaymentconfirm = '1000-01-01'
 				ORDER BY salesorders.orderno";			
 	$Result = DB_query($SQL);
 	$i = 0;

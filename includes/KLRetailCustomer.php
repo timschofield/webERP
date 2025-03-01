@@ -668,7 +668,7 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 				SUM(CASE klretailcustomers.firstname WHEN '' then 0 else 1 END) AS firstnames, 
 				SUM(CASE klretailcustomers.lastname WHEN '' then 0 else 1 END) AS lastnames, 
 				SUM(CASE klretailcustomers.country WHEN '0' then 0 else 1 END) AS countries, 
-				SUM(CASE klretailcustomers.date_of_birth WHEN '0000-00-00' then 0 else 1 END) AS date_of_births, 
+				SUM(CASE klretailcustomers.date_of_birth WHEN '1000-01-01' then 0 else 1 END) AS date_of_births, 
 				SUM(CASE klretailcustomers.email WHEN '' then 0 else 1 END) AS emails, 
 				SUM(CASE klretailcustomers.sex WHEN '' then 0 else 1 END) AS sexs,
 				(SELECT SUM(qtyinvoiced)

@@ -292,19 +292,19 @@ and converts to a format specified in $_SESSION['DefaultDateFormat']*/
 		prnMsg(_('The date does not appear to be in a valid format. The date being converted from SQL format was:') . ' ' . $DateEntry,'error');
 		switch ($_SESSION['DefaultDateFormat']) {
 			case 'd/m/Y':
-				return '00/00/0000';
+				return '01/01/1000';
 				break;
 			case 'd.m.Y':
-				return '00.00.0000';
+				return '01.01.1000';
 				break;
 			case 'm/d/Y':
-				return '00/00/0000';
+				return '01/01/1000';
 				break;
 			case 'Y/m/d':
-				return '0000/00/00';
+				return '1000/01/01';
 				break;
 			case 'Y-m-d':
-				return '0000-00-00';
+				return '1000-01-01';
 				break;
 		}
 	} else {
@@ -565,7 +565,7 @@ function Format_Date($DateEntry) {
 function EnsureSQLDateFormat($Date) {
 	// All credit to GitHub Copilot
 	$Date = mb_substr($Date, 0, 10); // chop off the time stuff
-	if ($Date == '0000-00-00'){
+	if ($Date == '1000-01-01'){
 		return true; // The date is "no date", but in the correct SQL format
 	}else{
 		$DateTime = DateTime::createFromFormat('Y-m-d', $Date);

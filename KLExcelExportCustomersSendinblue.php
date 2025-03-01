@@ -135,7 +135,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, $CountriesForRetail[$MyRow['country']]);
 				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, $MyRow['sex']);
 				
-				if (($MyRow['date_of_birth'] != '0000-00-00') AND ($MyRow['date_of_birth'] < Date('Y-m-d'))){
+				if (($MyRow['date_of_birth'] != '1000-01-01') AND ($MyRow['date_of_birth'] < Date('Y-m-d'))){
 					$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, $MyRow['date_of_birth']);
 				}
 				
@@ -149,7 +149,7 @@ function submit($CountriesForRetail, $MarkExported, $FromDate, $ToDate) {
 					$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'Y');
 				}
 				
-				if ($MyRow['orddate'] != '0000-00-00'){
+				if ($MyRow['orddate'] != '1000-01-01'){
 					$SpreadSheet->getActiveSheet()->setCellValue('I'.$i, $MyRow['orddate']);
 				}
 

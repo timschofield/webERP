@@ -105,7 +105,7 @@ if (isset($_POST['submit'])) {
 				SET stockid='" . $_POST['Stockid'] . "',
 					startprocessdate = CURRENT_DATE,
 					discountcategory='50',
-					endprocessdate='0000-00-00'
+					endprocessdate='1000-01-01'
 				WHERE countermovediscount = '".$SelectedMovement."'";
 
 		$Msg = _('Move Item To 50% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been updated');
@@ -119,7 +119,7 @@ if (isset($_POST['submit'])) {
 				VALUES ('" . $_POST['Stockid'] . "',
 					CURRENT_DATE,
 					'50',
-					'0000-00-00')";
+					'1000-01-01')";
 		$Msg = _('Move Item To 50% Discount Step 01 record for') . ' ' . $_POST['Stockid'] . ' ' . _('has been created');
 	}
 	if ($InputError !=1) {
@@ -190,7 +190,7 @@ or deletion of the records*/
 				klmovetodiscount50.startprocessdate
 			FROM klmovetodiscount50,stockmaster
 			WHERE stockmaster.stockid = klmovetodiscount50.stockid
-				AND klmovetodiscount50.endprocessdate = '0000-00-00'";
+				AND klmovetodiscount50.endprocessdate = '1000-01-01'";
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';

@@ -150,7 +150,7 @@ function submit($CountriesForRetail, $TypeCustomers, $MarkExported, $FromDate, $
 						$SpreadSheet->getActiveSheet()->setCellValue('H'.$i, 'Y');
 					}
 					
-					if ($MyRow['orddate'] != '0000-00-00'){
+					if ($MyRow['orddate'] != '1000-01-01'){
 						$SpreadSheet->getActiveSheet()->setCellValue('I'.$i, $MyRow['orddate']);
 					}
 

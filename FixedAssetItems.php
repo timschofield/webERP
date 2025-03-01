@@ -580,7 +580,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 	echo '<field><input type="hidden" name="AssetID" value="' . $AssetID . '"/></field>';
 }
 
-if (isset($AssetRow['disposaldate']) AND $AssetRow['disposaldate'] !='0000-00-00'){
+if (isset($AssetRow['disposaldate']) AND $AssetRow['disposaldate'] !='1000-01-01'){
 	echo '<field>
 			<label>' . _('Asset Already disposed on') . ':</label>
 			<div class="fieldvalue">' . ConvertSQLDate($AssetRow['disposaldate']) . '</div>
@@ -745,7 +745,7 @@ if (isset($AssetRow)){
 			<label>' . _('Accumulated Depreciation') . ':</label>
 			<div class="fieldvalue">' . locale_number_format($_POST['AccumDepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</div>
 		</field>';
-	if ($AssetRow['disposaldate'] != '0000-00-00'){
+	if ($AssetRow['disposaldate'] != '1000-01-01'){
 		echo'<field>
 			<label>' . _('Net Book Value at disposal date') . ':</label>
 			<div class="fieldvalue">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</div>

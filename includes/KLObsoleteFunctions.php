@@ -110,7 +110,7 @@ function AdjustNoSales($Location, $maxdays, $maxmanualchanges, $topitems, $TopIt
 /* KL RICARD COMMENTED ON 2014-06-10
 			// if manually reseted, not change it
 			$lastManualModification = isReorderLevelManuallyChanged($MyRow['stockid'], $Location, $maxmanualchanges);
-			if ($lastManualModification != '0000-00-00'){
+			if ($lastManualModification != '1000-01-01'){
 				$NewRL = $MyRow['reorderlevel'];
 				$notes = "Manually changed on ". ConvertSQLDate($lastManualModification);
 			}
@@ -527,7 +527,7 @@ function InsuficientStockForTopSalesItems($StockCat, $StockCatDescription, $Days
 
 function isReorderLevelManuallyChanged($StockID, $loccode, $maxmanualchanges){
 	if ($maxmanualchanges == 0){
-		return '0000-00-00';
+		return '1000-01-01';
 	}
 	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$maxmanualchanges));
 	$SQL="SELECT transactiondate
@@ -543,7 +543,7 @@ function isReorderLevelManuallyChanged($StockID, $loccode, $maxmanualchanges){
 		$MyRow = DB_fetch_array($Result);
 		$lastdate = $MyRow['transactiondate'];
 	}else{
-		$lastdate = '0000-00-00';
+		$lastdate = '1000-01-01';
 	}
 	return $lastdate;
 
@@ -1336,7 +1336,7 @@ function SetRLForLowSalesItems( $starttopitems, $endtopitems, $daystopitems, $Ne
 				AND stockmaster.discontinued = 0
 				AND salesorderdetails.stkcode = stockmaster.stockid
 				AND (stockmaster.lastcategoryupdate <= '" . $StartDate . "'
-					OR stockmaster.lastcategoryupdate = '0000-00-00')
+					OR stockmaster.lastcategoryupdate = '1000-01-01')
 				AND salesorderdetails.actualdispatchdate >= '" . $StartDate . "'
 			GROUP BY salesorderdetails.stkcode
 			ORDER BY totalinvoiced DESC

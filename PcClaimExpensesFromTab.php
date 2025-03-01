@@ -513,7 +513,7 @@ if (!isset($SelectedTabs)) {
 					$ExpenseCodeDes = $MyRow['codeexpense'] . ' - ' . $Description[0];
 			}
 
-			if ($MyRow['authorized'] == '0000-00-00') {
+			if ($MyRow['authorized'] == '1000-01-01') {
 				$AuthorisedDate = _('Unauthorised');
 			} else {
 				$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);
@@ -568,7 +568,7 @@ if (!isset($SelectedTabs)) {
 				$TaxesDescription .= $MyTaxRow['description'] . '<br />';
 				$TaxesTaxAmount .= locale_number_format($MyTaxRow['amount'], $CurrDecimalPlaces) . '<br />';
 			}
-			if (($MyRow['authorized'] == '0000-00-00') and ($ExpenseCodeDes != 'ASSIGNCASH')) {
+			if (($MyRow['authorized'] == '1000-01-01') and ($ExpenseCodeDes != 'ASSIGNCASH')) {
 				// only movements NOT authorised can be modified or deleted
 				// KL RICARD Keep the receipt text field, and do not show tax, tag, purpose
 				echo '<tr class="striped_row">

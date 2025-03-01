@@ -227,7 +227,7 @@ function PurgeKLTable($TableName,$DateField, $ShowMessages, $EmailText){
 	if ($_SESSION['MonthsAuditTrail'] > 0){
 		 $SQL = "DELETE FROM " . $TableName . "
 				WHERE  " . $DateField . " <= '" . Date('Y-m-d', mktime(0,0,0, Date('m')-$_SESSION['MonthsAuditTrail'])) . "'
-					AND " . $DateField .  " != '0000-00-00'";
+					AND " . $DateField .  " != '1000-01-01'";
 		$ErrMsg ='Could not purge table ' . $TableName . ' because';
 		$Result = DB_query($SQL,$ErrMsg);
 		$Text = "Table " . $TableName . " purged.";
