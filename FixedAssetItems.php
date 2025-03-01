@@ -554,7 +554,7 @@ if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$Category;
 }
 
-if (isset($AssetRow) AND ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow['datepurchased']!='')){
+if (isset($AssetRow) AND ($AssetRow['datepurchased']!='1000-01-01' AND $AssetRow['datepurchased']!='')){
 	echo '<field>
 			<label for="datepurchased">' . _('Date Purchased') . ':</label>
 			<fieldtext>' . ConvertSQLDate($AssetRow['datepurchased']) . '</fieldtext>
