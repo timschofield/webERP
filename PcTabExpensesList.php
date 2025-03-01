@@ -187,7 +187,7 @@ if (isset($_POST['submit'])) {
 				$ReceiptText = _('No attachment');
 				}
 
-				if ($MyRow['authorized'] == '0000-00-00') {
+				if ($MyRow['authorized'] == '1000-01-01') {
 					$AuthorisedDate = _('Unauthorised');
 				} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);

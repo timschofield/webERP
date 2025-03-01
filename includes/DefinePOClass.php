@@ -49,6 +49,7 @@ Class PurchOrder {
 	var $Contact;
 	var $Port;
 	var $DefaultReceivedDate;
+	var $Total;
 
 	function __construct(){
 	/*Constructor function initialises a new purchase order object */

@@ -449,7 +449,7 @@ if(isset($StockItemsResult)){
 			} else {
 				$Auth = _('Yes');
 			}
-			if ($MyRow['despatchdate'] == '0000-00-00') {
+			if ($MyRow['despatchdate'] == '1000-01-01') {
 				$Disp = _('Not yet');
 			} else {
 				$Disp = ConvertSQLDate($MyRow['despatchdate']);

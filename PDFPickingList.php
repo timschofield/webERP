@@ -167,7 +167,7 @@ if (isset($_POST['TransDate'])
 	$OrdersToPick[0]['orderno']='Preview';
 	$OrdersToPick[0]['customerref']=str_pad('',20,'x');
 	$OrdersToPick[0]['comments']=str_pad('',100,'x');
-	$OrdersToPick[0]['orddate']='1900-00-01';
+	$OrdersToPick[0]['orddate']='1000-01-01';
 	$OrdersToPick[0]['deliverto']=str_pad('',20,'x');
 	$OrdersToPick[0]['deladd1']=str_pad('',20,'x');
 	$OrdersToPick[0]['deladd2']=str_pad('',20,'x');
@@ -176,7 +176,7 @@ if (isset($_POST['TransDate'])
 	$OrdersToPick[0]['deladd5']=str_pad('',20,'x');
 	$OrdersToPick[0]['deladd6']=str_pad('',20,'x');
 	$OrdersToPick[0]['deliverblind']=str_pad('',20,'x');
-	$OrdersToPick[0]['deliverydate']='1900-00-01';
+	$OrdersToPick[0]['deliverydate']='1000-01-01';
 	$OrdersToPick[0]['name']=str_pad('',20,'x');
 	$OrdersToPick[0]['address1']=str_pad('',20,'x');
 	$OrdersToPick[0]['address2']=str_pad('',20,'x');
@@ -186,7 +186,7 @@ if (isset($_POST['TransDate'])
 	$OrdersToPick[0]['address6']=str_pad('',20,'x');
 	$OrdersToPick[0]['shippername']=str_pad('',20,'x');
 	$OrdersToPick[0]['printedpackingslip']=str_pad('',20,'x');
-	$OrdersToPick[0]['datepackingslipprinted']='1900-00-01';
+	$OrdersToPick[0]['datepackingslipprinted']='1000-01-01';
 	$OrdersToPick[0]['locationname']=str_pad('',15,'x');
 }
 /* Then there's an order to print and its not been printed already (or its been flagged for reprinting/ge_Width=807;
@@ -284,7 +284,7 @@ for ($i=0;$i<sizeof($OrdersToPick);$i++){
 				'" . $OrdersToPick[$i]['orderno']."',
 				'" . FormatDateForSQL($_POST['TransDate'])."',
 				CURRENT_DATE,
-				'0000-00-00')";
+				'1000-01-01')";
 			$HeaderResult=DB_query($SQL);
 		} else {
 			$LinesToShow=1;

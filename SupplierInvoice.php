@@ -365,8 +365,8 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 							$_SESSION['PO' . $identifier]->LineItems[$OrderLine
 								->LineNo]->GLCode = $AssetRow['costact'];
 							/*Now if there are no previous additions to this asset update the date purchased */
-							if ($AssetRow['datepurchased'] == '0000-00-00') {
-								/* it is a new addition as the date is set to 0000-00-00 when the asset record is created
+							if ($AssetRow['datepurchased'] == '1000-01-01') {
+								/* it is a new addition as the date is set to 1000-01-01 when the asset record is created
 								 * before any cost is added to the asset
 								*/
 								$SQL = "UPDATE fixedassets
@@ -1863,7 +1863,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 			$AssetRow = DB_fetch_array($Result);
 
 			$SQL = "UPDATE fixedassets SET cost = cost + " . ($AssetAddition->Amount / $_SESSION['SuppTrans']->ExRate);
-			if ($AssetRow['datepurchased'] == '0000-00-00') {
+			if ($AssetRow['datepurchased'] == '1000-01-01') {
 				$SQL .= ", datepurchased='" . $SQLInvoiceDate . "'";
 			}
 			$SQL .= " WHERE assetid = '" . $AssetAddition->AssetID . "'";

@@ -466,7 +466,7 @@ if (!isset($AssetID) OR $AssetID=='') {
 	echo '<field><td><input type="hidden" name="AssetID" value="' . $AssetID . '"/></td></field>';
 }
 
-if (isset($AssetRow['disposaldate']) AND $AssetRow['disposaldate'] !='0000-00-00'){
+if (isset($AssetRow['disposaldate']) AND $AssetRow['disposaldate'] !='1000-01-01'){
 	echo '<field>
 			<label for="disposaldate">' . _('Asset Already disposed on') . ':</label>
 			<fieldtext>' . ConvertSQLDate($AssetRow['disposaldate']) . '</fieldtext>
@@ -554,7 +554,7 @@ if (!isset($_POST['AssetCategoryID'])) {
 	$_POST['AssetCategoryID']=$Category;
 }
 
-if (isset($AssetRow) AND ($AssetRow['datepurchased']!='0000-00-00' AND $AssetRow['datepurchased']!='')){
+if (isset($AssetRow) AND ($AssetRow['datepurchased']!='1000-01-01' AND $AssetRow['datepurchased']!='')){
 	echo '<field>
 			<label for="datepurchased">' . _('Date Purchased') . ':</label>
 			<fieldtext>' . ConvertSQLDate($AssetRow['datepurchased']) . '</fieldtext>
@@ -626,7 +626,7 @@ if (isset($AssetRow)){
 			<td>' . _('Accumulated Depreciation') . ':</td>
 			<td class="number">' . locale_number_format($AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 		</tr>';
-	if ($AssetRow['disposaldate'] != '0000-00-00'){
+	if ($AssetRow['disposaldate'] != '1000-01-01'){
 		echo'<tr>
 			<td>' . _('Net Book Value at disposal date') . ':</td>
 			<td class="number">' . locale_number_format($AssetRow['cost']-$AssetRow['accumdepn'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>

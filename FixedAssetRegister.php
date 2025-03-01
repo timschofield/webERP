@@ -127,9 +127,9 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 			$Ancestors[$i] = $ParentRow['locationdescription'];
 		}
 		*/
-		if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['disposaldate']),$_POST['FromDate']) OR $MyRow['disposaldate']='0000-00-00') {
+		if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['disposaldate']),$_POST['FromDate']) OR $MyRow['disposaldate']='1000-01-01') {
 
-			if ($MyRow['disposaldate']!='0000-00-00' AND Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($MyRow['disposaldate']))){
+			if ($MyRow['disposaldate']!='1000-01-01' AND Date1GreaterThanDate2($_POST['ToDate'], ConvertSQLDate($MyRow['disposaldate']))){
 				/*The asset was disposed during the period */
 				$CostCfwd = 0;
 				$AccumDepnCfwd = 0;

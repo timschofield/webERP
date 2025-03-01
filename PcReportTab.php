@@ -118,7 +118,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQLBalanceNotAut = "SELECT SUM(amount)
 			FROM pcashdetails
 			WHERE tabcode = '" . $SelectedTabs . "'
-			AND authorized = '0000-00-00'
+			AND authorized = '1000-01-01'
 			AND date < '" . $SQLFromDate . "'";
 
 	$TabBalanceNotAut = DB_query($SQLBalanceNotAut);
@@ -216,7 +216,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			$ReceiptText = _('No attachment');
 		}
 
-		if ($MyRow['authorized'] == '0000-00-00') {
+		if ($MyRow['authorized'] == '1000-01-01') {
 					$AuthorisedDate = _('Unauthorised');
 				} else {
 					$AuthorisedDate = ConvertSQLDate($MyRow['authorized']);

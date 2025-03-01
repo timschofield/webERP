@@ -1,6 +1,6 @@
 <?php
 
-$SQL = "UPDATE pricematrix SET enddate='9999-12-31' WHERE enddate='0000-00-00'";
+$SQL = "UPDATE pricematrix SET enddate='9999-12-31' WHERE enddate='0000-00-00' OR enddate='1000-01-01'";
 $ErrMsg = _('There is a problem setting the default pricematrix enddate to 9999-12-31');
 $Result = DB_query($SQL, $ErrMsg);
 

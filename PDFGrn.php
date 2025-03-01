@@ -20,7 +20,7 @@ $pdf->addInfo('Title', _('Goods Received Note') );
 
 if ($GRNNo == 'Preview'){
 	$MyRow['itemcode'] = str_pad('', 15,'x');
-	$MyRow['deliverydate'] = '0000-00-00';
+	$MyRow['deliverydate'] = '1000-01-01';
 	$MyRow['itemdescription'] =  str_pad('', 30,'x');
 	$MyRow['qtyrecd'] = 99999999.99;
 	$MyRow['decimalplaces'] =2;

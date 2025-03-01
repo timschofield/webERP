@@ -14776,7 +14776,7 @@ INSERT INTO `fixedassetlocations` VALUES ('TORONT','Toronto Warehouse','');
 -- Dumping data for table `fixedassets`
 --
 
-INSERT INTO `fixedassets` VALUES (1,'','','HEADOF',0,0,'0000-00-00',0,'PLANT','test 1','Test 1',0,5,'0000-00-00');
+INSERT INTO `fixedassets` VALUES (1,'','','HEADOF',0,0,'1000-01-01',0,'PLANT','test 1','Test 1',0,5,'1000-01-01');
 
 --
 -- Dumping data for table `fixedassettasks`
@@ -18592,24 +18592,24 @@ INSERT INTO `salesman` VALUES ('PHO','Phone Contact','','',5.5,10001,2.95,1);
 
 INSERT INTO `salesorderdetails` VALUES (0,1,'DVD-DHWV',9,10.5,9,0,0,'2013-06-26 00:00:00',1,NULL,'2013-06-23','');
 INSERT INTO `salesorderdetails` VALUES (0,7,'BREAD',2,2.5,2,0,0,'2013-09-07 00:00:00',1,'','2013-09-06','');
-INSERT INTO `salesorderdetails` VALUES (0,8,'CUTTING',0,50,2,0,0,'0000-00-00 00:00:00',0,'','2014-08-02','0');
-INSERT INTO `salesorderdetails` VALUES (0,11,'DR_TUMMY',0,16.5,50,0,0,'0000-00-00 00:00:00',0,'','2016-10-19','');
+INSERT INTO `salesorderdetails` VALUES (0,8,'CUTTING',0,50,2,0,0,'1000-01-01 00:00:00',0,'','2014-08-02','0');
+INSERT INTO `salesorderdetails` VALUES (0,11,'DR_TUMMY',0,16.5,50,0,0,'1000-01-01 00:00:00',0,'','2016-10-19','');
 INSERT INTO `salesorderdetails` VALUES (1,1,'PAYTSURCHARGE',1,2.7405,1,0,0,'2013-06-26 00:00:00',1,NULL,'2013-06-23','');
-INSERT INTO `salesorderdetails` VALUES (1,8,'DR_TUMMY',0,0,1,0,0,'0000-00-00 00:00:00',0,'','2014-08-02','0');
-INSERT INTO `salesorderdetails` VALUES (1,11,'DVD-LTWP',0,7.49,2,0,0,'0000-00-00 00:00:00',0,'','2016-10-19','0');
+INSERT INTO `salesorderdetails` VALUES (1,8,'DR_TUMMY',0,0,1,0,0,'1000-01-01 00:00:00',0,'','2014-08-02','0');
+INSERT INTO `salesorderdetails` VALUES (1,11,'DVD-LTWP',0,7.49,2,0,0,'1000-01-01 00:00:00',0,'','2016-10-19','0');
 INSERT INTO `salesorderdetails` VALUES (1,12,'BREAD',0,4.6728971962617,1,0,0,'2014-03-07 00:00:00',0,'','2014-03-07',NULL);
-INSERT INTO `salesorderdetails` VALUES (2,11,'DVD-TOPGUN',0,12.25,2,0,0,'0000-00-00 00:00:00',0,'','2016-10-19','0');
+INSERT INTO `salesorderdetails` VALUES (2,11,'DVD-TOPGUN',0,12.25,2,0,0,'1000-01-01 00:00:00',0,'','2016-10-19','0');
 
 --
 -- Dumping data for table `salesorders`
 --
 
-INSERT INTO `salesorders` VALUES (1,'16','16','',NULL,' Inv 1','2013-06-23','DE',1,'34 Marram Way','Peka Peka','RD1 Waiakane','5134','','New Zealand','64275567890','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2013-06-23','2013-06-23',0,'0000-00-00',0,'2013-06-23',1,'ERI',NULL);
-INSERT INTO `salesorders` VALUES (7,'12','12','',NULL,' Inv 2','2013-09-06','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge &amp; Co',1,0,'TOR','2013-09-07','2013-09-07',0,'0000-00-00',0,'2013-09-07',0,'ERI',NULL);
-INSERT INTO `salesorders` VALUES (8,'12','12','',NULL,'','2014-08-02','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge & Co',1,0,'TOR','2014-08-04','2014-08-04',0,'0000-00-00',0,'2014-08-04',1,'ERI',NULL);
-INSERT INTO `salesorders` VALUES (10,'WEB0000018','WEB0000018','',NULL,'','2014-08-31','DE',1,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','04 528 9514','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2014-08-31','2014-08-31',0,'0000-00-00',1,'2014-08-31',0,'ERI',NULL);
-INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRYFL','',NULL,'','2016-10-19','DE',1,'1821 Sunnyside','Ft Lauderdale','Florida','42554','','United States','2445 2232 524','wendy@angry.com','Angus Rouledge - Florida',1,0,'TOR','2016-10-19','2016-10-19',0,'0000-00-00',0,'2016-10-19',1,'PHO',NULL);
-INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','POS-00001 102',NULL,NULL,'2014-03-07','DE',1,'','','',NULL,'','',NULL,NULL,'Angus Rouledge - Toronto',1,0,'MEL','2014-03-07','2014-03-07',1,'2014-03-07',0,'0000-00-00',0,'',NULL);
+INSERT INTO `salesorders` VALUES (1,'16','16','',NULL,' Inv 1','2013-06-23','DE',1,'34 Marram Way','Peka Peka','RD1 Waiakane','5134','','New Zealand','64275567890','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2013-06-23','2013-06-23',0,'1000-01-01',0,'2013-06-23',1,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (7,'12','12','',NULL,' Inv 2','2013-09-06','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge &amp; Co',1,0,'TOR','2013-09-07','2013-09-07',0,'1000-01-01',0,'2013-09-07',0,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (8,'12','12','',NULL,'','2014-08-02','DE',1,'123 Alexander Road','Roundhay','Leeds','3211','','United Kingdom','212234566','angus@angry.com','Angus Routledge & Co',1,0,'TOR','2014-08-04','2014-08-04',0,'1000-01-01',0,'2014-08-04',1,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (10,'WEB0000018','WEB0000018','',NULL,'','2014-08-31','DE',1,'34 Marram Way','Peka Peka, RD1 Waikanae','','Kapiti','5134','New Zealand','04 528 9514','phil@logicworks.co.nz','Phil Daintree',1,0,'TOR','2014-08-31','2014-08-31',0,'1000-01-01',1,'2014-08-31',0,'ERI',NULL);
+INSERT INTO `salesorders` VALUES (11,'ANGRY','ANGRYFL','',NULL,'','2016-10-19','DE',1,'1821 Sunnyside','Ft Lauderdale','Florida','42554','','United States','2445 2232 524','wendy@angry.com','Angus Rouledge - Florida',1,0,'TOR','2016-10-19','2016-10-19',0,'1000-01-01',0,'2016-10-19',1,'PHO',NULL);
+INSERT INTO `salesorders` VALUES (12,'ANGRY','ANGRY','POS-00001 102',NULL,NULL,'2014-03-07','DE',1,'','','',NULL,'','',NULL,NULL,'Angus Rouledge - Toronto',1,0,'MEL','2014-03-07','2014-03-07',1,'2014-03-07',0,'1000-01-01',0,'',NULL);
 
 --
 -- Dumping data for table `salestypes`
@@ -19286,37 +19286,37 @@ INSERT INTO `stockitemproperties` VALUES ('DVD_ACTION',4,'Action');
 -- Dumping data for table `stockmaster`
 --
 
-INSERT INTO `stockmaster` VALUES ('BIGEARS12','DVD','Big Ears and Noddy episodes on DVD','Big Ears and Noddy episodes on DVD','each','M',0.0000,3490.0000,1.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('BirthdayCakeConstruc','BAKE','12 foot birthday cake for wrestling tournament','12 foot birthday cake for wrestling tournament','each','M',0.0000,0.0000,12.9525,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M',0.0000,0.5625,0.5625,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('CUTTING','ZLAB','Cutting Labor','Cutting Labor','hours','D',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('DR_TUMMY','FOOD','Gastric exquisite diarrhea','Gastric exquisite diarrhea','each','M',0.0000,0.0000,116.2250,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
+INSERT INTO `stockmaster` VALUES ('BIGEARS12','DVD','Big Ears and Noddy episodes on DVD','Big Ears and Noddy episodes on DVD','each','M',0.0000,3490.0000,1.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('BirthdayCakeConstruc','BAKE','12 foot birthday cake for wrestling tournament','12 foot birthday cake for wrestling tournament','each','M',0.0000,0.0000,12.9525,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('BREAD','FOOD','Bread','Bread','each','M',0.0000,0.5625,0.5625,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('CUTTING','ZLAB','Cutting Labor','Cutting Labor','hours','D',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('DR_TUMMY','FOOD','Gastric exquisite diarrhea','Gastric exquisite diarrhea','each','M',0.0000,0.0000,116.2250,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
 INSERT INTO `stockmaster` VALUES ('DVD-CASE','DVD','webERP Demo DVD Case','webERP Demo DVD Case','each','B',0.0000,0.9567,1.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','DE',1,0,0,0,0,0,0,0.0000,'2014-01-14');
-INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). &lt;br /&gt;Languages: English, Deutsch. &lt;br /&gt;Subtitles: English, Deutsch, Spanish. &lt;br /&gt;Audio: Dolby Surround 5.1. &lt;br /&gt;Picture Format: 16:9 Wide-Screen. &lt;br /&gt;Length: (approx) 122 minutes. &lt;br /&gt;Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,5.5000,2.3200,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('DVD-LTWP','DVD','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n&lt;br /&gt;\r\nLanguages: English, Deutsch.\r\n&lt;br /&gt;\r\nSubtitles: English, Deutsch, Spanish.\r\n&lt;br /&gt;\r\nAudio: Dolby Surround 5.1.\r\n&lt;br /&gt;\r\nPicture Format: 16:9 Wide-Screen.\r\n&lt;br /&gt;\r\nLength: (approx) 100 minutes.\r\n&lt;br /&gt;\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,2.6600,2.7000,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B',0.0000,0.0000,6.5000,0.0000,0.0000,0,0,1,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). &lt;br /&gt;Languages: English, Deutsch. &lt;br /&gt;Subtitles: English, Deutsch, Spanish. &lt;br /&gt;Audio: Dolby Surround 5.1. &lt;br /&gt;Picture Format: 16:9 Wide-Screen. &lt;br /&gt;Length: (approx) 98 minutes. &lt;br /&gt;Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,5.0000,8.0000,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,0.0000,5.0000,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','A',0.0000,16.2200,22.0200,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B',0.0000,0.0000,3.8900,0.0000,0.0000,0,0,1,0,0.0000,0.0000,'','',1,0,0,1,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('FREIGHT','ZFR','Freight','Freight','each','D',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('FROAYLANDO','FOOD','Fried Orange Yoke Flan D\'Or','Fried Orange Yoke Flan D\'Or','each','M',0.0000,0.0000,34.2618,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B',0.0000,1015.6105,102564.1026,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,4,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B',0.0000,0.0000,633.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A',0.0000,0.0000,138461.5385,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M',0.0000,0.0000,853.0000,0.0000,0.0000,0,0,1,5,0.4000,7.8000,'','',1,1,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B',0.0000,0.0000,1235.0000,0.0000,0.0000,0,0,1,5,0.8500,16.0000,'','',1,1,0,0,0,0,0,0.0000,'0000-00-00');
+INSERT INTO `stockmaster` VALUES ('DVD-DHWV','DVD','Die Hard With A Vengeance Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). &lt;br /&gt;Languages: English, Deutsch. &lt;br /&gt;Subtitles: English, Deutsch, Spanish. &lt;br /&gt;Audio: Dolby Surround 5.1. &lt;br /&gt;Picture Format: 16:9 Wide-Screen. &lt;br /&gt;Length: (approx) 122 minutes. &lt;br /&gt;Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,5.5000,2.3200,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('DVD-LTWP','DVD','Lethal Weapon Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r\n&lt;br /&gt;\r\nLanguages: English, Deutsch.\r\n&lt;br /&gt;\r\nSubtitles: English, Deutsch, Spanish.\r\n&lt;br /&gt;\r\nAudio: Dolby Surround 5.1.\r\n&lt;br /&gt;\r\nPicture Format: 16:9 Wide-Screen.\r\n&lt;br /&gt;\r\nLength: (approx) 100 minutes.\r\n&lt;br /&gt;\r\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,2.6600,2.7000,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('DVD-TOPGUN','DVD','Top Gun DVD','Top Gun DVD','each','B',0.0000,0.0000,6.5000,0.0000,0.0000,0,0,1,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG','DVD','Under Siege Linked','Regional Code: 2 (Japan, Europe, Middle East, South Africa). &lt;br /&gt;Languages: English, Deutsch. &lt;br /&gt;Subtitles: English, Deutsch, Spanish. &lt;br /&gt;Audio: Dolby Surround 5.1. &lt;br /&gt;Picture Format: 16:9 Wide-Screen. &lt;br /&gt;Length: (approx) 98 minutes. &lt;br /&gt;Other: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,5.0000,8.0000,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('DVD-UNSG2','DVD','Under Siege 2 - Dark Territory','Regional Code: 2 (Japan, Europe, Middle East, South Africa).\r<br />\nLanguages: English, Deutsch.\r<br />\nSubtitles: English, Deutsch, Spanish.\r<br />\nAudio: Dolby Surround 5.1.\r<br />\nPicture Format: 16:9 Wide-Screen.\r<br />\nLength: (approx) 98 minutes.\r<br />\nOther: Interactive Menus, Chapter Selection, Subtitles (more languages).','each','B',0.0000,0.0000,5.0000,0.0000,0.0000,0,0,0,0,0.0000,7.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('DVD_ACTION','DVD','Action Series Bundle','Under Seige I and Under Seige II\r\n','each','A',0.0000,16.2200,22.0200,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('FLOUR','AIRCON','High Grade Flour','High Grade Flour','kgs','B',0.0000,0.0000,3.8900,0.0000,0.0000,0,0,1,0,0.0000,0.0000,'','',1,0,0,1,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('FREIGHT','ZFR','Freight','Freight','each','D',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('FROAYLANDO','FOOD','Fried Orange Yoke Flan D\'Or','Fried Orange Yoke Flan D\'Or','each','M',0.0000,0.0000,34.2618,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('FUJI990101','AIRCON','Fujitsu 990101 Split type Indoor Unit 3.5kw','Fujitsu 990101 Split type Indoor Unit 3.5kw Heat Pump with mounting screws and isolating switch','each','B',0.0000,1015.6105,102564.1026,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,4,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('FUJI990102','AIRCON','Fujitsu 990102 split type A/C Outdoor unit 3.5kw','Fujitsu 990102 split type A/C Outdoor unit 3.5kw with 5m piping & insulation','each','B',0.0000,0.0000,633.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('FUJI9901ASS','AIRCON','Fujitsu 990101 Split type A/C 3.5kw complete','Fujitsu 990101 Split type A/C 3.5kw complete with indoor and outdoor units 5m pipe and insulation isolating switch. 5 year warranty','each','A',0.0000,0.0000,138461.5385,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('HIT3042-4','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Indoor Unit - wall hung complete with brackets and screws. 220V-240V AC\r\n5 year guaranttee','each','M',0.0000,0.0000,853.0000,0.0000,0.0000,0,0,1,5,0.4000,7.8000,'','',1,1,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('HIT3043-5','AIRCON','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor','Hitachi Aircond Rev Cycle Split Type 6.5kw Outdoor unit - including 5m piping for fitting to HIT3042-4 indoor unit\r\n5 year guaranttee','each','B',0.0000,0.0000,1235.0000,0.0000,0.0000,0,0,1,5,0.8500,16.0000,'','',1,1,0,0,0,0,0,0.0000,'1000-01-01');
 INSERT INTO `stockmaster` VALUES ('LABOUR','ZLAB','Labour item - Freddie','Labour item - Freddie','each','D',0.0000,0.0000,75.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'2014-07-26');
-INSERT INTO `stockmaster` VALUES ('PAYTSURCHARGE','ZPAYT','Payment Surcharges','Payment Surcharges','each','D',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B',0.0000,1.2000,2.5000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,3,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('SELLTAPE','TAPE','Selling units of tape','Selling units of tape','each','A',0.0000,0.0000,0.0100,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','A',0.0000,0.0000,0.0563,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('STROD34','TAPE','Stainless 3/4&quot; Rod','Stainless 3/4&quot; Rod','each','B',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
+INSERT INTO `stockmaster` VALUES ('PAYTSURCHARGE','ZPAYT','Payment Surcharges','Payment Surcharges','each','D',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('SALT','BAKE','Salt','Salt','kgs','B',0.0000,1.2000,2.5000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,3,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('SELLTAPE','TAPE','Selling units of tape','Selling units of tape','each','A',0.0000,0.0000,0.0100,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('SLICE','FOOD','Slice Of Bread','Slice Of Bread','each','A',0.0000,0.0000,0.0563,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('STROD34','TAPE','Stainless 3/4&quot; Rod','Stainless 3/4&quot; Rod','each','B',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
 INSERT INTO `stockmaster` VALUES ('TAPE1','TAPE','Log of tape','Log of tape','feet','B',0.0000,0.0000,10.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,2,0,0,0,0.0000,'2013-02-08');
-INSERT INTO `stockmaster` VALUES ('TAPE2','TAPE','Tape 2','Tape 2','feet','M',0.0000,0.0000,2.5000,0.0000,0.0000,0,0,0,0,0.0100,0.1000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('Test123','TAPE','Testing manufact tape','Testing manufact tape','each','M',0.0000,0.0000,45.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('TESTSERIALITEM','TAPE','TEst Serial Item','Test Serial Item','each','B',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,1,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'0000-00-00');
-INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B',0.0000,3.8500,5.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,3,0,0,0,0.0000,'0000-00-00');
+INSERT INTO `stockmaster` VALUES ('TAPE2','TAPE','Tape 2','Tape 2','feet','M',0.0000,0.0000,2.5000,0.0000,0.0000,0,0,0,0,0.0100,0.1000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('Test123','TAPE','Testing manufact tape','Testing manufact tape','each','M',0.0000,0.0000,45.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('TESTSERIALITEM','TAPE','TEst Serial Item','Test Serial Item','each','B',0.0000,0.0000,0.0000,0.0000,0.0000,0,0,1,0,0.0000,0.0000,'','',1,0,0,0,0,0,0,0.0000,'1000-01-01');
+INSERT INTO `stockmaster` VALUES ('YEAST','BAKE','Yeast','Yeast','kgs','B',0.0000,3.8500,5.0000,0.0000,0.0000,0,0,0,0,0.0000,0.0000,'','',1,0,0,3,0,0,0,0.0000,'1000-01-01');
 
 --
 -- Dumping data for table `stockmoves`
@@ -19443,16 +19443,16 @@ INSERT INTO `suppliertype` VALUES (2,'Others');
 --
 
 INSERT INTO `supptrans` VALUES (34,20,'CRUISE','123','2013-01-15','2013-01-31','2012-12-16 00:00:00',1,0.6185,10,0,0,10,'',0,'',0,1);
-INSERT INTO `supptrans` VALUES (6,22,'CRUISE','Cash','2013-01-01','0000-00-00','2012-12-16 09:17:20',1,0.6185,-10,0,0,-10,'',0,'',0,2);
+INSERT INTO `supptrans` VALUES (6,22,'CRUISE','Cash','2013-01-01','1000-01-01','2012-12-16 09:17:20',1,0.6185,-10,0,0,-10,'',0,'',0,2);
 INSERT INTO `supptrans` VALUES (35,20,'CRUISE','234','2013-01-15','2013-01-31','2012-12-16 00:00:00',1,0.6185,100,0,0,100,'',0,'',0,3);
-INSERT INTO `supptrans` VALUES (7,22,'CRUISE','Cash','2013-01-16','0000-00-00','2012-12-16 09:20:11',1,0.6185,-100,0,0,-100,'',0,'',0,4);
+INSERT INTO `supptrans` VALUES (7,22,'CRUISE','Cash','2013-01-16','1000-01-01','2012-12-16 09:20:11',1,0.6185,-100,0,0,-100,'',0,'',0,4);
 INSERT INTO `supptrans` VALUES (36,20,'CRUISE','345','2013-01-16','2013-01-31','2012-12-16 00:00:00',1,0.6185,100,0,9.0667303671351,100,'',0,'',0,5);
-INSERT INTO `supptrans` VALUES (8,22,'CRUISE','Cash','2013-01-31','0000-00-00','2012-12-16 09:22:34',1,0.58565765,-100,0,-9.0667303671351,-100,'',0,'',0,6);
+INSERT INTO `supptrans` VALUES (8,22,'CRUISE','Cash','2013-01-31','1000-01-01','2012-12-16 09:22:34',1,0.58565765,-100,0,-9.0667303671351,-100,'',0,'',0,6);
 INSERT INTO `supptrans` VALUES (37,20,'CRUISE','opninvoice','2013-02-08','2013-03-31','2013-02-09 00:00:00',0,0.6324,95.25,0,0,0,'',0,'',0,7);
 INSERT INTO `supptrans` VALUES (38,20,'OTHER','145','2013-10-05','2013-11-22','2013-10-05 00:00:00',0,1.0884,55,6.7925,0,0,'',0,'',0,8);
-INSERT INTO `supptrans` VALUES (9,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 19:57:09',0,1.0884,-100,0,0,0,'',0,'',0,9);
-INSERT INTO `supptrans` VALUES (10,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 19:59:10',0,1,-100,0,0,0,'',0,'',0,10);
-INSERT INTO `supptrans` VALUES (11,22,'OTHER','Cash','2013-11-20','0000-00-00','2013-11-20 20:22:30',0,1.0884,-100,0,0,0,'',0,'',0,11);
+INSERT INTO `supptrans` VALUES (9,22,'OTHER','Cash','2013-11-20','1000-01-01','2013-11-20 19:57:09',0,1.0884,-100,0,0,0,'',0,'',0,9);
+INSERT INTO `supptrans` VALUES (10,22,'OTHER','Cash','2013-11-20','1000-01-01','2013-11-20 19:59:10',0,1,-100,0,0,0,'',0,'',0,10);
+INSERT INTO `supptrans` VALUES (11,22,'OTHER','Cash','2013-11-20','1000-01-01','2013-11-20 20:22:30',0,1.0884,-100,0,0,0,'',0,'',0,11);
 INSERT INTO `supptrans` VALUES (39,20,'BINGO','aA112','2013-11-30','2013-12-31','2013-12-01 00:00:00',0,1,52.35,5.235,0,0,'',0,'',0,12);
 INSERT INTO `supptrans` VALUES (40,20,'BINGO','2100','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,50,5,0,0,'',0,'',0,13);
 INSERT INTO `supptrans` VALUES (41,20,'BINGO','1223','2014-01-13','2014-02-28','2014-01-13 00:00:00',0,1,1,0.1,0,0,'',0,'',0,14);

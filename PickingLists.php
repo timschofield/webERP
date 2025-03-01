@@ -575,7 +575,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 		$ExtraLineSQL = ",shipqty=qtypicked";
 	} else {
 		$ExtraUpdSQL = ",shippedby='',
-					shipdate='0000-00-00'";
+					shipdate='1000-01-01'";
 		$ExtraLineSQL = ",shipqty=0";
 	}
 
