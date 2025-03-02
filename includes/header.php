@@ -53,9 +53,6 @@ echo '<script>
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
 	</script>';
 echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
-// KL RICARD Comment it out as it logs out inmediately
-//echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
-// KL RICARD END
 if ($_SESSION['ShowPageHelp'] == 0) {
 	echo '<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
 } else {
