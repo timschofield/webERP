@@ -4,6 +4,49 @@
 			FUNCTIONS RELATED CONTROL, PERFORMANCE OR OTHER KL BOARDS
 **************************************************************************************************/
 
+/**************************************************************************************************
+ALPHABETICAL LIST OF FUNCTIONS:
+
+ActiveTransfersByLocation - Shows pending transfers by location
+ActiveTransferStatus - Shows status of active transfers
+AverageKPIHistory - Shows average business KPI history
+AverageSales - Shows average sales for different time periods
+ChangeItemStandardCost - Updates the standard cost of an item
+CheckPackagingToBeRefilled - Checks packaging that needs to be refilled
+ComponentsToObsolete - Shows components that are not used in any BOM
+ErrorsInTransfers - Shows errors in closed transfers during a specified period
+FinishedStockDistribution - Shows distribution of finished stock by various criteria
+FinishedStockDistributionByShopAndCategory - Shows finished stock distribution by shop and category
+GetTopSalesField - Gets the field to be used in top sales queries based on days
+GetTotalQtyItemsForSale - Gets total quantity of items for sale
+GetTotalValueItemsForSale - Gets total value of items for sale
+GoodsToBeProduced - Shows components ready to be transformed into sellable goods
+InsuficientStockForShopPackaging - Shows shop packaging items with insufficient stock
+ItemsWithoutRetailPrice - Shows items without retail price
+LocationInformationReview - Shows shop information
+MaintenanceTasksList - Shows maintenance tasks list
+MaintenanceTasksDistribution - Shows distribution of maintenance tasks
+OnlineMarketPlacePaymentPending - Shows online marketplace orders with pending payments
+PackagingToBeRefilledFromGudang - Shows packaging that needs to be refilled from a specific location
+POStatusControl - Shows purchase orders status control by type
+PositionTopSalesItem - Returns the position of an item in top sales
+PurchaseOrdersProcessTime - Shows process time for purchase orders
+PurchaseOrdersWrongPlannedDates - Shows purchase orders with wrong planned dates
+RecentlyClosedTransferStatus - Shows recently closed transfers status
+RoundPackagingTransfer - Rounds packaging transfer quantity
+SQLFilterStockmasterForOnlineShop - Provides SQL filtering for online shop
+ShowTotalItemsMoving - Shows total items moving to discount
+TransfersDelayed - Shows transfers delayed more than specified days
+WrongStandardCost - Shows items with wrong standard cost
+**************************************************************************************************/
+
+/**************************************************************************************************************
+* Function: ActiveTransfersByLocation
+* Brief description: Shows pending transfers by location
+* Parameters:
+*   - $RootPath: Root path of the application
+* Returns: None
+**************************************************************************************************************/
 function ActiveTransfersByLocation($RootPath){
 	$TotalTransferIn = 0;
 	$TotalTransferOut = 0;
@@ -108,8 +151,15 @@ function ActiveTransfersByLocation($RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Function: ActiveTransferStatus
+* Brief description: Shows status of active transfers
+* Parameters:
+*   - $RootPath: Root path of the application
+* Returns: None
+**************************************************************************************************************/
 function ActiveTransferStatus($RootPath){
-	$SQL = "SELECT reference,
+	$SQL = "SELECT reference, 
 					shipdate,
 					(SELECT locationname
 						FROM locations
@@ -185,6 +235,18 @@ function ActiveTransferStatus($RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Function: AverageKPIHistory
+* Brief description: Shows average business KPI history for different time periods
+* Parameters:
+*   - $NumDaysA: Number of days for period A
+*   - $NumDaysB: Number of days for period B
+*   - $NumDaysC: Number of days for period C
+*   - $NumDaysD: Number of days for period D
+*   - $NumDaysE: Number of days for period E
+*   - $NumDaysF: Number of days for period F
+* Returns: None
+**************************************************************************************************************/
 function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF){
 
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysA));
@@ -314,6 +376,22 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	}
 }
 
+/**************************************************************************************************************
+* Function: AverageSales
+* Brief description: Shows average sales for different time periods
+* Parameters:
+*   - $TypeReport: Type of report (Shop, Online, etc.)
+*   - $NumDaysA: Number of days for period A
+*   - $NumDaysB: Number of days for period B
+*   - $NumDaysC: Number of days for period C
+*   - $NumDaysD: Number of days for period D
+*   - $NumDaysE: Number of days for period E
+*   - $NumDaysF: Number of days for period F
+*   - $NumDaysSort: Number of days for sorting
+*   - $Year: Year for report (CurrentYear or LastYear)
+*   - $Shop: Shop code or "All" for all shops
+* Returns: None
+**************************************************************************************************************/
 function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop){
 
 	if ($Year == "LastYear"){
