@@ -286,28 +286,24 @@ if(isset($StockItemsResult)){
 	AND DB_num_rows($StockItemsResult)>1) {
 	echo '<a href="' . $RootPath . '/InternalStockRequestInquiry.php">' . _('Return') . '</a>
 		<table cellpadding="2" class="selection">
-		<thead>
-			<tr>
-			<th class="SortedColumn" >' . _('Code') . '</th>
-			<th class="SortedColumn" >' . _('Description') . '</th>
-			<th class="SortedColumn" >' . _('Total Applied') . '</th>
-			<th>' . _('Units') . '</th>
-			</tr>
-		</thead>
-		<tbody>';
+			<thead>
+				<tr>
+					<th class="SortedColumn" >' . _('Code') . '</th>
+					<th class="SortedColumn" >' . _('Description') . '</th>
+					<th class="SortedColumn" >' . _('Total Applied') . '</th>
+					<th>' . _('Units') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
-		printf('<tr class="striped_row">
-				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>',
-				$MyRow['stockid'],
-				$MyRow['description'],
-				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-				$MyRow['units']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+			</tr>';
 //end of page full new headings if
 	}
 //end of while loop
@@ -449,7 +445,7 @@ if(isset($StockItemsResult)){
 			} else {
 				$Auth = _('Yes');
 			}
-			if ($MyRow['despatchdate'] == '1000-01-01') {
+			if ($MyRow['despatchdate'] == '0000-00-00') {
 				$Disp = _('Not yet');
 			} else {
 				$Disp = ConvertSQLDate($MyRow['despatchdate']);

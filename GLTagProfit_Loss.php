@@ -615,18 +615,18 @@ else {
 					}
 
 					if ($Section == 3) { /*Income */
-						printf('<tr>
-									<td colspan="2"><h4><i>%s </i></h4></td>
-									<td></td>
-									<td class="number">%s</td>
-								</tr>', $ActGrpLabel, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']));
+						echo '<tr>
+								<td colspan="2"><h4><i>', $ActGrpLabel, ' </i></h4></td>
+								<td></td>
+								<td class="number">', locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+							</tr>';
 					}
 					else { /*Costs */
-						printf('<tr>
-									<td colspan="2"><h4><i>%s </i></h4></td>
-									<td class="number">%s</td>
-									<td></td>
-								</tr>', $ActGrpLabel, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']));
+						echo '<tr>
+								<td colspan="2"><h4><i>', $ActGrpLabel, ' </i></h4></td>
+								<td class="number">', locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+								<td></td>
+							</tr>';
 					}
 					$GrpPrdLY[$Level] = 0;
 					$GrpPrdActual[$Level] = 0;
@@ -647,18 +647,18 @@ else {
 				}
 
 				if ($Section == 4) { /*Income */
-					printf('<tr>
-								<td colspan="2"><h4><i>%s </i></h4></td>
-								<td></td>
-								<td class="number">%s</td>
-							</tr>', $ActGrpLabel, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']));
+					echo '<tr>
+							<td colspan="2"><h4><i>', $ActGrpLabel, ' </i></h4></td>
+							<td></td>
+							<td class="number">', locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						</tr>';
 				}
 				else { /*Costs */
-					printf('<tr>
-								<td colspan="2"><h4><i>%s</i></h4></td>
-								<td class="number">%s</td>
-								<td></td>
-							</tr>', $ActGrpLabel, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']));
+					echo '<tr>
+							<td colspan="2"><h4><i>', $ActGrpLabel, '</i></h4></td>
+							<td class="number">', locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+							<td></td>
+						</tr>';
 				}
 				$GrpPrdActual[$Level] = 0;
 				$ParentGroups[$Level] = '';
@@ -677,11 +677,11 @@ else {
 							<td><hr /></td>
 						</tr>';
 
-					printf('<tr>
-								<td colspan="2"><h2>%s</h2></td>
-								<td></td>
-								<td class="number">%s</td>
-							</tr>', $Sections[$Section], locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']));
+					echo '<tr>
+							<td colspan="2"><h2>', $Sections[$Section], '</h2></td>
+							<td></td>
+							<td class="number">', locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						</tr>';
 
 				}
 				else {
@@ -689,11 +689,11 @@ else {
 							<td colspan="2"></td>
 							<td colspan="2"><hr /></td>
 						</tr>';
-					printf('<tr>
-								<td colspan="2"><h2>%s</h2></td>
-								<td></td>
-								<td class="number">%s</td>
-							</tr>', $Sections[$Section], locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']));
+					echo '<tr>
+							<td colspan="2"><h2>', $Sections[$Section], '</h2></td>
+							<td></td>
+							<td class="number">', locale_number_format($SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						</tr>';
 				}
 				if ($Section == 1) {
 					$TotalIncome += $SectionPrdActual;
@@ -704,11 +704,11 @@ else {
 							<td colspan="2"></td>
 							<td colspan="5"><hr /></td>
 						</tr>';
-					printf('<tr>
-								<td colspan="2"><h2>' . _('Gross Profit') . '</h2></td>
-								<td></td>
-								<td class="number">%s</td>
-							</tr>', locale_number_format($TotalIncome + $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']));
+					echo '<tr>
+							<td colspan="2"><h2>' . _('Gross Profit') . '</h2></td>
+							<td></td>
+							<td class="number">', locale_number_format($TotalIncome + $SectionPrdActual, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+						</tr>';
 
 					if ($TotalIncome != 0) {
 						$PrdGPPercent = 100 * ($TotalIncome + $SectionPrdActual) / $TotalIncome;
@@ -720,11 +720,14 @@ else {
 							<td colspan="2"></td>
 							<td colspan="6"><hr /></td>
 						</tr>';
-					printf('<tr>
+					echo '<tr>
 							<td colspan="2"><h4><i>' . _('Gross Profit Percent') . '</i></h4></td>
 							<td></td>
-							<td class="number"><i>%s</i></td>
-							</tr><tr><td colspan="6"> </td></tr>', locale_number_format($PrdGPPercent, 1) . '%');
+							<td class="number"><i>', locale_number_format($PrdGPPercent, 1) . '%</i></td>
+						</tr>
+						<tr>
+							<td colspan="6"> </td>
+						</tr>';
 				}
 			}
 			$SectionPrdActual = 0;
@@ -732,9 +735,9 @@ else {
 			$Section = $MyRow['sectioninaccounts'];
 
 			if ($_POST['Detail'] == 'Detailed') {
-				printf('<tr>
-							<td colspan="6"><h2><b>%s</b></h2></td>
-						</tr>', $Sections[$MyRow['sectioninaccounts']]);
+				echo '<tr>
+						<td colspan="6"><h2><b>', $Sections[$MyRow['sectioninaccounts']], '</b></h2></td>
+					</tr>';
 			}
 		}
 
@@ -747,9 +750,9 @@ else {
 			$ParentGroups[$Level] = $MyRow['groupname'];
 			$ActGrp = $MyRow['groupname'];
 			if ($_POST['Detail'] == 'Detailed') {
-				printf('<tr>
-							<td colspan="6"><h4><b>%s</b></h4></td>
-						</tr>', $MyRow['groupname']);
+				echo '<tr>
+						<td colspan="6"><h4><b>', $MyRow['groupname'], '</b></h4></td>
+					</tr>';
 
 				echo $TableHeader;
 			}
@@ -779,19 +782,19 @@ else {
 			$ActEnquiryURL = '<a href="' . $RootPath . '/GLAccountInquiry.php?PeriodFrom=' . urlencode($_POST['PeriodFrom']) . '&amp;PeriodTo=' . urlencode($_POST['PeriodTo']) . '&amp;Account=' . urlencode($MyRow['account']) . '&amp;Show=Yes">' . $MyRow['account'] . '</a>';
 
 			if ($Section == 4) {
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
+				echo '<tr class="striped_row">
+						<td>', $ActEnquiryURL, '</td>
+						<td>', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</td>
 						<td></td>
-						<td class="number">%s</td>
-						</tr>', $ActEnquiryURL, htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) , locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']));
+						<td class="number">', locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					</tr>';
 			}
 			else {
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', $ActEnquiryURL, htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false) , locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']));
+				echo '<tr class="striped_row">
+						<td>', $ActEnquiryURL, '</td>
+						<td>', htmlspecialchars($MyRow['accountname'], ENT_QUOTES, 'UTF-8', false), '</td>
+						<td class="number">', locale_number_format(-$AccountPeriodActual, $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					</tr>';
 			}
 		}
 	}
@@ -841,18 +844,18 @@ else {
 			}
 
 			if ($Section == 4) { /*Income */
-				printf('<tr>
-						<td colspan="2"><h4><i>%s</i></h4></td>
+				echo '<tr>
+						<td colspan="2"><h4><i>', $ActGrpLabel, '</i></h4></td>
 						<td></td>
-						<td class="number">%s</td>
-						</tr>', $ActGrpLabel, locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']));
+						<td class="number">', locale_number_format(-$GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
+					</tr>';
 			}
 			else { /*Costs */
-				printf('<tr>
-						<td colspan="2"><h4><i>%s </i></h4></td>
-						<td class="number">%s</td>
+				echo '<tr>
+						<td colspan="2"><h4><i>', $ActGrpLabel, ' </i></h4></td>
+						<td class="number">', locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']), '</td>
 						<td></td>
-						</tr>', $ActGrpLabel, locale_number_format($GrpPrdActual[$Level], $_SESSION['CompanyRecord']['decimalplaces']));
+					</tr>';
 			}
 			$GrpPrdActual[$Level] = 0;
 			$ParentGroups[$Level] = '';

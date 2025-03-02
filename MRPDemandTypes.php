@@ -112,20 +112,17 @@ if (!isset($SelectedDT) or isset($_GET['delete'])) {
 	echo '<table class="selection">
 			<tr><th>' . _('Demand Type') . '</th>
 				<th>' . _('Description') . '</th>
+				<th colspan="2"></th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_row($Result)) {
 
-		printf('<tr><td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedDT=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedDT=%s&amp;delete=yes">' . _('Delete')  . '</a></td>
-				</tr>',
-				$MyRow[0],
-				$MyRow[1],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow[0], htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow[0]);
+		echo '<tr class="striped_row">
+				<td>', $MyRow[0], '</td>
+				<td>', $MyRow[1], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedDT=', $MyRow[0], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedDT=', $MyRow[0], '&amp;delete=yes">' . _('Delete')  . '</a></td>
+			</tr>';
 	}
 
 	//END WHILE LIST LOOP

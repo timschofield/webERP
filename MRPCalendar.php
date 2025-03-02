@@ -217,30 +217,28 @@ function ShowDays()  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LIST
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$Result = DB_query($SQL,$ErrMsg);
 
-	echo '<br />
-		<table class="selection">
-		<tr>
-			<th>' . _('Date') . '</th>
-			<th>' . _('Manufacturing Date') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
+				<tr>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Manufacturing Date') . '</th>
+					<th>' . _('Manufacturing Day') . '?</th>
+				</tr>
+			</thead>';
 	$ctr = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$flag = _('Yes');
 		if ($MyRow['manufacturingflag'] == 0) {
 			$flag = _('No');
 		}
-		printf('<tr>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-				</tr>',
-				ConvertSQLDate($MyRow[0]),
-				_($MyRow[3]),
-				$flag);
+		echo '<tr class="striped_row">
+				<td>', ConvertSQLDate($MyRow[0]), '</td>
+				<td>', _($MyRow[3]), '</td>
+				<td>', $flag, '</td>
+			</tr>';
 	} //END WHILE LIST LOOP
 
 	echo '</table>';
-	echo '<br /><br />';
 	unset ($ChangeDate);
 	ShowInputForm($ChangeDate);
 

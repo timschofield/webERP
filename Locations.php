@@ -405,17 +405,17 @@ or deletion of the records*/
 	}
 
 	echo '<table class="selection">
-		<thead>
-		<tr>
-			<th class="SortedColumn">', _('Location Code'), '</th>
-			<th class="SortedColumn">', _('Location Name'), '</th>
-			<th class="SortedColumn">', _('Tax Province'), '</th>
-			<th class="SortedColumn">', _('GL Account Code'), '</th>
-			<th class="SortedColumn">', _('Allow Invoicing'), '</th>
-			<th class="noPrint" colspan="2">&nbsp;</th>
-			</tr>
-		</thead>
-		<tbody>';
+			<thead>
+				<tr>
+					<th class="SortedColumn">', _('Location Code'), '</th>
+					<th class="SortedColumn">', _('Location Name'), '</th>
+					<th class="SortedColumn">', _('Tax Province'), '</th>
+					<th class="SortedColumn">', _('GL Account Code'), '</th>
+					<th class="SortedColumn">', _('Allow Invoicing'), '</th>
+					<th class="noPrint" colspan="2">&nbsp;</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 while ($MyRow = DB_fetch_array($Result)) {
 /* warehouse management not implemented ... yet
@@ -425,22 +425,15 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$MyRow['managed'] = _('No');
 	}
 */
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="centre">%s</td>
-			<td class="noPrint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
-			<td class="noPrint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['loccode'],
-			$MyRow['locationname'],
-			$MyRow['description'],
-			($MyRow['glaccountcode']!='' ? $MyRow['glaccountcode'] : '&nbsp;'),// Use a non-breaking space to avoid an empty cell in a HTML table.
-			($MyRow['allowinvoicing']==1 ? _('Yes') : _('No')),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['loccode'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['loccode']);
+	echo '<tr class="striped_row">
+			<td>', $MyRow['loccode'], '</td>
+			<td>', $MyRow['locationname'], '</td>
+			<td>', $MyRow['description'], '</td>
+			<td class="number">', ($MyRow['glaccountcode']!='' ? $MyRow['glaccountcode'] : '&nbsp;'), '</td>
+			<td class="centre">', ($MyRow['allowinvoicing']==1 ? _('Yes') : _('No')), '</td>
+			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '">' . _('Edit') . '</a></td>
+			<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLocation=', $MyRow['loccode'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
+		</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody></table>';

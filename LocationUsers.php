@@ -6,8 +6,6 @@ $ViewTopic = 'Inventory';// Filename in ManualContents.php's TOC.
 $BookMark = 'LocationUsers';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
-echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Location Authorised Users') . '" alt="" />' . ' ' . $Title . '</p>';
-
 if (isset($_POST['SelectedUser'])) {
 	$SelectedUser = mb_strtoupper($_POST['SelectedUser']);
 } elseif (isset($_GET['SelectedUser'])) {
@@ -102,6 +100,10 @@ if (isset($_POST['submit'])) {
 
 if (!isset($SelectedLocation)) {
 
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Location Authorised Users') . '" alt="" />' . ' ' . $Title . '
+		</p>';
+
 	/* It could still be the second time the page has been run and a record has been selected for modification - SelectedUser will exist because it was sent with the new call. If its the first time the page has been displayed with no parameters
 	then none of the above are true. These will call the same page again and allow update/input or deletion of the records*/
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
@@ -151,8 +153,13 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 	$MyRow = DB_fetch_array($Result);
 	$SelectedLocationName = $MyRow['locationname'];
 
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Authorised users for') . ' ' . $SelectedLocationName . ' ' . _('Location') . '</a></div>
-		<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
+	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">', _('Select another location'), '</a>';
+
+	echo '<p class="page_title_text">
+			<img src="' . $RootPath . '/css/' . $Theme . '/images/money_add.png" title="' . _('Location Authorised Users') . '" alt="" />' . ' ' . $Title . '
+		</p>';
+
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">
 		<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 		<input type="hidden" name="SelectedLocation" value="' . $SelectedLocation . '" />';
 
@@ -169,39 +176,44 @@ if (isset($_POST['process']) or isset($SelectedLocation)) {
 
 	echo '<table class="selection">';
 	echo '<tr>
-			<th colspan="6"><h3>' . _('Authorised users for Location') . ': ' . $SelectedLocationName . '</h3></th>
+			<th colspan="6">' . _('Authorised users for Location') . ': ' . $SelectedLocationName . '</th>
 		</tr>';
 	echo '<tr>
 			<th>' . _('User Code') . '</th>
 			<th>' . _('User Name') . '</th>
 			<th>' . _('View') . '</th>
 			<th>' . _('Update') . '</th>
+			<th colspan="2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		if ($MyRow['canupd'] == 1) {
-			$ToggleText = '<td><a href="%s?SelectedUser=%s&amp;ToggleUpdate=0&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this user?') . '\');">' . _('Remove Update') . '</a></td>';
+			$ToggleText = '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedUser=' . $MyRow['userid'] . '&amp;ToggleUpdate=0&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to remove Update for this user?') . '\');">' . _('Remove Update') . '</a></td>';
 		} else {
-			$ToggleText = '<td><a href="%s?SelectedUser=%s&amp;ToggleUpdate=1&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this user?') . '\');">' . _('Add Update') . '</a></td>';
+			$ToggleText = '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?SelectedUser=' . $MyRow['userid'] . '&amp;ToggleUpdate=1&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to add Update for this user?') . '\');">' . _('Add Update') . '</a></td>';
 		}
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>' .
+		if ($MyRow['canview'] == 1) {
+			$CanView = _('Yes');
+		} else {
+			$CanView = _('No');
+		}
+
+		if ($MyRow['canupd'] == 1) {
+			$CanUpdate = _('Yes');
+		} else {
+			$CanUpdate = _('No');
+		}
+
+		echo '<tr class="striped_row">
+				<td>', $MyRow['userid'], '</td>
+				<td>', $MyRow['realname'], '</td>
+				<td>', $CanView, '</td>
+				<td>', $CanUpdate, '</td>' .
 				$ToggleText . '
-				<td><a href="%s?SelectedUser=%s&amp;delete=yes&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this user?') . '\');">' . _('Un-authorise') . '</a></td>
-				</tr>',
-				$MyRow['userid'],
-				$MyRow['realname'],
-				$MyRow['canview'],
-				$MyRow['canupd'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-				$MyRow['userid'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-				$MyRow['userid']);
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedUser=', $MyRow['userid'], '&amp;delete=yes&amp;SelectedLocation=' . $SelectedLocation . '" onclick="return confirm(\'' . _('Are you sure you wish to un-authorise this user?') . '\');">' . _('Un-authorise') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';

@@ -228,6 +228,7 @@ or deletion of the records*/
 			<th>' . _('Brand Name') . '</th>
 			<th>' . _('Brand URL') . '</th>
 			<th>' . _('Brands Image') . '</th>
+			<th colspan="2"></th>
 		</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
@@ -235,23 +236,14 @@ while ($MyRow = DB_fetch_array($Result)) {
 	$ImageFile = reset($Glob);
 	$BrandImgLink = GetImageLink($ImageFile, '/BRAND-' . $MyRow['manufacturers_id'], 120, 120, "", "");
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td><a target="_blank" href="%s">%s</a></td>
-			<td>%s</td>
-			<td><a href="%sSelectedManufacturer=%s&amp;edit=1">' . _('Edit') . '</a></td>
-			<td><a href="%sSelectedManufacturer=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this brand?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['manufacturers_id'],
-			$MyRow['manufacturers_name'],
-			$MyRow['manufacturers_url'],
-			$MyRow['manufacturers_url'],
-			$BrandImgLink,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['manufacturers_id'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['manufacturers_id']);
+	echo '<tr class="striped_row">
+			<td>', $MyRow['manufacturers_id'], '</td>
+			<td>', $MyRow['manufacturers_name'], '</td>
+			<td><a target="_blank" href="', $MyRow['manufacturers_url'], '">', $MyRow['manufacturers_url'], '</a></td>
+			<td>', $BrandImgLink, '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedManufacturer=', $MyRow['manufacturers_id'], '&amp;edit=1">' . _('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedManufacturer=', $MyRow['manufacturers_id'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this brand?') . '\');">' . _('Delete') . '</a></td>
+		</tr>';
 
 	}
 	//END WHILE LIST LOOP
