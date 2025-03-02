@@ -159,7 +159,7 @@ function ActiveTransfersByLocation($RootPath){
 * Returns: None
 **************************************************************************************************************/
 function ActiveTransferStatus($RootPath){
-	$SQL = "SELECT reference, 
+	$SQL = "SELECT reference,
 					shipdate,
 					(SELECT locationname
 						FROM locations
