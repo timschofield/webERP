@@ -211,6 +211,7 @@ if (isset($_POST['submit'])) {
 		$Result = DB_query($SQL,$ErrMsg);
 
 		$Message = _('The label template has been updated');
+		prnMsg($Message, 'success');
 
 	} elseif ($InputError !=1) {
 
@@ -238,6 +239,7 @@ if (isset($_POST['submit'])) {
 		$ErrMsg = _('The addition of this label failed because');
 		$Result = DB_query($SQL,$ErrMsg);
 		$Message = _('The new label template has been added to the database');
+		prnMsg($Message, 'success');
 	}
 
 	if (isset($InputError) AND $InputError !=1) {
@@ -252,8 +254,6 @@ if (isset($_POST['submit'])) {
 		unset($_POST['PageWidth']);
 		unset($_POST['PageHeight']);
 	}
-
-	prnMsg($Message);
 
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
@@ -296,6 +296,7 @@ if (!isset($SelectedLabelID)) {
 					<th>' . _('Width') . '</th>
 					<th>' . _('Row Height') . '</th>
 					<th>' . _('Column Width') . '</th>
+					<th colspan="2"></th>
 				</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
@@ -317,64 +318,37 @@ if (!isset($SelectedLabelID)) {
 				}
 			}
 			if (isset($Paper)){
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td colspan="2">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
-						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
-						</tr>',
-						$MyRow['description'],
-						$NoOfRows . ' x ' . $NoOfCols,
-						$Paper,
-						$MyRow['height'],
-						$MyRow['width'],
-						$MyRow['rowheight'],
-						$MyRow['columnwidth'],
-						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$MyRow['labelid'],
-						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$MyRow['labelid'],
-						$RootPath . '/LabelFields.php?',
-						$MyRow['labelid']);
+				echo'<tr class="striped_row">
+						<td>', $MyRow['description'], '</td>
+						<td>', $NoOfRows . ' x ' . $NoOfCols, '</td>
+						<td colspan="2">', $Paper, '</td>
+						<td class="number">', $MyRow['height'], '</td>
+						<td class="number">', $MyRow['width'], '</td>
+						<td class="number">', $MyRow['rowheight'], '</td>
+						<td class="number">', $MyRow['columnwidth'], '</td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=', $MyRow['labelid'], '">' . _('Edit') . '</a></td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=', $MyRow['labelid'], '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
+					</tr>';
 			} else {
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><a href="%sSelectedLabelID=%s">' . _('Edit') . '</a></td>
-						<td><a href="%sSelectedLabelID=%s&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
-						</tr>',
-						$MyRow['description'],
-						$NoOfRows . ' x ' . $NoOfCols,
-						$MyRow['pagewidth'],
-						$MyRow['pageheight'],
-						$MyRow['height'],
-						$MyRow['width'],
-						$MyRow['rowheight'],
-						$MyRow['columnwidth'],
-						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$MyRow['labelid'],
-						htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-						$MyRow['labelid'],
-						$RootPath . '/LabelFields.php?',
-						$MyRow['labelid']);
+				echo '<tr class="striped_row">
+						<td>', $MyRow['description'], '</td>
+						<td>', $NoOfRows . ' x ' . $NoOfCols, '</td>
+						<td class="number">', $MyRow['pagewidth'], '</td>
+						<td class="number">', $MyRow['pageheight'], '</td>
+						<td class="number">', $MyRow['height'], '</td>
+						<td class="number">', $MyRow['width'], '</td>
+						<td class="number">', $MyRow['rowheight'], '</td>
+						<td class="number">', $MyRow['columnwidth'], '</td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=', $MyRow['labelid'], '">' . _('Edit') . '</a></td>
+						<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedLabelID=', $MyRow['labelid'], '&delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this label?') . '\');">' . _('Delete') . '</a></td>
+					</tr>';
 			}
 		}
 		//END WHILE LIST LOOP
 
 		//end of ifs and buts!
 
-		echo '</table><p>';
+		echo '</table>';
 	} //end if there are label definitions to show
 }
 

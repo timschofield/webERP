@@ -41,8 +41,7 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 if (isset($_GET['CopySpec']) OR isset($_POST['CopySpec'])) {
 	if (!isset($_POST['CopyTo']) OR $_POST['CopyTo']=='' ) {
 		echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-		echo '<div>
-			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
+		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo _('Enter The Item, Fixed Asset or Template to Copy this Specification to') . ':<input type="text" name="CopyTo" size="25" maxlength="25" />
 			<div class="centre">
 				<input type="hidden" name="KeyValue" value="' . $KeyValue . '" />
@@ -134,7 +133,7 @@ if (!isset($KeyValue) OR $KeyValue=='') {
 
 	$ResultSelection=DB_query($SQLSpecSelect);
 	$MyRowSelection=DB_fetch_array($ResultSelection);
-	echo '<br/>' . _('Product Specification for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '<br/><br/>';
+	echo '<h3>' . _('Product Specification for') . ' ' . $KeyValue . '-' . $MyRowSelection['description'] . '</h3>';
 }
 if (isset($_GET['ListTests'])) {
 	$SQL = "SELECT qatests.testid,
@@ -205,24 +204,16 @@ if (isset($_GET['ListTests'])) {
 			$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';
 			break;
 	} //end switch
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>',
-			'<input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$MyRow['testid']. '">',
-			$MyRow['name'],
-			$MyRow['method'],
-			$MyRow['units'],
-			$MyRow['defaultvalue'],
-			'<input  class="' .$Class. '" type="text" name="AddTargetValue' .$x.'" />',
-			$RangeMin,
-			$RangeMax);
+		echo '<tr class="striped_row">
+				<td><input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$MyRow['testid']. '"></td>
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['method'], '</td>
+				<td>', $MyRow['units'], '</td>
+				<td>', $MyRow['defaultvalue'], '</td>
+				<td><input  class="' .$Class. '" type="text" name="AddTargetValue' .$x.'" /></td>
+				<td>', $RangeMin, '</td>
+				<td>', $RangeMax, '</td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 
@@ -442,40 +433,22 @@ or deletion of the records*/
 			break;
 	} //end switch
 
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedQATest=%s&amp;KeyValue=%s">' .  _('Edit') . '</a></td>
-			<td><a href="%sSelectedQATest=%s&amp;KeyValue=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this Product Specification ?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['name'],
-			$MyRow['method'],
-			$MyRow['units'],
-			$TypeDisp,
-			$MyRow['defaultvalue'],
-			$MyRow['targetvalue'],
-			$MyRow['rangemin'],
-			$MyRow['rangemax'],
-			$ShowOnCertText,
-			$ShowOnSpecText,
-			$ShowOnTestPlanText,
-			$ActiveText,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['testid'],
-			$KeyValue,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['testid'],
-			$KeyValue);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['method'], '</td>
+				<td>', $MyRow['units'], '</td>
+				<td>', $TypeDisp, '</td>
+				<td>', $MyRow['defaultvalue'], '</td>
+				<td>', $MyRow['targetvalue'], '</td>
+				<td>', $MyRow['rangemin'], '</td>
+				<td>', $MyRow['rangemax'], '</td>
+				<td>', $ShowOnCertText, '</td>
+				<td>', $ShowOnSpecText, '</td>
+				<td>', $ShowOnTestPlanText, '</td>
+				<td>', $ActiveText, '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '&amp;KeyValue=', $KeyValue, '">' .  _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedQATest=', $MyRow['testid'], '&amp;KeyValue=', $KeyValue, '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this Product Specification ?') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</tbody></table><br />';

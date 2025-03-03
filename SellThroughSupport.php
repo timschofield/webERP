@@ -171,20 +171,14 @@ if (isset($_POST['SearchSupplier'])) {
 	echo $TableHeader;
 
 	while ($MyRow = DB_fetch_array($SuppliersResult)) {
-	   printf('<tr class="striped_row">
-				<td><input type="submit" name="SupplierID" value="%s" /></td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>',
-				$MyRow['supplierid'],
-				$MyRow['suppname'],
-				$MyRow['currcode'],
-				$MyRow['address1'],
-				$MyRow['address2'],
-				$MyRow['address3']);
+	   echo '<tr class="striped_row">
+				<td><input type="submit" name="SupplierID" value="', $MyRow['supplierid'], '" /></td>
+				<td>', $MyRow['suppname'], '</td>
+				<td>', $MyRow['currcode'], '</td>
+				<td>', $MyRow['address1'], '</td>
+				<td>', $MyRow['address2'], '</td>
+				<td>', $MyRow['address3'], '</td>
+			</tr>';
 	}//end of while loop
 	echo '</table>
 			</form>';
@@ -256,18 +250,17 @@ if (isset($SupplierID) AND $Edit == false) {
 	if (DB_num_rows($Result)==0) {
 		prnMsg(_('There are no sell through support deals entered for this supplier'), 'info');
 	} else {
-		echo '<table cellpadding="2" class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Item or Category') . '</th>
-							<th>' . _('Customer') . '</th>
-							<th>' . _('Rebate') . '<br />' .  _('Value') . ' ' . $SuppRow['currcode'] . '</th>
-							<th>' . _('Rebate') . '<br />' . _('Percent') . '</th>
-							<th>' . _('Narrative') . '</th>
-							<th>' . _('Effective From') . '</th>
-							<th>' . _('Effective To') . '</th>
-						</tr>';
-
-		echo $TableHeader;
+		echo '<table cellpadding="2" class="selection">
+				<tr>
+					<th>' . _('Item or Category') . '</th>
+					<th>' . _('Customer') . '</th>
+					<th>' . _('Rebate') . '<br />' .  _('Value') . ' ' . $SuppRow['currcode'] . '</th>
+					<th>' . _('Rebate') . '<br />' . _('Percent') . '</th>
+					<th>' . _('Narrative') . '</th>
+					<th>' . _('Effective From') . '</th>
+					<th>' . _('Effective To') . '</th>
+					<th colspan="2"></th>
+				</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['categoryid']=='') {
@@ -281,30 +274,17 @@ if (isset($SupplierID) AND $Edit == false) {
 				$Customer = $MyRow['debtorno'] . ' - ' . $MyRow['name'];
 			}
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="%s?SellSupportID=%s&amp;SupplierID=%s&amp;Edit=1">' . _('Edit') . '</a></td>
-					<td><a href="%s?SellSupportID=%s&amp;Delete=1&amp;SupplierID=%s" onclick=\'return confirm("' . _('Are you sure you wish to delete this sell through support record?') . '");\'>' . _('Delete') . '</a></td>
-					</tr>',
-					$ItemDescription,
-					$Customer,
-					locale_number_format($MyRow['rebateamount'],$SuppRow['decimalplaces']),
-					locale_number_format($MyRow['rebatepercent']*100,2),
-					$MyRow['narrative'],
-					ConvertSQLDate($MyRow['effectivefrom']),
-					ConvertSQLDate($MyRow['effectiveto']),
-					htmlspecialchars($_SERVER['PHP_SELF']),
-					$MyRow['id'],
-					$SupplierID,
-					htmlspecialchars($_SERVER['PHP_SELF']),
-					$MyRow['id'],
-					$SupplierID);
+			echo '<tr class="striped_row">
+					<td>', $ItemDescription, '</td>
+					<td>', $Customer, '</td>
+					<td class="number">', locale_number_format($MyRow['rebateamount'],$SuppRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['rebatepercent']*100,2), '</td>
+					<td>', $MyRow['narrative'], '</td>
+					<td>', ConvertSQLDate($MyRow['effectivefrom']), '</td>
+					<td>', ConvertSQLDate($MyRow['effectiveto']), '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF']), '?SellSupportID=', $MyRow['id'], '&amp;SupplierID=', $SupplierID, '&amp;Edit=1">' . _('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF']), '?SellSupportID=', $MyRow['id'], '&amp;Delete=1&amp;SupplierID=', $SupplierID, '" onclick=\'return confirm("' . _('Are you sure you wish to delete this sell through support record?') . '");\'>' . _('Delete') . '</a></td>
+				</tr>';
 		} //end of while loop
 		echo '</table>';
 	} // end of there are sell through support rows to show

@@ -136,57 +136,36 @@ if (!isset($AccountID)) {
 
 	if (isset($Result) and DB_num_rows($Result)>0) {
 
-		echo '<br /><table class="selection">';
-
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Account Name') . '</th>
-							<th>' . _('Group') . '</th>
-							<th>' . _('Account Type') . '</th>
-							<th>' . _('Inquiry') . '</th>
-							<th>' . _('Edit') . '</th>
-						</tr>';
-
-		echo $TableHeader;
-
-		$j = 1;
+		echo '<table class="selection">
+				<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
+					<tr>
+						<th>' . _('Code') . '</th>
+						<th>' . _('Account Name') . '</th>
+						<th>' . _('Group') . '</th>
+						<th>' . _('Account Type') . '</th>
+						<th>' . _('Inquiry') . '</th>
+						<th>' . _('Edit') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 		while ($MyRow=DB_fetch_array($Result)) {
 
-			printf('<tr>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="%s/GLAccountInquiry.php?Account=%s&amp;Show=Yes&FromPeriod=%s&ToPeriod=%s"><img src="%s/css/%s/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
-					<td><a href="%s/GLAccounts.php?SelectedAccount=%s"><img src="%s/css/%s/images/maintenance.png" title="' . _('Edit') . '" alt="' . _('Edit') . '" /></a>
-					</tr>',
-					htmlspecialchars($MyRow['accountcode'],ENT_QUOTES,'UTF-8',false),
-					htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false),
-					$MyRow['group_'],
-					$MyRow['pl'],
-					$RootPath,
-					$MyRow['accountcode'],
-					$TargetPeriod,
-					$TargetPeriod,
-					$RootPath,
-					$Theme,
-					$RootPath,
-					$MyRow['accountcode'],
-					$RootPath,
-					$Theme);
+			echo '<tr class="striped_row">
+					<td>', htmlspecialchars($MyRow['accountcode'],ENT_QUOTES,'UTF-8',false), '</td>
+					<td>', htmlspecialchars($MyRow['accountname'],ENT_QUOTES,'UTF-8',false), '</td>
+					<td>', $MyRow['group_'], '</td>
+					<td>', $MyRow['pl'], '</td>
+					<td class="number"><a href="', $RootPath, '/GLAccountInquiry.php?Account=', $MyRow['accountcode'], '&amp;Show=Yes&FromPeriod=', $TargetPeriod, '&ToPeriod=', $TargetPeriod, '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/magnifier.png" title="' . _('Inquiry') . '" alt="' . _('Inquiry') . '" /></td>
+					<td><a href="', $RootPath, '/GLAccounts.php?SelectedAccount=', $MyRow['accountcode'], '"><img width="32px" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" title="' . _('Edit') . '" alt="' . _('Edit') . '" /></a>
+				</tr>';
 
-			$j++;
-			if ($j == 12){
-				$j=1;
-				echo $TableHeader;
-
-			}
 //end of page full new headings if
 		}
 //end of while loop
 
-		echo '</table>';
+		echo '</tbody>
+			</table>';
 
 	}
 //end if results to show

@@ -165,16 +165,18 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 			}
 
 			if ($NumRows == 0) {
-				printf('<tr class="striped_row">
-						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
-						<td>%s</td>
-						<td class="number">%s</td></tr>', 'StockID=' . mb_strtoupper($MyRow['stockid']), mb_strtoupper($MyRow['stockid']), $MyRow['description'], 0);
+				echo '<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . mb_strtoupper($MyRow['stockid']) . '>' . mb_strtoupper($MyRow['stockid']) . '</a></td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">0</td>
+					</tr>';
 			} else {
-				printf('<tr class="striped_row">
-					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td></tr>', 'StockID=' . mb_strtoupper($MyRow['stockid']), mb_strtoupper($MyRow['stockid']), $MyRow['description'], locale_number_format($LocQtyRow['newqoh'], $MyRow['decimalplaces']), $Controlled);
+				echo '<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=', mb_strtoupper($MyRow['stockid']), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
+						<td>', $MyRow['description'], '</td>
+						<td class="number">', locale_number_format($LocQtyRow['newqoh'], $MyRow['decimalplaces']), '</td>
+						<td class="number">', $Controlled, '</td>
+					</tr>';
 
 				$TotalQuantity+= $LocQtyRow['newqoh'];
 			}
@@ -183,10 +185,11 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 		}
 
 	} //end of while loop
-	echo '<tr>
+	echo '<tr class="total_row">
 			<td></td>
 			<td>' . _('Total Quantity') . ':</td>
 			<td class="number">' . $TotalQuantity . '</td>
+			<td></td>
 		</tr>
 		</table>';
 }

@@ -80,20 +80,14 @@ while ($MyRow = DB_fetch_array($Result)){
 		}
 		$CurrDecimalPlaces = $MyRow1['currdecimalplaces'];
 
-		printf( '<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$TransType,
-				$MyRow1['transno'],
-				$MyRow1['reference'],
-				locale_number_format($MyRow1['exrate'],4),
-				locale_number_format($MyRow1['totalamt'],$CurrDecimalPlaces),
-				locale_number_format($MyRow1['amt'],$CurrDecimalPlaces));
+		echo '<tr class="striped_row">
+				<td>', $TransType, '</td>
+				<td>', $MyRow1['transno'], '</td>
+				<td>', $MyRow1['reference'], '</td>
+				<td>', locale_number_format($MyRow1['exrate'],4), '</td>
+				<td class="number">', locale_number_format($MyRow1['totalamt'],$CurrDecimalPlaces), '</td>
+				<td class="number">', locale_number_format($MyRow1['amt'],$CurrDecimalPlaces), '</td>
+			</tr>';
 
 		$RowCounter++;
 		If ($RowCounter == 12){

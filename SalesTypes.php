@@ -186,26 +186,23 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
-		<thead>
-		<tr>
+			<thead>
+			<tr>
 				<th class="SortedColumn">' . _('Type Code') . '</th>
 				<th class="SortedColumn">' . _('Type Name') . '</th>
+				<th colspan="2"></th>
 			</tr>
 		</thead>
 		<tbody>';
 
 while ($MyRow = DB_fetch_row($Result)) {
 
-	printf('<tr class="striped_row">
-		<td>%s</td>
-		<td>%s</td>
-		<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
-		<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . _('Delete') . '</a></td>
-		</tr>',
-		$MyRow[0],
-		$MyRow[1],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow[0],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow[0]);
+	echo '<tr class="striped_row">
+			<td>', $MyRow[0], '</td>
+			<td>', $MyRow[1], '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '">' . _('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price list and all the prices it may have set up?') . '\');">' . _('Delete') . '</a></td>
+		</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody></table>';

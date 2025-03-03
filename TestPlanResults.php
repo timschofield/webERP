@@ -33,7 +33,6 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 	if (!isset($_POST['CopyToSampleID']) OR $_POST['CopyToSampleID']=='' OR !isset($_POST['Copy'])) {
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="SelectedSampleID" value="' . $SelectedSampleID . '" />
 			<input type="hidden" name="CopyResults" value="CopyResults" />';
@@ -533,24 +532,16 @@ if (isset($_GET['ListTests'])) {
 				$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';
 				break;
 		} //end switch
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>',
-			'<input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$MyRow['testid']. '">',
-			$MyRow['name'],
-			$MyRow['method'],
-			$MyRow['units'],
-			$MyRow['defaultvalue'],
-			'<input  class="' .$Class. '" type="text" name="AddTargetValue' .$x.'" />',
-			$RangeMin,
-			$RangeMax);
+		echo '<tr class="striped_row">
+				<td><input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$MyRow['testid']. '"></td>
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['method'], '</td>
+				<td>', $MyRow['units'], '</td>
+				<td>', $MyRow['defaultvalue'], '</td>
+				<td><input  class="' .$Class. '" type="text" name="AddTargetValue' .$x.'" /></td>
+				<td>', $RangeMin, '</td>
+				<td>', $RangeMax, '</td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 
@@ -946,7 +937,6 @@ echo '</tbody>
 			<input type="hidden" name="TestResultsCounter" value="' . $x . '" />
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-	</div>
 	</form>';
 
 echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ListTests=yes&amp;SelectedSampleID=' .$SelectedSampleID .'">' . _('Add More Tests') . '</a></div>';

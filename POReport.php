@@ -486,6 +486,7 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 		$Result = DB_query($SQL,$ErrMsg);
 		$ctr = 0;
 		$TotalQty = 0;
+		$TotalRecdQty = 0;
 		$TotalExtCost = 0;
 		$TotalExtPrice = 0;
 		$TotalInvQty = 0;
@@ -512,34 +513,54 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 		} else {
 			$SortBy_Display = $Detail_Array[$_POST['SortBy']];
 		}
-		echo '<tr><th colspan="2">' . _('Header Details') . '</th></tr>';
-		echo '<tr><td>' . _('Purchase Order Report') . '</td>
-					<td>' . $_POST['ReportType'] . ' ' . _('By') . ' '.$SortBy_Display  . '</td></tr>';
-		echo '<tr><td>' . _('Date Type') . '</td>
-				<td>' . $_POST['DateType'] . '</td></tr>';
-		echo '<tr><td>' . _('Date Range') . '</td>
-				<td>' . $_POST['FromDate'] . ' ' . _('To') . ' ' .  $_POST['ToDate'] . '</td></tr>';
+		echo '<tr>
+				<th colspan="2">' . _('Header Details') . '</th>
+			</tr>';
+		echo '<tr class="striped_row">
+				<td>' . _('Purchase Order Report') . '</td>
+				<td>' . $_POST['ReportType'] . ' ' . _('By') . ' '.$SortBy_Display  . '</td>
+			</tr>';
+		echo '<tr class="striped_row">
+				<td>' . _('Date Type') . '</td>
+				<td>' . $_POST['DateType'] . '</td>
+			</tr>';
+		echo '<tr class="striped_row">
+				<td>' . _('Date Range') . '</td>
+				<td>' . $_POST['FromDate'] . ' ' . _('To') . ' ' .  $_POST['ToDate'] . '</td>
+			</tr>';
 		if (mb_strlen(trim($PartNumber)) > 0) {
-			echo '<tr><td>' . _('Part Number') . '</td>
-					<td>' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '</td></tr>';
+			echo '<tr class="striped_row">
+					<td>' . _('Part Number') . '</td>
+					<td>' . $_POST['PartNumberOp'] . ' ' . $_POST['PartNumber'] . '</td>
+				</tr>';
 		}
 		if (mb_strlen(trim($_POST['SupplierId'])) > 0) {
-			echo '<tr><td>' . _('Supplier Number') . '</td>
-					<td>' . $_POST['SupplierIdOp'] . ' ' . $_POST['SupplierId'] . '</td></tr>';
+			echo '<tr class="striped_row">
+					<td>' . _('Supplier Number') . '</td>
+					<td>' . $_POST['SupplierIdOp'] . ' ' . $_POST['SupplierId'] . '</td>
+				</tr>';
 		}
 		if (mb_strlen(trim($_POST['SupplierName'])) > 0) {
-			echo '<tr><td>' . _('Supplier Name') . '</td>
-					<td>' . $_POST['SupplierNameOp'] . ' ' . $_POST['SupplierName'] . '</td></tr>';
+			echo '<tr class="striped_row">
+					<td>' . _('Supplier Name') . '</td>
+					<td>' . $_POST['SupplierNameOp'] . ' ' . $_POST['SupplierName'] . '</td>
+				</tr>';
 		}
-		echo '<tr><td>' . _('Line Item Status') . '</td>
-				<td>' . $_POST['LineStatus'] . '</td></tr>';
-		echo '<tr><td>' . _('Stock Category') . '</td>
-				<td>' . $_POST['Category'] . '</td></tr></table>';
+		echo '<tr class="striped_row">
+				<td>' . _('Line Item Status') . '</td>
+				<td>' . $_POST['LineStatus'] . '</td>
+			</tr>';
+		echo '<tr class="striped_row">
+				<td>' . _('Stock Category') . '</td>
+				<td>' . $_POST['Category'] . '</td>
+			</tr>
+		</table>';
 
 		if ($_POST['ReportType'] == 'Detail') {
-			echo '<br /><table class="selection" width="98%">';
+			echo '<table class="selection" width="98%">';
 			if ($_POST['DateType'] == 'Order') {
-				echo '<tr><th>' . _('Order No') . '</th>
+				echo '<tr>
+						<th>' . _('Order No') . '</th>
 						<th>' . _('Part Number') . '</th>
 						<th>' . _('Order Date') . '</th>
 						<th>' . _('Supplier No') . '</th>
@@ -552,7 +573,7 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 						<th>' . _('Line Status') . '</th>
 						<th>' . _('Item Due') . '</th>
 						<th>' . _('Part Description') . '</th>
-						</tr>';
+					</tr>';
 
 				$Linectr = 0;
 
@@ -560,66 +581,43 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 					$Linectr++;
 
 				   // Detail for both DateType of Order
-					printf('<tr class="striped_row">
-							<td><a href="'. $RootPath . '/PO_OrderDetails.php?OrderNo=%s">%s</a></td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>',
-							$MyRow['orderno'],
-							$MyRow['orderno'],
-							$MyRow['itemcode'],
-							ConvertSQLDate($MyRow['orddate']),
-							$MyRow['supplierno'],
-							$MyRow['suppname'],
-							locale_number_format($MyRow['quantityord'],$MyRow['decimalplaces']),
-							locale_number_format($MyRow['quantityrecd'],$MyRow['decimalplaces']),
-							locale_number_format($MyRow['extcost'],2),
-							locale_number_format($MyRow['extprice'],2),
-							locale_number_format($MyRow['qtyinvoiced'],$MyRow['decimalplaces']),
-							$MyRow['linestatus'],
-							ConvertSQLDate($MyRow['deliverydate']),
-							$MyRow['description']);
+					echo '<tr class="striped_row">
+							<td><a href="'. $RootPath . '/PO_OrderDetails.php?OrderNo=', $MyRow['orderno'], '">', $MyRow['orderno'], '</a></td>
+							<td>', $MyRow['itemcode'], '</td>
+							<td>', ConvertSQLDate($MyRow['orddate']), '</td>
+							<td>', $MyRow['supplierno'], '</td>
+							<td>', $MyRow['suppname'], '</td>
+							<td class="number">', locale_number_format($MyRow['quantityord'],$MyRow['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($MyRow['quantityrecd'],$MyRow['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($MyRow['extcost'],2), '</td>
+							<td class="number">', locale_number_format($MyRow['extprice'],2), '</td>
+							<td class="number">', locale_number_format($MyRow['qtyinvoiced'],$MyRow['decimalplaces']), '</td>
+							<td>', $MyRow['linestatus'], '</td>
+							<td>', ConvertSQLDate($MyRow['deliverydate']), '</td>
+							<td>', $MyRow['description'], '</td>
+						</tr>';
 							$LastDecimalPlaces = $MyRow['decimalplaces'];
 							$TotalQty += $MyRow['quantityord'];
+							$TotalRecdQty += $MyRow['quantityrecd'];
 							$TotalExtCost += $MyRow['extcost'];
 							$TotalExtPrice += $MyRow['extprice'];
 							$TotalInvQty += $MyRow['qtyinvoiced'];
 				} //END WHILE LIST LOOP
 				// Print totals
-					printf('<tr>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>',
-							_('Totals'),
-							_('Lines - ') . $Linectr,
-							' ',
-							' ',
-							' ',
-							locale_number_format($TotalQty,2),
-							locale_number_format($TotalExtCost,2),
-							locale_number_format($TotalExtPrice,2),
-							locale_number_format($TotalInvQty,2),
-							' ',
-							' ');
+					echo '<tr class="total_row">
+							<td>', _('Totals'), '</td>
+							<td>', _('Lines - ') . $Linectr, '</td>
+							<td>', ' ', '</td>
+							<td>', ' ', '</td>
+							<td>', ' ', '</td>
+							<td class="number">', locale_number_format($TotalQty,2), '</td>
+							<td class="number">', locale_number_format($TotalRecdQty,2), '</td>
+							<td class="number">', locale_number_format($TotalExtCost,2), '</td>
+							<td class="number">', locale_number_format($TotalExtPrice,2), '</td>
+							<td class="number">', locale_number_format($TotalInvQty,2), '</td>
+							<td>', ' ', '</td>
+							<td colspan="2"></td>
+							</tr>';
 			} else {
 			  // Header for Date Type of Delivery Date
 				echo '<tr>
@@ -643,36 +641,23 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 				while ($MyRow = DB_fetch_array($Result)) {
 					$Linectr++;
 
-				   // Detail for both DateType of Ship
-				   // In sql, had to alias grns.qtyrecd as quantityord so could use same name here
-					printf('<tr class="striped_row">
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>',
-							$MyRow['orderno'],
-							$MyRow['itemcode'],
-							ConvertSQLDate($MyRow['orddate']),
-							$MyRow['supplierno'],
-							$MyRow['suppname'],
-							locale_number_format($MyRow['quantityrecd'],$MyRow['decimalplaces']),
-							locale_number_format($MyRow['quantityord'],$MyRow['decimalplaces']),
-							locale_number_format($MyRow['extcost'],2),
-							locale_number_format($MyRow['extprice'],2),
-							locale_number_format($MyRow['qtyinvoiced'],$MyRow['decimalplaces']),
-							$MyRow['linestatus'],
-							ConvertSQLDate($MyRow['deliverydate']),
-							$MyRow['description']);
+					// Detail for both DateType of Ship
+					// In sql, had to alias grns.qtyrecd as quantityord so could use same name here
+					echo '<tr class="striped_row">
+							<td>', $MyRow['orderno'], '</td>
+							<td>', $MyRow['itemcode'], '</td>
+							<td>', ConvertSQLDate($MyRow['orddate']), '</td>
+							<td>', $MyRow['supplierno'], '</td>
+							<td>', $MyRow['suppname'], '</td>
+							<td class="number">', locale_number_format($MyRow['quantityrecd'],$MyRow['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($MyRow['quantityord'],$MyRow['decimalplaces']), '</td>
+							<td class="number">', locale_number_format($MyRow['extcost'],2), '</td>
+							<td class="number">', locale_number_format($MyRow['extprice'],2), '</td>
+							<td class="number">', locale_number_format($MyRow['qtyinvoiced'],$MyRow['decimalplaces']), '</td>
+							<td>', $MyRow['linestatus'], '</td>
+							<td>', ConvertSQLDate($MyRow['deliverydate']), '</td>
+							<td>', $MyRow['description'], '</td>
+						</tr>';
 
 					$LastDecimalPlaces = $MyRow['decimalplaces'];
 					$TotalQty += $MyRow['quantityord'];
@@ -681,30 +666,19 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 					$TotalInvQty += $MyRow['qtyinvoiced'];
 				} //END WHILE LIST LOOP
 				// Print totals
-					printf('<tr>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>',
-							_('Totals'),
-							_('Lines - ') . $Linectr,
-							' ',
-							' ',
-							' ',
-							locale_number_format($TotalQty,$LastDecimalPlaces),
-							locale_number_format($TotalExtCost,2),
-							locale_number_format($TotalExtPrice,2),
-							locale_number_format($TotalInvQty,$LastDecimalPlaces),
-							' ',
-							' ');
+					echo '<tr class="total_row">
+							<td>', _('Totals'), '</td>
+							<td>', _('Lines - ') . $Linectr, '</td>
+							<td>', ' ', '</td>
+							<td>', ' ', '</td>
+							<td>', ' ', '</td>
+							<td class="number">', locale_number_format($TotalQty,$LastDecimalPlaces), '</td>
+							<td class="number">', locale_number_format($TotalExtCost,2), '</td>
+							<td class="number">', locale_number_format($TotalExtPrice,2), '</td>
+							<td class="number">', locale_number_format($TotalInvQty,$LastDecimalPlaces), '</td>
+							<td>', ' ', '</td>
+							<td>', ' ', '</td>
+						</tr>';
 			}
 			echo '</table>';
 		} else {
@@ -749,23 +723,19 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 				$SummaryHeader = _('Month');
 				$DescriptionHeader = _('Month');
 			}
-			printf('<tr>
-					<th>%s</th>
-					<th>%s</th>
-					<th>%s</th>
-					<th>%s</th>
-					<th>%s</th>
-					<th>%s</th>
-					</tr>',
-				 _($SummaryHeader),
-				 _($DescriptionHeader),
-				 _('Quantity'),
-				 _('Extended Cost'),
-				 _('Extended Price'),
-				 _('Invoiced Qty'));
+			echo '<tr>
+					<th>', _($SummaryHeader), '</th>
+					<th>', _($DescriptionHeader), '</th>
+					<th>', _('Quantity'), '</th>
+					<th>', _('Extended Cost'), '</th>
+					<th>', _('Extended Price'), '</th>
+					<th>', _('Invoiced Qty'), '</th>
+					<th></th>
+				</tr>';
 
-				$SuppName = ' ';
-				$Linectr = 0;
+			$SuppName = ' ';
+			$Linectr = 0;
+			DB_free_result($Result);
 
 			while ($MyRow = DB_fetch_array($Result)) {
 				$Linectr++;
@@ -773,46 +743,33 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 					$SuppName = $MyRow['suppname'];
 				}
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$MyRow[$SummaryType],
-						$MyRow[$Description],
-						$MyRow['quantityord'],
-						locale_number_format($MyRow['extcost'],2),
-						locale_number_format($MyRow['extprice'],2),
-						$MyRow['qtyinvoiced'],
-						$SuppName);
+				echo '<tr class="striped_row">
+						<td>', $MyRow[$SummaryType], '</td>
+						<td>', $MyRow[$Description], '</td>
+						<td class="number">', $MyRow['quantityord'], '</td>
+						<td class="number">', locale_number_format($MyRow['extcost'],2), '</td>
+						<td class="number">', locale_number_format($MyRow['extprice'],2), '</td>
+						<td class="number">', $MyRow['qtyinvoiced'], '</td>
+						<td>', $SuppName, '</td>
+					</tr>';
 				$TotalQty += $MyRow['quantityord'];
 				$TotalExtCost += $MyRow['extcost'];
 				$TotalExtPrice += $MyRow['extprice'];
 				$TotalInvQty += $MyRow['qtyinvoiced'];
 			} //END WHILE LIST LOOP
 			// Print totals
-				printf('<tr>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						_('Totals'),
-						_('Lines - ') . $Linectr,
-						locale_number_format($TotalQty,2),
-						locale_number_format($TotalExtCost,2),
-						locale_number_format($TotalExtPrice,2),
-						locale_number_format($TotalInvQty,2),
-						' ');
-            echo '</table>';
+				echo '<tr class="total_row">
+						<td>', _('Totals'), '</td>
+						<td>', _('Lines - ') . $Linectr, '</td>
+						<td class="number">', locale_number_format($TotalQty,2), '</td>
+						<td class="number">', locale_number_format($TotalExtCost,2), '</td>
+						<td class="number">', locale_number_format($TotalExtPrice,2), '</td>
+						<td class="number">', locale_number_format($TotalInvQty,2), '</td>
+						<td></td>
+					</tr>';
+			echo '</table>';
 		} // End of if ($_POST['ReportType']
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
-        echo '<div>';
 		echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<input type="hidden" name="ReportType" value="'.$_POST['ReportType'].'" />';
 		echo '<input type="hidden" name="DateType" value="'.$_POST['DateType'].'" />';
@@ -831,7 +788,7 @@ function submit($PartNumber,$PartNumberOp,$SupplierId,$SupplierIdOp,$SupplierNam
 		echo '<input type="hidden" name="SummaryType" value="'.$_POST['SummaryType'].'" />';
 		echo '<br /><div class="centre"><input type="submit" name="submitcsv" value="' . _('Export as csv file') . '" /></div>';
 		echo '</div>
-              </form>';
+			  </form>';
 	} // End of if inputerror != 1
 } // End of function submit()
 
@@ -1567,8 +1524,8 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 	echo '<field>
 			<label for="OrderNo">' . _('Order Number') . ':</label>
 			<fieldtext>' . _('Equals').'</fieldtext>:<input type="text" name="OrderNo" size="10" maxlength="10" value="';
-    if (isset($_POST['OrderNo'])) {
-        echo $_POST['OrderNo'] . '" />
+	if (isset($_POST['OrderNo'])) {
+		echo $_POST['OrderNo'] . '" />
 				</field>';
 	} else {
 		echo  '" />

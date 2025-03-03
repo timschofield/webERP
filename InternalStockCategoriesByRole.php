@@ -150,7 +150,6 @@ if (!isset($SelectedRole)){
 //end of ifs and buts!
 if (isset($_POST['process'])OR isset($SelectedRole)) {
 
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' . _('Stock Categories available as internal for role') . ' ' .$SelectedRole. '</a></div>';
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -166,25 +165,20 @@ if (isset($_POST['process'])OR isset($SelectedRole)) {
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">';
-	echo '<tr><th colspan="3"><h3>' . _('Internal Stock Categories Allowed to user role') . ' ' .$SelectedRole. '</h3></th></tr>';
+	echo '<tr><th colspan="3">' . _('Internal Stock Categories Allowed to user role') . ' ' .$SelectedRole. '</th></tr>';
 	echo '<tr>
 			<th>' . _('Category Code') . '</th>
 			<th>' . _('Description') . '</th>
+			<th></th>
 		</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%s?SelectedType=%s&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this internal stock category code?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['categoryid'],
-			$MyRow['categorydescription'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$MyRow['categoryid'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$MyRow['categoryid']);
+	echo '<tr class="striped_row">
+			<td>', $MyRow['categoryid'], '</td>
+			<td>', $MyRow['categorydescription'], '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedType=', $MyRow['categoryid'], '&amp;delete=yes&amp;SelectedRole=' . $SelectedRole . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this internal stock category code?') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';

@@ -86,20 +86,13 @@ if(DB_num_rows($TaxRatesResult)>0) {
 		<tbody>';
 
 	while($MyRow = DB_fetch_array($TaxRatesResult)) {
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td><input class="number" maxlength="5" name="%s" required="required" size="5" title="' . _('Input must be numeric') . '" type="text" value="%s" /></td>
-				</tr>',
-			// Deliveries From:
-			$MyRow['taxprovincename'],
-			// Tax Category:
-			_($MyRow['taxcatname']),// Uses gettext() to translate 'Exempt', 'Freight' and 'Handling'.
-			// Tax Rate:
-			$MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid'],
-			locale_number_format($MyRow['taxrate']*100,2));
+		echo '<tr class="striped_row">
+				<td>', $MyRow['taxprovincename'], '</td>
+				<td>', _($MyRow['taxcatname']), '</td>
+				<td><input class="number" maxlength="5" name="', $MyRow['dispatchtaxprovince'] . '_' . $MyRow['taxcatid'], '" required="required" size="5" title="' . _('Input must be numeric') . '" type="text" value="', locale_number_format($MyRow['taxrate']*100,2), '" /></td>
+			</tr>';
 	}// End of while loop.
-	echo '</tbody></table><br />
+	echo '</tbody></table>
 		<div class="centre">
 		<input type="submit" name="UpdateRates" value="' . _('Update Rates') . '" />';
 	//end if tax taxcatid/rates to show
@@ -110,8 +103,7 @@ if(DB_num_rows($TaxRatesResult)>0) {
 }
 echo '</div>';// Closes Submit or prnMsg division.
 
-echo '<br />
-	<div class="centre">
+echo '<div class="centre">
 		<a href="' . $RootPath . '/TaxAuthorities.php">' . _('Tax Authorities Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxGroups.php">' . _('Tax Group Maintenance') .  '</a><br />
 		<a href="' . $RootPath . '/TaxProvinces.php">' . _('Dispatch Tax Province Maintenance') .  '</a><br />

@@ -41,17 +41,12 @@ if (DB_num_rows($Result) != 0){
 			}
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$MyRow['categorydescription'],
-					$CodeLink,
-					$MyRow['description']
-					);
+			echo '<tr class="striped_row">
+					<td class="number">', $i, '</td>
+					<td>', $MyRow['categorydescription'], '</td>
+					<td>', $CodeLink, '</td>
+					<td>', $MyRow['description'], '</td>
+				</tr>';
 			$i++;
 		}
 	}

@@ -82,23 +82,17 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 
 	/*show a table of the orders returned by the SQL */
 
-	echo '<br />
-		<table cellpadding="2" width="90%" class="selection">';
-
-	$Tableheader = '<tr>
-						<th>' . _('Modify') . '</th>
-						<th>' . _('Customer') . '</th>
-						<th>' . _('Branch') . '</th>
-						<th>' . _('Cust Order') . ' #</th>
-						<th>' . _('Last Recurrence') . '</th>
-						<th>' . _('End Date') . '</th>
-						<th>' . _('Times p.a.') . '</th>
-						<th>' . _('Order Total') . '</th>
-					</tr>';
-
-	echo $Tableheader;
-
-	$j = 1;
+	echo '<table cellpadding="2" width="90%" class="selection">
+			<tr>
+				<th>' . _('Modify') . '</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Cust Order') . ' #</th>
+				<th>' . _('Last Recurrence') . '</th>
+				<th>' . _('End Date') . '</th>
+				<th>' . _('Times p.a.') . '</th>
+				<th>' . _('Order Total') . '</th>
+			</tr>';
 
 	while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
 
@@ -107,31 +101,16 @@ SUM(recurrsalesorderdetails.unitprice*recurrsalesorderdetails.quantity*(1-recurr
 		$FormatedStopDate = ConvertSQLDate($MyRow['stopdate']);
 		$FormatedOrderValue = locale_number_format($MyRow['ordervalue'],$MyRow['currdecimalplaces']);
 
-		printf('<tr class="striped_row">
-				<td><a href="%s">%s</a></td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$ModifyPage,
-				$MyRow['recurrorderno'],
-				$MyRow['name'],
-				$MyRow['brname'],
-				$MyRow['customerref'],
-				$FormatedLastRecurrence,
-				$FormatedStopDate,
-				$MyRow['frequency'],
-				$FormatedOrderValue);
-
-		$j++;
-		If ($j == 12){
-			$j=1;
-			echo $Tableheader;
-		}
+		echo '<tr class="striped_row">
+				<td><a href="', $ModifyPage, '">', $MyRow['recurrorderno'], '</a></td>
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['brname'], '</td>
+				<td>', $MyRow['customerref'], '</td>
+				<td>', $FormatedLastRecurrence, '</td>
+				<td>', $FormatedStopDate, '</td>
+				<td>', $MyRow['frequency'], '</td>
+				<td class="number">', $FormatedOrderValue, '</td>
+			</tr>';
 	//end of page full new headings if
 	}
 	//end of while loop

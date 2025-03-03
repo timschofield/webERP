@@ -89,32 +89,19 @@ if ($SerialNo!='') {
 				<th>' . _('Total Move Qty') . '</th>
 			</tr>';
 		while ($MyRow=DB_fetch_row($Result)) {
-			printf('<tr>
-					<td>%s<br />%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s (%s)</td>
-					<td class="number">%s</td>
-					<td>%s - %s</td>
-					<td>%s &nbsp;</td>
-					<td>%s &nbsp;</td>
-					<td>%s &nbsp;</td>
-					<td>%s &nbsp;</td>
-					<td class="number">%s</td>
-					</tr>',
-					$MyRow[1],
-					$MyRow[0],
-					$MyRow[2],
-					$MyRow[3],
-					$MyRow[5], $MyRow[4],
-					$MyRow[6],
-					$MyRow[7], $MyRow[8],
-					$MyRow[9],
-					$MyRow[10],
-					$MyRow[11],
-					$MyRow[12],
-					$MyRow[13]
-				);
+			echo '<tr>
+					<td>', $MyRow[1], '<br />', $MyRow[0], '</td>
+					<td class="number">', $MyRow[2], '</td>
+					<td class="number">', $MyRow[3], '</td>
+					<td>', $MyRow[5], ' (', $MyRow[4], ')</td>
+					<td class="number">', $MyRow[6], '</td>
+					<td>', $MyRow[7], ' - ', $MyRow[8], '</td>
+					<td>', $MyRow[9], ' &nbsp;</td>
+					<td>', $MyRow[10], ' &nbsp;</td>
+					<td>', $MyRow[11], ' &nbsp;</td>
+					<td>', $MyRow[12], ' &nbsp;</td>
+					<td class="number">', $MyRow[13], '</td>
+				</tr>';
 		} //END WHILE LIST LOOP
 		echo '</table>';
 	} // ELSE THERE WHERE ROWS

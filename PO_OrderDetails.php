@@ -36,7 +36,7 @@ if (!isset($_GET['OrderNo'])) {
 
 	echo '<table class="table_index">
 		<tr><td class="menu_group_item">
-                <li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
+				<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 		</td></tr></table>';
 	include('includes/footer.php');
 	exit;
@@ -71,8 +71,8 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 	} else {
 		prnMsg ( _('The order requested could not be retrieved') . ' - ' . _('the SQL returned either several purchase orders'), 'error');
 	}
-        echo '<table class="table_index">
-                <tr>
+		echo '<table class="table_index">
+				<tr>
 					<td class="menu_group_item">
 						<li><a href="'. $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a></li>
 					</td>
@@ -87,56 +87,56 @@ if (DB_num_rows($GetOrdHdrResult)!=1) {
 $MyRow = DB_fetch_array($GetOrdHdrResult);
 
 /* SHOW ALL THE ORDER INFO IN ONE PLACE */
+echo '<a class="toplink" href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a>';
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' .
 		_('Purchase Order') . '" alt="" />' . ' ' . $Title . '</p>';
-echo '<a href="' . $RootPath . '/PO_SelectPurchOrder.php">' . _('Outstanding Purchase Orders') . '</a>';
 echo '<table class="selection" cellpadding="2">
 		<tr>
 			<th colspan="8"><b>' .  _('Order Header Details'). '</b></th>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' . _('Supplier Code'). '</td>
 			<td><a href="SelectSupplier.php?SupplierID='.$MyRow['supplierid'].'">' . $MyRow['supplierid'] . '</a></td>
 			<td>' . _('Supplier Name'). '</td>
 			<td><a href="SelectSupplier.php?SupplierID='.$MyRow['supplierid'].'">' . $MyRow['suppname'] . '</a></td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' . _('Ordered On'). '</td>
 			<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
 			<td>' . _('Delivery Address 1'). '</td>
 			<td>' . $MyRow['deladd1'] . '</td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' . _('Order Currency'). '</td>
 			<td>' . $MyRow['currcode'] . '</td>
 			<td>' . _('Delivery Address 2'). '</td>
 			<td>' . $MyRow['deladd2'] . '</td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' . _('Exchange Rate'). '</td>
 			<td>' . $MyRow['rate'] . '</td>
 			<td>' . _('Delivery Address 3'). '</td>
 			<td>' . $MyRow['deladd3'] . '</td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' . _('Deliver Into Location'). '</td>
 			<td>' . $MyRow['locationname'] . '</td>
 			<td>' . _('Delivery Address 4'). '</td>
 			<td>' . $MyRow['deladd4'] . '</td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' . _('Initiator'). '</td>
 			<td>' . $MyRow['realname'] . '</td>
 			<td>' . _('Delivery Address 5'). '</td>
 			<td>' . $MyRow['deladd5'] . '</td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' . _('Requisition Ref'). '.</td>
 			<td>' . $MyRow['requisitionno'] . '</td>
 			<td>' . _('Delivery Address 6'). '</td>
 			<td>' . $MyRow['deladd6'] . '</td>
 		</tr>
-		<tr>
+		<tr class="striped_row">
 			<td>' .  _('Printing') . '</td>
 			<td colspan="3">';
 
@@ -150,15 +150,16 @@ if ($MyRow['dateprinted'] == ''){
 
 echo  '</td>
 	</tr>
-	<tr>
+	<tr class="striped_row">
 		<td>' .  _('Status') . '</td>
 		<td>' .  _($MyRow['status']) . '</td>
+		<td colspan="2"></td>
 	</tr>
-	<tr>
+	<tr class="striped_row">
 		<td>' . _('Comments'). '</td>
 		<td colspan="3">' . $MyRow['comments'] . '</td>
 	</tr>
-	<tr>
+	<tr class="striped_row">
 		<td>' . _('Status Coments') . '</td>
 		<td colspan="5">' . html_entity_decode($MyRow['stat_comment']) . '</td>
 	</tr>
@@ -185,14 +186,14 @@ echo '<table class="selection" cellpadding="0">
 			<th colspan="8"><b>' .  _('Order Line Details'). '</b></th>
 		</tr>
 		<tr>
-			<td>' . _('Item Code'). '</td>
-			<td>' . _('Item Description'). '</td>
-			<td>' . _('Ord Qty'). '</td>
-			<td>' . _('Qty Recd'). '</td>
-			<td>' . _('Qty Inv'). '</td>
-			<td>' . _('Ord Price'). '</td>
-			<td>' . _('Chg Price'). '</td>
-			<td>' . _('Reqd Date'). '</td>
+			<th>' . _('Item Code'). '</th>
+			<th>' . _('Item Description'). '</th>
+			<th>' . _('Ord Qty'). '</th>
+			<th>' . _('Qty Recd'). '</th>
+			<th>' . _('Qty Inv'). '</th>
+			<th>' . _('Ord Price'). '</th>
+			<th>' . _('Chg Price'). '</th>
+			<th>' . _('Reqd Date'). '</th>
 		</tr>';
 
 $OrderTotal=0;
@@ -212,7 +213,7 @@ while ($MyRow=DB_fetch_array($LineItemsResult)) {
 	// if overdue and outstanding quantities, then highlight as so
 	if (($MyRow['quantityord'] - $MyRow['quantityrecd'] > 0)
 	  	AND Date1GreaterThanDate2(Date($_SESSION['DefaultDateFormat']), $DisplayReqdDate)){
-    	 	echo '<tr class="OsRow">';
+		 	echo '<tr class="info_row">';
 	} else {
 		echo '<tr class="striped_row">';
 	}
@@ -237,18 +238,15 @@ while ($MyRow=DB_fetch_array($LineItemsResult)) {
 
 }
 
-echo '<tr><td><br /></td>
-	</tr>
-	<tr>
+echo '<tr class="total_row">
 		<td colspan="4" class="number">' . _('Total Order Value Excluding Tax')  . '</td>
 		<td colspan="2" class="number">' . locale_number_format($OrderTotal,$CurrDecimalPlaces) . '</td>
 	</tr>
-	<tr>
+	<tr class="total_row">
 		<td colspan="4" class="number">' . _('Total Order Value Received Excluding Tax') . '</td>
 		<td colspan="2" class="number">' . locale_number_format($RecdTotal,$CurrDecimalPlaces) . '</td>
 	</tr>
-	</table>
-	<br />';
+	</table>';
 
 include ('includes/footer.php');
 ?>

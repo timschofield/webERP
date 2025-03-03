@@ -132,7 +132,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 	$DemandQty = GetDemand($StockID, $MyRow['loccode']);
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
-		// Get the QOO 
+		// Get the QOO
 		$QOO = GetQuantityOnOrder($StockID, $MyRow['loccode']);
 
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
@@ -174,19 +174,12 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 				<td> ' . $MyRow['bin'] . '</td>';
 		}
 
-		printf('<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>',
-				locale_number_format($MyRow['quantity'], $DecimalPlaces),
-				locale_number_format($MyRow['reorderlevel'], $DecimalPlaces),
-				locale_number_format($DemandQty, $DecimalPlaces),
-				locale_number_format($InTransitQuantityIn+$InTransitQuantityOut, $DecimalPlaces),
-				locale_number_format($Available, $DecimalPlaces),
-				locale_number_format($QOO, $DecimalPlaces)
-				);
+		echo '<td class="number">', locale_number_format($MyRow['quantity'], $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($MyRow['reorderlevel'], $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($DemandQty, $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($InTransitQuantityIn+$InTransitQuantityOut, $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($Available, $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($QOO, $DecimalPlaces), '</td>';
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
@@ -200,12 +193,10 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 	} else {
 	/* It must be a dummy, assembly or kitset part */
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$MyRow['locationname'],
-				locale_number_format($DemandQty, $DecimalPlaces));
+		echo '<tr class="striped_row">
+				<td>', $MyRow['locationname'], '</td>
+				<td class="number">', locale_number_format($DemandQty, $DecimalPlaces), '</td>
+			</tr>';
 	}
 //end of page full new headings if
 }
@@ -297,16 +288,12 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 
 	  foreach($PriceHistory as $PreviousPrice) {
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s%%</td>
-					</tr>',
-					$PreviousPrice[0],
-					locale_number_format($PreviousPrice[1],$DecimalPlaces),
-					locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($PreviousPrice[3]*100,2));
+		echo '<tr class="striped_row">
+				<td>', $PreviousPrice[0], '</td>
+				<td class="number">', locale_number_format($PreviousPrice[1],$DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($PreviousPrice[3]*100,2), '%</td>
+			</tr>';
 		} // end foreach
 	 echo '</tbody></table>';
 	 }

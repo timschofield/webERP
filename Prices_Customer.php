@@ -174,9 +174,9 @@ if (isset($_POST['submit'])) {
 
 $SQL = "SELECT prices.price,
 				prices.currabrev,
-               prices.typeabbrev,
-               prices.startdate,
-               prices.enddate
+			   prices.typeabbrev,
+			   prices.startdate,
+			   prices.enddate
 		FROM prices
 		WHERE  prices.stockid='" . $Item . "'
 		AND prices.typeabbrev='". $SalesType ."'
@@ -202,14 +202,11 @@ if (DB_num_rows($Result) == 0) {
 		} else {
 			$EndDateDisplay = ConvertSQLDate($MyRow['enddate']);
 		}
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td type="date">%s</td>
-				<td type="date">%s</td>
-				</tr>',
-				locale_number_format($MyRow['price'],$CurrDecimalPlaces),
-				ConvertSQLDate($MyRow['startdate']),
-				$EndDateDisplay);
+		echo '<tr class="striped_row">
+				<td class="number">', locale_number_format($MyRow['price'],$CurrDecimalPlaces), '</td>
+				<td type="date">', ConvertSQLDate($MyRow['startdate']), '</td>
+				<td type="date">', $EndDateDisplay, '</td>
+			</tr>';
 	}
 }
 
@@ -218,7 +215,7 @@ echo '</table>';
 //now get the prices for the customer selected
 
 $SQL = "SELECT prices.price,
-               prices.branchcode,
+			   prices.branchcode,
 			   custbranch.brname,
 			   prices.startdate,
 			   prices.enddate
@@ -246,6 +243,11 @@ if (DB_num_rows($Result) == 0) {
 	echo '<tr>
 			<th>' . _('Special Price') . '</th>
 			<th>' . _('Branch') . '</th>
+			<th>' . _('Units') . '</th>
+			<th>' . _('Conversion') . '<br />' . _('Factor') . '</th>
+			<th>' . _('Start Date') . '</th>
+			<th>' . _('End Date') . '</th>
+			<th colspan="2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -271,7 +273,7 @@ if (DB_num_rows($Result) == 0) {
 	if (DB_num_rows($StockResult) == 0) {
 		$StockRow['units'] = '';
 		$StockRow['conversionfactor'] = 1;
-	} else {
+	}
 		$StockRow = DB_fetch_array($StockResult);
 		echo '<tr style="background-color:#CCCCCC">
 				<td class="number">' . locale_number_format($MyRow['price'],$CurrDecimalPlaces) . '</td>
@@ -284,7 +286,7 @@ if (DB_num_rows($Result) == 0) {
 					'&amp;StartDate='.$MyRow['startdate'].'&amp;EndDate='.$MyRow['enddate'].'&amp;Edit=1">' . _('Edit') . '</a></td>
 				<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?Item='.$Item.'&amp;Branch='.$MyRow['branchcode'].'&amp;StartDate='.$MyRow['startdate'] .'&amp;EndDate='.$MyRow['enddate'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this price?') . '\');">' . _('Delete') . '</a></td>
 			</tr>';
-		}
+
 
 	}
 //END WHILE LIST LOOP

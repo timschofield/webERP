@@ -45,11 +45,11 @@ If (isset($ShiptRef) AND $ShiptRef!='') {
 	}
 } else {
 	if (isset($SelectedSupplier)) {
-		echo '<br />' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). ' ';
+		echo '<h3>' ._('For supplier'). ': '. $SelectedSupplier . ' ' . _('and'). '</h3>';
 		echo '<input type="hidden" name="SelectedSupplier" value="'. $SelectedSupplier. '" />';
 	}
 	If (isset($SelectedStockItem)) {
-		 echo _('for the part'). ': ' . $SelectedStockItem . '.';
+		echo '<h3>', _('for the part'). ': ' . $SelectedStockItem . '</h3>';
 		echo '<input type="hidden" name="SelectedStockItem" value="'. $SelectedStockItem. '" />';
 	}
 }
@@ -191,41 +191,27 @@ echo '<div class="centre">
 
 if (isset($StockItemsResult)) {
 
-	echo '<table class="selection">';
-	$TableHeader = '<tr>
-						<th>' .  _('Code') . '</th>
-						<th>' .  _('Description') . '</th>
-						<th>' .  _('On Hand') . '</th>
-						<th>' .  _('Orders') . '<br />' . _('Outstanding') . '</th>
-						<th>' .  _('Units') . '</th>
-					</tr>';
-	echo $TableHeader;
-
-	$j = 1;
+	echo '<table class="selection">
+			<tr>
+				<th>' .  _('Code') . '</th>
+				<th>' .  _('Description') . '</th>
+				<th>' .  _('On Hand') . '</th>
+				<th>' .  _('Orders') . '<br />' . _('Outstanding') . '</th>
+				<th>' .  _('Units') . '</th>
+				<th colspan="3"></th>
+			</tr>';
 
 	while ($MyRow=DB_fetch_array($StockItemsResult)) {
-
 /*
 Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand     Orders Ostdg	Units	 */
-		printf('<tr class="striped_row">
-				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>',
-				$MyRow['stockid'],
-				$MyRow['description'],
-				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-				locale_number_format($MyRow['qord'],$MyRow['decimalplaces']),
-				$MyRow['units']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['qord'],$MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+			</tr>';
 
-		$j++;
-		If ($j == 15){
-			$j=1;
-			echo $TableHeader;
-		}
-//end of page full new headings if
 	}
 //end of while loop
 
@@ -288,18 +274,15 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 	if (DB_num_rows($ShipmentsResult)>0){
 		/*show a table of the shipments returned by the SQL */
 
-		echo '<table width="95%" class="selection">';
-		$TableHeader = '<tr>
-							<th>' .  _('Shipment'). '</th>
-							<th>' .  _('Supplier'). '</th>
-							<th>' .  _('Vessel'). '</th>
-							<th>' .  _('Voyage'). '</th>
-							<th>' .  _('Expected Arrival'). '</th>
-						</tr>';
-
-		echo $TableHeader;
-
-		$j = 1;
+		echo '<table width="95%" class="selection">
+				<tr>
+					<th>' .  _('Shipment'). '</th>
+					<th>' .  _('Supplier'). '</th>
+					<th>' .  _('Vessel'). '</th>
+					<th>' .  _('Voyage'). '</th>
+					<th>' .  _('Expected Arrival'). '</th>
+					<th colspan="3"></th>
+				</tr>';
 
 		while ($MyRow=DB_fetch_array($ShipmentsResult)) {
 
@@ -313,45 +296,26 @@ Code	 Description	On Hand		 Orders Ostdg     Units		 Code	Description 	 On Hand 
 
 				$URL_Close_Shipment = $URL_View_Shipment . '&amp;Close=Yes';
 
-				printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="%s">' . _('Costing') . '</a></td>
-					<td><a href="%s">' . _('Modify') . '</a></td>
-					<td><a href="%s"><b>' . _('Close') . '</b></a></td>
-					</tr>',
-					$MyRow['shiptref'],
-					$MyRow['suppname'],
-					$MyRow['vessel'],
-					$MyRow['voyageref'],
-					$FormatedETA,
-					$URL_View_Shipment,
-					$URL_Modify_Shipment,
-					$URL_Close_Shipment);
+				echo '<tr class="striped_row">
+						<td>', $MyRow['shiptref'], '</td>
+						<td>', $MyRow['suppname'], '</td>
+						<td>', $MyRow['vessel'], '</td>
+						<td>', $MyRow['voyageref'], '</td>
+						<td>', $FormatedETA, '</td>
+						<td><a href="', $URL_View_Shipment, '">' . _('Costing') . '</a></td>
+						<td><a href="', $URL_Modify_Shipment, '">' . _('Modify') . '</a></td>
+						<td><a href="', $URL_Close_Shipment, '"><b>' . _('Close') . '</b></a></td>
+					</tr>';
 
 			} else {
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td><a href="%s">' . _('Costing') . '</a></td>
-						</tr>',
-						$MyRow['shiptref'],
-						$MyRow['suppname'],
-						$MyRow['vessel'],
-						$MyRow['voyage'],
-						$FormatedETA,
-						$URL_View_Shipment);
-			}
-			$j++;
-			If ($j == 15){
-				$j=1;
-				echo $TableHeader;
+				echo '<tr class="striped_row">
+						<td>', $MyRow['shiptref'], '</td>
+						<td>', $MyRow['suppname'], '</td>
+						<td>', $MyRow['vessel'], '</td>
+						<td>', $MyRow['voyage'], '</td>
+						<td>', $FormatedETA, '</td>
+						<td><a href="', $URL_View_Shipment, '">' . _('Costing') . '</a></td>
+						</tr>';
 			}
 		//end of page full new headings if
 		}
