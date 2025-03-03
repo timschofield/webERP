@@ -26,6 +26,9 @@ $DefaultTheme = 'gel';
 // Whether to display the demo login and password or not on the login screen
 $AllowDemoMode = False;
 
+// Whether to display company logo in drop down list at login
+$ShowLogoAtLogin = False;
+
 // email address of the system administrator
 $SysAdminEmail = 'webmaster@kapal-laut.com';
 
