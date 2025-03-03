@@ -8,6 +8,10 @@ $Title=_('FTP order to Radio Beacon');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
+echo '<p class="page_title_text">
+		<img src="'.$RootPath.'/css/'.$Theme.'/images/supplier.png" title="' . _('Freight Costs') . '" alt="" />' . ' ' . $Title . '
+	</p>';
+
 
 /*Logic should allow entry of an order number which returns
 some details of the order for confirming before producing the file for ftp */
@@ -19,7 +23,7 @@ $SQL = "SELECT salesorders.orderno,
 				salesorders.orddate,
 				salesorders.deliverto,
 				salesorders.deliverydate,
-				sum(salesorderdetails.linenetprice)) as ordervalue,
+				sum(salesorderdetails.linenetprice) as ordervalue,
 				datepackingslipprinted,
 				printedpackingslip
 			FROM salesorders,
@@ -45,16 +49,16 @@ $SalesOrdersResult = DB_query($SQL,$ErrMsg);
 
 echo '<table cellpadding="2" width="100%">';
 $TableHeader =	'<tr>
-				<td class="tableheader">' . _('Modify') . '</td>
-				<td class="tableheader">' . _('Send to') . '<br />' . _('Radio Beacon') . '</td>
-				<td class="tableheader">' . _('Customer') . '</td>
-				<td class="tableheader">' . _('Branch') . '</td>
-				<td class="tableheader">' . _('Cust Order') . ' #</td>
-				<td class="tableheader">' . _('Order Date') . '</td>
-				<td class="tableheader">' . _('Req Del Date') . '</td>
-				<td class="tableheader">' . _('Delivery To') . '</td>
-				<td class="tableheader">' . _('Order Total') . '</td>
-				<td class="tableheader">' . _('Last Send') . '</td>
+				<th>' . _('Modify') . '</th>
+				<th>' . _('Send to') . '<br />' . _('Radio Beacon') . '</th>
+				<th>' . _('Customer') . '</th>
+				<th>' . _('Branch') . '</th>
+				<th>' . _('Cust Order') . ' #</th>
+				<th>' . _('Order Date') . '</th>
+				<th>' . _('Req Del Date') . '</th>
+				<th>' . _('Delivery To') . '</th>
+				<th>' . _('Order Total') . '</th>
+				<th>' . _('Last Send') . '</th>
 				</tr>';
 
 echo $TableHeader;
@@ -70,50 +74,31 @@ while ($MyRow=DB_fetch_array($SalesOrdersResult)) {
 	$ModifyPage = $RootPath . 'SelectOrderItems.php?ModifyOrderNumber=' . $MyRow['orderno'];
 
 	if ($MyRow['printedpackingslip'] ==1){
-		printf('<tr class="striped_row">
-				<td><font size="2"><a href="%s">%s</a></font></td>
+		echo '<tr class="striped_row">
+				<td><font size="2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
 				<td><font color=RED size="2">' . _('Already') . '<br />' . _('Sent') . '</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td class="number"><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td></tr>',
-				$ModifyPage,
-				$MyRow['orderno'],
-				$MyRow['name'],
-				$MyRow['brname'],
-				$MyRow['customerref'],
-				$FormatedOrderDate,
-				$FormatedDelDate,
-				$MyRow['deliverto'],
-				$FormatedOrderValue,
-				$FormatedDateLastSent);
+				<td><font size="2">', $MyRow['name'], '</font></td>
+				<td><font size="2">', $MyRow['brname'], '</font></td>
+				<td><font size="2">', $MyRow['customerref'], '</font></td>
+				<td><font size="2">', $FormatedOrderDate, '</font></td>
+				<td><font size="2">', $FormatedDelDate, '</font></td>
+				<td><font size="2">', $MyRow['deliverto'], '</font></td>
+				<td class="number"><font size="2">', $FormatedOrderValue, '</font></td>
+				<td><font size="2">', $FormatedDateLastSent, '</font></td>
+			</tr>';
 	} else {
-		printf('<tr class="striped_row">
-				<td><font size="2"><a href="%s">%s</a></font></td>
-				<td><font size="2"><a href="%s">' . _('Send') . '</a></font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td>
-				<td class="number"><font size="2">%s</font></td>
-				<td><font size="2">%s</font></td></tr>',
-				$ModifyPage,
-				$MyRow['orderno'],
-				$FTPDispatchNote,
-				$MyRow['name'],
-				$MyRow['brname'],
-				$MyRow['customerref'],
-				$FormatedOrderDate,
-				$FormatedDelDate,
-				$MyRow['deliverto'],
-				$FormatedOrderValue,
-				$FormatedDateLastSent);
+		echo '<tr class="striped_row">
+				<td><font size="2"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></font></td>
+				<td><font size="2"><a href="', $FTPDispatchNote, '">' . _('Send') . '</a></font></td>
+				<td><font size="2">', $MyRow['name'], '</font></td>
+				<td><font size="2">', $MyRow['brname'], '</font></td>
+				<td><font size="2">', $MyRow['customerref'], '</font></td>
+				<td><font size="2">', $FormatedOrderDate, '</font></td>
+				<td><font size="2">', $FormatedDelDate, '</font></td>
+				<td><font size="2">', $MyRow['deliverto'], '</font></td>
+				<td class="number"><font size="2">', $FormatedOrderValue, '</font></td>
+				<td><font size="2">', $FormatedDateLastSent, '</font></td>
+			</tr>';
 	}
 	$j++;
 	if ($j == 12){
@@ -275,9 +260,9 @@ if (isset($_GET['OrderNo'])){ /*An order has been selected for sending */
 			ftp_quit($conn_id);
 
 			/* Update the order printed flag to prevent double sendings */
-			$SQL = "UPDATE salesorders 
-					SET printedpackingslip=1, 
-						datepackingslipprinted = CURRENT_DATE 
+			$SQL = "UPDATE salesorders
+					SET printedpackingslip=1,
+						datepackingslipprinted = CURRENT_DATE
 					WHERE salesorders.orderno=" . $_GET['OrderNo'];
 			$Result = DB_query($SQL);
 

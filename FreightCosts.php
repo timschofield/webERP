@@ -217,7 +217,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 
 	$Result = DB_query($SQL);
 
-	echo '<br /><table class="selection">';
+	echo '<table class="selection">';
 	$TableHeader = '<tr>
 					<th>' . _('Country') . '</th>
 					<th>' . _('Destination') . '</th>
@@ -227,6 +227,7 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 					<th>' . _('MAX Volume') . '</th>
 					<th>' . _('Fixed Price') . '</th>
 					<th>' . _('Minimum Charge') . '</th>
+					<th colspan="2"></th>
 					</tr>';
 
 	echo $TableHeader;
@@ -241,33 +242,18 @@ if (!isset($SelectedFreightCost) AND isset($LocationFrom) AND isset($ShipperID))
 
 		}
 
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td><a href="%s&amp;SelectedFreightCost=%s&amp;LocationFrom=%s&amp;ShipperID=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&amp;SelectedFreightCost=%s&amp;LocationFrom=%s&amp;ShipperID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this freight cost') . '\');">' . _('Delete') . '</a></td></tr>',
-			$MyRow[1],
-			$MyRow[2],
-			locale_number_format($MyRow[3],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($MyRow[4],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($MyRow[5],2),
-			locale_number_format($MyRow[6],3),
-			locale_number_format($MyRow[7],$_SESSION['CompanyRecord']['decimalplaces']),
-			locale_number_format($MyRow[8],$_SESSION['CompanyRecord']['decimalplaces']),
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow[0],
-			$LocationFrom,
-			$ShipperID,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow[0],
-			$LocationFrom,
-			$ShipperID);
+		echo '<tr class="striped_row">
+				<td>', $MyRow[1], '</td>
+				<td>', $MyRow[2], '</td>
+				<td class="number">', locale_number_format($MyRow[3],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow[4],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow[5],2), '</td>
+				<td class="number">', locale_number_format($MyRow[6],3), '</td>
+				<td class="number">', locale_number_format($MyRow[7],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow[8],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedFreightCost=', $MyRow[0], '&amp;LocationFrom=', $LocationFrom, '&amp;ShipperID=', $ShipperID, '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedFreightCost=', $MyRow[0], '&amp;LocationFrom=', $LocationFrom, '&amp;ShipperID=', $ShipperID, '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this freight cost') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 
 	}
 
