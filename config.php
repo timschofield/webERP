@@ -1,14 +1,14 @@
 <?php
 /*******************************************************************************
 *
-* KL RICARD: A lot of variables moved to KLConfig. php
+* KL RICARD: A lot of variables moved to KLConfig.php
 *
 ********************************************************************************/
 
 // User configurable variables
 //---------------------------------------------------
 
-// type of webERP (TEST or Prodution)
+// type of webERP (TEST or Production)   
 // Moved to KLConfig.php 
 // $webERPType = 'TEST';
 
