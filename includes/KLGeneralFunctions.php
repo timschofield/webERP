@@ -608,6 +608,19 @@ function GetItemDescriptionFromCode($StockID){
 	return '';
 }
 
+function GetItemStandardCostFromCode($StockID){
+	$ErrMsg = 'Error in function GetItemStandardCostFromCode()';
+	$SQL = "SELECT actualcost FROM stockmaster WHERE stockid='" . $StockID . "'";
+	$Result = DB_query($SQL,$ErrMsg);
+	if (DB_num_rows($Result) > 0) {
+		$Row = DB_fetch_row($Result);
+		return round($Row['0'], 0);
+	}
+	return 0;
+}
+
+
+
 function GetTotalItemsChangingPrice(){
 	$ErrMsg = 'Error in function GetTotalItemsChangingPrice()';
 	$SQL="SELECT COUNT(*) FROM stockmaster WHERE klchangingprice='1'";
