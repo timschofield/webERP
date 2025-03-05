@@ -1,0 +1,9 @@
+For all files in the working set:
+1) Trailing whitespaces: Remove all trailing whitespaces
+2) Indentation: Convert indentation spaces into tab with size 1 tab = 4 spaces.
+3) PascalCase: All variables must be written in PascalCase style and fix the wrong ones. Except variabes starting with $webERP* or counters like $i, $j.
+4) Binary Operators: ensure are surrounded by one space on each side
+5) Unary Operators: ensure no spaces after the operators
+6) Ternary Operators: Must have a space before and after the ? and the :
+7) Function Calls: No space between the function name and the opening parenthesis. No space after the opening parenthesis or before the closing parenthesis.
+8) Line Length: For any line longer than 120 characters divide it into several lines to imporve readability.

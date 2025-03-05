@@ -8,12 +8,13 @@
 // User configurable variables
 //---------------------------------------------------
 
-// type of webERP (TEST or Production)   
+// type of webERP (TEST or Production)
 // Moved to KLConfig.php 
 // $webERPType = 'TEST';
 
-//DefaultLanguage to use for the login screen and the setup of new users - the users language selection will override
-$DefaultLanguage ='en_GB.utf8';
+//DefaultLanguage to use for the login screen and the setup of new users
+//the users language selection will override
+$DefaultLanguage = 'en_GB.utf8';
 
 // Default theme to use for the login screen and the setup of new users.
 //The users' theme selection will override
@@ -40,9 +41,9 @@ date_default_timezone_set('Asia/Singapore');
 // Connection information for the database
 // $Host is the computer ip address or name where the database is located
 // assuming that the web server is also the sql server
-// $Hots Moved to KLConfig.php
+// $Host Moved to KLConfig.php
 // $Host = 'localhost';
-$MySQLPort=3306;
+$MySQLPort = 3306;
 
 //The type of db server being used
 //$DBType = 'postgres' - now DEPRECIATED;
@@ -55,11 +56,12 @@ $DBType = 'mariadb';
 //$DBUser = 'DBU_ptadu_test';
 //$DBPassword = 'LTq%w@.KkJcZ$@!^HBz';
 
-// It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched to 'ShowInputBox' or 'Hide'
-// depending if you allow the user to select the name of the company or must use the default one described at $DefaultCompany
-// If set to 'ShowSelectionBox' webERP examines each of the directories under the companies directory to determine all the companies that can be logged into
-// a new company directory together with the necessary subdirectories is created each time a new company is created by Z_MakeNewCompany.php
-// It would also be inappropiate in some environments to show the name of the company (database name) --> Choose 'Hide'. 
+// It would probably be inappropraite to allow selection of the company in a hosted envionment so this option can be switched
+// to 'ShowInputBox' or 'Hide' depending if you allow the user to select the name of the company or must use the default one
+// described at $DefaultCompany. If set to 'ShowSelectionBox' webERP examines each of the directories under the companies
+// directory to determine all the companies that can be logged into a new company directory together with the necessary
+// subdirectories is created each time a new company is created by Z_MakeNewCompany.php. It would also be inappropiate
+// in some environments to show the name of the company (database name) --> Choose 'Hide'.
 // Options:
 // 	'ShowSelectionBox' (default)
 //	'ShowInputBox'
@@ -67,12 +69,12 @@ $DBType = 'mariadb';
 
 $AllowCompanySelectionBox = 'Hide';
 
-//If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen as a default 
-//otherwise the user is expected to know the name of the company to log into.
+//If $AllowCompanySelectionBox is not 'ShowSelectionBox' above then the $DefaultCompany string is entered in the login screen
+//as a default otherwise the user is expected to know the name of the company to log into.
 // KL RICARD: LOOK AT THE END OF FILE!!! there is other place to set the name.this seems to be obsolete
 
 // Moved to KLConfig.php
-//$DefaultCompany  = 'test_erp';
+//$DefaultCompany = 'test_erp';
 //$DefaultDatabase = 'test_erp';
 
 //The maximum time that a login session can be idle before automatic logout
@@ -80,7 +82,7 @@ $AllowCompanySelectionBox = 'Hide';
 $SessionLifeTime = 3600;
 
 //The maximum time that a script can execute for before the web-server should terminate it
-$MaximumExecutionTime =720;
+$MaximumExecutionTime = 720;
 
 //The path to which session files should be stored in the server - useful for some multi-host web servers
 //this can be left commented out
@@ -104,34 +106,34 @@ $DefaultClock = 24;
 
 /*The $RootPath is used in most scripts to tell the script the installation details of the files.
 
-NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the installation manually:
-eg. if the files are under the webserver root directory then rootpath =''; if they are under weberp then weberp is the rootpath - notice no additional slashes are necessary.
+NOTE: In some windows installation this command doesn't work and the administrator must set this to the path of the
+installation manually: eg. if the files are under the webserver root directory then rootpath =''; if they are under
+weberp then weberp is the rootpath - notice no additional slashes are necessary.
 */
 
-$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'));
-if (isset($DirectoryLevelsDeep)){
-	for ($i=0;$i<$DirectoryLevelsDeep;$i++){
-		$RootPath = mb_substr($RootPath,0, strrpos($RootPath,'/'));
+$RootPath = dirname(htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'));
+if (isset($DirectoryLevelsDeep)) {
+	for ($i = 0; $i < $DirectoryLevelsDeep; $i++) {
+		$RootPath = mb_substr($RootPath, 0, strrpos($RootPath, '/'));
 	}
 }
 
 if ($RootPath == "/" OR $RootPath == "\\") {
 	$RootPath = "";
-}
 
 /* Report all errors except E_NOTICE
 This is the default value set in php.ini for most installations but just to be sure it is forced here
 turning on NOTICES destroys things */
 
 // Moved to KLConfig.php
-//error_reporting (E_ALL & ~E_NOTICE);
-//error_reporting (E_ALL & ~E_NOTICE & ~E_WARNING);
+//error_reporting(E_ALL & ~E_NOTICE);
+//error_reporting(E_ALL & ~E_NOTICE & ~E_WARNING);
 /* For Development Use */
-//error_reporting (-1);
+//error_reporting(-1);
 
 // Moved to KLConfig.php
 //Installed companies
-//$CompanyList[0] = array('database'=>'test_erp' ,'company'=>'Kapal-Laut TEST' );
+//$CompanyList[0] = array('database' => 'test_erp', 'company' => 'Kapal-Laut TEST');
 
 /*Make sure there is nothing - not even spaces after this last ?> */
 ?>
