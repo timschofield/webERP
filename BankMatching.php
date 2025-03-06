@@ -90,7 +90,7 @@ if (isset($_POST['Update']) AND $_POST['RowCounter']>1) {
 	$_POST['ShowTransactions'] = True;
 }
 
-echo '<div class="page_help_text">' . _('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div><br />';
+echo '<div class="page_help_text">' . _('Use this screen to match webERP Receipts and Payments to your Bank Statement.  Check your bank statement and click the check-box when you find the matching transaction.') . '</div>';
 
 echo '<form action="'. htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
@@ -173,8 +173,6 @@ echo '</fieldset>
 if (isset($_POST['BankAccount'])) {
    echo '<p><a href="' . $RootPath . '/BankReconciliation.php?Account=' . $_POST['BankAccount'] . '">' . _('Show reconciliation') . '</a></p>';
 }
-
-echo '</div>';
 
 $InputError=0;
 if (!Is_Date($_POST['BeforeDate'])) {
@@ -296,58 +294,37 @@ if ($InputError !=1
 		$Outstanding = $MyRow['amt']- $MyRow['amountcleared'];
 		if (ABS($Outstanding)<0.009) { /*the payment is cleared dont show the check box*/
 
-			printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td colspan="2">%s</td>
-						<td><input type="checkbox" name="Unclear_%s" /><input type="hidden" name="BankTrans_%s" value="%s" /></td>
-					</tr>',
-						$MyRow['ref'],
-						$MyRow['banktranstype'],
-						$DisplayTranDate,
-						locale_number_format($MyRow['amt'],$CurrDecimalPlaces),
-						locale_number_format($Outstanding,$CurrDecimalPlaces),
-						_('Unclear'),
-						$i,
-						$i,
-						$MyRow['banktransid']);
+			echo '<tr class="striped_row">
+						<td>', $MyRow['ref'], '</td>
+						<td>', $MyRow['banktranstype'], '</td>
+						<td>', $DisplayTranDate, '</td>
+						<td class="number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
+						<td class="number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
+						<td colspan="2">', _('Unclear'), '</td>
+						<td><input type="checkbox" name="Unclear_', $i, '" /><input type="hidden" name="BankTrans_', $i, '" value="', $MyRow['banktransid'], '" /></td>
+					</tr>';
 
 		} else{
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td><input type="checkbox" name="Clear_%s" /><input type="hidden" name="BankTrans_%s" value="%s" /></td>
-					<td colspan="2"><input type="text" maxlength="15" size="15" class="number" name="AmtClear_%s" /></td>
-				</tr>',
-					$MyRow['ref'],
-					$MyRow['banktranstype'],
-					$DisplayTranDate,
-					locale_number_format($MyRow['amt'],$CurrDecimalPlaces),
-					locale_number_format($Outstanding,$CurrDecimalPlaces),
-					$i,
-					$i,
-					$MyRow['banktransid'],
-					$i
-			);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['ref'], '</td>
+					<td>', $MyRow['banktranstype'], '</td>
+					<td>', $DisplayTranDate, '</td>
+					<td class="number">', locale_number_format($MyRow['amt'],$CurrDecimalPlaces), '</td>
+					<td class="number">', locale_number_format($Outstanding,$CurrDecimalPlaces), '</td>
+					<td><input type="checkbox" name="Clear_', $i, '" /><input type="hidden" name="BankTrans_', $i, '" value="', $MyRow['banktransid'], '" /></td>
+					<td colspan="2"><input type="text" maxlength="15" size="15" class="number" name="AmtClear_', $i, '" /></td>
+				</tr>';
 		}
 		$i++;
 	}
 	//end of while loop
 	echo '</tbody>
 		</table>
-			<br />
 			<div class="centre">
 				<input type="hidden" name="RowCounter" value="' . $i . '" />
 				<input type="submit" name="Update" value="' . _('Update Matching') . '" />
 			</div>';
 }
-echo '</div>';
 echo '</form>';
 include('includes/footer.php');
 ?>

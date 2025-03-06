@@ -408,44 +408,27 @@ if (!isset($SelectedBranch)){
 				<th class="SortedColumn">' . _('Email') . '</th>
 				<th class="SortedColumn">' . _('Tax Group') . '</th>
 				<th class="SortedColumn">' . _('Enabled?') . '</th>
+				<th colspan="2"></th>
 				</tr>
 			</thead>
 			<tbody>';
 
 		do {
 
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="Mailto:%s">%s</a></td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s">%s</a></td>
-				<td><a href="%s?DebtorNo=%s&amp;SelectedBranch=%s&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this branch?') . '");\'>%s</a></td></tr>',
-				$MyRow[1],
-				$MyRow[2],
-				$MyRow[5],
-				$MyRow[3],
-				$MyRow[4],
-				$MyRow[6],
-				$MyRow[7],
-				$MyRow[8],
-				$MyRow[8],
-				$MyRow[9],
-				($MyRow[10]?_('No'):_('Yes')),
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$DebtorNo,
-				urlencode($MyRow[1]),
-				_('Edit'),
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$DebtorNo,
-				urlencode($MyRow[1]),
-				_('Delete Branch'));
+			echo '<tr class="striped_row">
+					<td>', $MyRow[1], '</td>
+					<td>', $MyRow[2], '</td>
+					<td>', $MyRow[5], '</td>
+					<td>', $MyRow[3], '</td>
+					<td>', $MyRow[4], '</td>
+					<td>', $MyRow[6], '</td>
+					<td>', $MyRow[7], '</td>
+					<td><a href="Mailto:', $MyRow[8], '">', $MyRow[8], '</a></td>
+					<td>', $MyRow[9], '</td>
+					<td>', ($MyRow[10]?_('No'):_('Yes')), '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?DebtorNo=', $DebtorNo, '&amp;SelectedBranch=', urlencode($MyRow[1]), '">', _('Edit'), '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?DebtorNo=', $DebtorNo, '&amp;SelectedBranch=', urlencode($MyRow[1]), '&amp;delete=yes" onclick=\'return confirm("' . _('Are you sure you wish to delete this branch?') . '");\'>', _('Delete Branch'), '</a></td>
+				</tr>';
 
 			if ($MyRow[10]){
 				$TotalDisable++;

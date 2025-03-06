@@ -2115,33 +2115,23 @@ if (!isset($_POST['ProcessSale'])) {
 				// Find the demand
 				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Get the QOO 
+				// Get the QOO
 				$QOO = GetQuantityOnOrder($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><input class="number" tabindex="'.strval($j+7).'" type="text" ' . ($i==0?'autofocus="autofocus"':'') . ' size="6" required="required" name="OrderQty%s" value="0" />
-							<input type="hidden" name="StockID%s" value="%s" />
+				echo '<tr class="striped_row">
+						<td>', $MyRow['stockid'], '</td>
+						<td>', $MyRow['description'], '</td>
+						<td>', $MyRow['units'], '</td>
+						<td class="number">', $QOH, '</td>
+						<td class="number">', $DemandQty, '</td>
+						<td class="number">', $QOO, '</td>
+						<td class="number">', $Available, '</td>
+						<td><input class="number" tabindex="'.strval($j+7).'" type="text" ' . ($i==0?'autofocus="autofocus"':'') . ' size="6" required="required" name="OrderQty', $i, '" value="0" />
+							<input type="hidden" name="StockID', $i, '" value="', $MyRow['stockid'], '" />
 						</td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['description'],
-						$MyRow['units'],
-						$QOH,
-						$DemandQty,
-						$QOO,
-						$Available,
-						$i,
-						$i,
-						$MyRow['stockid']);
+					</tr>';
 				$j++;//counter for paging
 				$i++;//index for controls
 	#end of page full new headings if
@@ -2241,31 +2231,21 @@ if (!isset($_POST['ProcessSale'])) {
 				// Find the demand
 				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Get the QOO 
+				// Get the QOO
 				$QOO = GetQuantityOnOrder($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><input class="number"  tabindex="'.strval($j+7).'" type="text" size="6" required="required" ' . ($i==0?'autofocus="autofocus"':'') . ' name="OrderQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['description'],
-						$MyRow['units'],
-						locale_number_format($QOH, $MyRow['decimalplaces']),
-						locale_number_format($DemandQty, $MyRow['decimalplaces']),
-						locale_number_format($QOO, $MyRow['decimalplaces']),
-						locale_number_format($Available, $MyRow['decimalplaces']),
-						$i,
-						$i,
-						$MyRow['stockid']);
+				echo '<tr class="striped_row">
+						<td>', $MyRow['stockid'], '</td>
+						<td>', $MyRow['description'], '</td>
+						<td>', $MyRow['units'], '</td>
+						<td class="number">', locale_number_format($QOH, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($DemandQty, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($QOO, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($Available, $MyRow['decimalplaces']), '</td>
+						<td><input class="number"  tabindex="'.strval($j+7).'" type="text" size="6" required="required" ' . ($i==0?'autofocus="autofocus"':'') . ' name="OrderQty', $i, '" value="0" /><input type="hidden" name="StockID', $i, '" value="', $MyRow['stockid'], '" /></td>
+					</tr>';
 				$i++;
 			}
 	#end of while loop

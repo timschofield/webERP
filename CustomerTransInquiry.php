@@ -95,98 +95,87 @@ if (isset($_POST['ShowResults']) && $_POST['TransType'] != ''){
    $DbgMsg =  _('The SQL that failed was');
    $TransResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 
-   echo '<br />
-		<table class="selection">';
-
-   $TableHeader = '<tr>
-					<th>' . _('Type') . '</th>
-					<th>' . _('Number') . '</th>
-					<th>' . _('Date') . '</th>
-					<th>' . _('Customer') . '</th>
-					<th>' . _('Branch') . '</th>
-					<th>' . _('Reference') . '</th>
-					<th>' . _('Comments') . '</th>
-					<th>' . _('Order') . '</th>
-					<th>' . _('Ex Rate') . '</th>
-					<th>' . _('Amount') . '</th>
-					<th>' . _('Currency') . '</th>
-				</tr>';
-	echo $TableHeader;
+   echo '<table class="selection">
+			<thead>
+				<tr>
+					<th class="SortedColumn">' . _('Type') . '</th>
+					<th class="SortedColumn">' . _('Number') . '</th>
+					<th class="SortedColumn">' . _('Date') . '</th>
+					<th class="SortedColumn">' . _('Customer') . '</th>
+					<th class="SortedColumn">' . _('Branch') . '</th>
+					<th class="SortedColumn">' . _('Reference') . '</th>
+					<th class="SortedColumn">' . _('Comments') . '</th>
+					<th class="SortedColumn">' . _('Order') . '</th>
+					<th class="SortedColumn">' . _('Ex Rate') . '</th>
+					<th class="SortedColumn">' . _('Amount') . '</th>
+					<th class="SortedColumn">' . _('Currency') . '</th>
+				</tr>
+			</thead>
+			<tbody>';
 
 	$RowCounter = 1;
 
 	while ($MyRow=DB_fetch_array($TransResult)) {
 
-		$FormatBase = '<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td style="width:200px">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>';
-
 		if ($_POST['TransType']==10){ /* invoices */
 
-			printf($FormatBase .
-					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Invoice"><img src="%s" title="' . _('Click to preview the invoice') . '" /></a></td>
-					</tr>',
-					_($MyRow['typename']),
-					$MyRow['transno'],
-					ConvertSQLDate($MyRow['trandate']),
-					$MyRow['debtorno'],
-					$MyRow['branchcode'],
-					$MyRow['reference'],
-					$MyRow['invtext'],
-					$MyRow['order_'],
-					locale_number_format($MyRow['rate'],6),
-					locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
-					$MyRow['currcode'],
-					$RootPath,
-					$MyRow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.png');
+			echo '<tr class="striped_row">
+						<td>', _($MyRow['typename']), '</td>
+						<td>', $MyRow['transno'], '</td>
+						<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+						<td>', $MyRow['debtorno'], '</td>
+						<td>', $MyRow['branchcode'], '</td>
+						<td>', $MyRow['reference'], '</td>
+						<td style="width:200px">', $MyRow['invtext'], '</td>
+						<td>', $MyRow['order_'], '</td>
+						<td class="number">', locale_number_format($MyRow['rate'],6), '</td>
+						<td class="number">', locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']), '</td>
+						<td>', $MyRow['currcode'], '</td>
+						<td>
+							<a target="_blank" href="', $RootPath, '/PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&InvOrCredit=Invoice">
+							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . _('Click to preview the invoice') . '" /></a>
+						</td>
+					</tr>';
 
 		} elseif($_POST['TransType']==11) { /* credit notes */
-			printf($FormatBase .
-					'<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&InvOrCredit=Credit"><img src="%s" title="' . _('Click to preview the credit') . '" /></a></td>
-					</tr>',
-					_($MyRow['typename']),
-					$MyRow['transno'],
-					ConvertSQLDate($MyRow['trandate']),
-					$MyRow['debtorno'],
-					$MyRow['branchcode'],
-					$MyRow['reference'],
-					$MyRow['invtext'],
-					$MyRow['order_'],
-					locale_number_format($MyRow['rate'],6),
-					locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
-					$MyRow['currcode'],
-					$RootPath,
-					$MyRow['transno'],
-					$RootPath.'/css/'.$Theme.'/images/preview.png');
+			echo '<tr class="striped_row">
+						<td>', _($MyRow['typename']), '</td>
+						<td>', $MyRow['transno'], '</td>
+						<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+						<td>', $MyRow['debtorno'], '</td>
+						<td>', $MyRow['branchcode'], '</td>
+						<td>', $MyRow['reference'], '</td>
+						<td style="width:200px">', $MyRow['invtext'], '</td>
+						<td>', $MyRow['order_'], '</td>
+						<td class="number">', locale_number_format($MyRow['rate'],6), '</td>
+						<td class="number">', locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']), '</td>
+						<td>', $MyRow['currcode'], '</td>
+						<td>
+							<a target="_blank" href="', $RootPath, 'PrintCustTrans.php?FromTransNo=', $MyRow['transno'], '&InvOrCredit=Credit">
+							<img src="', $RootPath.'/css/'.$Theme.'/images/preview.png', '" title="' . _('Click to preview the credit') . '" /></a>
+						</td>
+					</tr>';
 		} else {  /* otherwise */
-			printf($FormatBase . '</tr>',
-					_($MyRow['typename']),
-					$MyRow['transno'],
-					ConvertSQLDate($MyRow['trandate']),
-					$MyRow['debtorno'],
-					$MyRow['branchcode'],
-					$MyRow['reference'],
-					$MyRow['invtext'],
-					$MyRow['order_'],
-					locale_number_format($MyRow['rate'],6),
-					locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']),
-					$MyRow['currcode']);
+			echo '<tr class="striped_row">
+						<td>', _($MyRow['typename']), '</td>
+						<td>', $MyRow['transno'], '</td>
+						<td>', ConvertSQLDate($MyRow['trandate']), '</td>
+						<td>', $MyRow['debtorno'], '</td>
+						<td>', $MyRow['branchcode'], '</td>
+						<td>', $MyRow['reference'], '</td>
+						<td style="width:200px">', $MyRow['invtext'], '</td>
+						<td>', $MyRow['order_'], '</td>
+						<td class="number">', locale_number_format($MyRow['rate'],6), '</td>
+						<td class="number">', locale_number_format($MyRow['totalamt'],$MyRow['currdecimalplaces']), '</td>
+						<td>', $MyRow['currcode'], '</td>
+					</tr>';
 		}
 
 	}
 	//end of while loop
 
- echo '</table>';
+ echo '</tbody>
+	</table>';
 }
 
 include('includes/footer.php');

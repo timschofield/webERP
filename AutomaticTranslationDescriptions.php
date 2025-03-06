@@ -34,7 +34,6 @@ $Result = DB_query($SQL);
 
 if(DB_num_rows($Result) != 0) {
 	echo '<p class="page_title_text"><strong>' . _('Description Automatic Translation for empty translations') . '</strong></p>';
-	echo '<div>';
 	echo '<table class="selection">';
 	$TableHeader = '<tr>
 						<th>' . _('#') . '</th>
@@ -58,19 +57,13 @@ if(DB_num_rows($Result) != 0) {
 			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 			$i++;
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$MyRow['stockid'],
-					$MyRow['description'],
-					$MyRow['language_id'],
-					$TranslatedText
-					);
+			echo '<tr class="striped_row">
+					<td class="number">', $i, '</td>
+					<td>', $MyRow['stockid'], '</td>
+					<td>', $MyRow['description'], '</td>
+					<td>', $MyRow['language_id'], '</td>
+					<td>', $TranslatedText, '</td>
+				</tr>';
 		}
 		if ($MyRow['longdescriptiontranslation'] == ''){
 			$TargetLanguage=mb_substr($MyRow['language_id'],0,2);
@@ -80,26 +73,20 @@ if(DB_num_rows($Result) != 0) {
 					"SET longdescriptiontranslation='" . $TranslatedText . "', " .
 						"needsrevision= '1' " .
 					"WHERE stockid='" . $MyRow['stockid'] . "' AND (language_id='" . $MyRow['language_id'] . "')";
+					echo $SQL;
 			$Update = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
 			$i++;
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$MyRow['stockid'],
-					$MyRow['longdescription'],
-					$MyRow['language_id'],
-					$TranslatedText
-					);
+			echo '<tr class="striped_row">
+					<td class="number">', $i, '</td>
+					<td>', $MyRow['stockid'], '</td>
+					<td>', $MyRow['longdescription'], '</td>
+					<td>', $MyRow['language_id'], '</td>
+					<td>', $TranslatedText, '</td>
+				</tr>';
 		}
 	}
-	echo '</table>
-			</div>';
+	echo '</table>';
 	prnMsg(_('Number of translated descriptions via Google API') . ': ' . locale_number_format($i));
 } else {
 

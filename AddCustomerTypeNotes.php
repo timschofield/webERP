@@ -19,7 +19,7 @@ if (isset($_POST['DebtorType'])){
 } elseif (isset($_GET['DebtorType'])){
 	$DebtorType = $_GET['DebtorType'];
 }
-echo '<a href="' . $RootPath . '/SelectCustomer.php?DebtorType='.$DebtorType.'">' . _('Back to Select Customer') . '</a><br />';
+echo '<a class="toplink" href="' . $RootPath . '/SelectCustomer.php?DebtorType='.$DebtorType.'">' . _('Back to Select Customer') . '</a><br />';
 
 if (isset($_POST['submit']) ) {
 
@@ -115,27 +115,18 @@ if (!isset($Id)) {
 			<th>' . _('Note') . '</th>
 			<th>' . _('href') . '</th>
 			<th>' . _('Priority') . '</th>
+			<th colspan="2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%sId=%s&amp;DebtorType=%s">' .  _('Edit') . '</a></td>
-				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td>
-				</tr>',
-				ConvertSQLDate($MyRow['date']),
-				$MyRow['note'],
-				$MyRow['href'],
-				$MyRow['priority'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['noteid'],
-				$MyRow['typeid'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['noteid'],
-				$MyRow['typeid']);
+		echo '<tr class="striped_row">
+				<td>', ConvertSQLDate($MyRow['date']), '</td>
+				<td>', $MyRow['note'], '</td>
+				<td>', $MyRow['href'], '</td>
+				<td>', $MyRow['priority'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&amp;DebtorType=', $MyRow['typeid'], '">' .  _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&amp;DebtorType=', $MyRow['typeid'], '&amp;delete=1">' .  _('Delete') . '</a></td>
+			</tr>';
 
 	}
 	//END WHILE LIST LOOP
