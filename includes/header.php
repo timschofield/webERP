@@ -60,11 +60,7 @@ if ($_SESSION['ShowFieldHelp'] == 0) {
 }
 
 echo '</head>';
-if (isset($AutoPrintPage)) {
-	echo '<body onload="window.print()">';
-} else {
-	echo '<body onload="initial(); load()">';
-}
+echo '<body onload="initial(); load()">';
 
 $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 echo '<div class="help-bubble" id="help-bubble">

@@ -1,9 +1,8 @@
-/* $Id: print.css 7158 2015-02-19 23:25:13Z vvs2012 $*/
 /* Print style sheet. */
 
 @media print {
 
-#FooterDiv, #HeaderDiv, #MainMenuDiv, .noPrint, .page_title_text img, .site-description, .site-title, .page_help_text, .PrintIcon, form {
+#FooterDiv, #HeaderDiv, #MainMenuDiv, .noprint, .page_title_text img, .site-description, .site-title {
 	display:none;
 	/* Remove unwanted elements. */
 }
@@ -60,11 +59,21 @@ a {
 	/* number class (general). */
 }
 
+.text {
+	text-align:left;
+	/* number class (general). */
+}
+.sheet {
+	border:0;
+	margin:0;
+	padding:0;
+	/* Class selector for sheet preview. */
+}
 .page_title_text {
 	font-weight:bold;
 	font-size: 207%;
 	text-align:center;
-	/* Page title class. */
+	/* Class selector for page title. */
 }
 
 body, #CanvasDiv {
@@ -74,10 +83,9 @@ body, #CanvasDiv {
 	border-radius:0;
 	box-shadow:none;
 	font-family:Arial, Verdana, Helvetica, sans-serif;
-	font-size:8pt;
+	font-size:11pt;
 	margin:0;
 	padding:0;
-	color:black;
 }
 
 #BodyDiv {
@@ -95,29 +103,18 @@ body, #CanvasDiv {
 
 #BodyDiv table {
 	background:white;
-	color:black;
 	border:none;
 	border-radius:0;
 	box-shadow:none;
 	padding:0;
+}
+
+#Report {
+	/* Division id for reports. */
+}
+#Report table {
 	width:100%;
-}
-
-#BodyDiv th {
-	font-size: 200%;
-}
-
-#BodyDiv th {
-	font-size: 12px;
-	border:1px solid black;
-}
-
-tr.striped_row:nth-of-type(even) {
-background-color:#BFBFBF;
-}
-
-tr.striped_row:nth-of-type(odd) {
-background-color:#FFFFFF;
+	/* Expands the body of the report to use the full width of the page. */
 }
 
 }
