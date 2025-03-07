@@ -3,6 +3,7 @@
 /**************************************************************************************
 *
 * KL RICARD: Some restrictions by role, send emails to admin, allow usage of group os scripts Personalia
+* 			Simplify table display, add some fields to the user table
 *
 ***************************************************************************************/
 
@@ -26,8 +27,9 @@ if(isset($_POST['UserID']) AND isset($_POST['ID'])) {
 	}
 }
 
-// KL RICARD : Include KL scripts needed 
 include('includes/header.php');
+
+// KL RICARD : Include KL scripts needed 
 include('includes/KLGeneralFunctions.php');
 include('includes/KLEmails.php');
 // KL RICARD END
@@ -38,7 +40,8 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	$Title, '</p>';// Page title.
 
 if($AllowDemoMode) {
-	prnMsg(_('The the system is in demo mode and the security model administration is disabled'), 'warn');
+	prnMsg(_('Demo mode is currently active, which disables the security model administration'), 'warn');
+	include('includes/footer.php');
 	exit;
 }
 $ModuleList = array(
@@ -184,6 +187,7 @@ if(isset($_POST['submit'])) {
 						customerid='" . $_POST['Cust'] ."',
 						phone='" . $_POST['Phone'] ."',
 						email='" . $_POST['Email'] ."',
+						timeout='" . $_POST['Timeout'] . "',
 						" . $UpdatePassword . "
 						branchcode='" . $_POST['BranchCode'] . "',
 						supplierid='" . $_POST['SupplierID'] . "',
@@ -225,6 +229,7 @@ if(isset($_POST['submit'])) {
 					password,
 					phone,
 					email,
+					timeout,
 					pagesize,
 					fullaccess,
 					cancreatetender,
@@ -247,6 +252,7 @@ if(isset($_POST['submit'])) {
 					'" . CryptPass($_POST['Password']) ."',
 					'" . $_POST['Phone'] . "',
 					'" . $_POST['Email'] ."',
+					'" . $_POST['Timeout'] ."',
 					'" . $_POST['PageSize'] ."',
 					'" . $_POST['Access'] . "',
 					'" . $_POST['CanCreateTender'] . "',
@@ -305,6 +311,7 @@ if(isset($_POST['submit'])) {
 		unset($_POST['Salesman']);
 		unset($_POST['Phone']);
 		unset($_POST['Email']);
+		unset($_POST['Timeout']);
 		unset($_POST['Password']);
 		unset($_POST['PageSize']);
 		unset($_POST['Access']);
@@ -335,20 +342,17 @@ if(!isset($SelectedUser)) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('User Login'), '</th>
-				<th class="ascending">', _('Full Name'), '</th>
-				<th class="ascending">', _('Telephone'), '</th>
-				<th class="ascending">', _('Email'), '</th>
-				<th class="ascending">', _('Customer Code'), '</th>
-				<th class="ascending">', _('Branch Code'), '</th>
-				<th class="ascending">', _('Supplier Code'), '</th>
-				<th class="ascending">', _('Salesperson'), '</th>
-				<th class="ascending">', _('Last Visit'), '</th>
-				<th class="ascending">', _('Security Role'), '</th>
-				<th class="ascending">', _('Report Size'), '</th>
-				<th class="ascending">', _('Theme'), '</th>
-				<th class="ascending">', _('Language'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="SortedColumn">', _('User Login'), '</th>
+				<th class="SortedColumn">', _('Full Name'), '</th>
+				<th class="SortedColumn">', _('Telephone'), '</th>
+				<th class="SortedColumn">', _('Email'), '</th>
+				<th class="SortedColumn">', _('Timeout'), '</th>
+				<th class="SortedColumn">', _('Customer Code'), '</th>
+				<th class="SortedColumn">', _('Branch Code'), '</th>
+				<th class="SortedColumn">', _('SPG Code'), '</th>
+				<th class="SortedColumn">', _('Last Visit'), '</th>
+				<th class="SortedColumn">', _('Security Role'), '</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -357,6 +361,7 @@ if(!isset($SelectedUser)) {
 					realname,
 					phone,
 					email,
+					timeout,
 					customerid,
 					branchcode,
 					supplierid,
@@ -377,10 +382,10 @@ if(!isset($SelectedUser)) {
 	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		if($MyRow[8] == '') {
+		if(!isset($MyRow['lastvisitdate'])) {
 			$LastVisitDate = _('No login record');
 		} else {
-			$LastVisitDate = ConvertSQLDate($MyRow[8]);
+			$LastVisitDate = ConvertSQLDate($MyRow['lastvisitdate']);
 		}
 		/*The SecurityHeadings array is defined in config.php */
 		echo '<tr class="striped_row">
@@ -388,17 +393,14 @@ if(!isset($SelectedUser)) {
 				<td class="text">', $MyRow['realname'], '</td>
 				<td class="text">', $MyRow['phone'], ' </td>
 				<td class="text">', $MyRow['email'], '</td>
+				<td class="number">', $MyRow['timeout'], ' ' , _('mins') , '</td>
 				<td class="text">', $MyRow['customerid'], '</td>
 				<td class="text">', $MyRow['branchcode'], '</td>
-				<td class="text">', $MyRow['supplierid'], '</td>
 				<td class="text">', $MyRow['salesman'], '</td>
 				<td class="centre">', $LastVisitDate, '</td>
 				<td class="text">', $SecurityRoles[($MyRow['fullaccess'])], '</td>
-				<td class="text">', $MyRow['pagesize'], '</td>
-				<td class="text">', $MyRow['theme'], '</td>
-				<td class="text">', $LanguagesArray[$MyRow['language']]['LanguageName'], '</td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '">', _('Edit'), '</a></td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this user?'), '\');">', _('Delete'), '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '">', _('Edit'), '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?', '&amp;SelectedUser=', $MyRow['userid'], '&amp;delete=1" onclick="return confirm(\'', _('Are you sure you wish to delete this user?'), '\');">', _('Delete'), '</a></td>
 			</tr>';
 	}// END foreach($Result as $MyRow).
 	echo '</tbody></table>';
@@ -420,6 +422,7 @@ if(isset($SelectedUser)) {
 				realname,
 				phone,
 				email,
+				timeout,
 				customerid,
 				password,
 				branchcode,
@@ -448,6 +451,7 @@ if(isset($SelectedUser)) {
 	$_POST['RealName'] = $MyRow['realname'];
 	$_POST['Phone'] = $MyRow['phone'];
 	$_POST['Email'] = $MyRow['email'];
+	$_POST['Timeout']	= $MyRow['timeout'];
 	$_POST['Cust']	= $MyRow['customerid'];
 	$_POST['BranchCode'] = $MyRow['branchcode'];
 	$_POST['SupplierID'] = $MyRow['supplierid'];
@@ -517,6 +521,9 @@ if(!isset($_POST['Phone'])) {
 if(!isset($_POST['Email'])) {
 	$_POST['Email']='';
 }
+if(!isset($_POST['Timeout'])) {
+	$_POST['Timeout'] = 15;
+}
 echo '<field>
 		<label for="Password">' . _('Password') . ':</label>
 		<input type="password" pattern=".{5,}" name="Password" ' . (!isset($SelectedUser) ? 'required="required"' : '') . ' size="22" maxlength="20" value="' . $_POST['Password'] . '" placeholder="'._('At least 5 characters').'" title="" />
@@ -534,6 +541,11 @@ echo '<field>
 		<label for="Email">' . _('Email Address') .':</label>
 		<input type="email" name="Email" placeholder="' . _('e.g. user@domain.com') . '" required="required" value="' . $_POST['Email'] .'" size="32" maxlength="55" title="" />
 		<fieldhelp>'._('A valid email address is required').'</fieldhelp>
+	</field>';
+echo '<field>
+		<label for="Timeout">' . _('Timeout after') .':</label>
+		<input type="text" class="number" name="Timeout" required="required" value="' . $_POST['Timeout'] .'" size="4" maxlength="5" title="" />&nbsp;', _('minutes'), '
+		<fieldhelp>'._('Log the user out after this interval of non-use').'</fieldhelp>
 	</field>';
 echo '<field>
 		<label for="Access">' . _('Security Role') . ':</label>

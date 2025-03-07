@@ -3,7 +3,11 @@
 //The scripts used to provide a Price break matrix for those users who like selling product in quantity break at different constant price.
 
 include('includes/session.php');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['EndDate'])){$_POST['EndDate'] = ConvertSQLDate($_POST['EndDate']);};
 $Title = _('Price break matrix Maintenance');
+$ViewTopic = 'Sales';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($Errors)) {
@@ -161,7 +165,7 @@ $SQL = "SELECT currabrev FROM currencies";
 $Result = DB_query($SQL);
 require_once('includes/CurrenciesArray.php');
 echo '<fieldset>
-		<legend>', _('Price Matrix For'), ' ', $_GET['StockID'], '</legend>';
+		<legend>', _('Price Matrix For'), ' ', $_POST['StockID'], '</legend>';
 echo '<field>
 		<label for="CurrAbrev">' . _('Currency') . ':</label>
 		<select name="CurrAbrev">';
@@ -219,13 +223,13 @@ if (!isset($_POST['Price'])) {
 }
 echo '<field>
 		<label for="StartDate">'. _('Price Effective From Date') . ':</label>
-		<input type="text" class="date" name="StartDate" required="required" size="11" maxlength="10" title="" value="' . $_POST['StartDate'] . '" />
+		<input type="date" name="StartDate" required="required" size="11" maxlength="10" title="" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
 		<fieldhelp>' . _('Enter the date from which this price should take effect.') . '</fieldhelp>
 	</field>';
 
 echo '<field>
 		<label for="EndDate">' . _('Price Effective To Date') . ':</label>
-		<input type="text" class="date" name="EndDate" size="11" maxlength="10" title="" value="' . $_POST['EndDate'] . '" />
+		<input type="date" name="EndDate" size="11" maxlength="10" title="" value="' . FormatDateForSQL($_POST['EndDate']) . '" />
 		<fieldhelp>' . _('Enter the date to which this price should be in effect to, or leave empty if the price should continue indefinitely') . '</fieldhelp>
 	</field>';
 
@@ -273,6 +277,7 @@ if (DB_num_rows($Result) > 0) {
 			<th>' . _('Price Effective To Date') .'</th>
 			<th>' . _('Quantity Break') . '</th>
 			<th>' . _('Sell Price') . '</th>
+			<th colspan="2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -280,39 +285,25 @@ if (DB_num_rows($Result) > 0) {
 		$EditURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Edit=yes&amp;StockID=' . $MyRow['stockid'] . '&amp;TypeAbbrev=' . $MyRow['salestype'] . '&amp;CurrAbrev=' . $MyRow['currabrev'] . '&amp;Price=' . locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']) . '&amp;StartDate=' . $MyRow['startdate'] . '&amp;EndDate=' . $MyRow['enddate'].'&amp;QuantityBreak=' . $MyRow['quantitybreak'];
 
 		if (in_array(5, $_SESSION['AllowedPageSecurityTokens'])){
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
-				<td><a href="%s">'._('Edit').'</a></td>
-			</tr>',
-			$MyRow['currency'],
-			$MyRow['sales_type'],
-			ConvertSQLDate($MyRow['startdate']),
-			ConvertSQLDate($MyRow['enddate']),
-			$MyRow['quantitybreak'],
-			$MyRow['price'] ,
-			$DeleteURL,
-			$EditURL);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['currency'], '</td>
+					<td>', $MyRow['sales_type'], '</td>
+					<td>', ConvertSQLDate($MyRow['startdate']), '</td>
+					<td>', ConvertSQLDate($MyRow['enddate']), '</td>
+					<td class="number">', $MyRow['quantitybreak'], '</td>
+					<td class="number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
+					<td><a href="', $DeleteURL, '" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
+					<td><a href="', $EditURL, '">'._('Edit').'</a></td>
+				</tr>';
 		} else {
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$MyRow['currency'],
-				$MyRow['sales_type'],
-				ConvertSQLDate($MyRow['startdate']),
-				ConvertSQLDate($MyRow['enddate']),
-				$MyRow['quantitybreak'],
-				$MyRow['price']);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['currency'], '</td>
+					<td>', $MyRow['sales_type'], '</td>
+					<td>', ConvertSQLDate($MyRow['startdate']), '</td>
+					<td>', ConvertSQLDate($MyRow['enddate']), '</td>
+					<td class="number">', $MyRow['quantitybreak'], '</td>
+					<td class="number">', locale_number_format($MyRow['price'], $MyRow['currdecimalplaces']), '</td>
+				</tr>';
 
 		}
 
@@ -320,7 +311,6 @@ if (DB_num_rows($Result) > 0) {
 }
 
 echo '</table>
-      </div>
 	  </form>';
 
 include('includes/footer.php');

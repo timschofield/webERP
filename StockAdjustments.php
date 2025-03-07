@@ -19,6 +19,7 @@ $BookMark = 'InventoryAdjustments';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other adjustment sessions on the same machine  */
@@ -201,7 +202,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$PeriodNo = GetPeriod (Date($_SESSION['DefaultDateFormat']));
 		$SQLAdjustmentDate = FormatDateForSQL(Date($_SESSION['DefaultDateFormat']));
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		// Need to get the current location quantity will need it later for the stock movement
 		$SQL="SELECT locstock.quantity
@@ -346,14 +347,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
-			foreach ($_POST['tag'] as $Tag) {
-				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-													'" . $Tag . "')";
-				$ErrMsg = _('Cannot insert a GL tag for the stock adjustment because');
-				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			}
+			InsertGLTags($_POST['tag']);
 
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
@@ -378,7 +372,7 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 
 		EnsureGLEntriesBalance(17, $AdjustmentNumber);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 		$AdjustReason = $_SESSION['Adjustment' . $identifier]->Narrative?  _('Narrative') . ' ' . $_SESSION['Adjustment' . $identifier]->Narrative:'';
 		$ConfirmationText = _('A stock adjustment for'). ' ' . $_SESSION['Adjustment' . $identifier]->StockID . ' -  ' . $_SESSION['Adjustment' . $identifier]->ItemDescription . ' '._('has been created from location').' ' . $_SESSION['Adjustment' . $identifier]->StockLocation .' '. _('for a quantity of') . ' ' . locale_number_format($_SESSION['Adjustment' . $identifier]->Quantity,$_SESSION['Adjustment' . $identifier]->DecimalPlaces) . ' ' . $AdjustReason;
 		prnMsg( $ConfirmationText,'success');
@@ -430,7 +424,7 @@ if (!isset($_SESSION['Adjustment' . $identifier])) {
 	if (DB_num_rows($Result) > 0) {
 		$MyRow=DB_fetch_array($Result);
 		$_SESSION['Adjustment' . $identifier]->PartUnit=$MyRow['units'];
-		$_SESSION['Adjustment' . $identifier]->StandardCost=$MyRow['materialcost']+$MyRow['labourcost']+$MyRow['overheadcost'];
+		$_SESSION['Adjustment' . $identifier]->StandardCost=$MyRow['actualcost'];
 		$DecimalPlaces = $MyRow['decimalplaces'];
 	}
 }
@@ -510,6 +504,7 @@ if ($Controlled==1){
 }
 echo '</field>';
 
+/* KL RICARD Do not show tags
 //Select the tag
 $SQL = "SELECT tagref,
 				tagdescription
@@ -529,6 +524,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 // End select tag
+KL RICARD Do not show tags */
 
 echo '</fieldset>
 	<div class="centre">

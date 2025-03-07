@@ -23,11 +23,15 @@ include('includes/DefineSuppTransClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 
 include('includes/session.php');
-
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
 $Title = _('Supplier Credit Note');
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
+include ('includes/GLFunctions.php');
 
 if (isset($_GET['New'])) {
 	unset($_SESSION['SuppTrans']);
@@ -283,8 +287,8 @@ if (!isset($_SESSION['SuppTrans']->TranDate)){
 	$_SESSION['SuppTrans']->TranDate= Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m'),Date('d')-1,Date('y')));
 }
 echo '<field>
-		<label style="color:red">' . _('Credit Note Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</label>
-		<input type="text" class="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" />
+		<label style="color:red">' . _('Credit Note Date') . ') :</label>
+		<input type="date" size="11" maxlength="10" name="TranDate" value="' . FormatDateForSQL($_SESSION['SuppTrans']->TranDate) . '" />
 	</field>
 	<field>
 		<label style="color:red">' . _('Exchange Rate') . ':</label>
@@ -465,15 +469,7 @@ if ($_SESSION['SuppTrans']->GLLink_Creditors ==1){
 
 		foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode){
 
-			$DescriptionTag = '';
-			foreach ($EnteredGLCode->Tag as $Tag) {
-				$SqlDescTag = "SELECT tagdescription
-						FROM tags
-						WHERE tagref='" . $Tag . "'";
-				$ResultDesTag = DB_query($SqlDescTag);
-				$TagRow = DB_fetch_array($ResultDesTag);
-				$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
-			}
+			$DescriptionTag = GetDescriptionsFromTagArray($EnteredGLCode->Tag);
 
 			echo '<tr>
 					<td>' . $EnteredGLCode->GLCode . '</td>
@@ -732,14 +728,7 @@ then do the updates and inserts to process the credit note entered */
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-
-				foreach ($EnteredGLCode->Tag as $Tag) {
-					$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-														'" . $Tag . "')";
-					$ErrMsg = _('Cannot insert a GL tag for the supplier Invoice because');
-					$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-				}
+				InsertGLTags($EnteredGLCode->Tag);
 
 				$LocalTotal += ($EnteredGLCode->Amount/$_SESSION['SuppTrans']->ExRate);
 			}
@@ -880,21 +869,12 @@ then do the updates and inserts to process the credit note entered */
 
 							if ($_SESSION['WeightedAverageCosting']==1){ /*Weighted Average costing */
 
-								/*
-								First off figure out the new weighted average cost Need the following data:
+								/* First off figure out the new weighted average cost Need the following data:
+								- How many in stock now
+								- The quantity being invoiced here - $EnteredGRN->This_QuantityInv
+								- The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate */
 
-								How many in stock now
-								The quantity being invoiced here - $EnteredGRN->This_QuantityInv
-								The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate
-								*/
-
-								$SQL ="SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-								$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
-								$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
-								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-								$QtyRow = DB_fetch_row($Result);
-								$TotalQuantityOnHand = $QtyRow[0];
-
+								$TotalQuantityOnHand = GetQuantityOnHand($EnteredGRN->ItemCode, 'ALL');
 
 								/*The cost adjustment is the price variance / the total quantity in stock
 								But thats only provided that the total quantity in stock is greater than the quantity charged on this invoice

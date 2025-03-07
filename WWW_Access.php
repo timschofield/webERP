@@ -123,17 +123,11 @@ if (!isset($SelectedRole)) {
 
 		/*The SecurityHeadings array is defined in config.php */
 
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td><a href="%s&amp;SelectedRole=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s&amp;SelectedRole=%s&amp;delete=1&amp;SecRoleName=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['secrolename'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
-			$MyRow['secroleid'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow['secroleid'],
-			urlencode($MyRow['secrolename']));
+		echo '<tr class="striped_row">
+				<td>', $MyRow['secrolename'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedRole=', $MyRow['secroleid'], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedRole=', $MyRow['secroleid'], '&amp;delete=1&amp;SecRoleName=', urlencode($MyRow['secrolename']), '" onclick="return confirm(\'' . _('Are you sure you wish to delete this role?') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';

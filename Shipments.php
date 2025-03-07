@@ -7,7 +7,10 @@ KL RICARD MODIFICATIONS:
 
 include('includes/DefineShiptClass.php');
 include('includes/session.php');
+if (isset($_POST['ETA'])){$_POST['ETA'] = ConvertSQLDate($_POST['ETA']);};
 $Title = _('Shipments');
+$ViewTopic = 'Shipments';
+$BookMark = '';
 include('includes/header.php');
 
 include('includes/SQL_CommonFunctions.inc');
@@ -320,7 +323,7 @@ echo '<field>
 	</field>';
 
 if (isset($_SESSION['Shipment']->ETA)){
-	$ETA = ConvertSQLDate($_SESSION['Shipment']->ETA);
+	$ETA = $_SESSION['Shipment']->ETA;
 } else {
 	$ETA ='';
 }
@@ -328,9 +331,9 @@ if (isset($_SESSION['Shipment']->ETA)){
 echo '<field>
 		<label for="ETA">' .  _('Expected Arrival Date (ETA)'). ': </label>';
 if (isset($_SESSION['Shipment']->ETA)) {
-	echo '<input type="text" name="ETA" class="date"  maxlength="10" size="11" value="' . $ETA . '" />';
+	echo '<input type="date" name="ETA"  maxlength="10" size="11" value="' . $ETA . '" />';
 } else {
-	echo '<input type="text" class="date" name="ETA" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />';
+	echo '<input type="date" name="ETA" maxlength="10" size="11" value="' . FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'm', 1)) . '" />';
 }
 echo '<field>';
 

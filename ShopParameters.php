@@ -4,7 +4,8 @@
 include('includes/session.php');
 
 $Title = _('Shop Configuration');
-
+$ViewTopic = 'Setup';
+$BookMark = 'ShopParameters';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Shop Configuration')
@@ -169,11 +170,11 @@ if (isset($_POST['submit'])) {
 
 		if (sizeof($SQL) > 0 ) {
 
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			foreach ($SQL as $SQLLine) {
 				$Result = DB_query($SQLLine,$ErrMsg,$DbgMsg,true);
 			}
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			prnMsg( _('Shop configuration updated'),'success');
 
 			$ForceConfigReload = True; // Required to force a load even if stored in the session vars

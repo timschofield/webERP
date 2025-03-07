@@ -105,10 +105,10 @@ function submit($TypeOfShop) {
 			\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 		
 			// Create new Spreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Lazada " . $NameOfShop)
 										 ->setSubject("Lazada " . $NameOfShop)
@@ -117,8 +117,8 @@ function submit($TypeOfShop) {
 										 ->setCategory("");
 
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$ActiveSheet = $objPHPExcel->getActiveSheet();
+			$SpreadSheet->setActiveSheetIndex(0);
+			$ActiveSheet = $SpreadSheet->getActiveSheet();
 			$ActiveSheet->setTitle(("Lazada " . $NameOfShop));
 
 			$ActiveSheet->setCellValue('A2', 'Group No');
@@ -290,7 +290,7 @@ function submit($TypeOfShop) {
 			}
 	
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output to a client's web browser 
 			if ($_POST['Format'] == 'xlsx') {
@@ -312,10 +312,10 @@ function submit($TypeOfShop) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 

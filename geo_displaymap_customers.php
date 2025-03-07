@@ -39,10 +39,10 @@ echo ' type="text/javascript"></script>';?>
 
 var customIcons = {
 4: {
-icon: 'http://labs.google.com/ridefinder/images/mm_20_blue.png'
+icon: '//labs.google.com/ridefinder/images/mm_20_blue.png'
 },
 5: {
-icon: 'http://labs.google.com/ridefinder/images/mm_20_red.png'
+icon: '//labs.google.com/ridefinder/images/mm_20_red.png'
 }
 };
 
@@ -66,7 +66,7 @@ var point = new google.maps.LatLng(
 parseFloat(markers[i].getAttribute("lat")),
 parseFloat(markers[i].getAttribute("lng")));
 var html = "<b>" + name + "</b> <br/>" + address;
-var icon = 'http://labs.google.com/ridefinder/images/mm_20_blue.png' || {};
+var icon = '//labs.google.com/ridefinder/images/mm_20_blue.png' || {};
 var marker = new google.maps.Marker({
 map: map,
 position: point,

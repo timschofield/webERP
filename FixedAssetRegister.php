@@ -9,14 +9,16 @@
  **********************************************************************************************************************************/
 
 include ('includes/session.php');
-$Title = _('Fixed Asset Register');
-
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetRegister';
+$Title = _('Fixed Asset Register');
+
 $CSVOutput = '';
 // Reports being generated in HTML, PDF and CSV/EXCEL format
-if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
-	if (isset($_POST['pdf'])) {
+if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
+	if (isset($_POST['PDF'])) {
 		$PaperSize = 'A4_Landscape';
 		include ('includes/PDFStarter.php');
 	} else if (empty($_POST['csv'])) {
@@ -69,7 +71,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 					fixedassetlocations.parentlocationid,
 					fixedassets.assetlocation";
 	$Result = DB_query($SQL);
-	if (isset($_POST['pdf'])) {
+	if (isset($_POST['PDF'])) {
 		$FontSize = 10;
 		$pdf->addInfo('Title', _('Fixed Asset Register'));
 		$pdf->addInfo('Subject', _('Fixed Asset Register'));
@@ -162,7 +164,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 			}else{
 				$DisposalDate = $MyRow['disposaldate'];
 			}
-			if (isset($_POST['pdf'])) {
+			if (isset($_POST['PDF'])) {
 
 				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 30 - $Left_Margin, $FontSize, $MyRow['assetid']);
 				$LeftOvers = $pdf->addTextWrap($XPos + 30, $YPos, 150 - $Left_Margin, $FontSize, $MyRow['description']);
@@ -254,7 +256,7 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 		$TotalNBV += ($CostCfwd - $AccumDepnCfwd);
 	}
 
-	if (isset($_POST['pdf'])) {
+	if (isset($_POST['PDF'])) {
 		$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 300 - $Left_Margin, $FontSize, _('TOTAL'));
 		$LeftOvers = $pdf->addTextWrap($XPos + 270, $YPos, 70, $FontSize, locale_number_format($TotalCostBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
 		$LeftOvers = $pdf->addTextWrap($XPos + 340, $YPos, 70, $FontSize, locale_number_format($TotalDepnBfwd, $_SESSION['CompanyRecord']['decimalplaces']), 'right');
@@ -391,18 +393,18 @@ if (isset($_POST['submit']) OR isset($_POST['pdf']) OR isset($_POST['csv'])) {
 
 	echo '<field>
 			<label for="FromDate">' . _('From Date') . '</label>
-			<input type="text" class="date" name="FromDate" required="required" title="" maxlength="10" size="11" value="' . $_POST['FromDate'] . '" />
+			<input type="date" name="FromDate" required="required" title="" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 			<fieldhelp>' . _('Enter the start date to show the cost and accumulated depreciation from') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="ToDate">' . _('To Date') . '</label>
-			<input type="text" class="date" name="ToDate" required="required" title="" maxlength="10" size="11" value="' . $_POST['ToDate'] . '" />
+			<input type="date" name="ToDate" required="required" title="" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 			<fieldhelp>' . _('Enter the end date to show the cost and accumulated depreciation to') . '</fieldhelp>
 		</field>
 	</fieldset>
 	<div class="centre">
-		<input type="submit" name="submit" value="' . _('Show Assets') . '" />&nbsp;
-		<input type="submit" name="pdf" value="' . _('Print as a pdf') . '" />&nbsp;
+		<input type="submit" name="submit" title="View" value="' . _('Show Assets') . '" />&nbsp;
+		<input type="submit" name="PDF" value="' . _('Print as a PDF') . '" />&nbsp;
 		<input type="submit" name = "csv" value="' . _('Print as CSV') . '" />
     </div>
 	</form>';

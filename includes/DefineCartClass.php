@@ -75,6 +75,9 @@ Class Cart {
 	var $BuyerName;
 	var $SpecialInstructions;
 	var $Packages;
+	var $total;
+	var $totalVolume;
+	var $totalWeight;
 
 	function __construct(){
 	/*Constructor function initialises a new shopping cart */
@@ -97,7 +100,7 @@ Class Cart {
 							$Descr,
 							$LongDescr,
 							$Price,
-							$Disc=0,
+							$Disc,
 							$UOM,
 							$Volume,
 							$Weight,
@@ -200,7 +203,7 @@ Class Cart {
 								$Price,
 								$Disc,
 								$Narrative,
-								$UpdateDB='No',
+								$UpdateDB,
 								$ItemDue,
 								$POLine,
 								$GPPercent,

@@ -4,6 +4,8 @@
 //  Variable Init
 /////////////////////////////////////////////////////////////////////
 
+if (isset($_POST['ReturnDate'])){$_POST['ReturnDate'] = ConvertSQLDate($_POST['ReturnDate']);};
+
 if (!isset($_POST['AmountPaidCash'])){
 	$_POST['AmountPaidCash'] =0;
 }

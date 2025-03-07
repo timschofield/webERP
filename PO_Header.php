@@ -10,6 +10,13 @@
 include ('includes/DefinePOClass.php');
 include ('includes/session.php');
 
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
+if (isset($_POST['KLAgreedDeliveryDate'])){$_POST['KLAgreedDeliveryDate'] = ConvertSQLDate($_POST['KLAgreedDeliveryDate']);};
+if (isset($_POST['KLPaymentDate'])){$_POST['KLPaymentDate'] = ConvertSQLDate($_POST['KLPaymentDate']);};
+if (isset($_POST['KLShipmentDate'])){$_POST['KLShipmentDate'] = ConvertSQLDate($_POST['KLShipmentDate']);};
+if (isset($_POST['KLCustomsDate'])){$_POST['KLCustomsDate'] = ConvertSQLDate($_POST['KLCustomsDate']);};
+if (isset($_POST['KLArrivalDate'])){$_POST['KLArrivalDate'] = ConvertSQLDate($_POST['KLArrivalDate']);};
+
 if (isset($_GET['ModifyOrderNumber'])) {
 	$Title = _('Modify Purchase Order') . ' ' . $_GET['ModifyOrderNumber'];
 } else {
@@ -636,10 +643,10 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 		echo '<table cellpadding="3" class="selection">
 			<thead>
 				<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Supplier Name') . '</th>
-				<th class="ascending">' . _('Address') . '</th>
-				<th class="ascending">' . _('Currency') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Supplier Name') . '</th>
+				<th class="SortedColumn">' . _('Address') . '</th>
+				<th class="SortedColumn">' . _('Currency') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -866,7 +873,7 @@ if ($_SESSION['RequireSupplierSelection'] == 1 or !isset($_SESSION['PO' . $ident
 	echo '<field>
 		<tr>
 			<label for="DeliveryDate">' . _('Delivery Date') . ':</label>
-			<input type="text" required="required" autofocus="autofocus" class="date" name="DeliveryDate" size="11" value="' . $_POST['DeliveryDate'] . '" />
+			<input required="required" autofocus="autofocus" type="date" name="DeliveryDate" size="11" value="' . FormatDateForSQL($_POST['DeliveryDate']) . '" />
 		</field>';
 KL RICARD COMMENTED OUT END */
 	// Initiator name
@@ -1048,19 +1055,19 @@ KL RICARD COMMENTED OUT END */
 
 		echo '<field>
 				<label for="KLAgreedDeliveryDate">', _('Agreed Delivery Date'), ':</label>
-				<input type="text" class="date" name="KLAgreedDeliveryDate" size="11" required="required" maxlength="10" value="', $_POST['KLAgreedDeliveryDate'], '" />
+				<input type="date" name="KLAgreedDeliveryDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLAgreedDeliveryDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="DeliveryDate">', _('Delivery Date'), ':</label>
-				<input type="text" class="date" name="DeliveryDate" size="11" required="required" maxlength="10" value="', $_POST['DeliveryDate'], '" />
+				<input type="date" name="DeliveryDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['DeliveryDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="KLPaymentDate">', _('Payment Date'), ':</label>
-				<input type="text" class="date" name="KLPaymentDate" size="11" required="required" maxlength="10" value="', $_POST['KLPaymentDate'], '" />
+				<input type="date" name="KLPaymentDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLPaymentDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="KLShipmentDate">', _('Shipment Date'), ':</label>
-				<input type="text" class="date" name="KLShipmentDate" size="11" required="required" maxlength="10" value="', $_POST['KLShipmentDate'], '" />
+				<input type="date" name="KLShipmentDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLShipmentDate']), '" />
 			</field>';
 		echo '<field>
 				<label for="KLShipmentAWB">', _('Shipment AWB'), ':</label>
@@ -1068,11 +1075,11 @@ KL RICARD COMMENTED OUT END */
 			</field>';
 		echo '<field>
 			<label for="KLCustomsDate">', _('Customs Date'), ':</label>
-			<input type="text" class="date" name="KLCustomsDate" size="11" required="required" maxlength="10" value="', $_POST['KLCustomsDate'], '" />
+			<input type="date" name="KLCustomsDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLCustomsDate']), '" />
 		</field>';
 		echo '<field>
 			<label for="KLArrivalDate">', _('Arrival Date'), ':</label>
-			<input type="text" class="date" name="KLArrivalDate" size="11" required="required" maxlength="10" value="', $_POST['KLArrivalDate'], '" />
+			<input type="date" name="KLArrivalDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['KLArrivalDate']), '" />
 		</field>';
 
 		echo '<div class="centre">
@@ -1288,23 +1295,23 @@ KL RICARD COMMENTED OUT END */
 			<input type="text" name="SuppDelAdd1" size="41" maxlength="40" value="' . $_POST['SuppDelAdd1'] . '" />
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 2 :</label>
+			<label for="SuppDelAdd2">' . _('Address') . ' 2 :</label>
 			<td><input type="text" name="SuppDelAdd2" size="41" maxlength="40" value="' . $_POST['SuppDelAdd2'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 3 :</label>
+			<label for="SuppDelAdd3">' . _('Address') . ' 3 :</label>
 			<td><input type="text" name="SuppDelAdd3" size="41" maxlength="40" value="' . $_POST['SuppDelAdd3'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 4 :</label>
+			<label for="SuppDelAdd4">' . _('Address') . ' 4 :</label>
 			<td><input type="text" name="SuppDelAdd4" size="41" maxlength="40" value="' . $_POST['SuppDelAdd4'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 5 :</label>
+			<label for="SuppDelAdd5">' . _('Address') . ' 5 :</label>
 			<td><input type="text" name="SuppDelAdd5" size="41" maxlength="20" value="' . $_POST['SuppDelAdd5'] . '" /></td>
 		</field>
 		<field>
-			<label for="SuppDelAdd1">' . _('Address') . ' 6 :</label>
+			<label for="SuppDelAdd6">' . _('Address') . ' 6 :</label>
 			<td><input type="text" name="SuppDelAdd6" size="16" maxlength="15" value="' . $_POST['SuppDelAdd6'] . '" /></td>
 		</field>';
 

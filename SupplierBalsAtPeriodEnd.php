@@ -109,6 +109,8 @@ If (isset($_POST['PrintPDF'])
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Supplier Balances At A Period End');
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' .

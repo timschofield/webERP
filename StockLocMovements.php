@@ -1,9 +1,13 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['BeforeDate'])){$_POST['BeforeDate'] = ConvertSQLDate($_POST['BeforeDate']);};
+if (isset($_POST['AfterDate'])){$_POST['AfterDate'] = ConvertSQLDate($_POST['AfterDate']);};
 
 $Title = _('All Stock Movements By Location');
 
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text">
@@ -61,12 +65,12 @@ if (!isset($_POST['AfterDate']) or !Is_date($_POST['AfterDate'])) {
 }
 echo '<field>
 		<label for="BeforeDate">', _('Show Movements before'), ':</label>
-		<input type="text" class="date" name="BeforeDate" size="11" required="required" maxlength="10" value="', $_POST['BeforeDate'], '" />
+		<input type="date" name="BeforeDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['BeforeDate']), '" />
 	</field>';
 
 echo '<field>
 		<label for="AfterDate">', _('But after'), ':</label>
-		<input type="text" class="date" name="AfterDate" size="11" required="required" maxlength="10" value="', $_POST['AfterDate'], '" />
+		<input type="date" name="AfterDate" size="11" required="required" maxlength="10" value="', FormatDateForSQL($_POST['AfterDate']), '" />
 	 </field>
 	 </fieldset>
 	<div class="centre">

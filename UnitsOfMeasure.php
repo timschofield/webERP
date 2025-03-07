@@ -3,6 +3,8 @@
 include('includes/session.php');
 
 $Title = _('Units Of Measure');
+$ViewTopic = 'Setup';
+$BookMark = '';
 
 include('includes/header.php');
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' .
@@ -26,7 +28,7 @@ if (isset($_POST['Submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['MeasureName'])) {
 		$InputError = 1;
-		prnMsg( _('The unit of measure cannot contain any of the illegal characters') ,'error');
+		prnMsg( _('The unit of measure cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 	}
 	if (trim($_POST['MeasureName']) == '') {
 		$InputError = 1;
@@ -89,7 +91,7 @@ if (isset($_POST['Submit'])) {
 	if ($InputError!=1){
 		//run the SQL from either of the above possibilites
 		if (is_array($SQL)) {
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			$TmpErr = _('Could not update unit of measure');
 			$tmpDbg = _('The sql that failed was') . ':';
 			foreach ($SQL as $stmt ) {
@@ -100,9 +102,9 @@ if (isset($_POST['Submit'])) {
 				}
 			}
 			if ($InputError!=1){
-				$Result = DB_Txn_Commit();
+				DB_Txn_Commit();
 			} else {
-				$Result = DB_Txn_Rollback();
+				DB_Txn_Rollback();
 			}
 		} else {
 			$Result = DB_query($SQL);
@@ -167,7 +169,7 @@ if (isset($_POST['Submit'])) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Units of Measure') . '</th>
+				<th class="SortedColumn">' . _('Units of Measure') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

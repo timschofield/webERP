@@ -260,7 +260,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 			</tr>
 		  </table>';
 
-	echo '<div class="noprint centre">
+	echo '<div class="noPrint centre">
 			<a href="', basename(__FILE__), '">', _('Select Different Criteria'), '</a>
 		</div>';
 	include ('includes/footer.php');

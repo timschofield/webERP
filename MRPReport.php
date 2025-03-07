@@ -345,7 +345,7 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 	$pdf->addTextWrap(490,$YPos,45,$FontSize,locale_number_format($WeeklyAvail[18],0),'right');
 	$YPos -=$LineHeight;
 	$pdf->addTextWrap($Left_Margin,$YPos,40,$FontSize,_('Planned Acc'));
-	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PlannedAccum[9],0),right);
+	$pdf->addTextWrap($Left_Margin+40,$YPos,45,$FontSize,locale_number_format($PlannedAccum[9],0),'right');
 	$InitialPoint = 130;
 	for($c=10;$c<19;$c++){
 		$pdf->addTextWrap($InitialPoint,$YPos,45,$FontSize,locale_number_format($PlannedAccum[$c],0),'right');
@@ -515,6 +515,8 @@ if (isset($_POST['PrintPDF']) AND $_POST['Part']!='') {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('MRP Report');
+	$ViewTopic = 'MRP';
+	$BookMark = '';
 	include('includes/header.php');
 
 	if (isset($_POST['PrintPDF'])) {

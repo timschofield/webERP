@@ -111,7 +111,7 @@ function display($Title)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_
 			
 /*	echo '<tr>
 			<td>' . _('Purge loctransfers table older or equal than') . '</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="PurgeLocTransfersRecdate" size="10" maxlength="10" value="' . ConvertSQLDate($AlreadyPurgedLocTransfersRecdate) . '" /></td>
+			<td><input type="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="PurgeLocTransfersRecdate" size="10" maxlength="10" value="' . ConvertSQLDate($AlreadyPurgedLocTransfersRecdate) . '" /></td>
 		</tr>';
 */
 	echo '<tr>

@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Supplier Types') . ' / ' . _('Maintenance');
+$ViewTopic = 'Setup';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
@@ -33,14 +35,14 @@ if (isset($_POST['submit'])) {
 	$i=1;
 	if (mb_strlen($_POST['TypeName']) >100) {
 		$InputError = 1;
-		echo prnMsg(_('The supplier type name description must be 100 characters or less long'),'error');
+		prnMsg(_('The supplier type name description must be 100 characters or less long'),'error');
 		$Errors[$i] = 'SupplierType';
 		$i++;
 	}
 
 	if (mb_strlen(trim($_POST['TypeName']))==0) {
 		$InputError = 1;
-		echo prnMsg(_('The supplier type name description must contain at least one character'),'error');
+		prnMsg(_('The supplier type name description must contain at least one character'),'error');
 		$Errors[$i] = 'SupplierType';
 		$i++;
 	}
@@ -52,7 +54,7 @@ if (isset($_POST['submit'])) {
 	$CheckRow=DB_fetch_row($CheckResult);
 	if ($CheckRow[0]>0 and !isset($_POST['Edit'])) {
 		$InputError = 1;
-		echo prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
+		prnMsg(_('You already have a supplier type called').' '.$_POST['TypeName'],'error');
 		$Errors[$i] = 'SupplierName';
 		$i++;
 	}
@@ -147,32 +149,28 @@ if (!isset($SelectedType)){
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
-		<thead>
-			<tr>
-		<th class="ascending" >' . _('Type ID') . '</th>
-		<th class="ascending" >' . _('Type Name') . '</th>
-			</tr>
-		</thead>
-		<tbody>';
+			<thead>
+				<tr>
+					<th class="SortedColumn" >' . _('Type ID') . '</th>
+					<th class="SortedColumn" >' . _('Type Name') . '</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>';
 
 while ($MyRow = DB_fetch_row($Result)) {
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedType=%s">' . _('Edit') . '</a></td>
-			<td><a href="%sSelectedType=%s&amp;delete=yes" onclick="return confirm(\'' .
+	echo '<tr class="striped_row">
+			<td>', $MyRow[0], '</td>
+			<td>', $MyRow[1], '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '>' . _('Edit') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedType=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' .
 				_('Are you sure you wish to delete this Supplier Type?') . '\');">' . _('Delete') . '</a></td>
-		</tr>',
-		$MyRow[0],
-		$MyRow[1],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-		$MyRow[0],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-		$MyRow[0]);
+		</tr>';
 	}
 	//END WHILE LIST LOOP
-	echo '</tbody></table>';
+	echo '</tbody>
+		</table>';
 }
 
 //end of ifs and buts!
@@ -222,7 +220,7 @@ if (! isset($_GET['delete'])) {
 	echo '<field>
 			<label for="TypeName">' . _('Type Name') . ':</label>
 			<input type="text"  required="true" pattern="(?!^\s+$)[^<>+-]{1,100}" title="" name="TypeName" placeholder="'._('less than 100 characters').'" value="' . $_POST['TypeName'] . '" />
-			<fieldhelp>'._('The input should not be over 100 characters and contains illegal characters').'</fieldhelp>
+			<fieldhelp>'._('The input should not be over 100 characters and contains illegal characters') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 		</field>';
 
 	echo '</fieldset>';

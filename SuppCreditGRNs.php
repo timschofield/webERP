@@ -7,10 +7,14 @@ an array of GLCodes objects - only used if the AP - GL link is effective */
 
 
 include('includes/DefineSuppTransClass.php');
+
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
+if (isset($_POST['Show_since'])){$_POST['Show_since'] = ConvertSQLDate($_POST['Show_since']);};
 
 $Title = _('Enter Supplier Credit Note Against Goods Received');
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
 
 include('includes/header.php');
 
@@ -159,7 +163,7 @@ $SQL = "SELECT grnno,
 		LEFT JOIN stockmaster
 		ON purchorderdetails.itemcode=stockmaster.stockid
 		WHERE grns.supplierid ='" . $_SESSION['SuppTrans']->SupplierID . "'
-		AND grns.deliverydate >= '" . FormatDateForSQL($_POST['Show_Since']) . "'
+		AND grns.deliverydate >= '" . $_POST['Show_Since'] . "'
 		ORDER BY grns.grnno";
 $GRNResults = DB_query($SQL);
 
@@ -178,7 +182,7 @@ echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'
 	<table class="selection">
 	<tr>
 			<th colspan="10"><h3>' . _('Show Goods Received Since') . ':&nbsp;</h3>
-			<input type="text" name="Show_Since" maxlength="11" size="12" class="date" value="' . $_POST['Show_Since'] . '" />
+			<input name="Show_Since" maxlength="11" size="12" type="date" value="' . FormatDateForSQL($_POST['Show_Since']) . '" />
 		<input type="submit" name="FindGRNs" value="' . _('Display GRNs') . '" />
 		<h3> ' . _('From') . ' ' . $_SESSION['SuppTrans']->SupplierName . '</h3></th>
 		</tr>
@@ -188,16 +192,16 @@ if (DB_num_rows($GRNResults)>0){
 	echo '<table class="selection">
 		<thead>
 			<tr>
-						<th class="ascending">' . _('GRN') . '</th>
-						<th class="ascending">' . _('Order') . '</th>
-						<th class="ascending">' . _('Item Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('Delivered') . '</th>
-						<th class="ascending">' . _('Total Qty') . '<br />' . _('Received') . '</th>
-						<th class="ascending">' . _('Qty Invoiced') . '</th>
-						<th class="ascending">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
-						<th class="ascending">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
-						<th class="ascending">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('GRN') . '</th>
+						<th class="SortedColumn">' . _('Order') . '</th>
+						<th class="SortedColumn">' . _('Item Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Delivered') . '</th>
+						<th class="SortedColumn">' . _('Total Qty') . '<br />' . _('Received') . '</th>
+						<th class="SortedColumn">' . _('Qty Invoiced') . '</th>
+						<th class="SortedColumn">' . _('Qty Yet') . '<br />' . _('invoice') . '</th>
+						<th class="SortedColumn">' . _('Price') . '<br />' . $_SESSION['SuppTrans']->CurrCode . '</th>
+						<th class="SortedColumn">' . _('Line Value') . '<br />' . _('In') . ' ' . $_SESSION['SuppTrans']->CurrCode . '</th>
 			</tr>
 		</thead>
 		<tbody>';

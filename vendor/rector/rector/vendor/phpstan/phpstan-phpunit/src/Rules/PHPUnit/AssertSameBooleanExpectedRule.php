@@ -26,7 +26,6 @@ class AssertSameBooleanExpectedRule implements Rule
             return [];
         }
         /** @var MethodCall|StaticCall $node */
-        $node = $node;
         if (count($node->getArgs()) < 2) {
             return [];
         }

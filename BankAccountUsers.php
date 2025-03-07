@@ -34,7 +34,7 @@ if (isset($_POST['Cancel'])) {
 
 if (isset($_POST['Process'])) {
 	if ($_POST['SelectedBankAccount'] == '') {
-		echo prnMsg(_('You have not selected any bank account'),'error');
+		prnMsg(_('You have not selected any bank account'),'error');
 		echo '<br />';
 		unset($SelectedBankAccount);
 		unset($_POST['SelectedBankAccount']);
@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['SelectedUser']=='') {
 		$InputError=1;
-		echo prnMsg(_('You have not selected an user to be authorised to use this bank account'),'error');
+		prnMsg(_('You have not selected an user to be authorised to use this bank account'),'error');
 		echo '<br />';
 		unset($SelectedBankAccount);
 	}
@@ -127,7 +127,7 @@ then none of the above are true. These will call the same page again and allow u
 
 	echo '<div class="centre">
 			<input type="submit" name="Process" value="' . _('Accept') . '" />
-			<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+			<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
 		</div>';
 
 	echo '</form>';
@@ -218,7 +218,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Accept') . '" />
-									<input type="submit" name="Cancel" value="' . _('Cancel') . '" />
+									<input type="reset" name="Cancel" value="' . _('Cancel') . '" />
 			</div>';
 
 		echo '</form>';

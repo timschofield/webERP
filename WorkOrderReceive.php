@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Receive Work Order');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -192,7 +194,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 	if ($InputError==false){
 /************************ BEGIN SQL TRANSACTIONS ************************/
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		/*Now Get the next WOReceipt transaction type 26 - function in SQL_CommonFunctions*/
 		$WOReceiptNo = GetNextTransNo(26);
 
@@ -207,7 +209,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 
 	//Recalculate the standard for the item if there were no items previously received against the work order
 		if ($WORow['qtyrecd']==0){
-			$CostResult = DB_query("SELECT SUM((materialcost+labourcost+overheadcost)*bom.quantity) AS cost
+			$CostResult = DB_query("SELECT SUM((actualcost)*bom.quantity) AS cost
 									FROM stockmaster INNER JOIN bom
 									ON stockmaster.stockid=bom.component
 									WHERE bom.parent='" . $_POST['StockID'] . "'
@@ -227,16 +229,14 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 			WoRealRequirements($_POST['WO'], $WORow['loccode'], $_POST['StockID']);
 
 			//Need to check this against the current standard cost and do a cost update if necessary
-			$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+			$SQL = "SELECT actualcost AS cost,
 						  sum(quantity) AS totalqoh,
 						  labourcost,
 						  overheadcost
 					FROM stockmaster INNER JOIN locstock
 						ON stockmaster.stockid=locstock.stockid
 					WHERE stockmaster.stockid='" . $_POST['StockID'] . "'
-					GROUP BY materialcost,
-							labourcost,
-							overheadcost";
+					GROUP BY actualcost";
 			$ItemResult = DB_query($SQL);
 			$ItemCostRow = DB_fetch_array($ItemResult);
 
@@ -289,7 +289,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 				}
 
 				$SQL = "UPDATE stockmaster SET
-							lastcostupdate=CURRENT_DATE,
+							lastcostupdate= CURRENT_DATE,
 							materialcost='" . $Cost . "',
 							labourcost='" . $ItemCostRow['labourcost'] . "',
 							overheadcost='" . $ItemCostRow['overheadcost'] . "',
@@ -305,7 +305,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 		//Do the issues for autoissue components in the worequirements table
 		$AutoIssueCompsResult = DB_query("SELECT worequirements.stockid,
 												 qtypu,
-												 materialcost+labourcost+overheadcost AS cost,
+												 actualcost AS cost,
 												 stockcategory.stockact,
 												 stockcategory.stocktype
 										  FROM worequirements
@@ -746,7 +746,7 @@ if (isset($_POST['Process'])){ //user hit the process the work order receipts en
 									true);
 
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('The receipt of') . ' ' . $QuantityReceived . ' ' . $WORow['units'] . ' ' . _('of')  . ' ' . $_POST['StockID'] . ' - ' . $WORow['description'] . ' ' . _('against work order') . ' '. $_POST['WO'] . ' ' . _('has been processed'),'info');
 		echo '<a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for receiving finished stock against'). '</a>';
@@ -846,7 +846,7 @@ echo '<table class="selection">
 		//add expiry date for perishable product
 		if($WORow['perishable']==1){
 			echo '<td>' . _('Expiry Date') . ':<td>
-				  <td><input type="text" maxlength="10" size="11" name="ExpiryDate" class="date" required /></td>';
+				  <td><input maxlength="10" size="11" name="ExpiryDate" type="date" required /></td>';
 		}
 
 		echo '<td>' . _('Received Into') . ':</td>

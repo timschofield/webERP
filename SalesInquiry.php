@@ -5,7 +5,11 @@
 // If Date Type is Invoice, stockmoves is the main table
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Sales Inquiry');
+$ViewTopic = 'Sales';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -1053,8 +1057,8 @@ function submit($PartNumber,$PartNumberOp,$DebtorNo,$DebtorNoOp,$DebtorName,$Deb
 				locale_number_format($TotalQty,2),
 				locale_number_format($TotalExtCost,$_SESSION['CompanyRecord']['decimalplaces']),
 				locale_number_format($TotalExtPrice,$_SESSION['CompanyRecord']['decimalplaces']),
-				locale_number_format($TotalInvQty,2),
-				' ');
+				locale_number_format($TotalInvQty,2)
+				);
 			echo '</pre>';
 		} // End of if($_POST['ReportType']
 
@@ -1109,9 +1113,9 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 	echo '<field>
 			<label>' . _('Date Range') . ':</label>
-			<input type="text" class="date" name="FromDate" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+			<input type="date" name="FromDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 			' . _('To') . ':
-			<input type="text" class="date" name="ToDate" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+			<input type="date" name="ToDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>';
 	if(!isset($_POST['PartNumber'])) {
 		$_POST['PartNumber']='';

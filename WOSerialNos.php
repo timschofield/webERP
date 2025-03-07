@@ -38,6 +38,8 @@ if ($Serialised==1){
 } else {
 	$Title = _('Work Order Batches in Progress');
 }
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 
 include('includes/header.php');
 
@@ -223,7 +225,7 @@ if (isset($_POST['UpdateItems'])){
 	}//end loop around all serial numbers/batches
 	$ErrMsg = _('Could not update serial/batches on the work order');
 	if (sizeof($SQL)>0){
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		foreach ($SQL as $SQLStatement){
 				$Result = DB_query($SQLStatement,$ErrMsg,$DbgMsg,true);
 		}
@@ -233,7 +235,7 @@ if (isset($_POST['UpdateItems'])){
 							$ErrMsg,
 							$DbgMsg,
 							true);
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 	}
 
 }

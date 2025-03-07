@@ -17,6 +17,9 @@ if (isset($_POST['Period'])) {
 elseif (isset($_GET['Period'])) {
 	$SelectedPeriod = $_GET['Period'];
 }
+if (!isset($_POST['tag'])) {
+	$_POST['tag']='';
+}
 
 echo '<p class="page_title_text"><img src="' . $RootPath, '/css/', $Theme, '/images/transactions.png" title="' . _('General Ledger Account Inquiry') . '" alt="" />' . ' ' . _('General Ledger Account Report') . '</p>';
 
@@ -72,6 +75,7 @@ while ($MyRow = DB_fetch_array($Periods)) {
 echo '</select>
 	</field>';
 
+/* KL RICARD Do not show tags
 //Select the tag
 echo '<field>
 		<label for="tag">' . _('Select Tag') . ':</label>
@@ -95,6 +99,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 // End select tag
+KL RICARD Do not show tags */
 echo '</fieldset>';
 
 echo '<div class="centre">

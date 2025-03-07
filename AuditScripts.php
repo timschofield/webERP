@@ -14,11 +14,6 @@ if (!isset($_POST['ToDate'])){
 	$_POST['ToDate']= Date($_SESSION['DefaultDateFormat']);
 }
 
-if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset($_POST['View']))) {
-	prnMsg( _('Incorrect date format used, please re-enter'), error);
-	unset($_POST['View']);
-}
-
 if (isset($_POST['ContainingText'])){
 	$ContainingText = trim(mb_strtoupper($_POST['ContainingText']));
 } elseif (isset($_GET['ContainingText'])){
@@ -31,12 +26,12 @@ echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />'
 echo '<table class="selection">';
 
 echo '<tr>
-		<td>' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="1" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+		<td>' .  _('From Date') . '</td>
+		<td><input tabindex="1" type="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .FormatDateForSQL($_POST['FromDate']). '"/></td>
 	</tr>
 	<tr>
-		<td>' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</td>
-		<td><input tabindex="2" type="text" class="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/></td>
+		<td>' .  _('To Date') . '</td>
+		<td><input tabindex="1" type="date" alt="'.$_SESSION['DefaultDateFormat'].'" name="ToDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .FormatDateForSQL($_POST['ToDate']). '"/></td>
 	</tr>';
 
 // Show user selections

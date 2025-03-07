@@ -6,6 +6,9 @@ include('includes/DefineSerialItems.php');
 include('includes/session.php');
 $Title = _('Specify Dispatched Controlled Items');
 
+$ViewTopic = 'ARTransactions';
+$BookMark = 'ConfirmInvoice';
+
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
 

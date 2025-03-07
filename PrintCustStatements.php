@@ -50,7 +50,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 	$ErrMsg = _('There was a problem settling the old transactions.');
 	$DbgMsg = _('The SQL used to settle outstanding transactions was');
 	$SQL = "UPDATE debtortrans SET settled=1
-			WHERE ABS(debtortrans.ovamount+debtortrans.ovdiscount+debtortrans.ovfreight+debtortrans.ovgst-debtortrans.alloc)<0.009";
+			WHERE ABS(debtortrans.balance)<0.009";
 	$SettleAsNec = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 /*Figure out who all the customers in this range are */
@@ -465,7 +465,7 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 
 			} /* end of check to see that there were statement transactons to print */
 			if ($_POST['EmailOrPrint']=='email'){
-				$FileName = 'Statement_Account_' . $StmtHeader['debtorno']  . '.pdf';
+				$FileName = $_SESSION['reports_dir'] . '/' .'Statement_Account_' . $StmtHeader['debtorno']  . '.pdf';
 				$pdf->Output($FileName,'F');
 				$mail = new htmlMimeMail();
 				$Attachment = $mail->getFile($FileName);
@@ -506,11 +506,11 @@ if (isset($_POST['PrintPDF']) AND isset($_POST['FromCust']) AND $_POST['FromCust
 			include('includes/header.php');
 			echo '<br />
 				<br />
-				<br />' . prnMsg( _('There were no statements to print'));
+				<br />' . prnMsg( _('There were no statements to print'),'warning','',true);
 		} else {
 			echo '<br />
 				<br />
-				<br />' . prnMsg( _('There were no statements to email'));
+				<br />' . prnMsg( _('There were no statements to email'),'warning','',true);
 		}
 		echo'<br />
 				<br />

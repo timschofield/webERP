@@ -319,7 +319,7 @@ echo '<field>
 
 echo '<select tabindex="4" name="GLCode">';
 
-DB_free_Result($Result);
+DB_free_result($Result);
 $SQL = "SELECT chartmaster.accountcode,
 			chartmaster.accountname
 		FROM chartmaster,
@@ -341,7 +341,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 
 } //end while loop
 
-DB_free_Result($Result);
+DB_free_result($Result);
 
 echo '</select>';
 echo '<fieldhelp>', _('Select the general ledger code to do COGS postingst to where the above criteria have been met.'), '</fieldhelp>

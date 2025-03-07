@@ -124,7 +124,7 @@ final class ArrayParser
             }
             $tokenIterator->tryConsumeTokenType(Lexer::TOKEN_EQUAL);
             $tokenIterator->tryConsumeTokenType(Lexer::TOKEN_COLON);
-            return [$key, $this->plainValueParser->parseValue($tokenIterator)];
+            /*return [$key, $this->plainValueParser->parseValue($tokenIterator)];*/
         }
         return [$key, $this->plainValueParser->parseValue($tokenIterator)];
     }

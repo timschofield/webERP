@@ -7,6 +7,8 @@
 
 include ('includes/session.php');
 $Title = _('Sales Integrity');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 

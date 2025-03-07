@@ -26,9 +26,7 @@ if (isset($_POST['PrintPDF']) OR isset($_POST['CSV'])){
 					unitcost,
 					stockmaster.units,
 					stockmaster.decimalplaces,
-					stockmaster.materialcost,
-					stockmaster.labourcost,
-					stockmaster.overheadcost,
+					stockmaster.actualcost,
 					stockmaster.stockid,
 					stockmaster.description
 				HAVING SUM(locstock.quantity)!=0
@@ -210,6 +208,8 @@ if (isset($_POST['PrintPDF'])){
 } else { /*The option to print PDF nor to create the CSV was not hit */
 
 	$Title=_('Inventory Valuation Reporting');
+	$ViewTopic = 'Inventory';
+	$BookMark = 'InventoryValuation';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">

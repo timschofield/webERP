@@ -164,7 +164,7 @@
 			$Errors=VerifyCurrencyCode($SupplierDetails['currcode'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['suppliersince'])){
-			$Errors=VerifySupplierSince($SupplierDetails['suppliersince'], sizeof($Errors), $Errors);
+			$Errors=VerifySupplierSinceDate($SupplierDetails['suppliersince'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['paymentterms'])){
 			$Errors=VerifyPaymentTerms($SupplierDetails['paymentterms'], sizeof($Errors), $Errors);
@@ -255,7 +255,7 @@
 			$Errors=VerifyCurrencyCode($SupplierDetails['currcode'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['suppliersince'])){
-			$Errors=VerifySupplierSince($SupplierDetails['suppliersince'], sizeof($Errors), $Errors);
+			$Errors=VerifySupplierSinceDate($SupplierDetails['suppliersince'], sizeof($Errors), $Errors);
 		}
 		if (isset($SupplierDetails['paymentterms'])){
 			$Errors=VerifyPaymentTerms($SupplierDetails['paymentterms'], sizeof($Errors), $Errors);

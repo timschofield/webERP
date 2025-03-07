@@ -1,10 +1,13 @@
 <?php
 
-
 // MRPCalendar.php
 // Maintains the calendar of valid manufacturing dates for MRP
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['ChangeDate'])){$_POST['ChangeDate'] = ConvertSQLDate($_POST['ChangeDate']);};
+
 $Title = _('MRP Calendar');
 $ViewTopic= 'MRP';
 $BookMark = 'MRP_Calendar';
@@ -214,30 +217,28 @@ function ShowDays()  {//####LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LISTALL_LIST
 	$ErrMsg = _('The SQL to find the parts selected failed with the message');
 	$Result = DB_query($SQL,$ErrMsg);
 
-	echo '<br />
-		<table class="selection">
-		<tr>
-			<th>' . _('Date') . '</th>
-			<th>' . _('Manufacturing Date') . '</th>
-		</tr>';
+	echo '<table class="selection">
+			<thead style="position: -webkit-sticky; position: sticky; top: 0px; z-index: 100;">
+				<tr>
+					<th>' . _('Date') . '</th>
+					<th>' . _('Manufacturing Date') . '</th>
+					<th>' . _('Manufacturing Day') . '?</th>
+				</tr>
+			</thead>';
 	$ctr = 0;
 	while ($MyRow = DB_fetch_array($Result)) {
 		$flag = _('Yes');
 		if ($MyRow['manufacturingflag'] == 0) {
 			$flag = _('No');
 		}
-		printf('<tr>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-				</tr>',
-				ConvertSQLDate($MyRow[0]),
-				_($MyRow[3]),
-				$flag);
+		echo '<tr class="striped_row">
+				<td>', ConvertSQLDate($MyRow[0]), '</td>
+				<td>', _($MyRow[3]), '</td>
+				<td>', $flag, '</td>
+			</tr>';
 	} //END WHILE LIST LOOP
 
 	echo '</table>';
-	echo '<br /><br />';
 	unset ($ChangeDate);
 	ShowInputForm($ChangeDate);
 
@@ -261,11 +262,11 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 
 	echo '<field>
 			<label for="FromDate">' . _('From Date') . ':</label>
-			<input type="text" class="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . $_POST['FromDate'] . '" />
+			<input type="date" name="FromDate" required="required" autofocus="autofocus" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 		</field>
 		<field>
 			<label for="ToDate">' . _('To Date') . ':</label>
-			<input type="text" class="date" name="ToDate" required="required" size="11" maxlength="10" value="' . $_POST['ToDate'] . '" />
+			<input type="date" name="ToDate" required="required" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 		</field>
 		<h3>' . _('Exclude The Following Days') . '</h3>
 		<field>
@@ -309,7 +310,7 @@ function ShowInputForm(&$ChangeDate)  {//####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DIS
 	echo '<fieldset>
 		<field>
 			<td>' . _('Change Date Status') . ':</td>
-			<td><input type="text" name="ChangeDate" class="date" size="11" maxlength="10" value="' . $_POST['ChangeDate'] . '" /></td>
+			<td><input name="ChangeDate" type="date" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ChangeDate']) . '" /></td>
 			<td><input type="submit" name="update" value="' . _('Update') . '" /></td>
 		</field>
 		</fieldset>

@@ -19,7 +19,7 @@ function standard_deviation($Data){
 
 function NewPageHeader () {
 	global $PageNumber,
-			$pdf,
+			$PDF,
 			$YPos,
 			$Page_Height,
 			$Page_Width,
@@ -33,13 +33,13 @@ function NewPageHeader () {
 	/*PDF page header for inventory planning report */
 
 	if ($PageNumber > 1){
-		$pdf->newPage();
+		$PDF->newPage();
 	}
 
 	$FontSize=10;
 	$YPos= $Page_Height-$Top_Margin;
 
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+	$LeftOvers = $PDF->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
 	$YPos -=$LineHeight;
 
@@ -48,48 +48,48 @@ function NewPageHeader () {
 	$ReportTitle = _('Preferred Supplier Inventory Plan');
 
 	if ($_POST['Location']=='All'){
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for all stock locations'));
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for all stock locations'));
 	} else {
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for stock at') . ' ' . $_POST['Location']);
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos,450,$FontSize, $ReportTitle . ' ' . _('for stock at') . ' ' . $_POST['Location']);
 	}
 
 	$FontSize=8;
-	$LeftOvers = $pdf->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
+	$LeftOvers = $PDF->addTextWrap($Page_Width-$Right_Margin-120,$YPos,120,$FontSize,_('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber);
 
 	$YPos -=(2*$LineHeight);
 
 	/*Draw a rectangle to put the headings in     */
 
-	$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
-	$pdf->line($Left_Margin, $YPos+$LineHeight,$Left_Margin, $YPos- $LineHeight);
-	$pdf->line($Left_Margin, $YPos- $LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
-	$pdf->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
+	$PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
+	$PDF->line($Left_Margin, $YPos+$LineHeight,$Left_Margin, $YPos- $LineHeight);
+	$PDF->line($Left_Margin, $YPos- $LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
+	$PDF->line($Page_Width-$Right_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos- $LineHeight);
 
 	/*set up the headings */
 	$XPos = $Left_Margin+1;
 
-	$LeftOvers = $pdf->addTextWrap($XPos,$YPos,180,$FontSize,_('Item'),'centre');
+	$LeftOvers = $PDF->addTextWrap($XPos,$YPos,180,$FontSize,_('Item'),'centre');
 
-	$LeftOvers = $pdf->addTextWrap(270,$YPos,50,$FontSize, _('Avg Qty'),'centre');
-	$LeftOvers = $pdf->addTextWrap(270,$YPos-10,50,$FontSize, _('4 mths'),'centre');
+	$LeftOvers = $PDF->addTextWrap(270,$YPos,50,$FontSize, _('Avg Qty'),'centre');
+	$LeftOvers = $PDF->addTextWrap(270,$YPos-10,50,$FontSize, _('4 mths'),'centre');
 
-	$LeftOvers = $pdf->addTextWrap(327,$YPos,50,$FontSize, _('Max Mnth'),'centre');
-	$LeftOvers = $pdf->addTextWrap(327,$YPos-10,50,$FontSize, _('Quantity'),'centre');
+	$LeftOvers = $PDF->addTextWrap(327,$YPos,50,$FontSize, _('Max Mnth'),'centre');
+	$LeftOvers = $PDF->addTextWrap(327,$YPos-10,50,$FontSize, _('Quantity'),'centre');
 
-	$LeftOvers = $pdf->addTextWrap(378,$YPos,50,$FontSize, _('Standard'),'centre');
-	$LeftOvers = $pdf->addTextWrap(378,$YPos-10,50,$FontSize, _('Deviation'),'centre');
+	$LeftOvers = $PDF->addTextWrap(378,$YPos,50,$FontSize, _('Standard'),'centre');
+	$LeftOvers = $PDF->addTextWrap(378,$YPos-10,50,$FontSize, _('Deviation'),'centre');
 
 
-	$LeftOvers = $pdf->addTextWrap(429,$YPos,50,$FontSize, _('Lead Time'),'centre');
-	$LeftOvers = $pdf->addTextWrap(429,$YPos-10,50,$FontSize, _('in months'),'centre');
+	$LeftOvers = $PDF->addTextWrap(429,$YPos,50,$FontSize, _('Lead Time'),'centre');
+	$LeftOvers = $PDF->addTextWrap(429,$YPos-10,50,$FontSize, _('in months'),'centre');
 
-	$LeftOvers = $pdf->addTextWrap(475,$YPos,60,$FontSize, _('Qty Required'),'centre');
-	$LeftOvers = $pdf->addTextWrap(475,$YPos-10,60,$FontSize, _('in Supply Chain'),'centre');
+	$LeftOvers = $PDF->addTextWrap(475,$YPos,60,$FontSize, _('Qty Required'),'centre');
+	$LeftOvers = $PDF->addTextWrap(475,$YPos-10,60,$FontSize, _('in Supply Chain'),'centre');
 
-	$LeftOvers = $pdf->addTextWrap(617,$YPos,40,$FontSize,_('QOH'),'centre');
-	$LeftOvers = $pdf->addTextWrap(648,$YPos,40,$FontSize,_('Cust Ords'),'centre');
-	$LeftOvers = $pdf->addTextWrap(694,$YPos,40,$FontSize,_('Splr Ords'),'centre');
-	$LeftOvers = $pdf->addTextWrap(735,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
+	$LeftOvers = $PDF->addTextWrap(617,$YPos,40,$FontSize,_('QOH'),'centre');
+	$LeftOvers = $PDF->addTextWrap(648,$YPos,40,$FontSize,_('Cust Ords'),'centre');
+	$LeftOvers = $PDF->addTextWrap(694,$YPos,40,$FontSize,_('Splr Ords'),'centre');
+	$LeftOvers = $PDF->addTextWrap(735,$YPos,40,$FontSize,_('Sugg Ord'),'centre');
 
 	$YPos =$YPos - (2*$LineHeight);
 	$FontSize=8;
@@ -97,6 +97,7 @@ function NewPageHeader () {
 
 include('includes/session.php');
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 if (isset($_POST['PrintPDF'])){
 
@@ -117,23 +118,23 @@ if (isset($_POST['PrintPDF'])){
 /* Standard PDF file creation header stuff */
 
 // Javier: better to not use references
-//	$pdf = & new Cpdf($PageSize);
-	$pdf = new Cpdf('L', 'pt', 'A4');
+//	$PDF = & new Cpdf($PageSize);
+	$PDF = new Cpdf('L', 'pt', 'A4');
 
-	$pdf->addInfo('Author','webERP ' . $Version);
-	$pdf->addInfo('Creator','webERP http://www.weberp.org');
-	$pdf->addInfo('Title',_('Inventory Planning Based On Lead Time Of Preferred Supplier') . ' ' . Date($_SESSION['DefaultDateFormat']));
+	$PDF->addInfo('Author','webERP ' . $Version);
+	$PDF->addInfo('Creator','webERP http://www.weberp.org');
+	$PDF->addInfo('Title',_('Inventory Planning Based On Lead Time Of Preferred Supplier') . ' ' . Date($_SESSION['DefaultDateFormat']));
 //	$PageNumber = 0;
-	$pdf->addInfo('Subject',_('Inventory Planning Based On Lead Time Of Preferred Supplier'));
+	$PDF->addInfo('Subject',_('Inventory Planning Based On Lead Time Of Preferred Supplier'));
 
 /* Javier: I have brought this piece from the pdf class constructor to get it closer to the admin/user,
 	I corrected it to match TCPDF, but it still needs check, after which,
 	I think it should be moved to each report to provide flexible Document Header and Margins in a per-report basis. */
-	$pdf->setAutoPageBreak(0);	// Javier: needs check.
-	$pdf->setPrintHeader(false);	// Javier: I added this must be called before Add Page
-	$pdf->AddPage();
+	$PDF->setAutoPageBreak(0);	// Javier: needs check.
+	$PDF->setPrintHeader(false);	// Javier: I added this must be called before Add Page
+	$PDF->AddPage();
 //	$this->SetLineWidth(1); 	   Javier: It was ok for FPDF but now is too gross with TCPDF. TCPDF defaults to 0'57 pt (0'2 mm) which is ok.
-	$pdf->cMargin = 0;		// Javier: needs check.
+	$PDF->cMargin = 0;		// Javier: needs check.
 /* END Brought from class.pdf.php constructor */
 
 
@@ -207,10 +208,10 @@ if (isset($_POST['PrintPDF'])){
 			if ($SupplierID!=''){ /*Then it's NOT the first time round */
 				/*draw a line under the supplier*/
 				$YPos -=$LineHeight;
-		   		$pdf->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
+		   		$PDF->line($Left_Margin, $YPos,$Page_Width-$Right_Margin, $YPos);
 				$YPos -=(2*$LineHeight);
 			}
-			$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['supplierno'] . ' - ' . $InventoryPlan['suppname'],'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 260-$Left_Margin,$FontSize,$InventoryPlan['supplierno'] . ' - ' . $InventoryPlan['suppname'],'left');
 			$SupplierID = $InventoryPlan['supplierno'];
 			$FontSize=8;
 		}
@@ -250,107 +251,46 @@ if (isset($_POST['PrintPDF'])){
 
 		$SalesRow = DB_fetch_array($SalesResult);
 
-		$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-				FROM salesorderdetails INNER JOIN salesorders
-				ON salesorderdetails.orderno=salesorders.orderno
-				INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE salesorderdetails.stkcode = '" . $InventoryPlan['stockid'] . "'
-				AND salesorderdetails.completed = 0
-				AND salesorders.quotation=0";
-		if ($_POST['Location']!='All'){
-			$SQL .= " AND salesorders.fromstkloc ='" . $_POST['Location'] . "'";
-		}
-
-		$DemandResult = DB_query($SQL, '', '', false, false);
-
-		if (DB_error_no() !=0) {
-	 		 $Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.php');
-	   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($Debug==1){
-	      			echo '<br />' . $SQL;
-	   		}
-	   		include('includes/footer.php');
-	   		exit;
-		}
-
-// Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-
-		$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-				FROM salesorderdetails INNER JOIN bom
-				ON salesorderdetails.stkcode=bom.parent
-				INNER JOIN	stockmaster
-				ON stockmaster.stockid=bom.parent
-				INNER JOIN salesorders
-				ON salesorders.orderno = salesorderdetails.orderno
-				INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-				AND bom.component='" . $InventoryPlan['stockid'] . "'
-				AND stockmaster.mbflag='A'
-				AND salesorderdetails.completed=0
-				AND salesorders.quotation=0";
-		if ($_POST['Location']!='All'){
-			$SQL .= " AND salesorders.fromstkloc ='" . $_POST['Location'] . "'";
-		}
-
-		$BOMDemandResult = DB_query($SQL,'','',false,false);
-
-		if (DB_error_no() !=0) {
-	 		$Title = _('Inventory Planning') . ' - ' . _('Problem Report') . '....';
-	  		include('includes/header.php');
-	   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-	   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-	   		if ($Debug==1){
-	      			echo '<br />' . $SQL;
-	   		}
-	   		include('includes/footer.php');
-	   		exit;
-		}
-
-		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
 		if ($_POST['Location']=='All'){
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], '');
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], '');
+			$LocationCode = 'ALL';
 		} else {
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($InventoryPlan['stockid'], $_POST['Location']);
-			$QOO += GetQuantityOnOrderDueToWorkOrders($InventoryPlan['stockid'], $_POST['Location']);
+			$LocationCode = $_POST['Location'];
 		}
 
-		$DemandRow = DB_fetch_array($DemandResult);
-		$BOMDemandRow = DB_fetch_array($BOMDemandResult);
-		$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
+		// Get the demand 
+		$TotalDemand = GetDemand($InventoryPlan['stockid'], $LocationCode);
+		// Get the QOO 
+		$QOO = GetQuantityOnOrder($InventoryPlan['stockid'], $LocationCode);
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
-		$LeftOvers = $pdf->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 60, $FontSize, $InventoryPlan['stockid'], 'left');
+		$LeftOvers = $PDF->addTextWrap(100, $YPos, 150,6,$InventoryPlan['description'],'left');
 		$AverageOfLast4Months = $SalesRow['4mthtotal']/4;
-		$LeftOvers = $pdf->addTextWrap(251, $YPos, 50,$FontSize,locale_number_format($AverageOfLast4Months,1),'right');
+		$LeftOvers = $PDF->addTextWrap(251, $YPos, 50,$FontSize,locale_number_format($AverageOfLast4Months,1),'right');
 
 		$MaxMthSales = Max($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
-		$LeftOvers = $pdf->addTextWrap(309, $YPos, 50,$FontSize,locale_number_format($MaxMthSales,0),'right');
+		$LeftOvers = $PDF->addTextWrap(309, $YPos, 50,$FontSize,locale_number_format($MaxMthSales,0),'right');
 
 		$Quantities = array($SalesRow['prd1'], $SalesRow['prd2'], $SalesRow['prd3'], $SalesRow['prd4']);
 		$StandardDeviation = standard_deviation($Quantities);
-		$LeftOvers = $pdf->addTextWrap(359, $YPos, 50,$FontSize,locale_number_format($StandardDeviation,2),'right');
+		$LeftOvers = $PDF->addTextWrap(359, $YPos, 50,$FontSize,locale_number_format($StandardDeviation,2),'right');
 
-		$LeftOvers = $pdf->addTextWrap(409, $YPos, 50,$FontSize,locale_number_format($InventoryPlan['monthsleadtime'],1),'right');
+		$LeftOvers = $PDF->addTextWrap(409, $YPos, 50,$FontSize,locale_number_format($InventoryPlan['monthsleadtime'],1),'right');
 
 		$RequiredStockInSupplyChain = $AverageOfLast4Months * ($_POST['NumberMonthsHolding']+$InventoryPlan['monthsleadtime']);
 
-		$LeftOvers = $pdf->addTextWrap(456, $YPos, 50,$FontSize,locale_number_format($RequiredStockInSupplyChain,0),'right');
-		$LeftOvers = $pdf->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
-		$LeftOvers = $pdf->addTextWrap(638, $YPos, 40,$FontSize,locale_number_format($TotalDemand,0),'right');
+		$LeftOvers = $PDF->addTextWrap(456, $YPos, 50,$FontSize,locale_number_format($RequiredStockInSupplyChain,0),'right');
+		$LeftOvers = $PDF->addTextWrap(597, $YPos, 40,$FontSize,locale_number_format($InventoryPlan['qoh'],0),'right');
+		$LeftOvers = $PDF->addTextWrap(638, $YPos, 40,$FontSize,locale_number_format($TotalDemand,0),'right');
 
-		$LeftOvers = $pdf->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($QOO,0),'right');
+		$LeftOvers = $PDF->addTextWrap(679, $YPos, 40,$FontSize,locale_number_format($QOO,0),'right');
 
 		$SuggestedTopUpOrder = $RequiredStockInSupplyChain - $InventoryPlan['qoh'] + $TotalDemand - $QOO;
 		if ($SuggestedTopUpOrder <=0){
-			$LeftOvers = $pdf->addTextWrap(730, $YPos, 40,$FontSize,_('Nil'),'center');
+			$LeftOvers = $PDF->addTextWrap(730, $YPos, 40,$FontSize,_('Nil'),'center');
 
 		} else {
 
-			$LeftOvers = $pdf->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
+			$LeftOvers = $PDF->addTextWrap(720, $YPos, 40,$FontSize,locale_number_format($SuggestedTopUpOrder,0),'right');
 		}
 
 		if ($YPos < $Bottom_Margin + $LineHeight){
@@ -362,7 +302,7 @@ if (isset($_POST['PrintPDF'])){
 
 	$YPos -= (2*$LineHeight);
 
-	$pdf->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
+	$PDF->line($Left_Margin, $YPos+$LineHeight,$Page_Width-$Right_Margin, $YPos+$LineHeight);
 
 	if ($ListCount == 0) {
 		$Title = _('Print Inventory Planning Report Empty');
@@ -372,14 +312,16 @@ if (isset($_POST['PrintPDF'])){
 		include('includes/footer.php');
 		exit;
 	} else {
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_Inventory_Planning_PrefSupplier_' . Date('Y-m-d') . '.pdf');
-		$pdf-> __destruct();
+		$PDF->OutputD($_SESSION['DatabaseName'] . '_Inventory_Planning_PrefSupplier_' . Date('Y-m-d') . '.pdf');
+		$PDF-> __destruct();
 	}
 	exit; // Javier: needs check
 
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Preferred Supplier Inventory Planning');
+	$ViewTopic = 'Inventory';
+	$BookMark = 'PlanningReport';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -416,9 +358,9 @@ if (isset($_POST['PrintPDF'])){
 	} else {
 		echo '<option value="0.5">' . _('Two Weeks')  . '</option>';
 	}
-	if ($_POST['NumberMonthsHolding']==1){
+	/*if ($_POST['NumberMonthsHolding']==1){
 		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
-	} else {
+	} else*/ {
 		echo '<option selected="selected" value="1">' . _('One Month') . '</option>';
 	}
 	if ($_POST['NumberMonthsHolding']==1.5){

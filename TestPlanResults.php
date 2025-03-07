@@ -3,7 +3,9 @@
 // Test Plan Results Entry.
 
 include('includes/session.php');
-$ViewTopic = '';/* ?????????? */
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+$ViewTopic = 'QualityAssurance';/* ?????????? */
 $BookMark = 'TestPlanResults';
 $Title = _('Test Plan Results');
 include('includes/header.php');
@@ -15,7 +17,7 @@ if (isset($_GET['SelectedSampleID'])){
 }
 
 if (!isset($_POST['FromDate'])){
-	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime($UpcomingDate . ' - 15 days'));
+	$_POST['FromDate']=Date(($_SESSION['DefaultDateFormat']), strtotime(date($_SESSION['DefaultDateFormat']) . ' - 15 days'));
 }
 if (!isset($_POST['ToDate'])){
 	$_POST['ToDate'] = Date($_SESSION['DefaultDateFormat']);
@@ -31,7 +33,6 @@ echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/m
 if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 	if (!isset($_POST['CopyToSampleID']) OR $_POST['CopyToSampleID']=='' OR !isset($_POST['Copy'])) {
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-			<div>
 			<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 			<input type="hidden" name="SelectedSampleID" value="' . $SelectedSampleID . '" />
 			<input type="hidden" name="CopyResults" value="CopyResults" />';
@@ -128,7 +129,7 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				echo _('For the part') . ':<b>' . $SelectedStockItem . '</b> ' . _('and') . ' <input type="hidden" name="SelectedStockItem" value="' . $SelectedStockItem . '" />';
 			}
 			echo _('Lot Number') . ': <input name="LotNumber" autofocus="autofocus" maxlength="20" size="12" value="' . $LotNumber . '"/> ' . _('Sample ID') . ': <input name="SampleID" maxlength="10" size="10" value="' . $SampleID . '"/> ';
-			echo _('From Sample Date') . ': <input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '" /> ' . _('To Sample Date') . ': <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '" /> ';
+			echo _('From Sample Date') . ': <input name="FromDate" size="10" type="date" value="' . FormatDateForSQL($_POST['FromDate']) . '" /> ' . _('To Sample Date') . ': <input name="ToDate" size="10" type="date" value="' . FormatDateForSQL($_POST['ToDate']) . '" /> ';
 			echo '<input type="submit" name="SearchSamples" value="' . _('Search Samples') . '" /></td>
 				</tr>
 				</table>';
@@ -177,10 +178,10 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 			echo '<table class="selection">
 				<thead>
 					<tr>
-						<th class="ascending">' . _('Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('On Hand') . '</th>
-						<th class="ascending">' . _('Units') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('On Hand') . '</th>
+						<th class="SortedColumn">' . _('Units') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -266,16 +267,16 @@ if (isset($_GET['CopyResults']) OR isset($_POST['CopyResults'])) {
 				echo '<table cellpadding="2" width="90%" class="selection">
 					<thead>
 						<tr>
-							<th class="ascending">' . _('Copy Results') . '</th>
-							<th class="ascending">' . _('Enter Results') . '</th>
-							<th class="ascending">' . _('Specification') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('Lot / Serial') . '</th>
-							<th class="ascending">' . _('Identifier') . '</th>
-							<th class="ascending">' . _('Created By') . '</th>
-							<th class="ascending">' . _('Sample Date') . '</th>
-							<th class="ascending">' . _('Comments') . '</th>
-							<th class="ascending">' . _('Cert Allowed') . '</th>
+							<th class="SortedColumn">' . _('Copy Results') . '</th>
+							<th class="SortedColumn">' . _('Enter Results') . '</th>
+							<th class="SortedColumn">' . _('Specification') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Lot / Serial') . '</th>
+							<th class="SortedColumn">' . _('Identifier') . '</th>
+							<th class="SortedColumn">' . _('Created By') . '</th>
+							<th class="SortedColumn">' . _('Sample Date') . '</th>
+							<th class="SortedColumn">' . _('Comments') . '</th>
+							<th class="SortedColumn">' . _('Cert Allowed') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -485,10 +486,10 @@ if (isset($_GET['ListTests'])) {
 		<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Add') . '</th>
-				<th class="ascending">' . _('Name') . '</th>
-				<th class="ascending">' . _('Method') . '</th>
-				<th class="ascending">' . _('Units') . '</th>
+				<th class="SortedColumn">' . _('Add') . '</th>
+				<th class="SortedColumn">' . _('Name') . '</th>
+				<th class="SortedColumn">' . _('Method') . '</th>
+				<th class="SortedColumn">' . _('Units') . '</th>
 				<th>' . _('Possible Values') . '</th>
 				<th>' . _('Target Value') . '</th>
 				<th>' . _('Range Min') . '</th>
@@ -531,24 +532,16 @@ if (isset($_GET['ListTests'])) {
 				$RangeMax='<input  class="' .$Class. '" type="text" name="AddRangeMax' .$x.'" />';
 				break;
 		} //end switch
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>',
-			'<input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$MyRow['testid']. '">',
-			$MyRow['name'],
-			$MyRow['method'],
-			$MyRow['units'],
-			$MyRow['defaultvalue'],
-			'<input  class="' .$Class. '" type="text" name="AddTargetValue' .$x.'" />',
-			$RangeMin,
-			$RangeMax);
+		echo '<tr class="striped_row">
+				<td><input type="checkbox" name="AddRow' .$x.'"><input type="hidden" name="AddTestID' .$x.'" value="' .$MyRow['testid']. '"></td>
+				<td>', $MyRow['name'], '</td>
+				<td>', $MyRow['method'], '</td>
+				<td>', $MyRow['units'], '</td>
+				<td>', $MyRow['defaultvalue'], '</td>
+				<td><input  class="' .$Class. '" type="text" name="AddTargetValue' .$x.'" /></td>
+				<td>', $RangeMin, '</td>
+				<td>', $RangeMax, '</td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 
@@ -780,14 +773,14 @@ $Result = DB_query($SQL);
 echo '<table cellpadding="2" width="90%" class="selection">
 	<thead>
 		<tr>
-			<th class="ascending">' . _('Test Name') . '</th>
-			<th class="ascending">' . _('Test Method') . '</th>
-			<th class="ascending">' . _('Range') . '</th>
-			<th class="ascending">' . _('Target Value') . '</th>
-			<th class="ascending">' . _('Test Date') . '</th>
-			<th class="ascending">' . _('Tested By') . '</th>
-			<th class="ascending">' . _('Test Result') . '</th>
-			<th class="ascending">' . _('On Cert') . '</th>
+			<th class="SortedColumn">' . _('Test Name') . '</th>
+			<th class="SortedColumn">' . _('Test Method') . '</th>
+			<th class="SortedColumn">' . _('Range') . '</th>
+			<th class="SortedColumn">' . _('Target Value') . '</th>
+			<th class="SortedColumn">' . _('Test Date') . '</th>
+			<th class="SortedColumn">' . _('Tested By') . '</th>
+			<th class="SortedColumn">' . _('Test Result') . '</th>
+			<th class="SortedColumn">' . _('On Cert') . '</th>
 		</tr>
 	</thead>
 	<tbody>';
@@ -841,9 +834,9 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$ShowOnCertText = _('No');
 	}
 	if ($MyRow['testdate']=='1000-01-01'){
-		$TestDate=ConvertSQLDate(date('Y-m-d'));
+		$TestDate=date('Y-m-d');
 	} else {
-		$TestDate=ConvertSQLDate($MyRow['testdate']);
+		$TestDate=$MyRow['testdate'];
 	}
 
 	$BGColor='';
@@ -921,7 +914,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>' . $MyRow['method'] . '</td>
 			<td>' . $RangeDisplay . '</td>
 			<td>' . $MyRow['targetvalue'] . ' ' . $MyRow['units'] . '</td>
-			<td><input type="text" class="date" name="TestDate' .$x. '" size="10" maxlength="10" value="' . $TestDate . '" /> </td>
+			<td><input type="date" name="TestDate' .$x. '" size="10" maxlength="10" value="' . $TestDate . '" /> </td>
 			<td><select name="TestedBy' .$x .'"/>';
 	while ($TechRow = DB_fetch_array($TechResult)) {
 		if ($TechRow['userid'] == $MyRow['testedby']){
@@ -944,7 +937,6 @@ echo '</tbody>
 			<input type="hidden" name="TestResultsCounter" value="' . $x . '" />
 			<input type="submit" name="submit" value="' . _('Enter Information') . '" />
 		</div>
-	</div>
 	</form>';
 
 echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ListTests=yes&amp;SelectedSampleID=' .$SelectedSampleID .'">' . _('Add More Tests') . '</a></div>';

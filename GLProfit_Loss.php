@@ -162,7 +162,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$HTML .= '<meta name="author" content="WebERP ' . $Version . '>
-					<meta name="Creator" content="webERP http://www.weberp.org">
+					<meta name="Creator" content="webERP //www.weberp.org">
 				</head>
 				<body>';
 //		_('From') . ' ' . $PeriodFromDate? . ' ' . _('to') . ' ' . $PeriodToDate . '<br />'; // Page title . reporting period.
@@ -764,10 +764,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$Title . '" /> ' . // Icon title.
 		$Title . '</p>';// Page title.
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
-		_('Profit and loss statement (P&amp;L) . also called an Income Statement . or Statement of Operations . this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out . also known as the "top line") is transformed into the net income (the result after all revenues and expenses have been accounted for . also known as the "bottom line").') . '<br />' .
+		_('Profit and loss statement (P&amp;L) . also called an Income Statement . or Statement of Operations . this is the statement that indicates how the revenue (money received from the sale of products and services before expenses are taken out . also known as the top line) is transformed into the net income (the result after all revenues and expenses have been accounted for . also known as the bottom line).') . '<br />' .
 		_('The purpose of the income statement is to show whether the company made or lost money during the period being reported.') . '<br />' .
 		_('The P&amp;L represents a period of time. This contrasts with the Balance Sheet . which represents a single moment in time.') . '<br />' .
-		_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer . and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer . and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
 		'<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post" target="_blank">',
 		'<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />',
@@ -799,7 +799,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 
-	$period = GetPeriod($FromDate);
+	$Period = GetPeriod($FromDate);
 
 	while ($MyRow=DB_fetch_array($Periods)) {
 		if(isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {
@@ -847,7 +847,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	echo '<field>
-			<label for="Period">' .'<b>' . _('OR') . ' </b>'.  _('Select Period') . '</label>
+			<label for="Period">' . '<b>' . _('OR') . ' </b>' . _('Select Period') . '</label>
 			' . ReportPeriodList($_POST['Period'], array('l', 't')),
 			'<fieldhelp>' . _('Select a period instead of using the beginning and end of the reporting period.') . '</fieldhelp>
 		</field>';

@@ -13,6 +13,7 @@ $BookMark = 'InventoryAddingItems';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/StockFunctions.php');
 include ('includes/ImageFunctions.php');
 
 /*If this form is called with the StockID then it is assumed that the stock item is to be modified */
@@ -473,7 +474,7 @@ if (isset($_POST['submit'])) {
 							categoryid='" . $_POST['CategoryID'] . "', ";
 				// KL RICARD
 				if ($OldCategoryId != $_POST['CategoryID']){
-					$SQL = $SQL . "lastcategoryupdate=CURRENT_DATE, ";
+					$SQL = $SQL . "lastcategoryupdate = CURRENT_DATE, ";
 				}
 				$SQL = $SQL . "length='" . filter_number_format($_POST['Length']) . "',
 							width='" . filter_number_format($_POST['Width']) . "',
@@ -552,9 +553,9 @@ if (isset($_POST['submit'])) {
 					}
 					if ($_POST['PropNumeric' . $i] == 1) {
 						$_POST['PropValue' . $i] = filter_number_format($_POST['PropValue' . $i]);
-					} else {
+					} /*else {
 						$_POST['PropValue' . $i] = $_POST['PropValue' . $i];
-					}
+					}*/
 					$Result = DB_query("INSERT INTO stockitemproperties (stockid,
 																		stkcatpropid,
 																		value)
@@ -760,9 +761,9 @@ if (isset($_POST['submit'])) {
 
 						if ($_POST['PropNumeric' . $i] == 1) {
 							$_POST['PropValue' . $i] = filter_number_format($_POST['PropValue' . $i]);
-						} else {
+						} /*else {
 							$_POST['PropValue' . $i] = $_POST['PropValue' . $i];
-						}
+						}*/
 
 						$Result = DB_query("INSERT INTO stockitemproperties (stockid,
 													stkcatpropid,
@@ -880,10 +881,8 @@ if (isset($_POST['submit'])) {
 						prnMsg(_('Cannot delete this item because there are existing purchase order items for it'), 'warn');
 						echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('purchase order item record relating to this part');
 					} else {
-						$SQL = "SELECT SUM(quantity) AS qoh FROM locstock WHERE stockid='" . $StockID . "' GROUP BY stockid";
-						$Result = DB_query($SQL);
-						$MyRow = DB_fetch_row($Result);
-						if ($MyRow[0] != 0) {
+						$QOH = GetQuantityOnHand($StockID, 'ALL');
+						if ($QOH != 0) {
 							$CancelDelete = 1;
 							prnMsg(_('Cannot delete this item because there is currently some stock on hand'), 'warn');
 							echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('on hand for this part');
@@ -936,7 +935,7 @@ if (isset($_POST['submit'])) {
 		$SQL = "DELETE FROM stockmaster WHERE stockid='" . $StockID . "'";
 		$Result = DB_query($SQL, _('Could not delete the item record'), '', true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('Deleted the stock master record for') . ' ' . $StockID . '....' . '<br />. . ' . _('and all the location stock records set up for the part') . '<br />. . .' . _('and any bill of material that may have been set up for the part') . '<br /> . . . .' . _('and any purchasing data that may have been set up for the part') . '<br /> . . . . .' . _('and any prices that may have been set up for the part'), 'success');
 		echo '<br />';
@@ -1171,7 +1170,8 @@ echo '<field>
 
 /* KL RICARD: For some reason, the image is not being displayed, return to old code as previous to commit 02/01/2025
 if (sizeof(glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}')) > 0) {
-	$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+	$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$ImageFile = reset($Glob);
 } else {
 	$ImageFile = '';
 }
@@ -1697,7 +1697,7 @@ if ($New == 1) {
 
 	// Now the form to enter the item properties
 	echo '<input type="submit" name="submit" value="' . _('Update') . '" /><br />';
-	echo '<input type="submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
+	echo '<input type="reset" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
 }
 

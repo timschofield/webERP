@@ -35,6 +35,18 @@ if (isset($_GET['AssetID'])){
 	$AssetID = '';
 }
 
+if (!isset($_POST['Description'])){
+	$_POST['Description'] = '';
+}
+
+if (!isset($_POST['LongDescription'])){
+	$_POST['LongDescription'] = '';
+}
+
+if (!isset($_POST['BarCode'])){
+	$_POST['BarCode'] = '';
+}
+
 $SupportedImgExt = array('png','jpg','jpeg');
 
 if (isset($_FILES['ItemPicture']) AND $_FILES['ItemPicture']['name'] !='') {
@@ -102,7 +114,7 @@ if (isset($_POST['submit'])) {
 		$i++;
 	}
 
-	if (mb_strlen($_POST['BarCode']) >20) {
+	if (isset($_POST['BarCode']) AND (mb_strlen($_POST['BarCode']) >20)) {
 		$InputError = 1;
 		prnMsg(_('The barcode must be 20 characters or less long'),'error');
 		$Errors[$i] = 'BarCode';
@@ -134,7 +146,7 @@ if (isset($_POST['submit'])) {
 	}
 	if ($_POST['Cost'] < $_POST['AccumDepn']){
 		$InputError = 1;
-		prnMsg(_('The Accumulated Depreciation can not ne higher then Cost'),'error');
+		prnMsg(_('The Accumulated Depreciation cannot be higher than Cost'),'error');
 		$Errors[$i] = 'Cost';
 		$i++;
 	}	
@@ -171,7 +183,7 @@ if (isset($_POST['submit'])) {
 		if ($_POST['submit']==_('Update')) { /*so its an existing one */
 
 			/*Start a transaction to do the whole lot inside */
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 
 			/*Need to check if changing the balance sheet codes - as will need to do journals for the cost and accum depn of the asset to the new category */
 			$Result = DB_query("SELECT assetcategoryid,
@@ -321,10 +333,10 @@ if (isset($_POST['submit'])) {
 			$DbgMsg = _('The SQL that was used to add the asset failed was');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-			if (DB_error_no() ==0) { //the insert of the new code worked so bang in the fixedassettrans records too
+			if (DB_error_no() == 0) { //the insert of the new code worked so bang in the fixedassettrans records too
 				$NewAssetID = DB_Last_Insert_ID('fixedassets', 'assetid');
 				$TransNo = GetNextTransNo(49);
-				$PeriodNo = GetPeriod($_POST['DatePurchased']);
+				$PeriodNo = GetPeriod(ConvertSQLDate($_POST['DatePurchased']));
 
 				$SQL = "INSERT INTO fixedassettrans ( assetid,
 												transtype,
@@ -368,8 +380,7 @@ if (isset($_POST['submit'])) {
 				$DbgMsg = _('The SQL that was used to add the fixedasset trans record that failed was');
 				$InsResult = DB_query($SQL,$ErrMsg,$DbgMsg);
 			}
-			
-			if (DB_error_no() ==0) {
+			if (DB_error_no() == 0) {
 				prnMsg( _('The new asset has been added to the database with an asset code of:') . ' ' . $NewAssetID,'success');
 				unset($_POST['LongDescription']);
 				unset($_POST['Description']);
@@ -379,6 +390,7 @@ if (isset($_POST['submit'])) {
 				unset($_POST['AccumDepn']);
 				unset($_POST['DatePurchased']);
 			}//ALL WORKED SO RESET THE FORM VARIABLES
+			DB_Txn_Commit();
 		}
 	} else {
 		echo '<br />' .  "\n";
@@ -414,7 +426,7 @@ if (isset($_POST['submit'])) {
 		prnMsg(_('There is a purchase order set up for this asset. The purchase order line must be deleted first'),'error');
 	}
 	if ($CancelDelete==0) {
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*Need to remove cost and accumulate depreciation from cost and accumdepn accounts */
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
@@ -465,7 +477,7 @@ if (isset($_POST['submit'])) {
 		$SQL="DELETE FROM fixedassets WHERE assetid='" . $AssetID . "'";
 		$Result=DB_query($SQL, _('Could not delete the asset record'),'',true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		// Delete the AssetImage
 		foreach ($SupportedImgExt as $Ext) {
@@ -492,7 +504,7 @@ if (isset($_POST['submit'])) {
 
 	} //end if OK Delete Asset
 } /* end if delete asset */
-$Result = DB_Txn_Commit();
+DB_Txn_Commit();
 
 echo '<form id="AssetForm" enctype="multipart/form-data" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
       <div>';
@@ -599,11 +611,14 @@ echo '<field>
 if (!isset($New) ) { //ie not new at all!
 
 	echo '<field>
-			<label>' .  _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
+			<label for="ItemPicture">' .  _('Image File (' . implode(", ", $SupportedImgExt) . ')') . ':</label>
 			<input type="file" id="ItemPicture" name="ItemPicture" />
-			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > '._('Clear Image');
-
-	$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		</field>
+		<field>
+			<label for"ClearImage">'._('Clear Image').'</label>
+			<input type="checkbox" name="ClearImage" id="ClearImage" value="1" > ';
+    $Glob = (glob($_SESSION['part_pics_dir'] . '/ASSET_' . $AssetID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+	$ImageFile = reset($Glob);
 	$AssetImgLink = GetImageLink($ImageFile, 'ASSET_' . $AssetID, 64, 64, "", "");
 	if ($AssetImgLink!=_('No Image')) {
 		echo '<div class="fieldvalue">' . _('Image') . '<br />' . $AssetImgLink . '</div></field>';
@@ -655,7 +670,7 @@ if (!isset($_POST['AssetCategoryID'])) {
 
 echo '<field>
 		<label>' . _('Date Purchased') . ':</label>
-		<input type="text" required="required" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DatePurchased" maxlength="10" size="11" value="' . $_POST['DatePurchased'] . '" />
+		<input type="date" required="required" alt="' . $_SESSION['DefaultDateFormat'] . '" name="DatePurchased" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['DatePurchased']) . '" />
 	</field>';
 
 echo '<field>
@@ -781,10 +796,9 @@ if (isset($New)) {
 		<div class="centre">
 			<input type="submit" name="submit" value="' . _('Update') . '" />
 		</div>';
-		prnMsg( _('Only click the Delete button if you are sure you wish to delete the asset. Only assets with a zero book value can be deleted'), 'warn', _('WARNING'));
 	echo '<br />
 		<div class="centre">
-			<input type="submit" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
+			<input type="reset" name="delete" value="' . _('Delete This Asset') . '" onclick="return confirm(\'' . _('Are You Sure? Only assets with a zero book value can be deleted.') . '\');" />';
 }
 
 echo '</div>

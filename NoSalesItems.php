@@ -53,8 +53,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 		} else {
 			$WhereLocation = " AND locstock.loccode IN(";
 			$commactr = 0;
-			foreach ($_POST['Location'] as $key => $value) {
-				$WhereLocation .= "'" . $value . "'";
+			foreach ($_POST['Location'] as $key => $Value) {
+				$WhereLocation .= "'" . $Value . "'";
 				$commactr++;
 				if ($commactr < sizeof($_POST['Location'])) {
 					$WhereLocation .= ",";
@@ -210,6 +210,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 } else {
+	$ViewTopic = 'Sales';
+	$BookMark = '';
 	include ('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('No Sales Items') . '" alt="" />' . ' ' . _('No Sales Items') . '</p></div>';
@@ -229,9 +231,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			FROM 	locations
 			INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
 			ORDER BY locationname";
-	$locationresult = DB_query($SQL);
+	$LocationResult = DB_query($SQL);
 	$i=0;
-	while ($MyRow = DB_fetch_array($locationresult)) {
+	while ($MyRow = DB_fetch_array($LocationResult)) {
 		if(isset($_POST['Location'][$i]) AND $MyRow['loccode'] == $_POST['Location'][$i]){
 		echo '<option selected="selected" value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
 		$i++;

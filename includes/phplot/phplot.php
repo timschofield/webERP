@@ -1857,7 +1857,7 @@ class PHPlot
             $y = $ypos - $r10 * $factor;
 
             // Call ImageString or ImageStringUp:
-            $draw_func($this->img, $font_number, $x, $y, $lines[$i], $color);
+            $draw_func($this->img, $font_number, (int)$x, (int)$y, $lines[$i], $color);
 
             // Step to the next line of text. This is a rotation of (x=0, y=interline_spacing)
             $xpos += $r01 * $interline_step;
@@ -7155,6 +7155,11 @@ class PHPlot
     protected function DrawBar($row, $column, $x1, $y1, $x2, $y2, $data_color, $shade_color, $border_color,
             $shade_top = TRUE, $shade_side = TRUE)
     {
+		$x1 = (int)$x1;
+		$y1 = (int)$y1;
+		$x2 = (int)$x2;
+		$y2 = (int)$y2;
+		
         // Sort the points so x1,y1 is upper left and x2,y2 is lower right. This
         // is needed in order to get the shading right, and imagerectangle may require it.
         if ($x1 > $x2) {

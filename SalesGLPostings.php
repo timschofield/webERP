@@ -110,33 +110,27 @@ if (!isset($SelectedSalesPostingID)) {
 	if (DB_num_rows($Result)>0){
 		$ShowLivePostingRecords = false;
 		prnMsg (_('The following posting records that do not have valid general ledger code specified - these records must be amended.'),'error');
-		echo '<table class="selection">';
-		echo '<tr><th>' . _('Area') . '</th>
-				<th>' . _('Stock Category') . '</th>
-				<th>' . _('Sales Type') . '</th>
-				<th>' . _('Sales Account') . '</th>
-				<th>' . _('Discount Account') . '</th>
-			</tr>';
+		echo '<table class="selection">
+				<tr>
+					<th>' . _('Area') . '</th>
+					<th>' . _('Stock Category') . '</th>
+					<th>' . _('Sales Type') . '</th>
+					<th>' . _('Sales Account') . '</th>
+					<th>' . _('Discount Account') . '</th>
+					<th colspan="2"></th>
+				</tr>';
 
 		while ($MyRow = DB_fetch_row($Result)) {
 
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  _('Delete') . '</a></td></tr>',
-				$MyRow[1],
-				$MyRow[2],
-				$MyRow[3],
-				htmlspecialchars($MyRow[4],ENT_QUOTES,'UTF-8'),
-				$MyRow[5],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow[0],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?',
-				$MyRow[0]);
+			echo '<tr class="striped_row">
+					<td>', $MyRow[1], '</td>
+					<td>', $MyRow[2], '</td>
+					<td>', $MyRow[3], '</td>
+					<td>', htmlspecialchars($MyRow[4],ENT_QUOTES,'UTF-8'), '</td>
+					<td>', $MyRow[5], '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '">' . _('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  _('Delete') . '</a></td>
+				</tr>';
 		}
 	}
 
@@ -220,33 +214,26 @@ if (!isset($SelectedSalesPostingID)) {
 		$Result = DB_query($SQL);
 
 		echo '<table class="selection">
-			<tr>
-			<th>' . _('Area') . '</th>
-			<th>' . _('Stock Category') . '</th>
-			<th>' . _('Sales Type') . '</th>
-			<th>' . _('Sales Account') . '</th>
-			<th>' . _('Discount Account') . '</th>
-			</tr>';
+				<tr>
+					<th>' . _('Area') . '</th>
+					<th>' . _('Stock Category') . '</th>
+					<th>' . _('Sales Type') . '</th>
+					<th>' . _('Sales Account') . '</th>
+					<th>' . _('Discount Account') . '</th>
+					<th colspan="2"></th>
+				</tr>';
 
 		while ($MyRow = DB_fetch_row($Result)) {
 
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedSalesPostingID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedSalesPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  _('Delete') . '</a></td></tr>',
-				$MyRow[1],
-				$MyRow[2],
-				$MyRow[3],
-                htmlspecialchars($MyRow[4],ENT_QUOTES,'UTF-8'),
-				$MyRow[5],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow[0],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?',
-				$MyRow[0]);
+			echo '<tr class="striped_row">
+					<td>', $MyRow[1], '</td>
+					<td>', $MyRow[2], '</td>
+					<td>', $MyRow[3], '</td>
+					<td>', htmlspecialchars($MyRow[4],ENT_QUOTES,'UTF-8'), '</td>
+					<td>', $MyRow[5], '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '">' . _('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedSalesPostingID=', $MyRow[0], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this sales GL posting record?') . '\');">' .  _('Delete') . '</a></td>
+				</tr>';
 		}
 		//END WHILE LIST LOOP
 		echo '</table>';

@@ -622,7 +622,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								stockmaster.controlled,
 								stockmaster.decimalplaces,
 								stockmaster.serialised,
-								(actualcost) AS standardcost,
+								stockmaster.actualcost AS standardcost,
 								stockmaster.taxcatid
 							FROM stockmaster
 							WHERE stockmaster.stockid = '". $_POST['NewItem'] . "'";
@@ -942,7 +942,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		  }
 		  echo '<div class="centre">
 				<input type="submit" name="Update" value="' . _('Update') . '" />
-				<input type="submit" name="CancelCredit" value="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');" />';
+				<input type="reset" name="CancelCredit" value="' . _('Cancel') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel the whole of this credit note?') . '\');" />';
 		  if (!isset($_POST['ProcessCredit']) AND $OKToProcess == true){
 			echo '<input type="submit" name="ProcessCredit" value="' . _('Process Credit Note') . '" />';
 		  }
@@ -1012,6 +1012,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 								<th>' . _('Code') . '</th>
 					  			<th>' . _('Description') . '</th>
 								<th>' . _('Units')  . '</th>
+								<th></th>
 							</tr>';
 			  echo $TableHeader;
 
@@ -1024,16 +1025,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$ImageFile = reset($Glob);
 				$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
 
-				printf('<tr class="striped_row">
-						<td><input type="submit" name="NewItem" value="%s" /></td>
-						<td>%s</td>
-						<td>%s</td>
+				echo '<tr class="striped_row">
+						<td><input type="submit" name="NewItem" value="', $MyRow['stockid'], '" /></td>
+						<td>', $MyRow['description'], '</td>
+						<td>', $MyRow['units'], '</td>
 						<td>' . $ImageSource . '</td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['description'],
-						$MyRow['units'],
-						$MyRow['stockid']);
+					</tr>';
 	#end of page full new headings if
 			  }
 	#end of while loop

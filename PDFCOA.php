@@ -23,6 +23,8 @@ if (isset($_GET['QASampleID']))  {
 
 //Get Out if we have no Certificate of Analysis
 If ((!isset($SelectedCOA) || $SelectedCOA=='') AND (!isset($QASampleID) OR $QASampleID=='')){
+	$ViewTopic = 'QualityAssurance';
+	$BookMark = '';
         $Title = _('Select Certificate of Analysis To Print');
         include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print')  . '" alt="" />' . ' ' . $Title . '</p>';

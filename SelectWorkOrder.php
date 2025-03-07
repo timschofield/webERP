@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Search Work Orders');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -233,9 +235,9 @@ if (!isset($StockID)) {
 		echo '<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('On Hand') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
 				</tr>
 			</thead>
@@ -243,16 +245,12 @@ if (!isset($StockID)) {
 
 		while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
-			printf('<tr class="striped_row">
-					<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>',
-					$MyRow['stockid'],
-					$MyRow['description'],
-					locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-					$MyRow['units']);
+			echo '<tr class="striped_row">
+					<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
+					<td>', $MyRow['description'], '</td>
+					<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+					<td>', $MyRow['units'], '</td>
+				</tr>';
 
 		}//end of while loop
 		echo '</tbody></table>';
@@ -344,18 +342,18 @@ if (!isset($StockID)) {
 				<thead>
 				<tr>
 					<th>' . _('Modify') . '</th>
-					<th class="ascending">' . _('Status') . '</th>
+					<th class="SortedColumn">' . _('Status') . '</th>
 					<th>' . _('Issue To') . '</th>
 					<th>' . _('Receive') . '</th>
 					<th>' . _('Costing') . '</th>
 					<th>' . _('Paperwork') . '</th>
 					<th>' . _('Location') . '</th>
-					<th class="ascending">' . _('Item') . '</th>
-					<th class="ascending">' . _('Quantity Required') . '</th>
-					<th class="ascending">' . _('Quantity Received') . '</th>
-					<th class="ascending">' . _('Quantity Outstanding') . '</th>
-					<th class="ascending">' . _('Start Date')  . '</th>
-					<th class="ascending">' . _('Required Date') . '</th>
+					<th class="SortedColumn">' . _('Item') . '</th>
+					<th class="SortedColumn">' . _('Quantity Required') . '</th>
+					<th class="SortedColumn">' . _('Quantity Received') . '</th>
+					<th class="SortedColumn">' . _('Quantity Outstanding') . '</th>
+					<th class="SortedColumn">' . _('Start Date')  . '</th>
+					<th class="SortedColumn">' . _('Required Date') . '</th>
 					</tr>
 				</thead>
 				<tbody>';
@@ -373,36 +371,21 @@ if (!isset($StockID)) {
 			$FormatedStartDate = ConvertSQLDate($MyRow['startdate']);
 
 
-			printf('<tr class="striped_row">
-					<td><a href="%s">%s</a></td>
-					<td><a href="%s">' . _('Status') . '</a></td>
-					<td><a href="%s">' . _('Issue To') . '</a></td>
-					<td><a href="%s">' . _('Receive') . '</a></td>
-					<td><a href="%s">' . _('Costing') . '</a></td>
-					<td><a href="%s">' . _('Print W/O') . '</a></td>
-					<td>%s</td>
-					<td>%s - %s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$ModifyPage,
-					$MyRow['wo'].'['.$MyRow['reference'] . ']',
-					$Status_WO,
-					$Issue_WO,
-					$Receive_WO,
-					$Costing_WO,
-					$Printing_WO,
-					$MyRow['loccode'],
-					urlencode($MyRow['stockid']),
-					$MyRow['description'],
-					locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']),
-					locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']),
-					locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']),
-					$FormatedStartDate,
-					$FormatedRequiredByDate);
+			echo '<tr class="striped_row">
+					<td><a href="', $ModifyPage, '">', $MyRow['wo'].'['.$MyRow['reference'] . ']', '</a></td>
+					<td><a href="', $Status_WO, '">' . _('Status') . '</a></td>
+					<td><a href="', $Issue_WO, '">' . _('Issue To') . '</a></td>
+					<td><a href="', $Receive_WO, '">' . _('Receive') . '</a></td>
+					<td><a href="', $Costing_WO, '">' . _('Costing') . '</a></td>
+					<td><a href="', $Printing_WO, '">' . _('Print W/O') . '</a></td>
+					<td>', $MyRow['loccode'], '</td>
+					<td>', urlencode($MyRow['stockid']), ' - ', $MyRow['description'], '</td>
+					<td class="number">', locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
+					<td>', $FormatedStartDate, '</td>
+					<td>', $FormatedRequiredByDate, '</td>
+				</tr>';
 		}
 		//end of while loop
 
@@ -410,8 +393,7 @@ if (!isset($StockID)) {
       }
 	}
 
-	echo '</div>
-          </form>';
+	echo '</form>';
 }
 
 include('includes/footer.php');

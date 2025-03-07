@@ -9,8 +9,13 @@
 $PricesSecurity = 12;
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
 $Title = _('Search Outstanding Purchase Orders');
+
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
 
 include('includes/header.php');
 include('includes/DefinePOClass.php');
@@ -40,6 +45,12 @@ if (empty($_GET['identifier'])) {
 	$identifier = date('U');
 } else {
 	$identifier = $_GET['identifier'];
+}
+
+if (isset($SelectedSupplier)) {
+	echo '<a class="toplink" href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
+} else {
+	echo '<a class="toplink" href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
 }
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
@@ -148,11 +159,6 @@ $OrdersAfterDate = Date("d/m/Y",Mktime(0,0,0,Date("m")-2,Date("d"),Date("Y")));
 */
 
 if (!isset($OrderNumber) or $OrderNumber == '') {
-	if (isset($SelectedSupplier)) {
-		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes&amp;SupplierID=' . $SelectedSupplier . '">' . _('Add Purchase Order') . '</a>';
-	} else {
-		echo '<a href="' . $RootPath . '/PO_Header.php?NewOrder=Yes">' . _('Add Purchase Order') . '</a>';
-	}
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	echo '<fieldset>
 			<legend>', _('Order Search Options'), '</legend>
@@ -279,9 +285,9 @@ if (!isset($OrderNumber) or $OrderNumber == '') {
 
 	echo '<field>
 			<label for="DateFrom">' . _('Orders Between') . '</label>
-			<input type="text" name="DateFrom" value="' . ConvertSQLDate($DateFrom) . '"  class="date" size="10" />
+			<input name="DateFrom" value="' . date('Y-m-d',strtotime($DateFrom)) . '"  type="date" size="10" />
 		' . _('and') . ':&nbsp;
-			<input type="text" name="DateTo" value="' . ConvertSQLDate($DateTo) . '"  class="date" size="10" />
+			<input name="DateTo" value="' . date('Y-m-d',strtotime($DateTo)) . '"  type="date" size="10" />
 		</field>
 		<field>
 			<label for="PODetails">' . _('Show PO Details') . '</label>
@@ -337,11 +343,11 @@ if (isset($StockItemsResult)) {
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Code') . '</th>
-			<th class="ascending">' . _('Description') . '</th>
-			<th class="ascending">' . _('On Hand') . '</th>
-			<th class="ascending">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
-			<th class="ascending">' . _('Units') . '</th>
+			<th class="SortedColumn">' . _('Code') . '</th>
+			<th class="SortedColumn">' . _('Description') . '</th>
+			<th class="SortedColumn">' . _('On Hand') . '</th>
+			<th class="SortedColumn">' . _('Orders') . '<br />' . _('Outstanding') . '</th>
+			<th class="SortedColumn">' . _('Units') . '</th>
 		</tr>
 		</thead>
 		<tbody>';
@@ -368,17 +374,13 @@ if (isset($StockItemsResult)) {
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 		$MyRow['qoh'] = $QOH[$MyRow['stockid']];
 
-		printf('<tr class="striped_row">
-				<td><input type="submit" name="SelectedStockItem" value="%s"</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td></tr>',
-				$MyRow['stockid'],
-				$MyRow['description'],
-				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-				locale_number_format($MyRow['qord'],$MyRow['decimalplaces']),
-				$MyRow['units']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '"</td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['qord'],$MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+			</tr>';
 	} //end of while loop through search items
 
 	echo '</tbody></table>';
@@ -681,29 +683,29 @@ else {
 			<thead>';
 
 	if (isset($_POST['PODetails'])) {
-		$BalHead = '<th class="ascending">' . _('Balance') .' (' . _('Stock ID') . '--' . _('Quantity') . ' )</th>';
+		$BalHead = '<th class="SortedColumn">' . _('Balance') .' (' . _('Stock ID') . '--' . _('Quantity') . ' )</th>';
 	} else {
 		$BalHead = '';
 	}
 	// KL RICARD Use custom fields
 	echo '<tr>
-			<th class="ascending">' . _('Order #') . '</th>
-			<th class="ascending">' . _('Order Date') . '</th>
-			<th class="ascending">' . _('Delivery Date') . '</th>
-			<th class="ascending">' . _('Payment Date') . '</th>
-			<th class="ascending">' . _('Shipment Date') . '</th>
-			<th class="ascending">' . _('Arrival Date') . '</th>
-			<th class="ascending">' . _('Supplier') . '</th>
+			<th class="SortedColumn">' . _('Order #') . '</th>
+			<th class="SortedColumn">' . _('Order Date') . '</th>
+			<th class="SortedColumn">' . _('Delivery Date') . '</th>
+			<th class="SortedColumn">' . _('Payment Date') . '</th>
+			<th class="SortedColumn">' . _('Shipment Date') . '</th>
+			<th class="SortedColumn">' . _('Arrival Date') . '</th>
+			<th class="SortedColumn">' . _('Supplier') . '</th>
 			' . $BalHead . '
-			<th class="ascending">' . _('Currency') . '</th>';
+			<th class="SortedColumn">' . _('Currency') . '</th>';
 
 	if (in_array($PricesSecurity, $_SESSION['AllowedPageSecurityTokens']) OR !isset($PricesSecurity)) {
 		echo '<th class="ascending">' . _('Order Total') . '</th>';
 	}
 	// KL RICARD Use custom fields
-	echo '<th class="ascending">' . _('# Items') . '</th>';
-	echo '	<th class="ascending">' . _('KL Status') . '</th>
-			<th class="ascending">' . _('Status') . '</th>
+	echo '<th class="SortedColumn">' . _('# Items') . '</th>';
+	echo '	<th class="SortedColumn">' . _('KL Status') . '</th>
+			<th class="SortedColumn">' . _('Status') . '</th>
 			<th>' . _('Print') . '</th>
 			<th>' . _('Receive') . '</th>
 			</tr>

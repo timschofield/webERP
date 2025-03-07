@@ -12,7 +12,7 @@ KL RICARD MODIFICATIONS:
 if (!isset($PathPrefix)) {
 	$PathPrefix = '';
 }
-require 'vendor/autoload.php';
+require $PathPrefix.'vendor/autoload.php';
 // KL RICARD: Include the specific KL session functions
 include ($PathPrefix . 'KLsession.php');
 // KL RICARD END: Include the specific KL session functions
@@ -49,7 +49,9 @@ if (!isset($SysAdminEmail)) {
 	$SysAdminEmail = '';
 }
 
-ini_set('session.gc_maxlifetime', $SessionLifeTime);
+if (isset($_SESSION['Timeout'])) {
+	ini_set('session.gc_maxlifetime', (60 * $_SESSION['Timeout'] + 1));
+}
 
 //INI directive 'safe_mode' is deprecated since PHP 5.3 and removed since PHP 5.4
 /*
@@ -152,10 +154,10 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 				}
 			}
 			foreach ($SQL as $sq) {
-				$Result = DB_query($sq);
+//				$Result = DB_query($sq);
 			}
 			if (isset($SQLi)) {
-				$Result = DB_query($SQLi);
+//				$Result = DB_query($SQLi);
 			}
 		} else {
 
@@ -169,7 +171,7 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 				$k++;
 			}
 			if ($k) {
-				$Result = DB_query($SQLi);
+//				$Result = DB_query($SQLi);
 			}
 		}
 	}
@@ -207,7 +209,24 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 	
 	switch ($rc) {
 		case UL_OK; //user logged in successfully
-		include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			setcookie('Login', $_SESSION['DatabaseName']);
+			include ($PathPrefix . 'includes/LanguageSetup.php'); //set up the language
+			if ($_SESSION['DBUpdateNumber'] > 10) {
+				$CheckSQL = "SELECT sessionid FROM login_data WHERE sessionid='" . session_id() . "'";
+				$CheckResult = DB_query($CheckSQL);
+				if (DB_num_rows($CheckResult) == 0) {
+					$SQL = "INSERT INTO login_data VALUES ('" . session_id() . "',
+														'" . $_SESSION['UserID'] . "',
+														NOW(),
+														'" . basename($_SERVER['SCRIPT_NAME']) . "')";
+					$Result = DB_query($SQL);
+				} else {
+					$SQL = "UPDATE login_data SET script='" . basename($_SERVER['SCRIPT_NAME']) . "'
+									WHERE sessionid='" . session_id() . "'";
+					$Result = DB_query($SQL);
+				}
+				unset($Result);
+			}
 		break;
 
 		case UL_SHOWLOGIN:
@@ -265,8 +284,9 @@ if (basename($_SERVER['SCRIPT_NAME']) == 'Logout.php') {
 //}
 /*If the highest of the DB update files is greater than the DBUpdateNumber held in config table then do upgrades */
 $_SESSION['DBVersion'] = HighestFileName($PathPrefix);
-if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
+if (($_SESSION['DBVersion'] > $_SESSION['DBUpdateNumber']) and (basename($_SERVER['SCRIPT_NAME']) != 'Logout.php') and (basename($_SERVER['SCRIPT_NAME']) != 'Z_UpgradeDatabase.php')) {
 	header('Location: Z_UpgradeDatabase.php');
+	exit;
 }
 // else {
 //	unset($_SESSION['DBVersion']);

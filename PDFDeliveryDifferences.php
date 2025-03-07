@@ -2,6 +2,8 @@
 
 
 include ('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 include('includes/SQL_CommonFunctions.inc');
 
 $InputError=0;
@@ -18,6 +20,8 @@ if (isset($_POST['ToDate']) AND !Is_Date($_POST['ToDate'])){
 if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 
 	 $Title = _('Delivery Differences Report');
+	$ViewTopic = 'Sales';
+	$BookMark = '';
 	 include ('includes/header.php');
 
 	echo '<div class="centre"><p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . $Title . '" alt="" />' . ' '
@@ -29,11 +33,11 @@ if (!isset($_POST['FromDate']) OR !isset($_POST['ToDate']) OR $InputError==1){
 			<legend>', _('Report Criteria'), '</legend>
 			<field>
 				<label for="FromDate">' . _('Enter the date from which variances between orders and deliveries are to be listed') . ':</label>
-				<input type="text" required="required" autofocus="autofocus" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" />
+				<input required="required" autofocus="autofocus" type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0,0,0,Date('m')-1,0,Date('y'))) . '" />
 			</field>';
 	echo '<field>
 			<label for="ToDate">' . _('Enter the date to which variances between orders and deliveries are to be listed') . ':</label>
-			<input type="text" required="required" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			<input required="required" type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
 		</field>';
 	echo '<field>
 			<label for="CategoryID">' . _('Inventory Category') . '</label>';

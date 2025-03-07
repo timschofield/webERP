@@ -1,6 +1,9 @@
 <?php
 include ('includes/session.php');
+if (isset($_POST['OnHandDate'])){$_POST['OnHandDate'] = ConvertSQLDate($_POST['OnHandDate']);};
 $Title = _('Stock On Hand By Date');
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include ('includes/header.php');
 
 echo '<p class="page_title_text" >
@@ -71,7 +74,7 @@ if (!isset($_POST['OnHandDate'])) {
 
 echo '<field>
 		<label for="OnHandDate">' . _('On-Hand On Date') . ':</label>
-		<input type="text" class="date" name="OnHandDate" size="12" required="required" maxlength="10" value="' . $_POST['OnHandDate'] . '" />
+		<input type="date" name="OnHandDate" size="12" required="required" maxlength="10" value="' . FormatDateForSQL($_POST['OnHandDate']) . '" />
 	</field>';
 
 if (isset($_POST['ShowZeroStocks'])) {
@@ -97,13 +100,15 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 	if ($_POST['StockCategory'] == 'All') {
 		$SQL = "SELECT stockid,
 						 description,
-						 decimalplaces
+						 decimalplaces,
+						 controlled
 					 FROM stockmaster
 					 WHERE (mbflag='M' OR mbflag='B')";
 	} else {
 		$SQL = "SELECT stockid,
 						description,
-						decimalplaces
+						decimalplaces,
+						controlled
 					 FROM stockmaster
 					 WHERE categoryid = '" . $_POST['StockCategory'] . "'
 					 AND (mbflag='M' OR mbflag='B')";
@@ -153,23 +158,25 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 
 		while ($LocQtyRow = DB_fetch_array($LocStockResult)) {
 
-			if ($MyRows['controlled'] == 1) {
+			if ($MyRow['controlled'] == 1) {
 				$Controlled = _('Yes');
 			} else {
 				$Controlled = _('No');
 			}
 
 			if ($NumRows == 0) {
-				printf('<tr class="striped_row">
-						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
-						<td>%s</td>
-						<td class="number">%s</td></tr>', 'StockID=' . mb_strtoupper($MyRow['stockid']), mb_strtoupper($MyRow['stockid']), $MyRow['description'], 0);
+				echo '<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=' . mb_strtoupper($MyRow['stockid']) . '>' . mb_strtoupper($MyRow['stockid']) . '</a></td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">0</td>
+					</tr>';
 			} else {
-				printf('<tr class="striped_row">
-					<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?%s">%s</a></td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td></tr>', 'StockID=' . mb_strtoupper($MyRow['stockid']), mb_strtoupper($MyRow['stockid']), $MyRow['description'], locale_number_format($LocQtyRow['newqoh'], $MyRow['decimalplaces']), $Controlled);
+				echo '<tr class="striped_row">
+						<td><a target="_blank" href="' . $RootPath . '/StockStatus.php?StockID=', mb_strtoupper($MyRow['stockid']), '">', mb_strtoupper($MyRow['stockid']), '</a></td>
+						<td>', $MyRow['description'], '</td>
+						<td class="number">', locale_number_format($LocQtyRow['newqoh'], $MyRow['decimalplaces']), '</td>
+						<td class="number">', $Controlled, '</td>
+					</tr>';
 
 				$TotalQuantity+= $LocQtyRow['newqoh'];
 			}
@@ -178,8 +185,11 @@ if (isset($_POST['ShowStatus']) and is_date($_POST['OnHandDate'])) {
 		}
 
 	} //end of while loop
-	echo '<tr>
-			<td>' . _('Total Quantity') . ': ' . $TotalQuantity . '</td>
+	echo '<tr class="total_row">
+			<td></td>
+			<td>' . _('Total Quantity') . ':</td>
+			<td class="number">' . $TotalQuantity . '</td>
+			<td></td>
 		</tr>
 		</table>';
 }

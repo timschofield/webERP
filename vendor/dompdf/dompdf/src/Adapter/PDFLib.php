@@ -234,7 +234,7 @@ class PDFLib implements Canvas
         }
 
         // fetch PDFLib version information for the producer field
-        $this->_pdf->set_info("Producer Addendum", sprintf("%s + PDFLib %s", $dompdf->version, $this->getPDFLibMajorVersion()));
+        $this->_pdf->set_info("Producer Addendum", sprintf("%s + PDFLib %s", $dompdf->__get('version'), $this->getPDFLibMajorVersion()));
 
         // Silence pedantic warnings about missing TZ settings
         $tz = @date_default_timezone_get();
@@ -967,26 +967,26 @@ class PDFLib implements Canvas
 
     public function rotate($angle, $x, $y)
     {
-        $pdf = $this->_pdf;
-        $pdf->translate($x, $this->_height - $y);
-        $pdf->rotate(-$angle);
-        $pdf->translate(-$x, -$this->_height + $y);
+        $PDF = $this->_pdf;
+        $PDF->translate($x, $this->_height - $y);
+        $PDF->rotate(-$angle);
+        $PDF->translate(-$x, -$this->_height + $y);
     }
 
     public function skew($angle_x, $angle_y, $x, $y)
     {
-        $pdf = $this->_pdf;
-        $pdf->translate($x, $this->_height - $y);
-        $pdf->skew($angle_y, $angle_x); // Needs to be inverted
-        $pdf->translate(-$x, -$this->_height + $y);
+        $PDF = $this->_pdf;
+        $PDF->translate($x, $this->_height - $y);
+        $PDF->skew($angle_y, $angle_x); // Needs to be inverted
+        $PDF->translate(-$x, -$this->_height + $y);
     }
 
     public function scale($s_x, $s_y, $x, $y)
     {
-        $pdf = $this->_pdf;
-        $pdf->translate($x, $this->_height - $y);
-        $pdf->scale($s_x, $s_y);
-        $pdf->translate(-$x, -$this->_height + $y);
+        $PDF = $this->_pdf;
+        $PDF->translate($x, $this->_height - $y);
+        $PDF->scale($s_x, $s_y);
+        $PDF->translate(-$x, -$this->_height + $y);
     }
 
     public function translate($t_x, $t_y)
@@ -1295,7 +1295,7 @@ class PDFLib implements Canvas
      * The callback function receives the four parameters `int $pageNumber`,
      * `int $pageCount`, `Canvas $canvas`, and `FontMetrics $fontMetrics`, in
      * that order. If a script is passed as string, the variables `$PAGE_NUM`,
-     * `$PAGE_COUNT`, `$pdf`, and `$fontMetrics` are available instead. Passing
+     * `$PAGE_COUNT`, `$PDF`, and `$fontMetrics` are available instead. Passing
      * a script as string is deprecated and will be removed in a future version.
      *
      * This function can be used to add page numbers to all pages after the
@@ -1309,7 +1309,7 @@ class PDFLib implements Canvas
             $this->processPageScript(function (
                 int $PAGE_NUM,
                 int $PAGE_COUNT,
-                self $pdf,
+                self $PDF,
                 FontMetrics $fontMetrics
             ) use ($callback) {
                 eval($callback);

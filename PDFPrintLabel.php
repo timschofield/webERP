@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);};
 include('includes/barcodepack/class.code128.php');
 
 $PtsPerMM = 2.83464567; //pdf points per mm (72 dpi / 25.4 mm per inch)
@@ -96,7 +97,7 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<input type="hidden" name="StockCategory" value="' . $_POST['StockCategory'] . '" />
 		<input type="hidden" name="SalesType" value="' . $_POST['SalesType'] . '" />
 		<input type="hidden" name="Currency" value="' . $_POST['Currency'] . '" />
-		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
+		<input type="hidden" name="EffectiveDate" value="' . FormatDateForSQL($_POST['EffectiveDate']) . '" />
 		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
 		<div class="centre">
 
@@ -263,6 +264,8 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 } else { /*The option to print PDF was not hit */
 
 	$Title= _('Price Labels');
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
@@ -337,7 +340,7 @@ if (isset($_POST['PrintLabels']) AND $NoOfLabels>0) {
 
 		echo '<field>
 				<label for="EffectiveDate">' . _('Effective As At') . ':</label>
-				<input type="text" maxlength="10" size="11" class="date" name="EffectiveDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+				<input maxlength="10" size="11" type="date" name="EffectiveDate" value="' . Date('Y-m-d') . '" />
 			</field>';
 
 		echo'<field>

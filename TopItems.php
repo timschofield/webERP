@@ -6,6 +6,7 @@ include ('includes/session.php');
 use Dompdf\Dompdf;
 $Title = _('Top Items Searching');
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 //check if input already
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
@@ -62,7 +63,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<body>
 				<div class="centre" id="ReportHeader">
 					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
-					' . _('Reorder Level Report') . '<br />
+					' . _('Top sales items list') . '<br />
 					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
 					' . _('Location') . ' - ' . $_POST['Location'] . '<br />
 					' . _('Customers') . ' - ' . $_POST['Customers'] . '<br />
@@ -73,14 +74,14 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 				<thead>
 					<tr>
 						<th>' . _('#') . '</th>
-						<th class="ascending">' . _('Code') . '</th>
-						<th class="ascending">' . _('Description') . '</th>
-						<th class="ascending">' . _('Total Invoiced') . '</th>
-						<th class="ascending">' . _('Units') . '</th>
-						<th class="ascending">' . _('Value Sales') . '</th>
-						<th class="ascending">' . _('On Hand') . '</th>
-						<th class="ascending">' . _('On Order') . '</th>
-						<th class="ascending">' . _('Stock (Days)') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Total Invoiced') . '</th>
+						<th class="SortedColumn">' . _('Units') . '</th>
+						<th class="SortedColumn">' . _('Value Sales') . '</th>
+						<th class="SortedColumn">' . _('On Hand') . '</th>
+						<th class="SortedColumn">' . _('On Order') . '</th>
+						<th class="SortedColumn">' . _('Stock (Days)') . '</th>
 					</tr>
 		</thead>
 		<tbody>';
@@ -98,17 +99,10 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			break;
 			case 'M':
 			case 'B':
-				$QOHResult = DB_query("SELECT sum(quantity)
-								FROM locstock
-								INNER JOIN locationusers ON locationusers.loccode=locstock.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-								WHERE stockid = '" . DB_escape_string($MyRow['stkcode']) . "'");
-				$QOHRow = DB_fetch_row($QOHResult);
-				$QOH = $QOHRow[0];
-
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stkcode'], '');
-				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stkcode'], '');
+				// get the QOH for the location user can view. 
+				$QOH = GetQuantityOnHand($MyRow['stkcode'], 'USER_CAN_VIEW');
+				// Get the QOO due to Purchase orders for all locations. 
+				$QOO = GetQuantityOnOrder($MyRow['stkcode'], 'ALL');
 			break;
 		}
 	        if(is_numeric($QOH) and is_numeric($QOO)){
@@ -173,7 +167,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 			"Attachment" => false
 		));
 	} else {
-		$Title = _('Reorder Level Reporting');
+		$Title = _('Top Sales Items List');
 		include ('includes/header.php');
 		echo '<p class="page_title_text">
 				<img src="' . $RootPath . '/css/' . $Theme . '/images/sales.png" title="' . _('Top Sales Items List') . '" alt="" />' . ' ' . _('Top Sales Items List') . '
@@ -183,6 +177,8 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 } else {
+	$ViewTopic = 'Sales';
+	$BookMark = '';
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text">

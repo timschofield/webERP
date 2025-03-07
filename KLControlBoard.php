@@ -54,7 +54,6 @@ $NumberOfOpenShopsTotal = $NumberOfOpenShopsKL + $NumberOfOpenShopsBL + $NumberO
 ***************************************************************************************/
 
 if ($_SESSION['UserID'] == "Ricard"){
-
 //	$NumberOfTestExecuted = CategoryItemsMissingInShops("TESTKA", "SHOPKL", $NumberOfTestExecuted, $RootPath);
 
 /*	$KL_SystemAdmin = TRUE;
@@ -109,7 +108,9 @@ if ($ProcessSection01){
 	/***************************************************************************************
 	* STANDARD COST         
 	***************************************************************************************/
-	if ($KL_PurchasingTeam){
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
+		OR $KL_PurchasingTeam){
 		SuppliersWithoutBasicData($RootPath);
 		$NumberOfTestExecuted++;
 		ItemsWithoutStandardCost($RootPath);
@@ -194,7 +195,6 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){
 		
 		ItemsInWrongShops("SHOPKL", $RootPath);
@@ -213,6 +213,17 @@ if ($ProcessSection01){
 		OR $KL_PurchasingTeam 
 		OR $KL_ShopSupportLeader){	
 
+		ItemsInLocationForMoreThan('SERVI', 10, $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInLocationForMoreThan('SERSV', 10, $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInLocationForMoreThan('SERSU', 10, $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInLocationForMoreThan('SERSW', 10, $RootPath);
+		$NumberOfTestExecuted++;
+		ItemsInLocationForMoreThan('SERDE', 10, $RootPath);
+		$NumberOfTestExecuted++;
+		
 		DiscountedItemsWithWrongDiscount("DISC2A", "20", $RootPath);
 		$NumberOfTestExecuted++;
 		DiscountedItemsWithWrongDiscount("DISC2B", "20", $RootPath);
@@ -408,7 +419,7 @@ if ($ProcessSection01){
 		BalanceListAccountControl("('111512000', 
 									'111512000AD')", "Persediaan Bahan Produksi (Components)",   50000000,    200000000, $PeriodNow);
 
-		BalanceAccountControl("111800000",  12000000 * $NumberOfOpenShopsTotal,  17500000 * $NumberOfOpenShopsTotal, $PeriodNow);
+		BalanceAccountControl("111800000",  15000000 * $NumberOfOpenShopsTotal,  20000000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
 		BalanceAccountControl("111900000",    500000 * $NumberOfOpenShopsTotal,   1200000 * $NumberOfOpenShopsTotal, $PeriodNow);
 		$NumberOfTestExecuted++;
@@ -554,7 +565,8 @@ if ($ProcessSection02){
 		prnMsg("Performing Control Panel Section 02",'info');
 	}
 
-	if ($KL_ShopSupportLeader
+	if ($KL_OperationalManager
+		OR $KL_ShopSupportLeader
 		OR $KL_PurchasingTeam){
 
 		ConsumablesGoodsNotEnoughStock(30, 15, 45, $RootPath);
@@ -589,6 +601,8 @@ if ($ProcessSection02){
 
 
 	if ($KL_SystemAdmin
+		OR $KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam){
 		ItemsWithoutPurchasingData($RootPath);
 		$NumberOfTestExecuted++;
@@ -619,8 +633,11 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_ShopSupportTeam
-		OR $KL_PurchasingTeam){
+	if ($KL_BusinessDevelopmentManager
+		OR $KL_SalesDirector
+		OR $KL_PurchasingTeam
+		OR $KL_ShopSupportLeader
+		OR $KL_ShopSupportTeam){
 		PackagingItemsOnWrongLocation($RootPath); 
 		$NumberOfTestExecuted++;
 	}
@@ -3099,6 +3116,61 @@ function ItemsOnSpecialRequest($RootPath){
 			</div>';
 	}
 }
+
+function ItemsInLocationForMoreThan($LocCode, $NumDays, $RootPath){
+
+	$StartDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	$SQL = "SELECT stockmaster.stockid,
+					stockmaster.description,
+					locstock.quantity,
+					locstock.date_updated
+			FROM stockmaster
+			INNER JOIN locstock
+				ON stockmaster.stockid = locstock.stockid
+			WHERE locstock.loccode = '" . $LocCode . "'
+				AND locstock.quantity > 0
+				AND locstock.date_updated < '" . $StartDate . "'
+			ORDER BY locstock.date_updated ASC";
+	$Result = DB_query($SQL);
+
+	if (DB_num_rows($Result) != 0){
+		$TableTitleText = _('Items in Location ') . GetLocationNameFromCode($LocCode) . _(' for more than ') . $NumDays . _(' Days');
+		ShowTableTitle($TableTitleText);
+		echo '<div>';
+		echo '<table class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('#') . '</th>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Quantity') . '</th>
+						<th class="SortedColumn">' . _('Since') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
+		$i = 1;
+		while ($MyRow = DB_fetch_array($Result)) {
+			printf('<tr class="striped_row">
+					<td class="number">%s</td>
+					<td>%s</td>
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$i, 
+					$MyRow['stockid'], 
+					$MyRow['description'], 
+					$MyRow['quantity'], 
+					ConvertSQLDateTime($MyRow['date_updated']) 
+					);
+			$i++;
+		}
+		echo '</tbody>
+			</table>
+			</div>';
+	}
+}
+
 
 function ItemsShouldBeInWebsite(){
 	$SQL = "SELECT stockid, description

@@ -11,6 +11,7 @@ Class Allocation {
 }
 
 include('includes/session.php');
+if (isset($_POST['AmountsDueBy'])){$_POST['AmountsDueBy'] = ConvertSQLDate($_POST['AmountsDueBy']);};
 include('includes/SQL_CommonFunctions.inc');
 include('includes/GetPaymentMethods.php');
 
@@ -26,8 +27,8 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	$Title = _('Payment Run - Problem Report');
 	$RefCounter = 0;
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title',_('Payment Run Report'));
-	$pdf->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
+	$PDF->addInfo('Title',_('Payment Run Report'));
+	$PDF->addInfo('Subject',_('Payment Run') . ' - ' . _('suppliers from') . ' ' . $_POST['FromCriteria'] . ' to ' . $_POST['ToCriteria'] . ' in ' . $_POST['Currency'] . ' ' . _('and Due By') . ' ' .  $_POST['AmountsDueBy']);
 
 	$PageNumber=1;
 	$LineHeight=12;
@@ -51,7 +52,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			AND supptrans.duedate <='" . FormatDateForSQL($_POST['AmountsDueBy']) . "'
 			AND supptrans.hold=0
 			AND suppliers.currcode = '" . $_POST['Currency'] . "'
-			AND supptrans.supplierNo >= '" . $_POST['FromCriteria'] . "'
+			AND supptrans.supplierno >= '" . $_POST['FromCriteria'] . "'
 			AND supptrans.supplierno <= '" . $_POST['ToCriteria'] . "'
 			GROUP BY suppliers.supplierid,
 					currencies.decimalplaces
@@ -66,7 +67,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 
 	if (isset($_POST['PrintPDFAndProcess'])){
-		$ProcessResult = DB_Txn_Begin();
+		DB_Txn_Begin();
 	}
 
 	while ($SuppliersToPay = DB_fetch_array($SuppliersResult)){
@@ -141,7 +142,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 				}
 				$AccumBalance = 0;
 				$AccumDiffOnExch = 0;
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,
+				$LeftOvers = $PDF->addTextWrap($Left_Margin,
 												$YPos,
 												450-$Left_Margin,
 												$FontSize,
@@ -153,7 +154,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 
 			$DislayTranDate = ConvertSQLDate($DetailTrans['trandate']);
 
-			$LeftOvers = $pdf->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
+			$LeftOvers = $PDF->addTextWrap($Left_Margin+15, $YPos, 340-$Left_Margin,$FontSize,$DislayTranDate . ' - ' . $DetailTrans['typename'] . ' - ' . $DetailTrans['suppreference'], 'left');
 
 			/*Positive is a favourable */
 			$DiffOnExch = ($DetailTrans['balance'] / $DetailTrans['rate']) -  ($DetailTrans['balance'] / filter_number_format($_POST['ExRate']));
@@ -186,14 +187,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 					if ($Debug==1){
 						echo '<br />' . _('The SQL that failed was') . $SQL;
 					}
-					$ProcessResult = DB_Txn_Rollback();
+					DB_Txn_Rollback();
 					include('includes/footer.php');
 					exit;
 				}
 			}
 
-			$LeftOvers = $pdf->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
-			$LeftOvers = $pdf->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+			$LeftOvers = $PDF->addTextWrap(340, $YPos,60,$FontSize,locale_number_format($DetailTrans['balance'],$CurrDecimalPlaces), 'right');
+			$LeftOvers = $PDF->addTextWrap(405, $YPos,60,$FontSize,locale_number_format($DiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 			$YPos -=$LineHeight;
 			if ($YPos < $Bottom_Margin + $LineHeight){
@@ -207,7 +208,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		/*All the payment processing is in the below file */
 		include('includes/PDFPaymentRun_PymtFooter.php');
 
-		$ProcessResult = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		if (DB_error_no() !=0) {
 			$Title = _('Payment Processing - Problem Report') . '.... ';
@@ -217,23 +218,25 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 			if ($Debug==1){
 				prnMsg(_('The SQL that failed was') . '<br />' . $SQL,'error');
 			}
-			$ProcessResult = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 			include('includes/footer.php');
 			exit;
 		}
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
-		$LeftOvers = $pdf->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
-		$LeftOvers = $pdf->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
+		$LeftOvers = $PDF->addTextWrap($Left_Margin, $YPos, 340-$Left_Margin,$FontSize,_('Grand Total Payments Due'), 'left');
+		$LeftOvers = $PDF->addTextWrap(340, $YPos, 60,$FontSize,locale_number_format($TotalPayments,$CurrDecimalPlaces), 'right');
+		$LeftOvers = $PDF->addTextWrap(405, $YPos, 60,$FontSize,locale_number_format($TotalAccumDiffOnExch,$_SESSION['CompanyRecord']['decimalplaces']), 'right');
 
 	}
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
-	$pdf->__destruct();
+	$PDF->OutputD($_SESSION['DatabaseName'] . '_Payment_Run_' . Date('Y-m-d_Hms') . '.pdf');
+	$PDF->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Payment Run');
+	$ViewTopic = 'AccountsPayable';
+	$BookMark = '';
 	include('includes/header.php');
 
 	echo '<p class="page_title_text">
@@ -264,7 +267,7 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 	echo '<field>
 			<label for="FromCriteria">' . _('From Supplier Code') . ':</label>
 			<input type="text" pattern="[^><+-]{1,10}" title="" maxlength="10" size="7" name="FromCriteria" value="' . $DefaultFromCriteria . '" />
-			<fieldhelp>'._('Illegal characters are not allowed').'</fieldhelp>
+			<fieldhelp>'._('Illegal characters are not allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 		  </field>';
 	echo '<field>
 			<label for="ToCriteria">' . _('To Supplier Code') . ':</label>
@@ -302,14 +305,14 @@ if ((isset($_POST['PrintPDF']) OR isset($_POST['PrintPDFAndProcess']))
 		  </field>';
 
 	if (!isset($_POST['AmountsDueBy'])){
-		$DefaultDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
+		$DefaultDate = Date('Y-m-d', Mktime(0,0,0,Date('m')+1,0 ,Date('y')));
 	} else {
-		$DefaultDate = $_POST['AmountsDueBy'];
+		$DefaultDate = FormatDateForSQL($_POST['AmountsDueBy']);
 	}
 
 	echo '<field>
 			<label for="AmountsDueBy">' . _('Payments Due To') . ':</label>
-			<input type="text" class="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" />
+			<input type="date" name="AmountsDueBy" maxlength="10" size="11" value="' . $DefaultDate . '" />
 		  </field>';
 
 	$SQL = "SELECT bankaccountname, accountcode FROM bankaccounts";

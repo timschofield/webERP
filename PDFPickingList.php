@@ -2,6 +2,7 @@
 
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
 include('includes/SQL_CommonFunctions.inc');
 
 /* Check that the config variable is set for
@@ -19,6 +20,8 @@ if ($_SESSION['RequirePickingNote']==0) {
 /* Show selection screen if we have no orders to work with */
 if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransDate'])){
 	$Title = _('Select Picking Lists');
+	$ViewTopic = 'Sales';
+	$BookMark = '';
 	include('includes/header.php');
 	$SQL="SELECT locations.loccode,
 				locationname
@@ -32,7 +35,7 @@ if ((!isset($_GET['TransNo']) or $_GET['TransNo']=='') and !isset($_POST['TransD
 			<legend>', _('Selection Criteria'), '</legend>
 		<field>
 			<label for="TransDate">' . _('Create picking lists for all deliveries to be made on').' : ' . '</label>
-			<input type="text" required="required" autofocus="autofocus" class="date" name="TransDate" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat'], mktime(date('m'),date('Y'),date('d')+1)) . '" />
+			<input required="required" autofocus="autofocus" type="date" name="TransDate" maxlength="10" size="11" value="' . date('Y-m-d', mktime(date('m'),date('Y'),date('d')+1)) . '" />
 		</field>
 		<field>
 			<label for="loccode">' . _('From Warehouse').' : ' . '</label>
@@ -164,7 +167,7 @@ if (isset($_POST['TransDate'])
 	$OrdersToPick[0]['orderno']='Preview';
 	$OrdersToPick[0]['customerref']=str_pad('',20,'x');
 	$OrdersToPick[0]['comments']=str_pad('',100,'x');
-	$OrdersToPick[0]['orddate']='1900-00-01';
+	$OrdersToPick[0]['orddate']='1000-01-01';
 	$OrdersToPick[0]['deliverto']=str_pad('',20,'x');
 	$OrdersToPick[0]['deladd1']=str_pad('',20,'x');
 	$OrdersToPick[0]['deladd2']=str_pad('',20,'x');
@@ -173,7 +176,7 @@ if (isset($_POST['TransDate'])
 	$OrdersToPick[0]['deladd5']=str_pad('',20,'x');
 	$OrdersToPick[0]['deladd6']=str_pad('',20,'x');
 	$OrdersToPick[0]['deliverblind']=str_pad('',20,'x');
-	$OrdersToPick[0]['deliverydate']='1900-00-01';
+	$OrdersToPick[0]['deliverydate']='1000-01-01';
 	$OrdersToPick[0]['name']=str_pad('',20,'x');
 	$OrdersToPick[0]['address1']=str_pad('',20,'x');
 	$OrdersToPick[0]['address2']=str_pad('',20,'x');
@@ -183,7 +186,7 @@ if (isset($_POST['TransDate'])
 	$OrdersToPick[0]['address6']=str_pad('',20,'x');
 	$OrdersToPick[0]['shippername']=str_pad('',20,'x');
 	$OrdersToPick[0]['printedpackingslip']=str_pad('',20,'x');
-	$OrdersToPick[0]['datepackingslipprinted']='1900-00-01';
+	$OrdersToPick[0]['datepackingslipprinted']='1000-01-01';
 	$OrdersToPick[0]['locationname']=str_pad('',15,'x');
 }
 /* Then there's an order to print and its not been printed already (or its been flagged for reprinting/ge_Width=807;

@@ -85,19 +85,19 @@ function HourlyPerformance($numDays, $RootPath){
 				(SELECT MIN(salesorders.ordtime)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = '". $Today ."') AS firstsaletoday,
+					AND salesorders.orddate = CURRENT_DATE) AS firstsaletoday,
 				(SELECT MAX(salesorders.ordtime)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = '". $Today ."') AS lastsaletoday,
+					AND salesorders.orddate = CURRENT_DATE) AS lastsaletoday,
 				(SELECT COUNT(*)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = '". $Today ."') AS totalsalestoday,
+					AND salesorders.orddate = CURRENT_DATE) AS totalsalestoday,
 				(SELECT SUM(klpaidcash+klpaidcreditcard)
 				FROM salesorders
 				WHERE salesorders.debtorno = debtorsmaster.debtorno
-					AND salesorders.orddate = '". $Today ."') AS valuesalestoday
+					AND salesorders.orddate = CURRENT_DATE) AS valuesalestoday
 			FROM debtorsmaster
 			WHERE debtorsmaster.typeid IN (". CUSTOMER_TYPE_RETAIL . ")
 			ORDER BY (SELECT SUM(klpaidcash+klpaidcreditcard)

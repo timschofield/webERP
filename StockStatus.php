@@ -10,6 +10,7 @@ $BookMark = '';
 
 include('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include	('includes/StockFunctions.php');
 
 if (isset($_GET['StockID'])){
 	$StockID = trim(mb_strtoupper($_GET['StockID']));
@@ -102,7 +103,7 @@ $ErrMsg = _('The stock held at each location cannot be retrieved because');
 $DbgMsg = _('The SQL that was used to update the stock item and failed was');
 $LocStockResult = DB_query($SQL, $ErrMsg, $DbgMsg);
 
-echo '<table class="selection"><tbody>';
+echo '<table class="selection">';
 	echo '<thead>';
 
 if ($Its_A_KitSet_Assembly_Or_Dummy == True){
@@ -128,71 +129,11 @@ echo '</thead>
 
 while ($MyRow=DB_fetch_array($LocStockResult)) {
 
-	$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-			FROM salesorderdetails INNER JOIN salesorders
-			ON salesorders.orderno = salesorderdetails.orderno
-			WHERE salesorders.fromstkloc='" . $MyRow['loccode'] . "'
-			AND salesorderdetails.completed=0
-			AND salesorders.quotation=0
-			AND salesorderdetails.stkcode='" . $StockID . "'";
-
-	$ErrMsg = _('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
-	if (DB_num_rows($DemandResult)==1){
-	  $DemandRow = DB_fetch_row($DemandResult);
-	  $DemandQty =  $DemandRow[0];
-	} else {
-	  $DemandQty =0;
-	}
-
-	//Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-	$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-			FROM salesorderdetails INNER JOIN salesorders
-			ON salesorders.orderno = salesorderdetails.orderno
-			INNER JOIN bom
-			ON salesorderdetails.stkcode=bom.parent
-			INNER JOIN stockmaster
-			ON stockmaster.stockid=bom.parent
-			WHERE salesorders.fromstkloc='" . $MyRow['loccode'] . "'
-			AND salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-			AND bom.component='" . $StockID . "'
-			AND stockmaster.mbflag='A'
-			AND salesorders.quotation=0";
-
-	$ErrMsg = _('The demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
-	if (DB_num_rows($DemandResult)==1){
-		$DemandRow = DB_fetch_row($DemandResult);
-		$DemandQty += $DemandRow[0];
-	}
-
-	//Also the demand for the item as a component of works orders
-
-	$SQL = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
-			FROM woitems INNER JOIN worequirements
-			ON woitems.stockid=worequirements.parentstockid
-			INNER JOIN workorders
-			ON woitems.wo=workorders.wo
-			AND woitems.wo=worequirements.wo
-			WHERE workorders.loccode='" . $MyRow['loccode'] . "'
-			AND worequirements.stockid='" . $StockID . "'
-			AND workorders.closed=0";
-
-	$ErrMsg = _('The workorder component demand for this product from') . ' ' . $MyRow['loccode'] . ' ' . _('cannot be retrieved because');
-	$DemandResult = DB_query($SQL,$ErrMsg,$DbgMsg);
-
-	if (DB_num_rows($DemandResult)==1){
-		$DemandRow = DB_fetch_row($DemandResult);
-		$DemandQty += $DemandRow[0];
-	}
+	$DemandQty = GetDemand($StockID, $MyRow['loccode']);
 
 	if ($Its_A_KitSet_Assembly_Or_Dummy == False){
-		// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, $MyRow['loccode']);
-		// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-		$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, $MyRow['loccode']);
+		// Get the QOO
+		$QOO = GetQuantityOnOrder($StockID, $MyRow['loccode']);
 
 		$InTransitSQL="SELECT SUM(pendingqty) as intransit
 						FROM loctransfers
@@ -233,19 +174,12 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 				<td> ' . $MyRow['bin'] . '</td>';
 		}
 
-		printf('<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>',
-				locale_number_format($MyRow['quantity'], $DecimalPlaces),
-				locale_number_format($MyRow['reorderlevel'], $DecimalPlaces),
-				locale_number_format($DemandQty, $DecimalPlaces),
-				locale_number_format($InTransitQuantityIn+$InTransitQuantityOut, $DecimalPlaces),
-				locale_number_format($Available, $DecimalPlaces),
-				locale_number_format($QOO, $DecimalPlaces)
-				);
+		echo '<td class="number">', locale_number_format($MyRow['quantity'], $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($MyRow['reorderlevel'], $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($DemandQty, $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($InTransitQuantityIn+$InTransitQuantityOut, $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($Available, $DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($QOO, $DecimalPlaces), '</td>';
 
 		if ($Serialised ==1){ /*The line is a serialised item*/
 
@@ -259,12 +193,10 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 	} else {
 	/* It must be a dummy, assembly or kitset part */
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$MyRow['locationname'],
-				locale_number_format($DemandQty, $DecimalPlaces));
+		echo '<tr class="striped_row">
+				<td>', $MyRow['locationname'], '</td>
+				<td class="number">', locale_number_format($DemandQty, $DecimalPlaces), '</td>
+			</tr>';
 	}
 //end of page full new headings if
 }
@@ -356,16 +288,12 @@ if ($DebtorNo) { /* display recent pricing history for this debtor and this stoc
 
 	  foreach($PriceHistory as $PreviousPrice) {
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s%%</td>
-					</tr>',
-					$PreviousPrice[0],
-					locale_number_format($PreviousPrice[1],$DecimalPlaces),
-					locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']),
-					locale_number_format($PreviousPrice[3]*100,2));
+		echo '<tr class="striped_row">
+				<td>', $PreviousPrice[0], '</td>
+				<td class="number">', locale_number_format($PreviousPrice[1],$DecimalPlaces), '</td>
+				<td class="number">', locale_number_format($PreviousPrice[2],$_SESSION['CompanyRecord']['decimalplaces']), '</td>
+				<td class="number">', locale_number_format($PreviousPrice[3]*100,2), '%</td>
+			</tr>';
 		} // end foreach
 	 echo '</tbody></table>';
 	 }

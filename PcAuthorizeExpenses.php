@@ -169,7 +169,6 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			if ($TagRow['tagref'] == 0) {
 				$TagRow['tagdescription'] = _('None');
 			}
-			$TagTo = $MyRow['tag'];
 			$TagDescription .= $TagRow['tagref'] . ' - ' . $TagRow['tagdescription'] . '</br>';
 		}
 
@@ -184,7 +183,7 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 			}
 
 			//build narrative
-			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['notes']);
+			$Narrative = _('PettyCash') . ' - ' . $MyRow['tabcode'] . ' - ' . $MyRow['codeexpense'] . ' - ' . DB_escape_string($MyRow['receipt']) . ' - ' . DB_escape_string($MyRow['notes']);
 			//insert to gltrans
 			DB_Txn_Begin();
 			$SQLFrom = "INSERT INTO `gltrans` (`counterindex`,
@@ -425,9 +424,10 @@ if (isset($_POST['Submit']) or isset($_POST['update']) or isset($SelectedTabs) o
 	$CurrentBalance = PettyCashTabCurrentBalance($SelectedTabs);
 	echo '</tbody>
 		<tfoot>
-			<tr>
+			<tr class="total_row">
 				<td colspan="2" class="number">', _('Current balance'), ':</td>
 				<td class="number">', locale_number_format($CurrentBalance, $CurrDecimalPlaces), '</td>
+				<td colspan="7"></td>
 			</tr>
 		</tfoot>';
 	// Do the postings

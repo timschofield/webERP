@@ -5,7 +5,7 @@ font-weight: 400;
 src: local('Ubuntu'), url(https://fonts.googleapis.com/css?family=Ubuntu);
 }
 body {
-font-family: Futura,Trebuchet MS,Arial,sans-serif; ;
+font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
 font-weight:400;
 background:#404552;
 margin:0;
@@ -20,12 +20,12 @@ padding: 1%;
 border-radius: 4px;
 }
 img {
-width:32px;
-height:32px;
+	/* width and height will be controlled by HTML attributes */
+	max-width: 100%; /* prevent images from overflowing their containers */
 }
 img.StockImage {
-width:48px;
-transition: transform .5s;
+	/* width will be controlled by HTML attributes */
+	transition: transform .5s;
 }
 img.StockImage:hover {
 transform: scale(5);
@@ -53,29 +53,6 @@ text-align:center;
 }
 .top {
 vertical-align:top;
-}
-.dpTD {
-border:0;
-width:20px;
-background-color:transparent;
-text-align:right;
-cursor:pointer;
-}
-.dpDayHighlight {
-border:0;
-width:20px;
-background-color:#1A1A1A;
-color:white;
-text-align:right;
-cursor:pointer;
-}
-.dpTDHover {
-border:0;
-width:20px;
-background-color:#2F343F;
-color:white;
-text-align:right;
-cursor:pointer;
 }
 .notavailable {
 font-weight:lighter;
@@ -111,4 +88,21 @@ border-radius:5px;
 }
 [data-title] {
 position: relative;
+}
+.graph {
+    width: 95vw;
+    height: 80vh;
+    max-width: 100%;
+    margin: 0 auto;
+}
+p{ /* some text need to be centered */
+    /*text-align:center;*/
+}
+p.good {
+    font-weight: bold;
+    color: green;
+}
+p.bad {
+    font-weight: bold;
+    color:red;
 }

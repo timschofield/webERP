@@ -1,6 +1,8 @@
 <?php
 include('includes/session.php');
 $Title = _('Supplier Invoice and GRN inquiry');
+$ViewTopic = 'AccountsPayable';
+$BookMark = '';
 include('includes/header.php');
 if (isset($_GET['SelectedSupplier'])) {
 	$SupplierID= $_GET['SelectedSupplier'];
@@ -76,10 +78,10 @@ if (isset($_POST['Submit'])) {
 		echo '<table class="selection">
 			<thead>
 			<tr>
-					<th class="ascending">' . _('Supplier Delivery Note') . '</th>
-					<th class="ascending">' . _('GRN Batch No') . '</th>
-					<th class="ascending">' . _('PO No') . '</th>
-					<th class="ascending">' . _('Invoice No') . '</th>
+					<th class="SortedColumn">' . _('Supplier Delivery Note') . '</th>
+					<th class="SortedColumn">' . _('GRN Batch No') . '</th>
+					<th class="SortedColumn">' . _('PO No') . '</th>
+					<th class="SortedColumn">' . _('Invoice No') . '</th>
 				</tr>
 			</thead>
 			<tbody>';

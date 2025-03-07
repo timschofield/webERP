@@ -8,6 +8,7 @@ KL RICARD MODIFICATIONS:
 
 $AllowCronJobToBeRun = true;
 include('includes/session.php');
+$Title = _('Send maintenance reminders');
 include('includes/htmlMimeMail.php');
 
 $SQL="SELECT 	description,
@@ -43,7 +44,7 @@ while ($MyRow = DB_fetch_array($Result)){
 	if (Date1GreaterThanDate2(ConvertSQLDate($MyRow['duedate']),Date($_SESSION['DefaultDateFormat']))) {
 		$MailText .= _('NB: THIS JOB IS OVERDUE');
 	}
-	$MailText . "\n\n";
+	$MailText .= "\n\n";
 }
 if (DB_num_rows($Result)>0){
 	${'Mail' . $LastUserResponsible}->setText($MailText);
@@ -55,7 +56,8 @@ $SQL="SELECT 	description,
 				taskdescription,
 				ADDDATE(lastcompleted,frequencydays) AS duedate,
 				realname,
-				manager
+				manager,
+				email
 		FROM fixedassettasks
 		INNER JOIN fixedassets
 		ON fixedassettasks.assetid=fixedassets.assetid
@@ -80,11 +82,17 @@ while ($MyRow = DB_fetch_array($Result)){
 		${'Mail' . $MyRow['manager']}->setFrom('Do_not_reply <>');
 	}
 	$MailText .= _('Asset') . ': ' . $MyRow['description'] . "\n" . _('Task:') . ' ' . $MyRow['taskdescription'] . "\n" . _('Due:') . ' ' . ConvertSQLDate($MyRow['duedate']);
-	$MailText . "\n\n";
+	$MailText .= "\n\n";
 }
 if (DB_num_rows($Result)>0){
+	include('includes/header.php');
 	${'Mail' . $LastManager}->setText($MailText);
 	$SendResult = ${'Mail' . $LastManager}->send(array($LastManagerEmail));
+	prnMsg(_('Reminder sent to') . ' ' . $LastManagerEmail, 'success');
+	include('includes/footer.php');
+} else {
+	include('includes/header.php');
+	prnMsg(_('There are no reminders to be sent'), 'info');
+	include('includes/footer.php');
 }
-
 ?>

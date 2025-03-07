@@ -6,6 +6,8 @@ $PricesSecurity = 12;//don't show pricing info unless security token 12 availabl
 
 $Today =  time();
 $Title = _('Aged Controlled Inventory') . ' ' . _('as-of') . ' ' . Date(($_SESSION['DefaultDateFormat']), $Today);
+$ViewTopic = 'Inventory';
+$BookMark = 'AgedControlled';
 
 include('includes/header.php');
 
@@ -46,14 +48,14 @@ $TotalVal=0;
 echo '<table>
 		<thead>
 		<tr>
-			<th class="ascending">', _('Stock'), '</th>
-			<th class="ascending">', _('Description'), '</th>
-			<th class="ascending">', _('Batch'), '</th>
-			<th class="ascending">', _('Quantity Remaining'), '</th>
-			<th class="ascending">', _('Units'), '</th>
-			<th class="ascending">', _('Inventory Value'), '</th>
-			<th class="ascending">', _('Date'), '</th>
-			<th class="ascending">', _('Days Old'), '</th>
+			<th class="SortedColumn">', _('Stock'), '</th>
+			<th class="SortedColumn">', _('Description'), '</th>
+			<th class="SortedColumn">', _('Batch'), '</th>
+			<th class="SortedColumn">', _('Quantity Remaining'), '</th>
+			<th class="SortedColumn">', _('Units'), '</th>
+			<th class="SortedColumn">', _('Inventory Value'), '</th>
+			<th class="SortedColumn">', _('Date'), '</th>
+			<th class="SortedColumn">', _('Days Old'), '</th>
 			</tr>
 		</thead>
 		<tbody>';

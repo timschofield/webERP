@@ -117,6 +117,7 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 			$_SESSION['DefaultPageSize'] = $MyRow['pagesize'];
 			$_SESSION['UserStockLocation'] = $MyRow['defaultlocation'];
 			$_SESSION['UserEmail'] = $MyRow['email'];
+			$_SESSION['Timeout'] = $MyRow['timeout'];
 			$_SESSION['ModulesEnabled'] = explode(",", $MyRow['modulesallowed']);
 			$_SESSION['UsersRealName'] = $MyRow['realname'];
 			$_SESSION['Theme'] = $MyRow['theme'];
@@ -226,7 +227,11 @@ function userLogin($Name, $Password, $SysAdminEmail = '') {
 								while ($CurrencyRow = DB_fetch_row($CurrenciesResult)){
 									if ($CurrencyRow[0]!=$_SESSION['CompanyRecord']['currencydefault']){
 
-										$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . GetCurrencyRate($CurrencyRow[0],$CurrencyRates) . "'
+										$Rate = GetCurrencyRate($CurrencyRow[0],$CurrencyRates);
+										if ($Rate == '') {
+											$Rate = 1;
+										}
+										$UpdateCurrRateResult = DB_query("UPDATE currencies SET rate='" . $Rate . "'
 																			WHERE currabrev='" . $CurrencyRow[0] . "'");
 									}
 								}

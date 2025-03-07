@@ -237,7 +237,8 @@ if (isset($_POST['PrintPDF'])) {
 				//for full template
 				$pdf->addTextWrap(50,$YPos,70,$FontSize,$MyRow['stockid'],'',0,$Fill);
 				$SupportedImgExt = array('png','jpg','jpeg');
-				$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+                $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+				$ImageFile = reset($Glob);
 				if (file_exists ($ImageFile) ) {
 					$pdf->Image($ImageFile,135,$Page_Height-$Top_Margin-$YPos+10,35,35);
 				}/*end checked file exist*/
@@ -335,6 +336,8 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('Stock Dispatch Report');
+	$ViewTopic = 'Inventory';
+	$BookMark = '';
 	include('includes/header.php');
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . _('Inventory Stock Dispatch Report') . '</p>';
 	echo '<div class="page_help_text">' . _('Create a transfer batch of overstock from one location to another location that is below reorder level.') . '<br/>'

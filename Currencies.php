@@ -359,6 +359,11 @@ or deletion of the records*/
 			$Rate = 1;
 		}
 
+		$Rate = GetCurrencyRate($MyRow['currabrev'],$CurrencyRatesArray);
+		if ($Rate == 0) {
+			$Rate = 1;
+		}
+
 		if ($MyRow['currabrev']!=$FunctionalCurrency) {
 			echo '	<td><img alt="" src="', $ImageFile, '" /></td>
 					<td>', $CountriesArray[substr($MyRow['currabrev'], 0, 2)], '</td>

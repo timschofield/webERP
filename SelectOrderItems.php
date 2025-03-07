@@ -26,6 +26,7 @@ $BookMark = 'SalesOrderEntry';
 include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 if (isset($_POST['QuickEntry'])){
 	unset($_POST['PartSearch']);
@@ -627,7 +628,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 
 			<div class="centre">
 				<input type="submit" name="SearchCust" value="' . _('Search Now') . '" />
-				<input type="submit" name="reset" value="' .  _('Reset') . '" />
+				<input type="reset" name="reset" value="' .  _('Reset') . '" />
 			</div>';
 
 	if (isset($Result_CustSelect)) {
@@ -637,9 +638,9 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<table class="selection">
 			<thead>
 				<tr>
-				<th class="ascending" >' . _('Customer') . '</th>
-				<th class="ascending" >' . _('Branch') . '</th>
-				<th class="ascending" >' . _('Contact') . '</th>
+				<th class="SortedColumn" >' . _('Customer') . '</th>
+				<th class="SortedColumn" >' . _('Branch') . '</th>
+				<th class="SortedColumn" >' . _('Contact') . '</th>
 				<th>' . _('Phone') . '</th>
 				<th>' . _('Fax') . '</th>
 				</tr>
@@ -763,6 +764,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						stockmaster.description,
 						stockmaster.longdescription,
 						stockmaster.units,
+						stockmaster.decimalplaces,
 						custitem.cust_part,
 						custitem.cust_description
 				FROM stockmaster INNER JOIN stockcategory
@@ -876,7 +878,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$QuickEntryQty = 'qty_' . $i;
 			$QuickEntryPOLine = 'poline_' . $i;
 			$QuickEntryItemDue = 'itemdue_' . $i;
-
+			$_POST[$QuickEntryItemDue] = ConvertSQLDate($_POST[$QuickEntryItemDue]);
 			$i++;
 
 			if (isset($_POST[$QuickEntryCode])) {
@@ -1055,6 +1057,12 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 		$AlreadyWarnedAboutCredit = false;
 
 		foreach ($_SESSION['Items'.$identifier]->LineItems as $OrderLine) {
+			if (isset($_POST['ItemDue_' . $OrderLine->LineNumber])){
+				$_POST['ItemDue_' . $OrderLine->LineNumber] = ConvertSQLDate($_POST['ItemDue_' . $OrderLine->LineNumber]);
+			}
+			else{
+				$_POST['ItemDue_' . $OrderLine->LineNumber] = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
+			}
 
 			if (isset($_POST['Quantity_' . $OrderLine->LineNumber])){
 
@@ -1449,7 +1457,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				$_SESSION['Items'.$identifier]->LineItems[$OrderLine->LineNumber]->ItemDue= $LineDueDate;
 			}
 
-			echo '<td><input class="date" maxlength="10" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" type="text" value="' . $LineDueDate . '" /></td>';
+			echo '<td><input type="date" maxlength="10" name="ItemDue_' . $OrderLine->LineNumber . '" size="10" value="' . FormatDateForSQL($LineDueDate) . '" /></td>';
 
 			echo '<td rowspan="2"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier=' . $identifier . '&amp;Delete=' . $OrderLine->LineNumber . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');">' . $RemTxt . '</a></td></tr>';
 
@@ -1516,6 +1524,7 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 						stockmaster.description,
 						stockmaster.longdescription,
 						stockmaster.stockid,
+						stockmaster.decimalplaces,
 						salesorderdetails.stkcode,
 						SUM(qtyinvoiced) salesqty
 					FROM `salesorderdetails`INNER JOIN `stockmaster`
@@ -1537,14 +1546,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<table class="table1">
 					<thead>
 					<tr>
-						<th class="ascending" >' . _('Code') . '</th>
-						<th class="ascending" >' . _('Description') . '</th>
+						<th class="SortedColumn" >' . _('Code') . '</th>
+						<th class="SortedColumn" >' . _('Description') . '</th>
 						<th>' . _('Units') . '</th>
-						<th class="ascending" >' . _('On Hand') . '</th>
-						<th class="ascending" >' . _('On Demand') . '</th>
-						<th class="ascending" >' . _('On Order') . '</th>
-						<th class="ascending" >' . _('Available') . '</th>
-						<th class="ascending" >' . _('Quantity') . '</th>
+						<th class="SortedColumn" >' . _('On Hand') . '</th>
+						<th class="SortedColumn" >' . _('On Demand') . '</th>
+						<th class="SortedColumn" >' . _('On Order') . '</th>
+						<th class="SortedColumn" >' . _('Available') . '</th>
+						<th class="SortedColumn" >' . _('Quantity') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -1552,68 +1561,31 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			$j=1;
 
 			while ($MyRow=DB_fetch_array($Result2)) {
-// This code needs sorting out, but until then :
+				// This code needs sorting out, but until then :
 				$ImageSource = _('No Image');
-// Find the quantity in stock at location
-				$QOHSQL = "SELECT sum(locstock.quantity) AS qoh,decimalplaces
-							FROM locstock INNER JOIN stockmaster ON stockmaster.stockid=locstock.stockid
-							WHERE locstock.stockid='" .$MyRow['stockid'] . "'
-							AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSQL);
-				$QOHRow = DB_fetch_array($QOHResult);
-				$QOH = $QOHRow['qoh'];
+				// Find the quantity in stock at location
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Find the quantity on outstanding sales orders
-				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorders.orderno = salesorderdetails.orderno
-						WHERE salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
-						AND salesorderdetails.completed=0
-						AND salesorders.quotation=0
-						AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
+				// Get the demand
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
-					 _('cannot be retrieved because');
-				$DemandResult = DB_query($SQL,$ErrMsg);
-
-				$DemandRow = DB_fetch_row($DemandResult);
-				if ($DemandRow[0] != null){
-				  $DemandQty =  $DemandRow[0];
-				} else {
-				  $DemandQty = 0;
-				}
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$WoQty = GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
-
-				$OnOrder = $PurchQty + $WoQty;
+				// Get the QOO
+				$OnOrder = GetQuantityOnOrder($MyRow['stockid'], 'ALL');
 
 				$Available = $QOH - $DemandQty + $OnOrder;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td title="%s">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><input class="number" ' . ($j==0 ? 'autofocus="autofocus"':'') . ' type="text" required="required" size="6" name="OrderQty%s" value="0" />
-						<input name="StockID%s" type="hidden" value="%s" />
+				echo '<tr class="striped_row">
+						<td>', $MyRow['stockid'], '</td>
+						<td title="', $MyRow['longdescription'], '">', $MyRow['description'], '</td>
+						<td>', $MyRow['units'], '</td>
+						<td class="number">', locale_number_format($QOH, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($DemandQty, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($OnOrder, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($Available, $MyRow['decimalplaces']), '</td>
+						<td><input class="number" ' . ($j==0 ? 'autofocus="autofocus"':'') . ' type="text" required="required" size="6" name="OrderQty', $j, '" value="0" />
+							<input name="StockID', $j, '" type="hidden" value="', $MyRow['stockid'], '" />
 						</td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['longdescription'],
-						$MyRow['description'],
-						$MyRow['units'],
-						locale_number_format($QOH, $QOHRow['decimalplaces']),
-						locale_number_format($DemandQty, $QOHRow['decimalplaces']),
-						locale_number_format($OnOrder, $QOHRow['decimalplaces']),
-						locale_number_format($Available, $QOHRow['decimalplaces']),
-						$j,
-						$j,
-						$MyRow['stockid']);
+					</tr>';
 				$j++;
 				$i++;
 #end of page full new headings if
@@ -1715,7 +1687,6 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Order when ready.') . '</div>';
 			echo '<br />';
 
-            echo '<div>';
 			echo '<input name="FormID" type="hidden" value="' . $_SESSION['FormID'] . '" />';
 			echo '<table class="table1">';
 			echo '<thead>
@@ -1725,14 +1696,14 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 					<td colspan="1"><input name="NextList" type="hidden" value="'.strval($Offset+1).'" /><input name="Next" type="submit" value="'._('Next').'" /></td>
 					</tr>
 					<tr>
-					<th class="ascending" >' . _('Code') . '</th>
-		   			<th class="ascending" >' . _('Description') . '</th>
-					<th class="ascending" >' . _('Customer Item') . '</th>
+					<th class="SortedColumn" >' . _('Code') . '</th>
+		   			<th class="SortedColumn" >' . _('Description') . '</th>
+					<th class="SortedColumn" >' . _('Customer Item') . '</th>
 		   			<th>' . _('Units') . '</th>
-		   			<th class="ascending" >' . _('On Hand') . '</th>
-		   			<th class="ascending" >' . _('On Demand') . '</th>
-		   			<th class="ascending" >' . _('On Order') . '</th>
-		   			<th class="ascending" >' . _('Available') . '</th>
+		   			<th class="SortedColumn" >' . _('On Hand') . '</th>
+		   			<th class="SortedColumn" >' . _('On Demand') . '</th>
+		   			<th class="SortedColumn" >' . _('On Order') . '</th>
+		   			<th class="SortedColumn" >' . _('Available') . '</th>
 		   			<th>' . _('Quantity') . '</th>
 					</tr>
 				</thead>
@@ -1744,68 +1715,29 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			while ($MyRow=DB_fetch_array($SearchResult)) {
 
 				// Find the quantity in stock at location
-				$QOHSQL = "SELECT quantity AS qoh,
-									stockmaster.decimalplaces
-							   FROM locstock INNER JOIN stockmaster
-							   ON locstock.stockid = stockmaster.stockid
-							   WHERE locstock.stockid='" .$MyRow['stockid'] . "' AND
-							   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSQL);
-				$QOHRow = DB_fetch_array($QOHResult);
-				$QOH = $QOHRow['qoh'];
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Find the quantity on outstanding sales orders
-				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorders.orderno = salesorderdetails.orderno
-						 WHERE  salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
-						 AND salesorderdetails.completed=0
-						 AND salesorders.quotation=0
-						 AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
+				// Get the demand
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
-				$DemandResult = DB_query($SQL,$ErrMsg);
+				// Get the QOO
+				$OnOrder = GetQuantityOnOrder($MyRow['stockid'], 'ALL');
 
-				$DemandRow = DB_fetch_row($DemandResult);
-				if ($DemandRow[0] != null){
-					$DemandQty =  $DemandRow[0];
-				} else {
-					$DemandQty = 0;
-				}
-
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$WoQty = GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
-
-				$OnOrder = $PurchQty + $WoQty;
 				$Available = $QOH - $DemandQty + $OnOrder;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td title="%s">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><input class="number" type="text" size="6" name="OrderQty%s"  ' . ($i==0 ? 'autofocus="autofocus"':'') . ' value="0" min="0"/>
-						<input name="StockID%s" type="hidden" value="%s" />
+				echo '<tr class="striped_row">
+						<td>', $MyRow['stockid'], '</td>
+						<td title="', $MyRow['longdescription'], '">', $MyRow['description'], '</td>
+						<td>', $MyRow['cust_part'] . '-' . $MyRow['cust_description'], '</td>
+						<td>', $MyRow['units'], '</td>
+						<td class="number">', locale_number_format($QOH,$MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($DemandQty,$MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($OnOrder,$MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($Available,$MyRow['decimalplaces']), '</td>
+						<td><input class="number" type="text" size="6" name="OrderQty', $j, '"  ' . ($i==0 ? 'autofocus="autofocus"':'') . ' value="0" min="0"/>
+						<input name="StockID', $j, '" type="hidden" value="', $MyRow['stockid'], '" />
 						</td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['longdescription'],
-						$MyRow['description'],
-						$MyRow['cust_part'] . '-' . $MyRow['cust_description'],
-						$MyRow['units'],
-						locale_number_format($QOH,$QOHRow['decimalplaces']),
-						locale_number_format($DemandQty,$QOHRow['decimalplaces']),
-						locale_number_format($OnOrder,$QOHRow['decimalplaces']),
-						locale_number_format($Available,$QOHRow['decimalplaces']),
-						$j,
-						$j,
-						$MyRow['stockid'] );
+					</tr>';
 				$i++;
 				$j++;
 	#end of page full new headings if
@@ -1846,8 +1778,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 				}
 				echo '<td><input type="text" name="part_' . $i . '" size="21" maxlength="20" title="' . _('Enter the item code ordered') . '" /></td>
 						<td><input class="number" type="text" name="qty_' . $i . '" size="6" maxlength="6" title="' . _('Enter the quantity of the item ordered by the customer') . '" /></td>
-						<td><input type="text" class="date" name="itemdue_' . $i . '" size="25" maxlength="25"
-                        value="' . $DefaultDeliveryDate . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
+						<td><input type="date" name="itemdue_' . $i . '" size="25" maxlength="25"
+                        value="' . FormatDateForSQL($DefaultDeliveryDate) . '" title="' . _('Enter the date that the customer requires delivery by') . '" /></td>
                       </tr>';
 	   		}
 			echo '</table>

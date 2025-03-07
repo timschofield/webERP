@@ -120,20 +120,19 @@ function SelectShowElement($keyName, $keyValue) {
  */
 if (isset($_POST['preview']) or isset($_POST['save'])) {
 	/*First create a simple xml object from the main file */
-	$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$_POST['FormName']);
-	$FormDesign['name']=$_POST['formname'];
-	if (mb_substr($_POST['PaperSize'],-8)=='Portrait') {
-		$_POST['PaperSize']=mb_substr($_POST['PaperSize'],0,mb_strlen($_POST['PaperSize'])-9);
+	$FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $_POST['FormName']);
+	$FormDesign['name'] = $_POST['formname'];
+	if (mb_substr($_POST['PaperSize'], -8) == 'Portrait') {
+		$_POST['PaperSize'] = mb_substr($_POST['PaperSize'], 0, mb_strlen($_POST['PaperSize']) - 9);
 	}
-	$FormDesign->PaperSize=$_POST['PaperSize'];
-	$FormDesign->LineHeight=$_POST['LineHeight'];
-	/*Iterate through the object filling in the values from
-	 * the POST variables */
+	$FormDesign->PaperSize = $_POST['PaperSize'];
+	$FormDesign->LineHeight = $_POST['LineHeight'];
+	/*Iterate through the object filling in the values from the POST variables */
 	foreach ($FormDesign as $key) {
-		foreach ($key as $subkey=>$Value) {
-			if ($key['type']=='ElementArray') {
-				foreach ($Value as $subsubkey=>$subvalue) {
-					$Value->$subsubkey = $_POST[$Value['id'].$subsubkey];
+		foreach ($key as $subkey => $Value) {
+			if ($key['type'] == 'ElementArray') {
+				foreach ($Value as $subsubkey => $subvalue) {
+					$Value->$subsubkey = $_POST[$Value['id'] . $subsubkey];
 				}
 			} else {
 				$key->$subkey = $_POST[$key['id'].$subkey];
@@ -179,23 +178,26 @@ if (isset($_POST['preview']) or isset($_POST['save'])) {
 		}
 	}
 }
-/* If no form has been selected to edit, then offer a
- * drop down list of possible forms */
+/* If no form has been selected to edit, then offer a drop down list of possible forms */
 if (empty($_POST['FormName'])) {
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p><br />';
-	echo '<form method="post" id="ChooseForm" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?' . SID . '">';
-    echo '<div>';
-	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<table><tr>';
-	echo '<td>' .  _('Select the form to edit')  . '</td><td><select name="FormName">';
-	/* Iterate throght the appropriate companies FormDesigns/ directory
-	 * and extract the form name from each of the xml files found */
-	if ($Handle = opendir($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/')) {
+	echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" id="ChooseForm" method="post">
+		<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />
+		<table class="selection">
+			<tr>
+				<th colspan="2">', _('Edit Form Layout'), '</th>
+			</tr>
+			<tr>
+				<td>', _('Select the form to edit'), '</td>
+				<td>
+					<select name="FormName">';
+	// Iterate throght the appropriate companies FormDesigns/ directory and extract the form name from each of the xml files found:
+	if ($Handle = opendir($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/')) {
 		while (false !== ($File = readdir($Handle))) {
-			if ($File[0]!='.') {
-				$FormDesign = simplexml_load_file($PathPrefix.'companies/'.$_SESSION['DatabaseName'].'/FormDesigns/'.$File);
+			if ($File[0] != '.') {
+				$FormDesign = simplexml_load_file($PathPrefix . 'companies/' . $_SESSION['DatabaseName'] . '/FormDesigns/' . $File);
 				//echo "name is". $FormDesign['name'];
-				echo '<option value="'.$File.'">' . /*_(*/ $FormDesign['name'] /*)*/ . '</option>';
+				echo '<option value="', $File, '">' . /*_(*/
+				$FormDesign['name'] /*)*/ . '</option>';
 			}
 		}
 		closedir($Handle);

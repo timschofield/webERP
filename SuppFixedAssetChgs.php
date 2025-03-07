@@ -79,9 +79,9 @@ echo '</p>';
 echo '<table class="selection">
 	<thead>
 		<tr>
-					<th class="ascending">' . _('Asset ID') . '</th>
-					<th class="ascending">' . _('Description') . '</th>
-					<th class="ascending">' . _('Amount') . '</th>
+					<th class="SortedColumn">' . _('Asset ID') . '</th>
+					<th class="SortedColumn">' . _('Description') . '</th>
+					<th class="SortedColumn">' . _('Amount') . '</th>
 		</tr>
 	</thead>
 	<tbody>';

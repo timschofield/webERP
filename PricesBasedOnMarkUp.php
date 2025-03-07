@@ -1,7 +1,11 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['PriceStartDate'])){$_POST['PriceStartDate'] = ConvertSQLDate($_POST['PriceStartDate']);};
+if (isset($_POST['PriceEndDate'])){$_POST['PriceEndDate'] = ConvertSQLDate($_POST['PriceEndDate']);};
 $Title=_('Update Pricing');
+$ViewTopic = 'Sales';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/money_add.png" title="' . _('Search') . '" alt="" />' . $Title . '</p>';
@@ -161,12 +165,12 @@ echo '<field>
 
 echo '<field>
 		<label for="PriceStartDate">' . _('New Price To Be Effective From') . ':</label>
-		<input type="text" class="date" name="PriceStartDate" size="11" maxlength="10" value="' . $_POST['PriceStartDate'] . '" />
+		<input type="date" name="PriceStartDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['PriceStartDate']) . '" />
 	</field>';
 
 echo '<field>
 		<label for="PriceEndDate">' . _('New Price To Be Effective To (Blank = No End Date)') . ':</label>
-		<input type="text" class="date" name="PriceEndDate" size="11" maxlength="10" value="' . $_POST['PriceEndDate'] . '" />
+		<input type="date" name="PriceEndDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['PriceEndDate']) . '" />
 	</field>';
 
 if (!isset($_POST['IncreasePercent'])){
@@ -298,7 +302,7 @@ if (isset($_POST['UpdatePrices'])){
 							WHERE typeabbrev= '" . $_POST['BasePriceList'] . "'
 								AND currabrev='" . $_POST['CurrCode'] . "'
 								AND debtorno=''
-								AND startdate <=CURRENT_DATE
+								AND startdate <= CURRENT_DATE
 								AND enddate >= CURRENT_DATE
 								AND stockid='" . $MyRow['stockid'] . "'
 							ORDER BY startdate DESC";
@@ -338,8 +342,8 @@ if (isset($_POST['UpdatePrices'])){
 													WHERE typeabbrev= '" . $_POST['PriceList'] . "'
 													AND debtorno =''
 													AND currabrev='" . $_POST['CurrCode'] . "'
-													AND startdate <=CURRENT_DATE
-													AND enddate>=CURRENT_DATE
+													AND startdate <= CURRENT_DATE
+													AND enddate >= CURRENT_DATE
 													AND stockid='" . $MyRow['stockid'] . "'");
 				if (DB_num_rows($CurrentPriceResult)==1){
 					$DayPriorToNewPrice = DateAdd($_POST['PriceStartDate'],'d',-1);

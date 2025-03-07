@@ -470,7 +470,7 @@ function ReadDefReports() {
 					$RptName = mb_substr($OneLine, $RptPos, mb_strpos($OneLine, "',", $RptPos)-$RptPos);
 					$ReportList[$i]['GrpName'] = $GrpName;
 					$ReportList[$i]['RptName'] = $RptName;
-					$ReportList[$i]['FileName'] = $pinfo[basename];
+					$ReportList[$i]['FileName'] = $pinfo['basename'];
 					$i++;
 				}
 			}

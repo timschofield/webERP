@@ -705,7 +705,7 @@ $SOH_DateFields = array ('orddate',
 								discountpercent,
 								taxcatid,
 								mbflag,
-								materialcost+labourcost+overheadcost AS standardcost
+								actualcost AS standardcost
 						FROM salesorderdetails INNER JOIN stockmaster
 						ON salesorderdetails.stkcode = stockmaster.stockid
 						WHERE orderno ='" . $OrderNo . "'
@@ -718,7 +718,7 @@ $SOH_DateFields = array ('orddate',
 		}
 
 	/*Start an SQL transaction */
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 	/*Now Get the next invoice number - function in SQL_CommonFunctions*/
 		$InvoiceNo = GetNextTransNo(10);
 		$PeriodNo = GetCurrentPeriod();
@@ -865,7 +865,7 @@ $SOH_DateFields = array ('orddate',
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 								bom.quantity,
-								stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+								stockmaster.actualcost AS standard
 							FROM bom INNER JOIN stockmaster
 							ON bom.component=stockmaster.stockid
 							WHERE bom.parent='" . $OrderLineRow['stkcode'] . "'
@@ -1278,11 +1278,11 @@ $SOH_DateFields = array ('orddate',
 
 		if (sizeof($Errors)==0) {
 
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			$Errors[0]=0;
 			$Errors[1]=$InvoiceNo;
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 		}
 		return $Errors;
 	} //end InvoiceSalesOrder function

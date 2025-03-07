@@ -148,7 +148,7 @@ if (!isset($_POST['FromDate'])
 	$graph->DrawGraph();
 	echo '<table class="selection">
 			<tr>
-				<td><p><img src="companies/' .$_SESSION['DatabaseName'] .  '/reports/kpigraph.png" alt="KPI Graph"></img></p></td>
+				<td><p><img class="graph" src="',$RootPath,'/', $_SESSION['reports_dir'], '/kpigraph.png" alt="kpigraph Graph"></img></p></td>
 			</tr>
 		  </table>';
 	unset ($_POST['Concept']);

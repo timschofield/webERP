@@ -52,9 +52,7 @@ echo '<script>
 		localStorage.setItem("DateFormat", "', $_SESSION['DefaultDateFormat'], '");
 		localStorage.setItem("Theme", "', $_SESSION['Theme'], '");
 	</script>';
-// KL RICARD Comment it out as it logs out inmediately
-//echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
-// KL RICARD END
+echo '<meta http-equiv="refresh" content="' . (60 * $_SESSION['Timeout']) . ';url=Logout.php" />';
 if ($_SESSION['ShowPageHelp'] == 0) {
 	echo '<link href="', $PathPrefix, $RootPath, '/css/', $_SESSION['Theme'], '/page_help_off.css" rel="stylesheet" type="text/css" media="screen" />';
 } else {
@@ -71,8 +69,17 @@ echo '</head>';
 if (isset($AutoPrintPage)) {
 	echo '<body onload="window.print()">';
 } else {
-	echo '<body onload="initial(); load()" onunload="GUnload()">';
+	echo '<body onload="initial(); load()">';
 }
+ 
+/* KL RICARD Comment these lines as only show an X on the left top corner
+echo '<div class="help-bubble" id="help-bubble">
+	<div class="help-header" id="help-header">
+		<div id="help_exit" class="close_button" onclick="CloseHelp()" title="', _('Close this window'), '">X</div>
+	</div>
+	<div class="help-content" id="help-content"></div>
+</div>';
+KL RICARD Comment these lines as only show an X on the left top corner */
 
 $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 /* KL RICARD
@@ -119,8 +126,18 @@ $ScriptName = basename($_SERVER['SCRIPT_NAME']);
 echo '<header class="noPrint">';
 
 /* KL RICARD: We don't want the logo on every page
+if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.png')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.png';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpeg';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.jpg')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.jpg';
+} else if (file_exists('companies/' . $_SESSION['DatabaseName'] . '/logo.gif')) {
+	$CompanyLogo = $PathPrefix . $RootPath . '/companies/' . $_SESSION['DatabaseName'] . '/logo.gif';
+}
+
 echo '<div id="Info" data-title="', stripslashes($_SESSION['CompanyRecord']['coyname']), '">
-		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/LogoKLBlink.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
+		<img src="', $PathPrefix, $RootPath, '/companies/' . $_SESSION['DatabaseName'], '/logo.png" alt="', stripslashes($_SESSION['CompanyRecord']['coyname']), '"/>
 	</div>';
  KL RICARD END */
  
@@ -138,6 +155,7 @@ echo '<div id="ExitIcon">
 
 if (count($_SESSION['AllowedPageSecurityTokens']) > 1) {
 
+	$DefaultManualLink = '<div id="ActionIcon"><a data-title="' . _('Read the manual') . '" onclick="ShowHelp(\'' . $ViewTopic .'\',\'' . $BookMark . '\'); return false;" href="#"><img src="' . $PathPrefix . $RootPath . '/css/' . $_SESSION['Theme'] . '/images/manual.png" alt="' . _('Help') . '" /></a></div>';
 	/* KL RICARD Customized Action Icons on every page */
 	include('includes/KLRoles.php');
 

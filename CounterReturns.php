@@ -15,6 +15,7 @@ include('includes/header.php');
 
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include('includes/GetSalesTransGLCodes.inc');
 
 if (empty($_GET['identifier'])) {
@@ -199,7 +200,7 @@ if (isset($_POST['CancelReturn'])) {
 	echo '</font></p>';
 }
 
-if (isset($_POST['Search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
+if (isset($_POST['search']) OR isset($_POST['Next']) OR isset($_POST['Prev'])) {
 
 	if ($_POST['Keywords']!='' AND $_POST['StockCode']=='') {
 		$Msg='<div class="page_help_text">' . _('Item description has been used in search') . '.</div>';
@@ -908,7 +909,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 	// *************************************************************************
 	//   S T A R T   O F   C R E D I T  N O T E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 	/*Now Get the next invoice number - GetNextTransNo() function in SQL_CommonFunctions
 	 * GetPeriod() in includes/DateFunctions.inc */
@@ -1017,7 +1018,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 						bom.quantity,
-						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+						stockmaster.actualcost AS standard
 						FROM bom,
 							stockmaster
 						WHERE bom.component=stockmaster.stockid
@@ -1604,7 +1605,7 @@ if (isset($_POST['ProcessReturn']) AND $_POST['ProcessReturn'] != '') {
 		unset($_SESSION['Items' . $identifier]->LineItems);
 		unset($_SESSION['Items' . $identifier]);
 
-		echo prnMsg( _('Credit Note number'). ' '. $CreditNoteNo .' '. _('processed'), 'success');
+		prnMsg( _('Credit Note number'). ' '. $CreditNoteNo .' '. _('processed'), 'success');
 
 		echo '<br /><div class="centre">';
 
@@ -1686,6 +1687,10 @@ if (!isset($_POST['ProcessReturn'])) {
 			echo '<br />';
 		}
 
+		echo '<div class="centre">
+				<input type="submit" name="search" value="Search Items" />
+			</div>';
+
 
 		if (isset($SearchResult)) {
 			$j = 1;
@@ -1712,37 +1717,13 @@ if (!isset($_POST['ProcessReturn'])) {
 			while ($MyRow=DB_fetch_array($SearchResult)) {
 
 				// Find the quantity in stock at location
-				$QOHSql = "SELECT sum(quantity) AS qoh
- 					   FROM locstock
-					   WHERE locstock.stockid='" .$MyRow['stockid'] . "'
-					   AND loccode = '" . $_SESSION['Items' . $identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSql);
-				$QOHRow = DB_fetch_array($QOHResult);
-				$QOH = $QOHRow['qoh'];
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
+				
+				// get the demand of the item
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Find the quantity on outstanding sales orders
-				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						 FROM salesorderdetails INNER JOIN salesorders
-						 ON salesorders.orderno = salesorderdetails.orderno
-						 WHERE salesorders.fromstkloc='" . $_SESSION['Items' . $identifier]->Location . "'
-						 AND salesorderdetails.completed=0
-						 AND salesorders.quotation=0
-						 AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
-
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items' . $identifier]->Location . ' ' . _('cannot be retrieved because');
-				$DemandResult = DB_query($SQL,$ErrMsg);
-
-				$DemandRow = DB_fetch_row($DemandResult);
-				if ($DemandRow[0] != null) {
-				  $DemandQty =  $DemandRow[0];
-				} else {
-				  $DemandQty = 0;
-				}
-
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO= GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				// Get the QOO
+				$QOO= GetQuantityOnOrder($MyRow['stockid'],  $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 
@@ -1814,7 +1795,7 @@ if (!isset($_POST['ProcessReturn'])) {
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
 	 		echo '<td><input type="text" name="part_' . $i . '" ' . ($i==1 ? 'autofocus="autofocus" ': '') . 'size="21" data-type="no-illegal-chars" title="' . _('Enter a part code to be returned. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '" maxlength="20" /></td>
 					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" />
-						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
+						<input type="hidden" type="date" name="ItemDue_' . $i . '" value="' . $ReturnDate . '" /></td>
 				</tr>';
    		}
 	 	echo '</table>
@@ -1826,9 +1807,8 @@ if (!isset($_POST['ProcessReturn'])) {
 
   	}
 	if ($_SESSION['Items' . $identifier]->ItemsOrdered >=1) {
-  		echo '<br />
-			<div class="centre">
-				<input type="submit" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" />
+  		echo '<div class="centre">
+				<input type="reset" name="CancelReturn" value="' . _('Cancel Return') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this return?') . '\');" />
 			</div>';
 	}
 }

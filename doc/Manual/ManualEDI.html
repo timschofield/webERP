@@ -1,5 +1,5 @@
 <h1>EDI</h1>
-<p>EDI stands for electronic data interchange - the electronic transmission of transaction information between trading partners. There are numerous standards for the encoding of such transactions the most widely used being UN/EDIFACT and its derivative EANCOM implementation. In fact many industry groups use the standard formats in slightly different ways and some businesses within the industry use the industry standard slightly differently again. So ultimately, the standards are really only a framework for what the actual messages look like. In implementing EDI in KwaMoja, some flexibility in the format of messages to be sent and received is available. EDI messages are created in flat files in the directory specified in config.php for EDI outgoing messages and a log of the EDI messages sent is retained also. The messages can be sent either as an email attachment to the customer supplied email address or via ftp to a customer supplied ftp server address - using the ftp username and password provided by the customer.</p>
+<p>EDI stands for electronic data interchange - the electronic transmission of transaction information between trading partners. There are numerous standards for the encoding of such transactions the most widely used being UN/EDIFACT and its derivative EANCOM implementation. In fact many industry groups use the standard formats in slightly different ways and some businesses within the industry use the industry standard slightly differently again. So ultimately, the standards are really only a framework for what the actual messages look like. In implementing EDI in webERP, some flexibility in the format of messages to be sent and received is available. EDI messages are created in flat files in the directory specified in config.php for EDI outgoing messages and a log of the EDI messages sent is retained also. The messages can be sent either as an email attachment to the customer supplied email address or via ftp to a customer supplied ftp server address - using the ftp username and password provided by the customer.</p>
 <!-- Help Begin: CustEDISetup -->
 <h2>EDI Setup</h2>
 <p>To enable EDI transactions for a customer, first select the customer from the Select Customer link on any page, then click the link - Customer EDI Configuration. This page allows selection of the type of transactions that are to transmitted electronically currently only invoices/credit notes and orders are available. Each must be specifically enabled to activate them. Each customer must have their:</p>
@@ -88,7 +88,7 @@
 	</tr>
 	<tr>
 		<td>StockID</td>
-		<td>The KwaMoja item code</td>
+		<td>The webERP item code</td>
 	</tr>
 	<tr>
 		<td>CustStockID</td>
@@ -137,7 +137,7 @@
 	</tr>
 </table>
 <p>There is therefore great flexibility in how the messages are defined. The variables for the summary and heading sections can be used in any section. The detail section variables can only be used in the detail section.</p>
-<p>Most customers will require that the branch to which the invoiced goods are delivered to, be identified using the customer's coding system. It is therefore important to ensure that the customer's branch code is actually entered against the KwaMoja branch record. The variable CustBranchCode is retrieved from the branch record and if it is not entered then the EDI transaction will fail.</p>
-<p>Some customers may also require the item code to be their item code, not the KwaMoja item code. The variable CustStockID is derived from the cross reference table EDIItemMapping which would need to contain a cross reference record for each item that they may buy.</p>
+<p>Most customers will require that the branch to which the invoiced goods are delivered to, be identified using the customer's coding system. It is therefore important to ensure that the customer's branch code is actually entered against the webERP branch record. The variable CustBranchCode is retrieved from the branch record and if it is not entered then the EDI transaction will fail.</p>
+<p>Some customers may also require the item code to be their item code, not the webERP item code. The variable CustStockID is derived from the cross reference table EDIItemMapping which would need to contain a cross reference record for each item that they may buy.</p>
 <p>The script that creates the EDI invoices (EDISendInvoices.php) should be run automatically in the background as a scheduled task. It first gets a list of all customers who should receive EDI invoices (or credit notes) - as determined in the settings of their DebtorsMaster record. Then the script goes through each customer returned in turn to get any invoices or credits that have not already been sent. A flat file is created for all the customers invoices and credits and sent to the customer using the transport, address and other parameters defined in the customer edi setup page - recorded against their DebtorsMaster record. There is a link to enable the script to be run manually - the browser will also show the output of the EDI message.</p>
 <!-- Help End: CustEDISetup -->

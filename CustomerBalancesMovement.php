@@ -1,10 +1,12 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title=_('Customer Activity and Balances');
-/*To do: Info in the manual. RChacon.
-$ViewTopic = '';// Filename in ManualContents.php's TOC.
-$BookMark = '';// Anchor's id in the manual's html document.*/
+/*To do: Info in the manual. RChacon.*/
+$ViewTopic = 'ARInquiries';
+$BookMark = '';
 
 if(!isset($_POST['CreateCSV'])) {
 	include('includes/header.php');
@@ -31,7 +33,7 @@ if (!isset($_POST['RunReport'])){
 	}
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="SalesArea">' . _('Sales Area') . '</label>
 			<select name="SalesArea">
@@ -41,7 +43,7 @@ if (!isset($_POST['RunReport'])){
 	}
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="SalesPerson">' . _('Sales Person') . '</label>
 			<select name="SalesPerson">
@@ -51,17 +53,17 @@ if (!isset($_POST['RunReport'])){
 	}
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="FromDate">' . _('Date From') . ':</label>
-			<input type="text" class="date" name="FromDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" />
+			<input type="date" name="FromDate" maxlength="10" size="11" value="' . Date('Y-m-d', Mktime(0, 0, 0, Date('m') - $_SESSION['NumberOfMonthMustBeShown'], Date('d'), Date('Y'))) . '" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="ToDate">' . _('Date To') . ':</label>
-			<input type="text" class="date" name="ToDate" maxlength="10" size="11" value="' . Date($_SESSION['DefaultDateFormat']) . '" />
+			<input type="date" name="ToDate" maxlength="10" size="11" value="' . Date('Y-m-d') . '" />
 		</field>';
-		
+
 	echo '<field>
 			<label for="CreateCSV">' . _('Create CSV') . ':</label>
 			<input type="checkbox" name="CreateCSV" value="">
@@ -96,7 +98,7 @@ $SQL = "SELECT SUM(ovamount+ovgst+ovdiscount+ovfreight-alloc) AS currencybalance
 		INNER JOIN custbranch
 		ON debtorsmaster.debtorno=custbranch.debtorno";
 
-if (mb_strlen($WhereClause)>0){
+if (isset($WhereClause) and mb_strlen($WhereClause)>0){
 	$SQL .= " WHERE " . $WhereClause . " ";
 }
 $SQL .= " GROUP BY debtorsmaster.debtorno";
@@ -110,11 +112,11 @@ if (!isset($_POST['CreateCSV'])){
 	echo '<table>
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Customer') . ' </th>
-				<th class="ascending">' . _('Opening Balance') . '</th>
-				<th class="ascending">' . _('Debits') . '</th>
-				<th class="ascending">' . _('Credits') . '</th>
-				<th class="ascending">' . _('Balance') . '</th>
+				<th class="SortedColumn">' . _('Customer') . ' </th>
+				<th class="SortedColumn">' . _('Opening Balance') . '</th>
+				<th class="SortedColumn">' . _('Debits') . '</th>
+				<th class="SortedColumn">' . _('Credits') . '</th>
+				<th class="SortedColumn">' . _('Balance') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -138,7 +140,7 @@ while ($MyRow=DB_fetch_array($Result)){
 					SUM((ovamount+ovgst+ovdiscount+ovfreight)/debtortrans.rate) AS localtotalpost
 			FROM debtortrans INNER JOIN debtorsmaster
 				ON debtortrans.debtorno=debtorsmaster.debtorno
-			WHERE trandate > '" . FormatDateForSQL($_POST['ToDate']) . "'
+			WHERE trandate > '" . FormatDateForSQL($_POST['FromDate']) . "'
 			AND debtorsmaster.debtorno = '" . $MyRow['debtorno'] . "'
 			GROUP BY debtorsmaster.debtorno";
 

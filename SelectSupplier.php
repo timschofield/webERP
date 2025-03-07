@@ -149,13 +149,13 @@ $TableHead =
 		<thead>
 			<tr>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/reports.png" title="' . _('Inquiries and Reports') . '" />' .
 					_('Supplier Inquiries') . '</th>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/transactions.png" title="' . _('Transactions') . '" />' .
 					_('Supplier Transactions') . '</th>
 				<th style="width:33%">' .
-					'<img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
+					'<img style="margin-right:4px" alt="" src="' . $RootPath . '/css/' . $Theme . '/images/maintenance.png" title="' . _('Maintenance') . '" />' .
 					_('Supplier Maintenance') . '</th>
 			</tr>
 		</thead>
@@ -289,16 +289,16 @@ if (isset($_POST['Search'])) {
 		<table cellpadding="2">
 		<thead>
 			<tr>
-	  		<th class="ascending">' . _('Code') . '</th>
-			<th class="ascending">' . _('Supplier Name') . '</th>
-			<th class="ascending">' . _('Currency') . '</th>
-			<th class="ascending">' . _('Address 1') . '</th>
-			<th class="ascending">' . _('Address 2') . '</th>
-			<th class="ascending">' . _('Address 3') . '</th>
-			<th class="ascending">' . _('Address 4') . '</th>
-			<th class="ascending">' . _('Telephone') . '</th>
-			<th class="ascending">' . _('Email') . '</th>
-			<th class="ascending">' . _('URL') . '</th>
+	  		<th class="SortedColumn">' . _('Code') . '</th>
+			<th class="SortedColumn">' . _('Supplier Name') . '</th>
+			<th class="SortedColumn">' . _('Currency') . '</th>
+			<th class="SortedColumn">' . _('Address 1') . '</th>
+			<th class="SortedColumn">' . _('Address 2') . '</th>
+			<th class="SortedColumn">' . _('Address 3') . '</th>
+			<th class="SortedColumn">' . _('Address 4') . '</th>
+			<th class="SortedColumn">' . _('Telephone') . '</th>
+			<th class="SortedColumn">' . _('Email') . '</th>
+			<th class="SortedColumn">' . _('URL') . '</th>
 			</tr>
 		</thead>
 		<tbody>';

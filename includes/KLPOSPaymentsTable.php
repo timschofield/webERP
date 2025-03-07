@@ -113,7 +113,7 @@ echo '</tr>';
 echo '<tr>';
 echo '<td></td>';
 echo '<td>' . _('Invoice Date') . ':</td>';
-echo '<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ReturnDate" size="10" maxlength="10" value="' . $_POST['ReturnDate'] . '" /></td>';
+echo '<td><input type="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="ReturnDate" size="10" maxlength="10" value="' . FormatDateForSQL($_POST['ReturnDate']) . '" /></td>';
 echo '</tr>';
 
 echo '<tr>';

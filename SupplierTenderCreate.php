@@ -72,7 +72,7 @@ if (isset($_GET['ID'])) {
 	$_SESSION['tender' . $identifier]->DelAdd4 = $MyRow['address4'];
 	$_SESSION['tender' . $identifier]->DelAdd5 = $MyRow['address5'];
 	$_SESSION['tender' . $identifier]->DelAdd6 = $MyRow['address6'];
-	$_SESSION['tender' . $identifier]->RequiredByDate = $MyRow['requiredbydate'];
+	$_SESSION['tender' . $identifier]->RequiredByDate = FormatDateForSQL(ConvertSQLDate($MyRow['requiredbydate']));
 
 	$SQL = "SELECT tenderid,
 					tendersuppliers.supplierid,
@@ -106,6 +106,8 @@ if (isset($_GET['ID'])) {
 
 if (isset($_GET['Edit'])) {
 	$Title = _('Edit an Existing Supplier Tender Request');
+	$ViewTopic = 'SupplierTenders';
+	$BookMark = 'EditTender';
 	include ('includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />  ' . $Title . '</p>';
 	$SQL = "SELECT tenderid,
@@ -152,10 +154,14 @@ if (isset($_GET['Edit'])) {
 	exit;
 } else if (isset($_GET['ID']) or (isset($_SESSION['tender' . $identifier]->TenderId))) {
 	$Title = _('Edit an Existing Supplier Tender Request');
+	$ViewTopic = 'SupplierTenders';
+	$BookMark = 'EditTender';
 	include ('includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />' . $Title . '</p>';
 } else {
 	$Title = _('Create a New Supplier Tender Request');
+	$ViewTopic = 'SupplierTenders';
+	$BookMark = 'CreateTender';
 	include ('includes/header.php');
 	echo '<p class="page_title_text noPrint" ><img src="' . $RootPath . '/css/' . $Theme . '/images/supplier.png" title="' . _('Purchase Order Tendering') . '" alt="" />' . $Title . '</p>';
 }
@@ -229,7 +235,7 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 	echo '<legend>' . _('Tender header details') . '</legend>
 		<field>
 			<label for="RequiredByDate">' . _('Delivery Must Be Made Before') . '</label>
-			<input type="text" class="date" required="required" name="RequiredByDate" autofocus="autofocus" size="11" value="' . ConvertSQLDate($_SESSION['tender' . $identifier]->RequiredByDate) . '" />
+			<input type="date" required="required" name="RequiredByDate" autofocus="autofocus" size="11" value="' . $_SESSION['tender' . $identifier]->RequiredByDate . '" />
 		</field>';
 
 	if (!isset($_POST['StkLocation']) or $_POST['StkLocation'] == '') {
@@ -413,9 +419,9 @@ if (!isset($_SESSION['tender' . $identifier]) or isset($_POST['LookupDeliveryAdd
 			<th colspan="6"><h3>' . _('Items in Tender') . '</h3></th>
 		</tr>
 		<tr>
-			<th class="ascending">' . _('Stock ID') . '</th>
-			<th class="ascending">' . _('Description') . '</th>
-			<th class="ascending">' . _('Quantity') . '</th>
+			<th class="SortedColumn">' . _('Stock ID') . '</th>
+			<th class="SortedColumn">' . _('Description') . '</th>
+			<th class="SortedColumn">' . _('Quantity') . '</th>
 			<th>' . _('UOM') . '</th>
 			</tr>
 		</thead>

@@ -3,9 +3,9 @@
 include('includes/session.php');
 $Title = _('Payment Methods');
 /* Manual links before header.php */
-/* RChacon: This is a topic to create.
+/* RChacon: This is a topic to create.*/
 $ViewTopic = 'ARTransactions';// Filename in ManualContents.php's TOC.
-$BookMark = 'PaymentMethods';// Anchor's id in the manual's html document.*/
+$BookMark = 'PaymentMethods';// Anchor's id in the manual's html document.
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/transactions.png" title="' . _('Payments') .
@@ -36,7 +36,7 @@ if (isset($_POST['submit'])) {
 
 	if (ContainsIllegalCharacters($_POST['MethodName'])) {
 		$InputError = 1;
-		prnMsg( _('The payment method cannot contain illegal characters'),'error');
+		prnMsg( _('The payment method cannot contain illegal characters') . ' ' . '" \' - &amp; or a space','error');
 		$Errors[$i] = 'MethodName';
 		$i++;
 	}
@@ -203,12 +203,12 @@ if (isset($_POST['submit'])) {
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">' . _('Payment Method') . '</th>
-			<th class="ascending">' . _('Use For Payments') . '</th>
-			<th class="ascending">' . _('Use For Receipts') . '</th>
-			<th class="ascending">' . _('Use Pre-printed Stationery') . '</th>
-			<th class="ascending">' . _('Open POS Cash Drawer for Sale') . '</th>
-			<th class="ascending">' . _('Payment discount') . ' %</th>
+			<th class="SortedColumn">' . _('Payment Method') . '</th>
+			<th class="SortedColumn">' . _('Use For Payments') . '</th>
+			<th class="SortedColumn">' . _('Use For Receipts') . '</th>
+			<th class="SortedColumn">' . _('Use Pre-printed Stationery') . '</th>
+			<th class="SortedColumn">' . _('Open POS Cash Drawer for Sale') . '</th>
+			<th class="SortedColumn">' . _('Payment discount') . ' %</th>
 			<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

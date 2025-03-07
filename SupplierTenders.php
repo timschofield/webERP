@@ -147,7 +147,7 @@ if (isset($_POST['Process'])) {
 			<input type="submit" name="Confirm" value="' . _('Confirm and Send Email') . '" />
 			<br />
 			<br />
-			<input type="submit" name="Cancel" value="' . _('Cancel Offer') . '" />
+			<input type="reset" name="Cancel" value="' . _('Cancel Offer') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');
@@ -298,7 +298,7 @@ if (isset($_POST['TenderType']) AND $_POST['TenderType']==1 AND !isset($_POST['R
 			INNER JOIN stockmaster
 				ON offers.stockid=stockmaster.stockid
 			WHERE offers.supplierid='" . $_POST['SupplierID'] . "'
-			AND offers.expirydate>=CURRENT_DATE";
+				AND offers.expirydate >= CURRENT_DATE";
 	$Result=DB_query($SQL);
 	$_SESSION['offer'.$identifier]=new Offer($_POST['SupplierID']);
 	$_SESSION['offer'.$identifier]->CurrCode=$Currency;
@@ -344,7 +344,7 @@ if (isset($_POST['TenderType']) and $_POST['TenderType']!=3 and isset($_SESSION[
 					<td>' . $LineItems->Units . '</td>
 					<td><input type="text" class="number" required="true" name="Price'.$LineItems->LineNo.'" value="'.locale_number_format($LineItems->Price,2,'.','').'" /></td>
 					<td class="number">' . locale_number_format($LineItems->Price*$LineItems->Quantity,2) . '</td>
-					<td><input type="text" maxlength="10" size="11" class="date" required="true" name="expirydate'.$LineItems->LineNo.'" value="'.$LineItems->ExpiryDate.'" /></td>
+					<td><input maxlength="10" size="11" type="date" required="true" name="expirydate'.$LineItems->LineNo.'" value="'.$LineItems->ExpiryDate.'" /></td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier.'&Delete=' . $LineItems->LineNo . '&Type=' . $_POST['TenderType'] . '">' . _('Remove') . '</a></td>
 				</tr>';
 		}
@@ -551,7 +551,7 @@ if (isset($_POST['TenderType'])
 				<td>' . $MyItemRow['suppliersuom'] . '</td>
 				<td>' . $MyRow[1] . '</td>
 				<td><input type="text" class="number" title="'._('Input must be in numeric format').'"  size="10" name="Price'. $i . '" value="0.00" /></td>
-				<td><input type="text" class="date" name="RequiredByDate'. $i . '" maxlength="10" size="11" value="' . ConvertSQLDate($MyItemRow['requiredbydate']) . '" /></td>
+				<td><input type="date" name="RequiredByDate'. $i . '" maxlength="10" size="11" value="' . ConvertSQLDate($MyItemRow['requiredbydate']) . '" /></td>
 				</tr>';
 			$i++;
 		}

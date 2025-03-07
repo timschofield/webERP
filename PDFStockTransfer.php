@@ -17,6 +17,8 @@ if (!isset($_GET['TransferNo'])){
 	if (!isset($_GET['TransferNo'])){ //still not set from a post then
 	//open a form for entering a transfer number
 		$Title = _('Print Stock Transfer');
+		$ViewTopic = 'Inventory';
+		$BookMark = '';
 		include('includes/header.php');
 		echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print Transfer Note') . '" alt="" />' . ' ' . $Title . '</p>';
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="form">';

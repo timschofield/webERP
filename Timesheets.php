@@ -327,7 +327,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 	//need to check again we have the full week!
 	$WeekTimeTotalResult = DB_query("SELECT employeeid,
 											employees.stockid,
-											materialcost+labourcost+overheadcost AS labourcost,
+											actualcost AS labourcost,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
 									FROM timesheets INNER JOIN employees
 									ON timesheets.employeeid=employees.id
@@ -353,7 +353,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 											employees.stockid as issueitem,
 											employees.surname,
 											employees.firstname,
-											materialcost+labourcost+overheadcost AS labourcost,
+											actualcost AS labourcost,
 											workorders.loccode,
 											SUM(day1+day2+day3+day4+day5+day6+day7) as totalweekhours
 									FROM timesheets INNER JOIN employees
@@ -381,7 +381,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 			$WOIssueNo = GetNextTransNo(28);
 			$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 
 			while ($WeekTimeRow = DB_fetch_array($WeekTimeResult)) {
 
@@ -495,7 +495,7 @@ if(isset($_POST['ApproveTimesheet'])) {
 												_('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' ._('Could not change the timesheet status to approved because'),
 												_('The following SQL was used to update the work order'),
 												true);
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			prnMsg(_('Timesheet posted'),'success');
 		} //end of if there is unposted in this week to post
 	} //end of if the timesheet has a full working week
@@ -526,39 +526,29 @@ if(!isset($SelectedEmployee) AND in_array(20, $_SESSION['AllowedPageSecurityToke
 		echo '<table class="selection">
 			<thead>
 			<tr class="striped_row">
-				<th class="ascending">', _('ID'), '</th>
-				<th class="ascending">', _('First name'), '</th>
-				<th class="ascending">', _('Surname'), '</th>
-				<th class="ascending">', _('Type'), '</th>
-				<th class="ascending">', _('Manager'), '</th>
-				<th class="ascending">', _('Email'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="SortedColumn">', _('ID'), '</th>
+				<th class="SortedColumn">', _('First name'), '</th>
+				<th class="SortedColumn">', _('Surname'), '</th>
+				<th class="SortedColumn">', _('Type'), '</th>
+				<th class="SortedColumn">', _('Manager'), '</th>
+				<th class="SortedColumn">', _('Email'), '</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="mailto:%s">%s</a></td>
-					<td class="noprint"><a href="%sSelectedEmployee=%s">' . _('Select') . '</a></td>
-					<td class="noprint"><a href="Employees.php?SelectedEmployee=%s">' . _('Edit') . '</a></td>
-				</tr>',
-				$MyRow['id'],
-				$MyRow['firstname'],
-				$MyRow['surname'],
-				$MyRow['stockid'],
-				$MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'],
-				$MyRow['email'],
-				$MyRow['email'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['id'],
-				$MyRow['id']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['id'], '</td>
+				<td>', $MyRow['firstname'], '</td>
+				<td>', $MyRow['surname'], '</td>
+				<td>', $MyRow['stockid'], '</td>
+				<td>', $MyRow['managerfirstname'] . ' ' . $MyRow['managersurname'], '</td>
+				<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedEmployee=', $MyRow['id'], '">' . _('Select') . '</a></td>
+				<td class="noPrint"><a href="Employees.php?SelectedEmployee=', $MyRow['id'], '">' . _('Edit') . '</a></td>
+			</tr>';
 		}
 		//END WHILE LIST LOOP
 		echo '</tbody></table>';

@@ -13,6 +13,7 @@ include ('includes/SQL_CommonFunctions.inc');
 include ('includes/ImageFunctions.php');
 
 include('includes/session.php');
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
 
 $Title = _('Purchase Order Items');
 
@@ -79,7 +80,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
  */
 	if ($InputError!=1){
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*figure out what status to set the order to */
 		if (IsEmailAddress($_SESSION['UserEmail'])){
@@ -423,7 +424,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		} /*end of if its a new order or an existing one */
 
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 		/* Only show the link to auto receive the order if the user has permission to receive goods and permission to authorise and has authorised the order */
 		if ($_SESSION['PO'.$identifier]->Status == 'Authorised'
                    AND in_array($_SESSION['PageSecurityArray']['GoodsReceived.php'], $_SESSION['AllowedPageSecurityTokens'])){
@@ -628,8 +629,8 @@ if (isset($_POST['NewItem'])
 								MAX(purchdata.effectivefrom) AS latesteffectivefrom
 							FROM purchdata
 							WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-							AND purchdata.effectivefrom <=CURRENT_DATE
-							AND purchdata.stockid = '". $ItemCode . "'
+								AND purchdata.effectivefrom <= CURRENT_DATE
+								AND purchdata.stockid = '". $ItemCode . "'
 							GROUP BY purchdata.price,
 								purchdata.conversionfactor,
 								purchdata.supplierdescription,
@@ -649,9 +650,9 @@ if (isset($_POST['NewItem'])
 										discountamount
 								FROM supplierdiscounts
 								WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-								AND effectivefrom <=CURRENT_DATE
-								AND effectiveto >=CURRENT_DATE
-								AND stockid = '". $ItemCode . "'";
+									AND effectivefrom <= CURRENT_DATE
+									AND effectiveto >= CURRENT_DATE
+									AND stockid = '". $ItemCode . "'";
 
 						$ItemDiscountPercent = 0;
 						$ItemDiscountAmount = 0;
@@ -796,8 +797,8 @@ if (isset($_POST['UploadFile'])) {
 									MAX(purchdata.effectivefrom) AS latesteffectivefrom
 								FROM purchdata
 								WHERE purchdata.supplierno = '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-								AND purchdata.effectivefrom <=CURRENT_DATE
-								AND purchdata.stockid = '". $ItemCode . "'
+									AND purchdata.effectivefrom <= CURRENT_DATE
+									AND purchdata.stockid = '". $ItemCode . "'
 								GROUP BY purchdata.price,
 									purchdata.conversionfactor,
 									purchdata.supplierdescription,
@@ -817,9 +818,9 @@ if (isset($_POST['UploadFile'])) {
 											discountamount
 									FROM supplierdiscounts
 									WHERE supplierno= '" . $_SESSION['PO'.$identifier]->SupplierID . "'
-									AND effectivefrom <=CURRENT_DATE
-									AND effectiveto >=CURRENT_DATE
-									AND stockid = '". $ItemCode . "'";
+										AND effectivefrom <= CURRENT_DATE
+										AND effectiveto >= CURRENT_DATE
+										AND stockid = '". $ItemCode . "'";
 
 							$ItemDiscountPercent = 0;
 							$ItemDiscountAmount = 0;
@@ -919,17 +920,17 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 			<tr>
-			<th class="ascending">' . _('Item Code') . '</th>
-			<th class="ascending">' . _('Description') . '</th>
-			<th class="ascending">' . _('Quantity Our Units') . '</th>
+			<th class="SortedColumn">' . _('Item Code') . '</th>
+			<th class="SortedColumn">' . _('Description') . '</th>
+			<th class="SortedColumn">' . _('Quantity Our Units') . '</th>
 			<th>' . _('Our Unit')  . '</th>
-			<th class="ascending">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
+			<th class="SortedColumn">' . _('Price Our Units') .' (' . $_SESSION['PO'.$identifier]->CurrCode .  ')</th>
 			<th>' . _('Unit Conversion Factor') . '</th>
-			<th class="ascending">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
+			<th class="SortedColumn">' . _('Order Quantity') . '<br />' . _('Supplier Units') . '</th>
 			<th>' .  _('Supplier Unit') . '</th>
-			<th class="ascending">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="ascending">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
-			<th class="ascending">' . _('Deliver By')  . '</th>
+			<th class="SortedColumn">' . _('Order Price') . '<br />' . _('Supp Units') . ' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="SortedColumn">' . _('Sub-Total') .' ('.$_SESSION['PO'.$identifier]->CurrCode.  ')</th>
+			<th class="SortedColumn">' . _('Deliver By')  . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -965,7 +966,7 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_GET['Edit'])){
 				<td>' . $POLine->SuppliersUnit . '</td>
 				<td><input type="text" class="number" name="SuppPrice' . $POLine->LineNo . '" size="10" value="' . $SuppPrice .'" /></td>
 				<td class="number">' . $DisplayLineTotal . '</td>
-				<td><input type="text" class="date" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .$POLine->ReqDelDate .'" /></td>';
+				<td><input type="date" name="ReqDelDate' . $POLine->LineNo.'" size="10" value="' .FormatDateForSQL($POLine->ReqDelDate) .'" /></td>';
 			if ($POLine->QtyReceived !=0 AND $POLine->Completed!=1){
 				echo '<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?identifier='.$identifier .'&amp;Complete=' . $POLine->LineNo . '">' . _('Complete') . '</a></td>';
 			} elseif ($POLine->QtyReceived ==0) {
@@ -1054,7 +1055,7 @@ if (isset($_POST['NonStockOrder'])) {
 		</tr>
 		<tr>
 			<td>' . _('Delivery Date') . '</td>
-			<td><input type="text" class="date" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
+			<td><input type="date" name="ReqDelDate" size="11" value="'.$_SESSION['PO'.$identifier]->DeliveryDate .'" /></td>
 		</tr>
 		</table>
 		<div class="centre">
@@ -1433,8 +1434,8 @@ if (isset($SearchResult)) {
 	echo '<table cellpadding="1" class="selection">';
 	echo $PageBar;
 	$TableHeader = '<tr>
-						<th class="ascending">' . _('Code')  . '</th>
-						<th class="ascending">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('Code')  . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
 						<th>' . _('Our Units') . '</th>
 						<th>' . _('Conversion') . '<br />' ._('Factor') . '</th>
 						<th>' . _('Supplier/Order') . '<br />' .  _('Units') . '</th>

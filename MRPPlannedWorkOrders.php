@@ -3,6 +3,7 @@
 // work orders created for them
 
 include('includes/session.php');
+if (isset($_POST['cutoffdate'])){$_POST['cutoffdate'] = ConvertSQLDate($_POST['cutoffdate']);};
 
 if ( !DB_table_exists('mrprequirements') ) {
 	$Title=_('MRP error');
@@ -30,8 +31,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
-					   (stockmaster.actualcost ) as computedcost
+						stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -48,8 +48,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
-					(stockmaster.actualcost ) as computedcost
+						stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -74,8 +73,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 					   stockmaster.description,
 					   stockmaster.mbflag,
 					   stockmaster.decimalplaces,
-					   stockmaster.actualcost,
-					(stockmaster.actualcost ) as computedcost
+						stockmaster.actualcost as computedcost
 				FROM mrpplannedorders
 				INNER JOIN stockmaster
 					ON mrpplannedorders.part = stockmaster.stockid
@@ -116,20 +114,20 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 		include('includes/PDFStarter.php');
 
-		$pdf->addInfo('Title',_('MRP Planned Work Orders Report'));
-		$pdf->addInfo('Subject',_('MRP Planned Work Orders'));
+		$PDF->addInfo('Title',_('MRP Planned Work Orders Report'));
+		$PDF->addInfo('Subject',_('MRP Planned Work Orders'));
 
 		$FontSize=9;
 		$PageNumber=1;
 		$LineHeight=12;
 		$Xpos = $Left_Margin+1;
 
-		PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+		PrintHeader($PDF,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					$Page_Width,$Right_Margin,$_POST['Consolidation'],$ReportDate);
 
 		$Partctr = 0;
 		$Fill = false;
-		$pdf->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
+		$PDF->SetFillColor(224,235,255);  // Defines color to make alternating lines highlighted
 		$FontSize=8;
 		$HoldPart = ' ';
 		$HoldDescription = ' ';
@@ -145,13 +143,13 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 				// Print information on part break
 				if ($Partctr > 0 AND $HoldPart != $MyRow['part']) {
-					$pdf->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$Fill);
-					$pdf->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$Fill);
-					$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
-					$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty, $HoldDecimalPlaces),'right',0,$Fill);
-					$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
-					$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$Fill);
-					$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$Fill);
+					$PDF->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$Fill);
+					$PDF->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$Fill);
+					$PDF->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
+					$PDF->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty, $HoldDecimalPlaces),'right',0,$Fill);
+					$PDF->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
+					$PDF->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$Fill);
+					$PDF->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$Fill);
 					$TotalPartCost = 0;
 					$TotalPartQty = 0;
 					$YPos -= (2*$LineHeight);
@@ -166,17 +164,17 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				$FormatedSupDueDate = ConvertSQLDate($MyRow['duedate']);
 				$FormatedSupMRPDate = ConvertSQLDate($MyRow['mrpdate']);
 				$ExtCost = $MyRow['supplyquantity'] * $MyRow['computedcost'];
-				$pdf->addTextWrap($Left_Margin,$YPos,110,$FontSize,$MyRow['part'],'',0,$Fill);
-				$pdf->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$Fill);
-				$pdf->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$Fill);
-				$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']),'right',0,$Fill);
-				$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($ExtCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
+				$PDF->addTextWrap($Left_Margin,$YPos,110,$FontSize,$MyRow['part'],'',0,$Fill);
+				$PDF->addTextWrap(150,$YPos,50,$FontSize,$FormatedSupDueDate,'right',0,$Fill);
+				$PDF->addTextWrap(200,$YPos,60,$FontSize,$FormatedSupMRPDate,'right',0,$Fill);
+				$PDF->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($MyRow['supplyquantity'], $MyRow['decimalplaces']),'right',0,$Fill);
+				$PDF->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($ExtCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
 
 				if ($_POST['Consolidation'] == 'None'){
-					$pdf->addTextWrap(370,$YPos,80,$FontSize,$MyRow['ordertype'],'right',0,$Fill);
-					$pdf->addTextWrap(450,$YPos,80,$FontSize,$MyRow['orderno'],'right',0,$Fill);
+					$PDF->addTextWrap(370,$YPos,80,$FontSize,$MyRow['ordertype'],'right',0,$Fill);
+					$PDF->addTextWrap(450,$YPos,80,$FontSize,$MyRow['orderno'],'right',0,$Fill);
 				} else {
-					$pdf->addTextWrap(370,$YPos,100,$FontSize,$MyRow['consolidatedcount'],'right',0,$Fill);
+					$PDF->addTextWrap(370,$YPos,100,$FontSize,$MyRow['consolidatedcount'],'right',0,$Fill);
 				}
 
 				$HoldDescription = $MyRow['description'];
@@ -191,20 +189,20 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 				$Partctr++;
 
 				if ($YPos < $Bottom_Margin + $LineHeight){
-				   PrintHeader($pdf,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
+				   PrintHeader($PDF,$YPos,$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,$Page_Width,
 							   $Right_Margin,$_POST['Consolidation'],$ReportDate);
 				}
 		} /*end while loop */
 
 		// Print summary information for last part
 		$YPos -=$LineHeight;
-		$pdf->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$Fill);
-		$pdf->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$Fill);
-		$pdf->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
-		$pdf->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty,$HoldDecimalPlaces),'right',0,$Fill);
-		$pdf->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
-		$pdf->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$Fill);
-		$pdf->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$Fill);
+		$PDF->addTextWrap(50,$YPos,130,$FontSize,$HoldDescription,'',0,$Fill);
+		$PDF->addTextWrap(180,$YPos,50,$FontSize,_('Unit Cost: '),'center',0,$Fill);
+		$PDF->addTextWrap(220,$YPos,40,$FontSize,locale_number_format($HoldCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
+		$PDF->addTextWrap(260,$YPos,50,$FontSize,locale_number_format($TotalPartQty,$HoldDecimalPlaces),'right',0,$Fill);
+		$PDF->addTextWrap(310,$YPos,60,$FontSize,locale_number_format($TotalPartCost,$_SESSION['CompanyRecord']['decimalplaces']),'right',0,$Fill);
+		$PDF->addTextWrap(370,$YPos,30,$FontSize,_('M/B: '),'right',0,$Fill);
+		$PDF->addTextWrap(400,$YPos,15,$FontSize,$HoldMBFlag,'right',0,$Fill);
 		$FontSize =8;
 		$YPos -= (2*$LineHeight);
 
@@ -214,14 +212,14 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 		}
 
 		/*Print out the grand totals */
-		$pdf->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');
-		$pdf->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
-		$pdf->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
+		$PDF->addTextWrap($Left_Margin,$YPos,120,$FontSize,_('Number of Work Orders: '), 'left');
+		$PDF->addTextWrap(150,$YPos,30,$FontSize,$Partctr, 'left');
+		$PDF->addTextWrap(200,$YPos,100,$FontSize,_('Total Extended Cost:'), 'right');
 		$DisplayTotalVal = locale_number_format($Total_ExtCost,$_SESSION['CompanyRecord']['decimalplaces']);
-		$pdf->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
+		$PDF->addTextWrap(310,$YPos,60,$FontSize,$DisplayTotalVal, 'right');
 
-		$pdf->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf');
-		$pdf->__destruct();
+		$PDF->OutputD($_SESSION['DatabaseName'] . '_MRP_Planned_Work_Orders_' . Date('Y-m-d') . '.pdf');
+		$PDF->__destruct();
 
 	} else { // Review planned work orders
 
@@ -288,13 +286,15 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			</table>
 			</form>';
 
-		echo '<br /><a class="noprint" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select different criteria.'), '</a>';
+		echo '<br /><a class="noPrint" href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '">', _('Select different criteria.'), '</a>';
 		include('includes/footer.php');
 
 	} // end Review planned work orders
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title=_('MRP Planned Work Orders Reporting');
+	$ViewTopic = 'MRP';
+	$BookMark = '';
 	include('includes/header.php');
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/inventory.png" title="' . _('Inventory') . '" alt="" />' . ' ' . $Title . '</p>';
@@ -320,7 +320,7 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 			 </field>
 			 <field>
 				<label for="cutoffdate">' . _('Cut Off Date') . ':</label>
-				<input type="text" required="required" class="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date($_SESSION['DefaultDateFormat']) . '" />
+				<input required="required" type="date" name="cutoffdate" autofocus="autofocus" maxlength="10" size="11" value="' . date('Y-m-d') . '" />
 			</field>
 			 </fieldset>
 			 <div class="centre">
@@ -332,24 +332,24 @@ if ( isset($_POST['PrintPDF']) OR isset($_POST['Review']) ) {
 
 } /*end of else not PrintPDF */
 
-function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
+function PrintHeader(&$PDF,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Margin,
 					 $Page_Width,$Right_Margin,$Consolidation,$ReportDate) {
 
 	/*PDF page header for MRP Planned Work Orders report */
 	if ($PageNumber>1){
-		$pdf->newPage();
+		$PDF->newPage();
 	}
 	$LineHeight=12;
 	$FontSize=9;
 	$YPos= $Page_Height-$Top_Margin;
 
-	$pdf->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
+	$PDF->addTextWrap($Left_Margin,$YPos,300,$FontSize,$_SESSION['CompanyRecord']['coyname']);
 
 	$YPos -=$LineHeight;
 
-	$pdf->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('MRP Planned Work Orders Report'));
-	$pdf->addTextWrap(190,$YPos,100,$FontSize,$ReportDate);
-	$pdf->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
+	$PDF->addTextWrap($Left_Margin,$YPos,150,$FontSize,_('MRP Planned Work Orders Report'));
+	$PDF->addTextWrap(190,$YPos,100,$FontSize,$ReportDate);
+	$PDF->addTextWrap($Page_Width-$Right_Margin-150,$YPos,160,$FontSize,_('Printed') . ': ' .
 		 Date($_SESSION['DefaultDateFormat']) . '   ' . _('Page') . ' ' . $PageNumber,'left');
 	$YPos -= $LineHeight;
 
@@ -361,25 +361,25 @@ function PrintHeader(&$pdf,&$YPos,&$PageNumber,$Page_Height,$Top_Margin,$Left_Ma
 		$DisplayConsolidation = _('Monthly');
 	}
 
-	$pdf->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation').':');
-	$pdf->addTextWrap(110,$YPos,40,$FontSize,$DisplayConsolidation);
+	$PDF->addTextWrap($Left_Margin,$YPos,65,$FontSize,_('Consolidation').':');
+	$PDF->addTextWrap(110,$YPos,40,$FontSize,$DisplayConsolidation);
 
 	$YPos -=(2*$LineHeight);
 
 	/*set up the headings */
 	$Xpos = $Left_Margin+1;
 
-	$pdf->addTextWrap($Xpos,$YPos,150,$FontSize,_('Part Number'), 'left');
-	$pdf->addTextWrap(150,$YPos,50,$FontSize,_('Due Date'), 'right');
-	$pdf->addTextWrap(200,$YPos,60,$FontSize,_('MRP Date'), 'right');
-	$pdf->addTextWrap(260,$YPos,50,$FontSize,_('Quantity'), 'right');
-	$pdf->addTextWrap(310,$YPos,60,$FontSize,_('Ext. Cost'), 'right');
+	$PDF->addTextWrap($Xpos,$YPos,150,$FontSize,_('Part Number'), 'left');
+	$PDF->addTextWrap(150,$YPos,50,$FontSize,_('Due Date'), 'right');
+	$PDF->addTextWrap(200,$YPos,60,$FontSize,_('MRP Date'), 'right');
+	$PDF->addTextWrap(260,$YPos,50,$FontSize,_('Quantity'), 'right');
+	$PDF->addTextWrap(310,$YPos,60,$FontSize,_('Ext. Cost'), 'right');
 
 	if ($Consolidation == 'None') {
-		$pdf->addTextWrap(370,$YPos,80,$FontSize,_('Source Type'), 'right');
-		$pdf->addTextWrap(450,$YPos,80,$FontSize,_('Source Order'), 'right');
+		$PDF->addTextWrap(370,$YPos,80,$FontSize,_('Source Type'), 'right');
+		$PDF->addTextWrap(450,$YPos,80,$FontSize,_('Source Order'), 'right');
 	} else {
-		$pdf->addTextWrap(370,$YPos,100,$FontSize,_('Consolidation Count'), 'right');
+		$PDF->addTextWrap(370,$YPos,100,$FontSize,_('Consolidation Count'), 'right');
 	}
 
 	$FontSize=8;

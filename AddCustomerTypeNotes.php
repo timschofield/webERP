@@ -2,8 +2,12 @@
 
 include('includes/session.php');
 $Title = _('Customer Type (Group) Notes');
+$ViewTopic = 'AccountsReceivable';
+$BookMark = 'CustomerTypeNotes';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+
+if (isset($_POST['NoteDate'])) {$_POST['NoteDate'] = ConvertSQLDate($_POST['NoteDate']);}
 
 if (isset($_GET['Id'])){
 	$Id = (int)$_GET['Id'];
@@ -36,7 +40,7 @@ if (isset($_POST['submit']) ) {
 		prnMsg( _('The contacts notes may not be empty'), 'error');
 	}
 
-	if ($Id and $InputError !=1) {
+	if (isset($Id) and $InputError !=1) {
 
 		$SQL = "UPDATE debtortypenotes SET note='" . $_POST['Note'] . "',
 											date='" . FormatDateForSQL($_POST['NoteDate']) . "',
@@ -122,7 +126,7 @@ if (!isset($Id)) {
 				<td><a href="%sId=%s&amp;DebtorType=%s">' .  _('Edit') . '</a></td>
 				<td><a href="%sId=%s&amp;DebtorType=%s&amp;delete=1">' .  _('Delete') . '</a></td>
 				</tr>',
-				$MyRow['date'],
+				ConvertSQLDate($MyRow['date']),
 				$MyRow['note'],
 				$MyRow['href'],
 				$MyRow['priority'],
@@ -169,7 +173,7 @@ if (!isset($_GET['delete'])) {
 		$_POST['NoteID'] = $MyRow['noteid'];
 		$_POST['Note']	= $MyRow['note'];
 		$_POST['Href']  = $MyRow['href'];
-		$_POST['NoteDate']  = $MyRow['date'];
+		$_POST['NoteDate']  = ConvertSQLDate($MyRow['date']);
 		$_POST['Priority']  = $MyRow['priority'];
 		$_POST['typeid']  = $MyRow['typeid'];
 		echo '<input type="hidden" name="Id" value="'. $Id .'" />';
@@ -204,7 +208,7 @@ if (!isset($_GET['delete'])) {
 		</field>
 		<field>
 			<label for="NoteDate">' .  _('Date').':</label>
-			<input type="text" required="required" name="NoteDate" class="date" value="'. $_POST['NoteDate']. '" size="11" maxlength="10" />
+			<input required="required" name="NoteDate" type="date" value="'. FormatDateForSQL($_POST['NoteDate']). '" size="11" maxlength="10" />
 			<fieldhelp>', _('The date of this note'), '</fieldhelp>
 		</field>
 		<field>

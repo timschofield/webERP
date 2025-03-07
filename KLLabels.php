@@ -287,7 +287,7 @@ function showLabel($Label, $Msg, $Theme, $ReadOnly=false) {
 			</tbody>
 		</table>
 		<br /><input type="submit" name="'.$Name.'" value="'.$Value.'" />
-		<input type="submit" name="Cancel" value="'.$vCancel.'" />
+		<input type="reset" name="Cancel" value="'.$vCancel.'" />
         </div>
     </div>
 	</form>';

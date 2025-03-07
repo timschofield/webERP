@@ -18,6 +18,7 @@ $BookMark = 'SelectingInventory';
 include ('includes/header.php');
 
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/StockFunctions.php');
 include ('includes/ImageFunctions.php');
 // KL RICARD
 include ('includes/KLDefines.php');
@@ -51,8 +52,8 @@ $SQL = "SELECT categoryid,
 		ORDER BY categorydescription";
 $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
-	echo '<p class="bad">' . _('Problem Report') . ':<br />' . _('There are no stock categories currently defined please use the link below to set them up') . '</p>';
-	echo '<br /><a href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a>';
+	prnMsg (_('There are no stock categories currently defined. Please use the link below to set them up'), 'warn');
+	echo '<a class="toplink" href="' . $RootPath . '/StockCategories.php">' . _('Define Stock Categories') . '</a><br /><br />';
 	include('includes/footer.php');
 	exit;
 }
@@ -178,19 +179,19 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 										price
 								FROM prices
 								WHERE currabrev ='" . $_SESSION['CompanyRecord']['currencydefault'] . "'
-								AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
-								AND debtorno=''
-								AND branchcode=''
-								AND startdate <= '". Date('Y-m-d') ."' 
-								AND enddate >= CURRENT_DATE
-								AND stockid='" . $StockID . "'");
+									AND typeabbrev = '" . $_SESSION['DefaultPriceList'] . "'
+									AND debtorno=''
+									AND branchcode=''
+									AND startdate <= CURRENT_DATE 
+									AND enddate >= CURRENT_DATE
+									AND stockid='" . $StockID . "'");
 		if ($MyRow['mbflag'] == 'K' OR $MyRow['mbflag'] == 'A' OR $MyRow['mbflag'] == 'G') {
 			$CostResult = DB_query("SELECT SUM(bom.quantity * (stockmaster.actualcost)) AS cost
 									FROM bom INNER JOIN stockmaster
 									ON bom.component=stockmaster.stockid
 									WHERE bom.parent='" . $StockID . "'
-                                    AND bom.effectiveafter <= CURRENT_DATE
-                                    AND bom.effectiveto > CURRENT_DATE");
+										AND bom.effectiveafter <= CURRENT_DATE
+										AND bom.effectiveto > CURRENT_DATE");
 			$CostRow = DB_fetch_row($CostResult);
 			$Cost = $CostRow[0];
 		} else {
@@ -306,61 +307,18 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		break;
 		case 'M':
 		case 'B':
-			$QOHResult = DB_query("SELECT sum(quantity)
-							FROM locstock
-							WHERE stockid = '" . $StockID . "'");
-			$QOHRow = DB_fetch_row($QOHResult);
-			$QOH = locale_number_format($QOHRow[0], $MyRow['decimalplaces']);
-
-			// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-			$QOO = GetQuantityOnOrderDueToPurchaseOrders($StockID, '');
-			// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-			$QOO += GetQuantityOnOrderDueToWorkOrders($StockID, '');
-
-			$QOO = locale_number_format($QOO, $MyRow['decimalplaces']);
+			// get the QOH for all locations. Function defined in StockFunctions.php
+			$QOH = GetQuantityOnHand($StockID, 'ALL');
+			// Get the QOO
+			$QOO = GetQuantityOnOrder($StockID, 'ALL');
 		break;
 	}
-	$Demand = 0;
-	$DemResult = DB_query("SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-							FROM salesorderdetails INNER JOIN salesorders
-							ON salesorders.orderno = salesorderdetails.orderno
-							INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-							WHERE salesorderdetails.completed=0
-							AND salesorders.quotation=0
-							AND salesorderdetails.stkcode='" . $StockID . "'");
-	$DemRow = DB_fetch_row($DemResult);
-	$Demand = $DemRow[0];
-	$DemAsComponentResult = DB_query("SELECT  SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-										FROM salesorderdetails INNER JOIN salesorders
-										ON salesorders.orderno = salesorderdetails.orderno
-										INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
-										INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
-										INNER JOIN locationusers ON locationusers.loccode=salesorders.fromstkloc AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-										WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-										AND bom.component='" . $StockID . "'
-										AND stockmaster.mbflag='A'
-										AND salesorders.quotation=0");
-	$DemAsComponentRow = DB_fetch_row($DemAsComponentResult);
-	$Demand+= $DemAsComponentRow[0];
-	//Also the demand for the item as a component of works orders
-	$SQL = "SELECT SUM(qtypu*(woitems.qtyreqd - woitems.qtyrecd)) AS woqtydemo
-			FROM woitems INNER JOIN worequirements
-			ON woitems.stockid=worequirements.parentstockid
-			INNER JOIN workorders
-			ON woitems.wo=workorders.wo
-			AND woitems.wo=worequirements.wo
-			INNER JOIN locationusers ON locationusers.loccode=workorders.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-			WHERE  worequirements.stockid='" . $StockID . "'
-			AND workorders.closed=0";
-	$ErrMsg = _('The workorder component demand for this product cannot be retrieved because');
-	$DemandResult = DB_query($SQL, $ErrMsg);
-	if (DB_num_rows($DemandResult) == 1) {
-		$DemandRow = DB_fetch_row($DemandResult);
-		$Demand+= $DemandRow[0];
-	}
+
+	$Demand = GetDemand($StockID, 'ALL');
+
 	echo '<tr>
 			<th class="number" style="width:15%">' . _('Quantity On Hand') . ':</th>
-			<td style="width:17%; text-align:right" class="select">' . $QOH . '</td>
+			<td style="width:17%; text-align:right" class="select">' . locale_number_format($QOH, $MyRow['decimalplaces']) . '</td>
 		</tr>
 		<tr>
 			<th class="number" style="width:15%">' . _('Quantity Demand') . ':</th>
@@ -368,7 +326,7 @@ if (!isset($_POST['Search']) AND (isset($_POST['Select']) OR isset($_SESSION['Se
 		</tr>
 		<tr>
 			<th class="number" style="width:15%">' . _('Quantity On Order') . ':</th>
-			<td style="width:17%; text-align:right" class="select">' . $QOO . '</td>
+			<td style="width:17%; text-align:right" class="select">' . locale_number_format($QOO, $MyRow['decimalplaces']) . '</td>
 		</tr>
 		</table>'; //end of nested table
 	echo '</td>'; //end cell of master table
@@ -883,9 +841,9 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			<thead>
 				<tr>
 							<th>' . _('Stock Status') . '</th>
-							<th class="ascending">' . _('Code') . '</th>
-                            				<th>'. _('image').'</th>
-							<th class="ascending">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
+                            				<th>'. _('Image').'</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
 							<th>' . _('Total Qty On Hand') . '</th>
 							<th>' . _('Units') . '</th>
 				</tr>
@@ -915,7 +873,6 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 			} else {
 				$ImageFile ='';
 			}
-			// KL RICARD We would like to not show the code inline. Failed so far.
 			$StockImgLink = GetImageLink($ImageFile, $MyRow['stockid'], 100, 100, "", "");
 
 			echo '<tr class="striped_row">

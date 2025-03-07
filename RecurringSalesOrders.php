@@ -10,6 +10,8 @@ $BookMark = 'RecurringSalesOrders';
 
 include('includes/session.php');
 $Title = _('Recurring Orders');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['StopDate'])){$_POST['StopDate'] = ConvertSQLDate($_POST['StopDate']);};
 
 
 /* webERP manual links before header.php */
@@ -188,7 +190,7 @@ if (isset($_POST['DeleteRecurringOrder'])){
 	exit;
 }
 If (isset($_POST['Process'])) {
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 	$InputErrors =0;
 	If (!Is_Date($_POST['StartDate'])){
 		$InputErrors =1;
@@ -288,7 +290,7 @@ If (isset($_POST['Process'])) {
 
 			} /* inserted line items into sales order details */
 
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 			prnmsg(_('The new recurring order template has been added'),'success');
 
 		} else { /* must be updating an existing recurring order */
@@ -428,13 +430,13 @@ if (!isset($_POST['StartDate'])){
 if ($NewRecurringOrder=='Yes'){
 	echo '<field>
 			<label for="StartDate">' .  _('Start Date') .':</label>
-			<input type="text" class="date" name="StartDate" size="11" maxlength="10" value="' . $_POST['StartDate'] .'" />
+			<input type="date" name="StartDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['StartDate']) .'" />
 		</field>';
 } else {
 	echo '<field>
 			<label>' .  _('Last Recurrence') . ':</label>
 			<fieldtext>' . $_POST['StartDate'], '<fieldtext>
-			<input type="hidden" name="StartDate" value="' . $_POST['StartDate'] . '" />
+			<input type="hidden" name="StartDate" value="' . FormatDateForSQL($_POST['StartDate']) . '" />
 		</field>';
 }
 
@@ -444,7 +446,7 @@ if (!isset($_POST['StopDate'])){
 
 echo '<field>
 		<label for="StopDate">' .  _('Finish Date') .':</label>
-		<input type="text" class="date" name="StopDate" size="11" maxlength="10" value="' . $_POST['StopDate'] .'" />
+		<input type="date" name="StopDate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['StopDate']) .'" />
 	</field>';
 
 echo '<field>
@@ -520,7 +522,7 @@ if ($NewRecurringOrder=='Yes'){
 
 	echo '<input type="submit" name="Process" value="' . _('Update Recurring Order Details') . '" />';
 	echo '<hr />';
-	echo '<br /><br /><input type="submit" name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');" />';
+	echo '<br /><br /><input type="reset" name="DeleteRecurringOrder" value="' . _('Delete Recurring Order') . ' ' . $_POST['ExistingRecurrOrderNo'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this recurring order template?') . '\');" />';
 }
 
 echo '</div>';

@@ -108,7 +108,7 @@ if (isset($_POST['submit'])) {
 
 		$SQL = "UPDATE klchangeprice 
 				SET stockid='" . $_POST['Stockid'] . "',
-					startprocessdate=CURRENT_DATE,
+					startprocessdate = CURRENT_DATE,
 					newretailprice='" . filter_number_format($_POST['NewRetailPrice']) . "',
 					pricechanged=0,
 					endprocessdate='1000-01-01'

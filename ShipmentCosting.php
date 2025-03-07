@@ -3,9 +3,14 @@
 
 include('includes/session.php');
 $Title = _('Shipment Costing');
+
+$ViewTopic = 'Shipments';
+$BookMark = '';
+
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 
 echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' . _('Search') . '" alt="" />
      ' . ' ' . $Title . '</p>';
@@ -135,7 +140,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 	if (isset($_POST['Close'])){
 	/*Set up a transaction to buffer all updates or none */
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat']));
 	}
 
@@ -227,32 +232,22 @@ if (DB_num_rows($LineItemsResult) > 0) {
 			*/
 
 			if ($_SESSION['WeightedAverageCosting'] == 1){   /* Do the WAvg journal and cost update */
-				   	/*
-					First off figure out the new weighted average cost Need the following data:
+				/* First off figure out the new weighted average cost Need the following data:
+				- How many in stock now
+				- The quantity being costed here - $MyRow['qtyinvoiced']
+				- The cost of these items - $ItemShipmentCost */
 
-					How many in stock now
-				The quantity being costed here - $MyRow['qtyinvoiced']
-				The cost of these items - $ItemShipmentCost
-				*/
+				$TotalQuantityOnHand = GetQuantityOnHand($MyRow['itemcode'], 'ALL');
 
-				$SQL ="SELECT SUM(quantity) FROM locstock WHERE stockid='" . $MyRow['itemcode'] . "'";
-				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
-				$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
-				$QtyRow = DB_fetch_row($Result);
-				$TotalQuantityOnHand = $QtyRow[0];
-
-
-				/*The cost adjustment is the price variance / the total quantity in stock
-				But that's only provided that the total quantity in stock is > the quantity charged on this invoice
-								*/
+				/* The cost adjustment is the price variance / the total quantity in stock
+				But that's only provided that the total quantity in stock is > the quantity charged on this invoice */
 
 				$WriteOffToVariances =0;
 
 				if ($MyRow['totqtyinvoiced'] > $TotalQuantityOnHand){
 
-							 /*So we need to write off some of the variance to variances and
-							 only the balance of the quantity in stock to go to stock value */
+					/*So we need to write off some of the variance to variances and
+					only the balance of the quantity in stock to go to stock value */
 
 					 $WriteOffToVariances =  ($MyRow['totqtyinvoiced'] - $TotalQuantityOnHand) * ($ItemShipmentCost - $StdCostUnit);
 				 }
@@ -262,7 +257,6 @@ if (DB_num_rows($LineItemsResult) > 0) {
 
 				   /* If the quantity on hand is less the amount charged on this invoice then some must have been sold
 					and the price variance on these must be written off to price variances*/
-
 
 					if ($MyRow['totqtyinvoiced'] > $TotalQuantityOnHand){
 
@@ -323,19 +317,19 @@ if (DB_num_rows($LineItemsResult) > 0) {
 					$CostIncrement = ($MyRow['totqtyinvoiced'] *($ItemShipmentCost - $StdCostUnit) - $WriteOffToVariances) / $TotalQuantityOnHand;
 
 					$SQL = "UPDATE stockmaster
-								SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost=materialcost+" . $CostIncrement . ",
-									lastcostupdate=CURRENT_DATE
+							SET lastcost=materialcost+overheadcost+labourcost,
+								materialcost=materialcost+" . $CostIncrement . ",
+								lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,'',TRUE);
 
 				} else {
 					$SQL = "UPDATE stockmaster
-								SET lastcost=materialcost+overheadcost+labourcost,
-									materialcost='" . $ItemShipmentCost . "',
-									lastcostupdate=CURRENT_DATE
-								WHERE stockid='" . $MyRow['itemcode'] . "'";
+							SET lastcost=materialcost+overheadcost+labourcost,
+								materialcost='" . $ItemShipmentCost . "',
+								lastcostupdate = CURRENT_DATE
+							WHERE stockid='" . $MyRow['itemcode'] . "'";
 
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg,'',TRUE);
 
@@ -389,14 +383,11 @@ if (DB_num_rows($LineItemsResult) > 0) {
 				  $Result = DB_query($SQL, $ErrMsg,'',TRUE);
 						 }
 
-				if ( isset($_POST['UpdateCost']) AND $_POST['UpdateCost'] == 'Yes' ){ /*Only ever a standard costing option
-												  Weighted average costing implies cost updates taking place automatically */
+				if ( isset($_POST['UpdateCost']) AND $_POST['UpdateCost'] == 'Yes' ){ 
+					/*Only ever a standard costing option
+					 Weighted average costing implies cost updates taking place automatically */
 
-					$QOHResult = DB_query("SELECT SUM(quantity)
-											FROM locstock
-											WHERE stockid ='" . $MyRow['itemcode'] . "'");
-					$QOHRow = DB_fetch_row($QOHResult);
-					$QOH=$QOHRow[0];
+					$QOH = GetQuantityOnHand($MyRow['itemcode'], 'ALL');
 
 					if ($_SESSION['CompanyRecord']['gllink_stock']==1){
 						$CostUpdateNo = GetNextTransNo(35);
@@ -449,7 +440,7 @@ if (DB_num_rows($LineItemsResult) > 0) {
 												labourcost=0,
 												overheadcost=0,
 												lastcost='" . $StdCostUnit . "',
-												lastcostupdate=CURRENT_DATE
+												lastcostupdate = CURRENT_DATE
 										WHERE stockid='" . $MyRow['itemcode'] . "'";
 
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The shipment cost details for the stock item could not be updated because'). ': ' . DB_error_msg();
@@ -672,7 +663,7 @@ if ( isset($_POST['Close']) ){ /* OK do the shipment close journals */
 							TRUE);
 
 	$Result = DB_query("UPDATE shipments SET closed=1 WHERE shiptref='" .$_GET['SelectedShipment']. "'",_('Could not update the shipment to closed'),'',TRUE);
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	echo '<br /><br />';
 	prnMsg( _('Shipment'). ' ' . $_GET['SelectedShipment'] . ' ' . _('has been closed') );

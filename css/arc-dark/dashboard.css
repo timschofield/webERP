@@ -1,7 +1,7 @@
 .container{
 display:grid;
 grid-template-columns:repeat(var(--cols), 1fr);
-grid-template-rows:repeat(var(--rows), 0.8fr);
+grid-template-rows:repeat(var(--rows), 0.6fr);
 column-gap: 10px;
 row-gap: 10px;
 margin-bottom:2%;
@@ -15,7 +15,7 @@ border: 1px solid #8BAA92;
 margin-top:4px;
 padding:3px;
 border-radius:7px;
-//box-shadow: 0 4px 8px 0 rgba(104, 104, 104, 0.5), 0 6px 6px 0 rgba(104, 104, 104, 0.5);
+box-shadow: 0 4px 8px 0 rgba(104, 104, 104, 0.5), 0 6px 6px 0 rgba(104, 104, 104, 0.5);
 }
 .CloseButton{
 float:right;

@@ -175,7 +175,7 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 								salesorderdetails.orderlineno,
 								salesorderdetails.poline,
 								salesorderdetails.itemdue,
-								stockmaster.materialcost + stockmaster.labourcost + stockmaster.overheadcost AS standardcost
+								stockmaster.actualcost AS standardcost
 							FROM pickreqdetails
 							INNER JOIN pickreq
 								ON pickreq.prid=pickreqdetails.prid
@@ -196,7 +196,31 @@ if (!isset($_GET['Prid']) and !isset($_SESSION['ProcessingPick'])) {
 
 			while ($MyRow = DB_fetch_array($LineItemsResult)) {
 
-				$_SESSION['Items' . $identifier]->add_to_cart($MyRow['stkcode'], $MyRow['quantity'], $MyRow['description'], $MyRow['longdescription'], $MyRow['unitprice'], $MyRow['discountpercent'], $MyRow['units'], $MyRow['volume'], $MyRow['grossweight'], 0, $MyRow['mbflag'], $MyRow['actualdispatchdate'], $MyRow['qtyinvoiced'], $MyRow['discountcategory'], $MyRow['controlled'], $MyRow['serialised'], $MyRow['decimalplaces'], htmlspecialchars_decode($MyRow['narrative']), 'No', $MyRow['orderlineno'], $MyRow['taxcatid'], '', $MyRow['itemdue'], $MyRow['poline'], $MyRow['standardcost']);
+				$_SESSION['Items' . $identifier]->add_to_cart($MyRow['stkcode'],
+															$MyRow['quantity'],
+															$MyRow['description'],
+															$MyRow['longdescription'],
+															$MyRow['unitprice'],
+															$MyRow['discountpercent'],
+															$MyRow['units'],
+															$MyRow['volume'],
+															$MyRow['grossweight'],
+															0,
+															$MyRow['mbflag'],
+															$MyRow['actualdispatchdate'],
+															$MyRow['qtyinvoiced'],
+															$MyRow['discountcategory'],
+															$MyRow['controlled'],
+															$MyRow['serialised'],
+															$MyRow['decimalplaces'],
+															htmlspecialchars_decode($MyRow['narrative']),
+															'No',
+															$MyRow['orderlineno'],
+															$MyRow['taxcatid'],
+															'',
+															$MyRow['itemdue'],
+															$MyRow['poline'],
+															$MyRow['standardcost']);
 				/*NB NO Updates to DB */
 
 				$SerialItemsSQL = "SELECT pickserialdetails.stockid,
@@ -417,8 +441,8 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 							ON stockmaster.stockid=bom.component
 						WHERE bom.parent='" . $OrderLine->StockID . "'
 							AND locstock.loccode='" . $_SESSION['Items' . $identifier]->Location . "'
-							AND effectiveafter <CURRENT_DATE
-							AND effectiveto >=CURRENT_DATE";
+							AND effectiveafter < CURRENT_DATE
+							AND effectiveto >= CURRENT_DATE";
 
 				$ErrMsg = _('Could not retrieve the component quantity left at the location once the assembly item on this order is invoiced (for the purposes of checking that stock will not go negative because)');
 				$Result = DB_query($SQL, $ErrMsg);
@@ -621,7 +645,7 @@ if (isset($_POST['ProcessPickList']) and $_POST['ProcessPickList'] != '') {
 	// *************************************************************************
 	//   E N D   O F  S Q L   P R O C E S S I N G
 	// *************************************************************************
-	echo prnMsg(_('PickList ') . ' ' . $_SESSION['ProcessingPick'] . ' ' . _('processed'), 'success');
+	prnMsg(_('PickList ') . ' ' . $_SESSION['ProcessingPick'] . ' ' . _('processed'), 'success');
 
 	if ($_SESSION['PackNoteFormat'] == 1) {
 		/*Laser printed A4 default */

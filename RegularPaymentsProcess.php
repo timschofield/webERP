@@ -2,6 +2,7 @@
 include ('includes/session.php');
 
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 $Title = _('Process regular payments');
 $ViewTopic = 'GeneralLedger';
@@ -79,7 +80,7 @@ if (isset($_POST['Add'])) {
 		} else {
 			$Completed = 0;
 		}
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -101,14 +102,7 @@ if (isset($_POST['Add'])) {
 								)";
 		$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 		$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was'), true);
-
-		foreach ($PaymentItem['Tags'] as $Tag) {
-			$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-												'" . $Tag . "')";
-			$ErrMsg = _('Cannot insert a GL tag for the payment line because');
-			$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-		}
+		InsertGLTags($PaymentItem['Tags']);
 
 		$SQL = "INSERT INTO gltrans (type,
 									typeno,
@@ -193,7 +187,7 @@ $SQL = "SELECT regularpayments.id,
 			INNER JOIN chartmaster
 				ON chartmaster.accountcode=regularpayments.glcode
 			WHERE completed=0
-				AND nextpayment<=CURRENT_DATE";
+				AND nextpayment <= CURRENT_DATE";
 $Result = DB_query($SQL);
 
 if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
@@ -220,22 +214,16 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 		/*Get the exchange rate between the functional currency and the payment currency*/
 		$ExRateResult = DB_query("SELECT decimalplaces, rate FROM currencies WHERE currabrev='" . $MyRow['currabrev'] . "'");
 		$ExRateRow = DB_fetch_row($ExRateResult);
-		$tableExRate = $ExRateRow[1]; //this is the rate of exchange between the functional currency and the payment currency
+		$TableExRate = $ExRateRow[1]; //this is the rate of exchange between the functional currency and the payment currency
 		/*Calculate cross rate to suggest appropriate exchange rate between payment currency and account currency */
 		if ($SuggestedFunctionalExRate != 0) {
-			$SuggestedExRate = $tableExRate / $SuggestedFunctionalExRate;
+			$SuggestedExRate = $TableExRate / $SuggestedFunctionalExRate;
 		} else {
 			$SuggestedExRate = 0;
 		}
 		$DecimalPLaces = $ExRateRow[0];
 		$Tags = explode(',', $MyRow['tag']);
-		$TagText = '';
-		foreach ($Tags as $Tag) {
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-			$TagResult = DB_query($TagSQL);
-			$TagRow = DB_fetch_array($TagResult);
-			$TagText.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-		}
+		$TagText = GetDescriptionsFromTagArray($Tags);
 		echo '<tr class="striped_row">
 				<td>', $MyRow['bankaccountname'], '</td>
 				<td>', $MyRow['glcode'], ' - ', $MyRow['accountname'], '</td>

@@ -59,7 +59,7 @@ final class RegexMatcher
                     $delimiter = '>';
                     break;
                 default:
-                    $delimiter = $delimiter;
+                    # $delimiter = $delimiter; # 20241023: no change
                     break;
             }
             /** @var string $modifiers */

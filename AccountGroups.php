@@ -278,17 +278,17 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 	$DbgMsg = _('The sql that was used to retrieve the account group information was ');
 	$ErrMsg = _('Could not get account groups because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
-	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" />' . ' ' . $Title . '</p><br />';
+	echo '<p class="page_title_text"><img alt="" src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . $Title . '" />' . ' ' . $Title . '</p><br />';
 
 	echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Group Name') . '</th>
-				<th class="ascending">' . _('Section') . '</th>
-				<th class="ascending">' . _('Sequence In TB') . '</th>
-				<th class="ascending">' . _('Profit and Loss') . '</th>
-				<th class="ascending">' . _('Parent Group') . '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="SortedColumn">' . _('Group Name') . '</th>
+				<th class="SortedColumn">' . _('Section') . '</th>
+				<th class="SortedColumn">' . _('Sequence In TB') . '</th>
+				<th class="SortedColumn">' . _('Profit and Loss') . '</th>
+				<th class="SortedColumn">' . _('Parent Group') . '</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -313,8 +313,8 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 			<td class="number">' . $MyRow['sequenceintb'] . '</td>
 			<td>' . $PandLText . '</td>
 			<td>' . $MyRow['parentgroupname'] . '</td>';
-		echo '<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
-		echo '<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
+		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '">' . _('Edit') . '</a></td>';
+		echo '<td class="noPrint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'] . '?SelectedAccountGroup=' . urlencode($MyRow['groupname']), ENT_QUOTES,'UTF-8') . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this account group?') . '\');">' . _('Delete')  . '</a></td></tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</tbody>
@@ -323,7 +323,7 @@ if(!isset($_GET['SelectedAccountGroup']) AND !isset($_POST['SelectedAccountGroup
 
 
 if(isset($_POST['SelectedAccountGroup']) or isset($_GET['SelectedAccountGroup'])) {
-	echo '<div class="centre"><br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a></div>';
+	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Groups') . '</a>';
 }
 
 if(!isset($_GET['delete'])) {
@@ -410,7 +410,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		<fieldhelp>' . _('Select the name of the parent group, or select Top level group if it has no parent') . '</fieldhelp>
 	</field>';
-	
+
 	echo '<field>
 			<label for="SectionInAccounts">', _('Section In Accounts'), ':</label>
 			<select ',
@@ -429,7 +429,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		<fieldhelp>' . _('The account section to which this group belongs') . '</fieldhelp>
 	</field>';
-	
+
 	echo '<field>
 			<label for="PandL">', _('Profit and Loss'), ':</label>
 			<select name="PandL" tabindex="4" title="">';
@@ -443,27 +443,23 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		<fieldhelp', _('Select YES if this account group will contain accounts that will consist of only profit and loss accounts or NO if the group will contain balance sheet account'), '</fieldhelp>
 	</field>';
-	
+
 	echo '<field>
 			<label for="SequenceInTB">', _('Sequence In TB'), ':</label>
 			<input class="number" maxlength="4" name="SequenceInTB" required="required" tabindex="5" type="text" value="', $_POST['SequenceInTB'], '" title="" />
 			<fieldhelp>', _('Enter the sequence number that this account group and its child general ledger accounts should display in the trial balance'), '</fieldhelp>
 		</field>';
-		
+
 	echo '</fieldset>';
 	if(isset($_GET['SelectedAccountGroup'])) {
 		echo '<div class="centre">
-				<button name="submit" tabindex="6" type="submit" value="Update"><img alt="" src="', $RootPath, '/css/', $Theme,
-						'/images/tick.svg" /> ', _('Update'), '</button>
-				<button onclick="window.location=\'AccountGroups.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-						'/images/return.svg" /> ', _('Return'), '</button>
+				<input type="submit" name="submit" value="', _('Update'), '" />
+				<input type="reset" name="reset" value="', _('Return'), '" />
 			</div>';
 	} else {
 		echo '<div class="centre">
-				<button name="submit" tabindex="6" type="submit" value="Insert"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/tick.svg" /> ', _('Insert'), '</button>
-				<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme,
-					'/images/return.svg" /> ', _('Return'), '</button>
+				<input type="submit" name="submit" value="', _('Insert'), '" />
+				<input type="reset" name="reset" value="', _('Return'), '" />
 			</div>';
 	}
 	echo '</form>';

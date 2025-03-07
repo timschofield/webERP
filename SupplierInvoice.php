@@ -16,6 +16,10 @@ $ViewTopic = 'AccountsPayable';
 $BookMark = 'SupplierInvoice';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/StockFunctions.php');
+include ('includes/GLFunctions.php');
+
+if (isset($_POST['TranDate'])){$_POST['TranDate'] = ConvertSQLDate($_POST['TranDate']);};
 
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
@@ -150,7 +154,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 		include ('includes/PO_ReadInOrder.inc');
 
 		if ($_SESSION['PO' . $identifier]->Status == 'Authorised') {
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			/*Now Get the next GRN - function in SQL_CommonFunctions*/
 			$GRN = GetNextTransNo(25);
 			if (!isset($_GET['DeliveryDate'])) {
@@ -444,7 +448,7 @@ if (isset($_GET['ReceivePO']) AND $_GET['ReceivePO'] != '') {
 					EnsureGLEntriesBalance(25, $GRN);
 				}
 
-				$Result = DB_Txn_Commit();
+				DB_Txn_Commit();
 
 				//Now add all these deliveries to this purchase invoice
 
@@ -637,8 +641,8 @@ if (!isset($_POST['PostInvoice'])) {
 		$_SESSION['SuppTrans']->TranDate = Date($_SESSION['DefaultDateFormat'], Mktime(0, 0, 0, Date('m') , Date('d') - 1, Date('y')));
 	}
 	echo '<field>
-			<label for="TranDate">' . _('Invoice Date') . ' (' . _('in format') . ' ' . $_SESSION['DefaultDateFormat'] . ') :</label>
-			<input type="text" class="date" size="11" maxlength="10" name="TranDate" value="' . $_SESSION['SuppTrans']->TranDate . '" />
+			<label for="TranDate">' . _('Invoice Date') . ') :</label>
+			<input type="date" size="11" maxlength="10" name="TranDate" value="' . FormatDateForSQL($_SESSION['SuppTrans']->TranDate) . '" />
 		</field>';
 
 	echo '<field>
@@ -849,15 +853,7 @@ if (!isset($_POST['PostInvoice'])) {
 
 			foreach ($_SESSION['SuppTrans']->GLCodes as $EnteredGLCode) {
 
-				$DescriptionTag = '';
-				foreach ($EnteredGLCode->Tag as $Tag) {
-					$SqlDescTag = "SELECT tagdescription
-							FROM tags
-							WHERE tagref='" . $Tag . "'";
-					$ResultDesTag = DB_query($SqlDescTag);
-					$TagRow = DB_fetch_array($ResultDesTag);
-					$DescriptionTag .= $Tag. ' - '. $TagRow['tagdescription'] . "<br />";
-				}
+				$DescriptionTag = GetDescriptionsFromTagArray($EnteredGLCode->Tag);
 
 				echo '<tr>
 						<td>' . $EnteredGLCode->GLCode . '</td>
@@ -1098,7 +1094,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 		/* SQL to process the postings for purchase invoice */
 		/*Start an SQL transaction */
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 
 		/*Get the next transaction number for internal purposes and the period to post GL transactions in based on the invoice date*/
 		$InvoiceNo = GetNextTransNo(20);
@@ -1159,14 +1155,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 				$DbgMsg = _('The following SQL to insert the GL transaction was used');
 
 				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-
-				foreach ($EnteredGLCode->Tag as $Tag) {
-					$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-														'" . $Tag . "')";
-					$ErrMsg = _('Cannot insert a GL tag for the supplier Invoice because');
-					$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-				}
+				InsertGLTags($EnteredGLCode->Tag);
 
 				$LocalTotal += $EnteredGLCode->Amount / $_SESSION['SuppTrans']->ExRate;
 			}
@@ -1301,20 +1290,12 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 
 							if ($_SESSION['WeightedAverageCosting'] == 1) { /*Weighted Average costing */
 
-								/*
-								First off figure out the new weighted average cost Need the following data:
-
-								How many in stock now
-								The quantity being invoiced here - $EnteredGRN->This_QuantityInv
-								The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate
-								*/
-
-								$SQL = "SELECT SUM(quantity) FROM locstock WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-								$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
-								$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
-								$Result = DB_query($SQL, $ErrMsg, $DbgMsg, True);
-								$QtyRow = DB_fetch_row($Result);
-								$TotalQuantityOnHand = $QtyRow[0];
+								/* First off figure out the new weighted average cost Need the following data:
+								- How many in stock now
+								- The quantity being invoiced here - $EnteredGRN->This_QuantityInv
+								- The cost of these items - $EnteredGRN->ChgPrice  / $_SESSION['SuppTrans']->ExRate */
+								
+								$TotalQuantityOnHand = GetQuantityOnHand($EnteredGRN->ItemCode, 'ALL');
 
 								/*The cost adjustment is the price variance / the total quantity in stock
 								But that is only provided that the total quantity in stock is greater than the quantity charged on this invoice
@@ -1459,7 +1440,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 				$LocalTotal += ($EnteredGRN->ChgPrice * $EnteredGRN->This_QuantityInv) / $_SESSION['SuppTrans']->ExRate;
 			} /* end of GRN postings */
 
-			if ($Debug == 1 AND ( abs($_SESSION['SuppTrans']->OvAmount/ $_SESSION['SuppTrans']->ExRate) - $LocalTotal) >0.009999){
+			if ($Debug == 1 AND (abs($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate) - $LocalTotal) > 0.009999) {
 
 				echo '<p>' . _('The total posted to the debit accounts is') . ' ' . $LocalTotal . ' ' . _('but the sum of OvAmount converted at ExRate') . ' = ' . ($_SESSION['SuppTrans']->OvAmount / $_SESSION['SuppTrans']->ExRate);
 			}
@@ -1651,14 +1632,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 							 * The cost of these items = $ActualCost
 							*/
 
-							$SQL = "SELECT sum(quantity)
-									FROM locstock
-									WHERE stockid='" . $EnteredGRN->ItemCode . "'";
-							$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The quantity on hand could not be retrieved from the database');
-							$DbgMsg = _('The following SQL to retrieve the total stock quantity was used');
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg);
-							$QtyRow = DB_fetch_row($Result);
-							$TotalQuantityOnHand = $QtyRow[0];
+							$TotalQuantityOnHand = GetQuantityOnHand($EnteredGRN->ItemCode, 'ALL');
 
 							/* If the quantity on hand is less the quantity charged on this invoice then some must have been sold and the price variance should be reflected in the cost of sales*/
 
@@ -1914,7 +1888,7 @@ else { // $_POST['PostInvoice'] is set so do the postings -and dont show the but
 			$DbgMsg = _('The following SQL was used to attempt the update of the cost and the date the asset was purchased');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 		} //end of non-gl fixed asset stuff
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('Supplier invoice number') . ' ' . $InvoiceNo . ' ' . _('has been processed') , 'success');
 		echo '<br />

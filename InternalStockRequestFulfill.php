@@ -15,6 +15,7 @@ $BookMark = 'FulfilRequest';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Contract') . '" alt="" />' . _('Fulfill Stock Requests') . '</p>';
 
@@ -169,14 +170,7 @@ if (isset($_POST['UpdateAll'])) {
 					$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 					$DbgMsg = _('The following SQL to insert the GL entries was used');
 					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
-					foreach ($Tags as $Tag) {
-						$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-														'" . $Tag . "')";
-						$ErrMsg = _('Cannot insert a GL tag for the journal line because');
-						$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-						$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-					}
+					InsertGLTags($Tags);
 
 					$SQL = "INSERT INTO gltrans (type,
 												typeno,
@@ -390,6 +384,7 @@ if (isset($_POST['Location'])) {
 			}
 			echo '<td class="centre"><input type="checkbox" name="' . $LineRow['dispatchid'] . 'Completed' . $LineRow['dispatchitemsid'] . '" /></td>';
 
+			/* KL RICARD Do not show tags
 			//Select the tag
 			$SQLTag = "SELECT tagref,
 							tagdescription
@@ -407,6 +402,8 @@ if (isset($_POST['Location'])) {
 			}
 			echo '</select></td>';
 			// End select tag
+			KL RICARD Do not show tags */
+			
 			echo '</tr>';
 			echo '<input type="hidden" class="number" name="' . $LineRow['dispatchid'] . 'StockID' . $LineRow['dispatchitemsid'] . '" value="' . $LineRow['stockid'] . '" />';
 			echo '<input type="hidden" class="number" name="' . $LineRow['dispatchid'] . 'Location' . $LineRow['dispatchitemsid'] . '" value="' . $_POST['Location'] . '" />';

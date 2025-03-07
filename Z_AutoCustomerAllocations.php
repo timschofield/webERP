@@ -120,7 +120,7 @@ function ProcessAllocation() {
 		//========[ START TRANSACTION ]===========
 		//
 		$Error = '';
-		$Result= DB_Txn_Begin();
+		DB_Txn_Begin();
 		$AllAllocations = 0;
 		$TotalDiffOnExch = 0;
 		foreach ($_SESSION['Alloc']->Allocs as $AllocnItem) {
@@ -228,9 +228,9 @@ function ProcessAllocation() {
 		//========[ COMMIT TRANSACTION ]===========
 		//
 		if (empty($Error) ) {
-			$Result = DB_Txn_Commit();
+			DB_Txn_Commit();
 		} else {
-			$Result = DB_Txn_Rollback();
+			DB_Txn_Rollback();
 			prnMsg($Error,'error');
 		}
 		unset($_SESSION['Alloc']);

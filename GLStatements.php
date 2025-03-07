@@ -154,7 +154,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		'<input name="ShowChangesInEquity" type="hidden" value="', $_POST['ShowChangesInEquity'], '" />',
 		'<input name="ShowCashFlows" type="hidden" value="', $_POST['ShowCashFlows'], '" />',
 		'<input name="ShowNotes" type="hidden" value="', $_POST['ShowNotes'], '" />',
-		'<div class="centre noprint">', // Form buttons:
+		'<div class="centre noPrint">', // Form buttons:
 			'<button onclick="window.print()" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/printer.png" /> ', _('Print'), '</button>', // "Print" button.
 			'<button name="NewReport" type="submit" value="on"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/reports.png" /> ', _('New Report'), '</button>', // "New Report" button.
 			'<button onclick="window.location=\'index.php?Application=GL\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/return.svg" /> ', _('Return'), '</button>', // "Return" button.
@@ -168,7 +168,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	fShowPageHelp(// Shows the page help text if $_SESSION['ShowFieldHelp'] is TRUE or is not set
 		_('Shows a set of financial statements.') . '<br />' .
 		_('A complete set of financial statements comprises:(a) a statement of financial position as at the end and at the beginning of the period;(b) a statement of comprehensive income for the period;(c) a statement of changes in equity for the period;(d) a statement of cash flows for the period; and(e) notes that summarize the significant accounting policies and other explanatory information.') . '<br />' .
-		_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />', // Input table:

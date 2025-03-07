@@ -55,7 +55,7 @@ if(isset($_POST['submit'])) {
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg);
 
 		prnMsg(_('The employee record has been updated'),'success');
-	
+
 	} elseif($InputError !=1) {
 
 		/*SelectedEmployee is null cos no employee selected on first time round so must be adding a	record must be submitting a new employee form */
@@ -150,19 +150,19 @@ or deletion of the records*/
 		echo '<table class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">', _('ID'), '</th>
-				<th class="ascending">', _('First name'), '</th>
-				<th class="ascending">', _('Surname'), '</th>
-				<th class="ascending">', _('Type'), '</th>
-				<th class="ascending">', _('Manager'), '</th>
-				<th class="ascending">', _('Email'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="SortedColumn">', _('ID'), '</th>
+				<th class="SortedColumn">', _('First name'), '</th>
+				<th class="SortedColumn">', _('Surname'), '</th>
+				<th class="SortedColumn">', _('Type'), '</th>
+				<th class="SortedColumn">', _('Manager'), '</th>
+				<th class="SortedColumn">', _('Email'), '</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
-	
+
 	while ($MyRow = DB_fetch_array($Result)) {
-	
+
 		printf('<tr class="striped_row">
 					<td>%s</td>
 					<td>%s</td>
@@ -170,8 +170,8 @@ or deletion of the records*/
 					<td>%s</td>
 					<td>%s</td>
 					<td><a href="mailto:%s">%s</a></td>
-					<td class="noprint"><a href="%sSelectedEmployee=%s">' . _('Edit') . '</a></td>
-					<td class="noprint"><a href="%sSelectedEmployee=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this employee?') . '\');">' . _('Delete') . '</a></td>
+					<td class="noPrint"><a href="%sSelectedEmployee=%s">' . _('Edit') . '</a></td>
+					<td class="noPrint"><a href="%sSelectedEmployee=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this employee?') . '\');">' . _('Delete') . '</a></td>
 				</tr>',
 				$MyRow['id'],
 				$MyRow['firstname'],
@@ -231,9 +231,9 @@ if(!isset($_GET['delete'])) {
 		$_POST['Manager'] = $MyRow['manager'];
 		$_POST['UserID'] = $MyRow['userid'];
 		$_POST['Email'] = $MyRow['email'];
-		
+
 		echo '<input type="hidden" name="SelectedEmployee" value="' . $SelectedEmployee . '" />';
-		
+
 		echo '<fieldset>';
 		echo '<legend>' . _('Amend Employee details') . '</legend>';
 		echo '<field>
@@ -268,7 +268,7 @@ if(!isset($_GET['delete'])) {
 	if(!isset($_POST['Email'])) {
 		$_POST['Email'] = '';
 	}
-	
+
 	echo '<field>
 			<label for="FirstName">' . _('First Name') . ':' . '</label>
 			<input type="text" name="FirstName" required="required" value="' . $_POST['FirstName'] . '" title="" size="21" maxlength="20" />
@@ -279,7 +279,7 @@ if(!isset($_GET['delete'])) {
 			<input type="text" name="Surname" required="required" value="'. $_POST['Surname'] . '" title="" namesize="21" maxlength="20" />
 			<fieldhelp>' . _('Enter the employee\'s surname') . '</fieldhelp>
 		</field>
-		
+
 		<field>
 			<label for="StockID">' . _('Labour Type') . ':</label>
 			<select name="StockID" />';
@@ -315,7 +315,7 @@ if(!isset($_GET['delete'])) {
 
 	$ManagersResult = DB_query("SELECT id, CONCAT(firstname, ' ', surname) AS managername
 								FROM employees
-								WHERE id != '" . $SelectedEmployee . "' 
+								WHERE id != '" . $SelectedEmployee . "'
 								ORDER BY surname");
 	if($_POST['Manager']==''){
 		echo '<option selected="selected" value="0">' , _('Not Managed') , '</option>';
@@ -332,7 +332,7 @@ if(!isset($_GET['delete'])) {
 
 	echo '</select>
 		</field>';
-		
+
 	echo '<field>
 			<label for="UserID">' , _('webERP User') , ':' , '</label>
 			<select name="UserID" title=""/>';
@@ -352,7 +352,7 @@ if(!isset($_GET['delete'])) {
 	echo '</select>
 		<fieldhelp>' , _('Select the employee\'s system user account so when the user logs in to enter a time sheet the system knows the employee record to use') , '</fieldhelp>
 	</field>';
-	
+
 	echo '</fieldset>
 		<div class="centre">
 			<input type="submit" name="submit" value="' , _('Enter Information') , '" />

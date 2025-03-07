@@ -231,6 +231,7 @@
 
     <p>Setting up an assembly part requires setting up A Bill Of Material - BOM for the item.</p>
 
+	<h2><a id="BOMMaintenance">BOM Maintenance</a></h2>
     <p>From the manufacturing tab of the main menu - under the Maintenance section - click the link "Bill Of Material Maintenance". The item search fields show with the option to enter either an extract from the item description or the item code. Having entered the selection click on the "Search Now" button. Not all items will show - only those items that can have a BOM - assembly items, manufactured parts and kit-sets. If the part is not defined as an assembly item - it won't show up!</p>
 
     <p>Clicking the part code button will then show a screen for entering components to make up the BOM. If a BOM already exists for the item it will show the components already set up. There are two links next to each item shown in the current BOM to enable the line to be edited or deleted.</p>
@@ -252,12 +253,6 @@
     <h3>Serialised</h3>
 
     <p>Serialised is a special case of controlled where the batch size is always one. The system will prompt for the serial number of each item of stock being received and stock records will be maintained for all serial numbers separately. Serialised does not have any effect if controlled is not set.</p>
-
-    <!--h3>Perishable</h3>
-
-    <!--Suggested content: Definition of Perishable.-->
-
-	<!--Suggested content: Where is it used? (e.g. scripts, formulas, etc.)-->
 
     <h3>Decimal Places for display Quantity</h3>
 
@@ -709,7 +704,7 @@
 
     <p><!-- Help Begin: InventoryValuation --></p>
 
-    <h3>Inventory Valuation Report</h3>
+    <h3><a id="InventoryValuation">Inventory Valuation Report</a></h3>
 
     <p>This report shows the stock on hand at the time the report is run as extended at the current standard cost. Both reports show the total quantity of stock held by Location and by Inventory Category. The detail report lists the individual stock items and value of each. Inventory items with no stock on hand are not printed out. This report can be run with only a selected inventory category and location, to reconcile the stock general ledger accounts.</p>
 
@@ -740,6 +735,9 @@
     <p>
 
     <p>The Inventory Planning Reports are run from the Inventory tab of the main menu under the Inquiries and Reports section. <!-- Help End: InventoryPlanning --></p>
+
+	<h2><a id="AgedControlled">Aged Control Inventory Report</a></h2>
+	<p>A report detailing controlled batches by age is available from the reports menu. This helps users to always select the oldest batch</p>
 
 <!-- Help Begin: StockCheck -->
 

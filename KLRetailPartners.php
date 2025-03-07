@@ -40,7 +40,7 @@ if(isset($_POST['submit'])) {
 
 	if(isset($SelectedPartner) AND $InputError !=1) {
 
-		$SQL = "UPDATE klretailpartners 
+		$SQL = "UPDATE klretailpartners
 				SET partnername ='" . $_POST['PartnerName'] . "',
 					partnernameinvoice ='" . $_POST['PartnerNameInvoice'] . "',
 					partneraddress ='" . $_POST['PartnerAddress'] . "',
@@ -153,7 +153,7 @@ if(isset($_POST['submit'])) {
 
 		/*SelectedPartner is null cos no item selected on first time round so must be adding a	record must be submitting new entries in the new Location form */
 
-		$SQL = "INSERT INTO klretailpartners 
+		$SQL = "INSERT INTO klretailpartners
 								(partnercode,
 								partnername,
 								partnernameinvoice,
@@ -620,10 +620,10 @@ if(!isset($_GET['delete'])) {
 		$_POST['CashSalesReported'] = 0;
 	}
 	if(!isset($_POST['HPPCompensation'])) {
-		$_POST['HPPCompensation'] = 0;
+		$_POST['HPPCompensation'] = 100;
 	}
 	if(!isset($_POST['AccountHPPCompensation'])) {
-		$_POST['AccountHPPCompensation'] = '';
+		$_POST['AccountHPPCompensation'] = '510010050';
 	}
 	if(!isset($_POST['AccountBankDanamon'])) {
 		$_POST['AccountBankDanamon'] = '';
@@ -714,16 +714,16 @@ if(!isset($_GET['delete'])) {
 	echo '<fieldset><legend>' . _('Invoice Details') . '</legend>';
 	echo FieldToSelectOneText('PartnerNameInvoice', $_POST['PartnerNameInvoice'], 51, 50, _('Partner Name in Consignment Invoice/FP'), '');
 	echo FieldToSelectOneText('partneraddressjalan', $_POST['partneraddressjalan'], 51, 100, _('Jalan in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressblok', $_POST['partneraddressblok'], 21, 20, _('Blok in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressblok', $_POST['partneraddressblok'], 21, 20, _('Blok in Consignment Invoice/FP'),'','','',false, false);
 	echo FieldToSelectOneText('partneraddressnomor', $_POST['partneraddressnomor'], 21, 20, _('Nomor in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressrt', $_POST['partneraddressrt'], 21, 20, _('RT in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddressrw', $_POST['partneraddressrw'], 21, 20, _('RW in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddresskecamatan', $_POST['partneraddresskecamatan'], 51, 50, _('Kecamatan in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddresskelurahan', $_POST['partneraddresskelurahan'], 51, 50, _('Kelurahan in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partneraddresskabupaten', $_POST['partneraddresskabupaten'], 51, 50, _('Kabupaten in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partneraddressrt', $_POST['partneraddressrt'], 21, 20, _('RT in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddressrw', $_POST['partneraddressrw'], 21, 20, _('RW in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddresskecamatan', $_POST['partneraddresskecamatan'], 51, 50, _('Kecamatan in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddresskelurahan', $_POST['partneraddresskelurahan'], 51, 50, _('Kelurahan in Consignment Invoice/FP'),'','','',false, false);
+	echo FieldToSelectOneText('partneraddresskabupaten', $_POST['partneraddresskabupaten'], 51, 50, _('Kabupaten in Consignment Invoice/FP'),'','','',false, false);
 	echo FieldToSelectOneText('partneraddresspropinsi', $_POST['partneraddresspropinsi'], 51, 50, _('Propinsi in Consignment Invoice/FP'));
 	echo FieldToSelectOneText('partneraddresskodepos', $_POST['partneraddresskodepos'], 11, 10, _('Kode Pos in Consignment Invoice/FP'));
-	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, _('Telepon in Consignment Invoice/FP'));
+	echo FieldToSelectOneText('partnertelepon', $_POST['partnertelepon'], 21, 20, _('Telepon in Consignment Invoice/FP'),'','','',false, false);
 	echo FieldToSelectOneText('PartnerNPWPInvoice', $_POST['PartnerNPWPInvoice'], 21, 20, _('NPWP in Consignment Invoice/FP'));
 	echo '</fieldset>';
 
@@ -765,13 +765,11 @@ if(!isset($_GET['delete'])) {
 	echo FieldToSelectOneGLAccount('AccountConsignmentCOGSPartner', $_POST['AccountConsignmentCOGSPartner'], _('Consignment COGS Partner GL Account'));
 	echo '</fieldset>';
 
-/*	KL RICARD: These parameters are obsolete. Used for HPP Compensation in accounting
 	echo '<fieldset><legend>' . _('HPP Compensation (Obsolete)') . '</legend>';
-	echo FieldToSelectOneText('HPPCompensation', $_POST['HPPCompensation'], 5, 5, _('% HPP Compensation'));
+	echo FieldToSelectOneText('HPPCompensation', $_POST['HPPCompensation'], 5, 5, _('% HPP Compensation (Obsolete. Always 100)'));
 	echo FieldToSelectOneGLAccount('AccountHPPCompensation', $_POST['AccountHPPCompensation'], _('HPP Compensation GL Account'));
 	echo '</fieldset>';
-	KL RICARD END: These parameters are obsolete. Used for HPP Compensation in accounting
-*/
+
 	echo OneButtonCenteredForm('submit', _('Enter Information'));
 
 	echo '</div>

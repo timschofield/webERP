@@ -240,6 +240,22 @@ if(isset($PrintPDF)
 		}
 		if(DB_num_rows($Result)==1) {
 			$MyRow = DB_fetch_array($Result);
+
+			if ( $_SESSION['SalesmanLogin'] != '' AND $_SESSION['SalesmanLogin'] != $MyRow['salesman'] ) {
+				$Title=_('Select Invoices/Credit Notes To Print');
+				include('includes/header.php');
+				prnMsg(_('Your account is set up to see only a specific salespersons orders. You are not authorised to view transaction for this order'),'error');
+				include('includes/footer.php');
+				exit;
+			}
+			if ( $CustomerLogin == 1 AND $MyRow['debtorno'] != $_SESSION['CustomerID'] ) {
+				$Title=_('Select Invoices/Credit Notes To Print');
+				include('includes/header.php');
+				echo '<p class="bad">' . _('This transaction is addressed to another customer and cannot be displayed for privacy reasons') . '. ' . _('Please select only transactions relevant to your company').'</p>';
+				include('includes/footer.php');
+				exit;
+			}
+
 			$ExchRate = $MyRow['rate'];
 
 			//Change the language to the customer's language

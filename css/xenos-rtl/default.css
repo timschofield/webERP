@@ -18,12 +18,12 @@ margin:0 auto;
 margin-bottom:10px;
 }
 img {
-width:32px;
-height:32px;
+	/* width and height will be controlled by HTML attributes */
+	max-width: 100%; /* prevent images from overflowing their containers */
 }
 img.StockImage {
-width:48px;
-transition: transform .5s;
+	/* width will be controlled by HTML attributes */
+	transition: transform .5s;
 }
 img.StockImage:hover {
 transform: scale(5);
@@ -88,6 +88,19 @@ visibility: hidden;
 position: relative;
 }
 .graph {
-width:950px;
-height:450px;
+    width: 95vw;
+    height: 80vh;
+    max-width: 100%;
+    margin: 0 auto;
+}
+p{ /* some text need to be centered */
+    /*text-align:center;*/
+}
+p.good {
+    font-weight: bold;
+    color: green;
+}
+p.bad {
+    font-weight: bold;
+    color:red;
 }

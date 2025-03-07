@@ -1804,7 +1804,7 @@ if (!isset($_POST['ProcessSale'])){
 	echo '</font>';
  
 	if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1){
-  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
+  		echo '<br /><div class="centre"><input type="reset" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
 	}
 }
 echo '</form>';

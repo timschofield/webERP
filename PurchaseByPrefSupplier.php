@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title=_('Preferred Supplier Purchasing');
+$ViewTopic = 'PurchaseOrdering';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
@@ -40,8 +42,8 @@ if (isset($_POST['CreatePO']) AND isset($_POST['Supplier'])){
 								MAX(purchdata.effectivefrom) AS latesteffectivefrom
 							FROM purchdata
 							WHERE purchdata.supplierno = '" . $_POST['Supplier'] . "'
-							AND purchdata.effectivefrom <=CURRENT_DATE
-							AND purchdata.stockid = '". $StockID . "'
+								AND purchdata.effectivefrom <= CURRENT_DATE
+								AND purchdata.stockid = '". $StockID . "'
 							GROUP BY purchdata.price,
 									purchdata.conversionfactor,
 									purchdata.supplierdescription,
@@ -410,17 +412,17 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 		echo '<table>
 			<thead>
 				<tr>
-					<th class="ascending">' . _('Item Code') . '</th>
-					<th class="ascending">' . _('Item Description') . '</th>
-					<th class="ascending">' . _('Bin') . '</th>
-					<th class="ascending">' . _('On Hand') . '</th>
-					<th class="ascending">' . _('Demand') . '</th>
-					<th class="ascending">' . _('Supp Ords') . '</th>
-					<th class="ascending">' . _('Previous') . '<br />' ._('Month') . '</th>
-					<th class="ascending">' . _('Last') . '<br />' ._('Month') . '</th>
-					<th class="ascending">' . _('Week') . '<br />' ._('3') . '</th>
-					<th class="ascending">' . _('Week') . '<br />' ._('2') . '</th>
-					<th class="ascending">' . _('Last') . '<br />' ._('Week') . '</th>
+					<th class="SortedColumn">' . _('Item Code') . '</th>
+					<th class="SortedColumn">' . _('Item Description') . '</th>
+					<th class="SortedColumn">' . _('Bin') . '</th>
+					<th class="SortedColumn">' . _('On Hand') . '</th>
+					<th class="SortedColumn">' . _('Demand') . '</th>
+					<th class="SortedColumn">' . _('Supp Ords') . '</th>
+					<th class="SortedColumn">' . _('Previous') . '<br />' ._('Month') . '</th>
+					<th class="SortedColumn">' . _('Last') . '<br />' ._('Month') . '</th>
+					<th class="SortedColumn">' . _('Week') . '<br />' ._('3') . '</th>
+					<th class="SortedColumn">' . _('Week') . '<br />' ._('2') . '</th>
+					<th class="SortedColumn">' . _('Last') . '<br />' ._('Week') . '</th>
 					<th>' . _('Order Qty') . '</th>
 				</tr>
 			</thead>
@@ -434,13 +436,13 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 			$SQL = "SELECT SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-2, date('d'), date('Y'))) . "' AND
 								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "') THEN -qty ELSE 0 END) AS previousmonth,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m')-1, date('d'), date('Y'))) . "' AND
-								trandate<=CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
+								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS lastmonth,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(3*7), date('Y'))) . "' AND
 								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "') THEN -qty ELSE 0 END) AS wk3,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-(2*7), date('Y'))) . "' AND
 								trandate<='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "') THEN -qty ELSE 0 END) AS wk2,
 						SUM(CASE WHEN (trandate>='" . Date('Y-m-d',mktime(0,0,0, date('m'), date('d')-7, date('Y'))) . "' AND
-								trandate<=CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
+								trandate<= CURRENT_DATE) THEN -qty ELSE 0 END) AS wk1
 					FROM stockmoves
 					WHERE stockid='" . $ItemRow['stockid'] . "'
 					AND (type=10 OR type=11)";
@@ -460,88 +462,10 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 
 			$SalesRow = DB_fetch_array($SalesResult);
 
-			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-					FROM salesorderdetails INNER JOIN salesorders
-					ON salesorderdetails.orderno=salesorders.orderno
-					WHERE salesorderdetails.stkcode = '" . $ItemRow['stockid'] . "'
-					AND salesorderdetails.completed = 0
-					AND salesorders.quotation=0";
-
-			$DemandResult = DB_query($SQL, '', '', false, false);
-
-
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The sales order demand quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'.$SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit;
-			}
-
-	// Also need to add in the demand as a component of an assembly items if this items has any assembly parents.
-
-			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-					FROM salesorderdetails INNER JOIN bom
-					ON salesorderdetails.stkcode=bom.parent
-					INNER JOIN	stockmaster
-					ON stockmaster.stockid=bom.parent
-					INNER JOIN salesorders
-					ON salesorders.orderno = salesorderdetails.orderno
-					WHERE  salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-					AND bom.component='" . $ItemRow['stockid'] . "'
-					AND stockmaster.mbflag='A'
-					AND salesorderdetails.completed=0
-					AND salesorders.quotation=0";
-
-			$BOMDemandResult = DB_query($SQL,'','',false,false);
-
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The sales order demand quantities from parent assemblies could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'.$SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit;
-			}
-
-			$SQL = "SELECT SUM(purchorderdetails.quantityord- purchorderdetails.quantityrecd) as qtyonorder
-					FROM purchorderdetails
-					LEFT JOIN purchorders
-					ON purchorderdetails.orderno = purchorders.orderno
-					LEFT JOIN purchdata
-					ON purchorders.supplierno=purchdata.supplierno
-					AND purchorderdetails.itemcode=purchdata.stockid
-					WHERE  purchorderdetails.itemcode = '" . $ItemRow['stockid'] . "'
-					AND purchorderdetails.completed = 0
-					AND purchorders.status <> 'Cancelled'
-					AND purchorders.status <> 'Rejected'
-					AND purchorders.status <> 'Pending'
-					AND purchorders.status <> 'Completed'";
-
-			$DemandRow = DB_fetch_array($DemandResult);
-			$BOMDemandRow = DB_fetch_array($BOMDemandResult);
-			$TotalDemand = $DemandRow['qtydemand'] + $BOMDemandRow['dem'];
-
-			$OnOrdResult = DB_query($SQL, '', '', false, false);
-			if (DB_error_no() !=0) {
-		 		$Title = _('Preferred supplier purchasing') . ' - ' . _('Problem Report') . '....';
-		  		include('includes/header.php');
-		   		prnMsg( _('The purchase order quantities could not be retrieved by the SQL because') . ' - ' . DB_error_msg(),'error');
-		   		echo '<br /><a href="' .$RootPath .'/index.php">' . _('Back to the menu') . '</a>';
-		   		if ($Debug==1){
-		      			echo '<br />'. $SQL;
-		   		}
-		   		include('includes/footer.php');
-		   		exit;
-			}
-			$OnOrdRow = DB_fetch_array($OnOrdResult);
+			// Get the demand
+			$TotalDemand = GetDemand($ItemRow['stockid'], 'ALL');
+			// Get the QOO
+			$QOO = GetQuantityOnOrder($ItemRow['stockid'], 'ALL');
 
 			if (!isset($_POST['OrderQty' . $i])){
 				$_POST['OrderQty' . $i] =0;
@@ -552,7 +476,7 @@ if (isset($_POST['Supplier']) AND isset($_POST['ShowItems']) AND $_POST['Supplie
 					<td>' . $ItemRow['bin'] . '</td>
 					<td class="number">' . round($ItemRow['qoh'],$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($TotalDemand,$ItemRow['decimalplaces']) . '</td>
-					<td class="number">' . round($OnOrdRow['qtyonorder'],$ItemRow['decimalplaces']) . '</td>
+					<td class="number">' . round($QOO,$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($SalesRow['previousmonth'],$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($SalesRow['lastmonth'],$ItemRow['decimalplaces']) . '</td>
 					<td class="number">' . round($SalesRow['wk3'],$ItemRow['decimalplaces']) . '</td>

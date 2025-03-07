@@ -10,6 +10,7 @@ customers. It needs to take shipment into account as well (currently it doesn't.
 
 include('includes/DefineReceiptClass.php');
 include('includes/session.php');
+if (isset($_POST['DateBanked'])){$_POST['DateBanked'] = ConvertSQLDate($_POST['DateBanked']);};
 
 include('includes/GetPaymentMethods.php');
 
@@ -25,6 +26,8 @@ if ($_GET['Type']=='GL') {
 
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
+
 if (empty($_GET['identifier'])) {
 	$identifier = date('U');
 } else {
@@ -278,7 +281,7 @@ if (isset($_POST['CommitBatch'])){
 	}
 
 	/*Start a transaction to do the whole lot inside */
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 	$_SESSION['ReceiptBatch' . $identifier]->BatchNo = GetNextTransNo(12);
 
 
@@ -302,7 +305,7 @@ if (isset($_POST['CommitBatch'])){
 				<th class="text">', _('GL Code'), '</th>
 				<th class="number">', _('Amount of Receipt'), '</th>';
 	if(isset($ReceiptItem) AND $ReceiptItem->GLCode =='') {
-		echo '<th class="noprint">&nbsp;</th>';
+		echo '<th class="noPrint">&nbsp;</th>';
 	}
 	echo '</tr>
 		</thead><tbody>';
@@ -317,11 +320,11 @@ if (isset($_POST['CommitBatch'])){
 			<td>' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . '</td>
 			<td>' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '</td>
 			<td>' . $ReceiptItem->CustomerName . '</td>
-			<td class="text">' . $ReceiptItem->GLCode . ' - ' . $MyRow['accountname'] . '</td>
+			<td class="text">' . $ReceiptItem->GLCode . ' - ' . ($MyRow['accountname'] ?? '') . '</td>
 			<td class="number">' . locale_number_format($ReceiptItem->Amount/$_SESSION['ReceiptBatch' . $identifier]->ExRate/$_SESSION['ReceiptBatch' . $identifier]->FunctionalExRate,$_SESSION['ReceiptBatch' . $identifier]->CurrDecimalPlaces)  . '</td>';
 
 		if ($ReceiptItem->GLCode ==''){
-			echo '<td class="noprint"><a target="_blank" href="', $RootPath, '/PDFReceipt.php?BatchNumber=', $_SESSION['ReceiptBatch' . $identifier]->BatchNo, '&ReceiptNumber=', $CustomerReceiptCounter, '">', _('Print a Customer Receipt'), '</a></td></tr>';
+			echo '<td class="noPrint"><a target="_blank" href="', $RootPath, '/PDFReceipt.php?BatchNumber=', $_SESSION['ReceiptBatch' . $identifier]->BatchNo, '&ReceiptNumber=', $CustomerReceiptCounter, '">', _('Print a Customer Receipt'), '</a></td></tr>';
 			$CustomerReceiptCounter += 1;
 		}
 
@@ -346,13 +349,9 @@ if (isset($_POST['CommitBatch'])){
 				$ErrMsg = _('Cannot insert a GL entry for the receipt because');
 				$DbgMsg = _('The SQL that failed to insert the receipt GL entry was');
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				foreach ($ReceiptItem->tag as $Tag) {
-					$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-														'" . $Tag . "')";
-					$ErrMsg = _('Cannot insert a GL tag for the journal line because');
-					$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-					$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-				}
+				/* KL RICARD Do not show tags
+				InsertGLTags($ReceiptItem->tag);
+				KL RICARD Do not show tags */
 			}
 
 			/*check to see if this is a GL posting to another bank account (or the same one)
@@ -602,11 +601,11 @@ if (isset($_POST['CommitBatch'])){
 
 	$ErrMsg = _('Cannot commit the changes');
 	$DbgMsg = _('The SQL that failed was');
-	$Result = DB_Txn_Commit();
+	 DB_Txn_Commit();
 	echo '<br />';
 	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
-	echo '<div class="centre noprint">',
+	echo '<div class="centre noPrint">',
 		'<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . _('Print') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/PDFBankingSummary.php?BatchNo=' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . '">' . _('Print PDF Batch Summary') . '</a></p>';
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/allocation.png" title="' . _('Allocate') . '" alt="" />' . ' ' . '<a href="' . $RootPath . '/CustomerAllocations.php">' . _('Allocate Receipts') . '</a></p>';
 	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/transactions.png" title="', _('Enter Receipts'), '" /> ', '<a href="', $RootPath, '/CustomerReceipt.php?NewReceipt=Yes&Type=', urlencode($_GET['Type']), '">', _('Enter Receipts'), '</a></p>',
@@ -710,21 +709,21 @@ customer record returned by the search - this record is then auto selected */
 				debtorsmaster.creditlimit,
 				holdreasons.dissallowinvoices,
 				holdreasons.reasondescription,
-				SUM(debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc) AS balance,
+				SUM(debtortrans.balance) AS balance,
 				SUM(CASE WHEN paymentterms.daysbeforedue > 0  THEN
-					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue  THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+					CASE WHEN (TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate)) >= paymentterms.daysbeforedue  THEN debtortrans.balance ELSE 0 END
 				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= 0 THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= 0 THEN debtortrans.balance ELSE 0 END
 				END) AS due,
 				SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
 					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue	AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays1'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight - debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
 				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays1'] . " THEN debtortrans.balance ELSE 0 END
 				END) AS overdue1,
 				SUM(CASE WHEN paymentterms.daysbeforedue > 0 THEN
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) > paymentterms.daysbeforedue AND TO_DAYS(Now()) - TO_DAYS(debtortrans.trandate) >= (paymentterms.daysbeforedue + " . $_SESSION['PastDueDays2'] . ") THEN debtortrans.balance ELSE 0 END
 				ELSE
-					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN debtortrans.ovamount + debtortrans.ovgst + debtortrans.ovfreight + debtortrans.ovdiscount - debtortrans.alloc ELSE 0 END
+					CASE WHEN TO_DAYS(Now()) - TO_DAYS(ADDDATE(last_day(debtortrans.trandate), paymentterms.dayinfollowingmonth)) >= " . $_SESSION['PastDueDays2'] . " THEN debtortrans.balance ELSE 0 END
 				END) AS overdue2
 			FROM debtorsmaster INNER JOIN paymentterms
 			ON debtorsmaster.paymentterms = paymentterms.termsindicator
@@ -861,7 +860,7 @@ if ($_SESSION['ReceiptBatch' . $identifier]->DateBanked == '' or !Is_Date($_SESS
 
 echo '<field>
 		<label for="DateBanked">' . _('Date Banked') . ':</label>
-		<input tabindex="2" type="text" required="required" class="date" name="DateBanked" maxlength="10" size="11" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')" value="' . $_SESSION['ReceiptBatch' . $identifier]->DateBanked . '" />
+		<input tabindex="2" required="required" type="date" name="DateBanked" maxlength="10" size="11" value="' . FormatDateForSQL($_SESSION['ReceiptBatch' . $identifier]->DateBanked) . '" />
 	</field>';
 
 echo '<field>
@@ -1029,31 +1028,22 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 				<th>' . _('Amount') . ' ' . _('Received') . '</th>
 				<th>' . _('GL Code') . '</th>
 				<th>' . _('Narrative') . '</th>
-				<th>' . _('Tag') . '</th>
 			</tr>';
 
 		foreach ($_SESSION['ReceiptBatch' . $identifier]->Items as $ReceiptItem) {
 
-			$TagDescriptions = '';
-			foreach ($ReceiptItem->tag as $Tag) {
-				$TagSql = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-				$TagResult = DB_query($TagSql);
-				$TagRow = DB_fetch_array($TagResult);
-				if ($Tag == 0) {
-					$TagRow['tagdescription'] = _('None');
-				}
-				$TagDescriptions.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-			}
-
+			/* KL RICARD Do not show tags
+			$TagDescriptions = GetDescriptionsFromTagArray($ReceiptItem->tag);
+			KL RICARD Do not show tags */
+			
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
 			$Result=DB_query($SQL);
-		$MyRow=DB_fetch_array($Result);
+			$MyRow=DB_fetch_array($Result);
 
 			echo '<tr>
 					<td class="number">' . locale_number_format($ReceiptItem->Amount,$_SESSION['ReceiptBatch' . $identifier]->CurrDecimalPlaces) . '</td>
 					<td>' . $ReceiptItem->GLCode.' - '.$MyRow['accountname'] . '</td>
 					<td>' .  stripslashes($ReceiptItem->Narrative) . '</td>
-					<td>' .  $TagDescriptions . '</td>
 					<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete='     . urlencode($ReceiptItem->ID)
 																								. '&Type='       . urlencode($_GET['Type'])
 																								. '&identifier=' . urlencode($identifier) . '">'
@@ -1140,6 +1130,7 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 	echo '<fieldset>
 			<legend>' . _('General Ledger Receipt Entry') . '</legend>';
 
+	/* KL RICARD Do not show tags
 	//Select the tag
 	echo '<field>
 			<label for="tag[]">', _('Select Tag(s)'), ':</label>
@@ -1162,8 +1153,9 @@ if (isset($_POST['GLEntry']) AND isset($_SESSION['ReceiptBatch' . $identifier]))
 		<fieldhelp>', _('Select any number of tags to associate this receipt with - use the ctrl button to pick multiple tags.'), '</fieldhelp>
 	</field>';
 
-// End select tag
-
+	// End select tag
+	KL RICARD Do not show tags */
+	
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	echo '<field>
 			<label for="GLCode">' . _('GL Account') . ':</label>

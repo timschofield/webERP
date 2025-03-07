@@ -3,9 +3,11 @@
 include ('includes/DefineSerialItems.php');
 include ('includes/SQL_CommonFunctions.inc');
 include ('includes/session.php');
+if (isset($_POST['RecdAfterDate'])){$_POST['RecdAfterDate'] = ConvertSQLDate($_POST['RecdAfterDate']);};
 
 $Title = _('Reverse Goods Received');
-
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include ('includes/header.php');
 
 if ((isset($_SESSION['SupplierID']) and $_SESSION['SupplierID'] != '') or (!isset($_POST['SupplierID']) or $_POST['SupplierID']) == '') {
@@ -112,7 +114,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 
 	/*Start an SQL transaction */
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	$PeriodNo = GetPeriod(ConvertSQLDate($GRN['deliverydate']));
 
@@ -330,7 +332,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 	} /* end of if GL and stock integrated*/
 
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	echo '<br />' . _('GRN number') . ' ' . $_GET['GRNNo'] . ' ' . _('for') . ' ' . $QtyToReverse . ' x ' . $GRN['itemcode'] . ' - ' . $GRN['itemdescription'] . ' ' . _('has been reversed') . '<br />';
 	unset($_GET['GRNNo']); // to ensure it cant be done again!!
@@ -350,7 +352,7 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 			<legend>', _('GRN Selection'), '</legend>';
 	echo '<field>
 			<label for="RecdAfterDate">' . _('Show all goods received after') . ': </label>
-			<input type="text" class="date" name="RecdAfterDate" value="' . $_POST['RecdAfterDate'] . '" maxlength="10" size="11" />
+			<input type="date" name="RecdAfterDate" value="' . FormatDateForSQL($_POST['RecdAfterDate']) . '" maxlength="10" size="11" />
 		</field>
 		</fieldset>
 		<div class="centre">
@@ -384,18 +386,19 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 		if (DB_num_rows($Result) == 0) {
 			prnMsg(_('There are no outstanding goods received yet to be invoiced for') . ' ' . $_POST['SuppName'] . '.<br />' . _('To reverse a GRN that has been invoiced first it must be credited'), 'warn');
 		} else { //there are GRNs to show
-			echo '<br /><table cellpadding="2" class="selection">';
-			$TableHeader = '<tr>
-								<th>' . _('GRN') . ' #</th>
-								<th>' . _('GRN Batch') . '</th>
-								<th>' . _('Supplier\' Ref') . '</th>
-								<th>' . _('Item Code') . '</th>
-								<th>' . _('Description') . '</th>
-								<th>' . _('Date') . '<br />' . _('Received') . '</th>
-								<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
-								<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
-								<th>' . _('Quantity To') . '<br />' . _('Reverse') . '</th>
-							</tr>';
+			echo '<table cellpadding="2" class="selection">
+					<tr>
+						<th>' . _('GRN') . ' #</th>
+						<th>' . _('GRN Batch') . '</th>
+						<th>' . _('Supplier\' Ref') . '</th>
+						<th>' . _('Item Code') . '</th>
+						<th>' . _('Description') . '</th>
+						<th>' . _('Date') . '<br />' . _('Received') . '</th>
+						<th>' . _('Quantity') . '<br />' . _('Received') . '</th>
+						<th>' . _('Quantity') . '<br />' . _('Invoiced') . '</th>
+						<th>' . _('Quantity To') . '<br />' . _('Reverse') . '</th>
+						<th></th>
+					</tr>';
 
 			echo $TableHeader;
 
@@ -409,24 +412,19 @@ if (isset($_GET['GRNNo']) and isset($_POST['SupplierID'])) {
 				$DisplayDateDel = ConvertSQLDate($MyRow['deliverydate']);
 				$LinkToRevGRN = '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?GRNNo=' . $MyRow['grnno'] . '">' . _('Reverse') . '</a>';
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>', $MyRow['grnno'], $MyRow['grnbatch'], $MyRow['supplierref'], $MyRow['itemcode'], $MyRow['itemdescription'], $DisplayDateDel, $DisplayQtyRecd, $DisplayQtyInv, $DisplayQtyRev, $LinkToRevGRN);
+				echo '<tr class="striped_row">
+						<td>', $MyRow['grnno'], '</td>
+						<td>', $MyRow['grnbatch'], '</td>
+						<td>', $MyRow['supplierref'], '</td>
+						<td>', $MyRow['itemcode'], '</td>
+						<td>', $MyRow['itemdescription'], '</td>
+						<td>', $DisplayDateDel, '</td>
+						<td class="number">', $DisplayQtyRecd, '</td>
+						<td class="number">', $DisplayQtyInv, '</td>
+						<td class="number">', $DisplayQtyRev, '</td>
+						<td>', $LinkToRevGRN, '</td>
+					</tr>';
 
-				$RowCounter++;
-				if ($RowCounter > 20) {
-					$RowCounter = 0;
-					echo $TableHeader;
-				}
 			}
 
 			echo '</table>';

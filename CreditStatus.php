@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title = _('Credit Status Code Maintenance');
+$ViewTopic = 'CreditStatus';
+$BookMark = 'CreditStatus';
 include('includes/header.php');
 
 if (isset($_GET['SelectedReason'])){
@@ -100,14 +102,16 @@ if (isset($_POST['submit'])) {
 		}
 
 		$Msg = _('A new credit status record has been inserted');
-		unset ($SelectedReason);
-		unset ($_POST['ReasonDescription']);
 	}
 	//run the SQL from either of the above possibilites
 	$Result = DB_query($SQL);
 	if ($Msg != '') {
 		prnMsg($Msg,'success');
 	}
+	unset ($SelectedReason);
+	unset ($_POST['ReasonCode']);
+	unset ($_POST['ReasonDescription']);
+	unset ($_POST['submit']);
 } elseif (isset($_GET['delete'])) {
 //the link to delete a selected record was clicked instead of the submit button
 

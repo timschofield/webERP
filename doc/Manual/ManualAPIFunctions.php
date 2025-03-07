@@ -21,7 +21,7 @@ $ServerString = $_SERVER['HTTP_HOST'].$RootPath;
 $FirstBitOfURL = mb_substr($ServerString,0,mb_strpos($ServerString,'/doc/Manual'));
 
 
-$ServerURL = "http://".  $FirstBitOfURL ."/api/api_xml-rpc.php";
+$ServerURL = "//".  $FirstBitOfURL ."/api/api_xml-rpc.php";
 $DebugLevel = 0; //Set to 0,1, or 2 with 2 being the highest level of debug info
 
 $msg = new xmlrpcmsg("system.listMethods", array());

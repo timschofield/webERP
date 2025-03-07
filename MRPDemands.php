@@ -6,6 +6,7 @@
 // to pass value of $StockID to functions.
 
 include('includes/session.php');
+if (isset($_POST['Duedate'])){$_POST['Duedate'] = ConvertSQLDate($_POST['Duedate']);};
 $Title = _('MRP Demands');
 $ViewTopic= 'MRP';
 $BookMark = 'MRP_MasterSchedule';
@@ -341,7 +342,7 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 						<a href="'. htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?listall=yes">' . _('List All Demands')  . '</a>
 					</field>
 				</fieldset>';
-				
+
 		echo '<div class="centre">
 				<input tabindex="3" type="submit" name="Search" value="' . _('Search Now') . '" />
 			</div>';
@@ -394,7 +395,7 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 		}
 
 		if (!isset($_POST['Duedate'])) {
-			$_POST['Duedate']=' ';
+			$_POST['Duedate']=date($_SESSION['DefaultDateFormat']);
 		}
 
 		echo '<field>
@@ -403,7 +404,7 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 			</field>
 			<field>
 				<label for="Duedate">' . _('Due Date') . ':</label>
-				<input type="text" class="date" name="Duedate" size="11" maxlength="10" value="' . $_POST['Duedate'] . '" />
+				<input type="date" name="Duedate" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['Duedate']) . '" />
 			</field>';
 		// Generate selections for Demand Type
 		echo '<field>
@@ -428,7 +429,7 @@ function display(&$StockID,&$DemandID) { //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_D
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Enter Information') . '" />&nbsp;&nbsp;
 				<input type="submit" name="listsome" value="' . _('List Selection') . '" />&nbsp;&nbsp;
-				<input type="submit" name="deletesome" value="' . _('Delete Demand Type') . '" />';
+				<input type="reset" name="deletesome" value="' . _('Delete Demand Type') . '" />';
 		// If mrpdemand record exists, display option to delete it
 		if ((isset($DemandID)) AND (DB_num_rows($Result) > 0)) {
 			echo '<a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?delete=yes&amp;StockID='.$StockID.'&amp;DemandID=' . $DemandID . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this demand?') . '\');">' . _('Or Delete Record') . '</a>';

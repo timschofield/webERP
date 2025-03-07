@@ -3,6 +3,7 @@
 
 include('includes/session.php');
 include('includes/CurrenciesArray.php'); // To get the currency name from the currency code.
+if (isset($_POST['ClientSince'])){$_POST['ClientSince'] = ConvertSQLDate($_POST['ClientSince']);};
 
 if (isset($_POST['Edit']) or isset($_GET['Edit']) or isset($_GET['DebtorNo'])) {
 	$ViewTopic = 'AccountsReceivable';
@@ -445,7 +446,7 @@ if (!isset($DebtorNo)) {
 
 	$DataError =0;
 
-	echo '<fieldset class="TwoColumn">
+	echo '<fieldset>
 			<legend>', _('Create Customer Details'), '</legend>
 			<fieldset class="Column1">';
 
@@ -541,10 +542,10 @@ if (!isset($DebtorNo)) {
 			</field>';
 	}
 
-	$DateString = Date($_SESSION['DefaultDateFormat']);
+	$DateString = Date('Y-m-d');
 	echo '<field>
 			<label for="ClientSince">' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input tabindex="10" type="text" class="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" />
+			<input tabindex="10" type="date" name="ClientSince" value="' . $DateString . '" size="11" maxlength="10" />
 		</field>
 	</fieldset>';
 
@@ -573,7 +574,7 @@ if (!isset($DebtorNo)) {
 	$Result=DB_query("SELECT terms, termsindicator FROM paymentterms");
 	if (DB_num_rows($Result)==0){
 		$DataError =1;
-		echo '<field><td colspan="2">' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error') . '</td></field>';
+		echo '<field><td colspan="2">' . prnMsg(_('There are no payment terms currently defined - go to the setup tab of the main menu and set at least one up first'),'error','',true) . '</td></field>';
 	} else {
 
 		echo '<field>
@@ -683,8 +684,8 @@ if (!isset($DebtorNo)) {
 
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-	echo '<fieldset class="TwoColumn">
-			<legend>', _('Create New Customer'), '</legend>';
+	echo '<fieldset>
+			<legend>', _('Edit Customer Details'), '</legend>';
 
 	if (!isset($_POST['New'])) {
 		$SQL = "SELECT debtorno,
@@ -913,7 +914,7 @@ if (!isset($DebtorNo)) {
 	} else {
 		echo '<field>
 				<label for="DefaultDateFormat">' . _('Customer Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-				<input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="text" class="date" name="ClientSince" size="11" maxlength="10" value="' . $_POST['ClientSince'] . '" />
+				<input ' . (in_array('ClientSince',$Errors) ?  'class="inputerror"' : '' ) .' type="date" name="ClientSince" size="11" maxlength="10" value="' . FormatDateForSQL($_POST['ClientSince']) . '" />
 			</field>
 			</fieldset>
 			<fieldset class="Column2">';
@@ -1175,13 +1176,13 @@ if (!isset($DebtorNo)) {
 	if (isset($_POST['New']) AND $_POST['New']) {
 		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Add New Customer') . '" />&nbsp;
-				<input type="submit" name="Reset" value="' . _('Reset') . '" />
+				<input type="reset" name="Reset" value="' . _('Reset') . '" />
 			</div>';
 	} elseif (!isset($_GET['Modify'])){
 		echo '<br />
 			<div class="centre">
 				<input type="submit" name="submit" value="' . _('Update Customer') . '" />&nbsp;
-				<input type="submit" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
+				<input type="reset" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
             </div>';
 	}
 

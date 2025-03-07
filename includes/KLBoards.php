@@ -4,6 +4,49 @@
 			FUNCTIONS RELATED CONTROL, PERFORMANCE OR OTHER KL BOARDS
 **************************************************************************************************/
 
+/**************************************************************************************************
+ALPHABETICAL LIST OF FUNCTIONS:
+
+ActiveTransfersByLocation - Shows pending transfers by location
+ActiveTransferStatus - Shows status of active transfers
+AverageKPIHistory - Shows average business KPI history
+AverageSales - Shows average sales for different time periods
+ChangeItemStandardCost - Updates the standard cost of an item
+CheckPackagingToBeRefilled - Checks packaging that needs to be refilled
+ComponentsToObsolete - Shows components that are not used in any BOM
+ErrorsInTransfers - Shows errors in closed transfers during a specified period
+FinishedStockDistribution - Shows distribution of finished stock by various criteria
+FinishedStockDistributionByShopAndCategory - Shows finished stock distribution by shop and category
+GetTopSalesField - Gets the field to be used in top sales queries based on days
+GetTotalQtyItemsForSale - Gets total quantity of items for sale
+GetTotalValueItemsForSale - Gets total value of items for sale
+GoodsToBeProduced - Shows components ready to be transformed into sellable goods
+InsuficientStockForShopPackaging - Shows shop packaging items with insufficient stock
+ItemsWithoutRetailPrice - Shows items without retail price
+LocationInformationReview - Shows shop information
+MaintenanceTasksList - Shows maintenance tasks list
+MaintenanceTasksDistribution - Shows distribution of maintenance tasks
+OnlineMarketPlacePaymentPending - Shows online marketplace orders with pending payments
+PackagingToBeRefilledFromGudang - Shows packaging that needs to be refilled from a specific location
+POStatusControl - Shows purchase orders status control by type
+PositionTopSalesItem - Returns the position of an item in top sales
+PurchaseOrdersProcessTime - Shows process time for purchase orders
+PurchaseOrdersWrongPlannedDates - Shows purchase orders with wrong planned dates
+RecentlyClosedTransferStatus - Shows recently closed transfers status
+RoundPackagingTransfer - Rounds packaging transfer quantity
+SQLFilterStockmasterForOnlineShop - Provides SQL filtering for online shop
+ShowTotalItemsMoving - Shows total items moving to discount
+TransfersDelayed - Shows transfers delayed more than specified days
+WrongStandardCost - Shows items with wrong standard cost
+**************************************************************************************************/
+
+/**************************************************************************************************************
+* Function: ActiveTransfersByLocation
+* Brief description: Shows pending transfers by location
+* Parameters:
+*   - $RootPath: Root path of the application
+* Returns: None
+**************************************************************************************************************/
 function ActiveTransfersByLocation($RootPath){
 	$TotalTransferIn = 0;
 	$TotalTransferOut = 0;
@@ -108,6 +151,13 @@ function ActiveTransfersByLocation($RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Function: ActiveTransferStatus
+* Brief description: Shows status of active transfers
+* Parameters:
+*   - $RootPath: Root path of the application
+* Returns: None
+**************************************************************************************************************/
 function ActiveTransferStatus($RootPath){
 	$SQL = "SELECT reference,
 					shipdate,
@@ -185,6 +235,18 @@ function ActiveTransferStatus($RootPath){
 	}
 }
 
+/**************************************************************************************************************
+* Function: AverageKPIHistory
+* Brief description: Shows average business KPI history for different time periods
+* Parameters:
+*   - $NumDaysA: Number of days for period A
+*   - $NumDaysB: Number of days for period B
+*   - $NumDaysC: Number of days for period C
+*   - $NumDaysD: Number of days for period D
+*   - $NumDaysE: Number of days for period E
+*   - $NumDaysF: Number of days for period F
+* Returns: None
+**************************************************************************************************************/
 function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF){
 
 	$StartDateA = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']), 'd', -$NumDaysA));
@@ -314,6 +376,22 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 	}
 }
 
+/**************************************************************************************************************
+* Function: AverageSales
+* Brief description: Shows average sales for different time periods
+* Parameters:
+*   - $TypeReport: Type of report (Shop, Online, etc.)
+*   - $NumDaysA: Number of days for period A
+*   - $NumDaysB: Number of days for period B
+*   - $NumDaysC: Number of days for period C
+*   - $NumDaysD: Number of days for period D
+*   - $NumDaysE: Number of days for period E
+*   - $NumDaysF: Number of days for period F
+*   - $NumDaysSort: Number of days for sorting
+*   - $Year: Year for report (CurrentYear or LastYear)
+*   - $Shop: Shop code or "All" for all shops
+* Returns: None
+**************************************************************************************************************/
 function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE, $NumDaysF, $NumDaysSort, $Year, $Shop){
 
 	if ($Year == "LastYear"){
@@ -743,7 +821,7 @@ function ChangeItemStandardCost($StockID, $NewCost, $OldCost, $QOH){
 									labourcost='" . 0 . "',
 									overheadcost='" . 0 . "',
 									lastcost='" . $OldCost . "',
-									lastcostupdate ='" . Date('Y-m-d')."'
+									lastcostupdate = CURRENT_DATE
 							WHERE stockid='" . $StockID . "'";
 
 	$ErrMsg = _('The cost details for the stock item could not be updated because');
@@ -4351,5 +4429,257 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 				</div>';
 	}
 }
+
+function MaintenanceTasksDistribution($Status, $NumDays){
+	$FromDate = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
+	if ($Status == "OPEN"){
+		$WhereStatus = "WHERE klmaintenancetasks.closed = 0";
+		$Title = 'Open Maintenance Tasks distribution';
+	}elseif ($Status == "CLOSED"){
+		$WhereStatus = "WHERE klmaintenancetasks.closed = 1
+							AND closedate >= '" . $FromDate . "'";
+		$Title = 'Closed Maintenance Tasks distribution during the last ' . $NumDays . ' days';
+	}elseif ($Status == "TOTAL"){
+		$WhereStatus = "WHERE klmaintenancetasks.closed = 0
+							OR (klmaintenancetasks.closed = 1
+								AND closedate >= '" . $FromDate . "')";
+		$Title = 'All Maintenance Tasks distribution during the last ' . $NumDays . ' days';
+	}
+	$TableResult = array();
+	// now populate the array with info
+	$SQL = "SELECT COUNT(counterindex) AS total, 
+				klmaintenancetasks.loccode,
+				locations.locationname,
+				klmaintenancetasks.maintenancetype
+			FROM klmaintenancetasks
+				INNER JOIN locations 
+					ON locations.loccode=klmaintenancetasks.loccode 
+				INNER JOIN klmaintenancetypes 
+					ON klmaintenancetypes.maintenancetype=klmaintenancetasks.maintenancetype 
+				INNER JOIN locationusers 
+					ON locationusers.loccode=klmaintenancetasks.loccode 
+						AND locationusers.userid='" .  $_SESSION['UserID'] . "'
+						AND locationusers.canview=1 " . 
+			$WhereStatus . "
+			GROUP BY klmaintenancetasks.loccode, klmaintenancetasks.maintenancetype
+			ORDER BY locationname, klmaintenancetasks.maintenancetype";
+	$Result = DB_query($SQL);
+	if (DB_num_rows($Result) != 0){
+		while ($MyRow = DB_fetch_array($Result)) {
+			$TableResult[$MyRow['loccode']]['locationname'] = $MyRow['locationname'];
+			$TableResult[$MyRow['loccode']][$MyRow['maintenancetype']] = $MyRow['total'];
+		}
+		$TableHeader = '<tr>
+						<th class="SortedColumn">' . _('Location') . '</th>
+						<th class="SortedColumn">' . _('AC') . '</th>
+						<th class="SortedColumn">' . _('Bocor') . '</th>
+						<th class="SortedColumn">' . _('Furniture') . '</th>
+						<th class="SortedColumn">' . _('IT') . '</th>
+						<th class="SortedColumn">' . _('Kanopi') . '</th>
+						<th class="SortedColumn">' . _('Lampu') . '</th>
+						<th class="SortedColumn">' . _('Listrik') . '</th>
+						<th class="SortedColumn">' . _('Paint') . '</th>
+						<th class="SortedColumn">' . _('Pintukaca') . '</th>
+						<th class="SortedColumn">' . _('Toilet') . '</th>
+						<th class="SortedColumn">' . _('Wallpaper') . '</th>
+						<th class="SortedColumn">' . _('DLL') . '</th>
+						<th class="SortedColumn">' . _('Total') . '</th>
+					</tr>';
+		$TableTitleText = $Title;
+		ShowTableTitle($TableTitleText);
+		echo '<div>';
+		echo '<table class="selection">
+				<thead>';
+		echo $TableHeader;
+		echo '</thead>
+				<tbody>';
+		$TotalIssuesAC = 0;
+		$TotalIssuesBOCOR = 0;
+		$TotalIssuesFURNITURE = 0;
+		$TotalIssuesIT = 0;
+		$TotalIssuesKANOPI = 0;
+		$TotalIssuesLAMPU = 0;
+		$TotalIssuesLISTRIK = 0;
+		$TotalIssuesPAINT = 0;
+		$TotalIssuesPINTUKACA = 0;
+		$TotalIssuesTOILET = 0;
+		$TotalIssuesWALLPAPER = 0;
+		$TotalIssuesDLL = 0;
+		$TotalIssues = 0;
+		foreach ($TableResult as $Row) {
+			$TotalIssuesLocation = 0;
+			if (isset($Row['AC'])){
+				$IssuesAC = $Row['AC'];
+				$TotalIssuesAC += $IssuesAC;
+				$TotalIssuesLocation += $IssuesAC;
+				$TotalIssues += $IssuesAC;
+			}else{
+				$IssuesAC = '';
+			}
+			if (isset($Row['BOCOR'])){
+				$IssuesBOCOR = $Row['BOCOR'];
+				$TotalIssuesBOCOR += $IssuesBOCOR;
+				$TotalIssuesLocation += $IssuesBOCOR;
+				$TotalIssues += $IssuesBOCOR;
+			}else{
+				$IssuesBOCOR = '';
+			}
+			if (isset($Row['FURNITURE'])){
+				$IssuesFURNITURE = $Row['FURNITURE'];
+				$TotalIssuesFURNITURE += $IssuesFURNITURE;
+				$TotalIssuesLocation += $IssuesFURNITURE;
+				$TotalIssues += $IssuesFURNITURE;
+			}else{
+				$IssuesFURNITURE = '';
+			}
+			if (isset($Row['IT'])){
+				$IssuesIT = $Row['IT'];
+				$TotalIssuesIT += $IssuesIT;
+				$TotalIssuesLocation += $IssuesIT;
+				$TotalIssues += $IssuesIT;
+			}else{
+				$IssuesIT = '';
+			}
+			if (isset($Row['KANOPI'])){
+				$IssuesKANOPI = $Row['KANOPI'];
+				$TotalIssuesKANOPI += $IssuesKANOPI;
+				$TotalIssuesLocation += $IssuesKANOPI;
+				$TotalIssues += $IssuesKANOPI;
+			}else{
+				$IssuesKANOPI = '';
+			}
+			if (isset($Row['LAMPU'])){
+				$IssuesLAMPU = $Row['LAMPU'];
+				$TotalIssuesLAMPU += $IssuesLAMPU;
+				$TotalIssuesLocation += $IssuesLAMPU;
+				$TotalIssues += $IssuesLAMPU;
+			}else{
+				$IssuesLAMPU = '';
+			}
+			if (isset($Row['LISTRIK'])){
+				$IssuesLISTRIK = $Row['LISTRIK'];
+				$TotalIssuesLISTRIK += $IssuesLISTRIK;
+				$TotalIssuesLocation += $IssuesLISTRIK;
+				$TotalIssues += $IssuesLISTRIK;
+			}else{
+				$IssuesLISTRIK = '';
+			}
+			if (isset($Row['PAINT'])){
+				$IssuesPAINT = $Row['PAINT'];
+				$TotalIssuesPAINT += $IssuesPAINT;
+				$TotalIssuesLocation += $IssuesPAINT;
+				$TotalIssues += $IssuesPAINT;
+			}else{
+				$IssuesPAINT = '';
+			}
+			if (isset($Row['PINTUKACA'])){
+				$IssuesPINTUKACA = $Row['PINTUKACA'];
+				$TotalIssuesPINTUKACA += $IssuesPINTUKACA;
+				$TotalIssuesLocation += $IssuesPINTUKACA;
+				$TotalIssues += $IssuesPINTUKACA;
+			}else{
+				$IssuesPINTUKACA = '';
+			}
+			if (isset($Row['TOILET'])){
+				$IssuesTOILET = $Row['TOILET'];
+				$TotalIssuesTOILET += $IssuesTOILET;
+				$TotalIssuesLocation += $IssuesTOILET;
+				$TotalIssues += $IssuesTOILET;
+			}else{
+				$IssuesTOILET = '';
+			}
+			if (isset($Row['WALLPAPER'])){
+				$IssuesWALLPAPER = $Row['WALLPAPER'];
+				$TotalIssuesWALLPAPER += $IssuesWALLPAPER;
+				$TotalIssuesLocation += $IssuesWALLPAPER;
+				$TotalIssues += $IssuesWALLPAPER;
+			}else{
+				$IssuesWALLPAPER = '';
+			}
+			if (isset($Row['_DLL'])){
+				$IssuesDLL = $Row['_DLL'];
+				$TotalIssuesDLL += $IssuesDLL;
+				$TotalIssuesLocation += $IssuesDLL;
+				$TotalIssues += $IssuesDLL;
+			}else{
+				$IssuesDLL = '';
+			}
+			printf('<tr class="striped_row">
+					<td>%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					<td class="number">%s</td>
+					</tr>', 
+					$Row['locationname'], 
+					$IssuesAC, 
+					$IssuesBOCOR, 
+					$IssuesFURNITURE, 
+					$IssuesIT, 
+					$IssuesKANOPI, 
+					$IssuesLAMPU, 
+					$IssuesLISTRIK, 
+					$IssuesPAINT, 
+					$IssuesPINTUKACA, 
+					$IssuesTOILET, 
+					$IssuesWALLPAPER, 
+					$IssuesDLL, 
+					$TotalIssuesLocation 
+					);
+		}
+		printf('<tr class="striped_row">
+				<td>%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				<td class="number">%s</td>
+				</tr>', 
+				"TOTAL", 
+				$TotalIssuesAC, 
+				$TotalIssuesBOCOR, 
+				$TotalIssuesFURNITURE, 
+				$TotalIssuesIT, 
+				$TotalIssuesKANOPI, 
+				$TotalIssuesLAMPU, 
+				$TotalIssuesLISTRIK, 
+				$TotalIssuesPAINT, 
+				$TotalIssuesPINTUKACA, 
+				$TotalIssuesTOILET, 
+				$TotalIssuesWALLPAPER, 
+				$TotalIssuesDLL, 
+				$TotalIssues
+				);
+		
+		echo '</tbody></table>
+			</div>';
+
+		if ($Status == "OPEN"){
+			InsertKPI("Maintenance", "Open Maintenance Tasks", $TotalIssues);
+		}elseif ($Status == "CLOSED"){
+			InsertKPI("Maintenance", "Closed Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+		}elseif ($Status == "TOTAL"){
+			InsertKPI("Maintenance", "All Maintenance Tasks during " . $NumDays . " days", $TotalIssues);
+		}
+	}
+}
+
 
 ?>

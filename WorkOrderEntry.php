@@ -2,6 +2,11 @@
 /* Entry of new work orders */
 
 include('includes/session.php');
+if (isset($_POST['StartDate'])){$_POST['StartDate'] = ConvertSQLDate($_POST['StartDate']);};
+if (isset($_POST['RequiredBy'])){$_POST['RequiredBy'] = ConvertSQLDate($_POST['RequiredBy']);};
+$ViewTopic = 'Manufacturing';// Filename's id in ManualContents.php's TOC.
+$BookMark = 'WorkOrderEntry';// Anchor's id in the manual's html document.
+
 $Title = _('Work Order Entry');
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
@@ -241,7 +246,7 @@ if(isset($_POST['Search']) OR isset($_POST['Prev']) OR isset($_POST['Next'])) {
 	$myrow=DB_fetch_array($SearchResult);
 	DB_free_result($SearchResult);
 	unset($SearchResult);
-	$ListCount = $myrow[0];
+	echo $ListCount.'x'.$_SESSION['DisplayRecordsMax'];
 	if($ListCount>0) {
 		$ListPageMax = ceil($ListCount / $_SESSION['DisplayRecordsMax'])-1;
 	} else {
@@ -780,7 +785,7 @@ if(!isset($_POST['StartDate'])) {
 
 echo '<tr>
 		<td class="label">' . _('Start Date') . ':</td>
-		<td><input type="text" name="StartDate" size="12" maxlength="12" value="' . $_POST['StartDate'] .'" class="date" /></td>
+		<td><input type="date" name="StartDate" size="12" maxlength="12" value="' . FormatDateForSQL($_POST['StartDate']) .'" /></td>
 	</tr>';
 
 if(!isset($_POST['RequiredBy'])) {
@@ -789,7 +794,7 @@ if(!isset($_POST['RequiredBy'])) {
 
 echo '<tr>
 		<td class="label">' . _('Required By') . ':</td>
-		<td><input type="text" name="RequiredBy" size="12" maxlength="12" value="' . $_POST['RequiredBy'] .'" class="date" /></td>
+		<td><input type="date" name="RequiredBy" size="12" maxlength="12" value="' . FormatDateForSQL($_POST['RequiredBy']) .'" /></td>
 	</tr>';
 if(!isset($_POST['Ref'])) {
 	$_POST['Ref'] = '';

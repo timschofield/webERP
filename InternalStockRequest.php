@@ -10,11 +10,13 @@
 include ('includes/DefineStockRequestClass.php');
 
 include ('includes/session.php');
+if (isset($_POST['DispatchDate'])){$_POST['DispatchDate'] = ConvertSQLDate($_POST['DispatchDate']);};
 $Title = _('Create an Internal Stock Request');
 $ViewTopic = 'Inventory';
 $BookMark = 'CreateRequest';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include ('includes/KLRoles.php');
 
 if (isset($_GET['New'])) {
@@ -237,7 +239,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 }
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 	<label for="Location">' . _('Location from which to request stock') . ':</label>';
 
@@ -276,7 +278,7 @@ echo '</field>';
 
 echo'<field>
 		<label for="DispatchDate">', _('Date when required'), ':</label>
-		<input type="text" class="date" name="DispatchDate" maxlength="10" size="11" value="', $_SESSION['Request']->DispatchDate, '" />
+		<input type="date" name="DispatchDate" maxlength="10" size="11" value="', FormatDateForSQL($_SESSION['Request']->DispatchDate), '" />
 	</field>
 	<field>
 		<label for="Narrative">', _('Narrative'), ':</label>
@@ -302,9 +304,9 @@ echo '<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8
 	</tr>
 	<tr>
 		<th>', _('Line Number'), '</th>
-		<th class="ascending">', _('Item Code'), '</th>
-		<th class="ascending">', _('Item Description'), '</th>
-		<th class="ascending">', _('Quantity Required'), '</th>
+		<th class="SortedColumn">', _('Item Code'), '</th>
+		<th class="SortedColumn">', _('Item Description'), '</th>
+		<th class="SortedColumn">', _('Quantity Required'), '</th>
 		<th>', _('UOM'), '</th>
 		</tr>
 	</thead>
@@ -377,7 +379,7 @@ while ($MyRow1 = DB_fetch_array($Result1)) {
 
 echo '</select>
 	</field>';
-	
+
 echo '<field>
 		<label for="Keywords">', _('Enter partial'), '<b> ', _('Description'), '</b>:</label>';
 
@@ -569,14 +571,14 @@ if (isset($SearchResult)) {
 					<input tabindex="', ($j + 10), '" type="submit" name="Next" value="', _('Next'), '" /></td>
 			</tr>
 			<tr>
-				<th class="ascending">', _('Code'), '</th>
-				<th class="ascending">', _('Description'), '</th>
+				<th class="SortedColumn">', _('Code'), '</th>
+				<th class="SortedColumn">', _('Description'), '</th>
 				<th>', _('Units'), '</th>
-				<th class="ascending">', _('On Hand'), '</th>
-				<th class="ascending">', _('On Demand'), '</th>
-				<th class="ascending">', _('On Order'), '</th>
-				<th class="ascending">', _('Available'), '</th>
-				<th class="ascending">', _('Quantity'), '</th>
+				<th class="SortedColumn">', _('On Hand'), '</th>
+				<th class="SortedColumn">', _('On Demand'), '</th>
+				<th class="SortedColumn">', _('On Order'), '</th>
+				<th class="SortedColumn">', _('Available'), '</th>
+				<th class="SortedColumn">', _('Quantity'), '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -585,52 +587,14 @@ if (isset($SearchResult)) {
 
 	$i = 0;
 	while ($MyRow = DB_fetch_array($SearchResult)) {
-		if ($MyRow['decimalplaces'] == '') {
-			/* This REALLY seems to be a redundant (unnecessary) re-query?
-			 * The default on stockmaster is 0, so an empty string should never
-			 * be true, as decimalplaces is in all queries from lines 382-482.
-			*/
-			$DecimalPlacesSQL = "SELECT decimalplaces
-								FROM stockmaster
-								WHERE stockid='" . $MyRow['stockid'] . "'";
-			$DecimalPlacesResult = DB_query($DecimalPlacesSQL);
-			$DecimalPlacesRow = DB_fetch_array($DecimalPlacesResult);
-			$DecimalPlaces = $DecimalPlacesRow['decimalplaces'];
-		} else {
-			$DecimalPlaces = $MyRow['decimalplaces'];
-		}
+		$DecimalPlaces = $MyRow['decimalplaces'];
 
-		$QOHSQL = "SELECT sum(locstock.quantity) AS qoh
-							   FROM locstock
-					WHERE locstock.stockid='" . $MyRow['stockid'] . "'
-						AND loccode = '" . $_SESSION['Request']->Location . "'";
-		$QOHResult = DB_query($QOHSQL);
-		$QOHRow = DB_fetch_array($QOHResult);
-		$QOH = $QOHRow['qoh'];
+		$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Request']->Location);
 
-		// Find the quantity on outstanding sales orders
-		$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-				FROM salesorderdetails
-				INNER JOIN salesorders
-				 ON salesorders.orderno = salesorderdetails.orderno
-				 WHERE salesorders.fromstkloc='" . $_SESSION['Request']->Location . "'
-				 AND salesorderdetails.completed=0
-				 AND salesorders.quotation=0
-				 AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
-		$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Request']->Location . ' ' . _('cannot be retrieved because');
-		$DemandResult = DB_query($SQL, $ErrMsg);
+		$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Request']->Location);
 
-		$DemandRow = DB_fetch_row($DemandResult);
-		if ($DemandRow[0] != null) {
-			$DemandQty = $DemandRow[0];
-		} else {
-			$DemandQty = 0;
-		}
+		$OnOrder = GetQuantityOnOrder($MyRow['stockid'], 'ALL');
 
-		$PurchQty = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-		$WoQty = GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
-
-		$OnOrder = $PurchQty + $WoQty;
 		$Available = $QOH - $DemandQty + $OnOrder;
 
 		echo '<tr class="striped_row">

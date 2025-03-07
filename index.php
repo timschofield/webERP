@@ -22,12 +22,23 @@ if (isset($_SESSION['FirstLogIn']) and $_SESSION['FirstLogIn'] == '1' and isset(
 	$_SESSION['FirstRun'] = false;
 }
 
-$Title = _('Main Menu');
+if (isset($_POST['CompanyNameField'])) {
+	$SQL = "INSERT INTO sessions VALUES ('" . session_id() . "', NOW())";
+	$Result = DB_query($SQL);
+	setcookie('Company', $_POST['CompanyNameField'], time() + 3600 * 24 * 30);
+}
 
+$Title = _('Main Menu');
+$SQL = "SELECT value FROM session_data WHERE userid='" . $_SESSION['UserID'] . "' AND field='module'";
+$Result = DB_query($SQL);
+$MyRow = DB_fetch_array($Result);
+$_SESSION['Module'] = $MyRow['value'];
 if (isset($_GET['Application']) and ($_GET['Application'] != '')) {
 	/*This is sent by this page (to itself) when the user clicks on a tab */
 	$_SESSION['Module'] = $_GET['Application'];
 	setcookie('Module', $_GET['Application'], time() + 3600 * 24 * 30);
+} else {
+	$_SESSION['Module'] = $_COOKIE['Module'];
 }
 
 include ('includes/header.php');

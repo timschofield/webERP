@@ -30,6 +30,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 $PageTitleText, '" /> ', // Icon title.
 $PageTitleText, '</p>'; // Page title.
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 if (isset($_POST['PaymentCancelled'])) {
 	prnMsg(_('Payment Cancelled since cheque was not printed') , 'warning');
@@ -475,19 +476,11 @@ if (isset($_POST['CommitBatch']) AND empty($Errors)) {
 								$PaymentItem->GLCode . "','" .
 								$PaymentItem->Narrative . "','" .
 								($PaymentItem->Amount / $_SESSION['PaymentDetail' . $identifier]->ExRate / $_SESSION['PaymentDetail' . $identifier]->FunctionalExRate) . "','" .
-								$PaymentItem->Cheque . 
-							"')";
+								$PaymentItem->Cheque . "'
+							)";
 					$ErrMsg = _('Cannot insert a GL entry for the payment using the SQL');
 					$Result = DB_query($SQL, $ErrMsg, _('The SQL that failed was') , true);
-					if (isset($PaymentItem->Tag)){
-						foreach ($PaymentItem->Tag as $Tag) {
-							$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-																'" . $Tag . "')";
-							$ErrMsg = _('Cannot insert a GL tag for the payment line because');
-							$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-							$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-						}
-					}
+					InsertGLTags($PaymentItem->Tag);
 					$TotalAmount += $PaymentItem->Amount;
 				}
 				$_SESSION['PaymentDetail' . $identifier]->Amount = $TotalAmount;
@@ -1244,6 +1237,7 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 	echo '<fieldset>
 			<legend>' . _('General Ledger Payment Analysis Entry') . '</legend>';
 
+	/* KL RICARD Do not show tags
 	//Select the Tag
 	echo '<field>
 			<label for="Tag">', _('Select Tag') , ':</label>
@@ -1267,6 +1261,8 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 			<fieldhelp>', _('Select one or more tags from the list. Use the CTRL button to select multiple tags') , '</fieldhelp>
 		</field>';
 	// End select Tag
+	KL RICARD Do not show tags */
+
 	/*now set up a GLCode field to select from avaialble GL accounts */
 	if (isset($_POST['GLManualCode'])) {
 		echo '<field>
@@ -1398,18 +1394,8 @@ if ($_SESSION['CompanyRecord']['gllink_creditors'] == 1 AND $_SESSION['PaymentDe
 
 		$PaymentTotal = 0;
 		foreach ($_SESSION['PaymentDetail' . $identifier]->GLItems as $PaymentItem) {
-			$TagDescriptions = '';
-			if (isset($PaymentItem->Tag)){
-				foreach ($PaymentItem->Tag as $Tag) {
-					$TagSql = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-					$TagResult = DB_query($TagSql);
-					$TagRow = DB_fetch_array($TagResult);
-					if ($Tag == 0) {
-						$TagRow['tagdescription'] = _('None');
-					}
-					$TagDescriptions.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-				}
-			}
+
+			$TagDescriptions = GetDescriptionsFromTagArray($PaymentItem->Tag);
 
 			echo '<tr>
 				<td>' . $PaymentItem->Cheque . '</td>

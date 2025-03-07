@@ -2,6 +2,8 @@
 
 include('includes/session.php');
 $Title = _('Customer Types') . ' / ' . _('Maintenance');
+$ViewTopic = 'Setup';
+$BookMark = 'CustomerTypes';
 include('includes/header.php');
 
 if (isset($_POST['SelectedType'])){
@@ -185,8 +187,8 @@ or deletion of the records*/
 	echo '<table class="selection">';
 	echo '<thead>
 			<tr>
-			<th class="ascending">' . _('Type ID') . '</th>
-			<th class="ascending">' . _('Type Name') . '</th>
+			<th class="SortedColumn">' . _('Type ID') . '</th>
+			<th class="SortedColumn">' . _('Type Name') . '</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -236,7 +238,7 @@ if (! isset($_GET['delete'])) {
 
 		echo '<input type="hidden" name="SelectedType" value="' . $SelectedType . '" />
 			<input type="hidden" name="typeid" value="' . $_POST['typeid'] . '" />';
-			
+
 		echo '<fieldset>
 				<legend>', _('Edit Customer Type'), '</legend>';
 

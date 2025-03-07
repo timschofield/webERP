@@ -636,7 +636,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 	echo '</fieldset>
 			<div class="centre">
 				<input type="submit" name="Submit" value="', _('Enter Information') , '" />
-				<input type="submit" name="Cancel" value="', _('Cancel') , '" />
+				<input type="reset" name="Cancel" value="', _('Cancel') , '" />
 			</div>
 		</form>';
 	include ('includes/footer.php');

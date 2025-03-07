@@ -5,10 +5,11 @@
 include('includes/DefineSpecialOrderClass.php');
 /* Session started in header.php for password checking and authorisation level check */
 include('includes/session.php');
+if (isset($_POST['ReqDelDate'])){$_POST['ReqDelDate'] = ConvertSQLDate($_POST['ReqDelDate']);};
 
 include('includes/SQL_CommonFunctions.inc');
 
-$ViewTopic = '';/* ?????????? */
+$ViewTopic = 'SalesOrders';/* ?????????? */
 $BookMark = 'SpecialOrder';
 $Title = _('Special Order Entry');
 include('includes/header.php');
@@ -142,22 +143,19 @@ if (!isset($_SESSION['SPL'.$identifier]->BranchCode)){
 			<br />
 			<table class="selection">';
 
-		$TableHeader = '<tr>
-							<th>' ._('Code') . '</th>
-							<th>' . _('Branch Name') . '</th>
-						</tr>';
-		echo $TableHeader;
+		echo '<tr>
+				<th>' ._('Code') . '</th>
+				<th>' . _('Branch Name') . '</th>
+			</tr>';
 
 		$j = 1;
 
 		while ($MyRow=DB_fetch_array($BranchResult)) {
 
-			printf('<tr class="striped_row">
-					<td><input type="submit" name="SelectBranch" value="%s" /></td>
-					<td>%s</td>
-					</tr>',
-				$MyRow['branchcode'],
-				htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8', false));
+			echo '<tr class="striped_row">
+					<td><input type="submit" name="SelectBranch" value="', $MyRow['branchcode'], '" /></td>
+					<td>', htmlspecialchars($MyRow['brname'], ENT_QUOTES, 'UTF-8', false), '</td>
+				</tr>';
 
 //end of page full new headings if
 		}
@@ -334,7 +332,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 		$StkLocAddResult = DB_query($SQL);
 		$StkLocAddress = DB_fetch_array($StkLocAddResult);
 
-		 $Result = DB_Txn_Begin();
+		 DB_Txn_Begin();
 
 		 /*Insert to purchase order header record */
 		 $SQL = "INSERT INTO purchorders (supplierno,
@@ -567,7 +565,7 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 
 		}
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 		unset($_SESSION['SPL'.$identifier]); /*Clear the PO data to allow a newy to be input*/
 		echo '<br /><br /><a href="' . $RootPath . '/SpecialOrder.php">' . _('Enter A New Special Order') . '</a>';
 		exit;
@@ -744,14 +742,14 @@ $_POST['ReqDelDate'] = Date($_SESSION['DefaultDateFormat'],Mktime(0,0,0,Date('m'
 
 echo '<field>
 		<label for="ReqDelDate">' . _('Required Delivery Date') . ':</label>
-		<input type="text" class="date" size="11" maxlength="10" name="ReqDelDate" value="' . $_POST['ReqDelDate'] . '" />
+		<input type="date" size="11" maxlength="10" name="ReqDelDate" value="' . FormatDateForSQL($_POST['ReqDelDate']) . '" />
 	</field>';
 
 echo '</fieldset>'; /* end of main table */
 
 echo '<div class="centre">
 		<input type="submit" name="EnterLine" value="' . _('Add Item to Order') . '" />
-		<input type="submit" name="Cancel" value="' . _('Start Again') . '" />
+		<input type="reset" name="Cancel" value="' . _('Start Again') . '" />
 		<input type="submit" name="Commit" value="' . _('Process This Order') . '" />
 	</div>
 	</form>';

@@ -9,6 +9,11 @@
 $PricesSecurity = 12;
 
 include ('includes/session.php');
+
+if (isset($_POST['DueDateFrom'])){$_POST['DueDateFrom'] = ConvertSQLDate($_POST['DueDateFrom']);};
+if (isset($_POST['DueDateTo'])){$_POST['DueDateTo'] = ConvertSQLDate($_POST['DueDateTo']);};
+if (isset($_POST['OrderDateFrom'])){$_POST['OrderDateFrom'] = ConvertSQLDate($_POST['OrderDateFrom']);};
+if (isset($_POST['OrderDateTo'])){$_POST['OrderDateTo'] = ConvertSQLDate($_POST['OrderDateTo']);};
 $Title = _('Search Outstanding Sales Orders');
 $ViewTopic = 'SalesOrders';
 $BookMark = 'SelectSalesOrder';
@@ -168,7 +173,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 			$SupplierArray[$key]  = $Row['supplierno'];
 		}
 
-		/* Use array_multisort to Sort the ItemArray with supplierno ascending
+		/* Use array_multisort to Sort the ItemArray with supplierno SortedColumn
 		Add $ItemArray as the last parameter, to sort by the common key
 		*/
 		if (count($SupplierArray) > 1) {
@@ -257,7 +262,7 @@ if (isset($_POST['PlacePO'])) { /*user hit button to place PO for selected order
 					}
 
 			  /*Starting a new purchase order with a different supplier */
-					$Result = DB_Txn_Begin();
+					DB_Txn_Begin();
 
 					$PO_OrderNo =  GetNextTransNo(18); //get the next PO number
 
@@ -549,19 +554,19 @@ if (!isset($StockID)) {
 		}
 
 		if (!isset($_POST['DueDateFrom'])) {
-			$_POST['DueDateFrom'] = '';
+			$_POST['DueDateFrom'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['DueDateTo'])) {
-			$_POST['DueDateTo'] = '';
+			$_POST['DueDateTo'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['CustomerRef'])) {
 			$_POST['CustomerRef'] = '';
 		}
 		if (!isset($_POST['OrderDateFrom'])) {
-			$_POST['OrderDateFrom'] = '';
+			$_POST['OrderDateFrom'] = date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['OrderDateTo'])) {
-			$_POST['OrderDateTo'] = '';
+			$_POST['OrderDateTo'] = date($_SESSION['DefaultDateFormat']);
 		}
 
 
@@ -574,24 +579,24 @@ if (!isset($StockID)) {
 			</field>
 			<field>
 				<label for"DueDateFrom">' . _('Due Date From') . '</label>
-				<input type="text" class="date" name="DueDateFrom" value="' . $_POST['DueDateFrom'] . '" size="10" />
+				<input type="date" name="DueDateFrom" value="' . FormatDateForSQL($_POST['DueDateFrom']) . '" size="10" />
 			</field>
 			<field>
 				<label for="DueDateTo">' . _('Due Date To') . '</label>
-				<input type="text" class="date" name="DueDateTo" value="' . $_POST['DueDateTo'] . '" size="10" />
+				<input type="date" name="DueDateTo" value="' . FormatDateForSQL($_POST['DueDateTo']) . '" size="10" />
 			</field>
 			<field>
 				<label for="OrderDateFrom">' . _('Order Date From') . '</label>
-				<input type="text" name="OrderDateFrom" value="' . $_POST['OrderDateFrom'] . '" size="10" class="date" />
+				<input type="date" name="OrderDateFrom" value="' . FormatDateForSQL($_POST['OrderDateFrom']) . '" size="10" />
 			</field>
 			<field>
 				<label for="OrderDateTo">' . _('Order Date To') . '</label>
-				<input type="text" name="OrderDateTo" value="' . $_POST['OrderDateTo'] . '" size="10" class="date" />
+				<input type="date" name="OrderDateTo" value="' . FormatDateForSQL($_POST['OrderDateTo']) . '" size="10" />
 			</field>
 		</fieldset>
 		<div class="centre">
 			<input type="submit" name="SearchOrders" value="' . _('Search') . '" />
-			<input type="submit" name="Reset" value="' . _('Reset') . '" />
+			<input type="reset" name="Reset" value="' . _('Reset') . '" />
 			<a href="' . $RootPath . '/SelectOrderItems.php?NewOrder=Yes">' . _('Add Sales Order') . '</a>
 		</div>';
 	}
@@ -638,7 +643,7 @@ if (!isset($StockID)) {
 	</fieldset>';
 	echo '<div class="centre">
 			<input type="submit" name="SearchParts" value="' . _('Search Parts Now') . '" />
-			<input type="submit" name="ResetPart" value="' . _('Show All') . '" />
+			<input type="reset" name="ResetPart" value="' . _('Show All') . '" />
 		</div>';
 
 if (isset($StockItemsResult)
@@ -647,9 +652,9 @@ if (isset($StockItemsResult)
 	echo '<table cellpadding="2" class="selection">
 		<thead>
 			<tr>
-			<th class="ascending" >' . _('Code') . '</th>
-			<th class="ascending" >' . _('Description') . '</th>
-			<th class="ascending" >' . _('On Hand') . '</th>
+			<th class="SortedColumn" >' . _('Code') . '</th>
+			<th class="SortedColumn" >' . _('Description') . '</th>
+			<th class="SortedColumn" >' . _('On Hand') . '</th>
 			<th>' . _('Units') . '</th>
 			</tr>
 		</thead>
@@ -657,16 +662,12 @@ if (isset($StockItemsResult)
 
 	while ($MyRow = DB_fetch_array($StockItemsResult)) {
 
-		printf('<tr class="striped_row">
-				<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>',
-				$MyRow['stockid'],
-				$MyRow['description'],
-				locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-				$MyRow['units']);
+		echo '<tr class="striped_row">
+				<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
+				<td>', $MyRow['description'], '</td>
+				<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+				<td>', $MyRow['units'], '</td>
+			</tr>';
 //end of page full new headings if
 	}
 //end of while loop
@@ -783,7 +784,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(CASE WHEN itemdue >= '" . FormatDateFromSQL($DueDateFrom) . "'
+						SUM(CASE WHEN itemdue >= '" . $DueDateFrom . "'
 							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 							 ELSE 0 END) as ordervalue";
 			} elseif (isset($DueDateFrom) AND is_date($DueDateFrom) AND isset($DueDateTo) AND is_date($DueDateTo)) {
@@ -796,7 +797,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM (CASE WHEN itemdue >= '" . FormatDateForSQL($DueDateFrom) . "' AND itemdue <= '" . FormatDateForSQL($DueDateTo) . "'
+						SUM (CASE WHEN itemdue >= '" . $DueDateFrom . "' AND itemdue <= '" . $DueDateTo . "'
 							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 							 ELSE 0 END) as ordervalue";
 			} elseif ((!isset($DueDateFrom) OR !is_date($DueDateFrom)) AND isset($DueDateTo) AND is_date($DueDateTo)) {
@@ -809,7 +810,7 @@ if (isset($StockItemsResult)
 						salesorders.deliverto,
 						salesorders.printedpackingslip,
 						salesorders.poplaced,
-						SUM(CASE WHEN AND itemdue <= '" . FormatDateForSQL($DueDateTo) . "'
+						SUM(CASE WHEN AND itemdue <= '" . $DueDateTo . "'
 							 THEN salesorderdetails.unitprice*(salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*(1-salesorderdetails.discountpercent)/currencies.rate
 							 ELSE 0 END) as ordervalue";
 			}//end of due date inquiry
@@ -913,19 +914,19 @@ if (isset($StockItemsResult)
 
 		if ( $_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only' ) {
 			echo '<tr>
-								<th class="ascending" >' . _('Modify') . '</th>
+								<th class="SortedColumn" >' . _('Modify') . '</th>
 								<th>' . _('Acknowledge') . '</th>
 								' . $PrintPickLabel . '
 								<th>' . _('Invoice') . '</th>
 								<th>' . _('Dispatch Note') . '</th>
 								<th>' . _('Labels') . '</th>
-								<th class="ascending" >' . _('Customer') . '</th>
-								<th class="ascending" >' . _('Branch') . '</th>
-								<th class="ascending" >' . _('Cust Order') . ' #</th>
-								<th class="ascending" >' . _('Order Date') . '</th>
-								<th class="ascending" >' . _('Req Del Date') . '</th>
-								<th class="ascending" >' . _('Delivery To') . '</th>
-								<th class="ascending" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
+								<th class="SortedColumn" >' . _('Customer') . '</th>
+								<th class="SortedColumn" >' . _('Branch') . '</th>
+								<th class="SortedColumn" >' . _('Cust Order') . ' #</th>
+								<th class="SortedColumn" >' . _('Order Date') . '</th>
+								<th class="SortedColumn" >' . _('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . _('Delivery To') . '</th>
+								<th class="SortedColumn" >' . _('Order Total') . '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>';
 
 			if ($AuthRow['cancreate'] == 0) { //If cancreate == 0 then this means the user can create orders hmmm!!
 				echo '<th>' . _('Place PO') . '</th>';
@@ -934,15 +935,15 @@ if (isset($StockItemsResult)
 			echo '</tr>';
 		} else {  /* displaying only quotations */
 			echo '<tr>
-								<th class="ascending">' . _('Modify') . '</th>
+								<th class="SortedColumn">' . _('Modify') . '</th>
 								<th>' . _('Print Quote') . '</th>
-								<th class="ascending" >' . _('Customer') . '</th>
-								<th class="ascending" >' . _('Branch') . '</th>
-								<th class="ascending" >' . _('Cust Ref') . ' #</th>
-								<th class="ascending" >' . _('Quote Date') . '</th>
-								<th class="ascending" >' . _('Req Del Date') . '</th>
-								<th class="ascending" >' . _('Delivery To') . '</th>
-								<th class="ascending" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
+								<th class="SortedColumn" >' . _('Customer') . '</th>
+								<th class="SortedColumn" >' . _('Branch') . '</th>
+								<th class="SortedColumn" >' . _('Cust Ref') . ' #</th>
+								<th class="SortedColumn" >' . _('Quote Date') . '</th>
+								<th class="SortedColumn" >' . _('Req Del Date') . '</th>
+								<th class="SortedColumn" >' . _('Delivery To') . '</th>
+								<th class="SortedColumn" >' . _('Quote Total') .  '<br />' . $_SESSION['CompanyRecord']['currencydefault'] . '</th>
 							</tr>';
 		}
 
@@ -1000,11 +1001,11 @@ if (isset($StockItemsResult)
 
 			if ($_POST['Quotations'] == 'Orders_Only' OR $_POST['Quotations'] == 'Overdue_Only') {
 				echo '<tr class="striped_row">
-							<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+							<td class="number"><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
 							<td><a href="', $PrintAck, '">', _('Acknowledge'), '</a>', $PrintDummyFlag, '</td>
 							', $PrintPickLabel, '
 							<td><a href="', $Confirm_Invoice, '">', _('Invoice'), '</a></td>
-			 				<td><a href="', $PrintDispatchNote, '" target="_blank">', $PrintText, ' <img src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /></a></td>
+			 				<td><a href="', $PrintDispatchNote, '" target="_blank"><img width="16px" src="', $RootPath, '/css/', $Theme, '/images/pdf.png" title="', _('Click for PDF'), '" alt="" /> ', $PrintText, ' </a></td>
 							<td><a href="', $PrintLabels, '">', _('Labels'), '</a></td>
 			 				<td>', $MyRow['name'], '</td>
 			 				<td>', $MyRow['brname'], '</td>
@@ -1024,28 +1025,17 @@ if (isset($StockItemsResult)
 						</tr>';
 
 			} else { /*must be quotes only */
-				printf('<tr class="striped_row">
-						<td><a href="%s">%s</a></td>
-						<td><a href="%s" target="_blank">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="%s">' . _('Portrait') . '</a></td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$ModifyPage,
-						$MyRow['orderno'],
-						$PrintQuotation,
-						$PrintQuotationPortrait,
-						$MyRow['name'],
-						$MyRow['brname'],
-						$MyRow['customerref'],
-						$FormatedOrderDate,
-						$FormatedDelDate,
-						html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'),
-						$FormatedOrderValue);
+				echo '<tr class="striped_row">
+						<td><a href="', $ModifyPage, '">', $MyRow['orderno'], '</a></td>
+						<td><a href="', $PrintQuotation, '" target="_blank">' . _('Landscape') . '</a>&nbsp;&nbsp;<a target="_blank" href="', $PrintQuotationPortrait, '">' . _('Portrait') . '</a></td>
+						<td>', $MyRow['name'], '</td>
+						<td>', $MyRow['brname'], '</td>
+						<td>', $MyRow['customerref'], '</td>
+						<td>', $FormatedOrderDate, '</td>
+						<td>', $FormatedDelDate, '</td>
+						<td>', html_entity_decode($MyRow['deliverto'], ENT_QUOTES, 'UTF-8'), '</td>
+						<td class="number">', $FormatedOrderValue, '</td>
+					</tr>';
 			}
 		}//end while loop through orders to display
 

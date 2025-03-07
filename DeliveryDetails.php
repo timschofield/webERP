@@ -18,6 +18,11 @@ include('includes/DefineCartClass.php');
 /* Session started in header.php for password checking the session will contain the details of the order from the Cart class object. The details of the order come from SelectOrderItems.php 			*/
 
 include('includes/session.php');
+
+if (isset($_POST['DeliveryDate'])){$_POST['DeliveryDate'] = ConvertSQLDate($_POST['DeliveryDate']);};
+if (isset($_POST['QuoteDate'])){$_POST['QuoteDate'] = ConvertSQLDate($_POST['QuoteDate']);};
+if (isset($_POST['ConfirmedDate'])){$_POST['ConfirmedDate'] = ConvertSQLDate($_POST['ConfirmedDate']);};
+
 $Title = _('Order Delivery Details');// Screen identification.
 $ViewTopic = 'SalesOrders';// Filename's id in ManualContents.php's TOC.
 $BookMark = 'DeliveryDetails';// Anchor's id in the manual's html document.
@@ -25,6 +30,7 @@ include('includes/header.php');
 
 include('includes/FreightCalculation.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include('includes/CountriesArray.php');
 
 if(isset($_GET['identifier'])) {
@@ -342,7 +348,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 	$QuotDate = FormatDateforSQL($_SESSION['Items'.$identifier]->QuoteDate);
 	$ConfDate = FormatDateforSQL($_SESSION['Items'.$identifier]->ConfirmedDate);
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	$OrderNo = GetNextTransNo(30);
 
@@ -445,56 +451,14 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 			echo '<br />';
 
 			//now get the data required to test to see if we need to make a new WO
-			$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'");
-			$QOHRow = DB_fetch_row($QOHResult);
-			$QOH = $QOHRow[0];
+			$QOH = GetQuantityOnHand($StockItem->StockID, 'ALL');
 
-			$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-					FROM salesorderdetails INNER JOIN salesorders
-					ON salesorderdetails.orderno=salesorders.orderno
-					WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
-					AND salesorderdetails.completed = 0
-					AND salesorders.quotation=0";
-			$DemandResult = DB_query($SQL);
-			$DemandRow = DB_fetch_row($DemandResult);
-			$QuantityDemand = $DemandRow[0];
+			$QuantityDemand = GetDemand($StockItem->StockID, 'ALL');
 
-			$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-					FROM salesorderdetails INNER JOIN salesorders
-					ON salesorderdetails.orderno=salesorders.orderno
-					INNER JOIN bom ON salesorderdetails.stkcode=bom.parent
-					INNER JOIN stockmaster ON stockmaster.stockid=bom.parent
-					WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-					AND bom.component='" . $StockItem->StockID . "'
-					AND salesorders.quotation=0
-					AND stockmaster.mbflag='A'
-					AND salesorderdetails.completed=0";
-			$AssemblyDemandResult = DB_query($SQL);
-			$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
-			$QuantityAssemblyDemand = $AssemblyDemandRow[0];
-
-			$SQL = "SELECT SUM(purchorderdetails.quantityord - purchorderdetails.quantityrecd) as qtyonorder
-					FROM purchorderdetails,
-						purchorders
-					WHERE purchorderdetails.orderno = purchorders.orderno
-					AND purchorderdetails.itemcode = '" . $StockItem->StockID . "'
-					AND purchorderdetails.completed = 0";
-			$PurchOrdersResult = DB_query($SQL);
-			$PurchOrdersRow = DB_fetch_row($PurchOrdersResult);
-			$QuantityPurchOrders = $PurchOrdersRow[0];
-
-			$SQL = "SELECT SUM(woitems.qtyreqd - woitems.qtyrecd) as qtyonorder
-					FROM woitems INNER JOIN workorders
-					ON woitems.wo=workorders.wo
-					WHERE woitems.stockid = '" . $StockItem->StockID . "'
-					AND woitems.qtyreqd > woitems.qtyrecd
-					AND workorders.closed = 0";
-			$WorkOrdersResult = DB_query($SQL);
-			$WorkOrdersRow = DB_fetch_row($WorkOrdersResult);
-			$QuantityWorkOrders = $WorkOrdersRow[0];
+			$QuantityOnOrder = GetQuantityOnOrder($StockItem->StockID, 'ALL');
 
 			//Now we have the data - do we need to make any more?
-			$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
+			$ShortfallQuantity = $QOH-$QuantityDemand+$QuantityOnOrder;
 
 			if($ShortfallQuantity < 0) {//then we need to make a work order
 				//How many should the work order be for??
@@ -595,7 +559,7 @@ if(isset($OK_to_PROCESS) AND $OK_to_PROCESS == 1 AND $_SESSION['ExistingOrder'.$
 		}//end if auto create WOs in on
 	} /* end inserted line items into sales order details */
 
-	$Result = DB_Txn_Commit();
+	 DB_Txn_Commit();
 	echo '<br />';
 	if($_SESSION['Items'.$identifier]->Quotation==1) {
 		prnMsg(_('Quotation Number') . ' ' . $OrderNo . ' ' . _('has been entered'),'success');
@@ -1026,30 +990,30 @@ echo '</select>
 
 // Set the default date to earliest possible date if not set already
 if(!isset($_SESSION['Items'.$identifier]->DeliveryDate)) {
-	$_SESSION['Items'.$identifier]->DeliveryDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->DeliveryDate = Date('Y-m-d',$EarliestDispatch);
 }
 if(!isset($_SESSION['Items'.$identifier]->QuoteDate)) {
-	$_SESSION['Items'.$identifier]->QuoteDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->QuoteDate = Date('Y-m-d',$EarliestDispatch);
 }
 if(!isset($_SESSION['Items'.$identifier]->ConfirmedDate)) {
-	$_SESSION['Items'.$identifier]->ConfirmedDate = Date($_SESSION['DefaultDateFormat'],$EarliestDispatch);
+	$_SESSION['Items'.$identifier]->ConfirmedDate = Date('Y-m-d',$EarliestDispatch);
 }
 
 // The estimated Dispatch date or Delivery date for this order
 echo '<field>
 		<label for="DeliveryDate">' .  _('Estimated Delivery Date') .':</label>
-		<input class="date" type="text" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title=""/>
+		<input type="date" size="11" maxlength="10" name="DeliveryDate" value="' . $_SESSION['Items'.$identifier]->DeliveryDate . '" title=""/>
 		<fieldhelp>' . _('Enter the estimated delivery date requested by the customer') . '</fieldhelp>
 	</field>';
 // The date when a quote was issued to the customer
 echo '<field>
 		<label for="QuoteDate">' .  _('Quote Date') .':</label>
-		<input class="date" type="text" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" />
+		<input type="date" size="11" maxlength="10" name="QuoteDate" value="' . $_SESSION['Items'.$identifier]->QuoteDate . '" />
 	</field>';
 // The date when the customer confirmed their order
 echo '<field>
 		<label for="ConfirmedDate">' .  _('Confirmed Order Date') .':</label>
-		<input class="date" type="text" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" />
+		<input type="date" size="11" maxlength="10" name="ConfirmedDate" value="' . $_SESSION['Items'.$identifier]->ConfirmedDate . '" />
 	</field>
 	<field>
 		<label for="BrAdd1">' .  _('Delivery Address 1 (Street)') . ':</label>

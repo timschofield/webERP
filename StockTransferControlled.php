@@ -7,6 +7,8 @@ include('includes/session.php');
 $Title = _('Transfer Controlled Items');
 
 /* Session started in session.php for password checking and authorisation level check */
+$ViewTopic = 'Inventory';
+$BookMark = '';
 
 include('includes/header.php');
 

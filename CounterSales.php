@@ -15,6 +15,7 @@ $BookMark = 'SalesOrderCounterSales';
 include('includes/header.php');
 include('includes/GetPrice.inc');
 include('includes/SQL_CommonFunctions.inc');
+include('includes/StockFunctions.php');
 include('includes/GetSalesTransGLCodes.inc');
 
 $AlreadyWarnedAboutCredit = false;
@@ -423,7 +424,7 @@ if ($_SESSION['Items'.$identifier]->DefaultCurrency != $_SESSION['CompanyRecord'
 			$NewItemDue = DateAdd (Date($_SESSION['DefaultDateFormat']),'d', $_SESSION['Items'.$identifier]->DeliveryDays);
 		}
 		if (isset($_POST[$QuickEntryPOLine])) {
-			$NewPOLine = $_POST[$QuickEntryPOLine]; 
+			$NewPOLine = $_POST[$QuickEntryPOLine];
 		} else {
 			$NewPOLine = 0;
 		}
@@ -949,7 +950,7 @@ if (count($_SESSION['Items'.$identifier]->LineItems)>0 ) { /*only show order lin
 	}
 	echo '<field>
 			<label for="CashReceived">', _('Cash Received'), ':</label>
-			<input type="text" class="number" id="CashReceived" name="CashReceived" required="required"  maxlength="12" size="12" value="', $_POST['CashReceived'], '" onkeyup="CalculateChangeDue();" />
+			<input type="text" class="number" id="CashReceived" name="CashReceived" required="required"  maxlength="12" size="12" value="', $_POST['CashReceived'], '" onblur="CounterSales.CalculateChangeDue()" />
 		</field>';
 
 	if (!isset($_POST['AmountPaid'])) {
@@ -1091,7 +1092,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 	// *************************************************************************
 	//   S T A R T   O F   I N V O I C E   S Q L   P R O C E S S I N G
 	// *************************************************************************
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 	/*First add the order to the database - it only exists in the session currently! */
 		$OrderNo = GetNextTransNo(30);
 		$InvoiceNo = GetNextTransNo(10);
@@ -1176,42 +1177,12 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 				AND $_SESSION['AutoCreateWOs']==1) { //oh yeah its all on!
 
 				//now get the data required to test to see if we need to make a new WO
-				$QOHResult = DB_query("SELECT SUM(quantity) FROM locstock WHERE stockid='" . $StockItem->StockID . "'");
-				$QOHRow = DB_fetch_row($QOHResult);
-				$QOH = $QOHRow[0];
-
-				$SQL = "SELECT SUM(salesorderdetails.quantity - salesorderdetails.qtyinvoiced) AS qtydemand
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorderdetails.orderno=salesorders.orderno
-						WHERE salesorderdetails.stkcode = '" . $StockItem->StockID . "'
-						AND salesorderdetails.completed = 0
-						AND salesorders.quotation = 0";
-				$DemandResult = DB_query($SQL);
-				$DemandRow = DB_fetch_row($DemandResult);
-				$QuantityDemand = $DemandRow[0];
-
-				$SQL = "SELECT SUM((salesorderdetails.quantity-salesorderdetails.qtyinvoiced)*bom.quantity) AS dem
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorderdetails.orderno=salesorders.orderno
-						INNER JOIN bom
-						ON salesorderdetails.stkcode=bom.parent
-						INNER JOIN stockmaster
-						ON stockmaster.stockid=bom.parent
-						WHERE salesorderdetails.quantity-salesorderdetails.qtyinvoiced > 0
-						AND bom.component='" . $StockItem->StockID . "'
-						AND salesorderdetails.completed=0
-						AND salesorders.quotation=0";
-				$AssemblyDemandResult = DB_query($SQL);
-				$AssemblyDemandRow = DB_fetch_row($AssemblyDemandResult);
-				$QuantityAssemblyDemand = $AssemblyDemandRow[0];
-
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QuantityPurchOrders= GetQuantityOnOrderDueToPurchaseOrders($StockItem->StockID, '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QuantityWorkOrders = GetQuantityOnOrderDueToWorkOrders($StockItem->StockID, '');
+				$QOH = GetQuantityOnHand($StockItem->StockID, 'ALL');
+				$QuantityDemand = GetDemand($StockItem->StockID, 'ALL');
+				$QuantityOnOrder= GetQuantityOnOrder($StockItem->StockID, 'ALL');
 
 				//Now we have the data - do we need to make any more?
-				$ShortfallQuantity = $QOH-$QuantityDemand-$QuantityAssemblyDemand+$QuantityPurchOrders+$QuantityWorkOrders;
+				$ShortfallQuantity = $QOH-$QuantityDemand + $QuantityOnOrder;
 
 				if ($ShortfallQuantity < 0) { //then we need to make a work order
 					//How many should the work order be for??
@@ -1435,7 +1406,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 				$StandardCost =0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 				$SQL = "SELECT bom.component,
 						bom.quantity,
-						stockmaster.materialcost+stockmaster.labourcost+stockmaster.overheadcost AS standard
+						stockmaster.actualcost AS standard
 						FROM bom,
 							stockmaster
 						WHERE bom.component=stockmaster.stockid
@@ -2070,7 +2041,7 @@ if (isset($_POST['ProcessSale']) AND $_POST['ProcessSale'] != '') {
 		unset($_SESSION['Items'.$identifier]->LineItems);
 		unset($_SESSION['Items'.$identifier]);
 
-		echo prnMsg( _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'), 'success');
+		prnMsg( _('Invoice number'). ' '. $InvoiceNo .' '. _('processed'), 'success');
 
 		echo '<br /><div class="centre">';
 
@@ -2137,41 +2108,15 @@ if (!isset($_POST['ProcessSale'])) {
 			$j = 1;
 
 			while ($MyRow=DB_fetch_array($Result2)) {
-	// This code needs sorting out, but until then :
 				$ImageSource = _('No Image');
-	// Find the quantity in stock at location
-				$QohSql = "SELECT sum(quantity)
-						   FROM locstock
-						   WHERE stockid='" .$MyRow['stockid'] . "' AND
-						   loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QohResult =  DB_query($QohSql);
-				$QohRow = DB_fetch_row($QohResult);
-				$QOH = $QohRow[0];
+				// Find the quantity in stock at location
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Find the quantity on outstanding sales orders
-				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						FROM salesorderdetails INNER JOIN salesorders
-						ON salesorders.orderno = salesorderdetails.orderno
-						WHERE  salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
-						AND salesorderdetails.completed=0
-						AND salesorders.quotation=0
-						AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
+				// Find the demand
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' .
-					 _('cannot be retrieved because');
-				$DemandResult = DB_query($SQL,$ErrMsg);
-
-				$DemandRow = DB_fetch_row($DemandResult);
-				if ($DemandRow[0] != null) {
-				  $DemandQty =  $DemandRow[0];
-				} else {
-				  $DemandQty = 0;
-				}
-
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO due to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				// Get the QOO 
+				$QOO = GetQuantityOnOrder($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 
@@ -2291,37 +2236,13 @@ if (!isset($_POST['ProcessSale'])) {
 			while ($MyRow=DB_fetch_array($SearchResult)) {
 
 				// Find the quantity in stock at location
-				$QOHSql = "SELECT sum(quantity) AS qoh
- 					   FROM locstock
-					   WHERE locstock.stockid='" .$MyRow['stockid'] . "'
-					   AND loccode = '" . $_SESSION['Items'.$identifier]->Location . "'";
-				$QOHResult =  DB_query($QOHSql);
-				$QOHRow = DB_fetch_array($QOHResult);
-				$QOH = $QOHRow['qoh'];
+				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				// Find the quantity on outstanding sales orders
-				$SQL = "SELECT SUM(salesorderdetails.quantity-salesorderdetails.qtyinvoiced) AS dem
-						 FROM salesorderdetails INNER JOIN salesorders
-						 ON salesorders.orderno = salesorderdetails.orderno
-						 WHERE salesorders.fromstkloc='" . $_SESSION['Items'.$identifier]->Location . "'
-						 AND salesorderdetails.completed=0
-						 AND salesorders.quotation=0
-						 AND salesorderdetails.stkcode='" . $MyRow['stockid'] . "'";
+				// Find the demand
+				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
-				$ErrMsg = _('The demand for this product from') . ' ' . $_SESSION['Items'.$identifier]->Location . ' ' . _('cannot be retrieved because');
-				$DemandResult = DB_query($SQL,$ErrMsg);
-
-				$DemandRow = DB_fetch_row($DemandResult);
-				if ($DemandRow[0] != null) {
-				  $DemandQty =  $DemandRow[0];
-				} else {
-				  $DemandQty = 0;
-				}
-
-				// Get the QOO due to Purchase orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO = GetQuantityOnOrderDueToPurchaseOrders($MyRow['stockid'], '');
-				// Get the QOO dues to Work Orders for all locations. Function defined in SQL_CommonFunctions.inc
-				$QOO += GetQuantityOnOrderDueToWorkOrders($MyRow['stockid'], '');
+				// Get the QOO 
+				$QOO = GetQuantityOnOrder($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
 				$Available = $QOH - $DemandQty + $QOO;
 
@@ -2416,7 +2337,7 @@ if (!isset($_POST['ProcessSale'])) {
 	 		/* Do not display colum unless customer requires po line number by sales order line*/
 	 		echo '<td><input type="text" name="part_' . $i . '"' . ($i==1 ? ' autofocus="autofocus"':'') . ' data-type="no-illegal-chars" title="' . _('Enter a part code to be sold. Part codes can contain any alpha-numeric characters underscore or hyphen.') . '"size="21" maxlength="20" /></td>
 					<td><input type="text" class="number" name="qty_' . $i . '" size="6" maxlength="6" />
-						<input type="hidden" class="date" name="ItemDue_' . $i . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
+						<input type="hidden" type="date" name="ItemDue_' . $i . '" value="' . $DefaultDeliveryDate . '" /></td></tr>';
    		}
 	 	echo '</table>
 				<br />
@@ -2429,13 +2350,15 @@ if (!isset($_POST['ProcessSale'])) {
 
   	}
 	if ($_SESSION['Items'.$identifier]->ItemsOrdered >=1) {
-  		echo '<br /><div class="centre"><input type="submit" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
+  		echo '<br /><div class="centre"><input type="reset" name="CancelOrder" value="' . _('Cancel Sale') . '" onclick="return confirm(\'' . _('Are you sure you wish to cancel this sale?') . '\');" /></div>';
 	}
 	echo '</form>';
 }
-echo '<script src="', $RootPath, 'javscripts/CounterSalesFunctions.js"></script>';
+
 ?>
+<script src="<?=$RootPath?>/javascripts/CounterSalesFunctions.js"></script>
 <script defer="defer">
+	CounterSales.SetTotalDue(<?=$_SESSION['Items'.$identifier]->total+$TaxTotal?>);
 	CounterSales.SetItemList(<?php echo json_encode($_SESSION['ItemList']); ?>);
 	CounterSales.SetQuickEntryTableId('QuickEntryTable');
 	CounterSales.SetRowCounter(<?php echo empty($i) ? 0 : $i; ?>);

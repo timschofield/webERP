@@ -1,6 +1,7 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['PaymentDate'])){$_POST['PaymentDate'] = ConvertSQLDate($_POST['PaymentDate']);};
 
 If ((isset($_POST['PrintPDF']))
 			AND isset($_POST['FromCriteria'])
@@ -127,6 +128,8 @@ If ((isset($_POST['PrintPDF']))
 } else { /*The option to print PDF was not hit */
 
 	$Title=_('Remittance Advices');
+	$ViewTopic = 'AccountsPayable';
+	$BookMark = '';
 	include('includes/header.php');
 
     echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/printer.png" title="' . $Title . '" alt="" />' . ' '
@@ -165,7 +168,7 @@ If ((isset($_POST['PrintPDF']))
 
 	echo '<field>
 			<label for="PaymentDate">' . _('Date Of Payment') . ':</label>
-			<input type="text" class="date" name="PaymentDate" maxlength="10" size="11" value="' . $DefaultDate . '" />
+			<input type="date" name="PaymentDate" maxlength="10" size="11" value="' . FormatDateForSQL($DefaultDate) . '" />
 		</field>';
 
 	echo '</fieldset>

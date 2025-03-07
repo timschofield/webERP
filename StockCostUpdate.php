@@ -5,6 +5,8 @@ $UpdateSecurity =10;
 
 include('includes/session.php');
 $Title = _('Stock Cost Update');
+$ViewTopic = 'Inventory';
+$BookMark = '';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 
@@ -63,21 +65,22 @@ if (isset($_POST['UpdateData'])){
 		prnMsg (_('The entered item code does not exist'),'error',_('Non-existent Item'));
 	} elseif (abs($NewCost - $OldCost) > pow(10,-($_SESSION['StandardCostDecimalPlaces']+1))){
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		ItemCostUpdateGL($StockID, $NewCost, $OldCost, $_POST['QOH']);
 
-		$SQL = "UPDATE stockmaster SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
-										labourcost='" . filter_number_format($_POST['LabourCost']) . "',
-										overheadcost='" . filter_number_format($_POST['OverheadCost']) . "',
-										lastcost='" . $OldCost . "',
-										lastcostupdate ='" . Date('Y-m-d')."'
-								WHERE stockid='" . $StockID . "'";
+		$SQL = "UPDATE stockmaster 
+				SET	materialcost='" . filter_number_format($_POST['MaterialCost']) . "',
+					labourcost='" . filter_number_format($_POST['LabourCost']) . "',
+					overheadcost='" . filter_number_format($_POST['OverheadCost']) . "',
+					lastcost='" . $OldCost . "',
+					lastcostupdate = CURRENT_DATE
+				WHERE stockid='" . $StockID . "'";
 
 		$ErrMsg = _('The cost details for the stock item could not be updated because');
 		$DbgMsg = _('The SQL that failed was');
 		$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 		UpdateCost($StockID); //Update any affected BOMs
 
 	}

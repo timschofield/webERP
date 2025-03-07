@@ -85,7 +85,8 @@ while ($MyRow = DB_fetch_array($Account)) {
 }
 echo '</select>
 	</field>';
-
+	
+/* KL RICARD Do not show tags
 //Select the tag
 echo '<field>
 		<label for="tag">' . _('Select Tag') . ':</label>
@@ -110,6 +111,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 	</field>';
 // End select tag
+KL RICARD Do not show tags */
+
 echo '<field>
 		<label for="Period">' . _('For Period range') . ':</label>
 		<select name="Period[]" size="12" multiple="multiple">';

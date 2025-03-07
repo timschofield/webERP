@@ -128,9 +128,6 @@ function GetECBCurrencyRates() {
 				if (isset($Tag['attributes'])) {
 					$elements[$index]->attributes = $Tag['attributes'];
 				}
-				if (isset($Tag['value'])) {
-					$elements[$index]->content = $Tag['value'];
-				}
 				if ($Tag['type'] == 'open') { // push
 					$elements[$index]->children = array();
 					$stack[count($stack)] = & $elements;

@@ -1,31 +1,33 @@
 <?php
 
 function GetImageLink($ImageFile, $Item, $Width, $Height, $AltText, $Class = "") {
-    if (extension_loaded('gd') 
-		and function_exists('gd_info') 
-		and file_exists($ImageFile) 
-		and isset($Item) 
+    if (extension_loaded('gd')
+		and function_exists('gd_info')
+		and file_exists($ImageFile)
+		and isset($Item)
 		and !empty($Item)) {
         if ($_SESSION['ShowStockidOnImages'] == '0'){
-			$ImageLink = '<img src="GetStockImage.php?automake=1' . 
+			$ImageLink = '<img class="StockImage" src="GetStockImage.php?automake=1' .
                                                     '&textcolor=FFFFFF' .
                                                     '&bgcolor=CCCCCC' .
-                                                    '&amp;width=' . $Width . 
-                                                    '&amp;height=' . $Height .
-                                                    '&amp;StockID=' . urlencode($Item) .
-                                                    '" alt="" />';
+                                                    '&width=' . $Width .
+                                                    '&height=' . $Height .
+                                                    '&StockID=' . urlencode($Item) .
+													'" alt="' . htmlspecialchars($AltText, ENT_QUOTES) . '" />';
         } else {
-            $ImageLink = '<img src="GetStockImage.php?automake=1' . 
+            $ImageLink = '<img class="StockImage" src="GetStockImage.php?automake=1' .
                                                     '&textcolor=FFFFFF' .
                                                     '&bgcolor=CCCCCC' .
-                                                    '&amp;text='. $Item .
-                                                    '&amp;width=' . $Width . 
-                                                    '&amp;height=' . $Height .
-                                                    '&amp;StockID=' . urlencode($Item) .
-                                                    '" alt="" />';
+                                                    '&text='. $Item .
+                                                    '&width=' . $Width .
+                                                    '&height=' . $Height .
+                                                    '&StockID=' . urlencode($Item) .
+													'" alt="' . htmlspecialchars($AltText, ENT_QUOTES) . '" />';
 		}
     } else if (file_exists($ImageFile)) {
-        $ImageLink = '<img class="StockImage" src="' . $ImageFile . '" />';
+        $ImageLink = '<img class="StockImage" src="' . $ImageFile .
+                                            '" width="' . $Width .
+                                            '" height="' . $Height . '" />';
     } else {
         $ImageLink = _('No Image');
     }

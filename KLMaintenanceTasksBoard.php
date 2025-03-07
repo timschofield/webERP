@@ -9,6 +9,9 @@ include('includes/KLGeneralFunctions.php');
 include('includes/KLBoards.php');
 include('includes/KLUIGeneralFunctions.php');
 
+MaintenanceTasksDistribution("OPEN", 0);
+MaintenanceTasksDistribution("CLOSED", 30);
+MaintenanceTasksDistribution("TOTAL", 30);
 MaintenanceTasksList("CLOSED", 60);
 
 include ('includes/footer.php');

@@ -398,10 +398,10 @@ if (isset($_POST['submit'])) {
 						}
 
 						if ($_POST['PropNumeric' .$i]==1){
-							$_POST['PropValue' . $i]=filter_number_format($_POST['PropValue' . $i]);
-						} else {
+							$_POST['PropValue' . $i] = filter_number_format($_POST['PropValue' . $i]);
+						} /*else {
 							$_POST['PropValue' . $i]=$_POST['PropValue' . $i];
-						}
+						}*/
 
 					$Result = DB_query("INSERT INTO stockitemproperties (stockid,
 													stkcatpropid,
@@ -543,17 +543,18 @@ if (isset($_POST['submit'])) {
 						$OldRow = DB_fetch_array($OldResult);
 
 					//now update cloned item costs
-						$Result = DB_Txn_Begin();
-						$SQL = "UPDATE stockmaster SET	materialcost='" . $OldRow['materialcost'] . "',
-										labourcost     ='" . $OldRow['labourcost'] . "',
-										overheadcost   ='" . $OldRow['overheadcost'] . "',
-										lastcost       ='" . $OldRow['lastcost'] . "',
-										lastcostupdate ='" . Date('Y-m-d')."'
+						DB_Txn_Begin();
+						$SQL = "UPDATE stockmaster 	
+								SET	materialcost ='" . $OldRow['materialcost'] . "',
+									labourcost ='" . $OldRow['labourcost'] . "',
+									overheadcost ='" . $OldRow['overheadcost'] . "',
+									lastcost ='" . $OldRow['lastcost'] . "',
+									lastcostupdate = CURRENT_DATE
 								WHERE stockid='" . $_POST['StockID'] . "'";
 						$ErrMsg = _('The cost details for the cloned stock item could not be updated because');
 						$DbgMsg = _('The SQL that failed was');
 						$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-						$Result = DB_Txn_Commit();
+						DB_Txn_Commit();
 
 					//finish up
 					if (DB_error_no() ==0) {

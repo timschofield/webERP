@@ -7,10 +7,12 @@ include('includes/session.php');
 $Title = _('KL Sales Inquiry');
 include('includes/header.php');
 
-# Sets default date range for current month
-if (!isset($_POST['FromDate'])){
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 
-// RICARD KL Modification. From date should be today as default
+// Sets default date range for current month
+if (!isset($_POST['FromDate'])){
+	// RICARD KL Modification. From date should be today as default
 	$_POST['FromDate'] = Date($_SESSION['DefaultDateFormat']);
 }
 if (!isset($_POST['ToDate'])){
@@ -1114,9 +1116,9 @@ function display()  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPLAY_#####
 
 	echo '<tr>
 			<td>' . _('Date Range') . ':</td>
-			<td><input type="text" class="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . $_POST['FromDate'] . '" /></td>
+			<td><input type="date" alt="' .$_SESSION['DefaultDateFormat'] .'" name="FromDate" size="10" maxlength="10" value="' . FormatDateForSQL($_POST['FromDate']) . '" /></td>
 			<td>' . _('To') . ':</td>
-			<td><input type="text" class="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . $_POST['ToDate'] . '" /></td>
+			<td><input type="date" alt="' . $_SESSION['DefaultDateFormat'] . '" name="ToDate" size="10" maxlength="10" value="' . FormatDateForSQL($_POST['ToDate']) . '" /></td>
 		</tr>';
 	if (!isset($_POST['PartNumber'])){
 		$_POST['PartNumber']='';

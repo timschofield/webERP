@@ -9,6 +9,9 @@ INSERT INTO test_erp.accountsection SELECT * FROM kurakura_kl_erp.accountsection
 TRUNCATE test_erp.`areas`;
 INSERT INTO test_erp.areas SELECT * FROM kurakura_kl_erp.areas;
 
+TRUNCATE test_erp.`assetmanager`;
+INSERT INTO test_erp.assetmanager SELECT * FROM kurakura_kl_erp.assetmanager;
+
 TRUNCATE test_erp.`auditscripts`;
 /* INSERT INTO test_erp.auditscripts SELECT * FROM kurakura_kl_erp.auditscripts; */
 
@@ -183,7 +186,7 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 130 AND periodno <= 140;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 140 AND periodno <= 150;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 150 AND periodno <= 160; 
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160 AND periodno <= 170; */
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 160 AND periodno <= 170; 
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 170 AND periodno <= 180;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 180 AND periodno <= 190;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 190 AND periodno <= 200;
@@ -191,6 +194,7 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 200 AND periodno <= 210;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 210 AND periodno <= 220;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 220;
+*/
 
 TRUNCATE test_erp.`grns`;
 INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns;
@@ -311,6 +315,12 @@ INSERT INTO test_erp.mailgroups SELECT * FROM kurakura_kl_erp.mailgroups;
 
 TRUNCATE test_erp.`manufacturers`;
 INSERT INTO test_erp.manufacturers SELECT * FROM kurakura_kl_erp.manufacturers;
+
+TRUNCATE test_erp.`menuitems`;
+INSERT INTO test_erp.menuitems SELECT * FROM kurakura_kl_erp.menuitems;
+
+TRUNCATE test_erp.`modules`;
+INSERT INTO test_erp.modules SELECT * FROM kurakura_kl_erp.modules;
 
 TRUNCATE test_erp.`mrpcalendar`;
 INSERT INTO test_erp.mrpcalendar SELECT * FROM kurakura_kl_erp.mrpcalendar;

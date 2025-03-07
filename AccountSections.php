@@ -64,7 +64,7 @@ if(isset($_POST['submit'])) {
 	}
 	if(ContainsIllegalCharacters($_POST['SectionName'])) {
 		$InputError = 1;
-		prnMsg( _('The account section name cannot contain any illegal characters') ,'error');
+		prnMsg( _('The account section name cannot contain any illegal characters') . ' ' . '" \' - &amp; or a space' ,'error');
 		$Errors[$i] = 'SectionName';
 		$i++;
 	}
@@ -166,7 +166,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 	$ErrMsg = _('Could not get account group sections because');
 	$Result = DB_query($SQL,$ErrMsg);
 
-	echo '<p class="page_title_text"><img alt="" class="noprint" src="', $RootPath, '/css/', $Theme,
+	echo '<p class="page_title_text"><img alt="" class="noPrint" src="', $RootPath, '/css/', $Theme,
 		'/images/maintenance.png" title="', // Icon image.
 		_('Account Sections'), '" /> ', // Icon title.
 		_('Account Sections'), '</p>';// Page title.
@@ -174,9 +174,9 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('Section Number'), '</th>
-				<th class="ascending">', _('Section Description'), '</th>
-				<th class="noprint" colspan="2">&nbsp;</th>
+				<th class="SortedColumn">', _('Section Number'), '</th>
+				<th class="SortedColumn">', _('Section Description'), '</th>
+				<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -186,8 +186,8 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 		echo '<tr class="striped_row">
 				<td class="number">', $MyRow['sectionid'], '</td>
 				<td class="text">', $MyRow['sectionname'], '</td>
-				<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
-				<td class="noprint">';
+				<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'].'?SelectedSectionID='.urlencode($MyRow['sectionid']), ENT_QUOTES, 'UTF-8'), '">', _('Edit'), '</a></td>
+				<td class="noPrint">';
 		if( $MyRow['sectionid'] == '1' or $MyRow['sectionid'] == '2' ) {
 			echo '<b>', _('Restricted'), '</b>';
 		} else {
@@ -202,7 +202,7 @@ if(!isset($_GET['SelectedSectionID']) AND !isset($_POST['SelectedSectionID'])) {
 
 
 if(isset($_POST['SelectedSectionID']) or isset($_GET['SelectedSectionID'])) {
-	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Sections') . '</a></div>';
+	echo '<a class="toplink" href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . _('Review Account Sections') . '</a>';
 }
 
 if(! isset($_GET['delete'])) {
@@ -229,7 +229,7 @@ if(! isset($_GET['delete'])) {
 			$_POST['SectionName'] = $MyRow['sectionname'];
 
 			echo '<input name="SelectedSectionID" type="hidden" value="', $_POST['SectionID'], '" />';
-			
+
 			echo '<fieldset>
 					<legend>', _('Edit Account Section Details'), '</legend>
 					<field>
@@ -266,9 +266,9 @@ if(! isset($_GET['delete'])) {
 					'maxlength="30" name="SectionName" required="required" size="30" tabindex="2" type="text" value="', $_POST['SectionName'], '" />
 				<fieldhelp>', _('Enter a description for this section'), '</fieldhelp>
 			</field>';
-			
+
 	echo '</fieldset>';
-	
+
 	echo '<div class="centre">
 			<input name="submit" tabindex="3" type="submit" value="', _('Enter Information'), '" />
 		</div>

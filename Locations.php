@@ -556,22 +556,22 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 		<tr>
-			<th class="ascending">', _('Code'), '</th>
-			<th class="ascending">', _('Location Name'), '</th>
-			<th class="ascending">', _('Zone'), '</th>
-			<th class="ascending">', _('Type'), '</th>
-			<th class="ascending">', _('Retail Partner'), '</th>
-			<th class="ascending">', _('Online Partner'), '</th>
-			<th class="ascending">', _('Stock Ready Sell'), '</th>
-			<th class="ascending">', _('Stock for Online?'), '</th>
-			<th class="ascending">', _('Priority'), '</th>
-			<th class="ascending">', _('ST From'), '</th>
-			<th class="ascending">', _('ST Max'), '</th>
-			<th class="ascending">', _('ST Min'), '</th>
-			<th class="ascending">', _('Pack From'), '</th>
-			<th class="ascending">', _('Pack Factor'), '</th>
-			<th class="ascending">', _('Pack Days'), '</th>
-			<th class="noprint" colspan="2">&nbsp;</th>
+			<th class="SortedColumn">', _('Code'), '</th>
+			<th class="SortedColumn">', _('Location Name'), '</th>
+			<th class="SortedColumn">', _('Zone'), '</th>
+			<th class="SortedColumn">', _('Type'), '</th>
+			<th class="SortedColumn">', _('Retail Partner'), '</th>
+			<th class="SortedColumn">', _('Online Partner'), '</th>
+			<th class="SortedColumn">', _('Stock Ready Sell'), '</th>
+			<th class="SortedColumn">', _('Stock for Online?'), '</th>
+			<th class="SortedColumn">', _('Priority'), '</th>
+			<th class="SortedColumn">', _('ST From'), '</th>
+			<th class="SortedColumn">', _('ST Max'), '</th>
+			<th class="SortedColumn">', _('ST Min'), '</th>
+			<th class="SortedColumn">', _('Pack From'), '</th>
+			<th class="SortedColumn">', _('Pack Factor'), '</th>
+			<th class="SortedColumn">', _('Pack Days'), '</th>
+			<th class="noPrint" colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
 		<tbody>';
@@ -622,8 +622,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 			<td>%s</td>
 			<td class="number">%s</td>
 			<td class="number">%s</td>
-			<td class="noprint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
-			<td class="noprint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
+			<td class="noPrint"><a href="%sSelectedLocation=%s">' . _('Edit') . '</a></td>
+			<td class="noPrint"><a href="%sSelectedLocation=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this inventory location?') . '\');">' . _('Delete') . '</a></td>
 			</tr>',
 			$MyRow['loccode'],
 			$MyRow['locationname'],

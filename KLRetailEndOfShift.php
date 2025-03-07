@@ -43,7 +43,7 @@ $SQL = "SELECT salesorders.orderno,
 				salesorders.klreturnedgoods,
 				salesorders.klvouchers
 		FROM salesorders
-		WHERE salesorders.orddate >= '". $Today ."'
+		WHERE salesorders.orddate >= CURRENT_DATE
 			AND salesorders.salesperson = '" . $_SESSION['SalesmanLogin'] . "'
 		ORDER BY salesorders.orderno ASC";
 		

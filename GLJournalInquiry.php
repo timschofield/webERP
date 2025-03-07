@@ -1,6 +1,8 @@
 <?php
 // GLJournalInquiry.php
 include ('includes/session.php');
+if (isset($_POST['FromTransDate'])){$_POST['FromTransDate'] = ConvertSQLDate($_POST['FromTransDate']);};
+if (isset($_POST['ToTransDate'])){$_POST['ToTransDate'] = ConvertSQLDate($_POST['ToTransDate']);};
 $Title = _('General Ledger Journal Inquiry');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'GLJournalInquiry';
@@ -59,8 +61,8 @@ if (!isset($_POST['Show'])) {
 
 	echo '<field>
 			<label>' . _('Journals Dated Between') . ':</label>
-			' . _('From') . ':' . '<input type="text" name="FromTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($FromDate) . '" />
-			' . _('To') . ':' . '<input type="text" name="ToTransDate" class="date" maxlength="10" size="11" value="' . ConvertSQLDate($ToDate) . '" />
+			' . _('From') . ':' . '<input name="FromTransDate" type="date" maxlength="10" size="11" value="' . $FromDate . '" />
+			' . _('To') . ':' . '<input name="ToTransDate" type="date" maxlength="10" size="11" value="' . $ToDate . '" />
 		</field>';
 
 	echo '</fieldset>';
@@ -163,7 +165,7 @@ else {
 					echo '<td class="number"><a href="PDFGLJournalCN.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
 				}
 				else {
-					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '">' . _('Print') . '</a></td></tr>';
+					echo '<td class="number"><a href="PDFGLJournal.php?JournalNo=' . $MyRow['typeno'] . '&Type=' . $_POST['TransType'] . '">' . _('Print') . '</a></td></tr>';
 				}
 
 				$LastJournal = $MyRow['typeno'];

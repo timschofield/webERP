@@ -1,8 +1,8 @@
 <?php
 
-
 include('includes/DefineContractClass.php');
 include('includes/session.php');
+if (isset($_POST['RequiredDate'])){$_POST['RequiredDate'] = ConvertSQLDate($_POST['RequiredDate']);};
 
 if (isset($_GET['ModifyContractNo'])) {
 	$Title = _('Modify Contract') . ' ' . $_GET['ModifyContractNo'];
@@ -535,7 +535,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 	$CustomerDetailsRow = DB_fetch_array($CustomerDetailsResult);
 
 	//start a DB transaction
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 	$OrderNo = GetNextTransNo(30);
 	$HeaderSQL = "INSERT INTO salesorders (	orderno,
 											debtorno,
@@ -606,7 +606,7 @@ if(isset($_POST['CreateQuotation']) AND !$InputError){
 						WHERE contractref='" . DB_escape_string($_SESSION['Contract'.$identifier]->ContractRef) . "'";
 	$ErrMsg = _('Unable to update the contract status and order number because');
 	$UpdContractResult = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 	$_SESSION['Contract'.$identifier]->Status=1;
 	$_SESSION['Contract'.$identifier]->OrderNo=$OrderNo;
 	prnMsg(_('The contract has been made into quotation number') . ' ' . $OrderNo,'info');
@@ -947,7 +947,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 
 	echo '<field>
 			<label for="RequiredDate">', _('Required Date'), ':</label>
-			<input type="text" class="date" name="RequiredDate" size="11" value="', $_SESSION['Contract' . $identifier]->RequiredDate, '" />
+			<input type="date" name="RequiredDate" size="11" value="', FormatDateForSQL($_SESSION['Contract' . $identifier]->RequiredDate), '" />
 		</field>';
 
 	echo '<field>
@@ -1105,7 +1105,7 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 	if ($_SESSION['Contract'.$identifier]->Status!=2) {
 		echo '<div class="centre">
 				 <br />
-				 <input type="submit" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
+				 <input type="reset" name="CancelContract" value="' . _('Cancel and Delete Contract') . '" />
 			  </div>';
 	}
 	echo '</form>';

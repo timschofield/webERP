@@ -6,6 +6,8 @@ include ('includes/DefineCartClass.php');
 include ('includes/DefineSerialItems.php');
 /* Session started in header.php for password checking and authorisation level check */
 include ('includes/session.php');
+$ViewTopic = 'ARTransactions';
+$BookMark = 'CreditNotes';
 
 $Title = _('Credit An Invoice');
 include ('includes/header.php');
@@ -145,7 +147,31 @@ if (!isset($_GET['InvoiceNumber']) and !$_SESSION['ProcessingCredit']) {
 
 				$LineNumber = $_SESSION['CreditItems' . $identifier]->LineCounter;
 
-				$_SESSION['CreditItems' . $identifier]->add_to_cart($MyRow['stockid'], $MyRow['quantity'], $MyRow['description'], $MyRow['longdescription'], $MyRow['price'], $MyRow['discountpercent'], $MyRow['units'], $MyRow['volume'], $MyRow['grossweight'], 0, $MyRow['mbflag'], $MyRow['trandate'], 0, $MyRow['discountcategory'], $MyRow['controlled'], $MyRow['serialised'], $MyRow['decimalplaces'], str_replace("\\r\\n", " ", $MyRow['narrative']), 'No', -1, $MyRow['taxcatid'], '', '', '', $MyRow['standardcost']);
+				$_SESSION['CreditItems' . $identifier]->add_to_cart($MyRow['stockid'],
+																	$MyRow['quantity'],
+																	$MyRow['description'],
+																	$MyRow['longdescription'],
+																	$MyRow['price'],
+																	$MyRow['discountpercent'],
+																	$MyRow['units'],
+																	$MyRow['volume'],
+																	$MyRow['grossweight'],
+																	0,
+																	$MyRow['mbflag'],
+																	$MyRow['trandate'],
+																	0,
+																	$MyRow['discountcategory'],
+																	$MyRow['controlled'],
+																	$MyRow['serialised'],
+																	$MyRow['decimalplaces'],
+																	str_replace("\\r\\n", " ", $MyRow['narrative']),
+																	'No',
+																	-1,
+																	$MyRow['taxcatid'],
+																	'',
+																	'',
+																	'',
+																	$MyRow['standardcost']);
 
 				$_SESSION['CreditItems' . $identifier]->GetExistingTaxes($LineNumber, $MyRow['stkmoveno']);
 
@@ -522,7 +548,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 	/*Start an SQL transaction */
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	$DefaultDispatchDate = FormatDateForSQL($DefaultDispatchDate);
 
@@ -720,7 +746,8 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 					$StandardCost = 0; /*To start with - accumulate the cost of the comoponents for use in journals later on */
 					$SQL = "SELECT	bom.component,
 									bom.quantity,
-									stockmaster.actualcost AS standard							FROM bom,
+								stockmaster.actualcost AS standard
+								FROM bom,
 									stockmaster
 								WHERE bom.component=stockmaster.stockid
 								AND bom.parent='" . $CreditLine->StockID . "'
@@ -1538,7 +1565,7 @@ if (isset($_POST['ProcessCredit']) and $OKToProcess == true) {
 
 	} /*end of if Sales and GL integrated */
 
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	unset($_SESSION['CreditItems' . $identifier]->LineItems);
 	unset($_SESSION['CreditItems' . $identifier]);

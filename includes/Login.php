@@ -46,7 +46,7 @@ echo '</head>';
 echo '<body>
 	<div id="container">
 		<div id="login_logo">
-			<div class="logo logo-left">' . $TextLogin . '</div><div class="logo logo-right"></div>
+			<div><strong>' . $TextLogin . '</strong></div>
 		</div>
 		<div id="login_box">
 			<form action="index.php" name="LogIn" method="post" class="noPrint">
@@ -70,6 +70,12 @@ if ($AllowCompanySelectionBox === 'Hide') {
 
 	$DirHandle = dir('companies/');
 
+	if (!isset($_COOKIE["Company"])) {
+		$Company = $DefaultCompany;
+	} else {
+		$Company = $_COOKIE["Company"];
+	}
+
 	while (false !== ($CompanyEntry = $DirHandle->read())) {
 		if (is_dir('companies/' . $CompanyEntry) and $CompanyEntry != '..' and $CompanyEntry != '' and $CompanyEntry != '.' and $CompanyEntry != 'default') {
 			if (file_exists('companies/' . $CompanyEntry . '/Companies.php')) {
@@ -77,7 +83,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 			} else {
 				$CompanyName[$CompanyEntry] = $CompanyEntry;
 			}
-			if ($CompanyEntry == $DefaultCompany) {
+			if ($Company == $CompanyEntry) {
 				echo '<option selected="selected" value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
 			} else {
 				echo '<option value="' . $CompanyEntry . '">' . $CompanyName[$CompanyEntry] . '</option>';
@@ -105,8 +111,12 @@ while (false !== ($CompanyEntry = $DirHandle->read())) {
 		} else {
 			$CompanyName[$CompanyEntry] = $CompanyEntry;
 		}
-		if ($AllowCompanySelectionBox != 'Hide') {
-			echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
+		if ($AllowCompanySelectionBox != 'Hide'){
+			if (empty($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
+				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
+			} else {
+				echo '<li class="option" id="' . $CompanyEntry . '" ><span style="top:0px" id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
+			}
 		}
 	}
 }
@@ -129,8 +139,11 @@ if (isset($DemoText)) {
 
 echo '</div>';
 
-echo '<button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()"><img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
-</button>';
+echo '<div style="text-align: center;">
+        <button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
+            <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
+        </button>
+      </div>';
 
 echo '</form>
 	</div>

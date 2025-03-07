@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
 	if (!isset($_POST['GLAccount'])){
 		$_POST['GLAccount']='';
 	}
-	  
+	
 	if (isset($SelectedSalesPerson) AND $InputError !=1) {
 
 		/*SelectedSalesPerson could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
@@ -218,7 +218,7 @@ or deletion of the records*/
 
 	while ($MyRow=DB_fetch_array($Result)) {
 
-		if ($MyRow[7] == 1) {
+		if ($MyRow['current'] == 1) {
 			$ActiveText = _('Yes');
 		} else {
 			$ActiveText = _('No');

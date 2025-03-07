@@ -2,6 +2,8 @@
 include ('includes/session.php');
 
 $Title = _('Sales Commission Calculation Methods');
+$ViewTopic= 'SalesCommission';
+$BookMark = 'SalesCommission';
 
 include ('includes/header.php');
 echo '<p class="page_title_text">
@@ -80,7 +82,7 @@ if (isset($_POST['Submit'])) {
 	if ($InputError != 1) {
 		//run the SQL from either of the above possibilites
 		if (is_array($SQL)) {
-			$Result = DB_Txn_Begin();
+			DB_Txn_Begin();
 			$DbErr = _('Could not update sales commission type');
 			$DbDbg = _('The sql that failed was') . ':';
 			foreach ($SQL as $Statement) {
@@ -91,9 +93,9 @@ if (isset($_POST['Submit'])) {
 				}
 			}
 			if ($InputError != 1) {
-				$Result = DB_Txn_Commit();
+				DB_Txn_Commit();
 			} else {
-				$Result = DB_Txn_Rollback();
+				DB_Txn_Rollback();
 			}
 		} else {
 			$Result = DB_query($SQL);

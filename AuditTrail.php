@@ -5,10 +5,14 @@
 * KL RICARD: do not show auditscripts table results
 *
 ************************************************************************************************/
-
 include('includes/session.php');
 
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+
 $Title = _('Audit Trail');
+$ViewTopic = 'Setup';
+$BookMark = 'AuditTrail';
 
 include('includes/header.php');
 
@@ -23,7 +27,7 @@ if (!isset($_POST['ToDate'])){
 }
 
 if ((!(Is_Date($_POST['FromDate'])) OR (!Is_Date($_POST['ToDate']))) AND (isset($_POST['View']))) {
-	prnMsg( _('Incorrect date format used, please re-enter'), error);
+	prnMsg( _('Incorrect date format used, please re-enter'), 'error');
 	unset($_POST['View']);
 }
 
@@ -45,12 +49,12 @@ echo '<fieldset>
 		<legend>', _('Report Criteria'), '</legend>';
 
 echo '<field>
-		<label for="FromDate">' .  _('From Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</label>
-		<input tabindex="1" type="text" class="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' .$_POST['FromDate']. '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
+		<label for="FromDate">' .  _('From Date') . '</label>
+		<input tabindex="1" type="date" name="FromDate" size="11" maxlength="10" autofocus="autofocus" required="required" value="' . FormatDateForSQL($_POST['FromDate']) . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
 	</field>
 	<field>
-		<label for="ToDate">' .  _('To Date') . ' ' . $_SESSION['DefaultDateFormat']  . '</label>
-		<input tabindex="2" type="text" class="date" name="ToDate" size="11" maxlength="10" required="required" value="' . $_POST['ToDate'] . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
+		<label for="ToDate">' .  _('To Date') . '</label>
+		<input tabindex="2" type="date" name="ToDate" size="11" maxlength="10" required="required" value="' . FormatDateForSQL($_POST['ToDate']) . '" onchange="isDate(this, this.value, '."'".$_SESSION['DefaultDateFormat']."'".')"/>
 	</field>';
 
 // Show user selections
@@ -150,7 +154,7 @@ if (isset($_POST['View'])) {
 		$SQLString = trim(str_replace("WHERE", '', $SQLString));
 		$Assigment = explode('=', $SQLString);
 		$_SESSION['SQLString']['fields'][0] = $Assigment[0];
-		$_SESSION['SQLString']['values'][0] = $Assigment[1];
+		if (isset($Assigment[1])) {$_SESSION['SQLString']['values'][0] = $Assigment[1];};
 	}
 
 	if (mb_strlen($ContainingText) > 0) {

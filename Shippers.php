@@ -8,6 +8,8 @@ KL RICARD MODIFICATIONS:
 
 include('includes/session.php');
 $Title = _('Shipping Company Maintenance');
+$ViewTopic = 'Shipments';
+$BookMark = '';
 include('includes/header.php');
 
 if (isset($_GET['SelectedShipper'])){
@@ -141,11 +143,9 @@ or deletion of the records*/
 	$Result = DB_query($SQL);
 
 	echo '<table class="selection">
-		<tr><th class="ascending">' .  _('Shipper ID'). '</th>
-			<th class="ascending">' .  _('Shipper Name'). '</th>
+		<tr><th>' .  _('Shipper ID'). '</th><th>' .  _('Shipper Name'). '</th></tr>';
 			<th class="ascending">' .  _('OpenCart Text'). '</th>
 			<th class="ascending">' .  _('PowerTrack Code'). '</th>
-		</tr>';
 
 
 	while ($MyRow = DB_fetch_array($Result)) {

@@ -12,6 +12,8 @@
 include('includes/DefinePOClass.php');
 include('includes/DefineSerialItems.php');
 include('includes/session.php');
+if (isset($_POST['DefaultReceivedDate'])){$_POST['DefaultReceivedDate'] = ConvertSQLDate($_POST['DefaultReceivedDate']);};
+
 include('includes/SQL_CommonFunctions.inc');
 
 /*The identifier makes this goods received session unique so cannot get confused
@@ -112,15 +114,14 @@ if (!isset($_POST['ProcessGoodsReceived'])) {
 			<legend>', _('GRN Header'), '</legend>
 			<field>
 				<label for="DefaultReceivedDate">' .  _('Date Goods/Service Received'). ':</label>
-				<input type="text" class="date" maxlength="10" size="11" onchange="return isDate(this, this.value, '."'".
-			$_SESSION['DefaultDateFormat']."'".')" name="DefaultReceivedDate" value="' . $_SESSION['PO' . $identifier]->DefaultReceivedDate . '" />
+				<input type="date" maxlength="10" size="11" name="DefaultReceivedDate" value="' . FormatDateForSQL($_SESSION['PO' . $identifier]->DefaultReceivedDate) . '" />
 			</field>
 			<field>
 				<label for="SupplierReference">' . _("Supplier's Reference") . ':</label>
 				<input type="text" name="SupplierReference" value="' . $SupplierReference. '" maxlength="30" size="20"  onchange="ReloadForm(form1.Update)"/>
 			</field>
 		</fieldset>';
-		
+
 	echo '<table cellpadding="2" class="selection">
 			<tr><th colspan="2">&nbsp;</th>
 				<th class="centre" colspan="4"><b>', _('Supplier Units'), '</b></th>
@@ -186,7 +187,8 @@ if (count($_SESSION['PO'.$identifier]->LineItems)>0 and !isset($_POST['ProcessGo
 
 		//Now Display LineItem
 		$SupportedImgExt = array('png','jpg','jpeg');
-		$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+		$Glob = (glob($_SESSION['part_pics_dir'] . '/' . $LnItm->StockID . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($Glob);
 		if ($ImageFile) {
 			$ImageLink = '<a href="' . $ImageFile . '" target="_blank">' .  $LnItm->StockID . '</a>';
 		} else {
@@ -429,7 +431,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 /* *********************** BEGIN SQL TRANSACTIONS *********************** */
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 /*Now Get the next GRN - function in SQL_CommonFunctions*/
 	$GRN = GetNextTransNo(25);
 
@@ -446,7 +448,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 			if ($OrderLine->StockID!='') { //Its a stock item line
 				/*Need to get the current standard cost as it is now so we can process GL jorunals later*/
-				$SQL = "SELECT materialcost + labourcost + overheadcost as stdcost,mbflag
+				$SQL = "SELECT actualcost as stdcost,mbflag
 							FROM stockmaster
 							WHERE stockid='" . $OrderLine->StockID . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The standard cost of the item being received cannot be retrieved because');
@@ -794,7 +796,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 		EnsureGLEntriesBalance(25, $GRN);
 	}
 
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 	$PONo = $_SESSION['PO'.$identifier]->OrderNo;
 	unset($_SESSION['PO'.$identifier]->LineItems);
 	unset($_SESSION['PO'.$identifier]);
@@ -802,7 +804,7 @@ if ($_SESSION['PO'.$identifier]->SomethingReceived()==0 AND isset($_POST['Proces
 
 	echo '<br />
 		<div class="centre">
-			'. prnMsg(_('GRN number'). ' '. $GRN .' '. _('has been processed'),'success') . '
+			'. prnMsg(_('GRN number'). ' '. $GRN .' '. _('has been processed'),'success','',true) . '
 			<br />
 			<br />
 			<a href="PDFGrn.php?GRNNo='.$GRN .'&amp;PONo='.$PONo.'">' .  _('Print this Goods Received Note (GRN)') . '</a>

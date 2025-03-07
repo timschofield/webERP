@@ -28,7 +28,7 @@ if(isset($_POST['submit'])) {
 
 	if(ContainsIllegalCharacters($_POST['TaxProvinceName'])) {
 		$InputError = 1;
-		prnMsg( _('The tax province name cannot contain any of the illegal characters'),'error');
+		prnMsg( _('The tax province name cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space','error');
 	}
 	if(trim($_POST['TaxProvinceName']) == '') {
 		$InputError = 1;
@@ -162,7 +162,7 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">' . _('Tax Province') . '</th>
+				<th class="SortedColumn">' . _('Tax Province') . '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>

@@ -54,16 +54,16 @@ if (basename($_SERVER['SCRIPT_NAME']) != 'Dashboard.php') {
 
 	$k = 0;
 
-	while ($row = DB_fetch_array($DashboardResult)) {
+	while ($Row = DB_fetch_array($DashboardResult)) {
 
-		$AccountCurrTotal+= $row['amount'];
-		$LocalCurrTotal+= $row['amount'] / $row['functionalexrate'] / $row['exrate'];
+		$AccountCurrTotal+= $Row['amount'];
+		$LocalCurrTotal+= $Row['amount'] / $Row['functionalexrate'] / $Row['exrate'];
 		echo '<tr class="striped_row">
-			<td>', $row['currcode'], '</td>
-			<td class="number">', locale_number_format($row['amount'], $row['decimalplaces']), '</td>
-			<td>', $row['typename'], '</td>
-			<td>', ConvertSQLDate($row['transdate']), '</td>
-			<td class="number">', $row['bankaccountname'], '</td>
+			<td>', $Row['currcode'], '</td>
+			<td class="number">', locale_number_format($Row['amount'], $Row['decimalplaces']), '</td>
+			<td>', $Row['typename'], '</td>
+			<td>', ConvertSQLDate($Row['transdate']), '</td>
+			<td class="number">', $Row['bankaccountname'], '</td>
 		</tr>';
 	}
 	echo '</tbody>

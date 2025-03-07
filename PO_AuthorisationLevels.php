@@ -123,15 +123,17 @@ $ErrMsg = _('The authentication details cannot be retrieved because');
 $Result=DB_query($SQL,$ErrMsg);
 
 echo '<table class="selection">
-     <tr>
-		<th>' . _('User ID') . '</th>
-		<th>' . _('User Name') . '</th>
-		<th>' . _('Currency') . '</th>
-		<th>' . _('Create Order') . '</th>
-		<th>' . _('Can Release') . '<br />' .  _('Invoices') . '</th>
-		<th>' . _('Authority Level') . '</th>
-		<th colspan="2">&nbsp;</th>
-    </tr>';
+		<thead>
+			<tr>
+				<th class="SortedColumn">' . _('User ID') . '</th>
+				<th class="SortedColumn">' . _('User Name') . '</th>
+				<th class="SortedColumn">' . _('Currency') . '</th>
+				<th class="SortedColumn">' . _('Create Order') . '</th>
+				<th class="SortedColumn">' . _('Can Release') . '<br />' .  _('Invoices') . '</th>
+				<th class="SortedColumn">' . _('Authority Level') . '</th>
+				<th colspan="2">&nbsp;</th>
+			</tr>
+		</thead>';
 
 while ($MyRow=DB_fetch_array($Result)) {
 	if ($MyRow['cancreate']==0) {
@@ -144,7 +146,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 	} else {
 		$DisplayOffHold=_('No');
 	}
-	echo '<tr>
+	echo '<tr class="striped_row">
 			<td>' . $MyRow['userid'] . '</td>
 			<td>' . $MyRow['realname'] . '</td>
 			<td>', _($MyRow['currency']), '</td>
@@ -158,7 +160,7 @@ while ($MyRow=DB_fetch_array($Result)) {
 		</tr>';
 }
 
-echo '</table><br /><br />';
+echo '</table>';
 
 if (!isset($_GET['Edit'])) {
 	$UserID=$_SESSION['UserID'];
@@ -218,7 +220,7 @@ if (isset($_GET['Edit'])) {
 
 	echo '<field>
 			<label for="CurrCode">' . _('Currency') . '</label>
-			<td>' . $MyRow['currency'] . '</td>
+			<fieldtext>' . $MyRow['currency'] . '</fieldtext>
 		</field>';
 	echo '<input type="hidden" name="CurrCode" value="'.$Currency.'" />';
 } else {

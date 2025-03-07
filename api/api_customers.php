@@ -180,7 +180,7 @@
 
 	function VerifyEDIReference($EDIReference, $i, $Errors) {
 		if (mb_strlen($EDIReference)>20) {
-			$Errors[$i] = IvalidEDIReference;
+			$Errors[$i] = InvalidEDIReference;
 		}
 		return $Errors;
 	}
@@ -194,28 +194,28 @@
 
 	function VerifyEDIAddress($EDIAddress, $i, $Errors) {
 		if (mb_strlen($EDIAddress)>50) {
-			$Errors[$i] = IvalidEDIAddress;
+			$Errors[$i] = InvalidEDIAddress;
 		}
 		return $Errors;
 	}
 
 	function VerifyEDIServerUser($EDIServerUser, $i, $Errors) {
 		if (mb_strlen($EDIServerUser)>20) {
-			$Errors[$i] = IvalidEDIServerUser;
+			$Errors[$i] = InvalidEDIServerUser;
 		}
 		return $Errors;
 	}
 
 	function VerifyEDIServerPassword($EDIServerPassword, $i, $Errors) {
 		if (mb_strlen($EDIServerPassword)>20) {
-			$Errors[$i] = IvalidEDIServerPassword;
+			$Errors[$i] = InvalidEDIServerPassword;
 		}
 		return $Errors;
 	}
 
 	function VerifyTaxRef($TaxRef, $i, $Errors) {
 		if (mb_strlen($TaxRef)>20) {
-			$Errors[$i] = IvalidTaxRef;
+			$Errors[$i] = InvalidTaxRef;
 		}
 		return $Errors;
 	}

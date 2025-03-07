@@ -3,6 +3,8 @@
 
 include('includes/session.php');
 $Title=_('Apply Current Cost to Sales Analysis');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include('includes/header.php');
 
 $Period = 42;
@@ -33,16 +35,14 @@ echo '</div></form>';
 
 if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 	$SQL = "SELECT stockmaster.stockid,
-			materialcost+overheadcost+labourcost AS standardcost,
+			actualcost AS standardcost,
 			stockmaster.mbflag
 		FROM salesanalysis INNER JOIN stockmaster
 			ON salesanalysis.stockid=stockmaster.stockid
 		WHERE periodno='" . $_POST['PeriodNo']  . "'
 		AND stockmaster.mbflag<>'D'
 		GROUP BY stockmaster.stockid,
-			stockmaster.materialcost,
-			stockmaster.overheadcost,
-			stockmaster.labourcost,
+			stockmaster.actualcost,
 			stockmaster.mbflag";
 
 
@@ -52,7 +52,7 @@ if (isset($_POST['UpdateSalesAnalysis']) AND $_POST['PeriodNo']!=0){
 	while ($ItemsToUpdate = DB_fetch_array($Result)){
 
 		if ($ItemsToUpdate['mbflag']=='A'){
-			$SQL = "SELECT SUM(materialcost + labourcost + overheadcost) AS standardcost
+			$SQL = "SELECT SUM(actualcost) AS standardcost
 					FROM stockmaster INNER JOIN BOM
 						ON stockmaster.stockid = bom.component
 					WHERE bom.parent = '" . $ItemsToUpdate['stockid'] . "'

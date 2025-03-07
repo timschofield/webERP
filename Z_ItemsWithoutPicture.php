@@ -4,6 +4,8 @@
 config.php is in turn included in session.php*/
 include ('includes/session.php');
 $Title = _('List of Items without picture');
+$ViewTopic = 'SpecialUtilities';
+$BookMark = basename(__FILE__, '.php'); ;
 include ('includes/header.php');
 
 $SQL = "SELECT stockmaster.stockid,
@@ -24,7 +26,8 @@ if (DB_num_rows($Result) != 0){
 	$i = 1;
 	$SupportedImgExt = array('png','jpg','jpeg');
 	while ($MyRow = DB_fetch_array($Result)) {
-		$ImageFile = reset((glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE)));
+        $Glob = (glob($_SESSION['part_pics_dir'] . '/' . $MyRow['stockid'] . '.{' . implode(",", $SupportedImgExt) . '}', GLOB_BRACE));
+		$ImageFile = reset($Glob);
 		if(!file_exists($ImageFile) ) {
 			if($PrintHeader){
 				$TableHeader = '<tr>
@@ -38,17 +41,12 @@ if (DB_num_rows($Result) != 0){
 			}
 
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '" target="_blank">' . $MyRow['stockid'] . '</a>';
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$MyRow['categorydescription'],
-					$CodeLink,
-					$MyRow['description']
-					);
+			echo '<tr class="striped_row">
+					<td class="number">', $i, '</td>
+					<td>', $MyRow['categorydescription'], '</td>
+					<td>', $CodeLink, '</td>
+					<td>', $MyRow['description'], '</td>
+				</tr>';
 			$i++;
 		}
 	}

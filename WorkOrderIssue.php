@@ -1,6 +1,9 @@
 <?php
 include ('includes/session.php');
+if (isset($_POST['IssuedDate'])){$_POST['IssuedDate'] = ConvertSQLDate($_POST['IssuedDate']);};
 $Title = _('Issue Materials To Work Order');
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
 include ('includes/ImageFunctions.php');
@@ -70,7 +73,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 		$InputError = true;
 	}
 	//Need to get the current standard cost for the item being issued
-	$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+	$SQL = "SELECT actualcost AS cost,
 					controlled,
 					serialised,
 					decimalplaces,
@@ -154,7 +157,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 
 		/************************ BEGIN SQL TRANSACTIONS ************************/
 
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28);
 
@@ -387,7 +390,7 @@ if (isset($_POST['Process'])) { //user hit the process the work order issues ent
 									SET costissued=costissued+" . ($QuantityIssued * $IssueItemRow['cost']) . "
 									WHERE wo='" . $_POST['WO'] . "'", $ErrMsg, $DbgMsg, true);
 
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of') . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' ' . $_POST['WO'] . ' ' . _('has been processed'), 'info');
 		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
@@ -444,7 +447,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 			}
 			$QuantityIssued = filter_number_format($Value);;
 			//Need to get the current standard cost for the item being issued
-			$SQL = "SELECT materialcost+labourcost+overheadcost AS cost,
+			$SQL = "SELECT actualcost AS cost,
 									controlled,
 									serialised,
 									mbflag
@@ -474,7 +477,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 	}
 	if (isset($InputError) and $InputError == false) {
 		/************************ BEGIN SQL TRANSACTIONS ************************/
-		$Result = DB_Txn_Begin();
+		DB_Txn_Begin();
 		/*Now Get the next WO Issue transaction type 28 - function in SQL_CommonFunctions*/
 		$WOIssueNo = GetNextTransNo(28);
 		$PeriodNo = GetPeriod(Date($_SESSION['DefaultDateFormat'])); //backdate
@@ -594,7 +597,7 @@ elseif (isset($_POST['ProcessMultiple'])) {
 
 			prnMsg(_('The issue of') . ' ' . $QuantityIssued . ' ' . _('of') . ' ' . $_POST['IssueItem'] . ' ' . _('against work order') . ' ' . $_POST['WO'] . ' ' . _('has been processed'), 'info');
 		} //end of foreach loop;
-		$Result = DB_Txn_Commit();
+		DB_Txn_Commit();
 
 		echo '<p><ul><li><a href="' . $RootPath . '/WorkOrderIssue.php?WO=' . $_POST['WO'] . '&amp;StockID=' . $_POST['StockID'] . '">' . _('Issue more components to this work order') . '</a></li>';
 		echo '<li><a href="' . $RootPath . '/SelectWorkOrder.php">' . _('Select a different work order for issuing materials and components against') . '</a></li></ul>';
@@ -796,7 +799,7 @@ while ($WORow = DB_fetch_array($WOResult)) {
 
 echo '<tr>
 		<td class="label">' . _('Date Material Issued') . ':</td>
-		<td><input type="text" name="IssuedDate" value="' . Date($_SESSION['DefaultDateFormat']) . '" class="date" maxlength="10" size="11" /></td>
+		<td><input name="IssuedDate" value="' . Date('Y-m-d') . '" type="date" maxlength="10" size="11" /></td>
 		<td class="label">' . _('Issued From') . ':</td>
 		<td>';
 
@@ -1012,13 +1015,13 @@ if (!isset($_POST['IssueItem'])) { //no item selected to issue yet
 					$ImageSource = GetImageLink($ImageFile, $MyRow['stockid'], 64, 64, "", "");
 
 					$IssueLink = htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?WO=' . $_POST['WO'] . '&amp;StockID=' . urlencode($_POST['StockID']) . '&amp;IssueItem=' . urlencode($MyRow['stockid']) . '&amp;FromLocation=' . $_POST['FromLocation'];
-					printf('<tr class="striped_row">
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td><a href="%s">' . _('Add to Work Order') . '</a></td>
-							</tr>', $MyRow['stockid'], $MyRow['description'], $MyRow['units'], $ImageSource, $IssueLink);
+					echo '<tr class="striped_row">
+							<td>', $MyRow['stockid'], '</td>
+							<td>', $MyRow['description'], '</td>
+							<td>', $MyRow['units'], '</td>
+							<td>', $ImageSource, '</td>
+							<td><a href="', $IssueLink, '">' . _('Add to Work Order') . '</a></td>
+						</tr>';
 
 					$j++;
 					if ($j == 25) {

@@ -1,11 +1,14 @@
 <?php
 include ('includes/session.php');
+if (isset($_POST['FirstPaymentDate'])){$_POST['FirstPaymentDate'] = ConvertSQLDate($_POST['FirstPaymentDate']);};
+if (isset($_POST['LastPaymentDate'])){$_POST['LastPaymentDate'] = ConvertSQLDate($_POST['LastPaymentDate']);};
 
 $Title = _('Setup regular payments');
 $ViewTopic = 'GeneralLedger';
 $BookMark = 'RegularPayments';
 
 include ('includes/header.php');
+include ('includes/GLFunctions.php');
 
 echo '<p class="page_title_text" >
 		<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', $Title, '" alt="" />', ' ', $Title, '
@@ -214,11 +217,11 @@ echo '<field>
 	</field>
 	<field>
 		<label for="FirstPaymentDate">', _('Date of first payment'), '</label>
-		<input type="text" name="FirstPaymentDate" class="date" required="required" maxlength="10" size="11" value="', $_POST['FirstPaymentDate'], '" />
+		<input name="FirstPaymentDate" type="date" required="required" maxlength="10" size="11" value="', FormatDateForSQL($_POST['FirstPaymentDate']), '" />
 	</field>
 	<field>
 		<label for="LastPaymentDate">', _('Date of Last payment'), '</label>
-		<input type="text" name="LastPaymentDate" class="date" required="required" maxlength="10" size="11" value="', $_POST['LastPaymentDate'], '" />
+		<input name="LastPaymentDate" type="date" required="required" maxlength="10" size="11" value="', FormatDateForSQL($_POST['LastPaymentDate']), '" />
 	</field>';
 
 $SQL = "SELECT bankaccountname,
@@ -405,13 +408,7 @@ if (DB_num_rows($Result) > 0 and !isset($_GET['Edit'])) {
 			</tr>';
 	while ($MyRow = DB_fetch_array($Result)) {
 		$Tags = explode(',', $MyRow['tag']);
-		$TagText = '';
-		foreach ($Tags as $Tag) {
-			$TagSQL = "SELECT tagdescription FROM tags WHERE tagref='" . $Tag . "'";
-			$TagResult = DB_query($TagSQL);
-			$TagRow = DB_fetch_array($TagResult);
-			$TagText.= $Tag . ' - ' . $TagRow['tagdescription'] . '<br />';
-		}
+		$TagText = GetDescriptionsFromTagArray($Tags);
 		echo '<tr class="striped_row">
 				<td>', $Frequencies[$MyRow['frequency']], '</td>
 				<td class="number">', $MyRow['days'], '</td>

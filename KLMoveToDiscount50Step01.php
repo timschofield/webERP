@@ -103,7 +103,7 @@ if (isset($_POST['submit'])) {
 		/*SelectedMovement could also exist if submit had not been clicked this code would not run in this case cos submit is false of course  see the delete code below*/
 		$SQL = "UPDATE klmovetodiscount50 
 				SET stockid='" . $_POST['Stockid'] . "',
-					startprocessdate=CURRENT_DATE,
+					startprocessdate = CURRENT_DATE,
 					discountcategory='50',
 					endprocessdate='1000-01-01'
 				WHERE countermovediscount = '".$SelectedMovement."'";

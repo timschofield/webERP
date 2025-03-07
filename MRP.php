@@ -414,11 +414,11 @@ if (isset($_POST['submit'])) {
 									 updateflag)
 						   SELECT Null,
 								  stockid,
-								  '0000-00-00',
+								  '2099-12-31',
 								  SUM(quantity),
 								  'QOH',
 								  1,
-								  '0000-00-00',
+								  '2099-12-31',
 								  0
 							  FROM locstock
 							  WHERE quantity > 0 " .
@@ -556,23 +556,23 @@ if (isset($_POST['submit'])) {
 			$Leeway = 0;
 		}
 		$UseMRPDemands = _('No');
-		if ($MyRow['usemrpdemands'] == 'y') {
+		if (isset($MyRow['usemrpdemands']) and $MyRow['usemrpdemands'] == 'y') {
 			 $UseMRPDemands = _('Yes');
 		}
 		$UseRLDemands = _('No');
-		if ($MyRow['userldemands'] == 'y') {
+		if (isset($MyRow['userldemands']) and $MyRow['userldemands'] == 'y') {
 			 $UseRLDemands = _('Yes');
 		}
 		$useeoq = _('No');
-		if ($MyRow['eoqflag'] == 'y') {
+		if (isset($MyRow['eoqflag']) and $MyRow['eoqflag'] == 'y') {
 			 $useeoq = _('Yes');
 		}
 		$usepansize = _('No');
-		if ($MyRow['pansizeflag'] == 'y') {
+		if (isset($MyRow['pansizeflag']) and $MyRow['pansizeflag'] == 'y') {
 			 $usepansize = _('Yes');
 		}
 		$useshrinkage = _('No');
-		if ($MyRow['shrinkageflag'] == 'y') {
+		if (isset($MyRow['shrinkageflag']) and $MyRow['shrinkageflag'] == 'y') {
 			 $useshrinkage = _('Yes');
 		}
 		if (!isset($MyRow['runtime'])) {

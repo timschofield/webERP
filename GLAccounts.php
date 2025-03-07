@@ -262,7 +262,7 @@ if(!isset($_GET['delete'])) {
 
 	echo '<fieldset>
 			<legend>', $Legend, '</legend>';
-			
+
 	echo '<field>
 			<label for="AccountCode">', _('Account Code'), ':</label>
 			<input ', (empty($_POST['AccountCode']) ? 'autofocus="autofocus" ' : 'disabled="disabled" '), 'data-type="no-illegal-chars" maxlength="20" name="AccountCode" required="required" size="20" title="" type="text" value="', $_POST['AccountCode'], '" />
@@ -287,9 +287,12 @@ if(!isset($_GET['delete'])) {
 		}
 		echo ' value="', $MyRow[0], '">', $MyRow[0], '</option>';
 	}
- 	echo '<tr>
-			<td>' . _('Controlled?') . ':</td>
-			<td><select required="required" name="Controlled">';
+	echo '</select>
+		</field>';
+
+	echo '<field>
+		<label for="Controlled">' . _('Controlled?') . ':</label>
+		<select required="required" name="Controlled">';
 	if (!isset($_POST['Controlled'])){
 		$_POST['Controlled']=0;
 	}
@@ -300,6 +303,9 @@ if(!isset($_GET['delete'])) {
 		echo '<option selected="selected" value="0">' . _('No') . '</option>';
 		echo '<option value="1">' . _('Yes') . '</option>';
 	}
+	echo '</select>
+		</field>';
+		
 	if (!isset($_POST['CashFlowsActivity'])){
 		$_POST['CashFlowsActivity']=0;
 	}

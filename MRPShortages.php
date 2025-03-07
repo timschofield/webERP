@@ -77,11 +77,11 @@ if (isset($_POST['PrintPDF'])) {
 					   stockmaster.mbflag,
 					   stockmaster.actualcost,
 					   stockmaster.decimalplaces,
-					   (stockmaster.actualcost ) as computedcost,
+					   (stockmaster.actualcost) as computedcost,
 					   demandtotal.demand,
 					   supplytotal.supply,
 					   (demandtotal.demand - supplytotal.supply) *
-					   (stockmaster.actualcost ) as extcost
+					   (stockmaster.actualcost) as extcost
 					FROM stockmaster
 						LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
 						LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
@@ -113,12 +113,11 @@ if (isset($_POST['PrintPDF'])) {
 		stockmaster.mbflag,
 		stockmaster.actualcost,
 		stockmaster.decimalplaces,
-		(stockmaster.actualcost ) as computedcost,
+		(stockmaster.actualcost) as computedcost,
 		demandtotal.demand,
 		supplytotal.supply,
 	   (demandtotal.demand - supplytotal.supply) *
-	   (stockmaster.materialcost + stockmaster.labourcost +
-		stockmaster.overheadcost ) as extcost
+	   (stockmaster.actualcost) as extcost
 		   FROM stockmaster
 			 LEFT JOIN demandtotal ON stockmaster.stockid = demandtotal.part
 			 LEFT JOIN supplytotal ON stockmaster.stockid = supplytotal.part
@@ -128,7 +127,6 @@ if (isset($_POST['PrintPDF'])) {
 			   stockmaster.mbflag,
 			   stockmaster.actualcost,
 			   stockmaster.decimalplaces,
-			   computedcost,
 			   supplytotal.supply,
 			   demandtotal.demand " . $SQLHaving . " ORDER BY '" . $_POST['Sort'] . "'";
 	$Result = DB_query($SQL, '', '', false, true);
@@ -231,6 +229,8 @@ if (isset($_POST['PrintPDF'])) {
 } else { /*The option to print PDF was not hit so display form */
 
 	$Title = _('MRP Shortages - Excess Reporting');
+	$ViewTopic = 'MRP';
+	$BookMark = '';
 	include ('includes/header.php');
 
 	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/inventory.png" title="' . _('Stock') . '" alt="" />' . ' ' . $Title . '</p>';

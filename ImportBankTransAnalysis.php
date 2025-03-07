@@ -12,6 +12,9 @@ include('includes/session.php');
 
 $Title = _('Imported Bank Transaction General Ledger Analysis');
 
+$ViewTopic = 'GeneralLedger';
+$BookMark = '';
+
 include('includes/header.php');
 
 if (!isset($_SESSION['Trans'])){
@@ -203,11 +206,11 @@ if ($AllowGLAnalysis==false){
 					<th colspan="5">' . _('General ledger Analysis') . '</th>
 				</tr>
 				<tr>
-					<th class="ascending">' . _('Account') . '</th>
-					<th class="ascending">' . _('Name') . '</th>
-					<th class="ascending">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
+					<th class="SortedColumn">' . _('Account') . '</th>
+					<th class="SortedColumn">' . _('Name') . '</th>
+					<th class="SortedColumn">' . _('Amount') . '<br />' . _('in') . ' ' . $_SESSION['Statement']->CurrCode . '</th>
 					<th>' . _('Narrative') . '</th>
-					<th class="ascending">' . _('Tag') . '</th>
+					<th class="SortedColumn">' . _('Tag') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -305,7 +308,6 @@ if ($AllowGLAnalysis==false){
 			ORDER BY tagref";
 
 	$Result=DB_query($SQL);
-	echo '<option value="0">0 - ' . _('None') . '</option>';
 	while ($MyRow=DB_fetch_array($Result)){
 		if (isset($_POST['tag']) and $_POST['tag']==$MyRow['tagref']){
 			echo '<option selected value="' . $MyRow['tagref'] . '">' . $MyRow['tagref'].' - ' .$MyRow['tagdescription'] . '</option>';

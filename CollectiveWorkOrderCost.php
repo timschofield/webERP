@@ -2,9 +2,13 @@
 /* Multiple work orders cost review */
 
 include('includes/session.php');
+
+if (isset($_POST['DateFrom'])){$_POST['DateFrom'] = ConvertSQLDate($_POST['DateFrom']);};
+if (isset($_POST['DateTo'])){$_POST['DateTo'] = ConvertSQLDate($_POST['DateTo']);};
+
 $Title = _('Search Work Orders');
-$ViewTopic = 'GeneralLedger';
-$BookMark = 'Z_ChangeGLAccountCode';
+$ViewTopic = 'Manufacturing';
+$BookMark = '';
 include('includes/header.php');
 
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
@@ -50,12 +54,12 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 				echo '<table class="selection">
 					<thead>
 						<tr>
-							<th class="ascending">' . _('Item') . '</th>
+							<th class="SortedColumn">' . _('Item') . '</th>
 						<th>' . _('Description') . '</th>
-						<th class="ascending">' . _('Date Issued') . '</th>
-						<th class="ascending">' . _('Issued Qty') . '</th>
-						<th class="ascending">' . _('Issued Cost') . '</th>
-						<th class="ascending">' . _('Work Order') . '</th>
+						<th class="SortedColumn">' . _('Date Issued') . '</th>
+						<th class="SortedColumn">' . _('Issued Qty') . '</th>
+						<th class="SortedColumn">' . _('Issued Cost') . '</th>
+						<th class="SortedColumn">' . _('Work Order') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -289,20 +293,20 @@ if (!isset($StockID)) {
 			</field>';
 
 		if (!isset($_POST['DateFrom'])) {
-			$_POST['DateFrom'] = '';
+			$_POST['DateFrom'] = Date($_SESSION['DefaultDateFormat']);
 		}
 		if (!isset($_POST['DateTo'])) {
-			$_POST['DateTo'] = '';
+			$_POST['DateTo'] = Date($_SESSION['DefaultDateFormat']);
 		}
 
 		echo '<field>
 				<label for="DateFrom">', _('Start Date From'), ':</label>
-				<input type="text" name="DateFrom" size="10" value="', $_POST['DateFrom'], '" class="date" />
+				<input name="DateFrom" size="10" value="', FormatDateForSQL($_POST['DateFrom']), '" type="date" />
 			</field>';
 
 		echo '<field>
 				<label for="DateTo">', _('Start Date To'), ':</label>
-				<input type="text" name="DateTo" size="10" value="', $_POST['DateTo'], '" class="date" />
+				<input name="DateTo" size="10" value="', FormatDateForSQL($_POST['DateTo']), '" type="date" />
 			</field>
 		</fieldset>';
 		echo '<div class="centre">
@@ -350,9 +354,9 @@ if (!isset($StockID)) {
 			<table cellpadding="2" class="selection">
 			<thead>
 			<tr>
-				<th class="ascending">' . _('Code') . '</th>
-				<th class="ascending">' . _('Description') . '</th>
-				<th class="ascending">' . _('On Hand') . '</th>
+				<th class="SortedColumn">' . _('Code') . '</th>
+				<th class="SortedColumn">' . _('Description') . '</th>
+				<th class="SortedColumn">' . _('On Hand') . '</th>
 				<th>' . _('Units') . '</th>
 				</tr>
 			</thead>
@@ -473,17 +477,17 @@ if (!isset($StockID)) {
 				<tr>
 					<th>' . _('Select') . '</th>
 					<th>' . _('Modify') . '</th>
-					<th class="ascending">' . _('Status') . '</th>
+					<th class="SortedColumn">' . _('Status') . '</th>
 					<th>' . _('Issue To') . '</th>
 					<th>' . _('Receive') . '</th>
 					<th>' . _('Costing') . '</th>
 					<th>' . _('Paperwork') . '</th>
-					<th class="ascending">' . _('Item') . '</th>
-					<th class="ascending">' . _('Quantity Required') . '</th>
-					<th class="ascending">' . _('Quantity Received') . '</th>
-					<th class="ascending">' . _('Quantity Outstanding') . '</th>
-					<th class="ascending">' . _('Start Date')  . '</th>
-					<th class="ascending">' . _('Required Date') . '</th>
+					<th class="SortedColumn">' . _('Item') . '</th>
+					<th class="SortedColumn">' . _('Quantity Required') . '</th>
+					<th class="SortedColumn">' . _('Quantity Received') . '</th>
+					<th class="SortedColumn">' . _('Quantity Outstanding') . '</th>
+					<th class="SortedColumn">' . _('Start Date')  . '</th>
+					<th class="SortedColumn">' . _('Required Date') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

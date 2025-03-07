@@ -12,7 +12,7 @@ border-radius:          4px;
 -webkit-box-shadow: 1px 1px 2px #C3C3C3;
 box-shadow:         1px 1px 2px #C3C3C3;
 -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')";
-filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3')
+filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#C3C3C3');
 table-layout: fixed;
 }
 table tr.visible {

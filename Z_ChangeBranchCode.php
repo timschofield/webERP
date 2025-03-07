@@ -46,7 +46,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	}
 
 
-	$Result = DB_Txn_Begin();
+	DB_Txn_Begin();
 
 	prnMsg(_('Inserting the new customer branches master record'),'info');
 	$SQL = "INSERT INTO custbranch (`branchcode`,
@@ -186,7 +186,7 @@ if (isset($_POST['ProcessCustomerChange'])){
 	$ErrMsg = _('The SQL to update contract header records failed because');
 	$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
-	$Result = DB_Txn_Commit();
+	DB_Txn_Commit();
 
 	$Result = DB_IgnoreForeignKeys();
 	prnMsg(_('Deleting the old customer branch record'),'info');

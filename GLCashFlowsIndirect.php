@@ -782,7 +782,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 /*			'<input name="ShowDetail" type="hidden" value="', $_POST['ShowDetail'], '" />',*/
 			'<input name="ShowZeroBalance" type="hidden" value="', $_POST['ShowZeroBalance'], '" />',
 			'<input name="ShowCash" type="hidden" value="', $_POST['ShowCash'], '" />',
-			'<div class="centre noprint">'; // Form buttons:
+			'<div class="centre noPrint">'; // Form buttons:
 		if($NeedSetup) {
 			echo '<button onclick="window.location=\'GLCashFlowsSetup.php\'" type="button"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/maintenance.png" /> ', _('Run Setup'), '</button>'; // "Run Setup" button.
 		}
@@ -799,7 +799,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		_('The statement of cash flows, also known as the successor of the old source and application of funds statement, reports how changes in balance sheet accounts and income affect cash and cash equivalents, and breaks the analysis down to operating, investing and financing activities.') . '<br />' .
 		_('The purpose of the statement of cash flows is to show where the company got their money from and how it was spent during the period being reported for a user selectable range of periods.') . '<br />' .
 		_('The statement of cash flows represents a period of time. This contrasts with the statement of financial position, which represents a single moment in time.') . '<br />' .
-		_('webERP is an "accrual" based system (not a "cash based" system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
+		_('webERP is an accrual based system (not a cash based system). Accrual systems include items when they are invoiced to the customer, and when expenses are owed based on the supplier invoice date.'));// Function fShowPageHelp() in ~/includes/MiscFunctions.php
 	echo // Shows a form to input the report parameters:
 		'<form action="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '" method="post">',
 		'<input name="FormID" type="hidden" value="', $_SESSION['FormID'], '" />'; // Input table:
@@ -832,7 +832,7 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 
-	$period = GetPeriod($FromDate);
+	$Period = GetPeriod($FromDate);
 
 	while ($MyRow=DB_fetch_array($Periods)) {
 		if(isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {
@@ -879,10 +879,9 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 	if(!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
-	echo '<h3>', _('OR'), '</h3>';
 
 	echo '<field>
-			<label for="Period">', _('Select Period'), '</label>
+			<label for="Period">', '<b>' . _('OR') . ' </b>' . _('Select Period'), '</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')),
 			'<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'), '</fieldhelp>
 		</field>',
@@ -907,8 +906,8 @@ if(isset($_POST['PeriodFrom']) AND isset($_POST['PeriodTo']) AND !$_POST['NewRep
 		</fieldset>';
 
 	echo '<div class="centre">
-			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF P & L Account').'" />
-			<input type="submit" name="View" title="View" value="' . _('Show P & L Account') .'" />
+			<input type="submit" name="PrintPDF" title="PDF" value="'._('PDF Cash Flow Statement').'" />
+			<input type="submit" name="View" title="View" value="' . _('Show Cash Flow Statement') .'" />
 		</div>',
 		'</form>';
 }

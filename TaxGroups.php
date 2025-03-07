@@ -88,10 +88,11 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 	}
 } elseif(isset($_POST['UpdateOrder'])) {
 	//A calculation order update
+	unset($Result);
 	$SQL = "SELECT taxauthid FROM taxgrouptaxes WHERE taxgroupid='" . $SelectedGroup . "'";
 	$Result = DB_query($SQL,_('Could not get tax authorities in the selected tax group'));
 
-	while($MyRow=DB_fetch_row($Result)) {
+	while ($MyRow=DB_fetch_row($Result)) {
 
 		if(is_numeric($_POST['CalcOrder_' . $MyRow[0]]) AND $_POST['CalcOrder_' . $MyRow[0]] < 10) {
 
@@ -101,7 +102,7 @@ if(isset($_POST['submit']) OR isset($_GET['remove']) OR isset($_GET['add']) ) {
 				WHERE taxgroupid='" . $SelectedGroup . "'
 				AND taxauthid='" . $MyRow[0] . "'";
 
-			$Result = DB_query($SQL);
+			$UpdateResult = DB_query($SQL);
 		}
 	}
 
@@ -172,27 +173,20 @@ if(!isset($SelectedGroup)) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-					<th class="ascending" >' . _('Group No') . '</th>
-					<th class="ascending" >' . _('Tax Group') . '</th>
+					<th class="SortedColumn" >' . _('Group No') . '</th>
+					<th class="SortedColumn" >' . _('Tax Group') . '</th>
 					<th colspan="2" >&nbsp;</th>
 				</tr>
 			</thead>
 			<tbody>';
 
 		while($MyRow = DB_fetch_array($Result)) {
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td><a href="%s&amp;SelectedGroup=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedGroup=%s&amp;Delete=1&amp;GroupID=%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax group?') . '\');">' . _('Delete') . '</a></td>
-					</tr>',
-					$MyRow['taxgroupid'],
-					$MyRow['taxgroupdescription'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
-					$MyRow['taxgroupid'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$MyRow['taxgroupid'],
-					urlencode($MyRow['taxgroupdescription']));
+			echo '<tr class="striped_row">
+					<td class="number">', $MyRow['taxgroupid'], '</td>
+					<td>', $MyRow['taxgroupdescription'], '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedGroup=', $MyRow['taxgroupid'], '">' . _('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedGroup=', $MyRow['taxgroupid'], '&amp;Delete=1&amp;GroupID=', urlencode($MyRow['taxgroupdescription']), '" onclick="return confirm(\'' . _('Are you sure you wish to delete this tax group?') . '\');">' . _('Delete') . '</a></td>
+					</tr>';
 
 		} //END WHILE LIST LOOP
 		echo '</tbody></table>';

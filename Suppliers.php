@@ -8,6 +8,7 @@
 ***************************************************************************************/
 
 include ('includes/session.php');
+if (isset($_POST['SupplierSince'])){$_POST['SupplierSince'] = ConvertSQLDate($_POST['SupplierSince']);};
 $Title = _('Supplier Maintenance');
 /* webERP manual links before header.php */
 $ViewTopic = 'AccountsPayable';
@@ -334,7 +335,7 @@ if (isset($_POST['submit'])) {
 	if (mb_strlen(trim($_POST['SuppName'])) > 40 or mb_strlen(trim($_POST['SuppName'])) == 0 or trim($_POST['SuppName']) == '') {
 
 		$InputError = 1;
-		prnMsg(_('The supplier name must be entered and be forty characters or less long'), 'error');
+		prnMsg(_('The supplier name must be entered and has maximum 40 characters)'), 'error');
 		$Errors[$i] = 'Name';
 		$i++;
 	}
@@ -346,7 +347,7 @@ if (isset($_POST['submit'])) {
 	}
 	if (ContainsIllegalCharacters($SupplierID)) {
 		$InputError = 1;
-		prnMsg(_('The supplier code cannot contain any of the illegal characters'), 'error');
+		prnMsg(_('The supplier code cannot contain any of the illegal characters') . ' ' . '" \' - &amp; or a space', 'error');
 		$Errors[$i] = 'ID';
 		$i++;
 	}
@@ -516,7 +517,7 @@ if (isset($_POST['submit'])) {
 							lng='" . $longitude . "',
 							taxref='" . $_POST['TaxRef'] . "',
 							defaultshipper='" . $_POST['DefaultShipper'] . "',
-							defaultgl='" . $_POST['DrfaultGL'] . "'
+							defaultgl='" . $_POST['DefaultGL'] . "'
 						WHERE supplierid = '" . $SupplierID . "'";
 			}
 
@@ -682,6 +683,12 @@ if (!isset($SupplierID)) {
 
 	/*If the page was called without $SupplierID passed to page then assume a new supplier is to be entered show a form with a Supplier Code field other wise the form showing the fields with the existing entries against the supplier will show for editing with only a hidden SupplierID field*/
 
+	$Result = DB_query("SELECT typeid, typename FROM suppliertype");
+	if (DB_num_rows($Result) == 0) {
+		prnMsg(_('There are no supplier types setup. These must be created first'), 'error');
+		exit;
+	}
+
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
@@ -694,37 +701,39 @@ if (!isset($SupplierID)) {
 	if ($_SESSION['AutoSupplierNo'] == 0) {
 		echo '<field>
 				<label for="SupplierID">' . _('Supplier Code') . ':</label>
-				<input type="text" data-type="no-illegal-chars" title="" required="required" name="SupplierID" placeholder="' . _('within 10 characters') . '" size="11" maxlength="10" />
-				<fieldhelp>' . _('The supplier id should not be within 10 legal characters and cannot be blank') . '</fieldhelp>
+				<input type="text" data-type="no-illegal-chars" title="" required="required" name="SupplierID" placeholder="' . _('max 10 characters') . '" size="11" maxlength="10" />
+				<fieldhelp>' . _('The supplier id cannot be blank (max 10 characters)') . '</fieldhelp>
 			</field>';
 	}
 	echo '<field>
 			<label for="SuppName">' . _('Supplier Name') . ':</label>
-			<input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="" name="SuppName" size="42" placeholder="' . _('Within 40 legal characters') . '" maxlength="40" />
-			<fieldhelp>' . _('The supplier name should not be blank and should be less than 40 legal characters') . '</fieldhelp>
+			<input type="text" pattern="(?!^\s+$)[^<>+]{1,40}" required="required" title="" name="SuppName" size="42" placeholder="' . _('max 40 characters') . '" maxlength="40" />
+			<fieldhelp>' . _('The supplier name should not be blank (max 40 characters)') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address1">' . _('Address Line 1 (Street)') . ':</label>
-			<input type="text" pattern=".{1,40}" title="" placeholder="' . _('Less than 40 characters') . '" name="Address1" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" pattern=".{1,40}" title="" placeholder="' . _('Max 39 characters') . '" name="Address1" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address2">' . _('Address Line 2 (Street)') . ':</label>
-			<input type="text" name="Address2" pattern=".{1,40}" title="" placeholder="' . _('Less than 40 characters') . '" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" name="Address2" pattern=".{1,40}" title="" placeholder="' . _('Max 39 characters') . '" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address3">' . _('Address Line 3 (Suburb/City)') . ':</label>
-			<input type="text" title="" placeholder="' . _('Less than 40 characters') . '" name="Address3" size="42" maxlength="40" />
-			<fieldhelp>' . _('The input should be less than 40 characters') . '</fieldhelp>
+			<input type="text" title="" placeholder="' . _('Max 39 characters') . '" name="Address3" size="42" maxlength="40" />
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address4">' . _('Address Line 4 (State/Province)') . ':</label>
-			<td><input type="text" name="Address4" placeholder="' . _('Less than 50 characters') . '" size="42" maxlength="50" /></td>
+			<td><input type="text" name="Address4" placeholder="' . _('Max 49 characters') . '" size="42" maxlength="50" /></td>
+			<fieldhelp>' . _('Max 49 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address5">' . _('Address Line 5 (Postal Code)') . ':</label>
-			<td><input type="text" name="Address5" size="42" placeholder="' . _('Less than 40 characters') . '" maxlength="40" /></td>
+			<td><input type="text" name="Address5" size="42" placeholder="' . _('Max 39 characters') . '" maxlength="20" /></td>
+			<fieldhelp>' . _('Max 39 characters') . '</fieldhelp>
 		</field>
 		<field>
 			<label for="Address6">' . _('Country') . ':</label>
@@ -770,10 +779,10 @@ if (!isset($SupplierID)) {
 	echo '</select>
 		</field>';
 
-	$DateString = Date($_SESSION['DefaultDateFormat']);
+	$DateString = Date('Y-m-d');
 	echo '<field>
 			<label for="SupplierSince">' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input type="text" class="date" name="SupplierSince" value="' . $DateString . '" size="11" maxlength="10" />
+			<input type="date" name="SupplierSince" value="' . $DateString . '" size="11" maxlength="10" />
 		</field>
 		<field>
 			<label for="BankPartics">' . _('Bank Particulars') . ':</label>
@@ -902,6 +911,7 @@ KL RICARD END we don't associate salesman (SPG) as suppliers */
 			<label for="DefaultGL">' . _('Default GL Account') . ':</label>
 			<select tabindex="19" name="DefaultGL">';
 
+	echo '<option value="0">', _('None') , ' (0)</option>';
 	while ($MyRow = DB_fetch_row($Result)) {
 		if ($_POST['DefaultGL'] == $MyRow[0]) {
 			echo '<option selected="selected" value="' . $MyRow[0] . '">' . htmlspecialchars($MyRow[1], ENT_QUOTES, 'UTF-8') . ' (' . $MyRow[0] . ')</option>';
@@ -1088,7 +1098,7 @@ KL RICARD END we don't associate salesman (SPG) as suppliers */
 		</field>
 		<field>
 			<label for="SupplierSince">' . _('Supplier Since') . ' (' . $_SESSION['DefaultDateFormat'] . '):</label>
-			<input ' . (in_array('SupplierSince', $Errors) ? 'class="inputerror"' : '') . ' size="11" maxlength="10" type="text" class="date" name="SupplierSince" value="' . $_POST['SupplierSince'] . '" />
+			<input size="11" maxlength="10" type="date" name="SupplierSince" value="' . FormatDateForSQL($_POST['SupplierSince']) . '" />
 		</field>
 		<field>
 			<label for="BankPartics">' . _('Bank Particulars') . ':</label>
@@ -1265,7 +1275,7 @@ KL RICARD END */
 		//		echo '<p><font color=red><b>' . _('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed') . '<br /></font></b>';
 		prnMsg(_('WARNING') . ': ' . _('There is no second warning if you hit the delete button below') . '. ' . _('However checks will be made to ensure there are no outstanding purchase orders or existing accounts payable transactions before the deletion is processed'), 'Warn');
 		echo '<div class="centre">
-				<input type="submit" name="delete" value="' . _('Delete Supplier') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />
+				<input type="reset" name="delete" value="' . _('Delete Supplier') . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this supplier?') . '\');" />
 			</div>';
 	}
 	echo '</div>

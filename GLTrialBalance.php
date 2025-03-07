@@ -398,7 +398,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['ViewTB'])) {
 		$FromDate = Date($_SESSION['DefaultDateFormat'], Mktime(0,0,0, $_SESSION['YearEnd'] + 2,0,Date('Y')-1));
 	}
 
-	$period = GetPeriod($FromDate);
+	$Period = GetPeriod($FromDate);
 
 	while ($MyRow=DB_fetch_array($Periods)) {
 		if(isset($_POST['PeriodFrom']) AND $_POST['PeriodFrom']!='') {
@@ -451,10 +451,9 @@ if (isset($_POST['PrintPDF']) or isset($_POST['ViewTB'])) {
 	if(!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}
-	echo '<h3>', _('OR'), '</h3>';
 
 	echo '<field>
-			<label for="Period">', _('Select Period'), '</label>
+			<label for="Period">', '<b>' . _('OR') . ' </b>' . _('Select Period'), '</label>
 			', ReportPeriodList($_POST['Period'], array('l', 't')),
 			'<fieldhelp>', _('Select a period instead of using the beginning and end of the reporting period.'),
 		'</field>',

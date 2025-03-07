@@ -283,35 +283,24 @@ or deletion of the records*/
 	echo '<tr>
 			<th>' . _('Report No') . '</th>
 			<th>' . _('Report Title') . '</th>
+			<th colspan="5"></th>
           </tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%s&amp;SelectedReport=%s">' . _('Design') . '</a></td>
-			<td><a href="%s/SalesAnalReptCols.php?ReportID=%s">' . _('Define Columns') . '</a></td>
-			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&amp;ProducePDF=True">' . _('Make PDF Report') . '</a></td>
-			<td><a href="%s/SalesAnalysis_UserDefined.php?ReportID=%s&amp;ProduceCVSFile=True">' . _('Make CSV File') . '</a></td>
-			<td><a href="%s&amp;SelectedReport=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this report design?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow[0],
-			$MyRow[1],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow[0],
-			$RootPath,
-			$MyRow[0],
-			$RootPath,
-			$MyRow[0],
-			$RootPath,
-			$MyRow[0],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-			$MyRow[0]);
+	echo '<tr class="striped_row">
+			<td>', $MyRow[0], '</td>
+			<td>', $MyRow[1], '</td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedReport=', $MyRow[0], '">' . _('Design') . '</a></td>
+			<td><a href="', $RootPath, '/SalesAnalReptCols.php?ReportID=', $MyRow[0], '">' . _('Define Columns') . '</a></td>
+			<td><a href="', $RootPath, '/SalesAnalysis_UserDefined.php?ReportID=', $MyRow[0], '&amp;ProducePDF=True">' . _('Make PDF Report') . '</a></td>
+			<td><a href="', $RootPath, '/SalesAnalysis_UserDefined.php?ReportID=', $MyRow[0], '&amp;ProduceCVSFile=True">' . _('Make CSV File') . '</a></td>
+			<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedReport=', $MyRow[0], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to remove this report design?') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 
 	}
 	//END WHILE LIST LOOP
-	echo '</table><br />';
+	echo '</table>';
 }
 
 //end of ifs and buts!
@@ -327,7 +316,6 @@ echo '<br />';
 
 if (!isset($_GET['delete'])) {
 	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<div>';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 	if (isset($SelectedReport)) {

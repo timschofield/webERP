@@ -2,6 +2,7 @@
 /* Inquiry showing invoices, credit notes and payments made to suppliers together with the amounts outstanding. */
 
 include('includes/session.php');
+if (isset($_POST['TransAfterDate'])){$_POST['TransAfterDate'] = ConvertSQLDate($_POST['TransAfterDate']);};
 $Title = _('Supplier Inquiry');
 $ViewTopic = 'AccountsPayable';// RChacon: Is there any content for Supplier Inquiry?
 $BookMark = 'AccountsPayable';
@@ -158,8 +159,8 @@ echo '<br />
 		<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
 echo '<div>
         <input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
-echo _('Show all transactions after') . ': '  . '<input type="text" class="date" name="TransAfterDate" value="' . $_POST['TransAfterDate'] . '" maxlength="10" size="10" />
-	    <input class="noprint" name="Refresh Inquiry" type="submit" value="' . _('Refresh Inquiry') . '" />
+echo _('Show all transactions after') . ': '  . '<input type="date" name="TransAfterDate" value="' . FormatDateForSQL($_POST['TransAfterDate']) . '" maxlength="10" size="10" />
+	    <input class="noPrint" name="Refresh Inquiry" type="submit" value="' . _('Refresh Inquiry') . '" />
     </div>
 	</form>
 	<br />';
@@ -201,16 +202,16 @@ if(DB_num_rows($TransResult) == 0) {
 echo '<table class="selection"><thead>
 	<thead>
 	<tr>
-		<th class="ascending">' . _('Date') . '</th>
-		<th class="ascending">' . _('Type') . '</th>
-		<th class="ascending">' . _('Number') . '</th>
-		<th class="ascending">' . _('Reference') . '</th>
-		<th class="ascending">' . _('Comments') . '</th>
-		<th class="ascending">' . _('Total') . '</th>
-		<th class="ascending">' . _('Allocated') . '</th>
-		<th class="ascending">' . _('Balance') . '</th>
-		<th class="noprint">' . _('More Info') . '</th>
-		<th class="noprint">' . _('More Info') . '</th>
+		<th class="SortedColumn">' . _('Date') . '</th>
+		<th class="SortedColumn">' . _('Type') . '</th>
+		<th class="SortedColumn">' . _('Number') . '</th>
+		<th class="SortedColumn">' . _('Reference') . '</th>
+		<th class="SortedColumn">' . _('Comments') . '</th>
+		<th class="SortedColumn">' . _('Total') . '</th>
+		<th class="SortedColumn">' . _('Allocated') . '</th>
+		<th class="SortedColumn">' . _('Balance') . '</th>
+		<th class="noPrint">' . _('More Info') . '</th>
+		<th class="noPrint">' . _('More Info') . '</th>
 	</tr>
 	</thead>
 	<tbody>';
@@ -252,22 +253,22 @@ while($MyRow = DB_fetch_array($TransResult)) {
 		<td class="number">', locale_number_format($MyRow['totalamount']-$MyRow['allocated'], $SupplierRecord['currdecimalplaces']), '</td>';
 
 	// STORE "Link to GL transactions inquiry" column to use in some of the cases (column 10):
-	$GLEntriesTD1 = '<td class="noprint"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&amp;TransNo=' . $MyRow['transno'] . '" target="_blank" title="' . _('Click to view the GL entries') . '"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" width="16" /> ' . _('GL Entries') . '</a></td>';
+	$GLEntriesTD1 = '<td class="noPrint"><a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&amp;TransNo=' . $MyRow['transno'] . '" target="_blank" title="' . _('Click to view the GL entries') . '"><img alt="" src="' . $RootPath . '/css/' . $Theme . '/images/gl.png" width="16" /> ' . _('GL Entries') . '</a></td>';
 
 	// Now prints columns 9 and 10:
 	if($MyRow['type'] == 20) {// It is a Purchase Invoice (systype = 20).
 		if($_SESSION['CompanyRecord']['gllink_creditors'] == True) {// Show a link to GL transactions inquiry:
 /*			if($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
 			if($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
-				echo '<td class="noprint"><a href="', $RootPath, '/PaymentAllocations.php?SuppID=', $MyRow['supplierno'], '&amp;InvID=', $MyRow['suppreference'], '" title="', _('Click to view payments'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/money_delete.png" width="16"/> ', _('Payments'), '</a></td>';// Payment column (column 9).
+				echo '<td class="noPrint"><a href="', $RootPath, '/PaymentAllocations.php?SuppID=', $MyRow['supplierno'], '&amp;InvID=', $MyRow['suppreference'], '" title="', _('Click to view payments'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/money_delete.png" width="16"/> ', _('Payments'), '</a></td>';// Payment column (column 9).
 			} else {// The transaction is NOT settled so show option to hold:
 				if($AuthRow['offhold'] == 0) {
-					echo '<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
+					echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
 				} else {
 					if($HoldValue == _('Release')) {
-						echo '<td class="noprint">', $HoldValue , '</a></td>';// Column 9.
+						echo '<td class="noPrint">', $HoldValue , '</a></td>';// Column 9.
 					} else {
-						echo '<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
+						echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $MyRow['type'], '&amp;HoldTrans=', $MyRow['transno'], '&amp;HoldStatus=', $HoldValue, '&amp;FromDate=', $_POST['TransAfterDate'], '">', $HoldValue, '</a></td>';// Column 9.
 					}
 				}
 			}
@@ -276,22 +277,22 @@ while($MyRow = DB_fetch_array($TransResult)) {
 		} else {// Do NOT show a link to GL transactions inquiry:
 /*			if($MyRow['totalamount'] - $MyRow['allocated'] == 0) {// The transaction is settled so don't show option to hold:*/
 			if($MyRow['totalamount'] == $MyRow['allocated']) {// The transaction is settled so don't show option to hold:
-				echo '<td class="noprint">&nbsp;</td>',// Column 9.
-					'<td class="noprint">&nbsp;</td>';// Column 10.
+				echo '<td class="noPrint">&nbsp;</td>',// Column 9.
+					'<td class="noPrint">&nbsp;</td>';// Column 10.
 			} else {// The transaction is NOT settled so show option to hold:
-				echo '<td class="noprint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '/PaymentAllocations.php?SuppID=',
+				echo '<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '/PaymentAllocations.php?SuppID=',
 						$MyRow['type'], '&amp;InvID=', $MyRow['transno'], '">', _('View Payments'), '</a></td>',// Column 9.
-					'<td class="noprint"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $_POST['TransAfterDate'], '&amp;HoldTrans=', $HoldValue, '&amp;HoldStatus=' .
+					'<td class="noPrint"><a href="' .htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES,'UTF-8'), '?HoldType=', $_POST['TransAfterDate'], '&amp;HoldTrans=', $HoldValue, '&amp;HoldStatus=' .
 						$RootPath, '&amp;FromDate=', $MyRow['supplierno'], '">' . $MyRow['suppreference'], '</a></td>';// Column 10.
 			}
 		}
 
 	} else {// It is NOT a Purchase Invoice (a credit note or a payment).
-		echo '<td class="noprint"><a href="', $RootPath, '/SupplierAllocations.php?AllocTrans=', $MyRow['id'], '" title="', _('Click to allocate funds'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ', _('Allocation'), '</a></td>';// Allocation column (column 9).
+		echo '<td class="noPrint"><a href="', $RootPath, '/SupplierAllocations.php?AllocTrans=', $MyRow['id'], '" title="', _('Click to allocate funds'), '"><img alt="" src="', $RootPath, '/css/', $Theme, '/images/allocation.png" /> ', _('Allocation'), '</a></td>';// Allocation column (column 9).
 		if($_SESSION['CompanyRecord']['gllink_creditors'] == True) {// Show a link to GL transactions inquiry:
 			echo $GLEntriesTD1;// Column 10.
 		} else {// Do NOT show a link to GL transactions inquiry:
-			echo '<td class="noprint">&nbsp;</td>';// Column 10.
+			echo '<td class="noPrint">&nbsp;</td>';// Column 10.
 		}
 	}// END printing columns 9 and 10.
 	echo '</tr>';// Close the table row.

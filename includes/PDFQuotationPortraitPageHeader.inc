@@ -36,7 +36,7 @@ $pdf->addText($XPos, $YPos-$FontSize*6, $FontSize, $_SESSION['CompanyRecord']['e
 $XPos = 46;
 $YPos = 770;
 $FontSize=12;
-$MyRow = array_map(html_entity_decode, $MyRow);
+$MyRow = array_map('html_entity_decode', $MyRow);
 $pdf->addText($XPos, $YPos+10,$FontSize, _('Delivery To').':' );
 $pdf->addText($XPos, $YPos- 3,$FontSize, $MyRow['deliverto']);
 $pdf->addText($XPos, $YPos-15,$FontSize, $MyRow['deladd1']);

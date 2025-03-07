@@ -293,9 +293,13 @@ function StockCategoryCommission($SalesPerson, $Debtor, $Branch, $StockID, $Curr
 }
 
 function SalesAreaCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period) {
+    /* todo : what to return here? */
+    return 0;
 }
 
 function TimeAsCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period) {
+    /* todo : what to return here? */
+    return 0;
 }
 
 function CalculateCommission($SalesPerson, $Debtor, $Branch, $StockID, $Currency, $Value, $Period) {

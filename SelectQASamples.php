@@ -1,6 +1,9 @@
 <?php
 
 include('includes/session.php');
+if (isset($_POST['SampleDate'])){$_POST['SampleDate'] = ConvertSQLDate($_POST['SampleDate']);};
+if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
+if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
 $Title = _('Select QA Samples');
 $ViewTopic= 'QualityAssurance';// Filename in ManualContents.php's TOC.
 $BookMark = 'QA_Samples';// Anchor's id in the manual's html document.
@@ -95,7 +98,7 @@ if (! isset($_GET['delete'])) {
 			</field>
 			<field>
 				<label>' . _('Sample Date') . ':</label>
-				<input class="date" type="text" name="SampleDate" size="10" maxlength="10" value="' . $_POST['SampleDate']. '" />
+				<input type="date" name="SampleDate" size="10" maxlength="10" value="' . FormatDateForSQL($_POST['SampleDate']). '" />
 			</field>
 			<field>
 				<label>' . _('Use for Cert?') . ':</label>
@@ -404,9 +407,9 @@ if (!isset($SelectedSampleID)) {
 			</field>';
 		echo '<field>
 				<label>', _('From Sample Date') . ':</label>
-				<input name="FromDate" size="10" class="date" value="' . $_POST['FromDate'] . '" />
+				<input name="FromDate" size="10" type="date" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 			</field>
-			<field' . _('To Sample Date') . ': <input name="ToDate" size="10" class="date" value="' . $_POST['ToDate'] . '" /></field>
+			<field' . _('To Sample Date') . ': <input name="ToDate" size="10" type="date" value="' . FormatDateForSQL($_POST['ToDate']) . '" /></field>
 			</fieldset>';
 		echo '<div class="centre">
 				<input type="submit" name="SearchSamples" value="' . _('Search Samples') . '" />
@@ -449,10 +452,10 @@ if (!isset($SelectedSampleID)) {
 		echo '<table class="selection">
 			<thead>
 				<tr>
-							<th class="ascending">' . _('Code') . '</th>
-							<th class="ascending">' . _('Description') . '</th>
-							<th class="ascending">' . _('On Hand') . '</th>
-							<th class="ascending">' . _('Units') . '</th>
+							<th class="SortedColumn">' . _('Code') . '</th>
+							<th class="SortedColumn">' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('On Hand') . '</th>
+							<th class="SortedColumn">' . _('Units') . '</th>
 				</tr>
 			</thead>
 			<tbody>';
@@ -534,15 +537,15 @@ if (!isset($SelectedSampleID)) {
 			echo '<table cellpadding="2" width="90%" class="selection">
 				<thead>
 					<tr>
-								<th class="ascending">' . _('Enter Results') . '</th>
-								<th class="ascending">' . _('Specification') . '</th>
-								<th class="ascending">' . _('Description') . '</th>
-								<th class="ascending">' . _('Lot / Serial') . '</th>
-								<th class="ascending">' . _('Identifier') . '</th>
-								<th class="ascending">' . _('Created By') . '</th>
-								<th class="ascending">' . _('Sample Date') . '</th>
-								<th class="ascending">' . _('Comments') . '</th>
-								<th class="ascending">' . _('Cert Allowed') . '</th>
+								<th class="SortedColumn">' . _('Enter Results') . '</th>
+								<th class="SortedColumn">' . _('Specification') . '</th>
+								<th class="SortedColumn">' . _('Description') . '</th>
+								<th class="SortedColumn">' . _('Lot / Serial') . '</th>
+								<th class="SortedColumn">' . _('Identifier') . '</th>
+								<th class="SortedColumn">' . _('Created By') . '</th>
+								<th class="SortedColumn">' . _('Sample Date') . '</th>
+								<th class="SortedColumn">' . _('Comments') . '</th>
+								<th class="SortedColumn">' . _('Cert Allowed') . '</th>
 					</tr>
 				</thead>
 				<tbody>';

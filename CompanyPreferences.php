@@ -41,6 +41,18 @@ if (isset($_POST['submit'])) {
 
 	if ($InputError !=1){
 
+		$CompanyFileHandler = fopen('companies/' . $_SESSION['DatabaseName'] . '/Companies.php', 'w');
+		$Contents = "<?php\n\n";
+		$Contents.= "\$CompanyName['" . $_SESSION['DatabaseName'] . "'] = '" . $_POST['CoyName'] . "';\n";
+		$Contents.= "?>";
+
+		if (!fwrite($CompanyFileHandler, $Contents)) {
+			fclose($CompanyFileHandler);
+			echo '<div class="error">' . _("Cannot write to the Companies.php file") . '</div>';
+		}
+		//close file
+		fclose($CompanyFileHandler);
+
 		$SQL = "UPDATE companies SET coyname='" . $_POST['CoyName'] . "',
 									companynumber = '" . $_POST['CompanyNumber'] . "',
 									gstno='" . $_POST['GSTNo'] . "',
@@ -253,7 +265,7 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 } //end while loop
 
-DB_free_Result($Result);
+DB_free_result($Result);
 
 echo '</select>
 	</field>';
@@ -362,7 +374,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 	}
 } //end while loop
 
-DB_free_Result($Result);
+DB_free_result($Result);
 
 echo '</select>
 	<fieldhelp>' . _('Select the general ledger account to be used for clearing profit and loss accounts to that represents the accumulated retained profits of the business. Only balance sheet accounts are available for this selection.') . '</fieldhelp>

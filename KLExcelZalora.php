@@ -77,10 +77,10 @@ function submit($FromPrice, $ToPrice) {
 		if (DB_num_rows($Result) != 0){
 
 			// Create new PHPSpreadsheet object
-			$objPHPExcel = new Spreadsheet();
+			$SpreadSheet = new Spreadsheet();
 
 			// Set document properties
-			$objPHPExcel->getProperties()->setCreator("webERP")
+			$SpreadSheet->getProperties()->setCreator("webERP")
 										 ->setLastModifiedBy("webERP")
 										 ->setTitle("Zalora Products")
 										 ->setSubject("Zalora Products")
@@ -89,41 +89,41 @@ function submit($FromPrice, $ToPrice) {
 										 ->setCategory("");
 		
 			// Add title data
-			$objPHPExcel->setActiveSheetIndex(0);
-			$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Product Name');
-			$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Main Category');
-			$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Brand');
-			$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Category');
-			$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Colour');
-			$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Quantity');
+			$SpreadSheet->setActiveSheetIndex(0);
+			$SpreadSheet->getActiveSheet()->setCellValue('A1', 'Product Name');
+			$SpreadSheet->getActiveSheet()->setCellValue('B1', 'Main Category');
+			$SpreadSheet->getActiveSheet()->setCellValue('C1', 'Brand');
+			$SpreadSheet->getActiveSheet()->setCellValue('D1', 'Category');
+			$SpreadSheet->getActiveSheet()->setCellValue('E1', 'Colour');
+			$SpreadSheet->getActiveSheet()->setCellValue('F1', 'Quantity');
 
 			// Add data
 			$i = 2;
 			while ($MyRow = DB_fetch_array($Result)) {
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['name']);
-/*				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, '');
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, '');
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, '');
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, '');
-*/				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $MyRow['quantity']);
+				$SpreadSheet->setActiveSheetIndex(0);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, $MyRow['name']);
+/*				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, '');
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, '');
+				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, '');
+				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, '');
+*/				$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, $MyRow['quantity']);
 				$i++;
 			}
 			
 			// Freeze panes
-			$objPHPExcel->getActiveSheet()->freezePane('A2');
+			$SpreadSheet->getActiveSheet()->freezePane('A2');
 		
 			// Auto Size columns
 			foreach(range('A','F') as $ColumnID) {
-				$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
+				$SpreadSheet->getActiveSheet()->getColumnDimension($ColumnID)
 					->setAutoSize(true);
 			}
 			
 			// Rename worksheet
-			$objPHPExcel->getActiveSheet()->setTitle('GL Transactions');
+			$SpreadSheet->getActiveSheet()->setTitle('GL Transactions');
 
 			// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-			$objPHPExcel->setActiveSheetIndex(0);
+			$SpreadSheet->setActiveSheetIndex(0);
 
 			// Redirect output to a client's web browser (Excel2007)
 			if ($_POST['Format'] == 'xlsx') {
@@ -145,10 +145,10 @@ function submit($FromPrice, $ToPrice) {
 			header ('Pragma: public'); // HTTP/1.0
 
 			if ($_POST['Format'] == 'xlsx') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 				$objWriter->save('php://output');
 			} else if ($_POST['Format'] == 'ods') {
-				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
+				$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 				$objWriter->save('php://output');
 			}
 

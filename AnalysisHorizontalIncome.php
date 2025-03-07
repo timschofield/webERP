@@ -151,6 +151,7 @@ if((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or isset($_POST[
 	echo '</select>
 		</field>';
 
+
 	if (!isset($_POST['Period'])) {
 		$_POST['Period'] = '';
 	}

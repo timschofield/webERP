@@ -41,14 +41,6 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	$ToDateSQL = FormatDateForSQL($ToDate);
 
 	//first off validate inputs sensible
-	if (!Is_Date($_POST['FromDate'])) {
-		$InputError = 1;
-		prnMsg(_('Invalid From Date'),'error');
-	}
-	if (!Is_Date($_POST['ToDate'])) {
-		$InputError = 1;
-		prnMsg(_('Invalid To Date'),'error');
-	}
 	if (strtotime($FromDateSQL) > strtotime($ToDateSQL)) {
 		$InputError = 1;
 		prnMsg(_('The From Date must be before the To Date'),'error');
@@ -74,12 +66,14 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 	}
 
 	if ($InputError == 0){
+		// Set value binder
+		\PhpOffice\PhpSpreadsheet\Cell\Cell::setValueBinder(new \PhpOffice\PhpSpreadsheet\Cell\AdvancedValueBinder());
 
 		// Create new Spreadsheet object
-		$objPHPExcel = new Spreadsheet();
+		$SpreadSheet = new Spreadsheet();
 
 		// Set document properties
-		$objPHPExcel->getProperties()->setCreator("webERP")
+		$SpreadSheet->getProperties()->setCreator("webERP")
 									 ->setLastModifiedBy("webERP")
 									 ->setTitle($PartnerCode . " GL Transactions")
 									 ->setSubject($PartnerCode . " GL Transactions")
@@ -88,13 +82,13 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 									 ->setCategory("");
 	
 		// Add title data
-		$objPHPExcel->setActiveSheetIndex(0);
-		$objPHPExcel->getActiveSheet()->setCellValue('A1', 'Group');
-		$objPHPExcel->getActiveSheet()->setCellValue('B1', 'Account Code');
-		$objPHPExcel->getActiveSheet()->setCellValue('C1', 'Account Name');
-		$objPHPExcel->getActiveSheet()->setCellValue('D1', 'Date');
-		$objPHPExcel->getActiveSheet()->setCellValue('E1', 'Amount');
-		$objPHPExcel->getActiveSheet()->setCellValue('F1', 'Description');
+		$SpreadSheet->setActiveSheetIndex(0);
+		$SpreadSheet->getActiveSheet()->setCellValue('A1', 'Group');
+		$SpreadSheet->getActiveSheet()->setCellValue('B1', 'Account Code');
+		$SpreadSheet->getActiveSheet()->setCellValue('C1', 'Account Name');
+		$SpreadSheet->getActiveSheet()->setCellValue('D1', 'Date');
+		$SpreadSheet->getActiveSheet()->setCellValue('E1', 'Amount');
+		$SpreadSheet->getActiveSheet()->setCellValue('F1', 'Description');
 
 
 		$WhereFrom 	= " AND trandate >= '". $FromDateSQL ."'";
@@ -138,13 +132,13 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		if (DB_num_rows($Result) != 0){
 			// Add data
 			while ($MyRow = DB_fetch_array($Result)) {
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, $MyRow['Description']);
+				$SpreadSheet->setActiveSheetIndex(0);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
+				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
+				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
+				$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, $MyRow['Description']);
 				$i++;
 			}
 		}
@@ -176,31 +170,31 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		if (DB_num_rows($Result) != 0){
 			// Add data
 			while ($MyRow = DB_fetch_array($Result)) {
-				$objPHPExcel->setActiveSheetIndex(0);
-				$objPHPExcel->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
-				$objPHPExcel->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
-				$objPHPExcel->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
-				$objPHPExcel->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
-				$objPHPExcel->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
-				$objPHPExcel->getActiveSheet()->setCellValue('F'.$i, 'Total harian ' . $MyRow['AccountName']);
+				$SpreadSheet->setActiveSheetIndex(0);
+				$SpreadSheet->getActiveSheet()->setCellValue('A'.$i, $MyRow['Group']);
+				$SpreadSheet->getActiveSheet()->setCellValue('B'.$i, $MyRow['AccountCode']);
+				$SpreadSheet->getActiveSheet()->setCellValue('C'.$i, $MyRow['AccountName']);
+				$SpreadSheet->getActiveSheet()->setCellValue('D'.$i, ConvertSQLDate($MyRow['Date']));
+				$SpreadSheet->getActiveSheet()->setCellValue('E'.$i, round($MyRow['Amount'],0));
+				$SpreadSheet->getActiveSheet()->setCellValue('F'.$i, 'Total harian ' . $MyRow['AccountName']);
 				$i++;
 			}
 		}
 
 		// Freeze panes
-		$objPHPExcel->getActiveSheet()->freezePane('A2');
+		$SpreadSheet->getActiveSheet()->freezePane('A2');
 	
 		// Auto Size columns
 		foreach(range('A','F') as $ColumnID) {
-			$objPHPExcel->getActiveSheet()->getColumnDimension($ColumnID)
+			$SpreadSheet->getActiveSheet()->getColumnDimension($ColumnID)
 				->setAutoSize(true);
 		}
 		
 		// Rename worksheet
-		$objPHPExcel->getActiveSheet()->setTitle($PartnerCode . "GL Transactions");
+		$SpreadSheet->getActiveSheet()->setTitle($PartnerCode . "GL Transactions");
 
 		// Set active sheet index to the first sheet, so Excel opens this as the first sheet
-		$objPHPExcel->setActiveSheetIndex(0);
+		$SpreadSheet->setActiveSheetIndex(0);
 
 		// Redirect output to a client's web browser
 		if ($_POST['Format'] == 'xlsx') {
@@ -222,12 +216,11 @@ function submit($PartnerCode, $FromDate, $ToDate) {
 		header ('Pragma: public'); // HTTP/1.0
 
 		if ($_POST['Format'] == 'xlsx') {
-			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($objPHPExcel);
-			$objWriter->save('php://output');
+			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($SpreadSheet);
 		} else if ($_POST['Format'] == 'ods') {
-			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($objPHPExcel);
-			$objWriter->save('php://output');
+			$objWriter = new \PhpOffice\PhpSpreadsheet\Writer\Ods($SpreadSheet);
 		}
+		$objWriter->save('php://output');
 	}
 } // End of function submit()
 
@@ -246,7 +239,7 @@ function display($RootPath, $Theme)  //####DISPLAY_DISPLAY_DISPLAY_DISPLAY_DISPL
 			<img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . $Title . '" alt="" />' . ' ' . $Title . '
 		</p>';
 
-	echo '<table>';
+	echo '<fieldset><legend>' . _('File Parameters') . '</legend>';
 	
 	echo FieldToSelectOneRetailPartner("PartnerCode", $_POST['PartnerCode'], _('Company'), _('Select the company to export GL transactions'), '', 1, true, false);
 	echo FieldToSelectOneDate('FromDate', $_POST['FromDate'], _('From Date'), '', '', 2, true, false);

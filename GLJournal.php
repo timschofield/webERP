@@ -16,6 +16,7 @@ $BookMark = 'GLJournals';
 
 include ('includes/header.php');
 include ('includes/SQL_CommonFunctions.inc');
+include ('includes/GLFunctions.php');
 
 if (isset($_GET['NewJournal']) and $_GET['NewJournal'] == 'Yes' and isset($_SESSION['JournalDetail'])) {
 
@@ -252,7 +253,7 @@ if (isset($_POST['ConfimSave'])) {
 
 	echo '<div class="centre">
 			<input type="submit" name="SaveTemplate" value="', _('Save as template') , '" /><br />
-			<input type="submit" name="Cancel" value="', _('Cancel') , '" />
+			<input type="reset" name="Cancel" value="', _('Cancel') , '" />
 		</div>';
 	echo '</form>';
 
@@ -293,14 +294,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 		$ErrMsg = _('Cannot insert a GL entry for the journal line because');
 		$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
-		foreach ($JournalItem->tag as $Tag) {
-			$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-											'" . $Tag . "')";
-			$ErrMsg = _('Cannot insert a GL tag for the journal line because');
-			$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-		}
+		InsertGLTags($JournalItem->tag);
 
 		if ($_POST['JournalType'] == 'Reversing') {
 			$SQL = "INSERT INTO gltrans (type,
@@ -322,14 +316,7 @@ if (isset($_POST['CommitBatch']) and $_POST['CommitBatch'] == _('Accept and Proc
 			$ErrMsg = _('Cannot insert a GL entry for the reversing journal because');
 			$DbgMsg = _('The SQL that failed to insert the GL Trans record was');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-
-			foreach ($JournalItem->tag as $Tag) {
-				$SQL = "INSERT INTO gltags VALUES ( LAST_INSERT_ID(),
-												'" . $Tag . "')";
-				$ErrMsg = _('Cannot insert a GL tag for the journal line because');
-				$DbgMsg = _('The SQL that failed to insert the GL tag record was');
-				$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
-			}
+			InsertGLTags($JournalItem->tag);
 		}
 	}
 
@@ -501,6 +488,7 @@ echo '<fieldset>
 
 /* Set upthe form for the transaction entry for a GL Payment Analysis item */
 
+/*KL RICARD Do not show tags
 //Select the tag
 $SQL = "SELECT tagref,
 			tagdescription
@@ -521,6 +509,8 @@ while ($MyRow = DB_fetch_array($Result)) {
 echo '</select>
 </field>';
 // End select tag
+KL RICARD Do not show tags */
+
 if (!isset($_POST['GLManualCode'])) {
 	$_POST['GLManualCode'] = '';
 }
@@ -598,20 +588,7 @@ $CreditTotal = 0;
 foreach ($_SESSION['JournalDetail']->GLEntries as $JournalItem) {
 	echo '<tr class="striped_row">
 		<td>';
-	foreach ($JournalItem->tag as $Tag) {
-		$SQL = "SELECT tagdescription
-				FROM tags
-				WHERE tagref='" . $Tag . "'";
-		$Result = DB_query($SQL);
-		$MyRow = DB_fetch_row($Result);
-		if ($Tag == 0) {
-			$TagDescription = _('None');
-		}
-		else {
-			$TagDescription = $MyRow[0];
-		}
-		echo $Tag . ' - ' . $TagDescription . '<br />';
-	}
+	echo GetDescriptionsFromTagArray($JournalItem->tag);
 	echo '</td>
 		<td>' . $JournalItem->GLCode . ' - ' . $JournalItem->GLActName . '</td>';
 	if ($JournalItem->Amount > 0) {

@@ -126,11 +126,11 @@ or deletion of the records*/
 	echo '<table class="selection">
 		<thead>
 			<tr>
-				<th class="ascending">', _('WC Code'), '</th>
-				<th class="ascending">', _('Description'), '</th>
-				<th class="ascending">', _('Location'), '</th>
-				<th class="ascending">', _('Overhead GL Account'), '</th>
-				<th class="ascending">', _('Overhead Per Hour'), '</th>
+				<th class="SortedColumn">', _('WC Code'), '</th>
+				<th class="SortedColumn">', _('Description'), '</th>
+				<th class="SortedColumn">', _('Location'), '</th>
+				<th class="SortedColumn">', _('Overhead GL Account'), '</th>
+				<th class="SortedColumn">', _('Overhead Per Hour'), '</th>
 				<th colspan="2">&nbsp;</th>
 			</tr>
 		</thead>
@@ -138,24 +138,15 @@ or deletion of the records*/
 
 	while ($MyRow = DB_fetch_array($Result)) {
 
-		printf('<tr>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td><a href="%s&amp;SelectedWC=%s">' . _('Edit') . '</a></td>
-					<td><a href="%s&amp;SelectedWC=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete')  . '</a></td>
-				</tr>',
-				$MyRow['code'],
-				$MyRow['description'],
-				$MyRow['locationname'],
-				$MyRow['overheadrecoveryact'],
-				$MyRow['overheadperhour'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['code'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['code']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['code'], '</td>
+				<td>', $MyRow['description'], '</td>
+				<td>', $MyRow['locationname'], '</td>
+				<td>', $MyRow['overheadrecoveryact'], '</td>
+				<td class="number">', $MyRow['overheadperhour'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedWC=', $MyRow['code'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this work centre?') . '\');">' . _('Delete')  . '</a></td>
+			</tr>';
 	}
 
 	//END WHILE LIST LOOP
@@ -214,7 +205,7 @@ if (isset($SelectedWC)) {
 			<field>
 				<label for="Code">' . _('Work Centre Code') . ':</label>
 				<input type="text" name="Code" pattern="[^&+-]{2,}" required="required" autofocus="autofocus" title=""  size="6" maxlength="5" value="' . $_POST['Code'] . '" placeholder="'._('More than 2 legal characters').'" />
-				<fieldhelp>'._('The code should be at least 2 characters and no illegal characters allowed').'</fieldhelp>
+				<fieldhelp>'._('The code should be at least 2 characters and no illegal characters allowed') . ' ' . '" \' - &amp; or a space'.'</fieldhelp>
 			</field>';
 }
 
