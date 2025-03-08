@@ -120,6 +120,7 @@ if (isset($DirectoryLevelsDeep)) {
 
 if ($RootPath == "/" OR $RootPath == "\\") {
 	$RootPath = "";
+}
 
 /* Report all errors except E_NOTICE
 This is the default value set in php.ini for most installations but just to be sure it is forced here
