@@ -1,7 +1,8 @@
 @font-face {
+font-family: Arial,sans-serif;
 }
 body {
-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+font-family: Arial,sans-serif;
 font-size:10pt;
 margin:0;
 padding:0;

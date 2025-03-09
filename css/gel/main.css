@@ -74,6 +74,7 @@ padding:4px;
 width:32px;
 height:32px;
 vertical-align:middle;
+box-shadow:0 0 0 0;
 }
 .MenuItem {
 color:#8DCDEB;
@@ -103,7 +104,7 @@ padding-bottom:2px;
 background-image: linear-gradient(#9B9BCE, #0202EE);
 padding-top:2px;
 padding-bottom:2px;
-padding-left:5px;
+padding-left:12px;
 width:30%;
 text-align:center;
 margin:10px auto;
@@ -115,7 +116,7 @@ clear: both;
 .page_title_text img {
 padding-top:6px;
 padding-bottom:6px;
-padding-right:7px;
+padding-right:0px;
 margin-left:7px;
 width:40px;
 height:40px;

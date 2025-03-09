@@ -70,6 +70,7 @@ width:40px;
 height:40px;
 padding-right:8px;
 vertical-align:middle;
+box-shadow:0 0 0 0;
 }
 .MenuItem {
 padding:2px;
@@ -94,6 +95,7 @@ color:white;
 .page_title_text {
 padding-top:2px;
 padding-bottom:2px;
+padding-left:7px;
 font-size:18px;
 color:black;
 width:60%;
@@ -104,7 +106,7 @@ border-radius:16px;
 clear: both;
 }
 .page_title_text img {
-padding-right:7px;
+padding-right:0px;
 width:48px;
 height:48px;
 vertical-align:middle;

@@ -99,15 +99,17 @@ font-size:120%;
 text-align:center;
 margin:5px auto;
 padding:5px;
+padding-left:7px;
 width:50%;
 clear: both;
 border-radius:7px;
 }
 .page_title_text img {
-padding-right:7px;
+padding-right:0px;
 width:40px;
 height:40px;
 vertical-align:middle;
+box-shadow:0 0 0 0;
 }
 .toplink {
 position:relative;
