@@ -1015,8 +1015,7 @@ if ($ProcessSection02){
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SystemAdmin 
-		OR $KL_ShopSupportLeader){
+	if ($KL_SystemAdmin){
 		TransferWithWrongInformation(15, $RootPath);
 		$NumberOfTestExecuted++;
 	}
@@ -5211,7 +5210,7 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 					recqty AS receivedqty
 			FROM loctransfers
 			WHERE  shipdate >= '" . $StartDate . "'
-				AND recdate > '2000'
+				AND recdate != '1000-01-01 00:00:00'
 				AND pendingqty != 0
 			ORDER BY recdate ASC, reference ASC, stockid ASC";
 			
@@ -5240,7 +5239,7 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 		$LastTransfer = "";
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
-			if (($MyRow['stockid'] != $LastStockid) OR ($MyRow['reference'] != $LastTransfer)){
+/*			if (($MyRow['stockid'] != $LastStockid) OR ($MyRow['reference'] != $LastTransfer)){
 				$SQL = "UPDATE loctransfers SET shipqty = recqty 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to fix the wrong information');
@@ -5253,6 +5252,8 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 				$ResultDelete = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 				$Action = "Deleted";
 			}
+*/
+			$Action = "CHECK IT OUT";
 			printf('<tr class="striped_row">
 					<td class="number">%s</td>
 					<td>%s</td>

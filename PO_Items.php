@@ -130,7 +130,6 @@ if (isset($_POST['Commit'])){ /*User wishes to commit the order to the database 
 			/*Get the order number */
 			$_SESSION['PO'.$identifier]->OrderNo =  GetNextTransNo(18);
 
-			/*Insert to purchase order header record */
 			if(!isset( $_SESSION['PO' . $identifier]->DeliveryDate)){
 				$_SESSION['PO' . $identifier]->DeliveryDate = ConvertSQLDate('1000-01-01');
 			}
