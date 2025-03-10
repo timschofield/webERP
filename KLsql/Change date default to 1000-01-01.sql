@@ -1,3 +1,8 @@
+ALTER TABLE pcashdetails CHANGE authorized authorized date NOT NULL DEFAULT '1000-01-01';
+UPDATE pcashdetails SET authorized = '1000-01-01' WHERE authorized = '0000-00-00';
+
+
+
 -- First group: Change date fields to default '1000-01-01'
 ALTER TABLE assetmanager CHANGE datepurchased datepurchased DATE NOT NULL DEFAULT '1000-01-01';
 ALTER TABLE banktrans CHANGE transdate transdate date NOT NULL DEFAULT '1000-01-01';
