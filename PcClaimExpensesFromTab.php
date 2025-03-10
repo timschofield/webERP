@@ -216,7 +216,7 @@ if (isset($_POST['submit'])) {
 										'" . FormatDateForSQL($_POST['Date']) . "',
 										'" . $_POST['SelectedExpense'] . "',
 										'" . -filter_number_format($_POST['Amount']) . "',
-										0,
+										'1000-01-01',
 										0,
 										'" . $_POST['Purpose'] . "',
 										'" . $_POST['Notes'] . "'
