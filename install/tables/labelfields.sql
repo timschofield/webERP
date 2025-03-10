@@ -9,4 +9,4 @@ CREATE TABLE `labelfields` (
   PRIMARY KEY (`labelfieldid`),
   KEY `labelid` (`labelid`),
   KEY `vpos` (`vpos`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;

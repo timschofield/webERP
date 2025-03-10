@@ -24,6 +24,7 @@ CREATE TABLE `debtortrans` (
   `consignment` varchar(20) NOT NULL DEFAULT '',
   `packages` int NOT NULL DEFAULT '1' COMMENT 'number of cartons',
   `salesperson` varchar(4) NOT NULL DEFAULT '',
+  `balance` double GENERATED ALWAYS AS (((((`ovamount` + `ovgst`) + `ovfreight`) + `ovdiscount`) - `alloc`)) STORED,
   PRIMARY KEY (`id`),
   KEY `DebtorNo` (`debtorno`,`branchcode`),
   KEY `Order_` (`order_`),
@@ -38,4 +39,4 @@ CREATE TABLE `debtortrans` (
   KEY `salesperson` (`salesperson`),
   CONSTRAINT `debtortrans_ibfk_2` FOREIGN KEY (`type`) REFERENCES `systypes` (`typeid`),
   CONSTRAINT `debtortrans_ibfk_3` FOREIGN KEY (`prd`) REFERENCES `periods` (`periodno`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb3;

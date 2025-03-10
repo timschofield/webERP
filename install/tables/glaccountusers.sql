@@ -5,4 +5,4 @@ CREATE TABLE `glaccountusers` (
   `canupd` tinyint NOT NULL DEFAULT '0',
   UNIQUE KEY `useraccount` (`userid`,`accountcode`),
   UNIQUE KEY `accountuser` (`accountcode`,`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

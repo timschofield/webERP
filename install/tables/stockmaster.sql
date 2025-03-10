@@ -5,7 +5,6 @@ CREATE TABLE `stockmaster` (
   `longdescription` text NOT NULL,
   `units` varchar(20) NOT NULL DEFAULT 'each',
   `mbflag` char(1) NOT NULL DEFAULT 'B',
-  `actualcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `lastcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `materialcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `labourcost` decimal(20,4) NOT NULL DEFAULT '0.0000',
@@ -27,6 +26,7 @@ CREATE TABLE `stockmaster` (
   `nextserialno` bigint NOT NULL DEFAULT '0',
   `netweight` decimal(20,4) NOT NULL DEFAULT '0.0000',
   `lastcostupdate` date NOT NULL DEFAULT '1000-01-01',
+  `actualcost` decimal(20,4) GENERATED ALWAYS AS (((`materialcost` + `labourcost`) + `overheadcost`)) STORED,
   PRIMARY KEY (`stockid`),
   KEY `CategoryID` (`categoryid`),
   KEY `Description` (`description`),
@@ -37,4 +37,4 @@ CREATE TABLE `stockmaster` (
   KEY `taxcatid` (`taxcatid`),
   CONSTRAINT `stockmaster_ibfk_1` FOREIGN KEY (`categoryid`) REFERENCES `stockcategory` (`categoryid`),
   CONSTRAINT `stockmaster_ibfk_2` FOREIGN KEY (`taxcatid`) REFERENCES `taxcategories` (`taxcatid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

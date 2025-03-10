@@ -12,10 +12,11 @@ CREATE TABLE `salesorderdetails` (
   `narrative` text,
   `itemdue` date DEFAULT NULL COMMENT 'Due date for line item.  Some customers require \r\nacknowledgements with due dates by line item',
   `poline` varchar(10) DEFAULT NULL COMMENT 'Some Customers require acknowledgements with a PO line number for each sales line',
+  `linenetprice` double GENERATED ALWAYS AS ((`qtyinvoiced` * (`unitprice` * (1 - `discountpercent`)))) STORED,
   PRIMARY KEY (`orderlineno`,`orderno`),
   KEY `OrderNo` (`orderno`),
   KEY `StkCode` (`stkcode`),
   KEY `Completed` (`completed`),
   CONSTRAINT `salesorderdetails_ibfk_1` FOREIGN KEY (`orderno`) REFERENCES `salesorders` (`orderno`),
   CONSTRAINT `salesorderdetails_ibfk_2` FOREIGN KEY (`stkcode`) REFERENCES `stockmaster` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

@@ -72,4 +72,4 @@ CREATE TABLE `reports` (
   `table6criteria` varchar(75) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `name` (`reportname`,`groupname`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;

@@ -5,4 +5,4 @@ CREATE TABLE `manufacturers` (
   `manufacturers_image` varchar(64) DEFAULT NULL,
   PRIMARY KEY (`manufacturers_id`),
   KEY `manufacturers_name` (`manufacturers_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;

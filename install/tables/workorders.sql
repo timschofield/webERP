@@ -13,4 +13,4 @@ CREATE TABLE `workorders` (
   KEY `StartDate` (`startdate`),
   KEY `RequiredBy` (`requiredby`),
   CONSTRAINT `worksorders_ibfk_1` FOREIGN KEY (`loccode`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

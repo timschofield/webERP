@@ -5,4 +5,4 @@ CREATE TABLE `purchorderauth` (
   `authlevel` double NOT NULL DEFAULT '0',
   `offhold` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`userid`,`currabrev`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

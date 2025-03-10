@@ -14,4 +14,4 @@ CREATE TABLE `qatests` (
   PRIMARY KEY (`testid`),
   KEY `name` (`name`),
   KEY `groupname` (`groupby`,`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb3;

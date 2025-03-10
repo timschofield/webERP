@@ -10,4 +10,4 @@ CREATE TABLE `pricematrix` (
   KEY `SalesType` (`salestype`),
   KEY `currabrev` (`currabrev`),
   KEY `stockid` (`stockid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

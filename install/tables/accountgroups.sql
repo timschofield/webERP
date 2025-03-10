@@ -9,4 +9,4 @@ CREATE TABLE `accountgroups` (
   KEY `sectioninaccounts` (`sectioninaccounts`),
   KEY `parentgroupname` (`parentgroupname`),
   CONSTRAINT `accountgroups_ibfk_1` FOREIGN KEY (`sectioninaccounts`) REFERENCES `accountsection` (`sectionid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

@@ -16,4 +16,4 @@ CREATE TABLE `sellthroughsupport` (
   KEY `effectiveto` (`effectiveto`),
   KEY `stockid` (`stockid`),
   KEY `categoryid` (`categoryid`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;
