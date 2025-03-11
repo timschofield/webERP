@@ -134,21 +134,23 @@ background-image:url(images/pdf.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
-padding-left:24px;
+min-width:110px;
+padding-left:28px;
 }
 form input[title~="View"] {
 background-image:url(images/screen.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
-padding-left:24px;
+min-width:110px;
+padding-left:28px;
 }
 form input[name^="Search"] {
 background-image:url(images/search.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
-padding-left:24px;
+padding-left:28px;
 }
 form input[type="reset"]{
 background:#E0F3B1;

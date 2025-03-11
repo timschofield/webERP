@@ -140,14 +140,32 @@ background-image:url(images/pdf.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
-padding-left:24px;
+padding-left:28px;
+min-width:110px;
+}
+form input[name*="PDF"]:hover {
+background-image:url(images/pdf.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:28px;
+min-width:110px;
 }
 form input[title~="View"] {
 background-image:url(images/screen.png);
 background-repeat: no-repeat;
 background-position:4px center;
 background-size:18px 18px;
-padding-left:24px;
+padding-left:28px;
+min-width:110px;
+}
+form input[title~="View"]:hover {
+background-image:url(images/screen.png);
+background-repeat: no-repeat;
+background-position:4px center;
+background-size:18px 18px;
+padding-left:28px;
+min-width:110px;
 }
 form input[name^="Search"] {
 background-image:url(images/search.png);
