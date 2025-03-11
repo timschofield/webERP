@@ -1,9 +1,90 @@
 <?php
+
+/********************************************************************************************
+* FUNCTIONS INCLUDED IN THIS FILE (in alphabetical order)
+*
+* ActiveItemsNoSales - Lists items with no sales in last X days and no current PO or WO
+* ActiveItemsWithoutPicture - Lists active items without pictures in webERP and QOH > 0
+* ActiveTransfersByLocation - Shows active transfers by location
+* ActiveTransferStatus - Shows active transfer status summary
+* BalanceAccountControl - Checks account balance against min/max limits 
+* BalanceListAccountControl - Checks total balance of a list of accounts against min/max limits
+* CalculateTransferFromBankToDanamon - Calculates transfer amount from bank to Danamon account
+* CashAtShops - Checks cash balances at retail shops
+* CategoryItemsMissingInShops - Lists category items missing in shops
+* CategoryItemsNotInShop - Lists items in a category not available in a specific shop
+* CheckNegativeStock - Checks for negative stock quantities
+* CheckPackagingToBeRefilled - Checks packaging that needs to be refilled
+* ComponentsToObsolete - Lists components that could be obsoleted
+* ConsumablesGoodsNotEnoughStock - Lists consumable goods with insufficient stock
+* CustomerDebtByCurrency - Gets customer debt by currency
+* CustomersDebtControl - Controls customer debt balances
+* DiscountedItemsWithWrongDiscount - Lists discounted items with wrong discount percentage
+* ErrorsInTransfers - Lists errors in transfers
+* FlaggedAsObsoleteButStockAvailable - Lists obsolete items that still have stock
+* GetBalanceAccount - Gets the balance of an account
+* GLTransDateControl - Checks for GL transactions with wrong dates
+* GoodsJustArrived - Lists goods just arrived at a location
+* GoodsJustTransferred - Lists goods just transferred between locations
+* GoodsReceivedNotInvoicedControl - Controls goods received not invoiced
+* GoodsToBeProduced - Lists goods that need to be produced
+* ImagesWithoutProduct - Lists images without corresponding products
+* InsuficientStockForShopPackaging - Lists shop packaging with insufficient stock
+* InternalBankTransfers - Manages internal bank transfers between accounts
+* ItemsCancelledInTransfers - Lists items cancelled in transfers
+* ItemsChangingPriceDelayed - Lists items with delayed price changes
+* ItemsInCategoryForMoreThanDays - Lists items in a category for more than X days
+* ItemsInKLProcessAndRLNotZero - Lists items in KL process with reorder level not zero
+* ItemsInLocationForMoreThan - Lists items in a location for more than X days
+* ItemsInmediateShortage - Lists items with immediate shortage
+* ItemsInSetup - Lists items in setup phase
+* ItemsInWrongShops - Lists items in wrong shop locations
+* ItemsMovingToDiscountDelayed - Lists items with delayed discount moves
+* ItemsNotNeededInOnlineOrderButRequested - Lists items not needed for online orders but with stock in online shop
+* ItemsOnSpecialRequest - Lists items on special request
+* ItemsWithoutPurchasingData - Lists items without purchasing data
+* ItemsWithoutStandardCost - Lists items without standard cost
+* ItemsWithoutWeightOrVolume - Lists items without weight or volume data
+* ItemsWithStockKantorButReorderLevelTokoZero - Lists items with stock at Kantor but zero reorder level at shops
+* ItemsWithStockLocationButNoStockAvailable - Lists items with locations but no available stock
+* ItemsShouldBeInWebsite - Lists items that should be in the website
+* MinimumOutletStockAvailable - Checks minimum outlet stock availability
+* NotDiscountedItemsWithDiscount - Lists non-discounted items with discount
+* ObsoleteComponentsInActiveBOM - Lists obsolete components in active BOMs
+* OldOnlineQuotations - Lists old online quotations
+* OldPOStillActive - Lists old purchase orders still active
+* OldWOStillActive - Lists old work orders still active
+* OnlineCustomersNoOrderPlaced - Lists online customers with no orders placed
+* OnlineItemsOnProcess - Lists online items in process
+* OnlineMarketPlacePaymentPending - Lists online marketplace payments pending
+* OnlineOrdersFollowUp - Follow up on outstanding online orders
+* OnlineQuotationsFollowUp - Follow up on outstanding online quotations
+* OpenCartItemsWithoutPicture - Lists OpenCart items without pictures
+* OpenCartOrdersByStatus - Lists OpenCart orders by status
+* OutstandingOrders - Lists outstanding orders
+* over_or_below_limit - Checks if a value is over or below a limit
+* OvestockAtSamples - Lists overstock at samples location
+* PackagingItemsOnWrongLocation - Lists packaging items in wrong locations
+* PettyCashBalance - Checks petty cash balance
+* PettyCashBalanceControlControl - Controls petty cash balance accounts
+* PettyCashToBeAuthorized - Lists petty cash to be authorized
+* POStatusControl - Controls purchase order status
+* PurchaseOrdersWrongPlannedDates - Lists purchase orders with wrong planned dates
+* RecentlyClosedTransferStatus - Lists recently closed transfers
+* RegularTransfersToShopNotReceived - Lists regular transfers to shop not received
+* SamplesNotLongerNeeded - Lists samples not longer needed
+* SPGNotReportingSalesInDays - Lists SPG not reporting sales in days
+* SuppliersWithoutBasicData - Lists suppliers without basic data
+* TransferWithWrongInformation - Lists transfers with wrong information
+* TransfersDelayed - Lists delayed transfers
+* UsersNotLoggingIn - Lists users not logging in 
+* ValueStockLocation - Checks value of stock in location
+* WrongItemsOnPurchaseOrders - Lists wrong items on purchase orders
+* WrongItemsOnWorkOrders - Lists wrong items on work orders
+* WrongStandardCost - Lists items with wrong standard cost
+*********************************************************************************************/
+
 define("VERSIONFILE", "4.04");
-
-/* Session started in session.php for password checking and authorisation level check
-config.php is in turn included in session.php*/
-
 include('includes/session.php');
 $Title = _('KL General Control Board '. VERSIONFILE);
 
@@ -217,7 +298,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInLocationForMoreThan('SERSV', 10, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInLocationForMoreThan('SERSU', 30, $RootPath);
+		ItemsInLocationForMoreThan('SERSU', 15, $RootPath);
 		$NumberOfTestExecuted++;
 		ItemsInLocationForMoreThan('SERSW', 10, $RootPath);
 		$NumberOfTestExecuted++;
