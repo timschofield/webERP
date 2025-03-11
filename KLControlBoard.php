@@ -217,7 +217,7 @@ if ($ProcessSection01){
 		$NumberOfTestExecuted++;
 		ItemsInLocationForMoreThan('SERSV', 10, $RootPath);
 		$NumberOfTestExecuted++;
-		ItemsInLocationForMoreThan('SERSU', 10, $RootPath);
+		ItemsInLocationForMoreThan('SERSU', 30, $RootPath);
 		$NumberOfTestExecuted++;
 		ItemsInLocationForMoreThan('SERSW', 10, $RootPath);
 		$NumberOfTestExecuted++;
