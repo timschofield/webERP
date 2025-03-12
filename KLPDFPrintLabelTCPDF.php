@@ -27,7 +27,7 @@ if (!isset($_POST['ChangeToday'])){
 
 if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND isset($_POST['StockCategory'])
-	AND mb_strlen($_POST['StockCategory'])>=1){
+	AND mb_strlen($_POST['StockCategory']) >= 1){
 
 	$Title = _('Print Labels');
 	include('includes/header.php');
@@ -35,25 +35,25 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	if ($_POST['LabelID'] == 'T570'){
 		$SQLPrice = "prices.price, ";
 		$MainWhere = " INNER JOIN prices 
-							ON stockmaster.stockid=prices.stockid
+							ON stockmaster.stockid = prices.stockid
 						WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
 							AND prices.currabrev = '" . CURRENCY_CODE . "'
 							AND prices.startdate <= CURRENT_DATE
 							AND prices.enddate > CURRENT_DATE
-							AND prices.debtorno=''";
+							AND prices.debtorno = ''";
 	}elseif ($_POST['LabelID'] == 'CodeSticker'){
 		$SQLPrice = "0 AS price, ";
 		$MainWhere = "	WHERE stockmaster.stockid = stockmaster.stockid ";
 	}
 	
-	if ($_POST['Location'] != "None"){
+	if ($_POST['Location'] != ""){
 		$SQLQOH = " (SELECT SUM(quantity)
 					FROM locstock
 					WHERE locstock.stockid = prices.stockid
-						AND locstock.loccode = '".$_POST['Location']."') AS qoh,
+						AND locstock.loccode = '" . $_POST['Location'] . "') AS qoh,
 					0 AS intransit ";
 	}else{
-		$SQLQOH = $_POST['LabelsPerItem'] ." AS qoh,
+		$SQLQOH = $_POST['LabelsPerItem'] . " AS qoh,
 					0 AS intransit ";
 	}
 
@@ -105,31 +105,29 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 					$SQLPrice . 
 					$SQLQOH . "
 			FROM stockmaster INNER JOIN	stockcategory
-   			     ON stockmaster.categoryid=stockcategory.categoryid ".
+   			     ON stockmaster.categoryid = stockcategory.categoryid " .
 			$MainWhere .
-				$SQLStockCategory.
-				$SQLChange. "
+				$SQLStockCategory .
+				$SQLChange . "
 				AND stockmaster.discontinued = 0
 			ORDER BY stockmaster.stockid";
 
-	$LabelsResult = DB_query($SQL,'','',false,false);
-	if (DB_error_no() !=0) {
-		prnMsg( _('The Price Labels could not be retrieved by the SQL because'). ' - ' . DB_error_msg(), 'error');
-		echo '<br /><a href="' .$RootPath .'/index.php">' .   _('Back to the menu'). '</a>';
-		if ($Debug==1){
-			prnMsg(_('For debugging purposes the SQL used was:') . $SQL,'error');
-		}
+	$LabelsResult = DB_query($SQL, '', '', false, false);
+	if (DB_error_no() != 0) {
+		prnMsg(_('The Price Labels could not be retrieved by the SQL because') . ' - ' . DB_error_msg(), 'error');
+		echo '<br /><a href="' . $RootPath . '/index.php">' . _('Back to the menu') . '</a>';
 		include('includes/footer.php');
 		exit;
 	}
-	if (DB_num_rows($LabelsResult)==0){
-		prnMsg(_('There were no price labels to print out for the category specified'),'warn');
-		echo '<br /><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' .  _('Back') . '</a>';
+	if (DB_num_rows($LabelsResult) == 0){
+		prnMsg(_('There were no price labels to print out for the category specified'), 'warn');
+		echo '<br /><a href="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '">' . 
+			_('Back') . '</a>';
 		include('includes/footer.php');
 		exit;
 	}
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<table class="selection">
 			<tr>
@@ -141,20 +139,20 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 				<th>' . _('Print') . ' ?</th>
 			</tr>
 			<tr>
-				<th colspan="6"><input type="submit" name="SelectAll" value="' . _('Select All Labels') . '" /><input type="checkbox" name="CheckAll" ';
+				<th colspan="6">' . _('Select All Labels') . '<input type="checkbox" name="CheckAll" ';
 	if (isset($_POST['CheckAll'])){
 		echo 'checked="checked" ';
 	}
 	echo 'onchange="ReloadForm(SelectAll)" /></th>
 		</tr>';
 
-	$i=0;
+	$i = 0;
 	while ($LabelRow = DB_fetch_array($LabelsResult)){
 
-		if ($LabelRow['intransit']!='') {
-			$Intransit=$LabelRow['intransit'];
+		if ($LabelRow['intransit'] != '') {
+			$Intransit = $LabelRow['intransit'];
 		} else {
-			$Intransit=0;
+			$Intransit = 0;
 		}
 		$LabelsToPrint = $LabelRow['qoh'] - $Intransit;
 		if($LabelsToPrint < 0){
@@ -169,9 +167,9 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 					<td class="number">' . locale_number_format($LabelsToPrint, 0) . '</td>
 					<td>';
 			if (isset($_POST['SelectAll']) AND isset($_POST['CheckAll'])) {
-				echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i .'" />';
+				echo '<input type="checkbox" checked="checked" name="PrintLabel' . $i . '" />';
 			} else {
-				echo '<input type="checkbox" name="PrintLabel' . $i .'" />';
+				echo '<input type="checkbox" name="PrintLabel' . $i . '" />';
 			}
 			echo '</td>
 				</tr>';
@@ -195,23 +193,23 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<br />
 		<div class="centre">
 
-			<input type="submit" name="PrintLabels" value="'. _('Print Labels'). '" />
+			<input type="submit" name="PrintLabels" value="' . _('Print Labels') . '" />
 		</div>
 		</form>';
 	include('includes/footer.php');
 	exit;
 }
 
-$LabelsToBePrinted = FALSE;
-if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoOfLabels']>0){
+$LabelsToBePrinted = false;
+if (isset($_POST['PrintLabels']) AND isset($_POST['NoOfLabels']) AND $_POST['NoOfLabels'] > 0){
 
-	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
-		if (isset($_POST['PrintLabel'.$i]) AND ($_POST['LabelsToPrint'.$i] > 0)){
+	for ($i = 0; $i < $_POST['NoOfLabels']; $i++){
+		if (isset($_POST['PrintLabel' . $i]) AND ($_POST['LabelsToPrint' . $i] > 0)){
 			$LabelsToBePrinted = TRUE;
 		}
 	}
 	if (!$LabelsToBePrinted){
-		prnMsg(_('There are no labels selected to print'),'info');
+		prnMsg(_('There are no labels selected to print'), 'info');
 	}
 }
 if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
@@ -268,13 +266,13 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		$CoreFileName = $CoreFileName . "-QOH-" . $_POST['Location'];
 	}
 	if ($_POST['ChangeToday'] != "Nothing"){
-		$CoreFileName = $CoreFileName . "-". $_POST['ChangeToday'];
+		$CoreFileName = $CoreFileName . "-" . $_POST['ChangeToday'];
 	}
 	if ($_POST['StockCategory'] != "All"){
-		$CoreFileName = $CoreFileName . "-". $_POST['StockCategory'];
+		$CoreFileName = $CoreFileName . "-" . $_POST['StockCategory'];
 	}
 	
-	$FileName= $CoreFileName . '-' . Date('Y-m-d-H-i-s') . '.pdf';
+	$FileName = $CoreFileName . '-' . Date('Y-m-d-H-i-s') . '.pdf';
 
 	$BarcodeStyle = array(
 			'position' => '',
@@ -285,35 +283,35 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			'border' => false,
 			'hpadding' => 'auto',
 			'vpadding' => 'auto',
-			'fgcolor' => array(0,0,0),
+			'fgcolor' => array(0, 0, 0),
 			'bgcolor' => false, //array(255,255,255),
 			'text' => true,
 			'font' => 'helvetica',
 			'fontsize' => $CodeFontSize,
 			'stretchtext' => 0);
 
-	$pdf = new TCPDF('L', 'mm', $PageLayout, true, 'UTF-8', false);
+	$Pdf = new TCPDF('L', 'mm', $PageLayout, true, 'UTF-8', false);
 	
 	// set PDF document information
-	$pdf->SetCreator('webERP');
-	$pdf->SetAuthor('webERP');
-	$pdf->SetTitle($CoreFileName);
-	$pdf->SetSubject($CoreFileName);
-	$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
-	$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
-	$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
-	$pdf->SetMargins(0, 0, 0);
-	$pdf->SetHeaderMargin(0);
-	$pdf->SetFooterMargin(0);
-	$pdf->setPrintHeader(false);
-	$pdf->setPrintFooter(false);
-	$pdf->SetAutoPageBreak(TRUE, 0);
-	$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+	$Pdf->SetCreator('webERP');
+	$Pdf->SetAuthor('webERP');
+	$Pdf->SetTitle($CoreFileName);
+	$Pdf->SetSubject($CoreFileName);
+	$Pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
+	$Pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+	$Pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+	$Pdf->SetMargins(0, 0, 0);
+	$Pdf->SetHeaderMargin(0);
+	$Pdf->SetFooterMargin(0);
+	$Pdf->setPrintHeader(false);
+	$Pdf->setPrintFooter(false);
+	$Pdf->SetAutoPageBreak(TRUE, 0);
+	$Pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 
 	// now print the labels
 	$LabelsPrinted = 0;
-	for ($i=0;$i < $_POST['NoOfLabels'];$i++){
-		if (isset($_POST['PrintLabel'.$i])){
+	for ($i = 0; $i < $_POST['NoOfLabels']; $i++){
+		if (isset($_POST['PrintLabel' . $i])){
 			// Get the data for each field
 			$StockID = $_POST['StockID' . $i];
 
@@ -361,56 +359,61 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 			if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
 				$ResultDiscount = DB_query("SELECT MAX(discountrate) AS discount
 								FROM discountmatrix
-							WHERE salestype='" . RETAIL_PRICE_LIST . "'
-							AND discountcategory ='" . $_POST['DiscountCategory'. $i] . "'
-							AND quantitybreak <='1'");
+							WHERE salestype = '" . RETAIL_PRICE_LIST . "'
+							AND discountcategory = '" . $_POST['DiscountCategory'. $i] . "'
+							AND quantitybreak <= '1'");
 				$MyRow = DB_fetch_row($ResultDiscount);
-				if ($MyRow[0]!=0){ 
+				if ($MyRow[0] != 0){ 
 					// there's a discount!
 					$PercentageDiscount = $MyRow[0];
-					$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1-($PercentageDiscount)),0) . ' '. CURRENCY_CODE;
-					$Price = "WAS: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+					$DiscountedPrice = "NOW: " . locale_number_format($_POST['Price' . $i] * (1 - ($PercentageDiscount)), 0) . 
+						' ' . CURRENCY_CODE;
+					$Price = "WAS: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
 				}else{
 					// no discount, price discounted by fixed price
 					$PercentageDiscount = 0;
-					$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+					$DiscountedPrice = "ONLY: " . locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
 					$Price = "";
 				}
 			}else{
 				// define prices for not discounted items
-				$Price = locale_number_format($_POST['Price' . $i],0) . ' '. CURRENCY_CODE;
+				$Price = locale_number_format($_POST['Price' . $i], 0) . ' ' . CURRENCY_CODE;
 			}
 
-			for ($LabelNumber=0; $LabelNumber < $_POST['LabelsToPrint'.$i];$LabelNumber++){
+			for ($LabelNumber = 0; $LabelNumber < $_POST['LabelsToPrint' . $i]; $LabelNumber++){
 				
-				$pdf->AddPage();
+				$Pdf->AddPage();
 
 				// print depending on each type of label
 				if ($_POST['LabelID'] == 'T570'){
-					if  (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
+					if (ItemInList($_POST['Category' . $i], LIST_STOCK_CATEGORIES_OUTLET)){
 						// print the previous price 
-						$pdf->SetXY($PriceXPosition,$PreviousPriceYPosition);
-						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
-						$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
+						$Pdf->SetXY($PriceXPosition, $PreviousPriceYPosition);
+						$Pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$Pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
 						// print the discounted price 
-						$pdf->SetXY($PriceXPosition,$PriceYPosition);
-						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
-						$pdf->Cell($PriceWidth, 0, $DiscountedPrice, 0, 0, $PriceAlignment);
+						$Pdf->SetXY($PriceXPosition, $PriceYPosition);
+						$Pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$Pdf->Cell($PriceWidth, 0, $DiscountedPrice, 0, 0, $PriceAlignment);
 					}else{
 						//Print the logo
-						$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 203, '', false, false, 0, false, false, false);
+						$Pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
+							true, 203, '', false, false, 0, false, false, false);
 						// print the price
-						$pdf->SetXY($PriceXPosition,$PriceYPosition);
-						$pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
-						$pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
+						$Pdf->SetXY($PriceXPosition, $PriceYPosition);
+						$Pdf->SetFont($PriceFont, $PriceFontStyle, $PriceFontSize);
+						$Pdf->Cell($PriceWidth, 0, $Price, 0, 0, $PriceAlignment);
 					}
 					// print the barcode
-					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
+					$Pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
+						$BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}elseif ($_POST['LabelID'] == 'CodeSticker'){
 					//Print the logo
-					$pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', true, 203, '', false, false, 0, false, false, false);
+					$Pdf->Image($LogoFile, $LogoXPosition, $LogoYPosition, 0, $LogoHeight, 'JPG', '', '', 
+						true, 203, '', false, false, 0, false, false, false);
 					// print the barcode
-					$pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, $BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
+					$Pdf->write1DBarcode($StockID, 'C128', $BarcodeXPosition, $BarcodeYPosition, 
+						$BarcodeLenght, $BarcodeWidth, $XResolution, $BarcodeStyle, 'N');
 				}else{
 					//not code yet
 					return;
@@ -421,24 +424,28 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		} //this label is set to print
 	} //loop through labels selected to print
 
-	$pdf->Output($FileName, 'D');
-	$pdf->__destruct();
+	$Pdf->Output($FileName, 'D');
+	$Pdf->__destruct();
 
 } else { /*The option to print PDF was not hit */
 
-	$Title= _('KL Print Labels');
+	$Title = _('KL Print Labels');
 	include('includes/header.php');
 
-	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . _('Price Labels') . '" alt="" />
+	echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/customer.png" title="' . 
+		_('Price Labels') . '" alt="" />
          ' . ' ' . _('Print Price Labels') . '</p>';
 
 	if (!function_exists('gd_info')) {
-		prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. You will most likely experience problems with this script until the GD module is enabled.'),'error');
+		prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. 
+			You will most likely experience problems with this script until the GD module is enabled.'), 'error');
+		include('includes/footer.php');
+		exit;
 	}
 
 	if (!isset($_POST['StockCategory'])) {
 		/*if $StockCategory is not set then show a form to allow input	*/
-		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
+		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '" method="post">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 		echo '<fieldset>
@@ -446,10 +453,16 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		echo FieldToSelectFromTwoOptions('T570', 'Pricetags T570', 
 										'CodeSticker', 'Code Stickers',
 										'LabelID', $_POST['LabelID'], _('Label Type'), '', '', 1, true, false);
-		echo FieldToSelectOneStockCategory('StockCategory', (isset($_POST['StockCategory']) ? $_POST['StockCategory'] : ''), _('For Stock Category'), '', '', true, 2, true, false);
-		echo FieldToSelectOneNumber('LabelsPerItem', $_POST['LabelsPerItem'], 3, 4, _('Fixed number of labels'), '', '', 3, false, false);
+		echo FieldToSelectOneStockCategory('StockCategory', 
+										(isset($_POST['StockCategory']) ? $_POST['StockCategory'] : ''), 
+										_('For Stock Category'), '', '', true, 2, true, false);
+		echo FieldToSelectOneNumber('LabelsPerItem', $_POST['LabelsPerItem'], 3, 4, _('Fixed number of labels'), 
+									'', '', 3, false, false);
 		$LabelLocationField = '<b>' . _('OR') . ' </b> ' . 'QOH at Location';
-		echo FieldToSelectOneLocation('Location', $_POST['Location'], $LabelLocationField, '', 'CANVIEW',  4, false, false);
+		echo FieldToSelectFromTwoOptions
+							('', ' ',
+							'KANTO', '000-Kantor',
+							'Location', $_POST['Location'], $LabelLocationField, '', '',  4, false, false);
 		$LabelItemsThatField = '<b>' . _('OR') . ' </b> ' . ' items that';
 		echo FieldToSelectFromFiveOptions('Nothing', ' ',
 										'ChangePrice', 'Changed price today', 
