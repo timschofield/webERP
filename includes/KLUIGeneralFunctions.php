@@ -4,6 +4,25 @@
  * 
  * KL RICARD: KL Specific UI functions
  * 
+ * Alphabetical list of functions:
+ * - FieldToSelectFromFiveOptions() - Creates a dropdown with five options
+ * - FieldToSelectFromFourOptions() - Creates a dropdown with four options
+ * - FieldToSelectFromThreeOptions() - Creates a dropdown with three options
+ * - FieldToSelectFromTwoOptions() - Creates a dropdown with two options
+ * - FieldToSelectOneBrand() - Creates a dropdown for selecting a brand
+ * - FieldToSelectOneDepartment() - Creates a dropdown for selecting a department
+ * - FieldToSelectOneGLAccount() - Creates a dropdown for selecting GL accounts
+ * - FieldToSelectOneKPIConcept() - Creates a dropdown for selecting KPI concepts
+ * - FieldToSelectOneMaintenanceType() - Creates a dropdown for selecting maintenance types
+ * - FieldToSelectOneRetailPartner() - Creates a dropdown for selecting retail partners
+ * - FieldToSelectOneReturnedItemReason() - Creates a dropdown for selecting returned item reasons
+ * - FieldToSelectOneServiceFee() - Creates a dropdown for selecting service fees
+ * - FieldToSelectOneTag() - Creates a dropdown for selecting tags
+ * - FieldToSelectSpreadSheetFormat() - Creates a dropdown for selecting spreadsheet formats
+ * - ShowTableSubTitle() - Displays a table subtitle
+ * - ShowTableTitle() - Displays a table title
+ * - ShowWarningTitle() - Displays a warning title
+ * 
  *********************************************************************************************************/
 
 function FieldToSelectSpreadSheetFormat($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
@@ -93,7 +112,7 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 	else if($SelectedValue == $ValueOption3) {
 		$HTML .= '<option selected="selected" value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
 				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
-				<option value="' . $ValueOption2 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
 				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>';
 	}
 	else {
@@ -106,6 +125,60 @@ function FieldToSelectFromFourOptions($ValueOption1, $LabelOption1,
 			</field>';
 	return $HTML;
 }
+
+function FieldToSelectFromFiveOptions($ValueOption1, $LabelOption1, 
+									$ValueOption2, $LabelOption2, 
+									$ValueOption3, $LabelOption3,
+									$ValueOption4, $LabelOption4,
+									$ValueOption5, $LabelOption5,
+									$VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+		<label>' . $Label . ':</label>
+		<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">';
+	if($SelectedValue == $ValueOption1) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
+				<option value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>';
+	}
+	else if($SelectedValue == $ValueOption2) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
+				<option value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>';
+	}
+	else if($SelectedValue == $ValueOption3) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
+				<option value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>';
+	}
+	else if($SelectedValue == $ValueOption4) {
+		$HTML .= '<option selected="selected" value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>';
+	}
+	else {
+		$HTML .= '<option selected="selected" value="' . $ValueOption5 . '">' . $LabelOption5 . '</option>
+				<option value="' . $ValueOption1 . '">' . $LabelOption1 . '</option>
+				<option value="' . $ValueOption2 . '">' . $LabelOption2 . '</option>
+				<option value="' . $ValueOption3 . '">' . $LabelOption3 . '</option>
+				<option value="' . $ValueOption4 . '">' . $LabelOption4 . '</option>';
+	}
+
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
 
 function FieldToSelectOneBrand($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 

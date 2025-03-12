@@ -4,6 +4,29 @@
  * 
  * General UI functions
  * 
+ * Functions included in this file:
+ * - AddAttributesToField() - Adds HTML attributes to form fields
+ * - FieldToSelectMultipleLocations() - Creates a multiple selection dropdown for locations
+ * - FieldToSelectMultiplePeriods() - Creates a multiple selection dropdown for accounting periods
+ * - FieldToSelectMultipleStockCategories() - Creates a multiple selection dropdown for stock categories
+ * - FieldToSelectOneCustomerType() - Creates a dropdown for selecting customer types
+ * - FieldToSelectOneDate() - Creates a date input field
+ * - FieldToSelectOneEntryFromArray() - Creates a dropdown from an array of values
+ * - FieldToSelectOneFile() - Creates a file upload input field
+ * - FieldToSelectOneGLAccountGroup() - Creates a dropdown for selecting GL account groups
+ * - FieldToSelectOneLocation() - Creates a dropdown for selecting a location
+ * - FieldToSelectOnePassword() - Creates a password input field
+ * - FieldToSelectOnePeriod() - Creates a dropdown for selecting an accounting period
+ * - FieldToSelectOneSalesArea() - Creates a dropdown for selecting a sales area
+ * - FieldToSelectOneSalesPerson() - Creates a dropdown for selecting a sales person
+ * - FieldToSelectOneStockCategory() - Creates a dropdown for selecting a stock category
+ * - FieldToSelectOneSysType() - Creates a dropdown for selecting a system type
+ * - FieldToSelectOneText() - Creates a text input field
+ * - FieldToSelectOneTextArea() - Creates a text area input field
+ * - FixedField() - Creates a read-only field displaying a value
+ * - OneButtonCenteredForm() - Creates a centered form with one submit button
+ * - TwoButtonsCenteredForm() - Creates a centered form with submit and reset buttons
+ * 
  *********************************************************************************************************/
 
 function AddAttributesToField($TabIndex, $Required, $AutoFocus) {
@@ -184,7 +207,7 @@ function FieldToSelectOneLocation($VariableName, $SelectedValue, $Label = '', $H
 
 	if ($Required){
 		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
-	} elseif (!isset($SelectedValue)) {
+	} elseif (!isset($SelectedValue) OR ($SelectedValue == '')) {
 		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
 	}
 
@@ -326,6 +349,49 @@ function FieldToSelectOneSalesPerson($VariableName, $SelectedValue, $Label = '',
 	return $HTML;
 }
 
+function FieldToSelectOneStockCategory($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $AllowAll = false, $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT categoryid, 
+				categorydescription
+			FROM stockcategory
+			ORDER BY categorydescription";
+
+	$Result = DB_query($SQL);
+
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+
+	if ($AllowAll) {
+		if (!isset($SelectedValue)) {
+			$HTML .= '<option selected="selected" value="All">' . _('All Stock Categories') . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="All">' . _('All Stock Categories') . '</option>';
+		}
+	} 
+	else {
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	}
+		
+	while ($MyRow = DB_fetch_array($Result)) {
+		if (isset($SelectedValue) AND ($MyRow['categoryid'] == $SelectedValue)) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
+
+
 function FieldToSelectOneSysType($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 
 	$SQL = "SELECT typeid, 
@@ -384,6 +450,19 @@ function FieldToSelectOneText($VariableName, $SelectedValue, $Size, $MaxLength, 
 			</field>';
 	return $HTML;
 }
+
+function FieldToSelectOneNumber($VariableName, $SelectedValue, $Size, $MaxLength, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<fieldhelp>' . $HelpText . '</fieldhelp>
+				<input type="text" class="number" pattern="[0-9]*"';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= '" name="' . $VariableName . '" size="' . $Size . '" maxlength="' . $MaxLength . '" value="' . $SelectedValue . '" />
+			</field>';
+	return $HTML;
+}
+
 
 
 function FieldToSelectOneTextArea($VariableName, $SelectedValue, $Cols, $Rows, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
