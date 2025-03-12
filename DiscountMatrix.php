@@ -163,28 +163,23 @@ echo '<tr>
 		<th>' . _('Discount Category') . '</th>
 		<th>' . _('Quantity Break') . '</th>
 		<th>' . _('Discount Rate') . ' %' . '</th>
+		<th></th>
 	</tr>';
 
 while ($MyRow = DB_fetch_array($Result)) {
 	$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;SalesType=' . $MyRow['salestype'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'] . '&amp;QuantityBreak=' . $MyRow['quantitybreak'];
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['sales_type'],
-			$MyRow['discountcategory'],
-			$MyRow['quantitybreak'],
-			$MyRow['discountrate']*100 ,
-			$DeleteURL);
+	echo '<tr class="striped_row">
+			<td>', $MyRow['sales_type'], '</td>
+			<td>', $MyRow['discountcategory'], '</td>
+			<td class="number">', $MyRow['quantitybreak'], '</td>
+			<td class="number">', $MyRow['discountrate']*100, '</td>
+			<td><a href="', $DeleteURL, '" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount matrix record?') . '\');">' . _('Delete') . '</a></td>
+		</tr>';
 
 }
 
 echo '</table>
-      </div>
 	  </form>';
 
 include('includes/footer.php');

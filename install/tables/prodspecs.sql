@@ -12,4 +12,4 @@ CREATE TABLE `prodspecs` (
   PRIMARY KEY (`keyval`,`testid`),
   KEY `testid` (`testid`),
   CONSTRAINT `prodspecs_ibfk_1` FOREIGN KEY (`testid`) REFERENCES `qatests` (`testid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

@@ -8,4 +8,4 @@ CREATE TABLE `custcontacts` (
   `email` varchar(55) NOT NULL,
   `statement` tinyint NOT NULL DEFAULT '0',
   PRIMARY KEY (`contid`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb3;

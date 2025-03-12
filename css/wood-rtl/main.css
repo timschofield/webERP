@@ -98,6 +98,7 @@ padding:2px;
 }
 .page_title_text {
 color:#000;
+padding-right:7px;
 font-weight:700;
 text-align:center;
 margin:5px auto;
@@ -105,10 +106,11 @@ padding:5px;
 clear: both;
 }
 .page_title_text img {
-padding-left:7px;
+padding-left:0px;
 width:40px;
 height:40px;
 vertical-align:middle;
+box-shadow:0 0 0 0;
 }
 .toplink {
 float:right;

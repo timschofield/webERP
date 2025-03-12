@@ -9,4 +9,4 @@ CREATE TABLE `pcashdetailtaxes` (
   `taxrate` double NOT NULL DEFAULT '0',
   `amount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`counterindex`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb3;

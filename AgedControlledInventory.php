@@ -71,34 +71,25 @@ while ($LocQtyRow=DB_fetch_array($LocStockResult)) {
 		$TotalVal += ($LocQtyRow['quantity'] * $LocQtyRow['cost']);
 	}
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-		</tr>',
-			mb_strtoupper($LocQtyRow['stockid']),
-			$LocQtyRow['description'],
-			$LocQtyRow['serialno'],
-			locale_number_format($LocQtyRow['quantity'],$LocQtyRow['decimalplaces']),
-			$LocQtyRow['units'],
-			$DispVal,
-			ConvertSQLDate($LocQtyRow['createdate']),
-			$DaysOld
-		);
+	echo '<tr class="striped_row">
+			<td>', mb_strtoupper($LocQtyRow['stockid']), '</td>
+			<td>', $LocQtyRow['description'], '</td>
+			<td>', $LocQtyRow['serialno'], '</td>
+			<td class="number">', locale_number_format($LocQtyRow['quantity'],$LocQtyRow['decimalplaces']), '</td>
+			<td>', $LocQtyRow['units'], '</td>
+			<td class="number">', $DispVal, '</td>
+			<td>', ConvertSQLDate($LocQtyRow['createdate']), '</td>
+			<td class="number">', $DaysOld, '</td>
+		</tr>';
 } //while
 
 echo '</tbody>
 		<tfoot>
-			<tr class="striped_row">
+			<tr class="total_row">
 				<td colspan="3"><b>', _('Total'), '</b></td>
 				<td class="number"><b>', locale_number_format($TotalQty,2), '</b></td>
 				<td class="number"><b>', locale_number_format($TotalVal,2), '</b></td>
-      <td colspan="2"></td>
+				<td colspan="3"></td>
 			</tr>
 		</tfoot>
 	</table>';

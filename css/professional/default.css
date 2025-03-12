@@ -2,10 +2,9 @@
 font-family:Ubuntu;
 font-style:normal;
 font-weight:400;
-src: local('Ubuntu'), url(https://fonts.googleapis.com/css?family=Ubuntu);
 }
 body {
-font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+font-family: Arial,sans-serif;
 font-weight:400;
 background-color:#FFFFFF;
 margin:0;

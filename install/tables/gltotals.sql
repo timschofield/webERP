@@ -3,4 +3,4 @@ CREATE TABLE `gltotals` (
   `period` smallint NOT NULL DEFAULT '0',
   `amount` double NOT NULL DEFAULT '0',
   PRIMARY KEY (`account`,`period`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

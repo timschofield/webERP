@@ -10,7 +10,6 @@ $BookMark = 'BankAccounts';
 include('includes/header.php');
 
 echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/bank.png" title="', // Icon image.
@@ -98,9 +97,11 @@ if (isset($_POST['PostExchangeDifference']) AND is_numeric(filter_number_format(
 	} //end if the bank statement balance was numeric
 }
 
-echo '<table class="selection">',
-		'<tr><td>', _('Bank Account'), ':</td>
-			<td><select name="BankAccount" tabindex="1">';
+echo '<fieldset>
+		<legend>', _('Select Accoutnt'), '</legend>
+		<field>
+			<label for="BankAccount">', _('Bank Account'), ':</label>
+			<select name="BankAccount" tabindex="1">';
 
 $SQL = "SELECT
 			bankaccounts.accountcode,
@@ -115,9 +116,9 @@ $DbgMsg = _('The SQL used to retrieve the bank accounts was');
 $AccountsResults = DB_query($SQL, $ErrMsg, $DbgMsg);
 
 if (DB_num_rows($AccountsResults)==0) {
-	echo '</select></td>
-			</tr>
-		</table>';
+	echo '</select>
+			</field>
+		</fieldset>';
 	prnMsg(_('Bank Accounts have not yet been defined. You must first') . ' <a href="' . $RootPath . '/BankAccounts.php">' . _('define the bank accounts') . '</a> ' . _('and general ledger accounts to be affected'), 'warn');
 	include ('includes/footer.php');
 	exit;
@@ -130,20 +131,18 @@ if (DB_num_rows($AccountsResults)==0) {
 			' value="', $MyRow['accountcode'], '">', $MyRow['bankaccountname'], ' - ', $MyRow['currcode'], '</option>';
 
 	}
-	echo '</select></td>
-		</tr>';
+	echo '</select>
+		</field>';
 }
 
 /*Now do the posting while the user is thinking about the bank account to select */
 
 include ('includes/GLPostings.inc');
 
-echo '</table>
-	<br />
+echo '</fieldset>
 	<div class="centre">
 		<input type="submit" tabindex="2" name="ShowRec" value="' . _('Show bank reconciliation statement') . '" />
-	</div>
-	<br />';
+	</div>';
 
 
 if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
@@ -177,7 +176,7 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 
 
 	echo '<table class="selection">
-			<tr class="striped_row">
+			<tr class="total_row">
 				<td colspan="6"><b>' . $CurrencyRow['bankaccountname'] . ' ' . _('Balance as at') . ' ' . Date($_SESSION['DefaultDateFormat']);
 
 	if ($_SESSION['CompanyRecord']['currencydefault']!=$CurrencyRow['currcode']) {
@@ -200,62 +199,41 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 				AND amount < 0
 				AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate";
 
-	echo '<tr><td><br /></td></tr>'; /*Bang in a blank line */
-
 	$ErrMsg = _('The unpresented cheques could not be retrieved by the SQL because');
 	$UPChequesResult = DB_query($SQL, $ErrMsg);
 
 	echo '<tr>
-			<td colspan="6"><b>' . _('Add back unpresented cheques') . ':</b></td>
+			<th colspan="6"><b>' . _('Add back unpresented cheques') . ':</b></th>
+		</tr>
+		<tr>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Number') . '</th>
+			<th>' . _('Reference') . '</th>
+			<th>' . _('Orig Amount') . '</th>
+			<th>' . _('Outstanding') . '</th>
 		</tr>';
 
-	$TableHeader = '<tr>
-						<th>' . _('Date') . '</th>
-						<th>' . _('Type') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Reference') . '</th>
-						<th>' . _('Orig Amount') . '</th>
-						<th>' . _('Outstanding') . '</th>
-					</tr>';
-
-	echo $TableHeader;
-
-	$j = 1;
 	$TotalUnpresentedCheques =0;
 
 	while ($MyRow=DB_fetch_array($UPChequesResult)) {
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				ConvertSQLDate($MyRow['transdate']),
-				$MyRow['typename'],
-				$MyRow['transno'],
-				$MyRow['ref'],
-				locale_number_format($MyRow['amt'],$CurrencyRow['currdecimalplaces']),
-				locale_number_format($MyRow['outstanding'],$CurrencyRow['currdecimalplaces']));
+		echo'<tr class="striped_row">
+				<td>', ConvertSQLDate($MyRow['transdate']), '</td>
+				<td>', $MyRow['typename'], '</td>
+				<td>', $MyRow['transno'], '</td>
+				<td>', $MyRow['ref'], '</td>
+				<td class="number">', locale_number_format($MyRow['amt'],$CurrencyRow['currdecimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['outstanding'],$CurrencyRow['currdecimalplaces']), '</td>
+				</tr>';
 
 		$TotalUnpresentedCheques +=$MyRow['outstanding'];
-
-		$j++;
-		If ($j == 18) {
-			$j=1;
-			echo $TableHeader;
-		}
 	}
 	//end of while loop
 
-	echo '<tr>
-             <td><br /></td>
-          </tr>
-			<tr class="striped_row">
-				<td colspan="6">' . _('Total of all unpresented cheques') . '</td>
-				<td class="number">' . locale_number_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td>
-			</tr>';
+	echo '<tr class="total_row">
+			<td colspan="6">' . _('Total of all unpresented cheques') . '</td>
+			<td class="number">' . locale_number_format($TotalUnpresentedCheques,$CurrencyRow['currdecimalplaces']) . '</td>
+		</tr>';
 
 	$SQL = "SELECT amount/exrate AS amt,
 				amountcleared,
@@ -270,65 +248,43 @@ if (isset($_POST['ShowRec']) OR isset($_POST['DoExchangeDifference'])) {
 			AND amount > 0
 			AND ABS((amount/exrate)-amountcleared)>0.009 ORDER BY transdate";
 
-	echo '<tr><td><br /></td></tr>'; /*Bang in a blank line */
-
 	$ErrMsg = _('The uncleared deposits could not be retrieved by the SQL because');
 
 	$UPChequesResult = DB_query($SQL,$ErrMsg);
 
-	echo '<tr><td colspan="6"><b>' . _('Less deposits not cleared') . ':</b></td></tr>';
+	echo '<tr>
+			<th colspan="6"><b>' . _('Less deposits not cleared') . ':</b></th>
+		</tr>
+		<tr>
+			<th>' . _('Date') . '</th>
+			<th>' . _('Type') . '</th>
+			<th>' . _('Number') . '</th>
+			<th>' . _('Reference') . '</th>
+			<th>' . _('Orig Amount') . '</th>
+			<th>' . _('Outstanding') . '</th>
+		</tr>';
 
-	$TableHeader = '<tr>
-						<th>' . _('Date') . '</th>
-						<th>' . _('Type') . '</th>
-						<th>' . _('Number') . '</th>
-						<th>' . _('Reference') . '</th>
-						<th>' . _('Orig Amount') . '</th>
-						<th>' . _('Outstanding') . '</th>
-					</tr>';
-
-	echo  $TableHeader;
-
-	$j = 1;
 	$TotalUnclearedDeposits =0;
 
 	while ($MyRow=DB_fetch_array($UPChequesResult)) {
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				ConvertSQLDate($MyRow['transdate']),
-				$MyRow['typename'],
-				$MyRow['transno'],
-				$MyRow['ref'],
-				locale_number_format($MyRow['amt'],$CurrencyRow['currdecimalplaces']),
-				locale_number_format($MyRow['outstanding'],$CurrencyRow['currdecimalplaces']) );
+		echo '<tr class="striped_row">
+				<td>', ConvertSQLDate($MyRow['transdate']), '</td>
+				<td>', $MyRow['typename'], '</td>
+				<td>', $MyRow['transno'], '</td>
+				<td>', $MyRow['ref'], '</td>
+				<td class="number">', locale_number_format($MyRow['amt'],$CurrencyRow['currdecimalplaces']), '</td>
+				<td class="number">', locale_number_format($MyRow['outstanding'],$CurrencyRow['currdecimalplaces']), '</td>
+				</tr>';
 
 		$TotalUnclearedDeposits +=$MyRow['outstanding'];
-
-		$j++;
-		if ($j == 18) {
-			$j=1;
-			echo $TableHeader;
-		}
 	}
 	//end of while loop
-	echo '<tr>
-            <td><br /></td>
-		</tr>
-		<tr class="striped_row">
+	echo '<tr class="total_row">
 			<td colspan="6">' . _('Total of all uncleared deposits') . '</td>
 			<td class="number">' . locale_number_format($TotalUnclearedDeposits,$CurrencyRow['currdecimalplaces']) . '</td>
 		</tr>';
 	$FXStatementBalance = ($Balance*$CurrencyRow['rate'] - $TotalUnpresentedCheques -$TotalUnclearedDeposits);
-	echo '<tr>
-            <td><br /></td>
-		</tr>
-		<tr class="striped_row">
+	echo '<tr class="total_row">
 			<td colspan="6"><b>' . _('Bank statement balance should be') . ' (' . $CurrencyRow['currcode'] . ')</b></td>
 			<td class="number">' . locale_number_format($FXStatementBalance,$CurrencyRow['currdecimalplaces']) . '</td>
 		</tr>';
@@ -368,7 +324,6 @@ if (isset($_POST['BankAccount'])) {
 			<p>
 			<a tabindex="4" href="' . $RootPath . '/BankMatching.php?Type=Payments&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared payments') . '</a>
 			</p>
-			<br />
 			<a tabindex="5" href="' . $RootPath . '/BankMatching.php?Type=Receipts&amp;Account='.$_POST['BankAccount'].'">' . _('Match off cleared deposits') . '</a>
 		</div>';
 } else {
@@ -376,11 +331,9 @@ if (isset($_POST['BankAccount'])) {
 			<p>
 			<a tabindex="4" href="' . $RootPath . '/BankMatching.php?Type=Payments">' . _('Match off cleared payments') . '</a>
 			</p>
-			<br />
 			<a tabindex="5" href="' . $RootPath . '/BankMatching.php?Type=Receipts">' . _('Match off cleared deposits') . '</a>
 		</div>';
 }
-echo '</div>';
 echo '</form>';
 include('includes/footer.php');
 ?>

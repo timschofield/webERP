@@ -290,13 +290,11 @@ if (isset($_POST['CommitBatch'])){
 	$BatchDebtorTotal = 0; //in functional currency
 	$CustomerReceiptCounter=1; //Count lines of customer receipts in this batch
 
-	echo '<br />
-		<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
+	echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 			'/images/money_add.png" title="',// Icon image.
 			_('Summary of Receipt Batch'), '" /> ',// Icon title.
 			_('Summary of Receipt Batch'), '</p>',// Page title.
-		'<br />
-		<table class="selection">
+		'<table class="selection">
 		<thead>
 			<tr>
 				<th>', _('Batch Number'), '</th>
@@ -602,7 +600,6 @@ if (isset($_POST['CommitBatch'])){
 	$ErrMsg = _('Cannot commit the changes');
 	$DbgMsg = _('The SQL that failed was');
 	 DB_Txn_Commit();
-	echo '<br />';
 	prnMsg( _('Receipt batch') . ' ' . $_SESSION['ReceiptBatch' . $identifier]->BatchNo . ' ' . _('has been successfully entered into the database'),'success');
 
 	echo '<div class="centre noPrint">',
@@ -802,7 +799,6 @@ customer record returned by the search - this record is then auto selected */
 
 
 echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Type=' . urlencode($_GET['Type']) . '&amp;identifier=' . urlencode($identifier) . '" method="post" id="form1">';
-echo '<div>';
 echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
 /*show the batch header details and the entries in the batch so far */
@@ -1035,7 +1031,7 @@ if (isset($_SESSION['ReceiptBatch' . $identifier])){
 			/* KL RICARD Do not show tags
 			$TagDescriptions = GetDescriptionsFromTagArray($ReceiptItem->tag);
 			KL RICARD Do not show tags */
-			
+
 			$SQL = "SELECT accountname FROM chartmaster WHERE accountcode='" . $ReceiptItem->GLCode . "'";
 			$Result=DB_query($SQL);
 			$MyRow=DB_fetch_array($Result);
@@ -1250,8 +1246,6 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 			AND !isset($_POST['GLEntry'])){
 
 	/*Show the form to select a customer */
-	echo '<br />';
-
 	echo '<p class="page_title_text">
 			<img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' . _('Customer') . '" alt="" />' . ' ' . _('Select a Customer') . '</p>
 		<fieldset>
@@ -1273,29 +1267,19 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 
 	if (isset($CustomerSearchResult)) {
 
-		echo '<table class="selection">';
-		$TableHeader = '<tr>
-							<th>' . _('Code') . '</th>
-							<th>' . _('Customer Name') . '</th>
-						</tr>';
-		echo $TableHeader;
-		$j = 1;
+		echo '<table class="selection">
+				<tr>
+					<th>' . _('Code') . '</th>
+					<th>' . _('Customer Name') . '</th>
+				</tr>';
 
 		while ($MyRow=DB_fetch_array($CustomerSearchResult)) {
 
-			printf('<tr class="striped_row">
-					<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="%s" /></td>
-					<td>%s</td>
-					</tr>',
-					$MyRow['debtorno'],
-					$MyRow['name']);
+			echo '<tr class="striped_row">
+					<td><input tabindex="'. strval(12+$j).'" type="submit" name="Select" value="', $MyRow['debtorno'], '" /></td>
+					<td>', $MyRow['name'], '</td>
+				</tr>';
 
-			$j++;
-			If ($j == 11){
-				$j=1;
-				echo $TableHeader;
-
-			}
 	//end of page full new headings if
 		}
 	//end of while loop
@@ -1307,11 +1291,9 @@ if (((isset($_SESSION['CustomerRecord' . $identifier])
 }
 if (isset($_SESSION['ReceiptBatch' . $identifier]->Items) AND count($_SESSION['ReceiptBatch' . $identifier]->Items) > 0){
 	echo '<div class="centre">
-			<br/>
 			<input tabindex="13" type="submit" name="CommitBatch" value="' . _('Accept and Process Batch') . '" />
 		</div>';
 }
-echo '</div>';
 echo '</form>';
 include('includes/footer.php');
 ?>

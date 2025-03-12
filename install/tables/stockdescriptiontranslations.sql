@@ -5,4 +5,4 @@ CREATE TABLE `stockdescriptiontranslations` (
   `longdescriptiontranslation` text COMMENT 'Item''s long description',
   `needsrevision` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`stockid`,`language_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

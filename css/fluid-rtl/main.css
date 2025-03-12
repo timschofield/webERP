@@ -69,6 +69,7 @@ padding:2px;
 width:32px;
 height:32px;
 vertical-align:middle;
+box-shadow:0 0 0 0;
 }
 .MenuItem {
 text-decoration:none;

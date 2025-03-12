@@ -138,29 +138,16 @@ if (!isset($Id)) {
 			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			printf('<tr class="striped_row">
-					<td class="text">%s</td>
-					<td class="text">%s</td>
-					<td class="text">%s</td>
-					<td class="text"><a href="mailto:%s">%s</a></td>
-					<td class="text">%s</td>
-					<td class="text">%s</td>
-					<td class="noPrint"><a href="%sId=%s&amp;DebtorNo=%s">' . _('Edit') . '</a></td>
-					<td class="noPrint"><a href="%sId=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td>
-				</tr>',
-				$MyRow['contactname'],
-				$MyRow['role'],
-				$MyRow['phoneno'],
-				$MyRow['email'],
-				$MyRow['email'],
-				($MyRow['statement']==0) ? _('No') : _('Yes'),
-				$MyRow['notes'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['contid'],
-				$MyRow['debtorno'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['contid'],
-				$MyRow['debtorno']);
+			echo '<tr class="striped_row">
+					<td class="text">', $MyRow['contactname'], '</td>
+					<td class="text">', $MyRow['role'], '</td>
+					<td class="text">', $MyRow['phoneno'], '</td>
+					<td class="text"><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+					<td class="text">', ($MyRow['statement']==0) ? _('No') : _('Yes'), '</td>
+					<td class="text">', $MyRow['notes'], '</td>
+					<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '">' . _('Edit') . '</a></td>
+					<td class="noPrint"><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this contact?') . '\');">' . _('Delete'). '</a></td>
+				</tr>';
 
 		}
 	//END WHILE LIST LOOP
