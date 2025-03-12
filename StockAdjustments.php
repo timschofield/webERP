@@ -20,6 +20,9 @@ $BookMark = 'InventoryAdjustments';
 include('includes/header.php');
 include('includes/SQL_CommonFunctions.inc');
 include ('includes/GLFunctions.php');
+include ('includes/UIGeneralFunctions.php');
+include ('includes/KLUIGeneralFunctions.php');
+
 
 if (empty($_GET['identifier'])) {
 	/*unique session identifier to ensure that there is no conflict with other adjustment sessions on the same machine  */
@@ -84,7 +87,9 @@ if (isset($_POST['tag'])){
 if (isset($_POST['Narrative'])){
 	$_SESSION['Adjustment' . $identifier]->Narrative = $_POST['Narrative'];
 }
-
+if (isset($_POST['AdjustmentReason'])){
+	$_SESSION['Adjustment' . $identifier]->AdjustmentReason = $_POST['AdjustmentReason'];
+}
 $SQL = "SELECT locations.loccode, locationname FROM locations INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canupd=1";
 $ResultStkLocs = DB_query($SQL);
 $LocationList=array();
@@ -246,11 +251,22 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 		$DbgMsg =  _('The following SQL to insert the stock movement record was used');
 		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
 
-/*Get the ID of the StockMove... */
+		/*Get the ID of the StockMove... */
 		$StkMoveNo = DB_Last_Insert_ID('stockmoves','stkmoveno');
+		
+		/* KL RICARD Adjustments reasons */	
+		$SQL = "INSERT INTO stockadjustments (transno,
+											reasonid)
+				VALUES ('" . $AdjustmentNumber . "',
+					'" . $_SESSION['Adjustment' . $identifier]->AdjustmentReason ."'
+					)";
 
-/*Insert the StockSerialMovements and update the StockSerialItems  for controlled items*/
+		$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The stock adjustment reason record cannot be inserted because');
+		$DbgMsg =  _('The following SQL to insert the stock adjustment reason record was used');
+		$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+		/* KL RICARD END Adjustments reasons */
 
+		/*Insert the StockSerialMovements and update the StockSerialItems for controlled items*/
 		if ($_SESSION['Adjustment' . $identifier]->Controlled ==1){
 			foreach($_SESSION['Adjustment' . $identifier]->SerialItems as $Item){
 			/*We need to add or update the StockSerialItem record and
@@ -347,7 +363,10 @@ if (isset($_POST['EnterAdjustment']) AND $_POST['EnterAdjustment']!= ''){
 			$ErrMsg = _('CRITICAL ERROR') . '! ' . _('NOTE DOWN THIS ERROR AND SEEK ASSISTANCE') . ': ' . _('The general ledger transaction entries could not be added because');
 			$DbgMsg = _('The following SQL to insert the GL entries was used');
 			$Result = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+			
+			/* KL RICARD Do not use tags
 			InsertGLTags($_POST['tag']);
+			KL RICARD END Do not use tags*/
 
 			$SQL = "INSERT INTO gltrans (type,
 										typeno,
@@ -459,7 +478,7 @@ if (isset($_SESSION['Adjustment' . $identifier]) AND mb_strlen($_SESSION['Adjust
 }
 
 echo '<field>
-		<label for="StockLocation">'. _('Adjustment to Stock At Location').':</label>
+		<label for="StockLocation">'. _('Adjustment Stock At Location').':</label>
 		<select name="StockLocation" onchange="submit();"> ';
 foreach ($LocationList as $Loccode=>$Locationname){
 	if (isset($_SESSION['Adjustment'.$identifier]->StockLocation) AND $Loccode == $_SESSION['Adjustment' . $identifier]->StockLocation){
@@ -471,6 +490,15 @@ foreach ($LocationList as $Loccode=>$Locationname){
 
 echo '</select>
 	</field>';
+
+/* KL RICARD Adjustments reasons */	
+if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->AdjustmentReason)) {
+	$_SESSION['Adjustment' . $identifier]->AdjustmentReason = 0;
+}
+
+echo FieldToSelectOneStockAdjustmentReason('AdjustmentReason', $_SESSION['Adjustment'.$identifier]->AdjustmentReason, 'Adjustment Reason', '', '', '', true, false);
+/* KL RICARD END Adjustments reasons */	
+
 if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustment' . $identifier]->Narrative)) {
 	$_SESSION['Adjustment' . $identifier]->Narrative = '';
 	$Narrative ='';
@@ -481,7 +509,7 @@ if (isset($_SESSION['Adjustment' . $identifier]) AND !isset($_SESSION['Adjustmen
 }
 
 echo '<field>
-		<label for="Narrative">' .  _('Comments On Why').':</label>
+		<label for="Narrative">' .  _('Adjustment Reason Comment').':</label>
 		<input type="text" name="Narrative" size="32" onchange="submit()" maxlength="100" value="' . $Narrative . '" />
 	</field>';
 

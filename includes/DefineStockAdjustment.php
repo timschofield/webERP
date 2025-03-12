@@ -13,6 +13,7 @@ class StockAdjustment {
 	var $Tag;
 	var $Narrative;
 	var $SerialItems; /*array to hold controlled items*/
+	var $AdjustmentReason;
 
 	//Constructor
 	function __construct(){
@@ -26,7 +27,9 @@ class StockAdjustment {
 		$this->DecimalPlaces = 0;
 		$this->SerialItems = array();
 		$this->Quantity = 0;
-		$this->tag=0;
+		$this->Tag=0;
+		$this->AdjustmentReason=0;
+		$this->Narrative='';
 	}
 
 	function StockAdjustment() {
