@@ -237,9 +237,6 @@ if (isset($_POST['OrderItems'])
 						case 'PKPB01-S':
 							$_POST['PackagingPouchBag01S']++;
 							break;
-						case 'PKSB02-L':
-							$_POST['ShoppingBag02L']++;
-							break;
 						case 'PKSB02-M':
 							$_POST['ShoppingBag02M']++;
 							break;
@@ -473,7 +470,7 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 
 	$TotalNumberOfBoxes = $_POST['PackagingBox01L'] + $_POST['PackagingBox01M'] + $_POST['PackagingBox01S'] 
 						+ $_POST['PackagingBox02L'] + $_POST['PackagingBox02M'] + $_POST['PackagingBox02S'];
-	$TotalNumberOfShoppingBags = $_POST['ShoppingBag02S'] + $_POST['ShoppingBag02M'] + $_POST['ShoppingBag02L'] +
+	$TotalNumberOfShoppingBags = $_POST['ShoppingBag02S'] + $_POST['ShoppingBag02M'] +
 								$_POST['BlinkShoppingBag04L'] + $_POST['BlinkShoppingBag04M'] + $_POST['BlinkShoppingBag04S'] + 
 								$_POST['OutletShoppingBag03M'];
 	$TotalNumberOfPouchBags = $_POST['PackagingPouchBag01L'] + $_POST['PackagingPouchBag01M'] + $_POST['PackagingPouchBag01S'] + 
@@ -1517,7 +1514,6 @@ if (isset($_POST['ProcessSale']) and $_POST['ProcessSale'] != ""){
 			AdjustPackagingMovement("PKPB01-M", $_POST['PackagingPouchBag01M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKPB01-S", $_POST['PackagingPouchBag01S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 
-			AdjustPackagingMovement("PKSB02-L", $_POST['ShoppingBag02L'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKSB02-M", $_POST['ShoppingBag02M'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 			AdjustPackagingMovement("PKSB02-S", $_POST['ShoppingBag02S'], $InvoiceNo, $PeriodNo, $OrderNo, $Area, $Tag, $identifier);
 		}
