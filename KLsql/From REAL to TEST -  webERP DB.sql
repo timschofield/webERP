@@ -529,6 +529,12 @@ INSERT INTO test_erp.shipments SELECT * FROM kurakura_kl_erp.shipments;
 TRUNCATE test_erp.`shippers`;
 INSERT INTO test_erp.shippers SELECT * FROM kurakura_kl_erp.shippers;
 
+TRUNCATE test_erp.`stockadjustmentreasons`;
+INSERT INTO test_erp.stockadjustmentreasons SELECT * FROM kurakura_kl_erp.stockadjustmentreasons;
+
+TRUNCATE test_erp.`stockadjustments`;
+INSERT INTO test_erp.stockadjustments SELECT * FROM kurakura_kl_erp.stockadjustments;
+
 TRUNCATE test_erp.`stockcategory`;
 INSERT INTO test_erp.stockcategory SELECT * FROM kurakura_kl_erp.stockcategory;
 

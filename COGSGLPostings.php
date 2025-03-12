@@ -10,8 +10,7 @@ include('includes/header.php');
 echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 	'/images/maintenance.png" title="', // Icon image.
 	$Title, '" /> ', // Icon title.
-	$Title, '</p>
-	<br />';// Page title.
+	$Title, '</p>';// Page title.
 
 
 if (isset($_POST['SelectedCOGSPostingID'])){
@@ -95,25 +94,19 @@ if (!isset($SelectedCOGSPostingID)) {
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
 				<th>' . _('COGS Account') . '</th>
+				<th colspan="2"></th>
 			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' .  _('Delete') . '</a></td></tr>',
-					$MyRow['area'],
-					$MyRow['stkcat'],
-					$MyRow['salestype'],
-					$MyRow['accountname'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$MyRow['id'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?',
-					$MyRow['id']);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['area'], '</td>
+					<td>', $MyRow['stkcat'], '</td>
+					<td>', $MyRow['salestype'], '</td>
+					<td>', $MyRow['accountname'], '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedCOGSPostingID=', $MyRow['id'], '">' . _('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'). '?SelectedCOGSPostingID=', $MyRow['id'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' .  _('Delete') . '</a></td>
+				</tr>';
 		}//end while
 		echo '</table>';
 	}
@@ -196,26 +189,19 @@ if (!isset($SelectedCOGSPostingID)) {
 				<th>' . _('Stock Category') . '</th>
 				<th>' . _('Sales Type') . '</th>
 				<th>' . _('GL Account') . '</th>
+				<th colspan="2"></th>
 			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%sSelectedCOGSPostingID=%s">' . _('Edit') . '</a></td>
-				<td><a href="%sSelectedCOGSPostingID=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</a></td>
-				</tr>',
-				$MyRow['area'],
-				$MyRow['stkcat'],
-				$MyRow['salestype'],
-				$MyRow['accountname'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['id'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['id']);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['area'], '</td>
+					<td>', $MyRow['stkcat'], '</td>
+					<td>', $MyRow['salestype'], '</td>
+					<td>', $MyRow['accountname'], '</td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCOGSPostingID=', $MyRow['id'], '">' . _('Edit') . '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCOGSPostingID=', $MyRow['id'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this COGS GL posting record?') . '\');">' . _('Delete') . '</a></td>
+				</tr>';
 
 		}//END WHILE LIST LOOP
 		echo '</table>';

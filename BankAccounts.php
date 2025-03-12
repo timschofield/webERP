@@ -205,6 +205,7 @@ if (!isset($SelectedBankAccount)) {
 				<th>' . _('Import Format') . '</th>
 				<th>' . _('Currency') . '</th>
 				<th>' . _('Default for Invoices') . '</th>
+				<th colspan="2"></th>
 			</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
@@ -228,31 +229,18 @@ if (!isset($SelectedBankAccount)) {
 				$ImportFormat ='';
 		}
 
-		printf('<tr class="striped_row">
-				<td>%s<br />%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%s?SelectedBankAccount=%s">' . _('Edit') . '</a></td>
-				<td><a href="%s?SelectedBankAccount=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this bank account?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['accountcode'],
-			$MyRow['accountname'],
-			$MyRow['bankaccountname'],
-			$MyRow['bankaccountcode'],
-			$MyRow['bankaccountnumber'],
-			$MyRow['bankaddress'],
-			$ImportFormat,
-			$MyRow['currcode'],
-			$DefaultBankAccount,
-			htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-			$MyRow['accountcode'],
-			htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'),
-			$MyRow['accountcode']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['accountcode'], '<br />', $MyRow['accountname'], '</td>
+				<td>', $MyRow['bankaccountname'], '</td>
+				<td>', $MyRow['bankaccountcode'], '</td>
+				<td>', $MyRow['bankaccountnumber'], '</td>
+				<td>', $MyRow['bankaddress'], '</td>
+				<td>', $ImportFormat, '</td>
+				<td>', $MyRow['currcode'], '</td>
+				<td>', $DefaultBankAccount, '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedBankAccount=', $MyRow['accountcode'], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8'), '?SelectedBankAccount=', $MyRow['accountcode'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this bank account?') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 
 	}
 	//END WHILE LIST LOOP
@@ -355,26 +343,25 @@ echo '<field>
 		<input tabindex="3" ' . (in_array('AccountCode',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountCode" value="' . $_POST['BankAccountCode'] . '" size="40" maxlength="50" />
 	</field>
 	<field>
-		<td>' . _('Bank Account Number') . ': </td>
-		<td><input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size="40" maxlength="50" /></td>
+		<label for="AccountNumber">' . _('Bank Account Number') . ': </label>
+		<input tabindex="3" ' . (in_array('AccountNumber',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAccountNumber" value="' . $_POST['BankAccountNumber'] . '" size="40" maxlength="50" />
 	</field>
 	<field>
-		<td>' . _('Bank Address') . ': </td>
-		<td><input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" maxlength="50" /></td>
+		<label for="BankAddress">' . _('Bank Address') . ': </label>
+		<input tabindex="4" ' . (in_array('BankAddress',$Errors) ?  'class="inputerror"' : '' ) .' type="text" name="BankAddress" value="' . $_POST['BankAddress'] . '" size="40" maxlength="50" />
 	</field>
 	<field>
-		<td>' . _('Transaction Import File Format') . ': </td>
-		<td><select tabindex="5" name="ImportFormat">
+		<label for="ImportFormat">' . _('Transaction Import File Format') . ': </label>
+		<select tabindex="5" name="ImportFormat">
 			<option ' . ($_POST['ImportFormat']=='' ? 'selected="selected"' : '') . ' value="">' . _('N/A') . '</option>
 			<option ' . ($_POST['ImportFormat']=='MT940-SCB' ? 'selected="selected"' : '') . ' value="MT940-SCB">' . _('MT940 - Siam Comercial Bank Thailand') . '</option>
 			<option ' . ($_POST['ImportFormat']=='MT940-ING' ? 'selected="selected"' : '') . ' value="MT940-ING">' . _('MT940 - ING Bank Netherlands') . '</option>
 			<option ' . ($_POST['ImportFormat']=='GIFTS' ? 'selected="selected"' : '') . ' value="GIFTS">' . _('GIFTS - Bank of New Zealand') . '</option>
 			</select>
-		</td>
 	</field>
 	<field>
-		<td>' . _('Currency Of Account') . ': </td>
-		<td><select tabindex="6" name="CurrCode">';
+		<label for="CurrCode">' . _('Currency Of Account') . ': </label>
+		<select tabindex="6" name="CurrCode">';
 
 if (!isset($_POST['CurrCode']) or $_POST['CurrCode']=='') {
 	$_POST['CurrCode'] = $_SESSION['CompanyRecord']['currencydefault'];
@@ -391,12 +378,12 @@ while ($MyRow = DB_fetch_array($Result)) {
 	}
 } //end while loop
 
-echo '</select></td>';
+echo '</select>';
 echo '</field>';
 
 echo '<field>
-		<td>' . _('Default for Invoices') . ': </td>
-		<td><select tabindex="8" name="DefAccount">';
+		<label for="DefAccount">' . _('Default for Invoices') . ': </label>
+		<select tabindex="8" name="DefAccount">';
 
 if (!isset($_POST['DefAccount']) OR $_POST['DefAccount']=='') {
 	$_POST['DefAccount'] = $_SESSION['CompanyRecord']['currencydefault'];
@@ -425,7 +412,7 @@ if (isset($SelectedBankAccount)) {
 			<option value="0">' . _('No') . '</option>';
 }
 
-echo '</select></td>
+echo '</select>
 		</field>
 		</fieldset>
 		<div class="centre"><input tabindex="9" type="submit" name="submit" value="'. _('Enter Information') .'" /></div>

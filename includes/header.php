@@ -66,11 +66,7 @@ if ($_SESSION['ShowFieldHelp'] == 0) {
 }
 
 echo '</head>';
-if (isset($AutoPrintPage)) {
-	echo '<body onload="window.print()">';
-} else {
-	echo '<body onload="initial(); load()">';
-}
+echo '<body onload="initial(); load()">';
  
 /* KL RICARD Comment these lines as only show an X on the left top corner
 echo '<div class="help-bubble" id="help-bubble">

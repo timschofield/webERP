@@ -1,55 +1,14 @@
 <?php
 
-
 include ('includes/session.php');
 include('includes/SQL_CommonFunctions.inc');
+use Dompdf\Dompdf;
 
 if (isset($_GET['BatchNo'])){
 	$_POST['BatchNo'] = $_GET['BatchNo'];
 }
 
-if (!isset($_POST['BatchNo'])){
-	$Title = _('Create PDF Print Out For A Batch Of Receipts');
-
-	$ViewTopic = 'ARReports';
-	$BookMark = 'BankingSummary';
-
-	include ('includes/header.php');
-
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
-		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
-
-	$SQL="SELECT DISTINCT
-			transno,
-			transdate
-		FROM banktrans
-		WHERE type=12
-		ORDER BY transno DESC";
-	$Result=DB_query($SQL);
-
-	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';
-    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-		<fieldset>
-		<legend>', _('Report Criteria'), '</legend>
-		<field>
-			<label for="BatchNo">' . _('Select the batch number of receipts to be printed') . ':</label>
-			<select required="required" autofocus="autofocus" name="BatchNo">';
-	while ($MyRow=DB_fetch_array($Result)) {
-		echo '<option value="'.$MyRow['transno'].'">' . _('Batch') .' '. $MyRow['transno'].' - '.ConvertSqlDate($MyRow['transdate']) . '</option>';
-	}
-	echo '</select>
-		</field>
-	</fieldset>';
-	echo '<div class="centre">
-			<input type="submit" name="EnterBatchNo" title="PDF" value="' . _('Create PDF') . '" />
-		</div>
-	</form>';
-
-	include ('includes/footer.php');
-	exit;
-}
-
-if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$SQL= "SELECT bankaccountname,
 				bankaccountnumber,
 				ref,
@@ -130,56 +89,159 @@ if (isset($_POST['BatchNo']) and $_POST['BatchNo']!='') {
 		exit;
 	}
 
+	$HTML = '';
 
-	include('includes/PDFStarter.php');
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>';
+
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<img class="logo" src=' . $_SESSION['LogoFile'] . ' /><br />';
+	}
+
+	$HTML .= '<div class="centre" id="ReportHeader">
+					' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+					' . _('Banking Summary Number') . ' ' . $_POST['BatchNo'] . '<br />
+					' . _('Date of Banking') .': ' . ConvertSQLDate($MyRow['transdate']) . '<br />
+					' . _('Banked into') . ': ' . $BankActName . ' - ' . _('Account Number') . ': ' . $BankActNumber . '<br />
+					' . _('Reference') . ': ' . $BankingReference . '<br />
+					' . _('Currency') . ': ' . $Currency . '<br />
+					' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+				</div>
+				<table>
+					<thead>
+						<tr>
+							<th>' . _('Amount') . '</th>
+							<th>' . _('Customer') . '</th>
+							<th>' . _('Bank Details') . '</th>
+							<th>' . _('Narrative') . '</th>
+						</tr>
+					</thead>
+					<tbody>';
 
 	/*PDFStarter.php has all the variables for page size and width set up depending on the users default preferences for paper size */
 
-	$pdf->addInfo('Title',_('Banking Summary'));
-	$pdf->addInfo('Subject',_('Banking Summary Number') . ' ' . $_POST['BatchNo']);
-	$LineHeight=12;
-	$PageNumber = 0;
-	$TotalBanked = 0;
+	while ($MyRow=DB_fetch_array($CustRecs)) {
 
-	include ('includes/PDFBankingSummaryPageHeader.inc');
+		$HTML .= '<tr class="striped_row">
+					<td>' . locale_number_format(-$MyRow['ovamount'],$BankCurrDecimalPlaces) . '</td>
+					<td>' . $MyRow['name'] . '</td>
+					<td>' . $MyRow['invtext'] . '</td>
+					<td>' . $MyRow['reference'] . '</td>
+				</tr>';
 
-	while ($MyRow=DB_fetch_array($CustRecs)){
-
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format(-$MyRow['ovamount'],$BankCurrDecimalPlaces), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,150,$FontSize,$MyRow['name'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+215,$YPos,100,$FontSize,$MyRow['invtext'], 'left');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+315,$YPos,100,$FontSize,$MyRow['reference'], 'left');
-
-		$YPos -= ($LineHeight);
 		$TotalBanked -= $MyRow['ovamount'];
 
-		if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
-			/*Then set up a new page */
-			include ('includes/PDFBankingSummaryPageHeader.inc');
-		} /*end of new page header  */
 	} /* end of while there are customer receipts in the batch to print */
 
 	/* Right now print out the GL receipt entries in the batch */
 	while ($MyRow=DB_fetch_array($GLRecs)){
 
-		$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format((-$MyRow['amount']*$ExRate*$FunctionalExRate),$BankCurrDecimalPlaces), 'right');
-		$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,$MyRow['narrative'], 'left');
-		$YPos -= ($LineHeight);
+		$HTML .= '<tr class="striped_row">
+					<td>' . locale_number_format((-$MyRow['amount']*$ExRate*$FunctionalExRate),$BankCurrDecimalPlaces) . '</td>
+					<td></td>
+					<td></td>
+					<td>' . $MyRow['narrative'] . '</td>
+				</tr>';
 		$TotalBanked +=  (-$MyRow['amount']*$ExRate);
 
-		if ($YPos - (2 *$LineHeight) < $Bottom_Margin){
-			/*Then set up a new page */
-			include ('includes/PDFBankingSummaryPageHeader.inc');
-		} /*end of new page header  */
 	} /* end of while there are GL receipts in the batch to print */
 
 
-	$YPos-=$LineHeight;
-	$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,60,$FontSize,locale_number_format($TotalBanked,2), 'right');
-	$LeftOvers = $pdf->addTextWrap($Left_Margin+65,$YPos,300,$FontSize,_('TOTAL') . ' ' . $Currency . ' ' . _('BANKED'), 'left');
+	$HTML .= '<tr class="total_row">
+				<td>' . locale_number_format($TotalBanked,2) . '</td>
+				<td>' . _('TOTAL') . ' ' . $Currency . ' ' . _('BANKED') . '</td>
+				<td colspan="2"></td>
+			</tr>';
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d').'.pdf');
-	$pdf->__destruct();
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_BankingSummary_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Create PDF Print Out For A Batch Of Receipts');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . _('Receipts') . '" alt="" />' . ' ' . _('Create PDF Print Out For A Batch Of Receipts') . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
+
+} else { /*The option to print PDF was not hit so display form */
+	$Title = _('Create PDF Print Out For A Batch Of Receipts');
+
+	$ViewTopic = 'ARReports';
+	$BookMark = 'BankingSummary';
+
+	include ('includes/header.php');
+
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/magnifier.png" title="' .
+		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
+
+	$SQL="SELECT DISTINCT
+			transno,
+			transdate
+		FROM banktrans
+		WHERE type=12
+		ORDER BY transno DESC";
+	$Result=DB_query($SQL);
+
+	echo '<form method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" target="_blank">';
+    echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
+		<fieldset>
+		<legend>', _('Report Criteria'), '</legend>
+		<field>
+			<label for="BatchNo">' . _('Select the batch number of receipts to be printed') . ':</label>
+			<select required="required" autofocus="autofocus" name="BatchNo">';
+	while ($MyRow=DB_fetch_array($Result)) {
+		echo '<option value="'.$MyRow['transno'].'">' . _('Batch') .' '. $MyRow['transno'].' - '.ConvertSqlDate($MyRow['transdate']) . '</option>';
+	}
+	echo '</select>
+		</field>
+	</fieldset>';
+	echo '<div class="centre">
+				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . _('View') . '" />
+			</div>
+	</form>';
+
+	include ('includes/footer.php');
+	exit;
 }
 
 ?>

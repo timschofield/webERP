@@ -509,7 +509,7 @@ if (!isset($DebtorNo)) {
 				<td colspan="2">' . prnMsg(_('No sales types/price lists defined'),'error') . '<br /><a href="SalesTypes.php?" target="_parent">' . _('Setup Types') . '</a></td>
 			</field>';
 	} else {
-        echo '<field>
+		echo '<field>
 				<label for="SalesType">' . _('Sales Type') . '/' . _('Price List') . ':</label>
 				<select tabindex="9" name="SalesType" required="required">';
 
@@ -517,7 +517,7 @@ if (!isset($DebtorNo)) {
 		   echo '<option value="'. $MyRow['typeabbrev'] . '">' . $MyRow['sales_type'] . '</option>';
 		} //end while loopre
 		DB_data_seek($Result,0);
-        echo '</select>
+		echo '</select>
 			</field>';
 	}
 
@@ -853,7 +853,7 @@ if (!isset($DebtorNo)) {
 			}
 		} //end while loop
 		DB_data_seek($Result,0);
-        echo '</select>
+		echo '</select>
 			</field>';
 	}
 
@@ -1010,34 +1010,34 @@ if (!isset($DebtorNo)) {
 			</field>';
 	}
 
-    if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
-        $_POST['LanguageID']=$_SESSION['Language'];
-    }
+	if (!isset($_POST['LanguageID']) OR $_POST['LanguageID']==''){
+		$_POST['LanguageID']=$_SESSION['Language'];
+	}
 
 	if (isset($_GET['Modify'])) {
-        echo '<field>
-                <td>' . _('Language') . ':</td>';
-        foreach ($LanguagesArray as $LanguageCode => $LanguageName){
-            if ($_POST['LanguageID'] == $LanguageCode){
-                echo '<td>' . $LanguageName['LanguageName'];
-            }
-        }
-        echo '</td>
-        </field>';
+		echo '<field>
+				<td>' . _('Language') . ':</td>';
+		foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+			if ($_POST['LanguageID'] == $LanguageCode){
+				echo '<td>' . $LanguageName['LanguageName'];
+			}
+		}
+		echo '</td>
+		</field>';
 	} else {
-        echo '<field>
-                <label for="LanguageID">' . _('Language') . ':</label>
-                <select name="LanguageID" required="required">';
-        foreach ($LanguagesArray as $LanguageCode => $LanguageName){
-            if ($_POST['LanguageID'] == $LanguageCode){
-                echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
-            } else {
-                echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
-            }
-        }
-        echo '</select>
-        </field>';
-    }
+		echo '<field>
+				<label for="LanguageID">' . _('Language') . ':</label>
+				<select name="LanguageID" required="required">';
+		foreach ($LanguagesArray as $LanguageCode => $LanguageName){
+			if ($_POST['LanguageID'] == $LanguageCode){
+				echo '<option selected="selected" value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
+			} else {
+				echo '<option value="' . $LanguageCode . '">' . $LanguageName['LanguageName']  . '</option>';
+			}
+		}
+		echo '</select>
+		</field>';
+	}
 	echo '<field>
 			<label for="CustomerPOLine">' . _('Require Customer PO Line on SO') . ':</label>';
 	if (isset($_GET['Modify'])) {
@@ -1133,40 +1133,23 @@ if (!isset($DebtorNo)) {
 	while ($MyRow = DB_fetch_array($Result)) {
 
 		if (isset($_GET['Modify'])) {
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="mailto:%s">%s</a></td>
-					<td>%s</td>
-					</tr>',
-					$MyRow['contactname'],
-					$MyRow['role'],
-					$MyRow['phoneno'],
-					$MyRow['email'],
-					$MyRow['email'],
-					$MyRow['notes']);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['contactname'], '</td>
+					<td>', $MyRow['role'], '</td>
+					<td>', $MyRow['phoneno'], '</td>
+					<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+					<td>', $MyRow['notes'], '</td>
+				</tr>';
 		} else {
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td><a href="mailto:%s">%s</a></td>
-					<td>%s</td>
-					<td><a href="AddCustomerContacts.php?Id=%s&amp;DebtorNo=%s">' .  _('Edit'). '</a></td>
-					<td><a href="%sID=%s&amp;DebtorNo=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">' .  _('Delete'). '</a></td>
-					</tr>',
-					$MyRow['contactname'],
-					$MyRow['role'],
-					$MyRow['phoneno'],
-					$MyRow['email'],
-					$MyRow['email'],
-					$MyRow['notes'],
-					$MyRow['contid'],
-					$MyRow['debtorno'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$MyRow['contid'],
-					$MyRow['debtorno']);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['contactname'], '</td>
+					<td>', $MyRow['role'], '</td>
+					<td>', $MyRow['phoneno'], '</td>
+					<td><a href="mailto:', $MyRow['email'], '">', $MyRow['email'], '</a></td>
+					<td>', $MyRow['notes'], '</td>
+					<td><a href="AddCustomerContacts.php?Id=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '">' .  _('Edit'). '</a></td>
+					<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?ID=', $MyRow['contid'], '&amp;DebtorNo=', $MyRow['debtorno'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer contact?') . '\');">' .  _('Delete'). '</a></td>
+				</tr>';
 		}
 	}//END WHILE LIST LOOP
 	echo '</table>';
@@ -1179,15 +1162,14 @@ if (!isset($DebtorNo)) {
 				<input type="reset" name="Reset" value="' . _('Reset') . '" />
 			</div>';
 	} elseif (!isset($_GET['Modify'])){
-		echo '<br />
-			<div class="centre">
+		echo '<div class="centre">
 				<input type="submit" name="submit" value="' . _('Update Customer') . '" />&nbsp;
 				<input type="reset" name="delete" value="' . _('Delete Customer') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />
-            </div>';
+			</div>';
 	}
 
 	echo '</div>
-          </form>';
+		  </form>';
 } // end of main ifs
 
 include('includes/footer.php');

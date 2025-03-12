@@ -29,4 +29,4 @@ CREATE TABLE `www_users` (
   KEY `CustomerID` (`customerid`),
   KEY `DefaultLocation` (`defaultlocation`),
   CONSTRAINT `www_users_ibfk_1` FOREIGN KEY (`defaultlocation`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;

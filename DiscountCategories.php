@@ -192,7 +192,7 @@ if (isset($_POST['SelectChoice'])) {
 		echo '</select>
 			</field>
 		</fieldset>';
-		
+
 		echo '<div class="centre">
 				<input type="submit" name="SubmitCategory" value="'. _('Update Items') .'" />
 			</div>';
@@ -225,21 +225,19 @@ if (isset($_POST['SelectChoice'])) {
 
 		echo '<table class="selection">';
 		echo '<tr>
-			<th>' .  _('Discount Category')  . '</th>
-			<th>' .  _('Item')  . '</th></tr>';
+				<th>' .  _('Discount Category')  . '</th>
+				<th>' .  _('Item')  . '</th>
+				<th></th>
+			</tr>';
 
 		while ($MyRow = DB_fetch_array($Result)) {
 			$DeleteURL = htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?Delete=yes&amp;StockID=' . $MyRow['stockid'] . '&amp;DiscountCategory=' . $MyRow['discountcategory'];
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s - %s</td>
-					<td><a href="%s" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">' .  _('Delete')  . '</a></td>
-					</tr>',
-					$MyRow['discountcategory'],
-					$MyRow['stockid'],
-					$MyRow['description'],
-					$DeleteURL);
+			echo '<tr class="striped_row">
+					<td>', $MyRow['discountcategory'], '</td>
+					<td>', $MyRow['stockid'], ' - ', $MyRow['description'], '</td>
+					<td><a href="', $DeleteURL, '" onclick="return confirm(\'' . _('Are you sure you wish to delete this discount category?') . '\');">' .  _('Delete')  . '</a></td>
+				</tr>';
 
 		}
 
@@ -257,7 +255,7 @@ if (!isset($_POST['SelectChoice'])) {
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 	echo '<fieldset>
 			<legend>', _('Choose Stock Item Option'), '</legend>';
-			
+
 	echo '<field>
 			<label for="ChooseOption">' . _('Update discount category for') . '</label>
 			<select name="ChooseOption" onchange="ReloadForm(choose.SelectChoice)">
@@ -266,7 +264,7 @@ if (!isset($_POST['SelectChoice'])) {
 			</select>
 		</field>
 		</fieldset>';
-		
+
 	echo '<div class="centre">
 			<input type="submit" name="SelectChoice" value="'._('Select').'" />
 		</div>';

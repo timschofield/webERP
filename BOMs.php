@@ -218,9 +218,7 @@ if (isset($_POST['ComponentSearch']) or isset($_POST['Next']) or isset($_POST['P
 		$_POST['Offset'] = $_POST['Offset'] + 1;
 	}
 
-	echo '<div class="toplink noPrint">
-			<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">', _('Return to main BOM screen') , '</a>
-		</div>';
+	echo '<a class="toplink" href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '?SelectedParent=', urlencode($SelectedParent) , '">', _('Return to main BOM screen') , '</a>';
 
 	echo '<p class="page_title_text noPrint">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/magnifier.png" title="', _('Search') , '" alt="" /> ', _('Select component to add to BOM') , '
@@ -644,9 +642,7 @@ if (isset($_GET['Add']) or isset($_GET['Edit'])) {
 }
 
 if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edit Component
-	echo '<div class="toplink noPrint">
-			<a href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '">', _('Select a Different BOM') , '</a>
-		</div>';
+	echo '<a class="toplink href="', htmlspecialchars(basename(__FILE__) , ENT_QUOTES, 'UTF-8') , '">', _('Select a Different BOM') , '</a>';
 
 	echo '<p class="page_title_text noPrint">
 			<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/maintenance.png" title="', _('Search') , '" alt="" /> ', $Title, '
@@ -973,10 +969,7 @@ if (isset($SelectedParent)) { //Parent Stock Item selected so display BOM or edi
 	echo '<input type="hidden" name="SelectedParent" value="', $SelectedParent, '" />';
 	echo '<table>';
 	echo '<tr>
-			<th colspan="15"><b>', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </b></th>
-			<th>
-				<img src="', $RootPath, '/css/', $_SESSION['Theme'], '/images/printer.png" class="PrintIcon noPrint" title="', _('Print') , '" alt="', _('Print') , '" onclick="window.print();" />
-			</th>
+			<th colspan="16"><b>', $SelectedParent, ' - ', $MyRow[0], ' (', $MBdesc, ') </b></th>
 		</tr>';
 
 	$BOMTree = array();

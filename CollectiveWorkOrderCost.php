@@ -55,11 +55,11 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 					<thead>
 						<tr>
 							<th class="SortedColumn">' . _('Item') . '</th>
-						<th>' . _('Description') . '</th>
-						<th class="SortedColumn">' . _('Date Issued') . '</th>
-						<th class="SortedColumn">' . _('Issued Qty') . '</th>
-						<th class="SortedColumn">' . _('Issued Cost') . '</th>
-						<th class="SortedColumn">' . _('Work Order') . '</th>
+							<th>' . _('Description') . '</th>
+							<th class="SortedColumn">' . _('Date Issued') . '</th>
+							<th class="SortedColumn">' . _('Issued Qty') . '</th>
+							<th class="SortedColumn">' . _('Issued Cost') . '</th>
+							<th class="SortedColumn">' . _('Work Order') . '</th>
 						</tr>
 					</thead>
 					<tbody>';
@@ -70,13 +70,13 @@ if (isset($_POST['Submit'])) {//users have selected the WO to calculate and subm
 					$IssuedCost = $IssuedQty * $MyRow['standardcost'];
 					$TotalCost += $IssuedCost;
 					echo '<tr class="striped_row">
-						<td>' . $MyRow['stockid'] . '</td>
-						<td>' . $MyRow['description'] . '</td>
-						<td>' . $MyRow['trandate'] . '</td>
-						<td class="number">' . locale_number_format($IssuedQty,$MyRow['decimalplaces']) . '</td>
-						<td class="number">' . locale_number_format($IssuedCost,2) . '</td>
-						<td>' . $MyRow['reference'] . '</td>
-					       </tr>';
+							<td>' . $MyRow['stockid'] . '</td>
+							<td>' . $MyRow['description'] . '</td>
+							<td>' . $MyRow['trandate'] . '</td>
+							<td class="number">' . locale_number_format($IssuedQty,$MyRow['decimalplaces']) . '</td>
+							<td class="number">' . locale_number_format($IssuedCost,2) . '</td>
+							<td>' . $MyRow['reference'] . '</td>
+						</tr>';
 				}
 				echo '</tbody>
 					<tfoot>
@@ -350,30 +350,25 @@ if (!isset($StockID)) {
 
 	if (isset($StockItemsResult)) {
 
-		echo '<br />
-			<table cellpadding="2" class="selection">
-			<thead>
-			<tr>
-				<th class="SortedColumn">' . _('Code') . '</th>
-				<th class="SortedColumn">' . _('Description') . '</th>
-				<th class="SortedColumn">' . _('On Hand') . '</th>
-				<th>' . _('Units') . '</th>
-				</tr>
-			</thead>
-			<tbody>';
+		echo '<table cellpadding="2" class="selection">
+				<thead>
+					<tr>
+						<th class="SortedColumn">' . _('Code') . '</th>
+						<th class="SortedColumn">' . _('Description') . '</th>
+						<th class="SortedColumn">' . _('On Hand') . '</th>
+						<th>' . _('Units') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 		while ($MyRow=DB_fetch_array($StockItemsResult)) {
 
-			printf('<tr class="striped_row">
-					<td><input type="submit" name="SelectedStockItem" value="%s" /></td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>',
-					$MyRow['stockid'],
-					$MyRow['description'],
-					locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']),
-					$MyRow['units']);
+			echo '<tr class="striped_row">
+					<td><input type="submit" name="SelectedStockItem" value="', $MyRow['stockid'], '" /></td>
+					<td>', $MyRow['description'], '</td>
+					<td class="number">', locale_number_format($MyRow['qoh'],$MyRow['decimalplaces']), '</td>
+					<td>', $MyRow['units'], '</td>
+				</tr>';
 
 		}//end of while loop
 		echo '</tbody>
@@ -469,8 +464,7 @@ if (!isset($StockID)) {
 
 		/*show a table of the orders returned by the SQL */
 		if (DB_num_rows($WorkOrdersResult)>0) {
-			echo '<br />
-				<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="wos">
+			echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" id="wos">
 				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
 				<table cellpadding="2" width="95%" class="selection">
 				<thead>
@@ -505,36 +499,21 @@ if (!isset($StockID)) {
 			$FormatedStartDate = ConvertSQLDate($MyRow['startdate']);
 
 
-			printf('<tr class="striped_row">
-					<td><input type="checkbox" name="WO_%s" /></td>
-					<td><a href="%s">%s</a></td>
-					<td><a href="%s">' . _('Status') . '</a></td>
-					<td><a href="%s">' . _('Issue To') . '</a></td>
-					<td><a href="%s">' . _('Receive') . '</a></td>
-					<td><a href="%s">' . _('Costing') . '</a></td>
-					<td><a href="%s">' . _('Print W/O') . '</a></td>
-					<td>%s - %s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$MyRow['wo'],
-					$ModifyPage,
-					$MyRow['wo'],
-					$Status_WO,
-					$Issue_WO,
-					$Receive_WO,
-					$Costing_WO,
-					$Printing_WO,
-					$MyRow['stockid'],
-					$MyRow['description'],
-					locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']),
-					locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']),
-					locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']),
-					$FormatedStartDate,
-					$FormatedRequiredByDate);
+			echo '<tr class="striped_row">
+					<td><input type="checkbox" name="WO_', $MyRow['wo'], '" /></td>
+					<td><a href="', $ModifyPage, '">', $MyRow['wo'], '</a></td>
+					<td><a href="', $Status_WO, '">' . _('Status') . '</a></td>
+					<td><a href="', $Issue_WO, '">' . _('Issue To') . '</a></td>
+					<td><a href="', $Receive_WO, '">' . _('Receive') . '</a></td>
+					<td><a href="', $Costing_WO, '">' . _('Costing') . '</a></td>
+					<td><a href="', $Printing_WO, '">' . _('Print W/O') . '</a></td>
+					<td>', $MyRow['stockid'], ' - ', $MyRow['description'], '</td>
+					<td class="number">', locale_number_format($MyRow['qtyreqd'],$MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
+					<td class="number">', locale_number_format($MyRow['qtyreqd']-$MyRow['qtyrecd'],$MyRow['decimalplaces']), '</td>
+					<td>', $FormatedStartDate, '</td>
+					<td>', $FormatedRequiredByDate, '</td>
+				</tr>';
 		//end of page full new headings if
 		}
 		//end of while loop
@@ -544,11 +523,10 @@ if (!isset($StockID)) {
 			<div class="centre">
 				<input type="submit" value="' . _('Submit') . '" name="Submit" />
 			</form>';
-      }
+		}
 	}
 
-	echo '</div>
-          </form>';
+	echo '</form>';
 }
 
 include('includes/footer.php');

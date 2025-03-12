@@ -10,4 +10,4 @@ CREATE TABLE `reportfields` (
   `params` text,
   PRIMARY KEY (`id`),
   KEY `reportid` (`reportid`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3;

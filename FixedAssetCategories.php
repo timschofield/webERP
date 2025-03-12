@@ -165,29 +165,20 @@ or deletion of the records*/
 			<th>' . _('P &amp; L Depn GL') . '</th>
 			<th>' . _('Disposal GL') . '</th>
 			<th>' . _('Accum Depn GL') . '</th>
+			<th colspan="2"></th>
 		  </tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td><a href="%sSelectedCategory=%s">' . _('Edit') . '</a></td>
-					<td><a href="%sSelectedCategory=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
-					</tr>',
-					$MyRow['categoryid'],
-					$MyRow['categorydescription'],
-					$MyRow['costact'],
-					$MyRow['depnact'],
-					$MyRow['disposalact'],
-					$MyRow['accumdepnact'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$MyRow['categoryid'],
-					htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-					$MyRow['categoryid']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['categoryid'], '</td>
+				<td>', $MyRow['categorydescription'], '</td>
+				<td class="number">', $MyRow['costact'], '</td>
+				<td class="number">', $MyRow['depnact'], '</td>
+				<td class="number">', $MyRow['disposalact'], '</td>
+				<td class="number">', $MyRow['accumdepnact'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedCategory=', $MyRow['categoryid'], '&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this fixed asset category? Additional checks will be performed before actual deletion to ensure data integrity is not compromised.') . '\');">' . _('Delete') . '</a></td>
+			</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</table>';
@@ -196,7 +187,7 @@ or deletion of the records*/
 //end of ifs and buts!
 
 if (isset($SelectedCategory)) {
-	echo '<br /><div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
+	echo '<div class="centre"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">' ._('Show All Fixed Asset Categories') . '</a></div>';
 }
 
 echo '<form id="CategoryForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">';

@@ -4901,6 +4901,8 @@ id	select_type	table	type	possible_keys	key	key_len	ref	rows	Extra
 				AND stockmaster.categoryid IN " . LIST_STOCK_CATEGORIES_SHOP_PACKAGING . "
 				AND locations.typeloc NOT IN " . LIST_BALI_SHOPS_BY_TYPE . "
 				AND locstock.loccode NOT IN " . LIST_PACAKING_LOCATIONS . "
+				AND locstock.loccode != 'TOKWS'
+				AND locstock.loccode != 'SAMPR'
 				AND ( locstock.quantity > 0 OR locstock.reorderlevel > 0 )
 			ORDER BY stockmaster.stockid";
 

@@ -135,20 +135,13 @@ or deletion of the records*/
 
 	while ($MyRow = DB_fetch_row($Result)) {
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td><a href="%s?SelectedMessageLine=%s">' . _('Edit') . '</a></td>
-				<td><a href="%s?delete=%s">' . _('Delete') . '</a></td>
-				</tr>',
-				$MyRow[1],
-				$MyRow[2],
-				$MyRow[3],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$MyRow[0],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$MyRow[0]);
+		echo '<tr class="striped_row">
+				<td>', $MyRow[1], '</td>
+				<td class="number">', $MyRow[2], '</td>
+				<td>', $MyRow[3], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedMessageLine=', $MyRow[0], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?delete=', $MyRow[0], '">' . _('Delete') . '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';

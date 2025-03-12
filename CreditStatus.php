@@ -154,6 +154,7 @@ or deletion of the records*/
 			<th>' .  _('Status Code')  . '</th>
 			<th>' .  _('Description')  . '</th>
 			<th>' .  _('Disallow Invoices')  . '</th>
+			<th colspan="2"></th>
         </tr>';
 
 	while ($MyRow=DB_fetch_array($Result)) {
@@ -164,20 +165,13 @@ or deletion of the records*/
 			$DissallowText = '<b>' .  _('NO INVOICING')  . '</b>';
 		}
 
-		printf('<tr class="striped_row">
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%s?SelectedReason=%s">' . _('Edit') . '</a></td>
-			<td><a href="%s?SelectedReason=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">' .  _('Delete')  . '</a></td>
-			</tr>',
-			$MyRow['reasoncode'],
-			$MyRow['reasondescription'],
-			$DissallowText,
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$MyRow['reasoncode'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-			$MyRow['reasoncode']);
+		echo '<tr class="striped_row">
+				<td>', $MyRow['reasoncode'], '</td>
+				<td>', $MyRow['reasondescription'], '</td>
+				<td>', $DissallowText, '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '">' . _('Edit') . '</a></td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'), '?SelectedReason=', $MyRow['reasoncode'], '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this credit status record?') . '\');">' .  _('Delete')  . '</a></td>
+			</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</table>';

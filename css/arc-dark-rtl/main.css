@@ -97,6 +97,7 @@ padding-right:7px;
 width:32px;
 height:32px;
 vertical-align:middle;
+box-shadow:0 0 0 0;
 }
 .toplink {
 float:right;

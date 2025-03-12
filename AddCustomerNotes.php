@@ -20,8 +20,7 @@ if (isset($_POST['DebtorNo'])){
 	$DebtorNo = $_GET['DebtorNo'];
 }
 
-echo '<a href="' . $RootPath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Select Customer') . '</a>
-	<br />';
+echo '<a class="toplink" href="' . $RootPath . '/SelectCustomer.php?DebtorNo=' . $DebtorNo . '">' . _('Back to Select Customer') . '</a>';
 
 if ( isset($_POST['submit']) ) {
 
@@ -100,8 +99,7 @@ if (!isset($Id)) {
 				WHERE debtorno='".$DebtorNo."'";
 	$Result = DB_query($SQLname);
 	$Row = DB_fetch_array($Result);
-	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$Row['name'] . '</b></p>
-		<br />';
+	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/maintenance.png" title="' . _('Search') . '" alt="" />' . _('Notes for Customer').': <b>' .$Row['name'] . '</b></p>';
 
 	$SQL = "SELECT noteid,
 					debtorno,
@@ -120,28 +118,18 @@ if (!isset($Id)) {
 			<th>' . _('Note') . '</th>
 			<th>' . _('WWW') . '</th>
 			<th>' . _('Priority') . '</th>
+			<th colspan="2"></th>
 		</tr>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%s">%s</a></td>
-				<td>%s</td>
-				<td><a href="%sId=%s&DebtorNo=%s">' .  _('Edit').' </td>
-				<td><a href="%sId=%s&DebtorNo=%s&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer note?') . '\');">' .  _('Delete'). '</td>
-				</tr>',
-				ConvertSQLDate($MyRow['date']),
-				$MyRow['note'],
-				$MyRow['href'],
-				$MyRow['href'],
-				$MyRow['priority'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['noteid'],
-				$MyRow['debtorno'],
-				htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?',
-				$MyRow['noteid'],
-				$MyRow['debtorno']);
+		echo '<tr class="striped_row">
+				<td>', ConvertSQLDate($MyRow['date']), '</td>
+				<td>', $MyRow['note'], '</td>
+				<td><a href="', $MyRow['href'], '">', $MyRow['href'], '</a></td>
+				<td>', $MyRow['priority'], '</td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&DebtorNo=', $MyRow['debtorno'], '">' .  _('Edit').' </td>
+				<td><a href="', htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?Id=', $MyRow['noteid'], '&DebtorNo=', $MyRow['debtorno'], '&delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer note?') . '\');">' .  _('Delete'). '</td>
+			</tr>';
 
 	}
 	//END WHILE LIST LOOP
@@ -152,7 +140,6 @@ if (isset($Id)) {
 			<a href="'.htmlspecialchars($_SERVER['PHP_SELF'], ENT_QUOTES, 'UTF-8') . '?DebtorNo='.$DebtorNo.'">' . _('Review all notes for this Customer') . '</a>
 		</div>';
 }
-echo '<br />';
 
 if (!isset($_GET['delete'])) {
 

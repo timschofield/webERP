@@ -66,9 +66,9 @@ function submit($Title, $Company, $PeriodOfFile, $SalaryType) {
 				require_once('includes/tcpdf/tcpdf.php');
 
  				if ($SalaryType == "MONTHLY"){
-					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . substr($PeriodMonth,0,7);
+					$CoreFileName = $MyRow['codename'] . '-SlipGaji-' . $PeriodMonth;
 				}else{
-					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . substr($PeriodMonth,0,7);
+					$CoreFileName = $MyRow['codename'] . '-SlipTHR-' . $PeriodMonth;
 				}
 				
 				include('includes/KLPersonaliaPDFNewSalarySlip.php');

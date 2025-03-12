@@ -1682,9 +1682,7 @@ if (!isset($_POST['ProcessReturn'])) {
 		</fieldset>';
 	// Add some useful help as the order progresses
 		if (isset($SearchResult)) {
-			echo '<br />';
 			echo '<div class="page_help_text">' . _('Select an item by entering the quantity required.  Click Return when ready.') . '</div>';
-			echo '<br />';
 		}
 
 		echo '<div class="centre">
@@ -1718,7 +1716,7 @@ if (!isset($_POST['ProcessReturn'])) {
 
 				// Find the quantity in stock at location
 				$QOH = GetQuantityOnHand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
-				
+
 				// get the demand of the item
 				$DemandQty = GetDemand($MyRow['stockid'], $_SESSION['Items' . $identifier]->Location);
 
@@ -1727,27 +1725,16 @@ if (!isset($_POST['ProcessReturn'])) {
 
 				$Available = $QOH - $DemandQty + $QOO;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td title="%s">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td><input class="number"  tabindex="'.strval($j+7).'" type="text"  required="required" ' . ($i==0?'autofocus="autofocus"':'') . ' size="6" name="ReturnQty%s" value="0" /><input type="hidden" name="StockID%s" value="%s" /></td>
-						</tr>',
-						$MyRow['stockid'],
-						$MyRow['longdescription'],
-						$MyRow['description'],
-						$MyRow['units'],
-						locale_number_format($QOH, $MyRow['decimalplaces']),
-						locale_number_format($DemandQty, $MyRow['decimalplaces']),
-						locale_number_format($QOO, $MyRow['decimalplaces']),
-						locale_number_format($Available, $MyRow['decimalplaces']),
-						$i,
-						$i,
-						$MyRow['stockid']);
+				echo '<tr class="striped_row">
+						<td>', $MyRow['stockid'], '</td>
+						<td title="', $MyRow['description'], '">', $MyRow['longdescription'], '</td>
+						<td>', $MyRow['units'], '</td>
+						<td class="number">', locale_number_format($QOH, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($DemandQty, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($QOO, $MyRow['decimalplaces']), '</td>
+						<td class="number">', locale_number_format($Available, $MyRow['decimalplaces']), '</td>
+						<td><input class="number"  tabindex="'.strval($j+7).'" type="text"  required="required" ' . ($i==0?'autofocus="autofocus"':'') . ' size="6" name="ReturnQty', $i, '" value="0" /><input type="hidden" name="StockID', $i, '" value="', $MyRow['stockid'], '" /></td>
+					</tr>';
 				$j++;
 				$i++;
 	#end of page full new headings if

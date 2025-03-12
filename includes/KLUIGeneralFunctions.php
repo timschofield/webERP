@@ -538,6 +538,39 @@ function FieldToSelectOneServiceFee($VariableName, $SelectedValue, $Label = '', 
 	return $HTML;
 }
 
+function FieldToSelectOneStockAdjustmentReason($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
+
+	$SQL = "SELECT reasonid,
+				reasonname
+			FROM stockadjustmentreasons
+			ORDER BY reasonname";
+	$Result = DB_query($SQL);
+
+	$HTML = '<field>
+				<label for="' . $VariableName . '">' . $Label . ':</label>
+				<select';
+	$HTML .= AddAttributesToField($TabIndex, $Required, $AutoFocus);	
+	$HTML .= 'name="' . $VariableName . '">
+				<fieldhelp>' . $HelpText . '</fieldhelp>';
+	
+	if ($Required){
+		$HTML .= '<option value="">' . _('Not Yet Selected') . '</option>';
+	} elseif (!isset($SelectedValue)) {
+		$HTML .= '<option selected="selected" value="">' . _('Not Yet Selected') . '</option>';
+	}
+
+	while ($MyRow = DB_fetch_array($Result)) {
+		if ($MyRow['reasonid'] == $SelectedValue) {
+			$HTML .= '<option selected="selected" value="' . $MyRow['reasonid'] . '">' . $MyRow['reasonname'] . '</option>';
+		} 
+		else {
+			$HTML .= '<option value="' . $MyRow['reasonid'] . '">' . $MyRow['reasonname'] . '</option>';
+		}
+	}
+	$HTML .= '</select>
+			</field>';
+	return $HTML;
+}
 
 function FieldToSelectOneTag($VariableName, $SelectedValue, $Label = '', $HelpText = '', $Filter = '', $TabIndex = '', $Required = true, $AutoFocus = false) {
 

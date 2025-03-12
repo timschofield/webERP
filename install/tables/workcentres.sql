@@ -10,4 +10,4 @@ CREATE TABLE `workcentres` (
   KEY `Description` (`description`),
   KEY `Location` (`location`),
   CONSTRAINT `workcentres_ibfk_1` FOREIGN KEY (`location`) REFERENCES `locations` (`loccode`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
