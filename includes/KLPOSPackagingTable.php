@@ -32,9 +32,6 @@ if ($_SESSION['TypeLoc'] == "SHOPKL"){
 	if (!isset($_POST['ShoppingBag02M'])){
 		$_POST['ShoppingBag02M'] =0;
 	}
-	if (!isset($_POST['ShoppingBag02L'])){
-		$_POST['ShoppingBag02L'] =0;
-	}
 	echo '<table class="selection">
 			<tr>
 				<th colspan=8>' . _('Kapal-Laut Packaging & Shopping Bags included in this sale') . '
@@ -48,8 +45,8 @@ if ($_SESSION['TypeLoc'] == "SHOPKL"){
 	echo '<td>' . _('KL Pouch Bag Large') . ':</td>
 		  <td><input type="text" class="number" name="PackagingPouchBag01L" maxlength="3" size="3" value="' . $_POST['PackagingPouchBag01L'] . '" /></td>';
 	echo '<td></td>';
-	echo '<td>' . _('KL Shopping Bag Large') . ':</td>
-		  <td><input type="text" class="number" name="ShoppingBag02L" maxlength="3" size="3" value="' . $_POST['ShoppingBag02L'] . '" /></td></tr>';
+	echo '<td></td>
+		  <td></td></tr>';
 	echo'</tr>';
 
 	echo '<tr>

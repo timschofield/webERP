@@ -925,10 +925,6 @@ function KLPrintReceiptShopFooter($identifier, $OrderNo){
 			$TextToPrint .= "KL Pouchbag-S: ". $_POST['PackagingPouchBag01S'] . " pouches";
 			$TextToPrint .= $NewLine;
 		}
-		if ($_POST['ShoppingBag02L'] != 0){
-			$TextToPrint .= "KL Shopping Bag-L: ". $_POST['ShoppingBag02L'] . " bags";
-			$TextToPrint .= $NewLine;
-		}
 		if ($_POST['ShoppingBag02M'] != 0){
 			$TextToPrint .= "KL Shopping Bag-M: ". $_POST['ShoppingBag02M'] . " bags";
 			$TextToPrint .= $NewLine;

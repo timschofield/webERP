@@ -83,9 +83,7 @@ if (!isset($_POST['ShoppingBag02S'])){
 if (!isset($_POST['ShoppingBag02M'])){
 	$_POST['ShoppingBag02M'] =0;
 }
-if (!isset($_POST['ShoppingBag02L'])){
-	$_POST['ShoppingBag02L'] =0;
-}
+
 if (!isset($_POST['BlinkShoppingBag04L'])){
 	$_POST['BlinkShoppingBag04L'] =0;
 }
