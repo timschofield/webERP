@@ -9,8 +9,21 @@
 include('includes/session.php');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
+include('includes/UIGeneralFunctions.php');
+include('includes/KLUIGeneralFunctions.php');
 
-if (isset($_POST['EffectiveDate'])){$_POST['EffectiveDate'] = ConvertSQLDate($_POST['EffectiveDate']);};
+if (!isset($_POST['LabelID'])){
+	$_POST['LabelID'] = 'T570';
+}
+if (!isset($_POST['Location'])){
+	$_POST['Location'] = '';
+}
+if (!isset($_POST['LabelsPerItem'])){
+	$_POST['LabelsPerItem'] = 1;
+}
+if (!isset($_POST['ChangeToday'])){
+	$_POST['ChangeToday'] = "Nothing";
+}
 
 if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 	AND isset($_POST['StockCategory'])
@@ -24,9 +37,9 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		$MainWhere = " INNER JOIN prices 
 							ON stockmaster.stockid=prices.stockid
 						WHERE prices.typeabbrev = '" . RETAIL_PRICE_LIST . "'
-							AND prices.currabrev = '". CURRENCY_CODE ."'
-							AND prices.startdate<='" . FormatDateForSQL($_POST['EffectiveDate']) . "'
-							AND prices.enddate>'" . FormatDateForSQL($_POST['EffectiveDate']) . "'
+							AND prices.currabrev = '" . CURRENCY_CODE . "'
+							AND prices.startdate <= CURRENT_DATE
+							AND prices.enddate > CURRENT_DATE
 							AND prices.debtorno=''";
 	}elseif ($_POST['LabelID'] == 'CodeSticker'){
 		$SQLPrice = "0 AS price, ";
@@ -38,12 +51,6 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 					FROM locstock
 					WHERE locstock.stockid = prices.stockid
 						AND locstock.loccode = '".$_POST['Location']."') AS qoh,
-					0 AS intransit ";
-	}elseif ($_POST['LocationStock'] != "None"){
-		$SQLQOH = " ((SELECT SUM(quantity)
-					FROM locstock
-					WHERE locstock.stockid = prices.stockid
-						AND locstock.loccode = '".$_POST['LocationStock']."') -1) AS qoh,
 					0 AS intransit ";
 	}else{
 		$SQLQOH = $_POST['LabelsPerItem'] ." AS qoh,
@@ -182,10 +189,8 @@ if ((isset($_POST['ShowLabels']) OR isset($_POST['SelectAll']))
 		<input type="hidden" name="NoOfLabels" value="' . $i . '" />
 		<input type="hidden" name="LabelID" value="' . $_POST['LabelID'] . '" />
 		<input type="hidden" name="StockCategory" value="' . $_POST['StockCategory'] . '" />
-		<input type="hidden" name="EffectiveDate" value="' . $_POST['EffectiveDate'] . '" />
 		<input type="hidden" name="LabelsPerItem" value="' . $_POST['LabelsPerItem'] . '" />
 		<input type="hidden" name="Location" value="' . $_POST['Location'] . '" />
-		<input type="hidden" name="LocationStock" value="' . $_POST['LocationStock'] . '" />
 		<input type="hidden" name="ChangeToday" value="' . $_POST['ChangeToday'] . '" />
 		<br />
 		<div class="centre">
@@ -261,9 +266,6 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 	}
 	if ($_POST['Location'] != "None"){
 		$CoreFileName = $CoreFileName . "-QOH-" . $_POST['Location'];
-	}
-	if ($_POST['LocationStock'] != "None"){
-		$CoreFileName = $CoreFileName . "-STOCK-" . $_POST['LocationStock'];
 	}
 	if ($_POST['ChangeToday'] != "Nothing"){
 		$CoreFileName = $CoreFileName . "-". $_POST['ChangeToday'];
@@ -434,91 +436,33 @@ if (isset($_POST['PrintLabels']) AND $LabelsToBePrinted) {
 		prnMsg(_('The GD module for PHP is required to print barcode labels. Your PHP installation is not capable currently. You will most likely experience problems with this script until the GD module is enabled.'),'error');
 	}
 
-
 	if (!isset($_POST['StockCategory'])) {
-
-	/*if $StockCategory is not set then show a form to allow input	*/
-
+		/*if $StockCategory is not set then show a form to allow input	*/
 		echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">
-				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />
-				<table class="selection">';
+				<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 
-		echo '<tr>
-			<td>' . _('Label Type') . ':</td>
-			<td><select name="LabelID">
-				<option selected="selected" value="T570">' . _('Pricetags T570') . '</option>
-				<option value="CodeSticker">' . _('Code Stickers') . '</option>
-			</select></td>
-			</tr>';
-			
-		echo '<tr>
-				<td>' .  _('For Stock Category') .':</td>
-				<td><select name="StockCategory">
-					<option selected="selected" value="All">' . _('All Categories') . '</option>';
+		echo '<fieldset>
+				<legend>' . _('Label Selection') . '</legend>';
+		echo FieldToSelectFromTwoOptions('T570', 'Pricetags T570', 
+										'CodeSticker', 'Code Stickers',
+										'LabelID', $_POST['LabelID'], _('Label Type'), '', '', 1, true, false);
+		echo FieldToSelectOneStockCategory('StockCategory', (isset($_POST['StockCategory']) ? $_POST['StockCategory'] : ''), _('For Stock Category'), '', '', true, 2, true, false);
+		echo FieldToSelectOneNumber('LabelsPerItem', $_POST['LabelsPerItem'], 3, 4, _('Fixed number of labels'), '', '', 3, false, false);
+		$LabelLocationField = '<b>' . _('OR') . ' </b> ' . 'QOH at Location';
+		echo FieldToSelectOneLocation('Location', $_POST['Location'], $LabelLocationField, '', 'CANVIEW',  4, false, false);
+		$LabelItemsThatField = '<b>' . _('OR') . ' </b> ' . ' items that';
+		echo FieldToSelectFromFiveOptions('Nothing', ' ',
+										'ChangePrice', 'Changed price today', 
+										'ChangeDisc20', 'Changed to Discount 20% today',
+										'ChangeDisc50', 'Changed to Discount 50% today',
+										'ChangeDisc80', 'Changed to Discount 80% today',
+										'ChangeToday', $_POST['ChangeToday'],  $LabelItemsThatField, '', '', 5, true, false);
 
-		$CatResult= DB_query("SELECT categoryid, categorydescription FROM stockcategory ORDER BY categorydescription");
-		while ($MyRow = DB_fetch_array($CatResult)){
-			echo '<option value="' . $MyRow['categoryid'] . '">' . $MyRow['categorydescription'] . '</option>';
-		}
-		echo '</select></td></tr>';
+		echo '</fieldset>';
 
-		echo '<tr>
-			<td>' . _('Prices Effective As At') . ':</td>
-			<td><input type="date" size="11" alt="' . $_SESSION['DefaultDateFormat'] . '" name="EffectiveDate" value="' . Date('Y-m-d') . '" />';
-        echo '</td></tr>';
-		echo'<tr><td></td></tr>';
-		echo'<tr><th colspan="2">' . _('Number of labels to print') . '</th></tr>
-			<tr><td>' . _('Fixed number of labels') . ':</td>
-			<td><input type="text" class="number" name="LabelsPerItem" size="3" value="1" /td></tr>';
-		echo'<tr><td>' . _('or QOH at') . ':</td>
-			<td>';
+		echo OneButtonCenteredForm('ShowLabels', _('Show Labels'));
 
-		$SQL = "SELECT locations.loccode,
-						locationname
-				FROM locations
-				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				ORDER BY locationname";
-		$LocnResult=DB_query($SQL);
-		echo '<select name="Location"><option value="None">' . _('') . '</option>';
-		while ($MyRow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		}
-		echo '</select></td>
-				</tr>';
-
-		echo'<tr><td>' . _('or STOCK (QOH-1) at') . ':</td>
-			<td>';
-
-		$SQL = "SELECT locations.loccode,
-						locationname
-				FROM locations
-				INNER JOIN locationusers ON locationusers.loccode=locations.loccode AND locationusers.userid='" .  $_SESSION['UserID'] . "' AND locationusers.canview=1
-				ORDER BY locationname";
-		$LocnResult=DB_query($SQL);
-		echo '<select name="LocationStock"><option value="None">' . _('') . '</option>';
-		while ($MyRow=DB_fetch_array($LocnResult)){
-			echo '<option value="' . $MyRow['loccode'] . '">' . $MyRow['locationname'] . '</option>';
-		}
-		echo '</select></td>
-				</tr>';
-
-		echo '<tr>
-			<td>' . _('or items that') . ':</td>
-			<td><select name="ChangeToday">
-				<option selected="selected" value="Nothing">' . _('') . '</option>
-				<option value="ChangePrice">' . _('Changed price today') . '</option>
-				<option value="ChangeDisc20">' . _('Changed to Discount 20% today') . '</option>
-				<option value="ChangeDisc50">' . _('Changed to Discount 50% today') . '</option>
-				<option value="ChangeDisc80">' . _('Changed to Discount 80% today') . '</option>
-			</select></td>
-			</tr>';
-
-		echo '</table>
-				<br />
-				<div class="centre">
-					<input type="submit" name="ShowLabels" value="'. _('Show Labels'). '" />
-				</div>
-				</form>';
+		echo '</form>';
 	}
 	include('includes/footer.php');
 
