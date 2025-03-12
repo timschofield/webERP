@@ -34,7 +34,7 @@ TRUNCATE test_erp.`buckets`;
 INSERT INTO test_erp.buckets SELECT * FROM kurakura_kl_erp.buckets;
 
 TRUNCATE test_erp.`chartdetails`;
-INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;
+/*INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;*/
 
 TRUNCATE test_erp.`chartmaster`;
 INSERT INTO test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
@@ -79,7 +79,7 @@ TRUNCATE test_erp.`currencies`;
 INSERT INTO test_erp.currencies SELECT * FROM kurakura_kl_erp.currencies;
 
 TRUNCATE test_erp.`custallocns`;
-INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= '2024-04-01'; 
+INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= '2025-04-01'; 
 
 TRUNCATE test_erp.`custbranch`;
 INSERT INTO test_erp.custbranch SELECT * FROM kurakura_kl_erp.custbranch;
@@ -160,7 +160,7 @@ TRUNCATE test_erp.`fixedassettasks`;
 INSERT INTO test_erp.fixedassettasks SELECT * FROM kurakura_kl_erp.fixedassettasks;
 
 TRUNCATE test_erp.`fixedassettrans`;
-INSERT INTO test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans WHERE transdate >= '2024-01-01';
+INSERT INTO test_erp.fixedassettrans SELECT * FROM kurakura_kl_erp.fixedassettrans WHERE transdate >= '2025-01-01';
 
 TRUNCATE test_erp.`freightcosts`;
 INSERT INTO test_erp.freightcosts SELECT * FROM kurakura_kl_erp.freightcosts;
@@ -221,13 +221,13 @@ TRUNCATE test_erp.`kladjustrl`;
 INSERT INTO test_erp.kladjustrl SELECT * FROM kurakura_kl_erp.kladjustrl; 
 
 TRUNCATE test_erp.`klconsignment`;
-INSERT INTO test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment WHERE saledate >= '2024-01-01'; 
+INSERT INTO test_erp.klconsignment SELECT * FROM kurakura_kl_erp.klconsignment WHERE saledate >= '2025-01-01'; 
 
 TRUNCATE test_erp.`klfreeexchanges`;
-INSERT INTO test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;
+/*INSERT INTO test_erp.klfreeexchanges SELECT * FROM kurakura_kl_erp.klfreeexchanges;*/
 
 TRUNCATE test_erp.`klkpi`;
-INSERT INTO test_erp.klkpi SELECT * FROM kurakura_kl_erp.klkpi;
+/*INSERT INTO test_erp.klkpi SELECT * FROM kurakura_kl_erp.klkpi;*/
 
 TRUNCATE test_erp.`klmaintenancetasks`;
 INSERT INTO test_erp.klmaintenancetasks SELECT * FROM kurakura_kl_erp.klmaintenancetasks;
@@ -359,7 +359,7 @@ TRUNCATE test_erp.`paymentterms`;
 INSERT INTO test_erp.paymentterms SELECT * FROM kurakura_kl_erp.paymentterms;
 
 TRUNCATE test_erp.`pcashdetails`;
-INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= '2024-01-01'; 
+/*INSERT INTO test_erp.pcashdetails SELECT * FROM kurakura_kl_erp.pcashdetails WHERE date >= '2025-01-01'; */
 
 TRUNCATE test_erp.`pcashdetailtaxes`;
 INSERT INTO test_erp.pcashdetailtaxes SELECT * FROM kurakura_kl_erp.pcashdetailtaxes;
@@ -467,7 +467,7 @@ TRUNCATE test_erp.`salariescalculated`;
 INSERT INTO test_erp.salariescalculated SELECT * FROM kurakura_kl_erp.salariescalculated;
 
 TRUNCATE test_erp.`salesanalysis`;
-INSERT INTO test_erp.salesanalysis SELECT * FROM kurakura_kl_erp.salesanalysis WHERE periodno >= 170;
+/*INSERT INTO test_erp.salesanalysis SELECT * FROM kurakura_kl_erp.salesanalysis WHERE periodno >= 170; */
 
 TRUNCATE test_erp.`salescat`;
 INSERT INTO test_erp.salescat SELECT * FROM kurakura_kl_erp.salescat;
@@ -590,7 +590,7 @@ TRUNCATE test_erp.`suppliertype`;
 INSERT INTO test_erp.suppliertype SELECT * FROM kurakura_kl_erp.suppliertype;
 
 TRUNCATE test_erp.`supptrans`;
-INSERT INTO test_erp.supptrans SELECT * FROM kurakura_kl_erp.supptrans WHERE trandate >= '2024-01-01'; 
+INSERT INTO test_erp.supptrans SELECT * FROM kurakura_kl_erp.supptrans WHERE trandate >= '2025-01-01'; 
 
 TRUNCATE test_erp.`supptranstaxes`;
 INSERT INTO test_erp.supptranstaxes SELECT * FROM kurakura_kl_erp.supptranstaxes WHERE supptransid >= 10000; 
