@@ -78,7 +78,7 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 	}
 	if ($MyRow['canupd']==1) {
 		$UpdateCode='<input title="'._('Input safety stock quantity').'" type="text" class="number" name="' . $MyRow['loccode'] . '" maxlength="10" size="10" value="' . $MyRow['reorderlevel'] . '" />
-			<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
+			';
 	} else {
 		$UpdateCode='<input type="hidden" name="' . $MyRow['loccode'] . '">' . $MyRow['reorderlevel'] . '<input type="hidden" name="' . $MyRow['loccode'] . '" value="' . $MyRow['reorderlevel'] . '" />';
 	}
