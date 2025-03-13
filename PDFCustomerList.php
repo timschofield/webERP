@@ -2,15 +2,17 @@
 /* Creates a report of the customer and branch information held. This report has options to print only customer branches in a specified sales area and sales person. Additional option allows to list only those customers with activity either under or over a specified amount, since a specified date. */
 
 include('includes/session.php');
+use Dompdf\Dompdf;
+
 if (isset($_POST['ActivitySince'])){$_POST['ActivitySince'] = ConvertSQLDate($_POST['ActivitySince']);};
 $ViewTopic = 'ARReports';
 $BookMark = 'CustomerListing';
 
-if(isset($_POST['PrintPDF'])) {
+if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	include('includes/PDFStarter.php');
-	$pdf->addInfo('Title', _('Customer Listing') );
-	$pdf->addInfo('Subject', _('Customer Listing') );
+	$PDF->addInfo('Title', _('Customer Listing') );
+	$PDF->addInfo('Subject', _('Customer Listing') );
 	$LineHeight=12;
 	$PageNumber = 0;
 	$FontSize=10;
@@ -225,7 +227,6 @@ if(isset($_POST['PrintPDF'])) {
 
 	} /* end if not all sales areas was selected */
 
-
 	$CustomersResult = DB_query($SQL);
 
 	if(DB_error_no() !=0) {
@@ -249,8 +250,80 @@ if(isset($_POST['PrintPDF'])) {
 	  exit;
 	}
 
+	$HTML = '';
 
-	include('includes/PDFCustomerListPageHeader.inc');
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '<html>
+					<head>';
+		$HTML .= '<link href="css/reports.css" rel="stylesheet" type="text/css" />';
+	}
+
+	$HTML .= '<meta name="author" content="WebERP " . $Version">
+					<meta name="Creator" content="webERP http://www.weberp.org">
+				</head>
+				<body>';
+
+	$Heading = _('Customers List for'). ' ';
+
+	if (in_array('All', $_POST['Areas'])){
+		$Heading .= _('All Territories'). ' ';
+	} else {
+		if (count($_POST['Areas'])==1){
+			$Heading .= _('Territory') . ' ' . $_POST['Areas'][0];
+		} else {
+			$Heading .= _('Territories'). ' ';
+			$NoOfAreas = count($_POST['Areas']);
+			$i=1;
+			foreach ($_POST['Areas'] as $Area){
+				if ($i==$NoOfAreas){
+					$Heading .= _('and') . ' ' . $Area . ' ';
+				} elseif ($i==($NoOfAreas-1)) {
+					$Heading .= $Area . ' ';
+				} else {
+					$Heading .= $Area . ', ';
+				}
+			}
+		}
+	}
+
+	$Heading .= ' '. _('and for').' ';
+	if (in_array('All', $_POST['SalesPeople'])){
+		$Heading .= _('All Salespeople');
+	} else {
+		if (count($_POST['SalesPeople'])==1){
+			$Heading .= _('only') .' ' . $_POST['SalesPeople'][0];
+		} else {
+			$Heading .= _('Salespeople') .' ';
+			$NoOfSalesfolk = count($_POST['SalesPeople']);
+			$i=1;
+			foreach ($_POST['SalesPeople'] as $Salesperson){
+				if ($i==$NoOfSalesfolk){
+					$Heading .= _('and') . ' ' . $Salesperson . " ";
+				} elseif ($i==($NoOfSalesfolk-1)) {
+					$Heading .= $Salesperson . " ";
+				} else {
+					$Heading .= $Salesperson . ", ";
+				}
+			}
+		}
+	}
+
+	$HTML .= '<div class="centre" id="ReportHeader">
+				' . $_SESSION['CompanyRecord']['coyname'] . '<br />
+				' . $Heading . '<br />
+				' . _('Printed') . ': ' . Date($_SESSION['DefaultDateFormat']) . '<br />
+			</div>
+			<table>
+				<thead>
+					<tr>
+						<th>' . _('Act Code') . '</th>
+						<th>' . _('Postal Address') . '</th>
+						<th>' . _('Branch Code') . '</th>
+						<th>' . _('Branch Contact Information') . '</th>
+						<th>' . _('Branch Delivery Address') . '</th>
+					</tr>
+				</thead>
+				<tbody>';
 
 	$Area ='';
 	$SalesPerson='';
@@ -291,77 +364,96 @@ if(isset($_POST['PrintPDF'])) {
 		}
 
 		if($PrintThisCustomer) {
+
+			$HTML .='<tr class="striped_row">';
 			if($Area!=$Customers['area']) {
-				$FontSize=10;
-				$YPos -=$LineHeight;
-				if($YPos < ($Bottom_Margin + 80)) {
-					include('includes/PDFCustomerListPageHeader.inc');
-				}
-				$pdf->setFont('','B');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,260-$Left_Margin,$FontSize,_('Customers in') . ' ' . $Customers['areadescription']);
+				$HTML .= '<th colspan="3">' . _('Customers in') . ' ' . $Customers['areadescription'] . '<br />';
 				$Area = $Customers['area'];
-				$pdf->setFont('','');
-				$FontSize=8;
-				$YPos -=$LineHeight;
 			}
 
 			if($SalesPerson!=$Customers['salesman']) {
-				$FontSize=10;
-				$YPos -=($LineHeight);
-				if($YPos < ($Bottom_Margin + 80)) {
-					include('includes/PDFCustomerListPageHeader.inc');
-				}
-				$pdf->setFont('','B');
-				$LeftOvers = $pdf->addTextWrap($Left_Margin,$YPos,300-$Left_Margin,$FontSize,$Customers['salesmanname']);
-				$pdf->setFont('','');
+				$HTML .= '' . _('Salesman') . ' ' . $Customers['salesmanname'] . '</th>';
 				$SalesPerson = $Customers['salesman'];
-				$FontSize=8;
-				$YPos -=$LineHeight;
+			}
+			$HTML .= '</tr>';
+
+			$CustomerDetails = $Customers['name'];
+			for ($i = 1; $i<=6; $i++) {
+				if ($Customers['address' . $i] != '') {
+					$CustomerDetails .= '<br />' . $Customers['address' . $i];
+				}
 			}
 
-			$YPos -=$LineHeight;
+			$HTML .= '<tr class="striped_row">
+						<td>' . $Customers['debtorno'] . '</td>
+						<td>' . $CustomerDetails . '</td>
+						<td>' . $Customers['branchcode'] . '<br />
+							' . _('Price List') . ': ' . $Customers['salestype'] . '
+						</td>';
 
-			$LeftOvers = $pdf->addTextWrap(20,$YPos,60,$FontSize,$Customers['debtorno']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos,150,$FontSize,$Customers['name']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos-10,150,$FontSize,$Customers['address1']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos-20,150,$FontSize,$Customers['address2']);
-			$LeftOvers = $pdf->addTextWrap(80,$YPos-30,150,$FontSize,$Customers['address3']);
-			$LeftOvers = $pdf->addTextWrap(140,$YPos-30,150,$FontSize,$Customers['address4']);
-			$LeftOvers = $pdf->addTextWrap(180,$YPos-30,150,$FontSize,$Customers['address5']);
-			$LeftOvers = $pdf->addTextWrap(210,$YPos-30,150,$FontSize,$Customers['address6']);
-
-			$LeftOvers = $pdf->addTextWrap(230,$YPos,60,$FontSize,$Customers['branchcode']);
-			$LeftOvers = $pdf->addTextWrap(230,$YPos-10,60,$FontSize, _('Price List') . ': ' . $Customers['salestype']);
 
 			if($_POST['Activity']!='All') {
-				$LeftOvers = $pdf->addTextWrap(230,$YPos-20,60,$FontSize,_('Turnover'),'right');
-				$LeftOvers = $pdf->addTextWrap(230,$YPos-30,60,$FontSize,locale_number_format($LocalCurrencyTurnover,0), 'right');
+				$HTML .= '<td>' . _('Turnover') . ' - ' . locale_number_format($LocalCurrencyTurnover,0) . '</td>';
 			}
 
-			$LeftOvers = $pdf->addTextWrap(290,$YPos,150,$FontSize,$Customers['brname']);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-10,150,$FontSize,$Customers['contactname']);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-20,150,$FontSize, _('Ph'). ': ' . $Customers['phoneno']);
-			$LeftOvers = $pdf->addTextWrap(290,$YPos-30,150,$FontSize, _('Fax').': ' . $Customers['faxno']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos,150,$FontSize,$Customers['braddress1']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos-10,150,$FontSize,$Customers['braddress2']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos-20,150,$FontSize,$Customers['braddress3']);
-			$LeftOvers = $pdf->addTextWrap(500,$YPos-20,150,$FontSize,$Customers['braddress4']);
-			$LeftOvers = $pdf->addTextWrap(540,$YPos-20,150,$FontSize,$Customers['braddress5']);
-			$LeftOvers = $pdf->addTextWrap(570,$YPos-20,150,$FontSize,$Customers['braddress6']);
-			$LeftOvers = $pdf->addTextWrap(440,$YPos-30,150,$FontSize,$Customers['email']);
+			$HTML .= '<td>' . $Customers['brname'] . '<br />
+						  ' . $Customers['contactname'] . '<br />
+						  ' . _('Ph'). ': ' . $Customers['phoneno'] . '<br />
+						  ' . _('Fax').': ' . $Customers['faxno'] . '
+						</td>';
 
-			$pdf->line($Page_Width-$Right_Margin, $YPos-32,$Left_Margin, $YPos-32);
-
-			$YPos -=40;
-			if($YPos < ($Bottom_Margin +30)) {
-				include('includes/PDFCustomerListPageHeader.inc');
+			$BranchAddress = $Customers['name'];
+			for ($i = 1; $i<=6; $i++) {
+				if ($Customers['braddress' . $i] != '') {
+					$BranchAddress .= '<br />' . $Customers['braddress' . $i];
+				}
 			}
+
+			$HTML .= '<td>' . $BranchAddress . '</td>
+					</tr>';
 		} /*end if $PrintThisCustomer == true */
 	} /*end while loop */
 
-	$pdf->OutputD($_SESSION['DatabaseName'] . '_CustomerList_' . date('Y-m-d').'.pdf');//UldisN
-	$pdf->__destruct();
-	exit;
+
+	if (isset($_POST['PrintPDF'])) {
+		$HTML .= '</tbody>
+				<div class="footer fixed-section">
+					<div class="right">
+						<span class="page-number">Page </span>
+					</div>
+				</div>
+			</table>';
+	} else {
+		$HTML .= '</tbody>
+				</table>
+				<div class="centre">
+					<form><input type="submit" name="close" value="' . _('Close') . '" onclick="window.close()" /></form>
+				</div>';
+	}
+	$HTML .= '</body>
+		</html>';
+
+	if (isset($_POST['PrintPDF'])) {
+		$dompdf = new Dompdf(['chroot' => __DIR__]);
+		$dompdf->loadHtml($HTML);
+
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper($_SESSION['PageSize'], 'portrait');
+
+		// Render the HTML as PDF
+		$dompdf->render();
+
+		// Output the generated PDF to Browser
+		$dompdf->stream($_SESSION['DatabaseName'] . '_CustomerListing_' . date('Y-m-d') . '.pdf', array(
+			"Attachment" => false
+		));
+	} else {
+		$Title = _('Customer Details Listing');
+		include ('includes/header.php');
+		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/bank.png" title="' . _('Receipts') . '" alt="" />' . ' ' . _('Create PDF Customer Details Listing') . '</p>';
+		echo $HTML;
+		include ('includes/footer.php');
+	}
 
 } else {
 
@@ -370,7 +462,7 @@ if(isset($_POST['PrintPDF'])) {
 	echo '<p class="page_title_text"><img src="'.$RootPath.'/css/'.$Theme.'/images/customer.png" title="' .
 		 $Title . '" alt="" />' . ' ' . $Title . '</p>';
 
-	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post">';
+	echo '<form action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '" method="post" target="_blank">';
 	echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
     echo '<fieldset>
 			<legend>', _('Report Criteria'), '</legend>';
@@ -422,7 +514,8 @@ if(isset($_POST['PrintPDF'])) {
 
 	echo '</fieldset>
 			<div class="centre">
-				<input type="submit" name="PrintPDF" value="'. _('Print PDF'). '" />
+				<input type="submit" name="PrintPDF" title="PDF" value="' . _('Print PDF') . '" />
+				<input type="submit" name="View" title="View" value="' . _('View') . '" />
 			</div>';
     echo '</form>';
 
