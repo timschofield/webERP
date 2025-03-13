@@ -11,11 +11,6 @@ $BookMark = 'CustomerListing';
 if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 
 	include('includes/PDFStarter.php');
-	$PDF->addInfo('Title', _('Customer Listing') );
-	$PDF->addInfo('Subject', _('Customer Listing') );
-	$LineHeight=12;
-	$PageNumber = 0;
-	$FontSize=10;
 
 	if($_POST['Activity']!='All') {
 		if(!is_numeric($_POST['ActivityAmount'])) {
