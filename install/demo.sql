@@ -786,15 +786,6 @@ INSERT INTO `orderdeliverydifferenceslog` VALUES (1,4,'TEST',1,'TIM','TIM','BO')
 UNLOCK TABLES;
 
 --
--- Dumping data for table `outputs`
---
-
-LOCK TABLES `outputs` WRITE;
-/*!40000 ALTER TABLE `outputs` DISABLE KEYS */;
-/*!40000 ALTER TABLE `outputs` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `paymentmethods`
 --
 
