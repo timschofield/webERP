@@ -208,9 +208,8 @@ echo '<field>
 		<label for="Keywords">' . _('Enter text extracts in the') . ' <b>' . _('description') . '</b>:</label>
 		<input type="text" name="Keywords" size="20" maxlength="25" />
 	</field>
-	<h1>' . _('OR') . '</h1>
 	<field>
-		<label for="StockCode">' . _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</label>
+		<label for="StockCode">' . '<b>'. _('OR'). ' </b>'. _('Enter extract of the') . '<b> ' . _('Stock Code') . '</b>:</label>
 		<input type="text" name="StockCode" size="15" maxlength="18" />
 	</field>
 	</fieldset>

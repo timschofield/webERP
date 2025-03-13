@@ -268,13 +268,11 @@ if (count($_SESSION['Contract'.$identifier]->ContractBOM)>0){
 			<label for="Keywords">', _('Enter text extracts in the description'), ':</label>
 			<input type="search" name="Keywords" size="20" autofocus="autofocus" maxlength="25" value="', $_POST['Keywords'], '" />
 		</field>
-		<h1>', _('OR'), '</h1>
 		<field>
-			<label for="StockCode">', _('Enter extract of the Stock Code'), ':</label>
+			<label for="StockCode">', '<b>', _('OR'), ' </b>', _('Enter extract of the Stock Code'), ':</label>
 			<input type="search" name="StockCode" size="15" maxlength="18" value="', $_POST['StockCode'], '" />
 		</field>
-		<h1>', _('OR'), '</h1>
-		<a target="_blank" href="', $RootPath, '/Stocks.php">', _('Create a New Stock Item'), '</a>
+		<a target="_blank" href="', $RootPath, '/Stocks.php">', '<b>', _('OR'), ' </b>', _('Create a New Stock Item'), '</a>
 	</fieldset>';
 	echo '<div class="centre"><input type="submit" name="UpdateLines" value="' . _('Update Lines') . '" />';
 	echo '<input type="submit" name="BackToHeader" value="' . _('Back To Contract Header') . '" /></div>';

@@ -217,9 +217,8 @@ if (isset($DebtorNo) and $DebtorNo != '' and !isset($_POST['Searchcustomer'])) {
 					<label for="Keywords">', _('Text in the customer'), ' <b>', _('NAME'), '</b>:</label>
 					<input type="text" name="Keywords" size="20" maxlength="25" />
 				</field>
-				<h1>', _('OR'), '</h1>
 				<field>
-					<label for="cust_no">', _('Text in customer'), ' <b>', _('CODE'), '</b>:</label>
+					<label for="cust_no">', '<b>', _('OR'), ' </b>', _('Text in customer'), ' <b>', _('CODE'), '</b>:</label>
 					<input type="text" name="cust_no" data-type="no-illegal-chars" size="20" maxlength="50" />
 				</field>
 			</fieldset>';

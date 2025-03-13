@@ -357,9 +357,8 @@ if (isset($SupplierID) AND $SupplierID != '' AND !isset($_POST['SearchSupplier']
 						<label for="Keywords">' . _('Text in the Supplier') . ' <b>' . _('NAME') . '</b>:</label>
 						<input type="text" name="Keywords" size="20" maxlength="25" />
 					</field>
-					<h1>' . _('OR') . '</h1>
 					<field>
-						<label for="SupplierCode">' . _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</label>
+						<label for="SupplierCode">' . '<b>'. _('OR'). ' </b>'. _('Text in Supplier') . ' <b>' . _('CODE') . '</b>:</label>
 						<input type="text" name="SupplierCode" data-type="no-illegal-chars" size="20" maxlength="50" />
 					</field>
 				</fieldset>

@@ -226,9 +226,8 @@ if ($_SESSION['RequireCustomerSelection'] ==1
 			<label for="Keywords">' . _('Enter text in the customer name') . ':</label>
 			<input type="text" name="Keywords" size="20" maxlength="25" />
 		</field>
-			<h1>' . _('OR') . '</h1>
 		<field>
-			<label for="CustCode">' . _('Enter text extract in the customer code') . ':</label>
+			<label for="CustCode">' . '<b>'. _('OR'). ' </b>'. _('Enter text extract in the customer code') . ':</label>
 			<input type="text" name="CustCode" size="15" maxlength="18" />
 		</field>';
 	echo '</fieldset>
