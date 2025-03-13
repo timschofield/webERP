@@ -8,9 +8,9 @@ CREATE TABLE `regularpayments` (
   `amount` double NOT NULL DEFAULT '0',
   `currabrev` char(3) NOT NULL DEFAULT '',
   `narrative` varchar(255) DEFAULT '',
-  `firstpayment` date NOT NULL DEFAULT '0000-00-00',
-  `finalpayment` date NOT NULL DEFAULT '0000-00-00',
-  `nextpayment` date NOT NULL DEFAULT '0000-00-00',
+  `firstpayment` date NOT NULL DEFAULT '1001-01-01',
+  `finalpayment` date NOT NULL DEFAULT '1001-01-01',
+  `nextpayment` date NOT NULL DEFAULT '1001-01-01',
   `completed` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb3;
