@@ -84,23 +84,15 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$Transfer = '';
 		$TransferDate = '';
 	}
-	printf('<tr class="striped_row">
-		<td class="number">%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td>%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		$Transfer,
-		$TransferDate,
-		$CodeLink, 
-		GetLocationNameFromCode($MyRow['shiploc']), 
-		locale_number_format($MyRow['shipqty'],0),
-		GetLocationNameFromCode($MyRow['recloc']), 
-		locale_number_format($MyRow['recqty'],0)
-	);
+	echo '<tr class="striped_row">
+		<td class="number">' . $Transfer . '</td>
+		<td>' . $TransferDate . '</td>
+		<td>' . $CodeLink . '</td>
+		<td>' . GetLocationNameFromCode($MyRow['shiploc']) . '</td>
+		<td class="number">' . locale_number_format($MyRow['shipqty'],0) . '</td>
+		<td>' . GetLocationNameFromCode($MyRow['recloc']) . '</td>
+		<td class="number">' . locale_number_format($MyRow['recqty'],0) . '</td>
+		</tr>';
 }
 echo '</tbody></table>';
 
@@ -158,26 +150,16 @@ while ($MyRow = DB_fetch_array($Result)) {
 		$Transfer = '';
 		$FromTo = '';
 	}
-	printf('<tr class="striped_row">
-		<td class="number">%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		</tr>', 
-		$Transfer,
-		$FromTo, 
-		ConvertSQLDate($MyRow['trandate']),
-		$CodeLink, 
-		locale_number_format($MyRow['qty'],0),
-		locale_number_format($MyRow['newqoh'],0),
-		$MyRow['userid'],
-		$MyRow['narrative']
-	);
-
+	echo '<tr class="striped_row">
+		<td class="number">' . $Transfer . '</td>
+		<td>' . $FromTo . '</td>
+		<td>' . ConvertSQLDate($MyRow['trandate']) . '</td>
+		<td>' . $CodeLink . '</td>
+		<td class="number">' . locale_number_format($MyRow['qty'],0) . '</td>
+		<td class="number">' . locale_number_format($MyRow['newqoh'],0) . '</td>
+		<td>' . $MyRow['userid'] . '</td>
+		<td>' . $MyRow['narrative'] . '</td>
+		</tr>';
 }
 echo '</tbody></table>';
 echo '<br />';

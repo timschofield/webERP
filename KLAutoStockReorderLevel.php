@@ -144,15 +144,11 @@ while ($MyRow=DB_fetch_array($LocStockResult)) {
 		$NewRL = $MyRow['reorderlevel'];
 	}
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$MyRow['locationname'], 
-			locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']),
-			locale_number_format($NewRL,$MyRow['decimalplaces'])
-			);
+	echo '<tr class="striped_row">
+			<td>' . $MyRow['locationname'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['quantity'],$MyRow['decimalplaces']) . '</td>
+			<td class="number">' . locale_number_format($NewRL,$MyRow['decimalplaces']) . '</td>
+			</tr>';
 
 }
 //end of while loop

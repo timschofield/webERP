@@ -70,46 +70,30 @@ function RetailCustomerAnalysisBySex($NumDays, $ListShops){
 				</tr>
 			</thead>
 			<tbody>';
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total Sales',
-			locale_number_format($NumberSales,0),
-			''
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Total Sales' . '</td>
+			<td class="number">' . locale_number_format($NumberSales,0) . '</td>
+			<td class="number">' . '' . '</td>
+			</tr>';
 
 	$NumberCases = $NumberFemales + $NumberMales;
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total Cases',
-			locale_number_format($NumberCases,0),
-			locale_number_format(($NumberCases/$NumberSales)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Total Cases' . '</td>
+			<td class="number">' . locale_number_format($NumberCases,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases/$NumberSales)*100,1).'%' . '</td>
+			</tr>';
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Females',
-			locale_number_format($NumberFemales,0),
-			locale_number_format(($NumberFemales/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Females' . '</td>
+			<td class="number">' . locale_number_format($NumberFemales,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberFemales/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Males',
-			locale_number_format($NumberMales,0),
-			locale_number_format(($NumberMales/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Males' . '</td>
+			<td class="number">' . locale_number_format($NumberMales,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberMales/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	echo '</tbody>
 		</table>
@@ -208,53 +192,37 @@ function RetailCustomerAnalysisByCountry($NumDays, $TypeOfShops, $ShopArea, $Min
 					</tr>
 				</thead>
 				<tbody>';
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Total Sales',
-				locale_number_format($NumberSales,0),
-				''
-				);
+		echo '<tr class="striped_row">
+				<td>' . 'Total Sales' . '</td>
+				<td class="number">' . locale_number_format($NumberSales,0) . '</td>
+				<td class="number">' . '' . '</td>
+				</tr>';
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Total Cases',
-				locale_number_format($NumberCases,0),
-				locale_number_format(($NumberCases/$NumberSales)*100,1).'%'
-				);
+		echo '<tr class="striped_row">
+				<td>' . 'Total Cases' . '</td>
+				<td class="number">' . locale_number_format($NumberCases,0) . '</td>
+				<td class="number">' . locale_number_format(($NumberCases/$NumberSales)*100,1).'%' . '</td>
+				</tr>';
 
 		$TotalOtherCountries = 0;	
 		while ($MyRow = DB_fetch_array($Result)) {
 			if ($MyRow['numberofcustomers'] > $MinimCustomersToShow){
-				printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$CountriesForRetail[$MyRow['country']],
-					locale_number_format($MyRow['numberofcustomers'],0),
-					locale_number_format(($MyRow['numberofcustomers']/$NumberCases)*100,1).'%'
-					);
+				echo '<tr class="striped_row">
+					<td>' . $CountriesForRetail[$MyRow['country']] . '</td>
+					<td class="number">' . locale_number_format($MyRow['numberofcustomers'],0) . '</td>
+					<td class="number">' . locale_number_format(($MyRow['numberofcustomers']/$NumberCases)*100,1).'%' . '</td>
+					</tr>';
 			}else{
 				$TotalOtherCountries += $MyRow['numberofcustomers'];
 			}
 		
 		}
 		if($TotalOtherCountries > 0){
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Other Countries',
-				locale_number_format($TotalOtherCountries,0),
-				locale_number_format(($TotalOtherCountries/$NumberCases)*100,1).'%'
-				);
+			echo '<tr class="striped_row">
+				<td>' . 'Other Countries' . '</td>
+				<td class="number">' . locale_number_format($TotalOtherCountries,0) . '</td>
+				<td class="number">' . locale_number_format(($TotalOtherCountries/$NumberCases)*100,1).'%' . '</td>
+				</tr>';
 		}
 		echo '</tbody>
 			</table>
@@ -323,25 +291,17 @@ function EmailHarvested($NumDays, $TypeOfShops){
 				</tr>
 			</thead>
 			<tbody>';
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total Sales',
-			locale_number_format($NumberSales,0),
-			''
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Total Sales' . '</td>
+			<td class="number">' . locale_number_format($NumberSales,0) . '</td>
+			<td class="number">' . '' . '</td>
+			</tr>';
 
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total Cases',
-			locale_number_format($NumberEmails,0),
-			locale_number_format(($NumberEmails/$NumberSales)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Total Cases' . '</td>
+			<td class="number">' . locale_number_format($NumberEmails,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberEmails/$NumberSales)*100,1).'%' . '</td>
+			</tr>';
 
 	echo '</tbody>
 		</table>
@@ -527,114 +487,74 @@ function RetailCustomerAnalysisByAge($NumDays, $TypeOfShops){
 			<tbody>';
 	$k = 0; //row colour counter
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total Sales',
-			locale_number_format($NumberSales,0),
-			''
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Total Sales' . '</td>
+			<td class="number">' . locale_number_format($NumberSales,0) . '</td>
+			<td class="number">' . '' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Total Cases',
-			locale_number_format($NumberCases,0),
-			locale_number_format(($NumberCases/$NumberSales)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . 'Total Cases' . '</td>
+			<td class="number">' . locale_number_format($NumberCases,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases/$NumberSales)*100,1).'%' . '</td>
+			</tr>';
 			
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'-'. AGE_STEP_01,
-			locale_number_format($NumberCases01,0),
-			locale_number_format(($NumberCases01/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . '-'. AGE_STEP_01 . '</td>
+			<td class="number">' . locale_number_format($NumberCases01,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases01/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			AGE_STEP_01 . '-'. AGE_STEP_02,
-			locale_number_format($NumberCases02,0),
-			locale_number_format(($NumberCases02/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . AGE_STEP_01 . '-'. AGE_STEP_02 . '</td>
+			<td class="number">' . locale_number_format($NumberCases02,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases02/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			AGE_STEP_02 . '-'. AGE_STEP_03,
-			locale_number_format($NumberCases03,0),
-			locale_number_format(($NumberCases03/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . AGE_STEP_02 . '-'. AGE_STEP_03 . '</td>
+			<td class="number">' . locale_number_format($NumberCases03,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases03/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			AGE_STEP_03 . '-'. AGE_STEP_04,
-			locale_number_format($NumberCases04,0),
-			locale_number_format(($NumberCases04/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . AGE_STEP_03 . '-'. AGE_STEP_04 . '</td>
+			<td class="number">' . locale_number_format($NumberCases04,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases04/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			AGE_STEP_04 . '-'. AGE_STEP_05,
-			locale_number_format($NumberCases05,0),
-			locale_number_format(($NumberCases05/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . AGE_STEP_04 . '-'. AGE_STEP_05 . '</td>
+			<td class="number">' . locale_number_format($NumberCases05,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases05/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			AGE_STEP_05 . '-'. AGE_STEP_06,
-			locale_number_format($NumberCases06,0),
-			locale_number_format(($NumberCases06/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . AGE_STEP_05 . '-'. AGE_STEP_06 . '</td>
+			<td class="number">' . locale_number_format($NumberCases06,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases06/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			AGE_STEP_06 . '-'. AGE_STEP_07,
-			locale_number_format($NumberCases07,0),
-			locale_number_format(($NumberCases07/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . AGE_STEP_06 . '-'. AGE_STEP_07 . '</td>
+			<td class="number">' . locale_number_format($NumberCases07,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases07/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	$k = StartEvenOrOddRow($k);
-	printf('<tr class="striped_row">
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			AGE_STEP_07 . '+',
-			locale_number_format($NumberCases08,0),
-			locale_number_format(($NumberCases08/$NumberCases)*100,1).'%'
-			);
+	echo '<tr class="striped_row">
+			<td>' . AGE_STEP_07 . '+' . '</td>
+			<td class="number">' . locale_number_format($NumberCases08,0) . '</td>
+			<td class="number">' . locale_number_format(($NumberCases08/$NumberCases)*100,1).'%' . '</td>
+			</tr>';
 
 	echo '</tbody>
 		</table>
@@ -709,31 +629,19 @@ function RetailCustomerDataQualitySPG($SPG, $NumDays){
 		echo $TableHeader;
 
 		while ($MyRow = DB_fetch_array($Result)) {
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$MyRow['salesperson'],
-				$MyRow['salesmanname'],
-				locale_number_format($MyRow['totalorders'],0),
-				locale_number_format(($MyRow['harvested']/$MyRow['totalorders'])*100,0).'%',
-				locale_number_format(($MyRow['firstnames']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['lastnames']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['countries']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['date_of_births']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['emails']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['sexs']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['onlinevipcards']/$MyRow['totalorders'])*100,0).'%'
-				);
+			echo '<tr class="striped_row">
+				<td>' . $MyRow['salesperson'] . '</td>
+				<td>' . $MyRow['salesmanname'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['totalorders'],0) . '</td>
+				<td class="number">' . locale_number_format(($MyRow['harvested']/$MyRow['totalorders'])*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format(($MyRow['firstnames']/$MyRow['harvested'])*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format(($MyRow['lastnames']/$MyRow['harvested'])*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format(($MyRow['countries']/$MyRow['harvested'])*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format(($MyRow['date_of_births']/$MyRow['harvested'])*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format(($MyRow['emails']/$MyRow['harvested'])*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format(($MyRow['sexs']/$MyRow['harvested'])*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format(($MyRow['onlinevipcards']/$MyRow['totalorders'])*100,0).'%' . '</td>
+				</tr>';
 		}
 		echo '</table>
 			</div>

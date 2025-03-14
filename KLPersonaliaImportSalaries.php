@@ -320,19 +320,13 @@ function submit($PeriodSelectedByUser, $SelectedFile, $SalaryType, $RootPath) {
 									)";
 					$ResultInsert = DB_query($SQLInsert,$InsertErrMsg,'',true);
 					
-					printf('<tr class="striped_row">
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							</tr>', 
-							$i,
-							$SalaryType,
-							$CodeName,
-							$Position,
-							$PaymentMethod
-							);
+					echo '<tr class="striped_row">
+							<td class="number">' . $i . '</td>
+							<td>' . $SalaryType . '</td>
+							<td>' . $CodeName . '</td>
+							<td>' . $Position . '</td>
+							<td>' . $PaymentMethod . '</td>
+							</tr>';
 					$i++;
 				}
 			}

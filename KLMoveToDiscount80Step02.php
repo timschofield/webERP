@@ -101,33 +101,20 @@ include('includes/KLUIGeneralFunctions.php');
 				$NewDiscountCategory = $MyRow['discountcategory'];
 				$NewLabelsPrinted = 'Not yet';
 			}
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>', 
-					locale_number_format($i,0),
-					$CodeLink, 
-					$MyRow['description'],
-					ConvertSQLDate($MyRow['startprocessdate']),
-					locale_number_format_zero_blank($MyRow['qohpos']-$MyRow['intransitfromshops'],0),
-					locale_number_format_zero_blank($MyRow['intransitfromkantor'],0),
-					locale_number_format_zero_blank($MyRow['intransitfromshops']+$MyRow['intransitfromconsignment'],0),
-					locale_number_format_zero_blank($MyRow['qohkantor']-$MyRow['intransitfromkantor'],0),
-					locale_number_format_zero_blank($MyRow['qohotherlocs'],0),
-					locale_number_format_zero_blank($MyRow['qohtotal'],0),
-					$NewDiscountCategory,
-					$NewLabelsPrinted
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . locale_number_format($i,0) . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['startprocessdate']) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['qohpos']-$MyRow['intransitfromshops'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['intransitfromkantor'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['intransitfromshops']+$MyRow['intransitfromconsignment'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['qohkantor']-$MyRow['intransitfromkantor'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['qohotherlocs'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['qohtotal'],0) . '</td>
+					<td class="number">' . $NewDiscountCategory . '</td>
+					<td>' . $NewLabelsPrinted . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>';

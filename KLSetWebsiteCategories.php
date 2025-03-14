@@ -118,25 +118,16 @@ if (DB_num_rows($Result) != 0){
 		}elseif ($Brand == 2){
 			$BrandText = "Blink";
 		}
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				</tr>', 
-				$i, 
-				$MyRow['stockid'], 
-				$MyRow['description'], 
-				$MyRow['categoryid'], 
-				$Weight, 
-				$Volume, 
-				$BrandText,
-				$WebsiteDescription
-				);
+		echo '<tr class="striped_row">
+				<td class="number">'.$i.'</td>
+				<td>'.$MyRow['stockid'].'</td>
+				<td>'.$MyRow['description'].'</td>
+				<td>'.$MyRow['categoryid'].'</td>
+				<td>'.$Weight.'</td>
+				<td>'.$Volume.'</td>
+				<td>'.$BrandText.'</td>
+				<td>'.$WebsiteDescription.'</td>
+				</tr>';
 		$i++;
 	}
 	echo '</tbody>

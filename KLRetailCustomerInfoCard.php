@@ -135,30 +135,18 @@ or deletion of the records*/
 			$TextCountry = $MyRow['Country'];
 		}
 
-	printf('<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href="%sSelectedOrder=%s">' .  _('Edit') . '</a></td>
-			<td><a href="%sSelectedOrder=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this customer info card data?') . '\');">' . _('Delete') . '</a></td>
-			</tr>',
-			$MyRow['orderno'],
-			$MyRow['customerref'],
-			ConvertSQLDate($MyRow['orddate']),
-			$MyRow['firstname'],
-			$MyRow['lastname'],
-			$TextCountry,
-			$TextDOB,
-			$MyRow['email'],
-			$MyRow['sex'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['orderno'],
-			htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['orderno']);
-
+		echo '<td>'.$MyRow['orderno'].'</td>
+			<td>'.$MyRow['customerref'].'</td>
+			<td>'.ConvertSQLDate($MyRow['orddate']).'</td>
+			<td>'.$MyRow['firstname'].'</td>
+			<td>'.$MyRow['lastname'].'</td>
+			<td>'.$TextCountry.'</td>
+			<td>'.$TextDOB.'</td>
+			<td>'.$MyRow['email'].'</td>
+			<td>'.$MyRow['sex'].'</td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedOrder='.$MyRow['orderno'].'">'._('Edit').'</a></td>
+			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedOrder='.$MyRow['orderno'].'&amp;delete=1" onclick="return confirm(\''._('Are you sure you wish to delete this customer info card data?').'\');">'._('Delete').'</a></td>
+			</tr>';
 	} //END WHILE LIST LOOP
 	echo '</tbody>
 		</table>

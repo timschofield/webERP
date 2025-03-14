@@ -64,15 +64,11 @@ if(isset($_POST['ProcessCopyAuthority'])) {
 				$Resultitem = DB_query($SQL,$ErrMsg,$DbgMsg,true);
 
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink,
-						locale_number_format($MyRow['reorderlevel'],0)
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td class="number">' . locale_number_format($MyRow['reorderlevel'],0) . '</td>
+						</tr>';
 				$i++;
 			}
 			echo '</tbody>

@@ -382,35 +382,21 @@ or deletion of the records*/
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		echo '<tr class="striped_row">';
-		printf('<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
-				<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this retail partner?') . '\');">' . _('Delete') . '</a></td>
-				</tr>',
-				$MyRow['partnercode'],
-				$MyRow['partnername'],
-				locale_number_format($MyRow['ppn'],0) . "%",
-				locale_number_format($MyRow['cashsalesreported'],0) . "%",
-				locale_number_format($MyRow['comissionccdanamon'],2) . "%",
-				locale_number_format($MyRow['comissionccbni'],2) . "%",
-				locale_number_format($MyRow['comissionamexbni'],2) . "%",
-				locale_number_format($MyRow['comissionccmandiri'],2) . "%",
-				locale_number_format($MyRow['comissionqris'],2) . "%",
-				locale_number_format($MyRow['comissionccbca'],2) . "%",
-				locale_number_format($MyRow['comissionamexbca'],2) . "%",
-				locale_number_format($MyRow['percentconsignmentptadu'],0) . "%",
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['partnercode'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['partnercode']);
+		echo '<td>'.$MyRow['partnercode'].'</td>
+				<td>'.$MyRow['partnername'].'</td>
+				<td class="number">'.locale_number_format($MyRow['ppn'],0)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['cashsalesreported'],0)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['comissionccdanamon'],2)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['comissionccbni'],2)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['comissionamexbni'],2)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['comissionccmandiri'],2)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['comissionqris'],2)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['comissionccbca'],2)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['comissionamexbca'],2)."%".'</td>
+				<td class="number">'.locale_number_format($MyRow['percentconsignmentptadu'],0)."%".'</td>
+				<td class="noprint"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedPartner='.$MyRow['partnercode'].'">'._('Edit').'</a></td>
+				<td class="noprint"><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedPartner='.$MyRow['partnercode'].'&amp;delete=1" onclick="return confirm(\''._('Are you sure you wish to delete this retail partner?').'\');">'._('Delete').'</a></td>
+				</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody></table>';

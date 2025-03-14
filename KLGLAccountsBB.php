@@ -145,21 +145,13 @@ or deletion of the records*/
 
 	while ($MyRow = DB_fetch_row($Result)) {
 		echo '<tr class="striped_row">';
-		printf("<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td><a href=\"%s&SelectedAccount=%s\">" . _('Edit') . "</td>
-			<td><a href=\"%s&SelectedAccount=%s&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
-			</tr>",
-			$MyRow[0],
-			$MyRow[1],
-			$MyRow[2],
-			$MyRow[3],
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-			$MyRow[0],
-			htmlspecialchars($_SERVER['PHP_SELF']) . '?',
-			$MyRow[0]);
+		echo "<td>{$MyRow[0]}</td>
+			<td>{$MyRow[1]}</td>
+			<td>{$MyRow[2]}</td>
+			<td>{$MyRow[3]}</td>
+			<td><a href=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?&SelectedAccount={$MyRow[0]}\">" . _('Edit') . "</td>
+			<td><a href=\"" . htmlspecialchars($_SERVER['PHP_SELF']) . "?&SelectedAccount={$MyRow[0]}&delete=1\" onclick=\"return confirm('" . _('Are you sure you wish to delete this account? Additional checks will be performed in any event to ensure data integrity is not compromised.') . "');\">" . _('Delete') . "</td>
+			</tr>";
 	}
 	echo '</tbody></table></div></form>';
 } //END IF selected ACCOUNT

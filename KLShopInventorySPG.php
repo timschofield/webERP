@@ -35,17 +35,12 @@ echo '</thead>
 $i = 1;
 while ($MyRow = DB_fetch_array($Result)) {
 	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $MyRow['stockid'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $MyRow['stockid'] . '</a>';
-	printf('<tr class="striped_row">
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			locale_number_format($i,0),
-			$CodeLink, 
-			$MyRow['description'], 
-			locale_number_format($MyRow['quantity'],0)
-			);
+	echo '<tr class="striped_row">
+			<td class="number">' . locale_number_format($i,0) . '</td>
+			<td>' . $CodeLink . '</td>
+			<td>' . $MyRow['description'] . '</td>
+			<td class="number">' . locale_number_format($MyRow['quantity'],0) . '</td>
+			</tr>';
 	$i++;
 }
 echo '</tbody>

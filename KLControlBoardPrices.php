@@ -280,40 +280,24 @@ function ItemsTooCheap($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales, $D
 					$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 					$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 					
-						$Issues++;
-					printf('<tr class="striped_row">
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							</tr>', 
-							$Issues, 
-							$CodeLink, 
-							$MyRow['description'], 
-							locale_number_format($PositionTopSales,0),
-							locale_number_format($MyRow['qoh'],0),
-							locale_number_format($QOO,0),
-							locale_number_format($MyRow['standardcost'],0),
-							locale_number_format($MinPrice,0),
-							ConvertSQLDate($MyRow['startdate']), 
-							locale_number_format($MyRow['retailprice'],0),
-							locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2),
-							locale_number_format($MaxPrice,0),
-							$NewPriceLink,
-							$Increase,
-							locale_number_format($IncomeIncrease,0)
-							);
+					$Issues++;
+					echo '<tr class="striped_row">
+							<td class="number">' . $Issues . '</td>
+							<td>' . $CodeLink . '</td>
+							<td>' . $MyRow['description'] . '</td>
+							<td class="number">' . locale_number_format($PositionTopSales,0) . '</td>
+							<td class="number">' . locale_number_format($MyRow['qoh'],0) . '</td>
+							<td class="number">' . locale_number_format($QOO,0) . '</td>
+							<td class="number">' . locale_number_format($MyRow['standardcost'],0) . '</td>
+							<td class="number">' . locale_number_format($MinPrice,0) . '</td>
+							<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
+							<td class="number">' . locale_number_format($MyRow['retailprice'],0) . '</td>
+							<td class="number">' . locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2) . '</td>
+							<td class="number">' . locale_number_format($MaxPrice,0) . '</td>
+							<td class="number">' . $NewPriceLink . '</td>
+							<td>' . $Increase . '</td>
+							<td class="number">' . locale_number_format($IncomeIncrease,0) . '</td>
+							</tr>';
 				}
 			}
 		}
@@ -403,40 +387,24 @@ function ItemsTooExpensive($Stockcat, $FactorMin, $FactorMax, $MinQoh, $TopSales
 				$NewPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RecommendedPrice .  '">' . locale_number_format($RecommendedPrice,0) . '</a>';
 				$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 
-					$Issues++;
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$Issues, 
-						$CodeLink, 
-						$MyRow['description'], 
-						locale_number_format($PositionTopSales,0),
-						locale_number_format($MyRow['qoh'],0),
-						locale_number_format($QOO,0),
-						locale_number_format($MyRow['standardcost'],0),
-						locale_number_format($MinPrice,0),
-						ConvertSQLDate($MyRow['startdate']), 
-						locale_number_format($MyRow['retailprice'],0),
-						locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2),
-						locale_number_format($MaxPrice,0),
-						$NewPriceLink,
-						$Decrease,
-						locale_number_format($IncomeDecrease,0)
-						);
+				$Issues++;
+				echo '<tr class="striped_row">
+						<td class="number">' . $Issues . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($PositionTopSales,0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qoh'],0) . '</td>
+						<td class="number">' . locale_number_format($QOO,0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['standardcost'],0) . '</td>
+						<td class="number">' . locale_number_format($MinPrice,0) . '</td>
+						<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['retailprice'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2) . '</td>
+						<td class="number">' . locale_number_format($MaxPrice,0) . '</td>
+						<td class="number">' . $NewPriceLink . '</td>
+						<td>' . $Decrease . '</td>
+						<td class="number">' . locale_number_format($IncomeDecrease,0) . '</td>
+						</tr>';
 			}
 		}
 		if (!$ShowHeader){
@@ -527,37 +495,22 @@ function PriceBelowStandard($Stockcat, $Factor, $MinQoh, $RootPath){
 				$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
 				$IncomeIncrease = ($MyRow['qoh'] + $QOO) * ($RecommendedPrice-$MyRow['retailprice']);
 
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$Issues, 
-						$CodeLink, 
-						$MyRow['description'], 
-						locale_number_format($PositionTopSales,0),
-						locale_number_format($MyRow['qoh'],0),
-						locale_number_format($QOO,0),
-						locale_number_format($MyRow['standardcost'],0),
-						ConvertSQLDate($MyRow['startdate']), 
-						locale_number_format($MyRow['retailprice'],0),
-						locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2),
-						locale_number_format($NewPrice,0),
-						$NewPriceLink,
-						$Increase,
-						locale_number_format($IncomeIncrease,0)
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $Issues . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($PositionTopSales,0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qoh'],0) . '</td>
+						<td class="number">' . locale_number_format($QOO,0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['standardcost'],0) . '</td>
+						<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['retailprice'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2) . '</td>
+						<td class="number">' . locale_number_format($NewPrice,0) . '</td>
+						<td class="number">' . $NewPriceLink . '</td>
+						<td>' . $Increase . '</td>
+						<td class="number">' . locale_number_format($IncomeIncrease,0) . '</td>
+						</tr>';
 			}
 		}
 		if(!$ShowHeader){
@@ -634,28 +587,19 @@ function PriceWrongRounding($RootPath){
 				$UpPriceLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $RoundedUp .  '">' . locale_number_format($RoundedUp,0) . '</a>';
 				$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
 				$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
-					$Issues++;
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$Issues, 
-						$CodeLink, 
-						$MyRow['description'], 
-						$PositionTopSales,
-						locale_number_format($MyRow['qoh'],0),
-						locale_number_format($QOO,0),
-						$DownPriceLink,
-						locale_number_format($MyRow['retailprice'],0),
-						$UpPriceLink
-						);
+				$Issues++;
+				
+				echo '<tr class="striped_row">
+						<td class="number">' . $Issues . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . $PositionTopSales . '</td>
+						<td class="number">' . locale_number_format($MyRow['qoh'],0) . '</td>
+						<td class="number">' . locale_number_format($QOO,0) . '</td>
+						<td class="number">' . $DownPriceLink . '</td>
+						<td class="number">' . locale_number_format($MyRow['retailprice'],0) . '</td>
+						<td class="number">' . $UpPriceLink . '</td>
+						</tr>';
 			}
 		}
 		if(!$ShowHeader){
@@ -730,34 +674,22 @@ function PricesTooOld($Years, $IncreaseA, $IncreaseB, $RootPath){
 			$PriceBLink = '<a href="' . $RootPath . '/KLStartChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $PriceB .  '">' . locale_number_format($PriceB,0) . '</a>';
 			$PositionTopSales = PositionTopSalesItem($MyRow['stockid'], 60);
 			$QOO = GetQuantityOnOrder($MyRow['stockid'], '');
-				$Issues++;
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$Issues, 
-					$CodeLink, 
-					$MyRow['description'], 
-					$PositionTopSales,
-					locale_number_format($MyRow['qoh'],0),
-					locale_number_format($QOO,0),
-					locale_number_format($MyRow['standardcost'],0),
-					ConvertSQLDate($MyRow['startdate']), 
-					locale_number_format($MyRow['retailprice'],0),
-					locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2),
-					$PriceALink,
-					$PriceBLink
-					);
+			$Issues++;
+			
+			echo '<tr class="striped_row">
+					<td class="number">' . $Issues . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td class="number">' . $PositionTopSales . '</td>
+					<td class="number">' . locale_number_format($MyRow['qoh'],0) . '</td>
+					<td class="number">' . locale_number_format($QOO,0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['standardcost'],0) . '</td>
+					<td>' . ConvertSQLDate($MyRow['startdate']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['retailprice'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['retailprice']/$MyRow['standardcost'],2) . '</td>
+					<td class="number">' . $PriceALink . '</td>
+					<td class="number">' . $PriceBLink . '</td>
+					</tr>';
 		}
 		if(!$ShowHeader){
 			echo '</tbody>

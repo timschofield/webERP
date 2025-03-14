@@ -111,26 +111,20 @@ function QualityIssuesByItem($Typereport, $numdays, $RootPath){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$PercentIncidences = ($MyRow['qtysold'] != 0) ? $MyRow['incidences']/$MyRow['qtysold'] : 0;
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$MyRow['item'],
-					locale_number_format($MyRow['incidences'],0),
-					locale_number_format($MyRow['qtysold'],0),
-					locale_number_format($PercentIncidences*100,1).'%'
-					);
+			echo '<tr class="striped_row">
+					<td class="number">'.$i.'</td>
+					<td>'.$MyRow['item'].'</td>
+					<td class="number">'.locale_number_format($MyRow['incidences'],0).'</td>
+					<td class="number">'.locale_number_format($MyRow['qtysold'],0).'</td>
+					<td class="number">'.locale_number_format($PercentIncidences*100,1).'%'.'</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody></table></div>';
 	}
 }
 
-/*
+
 function ReturnsBySPG($SPG, $NumDays){
 
 	$StartDate  = FormatDateForSQL(DateAdd(Date($_SESSION['DefaultDateFormat']),'d',-$NumDays));
@@ -163,7 +157,7 @@ function ReturnsBySPG($SPG, $NumDays){
 	$Result = DB_query($SQL);
 	
 	if (DB_num_rows($Result) != 0){
-		$TableTitleText = _ _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days';
+		$TableTitleText = _('Quality data Retail Customer by SPG during the last ') . locale_number_format($NumDays,0) . ' days';
 		ShowTableTitle($TableTitleText);
 		echo '<div>';
 		echo '<table class="selection">';
@@ -185,34 +179,22 @@ function ReturnsBySPG($SPG, $NumDays){
 		echo $TableHeader;
 		echo '<tbody>';
 		while ($MyRow = DB_fetch_array($Result)) {
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$MyRow['salesperson'],
-				$MyRow['salesmanname'],
-				locale_number_format($MyRow['totalorders'],0),
-				locale_number_format(($MyRow['harvested']/$MyRow['totalorders'])*100,0).'%',
-				locale_number_format(($MyRow['firstnames']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['lastnames']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['countries']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['date_of_births']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['emails']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['sexs']/$MyRow['harvested'])*100,0).'%',
-				locale_number_format(($MyRow['onlinevipcards']/$MyRow['totalorders'])*100,0).'%'
-				);
+			echo '<tr class="striped_row">
+				<td>'.$MyRow['salesperson'].'</td>
+				<td>'.$MyRow['salesmanname'].'</td>
+				<td class="number">'.locale_number_format($MyRow['totalorders'],0).'</td>
+				<td class="number">'.locale_number_format(($MyRow['harvested']/$MyRow['totalorders'])*100,0).'%'.'</td>
+				<td class="number">'.locale_number_format(($MyRow['firstnames']/$MyRow['harvested'])*100,0).'%'.'</td>
+				<td class="number">'.locale_number_format(($MyRow['lastnames']/$MyRow['harvested'])*100,0).'%'.'</td>
+				<td class="number">'.locale_number_format(($MyRow['countries']/$MyRow['harvested'])*100,0).'%'.'</td>
+				<td class="number">'.locale_number_format(($MyRow['date_of_births']/$MyRow['harvested'])*100,0).'%'.'</td>
+				<td class="number">'.locale_number_format(($MyRow['emails']/$MyRow['harvested'])*100,0).'%'.'</td>
+				<td class="number">'.locale_number_format(($MyRow['sexs']/$MyRow['harvested'])*100,0).'%'.'</td>
+				<td class="number">'.locale_number_format(($MyRow['onlinevipcards']/$MyRow['totalorders'])*100,0).'%'.'</td>
+				</tr>';
 		}
 		echo '</tbody></table></div></form>';
 	}
 }
-*/
+
 ?>

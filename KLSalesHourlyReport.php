@@ -156,29 +156,18 @@ function HourlyPerformance($numDays, $RootPath){
 				$ShowHeader = FALSE;
 			}
 			$i++;
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format_zero_blank($i,0),
-					$MyRow['name'],
-					locale_number_format_zero_blank($MyRow['totalsalesfull']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['valuesalesfull']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['totalsales']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['valuesales']/$numDays,0),
-					$MyRow['firstsaletoday'],
-					$MyRow['lastsaletoday'],
-					locale_number_format_zero_blank($MyRow['totalsalestoday'],0),
-					locale_number_format_zero_blank($MyRow['valuesalestoday'],0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . locale_number_format_zero_blank($i,0) . '</td>
+					<td>' . $MyRow['name'] . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['totalsalesfull']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['valuesalesfull']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['totalsales']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['valuesales']/$numDays,0) . '</td>
+					<td class="number">' . $MyRow['firstsaletoday'] . '</td>
+					<td class="number">' . $MyRow['lastsaletoday'] . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['totalsalestoday'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['valuesalestoday'],0) . '</td>
+					</tr>';
 					
 			if (isset($MyRow['firstsalefull'])){		
 				if ($FirstSaleFull > $MyRow['firstsalefull']){
@@ -225,82 +214,49 @@ function HourlyPerformance($numDays, $RootPath){
 			<tfooter>';
 
 		if (!$ShowHeader){
-			printf('<tr>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'',
-					'TOTALS',
-					locale_number_format_zero_blank($TotalSalesFull/$numDays,0),
-					locale_number_format_zero_blank($ValueSalesFull/$numDays,0),
-					locale_number_format_zero_blank($TotalSales/$numDays,0),
-					locale_number_format_zero_blank($ValueSales/$numDays,0),
-					$FirstSaleToday,
-					$LastSaleToday,
-					locale_number_format_zero_blank($TotalSalesToday,0),
-					locale_number_format_zero_blank($ValueSalesToday,0)
-					);
+			echo '<tr>
+					<td class="number"></td>
+					<td>TOTALS</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalSalesFull/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ValueSalesFull/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalSales/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ValueSales/$numDays,0) . '</td>
+					<td class="number">' . $FirstSaleToday . '</td>
+					<td class="number">' . $LastSaleToday . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalSalesToday,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ValueSalesToday,0) . '</td>
+					</tr>';
 			
 			$TotalPercent = ($ValueSalesFull != 0)? ($ValueSales/$ValueSalesFull*100) : 0 ;
 			$TodayRythm = ($ValueSales != 0) ? ($ValueSalesToday/($ValueSales/$numDays)*100) : 0 ;
 
-			printf('<tr>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'',
-					'',
-					'',
-					'',
-					'',
-					locale_number_format_zero_blank($TotalPercent,0).'%',
-					'',
-					'',
-					'',
-					locale_number_format_zero_blank($TodayRythm,0).'%'
-					);
+			echo '<tr>
+					<td class="number"></td>
+					<td></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number">' . locale_number_format_zero_blank($TotalPercent,0) . '%</td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number">' . locale_number_format_zero_blank($TodayRythm,0) . '%</td>
+					</tr>';
 
 			$TodayForecast = ($ValueSalesToday != 0) ? (round($ValueSalesFull/$ValueSales*$ValueSalesToday/JUTA)*JUTA) : 0 ;
 			
-			printf('<tr>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'',
-					'Today Forecast',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					locale_number_format_zero_blank($TodayForecast,0)
-					);
+			echo '<tr>
+					<td class="number"></td>
+					<td>Today Forecast</td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number"></td>
+					<td class="number">' . locale_number_format_zero_blank($TodayForecast,0) . '</td>
+					</tr>';
 			echo '</tfooter></table></div>';
 		}
 	}

@@ -91,9 +91,7 @@ if ($StockID != ''){
 		
 		echo '<td>' . $MyRow['locationname'] . '</td>';
 
-		printf('<td class="number">%s</td>',
-				locale_number_format_zero_blank($Available, 0)
-				);
+		echo '<td class="number">' . locale_number_format_zero_blank($Available, 0) . '</td>';
 
 		echo '</tr>';
 	}
@@ -102,9 +100,7 @@ if ($StockID != ''){
 	echo '<tr class="striped_row">
 		<td>Total available:</td>';
 
-	printf('<td class="number">%s</td></tr>',
-			locale_number_format_zero_blank($Total, 0)
-			);
+	echo '<td class="number">' . locale_number_format_zero_blank($Total, 0) . '</td></tr>';
 }
 
 echo '</tfooter>

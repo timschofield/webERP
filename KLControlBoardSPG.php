@@ -130,29 +130,18 @@ function AverageSPGSales($SPG, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD){
 			$Forecast = locale_number_format(round($MyRow['salesC'], -5),0);
 			$MTD = locale_number_format($MyRow['salesMTD'], 0);
 			
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i,
-					$Code,
-					$Name,
-					$dailyA, 
-					$dailyB, 
-					$dailyC,
-					$dailyD,
-					$MTD,
-					$Trend,
-					$Forecast
-					);
+			echo '<tr class="striped_row">
+					<td>' . $i . '</td>
+					<td>' . $Code . '</td>
+					<td>' . $Name . '</td>
+					<td class="number">' . $dailyA . '</td>
+					<td class="number">' . $dailyB . '</td>
+					<td class="number">' . $dailyC . '</td>
+					<td class="number">' . $dailyD . '</td>
+					<td class="number">' . $MTD . '</td>
+					<td>' . $Trend . '</td>
+					<td class="number">' . $Forecast . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>
@@ -215,21 +204,14 @@ function SPGTypePayments($SPG, $maxdays){
 				$Totalvouchers = $Totalvouchers + $MyRow['vouchersshop'];
 				$Total = $Total + $MyRow['totalshop'];
 				
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$MyRow['reportunit'],
-						$MyRow['reportname'],
-						$Percentcash, 
-						$Percentcredit, 
-						$Percentreturns, 
-						$Percentvouchers
-						);
+				echo '<tr class="striped_row">
+						<td>' . $MyRow['reportunit'] . '</td>
+						<td>' . $MyRow['reportname'] . '</td>
+						<td class="number">' . $Percentcash . '</td>
+						<td class="number">' . $Percentcredit . '</td>
+						<td class="number">' . $Percentreturns . '</td>
+						<td class="number">' . $Percentvouchers . '</td>
+						</tr>';
 				$i++;
 			}
 		}
@@ -280,25 +262,16 @@ function lastSalesSPG($spg, $NumDaysA){
 			$Total = $MyRow['klpaidcash'] + 
 					$MyRow['klpaidcreditcard'];
 					
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($MyRow['orderno'],0),
-					$MyRow['customerref'],
-					ConvertSQLDate($MyRow['orddate']), 
-					locale_number_format($MyRow['klpaidcash'],0),
-					locale_number_format($MyRow['klpaidcreditcard'],0),
-					locale_number_format($MyRow['klreturnedgoods'],0),
-					locale_number_format($MyRow['klvouchers'],0),
-					locale_number_format($Total,0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . locale_number_format($MyRow['orderno'],0) . '</td>
+					<td class="number">' . $MyRow['customerref'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['klpaidcash'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['klpaidcreditcard'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['klreturnedgoods'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['klvouchers'],0) . '</td>
+					<td class="number">' . locale_number_format($Total,0) . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>

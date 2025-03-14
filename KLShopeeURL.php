@@ -127,25 +127,16 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 					$Action = "Insert";
 				}
 
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i,
-						$StockID,
-						$ShopeeProductId,
-						$ShopeeStoreId,
-						$LinkShopee,
-						$QOH,
-						$Error,
-						$Action
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $StockID . '</td>
+						<td>' . $ShopeeProductId . '</td>
+						<td>' . $ShopeeStoreId . '</td>
+						<td>' . $LinkShopee . '</td>
+						<td class="number">' . $QOH . '</td>
+						<td>' . $Error . '</td>
+						<td>' . $Action . '</td>
+						</tr>';
 				$i++;
 			}
 		}

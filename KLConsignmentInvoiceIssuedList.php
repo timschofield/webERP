@@ -89,38 +89,24 @@ function submit($Title, $CompanyFrom, $StartDate, $EndDate) {
 				$TotalGoodsValue += $GoodsInvoice;
 				$TotalPPNValue += $PPNInvoice;
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$MyRow['partnercode'], 
-						ConvertSQLDate($MyRow['invoicedtopartner']), 
-						CreateConsignmentInvoiceNumber($CompanyFrom, $MyRow['partnercode'], $MyRow['invoicedtopartner']),
-						locale_number_format($GoodsInvoice,0),
-						locale_number_format($PPNInvoice,0),
-						locale_number_format($MyRow['valueinvoice'],0)
-						);
+				echo '<tr class="striped_row">
+						<td>' . $MyRow['partnercode'] . '</td>
+						<td>' . ConvertSQLDate($MyRow['invoicedtopartner']) . '</td>
+						<td>' . CreateConsignmentInvoiceNumber($CompanyFrom, $MyRow['partnercode'], $MyRow['invoicedtopartner']) . '</td>
+						<td class="number">' . locale_number_format($GoodsInvoice,0) . '</td>
+						<td class="number">' . locale_number_format($PPNInvoice,0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['valueinvoice'],0) . '</td>
+						</tr>';
 			}
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'TOTAL', 
-					'', 
-					locale_number_format($NumberConsignmentInvoices,0),
-					locale_number_format($TotalGoodsValue,0),
-					locale_number_format($TotalPPNValue,0),
-					locale_number_format($TotalInvoiceValue,0)
-					);
+			echo '<tr class="striped_row">
+					<td>TOTAL</td>
+					<td></td>
+					<td class="number">' . locale_number_format($NumberConsignmentInvoices,0) . '</td>
+					<td class="number">' . locale_number_format($TotalGoodsValue,0) . '</td>
+					<td class="number">' . locale_number_format($TotalPPNValue,0) . '</td>
+					<td class="number">' . locale_number_format($TotalInvoiceValue,0) . '</td>
+					</tr>';
 			echo '</tbody>
 				</table>
 				</div>';

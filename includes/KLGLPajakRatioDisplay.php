@@ -20,146 +20,94 @@ echo '<div>
       <tbody>';
 
 // Ratio GPM
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"HPP",
-		"",
-		locale_number_format($PajakRatio_HPP,0),
-		locale_number_format($PajakRatio_HPP_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"Sales",
-		"",
-		locale_number_format($PajakRatio_Sales,0),
-		locale_number_format($PajakRatio_Sales_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"GPM Ratio",
-		"30.21%",
-		locale_number_format($PajakRatio_HPP / $PajakRatio_Sales * 100, 2). "%",
-		locale_number_format($PajakRatio_HPP_LY / $PajakRatio_Sales_LY * 100, 2). "%"
-		);
+echo '<tr class="striped_row">
+		<td>HPP</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_HPP,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>Sales</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales,0) . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales_LY,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>GPM Ratio</td>
+		<td class="number">30.21%</td>
+		<td class="number">' . locale_number_format($PajakRatio_HPP / $PajakRatio_Sales * 100, 2). '%' . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_HPP_LY / $PajakRatio_Sales_LY * 100, 2). '%' . '</td>
+		</tr>';
 
 
 // Ratio CTTOR
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"Taxes",
-		"",
-		locale_number_format($PajakRatio_Taxes,0),
-		locale_number_format($PajakRatio_Taxes_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"Sales",
-		"",
-		locale_number_format($PajakRatio_Sales,0),
-		locale_number_format($PajakRatio_Sales_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"CTTOR Ratio",
-		"3.79%",
-		locale_number_format($PajakRatio_Taxes / $PajakRatio_Sales * 100, 2). "%",
-		locale_number_format($PajakRatio_Taxes_LY / $PajakRatio_Sales_LY * 100, 2). "%"
-		);		
+echo '<tr class="striped_row">
+		<td>Taxes</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_Taxes,0) . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Taxes_LY,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>Sales</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales,0) . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales_LY,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>CTTOR Ratio</td>
+		<td class="number">3.79%</td>
+		<td class="number">' . locale_number_format($PajakRatio_Taxes / $PajakRatio_Sales * 100, 2). '%' . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Taxes_LY / $PajakRatio_Sales_LY * 100, 2). '%' . '</td>
+		</tr>';		
 
 
 // Ratio NPM
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"Profit after tax",
-		"",
-		locale_number_format($PajakRatio_ProfitAfterTax,0),
-		locale_number_format($PajakRatio_ProfitAfterTax_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"Sales",
-		"",
-		locale_number_format($PajakRatio_Sales,0),
-		locale_number_format($PajakRatio_Sales_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"NPM Ratio",
-		"12.44%",
-		locale_number_format($PajakRatio_ProfitAfterTax / $PajakRatio_Sales * 100, 2). "%",
-		locale_number_format($PajakRatio_ProfitAfterTax_LY / $PajakRatio_Sales_LY * 100, 2). "%"
-		);		
+echo '<tr class="striped_row">
+		<td>Profit after tax</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_ProfitAfterTax,0) . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_ProfitAfterTax_LY,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>Sales</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales,0) . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales_LY,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>NPM Ratio</td>
+		<td class="number">12.44%</td>
+		<td class="number">' . locale_number_format($PajakRatio_ProfitAfterTax / $PajakRatio_Sales * 100, 2). '%' . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_ProfitAfterTax_LY / $PajakRatio_Sales_LY * 100, 2). '%' . '</td>
+		</tr>';		
 
 
 // Ratio G
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"Salaries",
-		"",
-		locale_number_format($PajakRatio_Salaries,0),
-		locale_number_format($PajakRatio_Salaries_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"Sales",
-		"",
-		locale_number_format($PajakRatio_Sales,0),
-		locale_number_format($PajakRatio_Sales_LY,0)
-		);
-printf('<tr class="striped_row">
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		"G Ratio",
-		"6.31%",
-		locale_number_format($PajakRatio_Salaries / $PajakRatio_Sales * 100, 2). "%",
-		locale_number_format($PajakRatio_Salaries_LY / $PajakRatio_Sales_LY * 100, 2). "%"
-		);		
+echo '<tr class="striped_row">
+		<td>Salaries</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_Salaries,0) . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Salaries_LY,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>Sales</td>
+		<td class="number"></td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales,0) . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Sales_LY,0) . '</td>
+		</tr>';
+
+echo '<tr class="striped_row">
+		<td>G Ratio</td>
+		<td class="number">6.31%</td>
+		<td class="number">' . locale_number_format($PajakRatio_Salaries / $PajakRatio_Sales * 100, 2). '%' . '</td>
+		<td class="number">' . locale_number_format($PajakRatio_Salaries_LY / $PajakRatio_Sales_LY * 100, 2). '%' . '</td>
+		</tr>';		
 
 echo '</tbody>
 	</table>

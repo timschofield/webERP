@@ -108,61 +108,38 @@ if ($StockID != ''){
 
 			$InvoiceLink = '<a href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $MyRow['transno'] . '&amp;InvOrCredit=Invoice">' . $MyRow['typename'] . '</a>';
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$DisplayTranDate,
-					$MyRow['userid'],
-					$InvoiceLink,
-					$MyRow['transno'],
-					'',
-					locale_number_format($MyRow['qty'],$MyRow['decimalplaces']),
-					locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']));
+			echo '<tr class="striped_row">
+					<td>' . $DisplayTranDate . '</td>
+					<td>' . $MyRow['userid'] . '</td>
+					<td>' . $InvoiceLink . '</td>
+					<td>' . $MyRow['transno'] . '</td>
+					<td>' . '' . '</td>
+					<td class="number">' . locale_number_format($MyRow['qty'],$MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']) . '</td>
+					</tr>';
 
 		} elseif ($MyRow['type']==11){
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td><a target="_blank" href="%s/PrintCustTrans.php?FromTransNo=%s&amp;InvOrCredit=Credit">%s</a></td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$DisplayTranDate,
-					$MyRow['userid'],
-					$RootPath,
-					$MyRow['transno'],
-					$MyRow['typename'],
-					$MyRow['transno'],
-					'',
-					locale_number_format($MyRow['qty'],$MyRow['decimalplaces']),
-					locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']));
+			echo '<tr class="striped_row">
+					<td>' . $DisplayTranDate . '</td>
+					<td>' . $MyRow['userid'] . '</td>
+					<td><a target="_blank" href="' . $RootPath . '/PrintCustTrans.php?FromTransNo=' . $MyRow['transno'] . '&amp;InvOrCredit=Credit">' . $MyRow['typename'] . '</a></td>
+					<td>' . $MyRow['transno'] . '</td>
+					<td>' . '' . '</td>
+					<td class="number">' . locale_number_format($MyRow['qty'],$MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']) . '</td>
+					</tr>';
 		} else {
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$DisplayTranDate,
-					$MyRow['userid'],
-					$MyRow['typename'],
-					$MyRow['transno'],
-					$MyRow['reference'],
-					locale_number_format($MyRow['qty'],$MyRow['decimalplaces']),
-					locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']));
+			echo '<tr class="striped_row">
+					<td>' . $DisplayTranDate . '</td>
+					<td>' . $MyRow['userid'] . '</td>
+					<td>' . $MyRow['typename'] . '</td>
+					<td>' . $MyRow['transno'] . '</td>
+					<td>' . $MyRow['reference'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['qty'],$MyRow['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['newqoh'],$MyRow['decimalplaces']) . '</td>
+					</tr>';
 		}
 	//end of page full new headings if
 	}

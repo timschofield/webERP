@@ -37,15 +37,11 @@ echo '</thead>
 
 while ($MyRow = DB_fetch_array($Result)) {
 	$CodeLink = '<a href="' . $RootPath . '/KLStockMovementsSPG.php?StockID=' . $MyRow['stkcode'] . '&Location='. $_SESSION['UserStockLocation'] . '">' . $MyRow['stkcode'] . '</a>';
-	printf('<tr class="striped_row">
-		<td>%s</td>
-		<td>%s</td>
-		<td class="number">%s</td>
-		</tr>', 
-		ConvertSQLDate($MyRow['orddate']),
-		$CodeLink, 
-		locale_number_format($MyRow['sold'],0)
-	);
+	echo '<tr class="striped_row">
+		<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
+		<td>' . $CodeLink . '</td>
+		<td class="number">' . locale_number_format($MyRow['sold'],0) . '</td>
+		</tr>';
 }
 
 echo '</tbody>

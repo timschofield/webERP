@@ -124,25 +124,16 @@ function submit($SelectedFile) {
 				}
 
 				$k = StartEvenOrOddRow($k);
-				printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i,
-					$StockID,
-					$LazadaProductId,
-					$LazadaStoreId,
-					$LinkLazada,
-					$QOH,
-					$Error,
-					$Action
-					);
+				echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . $StockID . '</td>
+					<td>' . $LazadaProductId . '</td>
+					<td>' . $LazadaStoreId . '</td>
+					<td>' . $LinkLazada . '</td>
+					<td class="number">' . $QOH . '</td>
+					<td>' . $Error . '</td>
+					<td>' . $Action . '</td>
+					</tr>';
 				$i++;
 			}
 		}

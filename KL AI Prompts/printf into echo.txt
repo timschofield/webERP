@@ -1,0 +1,1 @@
+1) replace all printf statements with echo statements, nothing else
