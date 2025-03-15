@@ -5,8 +5,8 @@ include('includes/SQL_CommonFunctions.inc');
 $Title = _('Kapal-Laut Delete Sales Order');
 include('includes/header.php');
 include('includes/KLDefines.php');
-include('includes/OpenCartGeneralFunctions.php');
-include('includes/OpenCartConnectDB.php');
+include('includes/OCOpenCartGeneralFunctions.php');
+include('includes/OCOpenCartConnectDB.php');
 
 //Get Out if we don't have the data needed to work with
 if (!isset($_GET['OrderNo']) OR $_GET['OrderNo']==''){

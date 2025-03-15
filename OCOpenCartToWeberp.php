@@ -13,9 +13,9 @@ include ('includes/KLGeneralFunctions.php');
 include ('includes/KLMarketplaceFunctions.php');
 include ('includes/KLDefines.php');
 include ('includes/KLEmails.php');
-include ('includes/OpenCartGeneralFunctions.php');
-include ('includes/OpenCartToWeberpSync.php');
-include ('includes/OpenCartConnectDB.php');
+include ('includes/OCOpenCartGeneralFunctions.php');
+include ('includes/OCOpenCartToWeberpSync.php');
+include ('includes/OCOpenCartConnectDB.php');
 
 OpenCartToWeberpSync(TRUE , '');
 

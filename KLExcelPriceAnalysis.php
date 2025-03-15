@@ -14,8 +14,8 @@ include('includes/KLGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 include('includes/KLCountriesForRetail.php');
-include('includes/OpenCartGeneralFunctions.php');
-include('includes/OpenCartConnectDB.php');
+include('includes/OCOpenCartGeneralFunctions.php');
+include('includes/OCOpenCartConnectDB.php');
 
 if (!isset($_POST['Format'])) {
     $_POST['Format'] = 'xlsx';

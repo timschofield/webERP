@@ -115,8 +115,8 @@ include('includes/KLEmails.php');
 include('includes/KLReorderLevel.php');
 include('includes/KLUIGeneralFunctions.php');
 
-include('includes/OpenCartGeneralFunctions.php');
-include('includes/OpenCartConnectDB.php');
+include('includes/OCOpenCartGeneralFunctions.php');
+include('includes/OCOpenCartConnectDB.php');
 
 /* Do the pending GL Postings to get the latest financial control reports*/
 include('includes/GLPostings.inc');

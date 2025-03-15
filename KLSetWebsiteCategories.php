@@ -11,7 +11,7 @@ include ('includes/KLDefines.php');
 include ('includes/KLBoards.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
-include('includes/OpenCartGeneralFunctions.php');
+include('includes/OCOpenCartGeneralFunctions.php');
 
 $UpdateDB = TRUE;
 

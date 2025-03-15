@@ -20,7 +20,7 @@ echo '<p class="page_title_text"><img alt="" src="', $RootPath, '/css/', $Theme,
 
 include('includes/CountriesArray.php');
 // KL RICARD
-include ('includes/OpenCartGeneralFunctions.php');
+include ('includes/OCOpenCartGeneralFunctions.php');
 // KL RICARD END
 
 if(isset($_GET['SelectedLocation'])) {
@@ -1248,7 +1248,7 @@ function UpdateOnlinePartnerPaypalSettingsInOpenCart($NewLocationType, $NewOnlin
 		// we are modifying an ONLINE Location
 		if ($NewOnlinePartnerCode != 'NOONLINE'){
 			// In the online location, the online partner can not be NOONLINE
-			include ('includes/OpenCartConnectDB.php');
+			include ('includes/OCOpenCartConnectDB.php');
 			$SQL = "SELECT klonlinepartners.paypalusername,
 						klonlinepartners.paypalpassword,
 						klonlinepartners.paypalsignature,
