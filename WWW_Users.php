@@ -1,5 +1,5 @@
 <?php
-// WWW_Users.php
+
 // Entry of users and security settings of users.
 
 include('includes/session.php');
@@ -364,7 +364,7 @@ if(!isset($SelectedUser)) {
 		</thead>
 		<tbody>';
 
-	$Sql = "SELECT userid,
+	$SQL = "SELECT userid,
 					realname,
 					phone,
 					email,
@@ -380,7 +380,13 @@ if(!isset($SelectedUser)) {
 					theme,
 					language
 				FROM www_users";
-	$Result = DB_query($Sql);
+	
+	// Only Sys Admin can see other sys admins. To prevent rogue employees playing with sys admin rights;-)
+	if($_SESSION['AccessLevel'] != 8){
+		$SQL = $SQL . " WHERE fullaccess != '8'";
+	} 
+	$SQL = $SQL . " ORDER BY userid";	
+	$Result = DB_query($SQL);
 
 	while ($MyRow = DB_fetch_array($Result)) {
 		if(!isset($MyRow['lastvisitdate'])) {
