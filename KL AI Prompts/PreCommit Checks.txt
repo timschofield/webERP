@@ -7,3 +7,5 @@ For all files in the working set:
 6) Ternary Operators: Must have a space before and after the ? and the :
 7) Function Calls: No space between the function name and the opening parenthesis. No space after the opening parenthesis or before the closing parenthesis.
 8) Line Length: For any line longer than 120 characters divide it into several lines to improve readability.
+9) Fix any potential Divide By Zero error.
+
