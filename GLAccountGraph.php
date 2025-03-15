@@ -252,7 +252,7 @@ if ((!isset($_POST['PeriodFrom']) or !isset($_POST['PeriodTo'])) or $NewReport =
 	$Graph->DrawGraph();
 	echo '<table class="selection">
 			<tr>
-				<td><p><img src="companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png" alt="Sales Report Graph"></img></p></td>
+				<td><img src="companies/' . $_SESSION['DatabaseName'] . '/reports/glaccountgraph.png" alt="Sales Report Graph"></img></td>
 			</tr>
 		  </table>';
 
