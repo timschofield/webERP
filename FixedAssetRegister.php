@@ -1,10 +1,14 @@
 <?php
-// FixedAssetRegister.php
+
 // Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
 
 include ('includes/session.php');
-if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
-if (isset($_POST['ToDate'])){$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);};
+if (isset($_POST['FromDate'])){
+	$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);
+}
+if (isset($_POST['ToDate'])){
+	$_POST['ToDate'] = ConvertSQLDate($_POST['ToDate']);
+}
 $ViewTopic = 'FixedAssets';
 $BookMark = 'AssetRegister';
 $Title = _('Fixed Asset Register');
@@ -19,6 +23,17 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 		include ('includes/header.php');
 		echo '<p class="page_title_text"><img src="' . $RootPath . '/css/' . $Theme . '/images/magnifier.png" title="' . _('Search') . '" alt="" />' . ' ' . $Title . '</p>';
 	}
+
+	$DisposalSQL = '';
+		if ($_POST['DisposalStatus']=='ALL'){
+		$DisposalSQL .= " AND (fixedassets.disposaldate = '1000-01-01' 
+								OR fixedassets.disposaldate >='" . $DateFrom . "')";
+	} elseif ($_POST['DisposalStatus']=='ACTIVE') {
+		$DisposalSQL .= ' AND disposaldate = "1000-01-01"';
+	}else{
+		$DisposalSQL .= ' AND disposaldate != "1000-01-01"';
+	}
+
 	$DateFrom = FormatDateForSQL($_POST['FromDate']);
 	$DateTo = FormatDateForSQL($_POST['ToDate']);
 	$SQL = "SELECT fixedassets.assetid,
@@ -42,7 +57,8 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 			INNER JOIN fixedassettrans ON fixedassets.assetid=fixedassettrans.assetid
 			WHERE fixedassets.assetcategoryid " . LIKE . "'" . $_POST['AssetCategory'] . "'
 			AND fixedassets.assetid " . LIKE . "'" . $_POST['AssetID'] . "'
-			AND fixedassets.assetlocation " . LIKE . "'" . $_POST['AssetLocation'] . "'
+			AND fixedassets.assetlocation " . LIKE . "'" . $_POST['AssetLocation'] . "'".
+			$DisposalSQL . "
 			GROUP BY fixedassets.assetid,
 					fixedassets.description,
 					fixedassets.longdescription,
@@ -78,7 +94,7 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 		}
 		PDFPageHeader();
 	} elseif (isset($_POST['csv'])) {
-		$CSVOutput = "'Asset ID','Description','Serial Number','Location','Date Acquired','Cost B/Fwd','Period Additions','Depn B/Fwd','Period Depreciation','Cost C/Fwd', 'Accum Depn C/Fwd','NBV','Disposal Value'\n";
+		$CSVOutput = "'Asset ID','Description','Serial Number','Location','Date Acquired','Cost B/Fwd','Period Additions','Depn B/Fwd','Period Depreciation','Cost C/Fwd', 'Accum Depn C/Fwd','NBV','Disposal Value','Disposal Date'\n";
 	} else {
 		echo '<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
               <div>';
@@ -100,6 +116,7 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 				<th>' . _('Depn C/fwd') . '</th>
 				<th>' . _('NBV') . '</th>
 				<th>' . _('Disposal Value') . '</th>
+				<th>' . _('Disposal Date') . '</th>
 			</tr>';
 	}
 	$TotalCostBfwd = 0;
@@ -137,7 +154,11 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 				$CostCfwd = $MyRow['periodadditions'] + $MyRow['costbfwd'];
 				$AccumDepnCfwd = $MyRow['perioddepn'] + $MyRow['depnbfwd'];
 			}
-
+			if ($MyRow['disposaldate']=='1000-01-01'){
+				$DisposalDate = "";
+			}else{
+				$DisposalDate = $MyRow['disposaldate'];
+			}
 			if (isset($_POST['PDF'])) {
 
 				$LeftOvers = $pdf->addTextWrap($XPos, $YPos, 30 - $Left_Margin, $FontSize, $MyRow['assetid']);
@@ -168,7 +189,21 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 					PDFPageHeader();
 				}
 			} elseif (isset($_POST['csv'])) {
-				$CSVOutput .= $MyRow['assetid'] . ',' . $MyRow['longdescription'] .',' . $MyRow['serialno'] . ',' . $MyRow['locationdescription'] . ',' . $MyRow['datepurchased'] . ',' . $MyRow['costbfwd'] . ',' . $MyRow['periodadditions'] . ',' . $MyRow['depnbfwd'] . ',' . $MyRow['perioddepn'] . ',' . $CostCfwd . ',' . $AccumDepnCfwd . ',' . ($CostCfwd - $AccumDepnCfwd) . ',' . $MyRow['perioddisposal'] . "\n";
+				$CSVOutput .= $MyRow['assetid'] . ',' . 
+							$MyRow['longdescription'] .',' . 
+							$MyRow['serialno'] . ',' . 
+							$MyRow['locationdescription'] . ',' . 
+							$MyRow['datepurchased'] . ',' . 
+							round($MyRow['costbfwd']) . ',' . 
+							round($MyRow['periodadditions']) . ',' . 
+							round($MyRow['depnbfwd']) . ',' . 
+							$MyRow['perioddepn'] . ',' . 
+							round($CostCfwd) . ',' . 
+							round($AccumDepnCfwd) . ',' . 
+							round($CostCfwd - $AccumDepnCfwd) . ',' . 
+							$MyRow['perioddisposal'] . ',' . 
+							$DisposalDate . 
+							"\n";
 
 			} else {
 				echo '<tr>
@@ -184,7 +219,12 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 					echo '|_' . $Ancestors[$i] . '<br />';
 				}
 			*/
-				echo '</td>
+			if ($MyRow['disposaldate']=='1000-01-01'){
+				$DisposalDate = "";
+			}else{
+				$DisposalDate = ConvertSQLDate($MyRow['disposaldate']);
+			}
+			echo '</td>
 					<td style="vertical-align:top">' . ConvertSQLDate($MyRow['datepurchased']) . '</td>
 					<td style="vertical-align:top" class="number">' . locale_number_format($MyRow['costbfwd'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td style="vertical-align:top" class="number">' . locale_number_format($MyRow['depnbfwd'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -194,6 +234,7 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 					<td style="vertical-align:top" class="number">' . locale_number_format($AccumDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td style="vertical-align:top" class="number">' . locale_number_format($CostCfwd - $AccumDepnCfwd, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td style="vertical-align:top" class="number">' . locale_number_format($MyRow['perioddisposal'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td style="vertical-align:top">' . $DisposalDate . '</td>
 				</tr>';
 			}
 		} // end of if the asset was either not disposed yet or disposed after the start date
@@ -307,6 +348,32 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 	}
 	echo '</select>
 		</field>';
+		
+	if (!isset($_POST['DisposalStatus'])) {
+		$_POST['DisposalStatus'] = "ACTIVE";
+	}
+
+	echo '<field>
+			<label for="DisposalStatus">' . _('Asset Disposal Status') . '</label>
+			<select name="DisposalStatus">';
+
+	if ($_POST['DisposalStatus']=='ALL'){
+		echo '	<option selected="selected" value="ALL">' . _('All') . '</option>
+				<option value="ACTIVE">' . _('Active') . '</option>
+				<option value="DISPOSED">' . _('Disposed') . '</option>';
+	} elseif ($_POST['DisposalStatus']=='ACTIVE') {
+		echo '	<option value="ALL">' . _('All') . '</option>
+				<option selected="selected" value="ACTIVE">' . _('Active') . '</option>
+				<option value="DISPOSED">' . _('Disposed') . '</option>';
+	}else{
+		echo '	<option value="ALL">' . _('All') . '</option>
+				<option value="ACTIVE">' . _('Active') . '</option>
+				<option selected="selected" value="DISPOSED">' . _('Disposed') . '</option>';
+	}
+
+	echo '	</select>
+		</field>';
+
 	if (empty($_POST['FromDate'])) {
 		$_POST['FromDate'] = date($_SESSION['DefaultDateFormat'], mktime(0, 0, 0, date('m'), date('d'), date('Y') - 1));
 	}
