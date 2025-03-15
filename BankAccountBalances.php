@@ -49,7 +49,7 @@ if (DB_num_rows($Result) == 0) {
 		$DecimalPlacesResult = DB_query($DecimalPlacesSQL);
 		$DecimalPlacesRow = DB_fetch_array($DecimalPlacesResult);
 
-		echo '<tr class="selection">
+		echo '<tr class="striped_row">
 				<td>', $MyBankRow['accountcode'], '</td>
 				<td>', $MyBankRow['bankaccountname'], '</td>
 				<td class="number">', locale_number_format($CurrBalanceRow['balance'], $DecimalPlacesRow['decimalplaces']), ' ', $MyBankRow['currcode'], '</td>
