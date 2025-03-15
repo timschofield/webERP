@@ -79,7 +79,7 @@ if ($ProcessSection01){
 	if ($KL_SystemAdmin
 		OR $KL_OperationalManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_ShopManager){
 		AverageSales("Shop", 365, 180, 90, 30, 15, 1, 30, "CurrentYear", "All");

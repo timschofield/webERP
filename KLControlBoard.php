@@ -935,7 +935,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_OperationalManager
 		OR $KL_ShopSupportLeader
 		OR $KL_ShopSupportTeam){
@@ -946,7 +946,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_OperationalManager){
 		OutstandingOrders("Wholesale", "Quotation", $RootPath);
 		$NumberOfTestExecuted++;
@@ -962,7 +962,7 @@ if ($ProcessSection02){
 	*/
 
 	if ($KL_AdministrationTeam
-		OR $KL_SalesTeamOnline){ 
+		OR $KL_CustomerService){ 
 		OnlineMarketPlacePaymentPending(0, $RootPath);
 		$NumberOfTestExecuted++;
 	}
@@ -970,7 +970,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportLeader
 		OR $KL_OperationalManager){ 
 		OnlineMarketPlacePaymentPending(10, $RootPath);
@@ -981,25 +981,25 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("MarketPlace", "Order", $RootPath);
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesTeamOnline){
+	if ($KL_CustomerService){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PENDING, $RootPath );
 		$NumberOfTestExecuted++;
 	}
 
-	if ($KL_SalesTeamOnline){
+	if ($KL_CustomerService){
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_SHIPPED, $RootPath );
 		$NumberOfTestExecuted++;
 	}
  
 	if ($KL_SystemAdmin 
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline){
+		OR $KL_CustomerService){
 		OnlineQuotationsFollowUp($RootPath );
 		$NumberOfTestExecuted++;
 		OldOnlineQuotations(1, $RootPath);
@@ -1009,7 +1009,7 @@ if ($ProcessSection02){
 	}
 
 	if ($KL_SystemAdmin
-		OR $KL_SalesTeamOnline){ 
+		OR $KL_CustomerService){ 
 		OpenCartOrdersByStatus(OPENCART_ORDER_STATUS_PROCESSING, $RootPath );
 		$NumberOfTestExecuted++;
 	}
@@ -1017,7 +1017,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline){
+		OR $KL_CustomerService){
 		OnlineOrdersFollowUp("KL-WEBSITE", 10, $RootPath);
 		$NumberOfTestExecuted++;
 	}
@@ -1026,7 +1026,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_AdministrationTeam
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
 		OutstandingOrders("Online", "Order", $RootPath);
 		$NumberOfTestExecuted++;
@@ -1035,7 +1035,7 @@ if ($ProcessSection02){
 	if ($KL_SystemAdmin 
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ShopSupportTeam){ 
 		OnlineItemsOnProcess($RootPath);
 		$NumberOfTestExecuted++;
@@ -1060,7 +1060,7 @@ if ($ProcessSection02){
 
 	if ($KL_SystemAdmin
 		OR $KL_SalesDirector
-		OR $KL_SalesTeamOnline
+		OR $KL_CustomerService
 		OR $KL_ITSupport){
 		ImagesWithoutProduct($RootPath);
 		$NumberOfTestExecuted++;
@@ -1072,7 +1072,7 @@ if ($ProcessSection02){
 		OR $KL_BusinessDevelopmentManager
 		OR $KL_SalesDirector
 		OR $KL_PurchasingTeam
-		OR $KL_SalesTeamOnline){
+		OR $KL_CustomerService){
 		ItemsWithoutWeightOrVolume($RootPath);
 		$NumberOfTestExecuted++;
 		ItemsShouldBeInWebsite();

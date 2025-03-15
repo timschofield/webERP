@@ -12,7 +12,7 @@ $KL_BusinessDevelopmentManager = FALSE;
 $KL_PurchasingTeam = FALSE;
 $KL_ShopSupportTeam = FALSE;
 $KL_ShopSupportLeader = FALSE;
-$KL_OnlineSales = FALSE;
+$KL_CustomerService = FALSE;
 $KL_ShopManager = FALSE;
 $KL_SalesDirector = FALSE;
 $KL_SPGSeniorOrSupport = FALSE;
@@ -56,12 +56,12 @@ if (isset($_SESSION['AccessLevel'])){
 		$KL_ITSupport = TRUE;
 	}else if ($_SESSION['AccessLevel'] == 34){ // Sales DIrector (a.k.a Fathus)
 		$KL_SalesDirector = TRUE;
-	}else if ($_SESSION['AccessLevel'] == 36){ // Sales Team Online
-		$KL_SalesTeamOnline = TRUE;
+	}else if ($_SESSION['AccessLevel'] == 36){ // Customer Service (a.k.a. Nia)
+		$KL_CustomerService = TRUE;
 	}else if ($_SESSION['AccessLevel'] == 37){ // Operational Leader (Novik)
 		$KL_OperationalLeader = TRUE;
 		$KL_OperationalTeam = TRUE;
-	}else if ($_SESSION['AccessLevel'] == 38){ // marketing Manager (Aisyah)
+	}else if ($_SESSION['AccessLevel'] == 38){ // Marketing Manager (ex Aisyah)
 		$KL_MarketingManager = TRUE;
 	}
 }
