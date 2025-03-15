@@ -1,12 +1,12 @@
 <?php
 
+// Produces a csv, html or pdf report of the fixed assets over a period showing period depreciation, additions and disposals.
+
 /***********************************************************************************************************************************
  * 
- * KL RICARD: Added disposal date on the report
- *			Added DisposalStatus to filter the report by Active, Disposed or All 
- *			Fixed date from
+ * KL RICARD: Fixed date from
  * 
- **********************************************************************************************************************************/
+**********************************************************************************************************************************/
 
 include ('includes/session.php');
 if (isset($_POST['FromDate'])){$_POST['FromDate'] = ConvertSQLDate($_POST['FromDate']);};
@@ -96,14 +96,12 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 		}
 		PDFPageHeader();
 	} elseif (isset($_POST['csv'])) {
-		// KL RICARD Added disposal date on the report
 		$CSVOutput = "'Asset ID','Description','Serial Number','Location','Date Acquired','Cost B/Fwd','Period Additions','Depn B/Fwd','Period Depreciation','Cost C/Fwd', 'Accum Depn C/Fwd','NBV','Disposal Value','Disposal Date'\n";
 	} else {
 		echo '<form id="RegisterForm" method="post" action="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '">
               <div>';
         echo '<input type="hidden" name="FormID" value="' . $_SESSION['FormID'] . '" />';
 		echo '<div class="centre">' ._('From') . ':' . $_POST['FromDate'] . ' ' . _('to') . ' ' . $_POST['ToDate'] . '</div>';
-		// KL RICARD Added disposal date on the report
 		echo '<br />
 			<table width="80%" cellspacing="1" class="selection">
 			<tr>
@@ -158,7 +156,6 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 				$CostCfwd = $MyRow['periodadditions'] + $MyRow['costbfwd'];
 				$AccumDepnCfwd = $MyRow['perioddepn'] + $MyRow['depnbfwd'];
 			}
-			// KL RICARD Added disposal date on the report
 			if ($MyRow['disposaldate']=='1000-01-01'){
 				$DisposalDate = "";
 			}else{
@@ -194,7 +191,6 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 					PDFPageHeader();
 				}
 			} elseif (isset($_POST['csv'])) {
-				// KL RICARD Added disposal date on the report
 				$CSVOutput .= $MyRow['assetid'] . ',' . 
 							$MyRow['longdescription'] .',' . 
 							$MyRow['serialno'] . ',' . 
@@ -230,7 +226,6 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 			}else{
 				$DisposalDate = ConvertSQLDate($MyRow['disposaldate']);
 			}
-			// KL RICARD Added disposal date on the report
 			echo '</td>
 					<td style="vertical-align:top">' . ConvertSQLDate($MyRow['datepurchased']) . '</td>
 					<td style="vertical-align:top" class="number">' . locale_number_format($MyRow['costbfwd'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
@@ -360,7 +355,6 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 		$_POST['DisposalStatus'] = "ACTIVE";
 	}
 
-	// KL RICARD Added DisposalStatus to filter the report by Active, Disposed or All 
 	echo '<field>
 			<label for="DisposalStatus">' . _('Asset Disposal Status') . '</label>
 			<select name="DisposalStatus">';
@@ -381,7 +375,6 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 
 	echo '	</select>
 		</field>';
-	// KL RICARD END Added DisposalStatus to filter the report by Active, Disposed or All 
 
 	if (empty($_POST['FromDate'])) {
 		// KL RICARD Fixed date from
@@ -392,12 +385,12 @@ if (isset($_POST['submit']) OR isset($_POST['PDF']) OR isset($_POST['csv'])) {
 	}
 
 	echo '<field>
-			<label for="FromDate">' . _('From Date') . '</label>
+			<label for="FromDate">', _('From Date'), '</label>
 			<input type="date" name="FromDate" required="required" title="" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['FromDate']) . '" />
 			<fieldhelp>' . _('Enter the start date to show the cost and accumulated depreciation from') . '</fieldhelp>
 		</field>
 		<field>
-			<label for="ToDate">' . _('To Date') . '</label>
+			<label for="ToDate">', _('To Date'), '</label>
 			<input type="date" name="ToDate" required="required" title="" maxlength="10" size="11" value="' . FormatDateForSQL($_POST['ToDate']) . '" />
 			<fieldhelp>' . _('Enter the end date to show the cost and accumulated depreciation to') . '</fieldhelp>
 		</field>
