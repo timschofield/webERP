@@ -88,45 +88,32 @@ include('includes/KLUIGeneralFunctions.php');
 				){
 				if ($MyRow['pricechanged']==1){
 					// already changed the price, so now it's time to see if labels have been printed and finish the process
-					$NewPriceLink = locale_number_format($MyRow['newretailprice'],0);
-					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $MyRow['newretailprice'] .  '&Action=Finish">' . _('Printed') . '</a>';
+					$NewPriceLink = 'Done';
+					$NewLabelsPrinted = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $MyRow['newretailprice'] .  '&Action=Finish">' . 'Printed' . '</a>';
 				}else{
 					// the category is still the old one. We still need to change it!
 					// if we have ONLY stock in kantor (or in locations not needing procedure) and NO transit, all the QOH is at kantor
 					// We can apply the new discount category
-					$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $MyRow['newretailprice'] .  '&Action=Change">' . locale_number_format($MyRow['newretailprice'],0) . '</a>';
-					$NewLabelsPrinted = 'Not yet';
+					$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $MyRow['newretailprice'] .  '&Action=Change">' . 'Change to ' . locale_number_format($MyRow['newretailprice'],0) . '</a>';
+					$NewLabelsPrinted = '';
 				}
 			}else{
-				$NewPriceLink = locale_number_format($MyRow['newretailprice'],0);
-				$NewLabelsPrinted = 'Not yet';
-			}
-			printf('<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>', 
-					locale_number_format($i,0),
-					$CodeLink, 
-					$MyRow['description'],
-					ConvertSQLDate($MyRow['startprocessdate']),
-					locale_number_format_zero_blank($MyRow['qohpos']-$MyRow['intransitfromshops'],0),
-					locale_number_format_zero_blank($MyRow['intransitfromkantor'],0),
-					locale_number_format_zero_blank($MyRow['intransitfromshops']+$MyRow['intransitfromconsignment'],0),
-					locale_number_format_zero_blank($MyRow['qohkantor']-$MyRow['intransitfromkantor'],0),
-					locale_number_format_zero_blank($MyRow['qohotherlocs'],0),
-					locale_number_format_zero_blank($MyRow['qohtotal'],0),
-					$NewPriceLink,
-					$NewLabelsPrinted
-					);
+				$NewPriceLink = '';
+				$NewLabelsPrinted = '';
+			}	
+			echo '<td class="number">'.locale_number_format($i,0).'</td>
+					<td>'.$CodeLink.'</td>
+					<td>'.$MyRow['description'].'</td>
+					<td>'.ConvertSQLDate($MyRow['startprocessdate']).'</td>
+					<td class="number">'.locale_number_format_zero_blank($MyRow['qohpos']-$MyRow['intransitfromshops'],0).'</td>
+					<td class="number">'.locale_number_format_zero_blank($MyRow['intransitfromkantor'],0).'</td>
+					<td class="number">'.locale_number_format_zero_blank($MyRow['intransitfromshops']+$MyRow['intransitfromconsignment'],0).'</td>
+					<td class="number">'.locale_number_format_zero_blank($MyRow['qohkantor']-$MyRow['intransitfromkantor'],0).'</td>
+					<td class="number">'.locale_number_format_zero_blank($MyRow['qohotherlocs'],0).'</td>
+					<td class="number">'.locale_number_format_zero_blank($MyRow['qohtotal'],0).'</td>
+					<td class="number">'.$NewPriceLink.'</td>
+					<td>'.$NewLabelsPrinted.'</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>

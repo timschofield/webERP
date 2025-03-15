@@ -240,19 +240,13 @@ or deletion of the records*/
 		</thead>
 		<tbody>';
 	while ($MyRow=DB_fetch_array($Result)) {
-		printf('<tr class="striped_row">
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			</tr>',
-			$MyRow['counterexchange'],
-			ConvertSQLDateTime($MyRow['date']),
-			$MyRow['itemfrom'],
-			$MyRow['itemto'],
-			$MyRow['invoicenumber']
-			);
+		echo '<tr class="striped_row">
+			<td class="number">' . $MyRow['counterexchange'] . '</td>
+			<td>' . ConvertSQLDateTime($MyRow['date']) . '</td>
+			<td>' . $MyRow['itemfrom'] . '</td>
+			<td>' . $MyRow['itemto'] . '</td>
+			<td>' . $MyRow['invoicenumber'] . '</td>
+			</tr>';
 	} //END WHILE LIST LOOP
 	echo '</tbody>
 		</table>';

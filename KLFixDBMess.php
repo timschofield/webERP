@@ -99,37 +99,22 @@ function FixGltransAmountZeroDueToCompensation($RootPath) {
 				$Updated = DB_query($SQLUpdate);
 			}
 
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$MyRow['counterindex'],
-					$MyRow['type'],
-					$MyRow['typeno'],
-					$MyRow['trandate'],
-					$MyRow['periodno'],
-					$MyRow['account'],
-					$MyRow['narrative'],
-					$MyRow['amount'],
-					$ItemCode,
-					$StandardCost,
-					$Quantity,
-					$NewAmount,
-					$NewNarrative
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td class="number">' . $MyRow['counterindex'] . '</td>
+					<td class="number">' . $MyRow['type'] . '</td>
+					<td class="number">' . $MyRow['typeno'] . '</td>
+					<td>' . $MyRow['trandate'] . '</td>
+					<td class="number">' . $MyRow['periodno'] . '</td>
+					<td>' . $MyRow['account'] . '</td>
+					<td>' . $MyRow['narrative'] . '</td>
+					<td class="number">' . $MyRow['amount'] . '</td>
+					<td>' . $ItemCode . '</td>
+					<td class="number">' . $StandardCost . '</td>
+					<td class="number">' . $Quantity . '</td>
+					<td class="number">' . $NewAmount . '</td>
+					<td>' . $NewNarrative . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>

@@ -12,8 +12,8 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php'); 
-include('includes/OpenCartGeneralFunctions.php');
-include('includes/OpenCartConnectDB.php');
+include('includes/OCOpenCartGeneralFunctions.php');
+include('includes/OCOpenCartConnectDB.php');
 
 if (!isset($_POST['FromPrice'])){
 	$_POST['FromPrice'] = 0;

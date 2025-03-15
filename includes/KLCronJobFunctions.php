@@ -12,10 +12,10 @@ function KLCronJobChecks($Group, $RootPath, $EmailText= ''){
 	include('includes/KLMarketplaceFunctions.php');
 	include('includes/GetPrice.inc');
 	include('includes/SQL_CommonFunctions.inc');
-	include ('includes/OpenCartGeneralFunctions.php');
-	include ('includes/WeberpToOpenCartSync.php');
-	include ('includes/OpenCartToWeberpSync.php');
-	include ('includes/OpenCartConnectDB.php');
+	include ('includes/OCOpenCartGeneralFunctions.php');
+	include ('includes/OCWeberpToOpenCartSync.php');
+	include ('includes/OCOpenCartToWeberpSync.php');
+	include ('includes/OCOpenCartConnectDB.php');
 	include ('includes/KLSmartStockTransfers.php');
 	include ('includes/htmlMimeMail.php');
 

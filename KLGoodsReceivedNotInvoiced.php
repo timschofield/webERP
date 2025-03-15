@@ -71,67 +71,40 @@ if (DB_num_rows($Result) != 0){
 		$QtyPending = $MyRow['qtyrecd'] - $MyRow['quantityinv'];
 		$TotalHomeCurrency = $TotalHomeCurrency + ($QtyPending * $MyRow['unitprice'] / $MyRow['rate']);
 		$TotalAtStandardCost = $TotalAtStandardCost + ($QtyPending * $MyRow['standardcost']);
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>', 
-				$MyRow['supplierid'], 
-				$MyRow['orderno'], 
-				$MyRow['itemcode'], 
-				ConvertSQLDate($MyRow['deliverydate']), 
-				$MyRow['qtyrecd'], 
-				$MyRow['quantityinv'], 
-				$QtyPending, 
-				locale_number_format($MyRow['unitprice'],$MyRow['decimalplaces']), 
-				$MyRow['currcode'], 
-				locale_number_format(($QtyPending * $MyRow['unitprice']),$MyRow['decimalplaces']), 
-				$MyRow['currcode'], 
-				locale_number_format(($QtyPending * $MyRow['unitprice'] / $MyRow['rate']),$_SESSION['CompanyRecord']['decimalplaces']),
-				$_SESSION['CompanyRecord']['currencydefault'],
-				locale_number_format($MyRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces']), 
-				locale_number_format(($QtyPending * $MyRow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']), 
-				locale_number_format(($QtyPending * $MyRow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']),
-				$_SESSION['CompanyRecord']['currencydefault']
-				);
+		echo '<tr class="striped_row">
+				<td>' . $MyRow['supplierid'] . '</td>
+				<td class="number">' . $MyRow['orderno'] . '</td>
+				<td>' . $MyRow['itemcode'] . '</td>
+				<td>' . ConvertSQLDate($MyRow['deliverydate']) . '</td>
+				<td class="number">' . $MyRow['qtyrecd'] . '</td>
+				<td class="number">' . $MyRow['quantityinv'] . '</td>
+				<td class="number">' . $QtyPending . '</td>
+				<td class="number">' . locale_number_format($MyRow['unitprice'],$MyRow['decimalplaces']) . '</td>
+				<td>' . $MyRow['currcode'] . '</td>
+				<td class="number">' . locale_number_format(($QtyPending * $MyRow['unitprice']),$MyRow['decimalplaces']) . '</td>
+				<td>' . $MyRow['currcode'] . '</td>
+				<td class="number">' . locale_number_format(($QtyPending * $MyRow['unitprice'] / $MyRow['rate']),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td>' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
+				<td class="number">' . locale_number_format($MyRow['standardcost'],$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format(($QtyPending * $MyRow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td class="number">' . locale_number_format(($QtyPending * $MyRow['standardcost']),$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+				<td>' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
+				</tr>';
 	}
 
 	echo '</tbody>
 			</tfooter>';
 	
-	printf('<tr class="striped_row">
-			<td colspan="10">%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td>%s</td>
-			</tr>', 
-			'',
-			_('Total').':', 
-			locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']),
-			$_SESSION['CompanyRecord']['currencydefault'],
-			'',
-			_('Std Cost').':', 
-			locale_number_format($TotalAtStandardCost,$_SESSION['CompanyRecord']['decimalplaces']),
-			$_SESSION['CompanyRecord']['currencydefault']
-			);
+	echo '<tr class="striped_row">
+			<td colspan="10">' . '' . '</td>
+			<td>' . _('Total') . ':' . '</td>
+			<td class="number">' . locale_number_format($TotalHomeCurrency,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td>' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
+			<td>' . '' . '</td>
+			<td>' . _('Std Cost') . ':' . '</td>
+			<td class="number">' . locale_number_format($TotalAtStandardCost,$_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+			<td>' . $_SESSION['CompanyRecord']['currencydefault'] . '</td>
+			</tr>';
 	
 	echo '</tfooter>
 			</table>

@@ -114,25 +114,16 @@ if (DB_num_rows($Result) != 0){
 			}
 		}
 		
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Invoices, 
-				number_format($MyRow['orderno']), 
-				$MyRow['customerref'], 
-				number_format($MyRow['klpaidcash']), 
-				number_format($MyRow['klpaidcreditcard']), 
-				number_format($MyRow['klreturnedgoods']), 
-				number_format($MyRow['klvouchers']), 
-				number_format($SubTotal)
-				);
+		echo '<tr class="striped_row">
+				<td class="number">'.$Invoices.'</td>
+				<td class="number">'.number_format($MyRow['orderno']).'</td>
+				<td>'.$MyRow['customerref'].'</td>
+				<td class="number">'.number_format($MyRow['klpaidcash']).'</td>
+				<td class="number">'.number_format($MyRow['klpaidcreditcard']).'</td>
+				<td class="number">'.number_format($MyRow['klreturnedgoods']).'</td>
+				<td class="number">'.number_format($MyRow['klvouchers']).'</td>
+				<td class="number">'.number_format($SubTotal).'</td>
+				</tr>';
 	}
 	$TextToPrint .= $NewLine;
 	$TextInvoice = "# Invoices: " . $Invoices;
@@ -145,25 +136,16 @@ if (DB_num_rows($Result) != 0){
 	$TextToPrint .= "Total include returns/vouchers: " . number_format($Total) . $NewLine;
 	$TextToPrint .= "Total Personal Sales SPG: " . number_format($TotalCash + $TotalCreditCard) . $NewLine;
 	
-	printf('<tr class="striped_row">
-			<td class="number">%s</td>
-			<td>%s</td>
-			<td>%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Invoices, 
-			'', 
-			'TOTALS', 
-			number_format($TotalCash), 
-			number_format($TotalCreditCard), 
-			number_format($TotalReturned), 
-			number_format($TotalVouchers), 
-			number_format($Total)
-			);
+	echo '<tr class="striped_row">
+			<td class="number">'.$Invoices.'</td>
+			<td>'.''.'</td>
+			<td>'.'TOTALS'.'</td>
+			<td class="number">'.number_format($TotalCash).'</td>
+			<td class="number">'.number_format($TotalCreditCard).'</td>
+			<td class="number">'.number_format($TotalReturned).'</td>
+			<td class="number">'.number_format($TotalVouchers).'</td>
+			<td class="number">'.number_format($Total).'</td>
+			</tr>';
 	echo '</tbody></table>
 			</div>';
 }else{

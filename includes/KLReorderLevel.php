@@ -279,24 +279,15 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 							$LocationsDistributed++;
 							if ($ShowMessages){
 								$k = StartEvenOrOddRow($k);
-								printf('<td class="number">%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td class="number">%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									</tr>', 
-									$i, 
-									$CodeLink, 
-									$MyRow['categoryid'], 
-									$MyRow['description'], 
-									$MyDistribution['loccode'],
-									locale_number_format($MyDistribution['oldrl'],0),
-									$MyRow['locationneeded'],
-									$strategy
-									);
+								echo '<td class="number">'.$i.'</td>
+									<td>'.$CodeLink.'</td>
+									<td>'.$MyRow['categoryid'].'</td>
+									<td>'.$MyRow['description'].'</td>
+									<td>'.$MyDistribution['loccode'].'</td>
+									<td class="number">'.locale_number_format($MyDistribution['oldrl'],0).'</td>
+									<td>'.$MyRow['locationneeded'].'</td>
+									<td>'.$strategy.'</td>
+									</tr>';
 								$PrintLine = FALSE;
 							}
 							if ($EmailText!=''){
@@ -325,24 +316,15 @@ function RebalancingBetweenShops($maxdays, $ShowMessages, $updateDB, $RootPath, 
 			}
 			if ($ShowMessages){
 				if ($PrintLine){
-					printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$MyRow['categoryid'], 
-						$MyRow['description'], 
-						$rebalancinglocationfrom,
-						"",
-						$MyRow['locationneeded'],
-						$strategy
-						);
+					echo '<td class="number">'.$i.'</td>
+						<td>'.$CodeLink.'</td>
+						<td>'.$MyRow['categoryid'].'</td>
+						<td>'.$MyRow['description'].'</td>
+						<td>'.$rebalancinglocationfrom.'</td>
+						<td class="number">'."".'</td>
+						<td>'.$MyRow['locationneeded'].'</td>
+						<td>'.$strategy.'</td>
+						</tr>';
 				}
 			}
 			if ($EmailText!=''){
@@ -515,14 +497,10 @@ function SetRLZeroForNotAvailableItems($ShowMessages, $updateDB, $RootPath, $Ema
 					$k = 1;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-					</tr>', 
-						$i, 
-						$CodeLink, 
-						$MyRow['description']
-						);
+				echo '<td class="number">'.$i.'</td>
+						<td>'.$CodeLink.'</td>
+						<td>'.$MyRow['description'].'</td>
+					</tr>';
 				$i++;
 			}
 			if ($EmailText!=''){
@@ -657,24 +635,15 @@ to the shops with RL > 0.
 									echo '<tr class="OddTableRows">';
 								}
 								$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-								printf('<td class="number">%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td>%s</td>
-									<td class="number">%s</td>
-									<td>%s</td>
-									<td class="number">%s</td>
-									<td class="number">%s</td>
-									</tr>', 
-									$i, 
-									$CodeLink, 
-									$MyRow['categoryid'], 
-									$MyRow['description'], 
-									locale_number_format($MyRowQtyAvailable['QtyAvailable'],0),
-									$MyDistribution['loccode'],
-									locale_number_format($MyDistribution['oldrl'],0),
-									locale_number_format($CurrentNewRL,0)
-									);
+								echo '<td class="number">'.$i.'</td>
+									<td>'.$CodeLink.'</td>
+									<td>'.$MyRow['categoryid'].'</td>
+									<td>'.$MyRow['description'].'</td>
+									<td class="number">'.locale_number_format($MyRowQtyAvailable['QtyAvailable'],0).'</td>
+									<td>'.$MyDistribution['loccode'].'</td>
+									<td class="number">'.locale_number_format($MyDistribution['oldrl'],0).'</td>
+									<td class="number">'.locale_number_format($CurrentNewRL,0).'</td>
+									</tr>';
 							}
 							if ($EmailText!=''){
 								$EmailText = $EmailText . $MyRow['stockid'] . " @ " . $MyDistribution['loccode'] . " Old RL = " . $MyDistribution['oldrl'] .  " New RL = " . $CurrentNewRL . "\n";
@@ -793,22 +762,14 @@ function SetRLForLowSalesHighRL($ShopType, $BottomPercentTopSales, $OldRL, $maxR
 					$k = 1;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						$MyRow['description'], 
-						$MyRow['categoryid'], 
-						$MyRow['loccode'], 
-						locale_number_format($MyRow['reorderlevel'],0),
-						locale_number_format($maxRL,0)
-						);
+				echo '<td class="number">'.$i.'</td>
+						<td>'.$CodeLink.'</td>
+						<td>'.$MyRow['description'].'</td>
+						<td>'.$MyRow['categoryid'].'</td>
+						<td>'.$MyRow['loccode'].'</td>
+						<td class="number">'.locale_number_format($MyRow['reorderlevel'],0).'</td>
+						<td class="number">'.locale_number_format($maxRL,0).'</td>
+						</tr>';
 			}
 			if ($EmailText!=''){
 				$EmailText = $EmailText .  $MyRow['stockid'] . " @ " . $MyRow['loccode'] . " OldRL = " . locale_number_format($MyRow['reorderlevel'],0) . " NewRL = " . locale_number_format($maxRL,0) . "\n";
@@ -941,16 +902,11 @@ function OnlineReorderLevelAdjustments($ShowMessages, $updateDB, $RootPath, $Ema
 					$k = 1;
 				}
 				$CodeLink = '<a href="' . $RootPath . '/StockReorderLevel.php?StockID=' . $MyRow['stkcode'] . '">' . $MyRow['stkcode'] . '</a>';
-				printf('<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i, 
-						$CodeLink, 
-						locale_number_format($MyRow['totalqty'],0),
-						locale_number_format($MyRow['reorderlevel'],0)
-						);
+				echo '<td class="number">'.$i.'</td>
+						<td>'.$CodeLink.'</td>
+						<td class="number">'.locale_number_format($MyRow['totalqty'],0).'</td>
+						<td class="number">'.locale_number_format($MyRow['reorderlevel'],0).'</td>
+						</tr>';
 				$i++;
 			}
 			if ($EmailText!=''){

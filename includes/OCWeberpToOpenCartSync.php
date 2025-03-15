@@ -1454,7 +1454,7 @@ function KL_DailyCleanOpenCartDB($ShowMessages , $EmailText=''){
 }
 
 function CleanOldOpenCartCoupons($ShowMessages, $MaxDays , $EmailText= ''){
-	$Title = 'Clean old OpenCart Couons expired ' . $MaxDays . ' ago';
+	$Title = 'Clean old OpenCart Coupons expired ' . $MaxDays . ' ago';
 	$i = 0;
 	$ServerNow = GetServerTimeNow(Get_SQL_to_PHP_time_difference());
 	if ($EmailText !=''){

@@ -175,31 +175,19 @@ function submit($Title, $Company, $PeriodOfFile, $PaymentDate, $SalaryType) {
 				$Rounding = $MyRow['bulatan'];
 				MoveSalaryTxToPC($Company, $MyRow['paymentmethod'], "ROUND", $PaymentDate, $Rounding, $MyRow['codename']);
 
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$MyRow['codename'],
-						locale_number_format_zero_blank($FixedSalary,0),
-						locale_number_format_zero_blank($Makan,0),
-						locale_number_format_zero_blank($Bensin,0),
-						locale_number_format_zero_blank($Commissions,0),
-						locale_number_format_zero_blank($Shifts,0),
-						locale_number_format_zero_blank($THR,0),
-						locale_number_format_zero_blank($Lain2,0),
-						locale_number_format_zero_blank($JHT,0),
-						locale_number_format_zero_blank($PPH21,0),
-						locale_number_format_zero_blank($Rounding,0)
-						);
+				echo '<tr class="striped_row">
+						<td>'.$MyRow['codename'].'</td>
+						<td class="number">'.locale_number_format_zero_blank($FixedSalary,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($Makan,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($Bensin,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($Commissions,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($Shifts,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($THR,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($Lain2,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($JHT,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($PPH21,0).'</td>
+						<td class="number">'.locale_number_format_zero_blank($Rounding,0).'</td>
+						</tr>';
 			}
 			echo '</tbody>
 				</table>

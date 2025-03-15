@@ -164,25 +164,16 @@ or deletion of the records*/
 while ($MyRow = DB_fetch_array($Result)) {
 	echo '<tr class="striped_row">';
 
-	printf('<td class="number">%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td class="number">%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td>%s</td>
-		<td><a href="%sSelectedReturnedItemsId=%s">' . _('Edit') . '</a></td>
-		<td><a href="%sSelectedReturnedItemsId=%s&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this return?') . '\');">' . _('Delete') . '</a></td>
-		</tr>',
-		$MyRow['returneditemsid'],
-		$MyRow['itemcodes'],
-		$MyRow['reasonname'],
-		$MyRow['orderno'],
-		ConvertSQLDate($MyRow['returndate']),
-		$MyRow['oldinvoice'],
-		ConvertSQLDate($MyRow['oldinvoicedate']),
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['returneditemsid'],
-		htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['returneditemsid']);
+	echo '<td class="number">'.$MyRow['returneditemsid'].'</td>
+		<td>'.$MyRow['itemcodes'].'</td>
+		<td>'.$MyRow['reasonname'].'</td>
+		<td class="number">'.$MyRow['orderno'].'</td>
+		<td>'.ConvertSQLDate($MyRow['returndate']).'</td>
+		<td>'.$MyRow['oldinvoice'].'</td>
+		<td>'.ConvertSQLDate($MyRow['oldinvoicedate']).'</td>
+		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedReturnedItemsId='.$MyRow['returneditemsid'].'">' . _('Edit') . '</a></td>
+		<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedReturnedItemsId='.$MyRow['returneditemsid'].'&amp;delete=yes" onclick="return confirm(\'' . _('Are you sure you wish to delete this return?') . '\');">' . _('Delete') . '</a></td>
+		</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody></table>';

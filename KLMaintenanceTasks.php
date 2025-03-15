@@ -150,25 +150,15 @@ or deletion of the records*/
 	while ($MyRow=DB_fetch_array($Result)) {
 
 		$k = StartEvenOrOddRow($k);
-		printf('<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%s?SelectedIndex=%s">' . _('Update') . '</a></td>
-				<td><a href="%s?SelectedIndex=%s&amp;close=1" onclick="return confirm(\'' . _('Are you sure you wish to close this maintenance task?') . '\');">' .  _('Close')  . '</a></td>
-				</tr>',
-				$MyRow['counterindex'],
-				$MyRow['locationname'],
-				$MyRow['typedescription'],
-				$MyRow['creationuser'],
-				ConvertSQLDateTime($MyRow['creationdate']),
-				$MyRow['taskdescription'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$MyRow['counterindex'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$MyRow['counterindex']);
+		echo '<td class="number">' . $MyRow['counterindex'] . '</td>
+				<td>' . $MyRow['locationname'] . '</td>
+				<td>' . $MyRow['typedescription'] . '</td>
+				<td>' . $MyRow['creationuser'] . '</td>
+				<td>' . ConvertSQLDateTime($MyRow['creationdate']) . '</td>
+				<td>' . $MyRow['taskdescription'] . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $MyRow['counterindex'] . '">' . _('Update') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedIndex=' . $MyRow['counterindex'] . '&amp;close=1" onclick="return confirm(\'' . _('Are you sure you wish to close this maintenance task?') . '\');">' . _('Close') . '</a></td>
+				</tr>';
 
 		// check if there are any updates to show
 		$SQLupdates = "SELECT klmaintenancetaskupdates.counterindex, 
@@ -181,25 +171,15 @@ or deletion of the records*/
 		$Resultupdates = DB_query($SQLupdates);
 		while ($MyUpdates=DB_fetch_array($Resultupdates)) {
 			$k = StartSameColourRow($k);
-			printf('<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					'',
-					'',
-					'',
-					$MyUpdates['updateuser'],
-					ConvertSQLDateTime($MyUpdates['updatedate']),
-					$MyUpdates['updatedescription'],
-					'',
-					'',
-					'',
-					'');
+			echo '<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . $MyUpdates['updateuser'] . '</td>
+					<td>' . ConvertSQLDateTime($MyUpdates['updatedate']) . '</td>
+					<td>' . $MyUpdates['updatedescription'] . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					</tr>';
 		}
 	} //END WHILE LIST LOOP
 	echo '</table>';

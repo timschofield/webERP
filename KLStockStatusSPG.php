@@ -93,15 +93,11 @@ if ($StockID != ''){
 		$InTransit = $InTransitQuantityIn+$InTransitQuantityOut;
 		$Available = $MyRow['quantity'];
 
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				$MyRow['locationname'],
-				locale_number_format_zero_blank($Available, $DecimalPlaces),
-				locale_number_format_zero_blank($InTransit, $DecimalPlaces)
-				);
+		echo '<tr class="striped_row">
+				<td>' . $MyRow['locationname'] . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Available, $DecimalPlaces) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($InTransit, $DecimalPlaces) . '</td>
+				</tr>';
 
 	}
 }

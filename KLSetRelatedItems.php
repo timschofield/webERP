@@ -108,15 +108,11 @@ if (DB_num_rows($Result) != 0){
 				$Resultinsert = DB_query($SQLinsert,$ErrMsg);
 
 				$i++;
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						</tr>', 
-						$i, 
-						$MyRow['stockid'], 
-						'WKPC01'
-						);
+				echo '<tr class="striped_row">
+						<td class="number">'.$i.'</td>
+						<td>'.$MyRow['stockid'].'</td>
+						<td>WKPC01</td>
+						</tr>';
 			}
 		}
 	}

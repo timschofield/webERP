@@ -12,7 +12,7 @@ include('includes/SQL_CommonFunctions.inc');
 include('includes/KLDefines.php');
 include('includes/KLGeneralFunctions.php');
 include('includes/KLMarketplaceFunctions.php');
-include('includes/OpenCartGeneralFunctions.php');
+include('includes/OCOpenCartGeneralFunctions.php');
 include('includes/UIGeneralFunctions.php');
 include('includes/KLUIGeneralFunctions.php');
 
@@ -104,23 +104,15 @@ function submit($SelectedFile, $RootPath, $Theme, $Title) {
 				$Action = "Insert";
 			}
 
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>', 
-					$i,
-					$StockID,
-					$TokopediaProductId,
-					$LinkTokopedia,
-					$QOH,
-					$Error,
-					$Action
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . $StockID . '</td>
+					<td>' . $TokopediaProductId . '</td>
+					<td>' . $LinkTokopedia . '</td>
+					<td class="number">' . $QOH . '</td>
+					<td>' . $Error . '</td>
+					<td>' . $Action . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>

@@ -764,14 +764,12 @@ if (!isset($_SESSION['Contract'.$identifier]->DebtorNo)
 				<label for="CustKeywords">', _('Part of the Customer Branch Name'), ':</label>
 				<input type="search" name="CustKeywords" autofocus="autofocus" maxlength="25" />
 			</field>
-			<h1>', _('OR'), '</h1>
 			<field>
-				<label for="CustCode">', _('Part of the Customer Branch Code'), ':</label>
+				<label for="CustCode">', '<b>', _('OR'), ' </b>', _('Part of the Customer Branch Code'), ':</label>
 				<input type="search" name="CustCode" maxlength="18" />
 			</field>
-			<h1>', _('OR'), '</h1>
 			<field>
-				<label for="CustPhone">', _('Part of the Branch Phone Number'), ':</label>
+				<label for="CustPhone">', '<b>', _('OR'), ' </b>', _('Part of the Branch Phone Number'), ':</label>
 				<input type="search" name="CustPhone" maxlength="18" />
 			</field>
 		</fieldset>

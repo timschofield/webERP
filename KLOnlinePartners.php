@@ -321,29 +321,15 @@ or deletion of the records*/
 		<tbody>';
 
 	while ($MyRow = DB_fetch_array($Result)) {
-		echo '<tr class="striped_row">';
-		if($MyRow['paypaltest'] == 1) {
-			$PayPalTest = _('Yes');
-		} else {
-			$PayPalTest = _('No');
-		}
-
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="noprint"><a href="%sSelectedPartner=%s">' . _('Edit') . '</a></td>
-				<td class="noprint"><a href="%sSelectedPartner=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this online partner?') . '\');">' . _('Delete') . '</a></td>
-				</tr>',
-				$MyRow['onlinepartnercode'],
-				$MyRow['onlinepartnername'],
-				$MyRow['paypalaccount'],
-				$PayPalTest,
-				locale_number_format($MyRow['foreigncurrencysurchargefactor'],2),
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['onlinepartnercode'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?', $MyRow['onlinepartnercode']);
+		echo '<tr class="striped_row">
+				<td>' . $MyRow['onlinepartnercode'] . '</td>
+				<td>' . $MyRow['onlinepartnername'] . '</td>
+				<td>' . $MyRow['paypalaccount'] . '</td>
+				<td>' . $PayPalTest . '</td>
+				<td class="number">' . locale_number_format($MyRow['foreigncurrencysurchargefactor'],2) . '</td>
+				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '">' . _('Edit') . '</a></td>
+				<td class="noprint"><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?SelectedPartner=' . $MyRow['onlinepartnercode'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this online partner?') . '\');">' . _('Delete') . '</a></td>
+				</tr>';
 	}
 	//END WHILE LIST LOOP
 	echo '</tbody></table>';

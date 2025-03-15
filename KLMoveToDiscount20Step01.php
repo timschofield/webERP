@@ -207,21 +207,14 @@ or deletion of the records*/
 		<tbody>';
 	$i=1;
 	while ($MyRow=DB_fetch_array($Result)) {
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td><a href="%s?delete=yes&amp;SelectedMovement=%s" onclick="return confirm(\''. _('Are you sure you wish to delete this movement?') . '\');">' . _('Delete') . '</a></td>
-				</tr>',
-				$i,
-				$MyRow['stockid'],
-				GetCategoryNameFromCode($MyRow['categoryid']),
-				$MyRow['discountcategory'],
-				ConvertSQLDate($MyRow['startprocessdate']),
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8'),
-				$MyRow['countermovediscount']);
+		echo '<tr class="striped_row">
+				<td class="number">' . $i . '</td>
+				<td>' . $MyRow['stockid'] . '</td>
+				<td>' . GetCategoryNameFromCode($MyRow['categoryid']) . '</td>
+				<td class="number">' . $MyRow['discountcategory'] . '</td>
+				<td>' . ConvertSQLDate($MyRow['startprocessdate']) . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?delete=yes&amp;SelectedMovement=' . $MyRow['countermovediscount'] . '" onclick="return confirm(\'' . _('Are you sure you wish to delete this movement?') . '\');">' . _('Delete') . '</a></td>
+				</tr>';
 		$i++;
 	} //END WHILE LIST LOOP
 	echo '</tbody></table><br />';

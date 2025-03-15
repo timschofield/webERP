@@ -539,37 +539,22 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 			}
 			
 			if ($MyRow['invoicesum'] > 0){
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i,
-						$Code,
-						$Name,
-						locale_number_format($MyRow['invoicesum']/$MyRow['invoicecount'],0), 
-						locale_number_format($MyRow['invoicecount']/$NumDaysA,1),
-						locale_number_format($MyRow['invoice01']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice02']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice03']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice04']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice05']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice06']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice07']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice08']/$MyRow['invoicecount']*100,1).'%', 
-						locale_number_format($MyRow['invoice09']/$MyRow['invoicecount']*100,1).'%'
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $Code . '</td>
+						<td>' . $Name . '</td>
+						<td class="number">' . locale_number_format($MyRow['invoicesum']/$MyRow['invoicecount'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['invoicecount']/$NumDaysA,1) . '</td>
+						<td class="number">' . locale_number_format($MyRow['invoice01']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice02']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice03']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice04']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice05']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice06']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice07']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice08']/$MyRow['invoicecount']*100,1) . '%</td>
+						<td class="number">' . locale_number_format($MyRow['invoice09']/$MyRow['invoicecount']*100,1) . '%</td>
+						</tr>';
 			}
 			$i++;
 			$SumInvoiceSum   += $MyRow['invoicesum'];
@@ -584,37 +569,22 @@ function AverageCustomerBehaviourByValueInvoice($Typereport, $Brand, $NumDaysA){
 			$SumInvoice08	+= $MyRow['invoice08'];
 			$SumInvoice09	+= $MyRow['invoice09'];
 		}
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"",
-				"",
-				"TOTAL",
-				locale_number_format_zero_blank($SumInvoiceSum/$SumInvoiceCount,0), 
-				locale_number_format_zero_blank($SumInvoiceCount/$NumDaysA,1),
-				locale_number_format_zero_blank($SumInvoice01/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice02/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice03/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice04/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice05/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice06/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice07/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice08/$SumInvoiceCount*100,1).'%', 
-				locale_number_format_zero_blank($SumInvoice09/$SumInvoiceCount*100,1).'%'
-				);
+		echo '<tr class="striped_row">
+				<td class="number"></td>
+				<td></td>
+				<td>TOTAL</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoiceSum/$SumInvoiceCount,0) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoiceCount/$NumDaysA,1) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice01/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice02/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice03/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice04/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice05/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice06/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice07/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice08/$SumInvoiceCount*100,1) . '%</td>
+				<td class="number">' . locale_number_format_zero_blank($SumInvoice09/$SumInvoiceCount*100,1) . '%</td>
+				</tr>';
 		echo '</tbody></table>
 				</div>';
 		InsertKPI("Sales", "Avg Invoice Value Last " . $NumDaysA . " days (IDR) " . $BrandText, $SumInvoiceSum/$SumInvoiceCount);
@@ -787,100 +757,64 @@ function CashStatus($Year,
 			</thead>
 			<tbody>';
 	$i = 1;
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash ADU in Brankas Kantor end of ' . ($Year-1), 
-			locale_number_format($CashEndOfPreviousYearADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Sales Retail PT ADU Cash during '. $Year, 
-			locale_number_format($SalesCashADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Floating Cash still in shops PT ADU', 
-			locale_number_format(-$FloatingCashADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash received from shops PT ADU in Brankas Kantor during '. $Year, 
-			locale_number_format($SalesCashADU-$FloatingCashADU,0)
-			);
+	echo '<tr>
+			<td>Cash ADU in Brankas Kantor end of ' . ($Year-1) . '</td>
+			<td class="number">' . locale_number_format($CashEndOfPreviousYearADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Sales Retail PT ADU Cash during '. $Year . '</td>
+			<td class="number">' . locale_number_format($SalesCashADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Floating Cash still in shops PT ADU</td>
+			<td class="number">' . locale_number_format(-$FloatingCashADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Cash received from shops PT ADU in Brankas Kantor during '. $Year . '</td>
+			<td class="number">' . locale_number_format($SalesCashADU-$FloatingCashADU,0) . '</td>
+			</tr>';
 	if ($BankToCashADU >= 0){
 		$Text = 'Total withdrawal from Danamon IDR PTADU to Brankas Kantor';
 	}else{
 		$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTADU ';
 	}
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format($BankToCashADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT ADU Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
-			locale_number_format(-$ExpensesADUPaidCash,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT ADU Small Suppliers Paid from Cash Kantor', 
-			locale_number_format(-$CashToSmallSuppliersADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT ADU Rent Paid from Cash Kantor', 
-			locale_number_format(-$CashToRentADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Dividends PT ADU Paid from Cash Kantor', 
-			locale_number_format(-$CashToDividendsADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current Cash PT ADU in Brankas Kantor', 
-			locale_number_format($CurrentBalanceADU,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash ADU in Brankas Kantor Goal for end of '. $Year, 
-			locale_number_format($YearlyGoalADU,0)
-			);
+	echo '<tr>
+			<td>' . $Text . '</td>
+			<td class="number">' . locale_number_format($BankToCashADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PT ADU Paid by Petty Cash (excluding checks, salaries, Corporate CC)</td>
+			<td class="number">' . locale_number_format(-$ExpensesADUPaidCash,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PT ADU Small Suppliers Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToSmallSuppliersADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PT ADU Rent Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToRentADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Dividends PT ADU Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToDividendsADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Current Cash PT ADU in Brankas Kantor</td>
+			<td class="number">' . locale_number_format($CurrentBalanceADU,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Cash ADU in Brankas Kantor Goal for end of '. $Year . '</td>
+			<td class="number">' . locale_number_format($YearlyGoalADU,0) . '</td>
+			</tr>';
 	if ($ToBeMovedADU >= 0){
 		$Text = 'Cash ADU OVER goal in Brankas Kantor';
 	}else{
 		$Text = 'Cash ADU BELOW goal in Brankas Kantor';
 	}
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format(abs($ToBeMovedADU),0)
-			);
+	echo '<tr>
+			<td>' . $Text . '</td>
+			<td class="number">' . locale_number_format(abs($ToBeMovedADU),0) . '</td>
+			</tr>';
 			
 	if ($ToBeTransferredADU != 0){
 		if ($ToBeTransferredADU > 0){
@@ -888,13 +822,10 @@ function CashStatus($Year,
 		}elseif ($ToBeTransferredADU < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR ADU to Brankas Kantor';
 		}
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Text, 
-				locale_number_format(abs($ToBeTransferredADU),0)
-				);
+		echo '<tr class="striped_row">
+				<td>' . $Text . '</td>
+				<td class="number">' . locale_number_format(abs($ToBeTransferredADU),0) . '</td>
+				</tr>';
 	}
 	echo '</tbody></table>
 		</div>';
@@ -1001,88 +932,58 @@ function CashStatus($Year,
 			</thead>
 			<tbody>';
 	$i = 1;
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Running PO for items for sale (USD approx)', 
-			locale_number_format($PORunningTotalUSD,0)
-			);
+	echo '<tr>
+			<td>Running PO for items for sale (USD approx)</td>
+			<td class="number">' . locale_number_format($PORunningTotalUSD,0) . '</td>
+			</tr>';
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
-			locale_number_format($POPaymentsPendingUSDuntilEndOfMonth,0)
-			);
+	echo '<tr>
+			<td>Pending payments until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)</td>
+			<td class="number">' . locale_number_format($POPaymentsPendingUSDuntilEndOfMonth,0) . '</td>
+			</tr>';
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current balance Danamon USD ADU (USD approx)', 
-			locale_number_format($SaldoADUDanamonUSD,0)
-			);
+	echo '<tr>
+			<td>Current balance Danamon USD ADU (USD approx)</td>
+			<td class="number">' . locale_number_format($SaldoADUDanamonUSD,0) . '</td>
+			</tr>';
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current balance Payoneer USD ADU (USD approx)', 
-			locale_number_format($SaldoADUPayoneerUSD,0)
-			);
+	echo '<tr>
+			<td>Current balance Payoneer USD ADU (USD approx)</td>
+			<td class="number">' . locale_number_format($SaldoADUPayoneerUSD,0) . '</td>
+			</tr>';
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current balance Aye Cargo ADU (USD approx)', 
-			locale_number_format($SaldoAyeCargoUSD,0)
-			);
+	echo '<tr>
+			<td>Current balance Aye Cargo ADU (USD approx)</td>
+			<td class="number">' . locale_number_format($SaldoAyeCargoUSD,0) . '</td>
+			</tr>';
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current balance available USD ADU (USD approx)', 
-			locale_number_format($SaldoUSD,0)
-			);
+	echo '<tr>
+			<td>Current balance available USD ADU (USD approx)</td>
+			<td class="number">' . locale_number_format($SaldoUSD,0) . '</td>
+			</tr>';
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'USD already exchanged from IDR this month for ADU (USD approx)', 
-			locale_number_format($USDAlreadyExhangedThisMonth,0)
-			);
+	echo '<tr>
+			<td>USD already exchanged from IDR this month for ADU (USD approx)</td>
+			<td class="number">' . locale_number_format($USDAlreadyExhangedThisMonth,0) . '</td>
+			</tr>';
 
-	printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'USD needed until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)', 
-				locale_number_format(max($ShortageUSDuntilEndOfMonth,0),0)
-				);
+	echo '<tr>
+				<td>USD needed until end of month ('.$DaysUntilEndOfMonth.' days) (USD approx)</td>
+				<td class="number">' . locale_number_format(max($ShortageUSDuntilEndOfMonth,0),0) . '</td>
+				</tr>';
 
 	if ($ToBeExchanged > 0){
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'ACTION NEEDED --> Purchase USD from ADU Danamon IDR to ADU Danamon USD', 
-				locale_number_format($ToBeExchanged)
-				);
+		echo '<tr class="striped_row">
+				<td>ACTION NEEDED --> Purchase USD from ADU Danamon IDR to ADU Danamon USD</td>
+				<td class="number">' . locale_number_format($ToBeExchanged) . '</td>
+				</tr>';
 	}
 	
 	if ($ToBeTransferredToPayoneer > 0){
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Payoneer USD', 
-				locale_number_format($ToBeTransferredToPayoneer)
-				);
+		echo '<tr class="striped_row">
+				<td>ACTION NEEDED --> Transfer from ADU Danamon USD to ADU Payoneer USD</td>
+				<td class="number">' . locale_number_format($ToBeTransferredToPayoneer) . '</td>
+				</tr>';
 	}
 
 	echo '</tbody></table>
@@ -1232,100 +1133,64 @@ function CashStatus($Year,
 			</thead>
 			<tbody>';
 	$i = 1;
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash SMH in Brankas Kantor end of ' . ($Year-1), 
-			locale_number_format($CashEndOfPreviousYearSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Sales Retail PT SMH Cash during '. $Year, 
-			locale_number_format($SalesCashSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Floating Cash still in shops PT SMH', 
-			locale_number_format(-$FloatingCashSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash received from shops PT SMH in Brankas Kantor during '. $Year, 
-			locale_number_format($SalesCashSMH-$FloatingCashSMH,0)
-			);
+	echo '<tr>
+			<td>Cash SMH in Brankas Kantor end of ' . ($Year-1) . '</td>
+			<td class="number">' . locale_number_format($CashEndOfPreviousYearSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Sales Retail PT SMH Cash during '. $Year . '</td>
+			<td class="number">' . locale_number_format($SalesCashSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Floating Cash still in shops PT SMH</td>
+			<td class="number">' . locale_number_format(-$FloatingCashSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Cash received from shops PT SMH in Brankas Kantor during '. $Year . '</td>
+			<td class="number">' . locale_number_format($SalesCashSMH-$FloatingCashSMH,0) . '</td>
+			</tr>';
 	if ($BankToCashSMH >= 0){
 		$Text = 'Total withdrawal from Danamon/Mandiri IDR PTSMH to Brankas Kantor';
 	}else{
 		$Text = 'Total deposit from Brankas Kantor to Danamon/Mandiri IDR PTSMH ';
 	}
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format($BankToCashSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT SMH Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
-			locale_number_format(-$ExpensesSMHPaidCash,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT SMH Small Suppliers Paid from Cash Kantor', 
-			locale_number_format(-$CashToSmallSuppliersSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PT SMH Rent Paid from Cash Kantor', 
-			locale_number_format(-$CashToRentSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Dividends PT SMH Paid from Cash Kantor', 
-			locale_number_format(-$CashToDividendsSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current Cash PT SMH in Brankas Kantor', 
-			locale_number_format($CurrentBalanceSMH,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash SMH in Brankas Kantor Goal for end of '. $Year, 
-			locale_number_format($YearlyGoalSMH,0)
-			);
+	echo '<tr>
+			<td>' . $Text . '</td>
+			<td class="number">' . locale_number_format($BankToCashSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PT SMH Paid by Petty Cash (excluding checks, salaries, Corporate CC)</td>
+			<td class="number">' . locale_number_format(-$ExpensesSMHPaidCash,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PT SMH Small Suppliers Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToSmallSuppliersSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PT SMH Rent Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToRentSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Dividends PT SMH Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToDividendsSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Current Cash PT SMH in Brankas Kantor</td>
+			<td class="number">' . locale_number_format($CurrentBalanceSMH,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Cash SMH in Brankas Kantor Goal for end of '. $Year . '</td>
+			<td class="number">' . locale_number_format($YearlyGoalSMH,0) . '</td>
+			</tr>';
 	if ($ToBeMovedSMH >= 0){
 		$Text = 'Cash SMH OVER goal in Brankas Kantor';
 	}else{
 		$Text = 'Cash SMH BELOW goal in Brankas Kantor';
 	}
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format(abs($ToBeMovedSMH),0)
-			);
+	echo '<tr>
+			<td>' . $Text . '</td>
+			<td class="number">' . locale_number_format(abs($ToBeMovedSMH),0) . '</td>
+			</tr>';
 			
 	if ($ToBeTransferredSMH != 0){
 		if ($ToBeTransferredSMH > 0){
@@ -1333,13 +1198,10 @@ function CashStatus($Year,
 		}elseif ($ToBeTransferredSMH < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR SMH to Brankas Kantor';
 		}
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Text, 
-				locale_number_format(abs($ToBeTransferredSMH),0)
-				);
+		echo '<tr class="striped_row">
+				<td>' . $Text . '</td>
+				<td class="number">' . locale_number_format(abs($ToBeTransferredSMH),0) . '</td>
+				</tr>';
 	}
 	echo '</tbody></table>
 		</div>';
@@ -1472,100 +1334,64 @@ function CashStatus($Year,
 			</thead>
 			<tbody>';
 	$i = 1;
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash PTBB in Brankas Kantor end of ' . ($Year-1), 
-			locale_number_format($CashEndOfPreviousYearBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Sales Retail PTBB Cash during '. $Year, 
-			locale_number_format($SalesCashBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Floating Cash still in shops PTBB', 
-			locale_number_format(-$FloatingCashBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash received from shops PTBB in Brankas Kantor during '. $Year, 
-			locale_number_format($SalesCashBB-$FloatingCashBB,0)
-			);
+	echo '<tr>
+			<td>Cash PTBB in Brankas Kantor end of ' . ($Year-1) . '</td>
+			<td class="number">' . locale_number_format($CashEndOfPreviousYearBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Sales Retail PTBB Cash during '. $Year . '</td>
+			<td class="number">' . locale_number_format($SalesCashBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Floating Cash still in shops PTBB</td>
+			<td class="number">' . locale_number_format(-$FloatingCashBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Cash received from shops PTBB in Brankas Kantor during '. $Year . '</td>
+			<td class="number">' . locale_number_format($SalesCashBB-$FloatingCashBB,0) . '</td>
+			</tr>';
 	if ($BankToCashBB >= 0){
 		$Text = 'Total withdrawal from Danamon IDR PTBB to Brankas Kantor';
 	}else{
 		$Text = 'Total deposit from Brankas Kantor to Danamon IDR PTBB ';
 	}
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format($BankToCashBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PTBB Paid by Petty Cash (excluding checks, salaries, Corporate CC)', 
-			locale_number_format(-$ExpensesBBPaidCash,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PTBB Small Suppliers Paid from Cash Kantor', 
-			locale_number_format(-$CashToSmallSuppliersBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Expenses PTBB Rent Paid from Cash Kantor', 
-			locale_number_format(-$CashToRentBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Dividends PTBB Paid from Cash Kantor', 
-			locale_number_format(-$CashToDividendsBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Current Cash PTBB in Brankas Kantor', 
-			locale_number_format($CurrentBalanceBB,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'Cash PTBB in Brankas Kantor Goal for end of '. $Year, 
-			locale_number_format($YearlyGoalBB,0)
-			);
+	echo '<tr>
+			<td>' . $Text . '</td>
+			<td class="number">' . locale_number_format($BankToCashBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PTBB Paid by Petty Cash (excluding checks, salaries, Corporate CC)</td>
+			<td class="number">' . locale_number_format(-$ExpensesBBPaidCash,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PTBB Small Suppliers Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToSmallSuppliersBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Expenses PTBB Rent Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToRentBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Dividends PTBB Paid from Cash Kantor</td>
+			<td class="number">' . locale_number_format(-$CashToDividendsBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Current Cash PTBB in Brankas Kantor</td>
+			<td class="number">' . locale_number_format($CurrentBalanceBB,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Cash PTBB in Brankas Kantor Goal for end of '. $Year . '</td>
+			<td class="number">' . locale_number_format($YearlyGoalBB,0) . '</td>
+			</tr>';
 	if ($ToBeMovedBB >= 0){
 		$Text = 'Cash PTBB OVER goal in Brankas Kantor';
 	}else{
 		$Text = 'Cash PTBB BELOW goal in Brankas Kantor';
 	}
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			$Text, 
-			locale_number_format(abs($ToBeMovedBB),0)
-			);
+	echo '<tr>
+			<td>' . $Text . '</td>
+			<td class="number">' . locale_number_format(abs($ToBeMovedBB),0) . '</td>
+			</tr>';
 
 	if ($ToBeTransferredBB != 0){
 		if ($ToBeTransferredBB > 0){
@@ -1573,13 +1399,10 @@ function CashStatus($Year,
 		}elseif ($ToBeTransferredBB < 0){
 			$Text = 'ACTION NEEDED -> Withdrawal from Danamon IDR BB to Brankas Kantor';
 		}
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Text, 
-				locale_number_format(abs($ToBeTransferredBB),0)
-				);
+		echo '<tr class="striped_row">
+				<td>' . $Text . '</td>
+				<td class="number">' . locale_number_format(abs($ToBeTransferredBB),0) . '</td>
+				</tr>';
 	}
 	echo '</tbody></table>
 		</div>';	
@@ -1632,75 +1455,48 @@ function CashStatus($Year,
 		$ToBeDistributedToShareholders = round_multiple_of($FreeSaldoBrankasShareholders, $MinMoveFree);	
 
 		$i = 1;
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Cash belonging to PTADU', 
-				locale_number_format($CurrentBalanceADU,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Cash belonging to PTSMH', 
-				locale_number_format($CurrentBalanceSMH,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Cash belonging to PTBB', 
-				locale_number_format($CurrentBalanceBB,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Total Cash PTADU+PTSMH+PTBB', 
-				locale_number_format($CurrentBalanceADU+$CurrentBalanceSMH+$CurrentBalanceBB,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Saldo Cash in Brankas Kantor ', 
-				locale_number_format($SaldoBrankasKantor,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Saldo Cash in Brankas Shareholders', 
-				locale_number_format($SaldoBrankasShareholders,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Total Saldo Cash', 
-				locale_number_format($SaldoBrankasKantor + $SaldoBrankasShareholders,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'Free Cash', 
-				locale_number_format($FreeSaldoBrankasShareholders,0)
-				);
+		echo '<tr>
+				<td>Cash belonging to PTADU</td>
+				<td class="number">' . locale_number_format($CurrentBalanceADU,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Cash belonging to PTSMH</td>
+				<td class="number">' . locale_number_format($CurrentBalanceSMH,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Cash belonging to PTBB</td>
+				<td class="number">' . locale_number_format($CurrentBalanceBB,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Total Cash PTADU+PTSMH+PTBB</td>
+				<td class="number">' . locale_number_format($CurrentBalanceADU+$CurrentBalanceSMH+$CurrentBalanceBB,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Saldo Cash in Brankas Kantor </td>
+				<td class="number">' . locale_number_format($SaldoBrankasKantor,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Saldo Cash in Brankas Shareholders</td>
+				<td class="number">' . locale_number_format($SaldoBrankasShareholders,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Total Saldo Cash</td>
+				<td class="number">' . locale_number_format($SaldoBrankasKantor + $SaldoBrankasShareholders,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Free Cash</td>
+				<td class="number">' . locale_number_format($FreeSaldoBrankasShareholders,0) . '</td>
+				</tr>';
 		if ($ToBeDistributedToShareholders !=0){
 			if ($FreeSaldoBrankasShareholders >= 0){
 				$Text = 'ACTION NEEDED -> Distribute Cash from Brankas Shareholders to Shareholders';
 			}else{
 				$Text = 'ACTION NEEDED -> Get Cash from Shareholders to Brankas Shareholders';
 			}
-			printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				$Text, 
-				locale_number_format(abs($ToBeDistributedToShareholders),0)
-				);
+			echo '<tr class="striped_row">
+				<td>' . $Text . '</td>
+				<td class="number">' . locale_number_format(abs($ToBeDistributedToShareholders),0) . '</td>
+				</tr>';
 		}
 		echo '</tbody></table>
 			</div>';	
@@ -1752,15 +1548,11 @@ function DailySalesRecords($Days, $NumDays, $Since){
 				<tbody>';
 		$i = 1;
 		while (($MyRow = DB_fetch_array($Result)) AND ($i <= $Days)) {
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($i,0),
-					ConvertSQLDate($MyRow['orddate']),
-					locale_number_format($MyRow['sales'],0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . locale_number_format($i,0) . '</td>
+					<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
+					<td class="number">' . locale_number_format($MyRow['sales'],0) . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody></table>
@@ -1892,67 +1684,39 @@ function GeneralCustomerBehaviour($Brand, $NumDaysA){
 				$AvgItemsPerDayLastYear = ($NumDaysA != 0) ? $MyRow['itemcount_lastyear']/$NumDaysA : 0;
 				$AvgItemsPerInvoiceLastYear = ($MyRow['invoicecount_lastyear'] != 0) ? $MyRow['itemcount_lastyear']/$MyRow['invoicecount_lastyear'] : 0;
 
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i,
-						$Code,
-						$Name,
-						locale_number_format_zero_blank($AvgIDRPerInvoice,0), 
-						locale_number_format_zero_blank($AvgIDRPerItem,0), 
-						locale_number_format_zero_blank($AvgInvoicesPerDay,1),
-						locale_number_format_zero_blank($AvgItemsPerDay,1),
-						locale_number_format_zero_blank($AvgItemsPerInvoice,1),
-						locale_number_format_zero_blank($AvgIDRPerInvoiceLastYear,0), 
-						locale_number_format_zero_blank($AvgIDRPerItemLastYear,0), 
-						locale_number_format_zero_blank($AvgInvoicesPerDayLastYear,1),
-						locale_number_format_zero_blank($AvgItemsPerDayLastYear,1),
-						locale_number_format_zero_blank($AvgItemsPerInvoiceLastYear,1)
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $Code . '</td>
+						<td>' . $Name . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgIDRPerInvoice,0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgIDRPerItem,0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgInvoicesPerDay,1) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgItemsPerDay,1) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgItemsPerInvoice,1) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgIDRPerInvoiceLastYear,0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgIDRPerItemLastYear,0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgInvoicesPerDayLastYear,1) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgItemsPerDayLastYear,1) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($AvgItemsPerInvoiceLastYear,1) . '</td>
+						</tr>';
 				
 			}
 		}
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"",
-				"",
-				"Brand Average",
-				locale_number_format_zero_blank($TotalInvoiceSum/$TotalInvoiceCount,0), 
-				locale_number_format_zero_blank($TotalInvoiceSum/$TotalItemCount,0), 
-				locale_number_format_zero_blank($TotalInvoiceCount/$NumDaysA,1),
-				locale_number_format_zero_blank($TotalItemCount/$NumDaysA,1),
-				locale_number_format_zero_blank($TotalItemCount/$TotalInvoiceCount,1),
-				locale_number_format_zero_blank($TotalInvoiceSumLastYear/$TotalInvoiceCountLastYear,0), 
-				locale_number_format_zero_blank($TotalInvoiceSumLastYear/$TotalItemCountLastYear,0), 
-				locale_number_format_zero_blank($TotalInvoiceCountLastYear/$NumDaysA,1),
-				locale_number_format_zero_blank($TotalItemCountLastYear/$NumDaysA,1),
-				locale_number_format_zero_blank($TotalItemCountLastYear/$TotalInvoiceCountLastYear,1)
-				);
+		echo '<tr class="striped_row">
+				<td class="number"></td>
+				<td></td>
+				<td>Brand Average</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalInvoiceSum/$TotalInvoiceCount,0) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalInvoiceSum/$TotalItemCount,0) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalInvoiceCount/$NumDaysA,1) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalItemCount/$NumDaysA,1) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalItemCount/$TotalInvoiceCount,1) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalInvoiceSumLastYear/$TotalInvoiceCountLastYear,0) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalInvoiceSumLastYear/$TotalItemCountLastYear,0) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalInvoiceCountLastYear/$NumDaysA,1) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalItemCountLastYear/$NumDaysA,1) . '</td>
+				<td class="number">' . locale_number_format_zero_blank($TotalItemCountLastYear/$TotalInvoiceCountLastYear,1) . '</td>
+				</tr>';
 		echo '</tbody></table>
 				</div>';
 		InsertKPI("Sales", "Items x Invoice Last " . $NumDaysA . " days (ITEMS) " . $BrandText, $TotalItemCount/$TotalInvoiceCount);
@@ -1988,27 +1752,19 @@ function PettyCashStatus($Currency){
 		$i = 1;
 		$Total = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$i, 
-					$MyRow['tabcode'], 
-					locale_number_format($MyRow['amount'],0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . $MyRow['tabcode'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['amount'],0) . '</td>
+					</tr>';
 			$i++;
 			$Total = $Total + $MyRow['amount'];
 		}
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				'', 
-				'Total', 
-				locale_number_format($Total,0)
-				);
+		echo '<tr class="striped_row">
+				<td class="number"></td>
+				<td>Total</td>
+				<td class="number">' . locale_number_format($Total,0) . '</td>
+				</tr>';
 		
 		echo '</tbody></table>
 				</div>';
@@ -2197,23 +1953,15 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 				$Trend = "Degrading ". locale_number_format($Percent,0) . "%";
 			}
 			if (($MyRow['salesA'] > 0) OR ($MyRow['salesB'] > 0)){
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$i,
-						$Code,
-						$Name,
-						locale_number_format($MyRow['salesA'],0), 
-						locale_number_format($MyRow['salesB'],0), 
-						$Trend,
-						$Rent
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $Code . '</td>
+						<td>' . $Name . '</td>
+						<td class="number">' . locale_number_format($MyRow['salesA'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['salesB'],0) . '</td>
+						<td>' . $Trend . '</td>
+						<td class="number">' . $Rent . '</td>
+						</tr>';
 				$i++;
 			}
 
@@ -2246,62 +1994,38 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 				$Trend = "Degrading ". locale_number_format($Percent,1) . "%";
 			}
 			$Rent = round(($TotalBothYearsRent / 365 * $NumDaysA) / $TotalBothYearsDateA * 100) . '%';
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					"",
-					"",
-					"EXISTING SHOPS",
-					locale_number_format($TotalBothYearsDateA,0), 
-					locale_number_format($TotalBothYearsDateB,0), 
-					$Trend,
-					$Rent
-					);
+			echo '<tr class="striped_row">
+					<td></td>
+					<td></td>
+					<td>EXISTING SHOPS</td>
+					<td class="number">' . locale_number_format($TotalBothYearsDateA,0) . '</td>
+					<td class="number">' . locale_number_format($TotalBothYearsDateB,0) . '</td>
+					<td>' . $Trend . '</td>
+					<td class="number">' . $Rent . '</td>
+					</tr>';
 			if ($TotalNewDateA > 0){
 				$Rent = round(($TotalNewRent / 365 * $NumDaysA) / $TotalNewDateA * 100) . '%';
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						"",
-						"",
-						"NEW SHOPS",
-						locale_number_format($TotalNewDateA,0), 
-						"", 
-						"",
-						$Rent
-						);
+				echo '<tr class="striped_row">
+						<td></td>
+						<td></td>
+						<td>NEW SHOPS</td>
+						<td class="number">' . locale_number_format($TotalNewDateA,0) . '</td>
+						<td class="number"></td>
+						<td></td>
+						<td class="number">' . $Rent . '</td>
+						</tr>';
 			}
 			if ($TotalOldDateB > 0){
 				$Rent = round(($TotalOldRent / 365 * $NumDaysA) / $TotalOldDateB * 100) . '%';
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						"",
-						"",
-						"CLOSED SHOPS",
-						"", 
-						locale_number_format($TotalOldDateB,0), 
-						"",
-						$Rent
-						);
+				echo '<tr class="striped_row">
+						<td></td>
+						<td></td>
+						<td>CLOSED SHOPS</td>
+						<td class="number"></td>
+						<td class="number">' . locale_number_format($TotalOldDateB,0) . '</td>
+						<td></td>
+						<td class="number">' . $Rent . '</td>
+						</tr>';
 			}
 		}
 		if (($Typereport == "Shop") OR ($Typereport == "Online")){
@@ -2314,23 +2038,15 @@ function PeriodDifferenceSales($Typeperiod, $Typereport, $NumDaysA){
 				$Trend = "Degrading ". locale_number_format($Percent,1) . "%";
 			}
 			$Rent = round(($TotalRent / 365 * $NumDaysA) / $TotalDateA * 100) . '%';
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					"",
-					"",
-					"TOTAL",
-					locale_number_format($TotalDateA,0), 
-					locale_number_format($TotalDateB,0), 
-					$Trend,
-					$Rent
-					);
+			echo '<tr class="striped_row">
+					<td></td>
+					<td></td>
+					<td>TOTAL</td>
+					<td class="number">' . locale_number_format($TotalDateA,0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateB,0) . '</td>
+					<td>' . $Trend . '</td>
+					<td class="number">' . $Rent . '</td>
+					</tr>';
 		}
 		echo '</tfooter>
 				</table>
@@ -2374,17 +2090,12 @@ function UnbalancedGLTransTX($NumDays, $RootPath){
 
 			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&TransNo=' . $MyRow['typeno'] . '">' . $MyRow['typeno'] . '</a>';
 					
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					ConvertSQLDateTime($MyRow['trandate']), 
-					$MyRow['typename'], 
-					$CodeLink, 
-					locale_number_format($MyRow['unbalance'],0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . ConvertSQLDateTime($MyRow['trandate']) . '</td>
+					<td>' . $MyRow['typename'] . '</td>
+					<td class="number">' . $CodeLink . '</td>
+					<td class="number">' . locale_number_format($MyRow['unbalance'],0) . '</td>
+					</tr>';
 		}
 		echo '</tbody></table>
 			</div>';
@@ -2423,34 +2134,22 @@ function EmptyAccountsGLTransTX($NumDays, $RootPath){
 
 			$CodeLink = '<a href="' . $RootPath . '/GLTransInquiry.php?TypeID=' . $MyRow['type'] . '&TransNo=' . $MyRow['typeno'] . '">' . $MyRow['typeno'] . '</a>';
 					
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					locale_number_format($MyRow['counterindex'],0),
-					ConvertSQLDateTime($MyRow['trandate']), 
-					$MyRow['type'], 
-					$CodeLink, 
-					locale_number_format($MyRow['amount'],0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . locale_number_format($MyRow['counterindex'],0) . '</td>
+					<td>' . ConvertSQLDateTime($MyRow['trandate']) . '</td>
+					<td>' . $MyRow['type'] . '</td>
+					<td class="number">' . $CodeLink . '</td>
+					<td class="number">' . locale_number_format($MyRow['amount'],0) . '</td>
+					</tr>';
 			$TotalAmount += $MyRow['amount'];
 		}
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"TOTAL",
-				"", 
-				"", 
-				"", 
-				locale_number_format($TotalAmount,0)
-				);
+		echo '<tr class="striped_row">
+				<td>TOTAL</td>
+				<td></td>
+				<td></td>
+				<td class="number"></td>
+				<td class="number">' . locale_number_format($TotalAmount,0) . '</td>
+				</tr>';
 		echo '</tbody></table>
 			</div>';
 	}
@@ -2484,19 +2183,13 @@ function ShowKPIHistory($NumDays){
 				</thead>
 				<tbody>';
 		while ($MyRow = DB_fetch_array($Result)) {
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$MyRow['class'], 
-					$MyRow['concept'], 
-					locale_number_format_kpi($MyRow['minimumvalue']),
-					locale_number_format_kpi($MyRow['averagevalue']),
-					locale_number_format_kpi($MyRow['maximumvalue'])
-					);
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['class'] . '</td>
+					<td>' . $MyRow['concept'] . '</td>
+					<td class="number">' . locale_number_format_kpi($MyRow['minimumvalue']) . '</td>
+					<td class="number">' . locale_number_format_kpi($MyRow['averagevalue']) . '</td>
+					<td class="number">' . locale_number_format_kpi($MyRow['maximumvalue']) . '</td>
+					</tr>';
 		}
 		echo '</tbody></table>
 			</div>';
@@ -2562,141 +2255,93 @@ function StockByBrand($Brand, $NumDays, $OptimalDaysStock, $ShowFullDetails){
 			</thead>
 			<tbody>';
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			'# Shops Open', 
-			locale_number_format($Shops,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Total Models (MODELS)", 
-			locale_number_format($TotalModels,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Total Stock (PCS)", 
-			locale_number_format($TotalItems,0)
-			);
+	echo '<tr>
+			<td># Shops Open</td>
+			<td class="number">' . locale_number_format($Shops,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Total Models (MODELS)</td>
+			<td class="number">' . locale_number_format($TotalModels,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Total Stock (PCS)</td>
+			<td class="number">' . locale_number_format($TotalItems,0) . '</td>
+			</tr>';
 	if ($Brand != "SHOPOU"){
-		printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Stock needed for display (PCS)", 
-			locale_number_format($DisplayItems,0)
-			);
+		echo '<tr>
+			<td>Stock needed for display (PCS)</td>
+			<td class="number">' . locale_number_format($DisplayItems,0) . '</td>
+			</tr>';
 	}
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Stock available for sale (PCS)", 
-			locale_number_format($AvailableForSaleItems,0)
-			);
+	echo '<tr>
+			<td>Stock available for sale (PCS)</td>
+			<td class="number">' . locale_number_format($AvailableForSaleItems,0) . '</td>
+			</tr>';
 
 	if ($ShowFullDetails){
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Daily Stock sold last " . $NumDays . " days " . 
-				ConvertSQLDate($FromLastDaysThisYear) . "-" .
-				ConvertSQLDate($ToLastDaysThisYear). " (PCS)", 
-				locale_number_format($DailySoldItemsThisYearPastDays,0)
-				);
+		echo '<tr>
+				<td>Daily Stock sold last ' . $NumDays . ' days ' . 
+				ConvertSQLDate($FromLastDaysThisYear) . '-' .
+				ConvertSQLDate($ToLastDaysThisYear). ' (PCS)</td>
+				<td class="number">' . locale_number_format($DailySoldItemsThisYearPastDays,0) . '</td>
+				</tr>';
 	}
 
 	if ($ShowFullDetails AND ($Brand != "SHOPOU")){
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Daily Stock sold same last " . $NumDays . " days last year " . 
-				ConvertSQLDate($FromLastDaysLastYear) . "-" .
-				ConvertSQLDate($ToLastDaysLastYear). " (PCS)", 
-				locale_number_format($DailySoldItemsLastYearPastDays,0)
-				);
+		echo '<tr>
+				<td>Daily Stock sold same last ' . $NumDays . ' days last year ' . 
+				ConvertSQLDate($FromLastDaysLastYear) . '-' .
+				ConvertSQLDate($ToLastDaysLastYear). ' (PCS)</td>
+				<td class="number">' . locale_number_format($DailySoldItemsLastYearPastDays,0) . '</td>
+				</tr>';
 	}
 	
 	if ($Brand != "SHOPOU"){
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Retail trend from same days last year (%)", 
-				locale_number_format($TrendThisYear*100,1). "%"
-				);
+		echo '<tr>
+				<td>Retail trend from same days last year (%)</td>
+				<td class="number">' . locale_number_format($TrendThisYear*100,1). '%</td>
+				</tr>';
 	}
 	
 	if ($ShowFullDetails AND ($Brand != "SHOPOU")){
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Daily Stock sold next " . $NumDaysLastYear . " days last year " . 
-				ConvertSQLDate($FromNextDaysLastYear) . "-" .
-				ConvertSQLDate($ToNextDaysLastYear). " (PCS)", 
-				locale_number_format($DailySoldItemsLastYearNextDays,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Items to be sold next " . $NumDaysLastYear . " days based on trend (PCS)", 
-				locale_number_format($ItemsToBeSoldNextDaysBasedOnTrendLastYear,0)
-				);
+		echo '<tr>
+				<td>Daily Stock sold next ' . $NumDaysLastYear . ' days last year ' . 
+				ConvertSQLDate($FromNextDaysLastYear) . '-' .
+				ConvertSQLDate($ToNextDaysLastYear). ' (PCS)</td>
+				<td class="number">' . locale_number_format($DailySoldItemsLastYearNextDays,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Items to be sold next ' . $NumDaysLastYear . ' days based on trend (PCS)</td>
+				<td class="number">' . locale_number_format($ItemsToBeSoldNextDaysBasedOnTrendLastYear,0) . '</td>
+				</tr>';
 	}
 
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Estimation daily Stock to be sold next " . $NumDays . " days  (PCS)", 
-			locale_number_format($EstimationDailyItemsToBeSoldNextDays,0)
-			);
-	printf('<tr>
-			<td>%s</td>
-			<td class="number">%s</td>
-			</tr>', 
-			"Days left of stock (DAYS)", 
-			locale_number_format($DaysStockForSale,0)
-			);
+	echo '<tr>
+			<td>Estimation daily Stock to be sold next ' . $NumDays . ' days  (PCS)</td>
+			<td class="number">' . locale_number_format($EstimationDailyItemsToBeSoldNextDays,0) . '</td>
+			</tr>';
+	echo '<tr>
+			<td>Days left of stock (DAYS)</td>
+			<td class="number">' . locale_number_format($DaysStockForSale,0) . '</td>
+			</tr>';
 
 	if ($Brand != "SHOPOU"){
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Stock to be received by PO (PCS)", 
-				locale_number_format($ItemsPO,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Stock to be received by WO (PCS)", 
-				locale_number_format($ItemsWO,0)
-				);
-		printf('<tr>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"Days left of stock including PO & WO (DAYS)", 
-				locale_number_format($DaysStockForSaleIncludingPOWO,0)
-				);
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"ACTION: Stock needed to reach " . $OptimalDaysStock . " days of optimal stock+PO+WO (PCS)", 
-				locale_number_format($ItemsToGetOptimalDaysStock,0)
-				);
+		echo '<tr>
+				<td>Stock to be received by PO (PCS)</td>
+				<td class="number">' . locale_number_format($ItemsPO,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Stock to be received by WO (PCS)</td>
+				<td class="number">' . locale_number_format($ItemsWO,0) . '</td>
+				</tr>';
+		echo '<tr>
+				<td>Days left of stock including PO & WO (DAYS)</td>
+				<td class="number">' . locale_number_format($DaysStockForSaleIncludingPOWO,0) . '</td>
+				</tr>';
+		echo '<tr class="striped_row">
+				<td>ACTION: Stock needed to reach ' . $OptimalDaysStock . ' days of optimal stock+PO+WO (PCS)</td>
+				<td class="number">' . locale_number_format($ItemsToGetOptimalDaysStock,0) . '</td>
+				</tr>';
 	}
 	echo '</tbody></table>
 			</div>

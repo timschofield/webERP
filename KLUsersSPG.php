@@ -302,25 +302,15 @@ if (!isset($SelectedUser)) {
 
 		/*The SecurityHeadings array is defined in config.php */
 
-		printf('<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td><a href="%s&amp;SelectedUser=%s">' . _('Edit') . '</a></td>
-				<td><a href="%s&amp;SelectedUser=%s&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
-				</tr>',
-				$MyRow['userid'],
-				$MyRow['salesmanname'],
-				$MyRow['locationname'],
-				$LastVisitDate,
-				$SecurityRoles[($MyRow['fullaccess'])],
-				$Status,
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?',
-				$MyRow['userid'],
-				htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?',
-				$MyRow['userid']);
+		echo '<td>' . $MyRow['userid'] . '</td>
+				<td>' . $MyRow['salesmanname'] . '</td>
+				<td>' . $MyRow['locationname'] . '</td>
+				<td>' . $LastVisitDate . '</td>
+				<td>' . $SecurityRoles[($MyRow['fullaccess'])] . '</td>
+				<td>' . $Status . '</td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8')  . '?&amp;SelectedUser=' . $MyRow['userid'] . '">' . _('Edit') . '</a></td>
+				<td><a href="' . htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8') . '?&amp;SelectedUser=' . $MyRow['userid'] . '&amp;delete=1" onclick="return confirm(\'' . _('Are you sure you wish to delete this user?') . '\');">' . _('Delete') . '</a></td>
+				</tr>';
 
 	} //END WHILE LIST LOOP
 	echo '</tbody>';

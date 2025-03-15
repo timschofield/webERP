@@ -102,48 +102,30 @@ function ActiveTransfersByLocation($RootPath){
 			$TotalPcsIn = $TotalPcsIn + $MyRow['qtyin'];
 			$TotalPcsOut = $TotalPcsOut + $MyRow['qtyout'];
 
-			printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-					</tr>',
-					$i,
-					$MyRow['locationname'],
-					locale_number_format($MyRow['transferout'],0),
-					locale_number_format($MyRow['transferin'],0),
-					locale_number_format($MyRow['transferout']+$MyRow['transferin'],0),
-					locale_number_format($MyRow['qtyout'],0),
-					locale_number_format($MyRow['qtyin'],0),
-					locale_number_format($MyRow['qtyout']+$MyRow['qtyin'],0)
-					);
+			echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $MyRow['locationname'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['transferout'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['transferin'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['transferout']+$MyRow['transferin'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qtyout'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qtyin'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qtyout']+$MyRow['qtyin'],0) . '</td>
+					</tr>';
 			$i++;
 		}
 		echo'</tbody>
 			<tfooter>';
-		printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-				</tr>',
-				'',
-				'Total',
-				locale_number_format($TotalTransferOut,0),
-				locale_number_format($TotalTransferIn,0),
-				locale_number_format($TotalTransferOut+$TotalTransferIn,0),
-				locale_number_format($TotalPcsOut,0),
-				locale_number_format($TotalPcsIn,0),
-				locale_number_format($TotalPcsOut+$TotalPcsIn,0)
-				);
+		echo '<tr class="striped_row">
+					<td class="number">' . '' . '</td>
+					<td>' . 'Total' . '</td>
+					<td class="number">' . locale_number_format($TotalTransferOut,0) . '</td>
+					<td class="number">' . locale_number_format($TotalTransferIn,0) . '</td>
+					<td class="number">' . locale_number_format($TotalTransferOut+$TotalTransferIn,0) . '</td>
+					<td class="number">' . locale_number_format($TotalPcsOut,0) . '</td>
+					<td class="number">' . locale_number_format($TotalPcsIn,0) . '</td>
+					<td class="number">' . locale_number_format($TotalPcsOut+$TotalPcsIn,0) . '</td>
+				</tr>';
 		InsertKPI("Transfers","Goods Pending to be transferred @ shops (pcs)", $TotalPcsOut+$TotalPcsIn);
 		echo '</tfooter>
 				</table>
@@ -193,41 +175,27 @@ function ActiveTransferStatus($RootPath){
 		$Total = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$i,
-					ConvertSQLDateTime($MyRow['shipdate']),
-					$CodeLink,
-					$MyRow['locfrom'],
-					$MyRow['locto'],
-					locale_number_format($MyRow['pendingqty'], 0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . ConvertSQLDateTime($MyRow['shipdate']) . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . $MyRow['locfrom'] . '</td>
+					<td>' . $MyRow['locto'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['pendingqty'], 0) . '</td>
+					</tr>';
 			$i++;
 			$Total = $Total + $MyRow['pendingqty'];
 		}
 		echo'</tbody>
 			<tfooter>';
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				'',
-				'',
-				'',
-				'',
-				'Total',
-				locale_number_format($Total, 0)
-				);
+		echo '<tr class="striped_row">
+				<td class="number">' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . 'Total' . '</td>
+				<td class="number">' . locale_number_format($Total, 0) . '</td>
+				</tr>';
 		InsertKPI("Transfers", "Active Transfers (pcs)", $Total);
 		echo '</tfooter>
 			  </table>
@@ -345,29 +313,18 @@ function AverageKPIHistory($NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $NumDaysE
 				$Trend = "Decreasing " . locale_number_format($Percent, 0) . "%";
 			}
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$Code,
-					$Name,
-					$dailyA,
-					$dailyB,
-					$dailyC,
-					$dailyD,
-					$dailyE,
-					$dailyF,
-					$Trend
-					);
+			echo '<tr class="striped_row">
+					<td>' . $i . '</td>
+					<td>' . $Code . '</td>
+					<td>' . $Name . '</td>
+					<td class="number">' . $dailyA . '</td>
+					<td class="number">' . $dailyB . '</td>
+					<td class="number">' . $dailyC . '</td>
+					<td class="number">' . $dailyD . '</td>
+					<td class="number">' . $dailyE . '</td>
+					<td class="number">' . $dailyF . '</td>
+					<td>' . $Trend . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>
@@ -685,33 +642,20 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 
 			if ($dailyA + $dailyB + $dailyC + $dailyD + $dailyE + $dailyF > 0){
 				// if there is any daily report not zero...
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$i,
-						$Code,
-						$Name,
-						locale_number_format($dailyA, 0),
-						locale_number_format($dailyB, 0),
-						locale_number_format($dailyC, 0),
-						locale_number_format($dailyD, 0),
-						locale_number_format($dailyE, 0),
-						locale_number_format($dailyF, 0),
-						$MTD,
-						$Trend,
-						locale_number_format($Forecast, 0)
-						);
+				echo '<tr class="striped_row">
+						<td>' . $i . '</td>
+						<td>' . $Code . '</td>
+						<td>' . $Name . '</td>
+						<td class="number">' . locale_number_format($dailyA, 0) . '</td>
+						<td class="number">' . locale_number_format($dailyB, 0) . '</td>
+						<td class="number">' . locale_number_format($dailyC, 0) . '</td>
+						<td class="number">' . locale_number_format($dailyD, 0) . '</td>
+						<td class="number">' . locale_number_format($dailyE, 0) . '</td>
+						<td class="number">' . locale_number_format($dailyF, 0) . '</td>
+						<td class="number">' . $MTD . '</td>
+						<td>' . $Trend . '</td>
+						<td class="number">' . locale_number_format($Forecast, 0) . '</td>
+						</tr>';
 
 			}
 			$TotalDateA = $TotalDateA + ($MyRow['salesA'] / $NumDaysA);
@@ -735,63 +679,36 @@ function AverageSales($TypeReport, $NumDaysA, $NumDaysB, $NumDaysC, $NumDaysD, $
 			if ($Percent < 0){
 				$Trend = "Degrading " . locale_number_format($Percent, 0) . "%";
 			}
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"TOTAL",
-					locale_number_format($TotalDateA, 0),
-					locale_number_format($TotalDateB, 0),
-					locale_number_format($TotalDateC, 0),
-					locale_number_format($TotalDateD, 0),
-					locale_number_format($TotalDateE, 0),
-					locale_number_format($TotalDateF, 0),
-					locale_number_format($TotalDateMTD, 0),
-					$Trend,
-					locale_number_format($TotalForecast, 0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "TOTAL" . '</td>
+					<td class="number">' . locale_number_format($TotalDateA, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateB, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateC, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateD, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateE, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateF, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateMTD, 0) . '</td>
+					<td>' . $Trend . '</td>
+					<td class="number">' . locale_number_format($TotalForecast, 0) . '</td>
+					</tr>';
 			$i--;
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"AVERAGE",
-					locale_number_format($TotalDateA / $i, 0),
-					locale_number_format($TotalDateB / $i, 0),
-					locale_number_format($TotalDateC / $i, 0),
-					locale_number_format($TotalDateD / $i, 0),
-					locale_number_format($TotalDateE / $i, 0),
-					locale_number_format($TotalDateF / $i, 0),
-					"",
-					"",
-					locale_number_format($TotalForecast / 30, 0),
-					""
-					);
+			echo '<tr class="striped_row">
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "AVERAGE" . '</td>
+					<td class="number">' . locale_number_format($TotalDateA / $i, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateB / $i, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateC / $i, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateD / $i, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateE / $i, 0) . '</td>
+					<td class="number">' . locale_number_format($TotalDateF / $i, 0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format($TotalForecast / 30, 0) . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 		}
 		echo '</tfooter>
 			  </table>
@@ -895,29 +812,18 @@ function MaintenanceTasksList($Status, $NumDays){
 				$CloseDate = ConvertSQLDateTime($MyRow['closedate']);
 				$DaysOpen = locale_number_format(abs(strtotime($MyRow['closedate']) - strtotime($MyRow['creationdate'])) / 60 / 60 / 24, 1);
 			}
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$i,
-					locale_number_format($MyRow['counterindex'], 0),
-					$MyRow['locationname'],
-					$MyRow['maintenancetype'],
-					$MyRow['taskdescription'],
-					$MyRow['creationuser'],
-					ConvertSQLDateTime($MyRow['creationdate']),
-					$CloseUser,
-					$CloseDate,
-					$DaysOpen
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td class="number">' . locale_number_format($MyRow['counterindex'], 0) . '</td>
+					<td>' . $MyRow['locationname'] . '</td>
+					<td>' . $MyRow['maintenancetype'] . '</td>
+					<td>' . $MyRow['taskdescription'] . '</td>
+					<td>' . $MyRow['creationuser'] . '</td>
+					<td>' . ConvertSQLDateTime($MyRow['creationdate']) . '</td>
+					<td>' . $CloseUser . '</td>
+					<td>' . $CloseDate . '</td>
+					<td class="number">' . $DaysOpen . '</td>
+					</tr>';
 			// check if there are any updates to show
 			$SQLUpdates = "SELECT klmaintenancetaskupdates.counterindex,
 								klmaintenancetaskupdates.description AS updatedescription,
@@ -928,29 +834,18 @@ function MaintenanceTasksList($Status, $NumDays){
 							ORDER BY klmaintenancetaskupdates.counterindex";
 			$ResultUpdates = DB_query($SQLUpdates);
 			while ($MyUpdates = DB_fetch_array($ResultUpdates)) {
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						'',
-						'',
-						'',
-						'',
-						$MyUpdates['updatedescription'],
-						$MyUpdates['updateuser'],
-						ConvertSQLDateTime($MyUpdates['updatedate']),
-						'',
-						'',
-						''
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . '' . '</td>
+						<td class="number">' . '' . '</td>
+						<td>' . '' . '</td>
+						<td>' . '' . '</td>
+						<td>' . $MyUpdates['updatedescription'] . '</td>
+						<td>' . $MyUpdates['updateuser'] . '</td>
+						<td>' . ConvertSQLDateTime($MyUpdates['updatedate']) . '</td>
+						<td>' . '' . '</td>
+						<td>' . '' . '</td>
+						<td class="number">' . '' . '</td>
+						</tr>';
 			}
 		}
 		echo '</tbody>
@@ -1003,42 +898,28 @@ function ComponentsToObsolete($ShowOnlyTotal, $ShowLimit, $RootPath){
 			$TotalCost = $TotalCost + ($MyRow['qoh'] * $MyRow['stdcost']);
 			if (!$ShowOnlyTotal){
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$i,
-						$CodeLink,
-						$MyRow['description'],
-						locale_number_format($MyRow['qoh'], 0),
-						$MyRow['units'],
-						locale_number_format($MyRow['qoh'] * $MyRow['stdcost'], 0)
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['qoh'], 0) . '</td>
+						<td>' . $MyRow['units'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['qoh'] * $MyRow['stdcost'], 0) . '</td>
+						</tr>';
 			}
 			$i++;
 		}
 		if (!$ShowOnlyTotal){
 			echo'</tbody>
 				<tfooter>';
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					'',
-					'',
-					'Total Cost',
-					'',
-					'',
-					locale_number_format($TotalCost, 0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . 'Total Cost' . '</td>
+					<td class="number">' . '' . '</td>
+					<td>' . '' . '</td>
+					<td class="number">' . locale_number_format($TotalCost, 0) . '</td>
+					</tr>';
 			echo '</tfooter>
 				  </table>
 				  </div>';
@@ -1111,62 +992,38 @@ function ErrorsInTransfers($maxdays, $RootPath){
 
 			if (($MyRow['cancelled_models'] != 0) OR ($MyRow['cancelled_quantity'] != 0)){
 				$TransferLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$NumTransfersWithErrors,
-						$TransferLink,
-						ConvertSQLDateTime($MyRow['shipdate']),
-						$MyRow['shiploc'],
-						$MyRow['recloc'],
-						locale_number_format($MyRow['shipped_models'], 0),
-						locale_number_format($MyRow['cancelled_models'], 0),
-						locale_number_format(($MyRow['shipped_models'] != 0) ? ($MyRow['cancelled_models'] / $MyRow['shipped_models'] * 100) : 0, 2) . '%',
-						locale_number_format($MyRow['shipped_quantity'], 0),
-						locale_number_format($MyRow['cancelled_quantity'], 0),
-						locale_number_format(($MyRow['shipped_quantity'] != 0) ? ($MyRow['cancelled_quantity'] / $MyRow['shipped_quantity'] * 100) : 0, 2) . '%'
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $NumTransfersWithErrors . '</td>
+						<td class="number">' . $TransferLink . '</td>
+						<td>' . ConvertSQLDateTime($MyRow['shipdate']) . '</td>
+						<td>' . $MyRow['shiploc'] . '</td>
+						<td>' . $MyRow['recloc'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['shipped_models'], 0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['cancelled_models'], 0) . '</td>
+						<td class="number">' . locale_number_format(($MyRow['shipped_models'] != 0) ? ($MyRow['cancelled_models'] / $MyRow['shipped_models'] * 100) : 0, 2) . '%' . '</td>
+						<td class="number">' . locale_number_format($MyRow['shipped_quantity'], 0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['cancelled_quantity'], 0) . '</td>
+						<td class="number">' . locale_number_format(($MyRow['shipped_quantity'] != 0) ? ($MyRow['cancelled_quantity'] / $MyRow['shipped_quantity'] * 100) : 0, 2) . '%' . '</td>
+						</tr>';
 				$NumTransfersWithErrors++;
 			}
 			$NumTransfers++;
 		}
 		echo '</tbody>
 			  <tfooter>';
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				locale_number_format($NumTransfers, 0),
-				locale_number_format(($NumTransfers != 0) ? ($NumTransfersWithErrors / $NumTransfers * 100) : 0, 2) . '%',
-				'',
-				'',
-				'TOTAL',
-				locale_number_format($TotalShippedModels, 0),
-				locale_number_format($TotalCancelledModels, 0),
-				locale_number_format(($TotalShippedModels != 0) ? ($TotalCancelledModels / $TotalShippedModels * 100) : 0, 2) . '%',
-				locale_number_format($TotalShippedQty, 0),
-				locale_number_format($TotalCancelledQty, 0),
-				locale_number_format(($TotalShippedQty != 0) ? ($TotalCancelledQty / $TotalShippedQty * 100) : 0, 2) . '%'
-				);
+		echo '<tr class="striped_row">
+				<td class="number">' . locale_number_format($NumTransfers, 0) . '</td>
+				<td class="number">' . locale_number_format(($NumTransfers != 0) ? ($NumTransfersWithErrors / $NumTransfers * 100) : 0, 2) . '%' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . 'TOTAL' . '</td>
+				<td class="number">' . locale_number_format($TotalShippedModels, 0) . '</td>
+				<td class="number">' . locale_number_format($TotalCancelledModels, 0) . '</td>
+				<td class="number">' . locale_number_format(($TotalShippedModels != 0) ? ($TotalCancelledModels / $TotalShippedModels * 100) : 0, 2) . '%' . '</td>
+				<td class="number">' . locale_number_format($TotalShippedQty, 0) . '</td>
+				<td class="number">' . locale_number_format($TotalCancelledQty, 0) . '</td>
+				<td class="number">' . locale_number_format(($TotalShippedQty != 0) ? ($TotalCancelledQty / $TotalShippedQty * 100) : 0, 2) . '%' . '</td>
+				</tr>';
 		echo '</tfooter>
 			  </table>
 			  </div>';
@@ -1288,54 +1145,32 @@ function FinishedStockDistribution($Kind, $ByReport){
 			$RealPcsModel = ($MyRow['realmodels'] != 0) ? locale_number_format(($MyRow['realstock']/$MyRow['realmodels']),1) : "";
 			$OptimalPcsModel = ($MyRow['optimalmodels'] != 0) ? locale_number_format(($MyRow['optimalstock']/$MyRow['optimalmodels']),1) : "";
 			if ($ByReport == "LOCATION"){
-				printf('<tr class="striped_row">
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-						</tr>',
-						$i,
-						$MyRow['locationname'],
-						locale_number_format($MyRow['realstock'],0),
-						locale_number_format($MyRow['optimalstock'],0),
-						$PercentStock,
-						locale_number_format($MyRow['realmodels'],0),
-						locale_number_format($MyRow['optimalmodels'],0),
-						$PercentModels,
-						$RealPcsModel,
-						$OptimalPcsModel
-						);
+				echo '<tr class="striped_row">
+							<td class="number">' . $i . '</td>
+							<td>' . $MyRow['locationname'] . '</td>
+							<td class="number">' . locale_number_format($MyRow['realstock'],0) . '</td>
+							<td class="number">' . locale_number_format($MyRow['optimalstock'],0) . '</td>
+							<td class="number">' . $PercentStock . '</td>
+							<td class="number">' . locale_number_format($MyRow['realmodels'],0) . '</td>
+							<td class="number">' . locale_number_format($MyRow['optimalmodels'],0) . '</td>
+							<td class="number">' . $PercentModels . '</td>
+							<td class="number">' . $RealPcsModel . '</td>
+							<td class="number">' . $OptimalPcsModel . '</td>
+						</tr>';
 			}
 			if ($ByReport == "STOCKCATEGORY"){
-				printf('<tr class="striped_row">
-							<td class="number">%s</td>
-							<td>%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-							<td class="number">%s</td>
-						</tr>',
-						$i,
-						$MyRow['categorydescription'],
-						locale_number_format($MyRow['realstock'],0),
-						'',
-						'',
-						locale_number_format($MyRow['realmodels'],0),
-						'',
-						'',
-						$RealPcsModel,
-						$OptimalPcsModel
-						);
+				echo '<tr class="striped_row">
+							<td class="number">' . $i . '</td>
+							<td>' . $MyRow['categorydescription'] . '</td>
+							<td class="number">' . locale_number_format($MyRow['realstock'],0) . '</td>
+							<td class="number">' . '' . '</td>
+							<td class="number">' . '' . '</td>
+							<td class="number">' . locale_number_format($MyRow['realmodels'],0) . '</td>
+							<td class="number">' . '' . '</td>
+							<td class="number">' . '' . '</td>
+							<td class="number">' . $RealPcsModel . '</td>
+							<td class="number">' . $OptimalPcsModel . '</td>
+						</tr>';
 			}
 			$i++;
 			$Totalpcs = $Totalpcs + $MyRow['realstock'];
@@ -1363,29 +1198,18 @@ function FinishedStockDistribution($Kind, $ByReport){
 			$TotalModels = "";
 			$PercentModels = "";
 		}
-		printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-				</tr>',
-				"",
-				"Total",
-				locale_number_format($Totalpcs,0),
-				"",
-				"",
-				$TotalModels,
-				"",
-				"",
-				$PercentModels,
-				""
-				);
+		echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td>' . "Total" . '</td>
+					<td class="number">' . locale_number_format($Totalpcs,0) . '</td>
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td class="number">' . $TotalModels . '</td>
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td class="number">' . $PercentModels . '</td>
+					<td class="number">' . "" . '</td>
+				</tr>';
 
 		echo '</tfooter>
 			  </table>
@@ -1595,51 +1419,29 @@ function FinishedStockDistributionByShopAndCategory(){
 									$MyRow['modelsDISC80BL'] +
 									$MyRow['modelsDISC80GE'] ;
 
-			printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-					</tr>',
-					$i,
-					$MyRow['locationname'],
-					locale_number_format_zero_blank($MyRow['modelsTESTKL'],0),
-					locale_number_format_zero_blank($MyRow['modelsSTABLEKAPALLAUT'],0),
-					locale_number_format_zero_blank($MyRow['modelsNOPOKL'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC20KL'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC50KL'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC80KL'],0),
-					locale_number_format_zero_blank($MyRow['modelsTESTBL'],0),
-					locale_number_format_zero_blank($MyRow['modelsSTABLEBLINK'],0),
-					locale_number_format_zero_blank($MyRow['modelsNOPOBL'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC20BL'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC50BL'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC80BL'],0),
-					locale_number_format_zero_blank($MyRow['modelsTESTGE'],0),
-					locale_number_format_zero_blank($MyRow['modelsSTABLEGENERAL'],0),
-					locale_number_format_zero_blank($MyRow['modelsNOPOGE'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC20GE'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC50GE'],0),
-					locale_number_format_zero_blank($MyRow['modelsDISC80GE'],0),
-					locale_number_format_zero_blank($TotalModelsLocation,0)
-					);
+			echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $MyRow['locationname'] . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsTESTKL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsSTABLEKAPALLAUT'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsNOPOKL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC20KL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC50KL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC80KL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsTESTBL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsSTABLEBLINK'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsNOPOBL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC20BL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC50BL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC80BL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsTESTGE'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsSTABLEGENERAL'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsNOPOGE'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC20GE'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC50GE'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['modelsDISC80GE'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TotalModelsLocation,0) . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>
@@ -1771,40 +1573,26 @@ function GoodsToBeProduced($CategoryComponent, $ParentCategory, $RootPath){
 		while ($MyRow = DB_fetch_array($Result)) {
 			$TotalCost = $TotalCost + ($MyRow['availablestock'] * $MyRow['stdcost']);
 			$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$i,
-					$CodeLink,
-					$MyRow['description'],
-					locale_number_format($MyRow['availablestock'], 0),
-					$MyRow['units'],
-					locale_number_format($MyRow['availablestock'] * $MyRow['stdcost'], 0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['availablestock'], 0) . '</td>
+					<td>' . $MyRow['units'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['availablestock'] * $MyRow['stdcost'], 0) . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>
 			  <tfooter>';
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				'',
-				'',
-				'Total Cost',
-				'',
-				'',
-				locale_number_format($TotalCost, 0)
-				);
+		echo '<tr class="striped_row">
+				<td class="number">' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . 'Total Cost' . '</td>
+				<td class="number">' . '' . '</td>
+				<td>' . '' . '</td>
+				<td class="number">' . locale_number_format($TotalCost, 0) . '</td>
+				</tr>';
 		echo '</tfooter>
 			  </table>
 			  </div>';
@@ -2056,69 +1844,39 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 	
 				$CodeLink = '<a href="' . $RootPath . '/SelectProduct.php?StockID=' . $MyRow['stockid'] . '">' . $MyRow['stockid'] . '</a>';
 				if ($ExtendedVersion){
-					printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$i,
-						$CodeLink,
-						$MyRow['description'],
-						locale_number_format($DailyUse,0),
-						locale_number_format($ForecastUsedThisYear,0),
-						locale_number_format($ForecastUsedLastYear,0),
-						locale_number_format($MinQOHGudang,0),
-						locale_number_format($OptimumQOH,0),
-						locale_number_format($MyRow['qohgudang'],0),
-						locale_number_format($MyRow['qohshops'],0),
-						locale_number_format($QOH,0),
-						locale_number_format($QOHDays,0),
-						locale_number_format($MissingQOH,0),
-						locale_number_format($PercentShortage,0) .'%',
-						locale_number_format_zero_blank($MyRow['qoo'],0),
-						locale_number_format_zero_blank($QtyToOrder,0)
-						);
+					echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($DailyUse,0) . '</td>
+						<td class="number">' . locale_number_format($ForecastUsedThisYear,0) . '</td>
+						<td class="number">' . locale_number_format($ForecastUsedLastYear,0) . '</td>
+						<td class="number">' . locale_number_format($MinQOHGudang,0) . '</td>
+						<td class="number">' . locale_number_format($OptimumQOH,0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qohgudang'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qohshops'],0) . '</td>
+						<td class="number">' . locale_number_format($QOH,0) . '</td>
+						<td class="number">' . locale_number_format($QOHDays,0) . '</td>
+						<td class="number">' . locale_number_format($MissingQOH,0) . '</td>
+						<td class="number">' . locale_number_format($PercentShortage,0) . '%' . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['qoo'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($QtyToOrder,0) . '</td>
+						</tr>';
 				}else{
-					printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$i,
-						$CodeLink,
-						$MyRow['description'],
-						locale_number_format($OptimumQOH,0),
-						locale_number_format($MyRow['qohgudang'],0),
-						locale_number_format($MyRow['qohshops'],0),
-						locale_number_format($QOH,0),
-						locale_number_format($QOHDays,0),
-						locale_number_format($MissingQOH,0),
-						locale_number_format($PercentShortage,0) .'%',
-						locale_number_format_zero_blank($MyRow['qoo'],0),
-						locale_number_format_zero_blank($QtyToOrder,0)
-						);
+					echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td class="number">' . locale_number_format($OptimumQOH,0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qohgudang'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qohshops'],0) . '</td>
+						<td class="number">' . locale_number_format($QOH,0) . '</td>
+						<td class="number">' . locale_number_format($QOHDays,0) . '</td>
+						<td class="number">' . locale_number_format($MissingQOH,0) . '</td>
+						<td class="number">' . locale_number_format($PercentShortage,0) . '%' . '</td>
+						<td class="number">' . locale_number_format_zero_blank($MyRow['qoo'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($QtyToOrder,0) . '</td>
+						</tr>';
 				}
 			}
 			$i++;
@@ -2140,69 +1898,39 @@ id	select_type			table				type	possible_keys				key					key_len	ref	rows	Extra
 			echo'</tbody>
 				<tfooter>';
 			if ($ExtendedVersion){
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"TOTAL",
-					"",
-					locale_number_format($TotalDailyUse,0),
-					locale_number_format($ForecastXDays,0),
-					locale_number_format($ForecastXDaysLastYear,0),
-					locale_number_format($TotalMinimumGudang,0),
-					locale_number_format($TotalQOHOptimum,0),
-					locale_number_format($TotalQOHGudang,0),
-					locale_number_format($TotalQOHShops,0),
-					locale_number_format($QOHTotal,0),
-					'',
-					locale_number_format($MissingTotal,0),
-					locale_number_format($PercentTotalShortage,0).'%',
-					locale_number_format_zero_blank($PendingQOO,0),
-					locale_number_format_zero_blank($OptimumOrder,0)
-					);
+				echo '<tr class="striped_row">
+						<td class="number">' . "" . '</td>
+					<td>' . "TOTAL" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format($TotalDailyUse,0) . '</td>
+					<td class="number">' . locale_number_format($ForecastXDays,0) . '</td>
+					<td class="number">' . locale_number_format($ForecastXDaysLastYear,0) . '</td>
+					<td class="number">' . locale_number_format($TotalMinimumGudang,0) . '</td>
+					<td class="number">' . locale_number_format($TotalQOHOptimum,0) . '</td>
+					<td class="number">' . locale_number_format($TotalQOHGudang,0) . '</td>
+					<td class="number">' . locale_number_format($TotalQOHShops,0) . '</td>
+					<td class="number">' . locale_number_format($QOHTotal,0) . '</td>
+					<td class="number">' . '' . '</td>
+					<td class="number">' . locale_number_format($MissingTotal,0) . '</td>
+					<td class="number">' . locale_number_format($PercentTotalShortage,0) . '%' . '</td>
+					<td class="number">' . locale_number_format_zero_blank($PendingQOO,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($OptimumOrder,0) . '</td>
+					</tr>';
 			}else{
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"TOTAL",
-					"",
-					locale_number_format($TotalQOHOptimum,0),
-					locale_number_format($TotalQOHGudang,0),
-					locale_number_format($TotalQOHShops,0),
-					locale_number_format($QOHTotal,0),
-					'',
-					locale_number_format($MissingTotal,0),
-					locale_number_format($PercentTotalShortage,0).'%',
-					locale_number_format_zero_blank($PendingQOO,0),
-					locale_number_format_zero_blank($OptimumOrder,0)
-					);
+				echo '<tr class="striped_row">
+						<td class="number">' . "" . '</td>
+					<td>' . "TOTAL" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format($TotalQOHOptimum,0) . '</td>
+					<td class="number">' . locale_number_format($TotalQOHGudang,0) . '</td>
+					<td class="number">' . locale_number_format($TotalQOHShops,0) . '</td>
+					<td class="number">' . locale_number_format($QOHTotal,0) . '</td>
+					<td class="number">' . '' . '</td>
+					<td class="number">' . locale_number_format($MissingTotal,0) . '</td>
+					<td class="number">' . locale_number_format($PercentTotalShortage,0) . '%' . '</td>
+					<td class="number">' . locale_number_format_zero_blank($PendingQOO,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($OptimumOrder,0) . '</td>
+					</tr>';
 			}
 			echo '</tfooter>
 				</table>
@@ -2272,21 +2000,14 @@ function ItemsWithoutRetailPrice($StockCat, $factorRetail, $RootPath){
 			$PriceLink = '<a href="' . $RootPath . '/Prices.php?Item=' . $MyRow['stockid'] . '">' . locale_number_format($MyRow['stdcost'],0) . '</a>';
 			$NewPriceLink = '<a href="' . $RootPath . '/KLChangeRetailPrice.php?Item=' . $MyRow['stockid'] . '&NewPrice='. $NewPrice .  '&Action=New">' . locale_number_format($NewPrice,0) . '</a>';
 			$Factor = ($MyRow['stdcost'] != 0) ? ($NewPrice/$MyRow['stdcost']) : 0;
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$Issues,
-					$CodeLink,
-					$MyRow['description'],
-					$PriceLink,
-					locale_number_format_zero_blank($Factor, 2),
-					$NewPriceLink
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $Issues . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td class="number">' . $PriceLink . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Factor, 2) . '</td>
+					<td class="number">' . $NewPriceLink . '</td>
+					</tr>';
 		}
 		echo '</tbody>
 				</table>
@@ -2384,43 +2105,25 @@ function LocationInformationReview($RootPath){
 			}else{
 				$Stock80D = "No";
 			}
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$i,
-					$CodeLink,
-					$MyRow['zone'],
-					$MyRow['typeloc'],
-					$MyRow['partnercode'],
-					locale_number_format($MyRow['klyearlyrent']/JUTA,0),
-					$MyRow['priority'],
-					$MyRow['smartdispatchmaxmodels'],
-					$StockOnline,
-					$StockTest,
-					$StockStable,
-					$StockNoPo,
-					$Stock20D,
-					$Stock50D,
-					$Stock80D,
-					$MyRow['rlfactorforpackaging'],
-					$MyRow['rldaysforpackaging']
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . $MyRow['zone'] . '</td>
+					<td>' . $MyRow['typeloc'] . '</td>
+					<td>' . $MyRow['partnercode'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['klyearlyrent']/JUTA,0) . '</td>
+					<td class="number">' . $MyRow['priority'] . '</td>
+					<td class="number">' . $MyRow['smartdispatchmaxmodels'] . '</td>
+					<td>' . $StockOnline . '</td>
+					<td>' . $StockTest . '</td>
+					<td>' . $StockStable . '</td>
+					<td>' . $StockNoPo . '</td>
+					<td>' . $Stock20D . '</td>
+					<td>' . $Stock50D . '</td>
+					<td>' . $Stock80D . '</td>
+					<td class="number">' . $MyRow['rlfactorforpackaging'] . '</td>
+					<td class="number">' . $MyRow['rldaysforpackaging'] . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>
@@ -2584,31 +2287,19 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 				}else{
 					$Reason = "Top up";
 				}
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						</tr>',
-						$TableResult[$i]['stockid'],
-						$TableResult[$i]['description'],
-						locale_number_format_zero_blank($TableResult[$i]['qohparent'],0),
-						locale_number_format_zero_blank($TableResult[$i]['qoh'],0),
-						locale_number_format_zero_blank($TableResult[$i]['rl'],0),
-						locale_number_format_zero_blank($TableResult[$i]['optimum'],0),
-						locale_number_format_zero_blank($TableResult[$i]['needed'],0),
-						locale_number_format_zero_blank($TableResult[$i]['needed']/$TableResult[$i]['optimum']*100,0). "%",
-						locale_number_format_zero_blank($TableResult[$i]['intransit'],0),
-						locale_number_format_zero_blank($TableResult[$i]['toship'],0),
-						$Reason
-						);
+				echo '<tr class="striped_row">
+						<td>' . $TableResult[$i]['stockid'] . '</td>
+						<td>' . $TableResult[$i]['description'] . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['qohparent'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['qoh'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['rl'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['optimum'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['needed'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['needed']/$TableResult[$i]['optimum']*100,0) . "%" . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['intransit'],0) . '</td>
+						<td class="number">' . locale_number_format_zero_blank($TableResult[$i]['toship'],0) . '</td>
+						<td>' . $Reason . '</td>
+						</tr>';
 				if ($TableResult[$i]['toship'] > 0){
 					$ItemsToShip++;
 					$EmailLink = $EmailLink . '&Item' . $ItemsToShip . '=' . $TableResult[$i]['stockid'] .
@@ -2622,13 +2313,10 @@ function PackagingToBeRefilledFromGudang($LocCode, $ShowAll, $ShowLinkEmail, $Ro
 				<tfooter>';
 			$EmailLink = $EmailLink . '">' . 'Send email to team' . '</a>';
 			if ($ShowLinkEmail){
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						</tr>',
-						"",
-						$EmailLink
-						);
+				echo '<tr class="striped_row">
+						<td>' . "" . '</td>
+						<td>' . $EmailLink . '</td>
+						</tr>';
 			}
 			echo '</tfooter>
 				</table>
@@ -3003,47 +2691,27 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			}else{
 				$Date2 = ConvertSQLDate($MyRow['reportdate2']);
 			}
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$i,
-					$CodeLink,
-					$MyRow['supplierno'],
-					ConvertSQLDate($MyRow['reportdate']),
-					$Date2,
-					$MyRow['shipmentawb'],
-					locale_number_format_zero_blank($MyRow['orderitems'],0),
-					locale_number_format_zero_blank($ValueOrderIDR,0),
-					locale_number_format_zero_blank($ValueOrderUSD,0),
-					locale_number_format_zero_blank($ValueOrderTHB,0),
-					locale_number_format_zero_blank($SupplierBalanceIDR,0),
-					locale_number_format_zero_blank($SupplierBalanceUSD,0),
-					locale_number_format_zero_blank($SupplierBalanceTHB,0),
-					locale_number_format_zero_blank($PaymentOrderIDR,0),
-					locale_number_format_zero_blank($PaymentOrderUSD,0),
-					locale_number_format_zero_blank($PaymentOrderTHB,0),
-					locale_number_format_zero_blank($AcumIDR,0),
-					locale_number_format_zero_blank($AcumUSD,0),
-					locale_number_format_zero_blank($AcumTHB,0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td class="number">' . $CodeLink . '</td>
+					<td>' . $MyRow['supplierno'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['reportdate']) . '</td>
+					<td>' . $Date2 . '</td>
+					<td>' . $MyRow['shipmentawb'] . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['orderitems'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ValueOrderIDR,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ValueOrderUSD,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ValueOrderTHB,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($SupplierBalanceIDR,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($SupplierBalanceUSD,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($SupplierBalanceTHB,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($PaymentOrderIDR,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($PaymentOrderUSD,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($PaymentOrderTHB,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($AcumIDR,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($AcumUSD,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($AcumTHB,0) . '</td>
+					</tr>';
 			// update the supplier balance after the order
 			$Payments[$MyRow['supplierno']]['balance'] = $Payments[$MyRow['supplierno']]['balance'] - $MyRow['ordervalue'];
 			if ($Payments[$MyRow['supplierno']]['balance'] < 0){
@@ -3059,47 +2727,27 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			($TypeOfCode == "STILL NOT FULLY PAID") OR
 			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
 
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					'',
-					'',
-					'TOTAL ORDERS',
-					'',
-					'',
-					'',
-					locale_number_format_zero_blank($TotalItemsAllOrders,0),
-					locale_number_format_zero_blank($TotalValueOrderIDR,0),
-					locale_number_format_zero_blank($TotalValueOrderUSD,0),
-					locale_number_format_zero_blank($TotalValueOrderTHB,0),
-					'',
-					'',
-					'',
-					'',
-					'',
-					'',
-					locale_number_format_zero_blank($TotalValueAllPayments,0),
-					'',
-					''
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . '' . '</td>
+					<td class="number">' . '' . '</td>
+					<td>' . 'TOTAL ORDERS' . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalItemsAllOrders,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalValueOrderIDR,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalValueOrderUSD,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalValueOrderTHB,0) . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalValueAllPayments,0) . '</td>
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					</tr>';
 			if (($TypeOfProduct == "FORSALE")
 				AND ($maxdays > 0)){
 				InsertKPI("Purchase Orders", "Payments pending items for sale in ". $maxdays . " days (IDR)", $TotalValueAllPayments);
@@ -3112,88 +2760,48 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			$CurrentTotalValueItemsForSale = GetTotalValueItemsForSale($periodnow);
 			InsertKPI("Stock", "Current Stock Items For Sale (IDR)", $CurrentTotalValueItemsForSale);
 			InsertKPI("Stock", "Current Stock Items For Sale (PCS)", $CurrentTotalQtyItemsForSale);
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"CURRENT STOCK",
-					"IDR",
-					"",
-					"",
-					"",
-					locale_number_format_zero_blank($CurrentTotalValueItemsForSale,0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
-/*			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"CURRENT STOCK",
-					"PCS",
-					"",
-					"",
-					"",
-					locale_number_format_zero_blank($CurrentTotalQtyItemsForSale,0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "CURRENT STOCK" . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank($CurrentTotalValueItemsForSale,0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
+/*			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "CURRENT STOCK" . '</td>
+					<td>' . "PCS" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank($CurrentTotalQtyItemsForSale,0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 */		}
 
 		if (($TypeOfCode == "IN NEGOTIAION WITH SUPPLIER") OR
@@ -3201,47 +2809,27 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			($TypeOfCode == "FINISHED BUT NOT PAID") OR
 			($TypeOfCode == "STILL NOT FULLY PAID") OR
 			($TypeOfCode == "ARRIVING IN NEXT DAYS")){
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"TOTAL ORDERS",
-					"IDR",
-					"",
-					"",
-					"",
-					locale_number_format_zero_blank($TotalValueAllOrders,0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "TOTAL ORDERS" . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalValueAllOrders,0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 		}
 		if (($TypeOfCode == "ARRIVING IN NEXT DAYS")
 			AND ($TypeOfProduct == "FORSALE")){
@@ -3262,223 +2850,123 @@ function POStatusControl($TypeOfProduct, $TypeOfCode, $maxdays, $periodnow, $Roo
 			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (IDR)", $TotalValueAllOrders);
 			InsertKPI("Purchase Orders", "PO Items for sale arriving next ". $maxdays." days (PCS @SC)", round($TotalValueAllOrders/$AverageItemCost));
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (IDR)", round($MyRow['cogs'],-6));
-/*			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"EXPECTED COGS NEXT " . $maxdays . " DAYS",
-					"IDR",
-					"",
-					"(APPROX)",
-					"",
-					locale_number_format_zero_blank(round($MyRow['cogs'], -6),0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
+/*			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "EXPECTED COGS NEXT " . $maxdays . " DAYS" . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "(APPROX)" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank(round($MyRow['cogs'], -6),0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 */
 			InsertKPI("Stock", "Expected COGS next ". $maxdays . " days (PCS)", round($MyRow['cogs']/$AverageItemCost, -2));
 			$ExpectedDifferenceValueStock = round($TotalValueAllOrders-$MyRow['cogs'],-6);
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (IDR)", $ExpectedDifferenceValueStock);
-/*			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"EXPECTED DIFFERENCE STOCK",
-					"IDR",
-					"",
-					"(APPROX)",
-					"",
-					locale_number_format_zero_blank($ExpectedDifferenceValueStock,0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
+/*			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "EXPECTED DIFFERENCE STOCK" . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "(APPROX)" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ExpectedDifferenceValueStock,0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 */
 			$ExpectedDifferenceQtyStock = round($ExpectedDifferenceValueStock/$AverageItemCost,-2);
 			InsertKPI("Stock", "Expected difference stock in ". $maxdays . " days (PCS)", $ExpectedDifferenceQtyStock);
-/*			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"EXPECTED DIFFERENCE STOCK",
-					"PCS",
-					"",
-					"(APPROX)",
-					"",
-					locale_number_format_zero_blank($ExpectedDifferenceQtyStock,0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
+/*			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "EXPECTED DIFFERENCE STOCK" . '</td>
+					<td>' . "PCS" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "(APPROX)" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ExpectedDifferenceQtyStock,0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 */			$ExpectedFutureValueStock = round($CurrentTotalValueItemsForSale+$ExpectedDifferenceValueStock, -6);
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (IDR)", $ExpectedFutureValueStock);
-/*			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS",
-					"IDR",
-					"",
-					"(APPROX)",
-					"",
-					locale_number_format_zero_blank($ExpectedFutureValueStock,0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
+/*			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS" . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "(APPROX)" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ExpectedFutureValueStock,0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 */
 			$ExpectedFutureQtyStock = round($ExpectedFutureValueStock / $AverageItemCost, -2);
 			InsertKPI("Stock", "Expected future stock in ". $maxdays . " days (PCS)", $ExpectedFutureQtyStock);
-/*			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					"",
-					"",
-					"EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS",
-					"PCS",
-					"",
-					"(APPROX)",
-					"",
-					locale_number_format_zero_blank($ExpectedFutureQtyStock,0),
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					"",
-					""
-					);
+/*			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "EXPECTED FUTURE STOCK IN " . $maxdays . " DAYS" . '</td>
+					<td>' . "PCS" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "(APPROX)" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . locale_number_format_zero_blank($ExpectedFutureQtyStock,0) . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 */		}
 		echo '</tfooter>
 				</table>
@@ -3542,29 +3030,18 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 			if ($MyRow['maxtotaldays'] < 0) {$MyRow['maxtotaldays'] = 0;}
 			if ($MyRow['avgtotaldays'] < 0) {$MyRow['avgtotaldays'] = 0;}
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$MyRow['address6'],
-					locale_number_format($MyRow['numorders'],0),
-					locale_number_format($MyRow['productiondays'],0),
-					locale_number_format($MyRow['paymentdays'],0),
-					locale_number_format($MyRow['shipmentdays'],0),
-					locale_number_format($MyRow['transitdays'],0),
-					locale_number_format($MyRow['customsdays'],0),
-					locale_number_format($MyRow['mintotaldays'],0),
-					locale_number_format($MyRow['maxtotaldays'],0),
-					locale_number_format($MyRow['avgtotaldays'],0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['address6'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['numorders'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['productiondays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['paymentdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['shipmentdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['transitdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['customsdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['mintotaldays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['maxtotaldays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['avgtotaldays'],0) . '</td>
+					</tr>';
 			$i++;
 		}
 	}
@@ -3598,29 +3075,18 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 			if ($MyRow['maxtotaldays'] < 0) {$MyRow['maxtotaldays'] = 0;}
 			if ($MyRow['avgtotaldays'] < 0) {$MyRow['avgtotaldays'] = 0;}
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					'OVERSEAS',
-					locale_number_format($MyRow['numorders'],0),
-					locale_number_format($MyRow['productiondays'],0),
-					locale_number_format($MyRow['paymentdays'],0),
-					locale_number_format($MyRow['shipmentdays'],0),
-					locale_number_format($MyRow['transitdays'],0),
-					locale_number_format($MyRow['customsdays'],0),
-					locale_number_format($MyRow['mintotaldays'],0),
-					locale_number_format($MyRow['maxtotaldays'],0),
-					locale_number_format($MyRow['avgtotaldays'],0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . 'OVERSEAS' . '</td>
+					<td class="number">' . locale_number_format($MyRow['numorders'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['productiondays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['paymentdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['shipmentdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['transitdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['customsdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['mintotaldays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['maxtotaldays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['avgtotaldays'],0) . '</td>
+					</tr>';
 			$i++;
 		}
 	}
@@ -3654,29 +3120,18 @@ function PurchaseOrdersProcessTime($NumDays, $RootPath){
 			if ($MyRow['maxtotaldays'] < 0) {$MyRow['maxtotaldays'] = 0;}
 			if ($MyRow['avgtotaldays'] < 0) {$MyRow['avgtotaldays'] = 0;}
 
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					'Indonesia',
-					locale_number_format($MyRow['numorders'],0),
-					locale_number_format($MyRow['productiondays'],0),
-					locale_number_format($MyRow['paymentdays'],0),
-					locale_number_format($MyRow['shipmentdays'],0),
-					locale_number_format($MyRow['transitdays'],0),
-					locale_number_format($MyRow['customsdays'],0),
-					locale_number_format($MyRow['mintotaldays'],0),
-					locale_number_format($MyRow['maxtotaldays'],0),
-					locale_number_format($MyRow['avgtotaldays'],0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . 'Indonesia' . '</td>
+					<td class="number">' . locale_number_format($MyRow['numorders'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['productiondays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['paymentdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['shipmentdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['transitdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['customsdays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['mintotaldays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['maxtotaldays'],0) . '</td>
+					<td class="number">' . locale_number_format($MyRow['avgtotaldays'],0) . '</td>
+					</tr>';
 			$i++;
 		}
 
@@ -3807,31 +3262,19 @@ function PurchaseOrdersWrongPlannedDates($RootPath){
 			} else {
 				$MyRow['arrivaldate'] = ConvertSQLDate($MyRow['arrivaldate']);
 			}
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$CodeLink,
-					$MyRow['supplierno'],
-					locale_number_format($MyRow['ordervalue'],0) . ' ' . $MyRow['currcode'] ,
-					$MyRow['description'],
-					$OrderDate,
-					$MyRow['agreeddeliverydate'],
-					$MyRow['deliverydate'],
-					$MyRow['paymentdate'],
-					$MyRow['shipmentdate'],
-					$MyRow['customsdate'],
-					$MyRow['arrivaldate']
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $CodeLink . '</td>
+					<td>' . $MyRow['supplierno'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['ordervalue'],0) . ' ' . $MyRow['currcode'] . '</td>
+					<td>' . $MyRow['description'] . '</td>
+					<td>' . $OrderDate . '</td>
+					<td>' . $MyRow['agreeddeliverydate'] . '</td>
+					<td>' . $MyRow['deliverydate'] . '</td>
+					<td>' . $MyRow['paymentdate'] . '</td>
+					<td>' . $MyRow['shipmentdate'] . '</td>
+					<td>' . $MyRow['customsdate'] . '</td>
+					<td>' . $MyRow['arrivaldate'] . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>
@@ -3882,41 +3325,27 @@ function RecentlyClosedTransferStatus($maxdays, $RootPath){
 		$Total = 0;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					</tr>',
-					$i,
-					ConvertSQLDateTime($MyRow['recdate']),
-					$CodeLink,
-					$MyRow['locfrom'],
-					$MyRow['locto'],
-					locale_number_format($MyRow['receivedqty'],0)
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . ConvertSQLDateTime($MyRow['recdate']) . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . $MyRow['locfrom'] . '</td>
+					<td>' . $MyRow['locto'] . '</td>
+					<td class="number">' . locale_number_format($MyRow['receivedqty'],0) . '</td>
+					</tr>';
 			$i++;
 			$Total = $Total + $MyRow['receivedqty'];
 		}
 		echo'</tbody>
 			<tfooter>';
-		printf('<tr class="striped_row">
-				<td class="number">%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				</tr>',
-				'',
-				'',
-				'',
-				'',
-				'Total',
-				locale_number_format($Total,0)
-				);
+		echo '<tr class="striped_row">
+				<td class="number">' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . 'Total' . '</td>
+				<td class="number">' . locale_number_format($Total,0) . '</td>
+				</tr>';
 		echo '</tfooter>
 				</table>
 				</div>
@@ -3986,19 +3415,13 @@ function TransfersDelayed($maxdays, $RootPath){
 		$i = 1;
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$CodeLink,
-					ConvertSQLDate($MyRow['shipdate']),
-					$MyRow['shiploc'],
-					$MyRow['recloc']
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . $CodeLink . '</td>
+					<td>' . ConvertSQLDate($MyRow['shipdate']) . '</td>
+					<td>' . $MyRow['shiploc'] . '</td>
+					<td>' . $MyRow['recloc'] . '</td>
+					</tr>';
 			$i++;
 		}
 		echo '</tbody>
@@ -4093,7 +3516,7 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 								<th class="SortedColumn">' . _('Date Std Cost') . '</th>
 								<th class="SortedColumn">' . _('Wrong Std Cost') . '</th>
 								<th class="SortedColumn">' . _('QOH') . '</th>
-								<th class="SortedColumn">' . _('KL UOM') . '</th>
+									<th class="SortedColumn">' . _('KL UOM') . '</th>
 								<th class="SortedColumn">' . _('Real Std Cost') . '</th>
 								<th class="SortedColumn">' . _('% Dif') . '</th>
 							</tr>
@@ -4114,35 +3537,21 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 			$PurchasingLink = '<a href="' . $RootPath . '/PurchData.php?StockID=' . $MyRow['stockid'] . '&SupplierID='. $MyRow['supplierno'] . '&Edit=1&EffectiveFrom='. $MyRow['effectivefrom']  .' ">' . $Price . '</a>';
 			if ($Mode == "SHOWONLY"){
 				$StdCostText = locale_number_format($NewStdCost,0);
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$i,
-						$CodeLink,
-						$MyRow['description'],
-						$MyRow['supplierno'],
-						ConvertSQLDate($MyRow['effectivefrom']),
-						$PurchasingLink,
-						$MyRow['currcode'],
-						locale_number_format(1/$MyRow['rate'],2),
-						$MyRow['suppliersuom'],
-						locale_number_format($MyRow['conversionfactor'],0),
-						ConvertSQLDate($MyRow['lastcostupdate']),
-						locale_number_format($MyRow['stdcost'],0),
-						$StdCostText
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td>' . $MyRow['supplierno'] . '</td>
+						<td>' . ConvertSQLDate($MyRow['effectivefrom']) . '</td>
+						<td class="number">' . $PurchasingLink . '</td>
+						<td>' . $MyRow['currcode'] . '</td>
+						<td class="number">' . locale_number_format(1/$MyRow['rate'],2) . '</td>
+						<td>' . $MyRow['suppliersuom'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['conversionfactor'],0) . '</td>
+						<td>' . ConvertSQLDate($MyRow['lastcostupdate']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['stdcost'],0) . '</td>
+						<td class="number">' . $StdCostText . '</td>
+						</tr>';
 			}else{
 				if($Mode == "UPDATEALL"){
 					// UPDATEALL
@@ -4157,41 +3566,24 @@ function WrongStandardCost($Country, $StockCat, $StdFactor, $Tolerance, $Mode, $
 				} else {
 					$PercentDiff = 0;
 				}
-				printf('<tr class="striped_row">
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>',
-						$i,
-						$CodeLink,
-						$MyRow['description'],
-						$MyRow['supplierno'],
-						ConvertSQLDate($MyRow['effectivefrom']),
-						$PurchasingLink,
-						$MyRow['currcode'],
-						locale_number_format(1/$MyRow['rate'],2),
-						$MyRow['suppliersuom'],
-						locale_number_format($MyRow['conversionfactor'],0),
-						ConvertSQLDate($MyRow['lastcostupdate']),
-						locale_number_format($MyRow['stdcost'],0),
-						locale_number_format($MyRow['qoh'],0),
-						$MyRow['units'],
-						$StdCostText,
-						locale_number_format($PercentDiff,1) . '%'
-						);
+				echo '<tr class="striped_row">
+						<td class="number">' . $i . '</td>
+						<td>' . $CodeLink . '</td>
+						<td>' . $MyRow['description'] . '</td>
+						<td>' . $MyRow['supplierno'] . '</td>
+						<td>' . ConvertSQLDate($MyRow['effectivefrom']) . '</td>
+						<td class="number">' . $PurchasingLink . '</td>
+						<td>' . $MyRow['currcode'] . '</td>
+						<td class="number">' . locale_number_format(1/$MyRow['rate'],2) . '</td>
+						<td>' . $MyRow['suppliersuom'] . '</td>
+						<td class="number">' . locale_number_format($MyRow['conversionfactor'],0) . '</td>
+						<td>' . ConvertSQLDate($MyRow['lastcostupdate']) . '</td>
+						<td class="number">' . locale_number_format($MyRow['stdcost'],0) . '</td>
+						<td class="number">' . locale_number_format($MyRow['qoh'],0) . '</td>
+						<td>' . $MyRow['units'] . '</td>
+						<td class="number">' . $StdCostText . '</td>
+						<td class="number">' . locale_number_format($PercentDiff,1) . '%' . '</td>
+						</tr>';
 			}
 			$i++;
 		}
@@ -4315,31 +3707,19 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 			}
 			$DecimalPlaces = $MyRow['decimalplaces'];
 
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					$i,
-					$MyRow['debtorno'],
-					$MyRow['name'],
-					$MyRow['orderno'],
-					$MyRow['customerref'],
-					ConvertSQLDate($MyRow['orddate']),
-					locale_number_format($PaymentValue,$DecimalPlaces),
-					$MyRow['currcode'],
-					$PaymentManual,
-					$PaymentTokopedia,
-					$PaymentShopee
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . $i . '</td>
+					<td>' . $MyRow['debtorno'] . '</td>
+					<td>' . $MyRow['name'] . '</td>
+					<td class="number">' . $MyRow['orderno'] . '</td>
+					<td class="number">' . $MyRow['customerref'] . '</td>
+					<td>' . ConvertSQLDate($MyRow['orddate']) . '</td>
+					<td class="number">' . locale_number_format($PaymentValue,$DecimalPlaces) . '</td>
+					<td>' . $MyRow['currcode'] . '</td>
+					<td>' . $PaymentManual . '</td>
+					<td>' . $PaymentTokopedia . '</td>
+					<td>' . $PaymentShopee . '</td>
+					</tr>';
 			$i++;
 			$TotalPaymentValue += $PaymentValue;
 		}
@@ -4347,81 +3727,45 @@ function OnlineMarketPlacePaymentPending($Days, $RootPath){
 			<tfooter>';
 		// for the detailed report, show totals. If only delayed more than $Days, no need to show totals
 		if ($Days == 0){
-			printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					"",
-					"",
-					"",
-					"",
-					"",
-					"SHOPEE:",
-					locale_number_format($TotalShopeeValue,$DecimalPlaces),
-					"IDR",
-					"",
-					"",
-					""
-					);
-				printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					"",
-					"",
-					"",
-					"",
-					"",
-					"TOKOPEDIA:",
-					locale_number_format($TotalTokopediaValue,$DecimalPlaces),
-					"IDR",
-					"",
-					"",
-					""
-					);
-				printf('<tr class="striped_row">
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					</tr>',
-					"",
-					"",
-					"",
-					"",
-					"",
-					"TOTAL:",
-					locale_number_format($TotalPaymentValue,$DecimalPlaces),
-					"IDR",
-					"",
-					"",
-					""
-					);
+			echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "SHOPEE:" . '</td>
+					<td class="number">' . locale_number_format($TotalShopeeValue,$DecimalPlaces) . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
+				echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "TOKOPEDIA:" . '</td>
+					<td class="number">' . locale_number_format($TotalTokopediaValue,$DecimalPlaces) . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
+				echo '<tr class="striped_row">
+					<td class="number">' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td class="number">' . "" . '</td>
+					<td>' . "TOTAL:" . '</td>
+					<td class="number">' . locale_number_format($TotalPaymentValue,$DecimalPlaces) . '</td>
+					<td>' . "IDR" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					<td>' . "" . '</td>
+					</tr>';
 		}
 		echo '</tfooter>
 				</table>
@@ -4603,69 +3947,39 @@ function MaintenanceTasksDistribution($Status, $NumDays){
 			}else{
 				$IssuesDLL = '';
 			}
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$Row['locationname'], 
-					$IssuesAC, 
-					$IssuesBOCOR, 
-					$IssuesFURNITURE, 
-					$IssuesIT, 
-					$IssuesKANOPI, 
-					$IssuesLAMPU, 
-					$IssuesLISTRIK, 
-					$IssuesPAINT, 
-					$IssuesPINTUKACA, 
-					$IssuesTOILET, 
-					$IssuesWALLPAPER, 
-					$IssuesDLL, 
-					$TotalIssuesLocation 
-					);
+			echo '<tr class="striped_row">
+					<td>' . $Row['locationname'] . '</td>
+					<td class="number">' . $IssuesAC . '</td>
+					<td class="number">' . $IssuesBOCOR . '</td>
+					<td class="number">' . $IssuesFURNITURE . '</td>
+					<td class="number">' . $IssuesIT . '</td>
+					<td class="number">' . $IssuesKANOPI . '</td>
+					<td class="number">' . $IssuesLAMPU . '</td>
+					<td class="number">' . $IssuesLISTRIK . '</td>
+					<td class="number">' . $IssuesPAINT . '</td>
+					<td class="number">' . $IssuesPINTUKACA . '</td>
+					<td class="number">' . $IssuesTOILET . '</td>
+					<td class="number">' . $IssuesWALLPAPER . '</td>
+					<td class="number">' . $IssuesDLL . '</td>
+					<td class="number">' . $TotalIssuesLocation . '</td>
+					</tr>';
 		}
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"TOTAL", 
-				$TotalIssuesAC, 
-				$TotalIssuesBOCOR, 
-				$TotalIssuesFURNITURE, 
-				$TotalIssuesIT, 
-				$TotalIssuesKANOPI, 
-				$TotalIssuesLAMPU, 
-				$TotalIssuesLISTRIK, 
-				$TotalIssuesPAINT, 
-				$TotalIssuesPINTUKACA, 
-				$TotalIssuesTOILET, 
-				$TotalIssuesWALLPAPER, 
-				$TotalIssuesDLL, 
-				$TotalIssues
-				);
+		echo '<tr class="striped_row">
+				<td>' . "TOTAL" . '</td>
+				<td class="number">' . $TotalIssuesAC . '</td>
+				<td class="number">' . $TotalIssuesBOCOR . '</td>
+				<td class="number">' . $TotalIssuesFURNITURE . '</td>
+				<td class="number">' . $TotalIssuesIT . '</td>
+				<td class="number">' . $TotalIssuesKANOPI . '</td>
+				<td class="number">' . $TotalIssuesLAMPU . '</td>
+				<td class="number">' . $TotalIssuesLISTRIK . '</td>
+				<td class="number">' . $TotalIssuesPAINT . '</td>
+				<td class="number">' . $TotalIssuesPINTUKACA . '</td>
+				<td class="number">' . $TotalIssuesTOILET . '</td>
+				<td class="number">' . $TotalIssuesWALLPAPER . '</td>
+				<td class="number">' . $TotalIssuesDLL . '</td>
+				<td class="number">' . $TotalIssues . '</td>
+				</tr>';
 		
 		echo '</tbody></table>
 			</div>';

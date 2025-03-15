@@ -150,21 +150,14 @@ function RetailTypePayments($Typereport, $maxdays){
 				$Totalvouchers = $Totalvouchers + $MyRow['vouchersshop'];
 				$Total = $Total + $MyRow['totalshop'];
 				
-				printf('<tr class="striped_row">
-						<td>%s</td>
-						<td>%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						<td class="number">%s</td>
-						</tr>', 
-						$MyRow['reportunit'],
-						$MyRow['reportname'],
-						$Percentcash, 
-						$Percentcredit, 
-						$Percentreturns, 
-						$Percentvouchers
-						);
+				echo '<tr class="striped_row">
+						<td>' . $MyRow['reportunit'] . '</td>
+						<td>' . $MyRow['reportname'] . '</td>
+						<td class="number">' . $Percentcash . '</td>
+						<td class="number">' . $Percentcredit . '</td>
+						<td class="number">' . $Percentreturns . '</td>
+						<td class="number">' . $Percentvouchers . '</td>
+						</tr>';
 				$i++;
 			}
 		}
@@ -174,21 +167,14 @@ function RetailTypePayments($Typereport, $maxdays){
 		$Percentreturns = locale_number_format(($Totalreturned/$Total)*100,1);
 		$Percentvouchers = locale_number_format(($Totalvouchers/$Total)*100,1);
 		
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				</tr>', 
-				"",
-				"Average",
-				$Percentcash, 
-				$Percentcredit, 
-				$Percentreturns, 
-				$Percentvouchers
-				);
+		echo '<tr class="striped_row">
+				<td>' . "" . '</td>
+				<td>' . "Average" . '</td>
+				<td class="number">' . $Percentcash . '</td>
+				<td class="number">' . $Percentcredit . '</td>
+				<td class="number">' . $Percentreturns . '</td>
+				<td class="number">' . $Percentvouchers . '</td>
+				</tr>';
 		
 		echo '</tbody>
 				</table>
@@ -314,27 +300,17 @@ function SPGPerformanceByShop($Shop, $NumDaysA, $NumDaysB, $NumDaysC){
 			$DailyA = ($MyRow['daysA'] != 0) ? ($MyRow['salesA']/$MyRow['daysA']) : 0;
 			$DailyB = ($MyRow['daysB'] != 0) ? ($MyRow['salesB']/$MyRow['daysB']) : 0;
 			$DailyC = ($MyRow['daysC'] != 0) ? ($MyRow['salesC']/$MyRow['daysC']) : 0;
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$MyRow['salesmancode'],
-					$MyRow['salesmanname'],
-					$MyRow['secrolename'],
-					locale_number_format_zero_blank($MyRow['daysA'],0),
-					locale_number_format_zero_blank($DailyA,0),
-					locale_number_format_zero_blank($MyRow['daysB'],0),
-					locale_number_format_zero_blank($DailyB,0),
-					locale_number_format_zero_blank($MyRow['daysC'],0),
-					locale_number_format_zero_blank($DailyC,0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['salesmancode'] . '</td>
+					<td>' . $MyRow['salesmanname'] . '</td>
+					<td>' . $MyRow['secrolename'] . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['daysA'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($DailyA,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['daysB'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($DailyB,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['daysC'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($DailyC,0) . '</td>
+					</tr>';
 		}
 		echo '</tbody>
 				</table>
@@ -591,41 +567,24 @@ function SPGPerformanceMonthy(){
 			$Last60B = ($MyRow['days60B'] != 0) ? ($MyRow['last60B']/$MyRow['days60B']) : 0;
 			$Last30A = ($MyRow['days30A'] != 0) ? ($MyRow['last30A']/$MyRow['days30A']) : 0;
 			$Last60A = ($MyRow['days60A'] != 0) ? ($MyRow['last60A']/$MyRow['days60A']) : 0;
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$MyRow['zone'],
-					$MyRow['loccode'],
-					$MyRow['salesmancode'],
-					$MyRow['salesmanname'],
-					locale_number_format_zero_blank($MyRow['mtdD'],0),
-					locale_number_format_zero_blank($Last30D,0),
-					locale_number_format_zero_blank($Last60D,0),
-					locale_number_format_zero_blank($MyRow['mtdC'],0),
-					locale_number_format_zero_blank($Last30C,0),
-					locale_number_format_zero_blank($Last60C,0),
-					locale_number_format_zero_blank($MyRow['mtdB'],0),
-					locale_number_format_zero_blank($Last30B,0),
-					locale_number_format_zero_blank($Last60B,0),
-					locale_number_format_zero_blank($MyRow['mtdA'],0),
-					locale_number_format_zero_blank($Last30A,0),
-					locale_number_format_zero_blank($Last60A,0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['zone'] . '</td>
+					<td>' . $MyRow['loccode'] . '</td>
+					<td>' . $MyRow['salesmancode'] . '</td>
+					<td>' . $MyRow['salesmanname'] . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdD'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30D,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last60D,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdC'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30C,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last60C,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdB'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30B,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last60B,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdA'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30A,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last60A,0) . '</td>
+					</tr>';
 			$lastshop = $MyRow['loccode'];
 		}
 		echo '</tbody>
@@ -882,41 +841,24 @@ function SPGPerformanceWeekly(){
 			$Last7B = ($MyRow['days7B'] != 0) ? ($MyRow['last7B']/$MyRow['days7B']) : 0;
 			$Last30A = ($MyRow['days30A'] != 0) ? ($MyRow['last30A']/$MyRow['days30A']) : 0;
 			$Last7A = ($MyRow['days7A'] != 0) ? ($MyRow['last7A']/$MyRow['days7A']) : 0;
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					$MyRow['zone'],
-					$MyRow['loccode'],
-					$MyRow['salesmancode'],
-					$MyRow['salesmanname'],
-					locale_number_format_zero_blank($MyRow['mtdD'],0),
-					locale_number_format_zero_blank($Last7D,0),
-					locale_number_format_zero_blank($Last30D,0),
-					locale_number_format_zero_blank($MyRow['mtdC'],0),
-					locale_number_format_zero_blank($Last7C,0),
-					locale_number_format_zero_blank($Last30C,0),
-					locale_number_format_zero_blank($MyRow['mtdB'],0),
-					locale_number_format_zero_blank($Last7B,0),
-					locale_number_format_zero_blank($Last30B,0),
-					locale_number_format_zero_blank($MyRow['mtdA'],0),
-					locale_number_format_zero_blank($Last7A,0),
-					locale_number_format_zero_blank($Last30A,0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['zone'] . '</td>
+					<td>' . $MyRow['loccode'] . '</td>
+					<td>' . $MyRow['salesmancode'] . '</td>
+					<td>' . $MyRow['salesmanname'] . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdD'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last7D,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30D,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdC'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last7C,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30C,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdB'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last7B,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30B,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['mtdA'],0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last7A,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($Last30A,0) . '</td>
+					</tr>';
 			$lastshop = $MyRow['loccode'];
 		}
 		echo '</tbody>
@@ -1257,202 +1199,110 @@ function HourlySales($numDays, $RootPath){
 			}		
 
 			$k = StartEvenOrOddRow($k);
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td>%s</td>
-					</tr>', 
-					$MyRow['zone'],
-					$MyRow['debtorno'],
-					'Sales',
-					$MyRow['firstsale'],
-					$Sales07,
-					$Sales08,
-					$Sales09,
-					$Sales10,
-					$Sales11,
-					$Sales12,
-					$Sales13,
-					$Sales14,
-					$Sales15,
-					$Sales16,
-					$Sales17,
-					$Sales18,
-					$Sales19,
-					$Sales20,
-					$Sales21,
-					$Sales22,
-					$Sales23,
-					$MyRow['lastsale']
-					);
+			echo '<tr class="striped_row">
+					<td>' . $MyRow['zone'] . '</td>
+					<td>' . $MyRow['debtorno'] . '</td>
+					<td>' . 'Sales' . '</td>
+					<td>' . $MyRow['firstsale'] . '</td>
+					<td class="number">' . $Sales07 . '</td>
+					<td class="number">' . $Sales08 . '</td>
+					<td class="number">' . $Sales09 . '</td>
+					<td class="number">' . $Sales10 . '</td>
+					<td class="number">' . $Sales11 . '</td>
+					<td class="number">' . $Sales12 . '</td>
+					<td class="number">' . $Sales13 . '</td>
+					<td class="number">' . $Sales14 . '</td>
+					<td class="number">' . $Sales15 . '</td>
+					<td class="number">' . $Sales16 . '</td>
+					<td class="number">' . $Sales17 . '</td>
+					<td class="number">' . $Sales18 . '</td>
+					<td class="number">' . $Sales19 . '</td>
+					<td class="number">' . $Sales20 . '</td>
+					<td class="number">' . $Sales21 . '</td>
+					<td class="number">' . $Sales22 . '</td>
+					<td class="number">' . $Sales23 . '</td>
+					<td>' . $MyRow['lastsale'] . '</td>
+					</tr>';
 
 			$k = StartSameColourRow($k);
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					'',
-					'',
-					'Value',
-					'',
-					locale_number_format_zero_blank($MyRow['sales07']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales08']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales09']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales10']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales11']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales12']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales13']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales14']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales15']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales16']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales17']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales18']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales19']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales20']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales21']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales22']/$numDays,0),
-					locale_number_format_zero_blank($MyRow['sales23']/$numDays,0),
-					locale_number_format_zero_blank($TotalSales/$numDays,0)
-					);
+			echo '<tr class="striped_row">
+					<td>' . '' . '</td>
+					<td>' . '' . '</td>
+					<td>' . 'Value' . '</td>
+					<td>' . '' . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales07']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales08']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales09']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales10']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales11']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales12']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales13']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales14']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales15']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales16']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales17']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales18']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales19']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales20']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales21']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales22']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($MyRow['sales23']/$numDays,0) . '</td>
+					<td class="number">' . locale_number_format_zero_blank($TotalSales/$numDays,0) . '</td>
+					</tr>';
 					
 					$i++;
 		}
 		$k = StartEvenOrOddRow($k);
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>', 
-				'TOTALS',
-				'',
-				'',
-				'',
-				locale_number_format_zero_blank($Total07/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total08/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total09/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total10/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total11/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total12/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total13/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total14/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total15/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total16/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total17/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total18/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total19/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total20/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total21/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total22/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank($Total23/$GrandTotal*100,0).'%',
-				''
-				);
+		echo '<tr class="striped_row">
+				<td>' . 'TOTALS' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total07/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total08/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total09/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total10/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total11/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total12/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total13/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total14/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total15/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total16/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total17/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total18/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total19/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total20/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total21/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total22/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total23/$GrandTotal*100,0).'%' . '</td>
+				<td>' . '' . '</td>
+				</tr>';
 
 		$k = StartEvenOrOddRow($k);
-		printf('<tr class="striped_row">
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td>%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td class="number">%s</td>
-				<td>%s</td>
-				</tr>', 
-				'CUMULATIVE',
-				'',
-				'',
-				'',
-				locale_number_format_zero_blank($Total07/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22)/$GrandTotal*100,0).'%',
-				locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22+$Total23)/$GrandTotal*100,0).'%',
-				''
-				);
+		echo '<tr class="striped_row">
+				<td>' . 'CUMULATIVE' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td>' . '' . '</td>
+				<td class="number">' . locale_number_format_zero_blank($Total07/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22)/$GrandTotal*100,0).'%' . '</td>
+				<td class="number">' . locale_number_format_zero_blank(($Total07+$Total08+$Total09+$Total10+$Total11+$Total12+$Total13+$Total14+$Total15+$Total16+$Total17+$Total18+$Total19+$Total20+$Total21+$Total22+$Total23)/$GrandTotal*100,0).'%' . '</td>
+				<td>' . '' . '</td>
+				</tr>';
 				
 		if (!$ShowHeader){
 			echo '</tbody>
@@ -1503,15 +1353,11 @@ function DaysOfWeekSales($numDays, $RootPath){
 		$k = 0; //row colour counter
 		while ($MyRow = DB_fetch_array($Result)) {
 			$k = StartEvenOrOddRow($k);
-			printf('<tr class="striped_row">
-					<td>%s</td>
-					<td class="number">%s</td>
-					<td class="number">%s</td>
-					</tr>', 
-					GetDayNameFromWeekDay($MyRow['WeekDay']),
-					locale_number_format(($MyRow['WeekDaySales']/$TotalSales)*100,1) . '%', 
-					locale_number_format((($MyRow['WeekDaySales']/$TotalSales/(1/7))-1)*100,1) . '%' 
-					);
+			echo '<tr class="striped_row">
+					<td>' . GetDayNameFromWeekDay($MyRow['WeekDay']) . '</td>
+					<td class="number">' . locale_number_format(($MyRow['WeekDaySales']/$TotalSales)*100,1) . '%' . '</td>
+					<td class="number">' . locale_number_format((($MyRow['WeekDaySales']/$TotalSales/(1/7))-1)*100,1) . '%' . '</td>
+					</tr>';
 		}
 	}
 	echo '</tbody>
