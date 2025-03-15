@@ -173,7 +173,7 @@ if (!isset($_POST['Show'])) {
 		$AccountCurrTotal = $BalancesRow['balance'];
 		$LocalCurrTotal = $BalancesRow['fbalance'];
 		if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
-			echo '<tr class="striped_row">
+			echo '<tr class="total_row">
 					<td colspan="8">' . _('Balances Brought Forward') . '</td>
 					<td class="number">' . locale_number_format($BalancesRow['balance'], $BankDetailRow['decimalplaces']) . '</td>
 					<td></td>
@@ -181,7 +181,7 @@ if (!isset($_POST['Show'])) {
 					<td></td>
 				</tr>';
 		} else {
-			echo '<tr class="striped_row">
+			echo '<tr class="total_row">
 					<td colspan="8">' . _('Balances Brought Forward') . '</td>
 					<td class="number">' . locale_number_format($BalancesRow['balance'], $BankDetailRow['decimalplaces']) . '</td>
 					<td></td>
@@ -221,16 +221,16 @@ if (!isset($_POST['Show'])) {
 			}
 		}
 		if ($BankDetailRow['currcode'] != $_SESSION['CompanyRecord']['currencydefault']) {
-			echo '<tr class="striped_row">
-					<td colspan="8">' . _('Balances Brought Forward') . '</td>
+			echo '<tr class="total_row">
+					<td colspan="8">' . _('Balances Carried Forward') . '</td>
 					<td class="number">' . locale_number_format($AccountCurrTotal, $BankDetailRow['decimalplaces']) . '</td>
 					<td></td>
-					<td class="number">' . locale_number_format($BalancesRow['fbalance'], $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
+					<td class="number">' . locale_number_format($LocalCurrTotal, $_SESSION['CompanyRecord']['decimalplaces']) . '</td>
 					<td></td>
 				</tr>';
 		} else {
-			echo '<tr class="striped_row">
-					<td colspan="8">' . _('Balances Brought Forward') . '</td>
+			echo '<tr class="total_row">
+					<td colspan="8">' . _('Balances Carried Forward') . '</td>
 					<td class="number">' . locale_number_format($LocalCurrTotal, $BankDetailRow['decimalplaces']) . '</td>
 					<td></td>
 				</tr>';
