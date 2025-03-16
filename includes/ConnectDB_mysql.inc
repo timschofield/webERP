@@ -81,6 +81,24 @@ function DB_query($SQL, $ErrorMessage='', $DebugMessage= '', $Transaction=false,
 		if(($SQLArray[0] == 'INSERT')
 			OR ($SQLArray[0] == 'UPDATE')
 			OR ($SQLArray[0] == 'DELETE')) {
+			if ($SQLArray[0] == 'INSERT' and $SQLArray[2] == 'gltrans') {
+				$FieldsString = trim($SQLArray[3], '(');
+				$FieldsString = trim(mb_substr($FieldsString, 0, mb_strpos($FieldsString, ')')));
+				$FieldNames = array_map('trim', explode(',', $FieldsString));
+				$ValuesString = trim($SQLArray[4], '(');
+				$ValuesString = trim(mb_substr($ValuesString, 0, mb_strpos($ValuesString, ')')));
+				$FieldValues = explode(',', $ValuesString);
+				$Account = $FieldValues[array_search('account', $FieldNames) ];
+				$Period = $FieldValues[array_search('periodno', $FieldNames) ];
+				$Amount = $FieldValues[array_search('amount', $FieldNames) ];
+				$UpdateGlSQL = "UPDATE gltotals SET amount=amount+" . $Amount . "
+										WHERE account=" . $Account . "
+										AND period=" . $Period;
+				$UpdateResult = mysqli_query($db, $UpdateGlSQL);
+				if (mysqli_errno($db) != 0) {
+					prnMsg(_('There was a problem updating the general ledger totals. Please correct'), 'error');
+				}
+			}
 
 			if($SQLArray[2] != 'audittrail') { // to ensure the auto delete of audit trail history is not logged
 				$AuditSQL = "INSERT INTO audittrail (transactiondate,
