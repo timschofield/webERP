@@ -95,7 +95,7 @@ while (false !== ($CompanyEntry = $DirHandle->read())) {
 			$CompanyName[$CompanyEntry] = $CompanyEntry;
 		}
 		if ($AllowCompanySelectionBox != 'Hide'){
-			if (empty($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
+			if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
 			} else {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><span style="top:0px" id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
