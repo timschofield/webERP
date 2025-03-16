@@ -5421,8 +5421,12 @@ class PHPlot
     {
         if (isset($zero_magnet) && $zero_magnet >= 0 && $zero_magnet <= 1.0)
             $this->rangectl[$which]['zero_magnet'] = $zero_magnet;
-		if (isset($adjust_mode) && strpos('TRI', $adjust_mode) !== FALSE)
-			$this->rangectl[$which]['adjust_mode'] = $adjust_mode;
+        // Fix for the error - properly check if $adjust_mode is a string and safely get first character
+        if (isset($adjust_mode) && is_string($adjust_mode) && strlen($adjust_mode) > 0) {
+            $first_char = substr($adjust_mode, 0, 1);
+            if (strpos('TRI', $first_char) !== FALSE)
+                $this->rangectl[$which]['adjust_mode'] = $adjust_mode;
+        }
         if (isset($adjust_amount) && $adjust_amount >= 0)
             $this->rangectl[$which]['adjust_amount'] = $adjust_amount;
         return TRUE;
@@ -7054,23 +7058,23 @@ class PHPlot
             break;
         case 'diamond':
             $arrpoints = array($x1, $y, $x, $y1, $x2, $y, $x, $y2);
-            ImageFilledPolygon($this->img, $arrpoints, 4, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'triangle':
             $arrpoints = array($x1, $y, $x2, $y, $x, $y2);
-            ImageFilledPolygon($this->img, $arrpoints, 3, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'trianglemid':
             $arrpoints = array($x1, $y1, $x2, $y1, $x, $y);
-            ImageFilledPolygon($this->img, $arrpoints, 3, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'yield':
             $arrpoints = array($x1, $y1, $x2, $y1, $x, $y2);
-            ImageFilledPolygon($this->img, $arrpoints, 3, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'delta':
             $arrpoints = array($x1, $y2, $x2, $y2, $x, $y1);
-            ImageFilledPolygon($this->img, $arrpoints, 3, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'star':
             ImageLine($this->img, $x1, $y, $x2, $y, $color);
@@ -7080,11 +7084,11 @@ class PHPlot
             break;
         case 'hourglass':
             $arrpoints = array($x1, $y1, $x2, $y1, $x1, $y2, $x2, $y2);
-            ImageFilledPolygon($this->img, $arrpoints, 4, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'bowtie':
             $arrpoints = array($x1, $y1, $x1, $y2, $x2, $y1, $x2, $y2);
-            ImageFilledPolygon($this->img, $arrpoints, 4, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'target':
             ImageFilledRectangle($this->img, $x1, $y1, $x, $y, $color);
@@ -7096,13 +7100,13 @@ class PHPlot
             break;
         case 'home': /* As in: "home plate" (baseball), also looks sort of like a house. */
             $arrpoints = array($x1, $y2, $x2, $y2, $x2, $y, $x, $y1, $x1, $y);
-            ImageFilledPolygon($this->img, $arrpoints, 5, $color);
+            ImageFilledPolygon($this->img, $arrpoints, $color);
             break;
         case 'up':
-            ImagePolygon($this->img, array($x, $y1, $x2, $y2, $x1, $y2), 3, $color);
+            ImagePolygon($this->img, array($x, $y1, $x2, $y2, $x1, $y2), $color);
             break;
         case 'down':
-            ImagePolygon($this->img, array($x, $y2, $x1, $y1, $x2, $y1), 3, $color);
+            ImagePolygon($this->img, array($x, $y2, $x1, $y1, $x2, $y1), $color);
             break;
         default: /* Also 'rect' */
             ImageFilledRectangle($this->img, $x1, $y1, $x2, $y2, $color);
@@ -7183,7 +7187,8 @@ class PHPlot
             } else { // Suppress top shading (Note shade_top==FALSE && shade_side==FALSE is not allowed)
                 $pts = array($x2, $y2, $x2, $y1, $x2 + $shade, $y1 - $shade, $x2 + $shade, $y2 - $shade);
             }
-            ImageFilledPolygon($this->img, $pts, count($pts) / 2, $shade_color);
+            // Remove explicit count parameter which is deprecated in PHP 8+
+            ImageFilledPolygon($this->img, $pts, $shade_color);
         }
 
         // Draw a border around the bar, if enabled.
@@ -7617,7 +7622,7 @@ class PHPlot
                 // Don't try to draw a 0 degree slice - it would make a full circle.
                 if ($arc_start_angle > $arc_end_angle) {
                     // Draw the slice
-                    ImageFilledArc($this->img, $xpos, $ypos+$h, $pie_width, $pie_height,
+                    ImageFilledArc($this->img, $xpos, (int)($ypos+$h), (int)$pie_width, (int)$pie_height,
                                    $arc_end_angle, $arc_start_angle, $slicecol, IMG_ARC_PIE);
 
                     // Processing to do only for the last (if shaded) or only (if unshaded) loop:
@@ -7858,7 +7863,7 @@ class PHPlot
                 array_push($pts, $xd[$row], $yd[$row][$col]);
             }
             // Draw it:
-            ImageFilledPolygon($this->img, $pts, $n_rows * 2, $this->ndx_data_colors[$prev_col]);
+            ImageFilledPolygon($this->img, $pts, $this->ndx_data_colors[$prev_col]);
 
             $prev_col = $col;
         }
