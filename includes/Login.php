@@ -80,7 +80,7 @@ if ($AllowCompanySelectionBox === 'Hide') {
 }
 
 if ($AllowCompanySelectionBox != 'Hide') {
-	echo '<label for="dropdownlist">', _('Company'), ':</label>';
+	echo '<label for="CompanySelect">', _('Company'), ':</label>';
 	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
 	echo '<ol id="dropdownlist" class="dropdownlist">';
 }
@@ -109,9 +109,9 @@ if ($AllowCompanySelectionBox != 'Hide') {
 	echo '</ol>';
 }
 
-echo '<label>', _('User name'), ':</label>
-	<input type="text" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', _('User name'), '" maxlength="20" /><br />
-	<label>', _('Password'), ':</label>
+echo '<label for="username">', _('User name'), ':</label>
+	<input type="text" id="username" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', _('User name'), '" maxlength="20" /><br />
+	<label for="password">', _('Password'), ':</label>
 	<input type="password" autocomplete="current-password" id="password" required="required" name="Password" placeholder="', _('Password'), '" />
 	<input type="text" id="eye" readonly title="', _('Show Password'), '" />
 	<div id="demo_text">';
