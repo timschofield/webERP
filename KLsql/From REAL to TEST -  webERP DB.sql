@@ -34,7 +34,7 @@ TRUNCATE test_erp.`buckets`;
 INSERT INTO test_erp.buckets SELECT * FROM kurakura_kl_erp.buckets;
 
 TRUNCATE test_erp.`chartdetails`;
-/*INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;*/
+INSERT INTO test_erp.chartdetails SELECT * FROM kurakura_kl_erp.chartdetails;
 
 TRUNCATE test_erp.`chartmaster`;
 INSERT INTO test_erp.chartmaster SELECT * FROM kurakura_kl_erp.chartmaster;
@@ -79,7 +79,7 @@ TRUNCATE test_erp.`currencies`;
 INSERT INTO test_erp.currencies SELECT * FROM kurakura_kl_erp.currencies;
 
 TRUNCATE test_erp.`custallocns`;
-INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= '2025-04-01'; 
+INSERT INTO test_erp.custallocns SELECT * FROM kurakura_kl_erp.custallocns WHERE datealloc >= '2025-01-01'; 
 
 TRUNCATE test_erp.`custbranch`;
 INSERT INTO test_erp.custbranch SELECT * FROM kurakura_kl_erp.custbranch;
@@ -175,7 +175,7 @@ TRUNCATE test_erp.`gltags`;
 INSERT INTO test_erp.gltags SELECT * FROM kurakura_kl_erp.gltags;
 
 TRUNCATE test_erp.`gltrans`;
-/* INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
+INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno <= 30;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 30 AND periodno <= 60;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 60 AND periodno <= 80;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 80 AND periodno <= 90;
@@ -190,11 +190,10 @@ INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodn
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 170 AND periodno <= 180;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 180 AND periodno <= 190;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 190 AND periodno <= 200;
-INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 190 AND periodno <= 200;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 200 AND periodno <= 210;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 210 AND periodno <= 220;
 INSERT INTO test_erp.gltrans SELECT * FROM kurakura_kl_erp.gltrans WHERE periodno > 220;
-*/
+
 
 TRUNCATE test_erp.`grns`;
 INSERT INTO test_erp.grns SELECT * FROM kurakura_kl_erp.grns;

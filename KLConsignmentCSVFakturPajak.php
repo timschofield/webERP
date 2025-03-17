@@ -13,9 +13,9 @@ if(!isset($_POST['CompanyFrom'])) {
 	$_POST['CompanyFrom']='PTADU';
 }
 
-// The default company to Invoice to (PTBB).
+// The default company to Invoice to (PTSMH).
 if(!isset($_POST['CompanyTo'])) {
-	$_POST['CompanyTo']='PTBB';
+	$_POST['CompanyTo']='PTSMH';
 }
 
 // default date to invoice is until Yesterday
@@ -45,6 +45,7 @@ if (isset($_POST['submit'])) {
 //####_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT_SUBMIT####
 function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $NomorSeriFP, $DecimalDigits) {
 
+	$EndDate = ConvertSQLDate($EndDate);
 	$EndDateSQL = FormatDateForSQL($EndDate);
 
 	//initialise no input errors
@@ -292,7 +293,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 					$NomorTelepon . $EOL; 
 					
 			if ($DraftOrInvoice == 'INVOICE'){
-				$rTx = DB_Txn_Begin();
+				DB_Txn_Begin();
 				$SQL = "UPDATE klconsignment
 						SET fakturpajakdate = '". $EndDateSQL ."'
 						WHERE companycode = '" . $CompanyFrom . "'
@@ -302,7 +303,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 				$ErrMsg = 'CRITICAL ERROR! WRITE THIS CODE AND CALL THE OFFICE IMMEDIATELY: ERROR-CONSIGNMENT-00002';		
 				$DbgMsg = 'SQL to update klconsignment record: ';
 				$Result = DB_query($SQL,$ErrMsg,$DbgMsg,true);
-				$rTx = DB_Txn_Commit();
+				DB_Txn_Commit();
 			}
 
 			// Write lines into actual file
@@ -319,7 +320,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice, $No
 			
 		}else{
 			include('includes/header.php');
-			prnMsg('No data to create a Faktur Pajak ');
+			prnMsg('No data to create a Faktur Pajak','warn');
 			include('includes/footer.php');
 		}
 	}else{
