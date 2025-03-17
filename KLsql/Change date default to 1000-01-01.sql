@@ -1,3 +1,13 @@
+UPDATE klconsignment SET invoicedtopartner = '1000-01-01' WHERE invoicedtopartner = '0000-00-00';
+UPDATE klconsignment SET fakturpajakdate = '1000-01-01' WHERE fakturpajakdate = '0000-00-00';
+
+UPDATE klretailcustomers SET date_of_birth = '1000-01-01' WHERE date_of_birth = '0000-00-00';
+
+UPDATE mrpsupplies SET duedate = '1000-01-01' WHERE duedate = '0000-00-00';
+UPDATE mrpsupplies SET mrpdate = '1000-01-01' WHERE mrpdate = '0000-00-00';
+
+
+
 ALTER TABLE pcashdetails CHANGE authorized authorized date NOT NULL DEFAULT '1000-01-01';
 UPDATE pcashdetails SET authorized = '1000-01-01' WHERE authorized = '0000-00-00';
 

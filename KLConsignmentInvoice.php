@@ -265,7 +265,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 			}
 
 			if ($DraftOrInvoice == 'INVOICE'){
-				$rTx = DB_Txn_Begin();
+				DB_Txn_Begin();
 				$SQL = "UPDATE klconsignment
 						SET invoicedtopartner = '". $EndDate ."'
 						WHERE companycode = '" . $CompanyFrom . "'
@@ -327,7 +327,7 @@ function submit($Title, $CompanyFrom, $CompanyTo, $EndDate, $DraftOrInvoice) {
 									);
 					
 				}
-				$rTx = DB_Txn_Commit();
+				DB_Txn_Commit();
 			}
 			
 			// download the pdf file
