@@ -53,7 +53,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	/*Calculate B/Fwd retained earnings */
 
 	/* Get the retained earnings amount */
-	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount),3) AS retainedearnings
+	$ThisYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings
 									FROM gltotals
 									INNER JOIN chartmaster
 										ON gltotals.account=chartmaster.accountcode
@@ -64,7 +64,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$ThisYearRetainedEarningsResult = DB_query($ThisYearRetainedEarningsSQL);
 	$ThisYearRetainedEarningsRow = DB_fetch_array($ThisYearRetainedEarningsResult);
 
-	$LastYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount),3) AS retainedearnings
+	$LastYearRetainedEarningsSQL = "SELECT ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS retainedearnings
 									FROM gltotals
 									INNER JOIN chartmaster
 										ON gltotals.account=chartmaster.accountcode
@@ -100,7 +100,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	$AccountListResult = DB_query($SQL);
 
 	$SQL = "SELECT account,
-					ROUND(SUM(amount),3) AS accounttotal
+					ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS accounttotal
 				FROM gltotals
 				WHERE period<='" . $_POST['PeriodTo'] . "'
 				GROUP BY account
@@ -113,7 +113,7 @@ if (isset($_POST['PrintPDF']) or isset($_POST['View'])) {
 	}
 
 	$SQL = "SELECT account,
-					ROUND(SUM(amount),3) AS accounttotal
+					ROUND(SUM(amount), " . $_SESSION['CompanyRecord']['decimalplaces'] . " +1) AS accounttotal
 				FROM gltotals
 				WHERE period<='" . ($_POST['PeriodTo'] - 12) . "'
 				GROUP BY account
