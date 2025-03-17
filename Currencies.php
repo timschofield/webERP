@@ -172,10 +172,10 @@ if (isset($_POST['submit'])) {
 		while ($MyRowBankAccount=DB_fetch_array($ResultBankAccounts)) {
 
 			/*Get the balance of the bank account concerned */
-			$SQL = "SELECT bfwd+actual AS balance
-					FROM chartdetails
-					WHERE period='" . $PeriodNo . "'
-					AND accountcode='" . $MyRowBankAccount['accountcode'] . "'";
+			$SQL = "SELECT SUM(amount) as balance
+					FROM gltotals
+					WHERE period<='" . $PeriodNo . "'
+					AND account='" . $MyRowBankAccount['accountcode'] . "'";
 
 			$ErrMsg = _('The bank account balance could not be returned by the SQL because');
 			$BalanceResult = DB_query($SQL,$ErrMsg);
