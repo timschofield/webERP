@@ -11,6 +11,9 @@ float:left;
 margin-left:5px;
 padding:3px;
 }
+footer .FooterLogo:hover {
+text-decoration: none;
+}
 footer .FooterLogo img {
 width:128px;
 }
