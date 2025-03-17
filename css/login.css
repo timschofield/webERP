@@ -98,6 +98,7 @@ border-radius:5px;
 box-shadow: 3px 3px 10px 0px rgba(5,7,41,0.75);
 overflow:hidden;
 scrollbar-color: #BFBFBF #4D4D4D;
+display:none;
 }
 .option {
 position:relative;

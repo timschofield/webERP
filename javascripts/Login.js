@@ -17,9 +17,11 @@ function ShowCompanies() {
 		document.getElementById("dropdownlist").style.maxHeight=ViewPortHeight-DropDownTop-10+"px";
 		document.getElementById("CompanySelect").style.background = "url(\'css/ascending.png\') no-repeat right transparent";
 		document.getElementById("CompanySelect").style.backgroundSize = "contain";
+		document.getElementById("dropdownlist").style.display="block";
 	} else {
 		document.getElementById("dropdownlist").style.overflow="hidden"
 		document.getElementById("dropdownlist").style.maxHeight="0px";
+		document.getElementById("dropdownlist").style.display="none";
 		document.getElementById("CompanySelect").style.background = "url(\'css/descending.png\') no-repeat right transparent";
 		document.getElementById("CompanySelect").style.backgroundSize = "contain";
 	}

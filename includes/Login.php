@@ -82,7 +82,11 @@ if ($AllowCompanySelectionBox === 'Hide') {
 if ($AllowCompanySelectionBox != 'Hide') {
 	echo '<label for="CompanySelect">', _('Company'), ':</label>';
 	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
-	echo '<ol id="dropdownlist" class="dropdownlist">';
+	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
+		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:10px;">';
+	} else {
+		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:15px;">';
+	}
 }
 
 $DirHandle = dir('companies/');
@@ -122,7 +126,7 @@ if (isset($DemoText)) {
 
 echo '</div>';
 
-echo '<div style="text-align: center;">
+echo '<div style="text-align: left;">
         <button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
             <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
         </button>
