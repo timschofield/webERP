@@ -94,17 +94,15 @@ if(isset($_POST['submit'])) {
 } elseif(isset($_GET['delete'])) {
 	//the link to delete a selected record was clicked instead of the submit button
 
-	// PREVENT DELETES IF DEPENDENT RECORDS IN 'ChartDetails'
-
 	$SQL= "SELECT COUNT(*)
-			FROM chartdetails
-			WHERE chartdetails.accountcode ='" . $SelectedAccount . "'
-			AND chartdetails.actual <>0";
+			FROM gltotals
+			WHERE account ='" . $SelectedAccount . "'
+			AND amount <> 0";
 	$Result = DB_query($SQL);
 	$MyRow = DB_fetch_row($Result);
 	if($MyRow[0] > 0) {
 		$CancelDelete = 1;
-		prnMsg(_('Cannot delete this account because chart details have been created using this account and at least one period has postings to it'), 'warn');
+		prnMsg(_('Cannot delete this account because GL transactions have been created using this account and at least one period has postings to it'), 'warn');
 		echo '<br />' . _('There are') . ' ' . $MyRow[0] . ' ' . _('chart details that require this account code');
 
 	} else {
@@ -205,9 +203,9 @@ if(isset($_POST['submit'])) {
 									prnMsg(_('Cannot delete this account because it is used by one the defined bank accounts'), 'warn');
 								} else {
 
-									$SQL = "DELETE FROM chartdetails WHERE accountcode='" . $SelectedAccount ."'";
+									$SQL = "DELETE FROM gltotals WHERE account='" . $SelectedAccount ."'";
 									$Result = DB_query($SQL);
-									$SQL = "DELETE FROM chartmaster WHERE accountcode= '" . $SelectedAccount ."'";
+									$SQL = "DELETE FROM gltotals WHERE account= '" . $SelectedAccount ."'";
 									$Result = DB_query($SQL);
 									prnMsg(_('Account') . ' ' . $SelectedAccount . ' ' . _('has been deleted'), 'succes');
 								}
