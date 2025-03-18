@@ -6,6 +6,9 @@ CreateTable('gltotals', "CREATE TABLE IF NOT EXISTS `gltotals` (
   PRIMARY KEY  (`account`, `period`)
 )");
 
+$SQL = "UPDATE gltrans SET account = '700111300' WHERE account = '350510100'";
+$Result = DB_query($SQL);
+
 $SQL = "TRUNCATE gltotals";
 $Result = DB_query($SQL);
 
