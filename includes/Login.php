@@ -97,9 +97,13 @@ if ($AllowCompanySelectionBox === 'Hide') {
 }
 
 if ($AllowCompanySelectionBox != 'Hide') {
-	echo '<label for="dropdownlist">', _('Company'), ':</label>';
+	echo '<label for="CompanySelect">', _('Company'), ':</label>';
 	echo '<input type="text" id="CompanySelect" readonly value="' . $CompanyName[$DefaultCompany] . '" />';
-	echo '<ol id="dropdownlist" class="dropdownlist">';
+	if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
+		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:10px;">';
+	} else {
+		echo '<ol id="dropdownlist" class="dropdownlist" style="padding-bottom:15px;">';
+	}
 }
 
 $DirHandle = dir('companies/');
@@ -112,7 +116,7 @@ while (false !== ($CompanyEntry = $DirHandle->read())) {
 			$CompanyName[$CompanyEntry] = $CompanyEntry;
 		}
 		if ($AllowCompanySelectionBox != 'Hide'){
-			if (empty($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
+			if (!isset($ShowLogoAtLogin) OR ($ShowLogoAtLogin == True)) {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><img id="optionlogo" src="companies/' . $CompanyEntry . '/logo.png" /><span id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
 			} else {
 				echo '<li class="option" id="' . $CompanyEntry . '" ><span style="top:0px" id="optionlabel">', $CompanyName[$CompanyEntry], '</span></li>';
@@ -126,9 +130,9 @@ if ($AllowCompanySelectionBox != 'Hide') {
 	echo '</ol>';
 }
 
-echo '<label>', _('User name'), ':</label>
-	<input type="text" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', _('User name'), '" maxlength="20" /><br />
-	<label>', _('Password'), ':</label>
+echo '<label for="username">', _('User name'), ':</label>
+	<input type="text" id="username" autocomplete="username" autofocus="autofocus" required="required" name="UserNameEntryField" placeholder="', _('User name'), '" maxlength="20" /><br />
+	<label for="password">', _('Password'), ':</label>
 	<input type="password" autocomplete="current-password" id="password" required="required" name="Password" placeholder="', _('Password'), '" />
 	<input type="text" id="eye" readonly title="', _('Show Password'), '" />
 	<div id="demo_text">';
@@ -139,7 +143,7 @@ if (isset($DemoText)) {
 
 echo '</div>';
 
-echo '<div style="text-align: center;">
+echo '<div style="text-align: left;">
         <button class="button" type="submit" value="', _('Login'), '" name="SubmitUser" onclick="ShowSpinner()">
             <img id="waiting_show" class="waiting_show" src="css/waiting.gif" />', _('Login'), ' ', '<img src="css/tick.png" title="', _('Login'), '" alt="" class="ButtonIcon" />
         </button>

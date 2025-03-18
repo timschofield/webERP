@@ -261,6 +261,7 @@ border-radius: 0.15em;
 transform: translateY(-0.075em);
 display: grid;
 place-content: center;
+overflow: hidden;
 }
 form fieldset field input[type="checkbox"]::before {
 content: "";
