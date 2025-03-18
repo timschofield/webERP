@@ -676,3 +676,5 @@ UPDATE test_erp.www_users SET blocked = 0 WHERE userid LIKE "999%";
 UPDATE  test_erp.`klonlinepartners` SET  `paypaltest` =  1;
 
 SET FOREIGN_KEY_CHECKS=1;
+
+UPDATE test_erp.`config` SET `confvalue` = '16' WHERE `confname` = 'DBUpdateNumber';
