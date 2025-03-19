@@ -125,8 +125,8 @@ if (!isset($SelectedType)){
 	echo '<table class="selection">';
 	echo '<thead>
 		<tr>
-			<th class="SortedColumn">' . _('Type ID') . '</th>
-			<th class="SortedColumn">' . _('Type Name') . '</th>
+			<th class="SortedColumn">' . _('Reason ID') . '</th>
+			<th class="SortedColumn">' . _('Reason Name') . '</th>
 		</tr>
 		</thead>
 		<tbody>';
@@ -139,7 +139,7 @@ while ($MyRow = DB_fetch_row($Result)) {
 			<td>'.$MyRow[1].'</td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'">' . _('Edit') . '</a></td>
 			<td><a href="'.htmlspecialchars($_SERVER['PHP_SELF'],ENT_QUOTES,'UTF-8').'?SelectedType='.$MyRow[0].'&amp;delete=yes" onclick="return confirm(\'' .
-				_('Are you sure you wish to delete this Item Return?') . '\');">' . _('Delete') . '</a></td>
+				_('Are you sure you wish to delete this Item Return Reason?') . '\');">' . _('Delete') . '</a></td>
 		</tr>';
 	}
 	//END WHILE LIST LOOP
@@ -185,7 +185,7 @@ if (! isset($_GET['delete'])) {
 		$_POST['reasonname']='';
 	}
 
-	echo FieldToSelectOneText('reasonname', $_POST['reasonname'], 100, 100, _('Type Name'), '',	'',	'',	true, false);
+	echo FieldToSelectOneText('reasonname', $_POST['reasonname'], 100, 100, _('Reason Name'), '',	'',	'',	true, false);
 
 	echo '</fieldset>';
 	echo OneButtonCenteredForm('submit', _('Accept'));
