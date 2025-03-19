@@ -277,7 +277,7 @@ if ($KL_SPGSeniorOrSupport
 echo '</field>';
 
 echo'<field>
-		<label for="DispatchDate">', _('Date when required'), ':</label>
+		<label for="DispatchDate">', _('Date required'), ':</label>
 		<input type="date" name="DispatchDate" maxlength="10" size="11" value="', FormatDateForSQL($_SESSION['Request']->DispatchDate), '" />
 	</field>
 	<field>
@@ -344,7 +344,7 @@ $SQL = "SELECT stockcategory.categoryid,
 		INNER JOIN internalstockcatrole
 			ON stockcategory.categoryid = internalstockcatrole.categoryid
 		WHERE internalstockcatrole.secroleid= " . $_SESSION['AccessLevel'] . "
-			ORDER BY stockcategory.categorydescription";
+		ORDER BY stockcategory.categorydescription";
 
 $Result1 = DB_query($SQL);
 if (DB_num_rows($Result1) == 0) {
@@ -408,14 +408,6 @@ echo '</field>
 	</form>';
 
 if (isset($_POST['Search']) or isset($_POST['Next']) or isset($_POST['Previous'])) {
-
-	if ($_POST['Keywords'] != '' and $_POST['StockCode'] == '') {
-		prnMsg(_('Order Item description has been used in search'), 'warn');
-	} elseif ($_POST['StockCode'] != '' and $_POST['Keywords'] == '') {
-		prnMsg(_('Stock Code has been used in search'), 'warn');
-	} elseif ($_POST['Keywords'] == '' and $_POST['StockCode'] == '') {
-		prnMsg(_('Stock Category has been used in search'), 'warn');
-	}
 
 	if (isset($_POST['Keywords']) and mb_strlen($_POST['Keywords']) > 0) {
 		//insert wildcard characters in spaces
@@ -565,7 +557,7 @@ if (isset($SearchResult)) {
 					<input tabindex="', ($j + 8), '" type="submit" name="Previous" value="', _('Previous'), '" /></td>
 				<td class="centre" colspan="6">
 				<input type="hidden" name="order_items" value="1" />
-					<input tabindex="', ($j + 9), '" type="submit" value="', _('Add to Requisition'), '" /></td>
+					<input tabindex="', ($j + 9), '" type="submit" value="', _('Add to Internal Stock Request'), '" /></td>
 			<td>
 					<input type="hidden" name="NextList" value="', ($Offset + 1), '" />
 					<input tabindex="', ($j + 10), '" type="submit" name="Next" value="', _('Next'), '" /></td>
