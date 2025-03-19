@@ -1452,7 +1452,7 @@ if ($New == 1) {
 
 	// Now the form to enter the item properties
 	echo '<input type="submit" name="submit" value="' . _('Update') . '" /><br />';
-	echo '<input type="reset" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
+	echo '<input type="submit" name="delete" value="' . _('Delete This Item') . '" onclick="return confirm(\'' . _('Are You Sure?') . '\');" />';
 	echo '<input type="submit" name="UpdateCategories" style="visibility:hidden;width:1px" value="' . _('Categories') . '" />';
 }
 
