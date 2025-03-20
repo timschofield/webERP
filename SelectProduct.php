@@ -515,7 +515,7 @@ if (isset($_POST['StockCode'])) {
 echo '<field>';
 
 echo '<field>
-		<label>' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Supplier Code') . '</label>';
+		<label>' . '<b>' . _('OR') . ' </b>' . _('Enter partial') . ' <b>' . _('Supplier Stock Code') . '</b>:</label>';
 if (isset($_POST['SupplierStockCode'])) {
 	echo '<input type="text" name="SupplierStockCode" value="' . $_POST['SupplierStockCode'] . '" title="" size="15" maxlength="18" />
 		<fieldhelp>' . _('Enter text that you wish to search for in the supplier\'s item code') . '</fieldhelp';
@@ -540,195 +540,7 @@ if (isset($_POST['Search']) OR isset($_POST['Go']) OR isset($_POST['Next']) OR i
 	if ($_POST['Keywords'] AND $_POST['StockCode']) {
 		prnMsg (_('Stock description keywords have been used in preference to the Stock code extract entered'), 'info');
 	}
-	if (isset($_POST['Keywords']) AND mb_strlen($_POST['Keywords'])>0) {
-		//insert wildcard characters in spaces
-		$_POST['Keywords'] = mb_strtoupper($_POST['Keywords']);
-		$SearchString = '%' . str_replace(' ', '%', $_POST['Keywords']) . '%';
-		if ($_POST['StockCat'] == 'All') {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.longdescription,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units,
-							stockmaster.mbflag,
-							stockmaster.discontinued,
-							stockmaster.decimalplaces
-						FROM stockmaster LEFT JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid,
-							locstock
-						WHERE stockmaster.stockid=locstock.stockid
-						AND stockmaster.description " . LIKE . " '$SearchString'
-						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.longdescription,
-							stockmaster.units,
-							stockmaster.mbflag,
-							stockmaster.discontinued,
-							stockmaster.decimalplaces
-						ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		} else {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.longdescription,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units,
-							stockmaster.mbflag,
-							stockmaster.discontinued,
-							stockmaster.decimalplaces
-						FROM stockmaster INNER JOIN locstock
-						ON stockmaster.stockid=locstock.stockid
-						WHERE description " . LIKE . " '$SearchString'
-						AND categoryid='" . $_POST['StockCat'] . "'
-						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.longdescription,
-							stockmaster.units,
-							stockmaster.mbflag,
-							stockmaster.discontinued,
-							stockmaster.decimalplaces
-						ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		}
-	} elseif (isset($_POST['StockCode']) AND mb_strlen($_POST['StockCode'])>0) {
-		$_POST['StockCode'] = mb_strtoupper($_POST['StockCode']);
-		if ($_POST['StockCat'] == 'All') {
-			$SQL = "SELECT stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.longdescription,
-							stockmaster.mbflag,
-							stockmaster.discontinued,
-							SUM(locstock.quantity) AS qoh,
-							stockmaster.units,
-							stockmaster.decimalplaces
-						FROM stockmaster
-						INNER JOIN stockcategory
-						ON stockmaster.categoryid=stockcategory.categoryid
-						INNER JOIN locstock ON stockmaster.stockid=locstock.stockid
-						WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-						GROUP BY stockmaster.stockid,
-							stockmaster.description,
-							stockmaster.longdescription,
-							stockmaster.units,
-							stockmaster.mbflag,
-							stockmaster.discontinued,
-							stockmaster.decimalplaces
-						ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		} else {
-			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						sum(locstock.quantity) as qoh,
-						stockmaster.units,
-						stockmaster.decimalplaces
-					FROM stockmaster INNER JOIN locstock
-					ON stockmaster.stockid=locstock.stockid
-					WHERE stockmaster.stockid " . LIKE . " '%" . $_POST['StockCode'] . "%'
-					AND categoryid='" . $_POST['StockCat'] . "'
-					GROUP BY stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.units,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						stockmaster.decimalplaces
-					ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		}
-	} elseif (isset($_POST['SupplierStockCode']) AND mb_strlen($_POST['SupplierStockCode'])>0) {
-		if ($_POST['StockCat'] == 'All') {
-			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						SUM(locstock.quantity) AS qoh,
-						stockmaster.units,
-						stockmaster.decimalplaces
-					FROM stockmaster
-					INNER JOIN purchdata
-					ON stockmaster.stockid=purchdata.stockid
-					INNER JOIN locstock
-					ON stockmaster.stockid=locstock.stockid
-					LEFT JOIN stockcategory
-					ON stockmaster.categoryid=stockcategory.categoryid
-					WHERE purchdata.suppliers_partno " . LIKE . " '%" . $_POST['SupplierStockCode'] . "%'
-					GROUP BY stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.units,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						stockmaster.decimalplaces
-					ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		} else {
-			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						SUM(locstock.quantity) AS qoh,
-						stockmaster.units,
-						stockmaster.decimalplaces
-					FROM stockmaster INNER JOIN locstock
-					ON stockmaster.stockid=locstock.stockid
-					INNER JOIN purchdata
-					ON stockmaster.stockid=purchdata.stockid
-					WHERE categoryid='" . $_POST['StockCat'] . "'
-					AND purchdata.suppliers_partno " . LIKE . " '%" . $_POST['SupplierStockCode'] . "%'
-					GROUP BY stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.units,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						stockmaster.decimalplaces
-					ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		}
-	} else {
-		if ($_POST['StockCat'] == 'All') {
-			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						SUM(locstock.quantity) AS qoh,
-						stockmaster.units,
-						stockmaster.decimalplaces
-					FROM stockmaster
-					LEFT JOIN stockcategory
-					ON stockmaster.categoryid=stockcategory.categoryid,
-						locstock
-					WHERE stockmaster.stockid=locstock.stockid
-					GROUP BY stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.units,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						stockmaster.decimalplaces
-					ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		} else {
-			$SQL = "SELECT stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						SUM(locstock.quantity) AS qoh,
-						stockmaster.units,
-						stockmaster.decimalplaces
-					FROM stockmaster INNER JOIN locstock
-					ON stockmaster.stockid=locstock.stockid
-					WHERE categoryid='" . $_POST['StockCat'] . "'
-					GROUP BY stockmaster.stockid,
-						stockmaster.description,
-						stockmaster.longdescription,
-						stockmaster.units,
-						stockmaster.mbflag,
-						stockmaster.discontinued,
-						stockmaster.decimalplaces
-					ORDER BY stockmaster.discontinued, stockmaster.stockid";
-		}
-	}
+	$SQL = GenerateStockmasterQuery($_POST);
 	$ErrMsg = _('No stock items were returned by the SQL because');
 	$DbgMsg = _('The SQL that returned an error was');
 	$SearchResult = DB_query($SQL, $ErrMsg, $DbgMsg);
@@ -842,4 +654,99 @@ if (isset($SearchResult) AND !isset($_POST['Select'])) {
 /* end display list if there is more than one record */
 
 include ('includes/footer.php');
+
+function GenerateStockmasterQuery(array $post): string {
+	/** 
+	 * Code mostly generated by Gemini 2.0
+	 * Generates an SQL query for stockmaster data based on user-provided filters.
+	 *
+	 * The function constructs a SELECT query with JOINs to retrieve stock information,
+	 * including quantity on hand (qoh).  It supports filtering by keywords,
+	 * stock code, supplier stock code, and stock category.  The query is ordered
+	 * by discontinued status and stock ID.
+	 *
+	 * @param array $post An array containing user input, typically from $_POST.
+	 * Expected keys:
+	 * - 'Keywords':  String to search for in stock descriptions.
+	 * - 'StockCode': String to search for in stock IDs.
+	 * - 'SupplierStockCode': String to search for in supplier part numbers.
+	 * - 'StockCat':  Category ID to filter by, or 'All' for all categories.
+	 *
+	 * @return string The generated SQL query string.  Returns an empty string if
+	 * no valid search criteria are provided.
+	 */
+
+    // Helper function to sanitize and prepare search strings.
+    function PrepareSearchString(string $InputString): string {
+        $InputString = mb_strtoupper($InputString); // Consistent case for comparisons.
+        return '%' . str_replace(' ', '%', $InputString) . '%'; // Add wildcards.
+    }
+
+    // Initialize the SQL query.
+    $SQL = "SELECT stockmaster.stockid,
+                   stockmaster.description,
+                   stockmaster.longdescription,
+                   SUM(locstock.quantity) AS qoh,
+                   stockmaster.units,
+                   stockmaster.mbflag,
+                   stockmaster.discontinued,
+                   stockmaster.decimalplaces
+            FROM stockmaster ";
+
+    // Common JOIN and WHERE clauses.
+    $JoinsSQL = "";
+    $WhereSQL = "WHERE stockmaster.stockid = locstock.stockid "; // Corrected initial where clause
+
+    // Determine the filter and build the query.
+    if (isset($post['Keywords']) && mb_strlen($post['Keywords']) > 0) {
+        $SearchString = PrepareSearchString($post['Keywords']);
+        $JoinsSQL .= "LEFT JOIN stockcategory 
+						ON stockmaster.categoryid = stockcategory.categoryid 
+					LEFT JOIN locstock 
+						ON stockmaster.stockid = locstock.stockid "; // Added locstock to the join.
+        $WhereSQL .= "AND stockmaster.description LIKE '$SearchString' ";
+    } elseif (isset($post['StockCode']) && mb_strlen($post['StockCode']) > 0) {
+        $SearchString = PrepareSearchString($post['StockCode']);
+        $JoinsSQL .= "INNER JOIN stockcategory 
+						ON stockmaster.categoryid = stockcategory.categoryid 
+					INNER JOIN locstock
+						ON stockmaster.stockid = locstock.stockid "; //Added locstock join
+        $WhereSQL .= "AND stockmaster.stockid LIKE '$SearchString' ";
+    } elseif (isset($post['SupplierStockCode']) && mb_strlen($post['SupplierStockCode']) > 0) {
+        $SearchString = PrepareSearchString($post['SupplierStockCode']);
+        $JoinsSQL .= "INNER JOIN purchdata 
+						ON stockmaster.stockid = purchdata.stockid
+					INNER JOIN locstock 
+						ON stockmaster.stockid = locstock.stockid
+					LEFT JOIN stockcategory 
+						ON stockmaster.categoryid = stockcategory.categoryid"; // Added locstock join
+        $WhereSQL .= "AND purchdata.suppliers_partno LIKE '$SearchString' ";
+    } else {
+        $JoinsSQL .= "LEFT JOIN stockcategory 
+						ON stockmaster.categoryid = stockcategory.categoryid 
+					LEFT JOIN locstock 
+						ON stockmaster.stockid = locstock.stockid "; // Added locstock to the join.
+    }
+
+    // Category filter.
+    if ($post['StockCat'] != 'All') {
+        $WhereSQL .= "AND stockmaster.categoryid = '" . $post['StockCat'] . "' ";
+    }
+
+    // Complete the query.
+    $SQL .= $JoinsSQL;
+    $SQL .= $WhereSQL;
+    $SQL .= "GROUP BY stockmaster.stockid,
+                    stockmaster.description,
+                    stockmaster.longdescription,
+                    stockmaster.units,
+                    stockmaster.mbflag,
+                    stockmaster.discontinued,
+                    stockmaster.decimalplaces
+             ORDER BY stockmaster.discontinued,
+			 		stockmaster.stockid";
+
+    return $SQL;
+}
+
 ?>
