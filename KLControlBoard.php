@@ -424,6 +424,7 @@ if ($ProcessSection01){
 									'111121107AD',
 									'111121110AD',
 									'111121115AD',
+									'111121117AD',
 									'111121121AD',
 									'111121122AD',
 									'111121125AD',
@@ -4943,21 +4944,21 @@ function TransferWithWrongInformation($maxdays, $RootPath){
 		$LastTransfer = "";
 		while ($MyRow = DB_fetch_array($Result)) {
 			$CodeLink = '<a href="' . $RootPath . '/StockLocTransferReceive.php?Trf_ID=' . $MyRow['reference'] . '">' . $MyRow['reference'] . '</a>';
-/*			if (($MyRow['stockid'] != $LastStockid) OR ($MyRow['reference'] != $LastTransfer)){
+			if (($MyRow['stockid'] != $LastStockid) OR ($MyRow['reference'] != $LastTransfer)){
 				$SQL = "UPDATE loctransfers SET shipqty = recqty 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to fix the wrong information');
-				$ResultFix = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$ResultFix = DB_query($SQL, $ErrMsg, '', true);
 				$Action = "Fixed"; 
 			}else{
 				$SQL = "DELETE FROM loctransfers 
 						WHERE loctransferid = '".$MyRow['loctransferid'] . "'";
 				$ErrMsg =  _('CRITICAL ERROR') . '! ' . _('Unable to delete the wrong information');
-				$ResultDelete = DB_query($SQL, $ErrMsg, $DbgMsg, true);
+				$ResultDelete = DB_query($SQL, $ErrMsg, '', true);
 				$Action = "Deleted";
 			}
-*/
-			$Action = "CHECK IT OUT";
+
+			$Action = "Fixed";
 			echo '<tr class="striped_row">
 					<td class="number">' . locale_number_format($MyRow['loctransferid'],0) . '</td>
 					<td>' . ConvertSQLDateTime($MyRow['recdate']) . '</td>
