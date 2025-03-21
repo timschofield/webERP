@@ -794,6 +794,7 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 		ChangeFieldInTable("companies", "purchasesexchangediffact", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "retainedearnings", $OldGL, $NewGL);
 		ChangeFieldInTable("companies", "freightact", $OldGL, $NewGL);
+		ChangeFieldInTable("companies", "commissionsact", $OldGL, $NewGL);
 
 		ChangeFieldInTable("fixedassetcategories", "costact", $OldGL, $NewGL);
 		ChangeFieldInTable("fixedassetcategories", "depnact", $OldGL, $NewGL);
@@ -802,7 +803,11 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 
 		ChangeFieldInTable("glaccountusers", "accountcode", $OldGL, $NewGL);
 
+		ChangeFieldInTable("glbudgetdetails", "account", $OldGL, $NewGL);
+
 		ChangeFieldInTable("gltrans", "account", $OldGL, $NewGL);
+		
+		ChangeFieldInTable("gltotals", "account", $OldGL, $NewGL);
 
 		ChangeFieldInTable("lastcostrollup", "stockact", $OldGL, $NewGL);
 		ChangeFieldInTable("lastcostrollup", "adjglact", $OldGL, $NewGL);
@@ -815,6 +820,11 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 		ChangeFieldInTable("pctabs", "glaccountpcash", $OldGL, $NewGL);
 
 		ChangeFieldInTable("purchorderdetails", "glcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("regularpayments", "glcode", $OldGL, $NewGL);
+		ChangeFieldInTable("regularpayments", "bankaccountcode", $OldGL, $NewGL);
+
+		ChangeFieldInTable("salesman", "glaccount", $OldGL, $NewGL);
 
 		ChangeFieldInTable("salesglpostings", "discountglcode", $OldGL, $NewGL);
 		ChangeFieldInTable("salesglpostings", "salesglcode", $OldGL, $NewGL);
@@ -843,6 +853,7 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 		ChangeFieldInTable("klretailpartners", "accountppn", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accounthppcompensation", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankdanamon", $OldGL, $NewGL);
+		ChangeFieldInTable("klretailpartners", "accountbankbni", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankmandiri", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountbankbca", $OldGL, $NewGL);
 		ChangeFieldInTable("klretailpartners", "accountcomissioncreditcard", $OldGL, $NewGL);
@@ -874,9 +885,6 @@ function ChangeGLAcoountCode ($NewGL, $OldGL){
 		ChangeFieldInTable("klonlinepartners", "accountshopeecomissionidr", $OldGL, $NewGL);
 		ChangeFieldInTable("klonlinepartners", "accountlazadaidr", $OldGL, $NewGL);
 		ChangeFieldInTable("klonlinepartners", "accountlazadacomissionidr", $OldGL, $NewGL);
-
-
-
 
 		DB_ReinstateForeignKeys();
 
